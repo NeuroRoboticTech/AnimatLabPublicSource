@@ -1,0 +1,8 @@
+Still have the m_bSpike variable that is currently used, but have another variable called 
+m_dSpikeCountDown. 
+
+if(m_bSpike)
+{
+  if(m_dSpikeCountDown
+
+}
