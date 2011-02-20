@@ -1,0 +1,1161 @@
+﻿<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{45227561-EC56-46E0-9395-E1D86A7F3464}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon />
+    <AssemblyKeyContainerName />
+    <AssemblyName>AnimatGUI</AssemblyName>
+    <AssemblyOriginatorKeyFile />
+    <AssemblyOriginatorKeyMode>None</AssemblyOriginatorKeyMode>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionStrict>On</OptionStrict>
+    <RootNamespace>AnimatGUI</RootNamespace>
+    <StartupObject />
+    <FileUpgradeFlags />
+    <MyType>Windows</MyType>
+    <UpgradeBackupLocation />
+    <OldToolsVersion>0.0</OldToolsVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <PublishUrl>http://localhost/AnimatGUI/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>..\..\bin\</OutputPath>
+    <DocumentationFile>AnimatGUI.xml</DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile />
+    <DefineConstants />
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>40025,40027,40028,42105,42104,42107,42030,42025</NoWarn>
+    <DebugType>full</DebugType>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>..\..\bin\</OutputPath>
+    <DocumentationFile>AnimatGUI.xml</DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile />
+    <DefineConstants />
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>40025,40027,40028,42105,42104,42107,42030,42025</NoWarn>
+    <DebugType>none</DebugType>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DotNetMagic, Version=6.0.1.0, Culture=neutral, PublicKeyToken=6cf6edec59e036ec, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\DotNetMagic.DLL</HintPath>
+    </Reference>
+    <Reference Include="MagicLibrary, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\MagicLibrary.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Design">
+      <Name>System.Design</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\AnimatCollectionBase.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\AnimatDictionaryBase.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\AnimatForms.vb" />
+    <Compile Include="Collections\AnimatSortedList.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\Assemblies.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\Axis.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\BehaviorItems.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\BodyParts.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\CollisionPairs.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\DataColumns.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\DataObjects.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\DataTypes.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\DiagramErrors.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\Diagrams.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\DigramImages.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\ExternalFileForms.vb" />
+    <Compile Include="Collections\Gains.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\HistoryEvents.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\Joints.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\Links.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\MetaDocuments.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\NeuralModules.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\Nodes.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\Odors.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\OdorTypes.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\Panels.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\ProgramModules.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\RigidBodies.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\Stimuli.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\Structures.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\SystemTypes.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\ToolHolders.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\Tools.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Data.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\DiagramError.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\DiagramErrors\DataError.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\DiagramImage.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Link.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Links\Adapter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Links\Graphical.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Links\Synapse.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\NeuralModule.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Node.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Nodes\Adapter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Nodes\BodyPart.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Nodes\ContactAdapter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Nodes\Graphical.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Nodes\Neuron.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Nodes\NodeToNodeAdapter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Nodes\NodeToPhysicalAdapter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Nodes\OffPage.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Nodes\PhysicalToNodeAdapter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Nodes\Subsystem.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Nodes\Text.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\PanelData.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\PhysicsModule.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\PrintHelper.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Charting\Axis.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Charting\DataColumn.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\DataType.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\DragObject.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\ExternalStimuli\BodyPartStimulus.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\ExternalStimuli\BurstCurrent.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\ExternalStimuli\Current.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\ExternalStimuli\Enabler.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\ExternalStimuli\Force.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\ExternalStimuli\MotorVelocity.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\ExternalStimuli\NodeStimulus.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\ExternalStimuli\RepetitiveCurrent.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\ExternalStimuli\Stimulus.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\ExternalStimuli\TonicCurrent.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\ExternalStimuli\VoltageClamp.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\FormHelper.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Gain.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Gains\Bell.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Gains\MuscleGains\LengthTension.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Gains\MuscleGains\SpringTension.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Gains\MuscleGains\StimulusTension.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Gains\MuscleGains\VelocityTension.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Gains\Polynomial.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Gains\Sigmoid.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Physical\BodyPart.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Physical\Bodies\Box.vb" />
+    <Compile Include="DataObjects\Physical\BodyTransparencies.vb" />
+    <Compile Include="DataObjects\Physical\Camera.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Physical\CollisionPair.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Physical\ConstrainLimit.vb" />
+    <Compile Include="DataObjects\Physical\Environment.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Physical\IMuscle.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Physical\Joint.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Physical\Joints\Hinge.vb" />
+    <Compile Include="DataObjects\Physical\Odor.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Physical\OdorType.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Physical\Organism.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Physical\PhysicalStructure.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Physical\ReceptiveFieldPair.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Physical\RigidBody.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\ProgramModule.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Simulation.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\ToolHolder.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Visualization\HudItem.vb" />
+    <Compile Include="Forms\About.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AnimatApplication.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AnimatForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Behavior\Connections.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Behavior\Diagram.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Behavior\Editor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Behavior\Errors.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Behavior\Export.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Behavior\Hierarchy.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Behavior\NeuralModules.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Behavior\Relabel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Behavior\SelectByType.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Behavior\SelectLinkType.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BodyPlan\EditCollisionPairs.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BodyPlan\Editor.Designer.vb">
+      <DependentUpon>Editor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\BodyPlan\Editor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BodyPlan\Odor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BodyPlan\Relabel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BodyPlan\SelectByType.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BodyPlan\SelectPartType.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BodyPlan\SwapParts.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ConfirmRelabel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ErrorDisplay.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ExternalFileForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ExternalStimuli\SelectStimulusType.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Gain\EditGain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Gain\GainControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MdiChild.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MultiLineStringEditor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NewProject.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProjectProperties.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProjectWorkspace.Designer.vb">
+      <DependentUpon>ProjectWorkspace.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ProjectWorkspace.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RelabelSelected.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SelectProgramModule.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SimulationController.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Toolbox.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Tools\CompareItems.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Tools\DataChart.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Tools\Preference.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Tools\SelectDataItem.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Tools\SelectToolType.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Tools\ToolForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UnitScaleSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrameWork\DataDragHelper.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FrameWork\DataObject.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FrameWork\ImageManager.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FrameWork\MathStringEval.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FrameWork\MouseEventArgs.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FrameWork\ScaledNumber.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FrameWork\ScaledVector3.vb" />
+    <Compile Include="FrameWork\UndoSystem\DiagramChangedEvent.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FrameWork\UndoSystem\EventGroup.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FrameWork\UndoSystem\HistoryEvent.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FrameWork\UndoSystem\HistoryStack.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FrameWork\UndoSystem\ModificationHistory.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FrameWork\UndoSystem\PropertyChangedEvent.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FrameWork\UndoSystem\ScaleUnitChangedEvent.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FrameWork\Util.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FrameWork\Vector.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModuleInformation.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModuleInformation.resx</DependentUpon>
+    </Compile>
+    <Compile Include="TypeHelpers\CollisionPairsTypeConverter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\CollisionPairsTypeEditor.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\CompressionTypeEditor.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\ConstraintLimitTypeConverter.vb" />
+    <Compile Include="TypeHelpers\DataTypeID.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\DataTypeIDTypeConverter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\DoubleVectorTypeConverter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\DropDownEntry.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\DropDownListEditor.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\DropDownTreeEditor.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\GainTypeConverter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\GainTypeEditor.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\ImageFileEditor.vb" />
+    <Compile Include="TypeHelpers\ImageTypeConverter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\ImageTypeEditor.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\LinkedBodyPart.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\LinkedBodyPartList.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\LinkedBodyPartTree.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\LinkedBodyPartTypeConverter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\LinkedNode.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\LinkedNodeTypeConverter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\LinkedOdorType.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\LinkedOdorTypeConverter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\LinkedOdorTypeList.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\LinkedStructureList.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\LinkedStructureTypeConverter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\MultilineStringTypeEditor.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\OdorTypeConverter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\OdorTypeEditor.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\UnitsTypeConverter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\UnitsTypeEditor.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="Forms\About.resx">
+      <DependentUpon>About.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AnimatApplication.resx">
+      <DependentUpon>AnimatApplication.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AnimatForm.resx">
+      <DependentUpon>AnimatForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ConfirmRelabel.resx">
+      <DependentUpon>ConfirmRelabel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ErrorDisplay.resx">
+      <DependentUpon>ErrorDisplay.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ExternalStimuli\SelectStimulusType.resx">
+      <DependentUpon>SelectStimulusType.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Gain\EditGain.resx">
+      <DependentUpon>EditGain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Gain\GainControl.resx">
+      <DependentUpon>GainControl.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MdiChild.resx">
+      <DependentUpon>MdiChild.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MultiLineStringEditor.resx">
+      <DependentUpon>MultiLineStringEditor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NewProject.resx">
+      <DependentUpon>NewProject.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProjectProperties.resx">
+      <DependentUpon>ProjectProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RelabelSelected.resx">
+      <DependentUpon>RelabelSelected.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SelectProgramModule.resx">
+      <DependentUpon>SelectProgramModule.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SimulationController.resx">
+      <DependentUpon>SimulationController.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Toolbox.resx">
+      <DependentUpon>Toolbox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Tools\CompareItems.resx">
+      <DependentUpon>CompareItems.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Tools\DataChart.resx">
+      <DependentUpon>DataChart.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Tools\Preference.resx">
+      <DependentUpon>Preference.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Tools\SelectDataItem.resx">
+      <DependentUpon>SelectDataItem.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Tools\SelectToolType.resx">
+      <DependentUpon>SelectToolType.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Tools\ToolForm.resx">
+      <DependentUpon>ToolForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UnitScaleSettings.resx">
+      <DependentUpon>UnitScaleSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphics\AdapterLink.gif" />
+    <EmbeddedResource Include="Graphics\AddChartAxis.gif" />
+    <EmbeddedResource Include="Graphics\AddChartItem.gif" />
+    <EmbeddedResource Include="Graphics\AddDataTool.gif" />
+    <EmbeddedResource Include="Graphics\AddGround.gif" />
+    <EmbeddedResource Include="Graphics\AddOrganism.gif" />
+    <EmbeddedResource Include="Graphics\AddStimulus.gif" />
+    <EmbeddedResource Include="Graphics\AddStructure.gif" />
+    <EmbeddedResource Include="Graphics\AddWater.gif" />
+    <EmbeddedResource Include="Graphics\AutoUpdate.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\Align.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignBottom.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignBottomGrey.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignBottomGreyLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignBottomLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignGrey.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignGreyLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignHorizontalCenter.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignHorizontalCenterGrey.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignHorizontalCenterGreyLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignHorizontalCenterLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignLeft.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignLeftGrey.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignLeftGreyLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignLeftLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignRight.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignRightGrey.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignRightGreyLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignRightLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignTop.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignTopGrey.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignTopGreyLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignTopLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignVerticalCenter.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignVerticalCenterGrey.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignVerticalCenterGreyLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AlignVerticalCenterLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AutoLayout.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AutoLayoutGrey.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AutoLayoutGreyLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\AutoLayoutLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\Camera.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\CameraLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\DefaultLink.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\Distribute.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\DistributeGrey.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\DistributeGreyLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\DistributeHorizontal.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\DistributeHorizontalGrey.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\DistributeHorizontalGreyLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\DistributeHorizontalLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\DistributeLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\DistributeVertical.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\DistributeVerticalGrey.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\DistributeVerticalGreyLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\DistributeVerticalLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\ErrorSmall.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\Export.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\GraphicalNode.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\OffPageConnector.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\Redo.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\RedoGrey.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\RedoGreyLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\RedoLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\Size.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\SizeBoth.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\SizeBothGrey.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\SizeBothGreyLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\SizeBothLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\SizeGrey.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\SizeGreyLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\SizeHeight.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\SizeHeightGrey.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\SizeHeightGreyLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\SizeHeightLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\SizeLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\SizeWidth.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\SizeWidthGrey.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\SizeWidthGreyLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\SizeWidthLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\StandardAdapter.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\SubsystemNode.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\Text.ico" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\Undo.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\UndoGrey.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\UndoGreyLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\UndoLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\WarningSmall.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\ZoomIn.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\ZoomInLarge.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\ZoomOut.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\ZoomOutLarge.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\DataEntry.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Microcontroller.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\MotorOutput.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\PCB.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\SensoryInput.gif" />
+    <EmbeddedResource Include="Graphics\BringToFront.gif" />
+    <EmbeddedResource Include="Graphics\BurstCurrent.gif" />
+    <EmbeddedResource Include="Graphics\BurstCurrentLarge.gif" />
+    <EmbeddedResource Include="Graphics\CameraTreeView.gif" />
+    <EmbeddedResource Include="Graphics\Clamp.gif" />
+    <EmbeddedResource Include="Graphics\Clamp_Large.gif" />
+    <EmbeddedResource Include="Graphics\CmLabs.gif" />
+    <EmbeddedResource Include="Graphics\Collapse.gif" />
+    <EmbeddedResource Include="Graphics\Connections.gif" />
+    <EmbeddedResource Include="Graphics\Copy.gif" />
+    <EmbeddedResource Include="Graphics\Crayfish.ico" />
+    <EmbeddedResource Include="Graphics\Cut.gif" />
+    <EmbeddedResource Include="Graphics\CutFromWorkspace.gif" />
+    <EmbeddedResource Include="Graphics\DataGraph.gif" />
+    <EmbeddedResource Include="Graphics\DataGraph.ico" />
+    <EmbeddedResource Include="Graphics\DefaultObject.gif" />
+    <EmbeddedResource Include="Graphics\DefaultObject.ico" />
+    <EmbeddedResource Include="Graphics\DefaultObjectSmall.gif" />
+    <EmbeddedResource Include="Graphics\Delete.gif" />
+    <EmbeddedResource Include="Graphics\DeSpringTension.gif" />
+    <EmbeddedResource Include="Graphics\EnablerStimulus.gif" />
+    <EmbeddedResource Include="Graphics\EnablerStimulus_Small.gif" />
+    <EmbeddedResource Include="Graphics\Environment.gif" />
+    <EmbeddedResource Include="Graphics\Equals.gif" />
+    <EmbeddedResource Include="Graphics\Error.ico" />
+    <EmbeddedResource Include="Graphics\Error_Small.gif" />
+    <EmbeddedResource Include="Graphics\Expand.gif" />
+    <EmbeddedResource Include="Graphics\ExportData.gif" />
+    <EmbeddedResource Include="Graphics\ExportStandalone.gif" />
+    <EmbeddedResource Include="Graphics\ExternalStimulus.gif" />
+    <EmbeddedResource Include="Graphics\ForceStimulus.gif" />
+    <EmbeddedResource Include="Graphics\ForceStimulus_Large.gif" />
+    <EmbeddedResource Include="Graphics\GotoEndLarge.gif" />
+    <EmbeddedResource Include="Graphics\GotoStartLarge.gif" />
+    <EmbeddedResource Include="Graphics\Ground.gif" />
+    <EmbeddedResource Include="Graphics\GSU_Small.gif" />
+    <EmbeddedResource Include="Graphics\HelpContents.gif" />
+    <EmbeddedResource Include="Graphics\HelpIndex.gif" />
+    <EmbeddedResource Include="Graphics\HelpSearch.gif" />
+    <EmbeddedResource Include="Graphics\HelpTutorials.gif" />
+    <EmbeddedResource Include="Graphics\Joint.gif" />
+    <EmbeddedResource Include="Graphics\Joint.ico" />
+    <EmbeddedResource Include="Graphics\LengthTension.gif" />
+    <EmbeddedResource Include="Graphics\MotorVelocity.gif" />
+    <EmbeddedResource Include="Graphics\MotorVelocity_Large.gif" />
+    <EmbeddedResource Include="Graphics\Neuron.gif" />
+    <EmbeddedResource Include="Graphics\Neuron.ico" />
+    <EmbeddedResource Include="Graphics\NewProject.gif" />
+    <EmbeddedResource Include="Graphics\NIH.gif" />
+    <EmbeddedResource Include="Graphics\Open_Toolbar.gif" />
+    <EmbeddedResource Include="Graphics\Organism.gif" />
+    <EmbeddedResource Include="Graphics\Organisms.gif" />
+    <EmbeddedResource Include="Graphics\PageSetup.gif" />
+    <EmbeddedResource Include="Graphics\Paste.gif" />
+    <EmbeddedResource Include="Graphics\PauseLarge.gif" />
+    <EmbeddedResource Include="Graphics\PeSpringTension.gif" />
+    <EmbeddedResource Include="Graphics\PlayLarge.gif" />
+    <EmbeddedResource Include="Graphics\preference.gif" />
+    <EmbeddedResource Include="Graphics\Print.gif" />
+    <EmbeddedResource Include="Graphics\PrintPreview.gif" />
+    <EmbeddedResource Include="Graphics\ProjectOpen.gif" />
+    <EmbeddedResource Include="Graphics\ProjectOpenLarge.gif" />
+    <EmbeddedResource Include="Graphics\ProjectProperties.gif" />
+    <EmbeddedResource Include="Graphics\ProjectSave.gif" />
+    <EmbeddedResource Include="Graphics\ProjectSaveLarge.gif" />
+    <EmbeddedResource Include="Graphics\ProjectWorkspace.gif" />
+    <EmbeddedResource Include="Graphics\Properties.gif" />
+    <EmbeddedResource Include="Graphics\ReceptiveField.gif" />
+    <EmbeddedResource Include="Graphics\Relabel.gif" />
+    <EmbeddedResource Include="Graphics\RelabelSelected.gif" />
+    <EmbeddedResource Include="Graphics\RemoteControl.gif" />
+    <EmbeddedResource Include="Graphics\RepetitiveCurrent.gif" />
+    <EmbeddedResource Include="Graphics\RepetitiveCurrentLarge.gif" />
+    <EmbeddedResource Include="Graphics\SaveVideoLarge.gif" />
+    <EmbeddedResource Include="Graphics\Save_Toolbar.gif" />
+    <EmbeddedResource Include="Graphics\SelectByType.gif" />
+    <EmbeddedResource Include="Graphics\SendToBack.gif" />
+    <EmbeddedResource Include="Graphics\SeSpringTension.gif" />
+    <EmbeddedResource Include="Graphics\SetZoomAxis.gif" />
+    <EmbeddedResource Include="Graphics\Simulate.gif" />
+    <EmbeddedResource Include="Graphics\Simulate.ico" />
+    <EmbeddedResource Include="Graphics\SimulateLarge.gif" />
+    <EmbeddedResource Include="Graphics\Simulation.gif" />
+    <EmbeddedResource Include="Graphics\SimulationController.gif" />
+    <EmbeddedResource Include="Graphics\SimulationController.ico" />
+    <EmbeddedResource Include="Graphics\Splash.jpg" />
+    <EmbeddedResource Include="Graphics\StepBackLarge.gif" />
+    <EmbeddedResource Include="Graphics\StepForwardLarge.gif" />
+    <EmbeddedResource Include="Graphics\StimulusTension.gif" />
+    <EmbeddedResource Include="Graphics\StopLarge.gif" />
+    <EmbeddedResource Include="Graphics\Structure.gif" />
+    <EmbeddedResource Include="Graphics\Structures.gif" />
+    <EmbeddedResource Include="Graphics\Swap.gif" />
+    <EmbeddedResource Include="Graphics\TechnicalSupport.gif" />
+    <EmbeddedResource Include="Graphics\TonicCurrent.gif" />
+    <EmbeddedResource Include="Graphics\TonicCurrentLarge.gif" />
+    <EmbeddedResource Include="Graphics\Toolbox.gif" />
+    <EmbeddedResource Include="Graphics\VelocityTension.gif" />
+    <EmbeddedResource Include="Graphics\ViewData.gif" />
+    <EmbeddedResource Include="Graphics\Water.gif" />
+    <EmbeddedResource Include="Graphics\Wrench.gif" />
+    <EmbeddedResource Include="Graphics\Wrench.ico" />
+    <EmbeddedResource Include="Graphics\Wrench_Small.gif" />
+    <EmbeddedResource Include="Graphics\Y.gif" />
+    <EmbeddedResource Include="ModuleInformation.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ModuleInformation.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AnimatGUICtrls\AnimatGUICtrls.csproj">
+      <Project>{1EABD935-A166-4B06-A4CA-96D5D9D7CB86}</Project>
+      <Name>AnimatGUICtrls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ManagedAnimatTools\ManagedAnimatTools\ManagedAnimatTools.vcproj">
+      <Project>{C4F78ED0-5777-47E1-8D4C-2FDD548FCE79}</Project>
+      <Name>ManagedAnimatTools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\Behavior\Connections.resx">
+      <DependentUpon>Connections.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Behavior\Diagram.resx">
+      <DependentUpon>Diagram.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Behavior\Editor.resx">
+      <DependentUpon>Editor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Behavior\Errors.resx">
+      <DependentUpon>Errors.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Behavior\Export.resx">
+      <DependentUpon>Export.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Behavior\Hierarchy.resx">
+      <DependentUpon>Hierarchy.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Behavior\NeuralModules.resx">
+      <DependentUpon>NeuralModules.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Behavior\Relabel.resx">
+      <DependentUpon>Relabel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Behavior\SelectByType.resx">
+      <DependentUpon>SelectByType.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Behavior\SelectLinkType.resx">
+      <DependentUpon>SelectLinkType.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BodyPlan\EditCollisionPairs.resx">
+      <DependentUpon>EditCollisionPairs.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BodyPlan\Editor.resx">
+      <DependentUpon>Editor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BodyPlan\Odor.resx">
+      <DependentUpon>Odor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BodyPlan\Relabel.resx">
+      <DependentUpon>Relabel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BodyPlan\SelectByType.resx">
+      <DependentUpon>SelectByType.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BodyPlan\SelectPartType.resx">
+      <DependentUpon>SelectPartType.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BodyPlan\SwapParts.resx">
+      <DependentUpon>SwapParts.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProjectWorkspace.resx">
+      <DependentUpon>ProjectWorkspace.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphics\BodyPlan\AddBodies_Small.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\AddBody.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\ArmMuscle.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\BallAndSocket_Button.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\BallSocket_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Bone.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\BoneNodeImage.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\BoxContact_Button.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\BoxContact_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Box_Button.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Box_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\ButtonDown.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\ButtonUp.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Cone_Button.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Cone_HeightProperty.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Cone_LowerRadiusProperty.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Cone_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Cone_UpperRadiusProperty.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\CylinderContact_Button.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\CylinderContact_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Cylinder_Button.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Cylinder_HeightProperty.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Cylinder_RadiusProperty.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Cylinder_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\DragBone.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\DragHinge.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\DragMuscle.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\DragSpindle.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\HeightProperty.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Hinge.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\HingeNodeImage.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Hinges.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Hinge_Button.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Hinge_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\IconSpindle.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\ikpoint.JPG" />
+    <EmbeddedResource Include="Graphics\BodyPlan\ikpoint.png" />
+    <EmbeddedResource Include="Graphics\BodyPlan\ikpoint0.JPG" />
+    <EmbeddedResource Include="Graphics\BodyPlan\ikpoint0.png" />
+    <EmbeddedResource Include="Graphics\BodyPlan\InverseDynamics.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\InverseDynamics_Large.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\LengthProperty.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Motor.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Mouth_Button.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Mouth_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\MultiSegmentSpring_Button.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Muscle.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\MuscleAttachment_Button.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\MuscleAttachment_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\MuscleSpindle.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\MuscleSpindle_Button.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\MuscleSpindle_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Muscle_Button.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Muscle_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\OdorSensor.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\OdorSensor_Button.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\OdorSensor_TreeView.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Plane_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\PositionClamp.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\PositionClamp_Large.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\PositionXProperty.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\PositionYProperty.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\PositionZProperty.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Prismatic_Button.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Prismatic_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Refresh.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\RotateXProperty.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\RotateYProperty.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\RotateZProperty.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\SelectBodies.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\SelectBodies_Small.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\SelectJoints.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\SelectJoints_Small.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\SelectReceptiveField.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\SelectReceptiveField_Small.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Sphere_Button.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Sphere_RadiusProperty.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Sphere_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Spring_Button.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Spring_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Static_Button.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Static_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Stomach_Button.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Stomach_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\VelocityClamp_Large.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\WidthProperty.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\X.png" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Y.png" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Z.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataObjects\ProgramModules\" />
+    <Folder Include="Forms\ProgramModules\" />
+    <Folder Include="My Project\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PreBuildEvent />
+    <PostBuildEvent />
+  </PropertyGroup>
+</Project>

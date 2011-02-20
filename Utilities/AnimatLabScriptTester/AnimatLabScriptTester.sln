@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AnimatLabScriptTester", "AnimatLabScriptTester.vbproj", "{CDFB38EF-DE04-45BB-A99E-7FC24CBF81FD}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{CDFB38EF-DE04-45BB-A99E-7FC24CBF81FD}.Debug.ActiveCfg = Debug|.NET
+		{CDFB38EF-DE04-45BB-A99E-7FC24CBF81FD}.Debug.Build.0 = Debug|.NET
+		{CDFB38EF-DE04-45BB-A99E-7FC24CBF81FD}.Release.ActiveCfg = Release|.NET
+		{CDFB38EF-DE04-45BB-A99E-7FC24CBF81FD}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

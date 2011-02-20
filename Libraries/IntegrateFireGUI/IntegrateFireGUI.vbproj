@@ -1,0 +1,211 @@
+﻿<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CA9FC172-4481-43DC-8F8F-1506643B65EB}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon />
+    <AssemblyKeyContainerName />
+    <AssemblyName>IntegrateFireGUI</AssemblyName>
+    <AssemblyOriginatorKeyFile />
+    <AssemblyOriginatorKeyMode>None</AssemblyOriginatorKeyMode>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionStrict>On</OptionStrict>
+    <RootNamespace>IntegrateFireGUI</RootNamespace>
+    <StartupObject />
+    <FileUpgradeFlags />
+    <MyType>Windows</MyType>
+    <OldToolsVersion>0.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>..\..\bin\</OutputPath>
+    <DocumentationFile>IntegrateFireGUI.xml</DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile />
+    <DefineConstants />
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032,40025,40027,40028,42105,42104,42107,42030,42025</NoWarn>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>..\..\bin\</OutputPath>
+    <DocumentationFile>IntegrateFireGUI.xml</DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile />
+    <DefineConstants />
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032,40025,40027,40028,42105,42104,42107,42030,42025</NoWarn>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DotNetMagic, Version=6.0.1.0, Culture=neutral, PublicKeyToken=6cf6edec59e036ec, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\DotNetMagic.DLL</HintPath>
+    </Reference>
+    <Reference Include="MagicLibrary, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\MagicLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Design">
+      <Name>System.Design</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\IonChannels.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections\SynapseTypes.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\NeuralModule.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Neurons\FiringRateAdapter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Neurons\IonChannel.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Neurons\NonSpiking.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Neurons\Spiking.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\Synapse.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\SynapseType.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\SynapseTypes\Electrical.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\SynapseTypes\NonSpikingChemical.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Behavior\SynapseTypes\SpikingChemical.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Gains\IonChannelSigmoid.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Forms\DeleteSynapseType.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditIonChannels.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SelectSynapseType.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\IonChannelTypeConverter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\IonChannelTypeEditor.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\SynapseTypeConverter.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeHelpers\SynapseTypeEditor.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="Forms\DeleteSynapseType.resx">
+      <DependentUpon>DeleteSynapseType.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditIonChannels.resx">
+      <DependentUpon>EditIonChannels.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SelectSynapseType.resx">
+      <DependentUpon>SelectSynapseType.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphics\ElectricalSynapse.gif" />
+    <EmbeddedResource Include="Graphics\IonChannel.gif" />
+    <EmbeddedResource Include="Graphics\IonChannelGain.gif" />
+    <EmbeddedResource Include="Graphics\NonSpikingNeuron.gif">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphics\NonSpikingSynapse.gif" />
+    <EmbeddedResource Include="Graphics\SpikingNeuron.gif" />
+    <EmbeddedResource Include="Graphics\SpikingSynapse.gif" />
+    <EmbeddedResource Include="ModuleInformation.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AnimatGUICtrls\AnimatGUICtrls.csproj">
+      <Project>{1EABD935-A166-4B06-A4CA-96D5D9D7CB86}</Project>
+      <Name>AnimatGUICtrls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AnimatGUI\AnimatGUI.vbproj">
+      <Project>{45227561-EC56-46E0-9395-E1D86A7F3464}</Project>
+      <Name>AnimatTools</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\ManagedAnimatTools\ManagedAnimatTools\ManagedAnimatTools.vcproj">
+      <Project>{C4F78ED0-5777-47E1-8D4C-2FDD548FCE79}</Project>
+      <Name>ManagedAnimatTools</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="My Project\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PreBuildEvent />
+    <PostBuildEvent />
+  </PropertyGroup>
+</Project>

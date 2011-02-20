@@ -1,0 +1,416 @@
+// VsForceStimulus.cpp: implementation of the VsForceStimulus class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "stdafx.h"
+
+#include "VsBody.h"
+#include "VsJoint.h"
+#include "VsRigidBody.h"
+#include "VsSimulator.h"
+
+#include "VsForceStimulus.h"
+ #include "VsDragger.h"
+
+namespace VortexAnimatSim
+{
+	namespace ExternalStimuli
+	{
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+VsForceStimulus::VsForceStimulus()
+{
+	m_lpStructure = NULL;
+	m_lpBody = NULL;
+	m_lpVsBody = NULL;
+
+	m_lpForceXEval = NULL;
+	m_lpForceYEval = NULL;
+	m_lpForceZEval = NULL;
+
+	m_fltForceX = 0;
+	m_fltForceY = 0;
+	m_fltForceZ = 0;
+
+	m_fltForceReportX = 0;
+	m_fltForceReportY = 0;
+	m_fltForceReportZ = 0;
+
+	m_lpTorqueXEval = NULL;
+	m_lpTorqueYEval = NULL;
+	m_lpTorqueZEval = NULL;
+
+	m_fltTorqueX = 0;
+	m_fltTorqueY = 0;
+	m_fltTorqueZ = 0;
+
+	m_fltTorqueReportX = 0;
+	m_fltTorqueReportY = 0;
+	m_fltTorqueReportZ = 0;
+}
+
+VsForceStimulus::~VsForceStimulus()
+{
+
+try
+{
+	m_lpStructure = NULL;
+	m_lpBody = NULL;
+	m_lpVsBody = NULL;
+
+	if(m_lpForceXEval) delete m_lpForceXEval;
+	if(m_lpForceYEval) delete m_lpForceYEval;
+	if(m_lpForceZEval) delete m_lpForceZEval;
+
+	if(m_lpTorqueXEval) delete m_lpTorqueXEval;
+	if(m_lpTorqueYEval) delete m_lpTorqueYEval;
+	if(m_lpTorqueZEval) delete m_lpTorqueZEval;
+}
+catch(...)
+{Std_TraceMsg(0, "Caught Error in desctructor of VsForceStimulus\r\n", "", -1, FALSE, TRUE);}
+}
+
+CStdPostFixEval *VsForceStimulus::SetupEquation(string strEquation)
+{
+	CStdPostFixEval *lpEquation = NULL;
+
+	if(!Std_IsBlank(strEquation))
+	{
+		lpEquation = new CStdPostFixEval;
+		lpEquation->AddVariable("t");
+		lpEquation->Equation(strEquation);
+	}
+
+	return lpEquation;
+}
+
+
+void VsForceStimulus::RelativePositionX(float fltVal)
+{
+	Simulator *lpSim = GetSimulator();
+	m_oRelativePosition.x = fltVal * lpSim->InverseDistanceUnits();
+}
+
+void VsForceStimulus::RelativePositionY(float fltVal)
+{
+	Simulator *lpSim = GetSimulator();
+	m_oRelativePosition.y = fltVal * lpSim->InverseDistanceUnits();
+}
+
+void VsForceStimulus::RelativePositionZ(float fltVal)
+{
+	Simulator *lpSim = GetSimulator();
+	m_oRelativePosition.z = fltVal * lpSim->InverseDistanceUnits();
+}
+
+void VsForceStimulus::ForceXEquation(string strVal)
+{
+	if(m_lpForceXEval) 
+	{delete m_lpForceXEval; m_lpForceXEval = NULL;}
+
+	m_strForceXEquation = strVal;
+	m_lpForceXEval = SetupEquation(strVal);
+}
+
+void VsForceStimulus::ForceYEquation(string strVal)
+{
+	if(m_lpForceYEval) 
+	{delete m_lpForceYEval; m_lpForceYEval = NULL;}
+
+	m_strForceYEquation = strVal;
+	m_lpForceYEval = SetupEquation(strVal);
+}
+
+void VsForceStimulus::ForceZEquation(string strVal)
+{
+	if(m_lpForceZEval) 
+	{delete m_lpForceZEval; m_lpForceZEval = NULL;}
+
+	m_strForceZEquation = strVal;
+	m_lpForceZEval = SetupEquation(strVal);
+}
+
+void VsForceStimulus::TorqueXEquation(string strVal)
+{
+	if(m_lpTorqueXEval) 
+	{delete m_lpTorqueXEval; m_lpTorqueXEval = NULL;}
+
+	m_strTorqueXEquation = strVal;
+	m_lpTorqueXEval = SetupEquation(strVal);
+}
+
+void VsForceStimulus::TorqueYEquation(string strVal)
+{
+	if(m_lpTorqueYEval) 
+	{delete m_lpTorqueYEval; m_lpTorqueYEval = NULL;}
+
+	m_strTorqueYEquation = strVal;
+	m_lpTorqueYEval = SetupEquation(strVal);
+}
+
+void VsForceStimulus::TorqueZEquation(string strVal)
+{
+	if(m_lpTorqueZEval) 
+	{delete m_lpTorqueZEval; m_lpTorqueZEval = NULL;}
+
+	m_strTorqueZEquation = strVal;
+	m_lpTorqueZEval = SetupEquation(strVal);
+}
+
+void VsForceStimulus::Initialize(Simulator *lpSim)
+{
+	if(!lpSim)
+		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
+
+	ExternalStimulus::Initialize(lpSim);
+
+	//Lets try and get the node we will dealing with.
+	m_lpStructure = lpSim->FindStructureFromAll(m_strStructureID);
+	m_lpBody = m_lpStructure->FindRigidBody(m_strBodyID);
+	m_lpVsBody = dynamic_cast<VsRigidBody *>(m_lpBody);
+}
+
+void VsForceStimulus::ResetSimulation(Simulator *lpSim)
+{
+	ExternalStimulus::ResetSimulation(lpSim);
+
+	m_fltForceX = m_fltForceY = m_fltForceZ = 0;
+	m_fltForceReportX = m_fltForceReportY = m_fltForceReportZ = 0;
+	m_fltTorqueX = m_fltTorqueY = m_fltTorqueZ = 0;
+	m_fltTorqueReportX = m_fltTorqueReportY = m_fltTorqueReportZ = 0;
+}
+
+void VsForceStimulus::Activate(Simulator *lpSim)
+{
+	ExternalStimulus::Activate(lpSim);
+}
+
+void VsForceStimulus::StepSimulation(Simulator *lpSim)
+{
+	try
+	{
+		//IMPORTANT! This stimulus applies a force to the physics engine, so it should ONLY be called once for every time the physcis
+		//engine steps. If you do not do this then the you will accumulate forces being applied during the neural steps, and the total
+		//force you apply will be greater than what it should be. To get around this we will only call the code in step simulation if
+		//the physics step count is equal to the step interval.
+		if(lpSim->PhysicsStepCount() == lpSim->PhysicsStepInterval())
+		{
+			VxReal3 fltF, fltP;
+
+			//Why do we multiply by the mass units here? The reason is that we have to try and keep the 
+			//length and mass values in a range around 1 for the simulator to be able to function appropriately.
+			//So say we are uing grams and centimeters. This means that if we have a 1cm^3 box that weights 1 gram
+			//it will come in with a density of 1 g.cm^3 and we will set its density to 1. But the simulator treats this
+			//as 1 Kg and not 1g. So forces/torques and so on are scaled incorrectly. We must scale the force to be applied
+			//so it is acting against kilograms instead of grams. So a 1N force would be 1000N to produce the same effect.
+			if(m_lpForceXEval || m_lpForceYEval || m_lpForceZEval)
+			{
+				m_fltForceX = m_fltForceY = m_fltForceZ = 0;
+				m_fltForceReportX = m_fltForceReportY = m_fltForceReportZ = 0;
+
+				if(m_lpForceXEval)
+				{
+					m_lpForceXEval->SetVariable("t", lpSim->Time());
+					m_fltForceReportX = m_lpForceXEval->Solve();
+					m_fltForceX = m_fltForceReportX * lpSim->InverseMassUnits() * lpSim->InverseDistanceUnits();
+				}
+
+				if(m_lpForceYEval)
+				{
+					m_lpForceYEval->SetVariable("t", lpSim->Time());
+					m_fltForceReportY = m_lpForceYEval->Solve();
+					m_fltForceY = m_fltForceReportY * lpSim->InverseMassUnits() * lpSim->InverseDistanceUnits();
+				}
+
+				if(m_lpForceZEval)
+				{
+					m_lpForceZEval->SetVariable("t", lpSim->Time());
+					m_fltForceReportZ = m_lpForceZEval->Solve();
+					m_fltForceZ = m_fltForceReportZ * lpSim->InverseMassUnits() * lpSim->InverseDistanceUnits();
+				}
+
+				fltF[0] = m_fltForceX; fltF[1] = m_fltForceY; fltF[2] = m_fltForceZ;
+				fltP[0] = m_oRelativePosition.x; fltP[1] = m_oRelativePosition.y; fltP[2] = m_oRelativePosition.z;
+
+				if(m_fltForceX || m_fltForceY || m_fltForceZ)
+					m_lpVsBody->Part()->addForceAtLocalPosition(fltF, fltP);
+			}
+
+			if(m_lpTorqueXEval || m_lpTorqueYEval || m_lpTorqueZEval)
+			{
+				m_fltTorqueX = m_fltTorqueY = m_fltTorqueZ = 0;
+				m_fltTorqueReportX = m_fltTorqueReportY = m_fltTorqueReportZ = 0;
+
+				if(m_lpTorqueXEval)
+				{
+					m_lpTorqueXEval->SetVariable("t", lpSim->Time());
+					m_fltTorqueReportX = m_lpTorqueXEval->Solve();
+					m_fltTorqueX = m_fltTorqueReportX * lpSim->InverseMassUnits() * lpSim->InverseDistanceUnits() * lpSim->InverseDistanceUnits();
+				}
+
+				if(m_lpTorqueYEval)
+				{
+					m_lpTorqueYEval->SetVariable("t", lpSim->Time());
+					m_fltTorqueReportY = m_lpTorqueYEval->Solve();
+					m_fltTorqueY = m_fltTorqueReportY * lpSim->InverseMassUnits() * lpSim->InverseDistanceUnits() * lpSim->InverseDistanceUnits();
+				}
+
+				if(m_lpTorqueZEval)
+				{
+					m_lpTorqueZEval->SetVariable("t", lpSim->Time());
+					m_fltTorqueReportZ = m_lpTorqueZEval->Solve();
+					m_fltTorqueZ = m_fltTorqueReportZ * lpSim->InverseMassUnits() * lpSim->InverseDistanceUnits() * lpSim->InverseDistanceUnits();
+				}
+
+				fltF[0] = m_fltTorqueX; fltF[1] = m_fltTorqueY; fltF[2] = m_fltTorqueZ;
+
+				if(m_fltTorqueX || m_fltTorqueY || m_fltTorqueZ)
+					m_lpVsBody->Part()->addTorque (fltF);
+			}
+		}
+	}
+	catch(...)
+	{
+		LOG_ERROR("Error Occurred while setting Joint Velocity");
+	}
+}
+
+void VsForceStimulus::Deactivate(Simulator *lpSim)
+{
+	ExternalStimulus::Deactivate(lpSim);
+}
+
+float *VsForceStimulus::GetDataPointer(string strDataType)
+{
+	float *lpData=NULL;
+	string strType = Std_CheckString(strDataType);
+
+	if(strType == "FORCEX")
+		lpData = &m_fltForceReportX;
+	else if(strType == "FORCEY")
+		lpData = &m_fltForceReportY;
+	else if(strType == "FORCEZ")
+		lpData = &m_fltForceReportZ;
+	else if(strType == "TORQUEX")
+		lpData = &m_fltTorqueReportX;
+	else if(strType == "TORQUEY")
+		lpData = &m_fltTorqueReportY;
+	else if(strType == "TORQUEZ")
+		lpData = &m_fltTorqueReportZ;
+	else
+		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "StimulusName: " + STR(m_strName) + "  DataType: " + strDataType);
+
+	return lpData;
+} 
+
+BOOL VsForceStimulus::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(strType == "POSITIONX")
+	{
+		RelativePositionX(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "POSITIONY")
+	{
+		RelativePositionY(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "POSITIONZ")
+	{
+		RelativePositionZ(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "FORCEX")
+	{
+		ForceXEquation(strValue);
+		return TRUE;
+	}
+
+	if(strType == "FORCEY")
+	{
+		ForceYEquation(strValue);
+		return TRUE;
+	}
+
+	if(strType == "FORCEZ")
+	{
+		ForceZEquation(strValue);
+		return TRUE;
+	}
+
+	if(strType == "TORQUEX")
+	{
+		TorqueXEquation(strValue);
+		return TRUE;
+	}
+
+	if(strType == "TORQUEY")
+	{
+		TorqueYEquation(strValue);
+		return TRUE;
+	}
+
+	if(strType == "TORQUEZ")
+	{
+		TorqueZEquation(strValue);
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
+
+void VsForceStimulus::Load(Simulator *lpSim, CStdXml &oXml)
+{
+	ActivatedItem::Load(lpSim, oXml);
+
+	oXml.IntoElem();  //Into Simulus Element
+
+	m_strStructureID = oXml.GetChildString("StructureID");
+	if(Std_IsBlank(m_strStructureID)) 
+		THROW_ERROR(Al_Err_lIDBlank, Al_Err_strIDBlank);
+
+	m_strBodyID = oXml.GetChildString("BodyID");
+	if(Std_IsBlank(m_strBodyID)) 
+		THROW_ERROR(Al_Err_lBodyIDBlank, Al_Err_strBodyIDBlank);
+
+	ForceXEquation(oXml.GetChildString("ForceX", ""));
+	ForceYEquation(oXml.GetChildString("ForceY", ""));
+	ForceZEquation(oXml.GetChildString("ForceZ", ""));
+
+	TorqueXEquation(oXml.GetChildString("TorqueX", ""));
+	TorqueYEquation(oXml.GetChildString("TorqueY", ""));
+	TorqueZEquation(oXml.GetChildString("TorqueZ", ""));
+
+	CStdFPoint oPoint;
+	Std_LoadPoint(oXml, "RelativePosition", m_oRelativePosition);
+
+	//We need to scale the distance values to be appropriate. They 
+	//will be saved as centimeters or some such in the config file, 
+	//but we need them to be in "unit" values.
+	m_oRelativePosition *= lpSim->InverseDistanceUnits();
+
+	oXml.OutOfElem(); //OutOf Simulus Element
+}
+
+void VsForceStimulus::Save(Simulator *lpSim, CStdXml &oXml)
+{
+}
+
+	}			//ExternalStimuli
+}				//VortexAnimatSim
+
+
+
+

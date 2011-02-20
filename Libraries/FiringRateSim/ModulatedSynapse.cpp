@@ -1,0 +1,70 @@
+// ModulatedSynapse.cpp: implementation of the ModulatedSynapse class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "stdafx.h"
+
+#include "Synapse.h"
+#include "ModulatedSynapse.h"
+#include "Neuron.h"
+#include "FiringRateModule.h"
+
+namespace FiringRateSim
+{
+	namespace Synapses
+	{
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+ModulatedSynapse::ModulatedSynapse()
+{
+	m_strType = "MODULATED";
+}
+
+ModulatedSynapse::~ModulatedSynapse()
+{
+
+}
+
+#pragma region DataAccesMethods
+
+float *ModulatedSynapse::GetDataPointer(string strDataType)
+{
+	float *fltVal = Synapse::GetDataPointer(strDataType);
+	if(fltVal) return fltVal;
+
+	string strType = Std_CheckString(strDataType);
+
+	if(strType == "MODULATION")
+		return &m_fltModulation;
+
+	return NULL;
+}
+
+#pragma endregion
+
+float ModulatedSynapse::CalculateModulation(FiringRateModule *lpModule)
+{
+	float fltIm=0;
+	m_fltModulation=0;
+
+	if(m_bEnabled && m_lpFromNeuron)
+	{
+		fltIm = m_lpFromNeuron->FiringFreq(lpModule) * m_fltWeight;
+		
+		if(fltIm>=0)
+			m_fltModulation = 1 + fltIm;
+		else 
+			m_fltModulation = 1/(1-fltIm);
+	}
+	else
+		m_fltModulation = 1;
+
+	return m_fltModulation;
+}
+
+	}			//Synapses
+}				//FiringRateSim
+

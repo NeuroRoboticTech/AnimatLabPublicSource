@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1EABD935-A166-4B06-A4CA-96D5D9D7CB86}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AnimatGUICtrls</RootNamespace>
+    <AssemblyName>AnimatGUICtrls</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DotNetMagic, Version=6.0.1.0, Culture=neutral, PublicKeyToken=6cf6edec59e036ec, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\DotNetMagic.DLL</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Collections\KeyFrameCollection.cs" />
+    <Compile Include="Controls\PropertyGrid\PropertyBag.cs" />
+    <Compile Include="Controls\PropertyGrid\PropertySlider.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Strips\AnimatMenuStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Strips\AnimatToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TimeRuler\KeyFrame.cs" />
+    <Compile Include="Controls\TimeRuler\KeyFrameCurrent.cs" />
+    <Compile Include="Controls\TimeRuler\KeyFrameVideoRange.cs" />
+    <Compile Include="Controls\TimeRuler\TimeRuler.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Docking\AnimatContent.cs">
+    </Compile>
+    <Compile Include="Forms\Spalsh.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Network\Constants.cs" />
+    <Compile Include="Network\EventArgs\InternetConnectionStateType.cs" />
+    <Compile Include="Network\EventArgs\PingCompletedEventArgs.cs" />
+    <Compile Include="Network\EventArgs\PingErrorEventArgs.cs" />
+    <Compile Include="Network\EventArgs\PingResponseEventArgs.cs" />
+    <Compile Include="Network\EventArgs\PingResponseType.cs" />
+    <Compile Include="Network\EventArgs\PingStartedEventArgs.cs" />
+    <Compile Include="Network\IcmpPacket.cs" />
+    <Compile Include="Network\NetworkUtilities.cs" />
+    <Compile Include="Network\Ping.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Network\PingResponse.cs" />
+    <Compile Include="Network\Validation.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\SecurityItem.cs" />
+    <Compile Include="Security\SecurityManager.cs" />
+    <Compile Include="Video\AudioStream.cs" />
+    <Compile Include="Video\Avi.cs" />
+    <Compile Include="Video\AviManager.cs" />
+    <Compile Include="Video\AviPlayer.cs" />
+    <Compile Include="Video\AviStream.cs" />
+    <Compile Include="Video\EditableVideoStream.cs" />
+    <Compile Include="Video\VideoStream.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ManagedAnimatTools\ManagedAnimatTools\ManagedAnimatTools.vcproj">
+      <Project>{C4F78ED0-5777-47E1-8D4C-2FDD548FCE79}</Project>
+      <Name>ManagedAnimatTools</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\PropertyGrid\PropertySlider.resx">
+      <DependentUpon>PropertySlider.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TimeRuler\TimeRuler.resx">
+      <DependentUpon>TimeRuler.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Spalsh.resx">
+      <DependentUpon>Spalsh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Network\Ping.resx">
+      <DependentUpon>Ping.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
