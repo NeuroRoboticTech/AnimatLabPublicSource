@@ -1696,6 +1696,7 @@ Namespace DataObjects.Physical
         Public Overridable Sub CreateDefaultGraphicsObject()
 
             Dim doGraphics As RigidBody = DirectCast(Me.Clone(Me, False, Me), Physical.RigidBody)
+            doGraphics.SetDefaultSizes()
             doGraphics.m_JointToParent = Nothing
             doGraphics.IsCollisionObject = False
             doGraphics.ContactSensor = False
@@ -1713,7 +1714,7 @@ Namespace DataObjects.Physical
         End Sub
 
         'This is called when creating a new body part. It sets the size of the part to its defaults.
-        Protected Overridable Sub SetDefaultSizes()
+        Public Overridable Sub SetDefaultSizes()
 
         End Sub
 

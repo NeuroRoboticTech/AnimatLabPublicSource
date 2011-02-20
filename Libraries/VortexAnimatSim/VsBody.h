@@ -59,8 +59,8 @@ namespace VortexAnimatSim
 			virtual void SetupPhysics(Simulator *lpSim, Structure *lpStructure) = 0;
 			virtual void DeleteGraphics();
 			virtual void DeletePhysics() {};
-			virtual void CreateSelectedGraphics();
-			virtual void CreateGrip();
+			virtual void CreateSelectedGraphics(string strName);
+			virtual void CreateDragger(string strName);
 			virtual void AttachedPartMovedOrRotated(string strID);
 			virtual void ResetGraphicsAndPhysics() {};
 			virtual void UpdatePositionAndRotationFromMatrix();

@@ -37,9 +37,12 @@ VsBox::~VsBox()
 void VsBox::CreateParts(Simulator *lpSim, Structure *lpStructure)
 {
 	m_osgGeometry = CreateBoxGeometry(m_fltLength, m_fltHeight, m_fltWidth, m_fltLength, m_fltHeight, m_fltWidth);
+	m_osgGeometry->setName(m_lpThis->Name() + "_Geometry");
+
 	osg::Geode *osgGroup = new osg::Geode;
 	osgGroup->addDrawable(m_osgGeometry.get());
 	m_osgNode = osgGroup;
+	m_osgNode->setName(m_lpThis->Name() + "_Node");
 
 	if(IsCollisionObject())
 		m_vxGeometry = new VxBox(m_fltLength, m_fltHeight, m_fltWidth);
@@ -80,13 +83,18 @@ void VsBox::Resize()
 
 		//Create a new box geometry with the new sizes.
 		m_osgGeometry = CreateBoxGeometry(m_fltLength, m_fltHeight, m_fltWidth, m_fltLength, m_fltHeight, m_fltWidth);
-		
+		m_osgGeometry->setName(m_lpThis->Name() + "_Geometry");
+
 		//Add it to the geode.
 		osgGroup->addDrawable(m_osgGeometry.get());
 
 		//Now lets re-adjust the gripper size.
 		if(m_osgDragger.valid())
 			m_osgDragger->SetupMatrix();
+
+		//Reset the user data for the new parts.
+		osg::ref_ptr<VsOsgUserDataVisitor> osgVisitor = new VsOsgUserDataVisitor(this);
+		osgVisitor->traverse(*m_osgNodeGroup);
 	}
 
 	if(m_vxGeometry)
@@ -99,13 +107,8 @@ void VsBox::Resize()
 		vxBox->setDimensions(m_fltLength, m_fltHeight, m_fltWidth);
 		GetBaseValues();
 
-		//Reset the user data for the new parts.
-		VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThis->Parent());
-		osg::ref_ptr<VsOsgUserDataVisitor> osgVisitor = new VsOsgUserDataVisitor(lpVsParent);
-		osgVisitor->traverse(*m_osgMT);
-
 		//Temp code. Lets save it out and make sure the collision stuff is actually correct.
-	    VxPersistence::saveFrame("C:\\AnimatLabSDK\\VS9\\Experiments\\Test.vxf", VxPersistence::kAutoGenerateGraphics);
+	    //VxPersistence::saveFrame("C:\\AnimatLabSDK\\VS9\\Experiments\\Test.vxf", VxPersistence::kAutoGenerateGraphics);
 	}
 }
 

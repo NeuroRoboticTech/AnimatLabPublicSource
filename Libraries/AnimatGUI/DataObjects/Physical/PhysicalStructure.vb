@@ -386,6 +386,7 @@ Namespace DataObjects.Physical
                 rbRootToAdd = DirectCast(frmSelectParts.SelectedPart.Clone(Me, False, Nothing), RigidBody)
             End If
 
+            rbRootToAdd.SetDefaultSizes()
             rbRootToAdd.Name = "Root"
             rbRootToAdd.IsRoot = True
             rbRootToAdd.IsCollisionObject = True

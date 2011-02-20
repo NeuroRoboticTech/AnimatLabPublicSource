@@ -50,12 +50,12 @@ void VsOsgUserDataVisitor::apply(osg::Geode &osgGeode)
 		{
 			if(m_lpBody)
 			{
-				lpDraw->setName(m_lpBody->ID().c_str());
+				lpDraw->setName(m_lpBody->Name() + "_Drawable");
 				lpDraw->setUserData(new VsOsgUserData(m_lpVsBody));
 			}
 			else if(m_lpJoint)
 			{
-				lpDraw->setName(m_lpJoint->ID().c_str());
+				lpDraw->setName(m_lpJoint->Name() + "_Drawable");
 				lpDraw->setUserData(new VsOsgUserData(m_lpVsJoint));
 			}
 

@@ -139,7 +139,7 @@ Namespace DataObjects.Physical.Bodies
 
         End Sub
 
-        Protected Overrides Sub SetDefaultSizes()
+        Public Overrides Sub SetDefaultSizes()
             m_snWidth.ActualValue = 1 * Util.Environment.DistanceUnitValue
             m_snHeight.ActualValue = 1 * Util.Environment.DistanceUnitValue
             m_snLength.ActualValue = 1 * Util.Environment.DistanceUnitValue

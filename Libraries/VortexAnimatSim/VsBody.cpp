@@ -72,9 +72,10 @@ void VsBody::Physics_Selected(BOOL bValue, BOOL bSelectMultiple)
 	}
 }
 
-void VsBody::CreateSelectedGraphics()
+void VsBody::CreateSelectedGraphics(string strName)
 {
 	m_osgSelectedGroup = new osg::Group();
+	m_osgSelectedGroup->setName(strName + "_SelectedGroup");
     m_osgSelectedGroup->addChild(m_osgNode.get());  
 
     // set up the state so that the underlying color is not seen through
@@ -98,10 +99,10 @@ void VsBody::CreateSelectedGraphics()
     
     m_osgSelectedGroup->setStateSet(stateset);
 
-	CreateGrip();
+	CreateDragger(strName);
 }
 
-void VsBody::CreateGrip()
+void VsBody::CreateDragger(string strName)
 {
 	string strVers = osgGetSOVersion();  
 
@@ -114,6 +115,8 @@ void VsBody::CreateGrip()
 		if(lpVsSim->OsgCmdMgr())
 		{
 			m_osgDragger = new VsDragger(this);
+			m_osgDragger->setName(strName + "_Dragger");
+
 			m_osgDragger->setupDefaultGeometry();
 
 			lpVsSim->OsgCmdMgr()->connect(*m_osgDragger, *m_osgMT);
@@ -248,7 +251,7 @@ void VsBody::Physics_UpdateMatrix()
 void VsBody::BuildLocalMatrix()
 {
 	//build the local matrix
-	BuildLocalMatrix(m_lpThis->LocalPosition(), m_lpThis->Rotation(), m_lpThis->ID());
+	BuildLocalMatrix(m_lpThis->LocalPosition(), m_lpThis->Rotation(), m_lpThis->Name());
 }
 
 void VsBody::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName)
@@ -256,11 +259,14 @@ void VsBody::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string s
 	if(!m_osgMT.valid())
 	{
 		m_osgMT = new osgManipulator::Selection;
-		m_osgMT->setName(strName.c_str());
+		m_osgMT->setName(strName + "_MT");
 	}
 
 	if(!m_osgRoot.valid())
+	{
 		m_osgRoot = new osg::Group;
+		m_osgRoot->setName(strName + "_Root");
+	}
 
 	if(!m_osgRoot->containsNode(m_osgMT.get()))
 		m_osgRoot->addChild(m_osgMT.get());
@@ -276,10 +282,11 @@ void VsBody::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string s
 	{
 		m_osgNodeGroup = new osg::Group();
 		m_osgNodeGroup->addChild(m_osgNode.get());		
+		m_osgNodeGroup->setName(strName + "_NodeGroup");
 		
 		m_osgMT->addChild(m_osgNodeGroup.get());
 	
-		CreateSelectedGraphics();
+		CreateSelectedGraphics(strName);
 	}
 }
 

@@ -211,13 +211,22 @@ void VsJoint::Physics_UpdateMatrix()
 void VsJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName)
 {
 	if(!m_osgMT.valid())
+	{
 		m_osgMT = new osgManipulator::Selection;
+		m_osgMT->setName(strName + "_MT");
+	}
 
 	if(!m_osgChildOffsetMT.valid())
+	{
 		m_osgChildOffsetMT = new osg::MatrixTransform;
+		m_osgChildOffsetMT->setName(strName + "ChildOffsetMT");
+	}
 
 	if(!m_osgRoot.valid())
+	{
 		m_osgRoot = new osg::Group;
+		m_osgRoot->setName(strName + "_Root");
+	}
 
 	m_osgChildOffsetMT->addChild(m_osgMT.get());
 	m_osgRoot->addChild(m_osgChildOffsetMT.get());
@@ -239,10 +248,11 @@ void VsJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string 
 	{
 		m_osgNodeGroup = new osg::Group();
 		m_osgNodeGroup->addChild(m_osgNode.get());		
-		
+		m_osgNodeGroup->setName(strName + "_NodeGroup");
+
 		m_osgMT->addChild(m_osgNodeGroup.get());
 	
-		CreateSelectedGraphics();
+		CreateSelectedGraphics(strName);
 	}
 }
 
