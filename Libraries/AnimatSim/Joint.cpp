@@ -252,9 +252,9 @@ void Joint::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 		oXml.OutOfElem();
 	}
 
-	m_fltDamping *= lpSim->InverseMassUnits();
+	m_fltDamping *=  m_fltDamping/lpSim->DensityMassUnits();
 	m_fltStiffness *= lpSim->InverseMassUnits();
-
+	
 	oXml.OutOfElem(); //OutOf Joint Element
 }
 

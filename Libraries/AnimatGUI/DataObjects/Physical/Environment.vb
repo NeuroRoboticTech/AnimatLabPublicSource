@@ -64,7 +64,6 @@ Namespace DataObjects.Physical
         Protected m_eDistanceUnits As enumDistanceUnits = enumDistanceUnits.Decimeters
         Protected m_eMassUnits As enumMassUnits = enumMassUnits.Grams
         Protected m_bSimulateHydrodynamics As Boolean = False
-        Protected m_fltPlaybackRate As Single = 1
 
         Protected m_iNewOrganismCount As Integer
         Protected m_iNewStructureCount As Integer
@@ -157,22 +156,6 @@ Namespace DataObjects.Physical
                 End If
 
                 m_snMaxSurfaceFriction.CopyData(Value)
-            End Set
-        End Property
-
-        Public Overridable Property PlaybackRate() As Single
-            Get
-                Return m_fltPlaybackRate
-            End Get
-            Set(ByVal Value As Single)
-                If Value < 0 Then
-                    Throw New System.Exception("The playback rate must be greater than zero.")
-                End If
-
-                m_fltPlaybackRate = Value
-
-                'If the simulation is active then lets update the playbackrate
-                Util.Application.SimulationInterface.PlaybackRate = Value
             End Set
         End Property
 
@@ -970,7 +953,6 @@ Namespace DataObjects.Physical
             m_eDistanceUnits = doOrig.m_eDistanceUnits
             m_eMassUnits = doOrig.m_eMassUnits
             m_bSimulateHydrodynamics = doOrig.m_bSimulateHydrodynamics
-            m_fltPlaybackRate = doOrig.m_fltPlaybackRate
 
             m_iNewOrganismCount = doOrig.m_iNewOrganismCount
             m_iNewStructureCount = doOrig.m_iNewStructureCount
@@ -1053,7 +1035,6 @@ Namespace DataObjects.Physical
             End If
 
             Me.SimulateHydrodynamics = oXml.GetChildBool("SimulateHydrodynamics", m_bSimulateHydrodynamics)
-            Me.PlaybackRate = oXml.GetChildFloat("PlaybackRate", m_fltPlaybackRate)
 
             If oXml.FindChildElement("AutoGenerateRandomSeed", False) Then
                 m_bAutoGenerateRandomSeed = oXml.GetChildBool("AutoGenerateRandomSeed")
@@ -1140,7 +1121,6 @@ Namespace DataObjects.Physical
             m_snMaxHydroForce.SaveData(oXml, "MaxHydroForce")
             m_snMaxHydroTorque.SaveData(oXml, "MaxHydroTorque")
 
-            oXml.AddChildElement("PlaybackRate", m_fltPlaybackRate)
             oXml.AddChildElement("SimulateHydrodynamics", m_bSimulateHydrodynamics)
 
             oXml.AddChildElement("MassUnits", m_eMassUnits.ToString())
@@ -1206,7 +1186,6 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("MaxHydroForce", m_snMaxHydroForce.ActualValue)
             oXml.AddChildElement("MaxHydroTorque", m_snMaxHydroTorque.ActualValue)
 
-            oXml.AddChildElement("PlaybackRate", m_fltPlaybackRate)
             oXml.AddChildElement("SimulateHydrodynamics", m_bSimulateHydrodynamics)
 
             oXml.AddChildElement("MassUnits", m_eMassUnits.ToString())

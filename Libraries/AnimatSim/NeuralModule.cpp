@@ -99,7 +99,17 @@ float NeuralModule::TimeStep()
 void NeuralModule::TimeStep(float fltVal)
 {
 	Std_IsAboveMin((float) 0, (float) fltVal, TRUE, "TimeStep");
-	m_fltTimeStep = fltVal;
+
+	//Find the number of timeslices that need to occur before this module is updated
+	m_iTimeStepInterval = fltVal / m_lpSim->TimeStep();
+
+	//Now recaculate the time step using the minimum time step as the base.
+	m_fltTimeStep = m_lpSim->TimeStep() * m_iTimeStepInterval;
+
+	//Check to see if this time step is less than the physics time step.
+	//If it is then we need to re-update that timestep.
+	if(m_fltTimeStep < m_lpSim->TimeStep())
+		m_lpSim->TimeStep(m_fltTimeStep);
 }
 
 string NeuralModule::ProjectPath()
@@ -145,12 +155,6 @@ void NeuralModule::Initialize(Simulator *lpSim, Structure *lpStructure)
 	m_lpOrganism = dynamic_cast<Organism *>(lpStructure);
 	if(!m_lpOrganism) 
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
-
-	//Find the number of timeslices that need to occur before this module is updated
-	m_iTimeStepInterval = m_fltTimeStep / lpSim->TimeStep();
-
-	//Now recaculate the time step using the minimum time step as the base.
-	m_fltTimeStep = lpSim->TimeStep() * m_iTimeStepInterval;
 }
 
 void NeuralModule::SetSystemPointers(Simulator *lpSim, Structure *lpStructure)

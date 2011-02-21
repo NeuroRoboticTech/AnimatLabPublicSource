@@ -59,8 +59,6 @@ namespace VortexAnimatSim
 		osg::Group *OSGRoot() {return m_grpScene.get();};
 		osgManipulator::CommandManager *OsgCmdMgr() {return m_osgCmdMgr.get();};
 
-		virtual void PlaybackRate(float fltVal);
-
 		virtual float *GetDataPointer(string strDataType);
 
 		virtual void Reset(); //Resets the entire application back to the default state 

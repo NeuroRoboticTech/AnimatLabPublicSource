@@ -55,15 +55,6 @@ VxUniverse *VsSimulator::Universe()
 Vx::VxFrame* VsSimulator::Frame()
 {return m_vxFrame;}
 
-void VsSimulator::PlaybackRate(float fltVal)
-{
-	if(fltVal<0)
-		THROW_PARAM_ERROR(Al_Err_lInvalidPlaybackRate, Al_Err_strInvalidPlaybackRate, "PlaybackRate", fltVal);
-
-	m_fltPlaybackRate = fltVal;
-}
-
-
 SimulationRecorder *VsSimulator::CreateSimulationRecorder()
 {
 //NEED_TO_FIX
@@ -201,12 +192,6 @@ void VsSimulator::InitializeVortex(int argc, const char **argv)
 	m_uUniverse->setGravity(0, m_fltGravity, 0);
 	//m_uUniverse->setGravity(0, 0, m_fltGravity);
 	m_vxFrame->addUniverse(m_uUniverse);
-
-	//Find the number of timeslices that need to occur before the physics system is updated
-	m_iPhysicsStepInterval = m_fltPhysicsTimeStep / m_fltTimeStep;
-
-	//Now recaculate the physics time step using the minimum time step as the base.
-	m_fltPhysicsTimeStep = m_fltTimeStep * m_iPhysicsStepInterval;
 
 	//set the frame timestep
 	m_vxFrame->setTimeStep(m_fltPhysicsTimeStep);		

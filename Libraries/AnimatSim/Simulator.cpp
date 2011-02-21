@@ -56,7 +56,6 @@ Simulator::Simulator()
 {
 	m_strID = "SIMULATOR";
 	m_strName = m_strID;
-	m_fltPlaybackRate = (float) 0.01;
 	m_fltTime = 0;
 	m_fltTimeStep = (float) 0.0025;
 	m_iPhysicsStepInterval = 4;
@@ -223,8 +222,78 @@ void Simulator::TimeStep(float fltVal)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "TimeStep");
 	m_fltTimeStep = fltVal;
+
+	//Find the number of timeslices that need to occur before the physics system is updated
+	m_iPhysicsStepInterval = m_fltPhysicsTimeStep / m_fltTimeStep;
+
+	//Now recaculate the physics time step using the minimum time step as the base.
+	m_fltPhysicsTimeStep = m_fltTimeStep * m_iPhysicsStepInterval;
 }
 
+void Simulator::DistanceUnits(string strUnits)
+{
+	m_fltDistanceUnits = ConvertDistanceUnits(strUnits);
+	m_fltInverseDistanceUnits = 1/m_fltDistanceUnits;
+	m_fltDenominatorDistanceUnits = ConvertDenominatorDistanceUnits(strUnits);
+}
+
+void Simulator::MassUnits(string strUnits)
+{
+	m_fltMassUnits = ConvertMassUnits(strUnits);
+	m_fltInverseMassUnits = 1/m_fltMassUnits;
+	m_fltDensityMassUnits = ConvertDensityMassUnits(strUnits);
+}
+
+void Simulator::SimulateHydrodynamics(BOOL bVal)
+{
+	m_bSimulateHydrodynamics = bVal;
+}
+
+void Simulator::FluidDensity(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "FluidDensity");
+
+	if(bUseScaling)
+		fltVal *= pow(m_fltDenominatorDistanceUnits, 3);  //Perform a conversion if necessary because we may be using different units in the denominator.
+
+	m_fltFluidDensity = fltVal;
+}
+
+void Simulator::Gravity(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Gravity");
+
+	//We must convert the gravity to use the correct scale.
+	if(bUseScaling)
+		fltVal /= m_fltDistanceUnits;
+
+	m_fltGravity = fltVal;
+}
+
+void Simulator::PhysicsTimeStep(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "PhysicsTimeStep");
+	m_fltPhysicsTimeStep = fltVal;
+
+	//If no timestep has been set then start the time step with the physics system and then later on we will find the 
+	//real minimum value while looking at all of the neural modules.
+	if(m_fltTimeStep < 0)
+		m_fltTimeStep = fltVal;
+
+	//Find the number of timeslices that need to occur before the physics system is updated
+	m_iPhysicsStepInterval = fltVal / m_fltTimeStep;
+
+	//Now recaculate the physics time step using the minimum time step as the base.
+	m_fltPhysicsTimeStep = m_fltTimeStep * m_iPhysicsStepInterval;
+}
+
+void Simulator::FrameRate(int iVal)
+{
+	Std_IsAboveMin((int) 0, iVal, TRUE, "FrameRate");
+
+	m_iFrameRate = iVal;
+ 	m_fltFrameStep = (1/ (float) m_iFrameRate);
+}
 
 //CNlClassFactory *Simulator::NeuralClassFactory()
 //{
@@ -269,6 +338,22 @@ void Simulator::VisualSelectionMode(int iVal)
 			lpBase->VisualSelectionModeChanged(m_iSelectionMode);
 	}
 };
+
+void Simulator::MouseSpringStiffness(float fltVal, BOOL bUseScaling) 
+{
+	if(bUseScaling)
+		fltVal *= this->InverseMassUnits();
+
+	m_fltMouseSpringStiffness = fltVal;
+}
+
+void Simulator::MouseSpringDamping(float fltVal, BOOL bUseScaling) 
+{
+	if(bUseScaling)
+		fltVal = fltVal/this->DensityMassUnits();
+
+	m_ftlMouseSpringDamping = fltVal;
+}
 
 /*! \brief 
    Resets all objects of the simulation.
@@ -1642,48 +1727,22 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 
 	oXml.IntoChildElement("Environment"); //Into Environment Element
 
-	string strUnits = oXml.GetChildString("DistanceUnits", "centimeter");
-	m_fltDistanceUnits = ConvertDistanceUnits(strUnits);
-	m_fltInverseDistanceUnits = 1/m_fltDistanceUnits;
-	m_fltDenominatorDistanceUnits = ConvertDenominatorDistanceUnits(strUnits);
+	DistanceUnits(oXml.GetChildString("DistanceUnits", "centimeter"));
+	MassUnits(oXml.GetChildString("MassUnits", "gram"));
+	Gravity(oXml.GetChildFloat("Gravity", m_fltGravity));
+	PhysicsTimeStep(oXml.GetChildFloat("PhysicsTimeStep", m_fltPhysicsTimeStep));
 
-	strUnits = oXml.GetChildString("MassUnits", "gram");
-	m_fltMassUnits = ConvertMassUnits(strUnits);
-	m_fltInverseMassUnits = 1/m_fltMassUnits;
-	m_fltDensityMassUnits = ConvertDensityMassUnits(strUnits);
-
-	m_bSimulateHydrodynamics = oXml.GetChildBool("SimulateHydrodynamics", m_bSimulateHydrodynamics);
-	m_fltPhysicsTimeStep = oXml.GetChildFloat("PhysicsTimeStep", m_fltPhysicsTimeStep);
-	m_fltGravity = oXml.GetChildFloat("Gravity", m_fltGravity);
-	m_fltFluidDensity = oXml.GetChildFloat("FluidDensity", m_fltFluidDensity);
-	m_fltFluidDensity *= pow(m_fltDenominatorDistanceUnits, 3);  //Perform a conversion if necessary because we may be using different units in the denominator.
-
-	Std_IsAboveMin((float) 0, m_fltPhysicsTimeStep, TRUE, "PhysicsTimeStep");
-
+	SimulateHydrodynamics(oXml.GetChildBool("SimulateHydrodynamics", m_bSimulateHydrodynamics));
 	if(m_bSimulateHydrodynamics)
-	{
-		Std_IsAboveMin((float) 0, m_fltFluidDensity, TRUE, "FluidDensity");		
-	}
+		FluidDensity(oXml.GetChildFloat("FluidDensity", m_fltFluidDensity));
 
-	m_fltPlaybackRate = oXml.GetChildFloat("PlaybackRate", m_fltPlaybackRate);
 	m_bAutoGenerateRandomSeed = oXml.GetChildBool("AutoGenerateRandomSeed", m_bAutoGenerateRandomSeed);
 	m_iManualRandomSeed = oXml.GetChildInt("ManualRandomSeed", m_iManualRandomSeed);
 
-	m_iFrameRate = oXml.GetChildInt("FrameRate", m_iFrameRate);
- 	m_fltFrameStep = (1/ (float) m_iFrameRate);
+	FrameRate(oXml.GetChildInt("FrameRate", m_iFrameRate));
 
-	//We must convert the gravity to use the correct scale.
-	m_fltGravity /= m_fltDistanceUnits;
-
-	//Start the time step with the physics system and then later on we will find the 
-	//real minimum value while looking at all of the neural modules.
-	m_fltTimeStep = m_fltPhysicsTimeStep; 
-
-	m_fltMouseSpringStiffness = oXml.GetChildFloat("MouseSpringStiffness", m_fltMouseSpringStiffness);
-	m_ftlMouseSpringDamping = oXml.GetChildFloat("MouseSpringDamping", m_ftlMouseSpringDamping);
-
-	//Must convert the spring damping to be in units of kg.
-	m_ftlMouseSpringDamping /= 1000;
+	MouseSpringStiffness(oXml.GetChildFloat("MouseSpringStiffness", m_fltMouseSpringStiffness));
+	MouseSpringDamping(oXml.GetChildFloat("MouseSpringDamping", m_ftlMouseSpringDamping));
 
 	m_fltLinearCompliance = oXml.GetChildFloat("LinearCompliance", m_fltLinearCompliance);
 	m_fltAngularCompliance = oXml.GetChildFloat("AngularCompliance", m_fltAngularCompliance);
@@ -1745,32 +1804,6 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 		oXml.OutOfElem(); //OutOf Structures Element
 
 	}
-
-	//oXml.IntoChildElement("Camera"); //Into Camera Element
-
-	//if(oXml.FindChildElement("RecordVideo", FALSE))
-	//{
-	//	m_bRecordVideo = oXml.GetChildBool("RecordVideo", FALSE);
-	//	m_strVideoFilename = oXml.GetChildString("VideoFilename", "Video.avi");
-	//	if(Std_IsBlank(m_strVideoFilename)) m_strVideoFilename = "Video.avi";
-	//	m_fltVideoRecordFrameTime = oXml.GetChildFloat("RecordFrameTime", m_fltVideoRecordFrameTime);
-	//	m_fltVideoPlaybackFrameTime = oXml.GetChildFloat("PlaybackFrameTime", m_fltVideoPlaybackFrameTime);
-	//	m_fltVideoStartTime = oXml.GetChildFloat("VideoStartTime", m_fltVideoStartTime);
-	//	m_fltVideoEndTime = oXml.GetChildFloat("VideoEndTime", m_fltVideoEndTime);
-	//	m_aviOpts.cbFormat = oXml.GetChildLong("cbFormat", 0);
-	//	m_aviOpts.cbParms = oXml.GetChildLong("cbParms", 4);
-	//	m_aviOpts.dwBytesPerSecond = oXml.GetChildLong("dwBytesPerSecond", 0);
-	//	m_aviOpts.dwFlags = oXml.GetChildLong("dwFlags", 8);
-	//	m_aviOpts.dwInterleaveEvery = oXml.GetChildLong("dwInterleaveEvery", 0);
-	//	m_aviOpts.dwKeyFrameEvery = oXml.GetChildLong("dwKeyFrameEvery", 0);
-	//	m_aviOpts.dwQuality = oXml.GetChildLong("dwQuality", 7500);
-	//	m_aviOpts.fccHandler = oXml.GetChildLong("fccHandler", 1668707181);
-	//	m_aviOpts.fccType = oXml.GetChildLong("fccType", 0);
-	//	m_aviOpts.lpFormat = 0;
-	//	m_aviOpts.lpParms = 0;
-	//}
-	// 
-	//oXml.OutOfElem(); //OutOf Camera Element
 
 	oXml.OutOfElem(); //OutOf Environment Element
 

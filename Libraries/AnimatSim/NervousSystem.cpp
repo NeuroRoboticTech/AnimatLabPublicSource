@@ -325,12 +325,6 @@ try
 
 	AddNeuralModule(lpModule);
 
-	//Find the minimum time step for any module in any organism and store
-	//it in the simulator object so we can calculate the time steps for each
-	//module later on.
-	if(lpModule->TimeStep() < lpSim->TimeStep())
-		lpSim->TimeStep(lpModule->TimeStep());
-
 	return lpModule;
 }
 catch(CStdErrorInfo oError)

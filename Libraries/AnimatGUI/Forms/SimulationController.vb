@@ -534,15 +534,6 @@ Namespace Forms
             End Set
         End Property
 
-        Public Property PlaybackRate() As Single
-            Get
-                Return Util.Environment.PlaybackRate
-            End Get
-            Set(ByVal Value As Single)
-                Util.Environment.PlaybackRate = Value
-            End Set
-        End Property
-
         Public Overridable Property EnableSimRecording() As Boolean
             Get
                 Return Util.Simulation.EnableSimRecording
@@ -718,10 +709,7 @@ Namespace Forms
             '                            "Playback Control", "If this is true then the simulation recording and playback feature is enabled. " & _
             '                            "If this is turned off it may slightly improve the simulation speed.", Util.Simulation.EnableSimRecording))
 
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Playback Rate", Util.Environment.PlaybackRate.GetType, "PlaybackRate", _
-                                        "Playback Control", "This controls the rate at which the simulation plays. Increasing the value speeds up the " & _
-                                        "the playback, decreasing the value below 1 slows it down. This value must be between 0 and 1.", Util.Environment.PlaybackRate))
-        End Sub
+         End Sub
 
 
         Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)

@@ -129,10 +129,6 @@ namespace AnimatSim
 			BOOL m_bStopSimulation;
 			BOOL m_bForceSimulationStop;
 
-			///The playback rate for the simulation. This is a multiplying factor. A setting of 2 would mean
-			///that 2 seconds of simulation time passes for each second of real time.
-			float m_fltPlaybackRate;
-
 			int m_iFrameRate;
 			float m_fltFrameStep;
 
@@ -342,58 +338,60 @@ namespace AnimatSim
 
 			BOOL Stopped() {return (m_bStopSimulation | m_bForceSimulationStop);};
 
+			virtual int FrameRate() {return m_iFrameRate;};
+			virtual float FrameStep() {return m_fltFrameStep;};
+			virtual void FrameRate(int iVal);
+
 			void BlockSimulation() {m_bBlockSimulation = TRUE;};
 			void UnblockSimulation() {m_bBlockSimulation = FALSE; m_bSimBlockConfirm = FALSE;};
 			BOOL SimulationBlockConfirm() {return m_bSimBlockConfirm;};
 			BOOL WaitForSimulationBlock(long lTimeout = -1);
-
-			virtual float PlaybackRate() {return m_fltPlaybackRate;};
-			virtual void PlaybackRate(float fltVal) {m_fltPlaybackRate = fltVal;};
 		 
 			virtual short PhysicsStepInterval() {return m_iPhysicsStepInterval;};
 			virtual void PhysicsStepInterval(short iVal) {m_iPhysicsStepInterval = iVal;};
 		 
+			virtual void PhysicsTimeStep(float fltVal);
 			virtual float PhysicsTimeStep() {return m_fltPhysicsTimeStep;};
 			virtual long PhysicsStepCount() {return m_iPhysicsStepCount;};
 
-			float Gravity() {return m_fltGravity;};
-			void Gravity(float fltVal) {m_fltGravity = fltVal;};
+			virtual float Gravity() {return m_fltGravity;};
+			virtual void Gravity(float fltVal, BOOL bUseScaling = TRUE);
 
-			float MouseSpringStiffness() {return m_fltMouseSpringStiffness;};
-			void MouseSpringStiffness(float fltVal) {m_fltMouseSpringStiffness = fltVal;};
+			virtual float MouseSpringStiffness() {return m_fltMouseSpringStiffness;};
+			virtual void MouseSpringStiffness(float fltVal, BOOL bUseScaling = TRUE);
 
-			float MouseSpringDamping() {return m_ftlMouseSpringDamping;};
-			void MouseSpringDamping(float fltVal) {m_ftlMouseSpringDamping = fltVal;};
+			virtual float MouseSpringDamping() {return m_ftlMouseSpringDamping;};
+			virtual void MouseSpringDamping(float fltVal, BOOL bUseScaling = TRUE);
 
+			virtual void DistanceUnits(string strUnits);
 			float DistanceUnits() {return m_fltDistanceUnits;};
-			void DistanceUnits(float fltVal) {m_fltDistanceUnits = fltVal;};
 			float InverseDistanceUnits() {return m_fltInverseDistanceUnits;};
 			//For items that use distance unit measures in the denominator we may want to use a differnt
 			//scale that that used for the whole app. For example, if we are using a distance scale of decimeters
 			//we will want to use centimeters for the density instead. This allows us to do that.
 			float DenominatorDistanceUnits() {return m_fltDenominatorDistanceUnits;};
 
+			virtual void MassUnits(string strUnits);
 			float MassUnits() {return m_fltMassUnits;};
-			void MassUnits(float fltVal) {m_fltMassUnits = fltVal;};
 			float InverseMassUnits() {return m_fltInverseMassUnits;};
 			//The editor will save out 1 Kg as 1000. So we need to convert 1000 to 1. We use this
 			//density mass unit value to do this.
 			float DensityMassUnits() {return m_fltDensityMassUnits;};
 
-			BOOL SimulateHydrodynamics() {return m_bSimulateHydrodynamics;};
-			void SimulateHydrodynamics(BOOL bVal) {m_bSimulateHydrodynamics = bVal;};
+			virtual BOOL SimulateHydrodynamics() {return m_bSimulateHydrodynamics;};
+			virtual void SimulateHydrodynamics(BOOL bVal);
 
-			float FluidDensity() {return m_fltFluidDensity;};
-			void FluidDensity(float fltVal) {m_fltFluidDensity = fltVal;};
+			virtual float FluidDensity() {return m_fltFluidDensity;};
+			virtual void FluidDensity(float fltVal, BOOL bUseScaling = TRUE);
 
-			BOOL HasConvexMesh() {return m_bHasConvexMesh;};
-			void HasConvexMesh(BOOL bVal) {m_bHasConvexMesh = bVal;};
+			virtual BOOL HasConvexMesh() {return m_bHasConvexMesh;};
+			virtual void HasConvexMesh(BOOL bVal) {m_bHasConvexMesh = bVal;};
 
-			BOOL HasTriangleMesh() {return m_bHasTriangleMesh;};
-			void HasTriangleMesh(BOOL bVal) {m_bHasTriangleMesh = bVal;};
+			virtual BOOL HasTriangleMesh() {return m_bHasTriangleMesh;};
+			virtual void HasTriangleMesh(BOOL bVal) {m_bHasTriangleMesh = bVal;};
 
-			BOOL HasHeightField() {return m_bHasHeightField;};
-			void HasHeightField(BOOL bVal) {m_bHasHeightField = bVal;};
+			virtual BOOL HasHeightField() {return m_bHasHeightField;};
+			virtual void HasHeightField(BOOL bVal) {m_bHasHeightField = bVal;};
 
 			virtual KeyFrame *VideoRecorder() {return m_lpVideoRecorder;};
 			virtual void VideoRecorder(KeyFrame *lpFrame) {m_lpVideoRecorder = lpFrame;};
@@ -401,8 +399,8 @@ namespace AnimatSim
 			virtual KeyFrame *VideoPlayback() {return m_lpVideoPlayback;};
 			virtual void VideoPlayback(KeyFrame *lpFrame) {m_lpVideoPlayback = lpFrame;};
 
-			BOOL EnableSimRecording() {return m_bEnableSimRecording;};
-			void EnableSimRecording(BOOL bVal) {m_bEnableSimRecording = bVal;};
+			virtual BOOL EnableSimRecording() {return m_bEnableSimRecording;};
+			virtual void EnableSimRecording(BOOL bVal) {m_bEnableSimRecording = bVal;};
 
 			virtual int VisualSelectionMode() {return m_iSelectionMode;};
 			virtual void VisualSelectionMode(int iVal);

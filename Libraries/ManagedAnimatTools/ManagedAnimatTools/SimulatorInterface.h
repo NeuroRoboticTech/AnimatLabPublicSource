@@ -139,39 +139,6 @@ namespace AnimatGUI
 				return m_bSimOpen;
 			}
 
-			property float PlaybackRate
-			{
-				float get()
-				{
-					if(m_lpSim) 
-						return m_lpSim->PlaybackRate();
-					else
-						return 1;
-				}
-
-				void set(float fltVal)
-				{
-					try
-					{
-						if(m_lpSim) 
-							m_lpSim->PlaybackRate(fltVal);
-					}
-					catch(CStdErrorInfo oError)
-					{
-						string strError = "An error occurred while attempting to create the simulation.\nError: " + oError.m_strError;
-						m_strErrorMessage = gcnew String(strError.c_str());
-						throw gcnew System::Exception(m_strErrorMessage);
-					}
-					catch(System::Exception ^ex)
-					{throw ex;}
-					catch(...)
-					{
-						m_strErrorMessage = "An unknown error occurred while attempting to create the simulation.";
-						throw gcnew System::Exception(m_strErrorMessage);
-					}
-				}
-			}			
-
 #pragma endregion
 
 #pragma region SimulationControl
