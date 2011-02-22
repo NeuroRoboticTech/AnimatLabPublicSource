@@ -1,22 +1,37 @@
-// AnimatBase.h: interface for the Adapter class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	AnimatBase.h
+
+\brief	Base class file for all Animat simulation objects.
+**/
+
 #pragma once
 
-/*! \brief 
-   xxxx.
+/**
+\namespace	AnimatSim
 
-   \remarks
-   xxxx
-		 
-   \sa
-	 xxx
-	 
-	 \ingroup AnimatSim
-*/
+\brief	Root namespace for the base simulation library for AnimatLab.
 
+\detils This is the root namespace for the simulation library that contains
+all of the base classes used in AnimatLab. The classes and methods in this 
+library contain the core functionality used throughout the entire simulation system.
+If you want to create new functionality for AnimatLab simulations you will be using
+the base classes from this library.
+**/
 namespace AnimatSim
 {
+	/**
+	\class	AnimatBase
+	
+	\brief	Animat base class. 
+	
+	\details This class contains the base variables and methods that are used
+	by all of the other animat simulation objects. For example, it contains the
+	unique ID string, type, name, etc. that is used for object creation and searching.
+	It also has the base methods used to set data items and add/remove new items.
+
+	\author	dcofer
+	\date	2/21/2011
+	**/
 
 	class ANIMAT_PORT AnimatBase : public CStdSerialize 
 	{
@@ -37,17 +52,17 @@ namespace AnimatSim
 		AnimatBase();
 		virtual ~AnimatBase();
 
-		virtual string ID() {return m_strID;};
+		virtual string ID() ;
 		virtual void ID(string strValue);
 
-		virtual string Name() {return m_strName;};
-		virtual void Name(string strValue) {m_strName = strValue;};
+		virtual string Name();
+		virtual void Name(string strValue);
 
-		virtual string Type() {return m_strType;};
-		virtual void Type(string strValue) {m_strType = strValue;};
+		virtual string Type();
+		virtual void Type(string strValue);
 
-		virtual BOOL Selected() {return m_bSelected;};
-		virtual void Selected(BOOL bValue, BOOL bSelectMultiple) {m_bSelected = bValue;};
+		virtual BOOL Selected();
+		virtual void Selected(BOOL bValue, BOOL bSelectMultiple);
 
 		//virtual AnimatBase *FindByID(string strID, BOOL bThrowError = TRUE);
 #pragma region DataAccesMethods

@@ -1,7 +1,3 @@
-// Mesh.cpp: implementation of the Mesh class.
-//
-//////////////////////////////////////////////////////////////////////
-
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
 #include "AnimatBase.h"
@@ -33,38 +29,9 @@ namespace AnimatSim
 		namespace Bodies
 		{
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-/*! \brief 
-   Constructs a Mesh object..
-   		
-   \param lpParent This is a pointer to the parent of this rigid body. 
-	          If this value is null then it is assumed that this is
-						a root object and no joint is loaded to connect this
-						part to the parent.
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a Mesh. 
-*/
-
 Mesh::Mesh()
 {
 }
-
-/*! \brief 
-   Destroys the Mesh object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the Mesh object..	 
-*/
 
 Mesh::~Mesh()
 {
@@ -73,9 +40,6 @@ Mesh::~Mesh()
 
 void Mesh::Trace(ostream &oOs)
 {
-	oOs << "{";
-	RigidBody::Trace(oOs);
-	oOs << "}";
 }
 
 

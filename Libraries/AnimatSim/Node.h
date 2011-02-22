@@ -1,28 +1,25 @@
-// Node.h: interface for the Adapter class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Node.h
 
-#if !defined(AFX_NODE_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)
-#define AFX_NODE_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_
+\brief	Base class for node items.
 
-#if _MSC_VER > 1000
+**/
+
 #pragma once
-#endif 
 
-/*! \brief 
-   xxxx.
-
-   \remarks
-   xxxx
-		 
-   \sa
-	 xxx
-	 
-	 \ingroup AnimatSim
-*/
 
 namespace AnimatSim
 {
+	/**
+	\class	Node
+	
+	\brief	Base class for node items.
+
+	\details Base class for 
+	
+	\author	Dacofer
+	\date	2/21/2011
+	**/
 
 	class ANIMAT_PORT Node : public AnimatBase 
 	{
@@ -78,4 +75,3 @@ namespace AnimatSim
 
 }				//AnimatSim
 
-#endif // !defined(AFX_NODE_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)
