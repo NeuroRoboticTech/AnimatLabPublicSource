@@ -41,7 +41,7 @@ namespace AnimatSim
 
 
 /**
-\class AnimatBase
+
 \fn	AnimatBase::AnimatBase()
 
 \brief	Constructs an AnimatBase object.
@@ -61,7 +61,7 @@ AnimatBase::AnimatBase()
 
 
 /**
-\class AnimatBase
+
 \fn	AnimatBase::~AnimatBase()
 
 \brief	Destroys the AnimatBase object..
@@ -90,7 +90,7 @@ catch(...)
 }
 
 /**
-\class AnimatBase
+
 \fn	virtual string AnimatBase::ID()
 		
 \brief	Gets the unique GUID ID of this object. 
@@ -103,7 +103,7 @@ catch(...)
 string AnimatBase::ID() {return m_strID;}
 
 /**
-\class AnimatBase
+
 \fn	virtual void AnimatBase::ID(string strValue);
 		
 \brief	Sets the unique GUID ID of the object.
@@ -124,7 +124,7 @@ void AnimatBase::ID(string strID)
 }
 
 /**
-\class AnimatBase
+
 \fn	string AnimatBase::Name()
 
 \brief	Gets the name of this object. 
@@ -137,7 +137,7 @@ void AnimatBase::ID(string strID)
 string AnimatBase::Name() {return m_strName;}
 
 /**
-\class AnimatBase
+
 \fn	void AnimatBase::Name(string strValue)
 
 \brief	Sets the name of the object. Blank is acceptable. 
@@ -150,7 +150,7 @@ string AnimatBase::Name() {return m_strName;}
 void AnimatBase::Name(string strValue) {m_strName = strValue;}
 
 /**
-\class AnimatBase
+
 \fn	string AnimatBase::Type()
 
 \brief	Gets the string type description of this object. This is basically just another
@@ -167,7 +167,7 @@ of that type. It is not mandatory and can be used how the class developer requir
 string AnimatBase::Type() {return m_strType;}
 
 /**
-\class AnimatBase
+
 \fn	void AnimatBase::Type(string strValue)
 
 \brief	Sets the class type for this object. 
@@ -180,7 +180,7 @@ string AnimatBase::Type() {return m_strType;}
 void AnimatBase::Type(string strValue) {m_strType = strValue;}
 
 /**
-\class AnimatBase
+
 \fn	BOOL AnimatBase::Selected()
 
 \brief	Tells if this items is selected or not. 
@@ -198,7 +198,7 @@ events are raised back up to the GUI to let it know that a part has been selecte
 BOOL AnimatBase::Selected() {return m_bSelected;}
 
 /**
-\class AnimatBase
+
 \fn	void AnimatBase::Selected(BOOL bValue, BOOL bSelectMultiple)
 
 \brief	Selects this object.
@@ -223,7 +223,7 @@ void AnimatBase::Selected(BOOL bValue, BOOL bSelectMultiple) {m_bSelected = bVal
 #pragma region DataAccesMethods
 
 /**
-\class AnimatBase
+
 \fn	float *AnimatBase::GetDataPointer(string strDataType)
 
 \brief	Returns a float pointer to a data item of interest in this object. 
@@ -250,7 +250,7 @@ float *AnimatBase::GetDataPointer(string strDataType)
 }
 
 /**
-\class AnimatBase
+
 \fn	BOOL AnimatBase::SetData(string strDataType, string strValue, BOOL bThrowError)
 
 \brief	Set a variable based on a string data type name. 
@@ -285,7 +285,7 @@ BOOL AnimatBase::SetData(string strDataType, string strValue, BOOL bThrowError)
 }
 
 /**
-\class AnimatBase
+
 \fn	BOOL AnimatBase::AddItem(string strItemType, string strXml, BOOL bThrowError)
 
 \brief	Adds a new object to this parent.
@@ -316,7 +316,7 @@ BOOL AnimatBase::AddItem(string strItemType, string strXml, BOOL bThrowError)
 }
 
 /**
-\class AnimatBase
+
 \fn	BOOL AnimatBase::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 
 \brief	Removes a child item from this parent. 
@@ -346,7 +346,7 @@ BOOL AnimatBase::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 #pragma endregion
 
 /**
-\class AnimatBase
+
 \fn	void AnimatBase::Load(CStdXml &oXml)
 
 \brief	Loads this object. 
