@@ -153,7 +153,9 @@ void AnimatBase::Name(string strValue) {m_strName = strValue;}
 
 \fn	string AnimatBase::Type()
 
-\brief	Gets the string type description of this object. This is basically just another
+\brief	returns the string type name of this object.
+
+\details Gets the string type description of this object. This is basically just another
 type of tag that can be applied by the developer of a class to differentiate it. An example
 of where this is used is in the synaptic types class. I use it to specify the synapse type
 as gated, modulatory, etc.. They still have different classes, but this gives a string description

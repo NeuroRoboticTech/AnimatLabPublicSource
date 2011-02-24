@@ -1,8 +1,7 @@
 /**
 \file	Node.h
 
-\brief	Base class for node items.
-
+\brief	Declares the node class. 
 **/
 
 #pragma once
@@ -13,20 +12,22 @@ namespace AnimatSim
 	/**
 	\class	Node
 	
-	\brief	Base class for node items.
-
-	\details Base class for 
+	\brief	Base class for body parts and neural network nodes. 
 	
-	\author	Dacofer
-	\date	2/21/2011
+	\details This is the base class used for body parts and network nodes. It contains
+	links the simulation, its containing structure and the neural module. It also has some
+	common methods and variables used by these types of objects.
+
+	\author	dcofer
+	\date	2/24/2011
 	**/
 
 	class ANIMAT_PORT Node : public AnimatBase 
 	{
 	protected:
-		Simulator *m_lpSim;
-		Structure *m_lpStructure;
-		NeuralModule *m_lpModule;
+		Simulator *m_lpSim; ///< The pointer to a simulation
+		Structure *m_lpStructure; ///< The pointer to a structure
+		NeuralModule *m_lpModule; ///< The pointer to a neuralmodule
 
 		///Determines if this node is enabled. This will only have any effect if this node can be disabled.
 		///The majority of nodes, like rigid bodies, can not be disabled.
@@ -37,7 +38,7 @@ namespace AnimatSim
 		///enabled state to what it was before it was killed.
 		BOOL m_bEnabledMem;
 
-		///This is for reporting purposes.
+		///This is used for reporting the enabled state in a GetDataPointer call.
 		float m_fltEnabled;
 
 		virtual void UpdateData(Simulator *lpSim, Structure *lpStructure);
@@ -46,16 +47,12 @@ namespace AnimatSim
 		Node();
 		virtual ~Node();
 
-		virtual Simulator *GetSimulator() {return m_lpSim;};
-		virtual Structure *GetStructure() {return m_lpStructure;};
-		virtual NeuralModule *GetNeuralModule() {return m_lpModule;};
+		virtual Simulator *GetSimulator();
+		virtual Structure *GetStructure();
+		virtual NeuralModule *GetNeuralModule();
 
-		virtual BOOL Enabled() {return m_bEnabled;};
-		virtual void Enabled(BOOL bValue) 
-		{
-			m_bEnabled = bValue;
-			m_fltEnabled = (float) m_bEnabled;
-		};
+		virtual BOOL Enabled();
+		virtual void Enabled(BOOL bValue);
 
 		virtual void Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState = TRUE);
 		virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure) = 0;

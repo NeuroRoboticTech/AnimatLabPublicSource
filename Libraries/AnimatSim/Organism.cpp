@@ -231,22 +231,14 @@ void Organism::Load(Simulator *lpSim, CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Layout Element
 
-	string strNeuralFile = oXml.GetChildString("BehavioralSystem", "");
-
 	//dwc convert. Need to have a method to remove a nervous system. It needs to remove any added
 	//modules from the list in the simulator.
 	if(m_lpNervousSystem) {delete m_lpNervousSystem; m_lpNervousSystem = NULL;}
 	m_lpNervousSystem = new AnimatSim::Behavior::NervousSystem;
 
-	if(!Std_IsBlank(strNeuralFile)) 
-		m_lpNervousSystem->Load(lpSim, this, lpSim->ProjectPath(), strNeuralFile);
-	else
-	{
-		oXml.IntoChildElement("NervousSystem");
-		m_lpNervousSystem->ProjectPath(lpSim->ProjectPath());
-		m_lpNervousSystem->Load(lpSim, this, oXml);
-		oXml.OutOfElem();
-	}
+	oXml.IntoChildElement("NervousSystem");
+	m_lpNervousSystem->Load(lpSim, this, oXml);
+	oXml.OutOfElem();
 
 	oXml.OutOfElem(); //OutOf Layout Element
 }

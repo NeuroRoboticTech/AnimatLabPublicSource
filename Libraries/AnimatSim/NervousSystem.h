@@ -1,39 +1,35 @@
-// NervousSystem.h: interface for the Adapter class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	NervousSystem.h
 
-#if !defined(AFX_NERVOUS_SYSTEM_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)
-#define AFX_NERVOUS_SYSTEM_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_
+\brief	Declares the nervous system class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
-
-/*! \brief 
-   xxxx.
-
-   \remarks
-   xxxx
-		 
-   \sa
-	 xxx
-	 
-	 \ingroup AnimatSim
-*/
 
 namespace AnimatSim
 {
 	namespace Behavior
 	{
+		/**
+		\class	NervousSystem
+		
+		\brief	Nervous system for an organism. 
 
+		\details An organism is a Structure that has a nervous system. The nervous system is made up of 
+		one or more NeuralModules, where each NeuralModule implements a given neural simulation method, 
+		firing rate vs. integrate and fire. Each of these neural modules is simulated independently with 
+		different integration time steps. You can connect elements in one module with elements in another
+		by using an Adapter. This allow you to convert the firing rate, or other variable of interest, 
+		of one neuron into a current injected into a neuron in the other module. 
+		
+		\author	dcofer
+		\date	2/24/2011
+		**/
 		class ANIMAT_PORT NervousSystem : public AnimatBase 
 		{
 		protected:
 			CStdPtrMap<string, NeuralModule> m_aryNeuralModules;
 			CStdPtrArray<Adapter> m_aryAdapters;
-
-			string m_strProjectPath;
-			string m_strNeuralNetworkFile;
 
 			NeuralModule *LoadNeuralModule(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
 			void AddNeuralModule(NeuralModule *lpModule);
@@ -43,12 +39,6 @@ namespace AnimatSim
 		public:
 			NervousSystem();
 			virtual ~NervousSystem();
-
-			string ProjectPath();
-			void ProjectPath(string strPath);
-
-			string NeuralNetworkFile();
-			void NeuralNetworkFile(string strFile);
 
 			virtual NeuralModule *FindNeuralModule(string strModuleName, BOOL bThrowError = TRUE);
 			virtual void AddNeuralModule(Simulator *lpSim, Structure *lpStructure, string strXml);
@@ -64,14 +54,8 @@ namespace AnimatSim
 			virtual void SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 			virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 
-			virtual void Load(Simulator *lpSim, Structure *lpStructure, string strProjectPath, string strNeuralFile);
 			virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
-			virtual void Save(Simulator *lpSim, Structure *lpStructure, string strProjectPath, string strNeuralFile) {};
-			virtual void Save(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml) {};
-
 		};
 
 	}			//Behavior
 }			//AnimatSim
-
-#endif // !defined(AFX_NERVOUS_SYSTEM_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)

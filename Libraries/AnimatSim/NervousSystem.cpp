@@ -1,6 +1,8 @@
-// NervousSystem.cpp: implementation of the NervousSystem class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	NervousSystem.cpp
+
+\brief	Implements the nervous system class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -28,39 +30,30 @@
 #include "Odor.h"
 #include "Simulator.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
 namespace AnimatSim
 {
 	namespace Behavior
 	{
+/**
+\fn	NervousSystem::NervousSystem()
 
-/*! \brief 
-   Constructs an structure object..
-   		
-	 \return
-	 No return value.
+\brief	Default constructor. 
 
-   \remarks
-	 The constructor for a structure. 
-*/
-
+\author	dcofer
+\date	2/24/2011
+**/
 NervousSystem::NervousSystem()
 {
 }
 
+/**
+\fn	NervousSystem::~NervousSystem()
 
-/*! \brief 
-   Destroys the structure object..
-   		
-	 \return
-	 No return value.
+\brief	Destructor. 
 
-   \remarks
-   Destroys the structure object..	 
-*/
-
+\author	dcofer
+\date	2/24/2011
+**/
 NervousSystem::~NervousSystem()
 {
 
@@ -73,18 +66,18 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of NervousSystem\r\n", "", -1, FALSE, TRUE);}
 }
 
-string NervousSystem::ProjectPath()
-{return m_strProjectPath;}
 
-void NervousSystem::ProjectPath(string strPath)
-{m_strProjectPath = strPath;}
+/**
+\fn	void NervousSystem::AddNeuralModule(NeuralModule *lpModule)
 
-string NervousSystem::NeuralNetworkFile()
-{return m_strNeuralNetworkFile;}
+\brief	Adds a neural module to the nervous system. 
 
-void NervousSystem::NeuralNetworkFile(string strFile)
-{m_strNeuralNetworkFile = strFile;}
+\author	dcofer
+\date	2/24/2011
 
+\param [in,out]	lpModule	If non-null, the pointer to a module. 
+\exception If module is null, or duplicate module name.
+**/
 void NervousSystem::AddNeuralModule(NeuralModule *lpModule)
 {
 	if(!lpModule)
@@ -101,6 +94,70 @@ void NervousSystem::AddNeuralModule(NeuralModule *lpModule)
 	}
 }
 
+/**
+\fn	void NervousSystem::AddNeuralModule(Simulator *lpSim, Structure *lpStructure, string strXml)
+
+\brief	Creates and adds a new neural module from an XML definition. 
+
+\details This method is used to both create and add a new neural module to the nervous system by using
+a XML configuration data packet. This is primarily used by the AddItem method to create a new module when
+the user does so in the GUI.
+
+\author	dcofer
+\date	2/24/2011
+
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to a structure. 
+\param	strXml				The string xml for loading the new module. 
+**/
+void NervousSystem::AddNeuralModule(Simulator *lpSim, Structure *lpStructure, string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("NeuralModule");
+
+	NeuralModule *lpModule = LoadNeuralModule(lpSim, lpStructure, oXml);
+	lpModule->Initialize(lpSim, lpStructure);
+}
+
+/**
+\fn	void NervousSystem::RemoveNeuralModule(Simulator *lpSim, Structure *lpStructure, string strID)
+
+\brief	Removes the neural module based on its ID. 
+
+\details This method is primarily used by the RemoveItem method to allow the GUI to remove
+a neural module when the user needs to do so.
+
+\author	dcofer
+\date	2/24/2011
+
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to a structure. 
+\param	strID				Unique GUID ID string of the module to delete. 
+**/
+void NervousSystem::RemoveNeuralModule(Simulator *lpSim, Structure *lpStructure, string strID)
+{
+	m_aryNeuralModules.Remove(strID);
+}
+
+
+/**
+\fn	NeuralModule *NervousSystem::FindNeuralModule(string strModuleName, BOOL bThrowError)
+
+\brief	Searches for a neural module with a matching module name. 
+
+\details The module name is the name of the DLL to load. This must be unique and match the name of the DLL file.
+
+\author	dcofer
+\date	2/24/2011
+
+\param	strModuleName	Name of the DLL module file to find. 
+\param	bThrowError		true to throw error, else it just return NULL if not found. 
+
+\return	null if it fails, else the found neural module. 
+\exception If bThrowError is true and nothing is found.
+**/
 NeuralModule *NervousSystem::FindNeuralModule(string strModuleName, BOOL bThrowError)
 {
 	NeuralModule *lpModule = NULL;
@@ -115,6 +172,23 @@ NeuralModule *NervousSystem::FindNeuralModule(string strModuleName, BOOL bThrowE
 	return lpModule;
 }
 
+
+/**
+\fn	void NervousSystem::Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState)
+
+\brief	Calls Kill method on all sub-items. 
+
+\details When an organism is killed then all neural elements are disabled to prevent 
+any further network activity. This method goes through and calls the Kill method of 
+each neural module.
+
+\author	dcofer
+\date	2/24/2011
+
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpOrganism	The pointer to an organism. 
+\param	bState				true to state. 
+**/
 void NervousSystem::Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState)
 {
 	NeuralModule *lpModule = NULL;
@@ -126,6 +200,22 @@ void NervousSystem::Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState)
 	}
 }
 
+
+/**
+\fn	void NervousSystem::ResetSimulation(Simulator *lpSim, Organism *lpOrganism)
+
+\brief	Resets the simulation to time 0. 
+
+\details When the simulation is reset it defaults the entire system back to time 0.
+This method calls the ResetSimulation method of each neural module, which in turn
+resets all data within the neural code back to its initial state on simulation start.
+
+\author	dcofer
+\date	2/24/2011
+
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpOrganism	The pointer to an organism. 
+**/
 void NervousSystem::ResetSimulation(Simulator *lpSim, Organism *lpOrganism)
 {
 	NeuralModule *lpModule = NULL;
@@ -137,6 +227,19 @@ void NervousSystem::ResetSimulation(Simulator *lpSim, Organism *lpOrganism)
 	}
 }
 
+/**
+\fn	void NervousSystem::Initialize(Simulator *lpSim, Structure *lpStructure)
+
+\brief	Initializes this object. 
+
+\details This initializes all neural modules and all of the adapters for this nervous system.
+
+\author	dcofer
+\date	2/24/2011
+
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to a structure. 
+**/
 void NervousSystem::Initialize(Simulator *lpSim, Structure *lpStructure)
 {
 	NeuralModule *lpModule = NULL;
@@ -156,6 +259,27 @@ void NervousSystem::Initialize(Simulator *lpSim, Structure *lpStructure)
 
 }
 
+/**
+\fn	void NervousSystem::StepSimulation(Simulator *lpSim, Structure *lpStructure)
+
+\brief	Steps simulation for the nervous system. 
+
+\details Each NeuralModule can have a different integration time step. This method loops
+through each of the modules and calls the NeedToStep method to determine if that modules
+StepSimulation method should be called. Remeber that all time steps are based on the core
+integer TimeStep. All of the other modules time steps are normalized to the module with the 
+smallest time step. For instance, lets the firing rate time step is 0.5 ms, and the integrate
+and fire time step was 0.1 ms. The base time step will be 0.1 ms, and the TimeStepInterval of the
+integrate and fire module will be 1, while the TimeStepInterval of the firing rate module will be
+5. So every 5th step the call to the firing rate module method NeedToStep will return true and 
+it will be stepped. 
+
+\author	dcofer
+\date	2/24/2011
+
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to a structure. 
+**/
 void NervousSystem::StepSimulation(Simulator *lpSim, Structure *lpStructure)
 {
 	NeuralModule *lpModule = NULL;
@@ -170,22 +294,21 @@ void NervousSystem::StepSimulation(Simulator *lpSim, Structure *lpStructure)
 	}
 }
 
-void NervousSystem::AddNeuralModule(Simulator *lpSim, Structure *lpStructure, string strXml)
-{
-	CStdXml oXml;
-	oXml.Deserialize(strXml);
-	oXml.FindElement("Root");
-	oXml.FindChildElement("NeuralModule");
+/**
+\fn	long NervousSystem::CalculateSnapshotByteSize()
 
-	NeuralModule *lpModule = LoadNeuralModule(lpSim, lpStructure, oXml);
-	lpModule->Initialize(lpSim, lpStructure);
-}
+\brief	Calculates the snapshot byte size. 
 
-void NervousSystem::RemoveNeuralModule(Simulator *lpSim, Structure *lpStructure, string strID)
-{
-	m_aryNeuralModules.Remove(strID);
-}
+\details Sometimes the user may want to capture a snapshot of the simulation at a given point in time,
+and then be able to go back to that specific point. To do this we grab a snapshot of all the data in the system,
+including the neural variables. We essentially serialize the data into a binary format for later re-use. This method
+calculates the number of bytes that will be required to store the entire nervous system.
 
+\author	dcofer
+\date	2/24/2011
+
+\return	The calculated snapshot byte size. 
+**/
 long NervousSystem::CalculateSnapshotByteSize()
 {
 	NeuralModule *lpModule = NULL;
@@ -202,6 +325,22 @@ long NervousSystem::CalculateSnapshotByteSize()
 	return lSize;
 }
 
+/**
+\fn	void NervousSystem::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
+
+\brief	Saves a key frame snapshot. 
+
+\details Sometimes the user may want to capture a snapshot of the simulation at a given point in time,
+and then be able to go back to that specific point. To do this we grab a snapshot of all the data in the system,
+including the neural variables. We essentially serialize the data into a binary format for later re-use. This method
+goes through each module and saves its data into the byte array.
+
+\author	dcofer
+\date	2/24/2011
+
+\param [in,out]	aryBytes	The array of bytes where the data is being stored. 
+\param [in,out]	lIndex		Current zero-based index of the write position in the array. 
+**/
 void NervousSystem::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 {
 	NeuralModule *lpModule = NULL;
@@ -215,6 +354,22 @@ void NervousSystem::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 	}
 }
 
+/**
+\fn	void NervousSystem::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
+
+\brief	Loads a key frame snapshot. 
+
+\details Sometimes the user may want to capture a snapshot of the simulation at a given point in time,
+and then be able to go back to that specific point. To do this we grab a snapshot of all the data in the system,
+including the neural variables. We essentially serialize the data into a binary format for later re-use. This method
+goes through each module and loads its data from the byte array.
+
+\author	dcofer
+\date	2/24/2011
+
+\param [in,out]	aryBytes	The array of bytes where the data is being stored. 
+\param [in,out]	lIndex		Current zero-based index of the read position in the array. 
+**/
 void NervousSystem::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 {
 	NeuralModule *lpModule = NULL;
@@ -226,31 +381,6 @@ void NervousSystem::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 
 		lpModule->LoadKeyFrameSnapshot(aryBytes, lIndex);
 	}
-}
-
-void NervousSystem::Load(Simulator *lpSim, Structure *lpStructure, string strProjectPath, string strNeuralFile)
-{
-	CStdXml oXml;
-
-	TRACE_DEBUG("Loading nervous system config file.\r\nProjectPath: " + m_strProjectPath + "\r\nFile: " + strNeuralFile);
-
-	if(Std_IsBlank(strProjectPath)) 
-		THROW_ERROR(Al_Err_lProjectPathBlank, Al_Err_strProjectPathBlank);
-
-	if(Std_IsBlank(strNeuralFile)) 
-		THROW_ERROR(Al_Err_lNeuralNetworkBlank, Al_Err_strNeuralNetworkBlank);
-
-	m_strProjectPath = strProjectPath;
-	m_strNeuralNetworkFile = strNeuralFile;
-
-	oXml.Load(AnimatSim::GetFilePath(strProjectPath, strNeuralFile));
-
-	oXml.FindElement("NervousSystem");
-	oXml.FindChildElement("NeuralModules");
-
-	Load(lpSim, lpStructure, oXml);
-
-	TRACE_DEBUG("Finished loading nervous system config file.");
 }
 
 void NervousSystem::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
@@ -309,7 +439,6 @@ try
 	if(!lpModule)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "NeuralModule");
 
-	lpModule->ProjectPath(m_strProjectPath);
 	lpModule->SetSystemPointers(lpSim, lpStructure);
 
 	//Clean up the original class factory. We will use the one in the NeuralModule from now on.

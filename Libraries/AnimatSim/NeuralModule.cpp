@@ -1,6 +1,8 @@
-// NeuralModule.cpp: implementation of the NeuralModule class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	NeuralModule.cpp
+
+\brief	Implements the neural module class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -29,24 +31,29 @@
 #include "Odor.h"
 #include "Simulator.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
 namespace AnimatSim
 {
+
+	/**
+	\namespace	Behavior
+
+	\brief	Contains objects related to neural networks.
+
+	\details This contains all of the objects related to the nervous system
+	and neural networks. 
+
+	**/
 	namespace Behavior
 	{
 
-/*! \brief 
-   Constructs an structure object..
-   		
-	 \return
-	 No return value.
+/**
+\fn	NeuralModule::NeuralModule()
 
-   \remarks
-	 The constructor for a structure. 
-*/
+\brief	Default constructor. 
 
+\author	dcofer
+\date	2/24/2011
+**/
 NeuralModule::NeuralModule()
 {
 	m_iTargetAdapterCount = 0;
@@ -58,17 +65,16 @@ NeuralModule::NeuralModule()
 	m_lpOrganism = NULL;
 }
 
+/**
+\fn	NeuralModule::~NeuralModule()
 
-/*! \brief 
-   Destroys the structure object..
-   		
-	 \return
-	 No return value.
+\brief	Destructor. 
 
-   \remarks
-   Destroys the structure object..	 
-*/
+\details This deletes the class factory when destroyed.
 
+\author	dcofer
+\date	2/24/2011
+**/
 NeuralModule::~NeuralModule()
 {
 
@@ -84,8 +90,69 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of NeuralModule\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\fn	IStdClassFactory *NeuralModule::ClassFactory()
+
+\brief	Gets the class factory. 
+
+\author	dcofer
+\date	2/24/2011
+
+\return	null if it fails, else. 
+**/
+IStdClassFactory *NeuralModule::ClassFactory() {return m_lpClassFactory;}
+
+/**
+\fn	Simulator *NeuralModule::GetSimulator()
+
+\brief	Gets the simulator. 
+
+\author	dcofer
+\date	2/24/2011
+
+\return	returns the simulator. 
+**/
+Simulator *NeuralModule::GetSimulator() {return m_lpSim;}
+
+/**
+\fn	Organism *NeuralModule::GetOrganism()
+
+\brief	Gets the organism. 
+
+\author	dcofer
+\date	2/24/2011
+
+\return	returns the organism. 
+**/
+Organism *NeuralModule::GetOrganism() {return m_lpOrganism;}
+
+/**
+\fn	short NeuralModule::TimeStepInterval()
+
+\brief	Gets the time step interval. 
+
+\details The m_iTimeStepInterval is the number of time slices between
+that this module must wait before stepping again.
+
+\author	dcofer
+\date	2/24/2011
+
+\return	. 
+**/
 short NeuralModule::TimeStepInterval()
 {return m_iTimeStepInterval;}
+
+/**
+\fn	void NeuralModule::TimeStepInterval(short iVal)
+
+\brief	Sets ime step interval. 
+
+\author	dcofer
+\date	2/24/2011
+
+\param	iVal	New time step interval. 
+\exception new value must be greater than zero.
+**/
 
 void NeuralModule::TimeStepInterval(short iVal)
 {

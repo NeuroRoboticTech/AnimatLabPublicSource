@@ -1,49 +1,64 @@
-// NeuralModule.h: interface for the NeuralModule class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	NeuralModule.h
 
-#if !defined(AFX_NEURAL_MODULE_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)
-#define AFX_NEURAL_MODULE_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_
+\brief	Declares the neural module class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
-
-/*! \brief 
-   xxxx.
-
-   \remarks
-   xxxx
-		 
-   \sa
-	 xxx
-	 
-	 \ingroup AnimatSim
-*/
 
 namespace AnimatSim
 {
 	namespace Behavior
 	{
+		/**
+		\class	NeuralModule
+		
+		\brief	Neural module.
 
+		\details An organism is a structure with a nervous system (NervousSystem). The 
+		nervous system contains one or more neural modules. A neural module performs the processing
+		for a given neural model library (firing rate, integrate and fire, etc.). Each neural module
+		can operate with an independent time step. Elements in one module can interact with elements in 
+		an another by using adapters to connect them. The module has a list of target adapters. At each 
+		time step of the module it calls StepSimulation to add an external value to the target node in 
+		another module.
+		
+		\author	dcofer
+		\date	2/24/2011
+		**/
 		class ANIMAT_PORT NeuralModule : public AnimatBase 
 		{
 		protected:
-			Simulator *m_lpSim;
-			Organism *m_lpOrganism;
+			Simulator *m_lpSim;  ///< The pointer to the simulation
+			Organism *m_lpOrganism; ///< The pointer to the organism
 
-			short m_iTimeStepInterval;
+			/// Zero-based integer index of the time step interval. This is the number of time slices between
+			/// that this module must wait before stepping again.
+			short m_iTimeStepInterval;  
+
+			/// The DT time step for this neural module in seconds. 
 			float m_fltTimeStep;
+
+			/// Count variable that keeps track of how many slices have occured since the last StepSimulation
+			// of this module. This is zeroed back out at the next step of this module.
 			short m_iTimeStepCount;
 
+			/// Full pathname of the string project file for this module.
 			string m_strProjectPath;
+
+			/// The string neural network file name
 			string m_strNeuralNetworkFile;
 
+			/// The pointer to the class factory for this module
 			IStdClassFactory *m_lpClassFactory;
 
+			/// An array of source adapters for this module.
 			CStdArray<Adapter *> m_arySourceAdapters;
+
+			/// An array of target adapters for this module.
 			CStdArray<Adapter *> m_aryTargetAdapters;
 
+			/// Number of target adapters
 			short m_iTargetAdapterCount;
 
 		public:
@@ -64,10 +79,10 @@ namespace AnimatSim
 			virtual float TimeStep();
 			virtual void TimeStep(float fltVal);
 
-			virtual IStdClassFactory *ClassFactory() {return m_lpClassFactory;};
+			virtual IStdClassFactory *ClassFactory();
 
-			Simulator *GetSimulator() {return m_lpSim;};
-			Organism *GetOrganism() {return m_lpOrganism;};
+			Simulator *GetSimulator();
+			Organism *GetOrganism();
 
 			virtual void Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState = TRUE) = 0;
 			virtual void ResetSimulation(Simulator *lpSim, Organism *lpOrganism) = 0;
@@ -90,5 +105,3 @@ namespace AnimatSim
 
 	}			//Behavior
 }			//AnimatSim
-
-#endif // !defined(AFX_NEURAL_MODULE_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)

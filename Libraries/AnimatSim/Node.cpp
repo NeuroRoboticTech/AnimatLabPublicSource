@@ -1,6 +1,8 @@
-// Node.cpp: implementation of the Node class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Node.cpp
+
+\brief	Implements the node class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -29,22 +31,17 @@
 #include "Odor.h"
 #include "Simulator.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
 namespace AnimatSim
 {
 
-/*! \brief 
-   Constructs an structure object..
-   		
-	 \return
-	 No return value.
+/**
+\fn	Node::Node()
 
-   \remarks
-	 The constructor for a structure. 
-*/
+\brief	Default constructor. 
 
+\author	dcofer
+\date	2/24/2011
+**/
 Node::Node()
 {
 	m_lpSim = NULL;
@@ -56,17 +53,14 @@ Node::Node()
 	m_fltEnabled = 0;
 }
 
+/**
+\fn	Node::~Node()
 
-/*! \brief 
-   Destroys the structure object..
-   		
-	 \return
-	 No return value.
+\brief	Destructor. 
 
-   \remarks
-   Destroys the structure object..	 
-*/
-
+\author	dcofer
+\date	2/24/2011
+**/
 Node::~Node()
 {
 
@@ -75,6 +69,76 @@ try
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Node\r\n", "", -1, FALSE, TRUE);}
+}
+
+/**
+\fn	Simulator *Node::GetSimulator()
+
+\brief	Gets the simulator pointer.
+
+\author	dcofer
+\date	2/24/2011
+
+\return	pointer the Simulator object for this simulation. 
+**/
+Simulator *Node::GetSimulator() {return m_lpSim;}
+
+/**
+\fn	Structure *Node::GetStructure()
+
+\brief	Gets the structure for this node. 
+
+\author	dcofer
+\date	2/24/2011
+
+\return	returns the Structure pointer for this node. 
+**/
+Structure *Node::GetStructure() {return m_lpStructure;}
+
+/**
+\fn	NeuralModule *Node::GetNeuralModule()
+
+\brief	Gets the neural module. 
+
+\author	dcofer
+\date	2/24/2011
+
+\return	Returns the NeuralModule pointer associated with this node.
+This only applies to neural network nodes. All others will return NULL.
+**/
+NeuralModule *Node::GetNeuralModule() {return m_lpModule;}
+
+/**
+\fn	BOOL Node::Enabled()
+
+\brief	Tells whether this node is enabled.
+
+\details Some types of nodes can be enabled/disabled. For example, joints or muscles. 
+This tells what enabled state the node is in. This will not apply to every node object type.
+
+\author	dcofer
+\date	2/24/2011
+
+\return	true if it enabled, false if not. 
+**/
+BOOL Node::Enabled() {return m_bEnabled;}
+
+/**
+\fn	void Node::Enabled(BOOL bValue)
+
+\brief	Enables the node. 
+
+\details Some types of nodes can be enabled/disabled. This sets the enabled state of the object.
+
+\author	dcofer
+\date	2/24/2011
+
+\param	bValue	true to enable. 
+**/
+void Node::Enabled(BOOL bValue) 
+{
+	m_bEnabled = bValue;
+	m_fltEnabled = (float) m_bEnabled;
 }
 
 void Node::AttachSourceAdapter(Simulator *lpSim, Structure *lpStructure, Adapter *lpAdapter)
@@ -87,6 +151,22 @@ void Node::AttachTargetAdapter(Simulator *lpSim, Structure *lpStructure, Adapter
 	lpSim->AttachTargetAdapter(lpStructure, lpAdapter);
 }
 
+/**
+\fn	void Node::Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState)
+
+\brief	Called when this organism is killed.
+
+\details When an organism dies this method is called. The node is disabled. This means that
+if the node is a joint then it is disabled (free moving), and if it is a neuron it will no 
+longer function.The organism is dead.
+
+\author	dcofer
+\date	2/24/2011
+
+\param [in,out]	lpSim		If non-null, the pointer to a simulation. 
+\param [in,out]	lpOrganism	If non-null, the pointer to an organism. 
+\param	bState				true to state. 
+**/
 void Node::Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState)
 {
 	if(bState)
@@ -99,6 +179,7 @@ void Node::Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState)
 
 }
 
+
 void *Node::GetDataItem(string strItemType, string strID, BOOL bThrowError) 
 {
 	if(bThrowError)
@@ -110,7 +191,24 @@ void *Node::GetDataItem(string strItemType, string strID, BOOL bThrowError)
 void Node::UpdateData(Simulator *lpSim, Structure *lpStructure)
 {}
 
-//Sometimes it is necessary to set the system pointers before Initialize is called. (eg. in load). This allows us to do that.
+//
+
+/**
+\fn	void Node::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule)
+
+\brief	Sets a system pointers for this node. 
+
+\details Sometimes it is necessary to set the system pointers before Initialize is called. (eg. in load). 
+This allows us to do that.
+
+\author	dcofer
+\date	2/24/2011
+
+\param [in,out]	lpSim		If non-null, the pointer to a simulation. 
+\param [in,out]	lpStructure	If non-null, the pointer to a structure. 
+\param [in,out]	lpModule	If non-null, the pointer to a module. 
+**/
+
 void Node::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule)
 {
 	m_lpSim = lpSim;
@@ -118,6 +216,18 @@ void Node::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralMod
 	m_lpModule = lpModule;
 }
 
+/**
+\fn	void Node::Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule)
+
+\brief	Initializes this node. 
+
+\author	dcofer
+\date	2/24/2011
+
+\param [in,out]	lpSim		If non-null, the pointer to a simulation. 
+\param [in,out]	lpStructure	If non-null, the pointer to a structure. 
+\param [in,out]	lpModule	If non-null, the pointer to a module. 
+**/
 void Node::Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule)
 {
 	m_lpSim = lpSim;
@@ -125,6 +235,20 @@ void Node::Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lp
 	m_lpModule = lpModule;
 }
 
+/**
+\fn	void Node::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+
+\brief	Loads the object.
+
+\details See AnimatBase::Load
+
+\author	dcofer
+\date	2/24/2011
+
+\param [in,out]	lpSim		If non-null, the pointer to a simulation. 
+\param [in,out]	lpStructure	If non-null, the pointer to a structure. 
+\param [in,out]	oXml		The xml. 
+**/
 void Node::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
