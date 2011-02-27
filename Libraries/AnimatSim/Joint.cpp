@@ -56,12 +56,10 @@ Joint::Joint()
 	m_fltPrevVelocity = -1000000;
 	m_bEnableMotor = FALSE;
 	m_bEnableMotorInit = FALSE;
-	m_bEnableLimits = TRUE;
-	m_bEnableLimitsInit = TRUE;
-	m_fltDamping = 0;
-	m_fltRestitution = 1;
-	m_fltStiffness = 5e6;
-	m_fltScale = 1;
+	m_fltPosition = 0;
+	m_fltVelocity = 0;
+	m_fltForce = 0;
+	m_fltSize = 0.02f;
 }
 
 
@@ -82,6 +80,40 @@ Joint::~Joint()
 	m_lpChild = NULL;
 }
 
+float Joint::Size() {return m_fltSize;};
+
+void Joint::Size(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Joint.Size");
+	if(bUseScaling)
+		m_fltSize = fltVal * m_lpSim->InverseDistanceUnits();
+	else
+		m_fltSize = fltVal;
+
+	Resize();
+}
+
+float Joint::EnableMotor() {return m_bEnableMotor;};
+
+void Joint::EnableMotor(BOOL bVal)
+{
+	m_bEnableMotor = bVal;
+	//TODO Add sim code here.
+}
+
+float Joint::MaxVelocity() {return m_fltMaxVelocity;};
+
+void Joint::MaxVelocity(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Joint.MaxVelocity");
+
+	if(bUseScaling && !UsesRadians())
+		m_fltMaxVelocity = fltVal * m_lpSim->InverseDistanceUnits();
+	else
+		m_fltMaxVelocity = fltVal;
+
+	//TODO Add sim code here.
+}
 
 //Node Overrides
 void Joint::AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput)
@@ -94,9 +126,6 @@ void Joint::SetVelocityToDesired()
 	m_fltSetVelocity = m_fltDesiredVelocity;
 	m_fltDesiredVelocity = 0;
 }
-
-void Joint::EnableMotor(BOOL bVal)
-{m_bEnableMotor = bVal;}
 
 void Joint::CreateJoint(Simulator *lpSim, Structure *lpStructure)
 {}
@@ -240,28 +269,13 @@ void Joint::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 	m_fltMaxVelocity = oXml.GetChildFloat("MaxVelocity", m_fltMaxVelocity);
 
 	if(!this->UsesRadians())
-			m_fltMaxVelocity *= lpSim->InverseDistanceUnits();  //Convert distance units.
+		m_fltMaxVelocity *= lpSim->InverseDistanceUnits();  //Convert distance units.
 
-	if(oXml.FindChildElement("Constraint", FALSE))
-	{
-		oXml.IntoElem();
-		m_bEnableLimits = m_bEnableLimitsInit = oXml.GetChildBool("EnableLimits", m_bEnableLimits);
-		m_fltDamping = oXml.GetChildFloat("Damping", m_fltDamping);
-		m_fltRestitution = oXml.GetChildFloat("Restitution", m_fltRestitution);
-		m_fltStiffness = oXml.GetChildFloat("Stiffness", m_fltStiffness);
-		oXml.OutOfElem();
-	}
+	Size(oXml.GetChildFloat("Size", m_fltSize));
 
-	m_fltDamping *=  m_fltDamping/lpSim->DensityMassUnits();
-	m_fltStiffness *= lpSim->InverseMassUnits();
-	
 	oXml.OutOfElem(); //OutOf Joint Element
 }
 
-
-void Joint::Save(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
-{
-}
 
 
 /*! \fn virtual void Joint::EnableMotor(BOOL bVal)

@@ -20,24 +20,26 @@ Namespace DataObjects.Physical
 
 #Region " Attributes "
 
-        Protected m_strLimitDescr As String
         Protected m_doPairedLimit As ConstraintLimit
-        Protected m_snAngle As AnimatGUI.Framework.ScaledNumber
+        Protected m_snLimitPos As AnimatGUI.Framework.ScaledNumber
         Protected m_snDamping As ScaledNumber
         Protected m_snRestitution As ScaledNumber
         Protected m_snStiffness As ScaledNumber
+        Protected m_bAngleLimit As Boolean = True
+        Protected m_bIsLowerLimit As Boolean = True
 
 #End Region
 
 #Region " Properties "
 
-        Public Overridable Property LimitDescription() As String
+        Public Overridable ReadOnly Property LimitDescription() As String
             Get
-                Return m_strLimitDescr
+                If m_bIsLowerLimit Then
+                    Return "Lower"
+                Else
+                    Return "Upper"
+                End If
             End Get
-            Set(ByVal value As String)
-                m_strLimitDescr = value
-            End Set
         End Property
         Public Overridable Property PairedLimit() As ConstraintLimit
             Get
@@ -48,23 +50,57 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
-        Public Overridable Property Angle() As ScaledNumber
+        Public Overridable Property AngleLimit() As Boolean
             Get
-                Return m_snAngle
+                Return m_bAngleLimit
+            End Get
+            Set(ByVal value As Boolean)
+                m_bAngleLimit = value
+
+                If m_bAngleLimit Then
+                    m_snLimitPos = New AnimatGUI.Framework.ScaledNumber(Me, "LimitPos", -45, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Degrees", "Deg")
+                Else
+                    m_snLimitPos = New AnimatGUI.Framework.ScaledNumber(Me, "LimitPos", 10, AnimatGUI.Framework.ScaledNumber.enumNumericScale.centi, "meters", "m")
+                End If
+            End Set
+        End Property
+
+        Public Overridable Property IsLowerLimit() As Boolean
+            Get
+                Return m_bIsLowerLimit
+            End Get
+            Set(ByVal value As Boolean)
+                m_bIsLowerLimit = value
+            End Set
+        End Property
+
+        Public Overridable Property LimitPos() As ScaledNumber
+            Get
+                Return m_snLimitPos
             End Get
             Set(ByVal value As ScaledNumber)
-                If Not m_doPairedLimit Is Nothing AndAlso value.ActualValue > m_doPairedLimit.Angle.ActualValue Then
-                    Throw New System.Exception("The " & m_strLimitDescr.ToLower() & " angle cannot be larger than its opposite angle.")
-                End If
-                If value.ActualValue < -180 Then
-                    Throw New System.Exception("The " & m_strLimitDescr.ToLower() & " angle cannot be less than -180 degrees.")
-                End If
-                If value.ActualValue > 180 Then
-                    Throw New System.Exception("The " & m_strLimitDescr.ToLower() & " angle cannot be greater than 180 degrees.")
+                If Not m_doPairedLimit Is Nothing Then
+                    If m_bIsLowerLimit AndAlso value.ActualValue > m_doPairedLimit.LimitPos.ActualValue Then
+                        Throw New System.Exception("The " & LimitDescription().ToLower() & " position cannot be larger than its opposite angle.")
+                    ElseIf Not m_bIsLowerLimit AndAlso value.ActualValue < m_doPairedLimit.LimitPos.ActualValue Then
+                        Throw New System.Exception("The " & LimitDescription().ToLower() & " position cannot be less than its opposite angle.")
+                    End If
                 End If
 
-                SetSimData("Angle", Util.DegreesToRadians(CSng(value.ActualValue)).ToString(), True)
-                m_snAngle.CopyData(value)
+                If m_bAngleLimit Then
+                    If value.ActualValue < -180 Then
+                        Throw New System.Exception("The " & LimitDescription.ToLower() & " angle cannot be less than -180 degrees.")
+                    End If
+                    If value.ActualValue > 180 Then
+                        Throw New System.Exception("The " & LimitDescription.ToLower() & " angle cannot be greater than 180 degrees.")
+                    End If
+
+                    SetSimData("LimitPos", Util.DegreesToRadians(CSng(value.ActualValue)).ToString(), True)
+                    m_snLimitPos.CopyData(value)
+                Else
+                    SetSimData("LimitPos", value.ActualValue.ToString(), True)
+                    m_snLimitPos.CopyData(value)
+                End If
             End Set
         End Property
 
@@ -117,7 +153,7 @@ Namespace DataObjects.Physical
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
 
-            m_snAngle = New AnimatGUI.Framework.ScaledNumber(Me, "Angle", -45, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Degrees", "Deg")
+            m_snLimitPos = New AnimatGUI.Framework.ScaledNumber(Me, "LimitPos", -45, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Degrees", "Deg")
             m_snStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "Stiffness", 5, ScaledNumber.enumNumericScale.Mega, "N/m", "N/m")
             m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 0, ScaledNumber.enumNumericScale.Kilo, "g/s", "g/s")
             m_snRestitution = New AnimatGUI.Framework.ScaledNumber(Me, "Restitution", 0, ScaledNumber.enumNumericScale.None, "v/v", "v/v")
@@ -126,7 +162,7 @@ Namespace DataObjects.Physical
 
         Public Overridable Sub CopyData(ByVal doConstraint As ConstraintLimit)
 
-            m_snAngle.CopyData(doConstraint.m_snAngle)
+            m_snLimitPos.CopyData(doConstraint.m_snLimitPos)
             m_snDamping.CopyData(doConstraint.m_snDamping)
             m_snRestitution.CopyData(doConstraint.m_snRestitution)
             m_snStiffness.CopyData(doConstraint.m_snStiffness)
@@ -136,7 +172,7 @@ Namespace DataObjects.Physical
         Public Overrides Sub ClearIsDirty()
             MyBase.ClearIsDirty()
 
-            m_snAngle.ClearIsDirty()
+            m_snLimitPos.ClearIsDirty()
             m_snStiffness.ClearIsDirty()
             m_snDamping.ClearIsDirty()
             m_snRestitution.ClearIsDirty()
@@ -156,20 +192,28 @@ Namespace DataObjects.Physical
             Dim doOrig As ConstraintLimit = DirectCast(doOriginal, ConstraintLimit)
 
             m_doPairedLimit = doOrig.m_doPairedLimit
-            m_snAngle = DirectCast(doOrig.m_snAngle, ScaledNumber)
+            m_snLimitPos = DirectCast(doOrig.m_snLimitPos, ScaledNumber)
             m_snStiffness = DirectCast(doOrig.m_snStiffness, ScaledNumber)
             m_snDamping = DirectCast(doOrig.m_snDamping, ScaledNumber)
             m_snRestitution = DirectCast(doOrig.m_snRestitution, ScaledNumber)
+            m_bIsLowerLimit = doOrig.m_bIsLowerLimit
+            m_bAngleLimit = doOrig.m_bAngleLimit
 
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
 
             Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag
-            pbNumberBag = m_snAngle.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Angle", pbNumberBag.GetType(), "Angle", _
-                                        "Constraints", "Sets the " & m_strLimitDescr.ToLower() & " angle rotation that is allowed for this joint in degrees.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            pbNumberBag = m_snLimitPos.Properties
+            If m_bAngleLimit Then
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Angle", pbNumberBag.GetType(), "LimitPos", _
+                                            "Constraints", "Sets the " & LimitDescription.ToLower() & " angle rotation that is allowed for this joint in degrees.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            Else
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Position", pbNumberBag.GetType(), "LimitPos", _
+                                            "Constraints", "Sets the " & LimitDescription.ToLower() & " position that is allowed for this joint.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            End If
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Enable Limit", m_bEnabled.GetType(), "Enabled", _
                                         "Constraints", "Enables or disables this joint limit constraints.", m_bEnabled))
@@ -217,7 +261,7 @@ Namespace DataObjects.Physical
                 End If
 
                 m_bEnabled = oXml.GetChildBool("Enabled", m_bEnabled)
-                m_snAngle.LoadData(oXml, "Angle")
+                m_snLimitPos.LoadData(oXml, "LimitPos")
                 m_snDamping.LoadData(oXml, "Damping")
                 m_snRestitution.LoadData(oXml, "Restitution")
                 m_snStiffness.LoadData(oXml, "Stiffness")
@@ -235,7 +279,7 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("Name", m_strName)
             oXml.AddChildElement("ID", m_strID)
             oXml.AddChildElement("Enabled", m_bEnabled)
-            m_snAngle.SaveData(oXml, "Angle")
+            m_snLimitPos.SaveData(oXml, "LimitPos")
             m_snDamping.SaveData(oXml, "Damping")
             m_snRestitution.SaveData(oXml, "Restitution")
             m_snStiffness.SaveData(oXml, "Stiffness")
@@ -252,7 +296,12 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("Name", m_strName)
             oXml.AddChildElement("ID", m_strID)
             oXml.AddChildElement("Enabled", m_bEnabled)
-            m_snAngle.SaveSimulationXml(oXml, Me, "Angle")
+
+            If m_bAngleLimit Then
+                oXml.AddChildElement("LimitPos", Util.DegreesToRadians(CSng(m_snLimitPos.ActualValue)))
+            Else
+                oXml.AddChildElement("LimitPos", m_snLimitPos.ActualValue)
+            End If
             m_snDamping.SaveSimulationXml(oXml, Me, "Damping")
             m_snRestitution.SaveSimulationXml(oXml, Me, "Restitution")
             m_snStiffness.SaveSimulationXml(oXml, Me, "Stiffness")
@@ -262,7 +311,7 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overrides Function ToString() As String
-            Return m_snAngle.ToString()
+            Return m_snLimitPos.ToString()
         End Function
 
 #End Region

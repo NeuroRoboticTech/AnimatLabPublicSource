@@ -58,7 +58,7 @@ NeuralModule::NeuralModule()
 {
 	m_iTargetAdapterCount = 0;
 	m_iTimeStepInterval = 0;
-	m_fltTimeStep = 0;
+	m_fltTimeStep = -1;
 	m_iTimeStepCount = 0;
 	m_lpClassFactory = NULL;
 	m_lpSim = NULL;

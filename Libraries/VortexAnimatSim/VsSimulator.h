@@ -59,6 +59,19 @@ namespace VortexAnimatSim
 		osg::Group *OSGRoot() {return m_grpScene.get();};
 		osgManipulator::CommandManager *OsgCmdMgr() {return m_osgCmdMgr.get();};
 
+#pragma region MutatorOverrides
+
+		virtual void LinearCompliance(float fltVal, BOOL bUseScaling = TRUE);
+		virtual void AngularCompliance(float fltVal, BOOL bUseScaling = TRUE);
+		virtual void LinearDamping(float fltVal, BOOL bUseScaling = TRUE);
+		virtual void AngularDamping(float fltVal, BOOL bUseScaling = TRUE);
+		virtual void LinearKineticLoss(float fltVal);
+		virtual void AngularKineticLoss(float fltVal);
+		virtual void PhysicsTimeStep(float fltVal);
+		virtual void Gravity(float fltVal, BOOL bUseScaling = TRUE);
+
+#pragma endregion
+
 		virtual float *GetDataPointer(string strDataType);
 
 		virtual void Reset(); //Resets the entire application back to the default state 

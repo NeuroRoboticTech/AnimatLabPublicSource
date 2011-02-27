@@ -70,6 +70,7 @@ namespace AnimatSim
 	{
 		class IPhysicsBody;
 		class BodyPart;
+		class ConstraintLimit;
 		class RigidBody;
 		class Joint;
 		class Structure;

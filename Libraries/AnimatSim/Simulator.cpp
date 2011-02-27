@@ -57,7 +57,7 @@ Simulator::Simulator()
 	m_strID = "SIMULATOR";
 	m_strName = m_strID;
 	m_fltTime = 0;
-	m_fltTimeStep = (float) 0.0025;
+	m_fltTimeStep = -1;
 	m_iPhysicsStepInterval = 4;
 	m_fltPhysicsTimeStep = (float) 0.01;
 	m_lTimeSlice = 0;
@@ -261,8 +261,6 @@ void Simulator::FluidDensity(float fltVal, BOOL bUseScaling)
 
 void Simulator::Gravity(float fltVal, BOOL bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Gravity");
-
 	//We must convert the gravity to use the correct scale.
 	if(bUseScaling)
 		fltVal /= m_fltDistanceUnits;
@@ -273,11 +271,10 @@ void Simulator::Gravity(float fltVal, BOOL bUseScaling)
 void Simulator::PhysicsTimeStep(float fltVal)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "PhysicsTimeStep");
-	m_fltPhysicsTimeStep = fltVal;
 
 	//If no timestep has been set then start the time step with the physics system and then later on we will find the 
 	//real minimum value while looking at all of the neural modules.
-	if(m_fltTimeStep < 0)
+	if(m_fltTimeStep < 0 || m_fltTimeStep > fltVal)
 		m_fltTimeStep = fltVal;
 
 	//Find the number of timeslices that need to occur before the physics system is updated
@@ -295,23 +292,63 @@ void Simulator::FrameRate(int iVal)
  	m_fltFrameStep = (1/ (float) m_iFrameRate);
 }
 
-//CNlClassFactory *Simulator::NeuralClassFactory()
-//{
-//	if(!m_lpClassFactory)
-//		THROW_ERROR(Al_Err_lClassFactoryNotDefined, Al_Err_strClassFactoryNotDefined);
-//
-//	return m_lpClassFactory;
-//}
+float Simulator::LinearCompliance() {return m_fltLinearCompliance;}
+void Simulator::LinearCompliance(float fltVal, BOOL bUseScaling) 
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "LinearCompliance");
+	
+	if(bUseScaling)
+		fltVal *= m_fltMassUnits;
 
+	m_fltLinearCompliance = fltVal;
+}
 
-//CNlNeuron *Simulator::GetNeuron(string strOrganismID, short iXPos, 
-//																	 short iYPos, short iZPos)
-//{
-//	Organism *lpOrganism = FindOrganism(strOrganismID);
-//
-//	//return lpOrganism->GetNeuron(iXPos, iYPos, iZPos);
-//	return NULL;
-//}
+float Simulator::AngularCompliance() {return m_fltAngularCompliance;}
+void Simulator::AngularCompliance(float fltVal, BOOL bUseScaling) 
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "AngularCompliance");
+	
+	if(bUseScaling)
+		fltVal *= m_fltMassUnits;
+
+	m_fltAngularCompliance = fltVal;
+}
+
+float Simulator::LinearDamping() {return m_fltLinearDamping;}
+void Simulator::LinearDamping(float fltVal, BOOL bUseScaling) 
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "LinearDamping");
+	
+	if(bUseScaling)
+		fltVal *= m_fltInverseMassUnits;
+
+	m_fltLinearDamping = fltVal;
+}
+
+float Simulator::AngularDamping() {return m_fltAngularDamping;}
+void Simulator::AngularDamping(float fltVal, BOOL bUseScaling) 
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "AngularDamping");
+	
+	if(bUseScaling)
+		fltVal *= m_fltInverseMassUnits;
+
+	m_fltAngularDamping = fltVal;
+}
+
+float Simulator::LinearKineticLoss() {return m_fltLinearKineticLoss;}
+void Simulator::LinearKineticLoss(float fltVal) 
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "LinearKineticLoss");
+	m_fltLinearKineticLoss = fltVal;
+}
+
+float Simulator::AngularKineticLoss() {return m_fltAngularKineticLoss;}
+void Simulator::AngularKineticLoss(float fltVal) 
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "AngularKineticLoss");
+	m_fltAngularKineticLoss = fltVal;
+}
 
 BOOL Simulator::IsPhysicsBeingUpdated()
 {
@@ -341,6 +378,8 @@ void Simulator::VisualSelectionMode(int iVal)
 
 void Simulator::MouseSpringStiffness(float fltVal, BOOL bUseScaling) 
 {
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "MouseSpringStiffness", TRUE);
+
 	if(bUseScaling)
 		fltVal *= this->InverseMassUnits();
 
@@ -349,9 +388,10 @@ void Simulator::MouseSpringStiffness(float fltVal, BOOL bUseScaling)
 
 void Simulator::MouseSpringDamping(float fltVal, BOOL bUseScaling) 
 {
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "MouseSpringDamping", TRUE);
+
 	if(bUseScaling)
 		fltVal = fltVal/this->DensityMassUnits();
-
 	m_ftlMouseSpringDamping = fltVal;
 }
 
@@ -372,7 +412,7 @@ void Simulator::MouseSpringDamping(float fltVal, BOOL bUseScaling)
 void Simulator::Reset()
 {
 	m_fltTime = 0;
-	m_fltTimeStep = (float) 0.0025;
+	m_fltTimeStep = -1;
 	m_iPhysicsStepInterval = 4;
 	m_fltPhysicsTimeStep = (float) 0.01;
 	m_iPhysicsStepCount = 0;
@@ -785,6 +825,96 @@ BOOL Simulator::SetData(string strDataType, string strValue, BOOL bThrowError)
 	else if(strType == "ADDBODIESMODE")
 	{
 		AddBodiesMode(Std_ToBool(strValue));
+		return TRUE;
+	}
+	else if(strType == "DISTANCEUNITS")
+	{
+		DistanceUnits(strValue);
+		return TRUE;
+	}
+	else if(strType == "MASSUNITS")
+	{
+		DistanceUnits(strValue);
+		return TRUE;
+	}
+	else if(strType == "GRAVITY")
+	{
+		Gravity(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "PHYSICSTIMESTEP")
+	{
+		PhysicsTimeStep(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "SIMULATEHYDRODYNAMICS")
+	{
+		SimulateHydrodynamics(Std_ToBool(strValue));
+		return TRUE;
+	}
+	else if(strType == "FLUIDDENSITY")
+	{
+		FluidDensity(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "AUTOGENERATERANDOMSEED")
+	{
+		AutoGenerateRandomSeed(Std_ToBool(strValue));
+		return TRUE;
+	}
+	else if(strType == "MANUALRANDOMSEED")
+	{
+		ManualRandomSeed(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "FRAMERATE")
+	{
+		FrameRate(atoi(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "FORCEFASTMOVING")
+	{
+		ForceFastMoving(atoi(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "MOUSESPRINGSTIFFNESS")
+	{
+		MouseSpringStiffness(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "MOUSESPRINGDAMPING")
+	{
+		MouseSpringDamping(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "LINEARCOMPLIANCE")
+	{
+		LinearCompliance(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "ANGULARCOMPLIANCE")
+	{
+		AngularCompliance(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "LINEARDAMPING")
+	{
+		LinearDamping(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "ANGULARDAMPING")
+	{
+		AngularDamping(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "LINEARKINETICLOSS")
+	{
+		LinearKineticLoss(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "ANGULARKINETICLOSS")
+	{
+		AngularKineticLoss(atof(strValue.c_str()));
 		return TRUE;
 	}
 
@@ -1736,34 +1866,22 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 	if(m_bSimulateHydrodynamics)
 		FluidDensity(oXml.GetChildFloat("FluidDensity", m_fltFluidDensity));
 
-	m_bAutoGenerateRandomSeed = oXml.GetChildBool("AutoGenerateRandomSeed", m_bAutoGenerateRandomSeed);
-	m_iManualRandomSeed = oXml.GetChildInt("ManualRandomSeed", m_iManualRandomSeed);
+	AutoGenerateRandomSeed(oXml.GetChildBool("AutoGenerateRandomSeed", m_bAutoGenerateRandomSeed));
+	ManualRandomSeed(oXml.GetChildInt("ManualRandomSeed", m_iManualRandomSeed));
 
 	FrameRate(oXml.GetChildInt("FrameRate", m_iFrameRate));
+	ForceFastMoving(oXml.GetChildBool("FastMoving", m_bForceFastMoving));
 
 	MouseSpringStiffness(oXml.GetChildFloat("MouseSpringStiffness", m_fltMouseSpringStiffness));
 	MouseSpringDamping(oXml.GetChildFloat("MouseSpringDamping", m_ftlMouseSpringDamping));
 
-	m_fltLinearCompliance = oXml.GetChildFloat("LinearCompliance", m_fltLinearCompliance);
-	m_fltAngularCompliance = oXml.GetChildFloat("AngularCompliance", m_fltAngularCompliance);
-	m_fltLinearDamping = oXml.GetChildFloat("LinearDamping", m_fltLinearDamping);
-	m_fltAngularDamping = oXml.GetChildFloat("AngularDamping", m_fltAngularDamping);
-	m_fltLinearKineticLoss = oXml.GetChildFloat("LinearKineticLoss", m_fltLinearKineticLoss);
-	m_fltAngularKineticLoss = oXml.GetChildFloat("AngularKineticLoss", m_fltAngularKineticLoss);
+	LinearCompliance(oXml.GetChildFloat("LinearCompliance", m_fltLinearCompliance));
+	AngularCompliance(oXml.GetChildFloat("AngularCompliance", m_fltAngularCompliance));
+	LinearDamping(oXml.GetChildFloat("LinearDamping", m_fltLinearDamping));
+	AngularDamping(oXml.GetChildFloat("AngularDamping", m_fltAngularDamping));
+	LinearKineticLoss(oXml.GetChildFloat("LinearKineticLoss", m_fltLinearKineticLoss));
+	AngularKineticLoss(oXml.GetChildFloat("AngularKineticLoss", m_fltAngularKineticLoss));
 
-	m_bForceFastMoving = oXml.GetChildBool("FastMoving", m_bForceFastMoving);
-
-	//m_fltLinearCompliance = 1e-20;
-	//m_fltAngularCompliance = 1e-20;
-	//m_fltLinearDamping = 1e20;
-	//m_fltAngularDamping = 1e20;
-
-	//m_fltLinearCompliance *= m_fltMassUnits;
-	//m_fltAngularCompliance *= m_fltMassUnits;
-	//m_fltLinearDamping *= m_fltInverseMassUnits;
-	//m_fltAngularDamping *= m_fltInverseMassUnits;
-	//m_fltLinearKineticLoss = AnimatSim::LoadScaledNumber(oXml, "LinearKineticLoss", FALSE, m_fltLinearKineticLoss);
-	//m_fltAngularKineticLoss = AnimatSim::LoadScaledNumber(oXml, "AngularKineticLoss", FALSE, m_fltAngularKineticLoss);
 
 	if(oXml.FindChildElement("OdorTypes", FALSE))
 	{

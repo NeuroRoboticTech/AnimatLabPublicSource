@@ -244,6 +244,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ConstraintLimit.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ContactAdapter.cpp"
 				>
 			</File>
@@ -531,6 +535,10 @@
 			</File>
 			<File
 				RelativePath=".\Cone.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ConstraintLimit.h"
 				>
 			</File>
 			<File

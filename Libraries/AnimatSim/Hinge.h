@@ -41,28 +41,27 @@ namespace AnimatSim
 			class ANIMAT_PORT Hinge : public Joint    
 			{
 			protected:
-				///This is the minimum radian value that the joint can rotate about its axis.
-				///Its orginal position is used as zero radians.
-				float m_fltConstraintLow;
-
-				///This is the maximum radian value that the joint can rotate about its axis.
-				///Its orginal position is used as zero radians.
-				float m_fltConstraintHigh;
+				ConstraintLimit *m_lpUpperLimit;
+				ConstraintLimit *m_lpLowerLimit;
+				ConstraintLimit *m_lpPosFlap;
 
 				float m_fltMaxTorque;
 
 				float m_ftlServoGain;
 				BOOL m_bServoMotor;
 
+				virtual void CreateCylinderGraphics(Simulator *lpSim, Structure *lpStructure) = 0;
+
 			public:
 				Hinge();
 				virtual ~Hinge();
 
-				virtual float ConstraintLow() {return m_fltConstraintLow;};
-				virtual void ConstraintLow(float fltVal) {m_fltConstraintLow = fltVal;};
+				float CylinderRadius();
+				float CylinderHeight();
+				float FlapWidth();
 
-				virtual float ConstraintHigh() {return m_fltConstraintHigh;};
-				virtual void ConstraintHigh(float fltVal) {m_fltConstraintHigh = fltVal;};
+				virtual ConstraintLimit *UpperLimit() {return m_lpUpperLimit;};
+				virtual ConstraintLimit *LowerLimit() {return m_lpLowerLimit;};
 
 				void ServoMotor(BOOL bServo) {m_bServoMotor = bServo;};
 				BOOL ServoMotor() {return m_bServoMotor;};

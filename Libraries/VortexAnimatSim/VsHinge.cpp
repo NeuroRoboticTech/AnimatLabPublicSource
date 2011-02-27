@@ -1,11 +1,9 @@
-// VsHinge.cpp: implementation of the VsHinge class.
-//
-//////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
 #include "VsBody.h"
 #include "VsJoint.h"
 #include "VsRigidBody.h"
+#include "VsHingeLimit.h"
 #include "VsHinge.h"
 #include "VsSimulator.h"
 #include "VsOsgUserData.h"
@@ -19,10 +17,6 @@ namespace VortexAnimatSim
 		namespace Joints
 		{
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
 VsHinge::VsHinge()
 {
 	m_lpThis = this;
@@ -30,21 +24,27 @@ VsHinge::VsHinge()
 	m_lpPhysicsBody = this;
 	m_vxHinge = NULL;
 	m_fltRotationDeg = 0;
-	m_fltConstraintLow = -0.25*VX_PI;
-	m_fltConstraintHigh = 0.25*VX_PI;
-	iVal = 0;
+
+	m_lpUpperLimit = new VsHingeLimit();
+	m_lpLowerLimit = new VsHingeLimit();
+	m_lpPosFlap = new VsHingeLimit();
+
+	m_lpUpperLimit->LimitPos(0.25*VX_PI, FALSE);
+	m_lpLowerLimit->LimitPos(-0.25*VX_PI, FALSE);
+	m_lpPosFlap->LimitPos(Hinge::JointPosition(), FALSE);
+
+	m_lpUpperLimit->Color(1, 1, 1, 1);
+	m_lpLowerLimit->Color(1, 0, 0, 1);
+	m_lpPosFlap->Color(0, 0, 1, 1);
+
+	m_lpLowerLimit->IsLowerLimit(TRUE);
+	m_lpUpperLimit->IsLowerLimit(FALSE);
 }
 
 VsHinge::~VsHinge()
 {
-
+	//ConstraintLimits are deleted in the base objects.
 }
-//
-//void VsHinge::Selected(BOOL bValue, BOOL bSelectMultiple)  
-//{
-//	Hinge::Selected(bValue, bSelectMultiple);
-//	VsJoint::Selected(bValue, bSelectMultiple);
-//}
 
 //If this is a servo motor then the "velocity" signal is not really a velocity signal in this case. 
 //It is the desired position and we must convert it to the velocity needed to reach and maintian that position.
@@ -54,24 +54,25 @@ void VsHinge::CalculateServoVelocity()
 		return;
 
 	float fltError = m_fltDesiredVelocity - m_fltPosition;
-
+/*
 	if(m_bEnableLimits)
 	{
-		if(m_fltDesiredVelocity>m_fltConstraintHigh)
-			m_fltDesiredVelocity = m_fltConstraintHigh;
-		if(m_fltDesiredVelocity<m_fltConstraintLow)
-			m_fltDesiredVelocity = m_fltConstraintLow;
+		if(m_fltDesiredVelocity>m_lpUpperLimit->LimitPos())
+			m_fltDesiredVelocity = m_lpUpperLimit->LimitPos();
+		if(m_fltDesiredVelocity<m_lpLowerLimit->LimitPos())
+			m_fltDesiredVelocity = m_lpLowerLimit->LimitPos();
 
-		float fltProp = fltError / (m_fltConstraintHigh-m_fltConstraintLow);
+		float fltProp = fltError / (m_lpUpperLimit->LimitPos()-m_lpLowerLimit->LimitPos());
 
 		m_fltDesiredVelocity = fltProp * m_ftlServoGain; 
 	}
 	else
 		m_fltDesiredVelocity = fltError * m_fltMaxVelocity; 
+	*/
 }
 
 void VsHinge::SetVelocityToDesired()
-{
+{/*
 	if(m_bEnableMotor)
 	{			
 		if(m_bServoMotor)
@@ -96,7 +97,7 @@ void VsHinge::SetVelocityToDesired()
 		}
 		
 		m_fltPrevVelocity = m_fltSetVelocity;
-	}
+	}*/
 }
 
 void VsHinge::EnableMotor(BOOL bVal)
@@ -107,68 +108,10 @@ void VsHinge::EnableMotor(BOOL bVal)
 }
 
 
-void VsHinge::ConstraintLow(float fltVal)
-{
-	Hinge::ConstraintLow(fltVal);
-
-	CStdFPoint vPos(0, 0, 0), vRot(0, 0, 0); 
-
-	//Reset the position and rotation of the flap.
-	if(m_osgMinFlapRotateMT.valid() && m_osgMinFlapTranslateMT.valid())
-	{
-		float fltHeight = m_fltScale * 0.2f;
-
-		vPos.Set(0, 0, 0); vRot.Set(0, 0, -m_fltConstraintLow); 
-		m_osgMinFlapRotateMT->setMatrix(SetupMatrix(vPos, vRot));
-
-		vPos.Set((fltHeight/2)*sin(-m_fltConstraintLow), -(fltHeight/2)*cos(-m_fltConstraintLow), 0); vRot.Set(0, 0, 0); 
-		m_osgMinFlapTranslateMT->setMatrix(SetupMatrix(vPos, vRot));
-	}
-
-	//Set the lower limit on the physics hinge object.
-	if(m_vxHinge)
-		m_vxHinge->setLowerLimit(m_vxHinge->kAngularCoordinate, m_fltConstraintLow, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
-}
-
-void VsHinge::ConstraintHigh(float fltVal)
-{
-	Hinge::ConstraintHigh(fltVal);
-
-	CStdFPoint vPos(0, 0, 0), vRot(0, 0, 0); 
-
-	//Reset the position and rotation of the flap.
-	if(m_osgMinFlapRotateMT.valid() && m_osgMinFlapTranslateMT.valid())
-	{
-		float fltHeight = m_fltScale * 0.2f;
-
-		vPos.Set(0, 0, 0); vRot.Set(0, 0, -m_fltConstraintHigh); 
-		m_osgMaxFlapRotateMT->setMatrix(SetupMatrix(vPos, vRot));
-
-		vPos.Set((fltHeight/2)*sin(-m_fltConstraintHigh), -(fltHeight/2)*cos(-m_fltConstraintHigh), 0); vRot.Set(0, 0, 0); 
-		m_osgMaxFlapTranslateMT->setMatrix(SetupMatrix(vPos, vRot));
-	}
-
-	//Set the lower limit on the physics hinge object.
-	if(m_vxHinge)
-		m_vxHinge->setUpperLimit(m_vxHinge->kAngularCoordinate, m_fltConstraintHigh, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
-}
-
 void VsHinge::ResetGraphicsAndPhysics()
 {
 
 	VsBody::BuildLocalMatrix();
-
-	//if(m_osgPosFlapRotateMT.valid() && m_osgPosFlapReferenceMT.valid() && m_osgPosFlapTranslateMT.valid())
-	//{
-	//	CStdFPoint vPos(0, 0, 0), vRot(0, 0, 0); 
-	//	m_osgPosFlapRotateMT->setMatrix(SetupMatrix(vPos, m_oRotation));
-
-	//	CStdFPoint vRefPos = GetOSGWorldCoords(m_osgPosFlapReferenceMT.get());
-	//	vPos = vRefPos - m_lpChild->AbsolutePosition(); 
-	//	//We want to reverse any rotations performed on the child object.
-	//	vRot = m_lpChild->Rotation(); vRot.x = -vRot.x; vRot.y = -vRot.y; vRot.z = -vRot.z;  
-	//	m_osgPosFlapTranslateMT->setMatrix(SetupMatrix(vPos, vRot));
-	//}
 
 	SetupPhysics(m_lpSim, m_lpStructure);	
 }
@@ -179,32 +122,56 @@ void VsHinge::Rotation(CStdFPoint &oPoint)
 	ResetGraphicsAndPhysics();
 }
 
+void VsHinge::JointPosition(float fltPos)
+{
+	m_fltPosition = fltPos;
+	if(m_lpPosFlap)
+		m_lpPosFlap->LimitPos(fltPos);
+}
+
+
 void VsHinge::SetAlpha()
 {
 	VsJoint::SetAlpha();
 
-	//Now set the alpha for all of the sub parts we created for the joint
-	//if(m_osgPosFlapMat.valid() && m_osgPosFlapSS.valid())
-	//	SetMaterialAlpha(m_osgPosFlapMat.get(), m_osgPosFlapSS.get(), m_fltAlpha);
-
-	if(m_osgMinFlapMat.valid() && m_osgMinFlapSS.valid())
-		SetMaterialAlpha(m_osgMinFlapMat.get(), m_osgMinFlapSS.get(), m_fltAlpha);
-
-	if(m_osgMaxFlapMat.valid() && m_osgMaxFlapSS.valid())
-		SetMaterialAlpha(m_osgMaxFlapMat.get(), m_osgMaxFlapSS.get(), m_fltAlpha);
+	m_lpUpperLimit->Alpha(m_fltAlpha);
+	m_lpLowerLimit->Alpha(m_fltAlpha);
+	m_lpPosFlap->Alpha(m_fltAlpha);
 
 	if(m_osgCylinderMat.valid() && m_osgCylinderSS.valid())
 		SetMaterialAlpha(m_osgCylinderMat.get(), m_osgCylinderSS.get(), m_fltAlpha);
 
 }
 
-//void VsHinge::SetVisible(BOOL bVisible)
-//{
-//	//Now set the visible for all of the sub parts we created for the joint
-//	VsJoint::SetVisible(m_osgCylinderMT.get(), bVisible);
-//	VsJoint::SetVisible(m_osgCylinderMT.get(), bVisible);
-//	VsJoint::SetVisible(m_osgCylinderMT.get(), bVisible);
-//}
+void VsHinge::CreateCylinderGraphics(Simulator *lpSim, Structure *lpStructure)
+{
+	//Create the cylinder for the hinge
+	m_osgCylinder = CreateConeGeometry(CylinderHeight(), CylinderRadius(), CylinderRadius(), 30, true, true, true);
+	osg::ref_ptr<osg::Geode> osgCylinder = new osg::Geode;
+	osgCylinder->addDrawable(m_osgCylinder.get());
+
+	CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
+	m_osgCylinderMT = new osg::MatrixTransform();
+	m_osgCylinderMT->setMatrix(SetupMatrix(vPos, vRot));
+	m_osgCylinderMT->addChild(osgCylinder.get());
+
+	//create a material to use with the pos flap
+	if(!m_osgCylinderMat.valid())
+		m_osgCylinderMat = new osg::Material();		
+
+	//create a stateset for this node
+	m_osgCylinderSS = m_osgCylinderMT->getOrCreateStateSet();
+
+	//set the diffuse property of this node to the color of this body	
+	m_osgCylinderMat->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.1, 0.1, 0.1, 1));
+	m_osgCylinderMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(1, 0.25, 1, 1));
+	m_osgCylinderMat->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(0.25, 0.25, 0.25, 1));
+	m_osgCylinderMat->setShininess(osg::Material::FRONT_AND_BACK, 64);
+	m_osgCylinderSS->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
+
+	//apply the material
+	m_osgCylinderSS->setAttribute(m_osgCylinderMat.get(), osg::StateAttribute::ON);
+}
 
 void VsHinge::SetupGraphics(Simulator *lpSim, Structure *lpStructure)
 {
@@ -214,164 +181,33 @@ void VsHinge::SetupGraphics(Simulator *lpSim, Structure *lpStructure)
 
 	if(m_osgParent.valid())
 	{
-		float fltRadius = m_fltScale * 0.05f;
-		float fltHeight = m_fltScale * 0.2f;
-		float fltFlapWidth = m_fltScale * 0.01f;
+		CreateCylinderGraphics(lpSim, lpStructure);
 
-		//Create the cylinder for the hinge
-		m_osgCylinder = CreateConeGeometry(fltHeight, fltRadius, fltRadius, 30, true, true, true);
-		osg::ref_ptr<osg::Geode> osgCylinder = new osg::Geode;
-		osgCylinder->addDrawable(m_osgCylinder.get());
+		VsHingeLimit *lpUpperLimit = dynamic_cast<VsHingeLimit *>(m_lpUpperLimit);
+		VsHingeLimit *lpLowerLimit = dynamic_cast<VsHingeLimit *>(m_lpLowerLimit);
+		VsHingeLimit *lpPosFlap = dynamic_cast<VsHingeLimit *>(m_lpPosFlap);
 
-		CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
-		m_osgCylinderMT = new osg::MatrixTransform();
-		m_osgCylinderMT->setMatrix(SetupMatrix(vPos, vRot));
-		m_osgCylinderMT->addChild(osgCylinder.get());
+		lpPosFlap->LimitPos(Hinge::JointPosition());
 
-		//Create the min flap
-		m_osgMinFlap = CreateBoxGeometry(fltFlapWidth, (fltHeight/2), fltHeight, fltFlapWidth, (fltHeight/2), fltHeight);
-		osg::ref_ptr<osg::Geode> osgMinFlap = new osg::Geode;
-		osgMinFlap->addDrawable(m_osgMinFlap.get());
-
-		//Rotate flap first then translate.
-		//m_fltConstraintLow = -(2*VX_PI)/4;
-		vPos.Set(0, 0, 0); vRot.Set(0, 0, -m_fltConstraintLow); 
-		m_osgMinFlapRotateMT = new osg::MatrixTransform();
-		m_osgMinFlapRotateMT->setMatrix(SetupMatrix(vPos, vRot));
-		m_osgMinFlapRotateMT->addChild(osgMinFlap.get());
-
-		vPos.Set((fltHeight/2)*sin(-m_fltConstraintLow), -(fltHeight/2)*cos(-m_fltConstraintLow), 0); vRot.Set(0, 0, 0); 
-		m_osgMinFlapTranslateMT = new osg::MatrixTransform();
-		m_osgMinFlapTranslateMT->setMatrix(SetupMatrix(vPos, vRot));
-		m_osgMinFlapTranslateMT->addChild(m_osgMinFlapRotateMT.get());
-
-		//Create the max flap
-		m_osgMaxFlap = CreateBoxGeometry(fltFlapWidth, (fltHeight/2), fltHeight, fltFlapWidth, (fltHeight/2), fltHeight);
-		osg::ref_ptr<osg::Geode> osgMaxFlap = new osg::Geode;
-		osgMaxFlap->addDrawable(m_osgMaxFlap.get());
-
-		//Rotate flap first then translate.
-		//m_fltConstraintHigh = (1*VX_PI)/4;
-		vPos.Set(0, 0, 0); vRot.Set(0, 0, -m_fltConstraintHigh); 
-		m_osgMaxFlapRotateMT = new osg::MatrixTransform();
-		m_osgMaxFlapRotateMT->setMatrix(SetupMatrix(vPos, vRot));
-		m_osgMaxFlapRotateMT->addChild(osgMaxFlap.get());
-
-		vPos.Set((fltHeight/2)*sin(-m_fltConstraintHigh), -(fltHeight/2)*cos(-m_fltConstraintHigh), 0); vRot.Set(0, 0, 0); 
-		m_osgMaxFlapTranslateMT = new osg::MatrixTransform();
-		m_osgMaxFlapTranslateMT->setMatrix(SetupMatrix(vPos, vRot));
-		m_osgMaxFlapTranslateMT->addChild(m_osgMaxFlapRotateMT.get());
-
-		//Now add a reference point. We will find the coordinates of this point and use that to setup the position
-		//of our movable flap. It is empty.
-		vPos.Set(0, -fltRadius, 0); vRot.Set(0, 0, 0); 
-		m_osgPosFlapReferenceMT = new osg::MatrixTransform();
-		m_osgPosFlapReferenceMT->setMatrix(SetupMatrix(vPos, vRot));
+		lpUpperLimit->SetupGraphics(lpSim, lpStructure);
+		lpLowerLimit->SetupGraphics(lpSim, lpStructure);
+		lpPosFlap->SetupGraphics(lpSim, lpStructure);
 
 		//Add the parts to the group node.
+		CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
 		vPos.Set(0, 0, 0); vRot.Set(0, VX_PI/2, 0); 
 		osg::ref_ptr<osg::MatrixTransform> m_osgHingeMT = new osg::MatrixTransform();
 		m_osgHingeMT->setMatrix(SetupMatrix(vPos, vRot));
 
 		m_osgHingeMT->addChild(m_osgCylinderMT.get());
-		m_osgHingeMT->addChild(m_osgMinFlapTranslateMT.get());
-		m_osgHingeMT->addChild(m_osgMaxFlapTranslateMT.get());
-		m_osgHingeMT->addChild(m_osgPosFlapReferenceMT.get());
+		m_osgHingeMT->addChild(lpUpperLimit->FlapTranslateMT());
+		m_osgHingeMT->addChild(lpLowerLimit->FlapTranslateMT());
+		m_osgHingeMT->addChild(lpPosFlap->FlapTranslateMT());
 
 		m_osgNode = m_osgHingeMT.get();
 
 		VsBody::BuildLocalMatrix();
-/*
-		//Create the max flap
-		float fltPosFlapHeight = fltHeight - (fltHeight*0.05); //make this flap just slightly smaller than the others
-		m_osgPosFlap = CreateBoxGeometry(fltPosFlapHeight, (fltHeight/2), fltFlapWidth, fltPosFlapHeight, (fltHeight/2), fltFlapWidth);
-		osg::ref_ptr<osg::Geode> osgPosFlap = new osg::Geode;
-		osgPosFlap->addDrawable(m_osgPosFlap.get());
 
-		//Rotate flap first then translate.
-		vPos.Set(0, 0, 0); vRot = m_lpThis->Rotation();
-		m_osgPosFlapRotateMT = new osg::MatrixTransform();
-		m_osgPosFlapRotateMT->setMatrix(SetupMatrix(vPos, vRot));
-		m_osgPosFlapRotateMT->addChild(osgPosFlap.get());
-
-		CStdFPoint vRefPos = GetOSGWorldCoords(m_osgPosFlapReferenceMT.get());
-		vPos = vRefPos - m_lpChild->AbsolutePosition(); //vRot.Set(0, 0, 0); 
-		//We want to reverse any rotations performed on the child object.
-		vRot = m_lpChild->Rotation(); vRot.x = -vRot.x; vRot.y = -vRot.y; vRot.z = -vRot.z;  
-		m_osgPosFlapTranslateMT = new osg::MatrixTransform();
-		m_osgPosFlapTranslateMT->setMatrix(SetupMatrix(vPos, vRot));
-		m_osgPosFlapTranslateMT->addChild(m_osgPosFlapRotateMT.get());
-		osgChild->addChild(m_osgPosFlapTranslateMT.get());
-*/
-
-		//create a material to use with the pos flap
-		if(!m_osgCylinderMat.valid())
-			m_osgCylinderMat = new osg::Material();		
-
-		//create a stateset for this node
-		m_osgCylinderSS = m_osgCylinderMT->getOrCreateStateSet();
-
-		//set the diffuse property of this node to the color of this body	
-		m_osgCylinderMat->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.1, 0.1, 0.1, 1));
-		m_osgCylinderMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(1, 0.25, 1, 1));
-		m_osgCylinderMat->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(0.25, 0.25, 0.25, 1));
-		m_osgCylinderMat->setShininess(osg::Material::FRONT_AND_BACK, 64);
-		m_osgCylinderSS->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
-
-		//apply the material
-		m_osgCylinderSS->setAttribute(m_osgCylinderMat.get(), osg::StateAttribute::ON);
-
-		//create a material to use with the pos flap
-		if(!m_osgMinFlapMat.valid())
-			m_osgMinFlapMat = new osg::Material();		
-
-		//create a stateset for this node
-		m_osgMinFlapSS = m_osgMinFlapTranslateMT->getOrCreateStateSet();
-
-		//set the diffuse property of this node to the color of this body	
-		m_osgMinFlapMat->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.1, 0.1, 0.1, 1));
-		m_osgMinFlapMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(1, 0, 0, 1));
-		m_osgMinFlapMat->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(0.25, 0.25, 0.25, 1));
-		m_osgMinFlapMat->setShininess(osg::Material::FRONT_AND_BACK, 64);
-		m_osgMinFlapSS->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
-
-		//apply the material
-		m_osgMinFlapSS->setAttribute(m_osgMinFlapMat.get(), osg::StateAttribute::ON);
-
-		//create a material to use with the pos flap
-		if(!m_osgMaxFlapMat.valid())
-			m_osgMaxFlapMat = new osg::Material();		
-
-		//create a stateset for this node
-		m_osgMaxFlapSS = m_osgMaxFlapTranslateMT->getOrCreateStateSet();
-
-		//set the diffuse property of this node to the color of this body	
-		m_osgMaxFlapMat->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.1, 0.1, 0.1, 1));
-		m_osgMaxFlapMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(1, 1, 1, 1));
-		m_osgMaxFlapMat->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(0.25, 0.25, 0.25, 1));
-		m_osgMaxFlapMat->setShininess(osg::Material::FRONT_AND_BACK, 64);
-		m_osgMaxFlapSS->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
-
-		//apply the material
-		m_osgMaxFlapSS->setAttribute(m_osgMaxFlapMat.get(), osg::StateAttribute::ON);
-/*
-		//create a material to use with the pos flap
-		if(!m_osgPosFlapMat.valid())
-			m_osgPosFlapMat = new osg::Material();		
-
-		//create a stateset for this node
-		m_osgPosFlapSS = m_osgPosFlapTranslateMT->getOrCreateStateSet();
-
-		//set the diffuse property of this node to the color of this body	
-		m_osgPosFlapMat->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.1, 0.1, 0.1, 1));
-		m_osgPosFlapMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(0, 0, 1, 1));
-		m_osgPosFlapMat->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(0.25, 0.25, 0.25, 1));
-		m_osgPosFlapMat->setShininess(osg::Material::FRONT_AND_BACK, 64);
-		m_osgPosFlapSS->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
-
-		//apply the material
-		m_osgPosFlapSS->setAttribute(m_osgPosFlapMat.get(), osg::StateAttribute::ON);
-*/
 		SetAlpha();
 		SetCulling();
 		SetVisible(m_lpThis->IsVisible());
@@ -452,9 +288,15 @@ void VsHinge::SetupPhysics(Simulator *lpSim, Structure *lpStructure)
 	//Disable collisions between this object and its parent
 	m_lpChild->DisableCollision(lpSim, m_lpParent);
 
-	m_vxHinge->setLowerLimit(m_vxHinge->kAngularCoordinate,m_fltConstraintLow, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
-	m_vxHinge->setUpperLimit(m_vxHinge->kAngularCoordinate, m_fltConstraintHigh, 0, m_fltRestitution, m_fltStiffness, m_fltDamping);
-	m_vxHinge->setLimitsActive(m_vxHinge->kAngularCoordinate, m_bEnableLimits);	
+	VsHingeLimit *lpUpperLimit = dynamic_cast<VsHingeLimit *>(m_lpUpperLimit);
+	VsHingeLimit *lpLowerLimit = dynamic_cast<VsHingeLimit *>(m_lpLowerLimit);
+
+	lpUpperLimit->HingeRef(m_vxHinge);
+	lpLowerLimit->HingeRef(m_vxHinge);
+
+	//m_vxHinge->setLowerLimit(m_vxHinge->kAngularCoordinate,m_lpLowerLimit->LimitPos(), 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
+	//m_vxHinge->setUpperLimit(m_vxHinge->kAngularCoordinate, m_lpUpperLimit->LimitPos(), 0, m_fltRestitution, m_fltStiffness, m_fltDamping);
+	//m_vxHinge->setLimitsActive(m_vxHinge->kAngularCoordinate, m_bEnableLimits);	
 
 	m_vxJoint = m_vxHinge;
 	m_iCoordID = m_vxHinge->kAngularCoordinate;

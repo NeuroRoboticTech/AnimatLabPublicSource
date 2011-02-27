@@ -16,10 +16,7 @@ Namespace DataObjects.Physical
 
 #Region " Attributes "
 
-        Protected m_bEnableLimits As Boolean = True
-        Protected m_snDamping As ScaledNumber
-        Protected m_snRestitution As ScaledNumber
-        Protected m_snStiffness As ScaledNumber
+        Protected m_snSize As AnimatGUI.Framework.ScaledNumber
 
 #End Region
 
@@ -59,55 +56,17 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
-        Public Overridable Property EnableLimits() As Boolean
+        Public Overridable Property Size() As ScaledNumber
             Get
-                Return m_bEnableLimits
+                Return m_snSize
             End Get
-            Set(ByVal Value As Boolean)
-                SetSimData("EnableLimits", m_bEnableLimits.ToString, True)
-                m_bEnableLimits = Value
-            End Set
-        End Property
-
-        Public Overridable Property Damping() As ScaledNumber
-            Get
-                Return m_snDamping
-            End Get
-            Set(ByVal Value As ScaledNumber)
-                If Value.ActualValue < 0 Then
-                    Throw New System.Exception("The damping can not be less than zero.")
+            Set(ByVal value As ScaledNumber)
+                If value.ActualValue <= 0 Then
+                    Throw New System.Exception("The size cannot be less than or equal to zero.")
                 End If
 
-                SetSimData("Damping", m_snDamping.ActualValue.ToString, True)
-                m_snDamping.CopyData(Value)
-            End Set
-        End Property
-
-        Public Overridable Property Restitution() As ScaledNumber
-            Get
-                Return m_snRestitution
-            End Get
-            Set(ByVal Value As ScaledNumber)
-                If Value.ActualValue < 0 OrElse Value.ActualValue > 1 Then
-                    Throw New System.Exception("The restitution must be between 0 and 1.")
-                End If
-
-                SetSimData("Restitution", m_snRestitution.ActualValue.ToString, True)
-                m_snRestitution.CopyData(Value)
-            End Set
-        End Property
-
-        Public Overridable Property Stiffness() As ScaledNumber
-            Get
-                Return m_snStiffness
-            End Get
-            Set(ByVal Value As ScaledNumber)
-                If Value.ActualValue < 0 Then
-                    Throw New System.Exception("The stiffness can not be less than zero.")
-                End If
-
-                SetSimData("Stiffness", m_snStiffness.ActualValue.ToString, True)
-                m_snStiffness.CopyData(Value)
+                SetSimData("Size", value.ActualValue.ToString, True)
+                m_snSize.CopyData(value)
             End Set
         End Property
 
@@ -120,9 +79,7 @@ Namespace DataObjects.Physical
 
             m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("DesiredVelocity", "Desired Velocity", "m/s", "m/s", -5, 5, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)
 
-            m_snStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "Stiffness", 5, ScaledNumber.enumNumericScale.Mega, "N/m", "N/m")
-            m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 0, ScaledNumber.enumNumericScale.Kilo, "g/s", "g/s")
-            m_snRestitution = New AnimatGUI.Framework.ScaledNumber(Me, "Restitution", 0, ScaledNumber.enumNumericScale.None, "v/v", "v/v")
+            m_snSize = New AnimatGUI.Framework.ScaledNumber(Me, "Size", 2, AnimatGUI.Framework.ScaledNumber.enumNumericScale.centi, "Meters", "m")
 
             'Now we need to setup handlers for the parent and child move and rotate events so we can tell the joint object 
             'in the simulation that these changes have occured. It will need to re-adjust the joint to take this into account.
@@ -143,9 +100,7 @@ Namespace DataObjects.Physical
         Public Overrides Sub ClearIsDirty()
             MyBase.ClearIsDirty()
 
-            m_snStiffness.ClearIsDirty()
-            m_snDamping.ClearIsDirty()
-            m_snRestitution.ClearIsDirty()
+            If Not m_snSize Is Nothing Then m_snSize.ClearIsDirty()
         End Sub
 
         Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -153,12 +108,7 @@ Namespace DataObjects.Physical
             MyBase.CloneInternal(doOriginal, bCutData, doRoot)
 
             Dim doOrigJoint As Joint = DirectCast(doOriginal, Joint)
-
-            m_bEnableLimits = doOrigJoint.m_bEnableLimits
-            m_snStiffness = DirectCast(doOrigJoint.m_snStiffness, ScaledNumber)
-            m_snDamping = DirectCast(doOrigJoint.m_snDamping, ScaledNumber)
-            m_snRestitution = DirectCast(doOrigJoint.m_snRestitution, ScaledNumber)
-
+            m_snSize = DirectCast(doOrigJoint.m_snSize.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
         End Sub
 
         Public Overrides Function CreateJointTreeView(ByRef tvTree As TreeView, ByVal tnParent As TreeNode, _
@@ -253,29 +203,10 @@ Namespace DataObjects.Physical
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Enable Limits", m_bEnableLimits.GetType(), "EnableLimits", _
-                                        "Constraints", "Enables or disables the joint limit constraints.", m_bEnableLimits))
-
-            Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = m_snDamping.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Damping", pbNumberBag.GetType(), "Damping", _
-                                        "Constraints", "The damping term for this limit. If the stiffness and damping " & _
-                                        "of an individual limit are both zero, it is effectively deactivated. This is the damping " & _
-                                        "of the virtual spring used when the joint reaches its limit. It is not frictional damping " & _
-                                        "for the motion around the joint.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
-
-            pbNumberBag = m_snRestitution.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Restitution", pbNumberBag.GetType(), "Restitution", _
-                                        "Constraints", "The coefficient of restitution is the ratio of rebound velocity to " & _
-                                        "impact velocity when the joint reaches the low or high stop. This is used if the limit stiffness " & _
-                                        "is greater than zero. Restitution must be in the range zero to one inclusive.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
-
-            pbNumberBag = m_snStiffness.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Stiffness", pbNumberBag.GetType(), "Stiffness", _
-                                        "Constraints", "The spring constant is used for restitution force when a limited " & _
-                                        "joint reaches one of its stops. This limit property must be zero or positive. " & _
-                                        "If the stiffness and damping of an individual limit are both zero, it is effectively deactivated.", pbNumberBag, _
+            Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag
+            pbNumberBag = m_snSize.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Size", pbNumberBag.GetType(), "Size", _
+                                        "Part Properties", "Sets the overall size of the part.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
         End Sub
@@ -284,22 +215,11 @@ Namespace DataObjects.Physical
 
             MyBase.LoadData(doStructure, oXml)
 
-            oXml.IntoElem() 'Into BodyPart Element
+            oXml.IntoElem() 'Into Joint Element
 
-            If oXml.FindChildElement("Constraint", False) Then
-                oXml.IntoElem()
+            m_snSize.LoadData(oXml, "Size")
 
-                If oXml.FindChildElement("EnableLimits", False) Then
-                    m_bEnableLimits = oXml.GetChildBool("EnableLimits")
-                    m_snDamping.LoadData(oXml, "Damping")
-                    m_snRestitution.LoadData(oXml, "Restitution")
-                    m_snStiffness.LoadData(oXml, "Stiffness")
-                End If
-
-                oXml.OutOfElem()
-            End If
-
-            oXml.OutOfElem() 'Outof BodyPart Element
+            oXml.OutOfElem() 'Outof Joint Element
 
         End Sub
 
@@ -307,36 +227,25 @@ Namespace DataObjects.Physical
 
             MyBase.SaveData(doStructure, oXml)
 
-            oXml.IntoElem() 'Into BodyPart Element
+            oXml.IntoElem() 'Into Joint Element
 
-            oXml.AddChildElement("Constraint")
-            oXml.IntoElem()
-            oXml.AddChildElement("EnableLimits", m_bEnableLimits)
-            m_snDamping.SaveData(oXml, "Damping")
-            m_snRestitution.SaveData(oXml, "Restitution")
-            m_snStiffness.SaveData(oXml, "Stiffness")
-            oXml.OutOfElem()
+            m_snSize.SaveData(oXml, "Size")
 
-            oXml.OutOfElem() 'Outof BodyPart Element
+            oXml.OutOfElem() 'Outof Joint Element
 
         End Sub
 
         Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
             MyBase.SaveSimulationXml(oXml, nmParentControl, strName)
 
-            oXml.IntoElem() 'Into BodyPart Element
+            oXml.IntoElem() 'Into Joint Element
 
-            oXml.AddChildElement("Constraint")
-            oXml.IntoElem()
-            oXml.AddChildElement("EnableLimits", m_bEnableLimits)
-            m_snDamping.SaveSimulationXml(oXml, Me, "Damping")
-            m_snRestitution.SaveSimulationXml(oXml, Me, "Restitution")
-            m_snStiffness.SaveSimulationXml(oXml, Me, "Stiffness")
-            oXml.OutOfElem()
+            m_snSize.SaveSimulationXml(oXml, Me, "Size")
 
-            oXml.OutOfElem() 'Outof BodyPart Element
+            oXml.OutOfElem() 'Outof Joint Element
 
         End Sub
+
 #End Region
 
 #Region " Events "

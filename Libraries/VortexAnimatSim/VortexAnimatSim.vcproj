@@ -249,6 +249,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\VsHingeLimit.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\VsHud.cpp"
 				>
 			</File>
@@ -412,6 +416,10 @@
 			</File>
 			<File
 				RelativePath=".\VsHinge.h"
+				>
+			</File>
+			<File
+				RelativePath=".\VsHingeLimit.h"
 				>
 			</File>
 			<File

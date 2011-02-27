@@ -316,36 +316,60 @@ namespace AnimatSim
 			virtual string SimulationFile() {return m_strSimulationFile;};
 			virtual void SimulationFile(string strFile) {m_strSimulationFile = strFile;};
 
-			BOOL Paused() {return m_bPaused;};
-			void Paused(BOOL bVal) {m_bPaused = bVal;};
+			virtual BOOL Paused() {return m_bPaused;};
+			virtual void Paused(BOOL bVal) {m_bPaused = bVal;};
 
-			BOOL Initialized() {return m_bInitialized;};
-			void Initialized(BOOL bVal) {m_bInitialized = bVal;};
+			virtual BOOL Initialized() {return m_bInitialized;};
+			virtual void Initialized(BOOL bVal) {m_bInitialized = bVal;};
 
-			BOOL SimRunning() {return m_bSimRunning;};
+			virtual BOOL SimRunning() {return m_bSimRunning;};
 
-			BOOL AutoGenerateRandomSeed() {return m_bAutoGenerateRandomSeed;};
-			int ManualRandomSeed() {return m_iManualRandomSeed;};
+			virtual BOOL ForceFastMoving() {return m_bForceFastMoving;};
+			virtual void ForceFastMoving(BOOL bVal) {m_bForceFastMoving = bVal;};
+
+			virtual BOOL AutoGenerateRandomSeed() {return m_bAutoGenerateRandomSeed;};
+			virtual void AutoGenerateRandomSeed(BOOL bVal) {m_bAutoGenerateRandomSeed = bVal;};
+
+			virtual int ManualRandomSeed() {return m_iManualRandomSeed;};
+			virtual void ManualRandomSeed(int iSeed) {m_iManualRandomSeed = iSeed;};
+
+			virtual float LinearCompliance();
+			virtual void LinearCompliance(float fltVal, BOOL bUseScaling = TRUE);
+
+			virtual float AngularCompliance();
+			virtual void AngularCompliance(float fltVal, BOOL bUseScaling = TRUE);
+
+			virtual float LinearDamping();
+			virtual void LinearDamping(float fltVal, BOOL bUseScaling = TRUE);
+
+			virtual float AngularDamping();
+			virtual void AngularDamping(float fltVal, BOOL bUseScaling = TRUE);
+
+			virtual float LinearKineticLoss();
+			virtual void LinearKineticLoss(float fltVal);
+
+			virtual float AngularKineticLoss();
+			virtual void AngularKineticLoss(float fltVal);
 
 			virtual float TimeStep();
 			virtual void TimeStep(float fltVal);
 
-			float EndSimTime() {return m_fltEndSimTime;};
-			void EndSimTime(float fltVal) {m_fltEndSimTime = fltVal;};
+			virtual float EndSimTime() {return m_fltEndSimTime;};
+			virtual void EndSimTime(float fltVal) {m_fltEndSimTime = fltVal;};
 
-			long EndSimTimeSlice() {return m_lEndSimTimeSlice;};
-			void EndSimTimeSlice(long lVal) {m_lEndSimTimeSlice = lVal;};
+			virtual long EndSimTimeSlice() {return m_lEndSimTimeSlice;};
+			virtual void EndSimTimeSlice(long lVal) {m_lEndSimTimeSlice = lVal;};
 
-			BOOL Stopped() {return (m_bStopSimulation | m_bForceSimulationStop);};
+			virtual BOOL Stopped() {return (m_bStopSimulation | m_bForceSimulationStop);};
 
 			virtual int FrameRate() {return m_iFrameRate;};
 			virtual float FrameStep() {return m_fltFrameStep;};
 			virtual void FrameRate(int iVal);
 
-			void BlockSimulation() {m_bBlockSimulation = TRUE;};
-			void UnblockSimulation() {m_bBlockSimulation = FALSE; m_bSimBlockConfirm = FALSE;};
-			BOOL SimulationBlockConfirm() {return m_bSimBlockConfirm;};
-			BOOL WaitForSimulationBlock(long lTimeout = -1);
+			virtual void BlockSimulation() {m_bBlockSimulation = TRUE;};
+			virtual void UnblockSimulation() {m_bBlockSimulation = FALSE; m_bSimBlockConfirm = FALSE;};
+			virtual BOOL SimulationBlockConfirm() {return m_bSimBlockConfirm;};
+			virtual BOOL WaitForSimulationBlock(long lTimeout = -1);
 		 
 			virtual short PhysicsStepInterval() {return m_iPhysicsStepInterval;};
 			virtual void PhysicsStepInterval(short iVal) {m_iPhysicsStepInterval = iVal;};

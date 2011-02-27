@@ -133,6 +133,7 @@ Namespace DataObjects.Physical
                     Throw New System.Exception("You can not set the physics time step value to be less than or equal to zero!")
                 End If
 
+                Me.SetSimData("PhysicsTimeStep", Value.ActualValue.ToString, True)
                 m_snPhysicsTimeStep.CopyData(Value)
             End Set
         End Property
@@ -142,6 +143,7 @@ Namespace DataObjects.Physical
                 Return m_snGravity
             End Get
             Set(ByVal Value As ScaledNumber)
+                Me.SetSimData("Gravity", Value.ActualValue.ToString, True)
                 m_snGravity.CopyData(Value)
             End Set
         End Property
@@ -164,6 +166,7 @@ Namespace DataObjects.Physical
                 Return m_bSimulateHydrodynamics
             End Get
             Set(ByVal Value As Boolean)
+                Me.SetSimData("SimulateHydrodynamics", Value.ToString, True)
                 m_bSimulateHydrodynamics = Value
             End Set
         End Property
@@ -177,6 +180,7 @@ Namespace DataObjects.Physical
                     Throw New System.Exception("You can not set the fluid density value to be less than zero!")
                 End If
 
+                Me.SetSimData("FluidDensity", Value.ActualValue.ToString, True)
                 m_snFluidDensity.CopyData(Value)
             End Set
         End Property
@@ -190,6 +194,7 @@ Namespace DataObjects.Physical
                     Throw New System.Exception("You can not set the mouse spring stiffness to be less than zero!")
                 End If
 
+                Me.SetSimData("MouseSpringStiffness", Value.ActualValue.ToString, True)
                 m_snMouseSpringStiffness.CopyData(Value)
             End Set
         End Property
@@ -203,6 +208,7 @@ Namespace DataObjects.Physical
                     Throw New System.Exception("You can not set the mouse spring stiffness to be less than zero!")
                 End If
 
+                Me.SetSimData("MouseSpringDamping", Value.ActualValue.ToString, True)
                 m_snMouseSpringDamping.CopyData(Value)
             End Set
         End Property
@@ -216,6 +222,7 @@ Namespace DataObjects.Physical
                     Throw New System.Exception("You can not set the linear compliance to be less than zero!")
                 End If
 
+                Me.SetSimData("LinearCompliance", Value.ActualValue.ToString, True)
                 m_snLinearCompliance.CopyData(Value)
             End Set
         End Property
@@ -229,6 +236,7 @@ Namespace DataObjects.Physical
                     Throw New System.Exception("You can not set the linear damping to be less than zero!")
                 End If
 
+                Me.SetSimData("LinearDamping", Value.ActualValue.ToString, True)
                 m_snLinearDamping.CopyData(Value)
             End Set
         End Property
@@ -242,6 +250,7 @@ Namespace DataObjects.Physical
                     Throw New System.Exception("You can not set the angular compliance to be less than zero!")
                 End If
 
+                Me.SetSimData("AngularCompliance", Value.ActualValue.ToString, True)
                 m_snAngularCompliance.CopyData(Value)
             End Set
         End Property
@@ -255,6 +264,7 @@ Namespace DataObjects.Physical
                     Throw New System.Exception("You can not set the angular damping to be less than zero!")
                 End If
 
+                Me.SetSimData("AngularDamping", Value.ActualValue.ToString, True)
                 m_snAngularDamping.CopyData(Value)
             End Set
         End Property
@@ -268,6 +278,7 @@ Namespace DataObjects.Physical
                     Throw New System.Exception("You can not set the linear kinetic loss to be less than zero!")
                 End If
 
+                Me.SetSimData("LinearKineticLoss", Value.ActualValue.ToString, True)
                 m_snLinearKineticLoss.CopyData(Value)
             End Set
         End Property
@@ -281,6 +292,7 @@ Namespace DataObjects.Physical
                     Throw New System.Exception("You can not set the angular kinetic loss to be less than zero!")
                 End If
 
+                Me.SetSimData("AngularKineticLoss", Value.ActualValue.ToString, True)
                 m_snAngularKineticLoss.CopyData(Value)
             End Set
         End Property
@@ -316,6 +328,7 @@ Namespace DataObjects.Physical
                 Return m_eDistanceUnits
             End Get
             Set(ByVal Value As enumDistanceUnits)
+                Me.SetSimData("DistanceUnits", Value.ToString, True)
                 m_eDistanceUnits = Value
             End Set
         End Property
@@ -395,6 +408,7 @@ Namespace DataObjects.Physical
                 Return m_eMassUnits
             End Get
             Set(ByVal Value As enumMassUnits)
+                Me.SetSimData("MassUnits", Value.ToString, True)
                 m_eMassUnits = Value
             End Set
         End Property
@@ -490,6 +504,7 @@ Namespace DataObjects.Physical
                 Return m_bAutoGenerateRandomSeed
             End Get
             Set(ByVal Value As Boolean)
+                Me.SetSimData("AutoGenerateRandomSeed", Value.ToString, True)
                 m_bAutoGenerateRandomSeed = Value
 
                 'Reselect this node to see if we need to display the manual seed or not.
@@ -504,6 +519,7 @@ Namespace DataObjects.Physical
                 Return m_iManualRandomSeed
             End Get
             Set(ByVal Value As Integer)
+                Me.SetSimData("ManualRandomSeed", Value.ToString, True)
                 m_iManualRandomSeed = Value
             End Set
         End Property
@@ -526,7 +542,7 @@ Namespace DataObjects.Physical
                 m_snFluidDensity = New ScaledNumber(Me, "FluidDensity", 1000, ScaledNumber.enumNumericScale.Kilo, "g/m^2", "g/m^2")
             End If
 
-            m_snMouseSpringStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "MouseSpringStiffness", 300, ScaledNumber.enumNumericScale.None, "N/m", "N/m")
+            m_snMouseSpringStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "MouseSpringStiffness", 1, ScaledNumber.enumNumericScale.None, "N/m", "N/m")
             m_snMouseSpringDamping = New AnimatGUI.Framework.ScaledNumber(Me, "MouseSpringDamping", 100, ScaledNumber.enumNumericScale.Kilo, "g/s", "g/s")
 
             m_snLinearCompliance = New ScaledNumber(Me, "LinearCompliance", 0.1, ScaledNumber.enumNumericScale.micro, "m/N", "m/N")

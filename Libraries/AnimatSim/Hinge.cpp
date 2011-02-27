@@ -13,6 +13,7 @@
 #include "ReceptiveField.h"
 #include "ContactSensor.h"
 #include "RigidBody.h"
+#include "ConstraintLimit.h"
 #include "Hinge.h"
 #include "Structure.h"
 #include "Organism.h"
@@ -52,8 +53,9 @@ namespace AnimatSim
 
 Hinge::Hinge()
 {
-	m_fltConstraintLow = (float) (-0.5*PI);
-	m_fltConstraintHigh = (float) (0.5*PI);
+	m_lpUpperLimit = NULL;
+	m_lpLowerLimit = NULL;
+	m_lpPosFlap = NULL;
 	m_fltMaxTorque = 1000;
 	m_bServoMotor = FALSE;
 	m_ftlServoGain = 100;
@@ -72,8 +74,44 @@ Hinge::Hinge()
 
 Hinge::~Hinge()
 {
+try
+{
+	if(m_lpUpperLimit)
+	{
+		delete m_lpUpperLimit;
+		m_lpUpperLimit = NULL;
+	}
 
+	if(m_lpLowerLimit)
+	{
+		delete m_lpLowerLimit;
+		m_lpLowerLimit = NULL;
+	}
+
+	if(m_lpPosFlap)
+	{
+		delete m_lpPosFlap;
+		m_lpPosFlap = NULL;
+	}
 }
+catch(...)
+{Std_TraceMsg(0, "Caught Error in desctructor of Hinge\r\n", "", -1, FALSE, TRUE);}
+}
+
+float Hinge::CylinderRadius() 
+{
+	return m_fltSize * 0.25f;
+};
+
+float Hinge::CylinderHeight() 
+{
+	return m_fltSize;
+};
+
+float Hinge::FlapWidth() 
+{
+	return m_fltSize * 0.05f;
+};
 
 BOOL Hinge::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
@@ -81,18 +119,6 @@ BOOL Hinge::SetData(string strDataType, string strValue, BOOL bThrowError)
 
 	if(Joint::SetData(strType, strValue, FALSE))
 		return TRUE;
-
-	if(strType == "MINANGLE")
-	{
-		ConstraintLow(atof(strValue.c_str()));
-		return TRUE;
-	}
-
-	if(strType == "MAXANGLE")
-	{
-		ConstraintHigh(atof(strValue.c_str()));
-		return TRUE;
-	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
@@ -107,13 +133,9 @@ void Hinge::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Joint Element
 
-	if(oXml.FindChildElement("Constraint", FALSE))
-	{
-		oXml.IntoChildElement("Constraint");  //Into Constraint Element
-		m_fltConstraintLow = oXml.GetAttribFloat("Low", FALSE, m_fltConstraintLow);
-		m_fltConstraintHigh = oXml.GetAttribFloat("High", FALSE, m_fltConstraintHigh);
-		oXml.OutOfElem(); //OutOf Constraint Element
-	}
+	m_lpUpperLimit->Load(lpSim, lpStructure, this, oXml, "UpperLimit");
+	m_lpLowerLimit->Load(lpSim, lpStructure, this, oXml, "LowerLimit");
+	m_lpPosFlap->SetSystemPointers(lpSim, lpStructure, this, JointPosition());
 
 	m_fltMaxTorque = oXml.GetChildFloat("MaxTorque", m_fltMaxTorque) * lpSim->InverseMassUnits() * lpSim->InverseDistanceUnits() * lpSim->InverseDistanceUnits();
 

@@ -54,19 +54,14 @@ namespace AnimatSim
 			float m_fltPrevVelocity;
 
 			BOOL m_bEnableMotor;
-			BOOL m_bEnableLimits;
 			BOOL m_bEnableMotorInit;
-			BOOL m_bEnableLimitsInit;
-			float m_fltDamping;
-			float m_fltRestitution;
-			float m_fltStiffness;
 
 			float m_fltPosition;
 			float m_fltVelocity;
 			float m_fltForce;
 
-			//Scales the size of the graphics for this joint.
-			float m_fltScale;
+			///Scales the size of the graphics for this joint.
+			float m_fltSize;
 
 			virtual void SetVelocityToDesired();
 
@@ -77,6 +72,15 @@ namespace AnimatSim
 			//Sometimes we need to know if the joint rotates or moves linearly. 
 			//This param tells us which it does.
 			virtual BOOL UsesRadians() {return TRUE;};
+
+			virtual float Size();
+			virtual void Size(float fltVal, BOOL bUseScaling = TRUE);
+
+			virtual float EnableMotor();
+			virtual void EnableMotor(BOOL bVal);
+
+			virtual float MaxVelocity();
+			virtual void MaxVelocity(float fltVal, BOOL bUseScaling = TRUE);
 
 			virtual int VisualSelectionType() {return JOINT_SELECTION_MODE;};
 
@@ -95,8 +99,6 @@ namespace AnimatSim
 			virtual void DesiredVelocity(float fltVelocity) {m_fltDesiredVelocity = fltVelocity;};
 			virtual void MotorInput(float fltInput) {m_fltDesiredVelocity = fltInput;}
 
-			virtual void EnableMotor(BOOL bVal);
-
 			virtual void CreateJoint(Simulator *lpSim, Structure *lpStructure);
 
 			//Node Overrides
@@ -107,7 +109,6 @@ namespace AnimatSim
 			virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure);
 			virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
 			virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
-			virtual void Save(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
 		};
 
 	}			// Environment

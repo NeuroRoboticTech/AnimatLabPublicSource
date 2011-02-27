@@ -51,7 +51,7 @@ void VsPrismatic::CalculateServoVelocity()
 		return;
 
 	float fltError = m_fltDesiredVelocity - m_fltPosition;
-
+/*
 	if(m_bEnableLimits)
 	{
 		if(m_fltDesiredVelocity>m_fltConstraintHigh)
@@ -64,7 +64,7 @@ void VsPrismatic::CalculateServoVelocity()
 		m_fltDesiredVelocity = fltProp * m_ftlServoGain; 
 	}
 	else
-		m_fltDesiredVelocity = fltError * m_fltMaxVelocity; 
+		m_fltDesiredVelocity = fltError * m_fltMaxVelocity; */
 }
 
 void VsPrismatic::SetVelocityToDesired()
@@ -138,7 +138,7 @@ void VsPrismatic::CreateJoint(Simulator *lpSim, Structure *lpStructure)
 
 	m_vxPrismatic->setLowerLimit(m_vxPrismatic->kLinearCoordinate, m_fltConstraintLow);
 	m_vxPrismatic->setUpperLimit(m_vxPrismatic->kLinearCoordinate, m_fltConstraintHigh);
-	m_vxPrismatic->setLimitsActive(m_vxPrismatic->kLinearCoordinate, m_bEnableLimits);
+	//m_vxPrismatic->setLimitsActive(m_vxPrismatic->kLinearCoordinate, m_bEnableLimits);
 
 	//m_vxPrismatic->setLowerLimit(m_vxPrismatic->kLinearCoordinate, m_fltConstraintLow, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
 	//m_vxPrismatic->setUpperLimit(m_vxPrismatic->kLinearCoordinate, m_fltConstraintHigh, 0, m_fltRestitution, m_fltStiffness, m_fltDamping);

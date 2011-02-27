@@ -36,6 +36,8 @@ VsSimulator::VsSimulator()
 	m_fltFrameDt = 0;
 	m_vsWinMgr = new VsSimulationWindowMgr;
 	m_lpWinMgr = m_vsWinMgr;
+	m_uUniverse = NULL;
+	m_vxFrame = NULL;
 }
 
 VsSimulator::~VsSimulator()
@@ -54,6 +56,63 @@ VxUniverse *VsSimulator::Universe()
 
 Vx::VxFrame* VsSimulator::Frame()
 {return m_vxFrame;}
+
+#pragma region MutatorOverrides
+
+void VsSimulator::LinearCompliance(float fltVal, BOOL bUseScaling)
+{
+	Simulator::LinearCompliance(fltVal, bUseScaling);
+	//TODO Add to sim
+}
+
+void VsSimulator::AngularCompliance(float fltVal, BOOL bUseScaling)
+{
+	Simulator::AngularCompliance(fltVal, bUseScaling);
+	//TODO Add to sim
+}
+
+void VsSimulator::LinearDamping(float fltVal, BOOL bUseScaling)
+{
+	Simulator::LinearDamping(fltVal, bUseScaling);
+	//TODO Add to sim
+}
+
+void VsSimulator::AngularDamping(float fltVal, BOOL bUseScaling)
+{
+	Simulator::AngularDamping(fltVal, bUseScaling);
+	//TODO Add to sim
+}
+
+void VsSimulator::LinearKineticLoss(float fltVal)
+{
+	Simulator::LinearKineticLoss(fltVal);
+	//TODO Add to sim
+}
+
+void VsSimulator::AngularKineticLoss(float fltVal)
+{
+	Simulator::AngularKineticLoss(fltVal);
+	//TODO Add to sim
+}
+
+void VsSimulator::PhysicsTimeStep(float fltVal)
+{
+	Simulator::PhysicsTimeStep(fltVal);
+
+	if(m_vxFrame)
+		m_vxFrame->setTimeStep(m_fltPhysicsTimeStep);		
+}
+
+void VsSimulator::Gravity(float fltVal, BOOL bUseScaling)
+{
+	Simulator::Gravity(fltVal, bUseScaling);
+
+	if(m_uUniverse)
+		m_uUniverse->setGravity(0, m_fltGravity, 0);
+}
+
+#pragma endregion
+
 
 SimulationRecorder *VsSimulator::CreateSimulationRecorder()
 {
@@ -170,6 +229,7 @@ void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
 	    m_osgCmdMgr = new osgManipulator::CommandManager;
 }
 
+	//TODO Add to sim
     //VxSolverParameters* sp = universe->getSolverParameters();
     //sp->setConstraintAngularCompliance(c);
     //sp->setConstraintAngularDamping(b);

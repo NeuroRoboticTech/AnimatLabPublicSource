@@ -59,6 +59,7 @@ namespace AnimatSim
 	{
 		class IPhysicsBody;
 		class BodyPart;
+		class ConstraintLimit;
 		class RigidBody;
 		class Joint;
 		class Structure;
@@ -155,6 +156,7 @@ using namespace AnimatSim::Recording;
 #include "ReceptiveFieldPair.h"
 #include "Adapter.h"
 #include "ContactAdapter.h"
+#include "ConstraintLimit.h"
 #include "Joint.h"
 #include "BallSocket.h"
 #include "Hinge.h"
