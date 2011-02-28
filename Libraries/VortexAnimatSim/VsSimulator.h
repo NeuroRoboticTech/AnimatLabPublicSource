@@ -1,6 +1,3 @@
-// VsSimulator.h: interface for the VsSimulator class.
-//
-//////////////////////////////////////////////////////////////////////
 
 #pragma once
 
@@ -12,10 +9,15 @@
 #include "VsCameraManipulator.h"
 #include "VsSimulationWindowMgr.h"
 
+/**
+\namespace	VortexAnimatSim
+
+\brief	Classes for implementing the cm-labs vortex physics engine for AnimatLab. 
+**/
 namespace VortexAnimatSim
 {
 
-	class VORTEX_PORT VsSimulator : public Simulator  
+	class VORTEX_PORT VsSimulator : public AnimatSim::Simulator  
 	{
 	protected:
 

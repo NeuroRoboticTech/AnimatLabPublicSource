@@ -16,7 +16,7 @@ namespace VortexAnimatSim
 		namespace Joints
 		{
 
-			class VORTEX_PORT VsPrismatic : public VsJoint, public Prismatic     
+			class VORTEX_PORT VsPrismatic : public VsJoint, public AnimatSim::Environment::Joints::Prismatic     
 			{
 			protected:
 				Vx::VxPrismatic *m_vxPrismatic;

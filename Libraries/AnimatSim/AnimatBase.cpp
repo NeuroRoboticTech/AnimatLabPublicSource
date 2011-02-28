@@ -243,6 +243,7 @@ pointer and then each time it needs to log a data point it reads the value into 
 \param	string name of the data item for which we are looking. 
 
 \return	float pointer of the data item. If not found then it throws an exception.
+\exception If DataType is not found.
 **/
 float *AnimatBase::GetDataPointer(string strDataType)
 {
@@ -318,7 +319,6 @@ BOOL AnimatBase::AddItem(string strItemType, string strXml, BOOL bThrowError)
 }
 
 /**
-
 \fn	BOOL AnimatBase::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 
 \brief	Removes a child item from this parent. 

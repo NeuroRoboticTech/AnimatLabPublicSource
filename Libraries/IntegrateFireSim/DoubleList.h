@@ -1,16 +1,14 @@
-// DoubleList.h: interface for the DoubleList class.
-//
-//////////////////////////////////////////////////////////////////////
 
-#if !defined(AFX_DOUBLELIST_H__2367CB33_D99E_41FC_822B_9AD5CB85975B__INCLUDED_)
-#define AFX_DOUBLELIST_H__2367CB33_D99E_41FC_822B_9AD5CB85975B__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace IntegrateFireSim
 {
+
+	/**
+	\namespace	IntegrateFireSim::Utilities
+
+	\brief	Utility classes for the integrate and fire neuron model. 
+	**/
 	namespace Utilities
 	{
 
@@ -42,5 +40,3 @@ namespace IntegrateFireSim
 
 	}			//Utilities
 }				//IntegrateFireSim
-
-#endif // !defined(AFX_DOUBLELIST_H__2367CB33_D99E_41FC_822B_9AD5CB85975B__INCLUDED_)

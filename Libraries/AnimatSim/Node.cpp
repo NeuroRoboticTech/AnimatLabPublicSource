@@ -179,7 +179,20 @@ void Node::Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState)
 
 }
 
+/**
+\fn	void *Node::GetDataItem(string strItemType, string strID, BOOL bThrowError)
 
+\brief	Gets a data item. 
+
+\author	dcofer
+\date	2/25/2011
+
+\param	strItemType	Type of the string item. 
+\param	strID		Identifier for the string. 
+\param	bThrowError	true to throw error. 
+
+\return	null if it fails, else the data item. 
+**/
 void *Node::GetDataItem(string strItemType, string strID, BOOL bThrowError) 
 {
 	if(bThrowError)

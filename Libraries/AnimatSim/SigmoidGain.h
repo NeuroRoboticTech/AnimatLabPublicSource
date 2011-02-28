@@ -9,18 +9,6 @@
 #pragma once
 #endif 
 
-/*! \brief 
-   xxxx.
-
-   \remarks
-   xxxx
-		 
-   \sa
-	 xxx
-	 
-	 \ingroup AnimatSim
-*/
-
 namespace AnimatSim
 {
 	namespace Gains

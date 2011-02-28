@@ -1,16 +1,13 @@
-// CNLSynapse.h: interface for the Synapse class.
-//
-//////////////////////////////////////////////////////////////////////
-
-#if !defined(AFX_RCNLSYNAPSE_H__0D6FBDE5_468A_44C1_8630_9279DDB69CA8__INCLUDED_)
-#define AFX_RCNLSYNAPSE_H__0D6FBDE5_468A_44C1_8630_9279DDB69CA8__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace FiringRateSim
 {
+
+	/**
+	\namespace	FiringRateSim::Synapses
+
+	\brief	Contains all of the synapse classes for the firing rate neural model. 
+	**/
 	namespace Synapses
 	{
 
@@ -68,5 +65,3 @@ namespace FiringRateSim
 
 	}			//Synapses
 }				//FiringRateSim
-
-#endif // !defined(AFX_RCNLSYNAPSE_H__0D6FBDE5_468A_44C1_8630_9279DDB69CA8__INCLUDED_)

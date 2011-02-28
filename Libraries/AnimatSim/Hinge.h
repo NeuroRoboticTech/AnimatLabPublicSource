@@ -1,18 +1,16 @@
-// Hinge.h: interface for the Hinge class.
-//
-//////////////////////////////////////////////////////////////////////
 
-#if !defined(AFX_ALHINGEJOINT_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_)
-#define AFX_ALHINGEJOINT_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
 	namespace Environment
 	{
+
+		/**
+		\namespace	AnimatSim::Environment::Joints
+
+		\brief	Contains all of the different joint types that can be used to connect body parts. 
+		**/
 		namespace Joints
 		{
 
@@ -74,5 +72,3 @@ namespace AnimatSim
 		}		//Joints
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALHINGEJOINT_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_)

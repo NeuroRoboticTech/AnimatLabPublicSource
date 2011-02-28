@@ -1,24 +1,22 @@
-// Organism.h: interface for the Organism class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Organism.h
 
-#if !defined(AFX_ALORGANISM_H__78FDAAA1_E9BE_4E8B_8732_D73DB94D8083__INCLUDED_)
-#define AFX_ALORGANISM_H__78FDAAA1_E9BE_4E8B_8732_D73DB94D8083__INCLUDED_
+\brief	Declares the organism class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
 	namespace Environment
 	{
 
-		/*! \brief 
-			A dynamic organism that is controlled by a neural network.
-
-			\remarks
-			An organism is a type of Structure. The difference between 
+		/**
+		\class	Organism
+		
+		\brief	A dynamic organism that is controlled by a neural network.
+		
+		\details An organism is a type of Structure. The difference between 
 			an organism and a structure is the same as that between a 
 			crayfish and a rock. A crayfish is an object that thinks and 
 			can move on its own. To do this it uses its brain to control
@@ -28,24 +26,24 @@ namespace AnimatSim
 			detect signals from the environment. This allows it to produce 
 			independent behavior.
 
-
-			\sa
-			Structure, Organism, Body, Joint
-			 
-			\ingroup AnimatSim
-		*/
-
+		\author	dcofer
+		\date	2/25/2011
+		**/
 		class ANIMAT_PORT Organism : public Structure
 		{
 		protected:
+
+			/// The pointer to the nervous system
 			NervousSystem *m_lpNervousSystem;
+
+			/// Tells if the organism is dead or not
 			BOOL m_bDead;
 
 		public:
 			Organism();
 			virtual ~Organism();
 
-			virtual BOOL IsDead() {return m_bDead;};
+			virtual BOOL IsDead();
 			virtual void Kill(Simulator *lpSim, BOOL bState = TRUE);
 
 			virtual void Initialize(Simulator *lpSim);
@@ -71,5 +69,3 @@ namespace AnimatSim
 
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALORGANISM_H__78FDAAA1_E9BE_4E8B_8732_D73DB94D8083__INCLUDED_)

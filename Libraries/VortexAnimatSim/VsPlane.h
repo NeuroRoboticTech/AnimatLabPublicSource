@@ -16,7 +16,7 @@ namespace VortexAnimatSim
 		namespace Bodies
 		{
 
-			class VORTEX_PORT VsPlane : public Plane, public VsRigidBody  
+			class VORTEX_PORT VsPlane : public AnimatSim::Environment::Bodies::Plane, public VsRigidBody  
 			{
 			protected:
 

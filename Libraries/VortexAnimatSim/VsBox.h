@@ -1,22 +1,21 @@
-// VsBox.h: interface for the VsBox class.
-//
-//////////////////////////////////////////////////////////////////////
 
-#if !defined(AFX_VSBOX_H__F74F0855_9701_4D03_82C4_EA3E5755910A__INCLUDED_)
-#define AFX_VSBOX_H__F74F0855_9701_4D03_82C4_EA3E5755910A__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif 
+
 
 namespace VortexAnimatSim
 {
 	namespace Environment
 	{
+
+		/**
+		\namespace	VortexAnimatSim::Environment::Bodies
+
+		\brief	Body part classes that use the vortex physics engine. 
+		**/
 		namespace Bodies
 		{
 
-			class VORTEX_PORT VsBox : public Box, public VsRigidBody
+			class VORTEX_PORT VsBox : public AnimatSim::Environment::Bodies::Box, public VsRigidBody
 			{
 			protected:
 
@@ -46,5 +45,3 @@ namespace VortexAnimatSim
 		}		//Bodies
 	}			// Environment
 }				//VortexAnimatSim
-
-#endif // !defined(AFX_VSBOX_H__F74F0855_9701_4D03_82C4_EA3E5755910A__INCLUDED_)

@@ -16,7 +16,7 @@ namespace VortexAnimatSim
 		namespace Bodies
 		{
 
-class VORTEX_PORT VsLinearHillMuscle : public LinearHillMuscle, public VsLine
+class VORTEX_PORT VsLinearHillMuscle : public AnimatSim::Environment::Bodies::LinearHillMuscle, public VsLine
 {
 protected:	
 

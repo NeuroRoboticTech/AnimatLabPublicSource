@@ -35,7 +35,7 @@ namespace AnimatSim
 {
 
 	/**
-	\namespace	Behavior
+	\namespace	AnimatSim::Behavior
 
 	\brief	Contains objects related to neural networks.
 

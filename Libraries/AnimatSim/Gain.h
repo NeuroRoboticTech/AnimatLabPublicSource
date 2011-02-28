@@ -1,28 +1,17 @@
-// Gain.h: interface for the Gain class.
-//
-//////////////////////////////////////////////////////////////////////
 
-#if !defined(AFX_GAIN_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)
-#define AFX_GAIN_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif 
-
-/*! \brief 
-   xxxx.
-
-   \remarks
-   xxxx
-		 
-   \sa
-	 xxx
-	 
-	 \ingroup AnimatSim
-*/
 
 namespace AnimatSim
 {
+
+	/**
+	\namespace	AnimatSim::Gains
+
+	\brief	Contains the different gain type classes that can be used. 
+
+	\details A gain is essentially an equation to convert one parameter into a different value. It is 
+	used extensively throughout the system, for example in the adapters.
+	**/
 	namespace Gains
 	{
 
@@ -81,5 +70,3 @@ namespace AnimatSim
 
 	}			//Gains
 }				//AnimatSim
-
-#endif // !defined(AFX_GAIN_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)

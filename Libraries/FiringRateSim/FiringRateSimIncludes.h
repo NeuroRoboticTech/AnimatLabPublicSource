@@ -12,16 +12,6 @@ namespace FiringRateSim
 	class ClassFactory;
 	class FiringRateModule;
 
-	namespace DataColumns
-	{
-		class NeuronData;
-	}
-
-	namespace ExternalStimuli
-	{
-		class CurrentInjection;
-	}
-
 	namespace Neurons
 	{
 		class MotorNeuron;
@@ -41,8 +31,6 @@ namespace FiringRateSim
 }
 
 using namespace FiringRateSim;
-using namespace FiringRateSim::DataColumns;
-using namespace FiringRateSim::ExternalStimuli;
 using namespace FiringRateSim::Neurons;
 using namespace FiringRateSim::Synapses;
 

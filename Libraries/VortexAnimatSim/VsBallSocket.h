@@ -16,7 +16,7 @@ namespace VortexAnimatSim
 		namespace Joints
 		{
 
-			class VORTEX_PORT VsBallSocket : public VsJoint, public BallSocket     
+			class VORTEX_PORT VsBallSocket : public VsJoint, public AnimatSim::Environment::Joints::BallSocket     
 			{
 			protected:
 				Vx::VxBallAndSocket *m_vxSocket;

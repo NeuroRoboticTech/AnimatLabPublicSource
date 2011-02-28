@@ -383,6 +383,21 @@ void NervousSystem::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 	}
 }
 
+/**
+\fn	void NervousSystem::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+
+\brief	Loads the nervous system. 
+
+\details This loads in all relevant parameters for this object from a xml packet. 
+See AnimatSim::Load for more details.
+
+\author	dcofer
+\date	2/25/2011
+
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to a structure. 
+\param [in,out]	oXml		The xml data packet that will be loaded. 
+**/
 void NervousSystem::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 {
 	if(!lpSim)
@@ -416,7 +431,25 @@ void NervousSystem::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml
 
 }
 
+/**
+\fn	NeuralModule *NervousSystem::LoadNeuralModule(Simulator *lpSim, Structure *lpStructure,
+CStdXml &oXml)
 
+\brief	Creates and loads a neural module. 
+
+\details This method uses the module name, module filename and module type to load a 
+neural module DLL file and get its class factory (IStdClassFactory). It then uses the 
+class factory to create a new neural module object and then loads it from the xml data.
+
+\author	dcofer
+\date	2/25/2011
+
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to a structure. 
+\param [in,out]	oXml		The xml data packet that will be loaded. 
+
+\return	null if it fails, else the neural module. 
+**/
 NeuralModule *NervousSystem::LoadNeuralModule(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 {
 	IStdClassFactory *lpFactory = NULL;
@@ -472,7 +505,24 @@ catch(...)
 }
 }
 
+/**
+\fn	Adapter *NervousSystem::LoadAdapter(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 
+\brief	Creates and loads an adapter. 
+
+\details This method uses the module name and type specified in the xml packet to create a
+new adapter object using the simulator::CreateObject method. It then loads the adapter using the
+xml data.
+
+\author	dcofer
+\date	2/25/2011
+
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to a structure. 
+\param [in,out]	oXml		The xml data packet to load. 
+
+\return	null if it fails, else the adapter. 
+**/
 Adapter *NervousSystem::LoadAdapter(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 {
 	Adapter *lpAdapter = NULL;

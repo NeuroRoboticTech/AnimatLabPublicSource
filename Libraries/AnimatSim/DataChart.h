@@ -1,16 +1,14 @@
-// DataChart.h: interface for the DataChart class.
-//
-//////////////////////////////////////////////////////////////////////
 
-#if !defined(AFX_DATACHART_H__D91DC66E_01F1_47FC_AB62_766BA63FCEF0__INCLUDED_)
-#define AFX_DATACHART_H__D91DC66E_01F1_47FC_AB62_766BA63FCEF0__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace AnimatSim
 {
+
+	/**
+	\namespace	AnimatSim::Charting
+
+	\brief	Namespace for objects related to collecting the data for charts. 
+	**/
 	namespace Charting
 	{
 
@@ -110,5 +108,3 @@ namespace AnimatSim
 
 	}			//Charting
 }				//AnimatSim
-
-#endif // !defined(AFX_DATACHART_H__D91DC66E_01F1_47FC_AB62_766BA63FCEF0__INCLUDED_)

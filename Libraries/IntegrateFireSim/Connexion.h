@@ -1,17 +1,12 @@
-// Connexion.h: interface for the Connexion class.
-//
-//////////////////////////////////////////////////////////////////////
-
-#if !defined(AFX_CONNEXION_H__C287771C_6873_4883_829A_CB726940617B__INCLUDED_)
-#define AFX_CONNEXION_H__C287771C_6873_4883_829A_CB726940617B__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
-
 
 namespace IntegrateFireSim
 {
+	/**
+	\namespace	IntegrateFireSim::Synapses
+
+	\brief	Synapse classes for the integrate and fire neural model. 
+	**/
 	namespace Synapses
 	{
 
@@ -114,5 +109,3 @@ namespace IntegrateFireSim
 
 	}			//Synapses
 }				//IntegrateFireSim
-
-#endif // !defined(AFX_CONNEXION_H__C287771C_6873_4883_829A_CB726940617B__INCLUDED_)

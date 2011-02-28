@@ -1936,7 +1936,6 @@ Structure *Simulator::LoadStructure(CStdXml &oXml)
 try
 {
 	lpStructure = dynamic_cast<Structure *>(m_lpAnimatClassFactory->CreateObject("Structure", "Structure", TRUE));
-	lpStructure->ProjectPath(m_strProjectPath);
 	lpStructure->Load(this, oXml);
 
 	AddStructure(lpStructure);
@@ -1974,7 +1973,6 @@ try
 	if(!lpOrganism)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 
-	lpOrganism->ProjectPath(m_strProjectPath);
 	lpOrganism->Load(this, oXml);
 
 	AddOrganism(lpOrganism);

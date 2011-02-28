@@ -1,16 +1,13 @@
-// Neuron.h: interface for the Neuron class.
-//
-//////////////////////////////////////////////////////////////////////
-
-#if !defined(AFX_RCNEURON_H__85C3FD55_D527_409C_ABA5_B3B18D225846__INCLUDED_)
-#define AFX_RCNEURON_H__85C3FD55_D527_409C_ABA5_B3B18D225846__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace FiringRateSim
 {
+
+	/**
+	\namespace	FiringRateSim::Neurons
+
+	\brief	Contains the neuron classes for the firing rate neuron model. 
+	**/
 	namespace Neurons
 	{
 
@@ -143,5 +140,3 @@ namespace FiringRateSim
 
 	}			//Neurons
 }				//FiringRateSim
-
-#endif // !defined(AFX_RCNEURON_H__85C3FD55_D527_409C_ABA5_B3B18D225846__INCLUDED_)

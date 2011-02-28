@@ -14,7 +14,7 @@ namespace VortexAnimatSim
 	namespace ExternalStimuli
 	{
 
-		class VORTEX_PORT VsInverseMuscleCurrent  : public ExternalStimulus
+		class VORTEX_PORT VsInverseMuscleCurrent  : public AnimatSim::ExternalStimuli::ExternalStimulus
 		{
 		protected:
 			Organism *m_lpOrganism;

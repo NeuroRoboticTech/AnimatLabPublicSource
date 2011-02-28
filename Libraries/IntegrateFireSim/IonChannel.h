@@ -9,18 +9,6 @@
 #pragma once
 #endif 
 
-/*! \brief 
-   xxxx.
-
-   \remarks
-   xxxx
-		 
-   \sa
-	 xxx
-	 
-	 \ingroup IntegrateFireSim
-*/
-
 namespace IntegrateFireSim
 {
 	class ADV_NEURAL_PORT IonChannel : public AnimatBase 

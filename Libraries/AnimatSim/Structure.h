@@ -1,18 +1,35 @@
-// AlStructure.h: interface for the Structure class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Structure.h
 
-#if !defined(AFX_ALSTRUCTURE_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)
-#define AFX_ALSTRUCTURE_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_
+\brief	Declares the structure class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
+
+	/**
+	\namespace	AnimatSim::Environment
+
+	\brief	This namespace contains all of the objects that are related to the physical part of the 
+	virtual 3-D world. All of the neural components are located in the Behavioral namespace. 
+	**/
 	namespace Environment
 	{
+
+		/**
+		\class	CollisionPair
+		
+		\brief	Collision pair. 
+		
+		\details Keeps track of the ID's for two pairs of body parts that can, or cannot collide.
+		This is primarily used in the collision exclusion list to disable collisions between the 
+		two objects.
+
+		\author	dcofer
+		\date	2/25/2011
+		**/
 		class ANIMAT_PORT CollisionPair : public AnimatBase
 		{
 		public:
@@ -43,20 +60,12 @@ namespace AnimatSim
 					
 			\sa
 			Structure, Organism, Body, Joint
-				
-			\ingroup AnimatSim
 		*/
-
 		class ANIMAT_PORT Structure : public AnimatBase 
 		{
 		protected:
+			/// The pointer to a simulation
 			Simulator *m_lpSim;
-
-			///The path to the directory to use for this project.
-			string m_strProjectPath;
-
-			///The filename of the layout configuration of this structure.
-			string m_strLayoutFile;
 
 			///The root rigid body object of this structure.
 			RigidBody *m_lpBody;
@@ -89,10 +98,13 @@ namespace AnimatSim
 
 			///This is the list of other body part ID's to exclude from collision tests.
 			CStdPtrArray<CollisionPair> m_aryExcludeCollisionList;
-		
+
+			///This is a pointer to an instance of the IBodyPartCallback interface. This
+			///interface is used to send back information to the GUI. If you are running in
+			///simulation mode only then this will be NULL and no info will be sent back up.
+			///If you are running with the GUI then it makes the calls back up to it.
 			IBodyPartCallback *m_lpCallback;
 
-			virtual void LoadLayout(Simulator *lpSim);
 			virtual void LoadLayout(Simulator *lpSim, CStdXml &oXml);
 			virtual void LoadCollisionPair(CStdXml &oXml);
 			virtual RigidBody *LoadRoot(CStdXml &oXml);
@@ -106,34 +118,54 @@ namespace AnimatSim
 			Structure();
 			virtual ~Structure();
 
-			void Sim(Simulator *lpSim) {m_lpSim = lpSim;};
+			void Sim(Simulator *lpSim);
+			virtual RigidBody *Body();
 
-			virtual string ProjectPath() {return m_strProjectPath;};
-			virtual void ProjectPath(string strValue) {m_strProjectPath = strValue;};
+			virtual CStdFPoint Position();
+			virtual void Position(CStdFPoint &oPoint);
 
-			virtual string LayoutFile() {return m_strLayoutFile;};
-			virtual void LayoutFile(string strValue) {m_strLayoutFile = strValue;};
+			virtual CStdFPoint ReportPosition();
+			virtual void ReportPosition(CStdFPoint &oPoint);
+			virtual void ReportPosition(float fltX, float fltY, float fltZ);
 
-			virtual CStdFPoint Position() {return m_oPosition;};
-			virtual void Position(CStdFPoint &oPoint) {m_oPosition = oPoint;};
+			virtual CStdFPoint ReportRotation();
+			virtual void ReportRotation(CStdFPoint &oPoint);
+			virtual void ReportRotation(float fltX, float fltY, float fltZ);
 
-			virtual CStdFPoint ReportPosition() {return m_oReportPosition;};
-			virtual void ReportPosition(CStdFPoint &oPoint) {m_oReportPosition = oPoint;};
-			virtual void ReportPosition(float fltX, float fltY, float fltZ) {m_oReportPosition.Set(fltX, fltY, fltZ);};
-
-			virtual CStdFPoint ReportRotation() {return m_oReportRotation;};
-			virtual void ReportRotation(CStdFPoint &oPoint) {m_oReportRotation = oPoint;};
-			virtual void ReportRotation(float fltX, float fltY, float fltZ) {m_oReportRotation.Set(fltX, fltY, fltZ);};
-
-			virtual CStdPtrArray<CollisionPair> ExclusionList() {return m_aryExcludeCollisionList;};
+			virtual CStdPtrArray<CollisionPair> ExclusionList();
 			virtual void AddCollisionPair(string strID1, string strID2);
 
-			virtual RigidBody *Body() {return m_lpBody;};
+			virtual IBodyPartCallback *Callback();
+			virtual void Callback(IBodyPartCallback *lpCallback);
 
-			virtual IBodyPartCallback *Callback() {return m_lpCallback;};
-			virtual void Callback(IBodyPartCallback *lpCallback) {m_lpCallback = lpCallback;};
+			/**
+			\fn	virtual void Structure::*Assembly() = 0;
+			
+			\brief	Gets the assembly pointer.
 
+			\details This is a pure virtual method that is used in the derived class to return 
+			a pointer to the vortex assembly object. 
+			
+			\author	dcofer
+			\date	2/25/2011
+			
+			\return	null if it fails, else. 
+			**/
 			virtual void *Assembly() = 0;
+
+			/**
+			\fn	virtual void Structure::*GetMatrixPointer() = 0;
+			
+			\brief	Gets the osg matrix pointer. 
+
+			\details This is a pure virtual method that is used in the derived class to return 
+			a pointer to the osg matrix object of the structure. 
+						
+			\author	dcofer
+			\date	2/25/2011
+			
+			\return	null if it fails, else the matrix pointer. 
+			**/
 			virtual void *GetMatrixPointer() = 0;
 
 			virtual void Initialize(Simulator *lpSim);
@@ -173,5 +205,3 @@ namespace AnimatSim
 
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALSTRUCTURE_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)

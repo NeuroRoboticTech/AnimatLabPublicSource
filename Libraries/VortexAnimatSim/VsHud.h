@@ -8,7 +8,7 @@ namespace VortexAnimatSim
 	namespace Visualization
 	{
 
-		class VORTEX_PORT VsHud : public AnimatBase 
+		class VORTEX_PORT VsHud : public AnimatSim::AnimatBase 
 		{
 		protected:
 			CStdPtrArray<VsHudItem> m_aryHudItems;

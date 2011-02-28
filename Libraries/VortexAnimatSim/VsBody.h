@@ -22,7 +22,7 @@ namespace VortexAnimatSim
 		osg::Geometry VORTEX_PORT *CreateTorusGeometry(float innerRadius, float outerRadius, int sides, int rings);
 
 
-		class VORTEX_PORT VsBody : public IPhysicsBody
+		class VORTEX_PORT VsBody : public AnimatSim::Environment::IPhysicsBody
 		{
 		protected:
 			BodyPart *m_lpThis;

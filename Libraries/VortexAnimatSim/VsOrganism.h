@@ -13,7 +13,7 @@ namespace VortexAnimatSim
 {
 	namespace Environment
 	{
-		class VORTEX_PORT VsOrganism : public Organism   
+		class VORTEX_PORT VsOrganism : public AnimatSim::Environment::Organism   
 		{
 
 		protected:

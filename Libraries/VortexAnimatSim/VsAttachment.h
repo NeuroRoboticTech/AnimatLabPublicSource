@@ -16,7 +16,7 @@ namespace VortexAnimatSim
 		namespace Bodies
 		{
 
-class VORTEX_PORT VsAttachment  : public Attachment, public VsRigidBody
+class VORTEX_PORT VsAttachment  : public AnimatSim::Environment::Bodies::Attachment, public VsRigidBody
 {
 protected:
 

@@ -1,31 +1,32 @@
-// Adapter.h: interface for the Adapter class.
-//
-//////////////////////////////////////////////////////////////////////
-
-#if !defined(AFX_ADAPTER_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)
-#define AFX_ADAPTER_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif 
-
-/*! \brief 
-   xxxx.
-
-   \remarks
-   xxxx
-		 
-   \sa
-	 xxx
-	 
-	 \ingroup AnimatSim
-*/
 
 namespace AnimatSim
 {
+
+	/**
+	\namespace	AnimatSim::Adapters
+
+	\brief	Namespace for the adapter objects.
+
+	\details Adapters are generalized mechanism that allows items in one module to talk to items in another. For example, 
+	It allows a neuron in a firing rate neural module to inject current into an integrate and fire neuron, or to talk to the
+	physics engine.
+	**/
 	namespace Adapters
 	{
 
+		/**
+		\class	Adapter
+		
+		\brief	Adapter. 
+		
+		\details Adapters are generalized mechanism that allows items in one module to talk to items in another. For example, 
+		It allows a neuron in a firing rate neural module to inject current into an integrate and fire neuron, or to talk to the
+		physics engine.
+
+		\author	dcofer
+		\date	2/28/2011
+		**/
 		class ANIMAT_PORT Adapter : public Node 
 		{
 		protected:
@@ -63,5 +64,3 @@ namespace AnimatSim
 
 	}			//Adapters
 }				//AnimatSim
-
-#endif // !defined(AFX_ADAPTER_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)

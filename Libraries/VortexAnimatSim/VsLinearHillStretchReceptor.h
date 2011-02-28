@@ -16,7 +16,7 @@ namespace VortexAnimatSim
 		namespace Bodies
 		{
 
-class VORTEX_PORT VsLinearHillStretchReceptor : public LinearHillStretchReceptor, public VsLine
+class VORTEX_PORT VsLinearHillStretchReceptor : public AnimatSim::Environment::Bodies::LinearHillStretchReceptor, public VsLine
 {
 protected:	
 

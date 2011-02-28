@@ -5,7 +5,7 @@ namespace VortexAnimatSim
 	namespace Visualization
 	{
 
-class VORTEX_PORT VsSimulationWindow : public SimulationWindow, osgGA::GUIEventHandler 
+class VORTEX_PORT VsSimulationWindow : public AnimatSim::SimulationWindow, osgGA::GUIEventHandler 
 {
 	protected:
 		VsSimulationWindowMgr *m_lpWinMgr;

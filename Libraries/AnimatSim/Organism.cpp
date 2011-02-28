@@ -1,6 +1,8 @@
-// Organism.cpp: implementation of the Organism class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Organism.cpp
+
+\brief	Implements the organism class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -32,36 +34,28 @@
 #include "Odor.h"
 #include "Simulator.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\fn	Organism::Organism()
 
-/*! \brief 
-   Constructs an organism object..
-   		
-	 \return
-	 No return value.
+\brief	Default constructor. 
 
-   \remarks
-	 The constructor for a organism. 
-*/
-
+\author	dcofer
+\date	2/25/2011
+**/
 Organism::Organism()
 {
 	m_bDead = FALSE;
 	m_lpNervousSystem = NULL;
 }
 
-/*! \brief 
-   Destroys the organism object..
-   		
-	 \return
-	 No return value.
+/**
+\fn	Organism::~Organism()
 
-   \remarks
-   Destroys the organism object..	 
-*/
+\brief	Destructor. 
 
+\author	dcofer
+\date	2/25/2011
+**/
 Organism::~Organism()
 {
 
@@ -77,6 +71,34 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Organism\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\fn	BOOL Organism::IsDead()
+
+\brief	Query if this object is dead. 
+
+\author	dcofer
+\date	2/25/2011
+
+\return	true if dead, false if not. 
+**/
+BOOL Organism::IsDead() 
+{return m_bDead;}
+
+/**
+\fn	void Organism::Kill(Simulator *lpSim, BOOL bState)
+
+\brief	Kills organism.
+
+\details Called to kill the organism. All neural items are disabled to prevent any further 
+neural activity, and all joints are disabled to allow free rotation, and all biomechancical 
+components are disabled so they can no longer produce forces.
+
+\author	dcofer
+\date	2/25/2011
+
+\param [in,out]	lpSim	The pointer to a simulation. 
+\param	bState			Set to true to kill, false to revive. 
+**/
 void Organism::Kill(Simulator *lpSim, BOOL bState)
 {
 	m_bDead = bState;
@@ -84,6 +106,16 @@ void Organism::Kill(Simulator *lpSim, BOOL bState)
 	m_lpNervousSystem->Kill(lpSim, this, bState);
 }
 
+/**
+\fn	void Organism::Initialize(Simulator *lpSim)
+
+\brief	Initializes this object. 
+
+\author	dcofer
+\date	2/25/2011
+
+\param [in,out]	lpSim	If non-null, the pointer to a simulation. 
+**/
 void Organism::Initialize(Simulator *lpSim)
 {
 	Structure::Initialize(lpSim);

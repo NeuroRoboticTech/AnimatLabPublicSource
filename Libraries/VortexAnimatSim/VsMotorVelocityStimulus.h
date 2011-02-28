@@ -14,7 +14,7 @@ namespace VortexAnimatSim
 	namespace ExternalStimuli
 	{
 
-		class VORTEX_PORT VsMotorVelocityStimulus  : public ExternalStimulus
+		class VORTEX_PORT VsMotorVelocityStimulus  : public AnimatSim::ExternalStimuli::ExternalStimulus
 		{
 		protected:
 			string m_strStructureID;

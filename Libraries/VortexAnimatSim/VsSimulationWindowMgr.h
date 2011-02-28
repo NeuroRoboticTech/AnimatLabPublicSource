@@ -2,10 +2,16 @@
 
 namespace VortexAnimatSim
 {
+
+	/**
+	\namespace	VortexAnimatSim::Visualization
+
+	\brief	Classes involved in displaying the simulation in OSG. 
+	**/
 	namespace Visualization
 	{
 
-class VORTEX_PORT VsSimulationWindowMgr : public SimulationWindowMgr
+class VORTEX_PORT VsSimulationWindowMgr : public AnimatSim::SimulationWindowMgr
 {
 protected:
 

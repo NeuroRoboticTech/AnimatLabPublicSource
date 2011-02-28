@@ -16,7 +16,7 @@ namespace VortexAnimatSim
 		namespace Bodies
 		{
 
-			class VORTEX_PORT VsSphere : public Sphere, public VsRigidBody
+			class VORTEX_PORT VsSphere : public AnimatSim::Environment::Bodies::Sphere, public VsRigidBody
 			{
 			protected:
 				Vx::VxSphere *m_cgSphere;

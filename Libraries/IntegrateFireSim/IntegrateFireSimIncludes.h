@@ -13,17 +13,6 @@ namespace IntegrateFireSim
 	class IntegrateFireNeuralModule;
 	class Neuron;
 
-	namespace DataColumns
-	{
-		class NeuronData;
-	}
-
-	namespace ExternalStimuli
-	{
-		//class EventTrigger;
-		//class CurrentStimulus;
-	}
-
 	namespace Synapses
 	{
 		class Connexion;
@@ -39,8 +28,6 @@ namespace IntegrateFireSim
 }
 
 using namespace IntegrateFireSim;
-using namespace IntegrateFireSim::DataColumns;
-using namespace IntegrateFireSim::ExternalStimuli;
 using namespace IntegrateFireSim::Synapses;
 using namespace IntegrateFireSim::Utilities;
 

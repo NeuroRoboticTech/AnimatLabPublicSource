@@ -1,16 +1,13 @@
-// Neuron.h: interface for the Neuron class.
-//
-//////////////////////////////////////////////////////////////////////
 
-#if !defined(AFX_NEURON_H__8C9256F2_445F_4E31_963E_08B9DBE29601__INCLUDED_)
-#define AFX_NEURON_H__8C9256F2_445F_4E31_963E_08B9DBE29601__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 class IntegrateFireNeuralModule;
 
+/**
+\namespace	IntegrateFireSim
+
+\brief	Contains all of the classes to implement a basic integrate and fire neural model. 
+**/
 namespace IntegrateFireSim
 {
 
@@ -260,5 +257,3 @@ namespace IntegrateFireSim
 	};
 
 }				//IntegrateFireSim
-
-#endif // !defined(AFX_NEURON_H__8C9256F2_445F_4E31_963E_08B9DBE29601__INCLUDED_)

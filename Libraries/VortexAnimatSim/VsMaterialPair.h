@@ -8,7 +8,7 @@ namespace VortexAnimatSim
 	namespace Environment
 	{
 
-		class VORTEX_PORT VsMaterialPair : public MaterialPair
+		class VORTEX_PORT VsMaterialPair : public AnimatSim::Environment::MaterialPair
 		{
 		protected:
 			VxMaterialTable *m_vxMaterialTable;

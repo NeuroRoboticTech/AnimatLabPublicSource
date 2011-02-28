@@ -8,7 +8,7 @@ namespace VortexAnimatSim
 	namespace Visualization
 	{
 
-		class VORTEX_PORT VsHudItem : public AnimatBase
+		class VORTEX_PORT VsHudItem : public AnimatSim::AnimatBase
 		{
 		protected:
 

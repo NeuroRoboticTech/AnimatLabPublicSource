@@ -16,7 +16,7 @@ namespace VortexAnimatSim
 		namespace Bodies
 		{
 
-			class VORTEX_PORT VsSpring : public VsLine, public Spring     
+			class VORTEX_PORT VsSpring : public VsLine, public AnimatSim::Environment::Bodies::Spring     
 			{
 			protected:
 				Vx::VxSpring *m_vxSpring;

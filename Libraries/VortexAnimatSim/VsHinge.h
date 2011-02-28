@@ -5,10 +5,16 @@ namespace VortexAnimatSim
 {
 	namespace Environment
 	{
+
+		/**
+		\namespace	VortexAnimatSim::Environment::Joints
+
+		\brief	Joint classes that use the vortex physics engine. 
+		**/
 		namespace Joints
 		{
 
-			class VORTEX_PORT VsHinge : public VsJoint, public Hinge     
+			class VORTEX_PORT VsHinge : public VsJoint, public AnimatSim::Environment::Joints::Hinge     
 			{
 			protected:
 				Vx::VxHinge *m_vxHinge;

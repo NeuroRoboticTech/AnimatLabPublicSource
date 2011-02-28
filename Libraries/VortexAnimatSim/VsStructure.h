@@ -11,9 +11,15 @@
 
 namespace VortexAnimatSim
 {
+
+	/**
+	\namespace	VortexAnimatSim::Environment
+
+	\brief	Classes for the virtual world simulation that use the vortex physics engine. 
+	**/
 	namespace Environment
 	{
-		class VORTEX_PORT VsStructure : public Structure   
+		class VORTEX_PORT VsStructure : public AnimatSim::Environment::Structure   
 		{
 		protected:
 			Vx::VxAssembly *m_lpAssembly;

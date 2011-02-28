@@ -1,16 +1,14 @@
-// VsForceStimulus.h: interface for the VsForceStimulus class.
-//
-//////////////////////////////////////////////////////////////////////
 
-#if !defined(AFX_FORCE_STIMULUS_H__AEBF2DF9_E7A0_4ED2_83CD_BE74B7D74E59__INCLUDED_)
-#define AFX_FORCE_INPUT_STIMULUS_H__AEBF2DF9_E7A0_4ED2_83CD_BE74B7D74E59__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace VortexAnimatSim
 {
+
+	/**
+	\namespace	VortexAnimatSim::ExternalStimuli
+
+	\brief	Classes that produce external stimuli. 
+	**/
 	namespace ExternalStimuli
 	{
 
@@ -105,5 +103,3 @@ namespace VortexAnimatSim
 
 	}			//ExternalStimuli
 }				//VortexAnimatSim
-
-#endif // !defined(AFX_FORCE_INPUT_STIMULUS_H__AEBF2DF9_E7A0_4ED2_83CD_BE74B7D74E59__INCLUDED_)

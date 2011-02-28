@@ -1,18 +1,15 @@
-// CAlBox.h: interface for the CAlBox class.
-//
-//////////////////////////////////////////////////////////////////////
-
-#if !defined(AFX_ALBOX_H__F74F0855_9701_4D03_82C4_EA3E5755910A__INCLUDED_)
-#define AFX_ALBOX_H__F74F0855_9701_4D03_82C4_EA3E5755910A__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
 	namespace Environment
 	{
+
+		/**
+		\namespace	AnimatSim::Environment::Bodies
+
+		\brief	Contains all of the different body parts that can be used in a structure. 
+		**/
 		namespace Bodies
 		{
 
@@ -65,5 +62,3 @@ namespace AnimatSim
 		}		//Bodies
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALBOX_H__F74F0855_9701_4D03_82C4_EA3E5755910A__INCLUDED_)
