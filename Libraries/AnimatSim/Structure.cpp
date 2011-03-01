@@ -574,29 +574,6 @@ Node *Structure::FindNode(string strID, BOOL bThrowError)
 
 #pragma region DataAccesMethods
 
-
-
-/**
-\fn	float *Structure::GetDataPointer(string strDataType)
-
-\brief	Returns a float pointer to a data item of interest in this object. 
-
-\details This is a generic method used to get a pointer to data variable of interest. It is used by a variety
-of systems in the simulation. The most prominent are the data charting and stimulus classes.
-Within this method we associate a variable with a string name. By passing in the name of the 
-data type we are interested in we can recieve back a float pointer to that data type. We can use
-that to read or set the data item in other classes. For example, the data charting system gets the 
-pointer and then each time it needs to log a data point it reads the value into an array. 
-
-\author	dcofer
-\date	2/22/2011
-
-\param	string name of the data item for which we are looking. 
-
-\return	float pointer of the data item. If not found then it throws an exception.
-\exception If DataType is not found.
-\sa AnimatBase::GetDataPointer
-**/
 float *Structure::GetDataPointer(string strDataType)
 {
 	float *lpData=NULL;
@@ -628,32 +605,6 @@ float *Structure::GetDataPointer(string strDataType)
 	return lpData;
 }
 
-
-
-/**
-\fn	BOOL Structure::SetData(string strDataType, string strValue, BOOL bThrowError)
-
-\brief	Set a variable based on a string data type name. 
-
-\details This is a generic method that can be used to set any variable in an AnimatBase object
-by specifying the name of the variable and a string representation of that data. The GUI uses this 
-method to set data into variables in the simulation when the user changes them in the UI. The value string
-can be as simple as a float or int, or as complex as an xml packet. It is the developers responsibilty 
-to know what type of data is needed and to process it accordingly.
-
-\author	dcofer
-\date	2/22/2011
-
-\param	strDataType	string name of the data type to set. 
-\param	strValue	The string value of the data. It is up to the developer to determine what this should be. 
-For example, in most cases it is simply a float and you just have to convert it to a float and make the appropriate
-mutator method call. However, it can be any type of string, including an entire xml packet. It is the developers
-responsibility to know how to set and process the data as required.
-\param	bThrowError	true to throw error if there is a problem. If false then it will not return an error, just return false. 
-
-\return	true if it succeeds, false if it fails. 
-\sa AnimatBase::SetData
-**/
 BOOL Structure::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
@@ -665,30 +616,6 @@ BOOL Structure::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
-/**
-
-\fn	BOOL Structure::AddItem(string strItemType, string strXml, BOOL bThrowError)
-
-\brief	Adds a new object to this parent.
-
-\details Generic method to add a new child item to this parent by specifying a string item
-type descriptor and an xml packet that can be used to load in the new object. The GUI uses this 
-method to create new items that were added with the user interface. The item type
-lets the method determine what type of item is being created, like synapse, neuron, body part, etc..
-It then gets the modulename, classname, and type from the xml and calls CreateObject to create
-the appropriate type of object. Then it passes in the xml packet to the new objects load method and
-does any needed initialization and adds it to the parent.
-
-\author	dcofer
-\date	2/22/2011
-
-\param	strItemType	String descriptor of the type of item that is being created. 
-\param	strXml		XML packet that is used to create and load the new item.
-\param	bThrowError	If true then throw an error if there is a problem, otherwise return false
-
-\return	true if it succeeds, false if it fails. 
-\sa AnimatBase::AddItem
-**/
 BOOL Structure::AddItem(string strItemType, string strXml, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
@@ -706,26 +633,6 @@ BOOL Structure::AddItem(string strItemType, string strXml, BOOL bThrowError)
 	return FALSE;
 }
 
-/**
-\fn	BOOL Structure::RemoveItem(string strItemType, string strID, BOOL bThrowError)
-
-\brief	Removes a child item from this parent. 
-
-\details This is a generic method that is used to delete a child object from this parent. The GUI
-uses this method to remove objects from the simulation that have been deleted in the UI. The item type
-lets the method determine what type of item is being deleted, like synapse, neuron, body part, etc..
-The ID is then used to delete that specific item.
-
-\author	dcofer
-\date	2/22/2011
-
-\param	strItemType	String descriptor of the type of item that is being created. 
-\param	strID		Unique ID of the item that will be removed. 
-\param	bThrowError	If true then throw an error if there is a problem, otherwise return false
-
-\return	true if it succeeds, false if it fails. 
-\sa AnimatBase::RemoveItem
-**/
 BOOL Structure::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strItemType);

@@ -24,8 +24,6 @@ namespace AnimatSim
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
 			//ActiveItem overrides
-			virtual void Load(Simulator *lpSim, CStdXml &oXml) = 0;
-			virtual void Save(Simulator *lpSim, CStdXml &oXml) = 0;
 			virtual BOOL operator<(ActivatedItem *lpItem);
 		};
 

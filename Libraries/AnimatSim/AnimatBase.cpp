@@ -348,17 +348,22 @@ BOOL AnimatBase::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 #pragma endregion
 
 /**
+\fn	virtual void AnimatBase::Load(CStdXml &oXml);
 
-\fn	void AnimatBase::Load(CStdXml &oXml)
+\brief	Loads the item using an XML data packet. 
 
-\brief	Loads this object. 
-
-\details This uses the Xml packet to load in the data for this object.
+\details This method is responsible for loading the structure from a XMl
+configuration file. You should call this method even in your 
+overriden function becuase it loads all of the base properties
+for this object like ID and Name. It also includes this object in the
+simulators AddToObjectList so that the simulator knows about this object
+when you do a FindObject call. If you do not call this base method then
+it is up to you to add your item to the simulators list of objects.
 
 \author	dcofer
-\date	2/22/2011
+\date	3/1/2011
 
-\param [in,out]	oXml	The CStdXml xml utility. 
+\param [in,out]	oXml	The CStdXml xml data packet to load. 
 **/
 void AnimatBase::Load(CStdXml &oXml)
 {
@@ -378,6 +383,29 @@ void AnimatBase::Load(CStdXml &oXml)
 	Simulator *lpSim = GetSimulator();
 	if(lpSim)
 		lpSim->AddToObjectList(this);
+}
+
+/**
+\fn	virtual void AnimatBase::Load(Simulator *lpSim, CStdXml &oXml)
+
+\brief	Loads the item using an XML data packet. 
+
+\details This method is responsible for loading the structure from a XMl
+configuration file. You should call this method even in your 
+overriden function becuase it loads all of the base properties
+for this object like ID and Name. It also includes this object in the
+simulators AddToObjectList so that the simulator knows about this object
+when you do a FindObject call. If you do not call this base method then
+it is up to you to add your item to the simulators list of objects.
+\author	dcofer
+\date	3/1/2011
+
+\param [in,out]	lpSim	The pointer to a simulation. 
+\param [in,out]	oXml	The CStdXml xml data packet to load. 
+**/
+void AnimatBase::Load(Simulator *lpSim, CStdXml &oXml)
+{
+	AnimatBase::Load(oXml);
 }
 
 

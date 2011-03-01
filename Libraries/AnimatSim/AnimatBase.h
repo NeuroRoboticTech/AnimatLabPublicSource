@@ -74,16 +74,139 @@ namespace AnimatSim
 
 #pragma endregion
 
-		//This is called whenever the visual selection mode of the simulation is changed.
-		//This is when the user switches from selecting graphics, collision objects, joints, etc..
-		virtual void VisualSelectionModeChanged(int iNewMode) {};
+#pragma region SimulationMethods
 
-		//These functions are called internally when the simulation is about to start up or pause.
+		/**
+		\fn	virtual void AnimatBase::Reset()
+		
+		\brief	Resets this object.
+
+		\deatils Call this method to reset all data for this object back to
+		its pre-loaded state.
+		
+		\author	dcofer
+		\date	3/1/2011
+		**/
+		virtual void Reset() {};
+
+		/**
+		\fn	virtual void AnimatBase::Initialize(Simulator *lpSim)
+		
+		\brief	Initializes this object. 
+		
+		\author	dcofer
+		\date	3/1/2011
+		
+		\param [in,out]	lpSim	The pointer to a simulation. 
+		**/
+		virtual void Initialize(Simulator *lpSim) {};
+
+		/**
+		\fn	virtual void AnimatBase::ResetSimulation(Simulator *lpSim)
+		
+		\brief	Resets the simulation back to time 0. 
+		
+		\details This method calls the ResetSimulation method on all subitems in order
+		to reset the simulation back to the beginning.
+
+		\author	dcofer
+		\date	3/1/2011
+		
+		\param [in,out]	lpSim	The pointer to a simulation. 
+		**/
+		virtual void ResetSimulation(Simulator *lpSim) {};
+
+		/**
+		\fn	virtual void AnimatBase::ReInitialize(Simulator *lpSim)
+		
+		\brief	Re-initialize this object. 
+		
+		\author	dcofer
+		\date	3/1/2011
+		
+		\param [in,out]	lpSim	The pointer to a simulation. 
+		**/
+		virtual void ReInitialize(Simulator *lpSim) {};
+
+		/**
+		\fn	virtual void AnimatBase::StepSimulation(Simulator *lpSim)
+		
+		\brief	Step the simulation for this object.
+
+		\details This is called on an object each time it is stepped in the simulation.
+		this is where its simulation code is processed. However, StepSimulation is not 
+		necessarily called every single time that the simulation as a whole is stepped. 
+		A good example of this is that neural modules can have different integration time
+		steps. So a firing rate module may have a DT of 0.5 ms, while an integrate and fire
+		model may have one of 0.1 ms. So the firing rate module would only get its StepSimulation
+		method called every 5th time that the other module was called. This is all handed in 
+		the StepSimulation method of the Simulator and NervousSystem.
+		
+		\author	dcofer
+		\date	3/1/2011
+		
+		\param [in,out]	lpSim	If non-null, the pointer to a simulation. 
+		**/
+		virtual void StepSimulation(Simulator *lpSim) {};
+
+		/**
+		\fn	virtual void AnimatBase::SimStarting()
+		
+		\brief	Called just before the simulation starts.
+
+		\details This method is called on each AnimatBase object when the simulation starts.
+		It allows it to perform any intialization prior to the beginning of the simulation that is needed.
+		
+		\author	dcofer
+		\date	3/1/2011
+		**/
 		virtual void SimStarting() {};
+
+		/**
+		\fn	virtual void AnimatBase::SimPausing()
+		
+		\brief	Called just before the simulation pauses.
+
+		\details This method is called on each AnimatBase object when the simulation pauses.
+		It allows it to perform any intialization prior to the pause of the simulation that is needed.
+		
+		\author	dcofer
+		\date	3/1/2011
+		**/
 		virtual void SimPausing() {};
+
+		/**
+		\fn	virtual void AnimatBase::SimStopping()
+		
+		\brief	Called just before the simulation stops.
+
+		\details This method is called on each AnimatBase object when the simulation stops.
+		It allows it to perform any intialization prior to the stop of the simulation that is needed.
+		
+		\author	dcofer
+		\date	3/1/2011
+		**/
 		virtual void SimStopping() {};
 
+#pragma endregion
+
+		/**
+		\fn	virtual void AnimatBase::VisualSelectionModeChanged(int iNewMode)
+		
+		\brief	Visual selection mode changed. 
+		
+		\details This is called whenever the visual selection mode of the simulation is changed.
+		This is when the user switches from selecting graphics, collision objects, joints, etc..
+
+		\author	dcofer
+		\date	3/1/2011
+		
+		\param	iNewMode	The new mode. 
+		**/
+		virtual void VisualSelectionModeChanged(int iNewMode) {};
+
 		virtual void Load(CStdXml &oXml);
+		virtual void Load(Simulator *lpSim, CStdXml &oXml);
 	};
 
 }				//AnimatSim

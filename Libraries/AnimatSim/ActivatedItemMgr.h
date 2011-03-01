@@ -1,21 +1,42 @@
-// ActivatedItemMgr.h: interface for the ActivatedItemMgr class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ActivatedItemMgr.h
 
-#if !defined(AFX_ACTIVATEDITEMMGR_H__CBDA72E7_469E_4C42_BEF4_41F1D7F40627__INCLUDED_)
-#define AFX_ACTIVATEDITEMMGR_H__CBDA72E7_469E_4C42_BEF4_41F1D7F40627__INCLUDED_
+\brief	Declares the activated item manager class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace AnimatSim
 {
+	/**
+	\class	ActivatedItemMgr
+	
+	\brief	Base manager class for ActivatedItem's.
 
+	\details Activated items are types of objects that are activated and deactivated 
+	at specific points in time. Examples of these types of objects are DataChart's and 
+	ExternalStimulus. This base class is used to manage the loading, initialization,
+	and activation/deactivation of those items. For each specific type of ActivateItem 
+	you will need an derived manager class for those types. For example, to manage data charts
+	you will need the DataChartMgr.<br><br>This class keeps a list of all activated items that
+	are added to it and at each time step of the simulation it determines which of these items 
+	need to be activated or deactivated. 
+	
+	\author	dcofer
+	\date	3/1/2011
+	**/
 	class ANIMAT_PORT ActivatedItemMgr : public AnimatBase    
 	{
 	protected:
+		/// The list of activated items. This is the list of unsorted pointers. Items put
+		/// into this list will be destroyed when the list is destroyed, so be careful 
+		/// what you place in or remove from this list.
 		CStdArray<ActivatedItem *> m_aryItems;
+
+		/// This is the sorted mpa of activated items. It is indexed based on the unique ID value.
+		/// This allows us to easily find any ActivatedItem based on its ID. The pointers in this 
+		/// list are a duplicate of the ones in m_aryItems. They are <b>NOT</b> deleted when the list
+		/// is destroyed.
 		CStdPtrMap<string, ActivatedItem> m_aryItemsMap;
 
 	public:
@@ -33,9 +54,6 @@ namespace AnimatSim
 		virtual void ResetSimulation(Simulator *lpSim);
 		virtual void ReInitialize(Simulator *lpSim);
 		virtual void StepSimulation(Simulator *lpSim);
-		virtual void Load(Simulator *lpSim, CStdXml &oXml) = 0;
 	};
 
 }			//AnimatSim
-
-#endif // !defined(AFX_ACTIVATEDITEMMGR_H__CBDA72E7_469E_4C42_BEF4_41F1D7F40627__INCLUDED_)

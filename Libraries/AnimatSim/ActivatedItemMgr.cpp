@@ -1,12 +1,13 @@
-// ActivatedItemMgr.cpp: implementation of the ActivatedItemMgr class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ActivatedItemMgr.cpp
+
+\brief	Implements the activated item manager class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
 #include "AnimatBase.h"
 
-//#include "ClassFactory.h"
 #include "Node.h"
 #include "IPhysicsBody.h"
 #include "BodyPart.h"
@@ -30,14 +31,26 @@
 namespace AnimatSim
 {
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\fn	ActivatedItemMgr::ActivatedItemMgr()
 
+\brief	Default constructor. 
+
+\author	dcofer
+\date	3/1/2011
+**/
 ActivatedItemMgr::ActivatedItemMgr()
 {
 }
 
+/**
+\fn	ActivatedItemMgr::~ActivatedItemMgr()
+
+\brief	Destructor. 
+
+\author	dcofer
+\date	3/1/2011
+**/
 ActivatedItemMgr::~ActivatedItemMgr()
 {
 
@@ -49,6 +62,16 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of ActivatedItemMgr\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\fn	void ActivatedItemMgr::Reset()
+
+\brief	Resets this manager.
+
+\details This releases all ActivatedItem's.
+
+\author	dcofer
+\date	3/1/2011
+**/
 void ActivatedItemMgr::Reset()
 {
 try
@@ -60,6 +83,19 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of DataChart\r\n", "", -1, FALSE, TRUE);}
 }
 
+
+/**
+\fn	void ActivatedItemMgr::Add(Simulator *lpSim, ActivatedItem *lpItem)
+
+\brief	Adds a new ActivatedItem to be managed. 
+
+\author	dcofer
+\date	3/1/2011
+
+\param [in,out]	lpSim	The pointer to a simulation. 
+\param [in,out]	lpItem	The pointer to the item to add. 
+\exception The ID of the new item must be unique for this manager.
+**/
 void ActivatedItemMgr::Add(Simulator *lpSim, ActivatedItem *lpItem)
 {
 	if(!lpItem)
@@ -84,6 +120,20 @@ void ActivatedItemMgr::Add(Simulator *lpSim, ActivatedItem *lpItem)
 	stable_sort(m_aryItems.begin(), m_aryItems.end(), LessThanActivatedItemCompare);
 }
 
+/**
+\fn	void ActivatedItemMgr::Remove(Simulator *lpSim, string strID, BOOL bThrowError)
+
+\brief	Removes the item with the specified ID. 
+
+\author	dcofer
+\date	3/1/2011
+
+\param [in,out]	lpSim	The pointer to a simulation. 
+\param	strID			ID of the item to remove. 
+\param	bThrowError		true to throw error if not found. 
+\exception If bThrowError is true and no item with the specified ID is found then
+an exception is thrown.
+**/
 void ActivatedItemMgr::Remove(Simulator *lpSim, string strID, BOOL bThrowError)
 {
 	int iIndex=0;
@@ -103,6 +153,23 @@ void ActivatedItemMgr::Remove(Simulator *lpSim, string strID, BOOL bThrowError)
 	stable_sort(m_aryItems.begin(), m_aryItems.end(), LessThanActivatedItemCompare);
 }
 
+/**
+\fn	ActivatedItem *ActivatedItemMgr::Find(string strID, int &iIndex, BOOL bThrowError)
+
+\brief	Searches for an item with the specified ID and sets its index in the array. 
+
+\author	dcofer
+\date	3/1/2011
+
+\param	strID			ID of item to find. 
+\param [in,out]	iIndex	Zero-based index of the item in m_aryItems. 
+\param	bThrowError		true to throw error if not found. 
+
+\return	If bThrowError is false and item is not found it returns NULL, otherwise
+if it is found then it returns pointer to the item.
+\exception If bThrowError is true and no item with the specified ID is found then
+an exception is thrown.
+**/
 ActivatedItem *ActivatedItemMgr::Find(string strID, int &iIndex, BOOL bThrowError)
 {
 	int iCount = m_aryItems.GetSize();
@@ -122,6 +189,22 @@ ActivatedItem *ActivatedItemMgr::Find(string strID, int &iIndex, BOOL bThrowErro
 	return NULL;
 }
 
+/**
+\fn	ActivatedItem *ActivatedItemMgr::Find(string strID, BOOL bThrowError)
+
+\brief	Searches for an item with the specified ID. 
+
+\author	dcofer
+\date	3/1/2011
+
+\param	strID			ID of item to find. 
+\param	bThrowError		true to throw error if not found. 
+
+\return	If bThrowError is false and item is not found it returns NULL, otherwise
+if it is found then it returns pointer to the item.
+\exception If bThrowError is true and no item with the specified ID is found then
+an exception is thrown.
+**/
 ActivatedItem *ActivatedItemMgr::Find(string strID, BOOL bThrowError)
 {
 	ActivatedItem *lpItem = NULL;
@@ -136,6 +219,19 @@ ActivatedItem *ActivatedItemMgr::Find(string strID, BOOL bThrowError)
 	return lpItem;
 }
 
+/**
+\fn	int ActivatedItemMgr::FindListPos(string strID, BOOL bThrowError)
+
+\brief	Searches for the item with the specified ID and returns its position in the m_aryItems array. 
+
+\author	dcofer
+\date	3/1/2011
+
+\param	strID			ID of item to find. 
+\param	bThrowError		true to throw error if not found. 
+
+\return	Items position in the m_aryItems array. 
+**/
 int ActivatedItemMgr::FindListPos(string strID, BOOL bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
@@ -150,6 +246,7 @@ int ActivatedItemMgr::FindListPos(string strID, BOOL bThrowError)
 
 	return -1;
 }
+
 
 void ActivatedItemMgr::Initialize(Simulator *lpSim)
 {

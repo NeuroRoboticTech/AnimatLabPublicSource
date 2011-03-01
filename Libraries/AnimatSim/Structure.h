@@ -74,12 +74,12 @@ namespace AnimatSim
 			///The root rigid body position is relative to this position.
 			CStdFPoint m_oPosition;
 
-			//This is used for reporting the position back to the GUI. It is the position scaled for
-			//distance units.
+			/// This is used for reporting the position back to the GUI. It is the position scaled for
+			/// distance units.
 			CStdFPoint m_oReportPosition;
 
-			//This is used for reporting the rotation back to the GUI. We need to keep the
-			//regular rotation information so it can be used during a simulation reset.
+			/// This is used for reporting the rotation back to the GUI. We need to keep the
+			/// regular rotation information so it can be used during a simulation reset.
 			CStdFPoint m_oReportRotation;
 
 			///A list of rigid bodies contained within this structure.
