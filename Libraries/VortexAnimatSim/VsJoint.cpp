@@ -21,6 +21,7 @@ namespace VortexAnimatSim
 VsJoint::VsJoint()
 {
 	m_bMotorOn = FALSE;
+	m_vxJoint = NULL;
 }
 
 VsJoint::~VsJoint()
