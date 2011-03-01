@@ -36,9 +36,7 @@ ConstraintLimit::ConstraintLimit()
 	m_fltDamping = 0;
 	m_fltRestitution = 0;
 	m_fltStiffness = 0;
-	m_bEnabled = TRUE;
 	m_bIsLowerLimit = TRUE;
-	m_fltEnabled = 1;
 }
 
 ConstraintLimit::~ConstraintLimit()
@@ -86,9 +84,6 @@ void ConstraintLimit::Stiffness(float fltVal, BOOL bUseScaling)
 	m_fltStiffness = fltVal;
 }
 
-BOOL ConstraintLimit::Enabled() {return m_bEnabled;};
-void ConstraintLimit::Enabled(BOOL bVal) {m_bEnabled = bVal; m_fltEnabled = (float) m_bEnabled;}
-
 void ConstraintLimit::Color(float fltR, float fltG, float fltB, float fltA)
 {m_vColor.Set(fltR, fltG, fltB, fltA);}
 
@@ -121,8 +116,6 @@ float *ConstraintLimit::GetDataPointer(string strDataType)
 
 	if(strType == "LIMITPOS")
 		return &m_fltLimitPos;
-	else if(strType == "ENABLE")
-		return &m_fltEnabled;
 	else
 		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "JointID: " + STR(m_strName) + "  DataType: " + strDataType);
 
@@ -153,14 +146,9 @@ BOOL ConstraintLimit::SetData(string strDataType, string strValue, BOOL bThrowEr
 		Stiffness(atof(strValue.c_str()));
 		return true;
 	}
-	else if(strType == "ENABLED")
-	{
-		Enabled(Std_ToBool(strValue));
-		return true;
-	}
 	else if(strType == "COLOR")
 	{
-		Enabled(Std_ToBool(strValue));
+		Color(strValue);
 		return true;
 	}
 	else if(strType == "ALPHA")
@@ -192,7 +180,6 @@ void ConstraintLimit::Load(Simulator *lpSim, Structure *lpStructure, Joint *lpJo
 	Damping(oXml.GetChildFloat("Damping", m_fltDamping));
 	Restitution(oXml.GetChildFloat("Restitution", m_fltRestitution));
 	Stiffness(oXml.GetChildFloat("Stiffness", m_fltStiffness));
-	Enabled(oXml.GetChildBool("Enabled", m_bEnabled));
 
 	oXml.OutOfElem(); //OutOf ConstraintLimit Element
 }

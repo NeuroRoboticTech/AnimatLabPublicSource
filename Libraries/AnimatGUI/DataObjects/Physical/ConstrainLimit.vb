@@ -215,9 +215,6 @@ Namespace DataObjects.Physical
                                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
             End If
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Enable Limit", m_bEnabled.GetType(), "Enabled", _
-                                        "Constraints", "Enables or disables this joint limit constraints.", m_bEnabled))
-
             pbNumberBag = m_snDamping.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Damping", pbNumberBag.GetType(), "Damping", _
                                         "Constraints", "The damping term for this limit. If the stiffness and damping " & _
@@ -260,7 +257,6 @@ Namespace DataObjects.Physical
                     m_strName = m_strID
                 End If
 
-                m_bEnabled = oXml.GetChildBool("Enabled", m_bEnabled)
                 m_snLimitPos.LoadData(oXml, "LimitPos")
                 m_snDamping.LoadData(oXml, "Damping")
                 m_snRestitution.LoadData(oXml, "Restitution")
@@ -278,7 +274,6 @@ Namespace DataObjects.Physical
 
             oXml.AddChildElement("Name", m_strName)
             oXml.AddChildElement("ID", m_strID)
-            oXml.AddChildElement("Enabled", m_bEnabled)
             m_snLimitPos.SaveData(oXml, "LimitPos")
             m_snDamping.SaveData(oXml, "Damping")
             m_snRestitution.SaveData(oXml, "Restitution")
@@ -295,7 +290,6 @@ Namespace DataObjects.Physical
 
             oXml.AddChildElement("Name", m_strName)
             oXml.AddChildElement("ID", m_strID)
-            oXml.AddChildElement("Enabled", m_bEnabled)
 
             If m_bAngleLimit Then
                 oXml.AddChildElement("LimitPos", Util.DegreesToRadians(CSng(m_snLimitPos.ActualValue)))

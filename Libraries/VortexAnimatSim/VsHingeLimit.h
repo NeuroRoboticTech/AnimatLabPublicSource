@@ -28,7 +28,6 @@ namespace VortexAnimatSim
 
 				virtual void Alpha(float fltA);
 				virtual void LimitPos(float fltVal, BOOL bUseScaling = TRUE, BOOL bOverrideSameCheck = FALSE);
-				virtual void Enabled(BOOL bVal);
 
 				osg::Geometry *FlapGeometry() {return m_osgFlap.get();};
 				osg::MatrixTransform *FlapTranslateMT() {return m_osgFlapTranslateMT.get();};

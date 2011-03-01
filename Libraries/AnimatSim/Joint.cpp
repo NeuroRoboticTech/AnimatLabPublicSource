@@ -60,6 +60,7 @@ Joint::Joint()
 	m_fltVelocity = 0;
 	m_fltForce = 0;
 	m_fltSize = 0.02f;
+	m_bEnableLimits = TRUE;
 }
 
 
@@ -93,7 +94,7 @@ void Joint::Size(float fltVal, BOOL bUseScaling)
 	Resize();
 }
 
-float Joint::EnableMotor() {return m_bEnableMotor;};
+BOOL Joint::EnableMotor() {return m_bEnableMotor;};
 
 void Joint::EnableMotor(BOOL bVal)
 {
@@ -114,6 +115,10 @@ void Joint::MaxVelocity(float fltVal, BOOL bUseScaling)
 
 	//TODO Add sim code here.
 }
+
+BOOL Joint::EnableLimits() {return m_bEnableLimits;};
+
+void Joint::EnableLimits(BOOL bVal) {m_bEnableLimits = bVal;}
 
 //Node Overrides
 void Joint::AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput)
@@ -188,23 +193,11 @@ BOOL Joint::SetData(string strDataType, string strValue, BOOL bThrowError)
 	if(BodyPart::SetData(strType, strValue, FALSE))
 		return TRUE;
 
-	//if(strType == "LENGTH")
-	//{
-	//	Length(atof(strValue.c_str()));
-	//	return TRUE;
-	//}
-
-	//if(strType == "WIDTH")
-	//{
-	//	Width(atof(strValue.c_str()));
-	//	return TRUE;
-	//}
-
-	//if(strType == "HEIGHT")
-	//{
-	//	Height(atof(strValue.c_str()));
-	//	return TRUE;
-	//}
+	if(strType == "ENABLELIMITS")
+	{
+		EnableLimits(Std_ToBool(strValue));
+		return true;
+	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
@@ -220,10 +213,6 @@ void Joint::ResetSimulation(Simulator *lpSim, Structure *lpStructure)
 	m_fltPrevVelocity = 0;
 
 	EnableMotor(m_bEnableMotorInit);
-	//EnableLimits(m_bEnableLimitsInit);
-
-	//BOOL m_bEnableMotor;
-	//BOOL m_bEnableLimits;
 
 	m_fltPosition = 0;
 	m_fltVelocity = 0;
@@ -265,11 +254,9 @@ void Joint::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 	m_oReportLocalPosition = m_oLocalPosition * lpSim->DistanceUnits();
 	m_oReportWorldPosition = m_oAbsPosition * lpSim->DistanceUnits();
 
-	m_bEnableMotor = m_bEnableMotorInit = oXml.GetChildBool("EnableMotor", m_bEnableMotor);
-	m_fltMaxVelocity = oXml.GetChildFloat("MaxVelocity", m_fltMaxVelocity);
-
-	if(!this->UsesRadians())
-		m_fltMaxVelocity *= lpSim->InverseDistanceUnits();  //Convert distance units.
+	EnableMotor(oXml.GetChildBool("EnableMotor", m_bEnableMotor));
+	MaxVelocity(oXml.GetChildFloat("MaxVelocity", m_fltMaxVelocity));
+	EnableLimits(oXml.GetChildBool("EnableLimits", m_bEnableLimits));
 
 	Size(oXml.GetChildFloat("Size", m_fltSize));
 

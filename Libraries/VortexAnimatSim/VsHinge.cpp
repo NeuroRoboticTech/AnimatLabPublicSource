@@ -46,6 +46,14 @@ VsHinge::~VsHinge()
 	//ConstraintLimits are deleted in the base objects.
 }
 
+void VsHinge::EnableLimits(BOOL bVal)
+{
+	Hinge::EnableLimits(bVal);
+
+	if(m_vxHinge)
+		m_vxHinge->setLimitsActive(m_vxHinge->kAngularCoordinate, m_bEnableLimits);	
+}
+
 //If this is a servo motor then the "velocity" signal is not really a velocity signal in this case. 
 //It is the desired position and we must convert it to the velocity needed to reach and maintian that position.
 void VsHinge::CalculateServoVelocity()
@@ -54,7 +62,7 @@ void VsHinge::CalculateServoVelocity()
 		return;
 
 	float fltError = m_fltDesiredVelocity - m_fltPosition;
-/*
+
 	if(m_bEnableLimits)
 	{
 		if(m_fltDesiredVelocity>m_lpUpperLimit->LimitPos())
@@ -68,11 +76,10 @@ void VsHinge::CalculateServoVelocity()
 	}
 	else
 		m_fltDesiredVelocity = fltError * m_fltMaxVelocity; 
-	*/
 }
 
 void VsHinge::SetVelocityToDesired()
-{/*
+{
 	if(m_bEnableMotor)
 	{			
 		if(m_bServoMotor)
@@ -97,7 +104,7 @@ void VsHinge::SetVelocityToDesired()
 		}
 		
 		m_fltPrevVelocity = m_fltSetVelocity;
-	}*/
+	}
 }
 
 void VsHinge::EnableMotor(BOOL bVal)
@@ -294,10 +301,6 @@ void VsHinge::SetupPhysics(Simulator *lpSim, Structure *lpStructure)
 	lpUpperLimit->HingeRef(m_vxHinge);
 	lpLowerLimit->HingeRef(m_vxHinge);
 
-	//m_vxHinge->setLowerLimit(m_vxHinge->kAngularCoordinate,m_lpLowerLimit->LimitPos(), 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
-	//m_vxHinge->setUpperLimit(m_vxHinge->kAngularCoordinate, m_lpUpperLimit->LimitPos(), 0, m_fltRestitution, m_fltStiffness, m_fltDamping);
-	//m_vxHinge->setLimitsActive(m_vxHinge->kAngularCoordinate, m_bEnableLimits);	
-
 	m_vxJoint = m_vxHinge;
 	m_iCoordID = m_vxHinge->kAngularCoordinate;
 
@@ -357,11 +360,6 @@ BOOL VsHinge::SetData(string strDataType, string strValue, BOOL bThrowError)
 		AttachedPartMovedOrRotated(strValue);
 		return true;
 	}
-	//else if(strDataType == "ROTATION")
-	//{
-	//	Rotation(strValue);
-	//	return true;
-	//}
 
 	if(Hinge::SetData(strDataType, strValue, FALSE))
 		return true;
@@ -386,12 +384,6 @@ void VsHinge::StepSimulation(Simulator *lpSim, Structure *lpStructure)
 {
 	UpdateData(lpSim, lpStructure);
 	SetVelocityToDesired();
-
-	//iVal++;
-	//if(iVal == 10000)
-	//	Hinge::Rotation(0, VX_PI/2, 0);
-	//if(iVal == 10000)
-	//	ConstraintHigh(0.75*VX_PI);
 }
 
 void VsHinge::UpdateData(Simulator *lpSim, Structure *lpStructure)

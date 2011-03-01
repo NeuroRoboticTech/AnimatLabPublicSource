@@ -6,7 +6,9 @@ Imports System.Windows.Forms
 Imports System.Diagnostics
 Imports System.Reflection
 
-
+''' \namespace Forms 
+'''
+''' \brief  Contains classes related to showing the AnimatLab main form. 
 Namespace Forms
 
     'Okay. Big Explanation
@@ -22,7 +24,31 @@ Namespace Forms
     'Thanks alot microsoft. This should have been easy, but I just spent hours trying to figure this one out.
     '@#$##@@#$$%$##@
 
+    ''' \class  AnimatLab
+    '''
+    ''' \brief  Main class for showing AnimatLab form.
+    ''' 		
+    ''' \details The AnimatLab executable is essentially a small shell program that contains
+    ''' very little code. All of the main code is located in the DLL and assembly modules. 
+    ''' All this exe shell does is load up the AnimatLab.config xml file to get the name of the
+    ''' assembly it is to load and the name of the class within that assembly that it must start.
+    ''' It then uses reflection to create an instance of that object and invoke the ShowDialog method.
+    ''' Before it shows the dialog it calls the CommandLineParams method to pass any command line arguments
+    ''' into the new AnimatLab form.  
+    '''
+    ''' \author dcofer
+    ''' \date   3/1/2011
     Public Class AnimatLab
+
+        ''' \fn Public Shared Sub Main()
+        '''
+        ''' \brief  Main entry-point for the AnimatLab application.
+        ''' 
+        ''' \details This function is the entry point. It loads up the config file, creates
+        ''' the AnimatLab object and invokes the necessary methods to start the application. 
+        '''
+        ''' \author dcofer
+        ''' \date   3/1/2011
         Public Shared Sub Main()
             Try
                 Dim strAssemblyPath As String, strClassName As String
@@ -56,6 +82,18 @@ Namespace Forms
             End Try
         End Sub
 
+        ''' \fn Private Shared Sub LoadConfigInfo(ByRef strAssemblyPath As String, ByRef strClassName As String)
+        '''
+        ''' \brief  Loads the AnimatLab.config xml configuration information. 
+        '''
+        ''' \author dcofer
+        ''' \date   3/1/2011
+        '''
+        ''' \exception  ArgumentException   Thrown when one or more arguments have unsupported or illegal
+        '''                                 values. 
+        '''
+        ''' \param [in,out] strAssemblyPath Full pathname of the string assembly file. 
+        ''' \param [in,out] strClassName    Name of the string class. 
         Private Shared Sub LoadConfigInfo(ByRef strAssemblyPath As String, ByRef strClassName As String)
             Dim strExePath As String, strFile As String
             SplitPathAndFile(Application.ExecutablePath, strExePath, strFile)
@@ -90,6 +128,17 @@ Namespace Forms
             fs.Close()
         End Sub
 
+        ''' \fn Private Shared Sub SplitPathAndFile(ByVal strFullPath As String, ByRef strPath As String, ByRef strFile As String)
+        '''
+        ''' \brief  Splits a path and filename. 
+        '''
+        ''' \author dcofer
+        ''' \date   3/1/2011
+        '''
+        ''' \param  strFullPath     Full pathname of the string full file. 
+        ''' \param [in,out] strPath Full pathname of the string file. 
+        ''' \param [in,out] strFile The string file. 
+
         Private Shared Sub SplitPathAndFile(ByVal strFullPath As String, _
                                            ByRef strPath As String, _
                                            ByRef strFile As String)
@@ -108,6 +157,16 @@ Namespace Forms
             If strPath.Trim.Length > 0 Then strPath += "\"
         End Sub
 
+        ''' \fn Private Shared Function IsFullPath(ByVal strPath As String) As Boolean
+        '''
+        ''' \brief  Query if 'strPath' is full path. 
+        '''
+        ''' \author dcofer
+        ''' \date   3/1/2011
+        '''
+        ''' \param  strPath Full pathname of the string file. 
+        '''
+        ''' \return true if full path, false if not. 
         Private Shared Function IsFullPath(ByVal strPath As String) As Boolean
             Dim aryParts() As String = Split(strPath, "\")
 

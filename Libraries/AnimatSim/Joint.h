@@ -1,13 +1,4 @@
-// Joint.h: interface for the Joint class.
-//
-//////////////////////////////////////////////////////////////////////
-
-#if !defined(AFX_ALJOINT_H__93EDBBFE_2FA0_467C_970F_1775454FE94E__INCLUDED_)
-#define AFX_ALJOINT_H__93EDBBFE_2FA0_467C_970F_1775454FE94E__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
@@ -55,6 +46,7 @@ namespace AnimatSim
 
 			BOOL m_bEnableMotor;
 			BOOL m_bEnableMotorInit;
+			BOOL m_bEnableLimits;
 
 			float m_fltPosition;
 			float m_fltVelocity;
@@ -76,7 +68,10 @@ namespace AnimatSim
 			virtual float Size();
 			virtual void Size(float fltVal, BOOL bUseScaling = TRUE);
 
-			virtual float EnableMotor();
+			virtual BOOL EnableLimits();
+			virtual void EnableLimits(BOOL bVal);
+
+			virtual BOOL EnableMotor();
 			virtual void EnableMotor(BOOL bVal);
 
 			virtual float MaxVelocity();
@@ -113,5 +108,3 @@ namespace AnimatSim
 
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALJOINT_H__93EDBBFE_2FA0_467C_970F_1775454FE94E__INCLUDED_)

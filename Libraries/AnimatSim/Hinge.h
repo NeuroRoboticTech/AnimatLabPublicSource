@@ -58,6 +58,12 @@ namespace AnimatSim
 				float CylinderHeight();
 				float FlapWidth();
 
+				virtual void Enabled(BOOL bValue) 
+				{
+					EnableMotor(bValue);
+					m_bEnabled = bValue;
+				};
+
 				virtual ConstraintLimit *UpperLimit() {return m_lpUpperLimit;};
 				virtual ConstraintLimit *LowerLimit() {return m_lpLowerLimit;};
 

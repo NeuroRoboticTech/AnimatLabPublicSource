@@ -29,8 +29,7 @@ void VsHingeLimit::HingeRef(Vx::VxHinge *vxHinge)
 {
 	m_vxHinge = vxHinge;
 
-	//Make sure we set the enabled and limit pos
-	Enabled(m_bEnabled);
+	//Make sure we set the limit pos
 	LimitPos(m_fltLimitPos, TRUE, TRUE);
 
 }
@@ -48,14 +47,6 @@ void VsHingeLimit::Alpha(float fltA)
 		else
 			m_osgFlapSS->setRenderingHint(osg::StateSet::OPAQUE_BIN);
 	}
-}
-
-void VsHingeLimit::Enabled(BOOL bVal)
-{
-	ConstraintLimit::Enabled(bVal);
-
-	//if(m_vxHinge)
-	//	m_vxHinge->setLimitsActive(m_vxHinge->kAngularCoordinate, m_bEnableLimits);	
 }
 
 void VsHingeLimit::LimitPos(float fltVal, BOOL bUseScaling, BOOL bOverrideSameCheck)

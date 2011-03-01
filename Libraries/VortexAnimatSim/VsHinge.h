@@ -40,12 +40,6 @@ namespace VortexAnimatSim
 				VsHinge();
 				virtual ~VsHinge();
 
-				virtual void Enabled(BOOL bValue) 
-				{
-					EnableMotor(bValue);
-					m_bEnabled = bValue;
-				};
-
 				virtual void Rotation(CStdFPoint &oPoint);
 				virtual void JointPosition(float fltPos);
 
@@ -60,6 +54,7 @@ namespace VortexAnimatSim
 #pragma endregion
 
 				virtual void EnableMotor(BOOL bVal);
+				virtual void EnableLimits(BOOL bVal);
 				virtual void CreateJoint(Simulator *lpSim, Structure *lpStructure);
 				virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
 			};

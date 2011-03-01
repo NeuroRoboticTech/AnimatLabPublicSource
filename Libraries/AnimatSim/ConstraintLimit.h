@@ -17,8 +17,6 @@ namespace AnimatSim
 			float m_fltDamping;
 			float m_fltRestitution;
 			float m_fltStiffness;
-			BOOL m_bEnabled;
-			float m_fltEnabled;
 			BOOL m_bIsLowerLimit;
 
 			CStdColor m_vColor;
@@ -39,9 +37,6 @@ namespace AnimatSim
 
 			virtual float Stiffness();
 			virtual void Stiffness(float fltVal, BOOL bUseScaling = TRUE);
-
-			virtual BOOL Enabled();
-			virtual void Enabled(BOOL bVal);
 
 			virtual void Color(float fltR, float fltG, float fltB, float fltA);
 			virtual CStdColor *Color();

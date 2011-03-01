@@ -17,6 +17,7 @@ Namespace DataObjects.Physical
 #Region " Attributes "
 
         Protected m_snSize As AnimatGUI.Framework.ScaledNumber
+        Protected m_bEnableLimts As Boolean = True
 
 #End Region
 
@@ -70,6 +71,16 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
+        Public Overridable Property EnableLimits() As Boolean
+            Get
+                Return m_bEnableLimts
+            End Get
+            Set(ByVal value As Boolean)
+                SetSimData("EnableLimits", value.ToString, True)
+                m_bEnableLimts = value
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -109,6 +120,7 @@ Namespace DataObjects.Physical
 
             Dim doOrigJoint As Joint = DirectCast(doOriginal, Joint)
             m_snSize = DirectCast(doOrigJoint.m_snSize.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
+            m_bEnableLimts = doOrigJoint.m_bEnableLimts
         End Sub
 
         Public Overrides Function CreateJointTreeView(ByRef tvTree As TreeView, ByVal tnParent As TreeNode, _
@@ -190,6 +202,7 @@ Namespace DataObjects.Physical
             Me.Name = doExisting.Name
             Me.ID = doExisting.ID
             Me.Description = doExisting.Description
+            Me.EnableLimits = doExisting.m_bEnableLimts
             m_bpBodyNode = doOriginal.BodyTreeNode
 
             Util.Application.WorkspaceImages.AddImage(Me.WorkspaceImageName)
@@ -209,6 +222,9 @@ Namespace DataObjects.Physical
                                         "Part Properties", "Sets the overall size of the part.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Enable Limits", m_bEnabled.GetType(), "EnableLimits", _
+                                        "Constraints", "Enables or disables this joint limit constraints.", m_bEnabled))
+
         End Sub
 
         Public Overloads Overrides Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
@@ -218,6 +234,7 @@ Namespace DataObjects.Physical
             oXml.IntoElem() 'Into Joint Element
 
             m_snSize.LoadData(oXml, "Size")
+            m_bEnableLimts = oXml.GetChildBool("EnableLimits", m_bEnableLimts)
 
             oXml.OutOfElem() 'Outof Joint Element
 
@@ -230,6 +247,7 @@ Namespace DataObjects.Physical
             oXml.IntoElem() 'Into Joint Element
 
             m_snSize.SaveData(oXml, "Size")
+            oXml.AddChildElement("EnableLimits", m_bEnableLimts)
 
             oXml.OutOfElem() 'Outof Joint Element
 
@@ -241,6 +259,7 @@ Namespace DataObjects.Physical
             oXml.IntoElem() 'Into Joint Element
 
             m_snSize.SaveSimulationXml(oXml, Me, "Size")
+            oXml.AddChildElement("EnableLimits", m_bEnableLimts)
 
             oXml.OutOfElem() 'Outof Joint Element
 
