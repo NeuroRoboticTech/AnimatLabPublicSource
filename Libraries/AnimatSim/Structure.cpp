@@ -392,30 +392,27 @@ void Structure::StepPhysicsEngine(Simulator *lpSim)
 	}
 }
 
-
 /**
-\fn	void Structure::AddJoint(Joint *lpJoint)
+\fn	void Structure::AddJointToList(Joint *lpJoint)
 
 \brief	Adds a new joint to the list of all joints for this structure.
 
-\details There are two reasons for this method. The first is to get a list of
-references to all joints in this structure that is mapped to their
-ID value. This allows us to use the STL find funtions to find joints.
-This is more efficeient that using a loop and recursion. The second
-reason is that this also allows us to ensure that each joint that is
-being added has a unique ID value. If you attempt to add a joint that
-has a ID that is already in the list then an exception will be thrown.
-Note that this method is NOT creating the object itself, that is done
-elsewhere. It is simply adding a reference to that created object to 
-the list. Also, items in that list are not destroyed when the list is
-destroyed. It is a list of references only.
+\details There are two reasons for this method. The first is to get a list of references to all
+joints in this structure that is mapped to their ID value. This allows us to use the STL find
+funtions to find joints. This is more efficeient that using a loop and recursion. The second
+reason is that this also allows us to ensure that each joint that is being added has a unique ID
+value. If you attempt to add a joint that has a ID that is already in the list then an exception
+will be thrown. Note that this method is NOT creating the object itself, that is done elsewhere.
+It is simply adding a reference to that created object to the list. Also, items in that list are
+not destroyed when the list is destroyed. It is a list of references only. 
 
 \author	dcofer
 \date	2/25/2011
 
-\param [in,out]	The pointer to a joint. 
+\param [in,out]	lpJoint	pointer to a joint. 
 **/
-void Structure::AddJoint(Joint *lpJoint)
+
+void Structure::AddJointToList(Joint *lpJoint)
 {
 	if(!lpJoint)
 		THROW_PARAM_ERROR(Al_Err_lJointNotDefined, Al_Err_strJointNotDefined, "StructureID", m_strName);
@@ -431,23 +428,19 @@ void Structure::AddJoint(Joint *lpJoint)
 	}
 }
 
-
 /**
-\fn	void Structure::AddRigidBody(RigidBody *lpBody)
+\fn	void Structure::AddRigidBodyToList(RigidBody *lpBody)
 
 \brief	Adds a new rigid body to the list of all bodies for this structure.
 
-\details There are two reasons for this method. The first is to get a list of
-references to all rigid bodies in this structure that is mapped to their
-ID value. This allows us to use the STL find funtions to find bodies.
-This is more efficeient that using a loop and recursion. The second
-reason is that this also allows us to ensure that each body that is
-being added has a unique ID value. If you attempt to add a  body that
-has a ID that is already in the list then an exception will be thrown.
-Note that this method is NOT creating the object itself, that is done
-elsewhere. It is simply adding a reference to that created object to 
-the list. Also, items in that list are not destroyed when the list is
-destroyed. It is a list of references only.
+\details There are two reasons for this method. The first is to get a list of references to all
+rigid bodies in this structure that is mapped to their ID value. This allows us to use the STL
+find funtions to find bodies. This is more efficeient that using a loop and recursion. The second
+reason is that this also allows us to ensure that each body that is being added has a unique ID
+value. If you attempt to add a  body that has a ID that is already in the list then an exception
+will be thrown. Note that this method is NOT creating the object itself, that is done elsewhere.
+It is simply adding a reference to that created object to the list. Also, items in that list are
+not destroyed when the list is destroyed. It is a list of references only. 
 
 \author	dcofer
 \date	2/25/2011
@@ -455,7 +448,7 @@ destroyed. It is a list of references only.
 \param [in,out]	lpBody	The pointer to a body. 
 **/
 
-void Structure::AddRigidBody(RigidBody *lpBody)
+void Structure::AddRigidBodyToList(RigidBody *lpBody)
 {
 	if(!lpBody)
 		THROW_PARAM_ERROR(Al_Err_lBodyNotDefined, Al_Err_strBodyNotDefined, "StructureID", m_strName);

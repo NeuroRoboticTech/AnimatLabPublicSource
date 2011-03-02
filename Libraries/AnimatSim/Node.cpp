@@ -141,11 +141,35 @@ void Node::Enabled(BOOL bValue)
 	m_fltEnabled = (float) m_bEnabled;
 }
 
+/**
+\fn	void Node::AttachSourceAdapter(Simulator *lpSim, Structure *lpStructure, Adapter *lpAdapter)
+
+\brief	Attach this node to a source adapter. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to a structure. 
+\param [in,out]	lpAdapter	The pointer to an adapter. 
+**/
 void Node::AttachSourceAdapter(Simulator *lpSim, Structure *lpStructure, Adapter *lpAdapter)
 {
 	lpSim->AttachSourceAdapter(lpStructure, lpAdapter);
 }
 
+/**
+\fn	void Node::AttachTargetAdapter(Simulator *lpSim, Structure *lpStructure, Adapter *lpAdapter)
+
+\brief	Attach this node to a target adapter. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to a structure. 
+\param [in,out]	lpAdapter	The pointer to an adapter. 
+**/
 void Node::AttachTargetAdapter(Simulator *lpSim, Structure *lpStructure, Adapter *lpAdapter)
 {
 	lpSim->AttachTargetAdapter(lpStructure, lpAdapter);
@@ -163,9 +187,9 @@ longer function.The organism is dead.
 \author	dcofer
 \date	2/24/2011
 
-\param [in,out]	lpSim		If non-null, the pointer to a simulation. 
-\param [in,out]	lpOrganism	If non-null, the pointer to an organism. 
-\param	bState				true to state. 
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpOrganism	The pointer to an organism. 
+\param	bState				True to kill it, false to resurrect it. 
 **/
 void Node::Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState)
 {
@@ -180,31 +204,19 @@ void Node::Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState)
 }
 
 /**
-\fn	void *Node::GetDataItem(string strItemType, string strID, BOOL bThrowError)
+\fn	void Node::UpdateData(Simulator *lpSim, Structure *lpStructure)
 
-\brief	Gets a data item. 
+\brief	Updates any reporting data for this time step. 
 
 \author	dcofer
-\date	2/25/2011
+\date	3/2/2011
 
-\param	strItemType	Type of the string item. 
-\param	strID		Identifier for the string. 
-\param	bThrowError	true to throw error. 
-
-\return	null if it fails, else the data item. 
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to a structure. 
 **/
-void *Node::GetDataItem(string strItemType, string strID, BOOL bThrowError) 
-{
-	if(bThrowError)
-		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
-
-	return NULL;
-}
-
 void Node::UpdateData(Simulator *lpSim, Structure *lpStructure)
 {}
 
-//
 
 /**
 \fn	void Node::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule)
@@ -237,9 +249,9 @@ void Node::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralMod
 \author	dcofer
 \date	2/24/2011
 
-\param [in,out]	lpSim		If non-null, the pointer to a simulation. 
-\param [in,out]	lpStructure	If non-null, the pointer to a structure. 
-\param [in,out]	lpModule	If non-null, the pointer to a module. 
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to this parts parent structure. 
+\param [in,out]	lpModule	The pointer to this parts parent module. 
 **/
 void Node::Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule)
 {
@@ -251,16 +263,21 @@ void Node::Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lp
 /**
 \fn	void Node::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 
-\brief	Loads the object.
+\brief	Loads the item using an XML data packet.
 
-\details See AnimatBase::Load
+\details This method is responsible for loading the structure from a XMl configuration file. You
+should call this method even in your overriden function becuase it loads all of the base
+properties for this object like ID and Name. It also includes this object in the simulators
+AddToObjectList so that the simulator knows about this object when you do a FindObject call. If
+you do not call this base method then it is up to you to add your item to the simulators list of
+objects. 
 
 \author	dcofer
-\date	2/24/2011
+\date	3/1/2011
 
-\param [in,out]	lpSim		If non-null, the pointer to a simulation. 
-\param [in,out]	lpStructure	If non-null, the pointer to a structure. 
-\param [in,out]	oXml		The xml. 
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to this parts parent structure. 
+\param [in,out]	oXml		The CStdXml xml data packet to load. 
 **/
 void Node::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 {

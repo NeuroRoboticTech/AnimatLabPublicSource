@@ -48,16 +48,15 @@ namespace AnimatSim
 
 			virtual void Initialize(Simulator *lpSim);
 			virtual void StepNeuralEngine(Simulator *lpSim);
-			virtual void StepPhysicsEngine(Simulator *lpSim);
-
 			virtual void ResetSimulation(Simulator *lpSim);
 
+#pragma region SnapshotMethods
 			virtual long CalculateSnapshotByteSize();
 			virtual void SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 			virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex);
+#pragma endregion
 
 #pragma region DataAccesMethods
-			virtual float *GetDataPointer(string &strID, string &strDataType);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE);
 			virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);

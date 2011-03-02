@@ -1,6 +1,8 @@
-// Body.cpp: implementation of the Body class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	RigidBody.cpp
+
+\brief	Implements the rigid body class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -29,26 +31,14 @@ namespace AnimatSim
 {
 	namespace Environment
 	{
+/**
+\fn	RigidBody::RigidBody()
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+\brief	Default constructor. 
 
-/*! \brief 
-   Constructs a Rigid Body object..
-   		
-   \param lpParent This is a pointer to the parent of this rigid body. 
-	          If this value is null then it is assumed that this is
-						a root object and no joint is loaded to connect this
-						part to the parent.
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a rigid body. 
-*/
-
+\author	dcofer
+\date	3/2/2011
+**/
 RigidBody::RigidBody()
 {
 	m_bUsesJoint = TRUE;
@@ -86,17 +76,14 @@ RigidBody::RigidBody()
 	m_strMaterialID = "DEFAULT";
 }
 
+/**
+\fn	RigidBody::~RigidBody()
 
-/*! \brief 
-   Destroys the Rigid Body object..
-   		
-	 \return
-	 No return value.
+\brief	Destructor. 
 
-   \remarks
-   Destroys the Rigid Body object..	 
-*/
-
+\author	dcofer
+\date	3/2/2011
+**/
 RigidBody::~RigidBody()
 {
 
@@ -120,14 +107,343 @@ int RigidBody::VisualSelectionType()
 		return GRAPHICS_SELECTION_MODE;
 }
 
-void RigidBody::Freeze(BOOL bVal)
+/**
+\fn	CStdColor *RigidBody::Ambient()
+
+\brief	Gets the ambient color value. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Pointer to color data
+**/
+CStdColor *RigidBody::Ambient() {return &m_vAmbient;}
+
+/**
+\fn	void RigidBody::Ambient(CStdColor &aryColor)
+
+\brief	Sets the Ambient color. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	aryColor	The color data. 
+**/
+void RigidBody::Ambient(CStdColor &aryColor)
 {
-	m_bFreeze = bVal;
+	m_vAmbient = aryColor;
+	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
+}
 
-	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->SetFreeze(bVal);
-};
+/**
+\fn	void RigidBody::Ambient(float *aryColor)
 
+\brief	Sets the Ambient color. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	aryColor	The color data. 
+**/
+void RigidBody::Ambient(float *aryColor)
+{
+	m_vAmbient.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
+	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
+}
+
+/**
+\fn	void RigidBody::Ambient(string strXml)
+
+\brief	Loads the Ambient color from an XML data packet. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml	The color data in an xml data packet
+**/
+
+void RigidBody::Ambient(string strXml)
+{
+	m_vAmbient.Load(strXml, "Ambient");
+	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
+}
+
+/**
+\fn	CStdColor *RigidBody::Diffuse()
+
+\brief	Gets the diffuse color. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Pointer to color data
+**/
+CStdColor *RigidBody::Diffuse() {return &m_vDiffuse;}
+
+/**
+\fn	void RigidBody::Diffuse(CStdColor &aryColor)
+
+\brief	Sets the Diffuse color. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	aryColor	The color data. 
+**/
+void RigidBody::Diffuse(CStdColor &aryColor)
+{
+	m_vDiffuse = aryColor;
+	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
+}
+
+/**
+\fn	void RigidBody::Diffuse(float *aryColor)
+
+\brief	Sets the Diffuse color. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	aryColor	The color data. 
+**/
+void RigidBody::Diffuse(float *aryColor)
+{
+	m_vDiffuse.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
+	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
+}
+
+/**
+\fn	void RigidBody::Diffuse(string strXml)
+
+\brief	Loads the Diffuse color from an XML data packet. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml	The color data in an xml data packet
+**/
+void RigidBody::Diffuse(string strXml)
+{
+	m_vDiffuse.Load(strXml, "Diffuse");
+	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
+}
+
+/**
+\fn	CStdColor *RigidBody::Specular()
+
+\brief	Gets the specular color. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Pointer to color data
+**/
+CStdColor *RigidBody::Specular() {return &m_vSpecular;}
+
+/**
+\fn	void RigidBody::Specular(CStdColor &aryColor)
+
+\brief	Sets the Specular color. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	aryColor	The color data. 
+**/
+void RigidBody::Specular(CStdColor &aryColor)
+{
+	m_vSpecular = aryColor;
+	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
+}
+
+/**
+\fn	void RigidBody::Specular(float *aryColor)
+
+\brief	Sets the Specular color. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	aryColor	The color data. 
+**/
+void RigidBody::Specular(float *aryColor)
+{
+	m_vSpecular.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
+	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
+}
+
+/**
+\fn	void RigidBody::Specular(string strXml)
+
+\brief	Loads the Specular color from an XML data packet.  
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml	The color data in an xml data packet
+**/
+void RigidBody::Specular(string strXml)
+{
+	m_vSpecular.Load(strXml, "Specular");
+	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
+}
+
+/**
+\fn	float RigidBody::Shininess()
+
+\brief	Gets the shininess. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Shininess value. 
+**/
+
+float RigidBody::Shininess() {return m_fltShininess;}
+
+/**
+\fn	void RigidBody::Shininess(float fltVal)
+
+\brief	Sets the shininess value. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltVal	The new value. 
+**/
+void RigidBody::Shininess(float fltVal)
+{
+	Std_InValidRange((float) 0, (float) 128, fltVal, TRUE, "Shininess");
+	m_fltShininess = fltVal;
+	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
+}
+
+/**
+\fn	string RigidBody::Texture()
+
+\brief	Gets the texture filename. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Texture filename. 
+**/
+string RigidBody::Texture() {return m_strTexture;}
+
+/**
+\fn	void RigidBody::Texture(string strValue)
+
+\brief	Sets the Texture filename. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strValue	The texture filename. 
+**/
+void RigidBody::Texture(string strValue)
+{
+	m_strTexture = strValue;
+	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_TextureChanged();
+}
+
+/**
+\fn	CStdFPoint RigidBody::CenterOfMass()
+
+\brief	Gets the user specified center of mass. 
+
+\details If this is (0, 0, 0) then the default COM is used for the part. This is
+only used if the user sets it to something.
+
+\author	dcofer
+\date	3/2/2011
+
+\return	COM point. 
+**/
+CStdFPoint RigidBody::CenterOfMass() {return m_oCenterOfMass;}
+
+/**
+\fn	void RigidBody::CenterOfMass(CStdFPoint &oPoint)
+
+\brief	Sets the user specified center of mass for this part. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	oPoint	The point. 
+**/
+void RigidBody::CenterOfMass(CStdFPoint &oPoint) {m_oCenterOfMass = oPoint;}
+
+/**
+\fn	CStdPtrArray<RigidBody> *RigidBody::ChildParts()
+
+\brief	Gets the array of child parts. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	pointer to array of child parts. 
+**/
+CStdPtrArray<RigidBody> *RigidBody::ChildParts() {return &m_aryChildParts;}
+
+/**
+\fn	Joint *RigidBody::JointToParent()
+
+\brief	Gets the joint to parent. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Pointer to joint that connects this part to its parent.
+**/
+Joint *RigidBody::JointToParent() {return m_lpJointToParent;}
+
+/**
+\fn	void RigidBody::JointToParent(Joint *lpValue)
+
+\brief	Sets the joint to parent. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpValue	The pointer to the joint. 
+**/
+void RigidBody::JointToParent(Joint *lpValue) {m_lpJointToParent = lpValue;}
+
+/**
+\fn	ContactSensor *RigidBody::ContactSensor()
+
+\brief	Gets the receptive field contact sensor. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Pointer to the receptive field contact sensor object. 
+**/
+ContactSensor *RigidBody::ContactSensor() {return m_lpContactSensor;}
+
+/**
+\fn	float RigidBody::Density()
+
+\brief	Gets the uniform density. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Uniform density value of this part. 
+**/
+float RigidBody::Density() {return m_fltDensity;}
+
+/**
+\fn	void RigidBody::Density(float fltVal)
+
+\brief	Sets the uniform density of this part. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltVal	The new density value. 
+\exception Density must be greater than zero.
+**/
 void RigidBody::Density(float fltVal) 
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "Density");
@@ -140,92 +456,435 @@ void RigidBody::Density(float fltVal)
 		m_lpPhysicsBody->SetDensity(m_fltDensity);
 };
 
-void RigidBody::Ambient(CStdColor &aryColor)
+/**
+\fn	float *RigidBody::Cd()
+
+\brief	Gets the coefficient of drag array. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	pointer to an array of drag coefficients for each dimension. 
+**/
+float *RigidBody::Cd() {return m_vCd;}
+
+/**
+\fn	void RigidBody::Cd(float *vVal)
+
+\brief	Sets the drag coefficients for each dimension.
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	vVal Pointer to a dimension 3 array of drag coefficients.
+**/
+void RigidBody::Cd(float *vVal) 
+{m_vCd[0] = vVal[0]; m_vCd[1] = vVal[1]; m_vCd[2] = vVal[2];}
+
+/**
+\fn	float RigidBody::Volume()
+
+\brief	Gets the volume of this part. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Volume. 
+**/
+float RigidBody::Volume() {return m_fltVolume;}
+
+/**
+\fn	float RigidBody::XArea()
+
+\brief	Gets the area of this part in the x dimension. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Area in x dimesion. 
+**/
+
+float RigidBody::XArea() {return m_fltXArea;}
+
+/**
+\fn	float RigidBody::YArea()
+
+\brief	Gets the area of this part in the y dimension. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Area in y dimesion.
+**/
+float RigidBody::YArea() {return m_fltYArea;}
+
+/**
+\fn	float RigidBody::ZArea()
+
+\brief	Gets the area of this part in the z dimension. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Area in z dimesion.
+**/
+float RigidBody::ZArea() {return m_fltZArea;}
+
+/**
+\fn	BOOL RigidBody::Freeze()
+
+\brief	Tells if this part is frozen or not
+
+\details Specifies if the part should frozen in place to the world. If a rigid body 
+is frozen then it is as if it is nailed in place and can not move. Gravity and 
+and other forces will not act on it.
+
+\author	dcofer
+\date	3/2/2011
+
+\return	true if frozen, false if else. 
+**/
+BOOL RigidBody::Freeze() {return m_bFreeze;}
+
+/**
+\fn	void RigidBody::Freeze(BOOL bVal)
+
+\brief	Freezes. 
+
+\details Specifies if the part should frozen in place to the world. If a rigid body 
+is frozen then it is as if it is nailed in place and can not move. Gravity and 
+and other forces will not act on it.
+
+\author	dcofer
+\date	3/2/2011
+
+\param	bVal	true to freeze. 
+**/
+void RigidBody::Freeze(BOOL bVal)
 {
-	m_vAmbient = aryColor;
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
+	m_bFreeze = bVal;
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->SetFreeze(bVal);
 }
 
-void RigidBody::Ambient(float *aryColor)
+/**
+\fn	BOOL RigidBody::IsContactSensor()
+
+\brief	Query if this object is contact sensor. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	true if contact sensor, false if not. 
+**/
+BOOL RigidBody::IsContactSensor() {return m_bIsContactSensor;}
+
+/**
+\fn	void RigidBody::IsContactSensor(BOOL bVal)
+
+\brief	Sets whether this is a contact sensor. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	bVal	true if it is a contact sensor. 
+**/
+void RigidBody::IsContactSensor(BOOL bVal) {m_bIsContactSensor = bVal;}
+
+/**
+\fn	BOOL RigidBody::IsCollisionObject()
+
+\brief	Query if this object is collision object. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	true if collision object, false if not. 
+**/
+BOOL RigidBody::IsCollisionObject() {return m_bIsCollisionObject;}
+
+/**
+\fn	void RigidBody::IsCollisionObject(BOOL bVal)
+
+\brief	Sets whether this part is a collision object. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	bVal true if collision object, false else. 
+**/
+void RigidBody::IsCollisionObject(BOOL bVal) {m_bIsCollisionObject = bVal;}
+
+/**
+\fn	BOOL RigidBody::IsFoodSource()
+
+\brief	Query if this object is food source. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	true if food source, false if not. 
+**/
+BOOL RigidBody::IsFoodSource() {return m_bFoodSource;}
+
+/**
+\fn	void RigidBody::IsFoodSource(BOOL bVal)
+
+\brief	Sets if this is a food source. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	bVal	true if food source, else false. 
+**/
+void RigidBody::IsFoodSource(BOOL bVal) {m_bFoodSource = bVal;}
+
+/**
+\fn	float RigidBody::FoodQuantity()
+
+\brief	Gets the food quantity. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Food Quantity. 
+**/
+float RigidBody::FoodQuantity() {return m_fltFoodQuantity;}
+
+/**
+\fn	void RigidBody::FoodQuantity(float fltVal)
+
+\brief	Sets the Food quantity. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltVal	The new food quantity value. 
+\exception Food Quantity must be zero or greater.
+**/
+void RigidBody::FoodQuantity(float fltVal) 
 {
-	m_vAmbient.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "FoodQuantity", TRUE);
+	m_fltFoodQuantity = fltVal;
 }
 
-void RigidBody::Ambient(string strXml)
+/**
+\fn	float RigidBody::FoodEaten()
+
+\brief	Gets the amount of food eaten. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Amount of food eaten. 
+**/
+float RigidBody::FoodEaten() {return m_fltFoodEaten;}
+
+/**
+\fn	void RigidBody::FoodEaten(float fltVal)
+
+\brief	Sets the amount of food eaten. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltVal	The amount of food eaten. 
+**/
+void RigidBody::FoodEaten(float fltVal) {m_fltFoodEaten = fltVal;}
+
+/**
+\fn	float RigidBody::FoodReplenishRate()
+
+\brief	Gets the food replenish rate. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Food replenish rate. 
+**/
+float RigidBody::FoodReplenishRate() {return m_fltFoodReplenishRate;}
+
+/**
+\fn	void RigidBody::FoodReplenishRate(float fltVal)
+
+\brief	Sets the food replenish rate. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltVal	The new replenish rate. 
+**/
+void RigidBody::FoodReplenishRate(float fltVal) {m_fltFoodReplenishRate = fltVal;}
+
+/**
+\fn	float RigidBody::FoodEnergyContent()
+
+\brief	Gets the food energy content. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Food energy content. 
+**/
+float RigidBody::FoodEnergyContent() {return m_fltFoodEnergyContent;}
+
+/**
+\fn	void RigidBody::FoodEnergyContent(float fltVal)
+
+\brief	Sets the food energy content. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltVal	The new food energy content value. 
+\exception Food Quantity must be zero or greater.
+**/
+void RigidBody::FoodEnergyContent(float fltVal) 
 {
-	m_vAmbient.Load(strXml, "Ambient");
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "FoodEnergyContent", TRUE);
+	m_fltFoodEnergyContent = fltVal;
 }
 
-void RigidBody::Diffuse(CStdColor &aryColor)
+/**
+\fn	float RigidBody::LinearVelocityDamping()
+
+\brief	Gets the linear velocity damping for this body part. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Linear velocity damping value. 
+**/
+float RigidBody::LinearVelocityDamping() {return m_fltLinearVelocityDamping;}
+
+/**
+\fn	void RigidBody::LinearVelocityDamping(float fltVal)
+
+\brief	Sets the Linear velocity damping. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltVal	The new value. 
+\exception Value must be zero or greater.
+**/
+void RigidBody::LinearVelocityDamping(float fltVal) 
 {
-	m_vDiffuse = aryColor;
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "LinearVelocityDamping", TRUE);
+	m_fltLinearVelocityDamping = fltVal;
 }
 
-void RigidBody::Diffuse(float *aryColor)
+/**
+\fn	float RigidBody::AngularVelocityDamping()
+
+\brief	Gets the angular velocity damping. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Angular velocity damping for this part. 
+**/
+float RigidBody::AngularVelocityDamping() {return m_fltAngularVelocityDamping;}
+
+/**
+\fn	void RigidBody::AngularVelocityDamping(float fltVal)
+
+\brief	Sets the angular velocity damping. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltVal	The new value. 
+\exception Value must be zero or greater.
+**/
+void RigidBody::AngularVelocityDamping(float fltVal) 
 {
-	m_vDiffuse.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "AngularVelocityDamping", TRUE);
+	m_fltAngularVelocityDamping = fltVal;
 }
 
-void RigidBody::Diffuse(string strXml)
-{
-	m_vDiffuse.Load(strXml, "Diffuse");
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
-}
+/**
+\fn	string RigidBody::MaterialID()
 
-void RigidBody::Specular(CStdColor &aryColor)
-{
-	m_vSpecular = aryColor;
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
-}
+\brief	Gets the material ID for this part.
 
-void RigidBody::Specular(float *aryColor)
-{
-	m_vSpecular.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
-}
+\details Each rigid body part can be associated with a specific type of material. 
+For example, a material like wood, or concrete. The material specifies things like 
+the frictional resistance between that part and parts of other materials. Each material
+is defined in the GUI and this is a unique ID string that specifies which one to use for this part.
 
-void RigidBody::Specular(string strXml)
-{
-	m_vSpecular.Load(strXml, "Specular");
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
-}
+\author	dcofer
+\date	3/2/2011
 
-void RigidBody::Shininess(float fltVal)
-{
-	Std_InValidRange((float) 0, (float) 128, fltVal, TRUE, "Shininess");
-	m_fltShininess = fltVal;
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
-}
+\return	. 
+**/
+string RigidBody::MaterialID() {return m_strMaterialID;}
 
-void RigidBody::Texture(string strValue)
-{
-	m_strTexture = strValue;
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_TextureChanged();
-}
-//
-//string RigidBody::TextureFile(string strTexture)
-//{
-//	string strExt = Std_FileExtension(strTexture);
-//
-//	if(Std_IsBlank(strExt))
-//		return AnimatSim::GetFilePath(m_lpSim->ProjectPath(), strTexture);
-//	else
-//	{
-//		string strTex = strTexture;
-//		strTex = Std_Replace(strTex, strExt, "");
-//		return AnimatSim::GetFilePath(m_lpSim->ProjectPath(), strTex);
-//	}
-//}
+/**
+\fn	void RigidBody::MaterialID(string strID) CStdFPoint RigidBody::GetCurrentPosition()
 
+\brief	Sets the Material ID for this part. 
+
+\details Each rigid body part can be associated with a specific type of material. 
+For example, a material like wood, or concrete. The material specifies things like 
+the frictional resistance between that part and parts of other materials. Each material
+is defined in the GUI and this is a unique ID string that specifies which one to use for this part.
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strID	ID of the material to use. 
+**/
+void RigidBody::MaterialID(string strID) {m_strMaterialID = strID;}
+
+/**
+\fn	float RigidBody::SurfaceContactCount()
+
+\brief	Gets the surface contact count. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Returns m_fltSurfaceContactCount. 
+**/
+float RigidBody::SurfaceContactCount() {return m_fltSurfaceContactCount;}
+
+/**
+\fn	void RigidBody::AddSurfaceContact(Simulator *lpSim, RigidBody *lpContactedSurface)
+
+\brief	Increments the surface contact count when this part collides with something in the virtual world
+
+\details If this item is setup to be a contact sensor then when the physics engine detects a collision between
+two objects it will provide this back to us. We then call this method to update the number of contacts that this
+object is undergoing. This value can then be used to detect whether, and how many, contacts are currently happening.
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpSim				The pointer to a simulation. 
+\param [in,out]	lpContactedSurface	The pointer to the other contacted surface. 
+**/
 void RigidBody::AddSurfaceContact(Simulator *lpSim, RigidBody *lpContactedSurface)
 {
 	m_fltSurfaceContactCount++;
 }
 
+/**
+\fn	void RigidBody::RemoveSurfaceContact(Simulator *lpSim, RigidBody *lpContactedSurface)
+
+\brief	Decrements the surface contact count when this part stops colliding with something in the virtual world
+
+\details If this item is setup to be a contact sensor then when the physics engine detects when a collision between
+two objects stops, and it will provide this back to us. We then call this method to update the number of contacts that this
+object is undergoing. This value can then be used to detect whether, and how many, contacts are currently happening.
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpSim				If non-null, the pointer to a simulation. 
+\param [in,out]	lpContactedSurface	If non-null, the pointer to a contacted surface. 
+**/
 void RigidBody::RemoveSurfaceContact(Simulator *lpSim, RigidBody *lpContactedSurface)
 {
 	if(m_fltSurfaceContactCount<=0)
@@ -234,6 +893,17 @@ void RigidBody::RemoveSurfaceContact(Simulator *lpSim, RigidBody *lpContactedSur
 	m_fltSurfaceContactCount--;
 }
 
+/**
+\fn	void RigidBody::Eat(float fltVal, long lTimeSlice)
+
+\brief	This item is eating the specified amount of food. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltVal		The amount of food to eat. 
+\param	lTimeSlice	The time slice during which the eating is occuring. 
+**/
 void RigidBody::Eat(float fltVal, long lTimeSlice)
 {
 	if(m_lEatTime != lTimeSlice)
@@ -244,52 +914,47 @@ void RigidBody::Eat(float fltVal, long lTimeSlice)
 	m_fltFoodQuantity = fltVal;
 }
 
-	
-/*! \brief 
-   Enables collision between the past-in object and this object.
-      
-   \param lpBody This is a pointer to the body to enable collisions on.
 
-	 \return
-	 No return value.
+/**
+\fn	void RigidBody::EnableCollision(Simulator *lpSim, RigidBody *lpBody)
 
-	 \remarks
-	 This method enables collision responses between the rigid body being past
-	 in and this rigid body. This is a virtual method that should be overridden 
-	 in the simulator system. You need to call physics engine API's to enable
-	 the collision responses between these two objects. This method does nothing
-	 by default.
+\brief	Enables collision between the past-in object and this object.
 
-   \sa
-   EnableCollision, DisableCollision	
-*/
+\details This method enables collision responses between the rigid body being past
+in and this rigid body. This is a virtual method that should be overridden 
+in the simulator system. You need to call physics engine API's to enable
+the collision responses between these two objects. This method does nothing
+by default.
 
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpSim	The pointer to a simulation. 
+\param [in,out]	lpBody	The pointer to a body. 
+**/
 void RigidBody::EnableCollision(Simulator *lpSim, RigidBody *lpBody)
 {
 	if(m_lpPhysicsBody)
 		m_lpPhysicsBody->Physics_EnableCollision(lpSim, lpBody);
 }
 
+/**
+\fn	void RigidBody::DisableCollision(Simulator *lpSim, RigidBody *lpBody)
 
-/*! \brief 
-   Disables collision between the past-in object and this object.
-      
-   \param lpBody This is a pointer to the body to disable collisions on.
+\brief	Disables collision between the past-in object and this object.
 
-	 \return
-	 No return value.
+\details This method disables collision responses between the rigid body being past
+in and this rigid body. This is a virtual method that should be overridden 
+in the simulator system. You need to call physics engine API's to disable
+the collision responses between these two objects. This method does nothing
+by default.
 
-	 \remarks
-	 This method disables collision responses between the rigid body being past
-	 in and this rigid body. This is a virtual method that should be overridden 
-	 in the simulator system. You need to call physics engine API's to disable
-	 the collision responses between these two objects. This method does nothing
-	 by default.
+\author	dcofer
+\date	3/2/2011
 
-   \sa
-   EnableCollision, DisableCollision	
-*/
-
+\param [in,out]	lpSim	The pointer to a simulation. 
+\param [in,out]	lpBody	The pointer to a body. 
+**/
 void RigidBody::DisableCollision(Simulator *lpSim, RigidBody *lpBody)
 {
 	if(m_lpPhysicsBody)
@@ -332,34 +997,30 @@ void RigidBody::AfterResetSimulation(Simulator *lpSim, Structure *lpStructure)
 }
 
 
-/*! \brief 
-   Allows the rigid body to create its parts using the chosen physics engine.
-      
-   \param lpSim This is a pointer to the simulator.
-   \param lpStructure This is a pointer to the structure/Organism that
-                  this rigid body is a part of.
+/**
+\fn	void RigidBody::CreateParts(Simulator *lpSim, Structure *lpStructure)
 
-	 \return
-	 No return value.
+\brief	Allows the rigid body to create its parts using the chosen physics engine.
 
-	 \remarks
-	 This function can not be truly implemented in the Animat library. It must
-	 be implemented in the next layer sitting above it. The reason for this is
-	 that the Animat library was made to be generalized so it could work with a
-	 number of different physics engines. Therefore it is not tightly coupled with
-	 any one engine. This in turn means that we can not implement the code in this
-	 library neccessary to create a part or joint in the chosen engine. Several
-	 overridable functions have been provided that allow you to do this. The two
-	 that will always have to be overridden are the CreateParts and CreateJoints
-	 methods. CreateParts makes the API calls to the physics engine to create the
-	 collision models, graphics models and so on. You should still call the 
-	 base class method at the end of your overridden method so the rigid body
-	 can walk down the tree and create the parts for its children.
+\details This function can not be truly implemented in the Animat library. It must
+be implemented in the next layer sitting above it. The reason for this is
+that the Animat library was made to be generalized so it could work with a
+number of different physics engines. Therefore it is not tightly coupled with
+any one engine. This in turn means that we can not implement the code in this
+library neccessary to create a part or joint in the chosen engine. Several
+overridable functions have been provided that allow you to do this. The two
+that will always have to be overridden are the CreateParts and CreateJoints
+methods. CreateParts makes the API calls to the physics engine to create the
+collision models, graphics models and so on. You should still call the 
+base class method at the end of your overridden method so the rigid body
+can walk down the tree and create the parts for its children.
 
-   \sa
-   CreateParts, CreateJoints, StepSimulation	
-*/
+\author	dcofer
+\date	3/2/2011
 
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to a structure. 
+**/
 void RigidBody::CreateParts(Simulator *lpSim, Structure *lpStructure)
 {
 	if(m_bFoodSource)
@@ -375,33 +1036,31 @@ void RigidBody::CreateParts(Simulator *lpSim, Structure *lpStructure)
 		m_aryChildParts[iIndex]->CreateParts(lpSim, lpStructure);
 }
 
-/*! \brief 
-   Allows the rigid body to create its joints using the chosen physics engine.
-      
-   \param lpSim This is a pointer to the simulator.
-   \param lpStructure This is a pointer to the structure/Organism that
-                  this rigid body is a part of.
 
-	 \return
-	 No return value.
+/**
+\fn	void RigidBody::CreateJoints(Simulator *lpSim, Structure *lpStructure)
 
-	 \remarks
-	 This function can not be truly implemented in the Animat library. It must
-	 be implemented in the next layer sitting above it. The reason for this is
-	 that the Animat library was made to be generalized so it could work with a
-	 number of different physics engines. Therefore it is not tightly coupled with
-	 any one engine. This in turn means that we can not implement the code in this
-	 library neccessary to create a part or joint in the chosen engine. Several
-	 overridable functions have been provided that allow you to do this. The two
-	 that will always have to be overridden are the CreateParts and CreateJoints
-	 methods. CreateJoints makes the API calls to the physics engine to create the
-	 joint and constraints and motors. You should still call the 
-	 base class method at the end of your overridden method so the rigid body
-	 can walk down the tree and create the joints for its children.
+\brief	Allows the rigid body to create its joints using the chosen physics engine.
 
-   \sa
-   CreateParts, CreateJoints, StepSimulation	
-*/
+\details This function can not be truly implemented in the Animat library. It must
+be implemented in the next layer sitting above it. The reason for this is
+that the Animat library was made to be generalized so it could work with a
+number of different physics engines. Therefore it is not tightly coupled with
+any one engine. This in turn means that we can not implement the code in this
+library neccessary to create a part or joint in the chosen engine. Several
+overridable functions have been provided that allow you to do this. The two
+that will always have to be overridden are the CreateParts and CreateJoints
+methods. CreateJoints makes the API calls to the physics engine to create the
+joint and constraints and motors. You should still call the 
+base class method at the end of your overridden method so the rigid body
+can walk down the tree and create the joints for its children.
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to a structure. 
+**/
 
 void RigidBody::CreateJoints(Simulator *lpSim, Structure *lpStructure)
 {
@@ -410,101 +1069,9 @@ void RigidBody::CreateJoints(Simulator *lpSim, Structure *lpStructure)
 		m_aryChildParts[iIndex]->CreateJoints(lpSim, lpStructure);
 }
 
-
-/*! \brief 
-   Copies the base value data elements of this rigid body.
-   		
-	 \param lpOrig This is the rigid body to copy.
-
-	 \return
-	 No return value.
-
-   \remarks
-   Copies the base value data elements of this rigid body.
-*/
-
-void RigidBody::Copy(RigidBody *lpOrig)
-{
-	m_strID = lpOrig->m_strID;
-	m_strName = lpOrig->m_strName;
-	m_oAbsPosition = lpOrig->m_oAbsPosition;
-	m_oCenterOfMass = lpOrig->m_oCenterOfMass;
-	m_fltDensity = lpOrig->m_fltDensity;
-	m_lpParent = lpOrig->m_lpParent;
-	m_lpJointToParent = lpOrig->m_lpJointToParent;
-	CopyPtrArray(lpOrig->m_aryChildParts, m_aryChildParts);
-}
-
-
-/*! \brief 
-   Dumps the key values of this object to a text stream.
-      
-   \param oOs Text stream.
-
-	 \return
-	 No return value.
-
-	 \remarks
-	 This method is used to trace the key values of an object.
-	 You can dump these values to the debug window in Visual Studio or
-	 to a log file. When you trace an array of objects this method is
-	 automatically invoked for each object in the array.
-*/
-
-void RigidBody::Trace(ostream &oOs)
-{
-	/*
-	ClassFactory *lpFactory = Al_ClassFactory();
-
-	oOs << "ID: " << m_strName  << ", Type: " << lpFactory->RigidBodyTypeAbbrev(m_iType);
-	oOs << ", RelPos: " << m_oRelPosition << ", AbsPos: " << m_oAbsPosition;
-	oOs << ", Rot: " << m_oRotation << ", " << m_fltDensity;
-	oOs << ", Cd: " << m_fltCd << ", Volume: " << m_fltVolume;
-	oOs << ", Area (" << m_fltXArea << ", " <<m_fltYArea << ", " << m_fltZArea;
-	oOs << "), Freeze: " << m_bFreeze;
-
-	if(m_lpParent)
-		oOs << ", Parent: " << m_lpParent->ID();
-
-	if(m_lpJointToParent)
-		oOs << ", Joint: " << m_lpJointToParent->ID();
-	*/
-}
-
-//Node Overrides
-
 void RigidBody::AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput)
 {
 }
-
-/*! \brief 
-   Allows the rigid body to update itself for each timeslice.
-      
-   \param lpSim This is a pointer to the simulator.
-   \param lpStructure This is a pointer to the structure/Organism that
-                  this rigid body is a part of.
-   \param lStep This is the current time slice.
-
-	 \return
-	 No return value.
-
-	 \remarks
-   This function is called for each rigid body on every
-   time slice. It allows the body to update itself. For
-   instance, if this is a muscle type of rigid body that is
-   connected to a motor neuron then it may need to adjust the
-   force it is applying based on the firing frequency of that
-   neuron. If you are doing hydrodynamics then you the bodies
-   will need to calcuate the buoyancy and drag forces to apply
-   to simulate those effects. You need 
-	 to be VERY careful to keep all code within the StepSimulation methods short, sweet, 
-	 and very fast. They are in the main processing loop and even a small increase in the
-	 amount of processing time that occurrs within this loop will lead to major impacts on
-	 the ultimate performance of the system. 
-
-   \sa
-   Joint::StepSimulation, Simulator::StepPhysicsEngine
-*/
 
 void RigidBody::StepSimulation(Simulator *lpSim, Structure *lpStructure)
 {
@@ -649,6 +1216,16 @@ BOOL RigidBody::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 	return FALSE;
 }
 
+/**
+\fn	void RigidBody::AddRigidBody(string strXml)
+
+\brief	Creates and adds a rigid body. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml	The xml data packet for loading the body. 
+**/
 void RigidBody::AddRigidBody(string strXml)
 {
 	CStdXml oXml;
@@ -667,12 +1244,39 @@ void RigidBody::AddRigidBody(string strXml)
 	lpBody->CreateJoints(m_lpSim, m_lpStructure);
 }
 
+/**
+\fn	void RigidBody::RemoveRigidBody(string strID, BOOL bThrowError)
+
+\brief	Removes the rigid body with the specified ID. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strID	ID of the body to remove
+\param	bThrowError	If true and ID is not found then it will throw an error.
+\exception If bThrowError is true and ID is not found.
+**/
 void RigidBody::RemoveRigidBody(string strID, BOOL bThrowError)
 {
 	int iPos = FindChildListPos(strID, bThrowError);
 	m_aryChildParts.RemoveAt(iPos);
 }
 
+/**
+\fn	int RigidBody::FindChildListPos(string strID, BOOL bThrowError)
+
+\brief	Finds the array index for the child part with the specified ID
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strID ID of part to find
+\param	bThrowError	If true and ID is not found then it will throw an error, else return NULL
+\exception If bThrowError is true and ID is not found.
+
+\return	If bThrowError is false and ID is not found returns NULL, 
+else returns the pointer to the found part.
+**/
 int RigidBody::FindChildListPos(string strID, BOOL bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
@@ -690,25 +1294,6 @@ int RigidBody::FindChildListPos(string strID, BOOL bThrowError)
 
 #pragma endregion
 
-
-/*! \brief 
-   Loads a rigid body from an xml configuration file.
-      
-   \param lpSim This is a pointer to the simulator.
-   \param lpStructure This is a pointer to the structure/Organism that
-                  this rigid body is a part of.
-   \param oXml This is an xml object.
-
-	 \return
-	 No return value.
-
-	 \remarks
-	 This method is responsible for loading the rigid body from a XMl
-	 configuration file. You should call this method even in your 
-	 overriden function becuase it loads all of the base properties
-	 for the Body. This includes the functionality to load the
-	 joint and any children.
-*/
 
 void RigidBody::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 {
@@ -815,6 +1400,21 @@ void RigidBody::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf RigidBody Element
 }
 
+/**
+\fn	RigidBody *RigidBody::LoadRigidBody(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+
+\brief	Loads a child rigid body. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to the parent structure of this part. 
+\param [in,out]	oXml		The xml data definition of the part to load. 
+
+\return	null if it fails, else the rigid body. 
+\exception If there is a problem loading the part.
+**/
 RigidBody *RigidBody::LoadRigidBody(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 {
 	RigidBody *lpChild = NULL;
@@ -853,6 +1453,21 @@ catch(...)
 }
 }
 
+/**
+\fn	Joint *RigidBody::LoadJoint(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+
+\brief	Loads a child joint. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to the parent structure to this part. 
+\param [in,out]	oXml		The xml data definition of the part to load. 
+
+\return	null if it fails, else the joint. 
+\exception If there is a problem loading the part.
+**/
 Joint *RigidBody::LoadJoint(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 {
 	string strType;
@@ -892,18 +1507,43 @@ catch(...)
 }
 }
 
+/**
+\fn	void RigidBody::CompileIDLists(Simulator *lpSim, Structure *lpStructure)
+
+\brief	This goes through and adds all rigid bodies and joints to their respective lists 
+in the structure.
+
+\details This is so that we can keep track of all of the rigid bodies and joints in a given structure.
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to the parent structure. 
+**/
 void RigidBody::CompileIDLists(Simulator *lpSim, Structure *lpStructure)
 {
 	if(m_lpJointToParent)
-		lpStructure->AddJoint(m_lpJointToParent);
+		lpStructure->AddJointToList(m_lpJointToParent);
 
 	//Add me and then add child parts
-	lpStructure->AddRigidBody(this);
+	lpStructure->AddRigidBodyToList(this);
 
 	int iCount = m_aryChildParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		m_aryChildParts[iIndex]->CompileIDLists(lpSim, lpStructure);
 }
+
+/**
+\fn	void RigidBody::AddOdor(Odor *lpOdor)
+
+\brief	Adds an odor source to this body part. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpOdor	The pointer to an odor source to add. 
+**/
 
 void RigidBody::AddOdor(Odor *lpOdor)
 {
@@ -921,6 +1561,19 @@ void RigidBody::AddOdor(Odor *lpOdor)
 	}
 }
 
+/**
+\fn	Odor *RigidBody::LoadOdor(Simulator *lpSim, CStdXml &oXml)
+
+\brief	Loads an odor source. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpSim	The pointer to a simulation. 
+\param [in,out]	oXml	The xml data to use when loading the odor. 
+
+\return	Pointer to the new odor. 
+**/
 Odor *RigidBody::LoadOdor(Simulator *lpSim, CStdXml &oXml)
 {
 	Odor *lpOdor = NULL;
@@ -947,55 +1600,65 @@ catch(...)
 }
 }
 
-void RigidBody::Save(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
-{
-	//Currently not implemented
-}
+/**
+\fn	void RigidBody::AddForce(Simulator *lpSim, float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits)
 
-float *RigidBody::LoadMeshVertices(CStdXml &oXml, string strTagName, int &iVertCount, BOOL bThrowError)
-{
-	float *aryVerts = NULL;
+\brief	Adds a force to this body at a specified position. 
 
-	if(oXml.FindChildElement(strTagName, bThrowError))
-	{
-		oXml.IntoChildElement(strTagName);
+\author	dcofer
+\date	3/2/2011
 
-		iVertCount = oXml.NumberOfChildren();
-
-		if(!iVertCount)
-			THROW_PARAM_ERROR(Al_Err_lNoVerticesDefined, Al_Err_strNoVerticesDefined, "BodyID", m_strName);
-
-		aryVerts = new float[3*iVertCount];
-
-		int iVerIndex=0;
-		for(int iIndex=0; iIndex<iVertCount; iIndex++)
-		{
-			oXml.FindChildByIndex(iIndex);
-
-			aryVerts[iVerIndex] = oXml.GetChildAttribFloat("x");
-			aryVerts[iVerIndex+1] = oXml.GetChildAttribFloat("y");
-			aryVerts[iVerIndex+2] = oXml.GetChildAttribFloat("z");
-			iVerIndex+=3;
-		}
-
-		oXml.OutOfElem();
-	}
-
-	return aryVerts;
-}
-
+\param [in,out]	lpSim	The pointer to a simulation. 
+\param	fltPx			The x position. 
+\param	fltPy			The y position.  
+\param	fltPz			The z position.  
+\param	fltFx			The x force. 
+\param	fltFy			The y force. 
+\param	fltFz			The z force. 
+\param	bScaleUnits		If true then the force and value is scaled by the ScaleUnits, 
+otherwise it is applied as provided.
+**/
 void RigidBody::AddForce(Simulator *lpSim, float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits)
 {
 	if(m_lpPhysicsBody)
 		m_lpPhysicsBody->Physics_AddBodyForce(lpSim, fltPx, fltPy, fltPz, fltFx, fltFy, fltFz, bScaleUnits);
 }
 
+/**
+\fn	void RigidBody::AddTorque(Simulator *lpSim, float fltTx, float fltTy, float fltTz, BOOL bScaleUnits)
+
+\brief	Adds a torque to this body about its center. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpSim	The pointer to a simulation. 
+\param	fltTx			The torque about the x axis. 
+\param	fltTy			The torque about the y axis. 
+\param	fltTz			The torque about the z axis.
+\param	bScaleUnits		If true then the force and value is scaled by the ScaleUnits, 
+otherwise it is applied as provided.
+**/
 void RigidBody::AddTorque(Simulator *lpSim, float fltTx, float fltTy, float fltTz, BOOL bScaleUnits)
 {
 	if(m_lpPhysicsBody)
 		m_lpPhysicsBody->Physics_AddBodyTorque(lpSim, fltTx, fltTy, fltTz, bScaleUnits);
 }
 
+/**
+\fn	CStdFPoint RigidBody::GetVelocityAtPoint(float x, float y, float z)
+
+\brief	Gets a velocity of this body at specified point in the body. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	x	The x coordinate. 
+\param	y	The y coordinate. 
+\param	z	The z coordinate. 
+
+\return	The velocity at point. 
+**/
 CStdFPoint RigidBody::GetVelocityAtPoint(float x, float y, float z)
 {
 	CStdFPoint vLoc(0, 0, 0);
@@ -1006,6 +1669,16 @@ CStdFPoint RigidBody::GetVelocityAtPoint(float x, float y, float z)
 	return vLoc;
 }
 
+/**
+\fn	float RigidBody::GetMass()
+
+\brief	Gets the mass of this part. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	The mass. 
+**/
 float RigidBody::GetMass()
 {
 	float fltMass = 0;
@@ -1015,218 +1688,6 @@ float RigidBody::GetMass()
 
 	return fltMass;
 }
-
-/*! \fn unsigned char Body::Type()
-   \brief
-   Rigid body type property.
-      
-   \remarks
-	 The type for this rigid body. Examples are Box, Plane, etc.. 
-	 This is the read-only accessor function for the m_iType element.
-*/
-
-
-/*! \fn string Body::ID()
-   \brief
-   Rigid body ID property.
-      
-   \remarks
-	 The unique Id for this body. It is unique for each structure, 
-	 but not across structures. So you could have two rigid bodies with the
-	 same ID in two different organisms.
-	 This is the accessor function for the m_strID element.
-*/
-/*! \fn void Body::ID(string strValue)
-   \brief
-   Rigid body Body::ID property.
-      
-   \remarks
-	 The unique Id for this body. It is unique for each structure, 
-	 but not across structures. So you could have two rigid bodies with the
-	 same ID in two different organisms.
-	 This is the mutator function for the m_strID element.
-*/
-
-
-/*! \fn string Body::Texture() 
-   \brief
-   Texture property.
-      
-   \remarks
-	 An optional texture to apply to the rigid body.
-	 This is the accessor function for the m_strTexture element.
-*/
-/*! \fn void Body::Texture(string strValue)
-   \brief
-   Texture property.
-      
-   \remarks
-	 An optional texture to apply to the rigid body.
-	 This is the mutator function for the m_strTexture element.
-*/
-
-
-/*! \fn CStdFPoint Body::AbsolutePosition()
-   \brief
-   AbsolutePosition property.
-      
-   \remarks
-	 The absolute position of the rigid body in world coordinates.
-	 This is calcualted during loading of the part using the position of 
-	 the parent part and the relative position specified in the configuration file.
-	 This is the accessor function for the m_oAbsPosition element.
-*/
-/*! \fn void Body::AbsolutePosition(CStdFPoint &oPoint)
-   \brief
-   AbsolutePosition property.
-      
-   \remarks
-	 The absolute position of the rigid body in world coordinates.
-	 This is calcualted during loading of the part using the position of 
-	 the parent part and the relative position specified in the configuration file.
-	 This is the mutator function for the m_oAbsPosition element.
-*/
-
-
-/*! \fn CStdFPoint Body::Rotation()	
-   \brief
-   Rotation property.
-      
-   \remarks
-	 The rotation to apply to this rigid body. It is defined by the three
-	 euler angles in radians.
-	 This is the accessor function for the m_oRotation element.
-*/
-/*! \fn void Body::Rotation(CStdFPoint &oPoint)
-   \brief
-   Rotation property.
-      
-   \remarks
-	 The rotation to apply to this rigid body. It is defined by the three
-	 euler angles in radians.
-	 This is the mutator function for the m_oRotation element.
-*/
-
-
-/*! \fn Body *Body::Parent()
-   \brief
-   Parent property.
-      
-   \remarks
-	 The parent rigid body of this part. If this value is null
-	 then it is assumed that this is the root part of a structure.
-	 This is the accessor function for the m_lpParent element.
-*/
-/*! \fn void Body::Parent(Body *lpValue)
-   \brief
-   Parent property.
-      
-   \remarks
-	 The parent rigid body of this part. If this value is null
-	 then it is assumed that this is the root part of a structure.
-	 This is the mutator function for the m_lpParent element.
-*/
-
-
-/*! \fn float Body::Density()
-   \brief
-   Density property.
-      
-   \remarks
-	 Uniform density for the rigid body.
-	 This is the accessor function for the m_fltDensity element.
-*/
-/*! \fn void Body::Density(float fltVal)
-   \brief
-   Density property.
-      
-   \remarks
-	 Uniform density for the rigid body.
-	 This is the mutator function for the m_fltDensity element.
-*/
-
-
-/*! \fn float Body::Cd() 
-   \brief
-   Cd property.
-      
-   \remarks
-	 Drag Coefficient
-	 This is the accessor function for the m_fltCd element.
-*/
-/*! \fn void Body::Cd(float fltVal)
-   \brief
-   Cd property.
-      
-   \remarks
-	 Drag Coefficient
-	 This is the mutator function for the m_fltCd element.
-*/
-
-
-/*! \fn float Body::Volume()
-   \brief
-   Volume property.
-      
-   \remarks
-	 Total volume for the rigid body. This is used in calculating the buoyancy.
-	 This is the read-only accessor function for the m_fltVolume element.
-*/
-
-
-/*! \fn float Body::XArea()
-   \brief
-   XArea property.
-      
-   \remarks
-	 The area of this rigid body in the x direction. This is used to calculate the
-	 drag force in this direction.
-	 This is the read-only accessor function for the m_fltXArea element.
-*/
-
-
-/*! \fn float Body::YArea()
-   \brief
-   YArea property.
-       
-   \remarks
-	 The area of this rigid body in the y direction. This is used to calculate the
-	 drag force in this direction.
-	 This is the read-only accessor function for the m_fltYArea element.
-*/
-
-
-/*! \fn float Body::ZArea()
-   \brief
-   ZArea property.
-      
-   \remarks
-	 The area of this rigid body in the z direction. This is used to calculate the
-	 drag force in this direction.
-	 This is the read-only accessor function for the m_fltZArea element.
-*/
-
-
-/*! \fn BOOL Body::Freeze()
-   \brief
-   Freeze property.
-      
-   \remarks
-	 Specifies if the part should frozen in place to the world. If a rigid body 
-	 is frozen then it is as if it is nailed in place and can not move. Gravity and 
-	 and other forces will not act on it.
-	 This is the accessor function for the m_bFreeze element.
-*/
-/*! \fn void Body::Freeze(BOOL bVal)
-   \brief
-   Freeze property.
-      
-   \remarks
-	 Specifies if the part should frozen in place to the world. If a rigid body 
-	 is frozen then it is as if it is nailed in place and can not move. Gravity and 
-	 and other forces will not act on it.
-	 This is the mutator function for the m_bFreeze element.
-*/
 
 	}			//Environment
 }				//AnimatSim

@@ -1,13 +1,10 @@
-// RigidBody.h: interface for the RigidBody class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	RigidBody.h
 
-#if !defined(AFX_ALRIGIDBODY_H__BE00E72D_B205_450A_9A20_58752ED37EED__INCLUDED_)
-#define AFX_ALRIGIDBODY_H__BE00E72D_B205_450A_9A20_58752ED37EED__INCLUDED_
+\brief	Declares the rigid body class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
@@ -15,70 +12,62 @@ namespace AnimatSim
 	{
 		class Odor;
 
-		/*! \brief 
-			The base class for all of the basic rigid body type of
-			objects.
-		   
-			\remarks
-			This class provides the base functionality for a rigid body.
-			Each structure/Organism is made up of a heirarchcal tree of
-			rigid bodies that are connected by Joint objects. The base
-			structure has a root rigid body. That root body has a list of
-			child rigid bodies that are connected to the root through a
-			joint. Each of those child bodies can then have other
-			children connected to them and so on.
-		   
-		   
-		   
-			Each rigid body within a structure/organism has a unique
-			string identifier that is specifed in the configuration file.
-			Whenever you are attempting to find a given part through a
-			function like Simulator::FindRigidBody it is this
-			identifier that is used as the key in the search. This class
-			also contains a number of parameters that are common for all
-			rigid bodies. These include things like the relative position
-			of the center of the object and the uniform density of the
-			body. All rigid bodies have these properties.
-		   
-		   
-		   
-			This is a virtual base class and can not be directly created.
-			You must override this class to provide specific
-			functionality in order to create a real rigid body. For
-			example, the CAlBox and CAlCylinder are two examples of
-			subclasses of a rigid body that add more parameters specific
-			for their body type. Box has the x,y, and z widths for the
-			box, whereas cylinder has the radius and height of the
-			cylinder to create. The purpose of Body and its
-			subclasses like CAlBox are to try and provide implement as
-			much of the functionality as can be accomplished in this
-			library, yet leave it flexible enough that a new physics
-			engine could be easily swapped in for use. This means that a
-			lot of the mundane things like loading the data for the
-			different rigid body and joint types is done for you
-			automatically by the Body and Joint classes. But
-			these classes can still not really implement all of the
-			functionality necessary for the rigid body. The reason for
-			this is that the overridable functions to create the actual
-			implementation for those parts in your chosen physics engine
-			must still be implemented. The two main functions related to
-			that are CreateParts and CreateJoints. Since AnimatSim is
-			generalized so that it is not tightly coupled to any one
-			physics engine then that coupling must be done in the layer
-			above this library where the chosen physics engine like
-			Vortex is actually used.
-		   
-			\sa
-			Body, Joint, CAlBox, CAlPlane, CAlCylinder, 
-			CAlCone, CAlMuscle, CAlAttachment, CAlSphere                                
-			 
-			\ingroup AnimatSim
-		*/
+		/**
+		\class	RigidBody
+		
+		\brief	The base class for all of the basic rigid body type of objects.
+		
+		\details
+		This class provides the base functionality for a rigid body.
+		Each structure/Organism is made up of a heirarchcal tree of
+		rigid bodies that are connected by Joint objects. The base
+		structure has a root rigid body. That root body has a list of
+		child rigid bodies that are connected to the root through a
+		joint. Each of those child bodies can then have other
+		children connected to them and so on.<br><br>
+		Each rigid body within a structure/organism has a unique
+		string identifier that is specifed for it.
+		Whenever you are attempting to find a given part through a
+		function like Simulator::FindRigidBody it is this
+		identifier that is used as the key in the search. This class
+		also contains a number of parameters that are common for all
+		rigid bodies. These include things like the colors
+		of the  object and the uniform density of the
+		body. All rigid bodies have these properties.<br><br>
+		This is a virtual base class and can not be directly created.
+		You must override this class to provide specific
+		functionality in order to create a real rigid body. For
+		example, the Box and Cylinder are two examples of
+		subclasses of a rigid body that add more parameters specific
+		for their body type. Box has the x,y, and z widths for the
+		box, whereas cylinder has the radius and height of the
+		cylinder to create. The purpose of RigidBody and its
+		subclasses like Box are to try and implement as
+		much of the functionality as can be accomplished in this
+		library, yet leave it flexible enough that a new physics
+		engine could be easily swapped in for later use. This means that a
+		lot of the mundane things like loading the data for the
+		different rigid body and joint types is done for you
+		automatically by the Body and Joint classes. But
+		these classes can still not really implement all of the
+		functionality necessary for the rigid body. The reason for
+		this is that the overridable functions to create the actual
+		implementation for those parts in your chosen physics engine
+		must still be implemented. The two main functions related to
+		that are CreateParts and CreateJoints. Since AnimatSim is
+		generalized so that it is not tightly coupled to any one
+		physics engine then that coupling must be done in the layer
+		above this library where the chosen physics engine like
+		Vortex is actually used.
 
+		\author	dcofer
+		\date	3/2/2011
+		**/
 		class ANIMAT_PORT RigidBody : public BodyPart    
 		{
 		protected:
-			///The center of mass of this body relative to the center of the object. 
+			///The center of mass of this body relative to the center of the object. If this
+			///is (0, 0, 0) then the default COM is used.
 			CStdFPoint m_oCenterOfMass;
 
 			///The ambient color to apply to this part. It is specified as red, green, blue, and alpha.
@@ -90,7 +79,7 @@ namespace AnimatSim
 			///The specular color to apply to this part. It is specified as red, green, blue, and alpha.
 			CStdColor m_vSpecular;
 
-			///The shininess of the part.
+			///The shininess of the part. A value between 0 and 128. 
 			float m_fltShininess;
 
 			///An optional texture to apply to the rigid body.
@@ -131,8 +120,8 @@ namespace AnimatSim
 			///must be connected to their parent.
 			Joint *m_lpJointToParent;
 
-			//Some body parts like contact sensors and muscle attachments do not have joints. If not then we should not 
-			//attempt to load them.
+			///Some body parts like contact sensors and muscle attachments do not have joints. If not then we should not 
+			///attempt to load them.
 			BOOL m_bUsesJoint;
 
 			///This determines whether or not this is a contact sensor. If this is TRUE then
@@ -146,33 +135,49 @@ namespace AnimatSim
 			///contact sensor. This is only used for sensors.
 			float m_fltSurfaceContactCount;
 
+			/// The pointer to a receptive field ContactSensor object. This is responsible for 
+			/// processing the receptive field contacts
 			ContactSensor *m_lpContactSensor;
 
+			/// The linear velocity damping for this body part.
 			float m_fltLinearVelocityDamping;
+
+			/// The angular velocity damping for this part.
 			float m_fltAngularVelocityDamping;
 
+			/// The array odor sources attached to this part.
 			CStdPtrMap<string, Odor> m_aryOdorSources;
 			
-			BOOL m_bFoodSource;  //Tells if this body is considered a food source.
+			///Tells if this body is considered a food source.
+			BOOL m_bFoodSource;  
+			
+			/// The quantity of food that this part contains
 			float m_fltFoodQuantity;
-			float m_fltFoodEaten;  //Tells how much food is being eaten.
+
+			///Tells how much food is being eaten.
+			float m_fltFoodEaten;
+
+			/// The maximum food quantity that this part can contain
 			float m_fltMaxFoodQuantity;
+
+			/// The rate at which food is replenished
 			float m_fltFoodReplenishRate;
+
+			/// The energy content of the food in calories.
 			float m_fltFoodEnergyContent;
+
+			/// Keeps track of how many time slices this part can eat.
 			long m_lEatTime;
 
+			/// Identifier for the material type this part will use.
 			string m_strMaterialID;
 
-			void Copy(RigidBody *lpOrig);
 			RigidBody *LoadRigidBody(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
 			Joint *LoadJoint(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
-			float *LoadMeshVertices(CStdXml &oXml, string strTagName, int &iVertCount, BOOL bThrowError = TRUE);
 
 			virtual void AddRigidBody(string strXml);
 			virtual void RemoveRigidBody(string strID, BOOL bThrowError = TRUE);
 			virtual int FindChildListPos(string strID, BOOL bThrowError = TRUE);
-
-			//string TextureFile(string strTexture);
 
 			Odor *LoadOdor(Simulator *lpSim, CStdXml &oXml);
 			void AddOdor(Odor *lpOdor);
@@ -181,88 +186,86 @@ namespace AnimatSim
 			RigidBody();
 			virtual ~RigidBody();
 
-			virtual CStdColor *Ambient() {return &m_vAmbient;};
+			virtual CStdColor *Ambient();
 			virtual void Ambient(CStdColor &aryColor);
 			virtual void Ambient(float *aryColor);
 			virtual void Ambient(string strXml);
 
-			virtual CStdColor *Diffuse() {return &m_vDiffuse;};
+			virtual CStdColor *Diffuse();
 			virtual void Diffuse(CStdColor &aryColor);
 			virtual void Diffuse(float *aryColor);
 			virtual void Diffuse(string strXml);
 
-			virtual CStdColor *Specular() {return &m_vSpecular;};
+			virtual CStdColor *Specular();
 			virtual void Specular(CStdColor &aryColor);
 			virtual void Specular(float *aryColor);
 			virtual void Specular(string strXml);
 
-			virtual float Shininess() {return m_fltShininess;};
+			virtual float Shininess();
 			virtual void Shininess(float fltVal);
 
 			virtual int VisualSelectionType();
 
-			string Texture() {return m_strTexture;};
+			string Texture();
 			void Texture(string strValue);
 
-			CStdFPoint CenterOfMass() {return m_oCenterOfMass;};
-			void CenterOfMass(CStdFPoint &oPoint) {m_oCenterOfMass = oPoint;};
+			CStdFPoint CenterOfMass();
+			void CenterOfMass(CStdFPoint &oPoint);
 
-			CStdPtrArray<RigidBody>* ChildParts() {return &m_aryChildParts;};
+			CStdPtrArray<RigidBody>* ChildParts();
 
-			Joint *JointToParent() {return m_lpJointToParent;};
-			void JointToParent(Joint *lpValue) {m_lpJointToParent = lpValue;};
+			Joint *JointToParent();
+			void JointToParent(Joint *lpValue);
 
-			ContactSensor *ContactSensor() {return m_lpContactSensor;};
+			ContactSensor *ContactSensor();
 
-			float Density() {return m_fltDensity;};
+			float Density();
 			void Density(float fltVal);
 
-			float *Cd() {return m_vCd;};
-			void Cd(float *vVal) 
-			{m_vCd[0] = vVal[0]; m_vCd[1] = vVal[1]; m_vCd[2] = vVal[2];};
+			float *Cd();
+			void Cd(float *vVal);
 
-			float Volume() {return m_fltVolume;};
-			float XArea() {return m_fltXArea;};
-			float YArea() {return m_fltYArea;};
-			float ZArea() {return m_fltZArea;};
+			float Volume();
+			float XArea();
+			float YArea();
+			float ZArea();
 
-			BOOL Freeze() {return m_bFreeze;};
+			BOOL Freeze();
 			void Freeze(BOOL bVal);
 
-			BOOL IsContactSensor() {return m_bIsContactSensor;};
-			void IsContactSensor(BOOL bVal) {m_bIsContactSensor = bVal;};
+			BOOL IsContactSensor();
+			void IsContactSensor(BOOL bVal);
 
-			BOOL IsCollisionObject() {return m_bIsCollisionObject;};
-			void IsCollisionObject(BOOL bVal) {m_bIsCollisionObject = bVal;};
+			BOOL IsCollisionObject();
+			void IsCollisionObject(BOOL bVal);
 
-			BOOL IsFoodSource() {return m_bFoodSource;};
-			void IsFoodSource(BOOL bVal) {m_bFoodSource = bVal;};
+			BOOL IsFoodSource();
+			void IsFoodSource(BOOL bVal);
 
-			float FoodQuantity() {return m_fltFoodQuantity;};
-			void FoodQuantity(float fltVal) {m_fltFoodQuantity = fltVal;};
+			float FoodQuantity();
+			void FoodQuantity(float fltVal);
 
-			float FoodEaten() {return m_fltFoodEaten;};
-			void FoodEaten(float fltVal) {m_fltFoodEaten = fltVal;};
-
-			void Eat(float fltVal, long lTimeSlice);
+			float FoodEaten();
+			void FoodEaten(float fltVal);
 			
-			float FoodReplenishRate() {return m_fltFoodReplenishRate;};
-			void FoodReplenishRate(float fltVal) {m_fltFoodReplenishRate = fltVal;};
+			float FoodReplenishRate();
+			void FoodReplenishRate(float fltVal);
 
-			float FoodEnergyContent() {return m_fltFoodEnergyContent;};
-			void FoodEnergyContent(float fltVal) {m_fltFoodEnergyContent = fltVal;};
+			float FoodEnergyContent();
+			void FoodEnergyContent(float fltVal);
 
-			float LinearVelocityDamping() {return m_fltLinearVelocityDamping;};
-			void LinearVelocityDamping(float fltVal) {m_fltLinearVelocityDamping = fltVal;};
+			float LinearVelocityDamping();
+			void LinearVelocityDamping(float fltVal);
 
-			float AngularVelocityDamping() {return m_fltAngularVelocityDamping;};
-			void AngularVelocityDamping(float fltVal) {m_fltAngularVelocityDamping = fltVal;};
+			float AngularVelocityDamping();
+			void AngularVelocityDamping(float fltVal);
 
-			string MaterialID() {return m_strMaterialID;};
+			string MaterialID();
+			void MaterialID(string strID);
 
-			virtual CStdFPoint GetCurrentPosition() {return m_oAbsPosition;};
+			virtual float SurfaceContactCount();
 
-			virtual float SurfaceContactCount() {return m_fltSurfaceContactCount;};
+			virtual void Eat(float fltVal, long lTimeSlice);
 			virtual void AddSurfaceContact(Simulator *lpSim, RigidBody *lpContactedSurface);
 			virtual void RemoveSurfaceContact(Simulator *lpSim, RigidBody *lpContactedSurface);
 			virtual void AddForce(Simulator *lpSim, float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits);
@@ -276,7 +279,6 @@ namespace AnimatSim
 			virtual void CreateParts(Simulator *lpSim, Structure *lpStructure);
 			virtual void CreateJoints(Simulator *lpSim, Structure *lpStructure);
 
-			virtual void Trace(ostream &oOs);
 			virtual void CompileIDLists(Simulator *lpSim, Structure *lpStructure);
 
 			//Node Overrides
@@ -296,10 +298,7 @@ namespace AnimatSim
 			virtual void AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput);
 			virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
 			virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
-			virtual void Save(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
 		};
 
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALRIGIDBODY_H__BE00E72D_B205_450A_9A20_58752ED37EED__INCLUDED_)

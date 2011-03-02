@@ -55,9 +55,12 @@ namespace FiringRateSim
 		BOOL InactiveArray();
 		void InactiveArray(BOOL bVal);
 
-		virtual long CalculateSnapshotByteSize();
-		virtual void SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex);
-		virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex);
+#pragma region SnapshotMethods
+			virtual long CalculateSnapshotByteSize();
+			virtual void SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex);
+			virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex);
+#pragma endregion
+
 	};
 
 }				//FiringRateSim

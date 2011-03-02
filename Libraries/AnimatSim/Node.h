@@ -55,19 +55,49 @@ namespace AnimatSim
 		virtual void Enabled(BOOL bValue);
 
 		virtual void Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState = TRUE);
-		virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure) = 0;
-		virtual void AfterResetSimulation(Simulator *lpSim, Structure *lpStructure) {};
 
+		/**
+		\fn	virtual void Node::AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput);
+		
+		\brief	Adds an external node input. 
+
+		\details This is used by the adapter to add a new external value to this node. It is up to the node
+		to interpret what that value means. For example, if it is a neuron then it can interpret it to be 
+		a current. This value is added to the current total so that multiple adapters can call this in a 
+		given time step. It is cleared out to zero at the beginning of the time step.
+		
+		\param [in,out]	lpSim		The pointer to a simulation. 
+		\param [in,out]	lpStructure	The pointer to a structure. 
+		\param	fltInput			The new input. 
+		**/
 		virtual void AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput) = 0;
+
+		/**
+		\fn	virtual void Node::StepSimulation(Simulator *lpSim, Structure *lpStructure) = 0;
+		
+		
+		\brief	Step the simulation for this object.
+
+		\details This is called on an object each time it is stepped in the simulation.
+		this is where its simulation code is processed. However, StepSimulation is not 
+		necessarily called every single time that the simulation as a whole is stepped. 
+		A good example of this is that neural modules can have different integration time
+		steps. So a firing rate module may have a DT of 0.5 ms, while an integrate and fire
+		model may have one of 0.1 ms. So the firing rate module would only get its StepSimulation
+		method called every 5th time that the other module was called. This is all handed in 
+		the StepSimulation method of the Simulator and NervousSystem.
+		
+		\param [in,out]	lpSim		The pointer to a simulation. 
+		\param [in,out]	lpStructure	The pointer to a structure. 
+		**/
+		virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure) = 0;
+
 		virtual void AttachSourceAdapter(Simulator *lpSim, Structure *lpStructure, Adapter *lpAdapter);
 		virtual void AttachTargetAdapter(Simulator *lpSim, Structure *lpStructure, Adapter *lpAdapter);
 		virtual float *GetDataPointer(string strDataType) = 0;
-		virtual void *GetDataItem(string strItemType, string strID, BOOL bThrowError = TRUE); 
 		virtual void Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule);
 		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule);
-		virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure) = 0;
 		virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
-		virtual void Save(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml) {};
 	};
 
 }				//AnimatSim

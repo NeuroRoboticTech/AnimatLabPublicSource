@@ -1,3 +1,9 @@
+/**
+\file	BodyPart.cpp
+
+\brief	Implements the body part class. 
+**/
+
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
 #include "AnimatBase.h"
@@ -26,10 +32,17 @@ namespace AnimatSim
 	namespace Environment
 	{
 
+/**
+\fn	BodyPart::BodyPart(void)
+
+\brief	Default constructor. 
+
+\author	dcofer
+\date	3/2/2011
+**/
 BodyPart::BodyPart(void)
 {
 	m_bIsVisible = TRUE;
-	m_bAllowMouseManipulation = TRUE;
 	m_lpCallback = NULL;
 	m_lpStructure = NULL;
 	m_lpParent = NULL;
@@ -44,96 +57,104 @@ BodyPart::BodyPart(void)
 	m_fltGripScale = 1;
 }
 
+/**
+\fn	BodyPart::~BodyPart(void)
+
+\brief	Destructor. 
+
+\author	dcofer
+\date	3/2/2011
+**/
 BodyPart::~BodyPart(void)
 {
 }
 
+#pragma region AccessorMutators
 
-void BodyPart::Selected(BOOL bValue, BOOL bSelectMultiple)
-{
-	Node::Selected(bValue, bSelectMultiple);
+/**
+\fn	RigidBody *BodyPart::Parent()
 
-	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->Physics_Selected(bValue, bSelectMultiple);
+\brief	Gets the parent RigidBody of this part. 
 
-	if(m_lpCallback)
-		m_lpCallback->SelectionChanged(bValue, bSelectMultiple);
-}
+\author	dcofer
+\date	3/2/2011
 
-void BodyPart::VisualSelectionModeChanged(int iNewMode)
-{
-	Node::VisualSelectionModeChanged(iNewMode);
+\return	Pointer to the parent RigidBody of this part, NULL if not set. 
+**/
+RigidBody *BodyPart::Parent() {return m_lpParent;}
 
-	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->SetAlpha();
-}
+/**
+\fn	void BodyPart::Parent(RigidBody *lpValue)
 
-void BodyPart::IsVisible(BOOL bVal) 
-{
-	m_bIsVisible = bVal;
+\brief	Sets the parent RigidBody of this part. 
 
-	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->SetVisible(m_bIsVisible);
-}
+\author	dcofer
+\date	3/2/2011
 
-void BodyPart::GraphicsAlpha(float fltVal) 
-{
-	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "GraphicsAlpha");
+\param [in,out]	lpValue	The pointer to the parent RigidBody. 
+**/
+void BodyPart::Parent(RigidBody *lpValue) {m_lpParent = lpValue;}
 
-	m_fltGraphicsAlpha = fltVal;
+/**
+\fn	int BodyPart::VisualSelectionType()
 
-	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->SetAlpha();
-}
+\brief	Gets the visual selection type for this part. 
 
-void BodyPart::CollisionsAlpha(float fltVal) 
-{
-	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "CollisionsAlpha");
+\details In the GUI the user can select several different types of visual selection modes
+When a user selects an object while in a given selection mode we need to be able to check 
+each object that is in the path of the click to see if it should be selected. So we check
+the current selection mode with this VisualSelectionType property to see if they match. So
+if the current VisualSelectionMode is Joints, and this body part is a joint then it will
+have a matching VisualSelectionType property and we will no it should be selected, but if
+a rigid body was selected its VisualSelectionType will be different, so we will not select it.
 
-	m_fltCollisionsAlpha = fltVal;
+\author	dcofer
+\date	3/2/2011
 
-	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->SetAlpha();
-}
+\return	. 
+**/
+int BodyPart::VisualSelectionType() {return 0;}
 
-void BodyPart::JointsAlpha(float fltVal) 
-{
-	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "JointsAlpha");
+/**
+\fn	BOOL BodyPart::AllowMouseManipulation()
 
-	m_fltJointsAlpha = fltVal;
+\brief	Tells if a given part can be manipulated using the mouse and draggers. 
 
-	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->SetAlpha();
-}
+\author	dcofer
+\date	3/2/2011
 
-void BodyPart::ReceptiveFieldsAlpha(float fltVal) 
-{
-	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "ReceptiveFieldsAlpha");
+\return	true if it can be manipulated, false if not.
+**/
+BOOL BodyPart::AllowMouseManipulation() {return TRUE;}
 
-	m_fltReceptiveFieldsAlpha = fltVal;
+/**
+\fn	CStdFPoint BodyPart::LocalPosition()
 
-	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->SetAlpha();
-}
+\brief	Gets the local position. (m_oLocalPosition) 
 
-void BodyPart::SimulationAlpha(float fltVal) 
-{
-	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "SimulationAlpha");
+\author	dcofer
+\date	3/2/2011
 
-	m_fltSimulationAlpha = fltVal;
+\return	returns m_oLocalPosition. 
+**/
+CStdFPoint BodyPart::LocalPosition() {return m_oLocalPosition;}
 
-	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->SetAlpha();
-}
+/**
+\fn	void BodyPart::LocalPosition(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
 
-float BodyPart::GetBoundingRadius()
-{
-	if(m_lpPhysicsBody)
-		return m_lpPhysicsBody->Physics_GetBoundingRadius();
-	else
-		return 1;
-}
+\brief	Sets the local position. (m_oLocalPosition) 
 
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	oPoint		The new point to use to set the local position. 
+\param	bUseScaling			If true then the position values that are passed in 
+will be scaled by the unit scaling values. 
+\param	bFireChangeEvent	If true then this will call the IBodyPartCallback->PositionChanged callback 
+method to inform the GUI that the part has moved. If false then this callback will be skipped. 
+\param	bUpdateMatrix		If true then the IPhysicsBody->Physics_UpdateMatrix method will be called
+so that the osg graphics will be updated. If false then this will be skipped.
+**/
 void BodyPart::LocalPosition(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix) 
 {
 	if(bUseScaling)
@@ -150,12 +171,49 @@ void BodyPart::LocalPosition(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireCha
 		m_lpCallback->PositionChanged();
 }
 
+/**
+\fn	void BodyPart::LocalPosition(float fltX, float fltY, float fltZ, BOOL bUseScaling,
+BOOL bFireChangeEvent, BOOL bUpdateMatrix)
+
+\brief	Sets the local position. (m_oLocalPosition) 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltX				The x coordinate. 
+\param	fltY				The y coordinate. 
+\param	fltZ				The z coordinate. 
+\param	bUseScaling			If true then the position values that are passed in 
+will be scaled by the unit scaling values. 
+\param	bFireChangeEvent	If true then this will call the IBodyPartCallback->PositionChanged callback 
+method to inform the GUI that the part has moved. If false then this callback will be skipped. 
+\param	bUpdateMatrix		If true then the IPhysicsBody->Physics_UpdateMatrix method will be called
+so that the osg graphics will be updated. If false then this will be skipped.
+**/
 void BodyPart::LocalPosition(float fltX, float fltY, float fltZ, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix) 
 {
 	CStdFPoint vPos(fltX, fltY, fltZ);
 	LocalPosition(vPos, bUseScaling, bFireChangeEvent);
 }
 
+/**
+\fn	void BodyPart::LocalPosition(string strXml, BOOL bUseScaling, BOOL bFireChangeEvent,
+BOOL bUpdateMatrix)
+
+\brief	Sets the local position. (m_oLocalPosition). This method is primarily used by the GUI
+to reset the local position using an xml data packet.
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml				The xml string with the data to load in the position. 
+\param	bUseScaling			If true then the position values that are passed in 
+will be scaled by the unit scaling values. 
+\param	bFireChangeEvent	If true then this will call the IBodyPartCallback->PositionChanged callback 
+method to inform the GUI that the part has moved. If false then this callback will be skipped. 
+\param	bUpdateMatrix		If true then the IPhysicsBody->Physics_UpdateMatrix method will be called
+so that the osg graphics will be updated. If false then this will be skipped.
+**/
 void BodyPart::LocalPosition(string strXml, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
 {
 	CStdXml oXml;
@@ -168,6 +226,159 @@ void BodyPart::LocalPosition(string strXml, BOOL bUseScaling, BOOL bFireChangeEv
 	LocalPosition(vPos, bUseScaling, bFireChangeEvent);
 }
 
+/**
+\fn	CStdFPoint BodyPart::AbsolutePosition()
+
+\brief	Gets the absolute position of this body part. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	return m_oAbsPosition. 
+**/
+CStdFPoint BodyPart::AbsolutePosition() {return m_oAbsPosition;}
+
+/**
+\fn	void BodyPart::AbsolutePosition(CStdFPoint &oPoint)
+
+\brief	Sets the absolute position of this body part. (m_oAbsPosition)
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	oPoint	The new position. 
+**/
+void BodyPart::AbsolutePosition(CStdFPoint &oPoint) {m_oAbsPosition = oPoint;}
+
+/**
+\fn	void BodyPart::AbsolutePosition(float fltX, float fltY, float fltZ)
+
+\brief	Sets the absolute position of this body part. (m_oAbsPosition)
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltX	The x coordinate. 
+\param	fltY	The y coordinate. 
+\param	fltZ	The z coordinate. 
+**/
+void BodyPart::AbsolutePosition(float fltX, float fltY, float fltZ) {m_oAbsPosition.Set(fltX, fltY, fltZ);}
+
+/**
+\fn	CStdFPoint BodyPart::GetCurrentPosition()
+
+\brief	Gets the current position of this part. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	The current position. 
+**/
+
+CStdFPoint BodyPart::GetCurrentPosition() {return m_oAbsPosition;}
+
+/**
+\fn	CStdFPoint BodyPart::ReportLocalPosition()
+
+\brief	Gets the reported local position. (m_oReportLocalPosition).
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Returns m_oReportLocalPosition. 
+**/
+CStdFPoint BodyPart::ReportLocalPosition() {return m_oReportLocalPosition;}
+
+/**
+\fn	void BodyPart::ReportLocalPosition(CStdFPoint &oPoint)
+
+\brief	Sets the reported local position. (m_oReportLocalPosition).
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	oPoint	The new position. 
+**/
+void BodyPart::ReportLocalPosition(CStdFPoint &oPoint) {m_oReportLocalPosition = oPoint;}
+
+/**
+\fn	void BodyPart::ReportLocalPosition(float fltX, float fltY, float fltZ)
+
+\brief	Sets the reported local position. (m_oReportLocalPosition).
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltX	The  coordinate. 
+\param	fltY	The y coordinate. 
+\param	fltZ	The z coordinate. 
+**/
+void BodyPart::ReportLocalPosition(float fltX, float fltY, float fltZ) {m_oReportLocalPosition.Set(fltX, fltY, fltZ);}
+
+/**
+\fn	CStdFPoint BodyPart::ReportWorldPosition()
+
+\brief	Gets the reported world position. (m_oReportWorldPosition)
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Returns the reported world position. (m_oReportWorldPosition) 
+**/
+CStdFPoint BodyPart::ReportWorldPosition() {return m_oReportWorldPosition;}
+
+/**
+\fn	void BodyPart::ReportWorldPosition(CStdFPoint &oPoint)
+
+\brief	Sets the reported world position (m_oReportWorldPosition)
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	oPoint	The new position. 
+**/
+void BodyPart::ReportWorldPosition(CStdFPoint &oPoint) {m_oReportWorldPosition = oPoint;}
+
+/**
+\fn	void BodyPart::ReportWorldPosition(float fltX, float fltY, float fltZ)
+
+\brief	Sets the reported world position (m_oReportWorldPosition)
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltX	The x coordinate. 
+\param	fltY	The y coordinate. 
+\param	fltZ	The z coordinate. 
+**/
+void BodyPart::ReportWorldPosition(float fltX, float fltY, float fltZ) {m_oReportWorldPosition.Set(fltX, fltY, fltZ);}
+
+/**
+\fn	CStdFPoint BodyPart::Rotation()
+
+\brief	Gets the rotation of this body in radians. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	rotation of body. (m_oRotation)
+**/
+CStdFPoint BodyPart::Rotation()	{return m_oRotation;}
+
+/**
+\fn	void BodyPart::Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
+
+\brief	Sets the rotation of this body in radians. (m_oRotation)
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	oPoint		The new rotation values. 
+\param	bFireChangeEvent	If true then this will call the IBodyPartCallback->RotationChanged callback 
+method to inform the GUI that the part has moved. If false then this callback will be skipped. 
+\param	bUpdateMatrix		If true then the IPhysicsBody->Physics_UpdateMatrix method will be called
+so that the osg graphics will be updated. If false then this will be skipped.
+**/
 void BodyPart::Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent, BOOL bUpdateMatrix) 
 {
 	m_oRotation = oPoint;
@@ -180,12 +391,43 @@ void BodyPart::Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent, BOOL bUpdateM
 		m_lpCallback->RotationChanged();
 }
 
+/**
+\fn	void BodyPart::Rotation(float fltX, float fltY, float fltZ, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
+
+\brief	Sets the rotation of this body in radians. (m_oRotation)
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltX				The x coordinate. 
+\param	fltY				The y coordinate. 
+\param	fltZ				The z coordinate. 
+\param	bFireChangeEvent	If true then this will call the IBodyPartCallback->RotationChanged callback 
+method to inform the GUI that the part has moved. If false then this callback will be skipped. 
+\param	bUpdateMatrix		If true then the IPhysicsBody->Physics_UpdateMatrix method will be called
+so that the osg graphics will be updated. If false then this will be skipped.
+**/
 void BodyPart::Rotation(float fltX, float fltY, float fltZ, BOOL bFireChangeEvent, BOOL bUpdateMatrix) 
 {
 	CStdFPoint vPos(fltX, fltY, fltZ);
 	Rotation(vPos, bFireChangeEvent);
 }
 
+/**
+\fn	void BodyPart::Rotation(string strXml, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
+
+\brief	Sets the rotation of this body in radians. (m_oRotation). This method is primarily used by the GUI
+to reset the rotation using an xml data packet
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml				The xml string used to load the rotation. 
+\param	bFireChangeEvent	If true then this will call the IBodyPartCallback->RotationChanged callback 
+method to inform the GUI that the part has moved. If false then this callback will be skipped. 
+\param	bUpdateMatrix		If true then the IPhysicsBody->Physics_UpdateMatrix method will be called
+so that the osg graphics will be updated. If false then this will be skipped.
+**/
 void BodyPart::Rotation(string strXml, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
 {
 	CStdXml oXml;
@@ -198,13 +440,455 @@ void BodyPart::Rotation(string strXml, BOOL bFireChangeEvent, BOOL bUpdateMatrix
 	Rotation(vPos, bFireChangeEvent);
 }
 
+/**
+\fn	CStdFPoint BodyPart::ReportRotation()
 
+\brief	Gets the reported rotation of this part. (m_oReportRotation)
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Returns the reported rotation. 
+**/
+CStdFPoint BodyPart::ReportRotation() {return m_oReportRotation;}
+
+/**
+\fn	void BodyPart::ReportRotation(CStdFPoint &oPoint)
+
+\brief	Sets the reported rotation of this part. (m_oReportRotation)
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	oPoint	The new reported rotation. 
+**/
+void BodyPart::ReportRotation(CStdFPoint &oPoint) {m_oReportRotation = oPoint;}
+
+/**
+\fn	void BodyPart::ReportRotation(float fltX, float fltY, float fltZ)
+
+\brief	Sets the reported rotation of this part. (m_oReportRotation)
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltX	The x coordinate. 
+\param	fltY	The y coordinate. 
+\param	fltZ	The z coordinate. 
+**/
+void BodyPart::ReportRotation(float fltX, float fltY, float fltZ) {m_oReportRotation.Set(fltX, fltY, fltZ);}
+
+/**
+\fn	BOOL BodyPart::IsVisible()
+
+\brief	Query if this object is visible. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	true if visible, false if not. 
+**/
+BOOL BodyPart::IsVisible() {return m_bIsVisible;}
+
+/**
+\fn	void BodyPart::IsVisible(BOOL bVal)
+
+\brief	Sets whether this part is visible or not. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	bVal	true to make visible, false to make invisible. 
+**/
+void BodyPart::IsVisible(BOOL bVal) 
+{
+	m_bIsVisible = bVal;
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->SetVisible(m_bIsVisible);
+}
+
+/**
+\fn	float BodyPart::GraphicsAlpha()
+
+\brief	Gets the graphics alpha. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	float alpha between 0 and 1. 
+**/
+float BodyPart::GraphicsAlpha() {return m_fltGraphicsAlpha;}
+
+/**
+\fn	void BodyPart::GraphicsAlpha(float fltVal)
+
+\brief	Sets the graphics alpha. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltVal	The new GraphicsAlpha value between 0 and 1.
+\exception If value not between 0 and 1.
+**/
+void BodyPart::GraphicsAlpha(float fltVal) 
+{
+	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "GraphicsAlpha");
+
+	m_fltGraphicsAlpha = fltVal;
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->SetAlpha();
+}
+
+/**
+\fn	float BodyPart::CollisionsAlpha()
+
+\brief	Gets the collisions alpha. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	float alpha between 0 and 1. 
+**/
+float BodyPart::CollisionsAlpha() {return m_fltCollisionsAlpha;}
+
+/**
+\fn	void BodyPart::CollisionsAlpha(float fltVal)
+
+\brief	Sets the collisions alpha. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltVal	The new CollisionsAlpha value between 0 and 1.
+\exception If value not between 0 and 1.
+**/
+void BodyPart::CollisionsAlpha(float fltVal) 
+{
+	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "CollisionsAlpha");
+
+	m_fltCollisionsAlpha = fltVal;
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->SetAlpha();
+}
+
+/**
+\fn	float BodyPart::JointsAlpha()
+
+\brief	Gets the joints alpha. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	float alpha between 0 and 1. 
+**/
+float BodyPart::JointsAlpha() {return m_fltJointsAlpha;}
+
+/**
+\fn	void BodyPart::JointsAlpha(float fltVal)
+
+\brief	Sets the joints alpha. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltVal	The new JointsAlpha value between 0 and 1.
+\exception If value not between 0 and 1.
+**/
+void BodyPart::JointsAlpha(float fltVal) 
+{
+	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "JointsAlpha");
+
+	m_fltJointsAlpha = fltVal;
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->SetAlpha();
+}
+
+/**
+\fn	float BodyPart::ReceptiveFieldsAlpha()
+
+\brief	Gets the receptive fields alpha. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	float alpha between 0 and 1. 
+**/
+float BodyPart::ReceptiveFieldsAlpha() {return m_fltReceptiveFieldsAlpha;}
+
+/**
+\fn	void BodyPart::ReceptiveFieldsAlpha(float fltVal)
+
+\brief	Sets the receptive fields alpha. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltVal	The new ReceptiveFieldsAlpha value between 0 and 1.
+\exception If value not between 0 and 1.
+**/
+void BodyPart::ReceptiveFieldsAlpha(float fltVal) 
+{
+	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "ReceptiveFieldsAlpha");
+
+	m_fltReceptiveFieldsAlpha = fltVal;
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->SetAlpha();
+}
+
+/**
+\fn	float BodyPart::SimulationAlpha()
+
+\brief	Gets the simulation alpha. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	float alpha between 0 and 1. 
+**/
+float BodyPart::SimulationAlpha() {return m_fltSimulationAlpha;}
+
+/**
+\fn	void BodyPart::SimulationAlpha(float fltVal)
+
+\brief	Sets the simulation alpha. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltVal	The new SimulationAlpha value between 0 and 1.
+\exception If value not between 0 and 1.
+**/
+void BodyPart::SimulationAlpha(float fltVal) 
+{
+	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "SimulationAlpha");
+
+	m_fltSimulationAlpha = fltVal;
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->SetAlpha();
+}
+
+/**
+\fn	float BodyPart::Alpha()
+
+\brief	Gets the current alpha. 
+
+\details The current alpha is on of the various selection mode alphas like JointsAlpha.
+This is just the one that is currently selected.
+
+\author	dcofer
+\date	3/2/2011
+
+\return	float alpha between 0 and 1. 
+**/
+float BodyPart::Alpha() {return m_fltAlpha;}
+
+/**
+\fn	void BodyPart::Alpha(float fltAlpha)
+
+\brief	Sets the current alpha. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltAlpha	The new Alpha value between 0 and 1.
+\exception If value not between 0 and 1.
+**/
+void BodyPart::Alpha(float fltAlpha) 
+{
+	Std_InValidRange((float) 0, (float) 1, fltAlpha, TRUE, "Alpha");
+
+	m_fltAlpha = fltAlpha;
+}
+
+/**
+\fn	float BodyPart::GripScale()
+
+\brief	Gets the grip scale. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	float scale of the grip. 
+**/
+float BodyPart::GripScale() {return m_fltGripScale;}
+
+/**
+\fn	void BodyPart::GripScale(float fltScale)
+
+\brief	Sets the grip scale. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltScale	The new scale value. 
+**/
+void BodyPart::GripScale(float fltScale) {m_fltGripScale = fltScale;}
+
+/**
+\fn	IBodyPartCallback *BodyPart::Callback()
+
+\brief	Gets the callback interface pointer. This is an interface pointer to a 
+callback class that allows us to notify the GUI of events that occur within the simulation.
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Pointer to callback object if one exists, NULL else.
+**/
+IBodyPartCallback *BodyPart::Callback() {return m_lpCallback;}
+
+/**
+\fn	void BodyPart::Callback(IBodyPartCallback *lpCallback)
+
+\brief	Sets the callback interface pointer. This is an interface pointer to a 
+callback class that allows us to notify the GUI of events that occur within the simulation.
+ 
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpCallback	The pointer to a callback interface object. 
+**/
+void BodyPart::Callback(IBodyPartCallback *lpCallback) {m_lpCallback = lpCallback;}
+
+/**
+\fn	IPhysicsBody *BodyPart::PhysicsBody()
+
+\brief	Gets the physics body interface pointer. This is an interface reference 
+to the Vs version of this object. It will allow us to call methods directly in the 
+Vs (OSG) version of the object directly without having to overload a bunch of methods in each box, sphere, etc..
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Pointer to Vs interface, NULL else.
+**/
+IPhysicsBody *BodyPart::PhysicsBody() {return m_lpPhysicsBody;}
+
+/**
+\fn	void BodyPart::PhysicsBody(IPhysicsBody *lpBody)
+
+\brief	Sets the physics body interface pointer. This is an interface reference 
+to the Vs version of this object. It will allow us to call methods directly in the 
+Vs (OSG) version of the object directly without having to overload a bunch of methods in each box, sphere, etc..
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpBody	The pointer to the phsyics body interface. 
+**/
+void BodyPart::PhysicsBody(IPhysicsBody *lpBody) {m_lpPhysicsBody = lpBody;}
+
+/**
+\fn	float BodyPart::GetBoundingRadius()
+
+\brief	Gets the bounding radius of this part. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	The bounding radius. 
+**/
+float BodyPart::GetBoundingRadius()
+{
+	if(m_lpPhysicsBody)
+		return m_lpPhysicsBody->Physics_GetBoundingRadius();
+	else
+		return 1;
+}
+
+/**
+\fn	void BodyPart::Resize()
+
+\brief	Called when this object has been resized.
+
+\details This method is called when an item is resized. It is overloaded in the
+derived class and allows that child class to perform any necessary graphics/physics
+calls for the resize event.
+
+\author	dcofer
+\date	3/2/2011
+**/
+void BodyPart::Resize() {};
+
+#pragma endregion
+
+void BodyPart::Selected(BOOL bValue, BOOL bSelectMultiple)
+{
+	Node::Selected(bValue, bSelectMultiple);
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_Selected(bValue, bSelectMultiple);
+
+	if(m_lpCallback)
+		m_lpCallback->SelectionChanged(bValue, bSelectMultiple);
+}
+
+/**
+\fn	void BodyPart::VisualSelectionModeChanged(int iNewMode)
+
+\brief	Called when the visual selection mode changed in GUI. 
+
+\details In the GUI the user can select several different types of visual selection modes
+This method is called any time that the user switches the selection mode in the GUI. This 
+allows us to change the current Alpha value of the objects so the display is correct.
+
+\author	dcofer
+\date	3/2/2011
+
+\param	iNewMode	The new VisualSelectionMode. 
+**/
+void BodyPart::VisualSelectionModeChanged(int iNewMode)
+{
+	Node::VisualSelectionModeChanged(iNewMode);
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->SetAlpha();
+}
+
+/**
+\fn	void BodyPart::AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ)
+
+\brief	Called when the user clicks on this object while the AddBody mode is active. 
+
+\details When the user selects the AddBody mode in the GUI then the simulation detects when a part is clicked
+in the simulation window. (This occurs in the VsCameraManipulator class). It gets the position of the click in
+global coordinates, and the normal vector for the surface that was clicked. We then need to pass this info back 
+up the GUI and let it know the click occurred. This method uses the IBodyPartCallback object to send this info
+back up to the GUI.
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltPosX		The position x coordinate. 
+\param	fltPosY		The position y coordinate. 
+\param	fltPosZ		The position z coordinate. 
+\param	fltNormX	The normal x coordinate. 
+\param	fltNormY	The normal y coordinate. 
+\param	fltNormZ	The normal z coordinate. 
+**/
 void BodyPart::AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ)
 {
 	if(m_lpCallback)
 		m_lpCallback->AddBodyClicked(fltPosX, fltPosY, fltPosZ, fltNormX, fltNormY, fltNormZ);
 }
 
+/**
+\fn	void BodyPart::UpdateData(Simulator *lpSim, Structure *lpStructure)
+
+\brief	Called to collect any body data for this part.
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to the parent structure for this part. 
+**/
 void BodyPart::UpdateData(Simulator *lpSim, Structure *lpStructure)
 {
 	if(m_lpPhysicsBody)
@@ -310,6 +994,23 @@ BOOL BodyPart::SetData(string strDataType, string strValue, BOOL bThrowError)
 
 #pragma endregion
 
+/**
+\fn	void BodyPart::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+
+\brief	Loads this body part. 
+
+\details This method is responsible for loading the body part from a XMl
+configuration file. You should call this method even in your 
+overriden function becuase it loads all of the base properties
+for the Body. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to this parts parent structure. 
+\param [in,out]	oXml		The xml data packet used to load this part. 
+**/
 void BodyPart::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 {
 	Node::Load(lpSim, lpStructure, oXml);

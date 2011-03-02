@@ -294,21 +294,7 @@ void NervousSystem::StepSimulation(Simulator *lpSim, Structure *lpStructure)
 	}
 }
 
-/**
-\fn	long NervousSystem::CalculateSnapshotByteSize()
 
-\brief	Calculates the snapshot byte size. 
-
-\details Sometimes the user may want to capture a snapshot of the simulation at a given point in time,
-and then be able to go back to that specific point. To do this we grab a snapshot of all the data in the system,
-including the neural variables. We essentially serialize the data into a binary format for later re-use. This method
-calculates the number of bytes that will be required to store the entire nervous system.
-
-\author	dcofer
-\date	2/24/2011
-
-\return	The calculated snapshot byte size. 
-**/
 long NervousSystem::CalculateSnapshotByteSize()
 {
 	NeuralModule *lpModule = NULL;
@@ -325,22 +311,6 @@ long NervousSystem::CalculateSnapshotByteSize()
 	return lSize;
 }
 
-/**
-\fn	void NervousSystem::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
-
-\brief	Saves a key frame snapshot. 
-
-\details Sometimes the user may want to capture a snapshot of the simulation at a given point in time,
-and then be able to go back to that specific point. To do this we grab a snapshot of all the data in the system,
-including the neural variables. We essentially serialize the data into a binary format for later re-use. This method
-goes through each module and saves its data into the byte array.
-
-\author	dcofer
-\date	2/24/2011
-
-\param [in,out]	aryBytes	The array of bytes where the data is being stored. 
-\param [in,out]	lIndex		Current zero-based index of the write position in the array. 
-**/
 void NervousSystem::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 {
 	NeuralModule *lpModule = NULL;
@@ -354,22 +324,6 @@ void NervousSystem::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 	}
 }
 
-/**
-\fn	void NervousSystem::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
-
-\brief	Loads a key frame snapshot. 
-
-\details Sometimes the user may want to capture a snapshot of the simulation at a given point in time,
-and then be able to go back to that specific point. To do this we grab a snapshot of all the data in the system,
-including the neural variables. We essentially serialize the data into a binary format for later re-use. This method
-goes through each module and loads its data from the byte array.
-
-\author	dcofer
-\date	2/24/2011
-
-\param [in,out]	aryBytes	The array of bytes where the data is being stored. 
-\param [in,out]	lIndex		Current zero-based index of the read position in the array. 
-**/
 void NervousSystem::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 {
 	NeuralModule *lpModule = NULL;

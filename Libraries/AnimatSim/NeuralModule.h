@@ -100,7 +100,6 @@ namespace AnimatSim
 			virtual BOOL NeedToStep();
 			virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
 			virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml) = 0;
-			virtual void Save(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml) = 0;
 		};
 
 	}			//Behavior

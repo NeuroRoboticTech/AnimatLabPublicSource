@@ -50,9 +50,11 @@ namespace AnimatSim
 			virtual void Initialize(Simulator *lpSim, Structure *lpStructure);
 			virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
 
+#pragma region SnapshotMethods
 			virtual long CalculateSnapshotByteSize();
 			virtual void SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 			virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex);
+#pragma endregion
 
 			virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
 		};

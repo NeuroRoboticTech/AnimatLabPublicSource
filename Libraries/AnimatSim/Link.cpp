@@ -77,14 +77,6 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Link\r\n", "", -1, FALSE, TRUE);}
 }
 
-void *Link::GetDataItem(string strItemType, string strID, BOOL bThrowError) 
-{
-	if(bThrowError)
-		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
-
-	return NULL;
-}
-
 void Link::UpdateData(Simulator *lpSim, Structure *lpStructure)
 {}
 

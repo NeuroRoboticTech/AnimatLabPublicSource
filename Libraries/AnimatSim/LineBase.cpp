@@ -64,7 +64,6 @@ LineBase::LineBase()
 
 	m_fltDensity = 0;
 	m_lpJointToParent = NULL;
-	m_bAllowMouseManipulation = FALSE;
 
 	m_fltLength = 0;
 	m_fltPrevLength = 0;
@@ -90,6 +89,8 @@ LineBase::~LineBase()
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of LineBase\r\n", "", -1, FALSE, TRUE);}
 }
+
+BOOL LineBase::AllowMouseManipulation() {return FALSE;}
 
 float LineBase::CalculateLength(Simulator *lpSim)
 {

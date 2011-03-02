@@ -67,9 +67,11 @@ namespace FiringRateSim
 			virtual float *GetDataPointer(string strDataType);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
+#pragma region SnapshotMethods
 			virtual long CalculateSnapshotByteSize();
 			virtual void SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 			virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex);
+#pragma endregion
 
 			virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
 		};

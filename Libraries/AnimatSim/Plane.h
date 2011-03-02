@@ -66,6 +66,8 @@ namespace AnimatSim
 				CStdIPoint Grid() {return m_ptGrid;};
 				void Grid(CStdIPoint ptPoint);
 
+				virtual BOOL AllowMouseManipulation();
+
 				virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
 			};
 

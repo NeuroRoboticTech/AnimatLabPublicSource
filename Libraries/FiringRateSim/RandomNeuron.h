@@ -62,9 +62,11 @@ namespace FiringRateSim
 			void InterbusrtLengthDistribution(AnimatSim::Gains::Gain *lpGain);
 			void InterbusrtLengthDistribution(string strXml);
 
+#pragma region SnapshotMethods
 			virtual long CalculateSnapshotByteSize();
 			virtual void SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 			virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex);
+#pragma endregion
 
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 

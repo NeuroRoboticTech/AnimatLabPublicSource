@@ -64,7 +64,6 @@ namespace AnimatSim
 		virtual BOOL Selected();
 		virtual void Selected(BOOL bValue, BOOL bSelectMultiple);
 
-		//virtual AnimatBase *FindByID(string strID, BOOL bThrowError = TRUE);
 #pragma region DataAccesMethods
 
 		virtual float *GetDataPointer(string strDataType);
@@ -116,6 +115,8 @@ namespace AnimatSim
 		**/
 		virtual void ResetSimulation(Simulator *lpSim) {};
 
+		virtual void AfterResetSimulation(Simulator *lpSim, Structure *lpStructure) {};
+
 		/**
 		\fn	virtual void AnimatBase::ReInitialize(Simulator *lpSim)
 		
@@ -145,7 +146,7 @@ namespace AnimatSim
 		\author	dcofer
 		\date	3/1/2011
 		
-		\param [in,out]	lpSim	If non-null, the pointer to a simulation. 
+		\param [in,out]	lpSim	The pointer to a simulation. 
 		**/
 		virtual void StepSimulation(Simulator *lpSim) {};
 
@@ -187,6 +188,66 @@ namespace AnimatSim
 		\date	3/1/2011
 		**/
 		virtual void SimStopping() {};
+
+#pragma endregion
+
+#pragma region SnapshotMethods
+
+		/**
+		\fn	virtual long AnimatBase::CalculateSnapshotByteSize()
+		
+		\brief	Calculates the snapshot byte size.
+		
+		\details Sometimes the user may want to capture a snapshot of the simulation at a given point in
+		time, and then be able to go back to that specific point. To do this we grab a snapshot of all
+		the data in the system, including the neural variables. We essentially serialize the data into a
+		binary format for later re-use. This method calculates the number of bytes that will be required
+		to store the entire object. 
+		
+		\author	dcofer
+		\date	2/24/2011
+		
+		\return	The calculated snapshot byte size. 
+		**/
+		virtual long CalculateSnapshotByteSize() {return 0;};
+
+		/**
+		\fn	virtual void AnimatBase::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
+		
+		\brief	Saves a key frame snapshot.
+		
+		\details Sometimes the user may want to capture a snapshot of the simulation at a given point in
+		time, and then be able to go back to that specific point. To do this we grab a snapshot of all
+		the data in the system, including the neural variables. We essentially serialize the data into a
+		binary format for later re-use. This method goes through each module and saves its data into the
+		byte array. 
+		
+		\author	dcofer
+		\date	2/24/2011
+		
+		\param [in,out]	aryBytes	The array of bytes where the data is being stored. 
+		\param [in,out]	lIndex		Current zero-based index of the write position in the array. 
+		**/
+		virtual void SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex) {};
+
+		/**
+		\fn	virtual void AnimatBase::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
+		
+		\brief	Loads a key frame snapshot.
+		
+		\details Sometimes the user may want to capture a snapshot of the simulation at a given point in
+		time, and then be able to go back to that specific point. To do this we grab a snapshot of all
+		the data in the system, including the neural variables. We essentially serialize the data into a
+		binary format for later re-use. This method goes through each module and loads its data from the
+		byte array. 
+		
+		\author	dcofer
+		\date	2/24/2011
+		
+		\param [in,out]	aryBytes	The array of bytes where the data is being stored. 
+		\param [in,out]	lIndex		Current zero-based index of the read position in the array. 
+		**/
+		virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex) {};
 
 #pragma endregion
 

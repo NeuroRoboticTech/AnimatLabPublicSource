@@ -106,16 +106,6 @@ void Organism::Kill(Simulator *lpSim, BOOL bState)
 	m_lpNervousSystem->Kill(lpSim, this, bState);
 }
 
-/**
-\fn	void Organism::Initialize(Simulator *lpSim)
-
-\brief	Initializes this object. 
-
-\author	dcofer
-\date	2/25/2011
-
-\param [in,out]	lpSim	If non-null, the pointer to a simulation. 
-**/
 void Organism::Initialize(Simulator *lpSim)
 {
 	Structure::Initialize(lpSim);
@@ -143,38 +133,23 @@ void Organism::ResetSimulation(Simulator *lpSim)
 		m_lpBody->AfterResetSimulation(lpSim, this);
 }
 
+/**
+\fn	void Organism::StepNeuralEngine(Simulator *lpSim)
+
+\brief	Step neural engine. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpSim	If non-null, the pointer to a simulation. 
+**/
 void Organism::StepNeuralEngine(Simulator *lpSim)
 {
 	if(!m_bDead)
 		m_lpNervousSystem->StepSimulation(lpSim, this);
 }
 
-void Organism::StepPhysicsEngine(Simulator *lpSim)
-{
-	if(m_lpBody)
-		m_lpBody->StepSimulation(lpSim, this);
-}
-
-
-
 #pragma region DataAccesMethods
-
-float *Organism::GetDataPointer(string &strID, string &strDataType)
-{
-	RigidBody *lpBody = dynamic_cast<RigidBody *>(FindRigidBody(strID, FALSE));
-
-	if(!lpBody)
-	{
-		Joint *lpJoint = dynamic_cast<Joint *>(FindJoint(strID, FALSE));
-		
-		if(!lpJoint)
-			THROW_PARAM_ERROR(Al_Err_lBodyOrJointIDNotFound, Al_Err_strBodyOrJointIDNotFound, "ID", strID);
-
-		return lpJoint->GetDataPointer(strDataType);		
-	}
-	else
-		return lpBody->GetDataPointer(strDataType);
-}
 
 BOOL Organism::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
@@ -245,6 +220,16 @@ BOOL Organism::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 
 #pragma endregion
 
+/**
+\fn	AnimatSim::Behavior::NervousSystem *Organism::NervousSystem()
+
+\brief	returns a pointer to the nervous system
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Pointer to the nervous system. 
+**/
 AnimatSim::Behavior::NervousSystem *Organism::NervousSystem()
 {return m_lpNervousSystem;}
 

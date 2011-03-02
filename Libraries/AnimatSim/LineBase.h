@@ -32,6 +32,8 @@ namespace AnimatSim
 				virtual float Length() {return m_fltLength;};
 				virtual float PrevLength() {return m_fltPrevLength;};
 
+				virtual BOOL AllowMouseManipulation();
+
 				CStdArray<Attachment *> *AttachmentPoints() {return &m_aryAttachmentPoints;};
 				virtual float CalculateLength(Simulator *lpSim);
 

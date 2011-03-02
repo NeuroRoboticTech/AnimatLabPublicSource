@@ -246,7 +246,6 @@ namespace IntegrateFireSim
 #pragma endregion
 
 		virtual void AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput);
-		virtual void *GetDataItem(string strItemType, string strID, BOOL bThrowError = TRUE);
 		virtual void ResetSimulation(Simulator *lpSim, Structure *lpStruct);
 		virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
 		virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);

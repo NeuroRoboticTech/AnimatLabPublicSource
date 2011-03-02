@@ -57,7 +57,6 @@ Plane::Plane()
 	m_fltHeight = 0;
 	m_fltDensity = 0;
 	m_bFreeze = TRUE;
-	m_bAllowMouseManipulation = FALSE;
 
 	m_ptCorner.Set(-100, -100, 0);
 	m_ptSize.Set(200, 200, 0);
@@ -101,6 +100,8 @@ void Plane::Grid(CStdIPoint ptPoint)
 	if(ptPoint.y <= 0) ptPoint.y = 1;
 	m_ptGrid = ptPoint;
 }
+
+BOOL Plane::AllowMouseManipulation() {return FALSE;}
 
 void Plane::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 {

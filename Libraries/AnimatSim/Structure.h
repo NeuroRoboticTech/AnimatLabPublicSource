@@ -171,8 +171,8 @@ namespace AnimatSim
 			virtual void Initialize(Simulator *lpSim);
 			virtual void StepPhysicsEngine(Simulator *lpSim);
 
-			void AddJoint(Joint *lpJoint);
-			void AddRigidBody(RigidBody *lpBody);
+			void AddJointToList(Joint *lpJoint);
+			void AddRigidBodyToList(RigidBody *lpBody);
 
 			virtual Joint *FindJoint(string strJointID, BOOL bThrowError = TRUE);
 			virtual RigidBody *FindRigidBody(string strBodyID, BOOL bThrowError = TRUE);
@@ -196,9 +196,11 @@ namespace AnimatSim
 
 #pragma endregion
 
+#pragma region SnapshotMethods
 			virtual long CalculateSnapshotByteSize();
 			virtual void SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 			virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex);
+#pragma endregion
 
 			virtual void Load(Simulator *lpSim, CStdXml &oXml);
 		};

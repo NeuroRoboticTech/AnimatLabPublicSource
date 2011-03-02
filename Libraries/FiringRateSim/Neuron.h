@@ -122,9 +122,11 @@ namespace FiringRateSim
 
 			virtual void InjectCurrent(float fltVal);
 
+#pragma region SnapshotMethods
 			virtual long CalculateSnapshotByteSize();
 			virtual void SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 			virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex);
+#pragma endregion
 
 #pragma region DataAccesMethods
 			virtual float *GetDataPointer(string strDataType);

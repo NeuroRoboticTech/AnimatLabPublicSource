@@ -662,27 +662,6 @@ int Neuron::FindIonChannelListPos(string strID, BOOL bThrowError)
 	return -1;
 }
 
-void *Neuron::GetDataItem(string strItemType, string strID, BOOL bThrowError)
-{
-	string strType = Std_CheckString(strItemType);
-
-	if(strType == "IONCHANNEL")
-	{
-		IonChannel *lpChannel = FindIonChannel(strID, FALSE);
-
-		//If we cannot find an ion channel then return back a standin variable so we do not get errors
-		//when we disable a channel and try and plot its values.
-		if(!lpChannel)
-			return &m_fltIonChannelStandin;
-
-		return lpChannel;
-	}
-	else if(bThrowError)
-		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Neuron Item Type", strItemType);
-
-	return NULL;
-}
-
 void Neuron::ResetSimulation(Simulator *lpSim, Structure *lpStruct)
 {
 	m_fltAdapterI = 0;

@@ -57,7 +57,6 @@ Terrain::Terrain()
 	m_fltHeight = 0;
 	m_fltDensity = 0;
 	m_bFreeze = TRUE;
-	m_bAllowMouseManipulation = FALSE;
 	m_ptGrid.Set(5, 5, 0);
 }
 
@@ -88,6 +87,8 @@ void Terrain::Grid(CStdIPoint ptPoint)
 	if(ptPoint.y <= 0) ptPoint.y = 1;
 	m_ptGrid = ptPoint;
 }
+
+BOOL Terrain::AllowMouseManipulation() {return FALSE;}
 
 void Terrain::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 {

@@ -44,7 +44,6 @@ namespace AnimatSim
 		virtual void AfterResetSimulation(Simulator *lpSim, Structure *lpStructure) {};
 
 		virtual float *GetDataPointer(string strDataType) = 0;
-		virtual void *GetDataItem(string strItemType, string strID, BOOL bThrowError = TRUE); 
 		virtual void Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
 		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
 		virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure, Node *lpNode) = 0;
