@@ -298,6 +298,9 @@ void VsHinge::SetupPhysics(Simulator *lpSim, Structure *lpStructure)
 	VsHingeLimit *lpUpperLimit = dynamic_cast<VsHingeLimit *>(m_lpUpperLimit);
 	VsHingeLimit *lpLowerLimit = dynamic_cast<VsHingeLimit *>(m_lpLowerLimit);
 
+	//Re-enable the limits once we have initialized the joint
+	EnableLimits(m_bEnableLimits);
+
 	lpUpperLimit->HingeRef(m_vxHinge);
 	lpLowerLimit->HingeRef(m_vxHinge);
 
