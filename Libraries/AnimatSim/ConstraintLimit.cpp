@@ -96,16 +96,15 @@ void ConstraintLimit::Color(string strXml)
 
 float ConstraintLimit::Alpha() {return m_vColor.a();}
 
-void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, Joint *lpJoint)
+void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
 {
-	m_lpSim = lpSim;
-	m_lpStructure = lpStructure;
-	m_lpJoint = lpJoint;
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
+	m_lpJoint = dynamic_cast<Joint *>(lpNode);
 }
 
-void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, Joint *lpJoint, float fltPosition)
+void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, float fltPosition)
 {
-	SetSystemPointers(lpSim, lpStructure, lpJoint);
+	SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
 	LimitPos(fltPosition);
 }
 #pragma region DataAccesMethods
@@ -166,10 +165,8 @@ BOOL ConstraintLimit::SetData(string strDataType, string strValue, BOOL bThrowEr
 
 #pragma endregion
 
-void ConstraintLimit::Load(Simulator *lpSim, Structure *lpStructure, Joint *lpJoint, CStdXml &oXml, string strName)
+void ConstraintLimit::Load(CStdXml &oXml, string strName)
 {
-	SetSystemPointers(lpSim, lpStructure, lpJoint);
-
 	oXml.FindChildElement(strName);
 
 	AnimatBase::Load(oXml);

@@ -71,7 +71,7 @@ void VsHud::Update(Simulator *lpSim)
 	}
 }
 
-void VsHud::Load(Simulator *lpSim, CStdXml &oXml)
+void VsHud::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 
@@ -87,7 +87,7 @@ void VsHud::Load(Simulator *lpSim, CStdXml &oXml)
 		for(int iIndex=0; iIndex<iCount; iIndex++)
 		{
 			oXml.FindChildByIndex(iIndex);
-			lpItem = LoadHudItem(lpSim, oXml);
+			lpItem = LoadHudItem(oXml);
 			m_aryHudItems.Add(lpItem);
 		}
 
@@ -96,7 +96,7 @@ void VsHud::Load(Simulator *lpSim, CStdXml &oXml)
 	}
 }
 
-VsHudItem *VsHud::LoadHudItem(Simulator *lpSim, CStdXml &oXml)
+VsHudItem *VsHud::LoadHudItem(CStdXml &oXml)
 {
 	VsHudItem *lpItem=NULL;
 	string strModuleName, strType;
@@ -108,11 +108,12 @@ try
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem();  //OutOf Column Element
 
-	lpItem = dynamic_cast<VsHudItem *>(lpSim->CreateObject(strModuleName, "HudItem", strType));
+	lpItem = dynamic_cast<VsHudItem *>(m_lpSim->CreateObject(strModuleName, "HudItem", strType));
 	if(!lpItem)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "HudItem");
 
-	lpItem->Load(lpSim, oXml);
+	lpItem->SetSystemPointers(m_lpSim, NULL, NULL, NULL);
+	lpItem->Load(oXml);
 
 	return lpItem;
 }

@@ -57,7 +57,7 @@ void Sensor::CreateParts(Simulator *lpSim, Structure *lpStructure)
 void Sensor::CreateJoints(Simulator *lpSim, Structure *lpStructure)
 {}
 
-void Sensor::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void Sensor::Load(CStdXml &oXml)
 {
 	if(!m_lpParent)
 		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);

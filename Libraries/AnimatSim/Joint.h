@@ -103,7 +103,7 @@ namespace AnimatSim
 
 			virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure);
 			virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
-			virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			// Environment

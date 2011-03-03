@@ -117,7 +117,7 @@ void NervousSystem::AddNeuralModule(Simulator *lpSim, Structure *lpStructure, st
 	oXml.FindElement("Root");
 	oXml.FindChildElement("NeuralModule");
 
-	NeuralModule *lpModule = LoadNeuralModule(lpSim, lpStructure, oXml);
+	NeuralModule *lpModule = LoadNeuralModule(oXml);
 	lpModule->Initialize(lpSim, lpStructure);
 }
 
@@ -337,26 +337,8 @@ void NervousSystem::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 	}
 }
 
-/**
-\fn	void NervousSystem::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
-
-\brief	Loads the nervous system. 
-
-\details This loads in all relevant parameters for this object from a xml packet. 
-See AnimatSim::Load for more details.
-
-\author	dcofer
-\date	2/25/2011
-
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpStructure	The pointer to a structure. 
-\param [in,out]	oXml		The xml data packet that will be loaded. 
-**/
-void NervousSystem::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void NervousSystem::Load(CStdXml &oXml)
 {
-	if(!lpSim)
-		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
-		
 	m_aryNeuralModules.RemoveAll();
 
 	oXml.IntoChildElement("NeuralModules");  //Into NeuralModules Element
@@ -365,7 +347,7 @@ void NervousSystem::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 	{
 		oXml.FindChildByIndex(iIndex);
-		LoadNeuralModule(lpSim, lpStructure, oXml);		
+		LoadNeuralModule(oXml);		
 	}
 
 	oXml.OutOfElem(); //OutOf NeuralModules Element
@@ -378,7 +360,7 @@ void NervousSystem::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml
 		for(int iIndex=0; iIndex<iCount; iIndex++)
 		{
 			oXml.FindChildByIndex(iIndex);
-			LoadAdapter(lpSim, lpStructure, oXml);		
+			LoadAdapter(oXml);		
 		}
 		oXml.OutOfElem(); //OutOf Adapters Element
 	}
@@ -386,25 +368,23 @@ void NervousSystem::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml
 }
 
 /**
-\fn	NeuralModule *NervousSystem::LoadNeuralModule(Simulator *lpSim, Structure *lpStructure,
-CStdXml &oXml)
+\fn	NeuralModule *NervousSystem::LoadNeuralModule(CStdXml &oXml)
 
-\brief	Creates and loads a neural module. 
+\brief	Creates and loads a neural module.
 
-\details This method uses the module name, module filename and module type to load a 
-neural module DLL file and get its class factory (IStdClassFactory). It then uses the 
-class factory to create a new neural module object and then loads it from the xml data.
+\details This method uses the module name, module filename and module type to load a neural
+module DLL file and get its class factory (IStdClassFactory). It then uses the class factory to
+create a new neural module object and then loads it from the xml data. 
 
 \author	dcofer
 \date	2/25/2011
 
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpStructure	The pointer to a structure. 
-\param [in,out]	oXml		The xml data packet that will be loaded. 
+\param [in,out]	oXml	The xml data packet that will be loaded. 
 
 \return	null if it fails, else the neural module. 
 **/
-NeuralModule *NervousSystem::LoadNeuralModule(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+
+NeuralModule *NervousSystem::LoadNeuralModule(CStdXml &oXml)
 {
 	IStdClassFactory *lpFactory = NULL;
 	NeuralModule *lpModule = NULL;
@@ -419,14 +399,14 @@ try
 	oXml.OutOfElem(); //OutOf NeuralModule Element
 
 	//Lets load the dynamic library and get a pointer to the class factory.
-	lpFactory = lpSim->LoadClassFactory(strModuleFileName);
+	lpFactory = m_lpSim->LoadClassFactory(strModuleFileName);
 
 	//Now create an instance of a neural module. There is only one type of 
 	lpModule = dynamic_cast<NeuralModule *>(lpFactory->CreateObject("NeuralModule", strModuleType, TRUE));
 	if(!lpModule)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "NeuralModule");
 
-	lpModule->SetSystemPointers(lpSim, lpStructure);
+	lpModule->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL);
 
 	//Clean up the original class factory. We will use the one in the NeuralModule from now on.
 	if(lpFactory)
@@ -435,9 +415,10 @@ try
 	//We must add the neural module factory before it is loaded because the module
 	//will need to use the standard Sim->CreateObject method and that requires
 	//that the sim have a pointer to this factory.
-	lpSim->AddNeuralModuleFactory(strModuleName, lpModule);
+	m_lpSim->AddNeuralModuleFactory(strModuleName, lpModule);
 
-	lpModule->Load(lpSim, lpStructure, oXml);
+	lpModule->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL);
+	lpModule->Load(oXml);
 
 	AddNeuralModule(lpModule);
 
@@ -460,24 +441,23 @@ catch(...)
 }
 
 /**
-\fn	Adapter *NervousSystem::LoadAdapter(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+\fn	Adapter *NervousSystem::LoadAdapter(CStdXml &oXml)
 
-\brief	Creates and loads an adapter. 
+\brief	Creates and loads an adapter.
 
-\details This method uses the module name and type specified in the xml packet to create a
-new adapter object using the simulator::CreateObject method. It then loads the adapter using the
-xml data.
+\details This method uses the module name and type specified in the xml packet to create a new
+adapter object using the simulator::CreateObject method. It then loads the adapter using the xml
+data. 
 
 \author	dcofer
 \date	2/25/2011
 
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpStructure	The pointer to a structure. 
-\param [in,out]	oXml		The xml data packet to load. 
+\param [in,out]	oXml	The xml data packet to load. 
 
 \return	null if it fails, else the adapter. 
 **/
-Adapter *NervousSystem::LoadAdapter(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+
+Adapter *NervousSystem::LoadAdapter(CStdXml &oXml)
 {
 	Adapter *lpAdapter = NULL;
 	string strModuleName, strType;
@@ -489,11 +469,12 @@ try
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Child Element
 
-	lpAdapter = dynamic_cast<Adapter *>(lpSim->CreateObject(strModuleName, "Adapter", strType));
+	lpAdapter = dynamic_cast<Adapter *>(m_lpSim->CreateObject(strModuleName, "Adapter", strType));
 	if(!lpAdapter)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Adapter");
 
-	lpAdapter->Load(lpSim, lpStructure, oXml);
+	lpAdapter->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL);
+	lpAdapter->Load(oXml);
 
 	m_aryAdapters.Add(lpAdapter);
 

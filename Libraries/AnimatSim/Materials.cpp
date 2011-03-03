@@ -116,7 +116,7 @@ void Materials::CreateDefaultMaterial(Simulator *lpSim)
 	}
 }
 
-void Materials::Load(Simulator *lpSim, CStdXml &oXml)
+void Materials::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 
@@ -154,7 +154,7 @@ void Materials::Load(Simulator *lpSim, CStdXml &oXml)
 			for(int iIndex=0; iIndex<iCount; iIndex++)
 			{
 				oXml.FindChildByIndex(iIndex);
-				lpItem = LoadMaterialPair(lpSim, oXml);
+				lpItem = LoadMaterialPair(oXml);
 				m_aryMaterialPairs.Add(lpItem);
 			}
 
@@ -164,10 +164,10 @@ void Materials::Load(Simulator *lpSim, CStdXml &oXml)
 		oXml.OutOfElem();  //Outof Materials Element
 	}
 
-	CreateDefaultMaterial(lpSim); //Always create a default material.
+	CreateDefaultMaterial(m_lpSim); //Always create a default material.
 }
 
-MaterialPair *Materials::LoadMaterialPair(Simulator *lpSim, CStdXml &oXml)
+MaterialPair *Materials::LoadMaterialPair(CStdXml &oXml)
 {
 	MaterialPair *lpItem=NULL;
 	string strModuleName, strType;
@@ -179,11 +179,12 @@ try
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem();  //OutOf Column Element
 
-	lpItem = dynamic_cast<MaterialPair *>(lpSim->CreateObject(strModuleName, "Material", strType));
+	lpItem = dynamic_cast<MaterialPair *>(m_lpSim->CreateObject(strModuleName, "Material", strType));
 	if(!lpItem)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Material");
 
-	lpItem->Load(lpSim, oXml);
+	lpItem->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL);
+	lpItem->Load(oXml);
 
 	return lpItem;
 }

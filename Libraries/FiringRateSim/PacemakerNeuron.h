@@ -73,7 +73,7 @@ namespace FiringRateSim
 			virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 #pragma endregion
 
-			virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			//Neurons

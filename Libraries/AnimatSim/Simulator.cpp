@@ -154,6 +154,9 @@ Simulator::Simulator()
 	m_vBackgroundColor[3] = 1;
 
 	m_lpWinMgr = NULL;
+	m_oDataChartMgr.SetSystemPointers(this, NULL, NULL, NULL);
+	m_oExternalStimuliMgr.SetSystemPointers(this, NULL, NULL, NULL);
+	m_oMaterialMgr.SetSystemPointers(this, NULL, NULL, NULL);
 }
 
 
@@ -1667,25 +1670,26 @@ void Simulator::Load(CStdXml &oXml)
 
 	//Other stuff Later
 	LoadEnvironment(oXml);
-	m_oDataChartMgr.Load(this, oXml);
-	m_oMaterialMgr.Load(this, oXml);
+	m_oDataChartMgr.Load(oXml);
+	m_oMaterialMgr.Load(oXml);
 	if(m_lpWinMgr) 
-		m_lpWinMgr->Load(this, oXml);
+		m_lpWinMgr->Load(oXml);
 
 	if(oXml.FindChildElement("ExternalStimuli", FALSE))
 	{
 		string strStimuliFile = oXml.GetChildString("ExternalStimuli", "");
 
 		if(!Std_IsBlank(strStimuliFile))
-			m_oExternalStimuliMgr.Load(this, m_strProjectPath, strStimuliFile);
+			m_oExternalStimuliMgr.Load(m_strProjectPath, strStimuliFile);
 		else
-			m_oExternalStimuliMgr.Load(this, oXml);
+			m_oExternalStimuliMgr.Load(oXml);
 	}
 
 	if(m_lpSimRecorder && oXml.FindChildElement("RecorderKeyFrames", FALSE))
 	{
 		string strKeyframesFile = oXml.GetChildString("RecorderKeyFrames");
-		m_lpSimRecorder->Load(this, m_strProjectPath, strKeyframesFile);
+		m_lpSimRecorder->SetSystemPointers(this, NULL, NULL, NULL);
+		m_lpSimRecorder->Load(m_strProjectPath, strKeyframesFile);
 	}
 
 	TRACE_DEBUG("Finished loading simulator config from Xml.");
@@ -1936,7 +1940,8 @@ Structure *Simulator::LoadStructure(CStdXml &oXml)
 try
 {
 	lpStructure = dynamic_cast<Structure *>(m_lpAnimatClassFactory->CreateObject("Structure", "Structure", TRUE));
-	lpStructure->Load(this, oXml);
+	lpStructure->SetSystemPointers(this, NULL, NULL, NULL);
+	lpStructure->Load(oXml);
 
 	AddStructure(lpStructure);
 	return lpStructure;
@@ -1973,7 +1978,8 @@ try
 	if(!lpOrganism)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 
-	lpOrganism->Load(this, oXml);
+	lpOrganism->SetSystemPointers(this, NULL, NULL, NULL);
+	lpOrganism->Load(oXml);
 
 	AddOrganism(lpOrganism);
 	return lpOrganism;
@@ -1999,7 +2005,9 @@ OdorType *Simulator::LoadOdorType(CStdXml &oXml)
 try
 {
 	lpOdorType = new OdorType();
-	lpOdorType->Load(this, oXml);
+
+	lpOdorType->SetSystemPointers(this, NULL, NULL, NULL);
+	lpOdorType->Load(oXml);
 
 	AddOdorType(lpOdorType);
 	return lpOdorType;

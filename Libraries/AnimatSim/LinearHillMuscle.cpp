@@ -356,9 +356,9 @@ float *LinearHillMuscle::GetDataPointer(string strDataType)
 	return lpData;
 }
 
-void LinearHillMuscle::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void LinearHillMuscle::Load(CStdXml &oXml)
 {
-	MuscleBase::Load(lpSim, lpStructure, oXml);
+	MuscleBase::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
 

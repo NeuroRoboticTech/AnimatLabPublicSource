@@ -44,10 +44,6 @@ namespace AnimatSim
 **/
 Node::Node()
 {
-	m_lpSim = NULL;
-	m_lpStructure = NULL;
-	m_lpModule = NULL;
-
 	m_bEnabledMem = TRUE;
 	m_bEnabled = TRUE;
 	m_fltEnabled = 0;
@@ -70,43 +66,6 @@ try
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Node\r\n", "", -1, FALSE, TRUE);}
 }
-
-/**
-\fn	Simulator *Node::GetSimulator()
-
-\brief	Gets the simulator pointer.
-
-\author	dcofer
-\date	2/24/2011
-
-\return	pointer the Simulator object for this simulation. 
-**/
-Simulator *Node::GetSimulator() {return m_lpSim;}
-
-/**
-\fn	Structure *Node::GetStructure()
-
-\brief	Gets the structure for this node. 
-
-\author	dcofer
-\date	2/24/2011
-
-\return	returns the Structure pointer for this node. 
-**/
-Structure *Node::GetStructure() {return m_lpStructure;}
-
-/**
-\fn	NeuralModule *Node::GetNeuralModule()
-
-\brief	Gets the neural module. 
-
-\author	dcofer
-\date	2/24/2011
-
-\return	Returns the NeuralModule pointer associated with this node.
-This only applies to neural network nodes. All others will return NULL.
-**/
-NeuralModule *Node::GetNeuralModule() {return m_lpModule;}
 
 /**
 \fn	BOOL Node::Enabled()
@@ -217,30 +176,6 @@ void Node::Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState)
 void Node::UpdateData(Simulator *lpSim, Structure *lpStructure)
 {}
 
-
-/**
-\fn	void Node::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule)
-
-\brief	Sets a system pointers for this node. 
-
-\details Sometimes it is necessary to set the system pointers before Initialize is called. (eg. in load). 
-This allows us to do that.
-
-\author	dcofer
-\date	2/24/2011
-
-\param [in,out]	lpSim		If non-null, the pointer to a simulation. 
-\param [in,out]	lpStructure	If non-null, the pointer to a structure. 
-\param [in,out]	lpModule	If non-null, the pointer to a module. 
-**/
-
-void Node::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule)
-{
-	m_lpSim = lpSim;
-	m_lpStructure = lpStructure;
-	m_lpModule = lpModule;
-}
-
 /**
 \fn	void Node::Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule)
 
@@ -258,30 +193,6 @@ void Node::Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lp
 	m_lpSim = lpSim;
 	m_lpStructure = lpStructure;
 	m_lpModule = lpModule;
-}
-
-/**
-\fn	void Node::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
-
-\brief	Loads the item using an XML data packet.
-
-\details This method is responsible for loading the structure from a XMl configuration file. You
-should call this method even in your overriden function becuase it loads all of the base
-properties for this object like ID and Name. It also includes this object in the simulators
-AddToObjectList so that the simulator knows about this object when you do a FindObject call. If
-you do not call this base method then it is up to you to add your item to the simulators list of
-objects. 
-
-\author	dcofer
-\date	3/1/2011
-
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpStructure	The pointer to this parts parent structure. 
-\param [in,out]	oXml		The CStdXml xml data packet to load. 
-**/
-void Node::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
-{
-	AnimatBase::Load(oXml);
 }
 
 

@@ -16,7 +16,7 @@ namespace AnimatSim
 			CStdArray<string> m_aryMaterialTypes;
 			CStdPtrArray<MaterialPair> m_aryMaterialPairs;
 
-			virtual MaterialPair *LoadMaterialPair(Simulator *lpSim, CStdXml &oXml);
+			virtual MaterialPair *LoadMaterialPair(CStdXml &oXml);
 
 			virtual void CreateDefaultMaterial(Simulator *lpSim);
 			virtual void RegisterMaterials(Simulator *lpSim);
@@ -30,7 +30,7 @@ namespace AnimatSim
 			virtual void Reset();
 			virtual void Initialize(Simulator *lpSim);
 
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			// Visualization

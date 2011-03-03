@@ -151,11 +151,8 @@ float *VsInverseMuscleCurrent::GetDataPointer(string strDataType)
 	return lpData;
 }
 
-void VsInverseMuscleCurrent::Load(Simulator *lpSim, CStdXml &oXml)
-{
-	if(!lpSim)
-		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
-		
+void VsInverseMuscleCurrent::Load(CStdXml &oXml)
+{		
 	oXml.IntoElem();  //Into Item Element
 
 	m_strID = Std_CheckString(oXml.GetChildString("ID"));
@@ -165,7 +162,7 @@ void VsInverseMuscleCurrent::Load(Simulator *lpSim, CStdXml &oXml)
 	m_strName = oXml.GetChildString("Name", "");
 
 	//This will add this object to the object list of the simulation.
-	lpSim->AddToObjectList(this);
+	m_lpSim->AddToObjectList(this);
 
 	m_bAlwaysActive = oXml.GetChildBool("AlwaysActive", m_bAlwaysActive);
 
@@ -192,7 +189,7 @@ void VsInverseMuscleCurrent::Load(Simulator *lpSim, CStdXml &oXml)
 	m_strMuscleLengthData = oXml.GetChildString("LengthData");
 
 	//Now load the muscle data
-	m_strMuscleLengthData = AnimatSim::GetFilePath(lpSim->ProjectPath(), m_strMuscleLengthData);
+	m_strMuscleLengthData = AnimatSim::GetFilePath(m_lpSim->ProjectPath(), m_strMuscleLengthData);
 	LoadMuscleData(m_strMuscleLengthData);
 
 	if(m_aryTime.GetSize() < 2)
@@ -201,16 +198,16 @@ void VsInverseMuscleCurrent::Load(Simulator *lpSim, CStdXml &oXml)
 	//Get the time step used in the data
 	float fltStep = m_aryTime[1] - m_aryTime[0];
 
-	if(fabs(fltStep - lpSim->PhysicsTimeStep()) > 1e-3)
-		THROW_TEXT_ERROR(Vs_Err_lMuscleLengthTimeStep, Vs_Err_strMuscleLengthTimeStep, " File Time Step: " + STR(fltStep) + " Physics Time Step: " + STR(lpSim->PhysicsTimeStep()) );
+	if(fabs(fltStep - m_lpSim->PhysicsTimeStep()) > 1e-3)
+		THROW_TEXT_ERROR(Vs_Err_lMuscleLengthTimeStep, Vs_Err_strMuscleLengthTimeStep, " File Time Step: " + STR(fltStep) + " Physics Time Step: " + STR(m_lpSim->PhysicsTimeStep()) );
 
 	//Set the start and end times using the data file
 	m_bLoadedTime = TRUE;
 	m_fltStartTime = m_aryTime[0];
 	m_fltEndTime = m_aryTime[m_aryTime.GetSize()-1];
 
-	m_lStartSlice = (long) (m_fltStartTime / lpSim->TimeStep() + 0.5);
-	m_lEndSlice = (long) (m_fltEndTime / lpSim->TimeStep() + 0.5);
+	m_lStartSlice = (long) (m_fltStartTime / m_lpSim->TimeStep() + 0.5);
+	m_lEndSlice = (long) (m_fltEndTime / m_lpSim->TimeStep() + 0.5);
 
 	m_fltConductance = oXml.GetChildFloat("Conductance", m_fltConductance);
 	Std_IsAboveMin((float) 0, m_fltConductance, FALSE, "Conductance");
@@ -221,7 +218,7 @@ void VsInverseMuscleCurrent::Load(Simulator *lpSim, CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf Simulus Element
 
 	//This will add this object to the object list of the simulation.
-	lpSim->AddToObjectList(this);
+	m_lpSim->AddToObjectList(this);
 }
 
 void VsInverseMuscleCurrent::LoadMuscleData(string strFilename)
@@ -258,15 +255,6 @@ void VsInverseMuscleCurrent::LoadMuscleData(string strFilename)
 			m_aryVelocity.Add(fltVelocity);
 		}
 	}
-}
-
-void VsInverseMuscleCurrent::Save(Simulator *lpSim, CStdXml &oXml)
-{
-}
-
-void VsInverseMuscleCurrent::Trace(ostream &oOs)
-{
-	oOs << "VsInverseMuscleCurrent"  << ", Name: " << m_strName << " Time (" << m_fltStartTime << ", " << m_fltEndTime << ") Slice: (" << m_lStartSlice << ", " << m_lEndSlice << ")";
 }
 
 	}			//ExternalStimuli

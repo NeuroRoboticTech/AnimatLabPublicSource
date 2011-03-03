@@ -37,15 +37,9 @@ Mesh::~Mesh()
 {
 }
 
-
-void Mesh::Trace(ostream &oOs)
+void Mesh::Load(CStdXml &oXml)
 {
-}
-
-
-void Mesh::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
-{
-	RigidBody::Load(lpSim, lpStructure, oXml);
+	RigidBody::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
 	Std_LoadPoint(oXml, "CollisionBoxSize", m_oCollisionBoxSize);
@@ -78,9 +72,9 @@ void Mesh::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 		THROW_TEXT_ERROR(Al_Err_lInvalidCollisionMeshType, Al_Err_strInvalidCollisionMeshType, "Body: " + m_strName + "  MeshType: " + m_strCollisionMeshType);
 
 	if(m_strCollisionMeshType == "REGULAR")
-		lpSim->HasTriangleMesh(TRUE);
+		m_lpSim->HasTriangleMesh(TRUE);
 	else
-		lpSim->HasConvexMesh(TRUE);
+		m_lpSim->HasConvexMesh(TRUE);
 }
 
 		}		//Bodies

@@ -20,8 +20,8 @@ namespace FiringRateSim
 
 		BOOL m_bActiveArray;
 
-		Neuron *LoadNeuron(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
-		void LoadNetworkXml(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+		Neuron *LoadNeuron(CStdXml &oXml);
+		void LoadNetworkXml(CStdXml &oXml);
 
 		void GenerateAutoSeed();
 
@@ -37,8 +37,7 @@ namespace FiringRateSim
 
 		virtual void Initialize(Simulator *lpSim, Structure *lpStructure);
 		virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
-		virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
-		virtual void Save(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml) {};
+		virtual void Load(CStdXml &oXml);
 
 #pragma region DataAccesMethods
 		virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);

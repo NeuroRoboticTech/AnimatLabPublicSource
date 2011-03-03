@@ -111,7 +111,7 @@ float Odor::CalculateOdorValue(Simulator *lpSim, OdorType *lpType, CStdFPoint &o
 	 for the Joint. 
 */
 
-void Odor::Load(Simulator *lpSim, CStdXml &oXml)
+void Odor::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 
@@ -126,7 +126,7 @@ void Odor::Load(Simulator *lpSim, CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf Odor Element
 
 	//Now lets find the odor type for this odor and add this one to it.
-	m_lpOdorType = lpSim->FindOdorType(strOdorTypeID);
+	m_lpOdorType = m_lpSim->FindOdorType(strOdorTypeID);
 	m_lpOdorType->AddOdorSource(this);
 }
 

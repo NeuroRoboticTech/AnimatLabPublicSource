@@ -9,8 +9,6 @@ namespace AnimatSim
 		class ANIMAT_PORT ConstraintLimit : public AnimatBase
 		{
 		protected:
-			Simulator *m_lpSim;
-			Structure *m_lpStructure;
 			Joint *m_lpJoint;
 
 			float m_fltLimitPos;
@@ -48,11 +46,11 @@ namespace AnimatSim
 			virtual void IsLowerLimit(BOOL bVal) {m_bIsLowerLimit = bVal;};
 			virtual BOOL IsLowerLimit() {return m_bIsLowerLimit;};
 
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, Joint *lpJoint, float fltPosition);
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, Joint *lpJoint);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, float fltPosition);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
 			virtual float *GetDataPointer(string strDataType);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
-			virtual void Load(Simulator *lpSim, Structure *lpStructure, Joint *lpJoint, CStdXml &oXml, string strName);
+			virtual void Load(CStdXml &oXml, string strName);
 			virtual void SetupGraphics(Simulator *lpSim, Structure *lpStructure) = 0;
 		};
 

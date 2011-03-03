@@ -29,8 +29,8 @@ namespace AnimatSim
 		class ANIMAT_PORT NeuralModule : public AnimatBase 
 		{
 		protected:
-			Simulator *m_lpSim;  ///< The pointer to the simulation
-			Organism *m_lpOrganism; ///< The pointer to the organism
+			/// The pointer to the organism
+			Organism *m_lpOrganism; 
 
 			/// Zero-based integer index of the time step interval. This is the number of time slices between
 			/// that this module must wait before stepping again.
@@ -88,18 +88,13 @@ namespace AnimatSim
 			virtual void ResetSimulation(Simulator *lpSim, Organism *lpOrganism) = 0;
 
 			virtual void Initialize(Simulator *lpSim, Structure *lpStructure);
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
 
 			virtual void AttachSourceAdapter(Adapter *lpAdapter);
 			virtual void AttachTargetAdapter(Adapter *lpAdapter);
 
-			virtual long CalculateSnapshotByteSize() = 0;
-			virtual void SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex) = 0;
-			virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex) = 0;
-
 			virtual BOOL NeedToStep();
 			virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
-			virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml) = 0;
 		};
 
 	}			//Behavior

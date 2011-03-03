@@ -237,9 +237,9 @@ void Joint::ResetSimulation(Simulator *lpSim, Structure *lpStructure)
 	 for the Joint. 
 */
 
-void Joint::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void Joint::Load(CStdXml &oXml)
 {
-	BodyPart::Load(lpSim, lpStructure, oXml);
+	BodyPart::Load(oXml);
 
 	oXml.IntoElem();  //Into Joint Element
 
@@ -251,8 +251,8 @@ void Joint::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 
 	//Reset the absolute position differently for a joint. It is derived from the child object, not the parent.
 	m_oAbsPosition = m_lpChild->AbsolutePosition() + m_oLocalPosition;
-	m_oReportLocalPosition = m_oLocalPosition * lpSim->DistanceUnits();
-	m_oReportWorldPosition = m_oAbsPosition * lpSim->DistanceUnits();
+	m_oReportLocalPosition = m_oLocalPosition * m_lpSim->DistanceUnits();
+	m_oReportWorldPosition = m_oAbsPosition * m_lpSim->DistanceUnits();
 
 	EnableMotor(oXml.GetChildBool("EnableMotor", m_bEnableMotor));
 	MaxVelocity(oXml.GetChildFloat("MaxVelocity", m_fltMaxVelocity));

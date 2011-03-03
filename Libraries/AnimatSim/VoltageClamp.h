@@ -40,9 +40,7 @@ namespace AnimatSim
 			float Vtarget() {return m_fltVtarget;};
 			void Vtarget(float fltVal);
 
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
-			virtual void Save(Simulator *lpSim, CStdXml &oXml);
-			virtual void Trace(ostream &oOs);
+			virtual void Load(CStdXml &oXml);
 
 			//ActiveItem overrides
 			virtual string Type() {return "VoltageClamp";};

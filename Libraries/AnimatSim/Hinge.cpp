@@ -127,17 +127,20 @@ BOOL Hinge::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
-void Hinge::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void Hinge::Load(CStdXml &oXml)
 {
-	Joint::Load(lpSim, lpStructure, oXml);
+	Joint::Load(oXml);
 
 	oXml.IntoElem();  //Into Joint Element
 
-	m_lpUpperLimit->Load(lpSim, lpStructure, this, oXml, "UpperLimit");
-	m_lpLowerLimit->Load(lpSim, lpStructure, this, oXml, "LowerLimit");
-	m_lpPosFlap->SetSystemPointers(lpSim, lpStructure, this, JointPosition());
+	m_lpUpperLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this);
+	m_lpLowerLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this);
+	m_lpPosFlap->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, JointPosition());
 
-	m_fltMaxTorque = oXml.GetChildFloat("MaxTorque", m_fltMaxTorque) * lpSim->InverseMassUnits() * lpSim->InverseDistanceUnits() * lpSim->InverseDistanceUnits();
+	m_lpUpperLimit->Load(oXml, "UpperLimit");
+	m_lpLowerLimit->Load(oXml, "LowerLimit");
+
+	m_fltMaxTorque = oXml.GetChildFloat("MaxTorque", m_fltMaxTorque) * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits() * m_lpSim->InverseDistanceUnits();
 
 	//If max torque is over 1000 N then assume we mean infinity.
 	if(m_fltMaxTorque >= 1000)

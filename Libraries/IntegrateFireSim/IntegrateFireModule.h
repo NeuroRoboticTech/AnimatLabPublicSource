@@ -62,10 +62,11 @@ namespace IntegrateFireSim
 	// ENGINE
 		double m_dCurrentTime;
 
+		virtual void LoadInternal(CStdXml &oXml);
+
 	public:
 		IntegrateFireNeuralModule();
 		virtual ~IntegrateFireNeuralModule();
-		virtual void Load(CStdXml &oXml);
 
 		void ResetIDs();
 
@@ -179,8 +180,7 @@ namespace IntegrateFireSim
 		virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex) {};
 
 		virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
-		virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
-		virtual void Save(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+		virtual void Load(CStdXml &oXml);
 		//NeuralModule Overrides
 
 	};

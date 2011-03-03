@@ -38,8 +38,7 @@ namespace AnimatSim
 			string InputEquation() {return m_strInputEquation;};
 			void InputEquation(string strVal);
 
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
-			virtual void Save(Simulator *lpSim, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 
 			//ActiveItem overrides
 			virtual string Type() {return "ExternalInput";};

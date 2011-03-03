@@ -161,9 +161,9 @@ BOOL VoltageClamp::SetData(string strDataType, string strValue, BOOL bThrowError
 	return FALSE;
 }
 
-void VoltageClamp::Load(Simulator *lpSim, CStdXml &oXml)
+void VoltageClamp::Load(CStdXml &oXml)
 {
-	ActivatedItem::Load(lpSim, oXml);
+	ActivatedItem::Load(oXml);
 
 	oXml.IntoElem();  //Into Simulus Element
 
@@ -183,15 +183,6 @@ void VoltageClamp::Load(Simulator *lpSim, CStdXml &oXml)
 	m_fltVtarget = oXml.GetChildFloat("Vtarget", m_fltVtarget);
 
 	oXml.OutOfElem(); //OutOf Simulus Element
-}
-
-void VoltageClamp::Save(Simulator *lpSim, CStdXml &oXml)
-{
-}
-
-void VoltageClamp::Trace(ostream &oOs)
-{
-	oOs << "VoltageClamp"  << ", Name: " << m_strName << " Time (" << m_fltStartTime << ", " << m_fltEndTime << ") Slice: (" << m_lStartSlice << ", " << m_lEndSlice << ")";
 }
 
 	}			//ExternalStimuli

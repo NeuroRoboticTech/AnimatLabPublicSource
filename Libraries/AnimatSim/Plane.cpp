@@ -103,7 +103,7 @@ void Plane::Grid(CStdIPoint ptPoint)
 
 BOOL Plane::AllowMouseManipulation() {return FALSE;}
 
-void Plane::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void Plane::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 

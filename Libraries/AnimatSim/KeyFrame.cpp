@@ -67,12 +67,6 @@ BOOL KeyFrame::operator<(ActivatedItem *lpItem)
 	return FALSE;
 }
 
-void KeyFrame::Trace(ostream &oOs)
-{
-	oOs << "(Start: " << m_lStartSlice << ", End: "<< m_lEndSlice << ") ";// ", CollectInterval: " << m_iCollectInterval;
-	//oOs << ", Output: " << m_strOutputFilename << ") ";
-}
-
 
 /*
 void KeyFrame::Initialize(Simulator *lpSim)
@@ -106,11 +100,8 @@ void KeyFrame::GenerateID(Simulator *lpSim)
 	m_strID = Std_CheckString(m_strID);
 }
 
-void KeyFrame::Load(Simulator *lpSim, CStdXml &oXml)
+void KeyFrame::Load(CStdXml &oXml)
 {
-	if(!lpSim)
-		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
-		
 	oXml.IntoElem();  //Into Item Element
 
 	m_lStartSlice = oXml.GetChildLong("StartSlice");
@@ -122,7 +113,7 @@ void KeyFrame::Load(Simulator *lpSim, CStdXml &oXml)
 	m_iCollectInterval = oXml.GetChildInt("CollectInterval");
 	Std_IsAboveMin((int) 0, m_iCollectInterval, TRUE, "CollectInterval");
 
-	GenerateID(lpSim);
+	GenerateID(m_lpSim);
 
 	oXml.OutOfElem(); //OutOf KeyFrame Element
 }

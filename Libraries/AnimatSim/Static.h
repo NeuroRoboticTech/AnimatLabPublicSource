@@ -38,7 +38,7 @@ namespace AnimatSim
 				Static();
 				virtual ~Static();
 
-				virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+				virtual void Load(CStdXml &oXml);
 			};
 
 		}		//Joints

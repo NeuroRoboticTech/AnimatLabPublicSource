@@ -109,9 +109,9 @@ void ContactAdapter::StepSimulation(Simulator *lpSim, Structure *lpStructure)
 		m_aryFieldPairs[iIndex]->StepSimulation(lpSim, lpStructure);
 }
 
-void ContactAdapter::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void ContactAdapter::Load(CStdXml &oXml)
 {
-	Node::Load(lpSim, lpStructure, oXml);
+	Node::Load(oXml);
 
 	oXml.IntoElem();  //Into Adapter Element
 	m_strSourceBodyID = oXml.GetChildString("SourceBodyID");
@@ -131,21 +131,22 @@ void ContactAdapter::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXm
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 	{
 		oXml.FindChildByIndex(iIndex);
-		LoadFieldPair(lpSim, lpStructure, oXml);
+		LoadFieldPair(oXml);
 	}
 	oXml.OutOfElem(); //OutOf FieldPairs Element
 
 	oXml.OutOfElem(); //OutOf Adapter Element
 }
 
-ReceptiveFieldPair *ContactAdapter::LoadFieldPair(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+ReceptiveFieldPair *ContactAdapter::LoadFieldPair(CStdXml &oXml)
 {
 	ReceptiveFieldPair *lpPair = NULL;
 
 try
 {
 	lpPair = new ReceptiveFieldPair();
-	lpPair->Load(lpSim, lpStructure, oXml);
+	lpPair->SetSystemPointers(m_lpSim, m_lpStructure, NULL, m_lpNode);
+	lpPair->Load(oXml);
 	m_aryFieldPairs.Add(lpPair);
 
 	return lpPair;

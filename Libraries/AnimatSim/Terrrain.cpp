@@ -90,7 +90,7 @@ void Terrain::Grid(CStdIPoint ptPoint)
 
 BOOL Terrain::AllowMouseManipulation() {return FALSE;}
 
-void Terrain::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void Terrain::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 

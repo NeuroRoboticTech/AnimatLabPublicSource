@@ -172,14 +172,14 @@ namespace AnimatSim
 			/// Identifier for the material type this part will use.
 			string m_strMaterialID;
 
-			RigidBody *LoadRigidBody(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
-			Joint *LoadJoint(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+			RigidBody *LoadRigidBody(CStdXml &oXml);
+			Joint *LoadJoint(CStdXml &oXml);
 
 			virtual void AddRigidBody(string strXml);
 			virtual void RemoveRigidBody(string strID, BOOL bThrowError = TRUE);
 			virtual int FindChildListPos(string strID, BOOL bThrowError = TRUE);
 
-			Odor *LoadOdor(Simulator *lpSim, CStdXml &oXml);
+			Odor *LoadOdor(CStdXml &oXml);
 			void AddOdor(Odor *lpOdor);
 
 		public:
@@ -297,7 +297,7 @@ namespace AnimatSim
 
 			virtual void AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput);
 			virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
-			virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			// Environment

@@ -98,7 +98,7 @@ catch(...)
 }
 
 
-void SimulationRecorder::Load(Simulator *lpSim, string strProjectPath, string strFileName)
+void SimulationRecorder::Load(string strProjectPath, string strFileName)
 {
 	CStdXml oXml;
 
@@ -109,17 +109,14 @@ void SimulationRecorder::Load(Simulator *lpSim, string strProjectPath, string st
 	oXml.FindElement("SimulationRecorder");
 	oXml.FindChildElement("");
 
-	Load(lpSim, oXml);
+	Load(oXml);
 
 	TRACE_DEBUG("Finished loading recorder keyframe config file.");
 }
 
-void SimulationRecorder::Load(Simulator *lpSim, CStdXml &oXml)
+void SimulationRecorder::Load(CStdXml &oXml)
 {
 	TRACE_DEBUG("Loading recorder keyframes from Xml.");
-
-	if(!lpSim)
-		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
 
 	Reset();
 
@@ -131,7 +128,7 @@ void SimulationRecorder::Load(Simulator *lpSim, CStdXml &oXml)
 		for(int iIndex=0; iIndex<iCount; iIndex++)
 		{
 			oXml.FindChildByIndex(iIndex);
-			LoadKeyFrame(lpSim, oXml);
+			LoadKeyFrame(oXml);
 		}
 
 		oXml.OutOfElem(); //OutOf KeyFrames Element
@@ -139,7 +136,7 @@ void SimulationRecorder::Load(Simulator *lpSim, CStdXml &oXml)
 }
 
 
-KeyFrame *SimulationRecorder::LoadKeyFrame(Simulator *lpSim, CStdXml &oXml)
+KeyFrame *SimulationRecorder::LoadKeyFrame(CStdXml &oXml)
 {
 	KeyFrame *lpFrame = NULL;
 	string strModuleName, strType;
@@ -151,13 +148,14 @@ try
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf KeyFrame Element
 
-	lpFrame = dynamic_cast<KeyFrame *>(lpSim->CreateObject(strModuleName, "KeyFrame", strType));
+	lpFrame = dynamic_cast<KeyFrame *>(m_lpSim->CreateObject(strModuleName, "KeyFrame", strType));
 	if(!lpFrame)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "KeyFrame");
 
-	lpFrame->Load(lpSim, oXml);
+	lpFrame->SetSystemPointers(m_lpSim, NULL, NULL, NULL);
+	lpFrame->Load(oXml);
 
-	Add(lpSim, lpFrame);
+	Add(m_lpSim, lpFrame);
 	return lpFrame;
 }
 catch(CStdErrorInfo oError)

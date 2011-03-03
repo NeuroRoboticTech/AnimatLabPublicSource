@@ -18,7 +18,7 @@ namespace AnimatSim
 			CStdArray<KeyFrame *> m_aryVideoFrames;
 			CStdArray<KeyFrame *> m_arySingleFrames;
 
-			KeyFrame *LoadKeyFrame(Simulator *lpSim, CStdXml &oXml);
+			KeyFrame *LoadKeyFrame(CStdXml &oXml);
 
 		public:
 			SimulationRecorder();
@@ -27,8 +27,8 @@ namespace AnimatSim
 			virtual void Add(Simulator *lpSim, ActivatedItem *lpItem);
 			virtual KeyFrame *Add(Simulator *lpSim, string strType, long lStart, long lEnd);
 
-			virtual void Load(Simulator *lpSim, string strProjectPath, string strFileName);
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
+			virtual void Load(string strProjectPath, string strFileName);
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			//Recording

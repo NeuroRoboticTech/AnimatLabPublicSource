@@ -263,13 +263,13 @@ namespace AnimatGUI
 					//currently running simulation.
 					if(m_lpSim)
 					{
-						m_lpSim->WindowMgr()->AddSimulationWindow(m_lpSim, "", "Basic", true, hWnd, Util::StringToStd(sWindowXml));
+						m_lpSim->WindowMgr()->AddSimulationWindow("", "Basic", true, hWnd, Util::StringToStd(sWindowXml));
 						return false;
 					}
 					else 
 					{
 						CreateSimulation();
-						m_lpSim->WindowMgr()->AddSimulationWindow(m_lpSim, "", "Basic", false, hWnd, Util::StringToStd(sWindowXml));
+						m_lpSim->WindowMgr()->AddSimulationWindow("", "Basic", false, hWnd, Util::StringToStd(sWindowXml));
 						Simulate(true);
 						return true;
 					}

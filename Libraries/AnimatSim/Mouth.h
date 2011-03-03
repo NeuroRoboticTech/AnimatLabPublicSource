@@ -54,7 +54,7 @@ namespace AnimatSim
 				virtual void AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput);
 				virtual float *GetDataPointer(string strDataType);
 				virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
-				virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+				virtual void Load(CStdXml &oXml);
 			};
 
 		}		//Joints

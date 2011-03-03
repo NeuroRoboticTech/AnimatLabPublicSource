@@ -94,7 +94,7 @@ namespace IntegrateFireSim
 
 
 		virtual void Initialize(Simulator *lpSim, Structure *lpStructure);
-		virtual void Load(CStdXml &oXml, IntegrateFireNeuralModule *lpNS);
+		virtual void Load(CStdXml &oXml);
 		virtual float CalculateCurrent(float fltStep, float fltVm);
 		virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure);
 	};

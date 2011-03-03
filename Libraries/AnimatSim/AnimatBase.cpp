@@ -55,6 +55,10 @@ and selected is set to false by default.
 
 AnimatBase::AnimatBase()
 {
+	m_lpSim = NULL;
+	m_lpStructure = NULL;
+	m_lpModule = NULL;
+	m_lpNode = NULL;
 	m_strID = Std_CreateAppID();
 	m_bSelected = FALSE;
 }
@@ -88,6 +92,56 @@ try
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of AnimatBase\r\n", "", -1, FALSE, TRUE);}
 }
+
+/**
+\fn	Simulator *AnimatBase::GetSimulator()
+
+\brief	Gets the simulator pointer. 
+
+\author	dcofer
+\date	2/24/2011
+
+\return	pointer the Simulator object for this simulation. 
+**/
+Simulator *AnimatBase::GetSimulator() {return m_lpSim;}
+
+/**
+\fn	Structure *AnimatBase::GetStructure()
+
+\brief	Gets the structure for this node. 
+
+\author	dcofer
+\date	2/24/2011
+
+\return	returns the Structure pointer for this node. 
+**/
+Structure *AnimatBase::GetStructure() {return m_lpStructure;}
+
+/**
+\fn	NeuralModule *AnimatBase::GetNeuralModule()
+
+\brief	Gets the neural module. 
+
+\author	dcofer
+\date	2/24/2011
+
+\return	Returns the NeuralModule pointer associated with this node. This only applies to neural
+network nodes. All others will return NULL. 
+**/
+NeuralModule *AnimatBase::GetNeuralModule() {return m_lpModule;}
+
+/**
+\fn	Node *AnimatBase::GetNode()
+
+\brief	Gets the node. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Parent node pointer. If none exists it returns NULL
+**/
+
+Node *AnimatBase::GetNode() {return m_lpNode;}
 
 /**
 
@@ -223,6 +277,28 @@ void AnimatBase::Selected(BOOL bValue, BOOL bSelectMultiple) {m_bSelected = bVal
 
 
 #pragma region DataAccesMethods
+
+/**
+\fn	void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
+
+\brief	Sets the system pointers. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to the parent structure. 
+\param [in,out]	lpModule	The pointer to the parent module module. 
+\param [in,out]	lpNode		The pointer to the parent node. 
+**/
+void AnimatBase::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
+{
+	m_lpSim = lpSim;
+	m_lpStructure = lpStructure;
+	m_lpModule = lpModule;
+	m_lpNode = lpNode;
+}
+
 
 /**
 
@@ -384,29 +460,5 @@ void AnimatBase::Load(CStdXml &oXml)
 	if(lpSim)
 		lpSim->AddToObjectList(this);
 }
-
-/**
-\fn	virtual void AnimatBase::Load(Simulator *lpSim, CStdXml &oXml)
-
-\brief	Loads the item using an XML data packet. 
-
-\details This method is responsible for loading the structure from a XMl
-configuration file. You should call this method even in your 
-overriden function becuase it loads all of the base properties
-for this object like ID and Name. It also includes this object in the
-simulators AddToObjectList so that the simulator knows about this object
-when you do a FindObject call. If you do not call this base method then
-it is up to you to add your item to the simulators list of objects.
-\author	dcofer
-\date	3/1/2011
-
-\param [in,out]	lpSim	The pointer to a simulation. 
-\param [in,out]	oXml	The CStdXml xml data packet to load. 
-**/
-void AnimatBase::Load(Simulator *lpSim, CStdXml &oXml)
-{
-	AnimatBase::Load(oXml);
-}
-
 
 }			//AnimatSim

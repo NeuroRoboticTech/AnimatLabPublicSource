@@ -102,9 +102,9 @@ void MemoryChart::StepSimulation(Simulator *lpSim)
 	}
 }
 
-void MemoryChart::Load(Simulator *lpSim, CStdXml &oXml)
+void MemoryChart::Load(CStdXml &oXml)
 {
-	DataChart::Load(lpSim, oXml);
+	DataChart::Load(oXml);
 
 	oXml.IntoElem();  //Into MemoryChart Element
 

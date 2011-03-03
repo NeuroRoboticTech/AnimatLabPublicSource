@@ -257,12 +257,8 @@ BOOL IonChannel::SetData(string strDataType, string strValue, BOOL bThrowError)
 #pragma endregion
 
 
-void IonChannel::Load(CStdXml &oXml, IntegrateFireNeuralModule *lpNS)
+void IonChannel::Load(CStdXml &oXml)
 {
-	Simulator *lpSim = lpNS->GetSimulator();
-	if(!lpSim)
-		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
-
 	AnimatBase::Load(oXml);
 
 	oXml.IntoElem();  //Into IonChannel Element
@@ -283,10 +279,11 @@ void IonChannel::Load(CStdXml &oXml, IntegrateFireNeuralModule *lpNS)
 	string strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Gain Element
 
-	m_lpMinf = dynamic_cast<AnimatSim::Gains::Gain *>(lpSim->CreateObject(strModuleName, "Gain", strType));
+	m_lpMinf = dynamic_cast<AnimatSim::Gains::Gain *>(m_lpSim->CreateObject(strModuleName, "Gain", strType));
 	if(!m_lpMinf)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Gain");
 
+	m_lpMinf->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL);
 	m_lpMinf->Load(oXml);
 
 	//Load Tm
@@ -295,12 +292,12 @@ void IonChannel::Load(CStdXml &oXml, IntegrateFireNeuralModule *lpNS)
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Gain Element
 
-	m_lpTm = dynamic_cast<AnimatSim::Gains::Gain *>(lpSim->CreateObject(strModuleName, "Gain", strType));
+	m_lpTm = dynamic_cast<AnimatSim::Gains::Gain *>(m_lpSim->CreateObject(strModuleName, "Gain", strType));
 	if(!m_lpTm)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Gain");
 
+	m_lpTm->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL);
 	m_lpTm->Load(oXml);
-
 
 	Hinit(oXml.GetChildFloat("Hinit"));
 	Nh(oXml.GetChildFloat("Nh"));
@@ -311,10 +308,11 @@ void IonChannel::Load(CStdXml &oXml, IntegrateFireNeuralModule *lpNS)
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Gain Element
 
-	m_lpHinf = dynamic_cast<AnimatSim::Gains::Gain *>(lpSim->CreateObject(strModuleName, "Gain", strType));
+	m_lpHinf = dynamic_cast<AnimatSim::Gains::Gain *>(m_lpSim->CreateObject(strModuleName, "Gain", strType));
 	if(!m_lpHinf)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Gain");
 
+	m_lpHinf->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL);
 	m_lpHinf->Load(oXml);
 
 	//Load Th
@@ -323,10 +321,11 @@ void IonChannel::Load(CStdXml &oXml, IntegrateFireNeuralModule *lpNS)
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Gain Element
 
-	m_lpTh = dynamic_cast<AnimatSim::Gains::Gain *>(lpSim->CreateObject(strModuleName, "Gain", strType));
+	m_lpTh = dynamic_cast<AnimatSim::Gains::Gain *>(m_lpSim->CreateObject(strModuleName, "Gain", strType));
 	if(!m_lpTh)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Gain");
 
+	m_lpTh->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL);
 	m_lpTh->Load(oXml);
 
 	oXml.OutOfElem(); //OutOf IonChannel Element

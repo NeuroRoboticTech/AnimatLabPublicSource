@@ -58,7 +58,7 @@ namespace AnimatSim
 				BallSocket();
 				virtual ~BallSocket();
 
-				virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+				virtual void Load(CStdXml &oXml);
 			};
 
 		}		//Joints

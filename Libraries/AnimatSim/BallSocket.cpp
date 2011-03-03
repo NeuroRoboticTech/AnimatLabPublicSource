@@ -73,9 +73,9 @@ BallSocket::~BallSocket()
 
 }
 
-void BallSocket::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void BallSocket::Load(CStdXml &oXml)
 {
-	Joint::Load(lpSim, lpStructure, oXml);
+	Joint::Load(oXml);
 
 	oXml.IntoElem();  //Into Joint Element
 	

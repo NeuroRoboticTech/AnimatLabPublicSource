@@ -88,18 +88,5 @@ void Link::Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lp
 	m_lpNode = lpNode;
 }
 
-void Link::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
-{
-	m_lpSim = lpSim;
-	m_lpStructure = lpStructure;
-	m_lpModule = lpModule;
-	m_lpNode = lpNode;
-}
-
-void Link::Load(Simulator *lpSim, Structure *lpStructure, Node *lpNode, CStdXml &oXml)
-{
-	AnimatBase::Load(oXml);
-}
-
 
 }			//AnimatSim

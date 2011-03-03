@@ -42,8 +42,7 @@ namespace AnimatSim
 				Cylinder();
 				virtual ~Cylinder();
 
-				virtual void Trace(ostream &oOs);
-				virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+				virtual void Load(CStdXml &oXml);
 			};
 
 		}		//Bodies

@@ -64,9 +64,6 @@ namespace AnimatSim
 		class ANIMAT_PORT Structure : public AnimatBase 
 		{
 		protected:
-			/// The pointer to a simulation
-			Simulator *m_lpSim;
-
 			///The root rigid body object of this structure.
 			RigidBody *m_lpBody;
 
@@ -105,7 +102,7 @@ namespace AnimatSim
 			///If you are running with the GUI then it makes the calls back up to it.
 			IBodyPartCallback *m_lpCallback;
 
-			virtual void LoadLayout(Simulator *lpSim, CStdXml &oXml);
+			virtual void LoadLayout(CStdXml &oXml);
 			virtual void LoadCollisionPair(CStdXml &oXml);
 			virtual RigidBody *LoadRoot(CStdXml &oXml);
 
@@ -202,7 +199,7 @@ namespace AnimatSim
 			virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 #pragma endregion
 
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			// Environment

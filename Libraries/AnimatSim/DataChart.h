@@ -33,7 +33,7 @@ namespace AnimatSim
 			int m_lCurrentRow;
 
 			virtual long CalculateChartColumnCount();
-			DataColumn *LoadDataColumn(Simulator *lpSim, CStdXml &oXml);
+			DataColumn *LoadDataColumn(CStdXml &oXml);
 			virtual DataColumn *FindColumn(string strID, int &iIndex, BOOL bThrowError);
 
 		public:
@@ -73,11 +73,9 @@ namespace AnimatSim
 
 			virtual void AddData(int iColumn, int iRow, float fltVal);
 
-			virtual void Load(Simulator *lpSim, string strProjectPath, string strConfigFile);
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
-			virtual void LoadChart(Simulator *lpSim, CStdXml &oXml);
-
-			virtual void Trace(ostream &oOs);
+			virtual void Load(string strProjectPath, string strConfigFile);
+			virtual void Load(CStdXml &oXml);
+			virtual void LoadChart(CStdXml &oXml);
 
 			//ActiveItem overrides
 			virtual string Type() {return "DataChart";};

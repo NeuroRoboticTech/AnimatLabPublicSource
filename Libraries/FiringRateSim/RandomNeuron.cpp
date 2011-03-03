@@ -250,10 +250,10 @@ BOOL RandomNeuron::SetData(string strDataType, string strValue, BOOL bThrowError
 
 #pragma endregion
 
-void RandomNeuron::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void RandomNeuron::Load(CStdXml &oXml)
 {
 
-	Neuron::Load(lpSim, lpStructure, oXml);
+	Neuron::Load(oXml);
 
 	oXml.IntoElem();  //Into Neuron Element
 

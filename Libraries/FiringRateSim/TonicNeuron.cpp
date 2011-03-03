@@ -65,9 +65,9 @@ BOOL TonicNeuron::SetData(string strDataType, string strValue, BOOL bThrowError)
 
 #pragma endregion
 
-void TonicNeuron::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void TonicNeuron::Load(CStdXml &oXml)
 {
-	Neuron::Load(lpSim, lpStructure, oXml);
+	Neuron::Load(oXml);
 
 	oXml.IntoElem();  //Into Neuron Element
 

@@ -37,9 +37,7 @@ namespace AnimatSim
 			virtual void Deactivate(Simulator *lpSim);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
-			virtual void Save(Simulator *lpSim, CStdXml &oXml);
-			virtual void Trace(ostream &oOs);
+			virtual void Load(CStdXml &oXml);
 
 			//ActiveItem overrides
 			virtual string Type() {return "EnablerInput";};

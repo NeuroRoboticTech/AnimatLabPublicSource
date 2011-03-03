@@ -86,8 +86,7 @@ namespace VortexAnimatSim
 			void TorqueYEquation(string strVal);
 			void TorqueZEquation(string strVal);
 			
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
-			virtual void Save(Simulator *lpSim, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 
 			//ActiveItem overrides
 			virtual string Type() {return "ForceInput";};

@@ -18,7 +18,7 @@ namespace VortexAnimatSim
 
 			virtual void Initialize(Simulator *lpSim, osg::Projection *lpProjection) = 0;
 			virtual void Update(Simulator *lpSim) = 0;
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			// Visualization

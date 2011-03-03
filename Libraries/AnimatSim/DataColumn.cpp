@@ -132,7 +132,7 @@ BOOL DataColumn::operator<(DataColumn *lpColumn)
 	return FALSE;
 }
 
-void DataColumn::Load(Simulator *lpSim, CStdXml &oXml)
+void DataColumn::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 
@@ -161,7 +161,7 @@ void DataColumn::Load(Simulator *lpSim, CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf DataColumn Element
 
 	//This will add this object to the object list of the simulation.
-	lpSim->AddToObjectList(this);
+	m_lpSim->AddToObjectList(this);
 }
 
 

@@ -120,7 +120,9 @@ Gain ANIMAT_PORT *LoadGain(string strName, CStdXml &oXml)
 		if(!lpGain)
 			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "CurrentGraph");
 
+		lpGain->SetSystemPointers(lpSim, NULL, NULL, NULL);
 		lpGain->Load(oXml);
+
 		return lpGain;
 	}
 	catch(CStdErrorInfo oError)

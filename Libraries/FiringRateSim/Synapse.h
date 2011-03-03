@@ -27,7 +27,7 @@ namespace FiringRateSim
 			Neuron *m_lpFromNeuron;
 			Neuron *m_lpToNeuron;
 
-			Synapse *LoadSynapse(Simulator *lpSim, Structure *lpStructure, Neuron *lpNeuron, CStdXml &oXml);
+			Synapse *LoadSynapse(CStdXml &oXml);
 
 		public:
 			Synapse();
@@ -59,7 +59,7 @@ namespace FiringRateSim
 
 			virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure, Node *lpNode);
 			virtual void Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
-			virtual void Load(Simulator *lpSim, Structure *lpStructure, Node *lpNode, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 			virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure, Node *lpNode) {}; //Not used here
 		};
 

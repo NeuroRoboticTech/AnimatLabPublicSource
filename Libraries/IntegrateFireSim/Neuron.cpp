@@ -105,13 +105,13 @@ Neuron::~Neuron()
 }
 
 
-void Neuron::Load(CStdXml &oXml, IntegrateFireNeuralModule *lpNS)
+void Neuron::Load(CStdXml &oXml)
 {
 	int i;
 	int j;
 	double d;
 
-	m_lpRealModule = lpNS;
+	m_lpRealModule = dynamic_cast<IntegrateFireNeuralModule *>(m_lpModule);
 
 	m_aryTonicInputPeriod.RemoveAll();
 	m_aryTonicInputPeriodType.RemoveAll();
@@ -137,6 +137,7 @@ void Neuron::Load(CStdXml &oXml, IntegrateFireNeuralModule *lpNS)
 		if(m_lpCaActive)
 		{delete m_lpCaActive; m_lpCaActive = NULL;}
 		m_lpCaActive = new CaActivation(this, "ACTIVE");
+		m_lpCaActive->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this);
 		m_lpCaActive->Load(oXml);
 	}
 
@@ -145,6 +146,7 @@ void Neuron::Load(CStdXml &oXml, IntegrateFireNeuralModule *lpNS)
 		if(m_lpCaInactive)
 		{delete m_lpCaInactive; m_lpCaInactive = NULL;}
 		m_lpCaInactive = new CaActivation(this, "INACTIVE");
+		m_lpCaInactive->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this);
 		m_lpCaInactive->Load(oXml);
 	}
 
@@ -172,7 +174,7 @@ void Neuron::Load(CStdXml &oXml, IntegrateFireNeuralModule *lpNS)
 	}
 	else
 	{
-		int iSpikingChemSynCount=lpNS->GetSpikingChemSynCount();
+		int iSpikingChemSynCount=m_lpRealModule->GetSpikingChemSynCount();
 		for(i=0; i<iSpikingChemSynCount; i++)
 		{
 			m_aryTonicInputPeriod.Add(0);
@@ -190,7 +192,7 @@ void Neuron::Load(CStdXml &oXml, IntegrateFireNeuralModule *lpNS)
 		for(int iIndex=0; iIndex<m_iIonChannels; iIndex++)
 		{
 			oXml.FindChildByIndex(iIndex);
-			LoadIonChannel(oXml, lpNS);		
+			LoadIonChannel(oXml);		
 		}
 
 		oXml.OutOfElem();
@@ -199,14 +201,15 @@ void Neuron::Load(CStdXml &oXml, IntegrateFireNeuralModule *lpNS)
 	oXml.OutOfElem(); //OutOf Neuron Element
 }
 
-IonChannel *Neuron::LoadIonChannel(CStdXml &oXml, IntegrateFireNeuralModule *lpNS)
+IonChannel *Neuron::LoadIonChannel(CStdXml &oXml)
 {
 	IonChannel *lpIonChannel = NULL;
 
 try
 {
 	lpIonChannel = new IonChannel();
-	lpIonChannel->Load(oXml, lpNS);
+	lpIonChannel->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this);
+	lpIonChannel->Load(oXml);
 	m_aryIonChannels.Add(lpIonChannel);
 
 	return lpIonChannel;
@@ -738,12 +741,6 @@ void Neuron::ResetSimulation(Simulator *lpSim, Structure *lpStruct)
 void Neuron::StepSimulation(Simulator *lpSim, Structure *lpStructure)
 {}
 
-void Neuron::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
-{}
-
-void Neuron::Save(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
-{}
-
 #pragma region DataAccesMethods
 
 float *Neuron::GetDataPointer(string strDataType)
@@ -870,7 +867,7 @@ void Neuron::AddIonChannel(string strXml)
 	oXml.FindElement("Root");
 	oXml.FindChildElement("IonChannel");
 
-	IonChannel *lpChannel = LoadIonChannel(oXml, m_lpRealModule);
+	IonChannel *lpChannel = LoadIonChannel(oXml);
 	lpChannel->Initialize(GetSimulator(), m_lpRealModule->GetOrganism());
 }
 

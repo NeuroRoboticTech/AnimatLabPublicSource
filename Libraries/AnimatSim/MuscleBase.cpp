@@ -107,12 +107,12 @@ void MuscleBase::AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, 
 	m_fltVm=fltInput;
 }
 
-void MuscleBase::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void MuscleBase::Load(CStdXml &oXml)
 {
 	if(!m_lpParent)
 		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
 
-	LineBase::Load(lpSim, lpStructure, oXml);
+	LineBase::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
 

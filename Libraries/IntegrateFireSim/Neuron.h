@@ -119,7 +119,7 @@ namespace IntegrateFireSim
 		CStdArray<double> m_aryDG;	// exponential decline factor in syn G COULD THIS BE STATIC???? (or put in synapse??)
 		CStdArray<double> m_aryFacilD;		// exponential decline factor in facilitation COULD THIS BE STATIC???? (or put in synapse??)
 
-		virtual IonChannel *LoadIonChannel(CStdXml &oXml, IntegrateFireNeuralModule *lpNS);
+		virtual IonChannel *LoadIonChannel(CStdXml &oXml);
 		IonChannel *FindIonChannel(string strID, BOOL bThrowError);
 
 	protected:
@@ -132,7 +132,7 @@ namespace IntegrateFireSim
 	public:
 		Neuron();
 		virtual ~Neuron();
-		virtual void Load(CStdXml &oXml, IntegrateFireNeuralModule *lpNS);
+		virtual void Load(CStdXml &oXml);
 
 		int NeuronID() {return m_iNeuronID;};
 		void NeuronID(int iID) {m_iNeuronID = iID;};
@@ -248,8 +248,6 @@ namespace IntegrateFireSim
 		virtual void AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput);
 		virtual void ResetSimulation(Simulator *lpSim, Structure *lpStruct);
 		virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
-		virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
-		virtual void Save(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
 		//Node Overrides
 
 	friend class IntegrateFireNeuralModule;

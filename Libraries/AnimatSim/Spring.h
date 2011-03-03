@@ -69,7 +69,7 @@ namespace AnimatSim
 
 				virtual void CreateParts(Simulator *lpSim, Structure *lpStructure);
 				virtual void AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput);
-				virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+				virtual void Load(CStdXml &oXml);
 			};
 
 		}		//Joints

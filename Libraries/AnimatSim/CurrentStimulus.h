@@ -79,9 +79,7 @@ namespace AnimatSim
 			float BurstOffDuration() {return m_fltBurstOffDuration;};
 			void BurstOffDuration(float fltVal);
 
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
-			virtual void Save(Simulator *lpSim, CStdXml &oXml);
-			virtual void Trace(ostream &oOs);
+			virtual void Load(CStdXml &oXml);
 
 			//ActiveItem overrides
 			virtual string Type() {return "CurrentStimulus";};

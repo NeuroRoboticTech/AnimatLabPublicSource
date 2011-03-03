@@ -70,9 +70,9 @@ void VsHudText::Update(Simulator *lpSim)
 	}
 }
 
-void VsHudText::Load(Simulator *lpSim, CStdXml &oXml)
+void VsHudText::Load(CStdXml &oXml)
 {
-	VsHudItem::Load(lpSim, oXml);
+	VsHudItem::Load(oXml);
 
 	oXml.IntoElem();
 

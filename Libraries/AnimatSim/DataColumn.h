@@ -59,7 +59,7 @@ namespace AnimatSim
 			virtual BOOL operator<(DataColumn *lpColumn);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 			virtual void SaveColumnNames(ofstream &oStream);
 		};
 

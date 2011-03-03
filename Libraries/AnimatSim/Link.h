@@ -15,11 +15,6 @@ namespace AnimatSim
 	class ANIMAT_PORT Link : public AnimatBase 
 	{
 	protected:
-		Simulator *m_lpSim;
-		Structure *m_lpStructure;
-		NeuralModule *m_lpModule;
-		Node *m_lpNode;
-
 		///Determines if this Link is enabled. This will only have any effect if this Link can be disabled.
 		///The majority of Links, like rigid bodies, can not be disabled.
 		BOOL m_bEnabled;
@@ -40,15 +35,7 @@ namespace AnimatSim
 			m_fltEnabled = (float) m_bEnabled;
 		};
 
-		virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure, Node *lpNode) = 0;
-		virtual void AfterResetSimulation(Simulator *lpSim, Structure *lpStructure) {};
-
-		virtual float *GetDataPointer(string strDataType) = 0;
 		virtual void Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
-		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
-		virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure, Node *lpNode) = 0;
-		virtual void Load(Simulator *lpSim, Structure *lpStructure, Node *lpNode, CStdXml &oXml);
-		virtual void Save(Simulator *lpSim, Structure *lpStructure, Node *lpNode, CStdXml &oXml) {};
 	};
 
 }				//AnimatSim

@@ -539,11 +539,8 @@ BOOL ActivatedItem::SetData(string strDataType, string strValue, BOOL bThrowErro
 	return FALSE;
 }
 
-void ActivatedItem::Load(Simulator *lpSim, CStdXml &oXml)
+void ActivatedItem::Load(CStdXml &oXml)
 {
-	if(!lpSim)
-		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
-		
 	AnimatBase::Load(oXml);
 
 	oXml.IntoElem();  //Into Item Element
@@ -556,8 +553,8 @@ void ActivatedItem::Load(Simulator *lpSim, CStdXml &oXml)
 		m_fltStartTime = oXml.GetChildFloat("StartTime");
 		m_fltEndTime = oXml.GetChildFloat("EndTime");
 
-		m_lStartSlice = (long) (m_fltStartTime / lpSim->TimeStep() + 0.5);
-		m_lEndSlice = (long) (m_fltEndTime / lpSim->TimeStep() + 0.5);
+		m_lStartSlice = (long) (m_fltStartTime / m_lpSim->TimeStep() + 0.5);
+		m_lEndSlice = (long) (m_fltEndTime / m_lpSim->TimeStep() + 0.5);
 
 		Std_IsAboveMin((float) -1, m_fltStartTime, TRUE, "StartTime");
 		Std_IsAboveMin(m_fltStartTime, m_fltEndTime, TRUE, "EndTime");

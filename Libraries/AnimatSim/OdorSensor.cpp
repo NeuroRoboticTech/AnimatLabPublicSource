@@ -87,12 +87,12 @@ float *OdorSensor::GetDataPointer(string strDataType)
 	return lpData;
 }
 
-void OdorSensor::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void OdorSensor::Load(CStdXml &oXml)
 {
 	if(!m_lpParent)
 		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
 
-	Sensor::Load(lpSim, lpStructure, oXml);
+	Sensor::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
 
@@ -101,7 +101,7 @@ void OdorSensor::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf RigidBody Element
 
 	if(!Std_IsBlank(strOdorTypeID))
-		m_lpOdorType = lpSim->FindOdorType(strOdorTypeID);
+		m_lpOdorType = m_lpSim->FindOdorType(strOdorTypeID);
 }
 
 		}		//Bodies

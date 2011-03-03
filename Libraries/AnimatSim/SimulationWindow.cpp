@@ -82,7 +82,7 @@ void SimulationWindow::SetupTrackCamera(BOOL bTrackCamera, string strLookAtStruc
 	SetupTrackCamera();
 }
 
-void SimulationWindow::Load(Simulator *lpSim, string strXml)
+void SimulationWindow::Load(string strXml)
 {
 	//If it is blank then skip the loading.
 	if(Std_IsBlank(strXml))
@@ -94,10 +94,10 @@ void SimulationWindow::Load(Simulator *lpSim, string strXml)
 	oXml.FindElement("WindowMgr");
 	oXml.FindChildElement("Window");
 
-	Load(lpSim, oXml);
+	Load(oXml);
 }
 
-void SimulationWindow::Load(Simulator *lpSim, CStdXml &oXml)
+void SimulationWindow::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 

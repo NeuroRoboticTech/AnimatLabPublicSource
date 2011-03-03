@@ -25,8 +25,8 @@ namespace AnimatSim
 
 			virtual void CurrentRow(long iVal) {}; //We need to disable the ability to reset the current row. It should always be the same size as the array.
 
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
-			virtual void LoadChart(Simulator *lpSim, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
+			virtual void LoadChart(CStdXml &oXml);
 
 			//ActiveItem overrides
 			virtual string Type() {return "ArrayChart";};

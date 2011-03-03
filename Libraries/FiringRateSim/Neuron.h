@@ -58,7 +58,7 @@ namespace FiringRateSim
 			virtual float CalculateSynapticCurrent(FiringRateModule *lpModule);
 			virtual float CalculateIntrinsicCurrent(FiringRateModule *lpModule, float fltInputCurrent);
 
-			Synapse *LoadSynapse(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+			Synapse *LoadSynapse(CStdXml &oXml);
 
 		public:
 			Neuron();
@@ -137,7 +137,7 @@ namespace FiringRateSim
 
 			//This is not used. The one above is used because we have to pass in the neuron indexes
 			virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure) {};
-			virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			//Neurons

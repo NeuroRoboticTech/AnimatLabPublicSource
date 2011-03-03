@@ -94,7 +94,7 @@ BOOL DataChartMgr::AddDataChart(Simulator *lpSim, string strXml)
 	oXml.Deserialize(strXml);
 	oXml.FindElement("Root");
 	oXml.FindChildElement("DataChart");
-	LoadDataChart(lpSim, oXml);
+	LoadDataChart(oXml);
 	ReInitialize(lpSim);
 	return TRUE;
 }
@@ -106,12 +106,9 @@ BOOL DataChartMgr::RemoveDataChart(Simulator *lpSim, string strID)
 	return TRUE;
 }
 
-void DataChartMgr::Load(Simulator *lpSim, CStdXml &oXml)
+void DataChartMgr::Load(CStdXml &oXml)
 {
 	TRACE_DEBUG("Loading data charts from Xml.");
-
-	if(!lpSim)
-		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
 
 	Reset();
 
@@ -123,7 +120,7 @@ void DataChartMgr::Load(Simulator *lpSim, CStdXml &oXml)
 		for(int iIndex=0; iIndex<iCount; iIndex++)
 		{
 			oXml.FindChildByIndex(iIndex);
-			LoadDataChart(lpSim, oXml);
+			LoadDataChart(oXml);
 		}
 
 		oXml.OutOfElem(); //OutOf Environment Element
@@ -131,7 +128,7 @@ void DataChartMgr::Load(Simulator *lpSim, CStdXml &oXml)
 }
 
 
-DataChart *DataChartMgr::LoadDataChart(Simulator *lpSim, CStdXml &oXml)
+DataChart *DataChartMgr::LoadDataChart(CStdXml &oXml)
 {
 	DataChart *lpChart = NULL;
 	string strModuleName, strType, strFilename;
@@ -144,19 +141,20 @@ try
 	strFilename = oXml.GetChildString("Filename", "");
 	oXml.OutOfElem(); //OutOf DataChart Element
 
-	lpChart = dynamic_cast<DataChart *>(lpSim->CreateObject(strModuleName, "DataChart", strType));
+	lpChart = dynamic_cast<DataChart *>(m_lpSim->CreateObject(strModuleName, "DataChart", strType));
 	if(!lpChart)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "DataChart");
 
+	lpChart->SetSystemPointers(m_lpSim, NULL, NULL, NULL);
 	if(!Std_IsBlank(strFilename))
-		lpChart->Load(lpSim, lpSim->ProjectPath(), strFilename);
+		lpChart->Load(m_lpSim->ProjectPath(), strFilename);
 	else
 	{
-		lpChart->ProjectPath(lpSim->ProjectPath());
-		lpChart->Load(lpSim, oXml);
+		lpChart->ProjectPath(m_lpSim->ProjectPath());
+		lpChart->Load(oXml);
 	}
 
-	Add(lpSim, lpChart);
+	Add(m_lpSim, lpChart);
 	return lpChart;
 }
 catch(CStdErrorInfo oError)

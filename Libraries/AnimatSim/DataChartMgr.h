@@ -18,7 +18,7 @@ namespace AnimatSim
 		{
 		protected:
 
-			DataChart *LoadDataChart(Simulator *lpSim, CStdXml &oXml);
+			DataChart *LoadDataChart(CStdXml &oXml);
 
 		public:
 			DataChartMgr();
@@ -33,7 +33,7 @@ namespace AnimatSim
 			virtual void ModifyDataColumn(string strChartKey, string strColumnName, string strDataType);
 			virtual void SetDataColumnIndex(string strChartKey, string strColumnName, int iIndex);
 
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			//Charting

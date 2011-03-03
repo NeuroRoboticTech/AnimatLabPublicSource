@@ -39,7 +39,7 @@ namespace AnimatSim
 
 				virtual void CreateParts(Simulator *lpSim, Structure *lpStructure);
 				virtual void CreateJoints(Simulator *lpSim, Structure *lpStructure);
-				virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+				virtual void Load(CStdXml &oXml);
 			};
 
 		}		//Bodies

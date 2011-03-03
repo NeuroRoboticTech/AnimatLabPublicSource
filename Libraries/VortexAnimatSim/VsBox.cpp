@@ -200,13 +200,6 @@ catch(...)
 }
 }
 
-
-void VsBox::Trace(ostream &oOs)
-{
-//	oOs << "{ Name: " << m_strName  << ", Size: " << m_oSize ;
-//	oOs <<", RelPos: " << m_oRelPosition << ", AbsPos: " << m_oAbsPosition;
-//	oOs << ", " << m_fltDensity << "}";
-}
 */
 
 		}		//Bodies

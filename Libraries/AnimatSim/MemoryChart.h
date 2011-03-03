@@ -26,7 +26,7 @@ namespace AnimatSim
 			virtual BOOL Lock();
 			virtual void Unlock();
 
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 
 			//ActiveItem overrides
 			virtual string Type() {return "MemoryChart";};

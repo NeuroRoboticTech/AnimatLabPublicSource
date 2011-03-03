@@ -6,7 +6,6 @@ namespace AnimatSim
 	class ANIMAT_PORT SimulationWindow : public AnimatBase
 	{
 	protected:
-		Simulator *m_lpSim;
 		BOOL m_bStandAlone;
 
 		HWND m_HWND;
@@ -76,8 +75,8 @@ namespace AnimatSim
 		virtual void Initialize(Simulator *lpSim) = 0;
 		virtual void Update(Simulator *lpSim) = 0;
 		virtual void Close() = 0;
-		virtual void Load(Simulator *lpSim, CStdXml &oXml);
-		virtual void Load(Simulator *lpSim, string strXml);
+		virtual void Load(CStdXml &oXml);
+		virtual void Load(string strXml);
 	};
 
 }//end namespace AnimatSim

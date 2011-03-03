@@ -994,26 +994,9 @@ BOOL BodyPart::SetData(string strDataType, string strValue, BOOL bThrowError)
 
 #pragma endregion
 
-/**
-\fn	void BodyPart::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
-
-\brief	Loads this body part. 
-
-\details This method is responsible for loading the body part from a XMl
-configuration file. You should call this method even in your 
-overriden function becuase it loads all of the base properties
-for the Body. 
-
-\author	dcofer
-\date	3/2/2011
-
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpStructure	The pointer to this parts parent structure. 
-\param [in,out]	oXml		The xml data packet used to load this part. 
-**/
-void BodyPart::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void BodyPart::Load(CStdXml &oXml)
 {
-	Node::Load(lpSim, lpStructure, oXml);
+	Node::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
 
@@ -1021,15 +1004,15 @@ void BodyPart::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 		Std_LoadPoint(oXml, "LocalPosition", m_oLocalPosition);
 	else
 		m_oLocalPosition.Set(0, 0, 0);
-	m_oLocalPosition *= lpSim->InverseDistanceUnits();
+	m_oLocalPosition *= m_lpSim->InverseDistanceUnits();
 
 	if(!m_lpParent)
 		m_oAbsPosition += m_oLocalPosition;
 	else
 		m_oAbsPosition = m_lpParent->AbsolutePosition() + m_oLocalPosition;
 
-	m_oReportLocalPosition = m_oLocalPosition * lpSim->DistanceUnits();
-	m_oReportWorldPosition = m_oAbsPosition * lpSim->DistanceUnits();
+	m_oReportLocalPosition = m_oLocalPosition * m_lpSim->DistanceUnits();
+	m_oReportWorldPosition = m_oAbsPosition * m_lpSim->DistanceUnits();
 
 	if(oXml.FindChildElement("Rotation", FALSE))
 		Std_LoadPoint(oXml, "Rotation", m_oRotation);

@@ -21,7 +21,7 @@ namespace AnimatSim
 			string m_strTargetModule;
 			CStdPtrArray<ReceptiveFieldPair> m_aryFieldPairs; 
 
-			ReceptiveFieldPair *LoadFieldPair(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+			ReceptiveFieldPair *LoadFieldPair(CStdXml &oXml);
 
 		public:
 			ContactAdapter();
@@ -33,7 +33,7 @@ namespace AnimatSim
 			virtual string TargetModule();
 
 			//Node Overrides
-			virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			//Adapters

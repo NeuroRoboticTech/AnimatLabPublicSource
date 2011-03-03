@@ -138,9 +138,9 @@ float *LinearHillStretchReceptor::GetDataPointer(string strDataType)
 	return lpData;
 }
 
-void LinearHillStretchReceptor::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void LinearHillStretchReceptor::Load(CStdXml &oXml)
 {
-	LinearHillMuscle::Load(lpSim, lpStructure, oXml);
+	LinearHillMuscle::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
 

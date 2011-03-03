@@ -75,12 +75,9 @@ Cylinder::~Cylinder()
 
 }
 
-void Cylinder::Trace(ostream &oOs)
-{}
-
-void Cylinder::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void Cylinder::Load(CStdXml &oXml)
 {
-	RigidBody::Load(lpSim, lpStructure, oXml);
+	RigidBody::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
 	m_fltRadius = oXml.GetChildFloat("Radius");

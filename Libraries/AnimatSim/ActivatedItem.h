@@ -130,7 +130,7 @@ namespace AnimatSim
 		virtual void StepSimulation(Simulator *lpSim) = 0;
 		virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 		virtual BOOL Overlaps(ActivatedItem *lpItem);
-		virtual void Load(Simulator *lpSim, CStdXml &oXml);
+		virtual void Load(CStdXml &oXml);
 	};
 
 	BOOL LessThanActivatedItemCompare(ActivatedItem *lpItem1, ActivatedItem *lpItem2);

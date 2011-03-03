@@ -851,34 +851,15 @@ void Structure::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 {}
 
 
-/**
-\fn	void Structure::Load(Simulator *lpSim, CStdXml &oXml)
-
-\brief	Loads a structure from an xml configuration file.
-
-\details This method is responsible for loading the structure from a XMl
-configuration file. You should call this method even in your 
-overriden function becuase it loads all of the base properties
-for the Body. This includes the loading the rigid bodies
-and joints for this structure. 
-
-\author	dcofer
-\date	2/25/2011
-
-\param [in,out]	lpSim	This is a pointer to the simulator. 
-\param [in,out]	oXml	The xml data packet to load. 
-**/
-void Structure::Load(Simulator *lpSim, CStdXml &oXml)
+void Structure::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
-
-	m_lpSim = lpSim;
 
 	oXml.IntoElem();  //Into Layout Element
 
 	Std_LoadPoint(oXml, "Position", m_oPosition);
 
-	LoadLayout(lpSim, oXml);
+	LoadLayout(oXml);
 
 	oXml.OutOfElem(); //OutOf Layout Element
 }
@@ -945,28 +926,25 @@ catch(...)
 }
 
 /**
-\fn	void Structure::LoadLayout(Simulator *lpSim, CStdXml &oXml)
+\fn	void Structure::LoadLayout(CStdXml &oXml)
 
 \brief	Loads the layout for this structure from an asl configuration file.
 
-\details This method opens up the Animat Structure Layout (ASL) file that was 
-associated with this structure in the Animat Simulation (ASIM) file.
-Once it has loaded the file into a CStdXml object it then calls
-the second method to actually create the structure from the configuration file.
+\details This method opens up the Animat Structure Layout (ASL) file that was associated with
+this structure in the Animat Simulation (ASIM) file. Once it has loaded the file into a CStdXml
+object it then calls the second method to actually create the structure from the configuration
+file. 
 
 \author	dcofer
 \date	2/25/2011
 
-\param [in,out]	lpSim	This is a pointer to the simulator.
 \param [in,out]	oXml	The xml data packet to load. 
 **/
-void Structure::LoadLayout(Simulator *lpSim, CStdXml &oXml)
+
+void Structure::LoadLayout(CStdXml &oXml)
 {
 	string strModule;
 	string strType;
-
-	if(!lpSim)
-		THROW_ERROR(Al_Err_lSimNotDefined, Al_Err_strSimNotDefined);
 
 	BOOL bFound = FALSE;
 	if(oXml.FindChildElement("Body", FALSE))
@@ -1024,10 +1002,9 @@ try
 	if(!m_lpBody)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "RigidBody");
 	m_lpBody->Parent(NULL);
-	m_lpBody->SetSystemPointers(m_lpSim, this, NULL);
 
-	//m_lpBody->AbsolutePosition(m_oPosition);
-	m_lpBody->Load(m_lpSim, this, oXml);
+	m_lpBody->SetSystemPointers(m_lpSim, this, NULL, NULL);
+	m_lpBody->Load(oXml);
 	m_lpBody->CompileIDLists(m_lpSim, this);
 
 	return m_lpBody;

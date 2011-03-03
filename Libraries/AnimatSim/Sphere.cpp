@@ -73,12 +73,9 @@ Sphere::~Sphere()
 
 }
 
-void Sphere::Trace(ostream &oOs)
-{}
-
-void Sphere::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void Sphere::Load(CStdXml &oXml)
 {
-	RigidBody::Load(lpSim, lpStructure, oXml);
+	RigidBody::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
 	m_fltRadius = oXml.GetChildFloat("Radius");

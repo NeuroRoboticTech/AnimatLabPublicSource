@@ -33,7 +33,7 @@ namespace FiringRateSim
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 #pragma endregion
 
-			virtual void Load(Simulator *lpSim, Structure *lpStructure, Neuron *lpNeuron, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			//Synapses

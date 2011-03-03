@@ -136,9 +136,9 @@ void Mouth::AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float
 		m_fltEatingRate = 0;
 }
 
-void Mouth::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void Mouth::Load(CStdXml &oXml)
 {
-	Sensor::Load(lpSim, lpStructure, oXml);
+	Sensor::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
 
@@ -148,7 +148,7 @@ void Mouth::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 	m_strName = "Mouth";
 
 	m_fltMinFoodRadius = oXml.GetChildFloat("MinimumFoodRadius", m_fltMinFoodRadius);
-	m_fltMinFoodRadius *= lpSim->InverseDistanceUnits();
+	m_fltMinFoodRadius *= m_lpSim->InverseDistanceUnits();
 
 	Std_IsAboveMin((float) 0, m_fltMinFoodRadius, TRUE, "MinFoodRadius");
 

@@ -128,14 +128,14 @@ float OdorType::CalculateOdorValue(Simulator *lpSim, CStdFPoint &oSensorPos)
 	 for the Joint. 
 */
 
-void OdorType::Load(Simulator *lpSim, CStdXml &oXml)
+void OdorType::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 
 	oXml.IntoElem();  //Into Joint Element
 
 	m_fltDiffusionConstant = oXml.GetChildFloat("DiffusionConstant", m_fltDiffusionConstant);
-	m_fltDiffusionConstant = m_fltDiffusionConstant/(lpSim->DistanceUnits()*lpSim->DistanceUnits()); //Our diffusion constant is in m^2/s. We need to convert its distance units appropriately.
+	m_fltDiffusionConstant = m_fltDiffusionConstant/(m_lpSim->DistanceUnits()*m_lpSim->DistanceUnits()); //Our diffusion constant is in m^2/s. We need to convert its distance units appropriately.
 	Std_IsAboveMin((float) 0, m_fltDiffusionConstant, TRUE, "Diffusion Constant");
 
 	oXml.OutOfElem(); //OutOf Joint Element

@@ -44,8 +44,7 @@ namespace AnimatSim
 				Cone();
 				virtual ~Cone();
 
-				virtual void Trace(ostream &oOs);
-				virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+				virtual void Load(CStdXml &oXml);
 			};
 
 		}		//Bodies

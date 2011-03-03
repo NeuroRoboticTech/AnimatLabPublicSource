@@ -62,7 +62,7 @@ namespace AnimatSim
 
 				virtual BOOL UsesRadians() {return FALSE;};
 
-				virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+				virtual void Load(CStdXml &oXml);
 			};
 
 		}		//Joints

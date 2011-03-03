@@ -73,9 +73,9 @@ Static::~Static()
 
 }
 
-void Static::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void Static::Load(CStdXml &oXml)
 {
-	Joint::Load(lpSim, lpStructure, oXml);
+	Joint::Load(oXml);
 
 	oXml.IntoElem();  //Into Joint Element
 

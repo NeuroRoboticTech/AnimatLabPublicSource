@@ -175,7 +175,7 @@ namespace AnimatSim
 			virtual void AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ);
 			virtual void VisualSelectionModeChanged(int iNewMode);
 
-			virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			// Environment

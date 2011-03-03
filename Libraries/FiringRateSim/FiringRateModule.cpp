@@ -142,7 +142,7 @@ void FiringRateModule::AddNeuron(string strXml)
 	oXml.FindElement("Root");
 	oXml.FindChildElement("Neuron");
 
-	Neuron *lpNeuron = LoadNeuron(m_lpSim, m_lpOrganism, oXml);
+	Neuron *lpNeuron = LoadNeuron(oXml);
 	lpNeuron->Initialize(m_lpSim, m_lpOrganism, this);
 }
 
@@ -231,12 +231,9 @@ void FiringRateModule::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 
 //This gets the Nervous system configuration file and loads in the filename
 //It then opens that file and loads it. 
-void FiringRateModule::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void FiringRateModule::Load(CStdXml &oXml)
 {
 	CStdXml oNetXml;
-
-	if(!lpSim)
-		THROW_ERROR(Nl_Err_lSimulationNotDefined, Nl_Err_strSimulationNotDefined);
 
 	//if(Std_IsBlank(m_strProjectPath)) 
 	//	THROW_ERROR(Al_Err_lProjectPathBlank, Al_Err_strProjectPathBlank);
@@ -257,10 +254,10 @@ void FiringRateModule::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &o
 		oNetXml.FindElement("NeuralModule");
 		oNetXml.FindChildElement("NetworkSize");
 
-		LoadNetworkXml(lpSim, lpStructure, oNetXml);
+		LoadNetworkXml(oNetXml);
 	}
 	else
-		LoadNetworkXml(lpSim, lpStructure, oXml);
+		LoadNetworkXml(oXml);
 
 	oXml.OutOfElem(); //OutOf NeuralModule Element
 
@@ -269,7 +266,7 @@ void FiringRateModule::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &o
 	TRACE_DEBUG("Finished loading nervous system config file.");
 }
 
-void FiringRateModule::LoadNetworkXml(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void FiringRateModule::LoadNetworkXml(CStdXml &oXml)
 {
 	short iNeuron, iTotalNeurons;
 		
@@ -281,7 +278,7 @@ void FiringRateModule::LoadNetworkXml(Simulator *lpSim, Structure *lpStructure, 
 	TimeStep(oXml.GetChildFloat("TimeStep", m_fltTimeStep));
 
 	//This will add this object to the object list of the simulation.
-	lpSim->AddToObjectList(this);
+	m_lpSim->AddToObjectList(this);
 
 	//*** Begin Loading Neurons. *****
 	oXml.IntoChildElement("Neurons");
@@ -290,7 +287,7 @@ void FiringRateModule::LoadNetworkXml(Simulator *lpSim, Structure *lpStructure, 
 	for(iNeuron=0; iNeuron<iTotalNeurons; iNeuron++)
 	{
 		oXml.FindChildByIndex(iNeuron);
-		LoadNeuron(lpSim, lpStructure, oXml);
+		LoadNeuron(oXml);
 	}
 
 	oXml.OutOfElem();
@@ -298,7 +295,7 @@ void FiringRateModule::LoadNetworkXml(Simulator *lpSim, Structure *lpStructure, 
 }
 
 
-Neuron *FiringRateModule::LoadNeuron(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+Neuron *FiringRateModule::LoadNeuron(CStdXml &oXml)
 {
 	Neuron *lpNeuron=NULL;
 	string strType;
@@ -310,11 +307,12 @@ try
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem();  //OutOf Neuron Element
 
-	lpNeuron = dynamic_cast<Neuron *>(lpSim->CreateObject(Nl_NeuralModuleName(), "Neuron", strType));
+	lpNeuron = dynamic_cast<Neuron *>(m_lpSim->CreateObject(Nl_NeuralModuleName(), "Neuron", strType));
 	if(!lpNeuron)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Neuron");
 
-	lpNeuron->Load(lpSim, lpStructure, oXml);
+	lpNeuron->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL);
+	lpNeuron->Load(oXml);
 	
 	m_aryNeurons.Add(lpNeuron);
 	return lpNeuron;

@@ -82,9 +82,9 @@ void FileChart::ResetSimulation(Simulator *lpSim)
 	oStream.open(AnimatSim::GetFilePath(m_strProjectPath, m_strOutputFilename).c_str());
 }
 
-void FileChart::Load(Simulator *lpSim, CStdXml &oXml)
+void FileChart::Load(CStdXml &oXml)
 {
-	DataChart::Load(lpSim, oXml);
+	DataChart::Load(oXml);
 
 	oXml.IntoElem();  //Into FileChart Element
 

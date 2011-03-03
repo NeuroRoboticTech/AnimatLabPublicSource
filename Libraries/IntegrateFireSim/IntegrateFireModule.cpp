@@ -61,7 +61,7 @@ IntegrateFireNeuralModule::~IntegrateFireNeuralModule()
 	{Std_TraceMsg(0, "Caught Error in desctructor of IntegrateFireNeuralModule\r\n", "", -1, FALSE, TRUE);}
 }
 
-void IntegrateFireNeuralModule::Load(CStdXml &oXml)
+void IntegrateFireNeuralModule::LoadInternal(CStdXml &oXml)
 {
 	int i;
 //Std_TraceMsg(0,"Starting to load");
@@ -179,7 +179,9 @@ Neuron *IntegrateFireNeuralModule::LoadNeuron(CStdXml &oXml)
 	{
 
 		lpNeuron = new Neuron;
-		lpNeuron->Load(oXml, this);
+
+		lpNeuron->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL);
+		lpNeuron->Load(oXml);
 
 		m_aryNeurons.Add(lpNeuron);
 
@@ -229,7 +231,7 @@ SpikingChemicalSynapse *IntegrateFireNeuralModule::LoadSpikingChemSyn(CStdXml &o
 	{
 
 		pSpikingChemSyn = new SpikingChemicalSynapse;
-		pSpikingChemSyn->NeuralModule(this);
+		pSpikingChemSyn->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL);
 		pSpikingChemSyn->Load(oXml);
 		pSpikingChemSyn->SynapseTypeID(iIndex);
 
@@ -261,6 +263,7 @@ NonSpikingChemicalSynapse *IntegrateFireNeuralModule::LoadNonSpikingChemSyn(CStd
 	{
 
 		pNonSpikingChemSyn = new NonSpikingChemicalSynapse;
+		pNonSpikingChemSyn->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL);
 		pNonSpikingChemSyn->Load(oXml);
 		pNonSpikingChemSyn->SynapseTypeID(iIndex);
 
@@ -292,6 +295,7 @@ ElectricalSynapse *IntegrateFireNeuralModule::LoadElecSyn(CStdXml &oXml, int iIn
 	{
 
 		pElecSyn = new ElectricalSynapse;
+		pElecSyn->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL);
 		pElecSyn->Load(oXml);
 		pElecSyn->SynapseTypeID(iIndex);
 
@@ -322,7 +326,8 @@ Connexion *IntegrateFireNeuralModule::LoadConnexion(CStdXml &oXml)
 	{
 
 		pConnexion = new Connexion;
-		pConnexion->Load(oXml, this);
+		pConnexion->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL);
+		pConnexion->Load(oXml);
 
 		m_aryConnexion.Add(pConnexion);
 
@@ -1062,18 +1067,14 @@ void IntegrateFireNeuralModule::StepSimulation(Simulator *lpSim, Structure *lpSt
 	CalcUpdate();
 }
 
-void IntegrateFireNeuralModule::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void IntegrateFireNeuralModule::Load(CStdXml &oXml)
 {
 	CStdXml oNetXml;
-
-	if(!lpSim)
-		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
 
 	//if(Std_IsBlank(m_strProjectPath)) 
 	//	THROW_ERROR(Al_Err_lProjectPathBlank, Al_Err_strProjectPathBlank);
 
-	m_lpSim = lpSim;
-	m_lpOrganism = dynamic_cast<Organism *>(lpStructure);
+	m_lpOrganism = dynamic_cast<Organism *>(m_lpStructure);
 	if(!m_lpOrganism) 
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 
@@ -1093,21 +1094,15 @@ void IntegrateFireNeuralModule::Load(Simulator *lpSim, Structure *lpStructure, C
 		oNetXml.FindElement("NeuralModule");
 		oNetXml.FindChildElement("UseCriticalPeriod");
 
-		Load(oNetXml);
+		LoadInternal(oNetXml);
 	}
 	else
-		Load(oXml);
+		LoadInternal(oXml);
 
 	oXml.OutOfElem(); //OutOf NeuralModule Element
 
 	TRACE_DEBUG("Finished loading nervous system config file.");
 }
-
-void IntegrateFireNeuralModule::Save(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml) 
-{};
-
-
-//NeuralModule overrides
 
 
 }				//IntegrateFireSim

@@ -111,7 +111,7 @@ void ReceptiveFieldPair::StepSimulation(Simulator *lpSim, Structure *lpStructure
 
 //Node Overrides
 
-void ReceptiveFieldPair::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void ReceptiveFieldPair::Load(CStdXml &oXml)
 {
 	oXml.IntoElem();  //Into Adapter Element
 
@@ -125,9 +125,5 @@ void ReceptiveFieldPair::Load(Simulator *lpSim, Structure *lpStructure, CStdXml 
 	oXml.OutOfElem(); //OutOf Adapter Element
 }
 
-void ReceptiveFieldPair::Trace(ostream &oOs)
-{
-	oOs << this->m_vVertex[0] << "," << this->m_vVertex[1] << "," << this->m_vVertex[2];
-}
 	}			//Environment
 }				//AnimatSim

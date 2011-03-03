@@ -77,12 +77,9 @@ Cone::~Cone()
 
 }
 
-void Cone::Trace(ostream &oOs)
-{}
-
-void Cone::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void Cone::Load(CStdXml &oXml)
 {
-	RigidBody::Load(lpSim, lpStructure, oXml);
+	RigidBody::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
 	m_fltLowerRadius = oXml.GetChildFloat("LowerRadius");
@@ -108,7 +105,7 @@ void Cone::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 	if(m_fltCollisionLowerRadius == 0 && m_fltCollisionUpperRadius == 0)
 		THROW_PARAM_ERROR(Al_Err_lInvalidConeRadius, Al_Err_strInvalidConeRadius, "Body", m_strName);
 
-	lpSim->HasConvexMesh(TRUE);
+	m_lpSim->HasConvexMesh(TRUE);
 }
 
 

@@ -56,7 +56,7 @@ namespace AnimatSim
 				virtual void Height(float fltVal, BOOL bUseScaling = TRUE);
 
 				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
-				virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+				virtual void Load(CStdXml &oXml);
 			};
 
 		}		//Bodies

@@ -110,9 +110,9 @@ BOOL EnablerStimulus::SetData(string strDataType, string strValue, BOOL bThrowEr
 	return FALSE;
 }
 
-void EnablerStimulus::Load(Simulator *lpSim, CStdXml &oXml)
+void EnablerStimulus::Load(CStdXml &oXml)
 {
-	ActivatedItem::Load(lpSim, oXml);
+	ActivatedItem::Load(oXml);
 
 	oXml.IntoElem();  //Into Simulus Element
 
@@ -128,15 +128,6 @@ void EnablerStimulus::Load(Simulator *lpSim, CStdXml &oXml)
 
 	oXml.OutOfElem(); //OutOf Simulus Element
 
-}
-
-void EnablerStimulus::Save(Simulator *lpSim, CStdXml &oXml)
-{
-}
-
-void EnablerStimulus::Trace(ostream &oOs)
-{
-	oOs << "EnablerStimulus"  << ", Name: " << m_strName << " Time (" << m_fltStartTime << ", " << m_fltEndTime << ") Slice: (" << m_lStartSlice << ", " << m_lEndSlice << ")";
 }
 
 	}			//ExternalStimuli

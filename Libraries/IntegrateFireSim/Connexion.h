@@ -16,7 +16,7 @@ namespace IntegrateFireSim
 			Connexion();
 			Connexion(int type, int id, double d,float topBlock=75,float botBlock=25);
 			virtual ~Connexion();
-			virtual void Load(CStdXml &oXml, IntegrateFireNeuralModule *lpNS);
+			virtual void Load(CStdXml &oXml);
 
 			virtual void ResetSimulation(Simulator *lpSim, Structure *lpStruct);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);

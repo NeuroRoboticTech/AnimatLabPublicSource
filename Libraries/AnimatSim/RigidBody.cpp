@@ -1233,7 +1233,7 @@ void RigidBody::AddRigidBody(string strXml)
 	oXml.FindElement("Root");
 	oXml.FindChildElement("RigidBody");
 
-	RigidBody *lpBody = LoadRigidBody(m_lpSim, m_lpStructure, oXml);
+	RigidBody *lpBody = LoadRigidBody(oXml);
 
 	lpBody->Initialize(m_lpSim, m_lpStructure, NULL);
 
@@ -1295,14 +1295,13 @@ int RigidBody::FindChildListPos(string strID, BOOL bThrowError)
 #pragma endregion
 
 
-void RigidBody::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void RigidBody::Load(CStdXml &oXml)
 {
 	m_fltDensity = 0;
-	m_lpStructure = lpStructure;
 	if(m_lpJointToParent) {delete m_lpJointToParent; m_lpJointToParent=NULL;}
 	m_aryChildParts.RemoveAll();
 
-	BodyPart::Load(lpSim, lpStructure, oXml);
+	BodyPart::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
 
@@ -1313,13 +1312,13 @@ void RigidBody::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 	else
 		m_oCenterOfMass.Set(0, 0, 0);
 
-	m_oCenterOfMass *= lpSim->InverseDistanceUnits();
+	m_oCenterOfMass *= m_lpSim->InverseDistanceUnits();
 
 	Density(oXml.GetChildFloat("Density", m_fltDensity));
 
 	m_vCd[0] = m_vCd[1] = m_vCd[2] = oXml.GetChildFloat("Cd", 0);
 
-	if(lpSim->SimulateHydrodynamics())
+	if(m_lpSim->SimulateHydrodynamics())
 	{
 		Std_IsAboveMin((float) 0, m_vCd[0], TRUE, "Cd x", true);
 		Std_IsAboveMin((float) 0, m_vCd[1], TRUE, "Cd y", true);
@@ -1360,7 +1359,7 @@ void RigidBody::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 		//Static joints do not have joints specified. Any time that there is a parent but not joint defined
 		//then this signals that we need to statically add that part to the parent object geometry.
 		if(oXml.FindChildElement("Joint", FALSE))
-			LoadJoint(lpSim, lpStructure, oXml);
+			LoadJoint(oXml);
 		else
 			m_lpJointToParent = NULL;
 	}
@@ -1373,7 +1372,7 @@ void RigidBody::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 		for(int iIndex=0; iIndex<iChildCount; iIndex++)
 		{
 			oXml.FindChildByIndex(iIndex);
-			LoadRigidBody(lpSim, lpStructure, oXml);
+			LoadRigidBody(oXml);
 		}
 		oXml.OutOfElem(); //OutOf ChildBodies Element
 	}
@@ -1381,7 +1380,8 @@ void RigidBody::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 	if(oXml.FindChildElement("ContactSensor", FALSE))
 	{
 		m_lpContactSensor = new AnimatSim::Environment::ContactSensor();
-		m_lpContactSensor->Load(lpSim, lpStructure, oXml);
+		m_lpContactSensor->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this);
+		m_lpContactSensor->Load(oXml);
 	}
 
 	if(oXml.FindChildElement("OdorSources", FALSE))
@@ -1392,7 +1392,7 @@ void RigidBody::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 		for(int iIndex=0; iIndex<iChildCount; iIndex++)
 		{
 			oXml.FindChildByIndex(iIndex);
-			LoadOdor(lpSim, oXml);
+			LoadOdor(oXml);
 		}
 		oXml.OutOfElem(); //OutOf OdorSources Element
 	}	
@@ -1401,21 +1401,19 @@ void RigidBody::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 }
 
 /**
-\fn	RigidBody *RigidBody::LoadRigidBody(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+\fn	RigidBody *RigidBody::LoadRigidBody(CStdXml &oXml)
 
 \brief	Loads a child rigid body. 
 
 \author	dcofer
 \date	3/2/2011
 
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpStructure	The pointer to the parent structure of this part. 
-\param [in,out]	oXml		The xml data definition of the part to load. 
+\param [in,out]	oXml	The xml data definition of the part to load. 
 
 \return	null if it fails, else the rigid body. 
-\exception If there is a problem loading the part.
 **/
-RigidBody *RigidBody::LoadRigidBody(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+
+RigidBody *RigidBody::LoadRigidBody(CStdXml &oXml)
 {
 	RigidBody *lpChild = NULL;
 	string strType;
@@ -1427,13 +1425,13 @@ try
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Child Element
 
-	lpChild = dynamic_cast<RigidBody *>(lpSim->CreateObject(strModule, "RigidBody", strType));
+	lpChild = dynamic_cast<RigidBody *>(m_lpSim->CreateObject(strModule, "RigidBody", strType));
 	if(!lpChild)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "RigidBody");
 	lpChild->Parent(this);
-	lpChild->SetSystemPointers(lpSim, lpStructure, NULL);
 
-	lpChild->Load(lpSim, lpStructure, oXml);
+	lpChild->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this);
+	lpChild->Load(oXml);
 
 	m_aryChildParts.Add(lpChild);
 
@@ -1454,21 +1452,19 @@ catch(...)
 }
 
 /**
-\fn	Joint *RigidBody::LoadJoint(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+\fn	Joint *RigidBody::LoadJoint(CStdXml &oXml)
 
 \brief	Loads a child joint. 
 
 \author	dcofer
 \date	3/2/2011
 
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpStructure	The pointer to the parent structure to this part. 
-\param [in,out]	oXml		The xml data definition of the part to load. 
+\param [in,out]	oXml	The xml data definition of the part to load. 
 
 \return	null if it fails, else the joint. 
-\exception If there is a problem loading the part.
 **/
-Joint *RigidBody::LoadJoint(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+
+Joint *RigidBody::LoadJoint(CStdXml &oXml)
 {
 	string strType;
 
@@ -1479,14 +1475,14 @@ try
 	string strJointType = oXml.GetChildString("Type");
 	oXml.OutOfElem();  //OutOf Joint Element
 
-	m_lpJointToParent = dynamic_cast<Joint *>(lpSim->CreateObject(strModule, "Joint", strJointType));
+	m_lpJointToParent = dynamic_cast<Joint *>(m_lpSim->CreateObject(strModule, "Joint", strJointType));
 	if(m_lpJointToParent)
 	{
 		m_lpJointToParent->Parent(m_lpParent);
 		m_lpJointToParent->Child(this);
-		m_lpJointToParent->SetSystemPointers(lpSim, lpStructure, NULL);
 
-		m_lpJointToParent->Load(lpSim, lpStructure, oXml);
+		m_lpJointToParent->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this);
+		m_lpJointToParent->Load(oXml);
 	}
 
 	return m_lpJointToParent;
@@ -1562,26 +1558,29 @@ void RigidBody::AddOdor(Odor *lpOdor)
 }
 
 /**
-\fn	Odor *RigidBody::LoadOdor(Simulator *lpSim, CStdXml &oXml)
+\fn	Odor *RigidBody::LoadOdor(CStdXml &oXml)
 
 \brief	Loads an odor source. 
 
 \author	dcofer
 \date	3/2/2011
 
-\param [in,out]	lpSim	The pointer to a simulation. 
 \param [in,out]	oXml	The xml data to use when loading the odor. 
 
 \return	Pointer to the new odor. 
 **/
-Odor *RigidBody::LoadOdor(Simulator *lpSim, CStdXml &oXml)
+
+Odor *RigidBody::LoadOdor(CStdXml &oXml)
 {
 	Odor *lpOdor = NULL;
 
 try
 {
 	lpOdor = new Odor(this);
-	lpOdor->Load(lpSim, oXml);
+
+	lpOdor->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this);
+	lpOdor->Load(oXml);
+
 	AddOdor(lpOdor);
 
 	return lpOdor;

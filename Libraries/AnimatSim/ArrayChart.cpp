@@ -99,9 +99,9 @@ void ArrayChart::StepSimulation(Simulator *lpSim)
 	}
 }
 
-void ArrayChart::Load(Simulator *lpSim, CStdXml &oXml)
+void ArrayChart::Load(CStdXml &oXml)
 {
-	DataChart::Load(lpSim, oXml);
+	DataChart::Load(oXml);
 
 	oXml.IntoElem();  //Into DataChart Element	
 	Std_LoadPoint(oXml, "Size", m_vArraySize);
@@ -109,9 +109,9 @@ void ArrayChart::Load(Simulator *lpSim, CStdXml &oXml)
 }
 
 
-void ArrayChart::LoadChart(Simulator *lpSim, CStdXml &oXml)
+void ArrayChart::LoadChart(CStdXml &oXml)
 {
-	DataChart::LoadChart(lpSim, oXml);
+	DataChart::LoadChart(oXml);
 
 	oXml.IntoElem();
 	Std_LoadPoint(oXml, "Size", m_vArraySize);

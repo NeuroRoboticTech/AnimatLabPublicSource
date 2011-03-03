@@ -27,7 +27,7 @@ namespace AnimatSim
 			string OutputFilename() {return m_strOutputFilename;};
 			void OutputFilename(string strVal) {m_strOutputFilename = strVal;};
 
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 			virtual void SaveOutput(Simulator *lpSim);
 
 			//ActiveItem overrides

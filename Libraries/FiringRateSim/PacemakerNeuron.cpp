@@ -275,9 +275,9 @@ void PacemakerNeuron::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
   lIndex += sizeof(m_iIntrinsicType);
 }
 
-void PacemakerNeuron::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void PacemakerNeuron::Load(CStdXml &oXml)
 {
-	Neuron::Load(lpSim, lpStructure, oXml);
+	Neuron::Load(oXml);
 
 	oXml.IntoElem();  //Into Neuron Element
 

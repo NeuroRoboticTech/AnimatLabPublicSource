@@ -31,10 +31,10 @@ namespace AnimatSim
 			CStdPtrMap<string, NeuralModule> m_aryNeuralModules;
 			CStdPtrArray<Adapter> m_aryAdapters;
 
-			NeuralModule *LoadNeuralModule(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+			NeuralModule *LoadNeuralModule(CStdXml &oXml);
 			void AddNeuralModule(NeuralModule *lpModule);
 
-			Adapter *LoadAdapter(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+			Adapter *LoadAdapter(CStdXml &oXml);
 
 		public:
 			NervousSystem();
@@ -56,7 +56,7 @@ namespace AnimatSim
 			virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 #pragma endregion
 
-			virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			//Behavior

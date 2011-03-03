@@ -35,7 +35,7 @@ class VORTEX_PORT VsSimulationWindow : public AnimatSim::SimulationWindow, osgGA
 		virtual void Initialize(Simulator *lpSim);
 		virtual void Update(Simulator *lpSim);
 		virtual void Close();
-		virtual void Load(Simulator *lpSim, CStdXml &oXml);
+		virtual void Load(CStdXml &oXml);
 
 };
 

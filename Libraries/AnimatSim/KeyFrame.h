@@ -30,9 +30,7 @@ namespace AnimatSim
 
 			virtual void GenerateID(Simulator *lpSim);
 
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
-
-			virtual void Trace(ostream &oOs);
+			virtual void Load(CStdXml &oXml);
 
 			//ActiveItem overrides
 			virtual BOOL operator<(ActivatedItem *lpItem);

@@ -140,7 +140,7 @@ void LineBase::CreateJoints(Simulator *lpSim, Structure *lpStructure)
 	m_fltPrevLength = m_fltLength;
 }
 
-void LineBase::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void LineBase::Load(CStdXml &oXml)
 {
 	if(!m_lpParent)
 		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);

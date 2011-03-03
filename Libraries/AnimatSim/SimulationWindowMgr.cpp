@@ -48,21 +48,22 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of SimulationWindowMgr\r\n", "", -1, FALSE, TRUE);}
 }
 
-SimulationWindow *SimulationWindowMgr::AddSimulationWindow(Simulator *lpSim, string strModule, string strType, BOOL bInit, HWND win, string strXml)
+SimulationWindow *SimulationWindowMgr::AddSimulationWindow(string strModule, string strType, BOOL bInit, HWND win, string strXml)
 {
 	SimulationWindow *lpWin=NULL;
 
 try
 {
 	//Create a simulation window from the graphics library being used
-	lpWin = dynamic_cast<SimulationWindow *>(lpSim->CreateObject(strModule, "SimulationWindow", strType));
+	lpWin = dynamic_cast<SimulationWindow *>(m_lpSim->CreateObject(strModule, "SimulationWindow", strType));
 
-	lpWin->Load(lpSim, strXml);
+	lpWin->SetSystemPointers(m_lpSim, NULL, NULL, NULL);
+	lpWin->Load(strXml);
 
 	//initialize the window
 	lpWin->WindowID(win);
 	if(bInit)
-		lpWin->Initialize(lpSim);
+		lpWin->Initialize(m_lpSim);
 
 	//add the window to the list of windows
 	m_aryWindows.Add(lpWin);
@@ -155,7 +156,7 @@ BOOL SimulationWindowMgr::HasContainedWindow()
 	return FALSE;
 }
 
-void SimulationWindowMgr::Load(Simulator *lpSim, CStdXml &oXml)
+void SimulationWindowMgr::Load(CStdXml &oXml)
 {
 	m_aryWindows.RemoveAll();
 
@@ -178,7 +179,7 @@ void SimulationWindowMgr::Load(Simulator *lpSim, CStdXml &oXml)
 		for(int iIndex=0; iIndex<iCount; iIndex++)
 		{
 			oXml.FindChildByIndex(iIndex);
-			lpItem = LoadSimulationWindow(lpSim, oXml);
+			lpItem = LoadSimulationWindow(oXml);
 			m_aryWindows.Add(lpItem);
 		}
 		oXml.OutOfElem(); //OutOf Windows Element
@@ -188,7 +189,7 @@ void SimulationWindowMgr::Load(Simulator *lpSim, CStdXml &oXml)
 	}
 }
 
-SimulationWindow *SimulationWindowMgr::LoadSimulationWindow(Simulator *lpSim, CStdXml &oXml)
+SimulationWindow *SimulationWindowMgr::LoadSimulationWindow(CStdXml &oXml)
 {
 	SimulationWindow *lpWin=NULL;
 	string strModuleName, strType;
@@ -200,11 +201,12 @@ try
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem();  //OutOf Column Element
 
-	lpWin = dynamic_cast<SimulationWindow *>(lpSim->CreateObject(strModuleName, "SimulationWindow", strType));
+	lpWin = dynamic_cast<SimulationWindow *>(m_lpSim->CreateObject(strModuleName, "SimulationWindow", strType));
 	if(!lpWin)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "SimulationWindow");
 
-	lpWin->Load(lpSim, oXml);
+	lpWin->SetSystemPointers(m_lpSim, NULL, NULL, NULL);
+	lpWin->Load(oXml);
 
 	return lpWin;
 }

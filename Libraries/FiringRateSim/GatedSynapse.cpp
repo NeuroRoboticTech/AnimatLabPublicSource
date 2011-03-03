@@ -77,9 +77,9 @@ BOOL GatedSynapse::SetData(string strDataType, string strValue, BOOL bThrowError
 
 #pragma endregion
 
-void GatedSynapse::Load(Simulator *lpSim, Structure *lpStructure, Neuron *lpNeuron, CStdXml &oXml)
+void GatedSynapse::Load(CStdXml &oXml)
 {
-	Synapse::Load(lpSim, lpStructure, lpNeuron, oXml);
+	Synapse::Load(oXml);
 
 	oXml.IntoElem();  //Into GatedSynapse Element
 

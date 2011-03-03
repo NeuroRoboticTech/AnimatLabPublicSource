@@ -41,8 +41,6 @@ namespace AnimatSim
 			BOOL LessThanThan(float fltX, float fltY, float fltZ);
 			BOOL GreaterThanThan(float fltX, float fltY, float fltZ);
 			BOOL Equals(float fltX, float fltY, float fltZ);
-
-			virtual void Trace(ostream &oOs);
 		};
 
 	}			// Environment

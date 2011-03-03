@@ -36,6 +36,7 @@ VsSimulator::VsSimulator()
 	m_fltFrameDt = 0;
 	m_vsWinMgr = new VsSimulationWindowMgr;
 	m_lpWinMgr = m_vsWinMgr;
+	m_lpWinMgr->SetSystemPointers(this, NULL, NULL, NULL);
 	m_uUniverse = NULL;
 	m_vxFrame = NULL;
 }

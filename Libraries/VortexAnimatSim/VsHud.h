@@ -15,7 +15,7 @@ namespace VortexAnimatSim
 			osg::ref_ptr<osg::Projection> m_osgProjection;
 			osg::ref_ptr<osg::MatrixTransform> m_osgMT;
 
-			virtual VsHudItem *LoadHudItem(Simulator *lpSim, CStdXml &oXml);
+			virtual VsHudItem *LoadHudItem(CStdXml &oXml);
 
 		public:
 			VsHud();
@@ -25,7 +25,7 @@ namespace VortexAnimatSim
 			virtual void Initialize(Simulator *lpSim);
 			virtual void Update(Simulator *lpSim);
 
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			// Visualization

@@ -133,9 +133,5 @@ BOOL ReceptiveField::Equals(float fltX, float fltY, float fltZ)
 	return false;
 }
 
-void ReceptiveField::Trace(ostream &oOs)
-{
-	oOs << this->m_vVertex[0] << "," << this->m_vVertex[1] << "," << this->m_vVertex[2];
-}
 	}			//Environment
 }				//AnimatSim

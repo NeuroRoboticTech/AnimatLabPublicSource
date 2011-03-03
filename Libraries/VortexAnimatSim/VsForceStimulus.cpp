@@ -371,9 +371,9 @@ BOOL VsForceStimulus::SetData(string strDataType, string strValue, BOOL bThrowEr
 	return FALSE;
 }
 
-void VsForceStimulus::Load(Simulator *lpSim, CStdXml &oXml)
+void VsForceStimulus::Load(CStdXml &oXml)
 {
-	ActivatedItem::Load(lpSim, oXml);
+	ActivatedItem::Load(oXml);
 
 	oXml.IntoElem();  //Into Simulus Element
 
@@ -399,13 +399,9 @@ void VsForceStimulus::Load(Simulator *lpSim, CStdXml &oXml)
 	//We need to scale the distance values to be appropriate. They 
 	//will be saved as centimeters or some such in the config file, 
 	//but we need them to be in "unit" values.
-	m_oRelativePosition *= lpSim->InverseDistanceUnits();
+	m_oRelativePosition *= m_lpSim->InverseDistanceUnits();
 
 	oXml.OutOfElem(); //OutOf Simulus Element
-}
-
-void VsForceStimulus::Save(Simulator *lpSim, CStdXml &oXml)
-{
 }
 
 	}			//ExternalStimuli

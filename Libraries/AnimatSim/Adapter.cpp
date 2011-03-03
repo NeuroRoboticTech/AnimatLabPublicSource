@@ -128,9 +128,9 @@ void Adapter::StepSimulation(Simulator *lpSim, Structure *lpStructure)
 	m_lpTargetNode->AddExternalNodeInput(lpSim, lpStructure, m_lpGain->CalculateGain(*m_lpSourceData));
 }
 
-void Adapter::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void Adapter::Load(CStdXml &oXml)
 {
-	Node::Load(lpSim, lpStructure, oXml);
+	Node::Load(oXml);
 
 	oXml.IntoElem();  //Into Adapter Element
 
@@ -161,18 +161,16 @@ void Adapter::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 	string strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Gain Element
 
-	m_lpGain = dynamic_cast<AnimatSim::Gains::Gain *>(lpSim->CreateObject(strModuleName, "Gain", strType));
+	m_lpGain = dynamic_cast<AnimatSim::Gains::Gain *>(m_lpSim->CreateObject(strModuleName, "Gain", strType));
 	if(!m_lpGain)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Gain");
 
+	m_lpGain->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this);
 	m_lpGain->Load(oXml);
 
 	oXml.OutOfElem(); //OutOf Adapter Element
 }
 
-void Adapter::Save(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
-{
-}
 
 	}			//Adapters
 }			//AnimatSim

@@ -217,7 +217,7 @@ void ContactSensor::ProcessContact(Simulator *lpSim, StdVector3 vPos, float fltF
 	}
 }
 
-void ContactSensor::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void ContactSensor::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 
@@ -228,10 +228,11 @@ void ContactSensor::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml
 	string strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Gain Element
 
-	m_lpFieldGain = dynamic_cast<AnimatSim::Gains::Gain *>(lpSim->CreateObject(strModuleName, "Gain", strType));
+	m_lpFieldGain = dynamic_cast<AnimatSim::Gains::Gain *>(m_lpSim->CreateObject(strModuleName, "Gain", strType));
 	if(!m_lpFieldGain)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "FieldGain");
 
+	m_lpFieldGain->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL);
 	m_lpFieldGain->Load(oXml);
 
 	oXml.IntoChildElement("CurrentGain");
@@ -239,17 +240,18 @@ void ContactSensor::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Gain Element
 
-	m_lpCurrentGain = dynamic_cast<AnimatSim::Gains::Gain *>(lpSim->CreateObject(strModuleName, "Gain", strType));
+	m_lpCurrentGain = dynamic_cast<AnimatSim::Gains::Gain *>(m_lpSim->CreateObject(strModuleName, "Gain", strType));
 	if(!m_lpCurrentGain)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "FieldGain");
 
+	m_lpCurrentGain->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL);
 	m_lpCurrentGain->Load(oXml);
 
 	if(m_lpCurrentGain->UseLimits())
 		m_fltMaxForce = m_lpCurrentGain->UpperLimit();
 
 	m_fltReceptiveFieldDistance = oXml.GetChildFloat("ReceptiveFieldDistance", m_fltReceptiveFieldDistance);
-	m_fltReceptiveFieldDistance *= lpSim->InverseDistanceUnits(); 
+	m_fltReceptiveFieldDistance *= m_lpSim->InverseDistanceUnits(); 
 
 	oXml.FindChildElement("FieldPairs");
 	oXml.IntoElem(); //Into FieldPairs Element

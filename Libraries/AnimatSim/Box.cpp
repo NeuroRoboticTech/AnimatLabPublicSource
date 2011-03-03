@@ -138,9 +138,9 @@ BOOL Box::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
-void Box::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void Box::Load(CStdXml &oXml)
 {
-	RigidBody::Load(lpSim, lpStructure, oXml);
+	RigidBody::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
 

@@ -308,9 +308,9 @@ BOOL CurrentStimulus::SetData(string strDataType, string strValue, BOOL bThrowEr
 	return FALSE;
 }
 
-void CurrentStimulus::Load(Simulator *lpSim, CStdXml &oXml)
+void CurrentStimulus::Load(CStdXml &oXml)
 {
-	ActivatedItem::Load(lpSim, oXml);
+	ActivatedItem::Load(oXml);
 
 	oXml.IntoElem();  //Into Simulus Element
 
@@ -379,15 +379,6 @@ void CurrentStimulus::Load(Simulator *lpSim, CStdXml &oXml)
 	}
 
 	oXml.OutOfElem(); //OutOf Simulus Element
-}
-
-void CurrentStimulus::Save(Simulator *lpSim, CStdXml &oXml)
-{
-}
-
-void CurrentStimulus::Trace(ostream &oOs)
-{
-	oOs << "CurrentStimulus"  << ", Name: " << m_strName << " Time (" << m_fltStartTime << ", " << m_fltEndTime << ") Slice: (" << m_lStartSlice << ", " << m_lEndSlice << ")";
 }
 
 	}			//ExternalStimuli

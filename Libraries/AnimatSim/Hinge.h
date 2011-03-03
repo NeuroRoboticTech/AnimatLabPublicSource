@@ -72,7 +72,7 @@ namespace AnimatSim
 
 				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
-				virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+				virtual void Load(CStdXml &oXml);
 			};
 
 		}		//Joints

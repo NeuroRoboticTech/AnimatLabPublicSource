@@ -22,7 +22,7 @@ VsHudItem::~VsHudItem()
 {
 }
 
-void VsHudItem::Load(Simulator *lpSim, CStdXml &oXml)
+void VsHudItem::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 }

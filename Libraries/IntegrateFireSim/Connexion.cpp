@@ -247,11 +247,9 @@ double Connexion::MaxGVoltDepRel()
 	return 0;
 }
 
-void Connexion::Load(CStdXml &oXml, IntegrateFireNeuralModule *lpNS)
+void Connexion::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
-
-	m_lpModule = lpNS;
 
 	oXml.IntoElem();  //Into SpikingChemSyn Element
 //	m_dLowCoup= oXml.GetChildDouble("dLowCoup");

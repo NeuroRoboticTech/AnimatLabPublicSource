@@ -239,12 +239,15 @@ void VsSimulationWindow::Close()
 	m_vsHud.Reset();
 }
 
-void VsSimulationWindow::Load(Simulator *lpSim, CStdXml &oXml)
+void VsSimulationWindow::Load(CStdXml &oXml)
 {
-	SimulationWindow::Load(lpSim, oXml);
+	SimulationWindow::Load(oXml);
 
 	oXml.IntoElem(); //Into Window Element
-	m_vsHud.Load(lpSim, oXml);
+
+	m_vsHud.SetSystemPointers(m_lpSim, NULL, NULL, NULL); 
+	m_vsHud.Load(oXml);
+
 	oXml.OutOfElem(); //OutOf Window Element
 }
 

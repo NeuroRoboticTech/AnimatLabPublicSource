@@ -86,7 +86,7 @@ namespace AnimatSim
 			virtual int GetMaterialID(string strName) = 0;
 			virtual void Initialize(Simulator *lpSim) = 0;
 			virtual void RegisterMaterialTypes(Simulator *lpSim, CStdArray<string> aryMaterialTypes) = 0;
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			// Visualization

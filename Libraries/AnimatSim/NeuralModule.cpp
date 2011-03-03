@@ -224,9 +224,10 @@ void NeuralModule::Initialize(Simulator *lpSim, Structure *lpStructure)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 }
 
-void NeuralModule::SetSystemPointers(Simulator *lpSim, Structure *lpStructure)
+void NeuralModule::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
 {
-	m_lpSim = lpSim;
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
+
 	m_lpOrganism = dynamic_cast<Organism *>(lpStructure);
 	if(!m_lpOrganism) 
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");

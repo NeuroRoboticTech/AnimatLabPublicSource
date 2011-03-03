@@ -183,9 +183,9 @@ BOOL VsMotorVelocityStimulus::SetData(string strDataType, string strValue, BOOL 
 	return FALSE;
 }
 
-void VsMotorVelocityStimulus::Load(Simulator *lpSim, CStdXml &oXml)
+void VsMotorVelocityStimulus::Load(CStdXml &oXml)
 {
-	ActivatedItem::Load(lpSim, oXml);
+	ActivatedItem::Load(oXml);
 
 	oXml.IntoElem();  //Into Simulus Element
 
@@ -201,15 +201,6 @@ void VsMotorVelocityStimulus::Load(Simulator *lpSim, CStdXml &oXml)
 	DisableMotorWhenDone(oXml.GetChildBool("DisableMotorWhenDone", m_bDisableMotorWhenDone));
 
 	oXml.OutOfElem(); //OutOf Simulus Element
-}
-
-void VsMotorVelocityStimulus::Save(Simulator *lpSim, CStdXml &oXml)
-{
-}
-
-void VsMotorVelocityStimulus::Trace(ostream &oOs)
-{
-	oOs << "MotorVelocityStimulus"  << ", Name: " << m_strName << " Time (" << m_fltStartTime << ", " << m_fltEndTime << ") Slice: (" << m_lStartSlice << ", " << m_lEndSlice << ")";
 }
 
 	}			//ExternalStimuli

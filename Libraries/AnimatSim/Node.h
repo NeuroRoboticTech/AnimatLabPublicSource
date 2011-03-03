@@ -25,10 +25,6 @@ namespace AnimatSim
 	class ANIMAT_PORT Node : public AnimatBase 
 	{
 	protected:
-		Simulator *m_lpSim; ///< The pointer to a simulation
-		Structure *m_lpStructure; ///< The pointer to a structure
-		NeuralModule *m_lpModule; ///< The pointer to a neuralmodule
-
 		///Determines if this node is enabled. This will only have any effect if this node can be disabled.
 		///The majority of nodes, like rigid bodies, can not be disabled.
 		BOOL m_bEnabled;
@@ -46,10 +42,6 @@ namespace AnimatSim
 	public:
 		Node();
 		virtual ~Node();
-
-		virtual Simulator *GetSimulator();
-		virtual Structure *GetStructure();
-		virtual NeuralModule *GetNeuralModule();
 
 		virtual BOOL Enabled();
 		virtual void Enabled(BOOL bValue);
@@ -96,8 +88,6 @@ namespace AnimatSim
 		virtual void AttachTargetAdapter(Simulator *lpSim, Structure *lpStructure, Adapter *lpAdapter);
 		virtual float *GetDataPointer(string strDataType) = 0;
 		virtual void Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule);
-		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule);
-		virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
 	};
 
 }				//AnimatSim

@@ -77,7 +77,7 @@ void Synapse::AddSynapse(string strXml)
 	oXml.FindElement("Root");
 	oXml.FindChildElement("CompoundSynapse");
 
-	Synapse *lpSynapse = LoadSynapse(m_lpSim, m_lpOrganism, m_lpToNeuron, oXml);
+	Synapse *lpSynapse = LoadSynapse(oXml);
 	lpSynapse->Initialize(m_lpSim, m_lpOrganism, m_lpFastModule, m_lpToNeuron);
 }
 
@@ -215,13 +215,13 @@ void Synapse::ResetSimulation(Simulator *lpSim, Structure *lpStructure, Node *lp
 		m_arySynapses[iIndex]->ResetSimulation(lpSim, lpStructure, lpNode);
 }
 
-void Synapse::Load(Simulator *lpSim, Structure *lpStructure, Node *lpNode, CStdXml &oXml)
+void Synapse::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 
-	m_lpToNeuron = dynamic_cast<Neuron *>(lpNode);
+	m_lpToNeuron = dynamic_cast<Neuron *>(m_lpNode);
 	if(!m_lpToNeuron)
-		THROW_PARAM_ERROR(Al_Err_lUnableToCastNodeToDesiredType, Al_Err_strUnableToCastNodeToDesiredType, "ID: ", lpNode->ID());
+		THROW_PARAM_ERROR(Al_Err_lUnableToCastNodeToDesiredType, Al_Err_strUnableToCastNodeToDesiredType, "ID: ", m_lpNode->ID());
 
 	oXml.IntoElem();  //Into Synapse Element
 
@@ -243,7 +243,7 @@ void Synapse::Load(Simulator *lpSim, Structure *lpStructure, Node *lpNode, CStdX
 		for(int iIndex=0; iIndex<iCount; iIndex++)
 		{
 			oXml.FindChildByIndex(iIndex);
-			LoadSynapse(lpSim, lpStructure, m_lpToNeuron, oXml);
+			LoadSynapse(oXml);
 		}
 
 		oXml.OutOfElem(); //OutOf CompoundSynapses Element
@@ -253,7 +253,7 @@ void Synapse::Load(Simulator *lpSim, Structure *lpStructure, Node *lpNode, CStdX
 	oXml.OutOfElem(); //OutOf Synapse Element
 }
 
-Synapse *Synapse::LoadSynapse(Simulator *lpSim, Structure *lpStructure, Neuron *lpNeuron, CStdXml &oXml)
+Synapse *Synapse::LoadSynapse(CStdXml &oXml)
 {
 	Synapse *lpSynapse=NULL;
 	string strType;
@@ -264,12 +264,14 @@ try
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Synapse Element
 
-	lpSynapse = dynamic_cast<Synapse *>(lpSim->CreateObject(Nl_NeuralModuleName(), "Synapse", strType));
+	lpSynapse = dynamic_cast<Synapse *>(m_lpSim->CreateObject(Nl_NeuralModuleName(), "Synapse", strType));
 	if(!lpSynapse)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Synapse");
 
-	lpSynapse->Load(lpSim, lpStructure, lpNeuron, oXml);
+	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, m_lpNode);
+	lpSynapse->Load(oXml);
 	m_arySynapses.Add(lpSynapse);
+
 	return lpSynapse;
 }
 catch(CStdErrorInfo oError)

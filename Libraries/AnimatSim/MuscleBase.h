@@ -60,7 +60,7 @@ namespace AnimatSim
 
 				virtual void CalculateInverseDynamics(Simulator *lpSim, float fltLength, float fltVelocity, float fltT, float &fltVm, float &fltA) = 0;
 				virtual void AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput);
-				virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+				virtual void Load(CStdXml &oXml);
 			};
 
 		}		//Bodies

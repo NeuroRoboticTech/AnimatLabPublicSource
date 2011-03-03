@@ -106,12 +106,12 @@ void Spring::AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, floa
 		m_bEnabled = FALSE;
 }
 
-void Spring::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void Spring::Load(CStdXml &oXml)
 {
 	if(!m_lpParent)
 		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
 
-	LineBase::Load(lpSim, lpStructure, oXml);
+	LineBase::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
 
@@ -122,9 +122,9 @@ void Spring::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 	m_fltStiffness = oXml.GetChildFloat("Stiffness", m_fltStiffness);
 	m_fltDamping = oXml.GetChildFloat("Damping", m_fltDamping);
 	
-	m_fltNaturalLength *= lpSim->InverseDistanceUnits();
-	m_fltStiffness *= lpSim->InverseMassUnits();
-	m_fltDamping = m_fltDamping/lpSim->DensityMassUnits();
+	m_fltNaturalLength *= m_lpSim->InverseDistanceUnits();
+	m_fltStiffness *= m_lpSim->InverseMassUnits();
+	m_fltDamping = m_fltDamping/m_lpSim->DensityMassUnits();
 
 	Std_IsAboveMin((float) 0, m_fltNaturalLength, TRUE, "NaturalLength");
 	Std_IsAboveMin((float) 0, m_fltStiffness, TRUE, "Stiffness");

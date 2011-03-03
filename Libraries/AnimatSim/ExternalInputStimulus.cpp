@@ -141,9 +141,9 @@ BOOL ExternalInputStimulus::SetData(string strDataType, string strValue, BOOL bT
 	return FALSE;
 }
 
-void ExternalInputStimulus::Load(Simulator *lpSim, CStdXml &oXml)
+void ExternalInputStimulus::Load(CStdXml &oXml)
 {
-	ActivatedItem::Load(lpSim, oXml);
+	ActivatedItem::Load(oXml);
 
 	oXml.IntoElem();  //Into Simulus Element
 
@@ -160,9 +160,6 @@ void ExternalInputStimulus::Load(Simulator *lpSim, CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf Simulus Element
 }
 
-void ExternalInputStimulus::Save(Simulator *lpSim, CStdXml &oXml)
-{
-}
 
 	}			//ExternalStimuli
 }				//VortexAnimatSim

@@ -76,9 +76,9 @@ Prismatic::~Prismatic()
 
 }
 
-void Prismatic::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void Prismatic::Load(CStdXml &oXml)
 {
-	Joint::Load(lpSim, lpStructure, oXml);
+	Joint::Load(oXml);
 
 	oXml.IntoElem();  //Into Joint Element
 
@@ -91,7 +91,7 @@ void Prismatic::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 	}
 
 	//For a prismatic it is really max force, not max torque. I am leaving the naming alone to be consistent, but the unit conversion should be correct.
-	m_fltMaxForce = oXml.GetChildFloat("MaxForce", m_fltMaxForce) * lpSim->InverseMassUnits() * lpSim->InverseDistanceUnits();
+	m_fltMaxForce = oXml.GetChildFloat("MaxForce", m_fltMaxForce) * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits();
 
 	m_bServoMotor = oXml.GetChildBool("ServoMotor", m_bServoMotor);
 	m_ftlServoGain = oXml.GetChildFloat("ServoGain", m_ftlServoGain);

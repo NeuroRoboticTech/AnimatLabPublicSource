@@ -209,7 +209,7 @@ void Neuron::AddSynapse(string strXml)
 	oXml.FindElement("Root");
 	oXml.FindChildElement("Synapse");
 
-	Synapse *lpSynapse = LoadSynapse(m_lpSim, m_lpOrganism, oXml);
+	Synapse *lpSynapse = LoadSynapse(oXml);
 	lpSynapse->Initialize(m_lpSim, m_lpOrganism, m_lpFastModule, this);
 }
 
@@ -604,11 +604,11 @@ void Neuron::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
   lIndex += sizeof(m_fltFiringFreq);
 }
 
-void Neuron::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void Neuron::Load(CStdXml &oXml)
 {
 	int iCount, iIndex;
 
-	Node::Load(lpSim, lpStructure, oXml);
+	Node::Load(oXml);
 
 	oXml.IntoElem();  //Into Neuron Element
 
@@ -657,7 +657,7 @@ void Neuron::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 		for(iIndex=0; iIndex<iCount; iIndex++)
 		{
 			oXml.FindChildByIndex(iIndex);
-			LoadSynapse(lpSim, lpStructure, oXml);
+			LoadSynapse(oXml);
 		}
 
 		oXml.OutOfElem();
@@ -669,7 +669,7 @@ void Neuron::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 }
 
 
-Synapse *Neuron::LoadSynapse(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+Synapse *Neuron::LoadSynapse(CStdXml &oXml)
 {
 	string strType;
 	Synapse *lpSynapse=NULL;
@@ -680,12 +680,14 @@ try
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Synapse Element
 
-	lpSynapse = dynamic_cast<Synapse *>(lpSim->CreateObject(Nl_NeuralModuleName(), "Synapse", strType));
+	lpSynapse = dynamic_cast<Synapse *>(m_lpSim->CreateObject(Nl_NeuralModuleName(), "Synapse", strType));
 	if(!lpSynapse)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Synapse");
 
-	lpSynapse->Load(lpSim, lpStructure, this, oXml);
+	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this);
+	lpSynapse->Load(oXml);
 	AddSynapse(lpSynapse);
+
 	return lpSynapse;
 }
 catch(CStdErrorInfo oError)

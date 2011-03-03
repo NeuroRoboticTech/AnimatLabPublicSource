@@ -18,7 +18,7 @@ namespace AnimatSim
 		{
 		protected:
 
-			ExternalStimulus *LoadExternalStimuli(Simulator *lpSim, CStdXml &oXml);
+			ExternalStimulus *LoadExternalStimuli(CStdXml &oXml);
 
 		public:
 			ExternalStimuliMgr();
@@ -27,8 +27,8 @@ namespace AnimatSim
 			virtual BOOL AddStimulus(Simulator *lpSim, string strXml);
 			virtual BOOL RemoveStimulus(Simulator *lpSim, string strID);
 
-			virtual void Load(Simulator *lpSim, string strProjectPath, string strFileName);
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
+			virtual void Load(string strProjectPath, string strFileName);
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			//ExternalStimuli

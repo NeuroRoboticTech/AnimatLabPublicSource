@@ -149,7 +149,7 @@ void Stomach::AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, flo
 		m_fltAdapterConsumptionRate = 0;
 }
 
-void Stomach::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void Stomach::Load(CStdXml &oXml)
 {
 	oXml.IntoElem();  //Into RigidBody Element
 
@@ -169,7 +169,7 @@ void Stomach::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf RigidBody Element
 
 	//This will add this object to the object list of the simulation.
-	lpSim->AddToObjectList(this);
+	m_lpSim->AddToObjectList(this);
 }
 
 		}		//Joints

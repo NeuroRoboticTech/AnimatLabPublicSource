@@ -62,7 +62,7 @@ namespace AnimatSim
 			virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
 #pragma endregion
 
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 			virtual AnimatSim::Behavior::NervousSystem *NervousSystem();
 		};
 

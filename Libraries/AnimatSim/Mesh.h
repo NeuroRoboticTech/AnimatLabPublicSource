@@ -27,8 +27,7 @@ namespace AnimatSim
 				CStdFPoint CollisionBoxSize() {return m_oCollisionBoxSize;};
 				CStdFPoint GraphicsBoxSize() {return m_oGraphicsBoxSize;};
 
-				virtual void Trace(ostream &oOs);
-				virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+				virtual void Load(CStdXml &oXml);
 			};
 
 		}		//Bodies

@@ -131,9 +131,9 @@ BOOL BistableNeuron::SetData(string strDataType, string strValue, BOOL bThrowErr
 
 #pragma endregion
 
-void BistableNeuron::Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml)
+void BistableNeuron::Load(CStdXml &oXml)
 {
-	Neuron::Load(lpSim, lpStructure, oXml);
+	Neuron::Load(oXml);
 
 	oXml.IntoElem();  //Into Neuron Element
 

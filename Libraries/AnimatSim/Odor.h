@@ -49,7 +49,7 @@ namespace AnimatSim
 			
 			float CalculateOdorValue(Simulator *lpSim, OdorType *lpType, CStdFPoint &oSensorPos);
 
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			// Environment

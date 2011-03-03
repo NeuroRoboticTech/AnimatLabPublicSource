@@ -57,7 +57,7 @@ namespace AnimatSim
 
 			void ClearCurrents();
 			void ProcessContact(Simulator *lpSim, StdVector3 vPos, float fltForceMagnitude);
-			virtual void Load(Simulator *lpSim, Structure *lpStructure, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			// Environment

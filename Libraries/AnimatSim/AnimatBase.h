@@ -36,6 +36,18 @@ namespace AnimatSim
 	class ANIMAT_PORT AnimatBase : public CStdSerialize 
 	{
 	protected:
+		 /// The pointer to a Simulation
+		Simulator *m_lpSim;
+
+		/// The pointer to this items parent Structure. If this is not relevant for this object then this is NULL
+		Structure *m_lpStructure;
+
+		/// The pointer to this items parentNeuralModule. If this is not relevant for this object then this is NULL
+		NeuralModule *m_lpModule; 
+
+		/// The pointer to this items parent Node. If this is not relevant for this object then this is NULL
+		Node *m_lpNode; 
+
 		///The unique Id for this object. 
 		string m_strID;  
 
@@ -52,6 +64,11 @@ namespace AnimatSim
 		AnimatBase();
 		virtual ~AnimatBase();
 
+		virtual Simulator *GetSimulator();
+		virtual Structure *GetStructure();
+		virtual NeuralModule *GetNeuralModule();
+		virtual Node *GetNode();
+
 		virtual string ID() ;
 		virtual void ID(string strValue);
 
@@ -66,6 +83,7 @@ namespace AnimatSim
 
 #pragma region DataAccesMethods
 
+		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
 		virtual float *GetDataPointer(string strDataType);
 		virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 		virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE);
@@ -267,7 +285,6 @@ namespace AnimatSim
 		virtual void VisualSelectionModeChanged(int iNewMode) {};
 
 		virtual void Load(CStdXml &oXml);
-		virtual void Load(Simulator *lpSim, CStdXml &oXml);
 	};
 
 }				//AnimatSim

@@ -62,7 +62,7 @@ BOOL ExternalStimuliMgr::AddStimulus(Simulator *lpSim, string strXml)
 	oXml.Deserialize(strXml);
 	oXml.FindElement("Root");
 	oXml.FindChildElement("Stimulus");
-	ExternalStimulus *lpStim = LoadExternalStimuli(lpSim, oXml);
+	ExternalStimulus *lpStim = LoadExternalStimuli(oXml);
 	lpStim->Initialize(lpSim);
 
 	return TRUE;
@@ -74,7 +74,7 @@ BOOL ExternalStimuliMgr::RemoveStimulus(Simulator *lpSim, string strID)
 	return TRUE;
 }
 
-void ExternalStimuliMgr::Load(Simulator *lpSim, string strProjectPath, string strFileName)
+void ExternalStimuliMgr::Load(string strProjectPath, string strFileName)
 {
 	CStdXml oXml;
 
@@ -85,18 +85,15 @@ void ExternalStimuliMgr::Load(Simulator *lpSim, string strProjectPath, string st
 	oXml.FindElement("StimuliConfiguration");
 	oXml.FindChildElement("");
 
-	Load(lpSim, oXml);
+	Load(oXml);
 
 	TRACE_DEBUG("Finished loading external stimuli config file.");
 }
 
 
-void ExternalStimuliMgr::Load(Simulator *lpSim, CStdXml &oXml)
+void ExternalStimuliMgr::Load(CStdXml &oXml)
 {
 	TRACE_DEBUG("Loading external stimuli from Xml.");
-
-	if(!lpSim)
-		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
 
 	Reset();
 
@@ -108,7 +105,7 @@ void ExternalStimuliMgr::Load(Simulator *lpSim, CStdXml &oXml)
 		for(int iIndex=0; iIndex<iCount; iIndex++)
 		{
 			oXml.FindChildByIndex(iIndex);
-			LoadExternalStimuli(lpSim, oXml);
+			LoadExternalStimuli(oXml);
 		}
 
 		oXml.OutOfElem(); //OutOf ExternalStimuli Element
@@ -116,7 +113,7 @@ void ExternalStimuliMgr::Load(Simulator *lpSim, CStdXml &oXml)
 }
 
 
-ExternalStimulus *ExternalStimuliMgr::LoadExternalStimuli(Simulator *lpSim, CStdXml &oXml)
+ExternalStimulus *ExternalStimuliMgr::LoadExternalStimuli(CStdXml &oXml)
 {
 	ExternalStimulus *lpStimulus = NULL;
 	string strModuleName, strType, strFilename;
@@ -128,13 +125,14 @@ try
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Stimulus Element
 
-	lpStimulus = dynamic_cast<ExternalStimulus *>(lpSim->CreateObject(strModuleName, "ExternalStimulus", strType));
+	lpStimulus = dynamic_cast<ExternalStimulus *>(m_lpSim->CreateObject(strModuleName, "ExternalStimulus", strType));
 	if(!lpStimulus)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "ExternalStimulus");
 
-	lpStimulus->Load(lpSim, oXml);
+	lpStimulus->SetSystemPointers(m_lpSim, NULL, NULL, NULL);
+	lpStimulus->Load(oXml);
 
-	Add(lpSim, lpStimulus);
+	Add(m_lpSim, lpStimulus);
 	return lpStimulus;
 }
 catch(CStdErrorInfo oError)

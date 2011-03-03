@@ -82,12 +82,6 @@ BOOL DataChart::operator<(ActivatedItem *lpItem)
 	return FALSE;
 }
 
-void DataChart::Trace(ostream &oOs)
-{
-	oOs << "(Start: " << m_lStartSlice << ", End: "<< m_lEndSlice << ") ";// ", CollectInterval: " << m_iCollectInterval;
-	//oOs << ", Output: " << m_strOutputFilename << ") ";
-}
-
 void DataChart::StartTime(float fltVal) 
 {
 	ActivatedItem::StartTime(fltVal);
@@ -265,7 +259,7 @@ void DataChart::AddColumn(string strXml)
 	oXml.FindChildElement("DataColumn");
 
 	Simulator *lpSim = GetSimulator();
-	LoadDataColumn(lpSim, oXml);
+	LoadDataColumn(oXml);
 	ReInitialize(lpSim);
 }
 
@@ -458,7 +452,7 @@ void DataChart::AddData(int iColumn, int iRow, float fltVal)
 		m_aryDataBuffer[(iRow*m_lColumnCount) + iColumn] = fltVal;
 }
 
-void DataChart::Load(Simulator *lpSim, string strProjectPath, string strConfigFile)
+void DataChart::Load(string strProjectPath, string strConfigFile)
 {
 	CStdXml oXml;
 
@@ -478,17 +472,17 @@ void DataChart::Load(Simulator *lpSim, string strProjectPath, string strConfigFi
 	oXml.FindElement("ChartConfiguration");
 	oXml.FindChildElement("DataChart");
 
-	Load(lpSim, oXml);
+	Load(oXml);
 
 	TRACE_DEBUG("Finished loading data chart config file.");
 }
 
 
-void DataChart::Load(Simulator *lpSim, CStdXml &oXml)
+void DataChart::Load(CStdXml &oXml)
 {
 	short iColumn, iTotalColumns;
 
-	ActivatedItem::Load(lpSim, oXml);
+	ActivatedItem::Load(oXml);
 
 	oXml.IntoElem();  //Into DataChart Element
 
@@ -500,7 +494,7 @@ void DataChart::Load(Simulator *lpSim, CStdXml &oXml)
 	Std_IsAboveMin((float) 0, fltCollectInterval, TRUE, "CollectInterval");
 
 	//Lets calculate the number of slices for the collect interval.
-	m_iCollectInterval = (int) (fltCollectInterval/lpSim->TimeStep());
+	m_iCollectInterval = (int) (fltCollectInterval/m_lpSim->TimeStep());
 	if(m_iCollectInterval<=0) m_iCollectInterval = 1;
 
 	m_bSetStartEndTime = oXml.GetChildBool("SetStartEndTime", FALSE);
@@ -517,7 +511,7 @@ void DataChart::Load(Simulator *lpSim, CStdXml &oXml)
 	for(iColumn=0; iColumn<iTotalColumns; iColumn++)
 	{
 		oXml.FindChildByIndex(iColumn);
-		lpColumn = LoadDataColumn(lpSim, oXml);
+		lpColumn = LoadDataColumn(oXml);
 
 		if(lpColumn->Index() < 0)
 			lpColumn->Index(iColumn);
@@ -530,7 +524,7 @@ void DataChart::Load(Simulator *lpSim, CStdXml &oXml)
 }
 
 
-DataColumn *DataChart::LoadDataColumn(Simulator *lpSim, CStdXml &oXml)
+DataColumn *DataChart::LoadDataColumn(CStdXml &oXml)
 {
 	DataColumn *lpColumn=NULL;
 	string strModuleName, strType;
@@ -542,11 +536,12 @@ try
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem();  //OutOf Column Element
 
-	lpColumn = dynamic_cast<DataColumn *>(lpSim->CreateObject(strModuleName, "DataColumn", strType));
+	lpColumn = dynamic_cast<DataColumn *>(m_lpSim->CreateObject(strModuleName, "DataColumn", strType));
 	if(!lpColumn)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "DataColumn");
 
-	lpColumn->Load(lpSim, oXml);
+	lpColumn->SetSystemPointers(m_lpSim, NULL, NULL, NULL);
+	lpColumn->Load(oXml);
 
 	AddColumn(lpColumn);
 
@@ -566,12 +561,12 @@ catch(...)
 }
 }
 
-void DataChart::LoadChart(Simulator *lpSim, CStdXml &oXml)
+void DataChart::LoadChart(CStdXml &oXml)
 {
 	oXml.FindElement("ChartConfiguration");
 	oXml.FindChildElement("DataChart");
 
-	ActivatedItem::Load(lpSim, oXml);
+	ActivatedItem::Load(oXml);
 
 	oXml.IntoElem();
 
@@ -579,7 +574,7 @@ void DataChart::LoadChart(Simulator *lpSim, CStdXml &oXml)
 	Std_IsAboveMin((float) 0, fltCollectInterval, TRUE, "CollectInterval");
 
 	//Lets calculate the number of slices for the collect interval.
-	m_iCollectInterval = (int) (fltCollectInterval/lpSim->TimeStep());
+	m_iCollectInterval = (int) (fltCollectInterval/m_lpSim->TimeStep());
 	if(m_iCollectInterval<=0) m_iCollectInterval = 1;
 
 	m_bSetStartEndTime = oXml.GetChildBool("SetStartEndTime", FALSE);

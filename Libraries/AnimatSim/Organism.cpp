@@ -242,9 +242,9 @@ void Organism::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 void Organism::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 {m_lpNervousSystem->LoadKeyFrameSnapshot(aryBytes, lIndex);}
 
-void Organism::Load(Simulator *lpSim, CStdXml &oXml)
+void Organism::Load(CStdXml &oXml)
 {
-	Structure::Load(lpSim, oXml);
+	Structure::Load(oXml);
 
 	oXml.IntoElem();  //Into Layout Element
 
@@ -254,7 +254,10 @@ void Organism::Load(Simulator *lpSim, CStdXml &oXml)
 	m_lpNervousSystem = new AnimatSim::Behavior::NervousSystem;
 
 	oXml.IntoChildElement("NervousSystem");
-	m_lpNervousSystem->Load(lpSim, this, oXml);
+
+	m_lpNervousSystem->SetSystemPointers(m_lpSim, this, NULL, NULL);
+	m_lpNervousSystem->Load(oXml);
+
 	oXml.OutOfElem();
 
 	oXml.OutOfElem(); //OutOf Layout Element

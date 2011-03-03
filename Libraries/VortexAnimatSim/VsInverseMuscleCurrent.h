@@ -55,9 +55,7 @@ namespace VortexAnimatSim
 			VsInverseMuscleCurrent();
 			virtual ~VsInverseMuscleCurrent();
 
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
-			virtual void Save(Simulator *lpSim, CStdXml &oXml);
-			virtual void Trace(ostream &oOs);
+			virtual void Load(CStdXml &oXml);
 
 			virtual float *GetDataPointer(string strDataType);
 

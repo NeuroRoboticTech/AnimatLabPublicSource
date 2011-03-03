@@ -70,7 +70,7 @@ void MaterialPair::ScaleUnits(Simulator *lpSim)
 	m_fltMaxAdhesive *= (lpSim->InverseMassUnits() * lpSim->InverseDistanceUnits()); //This is a force.
 }
 
-void MaterialPair::Load(Simulator *lpSim, CStdXml &oXml)
+void MaterialPair::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 
@@ -102,7 +102,7 @@ void MaterialPair::Load(Simulator *lpSim, CStdXml &oXml)
 	if(m_fltRestitution > 1)
 		m_fltRestitution = 1;
 
-	ScaleUnits(lpSim);
+	ScaleUnits(m_lpSim);
 
 	oXml.OutOfElem(); //OutOf MaterialPair Element
 
