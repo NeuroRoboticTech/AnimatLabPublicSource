@@ -44,11 +44,6 @@ namespace AnimatSim
 			virtual ~Organism();
 
 			virtual BOOL IsDead();
-			virtual void Kill(Simulator *lpSim, BOOL bState = TRUE);
-
-			virtual void Initialize(Simulator *lpSim);
-			virtual void StepNeuralEngine(Simulator *lpSim);
-			virtual void ResetSimulation(Simulator *lpSim);
 
 #pragma region SnapshotMethods
 			virtual long CalculateSnapshotByteSize();
@@ -61,6 +56,11 @@ namespace AnimatSim
 			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE);
 			virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
 #pragma endregion
+
+			virtual void Initialize();
+			virtual void StepNeuralEngine();
+			virtual void ResetSimulation();
+			virtual void Kill(BOOL bState = TRUE);
 
 			virtual void Load(CStdXml &oXml);
 			virtual AnimatSim::Behavior::NervousSystem *NervousSystem();

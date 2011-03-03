@@ -82,10 +82,9 @@ namespace AnimatSim
 			virtual float MaxAdhesive() {return m_fltMaxAdhesive;};
 			virtual void MaxAdhesive(float fltVal) {m_fltMaxAdhesive = fltVal;};
 
-			virtual void ScaleUnits(Simulator *lpSim);
+			virtual void ScaleUnits();
 			virtual int GetMaterialID(string strName) = 0;
-			virtual void Initialize(Simulator *lpSim) = 0;
-			virtual void RegisterMaterialTypes(Simulator *lpSim, CStdArray<string> aryMaterialTypes) = 0;
+			virtual void RegisterMaterialTypes(CStdArray<string> aryMaterialTypes) = 0;
 			virtual void Load(CStdXml &oXml);
 		};
 

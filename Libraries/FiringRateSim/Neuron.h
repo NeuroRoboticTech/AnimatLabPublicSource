@@ -115,10 +115,12 @@ namespace FiringRateSim
 			virtual void ClearSynapses();
 			virtual int FindSynapseListPos(string strID, BOOL bThrowError = TRUE);
 
-			virtual void AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput);
-			virtual void Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule);
-			virtual void ResetSimulation(Simulator *lpSim, Structure *lpStruct);
-			virtual void StepSimulation(Simulator *lpSim, Organism *lpOrganism, FiringRateModule *lpModule);
+			virtual void AddExternalNodeInput(float fltInput);
+
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
+			virtual void Initialize();
+			virtual void ResetSimulation();
+			virtual void StepSimulation();
 
 			virtual void InjectCurrent(float fltVal);
 
@@ -135,8 +137,6 @@ namespace FiringRateSim
 			virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
 #pragma endregion
 
-			//This is not used. The one above is used because we have to pass in the neuron indexes
-			virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure) {};
 			virtual void Load(CStdXml &oXml);
 		};
 

@@ -22,7 +22,6 @@ namespace VortexAnimatSim
 				Vx::VxPrismatic *m_vxPrismatic;
 				float m_fltDistanceUnits;
 
-				//virtual void UpdateData(Simulator *lpSim);
 				virtual void SetVelocityToDesired();
 				void CalculateServoVelocity();
 
@@ -35,13 +34,11 @@ namespace VortexAnimatSim
 					EnableMotor(bValue);
 					m_bEnabled = bValue;
 				};
-				//virtual void Selected(BOOL bValue, BOOL bSelectMultiple); 
 
 				virtual void EnableMotor(BOOL bVal);
-				virtual void CreateJoint(Simulator *lpSim, Structure *lpStructure);
+				virtual void CreateJoint();
 				virtual float *GetDataPointer(string strDataType);
-				//virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure);
-				virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
+				virtual void StepSimulation();
 			};
 
 		}		//Joints

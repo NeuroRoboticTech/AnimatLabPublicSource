@@ -88,47 +88,40 @@ void CurrentStimulus::CurrentOn(float fltVal)
 
 void CurrentStimulus::CycleOnDuration(float fltVal)
 {
-	Simulator *lpSim = GetSimulator();
 	m_fltCycleOnDuration = fltVal;
-	m_lCycleOnDuration = (long) (m_fltCycleOnDuration / lpSim->TimeStep() + 0.5);
+	m_lCycleOnDuration = (long) (m_fltCycleOnDuration / m_lpSim->TimeStep() + 0.5);
 }
 
 void CurrentStimulus::CycleOffDuration(float fltVal)
 {
-	Simulator *lpSim = GetSimulator();
 	m_fltCycleOffDuration = fltVal;
-	m_lCycleOffDuration = (long) (m_fltCycleOffDuration / lpSim->TimeStep() + 0.5);
+	m_lCycleOffDuration = (long) (m_fltCycleOffDuration / m_lpSim->TimeStep() + 0.5);
 }
 
 void CurrentStimulus::BurstOnDuration(float fltVal)
 {
-	Simulator *lpSim = GetSimulator();
 	m_fltBurstOnDuration = fltVal;
-	m_lBurstOnDuration = (long) (m_fltBurstOnDuration / lpSim->TimeStep() + 0.5);
+	m_lBurstOnDuration = (long) (m_fltBurstOnDuration / m_lpSim->TimeStep() + 0.5);
 }
 
 void CurrentStimulus::BurstOffDuration(float fltVal)
 {
-	Simulator *lpSim = GetSimulator();
 	m_fltBurstOffDuration = fltVal;
-	m_lBurstOffDuration = (long) (m_fltBurstOffDuration / lpSim->TimeStep() + 0.5);
+	m_lBurstOffDuration = (long) (m_fltBurstOffDuration / m_lpSim->TimeStep() + 0.5);
 }
 
-void CurrentStimulus::Initialize(Simulator *lpSim)
+void CurrentStimulus::Initialize()
 {
-	if(!lpSim)
-		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
+	ExternalStimulus::Initialize();
 
-	ExternalStimulus::Initialize(lpSim);
-
-	m_lCycleOnDuration = (long) (m_fltCycleOnDuration / lpSim->TimeStep() + 0.5);
-	m_lCycleOffDuration = (long) (m_fltCycleOffDuration / lpSim->TimeStep() + 0.5);
-	m_lBurstOnDuration = (long) (m_fltBurstOnDuration / lpSim->TimeStep() + 0.5);
-	m_lBurstOffDuration = (long) (m_fltBurstOffDuration / lpSim->TimeStep() + 0.5);
+	m_lCycleOnDuration = (long) (m_fltCycleOnDuration / m_lpSim->TimeStep() + 0.5);
+	m_lCycleOffDuration = (long) (m_fltCycleOffDuration / m_lpSim->TimeStep() + 0.5);
+	m_lBurstOnDuration = (long) (m_fltBurstOnDuration / m_lpSim->TimeStep() + 0.5);
+	m_lBurstOffDuration = (long) (m_fltBurstOffDuration / m_lpSim->TimeStep() + 0.5);
 
 	//Lets try and get the node we will dealing with.
-	m_lpOrganism = lpSim->FindOrganism(m_strOrganismID);
-	m_lpNode = dynamic_cast<Node *>(lpSim->FindByID(m_strTargetNodeID));
+	m_lpOrganism = m_lpSim->FindOrganism(m_strOrganismID);
+	m_lpNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strTargetNodeID));
 	if(!m_lpNode)
 		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strTargetNodeID);
 
@@ -140,11 +133,11 @@ void CurrentStimulus::Initialize(Simulator *lpSim)
 		"Node: " + m_strTargetNodeID + " DataType: ExternalCurrent"));
 }
 
-float CurrentStimulus::GetCurrentOn(Simulator *lpSim)
+float CurrentStimulus::GetCurrentOn()
 {
 	if(m_lpCurrentOnEval)
 	{
-		m_lpCurrentOnEval->SetVariable("t", (lpSim->Time()-m_fltStartTime) );
+		m_lpCurrentOnEval->SetVariable("t", (m_lpSim->Time()-m_fltStartTime) );
 		return 1e-9*m_lpCurrentOnEval->Solve();
 	}
 	else
@@ -152,30 +145,30 @@ float CurrentStimulus::GetCurrentOn(Simulator *lpSim)
 
 }
 
-void CurrentStimulus::Activate(Simulator *lpSim)
+void CurrentStimulus::Activate()
 {
-	ExternalStimulus::Activate(lpSim);
+	ExternalStimulus::Activate();
 
 	//Start a cycle and a burst.
-	m_fltActiveCurrent = GetCurrentOn(lpSim);
+	m_fltActiveCurrent = GetCurrentOn();
 
-	m_lCycleStart = lpSim->TimeSlice();
+	m_lCycleStart = m_lpSim->TimeSlice();
 	m_lBurstStart = m_lCycleStart;
 
 	*m_lpExternalCurrent = *m_lpExternalCurrent + m_fltActiveCurrent;
 }
 
-void CurrentStimulus::StepSimulation(Simulator *lpSim)
+void CurrentStimulus::StepSimulation()
 {
-	long lCycleDiff = lpSim->TimeSlice() - m_lCycleStart;
-	long lBurstDiff = lpSim->TimeSlice() - m_lBurstStart;
+	long lCycleDiff = m_lpSim->TimeSlice() - m_lCycleStart;
+	long lBurstDiff = m_lpSim->TimeSlice() - m_lBurstStart;
 
 	if(m_bBurstOn)
 	{
 		if( (m_bCycleOn && (lCycleDiff >= m_lCycleOnDuration)) )
 		{
 			m_bCycleOn = FALSE;
-			m_lCycleStart = lpSim->TimeSlice();
+			m_lCycleStart = m_lpSim->TimeSlice();
 			
 			*m_lpExternalCurrent = *m_lpExternalCurrent - m_fltActiveCurrent;
 			m_fltActiveCurrent = m_fltCurrentOff;
@@ -184,10 +177,10 @@ void CurrentStimulus::StepSimulation(Simulator *lpSim)
 		else if( (!m_bCycleOn && (lCycleDiff >= m_lCycleOffDuration)) )
 		{
 			m_bCycleOn = TRUE;
-			m_lCycleStart = lpSim->TimeSlice();
+			m_lCycleStart = m_lpSim->TimeSlice();
 
 			*m_lpExternalCurrent = *m_lpExternalCurrent - m_fltActiveCurrent;
-			m_fltActiveCurrent = GetCurrentOn(lpSim);
+			m_fltActiveCurrent = GetCurrentOn();
 			*m_lpExternalCurrent = *m_lpExternalCurrent + m_fltActiveCurrent;
 		}
 	}
@@ -196,7 +189,7 @@ void CurrentStimulus::StepSimulation(Simulator *lpSim)
 	{
 		m_bCycleOn = FALSE;
 		m_bBurstOn = FALSE;
-		m_lBurstStart = lpSim->TimeSlice();
+		m_lBurstStart = m_lpSim->TimeSlice();
 
 		*m_lpExternalCurrent = *m_lpExternalCurrent - m_fltActiveCurrent;
 		m_fltActiveCurrent = m_fltCurrentBurstOff;
@@ -206,31 +199,31 @@ void CurrentStimulus::StepSimulation(Simulator *lpSim)
 	{
 		m_bCycleOn = TRUE;
 		m_bBurstOn = TRUE;
-		m_lBurstStart = lpSim->TimeSlice();
+		m_lBurstStart = m_lpSim->TimeSlice();
 		m_lCycleStart = m_lBurstStart;
 
 		*m_lpExternalCurrent = *m_lpExternalCurrent - m_fltActiveCurrent;
-		m_fltActiveCurrent = GetCurrentOn(lpSim);
+		m_fltActiveCurrent = GetCurrentOn();
 		*m_lpExternalCurrent = *m_lpExternalCurrent + m_fltActiveCurrent;
 	}
 	else if(m_iType == AL_TONIC_CURRENT && m_lpCurrentOnEval)
 	{
 		*m_lpExternalCurrent = *m_lpExternalCurrent - m_fltActiveCurrent;
-		m_fltActiveCurrent = GetCurrentOn(lpSim);
+		m_fltActiveCurrent = GetCurrentOn();
 		*m_lpExternalCurrent = *m_lpExternalCurrent + m_fltActiveCurrent;
 	}
 
 }
 
-void CurrentStimulus::Deactivate(Simulator *lpSim)
+void CurrentStimulus::Deactivate()
 {		
-	ExternalStimulus::Deactivate(lpSim);
+	ExternalStimulus::Deactivate();
 	*m_lpExternalCurrent = *m_lpExternalCurrent - m_fltActiveCurrent;
 }
 
-void CurrentStimulus::ResetSimulation(Simulator *lpSim)
+void CurrentStimulus::ResetSimulation()
 {
-	ExternalStimulus::ResetSimulation(lpSim);
+	ExternalStimulus::ResetSimulation();
 
 	m_bCycleOn = TRUE;
 	m_bBurstOn = TRUE;

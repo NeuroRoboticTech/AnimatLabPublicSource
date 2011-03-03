@@ -76,22 +76,22 @@ catch(...)
 }
 
 
-void ContactAdapter::Initialize(Simulator *lpSim, Structure *lpStructure)
+void ContactAdapter::Initialize()
 {
-	Organism *lpOrganism = dynamic_cast<Organism *>(lpStructure);
+	Organism *lpOrganism = dynamic_cast<Organism *>(m_lpStructure);
 	if(!lpOrganism)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 
 	m_lpSourceNode = lpOrganism->FindRigidBody(m_strSourceBodyID);
-	m_lpSourceNode->AttachSourceAdapter(lpSim, lpStructure, this);
-	lpSim->AttachTargetAdapter(lpStructure, this);
+	m_lpSourceNode->AttachSourceAdapter(m_lpStructure, this);
+	m_lpSim->AttachTargetAdapter(m_lpStructure, this);
 
 	int iCount = m_aryFieldPairs.GetSize();
 	ReceptiveFieldPair *lpPair=NULL;
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 	{
 		lpPair = m_aryFieldPairs[iIndex];
-		lpPair->Initialize(lpSim, lpOrganism, m_lpSourceNode, m_strTargetModule);
+		lpPair->Initialize(m_strTargetModule);
 	}
 }
 
@@ -102,11 +102,11 @@ string ContactAdapter::TargetModule()
 {return m_strTargetModule;}
 
 //Node Overrides
-void ContactAdapter::StepSimulation(Simulator *lpSim, Structure *lpStructure)
+void ContactAdapter::StepSimulation()
 {
 	int iCount = m_aryFieldPairs.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryFieldPairs[iIndex]->StepSimulation(lpSim, lpStructure);
+		m_aryFieldPairs[iIndex]->StepSimulation();
 }
 
 void ContactAdapter::Load(CStdXml &oXml)

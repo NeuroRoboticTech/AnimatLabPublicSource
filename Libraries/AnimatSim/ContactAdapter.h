@@ -27,8 +27,8 @@ namespace AnimatSim
 			ContactAdapter();
 			virtual ~ContactAdapter();
 
-			virtual void Initialize(Simulator *lpSim, Structure *lpStructure);
-			virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
+			virtual void Initialize();
+			virtual void StepSimulation();
 			virtual string SourceModule();
 			virtual string TargetModule();
 

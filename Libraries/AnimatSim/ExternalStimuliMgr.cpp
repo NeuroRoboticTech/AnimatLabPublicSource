@@ -56,21 +56,21 @@ ExternalStimuliMgr::~ExternalStimuliMgr()
 
 }
  
-BOOL ExternalStimuliMgr::AddStimulus(Simulator *lpSim, string strXml)
+BOOL ExternalStimuliMgr::AddStimulus(string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
 	oXml.FindElement("Root");
 	oXml.FindChildElement("Stimulus");
 	ExternalStimulus *lpStim = LoadExternalStimuli(oXml);
-	lpStim->Initialize(lpSim);
+	lpStim->Initialize();
 
 	return TRUE;
 }
 
-BOOL ExternalStimuliMgr::RemoveStimulus(Simulator *lpSim, string strID)
+BOOL ExternalStimuliMgr::RemoveStimulus(string strID)
 {
-	Remove(lpSim, strID);
+	Remove(strID);
 	return TRUE;
 }
 
@@ -132,7 +132,7 @@ try
 	lpStimulus->SetSystemPointers(m_lpSim, NULL, NULL, NULL);
 	lpStimulus->Load(oXml);
 
-	Add(m_lpSim, lpStimulus);
+	Add(lpStimulus);
 	return lpStimulus;
 }
 catch(CStdErrorInfo oError)

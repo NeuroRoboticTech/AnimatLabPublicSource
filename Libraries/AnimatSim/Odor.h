@@ -47,7 +47,7 @@ namespace AnimatSim
 			BOOL UseFoodQuantity() {return m_bUseFoodQuantity;};
 			void UseFoodQuantity(BOOL bVal) {m_bUseFoodQuantity = bVal;};
 			
-			float CalculateOdorValue(Simulator *lpSim, OdorType *lpType, CStdFPoint &oSensorPos);
+			float CalculateOdorValue(OdorType *lpType, CStdFPoint &oSensorPos);
 
 			virtual void Load(CStdXml &oXml);
 		};

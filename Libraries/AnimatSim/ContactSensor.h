@@ -56,7 +56,7 @@ namespace AnimatSim
 			void FinishedAddingVertices();
 
 			void ClearCurrents();
-			void ProcessContact(Simulator *lpSim, StdVector3 vPos, float fltForceMagnitude);
+			void ProcessContact(StdVector3 vPos, float fltForceMagnitude);
 			virtual void Load(CStdXml &oXml);
 		};
 

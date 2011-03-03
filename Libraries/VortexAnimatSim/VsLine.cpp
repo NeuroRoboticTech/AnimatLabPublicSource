@@ -35,7 +35,7 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of VsLine\r\n", "", -1, FALSE, TRUE);}
 }
 
-osg::Geometry *VsLine::CreateLineGeometry(Simulator *lpSim, Structure *lpStructure)
+osg::Geometry *VsLine::CreateLineGeometry()
 { 
 	//Always create the graphics. If it is disabled or made not visible we will turn it off.
 	CStdArray<Attachment *> *aryAttachments = m_lpLineBase->AttachmentPoints();
@@ -85,7 +85,7 @@ osg::Geometry *VsLine::CreateLineGeometry(Simulator *lpSim, Structure *lpStructu
 }
 
 
-void VsLine::DrawLine(Simulator *lpSim, Structure *lpStructure)
+void VsLine::DrawLine()
 {
 	CStdArray<Attachment *> *aryAttachments = m_lpLineBase->AttachmentPoints();
 	int iCount = aryAttachments->GetSize();
@@ -107,9 +107,9 @@ void VsLine::DrawLine(Simulator *lpSim, Structure *lpStructure)
 	}
 }
 
-void VsLine::SetupGraphics(Simulator *lpSim, Structure *lpStructure)
+void VsLine::SetupGraphics()
 {
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(lpSim);
+	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThis->GetSimulator());
 	if(!lpVsSim)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
 
@@ -119,21 +119,21 @@ void VsLine::SetupGraphics(Simulator *lpSim, Structure *lpStructure)
 }
 
 
-void VsLine::CreateParts(Simulator *lpSim, Structure *lpStructure)
+void VsLine::CreateParts()
 {
 	fltA = 0;
-	m_osgGeometry = CreateLineGeometry(lpSim, lpStructure);
+	m_osgGeometry = CreateLineGeometry();
 	osg::Geode *osgGroup = new osg::Geode;
 	osgGroup->addDrawable(m_osgGeometry.get());
 	m_osgNode = osgGroup;
 	m_vxGeometry = NULL;
 
-	VsRigidBody::CreateBody(lpSim, lpStructure);
-	VsRigidBody::SetBody(lpSim, lpStructure);
+	VsRigidBody::CreateBody();
+	VsRigidBody::SetBody();
 }
 
 
-void VsLine::CalculateForceVector(Simulator *lpSim,Attachment *lpPrim, Attachment *lpSec, float fltTension, CStdFPoint &oPrimPos, CStdFPoint &oSecPos, CStdFPoint &oPrimForce)
+void VsLine::CalculateForceVector(Attachment *lpPrim, Attachment *lpSec, float fltTension, CStdFPoint &oPrimPos, CStdFPoint &oSecPos, CStdFPoint &oPrimForce)
 {
 	oPrimPos = lpPrim->AbsolutePosition();
 	oSecPos = lpSec->AbsolutePosition();
@@ -144,7 +144,7 @@ void VsLine::CalculateForceVector(Simulator *lpSim,Attachment *lpPrim, Attachmen
 }
 
 
-void VsLine::StepSimulation(Simulator *lpSim, Structure *lpStructure, float fltTension)
+void VsLine::StepSimulation(float fltTension)
 {
 	if(m_lpThis->Enabled())
 	{
@@ -167,28 +167,28 @@ void VsLine::StepSimulation(Simulator *lpSim, Structure *lpStructure, float fltT
 				lpAttach1Parent = dynamic_cast<VsRigidBody *>(lpAttach1->Parent());
 				lpAttach2Parent = dynamic_cast<VsRigidBody *>(lpAttach2->Parent());
 
-				CalculateForceVector(lpSim, lpAttach1, lpAttach2, fltTension, oPrimPos, oPrimPlusPos, oPrimForce);
-				CalculateForceVector(lpSim, lpAttach2, lpAttach1, fltTension, oSecPos, oSecMinusPos, oSecForce);
+				CalculateForceVector(lpAttach1, lpAttach2, fltTension, oPrimPos, oPrimPlusPos, oPrimForce);
+				CalculateForceVector(lpAttach2, lpAttach1, fltTension, oSecPos, oSecMinusPos, oSecForce);
 
-				lpAttach1Parent->Physics_AddBodyForce(lpSim, oPrimPos.x, oPrimPos.y, oPrimPos.z, oPrimForce.x, oPrimForce.y, oPrimForce.z, TRUE); 
-				lpAttach2Parent->Physics_AddBodyForce(lpSim, oSecForce.x, oSecForce.y, oSecForce.z, oSecForce.x, oSecForce.y, oSecForce.z, TRUE); 
+				lpAttach1Parent->Physics_AddBodyForce(oPrimPos.x, oPrimPos.y, oPrimPos.z, oPrimForce.x, oPrimForce.y, oPrimForce.z, TRUE); 
+				lpAttach2Parent->Physics_AddBodyForce(oSecForce.x, oSecForce.y, oSecForce.z, oSecForce.x, oSecForce.y, oSecForce.z, TRUE); 
 
 				lpAttach1 = lpAttach2;
 			}
 		}
 	}
 
-	DrawLine(lpSim, lpStructure);
+	DrawLine();
 }
 
-void VsLine::ResetSimulation(Simulator *lpSim, Structure *lpStructure)
+void VsLine::ResetSimulation()
 {
 	//We do nothing in the reset simulation because we need the attachment points to be reset before we can do anything.
 }
 
-void VsLine::AfterResetSimulation(Simulator *lpSim, Structure *lpStructure)
+void VsLine::AfterResetSimulation()
 {
-	DrawLine(lpSim, lpStructure);
+	DrawLine();
 }
 
 	}			// Visualization

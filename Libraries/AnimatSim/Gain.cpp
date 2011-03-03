@@ -100,7 +100,7 @@ void Gain::Load(CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf Adapter Element
 }
 
-Gain ANIMAT_PORT *LoadGain(string strName, CStdXml &oXml)
+Gain ANIMAT_PORT *LoadGain(Simulator *lpSim, string strName, CStdXml &oXml)
 {
 	Gain *lpGain = NULL;
 
@@ -111,10 +111,6 @@ Gain ANIMAT_PORT *LoadGain(string strName, CStdXml &oXml)
 		string strModuleName = oXml.GetChildString("ModuleName", "");
 		string strType = oXml.GetChildString("Type");
 		oXml.OutOfElem(); //OutOf Gain Element
-
-		Simulator *lpSim = GetSimulator();
-		if(!lpSim)
-			THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
 
 		Gain *lpGain = dynamic_cast<AnimatSim::Gains::Gain *>(lpSim->CreateObject(strModuleName, "Gain", strType));
 		if(!lpGain)

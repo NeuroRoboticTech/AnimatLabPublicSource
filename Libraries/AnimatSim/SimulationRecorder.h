@@ -24,8 +24,8 @@ namespace AnimatSim
 			SimulationRecorder();
 			virtual ~SimulationRecorder();
 
-			virtual void Add(Simulator *lpSim, ActivatedItem *lpItem);
-			virtual KeyFrame *Add(Simulator *lpSim, string strType, long lStart, long lEnd);
+			virtual void Add(ActivatedItem *lpItem);
+			virtual KeyFrame *Add(string strType, long lStart, long lEnd);
 
 			virtual void Load(string strProjectPath, string strFileName);
 			virtual void Load(CStdXml &oXml);

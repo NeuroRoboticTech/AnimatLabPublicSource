@@ -25,7 +25,7 @@ public:
 	//virtual osgViewer::CompositeViewer *Viewer() {return m_osgViewer.get();};
 	//virtual osg::GraphicsContext *GraphicsContext() {return m_osgGraphicsContext.get();};
 
-	virtual void Initialize(Simulator *lpSim);
+	virtual void Initialize();
 	virtual void Realize();
 };
 

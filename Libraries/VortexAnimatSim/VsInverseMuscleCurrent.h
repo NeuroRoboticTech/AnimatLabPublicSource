@@ -61,10 +61,10 @@ namespace VortexAnimatSim
 
 			//ActiveItem overrides
 			virtual string Type() {return "InverseMuscleCurrent";};
-			virtual void Initialize(Simulator *lpSim);  
-			virtual void Activate(Simulator *lpSim);
-			virtual void StepSimulation(Simulator *lpSim);
-			virtual void Deactivate(Simulator *lpSim);
+			virtual void Initialize();  
+			virtual void Activate();
+			virtual void StepSimulation();
+			virtual void Deactivate();
 
 			//virtual void Modify(Simulator *lpSim, ActivatedItem *lpItem);
 		};

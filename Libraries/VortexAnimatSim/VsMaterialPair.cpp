@@ -31,9 +31,9 @@ int VsMaterialPair::GetMaterialID(string strName)
 	return m_vxMaterialTable->getMaterialID(strName.c_str());
 }
 
-void VsMaterialPair::RegisterMaterialTypes(Simulator *lpSim, CStdArray<string> aryMaterialTypes)
+void VsMaterialPair::RegisterMaterialTypes(CStdArray<string> aryMaterialTypes)
 {
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(lpSim);
+	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
 	if(!lpVsSim)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
 	
@@ -48,9 +48,9 @@ void VsMaterialPair::RegisterMaterialTypes(Simulator *lpSim, CStdArray<string> a
 	}
 }
 
-void VsMaterialPair::Initialize(Simulator *lpSim)
+void VsMaterialPair::Initialize()
 {
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(lpSim);
+	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
 	if(!lpVsSim)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
 	

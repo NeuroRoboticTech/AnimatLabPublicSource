@@ -21,7 +21,6 @@ namespace VortexAnimatSim
 			protected:
 				Vx::VxBallAndSocket *m_vxSocket;
 
-				//virtual void UpdateData(Simulator *lpSim);
 				virtual void SetVelocityToDesired();
 
 			public:
@@ -31,10 +30,7 @@ namespace VortexAnimatSim
 				//virtual void Selected(BOOL bValue, BOOL bSelectMultiple); 
 
 				virtual void EnableMotor(BOOL bVal);
-				virtual void CreateJoint(Simulator *lpSim, Structure *lpStructure);
-				//virtual float *GetDataPointer(string strDataType);
-				//virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure);
-				//virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
+				virtual void CreateJoint();
 			};
 
 		}		//Joints

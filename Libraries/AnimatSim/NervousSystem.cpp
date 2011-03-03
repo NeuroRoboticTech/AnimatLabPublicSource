@@ -95,22 +95,21 @@ void NervousSystem::AddNeuralModule(NeuralModule *lpModule)
 }
 
 /**
-\fn	void NervousSystem::AddNeuralModule(Simulator *lpSim, Structure *lpStructure, string strXml)
+\fn	void NervousSystem::AddNeuralModule(string strXml)
 
-\brief	Creates and adds a new neural module from an XML definition. 
+\brief	Creates and adds a new neural module from an XML definition.
 
-\details This method is used to both create and add a new neural module to the nervous system by using
-a XML configuration data packet. This is primarily used by the AddItem method to create a new module when
-the user does so in the GUI.
+\details This method is used to both create and add a new neural module to the nervous system by
+using a XML configuration data packet. This is primarily used by the AddItem method to create a
+new module when the user does so in the GUI. 
 
 \author	dcofer
 \date	2/24/2011
 
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpStructure	The pointer to a structure. 
-\param	strXml				The string xml for loading the new module. 
+\param	strXml	The string xml for loading the new module. 
 **/
-void NervousSystem::AddNeuralModule(Simulator *lpSim, Structure *lpStructure, string strXml)
+
+void NervousSystem::AddNeuralModule(string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -118,25 +117,24 @@ void NervousSystem::AddNeuralModule(Simulator *lpSim, Structure *lpStructure, st
 	oXml.FindChildElement("NeuralModule");
 
 	NeuralModule *lpModule = LoadNeuralModule(oXml);
-	lpModule->Initialize(lpSim, lpStructure);
+	lpModule->Initialize();
 }
 
 /**
-\fn	void NervousSystem::RemoveNeuralModule(Simulator *lpSim, Structure *lpStructure, string strID)
+\fn	void NervousSystem::RemoveNeuralModule(string strID)
 
-\brief	Removes the neural module based on its ID. 
+\brief	Removes the neural module based on its ID.
 
-\details This method is primarily used by the RemoveItem method to allow the GUI to remove
-a neural module when the user needs to do so.
+\details This method is primarily used by the RemoveItem method to allow the GUI to remove a
+neural module when the user needs to do so. 
 
 \author	dcofer
 \date	2/24/2011
 
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpStructure	The pointer to a structure. 
-\param	strID				Unique GUID ID string of the module to delete. 
+\param	strID	Unique GUID ID string of the module to delete. 
 **/
-void NervousSystem::RemoveNeuralModule(Simulator *lpSim, Structure *lpStructure, string strID)
+
+void NervousSystem::RemoveNeuralModule(string strID)
 {
 	m_aryNeuralModules.Remove(strID);
 }
@@ -172,75 +170,30 @@ NeuralModule *NervousSystem::FindNeuralModule(string strModuleName, BOOL bThrowE
 	return lpModule;
 }
 
-
-/**
-\fn	void NervousSystem::Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState)
-
-\brief	Calls Kill method on all sub-items. 
-
-\details When an organism is killed then all neural elements are disabled to prevent 
-any further network activity. This method goes through and calls the Kill method of 
-each neural module.
-
-\author	dcofer
-\date	2/24/2011
-
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpOrganism	The pointer to an organism. 
-\param	bState				true to state. 
-**/
-void NervousSystem::Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState)
+void NervousSystem::Kill(BOOL bState)
 {
 	NeuralModule *lpModule = NULL;
 	CStdPtrMap<string, NeuralModule>::iterator oPos;
 	for(oPos=m_aryNeuralModules.begin(); oPos!=m_aryNeuralModules.end(); ++oPos)
 	{
 		lpModule = oPos->second;
-		lpModule->Kill(lpSim, lpOrganism, bState);
+		lpModule->Kill(bState);
 	}
 }
 
-
-/**
-\fn	void NervousSystem::ResetSimulation(Simulator *lpSim, Organism *lpOrganism)
-
-\brief	Resets the simulation to time 0. 
-
-\details When the simulation is reset it defaults the entire system back to time 0.
-This method calls the ResetSimulation method of each neural module, which in turn
-resets all data within the neural code back to its initial state on simulation start.
-
-\author	dcofer
-\date	2/24/2011
-
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpOrganism	The pointer to an organism. 
-**/
-void NervousSystem::ResetSimulation(Simulator *lpSim, Organism *lpOrganism)
+void NervousSystem::ResetSimulation()
 {
 	NeuralModule *lpModule = NULL;
 	CStdPtrMap<string, NeuralModule>::iterator oPos;
 	for(oPos=m_aryNeuralModules.begin(); oPos!=m_aryNeuralModules.end(); ++oPos)
 	{
 		lpModule = oPos->second;
-		lpModule->ResetSimulation(lpSim, lpOrganism);
+		lpModule->ResetSimulation();
 	}
 }
 
-/**
-\fn	void NervousSystem::Initialize(Simulator *lpSim, Structure *lpStructure)
 
-\brief	Initializes this object. 
-
-\details This initializes all neural modules and all of the adapters for this nervous system.
-
-\author	dcofer
-\date	2/24/2011
-
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpStructure	The pointer to a structure. 
-**/
-void NervousSystem::Initialize(Simulator *lpSim, Structure *lpStructure)
+void NervousSystem::Initialize()
 {
 	NeuralModule *lpModule = NULL;
 	CStdPtrMap<string, NeuralModule>::iterator oPos;
@@ -249,38 +202,18 @@ void NervousSystem::Initialize(Simulator *lpSim, Structure *lpStructure)
 	for(oPos=m_aryNeuralModules.begin(); oPos!=m_aryNeuralModules.end(); ++oPos)
 	{
 		lpModule = oPos->second;
-		lpModule->Initialize(lpSim, lpStructure);
+		lpModule->Initialize();
 	}
 
 	//Now initialize the adapters
 	int iCount = m_aryAdapters.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryAdapters[iIndex]->Initialize(lpSim, lpStructure);
+		m_aryAdapters[iIndex]->Initialize();
 
 }
 
-/**
-\fn	void NervousSystem::StepSimulation(Simulator *lpSim, Structure *lpStructure)
 
-\brief	Steps simulation for the nervous system. 
-
-\details Each NeuralModule can have a different integration time step. This method loops
-through each of the modules and calls the NeedToStep method to determine if that modules
-StepSimulation method should be called. Remeber that all time steps are based on the core
-integer TimeStep. All of the other modules time steps are normalized to the module with the 
-smallest time step. For instance, lets the firing rate time step is 0.5 ms, and the integrate
-and fire time step was 0.1 ms. The base time step will be 0.1 ms, and the TimeStepInterval of the
-integrate and fire module will be 1, while the TimeStepInterval of the firing rate module will be
-5. So every 5th step the call to the firing rate module method NeedToStep will return true and 
-it will be stepped. 
-
-\author	dcofer
-\date	2/24/2011
-
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpStructure	The pointer to a structure. 
-**/
-void NervousSystem::StepSimulation(Simulator *lpSim, Structure *lpStructure)
+void NervousSystem::StepSimulation()
 {
 	NeuralModule *lpModule = NULL;
 	CStdPtrMap<string, NeuralModule>::iterator oPos;
@@ -290,7 +223,7 @@ void NervousSystem::StepSimulation(Simulator *lpSim, Structure *lpStructure)
 		lpModule = oPos->second;
 
 		if(lpModule->NeedToStep())
-			lpModule->StepSimulation(lpSim, lpStructure);
+			lpModule->StepSimulation();
 	}
 }
 

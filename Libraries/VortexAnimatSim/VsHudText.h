@@ -32,8 +32,8 @@ namespace VortexAnimatSim
 			osgText::Text *OsgText() {return m_osgText.get();};
 			osg::Geode *Geode() {return m_osgGeode.get();};
 
-			virtual void Initialize(Simulator *lpSim, osg::Projection *lpProjection);
-			virtual void Update(Simulator *lpSim);
+			virtual void Initialize(osg::Projection *lpProjection);
+			virtual void Update();
 			virtual void Load(CStdXml &oXml);
 		};
 

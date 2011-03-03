@@ -40,12 +40,12 @@ osg::Viewport* VsSimulationWindow::GetViewport()
 	return m_osgViewer->getCamera()->getViewport();
 }
 
-void VsSimulationWindow::Update(Simulator *lpSim)
+void VsSimulationWindow::Update()
 {
 	if(m_lpTrackBody)
 		TrackCamera();
 
-	m_vsHud.Update(lpSim);
+	m_vsHud.Update();
 	m_osgViewer->frame(); 
 }
 
@@ -207,23 +207,22 @@ void VsSimulationWindow::InitStandalone(Simulator *lpSim, VsSimulator *lpVsSim)
     m_osgViewer->startThreading();*/
 }
 
-void VsSimulationWindow::Initialize(Simulator *lpSim)
+void VsSimulationWindow::Initialize()
 {
-	m_lpSim = lpSim;
-	m_lpWinMgr = dynamic_cast<VsSimulationWindowMgr *>(lpSim->WindowMgr());
+	m_lpWinMgr = dynamic_cast<VsSimulationWindowMgr *>(m_lpSim->WindowMgr());
 	if(!m_lpWinMgr)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsWinMgr, Vs_Err_strUnableToConvertToVsWinMgr);
 
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(lpSim);
+	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
 	if(!lpVsSim)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
 
 	if(m_HWND)
-		InitEmbedded(lpSim, lpVsSim);
+		InitEmbedded(m_lpSim, lpVsSim);
 	else
-		InitStandalone(lpSim, lpVsSim);
+		InitStandalone(m_lpSim, lpVsSim);
 
-	m_vsHud.Initialize(lpSim);
+	m_vsHud.Initialize();
 
 	SetupTrackCamera();
 }

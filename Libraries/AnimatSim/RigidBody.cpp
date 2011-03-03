@@ -851,41 +851,43 @@ void RigidBody::MaterialID(string strID) {m_strMaterialID = strID;}
 float RigidBody::SurfaceContactCount() {return m_fltSurfaceContactCount;}
 
 /**
-\fn	void RigidBody::AddSurfaceContact(Simulator *lpSim, RigidBody *lpContactedSurface)
+\fn	void RigidBody::AddSurfaceContact(RigidBody *lpContactedSurface)
 
-\brief	Increments the surface contact count when this part collides with something in the virtual world
+\brief	Increments the surface contact count when this part collides with something in the
+virtual world
 
-\details If this item is setup to be a contact sensor then when the physics engine detects a collision between
-two objects it will provide this back to us. We then call this method to update the number of contacts that this
-object is undergoing. This value can then be used to detect whether, and how many, contacts are currently happening.
+\details If this item is setup to be a contact sensor then when the physics engine detects a
+collision between two objects it will provide this back to us. We then call this method to update
+the number of contacts that this object is undergoing. This value can then be used to detect
+whether, and how many, contacts are currently happening. 
 
 \author	dcofer
 \date	3/2/2011
 
-\param [in,out]	lpSim				The pointer to a simulation. 
 \param [in,out]	lpContactedSurface	The pointer to the other contacted surface. 
 **/
-void RigidBody::AddSurfaceContact(Simulator *lpSim, RigidBody *lpContactedSurface)
+void RigidBody::AddSurfaceContact(RigidBody *lpContactedSurface)
 {
 	m_fltSurfaceContactCount++;
 }
 
 /**
-\fn	void RigidBody::RemoveSurfaceContact(Simulator *lpSim, RigidBody *lpContactedSurface)
+\fn	void RigidBody::RemoveSurfaceContact(RigidBody *lpContactedSurface)
 
-\brief	Decrements the surface contact count when this part stops colliding with something in the virtual world
+\brief	Decrements the surface contact count when this part stops colliding with something in the
+virtual world
 
-\details If this item is setup to be a contact sensor then when the physics engine detects when a collision between
-two objects stops, and it will provide this back to us. We then call this method to update the number of contacts that this
-object is undergoing. This value can then be used to detect whether, and how many, contacts are currently happening.
+\details If this item is setup to be a contact sensor then when the physics engine detects when a
+collision between two objects stops, and it will provide this back to us. We then call this
+method to update the number of contacts that this object is undergoing. This value can then be
+used to detect whether, and how many, contacts are currently happening. 
 
 \author	dcofer
 \date	3/2/2011
 
-\param [in,out]	lpSim				If non-null, the pointer to a simulation. 
 \param [in,out]	lpContactedSurface	If non-null, the pointer to a contacted surface. 
 **/
-void RigidBody::RemoveSurfaceContact(Simulator *lpSim, RigidBody *lpContactedSurface)
+void RigidBody::RemoveSurfaceContact(RigidBody *lpContactedSurface)
 {
 	if(m_fltSurfaceContactCount<=0)
 		THROW_ERROR(Al_Err_lInvalidSurceContactCount, Al_Err_strInvalidSurceContactCount);
@@ -914,166 +916,149 @@ void RigidBody::Eat(float fltVal, long lTimeSlice)
 	m_fltFoodQuantity = fltVal;
 }
 
-
 /**
-\fn	void RigidBody::EnableCollision(Simulator *lpSim, RigidBody *lpBody)
+\fn	void RigidBody::EnableCollision(RigidBody *lpBody)
 
 \brief	Enables collision between the past-in object and this object.
 
-\details This method enables collision responses between the rigid body being past
-in and this rigid body. This is a virtual method that should be overridden 
-in the simulator system. You need to call physics engine API's to enable
-the collision responses between these two objects. This method does nothing
-by default.
+\details This method enables collision responses between the rigid body being past in and this
+rigid body. This is a virtual method that should be overridden in the simulator system. You need
+to call physics engine API's to enable the collision responses between these two objects. This
+method does nothing by default. 
 
 \author	dcofer
 \date	3/2/2011
 
-\param [in,out]	lpSim	The pointer to a simulation. 
 \param [in,out]	lpBody	The pointer to a body. 
 **/
-void RigidBody::EnableCollision(Simulator *lpSim, RigidBody *lpBody)
+void RigidBody::EnableCollision(RigidBody *lpBody)
 {
 	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->Physics_EnableCollision(lpSim, lpBody);
+		m_lpPhysicsBody->Physics_EnableCollision(lpBody);
 }
 
 /**
-\fn	void RigidBody::DisableCollision(Simulator *lpSim, RigidBody *lpBody)
+\fn	void RigidBody::DisableCollision(RigidBody *lpBody)
 
 \brief	Disables collision between the past-in object and this object.
 
-\details This method disables collision responses between the rigid body being past
-in and this rigid body. This is a virtual method that should be overridden 
-in the simulator system. You need to call physics engine API's to disable
-the collision responses between these two objects. This method does nothing
-by default.
+\details This method disables collision responses between the rigid body being past in and this
+rigid body. This is a virtual method that should be overridden in the simulator system. You need
+to call physics engine API's to disable the collision responses between these two objects. This
+method does nothing by default. 
 
 \author	dcofer
 \date	3/2/2011
 
-\param [in,out]	lpSim	The pointer to a simulation. 
 \param [in,out]	lpBody	The pointer to a body. 
 **/
-void RigidBody::DisableCollision(Simulator *lpSim, RigidBody *lpBody)
+void RigidBody::DisableCollision(RigidBody *lpBody)
 {
 	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->Physics_DisableCollision(lpSim, lpBody);
+		m_lpPhysicsBody->Physics_DisableCollision(lpBody);
 }
 
-void RigidBody::Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState)
+void RigidBody::Kill(BOOL bState)
 {
-	BodyPart::Kill(lpSim, lpOrganism, bState);
+	BodyPart::Kill(bState);
 
 	int iCount = m_aryChildParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryChildParts[iIndex]->Kill(lpSim, lpOrganism, bState);
+		m_aryChildParts[iIndex]->Kill(bState);
 
 	if(m_lpJointToParent)
-		m_lpJointToParent->Kill(lpSim, lpOrganism, bState);
+		m_lpJointToParent->Kill(bState);
 }
 
-void RigidBody::ResetSimulation(Simulator *lpSim, Structure *lpStructure)
+void RigidBody::ResetSimulation()
 {
 	int iCount = m_aryChildParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryChildParts[iIndex]->ResetSimulation(lpSim, lpStructure);
+		m_aryChildParts[iIndex]->ResetSimulation();
 
 	if(m_lpJointToParent)
-		m_lpJointToParent->ResetSimulation(lpSim, lpStructure);
+		m_lpJointToParent->ResetSimulation();
 
 	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->Physics_ResetSimulation(lpSim, lpStructure);
+		m_lpPhysicsBody->Physics_ResetSimulation();
 }
 
-void RigidBody::AfterResetSimulation(Simulator *lpSim, Structure *lpStructure)
+void RigidBody::AfterResetSimulation()
 {
 	int iCount = m_aryChildParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryChildParts[iIndex]->AfterResetSimulation(lpSim, lpStructure);
+		m_aryChildParts[iIndex]->AfterResetSimulation();
 
 	if(m_lpJointToParent)
-		m_lpJointToParent->AfterResetSimulation(lpSim, lpStructure);
+		m_lpJointToParent->AfterResetSimulation();
 }
-
 
 /**
-\fn	void RigidBody::CreateParts(Simulator *lpSim, Structure *lpStructure)
+\fn	void RigidBody::CreateParts()
 
 \brief	Allows the rigid body to create its parts using the chosen physics engine.
 
-\details This function can not be truly implemented in the Animat library. It must
-be implemented in the next layer sitting above it. The reason for this is
-that the Animat library was made to be generalized so it could work with a
-number of different physics engines. Therefore it is not tightly coupled with
-any one engine. This in turn means that we can not implement the code in this
-library neccessary to create a part or joint in the chosen engine. Several
-overridable functions have been provided that allow you to do this. The two
-that will always have to be overridden are the CreateParts and CreateJoints
-methods. CreateParts makes the API calls to the physics engine to create the
-collision models, graphics models and so on. You should still call the 
-base class method at the end of your overridden method so the rigid body
-can walk down the tree and create the parts for its children.
+\details This function can not be truly implemented in the Animat library. It must be implemented
+in the next layer sitting above it. The reason for this is that the Animat library was made to be
+generalized so it could work with a number of different physics engines. Therefore it is not
+tightly coupled with any one engine. This in turn means that we can not implement the code in
+this library neccessary to create a part or joint in the chosen engine. Several overridable
+functions have been provided that allow you to do this. The two that will always have to be
+overridden are the CreateParts and CreateJoints methods. CreateParts makes the API calls to the
+physics engine to create the collision models, graphics models and so on. You should still call
+the base class method at the end of your overridden method so the rigid body can walk down the
+tree and create the parts for its children. 
 
 \author	dcofer
 \date	3/2/2011
-
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpStructure	The pointer to a structure. 
 **/
-void RigidBody::CreateParts(Simulator *lpSim, Structure *lpStructure)
+
+void RigidBody::CreateParts()
 {
 	if(m_bFoodSource)
 	{
-		lpSim->AddFoodSource(this);
+		m_lpSim->AddFoodSource(this);
 
 		//We have the replenish rate in Quantity/s, but we need it in Quantity/timeslice. Lets recalculate it here.
-		m_fltFoodReplenishRate = (m_fltFoodReplenishRate * lpSim->PhysicsTimeStep());
+		m_fltFoodReplenishRate = (m_fltFoodReplenishRate * m_lpSim->PhysicsTimeStep());
 	}
 
 	int iCount = m_aryChildParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryChildParts[iIndex]->CreateParts(lpSim, lpStructure);
+		m_aryChildParts[iIndex]->CreateParts();
 }
 
-
 /**
-\fn	void RigidBody::CreateJoints(Simulator *lpSim, Structure *lpStructure)
+\fn	void RigidBody::CreateJoints()
 
 \brief	Allows the rigid body to create its joints using the chosen physics engine.
 
-\details This function can not be truly implemented in the Animat library. It must
-be implemented in the next layer sitting above it. The reason for this is
-that the Animat library was made to be generalized so it could work with a
-number of different physics engines. Therefore it is not tightly coupled with
-any one engine. This in turn means that we can not implement the code in this
-library neccessary to create a part or joint in the chosen engine. Several
-overridable functions have been provided that allow you to do this. The two
-that will always have to be overridden are the CreateParts and CreateJoints
-methods. CreateJoints makes the API calls to the physics engine to create the
-joint and constraints and motors. You should still call the 
-base class method at the end of your overridden method so the rigid body
-can walk down the tree and create the joints for its children.
+\details This function can not be truly implemented in the Animat library. It must be implemented
+in the next layer sitting above it. The reason for this is that the Animat library was made to be
+generalized so it could work with a number of different physics engines. Therefore it is not
+tightly coupled with any one engine. This in turn means that we can not implement the code in
+this library neccessary to create a part or joint in the chosen engine. Several overridable
+functions have been provided that allow you to do this. The two that will always have to be
+overridden are the CreateParts and CreateJoints methods. CreateJoints makes the API calls to the
+physics engine to create the joint and constraints and motors. You should still call the base
+class method at the end of your overridden method so the rigid body can walk down the tree and
+create the joints for its children. 
 
 \author	dcofer
 \date	3/2/2011
-
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpStructure	The pointer to a structure. 
 **/
-
-void RigidBody::CreateJoints(Simulator *lpSim, Structure *lpStructure)
+void RigidBody::CreateJoints()
 {
 	int iCount = m_aryChildParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryChildParts[iIndex]->CreateJoints(lpSim, lpStructure);
+		m_aryChildParts[iIndex]->CreateJoints();
 }
 
-void RigidBody::AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput)
+void RigidBody::AddExternalNodeInput(float fltInput)
 {
 }
 
-void RigidBody::StepSimulation(Simulator *lpSim, Structure *lpStructure)
+void RigidBody::StepSimulation()
 {
 	if(m_bFoodSource)
 	{
@@ -1082,18 +1067,18 @@ void RigidBody::StepSimulation(Simulator *lpSim, Structure *lpStructure)
 			m_fltFoodQuantity = m_fltMaxFoodQuantity;
 
 		//Clear the food eaten variable if it has been around for too long.
-		if(m_fltFoodEaten && m_lEatTime != lpSim->TimeSlice())
+		if(m_fltFoodEaten && m_lEatTime != m_lpSim->TimeSlice())
 			m_fltFoodEaten = 0;
 	}
 
 	int iCount = m_aryChildParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryChildParts[iIndex]->StepSimulation(lpSim, lpStructure);
+		m_aryChildParts[iIndex]->StepSimulation();
 
 	if(m_lpJointToParent)
-		m_lpJointToParent->StepSimulation(lpSim, lpStructure);
+		m_lpJointToParent->StepSimulation();
 
-	UpdateData(lpSim, lpStructure);
+	UpdateData();
 }
 
 
@@ -1235,13 +1220,13 @@ void RigidBody::AddRigidBody(string strXml)
 
 	RigidBody *lpBody = LoadRigidBody(oXml);
 
-	lpBody->Initialize(m_lpSim, m_lpStructure, NULL);
+	lpBody->Initialize();
 
 	//First create all of the model objects.
-	lpBody->CreateParts(m_lpSim, m_lpStructure);
+	lpBody->CreateParts();
 
 	//Then create all of the joints between the models.
-	lpBody->CreateJoints(m_lpSim, m_lpStructure);
+	lpBody->CreateJoints();
 }
 
 /**
@@ -1504,30 +1489,28 @@ catch(...)
 }
 
 /**
-\fn	void RigidBody::CompileIDLists(Simulator *lpSim, Structure *lpStructure)
+\fn	void RigidBody::CompileIDLists()
 
-\brief	This goes through and adds all rigid bodies and joints to their respective lists 
-in the structure.
+\brief	This goes through and adds all rigid bodies and joints to their respective lists in the
+structure.
 
-\details This is so that we can keep track of all of the rigid bodies and joints in a given structure.
+\details This is so that we can keep track of all of the rigid bodies and joints in a given
+structure. 
 
 \author	dcofer
 \date	3/2/2011
-
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpStructure	The pointer to the parent structure. 
 **/
-void RigidBody::CompileIDLists(Simulator *lpSim, Structure *lpStructure)
+void RigidBody::CompileIDLists()
 {
 	if(m_lpJointToParent)
-		lpStructure->AddJointToList(m_lpJointToParent);
+		m_lpStructure->AddJointToList(m_lpJointToParent);
 
 	//Add me and then add child parts
-	lpStructure->AddRigidBodyToList(this);
+	m_lpStructure->AddRigidBodyToList(this);
 
 	int iCount = m_aryChildParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryChildParts[iIndex]->CompileIDLists(lpSim, lpStructure);
+		m_aryChildParts[iIndex]->CompileIDLists();
 }
 
 /**
@@ -1600,48 +1583,48 @@ catch(...)
 }
 
 /**
-\fn	void RigidBody::AddForce(Simulator *lpSim, float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits)
+\fn	void RigidBody::AddForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy,
+float fltFz, BOOL bScaleUnits)
 
 \brief	Adds a force to this body at a specified position. 
 
 \author	dcofer
 \date	3/2/2011
 
-\param [in,out]	lpSim	The pointer to a simulation. 
-\param	fltPx			The x position. 
-\param	fltPy			The y position.  
-\param	fltPz			The z position.  
-\param	fltFx			The x force. 
-\param	fltFy			The y force. 
-\param	fltFz			The z force. 
-\param	bScaleUnits		If true then the force and value is scaled by the ScaleUnits, 
-otherwise it is applied as provided.
+\param	fltPx		The x position. 
+\param	fltPy		The y position.  
+\param	fltPz		The z position.  
+\param	fltFx		The x force. 
+\param	fltFy		The y force. 
+\param	fltFz		The z force. 
+\param	bScaleUnits	If true then the force and value is scaled by the ScaleUnits, otherwise it is
+					applied as provided. 
 **/
-void RigidBody::AddForce(Simulator *lpSim, float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits)
+
+void RigidBody::AddForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits)
 {
 	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->Physics_AddBodyForce(lpSim, fltPx, fltPy, fltPz, fltFx, fltFy, fltFz, bScaleUnits);
+		m_lpPhysicsBody->Physics_AddBodyForce(fltPx, fltPy, fltPz, fltFx, fltFy, fltFz, bScaleUnits);
 }
 
 /**
-\fn	void RigidBody::AddTorque(Simulator *lpSim, float fltTx, float fltTy, float fltTz, BOOL bScaleUnits)
+\fn	void RigidBody::AddTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits)
 
 \brief	Adds a torque to this body about its center. 
 
 \author	dcofer
 \date	3/2/2011
 
-\param [in,out]	lpSim	The pointer to a simulation. 
-\param	fltTx			The torque about the x axis. 
-\param	fltTy			The torque about the y axis. 
-\param	fltTz			The torque about the z axis.
-\param	bScaleUnits		If true then the force and value is scaled by the ScaleUnits, 
-otherwise it is applied as provided.
+\param	fltTx		The torque about the x axis. 
+\param	fltTy		The torque about the y axis. 
+\param	fltTz		The torque about the z axis. 
+\param	bScaleUnits	If true then the force and value is scaled by the ScaleUnits, otherwise it is
+					applied as provided. 
 **/
-void RigidBody::AddTorque(Simulator *lpSim, float fltTx, float fltTy, float fltTz, BOOL bScaleUnits)
+void RigidBody::AddTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits)
 {
 	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->Physics_AddBodyTorque(lpSim, fltTx, fltTy, fltTz, bScaleUnits);
+		m_lpPhysicsBody->Physics_AddBodyTorque(fltTx, fltTy, fltTz, bScaleUnits);
 }
 
 /**

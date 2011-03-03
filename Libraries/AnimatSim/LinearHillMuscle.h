@@ -196,7 +196,7 @@ namespace AnimatSim
 				float Fact(float fltStim);
 				//float Tspring(float fltKq, float fltKl, float fltB, float fltLimit, float fltE);
 
-				virtual void CalculateTension(Simulator *lpSim);
+				virtual void CalculateTension();
 
 			public:
 				LinearHillMuscle();
@@ -240,9 +240,9 @@ namespace AnimatSim
 
 				virtual void Enabled(BOOL bVal);
 
-				virtual void CalculateInverseDynamics(Simulator *lpSim, float fltLength, float fltVelocity, float fltT, float &fltVm, float &fltA);
+				virtual void CalculateInverseDynamics(float fltLength, float fltVelocity, float fltT, float &fltVm, float &fltA);
 
-				virtual void CreateJoints(Simulator *lpSim, Structure *lpStructure);
+				virtual void CreateJoints();
 				virtual float *GetDataPointer(string strDataType);
 
 				virtual void Load(CStdXml &oXml);

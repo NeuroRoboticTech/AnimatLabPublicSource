@@ -26,8 +26,8 @@ namespace VortexAnimatSim
 
 				//virtual void Selected(BOOL bValue, BOOL bSelectMultiple); 
 
-				virtual void CreateParts(Simulator *lpSim, Structure *lpStructure);
-				virtual void CreateJoints(Simulator *lpSim, Structure *lpStructure);
+				virtual void CreateParts();
+				virtual void CreateJoints();
 				//virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure);
 				//virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
 				//virtual float *GetDataPointer(string strDataType);

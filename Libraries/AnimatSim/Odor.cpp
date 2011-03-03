@@ -81,7 +81,7 @@ float Odor::Quantity()
 		return m_fltQuantity;
 };
 
-float Odor::CalculateOdorValue(Simulator *lpSim, OdorType *lpType, CStdFPoint &oSensorPos)
+float Odor::CalculateOdorValue(OdorType *lpType, CStdFPoint &oSensorPos)
 {
 	if(!m_lpParent) return 0;
 

@@ -77,16 +77,13 @@ void VoltageClamp::Vtarget(float fltVal)
 	m_fltTargetCurrent = (m_fltVtarget - *m_lpVrest)*(*m_lpGm);
 }
 
-void VoltageClamp::Initialize(Simulator *lpSim)
+void VoltageClamp::Initialize()
 {
-	if(!lpSim)
-		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
-
-	ExternalStimulus::Initialize(lpSim);
+	ExternalStimulus::Initialize();
 
 	//Lets try and get the node we will dealing with.
-	m_lpOrganism = lpSim->FindOrganism(m_strOrganismID);
-	m_lpNode = dynamic_cast<Node *>(lpSim->FindByID(m_strTargetNodeID));
+	m_lpOrganism = m_lpSim->FindOrganism(m_strOrganismID);
+	m_lpNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strTargetNodeID));
 	if(!m_lpNode)
 		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strTargetNodeID);
 
@@ -104,29 +101,29 @@ void VoltageClamp::Initialize(Simulator *lpSim)
  		 m_strNeuralModule + "Node: " + m_strTargetNodeID + " DataType: ExternalCurrent"));
 }
 
-void VoltageClamp::Activate(Simulator *lpSim)
+void VoltageClamp::Activate()
 {
-	ExternalStimulus::Activate(lpSim);
+	ExternalStimulus::Activate();
 
 	m_fltActiveCurrent = m_fltTargetCurrent - (*m_lpTotalCurrent);
 	*m_lpExternalCurrent = *m_lpExternalCurrent + m_fltActiveCurrent;
 }
 
-void VoltageClamp::StepSimulation(Simulator *lpSim)
+void VoltageClamp::StepSimulation()
 {
 	m_fltActiveCurrent = m_fltTargetCurrent - (*m_lpTotalCurrent);
 	*m_lpExternalCurrent = *m_lpExternalCurrent + m_fltActiveCurrent;
 }
 
-void VoltageClamp::Deactivate(Simulator *lpSim)
+void VoltageClamp::Deactivate()
 {		
-	ExternalStimulus::Deactivate(lpSim);
+	ExternalStimulus::Deactivate();
 	//*m_lpExternalCurrent = *m_lpExternalCurrent - m_fltActiveCurrent;
 }
 
-void VoltageClamp::ResetSimulation(Simulator *lpSim)
+void VoltageClamp::ResetSimulation()
 {
-	ExternalStimulus::ResetSimulation(lpSim);
+	ExternalStimulus::ResetSimulation();
 	
 	m_fltActiveCurrent = 0;
 }

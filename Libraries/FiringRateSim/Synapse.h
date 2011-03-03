@@ -14,10 +14,10 @@ namespace FiringRateSim
 		class FAST_NET_PORT Synapse : public AnimatSim::Link   
 		{
 		protected:
-			CStdPtrArray<Synapse> m_arySynapses;
-
 			FiringRateModule *m_lpFastModule;
 			Organism *m_lpOrganism;
+
+			CStdPtrArray<Synapse> m_arySynapses;
 
 			BOOL m_bEnabled;
 			float m_fltWeight;
@@ -57,10 +57,10 @@ namespace FiringRateSim
 			virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
 #pragma endregion
 
-			virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure, Node *lpNode);
-			virtual void Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
+			virtual void ResetSimulation();
+			virtual void Initialize();
 			virtual void Load(CStdXml &oXml);
-			virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure, Node *lpNode) {}; //Not used here
 		};
 
 	}			//Synapses

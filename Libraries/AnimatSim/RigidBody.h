@@ -266,25 +266,20 @@ namespace AnimatSim
 			virtual float SurfaceContactCount();
 
 			virtual void Eat(float fltVal, long lTimeSlice);
-			virtual void AddSurfaceContact(Simulator *lpSim, RigidBody *lpContactedSurface);
-			virtual void RemoveSurfaceContact(Simulator *lpSim, RigidBody *lpContactedSurface);
-			virtual void AddForce(Simulator *lpSim, float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits);
-			virtual void AddTorque(Simulator *lpSim, float fltTx, float fltTy, float fltTz, BOOL bScaleUnits);
+			virtual void AddSurfaceContact(RigidBody *lpContactedSurface);
+			virtual void RemoveSurfaceContact(RigidBody *lpContactedSurface);
+			virtual void AddForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits);
+			virtual void AddTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits);
 			virtual CStdFPoint GetVelocityAtPoint(float x, float y, float z);
 			virtual float GetMass();
 
-			virtual void EnableCollision(Simulator *lpSim, RigidBody *lpBody);
-			virtual void DisableCollision(Simulator *lpSim, RigidBody *lpBody);
+			virtual void EnableCollision(RigidBody *lpBody);
+			virtual void DisableCollision(RigidBody *lpBody);
 
-			virtual void CreateParts(Simulator *lpSim, Structure *lpStructure);
-			virtual void CreateJoints(Simulator *lpSim, Structure *lpStructure);
+			virtual void CreateParts();
+			virtual void CreateJoints();
 
-			virtual void CompileIDLists(Simulator *lpSim, Structure *lpStructure);
-
-			//Node Overrides
-			virtual void Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState = TRUE);
-			virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure);
-			virtual void AfterResetSimulation(Simulator *lpSim, Structure *lpStructure);
+			virtual void CompileIDLists();
 
 #pragma region DataAccesMethods
 
@@ -295,8 +290,11 @@ namespace AnimatSim
 
 #pragma endregion
 
-			virtual void AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput);
-			virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
+			virtual void AddExternalNodeInput(float fltInput);
+			virtual void StepSimulation();
+			virtual void ResetSimulation();
+			virtual void AfterResetSimulation();
+			virtual void Kill(BOOL bState = TRUE);
 			virtual void Load(CStdXml &oXml);
 		};
 

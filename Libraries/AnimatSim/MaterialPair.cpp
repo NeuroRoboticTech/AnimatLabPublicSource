@@ -55,19 +55,19 @@ MaterialPair::~MaterialPair()
 {
 }
 
-void MaterialPair::ScaleUnits(Simulator *lpSim)
+void MaterialPair::ScaleUnits()
 {
 	//scale the varios units to be consistent
 	//Friction coefficients are unitless
-	m_fltMaxFrictionPrimary *= (lpSim->InverseMassUnits() * lpSim->InverseDistanceUnits()); //This is a force. 
-	m_fltMaxFrictionSecondary *= (lpSim->InverseMassUnits() * lpSim->InverseDistanceUnits()); //This is a force. 
-	m_fltCompliance *= lpSim->MassUnits();  //Compliance units are m/N or s^2/Kg
-	m_fltDamping *= lpSim->InverseMassUnits();
-	m_fltSlipPrimary *= lpSim->MassUnits();  //Slip units are s/Kg
-	m_fltSlipSecondary *= lpSim->MassUnits();  
-	m_fltSlidePrimary *= lpSim->InverseDistanceUnits(); //slide is a velocity so units are m/s
-	m_fltSlidePrimary *= lpSim->InverseDistanceUnits();
-	m_fltMaxAdhesive *= (lpSim->InverseMassUnits() * lpSim->InverseDistanceUnits()); //This is a force.
+	m_fltMaxFrictionPrimary *= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits()); //This is a force. 
+	m_fltMaxFrictionSecondary *= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits()); //This is a force. 
+	m_fltCompliance *= m_lpSim->MassUnits();  //Compliance units are m/N or s^2/Kg
+	m_fltDamping *= m_lpSim->InverseMassUnits();
+	m_fltSlipPrimary *= m_lpSim->MassUnits();  //Slip units are s/Kg
+	m_fltSlipSecondary *= m_lpSim->MassUnits();  
+	m_fltSlidePrimary *= m_lpSim->InverseDistanceUnits(); //slide is a velocity so units are m/s
+	m_fltSlidePrimary *= m_lpSim->InverseDistanceUnits();
+	m_fltMaxAdhesive *= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits()); //This is a force.
 }
 
 void MaterialPair::Load(CStdXml &oXml)
@@ -102,7 +102,7 @@ void MaterialPair::Load(CStdXml &oXml)
 	if(m_fltRestitution > 1)
 		m_fltRestitution = 1;
 
-	ScaleUnits(m_lpSim);
+	ScaleUnits();
 
 	oXml.OutOfElem(); //OutOf MaterialPair Element
 

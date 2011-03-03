@@ -55,8 +55,8 @@ namespace VortexAnimatSim
 
 			virtual void LocalMatrix(osg::Matrix osgLocalMT);
 
-			virtual void SetupGraphics(Simulator *lpSim, Structure *lpStructure) = 0;
-			virtual void SetupPhysics(Simulator *lpSim, Structure *lpStructure) = 0;
+			virtual void SetupGraphics() = 0;
+			virtual void SetupPhysics() = 0;
 			virtual void DeleteGraphics();
 			virtual void DeletePhysics() {};
 			virtual void CreateSelectedGraphics(string strName);
@@ -69,7 +69,7 @@ namespace VortexAnimatSim
 			VsBody();
 			virtual ~VsBody();
 
-			virtual osg::Group *ParentOSG(Simulator *lpSim, Structure *lpStructure) = 0;
+			virtual osg::Group *ParentOSG() = 0;
 			virtual osg::Group *RootGroup() {return m_osgRoot.get();};
 			virtual osg::Group *NodeGroup() {return m_osgNodeGroup.get();};
 			virtual osg::Matrix LocalMatrix() {return m_osgLocalMatrix;};
@@ -98,9 +98,9 @@ namespace VortexAnimatSim
 			virtual void SetFreeze(BOOL bVal) {};
 			virtual void SetDensity(float fltVal) {};
 
-			virtual void Initialize(Simulator *lpSim, Structure *lpStructure) = 0;
-			virtual void CreateBody(Simulator *lpSim, Structure *lpStructure);
-			virtual void SetBody(Simulator *lpSim, Structure *lpStructure) = 0;
+			virtual void Initialize() = 0;
+			virtual void CreateBody();
+			virtual void SetBody() = 0;
 
 			virtual osg::MatrixTransform* GetMatrixTransform();
 			virtual void BuildLocalMatrix();

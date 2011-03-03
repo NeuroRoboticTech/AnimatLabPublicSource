@@ -48,7 +48,7 @@ void VsBallSocket::EnableMotor(BOOL bVal)
 }
 
 
-void VsBallSocket::CreateJoint(Simulator *lpSim, Structure *lpStructure)
+void VsBallSocket::CreateJoint()
 {
 	if(!m_lpParent)
 		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
@@ -56,7 +56,7 @@ void VsBallSocket::CreateJoint(Simulator *lpSim, Structure *lpStructure)
 	if(!m_lpChild)
 		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
 
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(lpSim);
+	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
 	if(!lpVsSim)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
 
@@ -67,7 +67,7 @@ void VsBallSocket::CreateJoint(Simulator *lpSim, Structure *lpStructure)
 	VsRigidBody *lpVsChild = dynamic_cast<VsRigidBody *>(m_lpChild);
 	if(!lpVsChild)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody);
-	VxAssembly *lpAssem = (VxAssembly *) lpStructure->Assembly();
+	VxAssembly *lpAssem = (VxAssembly *) m_lpStructure->Assembly();
 
 	CStdFPoint vChildPos = lpVsChild->GetOSGWorldCoords();
 	CStdFPoint vGlobal = vChildPos + m_lpThis->LocalPosition();
@@ -77,39 +77,12 @@ void VsBallSocket::CreateJoint(Simulator *lpSim, Structure *lpStructure)
     VxVector3 axis((double) vLocalRot.x, (double) vLocalRot.y, (double) vLocalRot.z); 
 	m_vxSocket = new VxBallAndSocket(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
 
-	//lpAssem->addConstraint(m_vxHinge);
 	lpVsSim->Universe()->addConstraint(m_vxSocket);
-	lpStructure->AddCollisionPair(m_lpParent->ID(), m_lpChild->ID());
-
-	//m_vxSocket->setLowerLimit(m_vxHinge->kAngularCoordinate,m_fltConstraintLow, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
-	//m_vxHinge->setUpperLimit(m_vxHinge->kAngularCoordinate, m_fltConstraintHigh, 0, m_fltRestitution, m_fltStiffness, m_fltDamping);
-	//m_vxHinge->setLimitsActive(m_vxHinge->kAngularCoordinate, m_bEnableLimits);	
+	m_lpStructure->AddCollisionPair(m_lpParent->ID(), m_lpChild->ID());
 
 	m_vxJoint = m_vxSocket;
 	m_iCoordID = m_vxSocket->kCoordinateAngular;
 }
-
-/*
-float *VsBallSocket::GetDataPointer(string strDataType)
-{
-	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
-
-	THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "JointID: " + STR(m_strName) + "  DataType: " + strDataType);
-
-	return lpData;
-}
-
-void VsBallSocket::ResetSimulation(Simulator *lpSim, Structure *lpStructure)
-{
-	VsJoint::ResetSimulation(lpSim, lpStructure);
-	BallSocket::ResetSimulation(lpSim, lpStructure);
-}
-*/
-//void VsBallSocket::StepSimulation(Simulator *lpSim, Structure *lpStructure)
-//{
-//	SetVelocityToDesired();
-//}
 
 		}		//Joints
 	}			// Environment

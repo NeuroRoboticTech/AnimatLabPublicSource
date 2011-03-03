@@ -147,20 +147,20 @@ void PacemakerNeuron::LowCurrentOn(float fltVss)
 }
 
 
-void PacemakerNeuron::StepSimulation(Simulator *lpSim, Organism *lpOrganism, FiringRateModule *lpModule)
+void PacemakerNeuron::StepSimulation()
 {
 	//float fltTime = lpSim->Time();
 	//if(m_strName == "U Obstacle Mem" && fltTime > 3.672)
 	//	fltTime=fltTime;
 
-	Neuron::StepSimulation(lpSim, lpOrganism, lpModule);
+	Neuron::StepSimulation();
 
 //	//Now we need to check if this neuron has crossed the firing threshold.
 //	//If it has then we initiate High current.
-		if( ((m_aryVn[lpModule->InactiveArray()] - m_fltVth) > 1e-6) && ((m_aryVn[lpModule->ActiveArray()] - m_fltVth) < 1e-6) )
+		if( ((m_aryVn[m_lpFastModule->InactiveArray()] - m_fltVth) > 1e-6) && ((m_aryVn[m_lpFastModule->ActiveArray()] - m_fltVth) < 1e-6) )
 			HighCurrentOn();
 
-		if( ((m_aryVn[lpModule->InactiveArray()] - m_fltVth) < 1e-6) && ((m_aryVn[lpModule->ActiveArray()] - m_fltVth) > 1e-6) )
+		if( ((m_aryVn[m_lpFastModule->InactiveArray()] - m_fltVth) < 1e-6) && ((m_aryVn[m_lpFastModule->ActiveArray()] - m_fltVth) > 1e-6) )
 			LowCurrentOn(0);
 
 	//I was having problems where Vnactive = 2e-9 and vth=0 it would not reset the high current on when you hit it with a current inject.

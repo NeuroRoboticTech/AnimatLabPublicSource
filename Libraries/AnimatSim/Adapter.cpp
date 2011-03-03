@@ -82,17 +82,17 @@ catch(...)
 
 
 //Node Overrides
-void Adapter::AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput)
+void Adapter::AddExternalNodeInput(float fltInput)
 {
 	THROW_TEXT_ERROR(Al_Err_lOpNotDefinedForAdapter, Al_Err_strOpNotDefinedForAdapter, "AddExternalNodeInput");
 }
 
-void Adapter::AttachSourceAdapter(Simulator *lpSim, Structure *lpStructure, Node *lpNode)
+void Adapter::AttachSourceAdapter(Structure *lpStructure, Node *lpNode)
 {
 	THROW_TEXT_ERROR(Al_Err_lOpNotDefinedForAdapter, Al_Err_strOpNotDefinedForAdapter, "AttachSourceAdapter");
 }
 
-void Adapter::AttachTargetAdapter(Simulator *lpSim, Structure *lpStructure, Node *lpNode)
+void Adapter::AttachTargetAdapter(Structure *lpStructure, Node *lpNode)
 {
 	THROW_TEXT_ERROR(Al_Err_lOpNotDefinedForAdapter, Al_Err_strOpNotDefinedForAdapter, "AttachTargetAdapter");
 }
@@ -103,9 +103,9 @@ float *Adapter::GetDataPointer(string strDataType)
 	return 0;
 }
 
-void Adapter::Initialize(Simulator *lpSim, Structure *lpStructure)
+void Adapter::Initialize()
 {
-	m_lpSourceNode = dynamic_cast<Node *>(lpSim->FindByID(m_strSourceID));
+	m_lpSourceNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strSourceID));
 	if(!m_lpSourceNode)
 		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strSourceID);
 
@@ -113,19 +113,19 @@ void Adapter::Initialize(Simulator *lpSim, Structure *lpStructure)
 
 	if(!m_lpSourceData)
 		THROW_TEXT_ERROR(Al_Err_lDataPointNotFound, Al_Err_strDataPointNotFound, 
-		("Adapter: " + m_strID + " StructureID: " + lpStructure->ID() + "SourceID: " + m_strSourceID + " DataType: " + m_strSourceDataType));
+		("Adapter: " + m_strID + " StructureID: " + m_lpStructure->ID() + "SourceID: " + m_strSourceID + " DataType: " + m_strSourceDataType));
 
-	m_lpTargetNode = dynamic_cast<Node *>(lpSim->FindByID(m_strTargetID));
+	m_lpTargetNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strTargetID));
 	if(!m_lpTargetNode)
 		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strTargetID);
 
-	m_lpSourceNode->AttachSourceAdapter(lpSim, lpStructure, this);
-	m_lpTargetNode->AttachTargetAdapter(lpSim, lpStructure, this);
+	m_lpSourceNode->AttachSourceAdapter(m_lpStructure, this);
+	m_lpTargetNode->AttachTargetAdapter(m_lpStructure, this);
 }
 
-void Adapter::StepSimulation(Simulator *lpSim, Structure *lpStructure)
+void Adapter::StepSimulation()
 {
-	m_lpTargetNode->AddExternalNodeInput(lpSim, lpStructure, m_lpGain->CalculateGain(*m_lpSourceData));
+	m_lpTargetNode->AddExternalNodeInput(m_lpGain->CalculateGain(*m_lpSourceData));
 }
 
 void Adapter::Load(CStdXml &oXml)

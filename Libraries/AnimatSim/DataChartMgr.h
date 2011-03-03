@@ -24,8 +24,8 @@ namespace AnimatSim
 			DataChartMgr();
 			virtual ~DataChartMgr();
 
-			virtual BOOL AddDataChart(Simulator *lpSim, string strXml);
-			virtual BOOL RemoveDataChart(Simulator *lpSim, string strID);
+			virtual BOOL AddDataChart(string strXml);
+			virtual BOOL RemoveDataChart(string strID);
 
 			virtual void AddDataColumn(string strChartKey, DataColumn *lpColumn);
 			virtual void RemoveDataColumn(string strChartKey, string strColumnName, BOOL bThrowError = TRUE);

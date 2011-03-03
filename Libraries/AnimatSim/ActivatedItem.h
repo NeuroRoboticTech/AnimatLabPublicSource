@@ -100,8 +100,8 @@ namespace AnimatSim
 		BOOL IsActivated();
 		BOOL IsInitialized();
 
-		BOOL NeedToActivate(Simulator *lpSim);
-		BOOL NeedToDeactivate(Simulator *lpSim);
+		BOOL NeedToActivate();
+		BOOL NeedToDeactivate();
 
 		/**
 		\fn	virtual BOOL ActivatedItem::operator<(ActivatedItem *lpItem) = 0;
@@ -120,14 +120,13 @@ namespace AnimatSim
 		**/
 		virtual BOOL operator<(ActivatedItem *lpItem) = 0;
 
-		virtual void Initialize(Simulator *lpSim);
-		virtual void ReInitialize(Simulator *lpSim);
+		virtual void Initialize();
+		virtual void ReInitialize();
 		virtual BOOL NeedToStep();
-		virtual void ResetSimulation(Simulator *lpSim);
-		virtual void Activate(Simulator *lpSim);
-		virtual void Deactivate(Simulator *lpSim);
+		virtual void ResetSimulation();
+		virtual void Activate();
+		virtual void Deactivate();
 
-		virtual void StepSimulation(Simulator *lpSim) = 0;
 		virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 		virtual BOOL Overlaps(ActivatedItem *lpItem);
 		virtual void Load(CStdXml &oXml);

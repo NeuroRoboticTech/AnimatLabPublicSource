@@ -22,8 +22,8 @@ namespace VortexAnimatSim
 			virtual ~VsHud();
 
 			virtual void Reset();
-			virtual void Initialize(Simulator *lpSim);
-			virtual void Update(Simulator *lpSim);
+			virtual void Initialize();
+			virtual void Update();
 
 			virtual void Load(CStdXml &oXml);
 		};

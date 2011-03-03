@@ -193,7 +193,7 @@ void ContactSensor::ClearCurrents()
 		m_aryFields[iField]->m_fltCurrent = 0;
 }
 
-void ContactSensor::ProcessContact(Simulator *lpSim, StdVector3 vPos, float fltForceMagnitude)
+void ContactSensor::ProcessContact(StdVector3 vPos, float fltForceMagnitude)
 {
 	if(fltForceMagnitude > m_fltMaxForce)
 		fltForceMagnitude = m_fltMaxForce;
@@ -205,7 +205,7 @@ void ContactSensor::ProcessContact(Simulator *lpSim, StdVector3 vPos, float fltF
 	for(int iField=0; iField<iSize; iField++)
 	{
 		lpField = m_aryFields[iField];
-		fltDist = V3_DIST(lpField->m_vVertex, vPos) * lpSim->DistanceUnits();
+		fltDist = V3_DIST(lpField->m_vVertex, vPos) * m_lpSim->DistanceUnits();
 		fltFieldGain = m_lpFieldGain->CalculateGain(fltDist);
 		fltForce = fltForceMagnitude*fltFieldGain;
 		fltCurrent = m_lpCurrentGain->CalculateGain(fltForce);

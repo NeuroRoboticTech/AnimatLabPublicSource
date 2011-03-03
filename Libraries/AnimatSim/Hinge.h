@@ -48,7 +48,7 @@ namespace AnimatSim
 				float m_ftlServoGain;
 				BOOL m_bServoMotor;
 
-				virtual void CreateCylinderGraphics(Simulator *lpSim, Structure *lpStructure) = 0;
+				virtual void CreateCylinderGraphics() = 0;
 
 			public:
 				Hinge();

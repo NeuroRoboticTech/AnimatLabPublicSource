@@ -34,18 +34,18 @@ VsSpring::~VsSpring()
 }
 
 
-void VsSpring::CreateParts(Simulator *lpSim, Structure *lpStructure)
+void VsSpring::CreateParts()
 {
 	//We do nothing in createparts because we cannot build the line until after all parts are created
 	//so we can get a handle to the attachment points.
 }
 
-void VsSpring::CreateJoints(Simulator *lpSim, Structure *lpStructure)
+void VsSpring::CreateJoints()
 {
-	Spring::CreateJoints(lpSim, lpStructure);
-	VsLine::CreateParts(lpSim, lpStructure);
+	Spring::CreateJoints();
+	VsLine::CreateParts();
 
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(lpSim);
+	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
 	if(!lpVsSim)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
 
@@ -82,38 +82,38 @@ void VsSpring::Enabled(BOOL bVal)
 		m_vxSpring->enable(m_bEnabled);
 }
 
-void VsSpring::CollectBodyData(Simulator *lpSim)
+void VsSpring::CollectBodyData()
 {
 	if(m_vxSpring)
 	{
-		m_fltLength = CalculateLength(lpSim);
-		m_fltDisplacement = (m_fltLength - m_fltNaturalLength) * lpSim->DistanceUnits();
-		m_fltLength *= lpSim->DistanceUnits();
+		m_fltLength = CalculateLength();
+		m_fltDisplacement = (m_fltLength - m_fltNaturalLength) * m_lpSim->DistanceUnits();
+		m_fltLength *= m_lpSim->DistanceUnits();
 
 		m_fltEnergy = 0.5f*m_fltStiffness*m_fltDisplacement*m_fltDisplacement;
 
 		Vx::VxReal3 vForce;
 		m_vxSpring->getPartForce(0, vForce);
-		m_fltTension = V3_MAG(vForce) * lpSim->MassUnits() * lpSim->DistanceUnits();
+		m_fltTension = V3_MAG(vForce) * m_lpSim->MassUnits() * m_lpSim->DistanceUnits();
 	}
 }
 
-void VsSpring::ResetSimulation(Simulator *lpSim, Structure *lpStructure)
+void VsSpring::ResetSimulation()
 {
-	Spring::ResetSimulation(lpSim, lpStructure);
-	VsLine::ResetSimulation(lpSim, lpStructure);
+	Spring::ResetSimulation();
+	VsLine::ResetSimulation();
 }
 
-void VsSpring::AfterResetSimulation(Simulator *lpSim, Structure *lpStructure)
+void VsSpring::AfterResetSimulation()
 {
-	Spring::AfterResetSimulation(lpSim, lpStructure);
-	VsLine::AfterResetSimulation(lpSim, lpStructure);
+	Spring::AfterResetSimulation();
+	VsLine::AfterResetSimulation();
 }
 
-void VsSpring::StepSimulation(Simulator *lpSim, Structure *lpStructure)
+void VsSpring::StepSimulation()
 {
-	Spring::StepSimulation(lpSim, lpStructure);
-	VsLine::DrawLine(lpSim, lpStructure);
+	Spring::StepSimulation();
+	VsLine::DrawLine();
 }
 
 float *VsSpring::GetDataPointer(string strDataType)

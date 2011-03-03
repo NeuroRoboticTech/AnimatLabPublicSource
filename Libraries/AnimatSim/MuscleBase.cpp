@@ -99,7 +99,7 @@ void MuscleBase::Enabled(BOOL bVal)
 	}
 }
 
-void MuscleBase::AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput)
+void MuscleBase::AddExternalNodeInput(float fltInput)
 {
 	//We are changing this. It is now really driven by the membrane voltage of the non-spiking neuron. Integration from 
 	//different motor neurons takes place in the non-spiking neuron and we get that here instead of frequency and use that

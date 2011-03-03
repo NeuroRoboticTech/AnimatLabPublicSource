@@ -21,7 +21,7 @@ namespace VortexAnimatSim
 			protected:
 				Vx::VxSpring *m_vxSpring;
 
-				virtual void CollectBodyData(Simulator *lpSim);
+				virtual void CollectBodyData();
 
 			public:
 				VsSpring();
@@ -29,12 +29,12 @@ namespace VortexAnimatSim
 
 				virtual void Enabled(BOOL bVal);
 
-				virtual void CreateParts(Simulator *lpSim, Structure *lpStructure);
-				virtual void CreateJoints(Simulator *lpSim, Structure *lpStructure);
+				virtual void CreateParts();
+				virtual void CreateJoints();
 				virtual float *GetDataPointer(string strDataType);
-				virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure);
-				virtual void AfterResetSimulation(Simulator *lpSim, Structure *lpStructure);
-				virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
+				virtual void ResetSimulation();
+				virtual void AfterResetSimulation();
+				virtual void StepSimulation();
 			};
 
 		}		//Joints

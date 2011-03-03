@@ -109,7 +109,7 @@ namespace AnimatSim
 			virtual void AddRoot(string strXml);
 			virtual void RemoveRoot(string strID, BOOL bThrowError = TRUE);
 			
-			virtual void CollectStructureData(Simulator *lpSim);
+			virtual void CollectStructureData();
 
 		public:
 			Structure();
@@ -165,8 +165,9 @@ namespace AnimatSim
 			**/
 			virtual void *GetMatrixPointer() = 0;
 
-			virtual void Initialize(Simulator *lpSim);
-			virtual void StepPhysicsEngine(Simulator *lpSim);
+			virtual void Initialize();
+			virtual void StepPhysicsEngine();
+			virtual void ResetSimulation();
 
 			void AddJointToList(Joint *lpJoint);
 			void AddRigidBodyToList(RigidBody *lpBody);
@@ -179,10 +180,8 @@ namespace AnimatSim
 			virtual void EnableMotor(string strJointID, BOOL bVal);
 			virtual void SetMotorInput(string strJointID, float fltInput);
 
-			virtual void EnableCollision(Simulator *lpSim, RigidBody *lpCollisionBody);
-			virtual void DisableCollision(Simulator *lpSim, RigidBody *lpCollisionBody);
-
-			virtual void ResetSimulation(Simulator *lpSim);
+			virtual void EnableCollision(RigidBody *lpCollisionBody);
+			virtual void DisableCollision(RigidBody *lpCollisionBody);
 
 #pragma region DataAccesMethods
 

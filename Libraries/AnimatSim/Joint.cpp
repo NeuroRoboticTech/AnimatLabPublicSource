@@ -121,7 +121,7 @@ BOOL Joint::EnableLimits() {return m_bEnableLimits;};
 void Joint::EnableLimits(BOOL bVal) {m_bEnableLimits = bVal;}
 
 //Node Overrides
-void Joint::AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput)
+void Joint::AddExternalNodeInput(float fltInput)
 {
 	m_fltDesiredVelocity += fltInput;
 }
@@ -132,7 +132,7 @@ void Joint::SetVelocityToDesired()
 	m_fltDesiredVelocity = 0;
 }
 
-void Joint::CreateJoint(Simulator *lpSim, Structure *lpStructure)
+void Joint::CreateJoint()
 {}
 
 
@@ -159,9 +159,9 @@ void Joint::CreateJoint(Simulator *lpSim, Structure *lpStructure)
    Joint::StepSimulation, Simulator::StepSimulation
 */
 
-void Joint::StepSimulation(Simulator *lpSim, Structure *lpStructure)
+void Joint::StepSimulation()
 {
-	UpdateData(lpSim, lpStructure);
+	UpdateData();
 }
 
 
@@ -206,7 +206,7 @@ BOOL Joint::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
-void Joint::ResetSimulation(Simulator *lpSim, Structure *lpStructure)
+void Joint::ResetSimulation()
 {
 	m_fltSetVelocity = 0;
 	m_fltDesiredVelocity = 0;

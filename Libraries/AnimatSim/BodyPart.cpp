@@ -879,20 +879,17 @@ void BodyPart::AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float
 }
 
 /**
-\fn	void BodyPart::UpdateData(Simulator *lpSim, Structure *lpStructure)
+\fn	void BodyPart::UpdateData()
 
-\brief	Called to collect any body data for this part.
+\brief	Called to collect any body data for this part. 
 
 \author	dcofer
 \date	3/2/2011
-
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpStructure	The pointer to the parent structure for this part. 
 **/
-void BodyPart::UpdateData(Simulator *lpSim, Structure *lpStructure)
+void BodyPart::UpdateData()
 {
 	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->Physics_CollectBodyData(lpSim);
+		m_lpPhysicsBody->Physics_CollectBodyData();
 }
 
 

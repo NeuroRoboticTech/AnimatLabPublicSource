@@ -66,18 +66,18 @@ BOOL MemoryChart::Lock()
 void MemoryChart::Unlock()
 {m_oRowCountLock.Leave();}
 
-void MemoryChart::Initialize(Simulator *lpSim)
+void MemoryChart::Initialize()
 {
-	DataChart::Initialize(lpSim);
+	DataChart::Initialize();
 
 	//The time window this memory chart will use for data collection is determined by
 	//the starttime/endtime. This is translated to startslice/endslice in ActivatedItem::Initialize
 	//and then datachart::Initialize creates a buffer of the correct size.
 }
 
-void MemoryChart::StepSimulation(Simulator *lpSim)
+void MemoryChart::StepSimulation()
 {
-	if(!(lpSim->TimeSlice()%m_iCollectInterval))
+	if(!(m_lpSim->TimeSlice()%m_iCollectInterval))
 	{
 		if(m_oRowCountLock.TryEnter())
 		{
@@ -91,7 +91,7 @@ void MemoryChart::StepSimulation(Simulator *lpSim)
 			}
 
 			if(m_lCurrentRow < m_lRowCount)
-				DataChart::StepSimulation(lpSim);
+				DataChart::StepSimulation();
 
 			m_oRowCountLock.Leave();
 		}

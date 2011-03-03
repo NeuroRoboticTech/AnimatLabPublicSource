@@ -40,36 +40,36 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of VsLinearHillMuscle\r\n", "", -1, FALSE, TRUE);}
 }
 
-void VsLinearHillMuscle::CreateParts(Simulator *lpSim, Structure *lpStructure)
+void VsLinearHillMuscle::CreateParts()
 {
 	//We do nothing in createparts because we cannot build the line until after all parts are created
 	//so we can get a handle to the attachment points.
 }
 
-void VsLinearHillMuscle::CreateJoints(Simulator *lpSim, Structure *lpStructure)
+void VsLinearHillMuscle::CreateJoints()
 {
-	LinearHillMuscle::CreateJoints(lpSim, lpStructure);
-	VsLine::CreateParts(lpSim, lpStructure);
+	LinearHillMuscle::CreateJoints();
+	VsLine::CreateParts();
 }
 
-void VsLinearHillMuscle::ResetSimulation(Simulator *lpSim, Structure *lpStructure)
+void VsLinearHillMuscle::ResetSimulation()
 {
-	LinearHillMuscle::ResetSimulation(lpSim, lpStructure);
-	VsLine::ResetSimulation(lpSim, lpStructure);
+	LinearHillMuscle::ResetSimulation();
+	VsLine::ResetSimulation();
 }
 
-void VsLinearHillMuscle::AfterResetSimulation(Simulator *lpSim, Structure *lpStructure)
+void VsLinearHillMuscle::AfterResetSimulation()
 {
-	LinearHillMuscle::AfterResetSimulation(lpSim, lpStructure);
-	VsLine::AfterResetSimulation(lpSim, lpStructure);
+	LinearHillMuscle::AfterResetSimulation();
+	VsLine::AfterResetSimulation();
 }
 
-void VsLinearHillMuscle::StepSimulation(Simulator *lpSim, Structure *lpStructure)
+void VsLinearHillMuscle::StepSimulation()
 {
 	if(m_bEnabled)
 	{
-		CalculateTension(lpSim);
-		VsLine::StepSimulation(lpSim, lpStructure, m_fltTension); 
+		CalculateTension();
+		VsLine::StepSimulation(m_fltTension); 
 	}
 }
 

@@ -68,32 +68,32 @@ int Materials::GetMaterialID(string strName)
 	return m_lpPair->GetMaterialID(strName);
 }
 
-void Materials::Initialize(Simulator *lpSim)
+void Materials::Initialize()
 {
-	RegisterMaterials(lpSim);
+	RegisterMaterials();
 
 	MaterialPair *lpItem = NULL;
 	int iCount = m_aryMaterialPairs.GetSize();
 	for(int iIndex = 0; iIndex < iCount; iIndex++)
 	{
 		lpItem = m_aryMaterialPairs[iIndex];
-		lpItem->Initialize(lpSim);
+		lpItem->Initialize();
 	}
 }
 
-void Materials::RegisterMaterials(Simulator *lpSim)
+void Materials::RegisterMaterials()
 {
 	if(m_lpPair)
 		{delete m_lpPair; m_lpPair = NULL;}	
 
-	m_lpPair = dynamic_cast<MaterialPair *>(lpSim->CreateObject("", "Material", "Default"));
+	m_lpPair = dynamic_cast<MaterialPair *>(m_lpSim->CreateObject("", "Material", "Default"));
 	if(!m_lpPair)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Material");
 
-	m_lpPair->RegisterMaterialTypes(lpSim, m_aryMaterialTypes);
+	m_lpPair->RegisterMaterialTypes(m_aryMaterialTypes);
 }
 
-void Materials::CreateDefaultMaterial(Simulator *lpSim)
+void Materials::CreateDefaultMaterial()
 {
 	MaterialPair *lpItem=NULL;
 
@@ -104,13 +104,13 @@ void Materials::CreateDefaultMaterial(Simulator *lpSim)
 	{
 		strType = m_aryMaterialTypes[iIndex];
 
-		lpItem = dynamic_cast<MaterialPair *>(lpSim->CreateObject("", "Material", "Default"));
+		lpItem = dynamic_cast<MaterialPair *>(m_lpSim->CreateObject("", "Material", "Default"));
 		if(!lpItem)
 			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Material");
 
 		lpItem->Material1("DEFAULT");
 		lpItem->Material2(strType);
-		lpItem->ScaleUnits(lpSim);
+		lpItem->ScaleUnits();
 
 		m_aryMaterialPairs.Add(lpItem);
 	}
@@ -164,7 +164,7 @@ void Materials::Load(CStdXml &oXml)
 		oXml.OutOfElem();  //Outof Materials Element
 	}
 
-	CreateDefaultMaterial(m_lpSim); //Always create a default material.
+	CreateDefaultMaterial(); //Always create a default material.
 }
 
 MaterialPair *Materials::LoadMaterialPair(CStdXml &oXml)

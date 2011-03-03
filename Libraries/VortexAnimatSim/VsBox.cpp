@@ -34,7 +34,7 @@ VsBox::~VsBox()
 {
 }
 
-void VsBox::CreateParts(Simulator *lpSim, Structure *lpStructure)
+void VsBox::CreateParts()
 {
 	m_osgGeometry = CreateBoxGeometry(m_fltLength, m_fltHeight, m_fltWidth, m_fltLength, m_fltHeight, m_fltWidth);
 	m_osgGeometry->setName(m_lpThis->Name() + "_Geometry");
@@ -53,18 +53,18 @@ void VsBox::CreateParts(Simulator *lpSim, Structure *lpStructure)
 	m_fltYArea = m_fltLength * m_fltWidth;
 	m_fltZArea = m_fltHeight * m_fltLength;
 
-	VsRigidBody::CreateBody(lpSim, lpStructure);
-	Box::CreateParts(lpSim, lpStructure);
-	VsRigidBody::SetBody(lpSim, lpStructure);
+	VsRigidBody::CreateBody();
+	Box::CreateParts();
+	VsRigidBody::SetBody();
 }
 
-void VsBox::CreateJoints(Simulator *lpSim, Structure *lpStructure)
+void VsBox::CreateJoints()
 {
 	if(m_lpJointToParent)
-		m_lpJointToParent->CreateJoint(lpSim, lpStructure);
+		m_lpJointToParent->CreateJoint();
 
-	Box::CreateJoints(lpSim, lpStructure);
-	VsRigidBody::Initialize(lpSim, lpStructure);
+	Box::CreateJoints();
+	VsRigidBody::Initialize();
 }
 
 void VsBox::Resize()

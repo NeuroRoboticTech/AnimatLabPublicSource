@@ -87,7 +87,7 @@ namespace AnimatSim
 			/// directly without having to overload a bunch of methods in each box, sphere, etc..
 			IPhysicsBody *m_lpPhysicsBody;
 
-			virtual void UpdateData(Simulator *lpSim, Structure *lpStructure);
+			virtual void UpdateData();
 
 		public:
 			BodyPart(void);

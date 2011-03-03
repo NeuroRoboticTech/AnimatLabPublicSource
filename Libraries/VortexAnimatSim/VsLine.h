@@ -8,7 +8,7 @@ namespace VortexAnimatSim
 	namespace Environment
 	{
 
-		class VORTEX_PORT VsLine : public VsRigidBody 
+		class VORTEX_PORT VsLine : public VsRigidBody
 		{
 		protected:
 			LineBase *m_lpLineBase;
@@ -16,9 +16,9 @@ namespace VortexAnimatSim
 			osg::ref_ptr<osg::Geometry> m_osgGeometry; 
 			float fltA;
 
-			osg::Geometry *CreateLineGeometry(Simulator *lpSim, Structure *lpStructure);
+			osg::Geometry *CreateLineGeometry();
 
-			virtual void SetupGraphics(Simulator *lpSim, Structure *lpStructure);
+			virtual void SetupGraphics();
 
 			//Remove the texture and culling options for the line.
 			virtual void SetTexture(string strTexture) {};
@@ -28,13 +28,13 @@ namespace VortexAnimatSim
 			VsLine();
 			virtual ~VsLine();
 
-			virtual void Initialize(Simulator *lpSim, Structure *lpStructure) {};
-			virtual void CalculateForceVector(Simulator *lpSim,Attachment *lpPrim, Attachment *lpSec, float fltTension, CStdFPoint &oPrimPos, CStdFPoint &oSecPos, CStdFPoint &oPrimForce);
-			virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure);
-			virtual void AfterResetSimulation(Simulator *lpSim, Structure *lpStructure);
-			virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure, float fltTension);
-			virtual void CreateParts(Simulator *lpSim, Structure *lpStructure);
-			virtual void DrawLine(Simulator *lpSim, Structure *lpStructure);
+			virtual void Initialize() {};
+			virtual void CalculateForceVector(Attachment *lpPrim, Attachment *lpSec, float fltTension, CStdFPoint &oPrimPos, CStdFPoint &oSecPos, CStdFPoint &oPrimForce);
+			virtual void ResetSimulation();
+			virtual void AfterResetSimulation();
+			virtual void StepSimulation(float fltTension);
+			virtual void CreateParts();
+			virtual void DrawLine();
 		};
 
 	}			// Visualization

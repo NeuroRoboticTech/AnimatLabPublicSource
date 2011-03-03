@@ -59,16 +59,16 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of VsInverseMuscleCurrent\r\n", "", -1, FALSE, TRUE);}
 }
 
-void VsInverseMuscleCurrent::Initialize(Simulator *lpSim)
+void VsInverseMuscleCurrent::Initialize()
 {
-	if(!lpSim)
+	if(!m_lpSim)
 		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
 
-	ExternalStimulus::Initialize(lpSim);
+	ExternalStimulus::Initialize();
 
 	//Lets try and get the node we will dealing with.
-	m_lpOrganism = lpSim->FindOrganism(m_strOrganismID);
-	m_lpNode = dynamic_cast<Node *>(lpSim->FindByID(m_strTargetNodeID));
+	m_lpOrganism = m_lpSim->FindOrganism(m_strOrganismID);
+	m_lpNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strTargetNodeID));
 	if(!m_lpNode)
 		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strTargetNodeID);
 
@@ -83,14 +83,14 @@ void VsInverseMuscleCurrent::Initialize(Simulator *lpSim)
 	//Tells how many time steps it takes before we do this stimulus.
 	//The neural stuff can have faster time steps than the physics engine.
 	//We only need to update this guy when the physics engine steps though.
-	m_iStepInterval = lpSim->PhysicsTimeStep()/lpSim->TimeStep();
+	m_iStepInterval = m_lpSim->PhysicsTimeStep()/m_lpSim->TimeStep();
 
 	m_lpMuscle = dynamic_cast<LinearHillMuscle *>( m_lpOrganism->FindRigidBody(m_strMuscleID));
 }
 
-void VsInverseMuscleCurrent::Activate(Simulator *lpSim)
+void VsInverseMuscleCurrent::Activate()
 {
-	ExternalStimulus::Activate(lpSim);
+	ExternalStimulus::Activate();
 
 	m_iIndex = 0;
 
@@ -100,12 +100,12 @@ void VsInverseMuscleCurrent::Activate(Simulator *lpSim)
 	}
 }
  
-void VsInverseMuscleCurrent::StepSimulation(Simulator *lpSim)
+void VsInverseMuscleCurrent::StepSimulation()
 {
 	if(m_iIndex < m_aryTime.GetSize())
 	{
 		float fltTime = m_aryTime[m_iIndex];
-		float fltTime1 = lpSim->Time();
+		float fltTime1 = m_lpSim->Time();
 
 		//if(fltTime >= 2.03)
 		//	fltTime = fltTime;
@@ -114,7 +114,7 @@ void VsInverseMuscleCurrent::StepSimulation(Simulator *lpSim)
 		m_fltVelocity = m_aryVelocity[m_iIndex];
 
 		//First calculate the active tension required.
-		m_lpMuscle->CalculateInverseDynamics(lpSim, m_fltLength, m_fltVelocity, m_fltT, m_fltVm, m_fltA);
+		m_lpMuscle->CalculateInverseDynamics(m_fltLength, m_fltVelocity, m_fltT, m_fltVm, m_fltA);
 		m_fltVm = m_fltVm - m_fltRestPotential;
 
 		m_fltPrevCurrent = m_fltCurrent;
@@ -128,9 +128,9 @@ void VsInverseMuscleCurrent::StepSimulation(Simulator *lpSim)
 
 }
 
-void VsInverseMuscleCurrent::Deactivate(Simulator *lpSim)
+void VsInverseMuscleCurrent::Deactivate()
 {		
-	ExternalStimulus::Deactivate(lpSim);
+	ExternalStimulus::Deactivate();
 	*m_lpExternalCurrent = *m_lpExternalCurrent - m_fltCurrent;
 }
 

@@ -47,17 +47,17 @@ namespace AnimatSim
 			Adapter();
 			virtual ~Adapter();
 
-			virtual void Initialize(Simulator *lpSim, Structure *lpStructure);
+			virtual void Initialize();
 			virtual string SourceModule() {return m_strSourceModule;};
 			virtual string TargetModule() {return m_strTargetModule;};
 
 			//Node Overrides
-			virtual void AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput);
-			virtual void AttachSourceAdapter(Simulator *lpSim, Structure *lpStructure, Node *lpNode);
-			virtual void AttachTargetAdapter(Simulator *lpSim, Structure *lpStructure, Node *lpNode);
+			virtual void AddExternalNodeInput(float fltInput);
+			virtual void AttachSourceAdapter(Structure *lpStructure, Node *lpNode);
+			virtual void AttachTargetAdapter(Structure *lpStructure, Node *lpNode);
 			virtual float *GetDataPointer(string strDataType);
-			virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure) {};
-			virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
+			virtual void ResetSimulation() {};
+			virtual void StepSimulation();
 			virtual void Load(CStdXml &oXml);
 		};
 

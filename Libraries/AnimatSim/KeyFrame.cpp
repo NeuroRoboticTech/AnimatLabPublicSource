@@ -69,23 +69,23 @@ BOOL KeyFrame::operator<(ActivatedItem *lpItem)
 
 
 /*
-void KeyFrame::Initialize(Simulator *lpSim)
+void KeyFrame::Initialize()
 {
 }
 
 
-void KeyFrame::Activate(Simulator *lpSim)
+void KeyFrame::Activate()
 {}
 
-void KeyFrame::StepSimulation(Simulator *lpSim)
+void KeyFrame::StepSimulation()
 {}
 
-void KeyFrame::Deactivate(Simulator *lpSim)
+void KeyFrame::Deactivate()
 {
 }
 */
 
-void KeyFrame::GenerateID(Simulator *lpSim)
+void KeyFrame::GenerateID()
 {
 	//Lets verify the slice data is setup correctly.
 	Std_IsAboveMin((long) -1, m_lStartSlice, TRUE, "StartSlice");
@@ -113,7 +113,7 @@ void KeyFrame::Load(CStdXml &oXml)
 	m_iCollectInterval = oXml.GetChildInt("CollectInterval");
 	Std_IsAboveMin((int) 0, m_iCollectInterval, TRUE, "CollectInterval");
 
-	GenerateID(m_lpSim);
+	GenerateID();
 
 	oXml.OutOfElem(); //OutOf KeyFrame Element
 }

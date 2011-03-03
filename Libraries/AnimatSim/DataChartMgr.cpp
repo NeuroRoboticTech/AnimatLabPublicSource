@@ -88,21 +88,21 @@ void DataChartMgr::SetDataColumnIndex(string strChartKey, string strColumnName, 
 	lpColumn->Index(iIndex);
 }
 
-BOOL DataChartMgr::AddDataChart(Simulator *lpSim, string strXml)
+BOOL DataChartMgr::AddDataChart(string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
 	oXml.FindElement("Root");
 	oXml.FindChildElement("DataChart");
 	LoadDataChart(oXml);
-	ReInitialize(lpSim);
+	ReInitialize();
 	return TRUE;
 }
 
-BOOL DataChartMgr::RemoveDataChart(Simulator *lpSim, string strID)
+BOOL DataChartMgr::RemoveDataChart(string strID)
 {
-	Remove(lpSim, strID);
-	ReInitialize(lpSim);
+	Remove(strID);
+	ReInitialize();
 	return TRUE;
 }
 
@@ -154,7 +154,7 @@ try
 		lpChart->Load(oXml);
 	}
 
-	Add(m_lpSim, lpChart);
+	Add(lpChart);
 	return lpChart;
 }
 catch(CStdErrorInfo oError)

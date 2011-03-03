@@ -28,22 +28,22 @@ namespace AnimatSim
 			int CollectInterval() {return m_iCollectInterval;};
 			void CollectInterval(int iVal) {m_iCollectInterval = iVal;};
 
-			virtual void GenerateID(Simulator *lpSim);
+			virtual void GenerateID();
 
 			virtual void Load(CStdXml &oXml);
 
 			//ActiveItem overrides
 			virtual BOOL operator<(ActivatedItem *lpItem);
 
-			virtual void EnableVideoPlayback(Simulator *lpSim) = 0;
-			virtual void DisableVideoPlayback(Simulator *lpSim) = 0;
-			virtual void StartVideoPlayback(Simulator *lpSim) = 0;
-			virtual void StopVideoPlayback(Simulator *lpSim) = 0;
-			virtual void PlaybackVideoFrame(Simulator *lpSim) = 0;
-			virtual void StepVideoPlayback(Simulator *lpSim, int iFrameCount) = 0;
-			virtual void RecordVideoFrame(Simulator *lpSim) = 0;
-			virtual void SaveVideo(Simulator *lpSim, string strPath) = 0;
-			virtual void MakeCurrentFrame(Simulator *lpSim) = 0;
+			virtual void EnableVideoPlayback() = 0;
+			virtual void DisableVideoPlayback() = 0;
+			virtual void StartVideoPlayback() = 0;
+			virtual void StopVideoPlayback() = 0;
+			virtual void PlaybackVideoFrame() = 0;
+			virtual void StepVideoPlayback(int iFrameCount) = 0;
+			virtual void RecordVideoFrame() = 0;
+			virtual void SaveVideo(string strPath) = 0;
+			virtual void MakeCurrentFrame() = 0;
 		};
 
 		BOOL LessThanActivatedItemCompare(ActivatedItem *lpItem1, ActivatedItem *lpItem2);

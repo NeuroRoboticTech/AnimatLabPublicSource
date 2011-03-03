@@ -216,14 +216,6 @@ void NeuralModule::AttachTargetAdapter(Adapter *lpAdapter)
 	m_iTargetAdapterCount = m_aryTargetAdapters.GetSize();
 }
 
-void NeuralModule::Initialize(Simulator *lpSim, Structure *lpStructure)
-{
-	m_lpSim = lpSim;
-	m_lpOrganism = dynamic_cast<Organism *>(lpStructure);
-	if(!m_lpOrganism) 
-		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
-}
-
 void NeuralModule::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
 {
 	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
@@ -233,10 +225,10 @@ void NeuralModule::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, N
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 }
 
-void NeuralModule::StepSimulation(Simulator *lpSim, Structure *lpStructure)
+void NeuralModule::StepSimulation()
 {
 	for(int iIndex=0; iIndex<m_iTargetAdapterCount; iIndex++)
-		m_aryTargetAdapters[iIndex]->StepSimulation(lpSim, lpStructure);
+		m_aryTargetAdapters[iIndex]->StepSimulation();
 }
 
 	}			//Behavior

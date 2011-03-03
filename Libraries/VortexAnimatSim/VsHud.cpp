@@ -34,7 +34,7 @@ void VsHud::Reset()
 	m_aryHudItems.RemoveAll();
 }
 
-void VsHud::Initialize(Simulator *lpSim)
+void VsHud::Initialize()
 {
 	m_osgProjection = new osg::Projection;
     m_osgProjection->setMatrix(osg::Matrix::ortho2D(0, 800, 0, 600));
@@ -44,7 +44,7 @@ void VsHud::Initialize(Simulator *lpSim)
 	for(int iIndex = 0; iIndex < iCount; iIndex++)
 	{
 		lpItem = m_aryHudItems[iIndex];
-		lpItem->Initialize(lpSim, m_osgProjection.get());
+		lpItem->Initialize(m_osgProjection.get());
 	}
 
 	m_osgMT = new osg::MatrixTransform;
@@ -53,21 +53,21 @@ void VsHud::Initialize(Simulator *lpSim)
     m_osgMT->getOrCreateStateSet()->setAttributeAndModes(new osg::Program, osg::StateAttribute::ON);
     m_osgMT->addChild(m_osgProjection.get());
 
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(lpSim);
+	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
 	if(!lpVsSim)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
 
 	lpVsSim->OSGRoot()->addChild(m_osgMT.get());
 }
 
-void VsHud::Update(Simulator *lpSim)
+void VsHud::Update()
 {
 	VsHudItem *lpItem = NULL;
 	int iCount = m_aryHudItems.GetSize();
 	for(int iIndex = 0; iIndex < iCount; iIndex++)
 	{
 		lpItem = m_aryHudItems[iIndex];
-		lpItem->Update(lpSim);
+		lpItem->Update();
 	}
 }
 

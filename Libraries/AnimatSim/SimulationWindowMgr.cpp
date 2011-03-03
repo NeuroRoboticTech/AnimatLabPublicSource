@@ -63,7 +63,7 @@ try
 	//initialize the window
 	lpWin->WindowID(win);
 	if(bInit)
-		lpWin->Initialize(m_lpSim);
+		lpWin->Initialize();
 
 	//add the window to the list of windows
 	m_aryWindows.Add(lpWin);
@@ -103,7 +103,7 @@ SimulationWindow *SimulationWindowMgr::FindSimulationWindow(HWND win, int &iInde
 
 }
 
-void SimulationWindowMgr::RemoveSimulationWindow(Simulator *lpSim, HWND win)
+void SimulationWindowMgr::RemoveSimulationWindow(HWND win)
 {
 	int iIndex = 0;
 	SimulationWindow *lpWin = FindSimulationWindow(win, iIndex, FALSE);
@@ -116,11 +116,11 @@ void SimulationWindowMgr::RemoveSimulationWindow(Simulator *lpSim, HWND win)
 }
 
 
-BOOL SimulationWindowMgr::Update(Simulator *lpSim)
+BOOL SimulationWindowMgr::Update()
 {
 	int iCount = m_aryWindows.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryWindows[iIndex]->Update(lpSim);
+		m_aryWindows[iIndex]->Update();
 
 	return TRUE;
 }

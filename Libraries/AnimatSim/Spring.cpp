@@ -88,11 +88,11 @@ Spring::~Spring()
 }
 
 // There are no parts or joints to create for muscle attachment points.
-void Spring::CreateParts(Simulator *lpSim, Structure *lpStructure)
+void Spring::CreateParts()
 {
 }
 
-void Spring::AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput)
+void Spring::AddExternalNodeInput(float fltInput)
 {
 	if(m_lpPrimaryAttachment && m_lpSecondaryAttachment)
 	{

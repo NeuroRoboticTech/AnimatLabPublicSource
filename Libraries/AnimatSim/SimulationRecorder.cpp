@@ -45,7 +45,7 @@ SimulationRecorder::SimulationRecorder()
 SimulationRecorder::~SimulationRecorder()
 {}
 
-void SimulationRecorder::Add(Simulator *lpSim, ActivatedItem *lpItem)
+void SimulationRecorder::Add(ActivatedItem *lpItem)
 {
 	//Lets make sure that there are no other frames that already exist that overlap with
 	//this frame that are the same type.
@@ -59,27 +59,27 @@ void SimulationRecorder::Add(Simulator *lpSim, ActivatedItem *lpItem)
 			THROW_PARAM_ERROR(Al_Err_lKeyFrameOverlap, Al_Err_strKeyFrameOverlap, "Overlap Frame ID", lpTest->ID()); 
 	}
 
-	ActivatedItemMgr::Add(lpSim, lpItem);
+	ActivatedItemMgr::Add(lpItem);
 }
 
 
-KeyFrame *SimulationRecorder::Add(Simulator *lpSim, string strType, long lStart, long lEnd)
+KeyFrame *SimulationRecorder::Add(string strType, long lStart, long lEnd)
 {
 	KeyFrame *lpFrame = NULL;
 
 try
 {
-	lpFrame = dynamic_cast<KeyFrame *>(lpSim->CreateObject("AnimatLab", "KeyFrame", strType));
+	lpFrame = dynamic_cast<KeyFrame *>(m_lpSim->CreateObject("AnimatLab", "KeyFrame", strType));
 	if(!lpFrame)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "KeyFrame");
 
 	lpFrame->EndSlice(lEnd);
 	lpFrame->StartSlice(lStart);
-	lpFrame->GenerateID(lpSim);
+	lpFrame->GenerateID();
 
-	Add(lpSim, lpFrame);
+	Add(lpFrame);
 
-	lpFrame->Initialize(lpSim);
+	lpFrame->Initialize();
 
 	return lpFrame;
 }
@@ -155,7 +155,7 @@ try
 	lpFrame->SetSystemPointers(m_lpSim, NULL, NULL, NULL);
 	lpFrame->Load(oXml);
 
-	Add(m_lpSim, lpFrame);
+	Add(lpFrame);
 	return lpFrame;
 }
 catch(CStdErrorInfo oError)

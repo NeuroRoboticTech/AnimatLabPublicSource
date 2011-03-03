@@ -78,7 +78,7 @@ void Synapse::AddSynapse(string strXml)
 	oXml.FindChildElement("CompoundSynapse");
 
 	Synapse *lpSynapse = LoadSynapse(oXml);
-	lpSynapse->Initialize(m_lpSim, m_lpOrganism, m_lpFastModule, m_lpToNeuron);
+	lpSynapse->Initialize();
 }
 
 void Synapse::RemoveSynapse(string strID, BOOL bThrowError)
@@ -102,7 +102,7 @@ int Synapse::FindSynapseListPos(string strID, BOOL bThrowError)
 	return -1;
 }
 
-float Synapse::CalculateModulation(FiringRateModule *lpModule)
+float Synapse::CalculateModulation(FiringRateModule *m_lpFastModule)
 {
 	m_fltModulation=1;
 	int iCount, iIndex;
@@ -112,32 +112,37 @@ float Synapse::CalculateModulation(FiringRateModule *lpModule)
 	for(iIndex=0; iIndex<iCount; iIndex++)
 	{
 		lpSynapse = m_arySynapses[iIndex];
-		m_fltModulation*=lpSynapse->CalculateModulation(lpModule);
+		m_fltModulation*=lpSynapse->CalculateModulation(m_lpFastModule);
 	}
 
 	return m_fltModulation;
 }
 
 
-void Synapse::Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
+void Synapse::Initialize()
 {
-	Link::Initialize(lpSim, lpStructure, lpModule, lpNode);
+	Link::Initialize();
 
-	m_lpFastModule = dynamic_cast<FiringRateModule *>(lpModule);
-	if(!m_lpFastModule)
-		THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", lpModule->ID());
-
-	m_lpOrganism = dynamic_cast<AnimatSim::Environment::Organism *>(lpStructure);
-	if(!m_lpOrganism)
-		THROW_PARAM_ERROR(Al_Err_lUnableToCastOrganismToDesiredType, Al_Err_strUnableToCastOrganismToDesiredType, "ID: ", lpStructure->ID());
-
-	m_lpFromNeuron = dynamic_cast<Neuron *>(lpSim->FindByID(m_strFromID));
+	m_lpFromNeuron = dynamic_cast<Neuron *>(m_lpSim->FindByID(m_strFromID));
 	if(!m_lpFromNeuron)
 		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strFromID);
 
 	int iCount = m_arySynapses.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_arySynapses[iIndex]->Initialize(lpSim, m_lpOrganism, lpModule, lpNode);
+		m_arySynapses[iIndex]->Initialize();
+}
+
+void Synapse::SetSystemPointers(Simulator *m_lpSim, Structure *lpStructure, NeuralModule *m_lpFastModule, Node *lpNode)
+{
+	Link::SetSystemPointers(m_lpSim, lpStructure, m_lpFastModule, lpNode);
+	
+	m_lpFastModule = dynamic_cast<FiringRateModule *>(m_lpFastModule);
+	if(!m_lpFastModule)
+		THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpFastModule->ID());
+
+	m_lpOrganism = dynamic_cast<AnimatSim::Environment::Organism *>(m_lpStructure);
+	if(!m_lpOrganism)
+		THROW_PARAM_ERROR(Al_Err_lUnableToCastOrganismToDesiredType, Al_Err_strUnableToCastOrganismToDesiredType, "ID: ", m_lpStructure->ID());
 }
 
 #pragma region DataAccesMethods
@@ -208,11 +213,11 @@ BOOL Synapse::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 
 #pragma endregion
 
-void Synapse::ResetSimulation(Simulator *lpSim, Structure *lpStructure, Node *lpNode)
+void Synapse::ResetSimulation()
 {
 	int iCount = m_arySynapses.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_arySynapses[iIndex]->ResetSimulation(lpSim, lpStructure, lpNode);
+		m_arySynapses[iIndex]->ResetSimulation();
 }
 
 void Synapse::Load(CStdXml &oXml)
@@ -268,7 +273,7 @@ try
 	if(!lpSynapse)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Synapse");
 
-	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, m_lpNode);
+	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpFastModule, m_lpNode);
 	lpSynapse->Load(oXml);
 	m_arySynapses.Add(lpSynapse);
 

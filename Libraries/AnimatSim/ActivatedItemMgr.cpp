@@ -83,20 +83,17 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of DataChart\r\n", "", -1, FALSE, TRUE);}
 }
 
-
 /**
-\fn	void ActivatedItemMgr::Add(Simulator *lpSim, ActivatedItem *lpItem)
+\fn	void ActivatedItemMgr::Add(ActivatedItem *lpItem)
 
 \brief	Adds a new ActivatedItem to be managed. 
 
 \author	dcofer
 \date	3/1/2011
 
-\param [in,out]	lpSim	The pointer to a simulation. 
 \param [in,out]	lpItem	The pointer to the item to add. 
-\exception The ID of the new item must be unique for this manager.
 **/
-void ActivatedItemMgr::Add(Simulator *lpSim, ActivatedItem *lpItem)
+void ActivatedItemMgr::Add(ActivatedItem *lpItem)
 {
 	if(!lpItem)
 		THROW_ERROR(Al_Err_lActivatedItemNull, Al_Err_strActivatedItemNull);
@@ -121,20 +118,18 @@ void ActivatedItemMgr::Add(Simulator *lpSim, ActivatedItem *lpItem)
 }
 
 /**
-\fn	void ActivatedItemMgr::Remove(Simulator *lpSim, string strID, BOOL bThrowError)
+\fn	void ActivatedItemMgr::Remove(string strID, BOOL bThrowError)
 
 \brief	Removes the item with the specified ID. 
 
 \author	dcofer
 \date	3/1/2011
 
-\param [in,out]	lpSim	The pointer to a simulation. 
-\param	strID			ID of the item to remove. 
-\param	bThrowError		true to throw error if not found. 
-\exception If bThrowError is true and no item with the specified ID is found then
-an exception is thrown.
+\param	strID		ID of the item to remove. 
+\param	bThrowError	true to throw error if not found. 
 **/
-void ActivatedItemMgr::Remove(Simulator *lpSim, string strID, BOOL bThrowError)
+
+void ActivatedItemMgr::Remove(string strID, BOOL bThrowError)
 {
 	int iIndex=0;
 	ActivatedItem *lpItem = Find(strID, iIndex, bThrowError);
@@ -142,7 +137,7 @@ void ActivatedItemMgr::Remove(Simulator *lpSim, string strID, BOOL bThrowError)
 	if(lpItem)
 	{
 		if(lpItem->IsActivated())
-			lpItem->Deactivate(lpSim);
+			lpItem->Deactivate();
 
 		m_aryItems.RemoveAt(iIndex);
 
@@ -248,32 +243,32 @@ int ActivatedItemMgr::FindListPos(string strID, BOOL bThrowError)
 }
 
 
-void ActivatedItemMgr::Initialize(Simulator *lpSim)
+void ActivatedItemMgr::Initialize()
 {
 	int iCount = m_aryItems.GetSize();
 	for(int iChart=0; iChart<iCount; iChart++)
-		m_aryItems[iChart]->Initialize(lpSim);
+		m_aryItems[iChart]->Initialize();
 
 	stable_sort(m_aryItems.begin(), m_aryItems.end(), LessThanActivatedItemCompare);
 }
 
-void ActivatedItemMgr::ReInitialize(Simulator *lpSim)
+void ActivatedItemMgr::ReInitialize()
 {
 	int iCount = m_aryItems.GetSize();
 	for(int iChart=0; iChart<iCount; iChart++)
-		m_aryItems[iChart]->ReInitialize(lpSim);
+		m_aryItems[iChart]->ReInitialize();
 
 	stable_sort(m_aryItems.begin(), m_aryItems.end(), LessThanActivatedItemCompare);
 }
 
-void ActivatedItemMgr::ResetSimulation(Simulator *lpSim)
+void ActivatedItemMgr::ResetSimulation()
 {
 	int iCount = m_aryItems.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryItems[iIndex]->ResetSimulation(lpSim);
+		m_aryItems[iIndex]->ResetSimulation();
 }
 
-void ActivatedItemMgr::StepSimulation(Simulator *lpSim)
+void ActivatedItemMgr::StepSimulation()
 {
 	ActivatedItem *lpItem;
 	int iCount = m_aryItems.GetSize();
@@ -281,13 +276,13 @@ void ActivatedItemMgr::StepSimulation(Simulator *lpSim)
 	{
 		lpItem = m_aryItems[iIndex];
 
-		if(lpItem->NeedToActivate(lpSim))
-			lpItem->Activate(lpSim);
-		else if(lpItem->NeedToDeactivate(lpSim))
-			lpItem->Deactivate(lpSim);
+		if(lpItem->NeedToActivate())
+			lpItem->Activate();
+		else if(lpItem->NeedToDeactivate())
+			lpItem->Deactivate();
 
 		if(lpItem->IsActivated())
-			lpItem->StepSimulation(lpSim);
+			lpItem->StepSimulation();
 	}
 }
 

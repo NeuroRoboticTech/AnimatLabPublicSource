@@ -35,7 +35,7 @@ namespace AnimatSim
 				///Tension of the muscle in the last time slice.
 				float m_fltPrevTension;
 
-				virtual void CalculateTension(Simulator *lpSim) = 0;
+				virtual void CalculateTension() = 0;
 
 			public:
 				MuscleBase();
@@ -58,8 +58,8 @@ namespace AnimatSim
 
 				virtual void Enabled(BOOL bVal);
 
-				virtual void CalculateInverseDynamics(Simulator *lpSim, float fltLength, float fltVelocity, float fltT, float &fltVm, float &fltA) = 0;
-				virtual void AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput);
+				virtual void CalculateInverseDynamics(float fltLength, float fltVelocity, float fltT, float &fltVm, float &fltA) = 0;
+				virtual void AddExternalNodeInput(float fltInput);
 				virtual void Load(CStdXml &oXml);
 			};
 

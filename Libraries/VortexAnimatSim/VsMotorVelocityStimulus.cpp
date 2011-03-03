@@ -60,30 +60,30 @@ void VsMotorVelocityStimulus::VelocityEquation(string strVal)
 	m_lpEval->Equation(m_strVelocityEquation);
 }
 
-void VsMotorVelocityStimulus::ResetSimulation(Simulator *lpSim)
+void VsMotorVelocityStimulus::ResetSimulation()
 {
-	ExternalStimulus::ResetSimulation(lpSim);
+	ExternalStimulus::ResetSimulation();
 
 	m_fltVelocity = 0;
 	m_fltVelocityReport = 0;
 }
 
-void VsMotorVelocityStimulus::Initialize(Simulator *lpSim)
+void VsMotorVelocityStimulus::Initialize()
 {
-	if(!lpSim)
+	if(!m_lpSim)
 		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
 
-	ExternalStimulus::Initialize(lpSim);
+	ExternalStimulus::Initialize();
 
 	//Lets try and get the joint we will be injecting.
-	m_lpJoint = lpSim->FindJoint(m_strStructureID, m_strJointID);
+	m_lpJoint = m_lpSim->FindJoint(m_strStructureID, m_strJointID);
 	m_lpPosition = m_lpJoint->GetDataPointer("JOINTPOSITION");
 	m_lpVelocity = m_lpJoint->GetDataPointer("JOINTACTUALVELOCITY");
 }
 
-void VsMotorVelocityStimulus::Activate(Simulator *lpSim)
+void VsMotorVelocityStimulus::Activate()
 {
-	ExternalStimulus::Activate(lpSim);
+	ExternalStimulus::Activate();
 
 	if(m_bEnabled)
 	{
@@ -93,7 +93,7 @@ void VsMotorVelocityStimulus::Activate(Simulator *lpSim)
 }
 
 
-void VsMotorVelocityStimulus::StepSimulation(Simulator *lpSim)
+void VsMotorVelocityStimulus::StepSimulation()
 {
 	//float fltVel=0;
 
@@ -105,9 +105,9 @@ void VsMotorVelocityStimulus::StepSimulation(Simulator *lpSim)
 			//engine steps. If you do not do this then the you will accumulate forces being applied during the neural steps, and the total
 			//for you apply will be greater than what it should be. To get around this we will only call the code in step simulation if
 			//the physics step count is equal to the step interval.
-			if(lpSim->PhysicsStepCount() == lpSim->PhysicsStepInterval())
+			if(m_lpSim->PhysicsStepCount() == m_lpSim->PhysicsStepInterval())
 			{
-				m_lpEval->SetVariable("t", (lpSim->Time()-m_fltStartTime) );
+				m_lpEval->SetVariable("t", (m_lpSim->Time()-m_fltStartTime) );
 				
 				if(m_lpPosition)
 					m_lpEval->SetVariable("p",  *m_lpPosition);
@@ -116,10 +116,10 @@ void VsMotorVelocityStimulus::StepSimulation(Simulator *lpSim)
 					m_lpEval->SetVariable("v", *m_lpVelocity);
 
 				m_fltVelocityReport = m_fltVelocity = m_lpEval->Solve();
-				//fltVel = -sin(6.28*(lpSim->Time()-m_fltStartTime));
+				//fltVel = -sin(6.28*(m_lpSim->Time()-m_fltStartTime));
 
 				if(!m_lpJoint->UsesRadians())
-					m_fltVelocity *= lpSim->InverseDistanceUnits();
+					m_fltVelocity *= m_lpSim->InverseDistanceUnits();
 
 				m_lpJoint->DesiredVelocity(m_fltVelocity);
 			}
@@ -132,9 +132,9 @@ void VsMotorVelocityStimulus::StepSimulation(Simulator *lpSim)
 }
 
 
-void VsMotorVelocityStimulus::Deactivate(Simulator *lpSim)
+void VsMotorVelocityStimulus::Deactivate()
 {
-	ExternalStimulus::Deactivate(lpSim);
+	ExternalStimulus::Deactivate();
 
 	if(m_bEnabled)
 	{

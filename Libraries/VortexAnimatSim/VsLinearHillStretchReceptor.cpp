@@ -41,40 +41,40 @@ catch(...)
 }
 
 
-void VsLinearHillStretchReceptor::CreateParts(Simulator *lpSim, Structure *lpStructure)
+void VsLinearHillStretchReceptor::CreateParts()
 {
 	//We do nothing in createparts because we cannot build the line until after all parts are created
 	//so we can get a handle to the attachment points.
 }
 
-void VsLinearHillStretchReceptor::CreateJoints(Simulator *lpSim, Structure *lpStructure)
+void VsLinearHillStretchReceptor::CreateJoints()
 {
-	LinearHillStretchReceptor::CreateJoints(lpSim, lpStructure);
-	VsLine::CreateParts(lpSim, lpStructure);
+	LinearHillStretchReceptor::CreateJoints();
+	VsLine::CreateParts();
 
 	m_fltIaRate = m_fltIaDischargeConstant*m_fltSeLength;
 	m_fltIbRate = m_fltIbDischargeConstant*m_fltTension;
 	m_fltIIRate = m_fltIIDischargeConstant*m_fltPeLength;
 }
 
-void VsLinearHillStretchReceptor::ResetSimulation(Simulator *lpSim, Structure *lpStructure)
+void VsLinearHillStretchReceptor::ResetSimulation()
 {
-	LinearHillStretchReceptor::ResetSimulation(lpSim, lpStructure);
-	VsLine::ResetSimulation(lpSim, lpStructure);
+	LinearHillStretchReceptor::ResetSimulation();
+	VsLine::ResetSimulation();
 }
 
-void VsLinearHillStretchReceptor::AfterResetSimulation(Simulator *lpSim, Structure *lpStructure)
+void VsLinearHillStretchReceptor::AfterResetSimulation()
 {
-	LinearHillStretchReceptor::AfterResetSimulation(lpSim, lpStructure);
-	VsLine::AfterResetSimulation(lpSim, lpStructure);
+	LinearHillStretchReceptor::AfterResetSimulation();
+	VsLine::AfterResetSimulation();
 }
 
-void VsLinearHillStretchReceptor::StepSimulation(Simulator *lpSim, Structure *lpStructure)
+void VsLinearHillStretchReceptor::StepSimulation()
 {
 	if(m_bEnabled)
 	{
-		CalculateTension(lpSim);
-		VsLine::StepSimulation(lpSim, lpStructure, m_fltTension); 
+		CalculateTension();
+		VsLine::StepSimulation(m_fltTension); 
 	}
 }
 

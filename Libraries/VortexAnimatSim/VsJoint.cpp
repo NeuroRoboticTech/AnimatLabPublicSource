@@ -96,7 +96,7 @@ void VsJoint::UpdatePosition()
 	m_lpThis->ReportWorldPosition(m_lpThis->AbsolutePosition() * m_lpThis->GetSimulator()->DistanceUnits());
 }
 
-void VsJoint::Physics_CollectBodyData(Simulator *lpSim)
+void VsJoint::Physics_CollectBodyData()
 {
 	if(m_lpThis && m_vxJoint)
 	{
@@ -114,8 +114,8 @@ void VsJoint::Physics_CollectBodyData(Simulator *lpSim)
 		}
 		else
 		{
-			float fltDistanceUnits = lpSim->DistanceUnits();
-			float fltMassUnits = lpSim->MassUnits();
+			float fltDistanceUnits = m_lpThis->GetSimulator()->DistanceUnits();
+			float fltMassUnits = m_lpThis->GetSimulator()->MassUnits();
 
 			m_lpThisJoint->JointPosition(m_vxJoint->getCoordinateCurrentPosition (m_iCoordID) * fltDistanceUnits); 
 			m_lpThisJoint->JointVelocity(m_vxJoint->getCoordinateVelocity(m_iCoordID) * fltDistanceUnits);
@@ -132,7 +132,7 @@ float *VsJoint::Physics_GetDataPointer(string strDataType)
 	return NULL;
 }
 
-osg::Group *VsJoint::ParentOSG(Simulator *lpSim, Structure *lpStructure)
+osg::Group *VsJoint::ParentOSG()
 {
 	RigidBody *lpParent = m_lpThis->Parent();
 	if(lpParent)
@@ -144,7 +144,7 @@ osg::Group *VsJoint::ParentOSG(Simulator *lpSim, Structure *lpStructure)
 	return NULL;
 }
 
-osg::Group *VsJoint::ChildOSG(Simulator *lpSim, Structure *lpStructure)
+osg::Group *VsJoint::ChildOSG()
 {
 	RigidBody *lpChild = m_lpThisJoint->Child();
 	if(lpChild)
@@ -156,19 +156,19 @@ osg::Group *VsJoint::ChildOSG(Simulator *lpSim, Structure *lpStructure)
 	return NULL;
 }
 
-void VsJoint::SetupGraphics(Simulator *lpSim, Structure *lpStructure)
+void VsJoint::SetupGraphics()
 {
 }
 
-void VsJoint::SetupPhysics(Simulator *lpSim, Structure *lpStructure)
+void VsJoint::SetupPhysics()
 {
 }
 
-void VsJoint::Initialize(Simulator *lpSim, Structure *lpStructure)
+void VsJoint::Initialize()
 {
 }
 
-void VsJoint::SetBody(Simulator *lpSim, Structure *lpStructure)
+void VsJoint::SetBody()
 {
 }
 
@@ -188,7 +188,7 @@ void VsJoint::ChildOffsetMatrix(osg::Matrix osgMT)
 void VsJoint::UpdatePositionAndRotationFromMatrix()
 {
 	VsBody::UpdatePositionAndRotationFromMatrix();
-	SetupPhysics(m_lpThis->GetSimulator(), m_lpThis->GetStructure());
+	SetupPhysics();
 }
 
 void VsJoint::Physics_UpdateMatrix()
@@ -257,7 +257,7 @@ void VsJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string 
 	}
 }
 
-void VsJoint::Physics_ResetSimulation(Simulator *lpSim, Structure *lpStructure)
+void VsJoint::Physics_ResetSimulation()
 {
 	if(m_vxJoint)
 	{

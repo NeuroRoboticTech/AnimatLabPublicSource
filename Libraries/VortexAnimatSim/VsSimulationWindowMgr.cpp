@@ -23,11 +23,11 @@ VsSimulationWindowMgr::~VsSimulationWindowMgr(void)
 {
 }
 
-void VsSimulationWindowMgr::Initialize(Simulator *lpSim)
+void VsSimulationWindowMgr::Initialize()
 {
 	int iCount = m_aryWindows.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryWindows[iIndex]->Initialize(lpSim);
+		m_aryWindows[iIndex]->Initialize();
 }
 
 void VsSimulationWindowMgr::Realize()

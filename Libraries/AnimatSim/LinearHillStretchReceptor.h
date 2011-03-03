@@ -70,7 +70,7 @@ namespace AnimatSim
 				///II fiber discharge rate.
 				float m_fltIIRate;
 
-				virtual void CalculateTension(Simulator *lpSim);
+				virtual void CalculateTension();
 
 			public:
 				LinearHillStretchReceptor();

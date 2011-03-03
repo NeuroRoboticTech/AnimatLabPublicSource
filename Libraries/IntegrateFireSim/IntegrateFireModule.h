@@ -170,16 +170,15 @@ namespace IntegrateFireSim
 		virtual int FindNonSpikingChemListPos(string strID, BOOL bThrowError = TRUE);
 		virtual int FindElectricalListPos(string strID, BOOL bThrowError = TRUE);
 
-		virtual void Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState = TRUE);
-		virtual void ResetSimulation(Simulator *lpSim, Organism *lpOrganism);
-
-		virtual void Initialize(Simulator *lpSim, Structure *lpStructure);
+		virtual void Kill(BOOL bState = TRUE);
 
 		virtual long CalculateSnapshotByteSize()  {return 0;};
 		virtual void SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex) {};
 		virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex) {};
 
-		virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
+		virtual void ResetSimulation();
+		virtual void Initialize();
+		virtual void StepSimulation();
 		virtual void Load(CStdXml &oXml);
 		//NeuralModule Overrides
 

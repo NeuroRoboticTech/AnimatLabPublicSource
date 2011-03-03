@@ -35,7 +35,7 @@ namespace VortexAnimatSim
 				osg::Material *FlapMat() {return m_osgFlapMat.get();};
 				osg::StateSet *FlapSS() {return m_osgFlapSS.get();};
 
-				virtual void SetupGraphics(Simulator *lpSim, Structure *lpStructure);
+				virtual void SetupGraphics();
 			};
 
 		}		//Joints

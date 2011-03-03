@@ -223,7 +223,7 @@ void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
 	m_grpScene->addChild(VsMouseSpring::GetInstance()->GetNode());
 
 	//Create the windows, cameras, and Huds
-	m_vsWinMgr->Initialize(this);
+	m_vsWinMgr->Initialize();
 
 	//Create the command manager if needed.
 	if(!m_osgCmdMgr.valid())
@@ -291,11 +291,11 @@ void VsSimulator::Initialize(int argc, const char **argv)
 
 	InitializeStructures();
 
-	m_oDataChartMgr.Initialize(this);
-	m_oExternalStimuliMgr.Initialize(this);
-	if(m_lpSimRecorder) m_lpSimRecorder->Initialize(this);
+	m_oDataChartMgr.Initialize();
+	m_oExternalStimuliMgr.Initialize();
+	if(m_lpSimRecorder) m_lpSimRecorder->Initialize();
 
-	m_vsIntersect.Initialize(this);
+	m_vsIntersect.Initialize();
 
 	//realize the osg viewer
 	m_vsWinMgr->Realize();
@@ -323,7 +323,7 @@ void VsSimulator::StepSimulation()
 	m_fltFrameDt = osg::Timer::instance()->delta_s(m_iLastFrame, m_iCurrentFrame);
 	if( m_fltFrameDt > m_fltFrameStep)
 	{
-		m_bStopSimulation = !m_vsWinMgr->Update(this);
+		m_bStopSimulation = !m_vsWinMgr->Update();
 		m_iLastFrame = m_iCurrentFrame;
 	}
 	else if(m_bPaused)
@@ -396,7 +396,7 @@ void VsSimulator::SnapshotStopFrame()
 
 	m_lpSimStopPoint->StartSlice(m_lTimeSlice);
 	m_lpSimStopPoint->EndSlice(m_lTimeSlice);
-	m_lpSimStopPoint->Activate(this);
+	m_lpSimStopPoint->Activate();
 }
 
 VsSimulator *VsSimulator::ConvertSimulator(Simulator *lpSim)

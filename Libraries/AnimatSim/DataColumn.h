@@ -19,6 +19,7 @@ namespace AnimatSim
 		protected:
 			string m_strTargetID;
 			string m_strDataType;
+			DataChart *m_lpChart;
 
 			AnimatBase *m_lpTarget;
 			float *m_lpDataValue;
@@ -53,9 +54,10 @@ namespace AnimatSim
 
 			float *DataValue() {return m_lpDataValue;};
 
-			virtual void Initialize(Simulator *lpSim);
-			virtual void ReInitialize(Simulator *lpSim);
-			virtual void StepSimulation(Simulator *lpSim, DataChart *lpChart);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, DataChart *lpChart);
+			virtual void Initialize();
+			virtual void ReInitialize();
+			virtual void StepSimulation();
 			virtual BOOL operator<(DataColumn *lpColumn);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 

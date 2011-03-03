@@ -61,12 +61,12 @@ int DataColumn::ColumnCount()
 void DataColumn::DataType(string strType)
 {
 	m_strDataType = strType;
-	Initialize(GetSimulator());
+	Initialize();
 }
 
-void DataColumn::Initialize(Simulator *lpSim)
+void DataColumn::Initialize()
 {
-	m_lpTarget = lpSim->FindByID(m_strTargetID);
+	m_lpTarget = m_lpSim->FindByID(m_strTargetID);
 	m_lpDataValue = m_lpTarget->GetDataPointer(m_strDataType);
 
 	if(!m_lpDataValue)
@@ -76,10 +76,10 @@ void DataColumn::Initialize(Simulator *lpSim)
 	m_bInitialized = TRUE;
 }
 
-void DataColumn::ReInitialize(Simulator *lpSim)
+void DataColumn::ReInitialize()
 {
 	if(!m_bInitialized)
-		Initialize(lpSim);
+		Initialize();
 }
 
 BOOL DataColumn::SetData(string strDataType, string strValue, BOOL bThrowError)
@@ -116,9 +116,15 @@ void DataColumn::SaveColumnNames(ofstream &oStream)
 	}
 }
 
-void DataColumn::StepSimulation(Simulator *lpSim, DataChart *lpChart)
+void DataColumn::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, DataChart *lpChart)
 {
-	lpChart->AddData(m_iColumnIndex, m_iRowIndex, *m_lpDataValue);
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
+	m_lpChart = lpChart;
+}
+
+void DataColumn::StepSimulation()
+{
+	m_lpChart->AddData(m_iColumnIndex, m_iRowIndex, *m_lpDataValue);
 }
 
 BOOL DataColumn::operator<(DataColumn *lpColumn)

@@ -150,8 +150,8 @@ void Neuron::RelativeAccomodation(float fltVal)
 	else
 		m_bUseAccom = FALSE;
 
-	if(m_bUseAccom && m_lpModule)
-		m_fltDCTH = exp(-m_lpModule->TimeStep()/m_fltAccomTimeConst);
+	if(m_bUseAccom && m_lpFastModule)
+		m_fltDCTH = exp(-m_lpFastModule->TimeStep()/m_fltAccomTimeConst);
 	else
 		m_fltDCTH = 0;
 }
@@ -163,8 +163,8 @@ void Neuron::AccomodationTimeConstant(float fltVal)
 {
 	m_fltAccomTimeConst = fltVal;
 
-	if(m_bUseAccom && m_lpModule)
-		m_fltDCTH = exp(-m_lpModule->TimeStep()/m_fltAccomTimeConst);
+	if(m_bUseAccom && m_lpFastModule)
+		m_fltDCTH = exp(-m_lpFastModule->TimeStep()/m_fltAccomTimeConst);
 	else
 		m_fltDCTH = 0;
 }
@@ -178,9 +178,9 @@ void Neuron::GainType(BOOL bVal)
 float Neuron::Vn()
 {return m_fltVn;}
 
-float Neuron::FiringFreq(FiringRateModule *lpModule)
+float Neuron::FiringFreq(FiringRateModule *m_lpFastModule)
 {
-	return CalculateFiringFrequency(m_aryVn[lpModule->ActiveArray()], m_aryVth[lpModule->ActiveArray()]);
+	return CalculateFiringFrequency(m_aryVn[m_lpFastModule->ActiveArray()], m_aryVth[m_lpFastModule->ActiveArray()]);
 }
 
 float Neuron::IntrinsicCurrent()
@@ -210,7 +210,7 @@ void Neuron::AddSynapse(string strXml)
 	oXml.FindChildElement("Synapse");
 
 	Synapse *lpSynapse = LoadSynapse(oXml);
-	lpSynapse->Initialize(m_lpSim, m_lpOrganism, m_lpFastModule, this);
+	lpSynapse->Initialize();
 }
 
 void Neuron::RemoveSynapse(int iIndex)
@@ -255,14 +255,14 @@ void Neuron::ClearSynapses()
 {m_arySynapses.RemoveAll();}
 
 
-void Neuron::StepSimulation(Simulator *lpSim, Organism *lpOrganism, FiringRateModule *lpModule)
+void Neuron::StepSimulation()
 {
 
 	if(m_bEnabled)
 	{
 		//Lets get the Summation of synaptic inputs
-		m_fltSynapticI = CalculateSynapticCurrent(lpModule);
-		m_fltIntrinsicI = CalculateIntrinsicCurrent(lpModule, m_fltExternalI+m_fltSynapticI);
+		m_fltSynapticI = CalculateSynapticCurrent(m_lpFastModule);
+		m_fltIntrinsicI = CalculateIntrinsicCurrent(m_lpFastModule, m_fltExternalI+m_fltSynapticI);
 
 		if(m_bUseNoise)
 			m_fltVNoise = Std_FRand(-m_fltVNoiseMax, m_fltVNoiseMax);
@@ -270,20 +270,20 @@ void Neuron::StepSimulation(Simulator *lpSim, Organism *lpOrganism, FiringRateMo
 		//Get the total current being applied to the neuron.
 		m_fltTotalMemoryI = m_fltSynapticI + m_fltIntrinsicI + m_fltExternalI + m_fltAdapterI;
 
-		m_aryVn[lpModule->InactiveArray()] = m_aryVn[lpModule->ActiveArray()] + m_fltVNoise + 
-							(lpModule->TimeStep() * m_fltInvCn * 
+		m_aryVn[m_lpFastModule->InactiveArray()] = m_aryVn[m_lpFastModule->ActiveArray()] + m_fltVNoise + 
+							(m_lpFastModule->TimeStep() * m_fltInvCn * 
 							(m_fltSynapticI + m_fltIntrinsicI + m_fltExternalI + m_fltAdapterI - 
-							(m_aryVn[lpModule->ActiveArray()]*m_fltGn)));
+							(m_aryVn[m_lpFastModule->ActiveArray()]*m_fltGn)));
 
-		m_fltVn = m_aryVn[lpModule->InactiveArray()];
+		m_fltVn = m_aryVn[m_lpFastModule->InactiveArray()];
 		m_fltVndisp = m_fltVrest + m_fltVn;
 
 		if(m_bUseAccom)
-			m_aryVth[lpModule->InactiveArray()] = m_fltVthi + (m_aryVth[lpModule->ActiveArray()]-m_fltVthi)*m_fltDCTH + m_fltRelativeAccom*m_fltVn*(1-m_fltDCTH);
+			m_aryVth[m_lpFastModule->InactiveArray()] = m_fltVthi + (m_aryVth[m_lpFastModule->ActiveArray()]-m_fltVthi)*m_fltDCTH + m_fltRelativeAccom*m_fltVn*(1-m_fltDCTH);
 		else
-			m_aryVth[lpModule->InactiveArray()] = m_fltVthi;
+			m_aryVth[m_lpFastModule->InactiveArray()] = m_fltVthi;
 
-		m_fltVth = m_aryVth[lpModule->InactiveArray()];
+		m_fltVth = m_aryVth[m_lpFastModule->InactiveArray()];
 		m_fltVthdisp = m_fltVrest + m_fltVth;
 
 		m_fltFiringFreq = CalculateFiringFrequency(m_fltVn, m_fltVth);
@@ -329,10 +329,10 @@ float Neuron::CalculateFiringFrequency(float fltVn, float fltVth)
 }
 
 
-float Neuron::CalculateIntrinsicCurrent(FiringRateModule *lpModule, float fltInputCurrent)
+float Neuron::CalculateIntrinsicCurrent(FiringRateModule *m_lpFastModule, float fltInputCurrent)
 {return 0;}
 
-float Neuron::CalculateSynapticCurrent(FiringRateModule *lpModule)
+float Neuron::CalculateSynapticCurrent(FiringRateModule *m_lpFastModule)
 {
 	unsigned char iSynapse, iCount;
 	float fltSynapticI=0;
@@ -344,7 +344,7 @@ float Neuron::CalculateSynapticCurrent(FiringRateModule *lpModule)
 		lpSynapse = m_arySynapses[iSynapse];
 
 		if(lpSynapse->Enabled() && lpSynapse->FromNeuron())
-			fltSynapticI+= (lpSynapse->FromNeuron()->FiringFreq(lpModule) * lpSynapse->Weight() * lpSynapse->CalculateModulation(lpModule) ); 
+			fltSynapticI+= (lpSynapse->FromNeuron()->FiringFreq(m_lpFastModule) * lpSynapse->Weight() * lpSynapse->CalculateModulation(m_lpFastModule) ); 
 	}
 
 	return fltSynapticI;
@@ -353,27 +353,56 @@ float Neuron::CalculateSynapticCurrent(FiringRateModule *lpModule)
 void Neuron::InjectCurrent(float fltVal)
 {m_fltExternalI+=fltVal;}
 
-void Neuron::Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule)
+void Neuron::Initialize()
 {
-	Node::Initialize(lpSim, lpStructure, lpModule);
-
-	m_lpFastModule = dynamic_cast<FiringRateModule *>(lpModule);
-	if(!m_lpFastModule)
-		THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", lpModule->ID());
-
-	m_lpOrganism = dynamic_cast<AnimatSim::Environment::Organism *>(lpStructure);
-	if(!m_lpOrganism)
-		THROW_PARAM_ERROR(Al_Err_lUnableToCastOrganismToDesiredType, Al_Err_strUnableToCastOrganismToDesiredType, "ID: ", lpStructure->ID());
+	Node::Initialize();
 
 	if(m_bUseAccom)
-		m_fltDCTH = exp(-m_lpModule->TimeStep()/m_fltAccomTimeConst);
+		m_fltDCTH = exp(-m_lpFastModule->TimeStep()/m_fltAccomTimeConst);
 
 	int iCount = m_arySynapses.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_arySynapses[iIndex]->Initialize(lpSim, m_lpOrganism, lpModule, this);
+		m_arySynapses[iIndex]->Initialize();
 } 
 
-void Neuron::AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput)
+void Neuron::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *m_lpFastModule, Node *lpNode)
+{
+	Node::SetSystemPointers(lpSim, lpStructure, m_lpFastModule, lpNode);
+	
+	m_lpFastModule = dynamic_cast<FiringRateModule *>(m_lpFastModule);
+	if(!m_lpFastModule)
+		THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpFastModule->ID());
+
+	m_lpOrganism = dynamic_cast<AnimatSim::Environment::Organism *>(m_lpStructure);
+	if(!m_lpOrganism)
+		THROW_PARAM_ERROR(Al_Err_lUnableToCastOrganismToDesiredType, Al_Err_strUnableToCastOrganismToDesiredType, "ID: ", m_lpStructure->ID());
+}
+
+void Neuron::ResetSimulation()
+{
+	m_fltExternalI = 0;
+	m_fltIntrinsicI = 0;
+	m_fltSynapticI = 0;
+	m_fltAdapterI = 0;
+	m_fltAdapterMemoryI = 0;
+	m_fltTotalMemoryI = 0;
+	m_fltFiringFreq = 0;
+	m_fltVNoise = 0;
+	m_fltDCTH = 0;
+	m_aryVn[0]=0.0;
+	m_aryVn[1]=0.0;
+	m_fltVn = m_fltVrest;
+	m_fltVth = m_fltVthi;
+	m_fltVndisp = m_fltVrest;
+	m_fltVthdisp = m_fltVrest + m_fltVth;
+	m_aryVth[0] = m_aryVth[1] = m_fltVth;
+
+	int iCount = m_arySynapses.GetSize();
+	for(int iSynapse=0; iSynapse<iCount; iSynapse++)
+		m_arySynapses[iSynapse]->ResetSimulation();
+}
+
+void Neuron::AddExternalNodeInput(float fltInput)
 {
 	m_fltAdapterI += fltInput;
 	m_fltAdapterMemoryI = m_fltAdapterI;
@@ -532,30 +561,6 @@ BOOL Neuron::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 
 #pragma endregion
 
-void Neuron::ResetSimulation(Simulator *lpSim, Structure *lpStruct)
-{
-	m_fltExternalI = 0;
-	m_fltIntrinsicI = 0;
-	m_fltSynapticI = 0;
-	m_fltAdapterI = 0;
-	m_fltAdapterMemoryI = 0;
-	m_fltTotalMemoryI = 0;
-	m_fltFiringFreq = 0;
-	m_fltVNoise = 0;
-	m_fltDCTH = 0;
-	m_aryVn[0]=0.0;
-	m_aryVn[1]=0.0;
-	m_fltVn = m_fltVrest;
-	m_fltVth = m_fltVthi;
-	m_fltVndisp = m_fltVrest;
-	m_fltVthdisp = m_fltVrest + m_fltVth;
-	m_aryVth[0] = m_aryVth[1] = m_fltVth;
-
-	int iCount = m_arySynapses.GetSize();
-	for(int iSynapse=0; iSynapse<iCount; iSynapse++)
-		m_arySynapses[iSynapse]->ResetSimulation(lpSim, lpStruct, this);
-}
-
 long Neuron::CalculateSnapshotByteSize()
 {
 	//We need bytes for the internal state variables for this neuron.
@@ -684,7 +689,7 @@ try
 	if(!lpSynapse)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Synapse");
 
-	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this);
+	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpFastModule, this);
 	lpSynapse->Load(oXml);
 	AddSynapse(lpSynapse);
 

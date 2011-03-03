@@ -92,11 +92,11 @@ namespace IntegrateFireSim
 		virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 #pragma endregion
 
-
-		virtual void Initialize(Simulator *lpSim, Structure *lpStructure);
-		virtual void Load(CStdXml &oXml);
 		virtual float CalculateCurrent(float fltStep, float fltVm);
-		virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure);
+
+		virtual void Initialize();
+		virtual void Load(CStdXml &oXml);
+		virtual void ResetSimulation();
 	};
 }				//AnimatSim
 

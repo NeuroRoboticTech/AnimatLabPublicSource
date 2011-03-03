@@ -101,56 +101,38 @@ void Node::Enabled(BOOL bValue)
 }
 
 /**
-\fn	void Node::AttachSourceAdapter(Simulator *lpSim, Structure *lpStructure, Adapter *lpAdapter)
+\fn	void Node::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 
 \brief	Attach this node to a source adapter. 
 
 \author	dcofer
 \date	3/2/2011
 
-\param [in,out]	lpSim		The pointer to a simulation. 
 \param [in,out]	lpStructure	The pointer to a structure. 
 \param [in,out]	lpAdapter	The pointer to an adapter. 
 **/
-void Node::AttachSourceAdapter(Simulator *lpSim, Structure *lpStructure, Adapter *lpAdapter)
+void Node::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 {
-	lpSim->AttachSourceAdapter(lpStructure, lpAdapter);
+	m_lpSim->AttachSourceAdapter(lpStructure, lpAdapter);
 }
 
 /**
-\fn	void Node::AttachTargetAdapter(Simulator *lpSim, Structure *lpStructure, Adapter *lpAdapter)
+\fn	void Node::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 
 \brief	Attach this node to a target adapter. 
 
 \author	dcofer
 \date	3/2/2011
 
-\param [in,out]	lpSim		The pointer to a simulation. 
 \param [in,out]	lpStructure	The pointer to a structure. 
 \param [in,out]	lpAdapter	The pointer to an adapter. 
 **/
-void Node::AttachTargetAdapter(Simulator *lpSim, Structure *lpStructure, Adapter *lpAdapter)
+void Node::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 {
-	lpSim->AttachTargetAdapter(lpStructure, lpAdapter);
+	m_lpSim->AttachTargetAdapter(lpStructure, lpAdapter);
 }
 
-/**
-\fn	void Node::Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState)
-
-\brief	Called when this organism is killed.
-
-\details When an organism dies this method is called. The node is disabled. This means that
-if the node is a joint then it is disabled (free moving), and if it is a neuron it will no 
-longer function.The organism is dead.
-
-\author	dcofer
-\date	2/24/2011
-
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpOrganism	The pointer to an organism. 
-\param	bState				True to kill it, false to resurrect it. 
-**/
-void Node::Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState)
+void Node::Kill(BOOL bState)
 {
 	if(bState)
 	{
@@ -163,37 +145,16 @@ void Node::Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState)
 }
 
 /**
-\fn	void Node::UpdateData(Simulator *lpSim, Structure *lpStructure)
+\fn	void Node::UpdateData()
 
 \brief	Updates any reporting data for this time step. 
 
 \author	dcofer
 \date	3/2/2011
-
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpStructure	The pointer to a structure. 
 **/
-void Node::UpdateData(Simulator *lpSim, Structure *lpStructure)
+
+void Node::UpdateData()
 {}
-
-/**
-\fn	void Node::Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule)
-
-\brief	Initializes this node. 
-
-\author	dcofer
-\date	2/24/2011
-
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpStructure	The pointer to this parts parent structure. 
-\param [in,out]	lpModule	The pointer to this parts parent module. 
-**/
-void Node::Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule)
-{
-	m_lpSim = lpSim;
-	m_lpStructure = lpStructure;
-	m_lpModule = lpModule;
-}
 
 
 }			//AnimatSim

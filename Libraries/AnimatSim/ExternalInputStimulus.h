@@ -42,10 +42,10 @@ namespace AnimatSim
 
 			//ActiveItem overrides
 			virtual string Type() {return "ExternalInput";};
-			virtual void Activate(Simulator *lpSim);
-			virtual void Initialize(Simulator *lpSim);
-			virtual void StepSimulation(Simulator *lpSim);
-			virtual void Deactivate(Simulator *lpSim);
+			virtual void Activate();
+			virtual void Initialize();
+			virtual void StepSimulation();
+			virtual void Deactivate();
 
 			virtual float *GetDataPointer(string strDataType);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);

@@ -78,13 +78,13 @@ ReceptiveFieldPair::~ReceptiveFieldPair()
 {
 }
 
-void ReceptiveFieldPair::Initialize(Simulator *lpSim, Organism *lpOrganism, Node *lpSourceNode, string strTargetModule)
+void ReceptiveFieldPair::Initialize(string strTargetModule)
 {
-	m_lpTargetNode = dynamic_cast<Node *>(lpSim->FindByID(m_strTargetNodeID));
+	m_lpTargetNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strTargetNodeID));
 	if(!m_lpTargetNode)
 		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strTargetNodeID);
 
-	RigidBody *lpBody = dynamic_cast<RigidBody *>(lpSourceNode);
+	RigidBody *lpBody = dynamic_cast<RigidBody *>(m_lpNode);
 
 	if(!lpBody)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "SourceNode to RigidBody");
@@ -103,10 +103,10 @@ void ReceptiveFieldPair::Initialize(Simulator *lpSim, Organism *lpOrganism, Node
 	m_lpField = lpSensor->GetReceptiveField(iIndex);
 }
 
-void ReceptiveFieldPair::StepSimulation(Simulator *lpSim, Structure *lpStructure)
+void ReceptiveFieldPair::StepSimulation()
 {
 	if(m_lpField)
-		m_lpTargetNode->AddExternalNodeInput(lpSim, lpStructure, m_lpField->m_fltCurrent);
+		m_lpTargetNode->AddExternalNodeInput(m_lpField->m_fltCurrent);
 }
 
 //Node Overrides

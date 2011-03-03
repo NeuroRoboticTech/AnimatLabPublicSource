@@ -195,9 +195,8 @@ float ActivatedItem::StartTime()
 **/
 void ActivatedItem::StartTime(float fltVal) 
 {
-	Simulator *lpSim = GetSimulator();
 	m_fltStartTime = fltVal;
-	m_lStartSlice = (long) (m_fltStartTime / lpSim->TimeStep() + 0.5);
+	m_lStartSlice = (long) (m_fltStartTime / m_lpSim->TimeStep() + 0.5);
 }
 
 /**
@@ -225,9 +224,8 @@ float ActivatedItem::EndTime()
 **/
 void ActivatedItem::EndTime(float fltVal) 
 {
-	Simulator *lpSim = GetSimulator();
 	m_fltEndTime = fltVal;
-	m_lEndSlice = (long) (m_fltEndTime / lpSim->TimeStep() + 0.5);
+	m_lEndSlice = (long) (m_fltEndTime / m_lpSim->TimeStep() + 0.5);
 }
 
 /**
@@ -335,79 +333,75 @@ BOOL ActivatedItem::IsActivated() {return m_bIsActivated;}
 BOOL ActivatedItem::IsInitialized() {return m_bInitialized;}
 
 /**
-\fn	BOOL ActivatedItem::NeedToActivate(Simulator *lpSim)
+\fn	BOOL ActivatedItem::NeedToActivate()
 
 \brief	Determines if this item needs to be activated. 
 
 \author	dcofer
 \date	3/1/2011
 
-\param [in,out]	lpSim	The pointer to a simulation. 
-
-\return	true if the item is enabled and it is always active or if the current 
-simulation time is within the start and end times.
+\return	true if the item is enabled and it is always active or if the current simulation time is
+within the start and end times. 
 **/
-BOOL ActivatedItem::NeedToActivate(Simulator *lpSim)
+
+BOOL ActivatedItem::NeedToActivate()
 {
-	if(!m_bIsActivated && m_bEnabled && (m_bAlwaysActive || (m_lStartSlice <= lpSim->TimeSlice() && m_lEndSlice >= lpSim->TimeSlice())))
+	if(!m_bIsActivated && m_bEnabled && (m_bAlwaysActive || (m_lStartSlice <= m_lpSim->TimeSlice() && m_lEndSlice >= m_lpSim->TimeSlice())))
 		return TRUE;
 	return FALSE;
 }
 
 /**
-\fn	BOOL ActivatedItem::NeedToDeactivate(Simulator *lpSim)
+\fn	BOOL ActivatedItem::NeedToDeactivate()
 
 \brief	Determines if this item needs to be deactivated. 
 
 \author	dcofer
 \date	3/1/2011
 
-\param [in,out]	lpSim	The pointer to a simulation. 
-
-\return	true if the item is not enabled or it is not always active and the current 
-simulation time is outside of the start and end times.
+\return	true if the item is not enabled or it is not always active and the current simulation
+time is outside of the start and end times. 
 **/
-BOOL ActivatedItem::NeedToDeactivate(Simulator *lpSim)
+
+BOOL ActivatedItem::NeedToDeactivate()
 {
 	if(m_bIsActivated && !m_bEnabled)
 		return TRUE;
 
-	if(m_bIsActivated && !m_bAlwaysActive && !(m_lStartSlice <= lpSim->TimeSlice() && m_lEndSlice >= lpSim->TimeSlice()) )
+	if(m_bIsActivated && !m_bAlwaysActive && !(m_lStartSlice <= m_lpSim->TimeSlice() && m_lEndSlice >= m_lpSim->TimeSlice()) )
 		return TRUE;
 	return FALSE;
 }
 
 /**
-\fn	void ActivatedItem::Activate(Simulator *lpSim)
+\fn	void ActivatedItem::Activate()
 
 \brief	Activates this item. 
 
 \author	dcofer
 \date	3/1/2011
-
-\param [in,out]	lpSim	The pointer to a simulation. 
 **/
-void ActivatedItem::Activate(Simulator *lpSim)
+
+void ActivatedItem::Activate()
 {
 	m_bIsActivated = TRUE;
 }
 
 /**
-\fn	void ActivatedItem::Deactivate(Simulator *lpSim)
+\fn	void ActivatedItem::Deactivate()
 
 \brief	Deactivates this item. 
 
 \author	dcofer
 \date	3/1/2011
-
-\param [in,out]	lpSim	The pointer to a simulation. 
 **/
-void ActivatedItem::Deactivate(Simulator *lpSim)
+
+void ActivatedItem::Deactivate()
 {
 	m_bIsActivated = FALSE;
 }
 
-void ActivatedItem::ResetSimulation(Simulator *lpSim)
+void ActivatedItem::ResetSimulation()
 {
 	m_bIsActivated = FALSE;
 }
@@ -436,38 +430,36 @@ BOOL ActivatedItem::Overlaps(ActivatedItem *lpItem)
 }
 
 /**
-\fn	void ActivatedItem::Initialize(Simulator *lpSim)
+\fn	void ActivatedItem::Initialize()
 
 \brief	Initializes this object. 
 
 \author	dcofer
 \date	3/1/2011
-
-\param [in,out]	lpSim	The pointer to a simulation. 
 **/
-void ActivatedItem::Initialize(Simulator *lpSim)
+void ActivatedItem::Initialize()
 {
 	if(m_bLoadedTime)
 	{
-		m_lStartSlice = (long) (m_fltStartTime / lpSim->TimeStep() + 0.5);
-		m_lEndSlice = (long) (m_fltEndTime / lpSim->TimeStep() + 0.5);
+		m_lStartSlice = (long) (m_fltStartTime / m_lpSim->TimeStep() + 0.5);
+		m_lEndSlice = (long) (m_fltEndTime / m_lpSim->TimeStep() + 0.5);
 
 		Std_IsAboveMin((long) -1, m_lStartSlice, TRUE, "StartSlice");
 		Std_IsAboveMin(m_lStartSlice, m_lEndSlice, TRUE, "EndSlice");
 	}
 	else
 	{
-		m_fltStartTime = m_lStartSlice * lpSim->TimeStep();
-		m_fltEndTime = m_lEndSlice * lpSim->TimeStep();
+		m_fltStartTime = m_lStartSlice * m_lpSim->TimeStep();
+		m_fltEndTime = m_lEndSlice * m_lpSim->TimeStep();
 	}
 
 	m_bInitialized = TRUE;
 }
 
-void ActivatedItem::ReInitialize(Simulator *lpSim)
+void ActivatedItem::ReInitialize()
 {
 	if(!m_bInitialized)
-		Initialize(lpSim);
+		Initialize();
 }
 
 /**

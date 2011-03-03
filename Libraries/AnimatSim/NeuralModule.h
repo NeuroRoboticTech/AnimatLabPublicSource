@@ -84,17 +84,13 @@ namespace AnimatSim
 			Simulator *GetSimulator();
 			Organism *GetOrganism();
 
-			virtual void Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState = TRUE) = 0;
-			virtual void ResetSimulation(Simulator *lpSim, Organism *lpOrganism) = 0;
-
-			virtual void Initialize(Simulator *lpSim, Structure *lpStructure);
 			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
 
 			virtual void AttachSourceAdapter(Adapter *lpAdapter);
 			virtual void AttachTargetAdapter(Adapter *lpAdapter);
 
 			virtual BOOL NeedToStep();
-			virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
+			virtual void StepSimulation();
 		};
 
 	}			//Behavior

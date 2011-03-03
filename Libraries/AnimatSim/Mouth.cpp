@@ -83,12 +83,12 @@ Mouth::~Mouth()
 	{Std_TraceMsg(0, "Caught Error in desctructor of Mouth\r\n", "", -1, FALSE, TRUE);}
 }
 
-void Mouth::StepSimulation(Simulator *lpSim, Structure *lpStructure)
+void Mouth::StepSimulation()
 {
 	if(m_lpStomach && m_fltEatingRate > 0)
 	{
 		//Now lets find the closest food source.
-		RigidBody *lpFood = lpSim->FindClosestFoodSource(this->GetCurrentPosition(), m_fltMinFoodRadius);
+		RigidBody *lpFood = m_lpSim->FindClosestFoodSource(this->GetCurrentPosition(), m_fltMinFoodRadius);
 
 		if(lpFood)
 		{
@@ -110,7 +110,7 @@ void Mouth::StepSimulation(Simulator *lpSim, Structure *lpStructure)
 
 			float fltFoodQty = lpFood->FoodQuantity() - fltBiteSize;
 
-			lpFood->Eat(fltFoodQty, lpSim->TimeSlice());
+			lpFood->Eat(fltFoodQty, m_lpSim->TimeSlice());
 			m_lpStomach->EnergyLevel(fltEnergy);			
 		}
 	}
@@ -129,7 +129,7 @@ float *Mouth::GetDataPointer(string strDataType)
 	return lpData;
 }
 
-void Mouth::AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput)
+void Mouth::AddExternalNodeInput(float fltInput)
 {
 	m_fltEatingRate = fltInput;
 	if(m_fltEatingRate < 0)

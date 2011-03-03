@@ -31,9 +31,9 @@ namespace AnimatSim
 			//ActiveItem overrides
 			virtual string Type() {return "ArrayChart";};
 
-			virtual void Initialize(Simulator *lpSim);
-			virtual void ReInitialize(Simulator *lpSim);
-			virtual void StepSimulation(Simulator *lpSim);
+			virtual void Initialize();
+			virtual void ReInitialize();
+			virtual void StepSimulation();
 		};
 
 	}			//Charting

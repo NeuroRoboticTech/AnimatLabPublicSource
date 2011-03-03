@@ -94,15 +94,15 @@ namespace AnimatSim
 			virtual void DesiredVelocity(float fltVelocity) {m_fltDesiredVelocity = fltVelocity;};
 			virtual void MotorInput(float fltInput) {m_fltDesiredVelocity = fltInput;}
 
-			virtual void CreateJoint(Simulator *lpSim, Structure *lpStructure);
+			virtual void CreateJoint();
 
 			//Node Overrides
-			virtual void AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput);
+			virtual void AddExternalNodeInput(float fltInput);
 			virtual float *GetDataPointer(string strDataType);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
-			virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure);
-			virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
+			virtual void ResetSimulation();
+			virtual void StepSimulation();
 			virtual void Load(CStdXml &oXml);
 		};
 

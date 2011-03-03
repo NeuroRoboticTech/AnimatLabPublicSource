@@ -113,7 +113,7 @@ void  IonChannel::Minit(float fltVal)
 	m_fltMInit = fltVal;
 }; 
 
-void IonChannel::Initialize(Simulator *lpSim, Structure *lpStructure)
+void IonChannel::Initialize()
 {
 }
 
@@ -331,7 +331,7 @@ void IonChannel::Load(CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf IonChannel Element
 }
 
-void IonChannel::ResetSimulation(Simulator *lpSim, Structure *lpStructure)
+void IonChannel::ResetSimulation()
 {
 }
 

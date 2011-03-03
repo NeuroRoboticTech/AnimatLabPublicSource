@@ -86,7 +86,7 @@ void VsHingeLimit::LimitPos(float fltVal, BOOL bUseScaling, BOOL bOverrideSameCh
 	}
 }
 
-void VsHingeLimit::SetupGraphics(Simulator *lpSim, Structure *lpStructure)
+void VsHingeLimit::SetupGraphics()
 {
 	//The parent osg object for the joint is actually the child rigid body object.
 	Hinge *lpHinge = dynamic_cast<Hinge *>(m_lpJoint);

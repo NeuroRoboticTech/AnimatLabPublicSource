@@ -56,22 +56,22 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of EnablerStimulus\r\n", "", -1, FALSE, TRUE);}
 }
 
-void EnablerStimulus::Initialize(Simulator *lpSim)
+void EnablerStimulus::Initialize()
 {
-	if(!lpSim)
+	if(!m_lpSim)
 		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
 
-	ExternalStimulus::Initialize(lpSim);
+	ExternalStimulus::Initialize();
 
 	//Lets try and get the node we will dealing with.
-	m_lpStructure = lpSim->FindStructureFromAll(m_strStructureID);
+	m_lpStructure = m_lpSim->FindStructureFromAll(m_strStructureID);
 
 	m_lpNode = m_lpStructure->FindNode(m_strBodyID);
 }
 
-void EnablerStimulus::Activate(Simulator *lpSim)
+void EnablerStimulus::Activate()
 {
-	ExternalStimulus::Activate(lpSim);
+	ExternalStimulus::Activate();
 
 	if(m_bEnableWhenActive)
 		m_lpNode->Enabled(TRUE);
@@ -79,13 +79,13 @@ void EnablerStimulus::Activate(Simulator *lpSim)
 		m_lpNode->Enabled(FALSE);
 }
 
-void EnablerStimulus::StepSimulation(Simulator *lpSim)
+void EnablerStimulus::StepSimulation()
 {
 }
 
-void EnablerStimulus::Deactivate(Simulator *lpSim)
+void EnablerStimulus::Deactivate()
 {
-	ExternalStimulus::Deactivate(lpSim);
+	ExternalStimulus::Deactivate();
 
 	if(m_bEnableWhenActive)
 		m_lpNode->Enabled(FALSE);

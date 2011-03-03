@@ -39,7 +39,7 @@ VsCylinder::~VsCylinder()
 //	VsRigidBody::Selected(bValue, bSelectMultiple);
 //}
 
-void VsCylinder::CreateParts(Simulator *lpSim, Structure *lpStructure)
+void VsCylinder::CreateParts()
 {
 	m_osgGeometry = CreateConeGeometry(m_fltHeight, m_fltRadius, m_fltRadius, 50, true, true, true);
 	osg::Geode *osgGroup = new osg::Geode;
@@ -53,18 +53,18 @@ void VsCylinder::CreateParts(Simulator *lpSim, Structure *lpStructure)
 	m_fltYArea = 2*m_fltRadius*m_fltHeight;
 	m_fltZArea = 2*VX_PI*m_fltRadius*m_fltRadius;
 
-	VsRigidBody::CreateBody(lpSim, lpStructure);
-	Cylinder::CreateParts(lpSim, lpStructure);
-	VsRigidBody::SetBody(lpSim, lpStructure);
+	VsRigidBody::CreateBody();
+	Cylinder::CreateParts();
+	VsRigidBody::SetBody();
 }
 
-void VsCylinder::CreateJoints(Simulator *lpSim, Structure *lpStructure)
+void VsCylinder::CreateJoints()
 {
 	if(m_lpJointToParent)
-		m_lpJointToParent->CreateJoint(lpSim, lpStructure);
+		m_lpJointToParent->CreateJoint();
 
-	Cylinder::CreateJoints(lpSim, lpStructure);
-	VsRigidBody::Initialize(lpSim, lpStructure);
+	Cylinder::CreateJoints();
+	VsRigidBody::Initialize();
 }
 /*
 void VsCylinder::ResetSimulation(Simulator *lpSim, Structure *lpStructure)

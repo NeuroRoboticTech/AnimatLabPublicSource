@@ -35,10 +35,10 @@ namespace AnimatSim
 				virtual BOOL AllowMouseManipulation();
 
 				CStdArray<Attachment *> *AttachmentPoints() {return &m_aryAttachmentPoints;};
-				virtual float CalculateLength(Simulator *lpSim);
+				virtual float CalculateLength();
 
-				virtual void CreateParts(Simulator *lpSim, Structure *lpStructure);
-				virtual void CreateJoints(Simulator *lpSim, Structure *lpStructure);
+				virtual void CreateParts();
+				virtual void CreateJoints();
 				virtual void Load(CStdXml &oXml);
 			};
 

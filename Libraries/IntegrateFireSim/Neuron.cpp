@@ -629,7 +629,7 @@ void Neuron::CalcUpdate(IntegrateFireNeuralModule *lpNS)
 
 //Node Overrides
 
-void Neuron::AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput)
+void Neuron::AddExternalNodeInput(float fltInput)
 {
 	if(!m_bZapped)
 	{
@@ -665,7 +665,7 @@ int Neuron::FindIonChannelListPos(string strID, BOOL bThrowError)
 	return -1;
 }
 
-void Neuron::ResetSimulation(Simulator *lpSim, Structure *lpStruct)
+void Neuron::ResetSimulation()
 {
 	m_fltAdapterI = 0;
 	m_fltAdapterMemoryI = 0;
@@ -734,12 +734,8 @@ void Neuron::ResetSimulation(Simulator *lpSim, Structure *lpStruct)
 
 	iSize = m_aryIonChannels.GetSize();
 	for(int iIndex = 0; iIndex<iSize; iIndex++)
-		m_aryIonChannels[iIndex]->ResetSimulation(lpSim, lpStruct);
+		m_aryIonChannels[iIndex]->ResetSimulation();
 }
-
-//These methods are not used in this system.
-void Neuron::StepSimulation(Simulator *lpSim, Structure *lpStructure)
-{}
 
 #pragma region DataAccesMethods
 
@@ -868,7 +864,7 @@ void Neuron::AddIonChannel(string strXml)
 	oXml.FindChildElement("IonChannel");
 
 	IonChannel *lpChannel = LoadIonChannel(oXml);
-	lpChannel->Initialize(GetSimulator(), m_lpRealModule->GetOrganism());
+	lpChannel->Initialize();
 }
 
 void Neuron::RemoveIonChannel(string strID, BOOL bThrowError)

@@ -92,7 +92,7 @@ void OdorType::AddOdorSource(Odor *lpOdor)
 	}
 }
 
-float OdorType::CalculateOdorValue(Simulator *lpSim, CStdFPoint &oSensorPos)
+float OdorType::CalculateOdorValue(CStdFPoint &oSensorPos)
 {
 	//Loop through each of the associated odors and calculate the value for each one.
 	CStdMap<string, Odor *>::iterator oIterator;
@@ -104,7 +104,7 @@ float OdorType::CalculateOdorValue(Simulator *lpSim, CStdFPoint &oSensorPos)
 			++oIterator)
 	{
 		lpOdor = oIterator->second;
-		fltVal += lpOdor->CalculateOdorValue(lpSim, this, oSensorPos);
+		fltVal += lpOdor->CalculateOdorValue(this, oSensorPos);
 	}
 
 	return fltVal;

@@ -39,7 +39,7 @@ VsSphere::~VsSphere()
 //	VsRigidBody::Selected(bValue, bSelectMultiple);
 //}
 
-void VsSphere::CreateParts(Simulator *lpSim, Structure *lpStructure)
+void VsSphere::CreateParts()
 {
 	m_osgGeometry = CreateSphereGeometry(50, 50, m_fltRadius);
 	osg::Geode *osgGroup = new osg::Geode;
@@ -53,18 +53,18 @@ void VsSphere::CreateParts(Simulator *lpSim, Structure *lpStructure)
 	m_fltYArea = m_fltXArea;
 	m_fltZArea = m_fltXArea;
 
-	VsRigidBody::CreateBody(lpSim, lpStructure);
-	Sphere::CreateParts(lpSim, lpStructure);
-	VsRigidBody::SetBody(lpSim, lpStructure);
+	VsRigidBody::CreateBody();
+	Sphere::CreateParts();
+	VsRigidBody::SetBody();
 }
 
-void VsSphere::CreateJoints(Simulator *lpSim, Structure *lpStructure)
+void VsSphere::CreateJoints()
 {
 	if(m_lpJointToParent)
-		m_lpJointToParent->CreateJoint(lpSim, lpStructure);
+		m_lpJointToParent->CreateJoint();
 
-	Sphere::CreateJoints(lpSim, lpStructure);
-	VsRigidBody::Initialize(lpSim, lpStructure);
+	Sphere::CreateJoints();
+	VsRigidBody::Initialize();
 }
 //
 //void VsSphere::ResetSimulation(Simulator *lpSim, Structure *lpStructure)

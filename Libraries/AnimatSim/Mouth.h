@@ -51,9 +51,9 @@ namespace AnimatSim
 				virtual ~Mouth();
 
 				//Node Overrides
-				virtual void AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput);
+				virtual void AddExternalNodeInput(float fltInput);
 				virtual float *GetDataPointer(string strDataType);
-				virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
+				virtual void StepSimulation();
 				virtual void Load(CStdXml &oXml);
 			};
 

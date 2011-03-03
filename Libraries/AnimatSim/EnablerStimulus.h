@@ -32,16 +32,16 @@ namespace AnimatSim
 			BOOL EnableWhenActive() {return m_bEnableWhenActive;};
 			void EnableWhenActive(BOOL bVal) {m_bEnableWhenActive = bVal;};
 
-			virtual void Activate(Simulator *lpSim);
-			virtual void StepSimulation(Simulator *lpSim);
-			virtual void Deactivate(Simulator *lpSim);
+			virtual void Activate();
+			virtual void StepSimulation();
+			virtual void Deactivate();
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
 			virtual void Load(CStdXml &oXml);
 
 			//ActiveItem overrides
 			virtual string Type() {return "EnablerInput";};
-			virtual void Initialize(Simulator *lpSim);
+			virtual void Initialize();
 		};
 
 	}			//ExternalStimuli

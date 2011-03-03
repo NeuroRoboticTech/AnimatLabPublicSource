@@ -25,8 +25,8 @@ namespace AnimatSim
 					Sensor();
 					virtual ~Sensor();
 
-					virtual void CreateParts(Simulator *lpSim, Structure *lpStructure);
-					virtual void CreateJoints(Simulator *lpSim, Structure *lpStructure);
+					virtual void CreateParts();
+					virtual void CreateJoints();
 
 					virtual void Load(CStdXml &oXml);
 				};

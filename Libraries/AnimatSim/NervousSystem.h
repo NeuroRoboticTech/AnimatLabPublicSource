@@ -41,14 +41,14 @@ namespace AnimatSim
 			virtual ~NervousSystem();
 
 			virtual NeuralModule *FindNeuralModule(string strModuleName, BOOL bThrowError = TRUE);
-			virtual void AddNeuralModule(Simulator *lpSim, Structure *lpStructure, string strXml);
-			virtual void RemoveNeuralModule(Simulator *lpSim, Structure *lpStructure, string strID);
+			virtual void AddNeuralModule(string strXml);
+			virtual void RemoveNeuralModule(string strID);
 
-			virtual void Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState = TRUE);
-			virtual void ResetSimulation(Simulator *lpSim, Organism *lpOrganism);
+			virtual void Kill(BOOL bState = TRUE);
+			virtual void ResetSimulation();
 
-			virtual void Initialize(Simulator *lpSim, Structure *lpStructure);
-			virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
+			virtual void Initialize();
+			virtual void StepSimulation();
 
 #pragma region SnapshotMethods
 			virtual long CalculateSnapshotByteSize();

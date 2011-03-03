@@ -19,8 +19,6 @@ namespace VortexAnimatSim
 
 		    void notifyIntersect(VxUniverse::eIntersectEventType type, VxIntersectResult* inResult, VxDynamicsResponseInput* inResp);
 		    void notifyDisjoint(VxUniverse::eIntersectEventType type, VxIntersectResult* ires);
-
-			virtual void Initialize(Simulator *lpSim);
 		};
 
 	}			// Visualization

@@ -18,8 +18,8 @@ namespace AnimatSim
 
 			virtual MaterialPair *LoadMaterialPair(CStdXml &oXml);
 
-			virtual void CreateDefaultMaterial(Simulator *lpSim);
-			virtual void RegisterMaterials(Simulator *lpSim);
+			virtual void CreateDefaultMaterial();
+			virtual void RegisterMaterials();
 
 		public:
 			Materials();
@@ -28,7 +28,7 @@ namespace AnimatSim
 			virtual int GetMaterialID(string strID);
 
 			virtual void Reset();
-			virtual void Initialize(Simulator *lpSim);
+			virtual void Initialize();
 
 			virtual void Load(CStdXml &oXml);
 		};

@@ -262,58 +262,36 @@ callback object that will communicate events back up to the GUI.
 **/
 void Structure::Callback(IBodyPartCallback *lpCallback) 
 {m_lpCallback = lpCallback;}
-
 /**
-\fn	void Structure::CollectStructureData(Simulator *lpSim)
+\fn	void Structure::CollectStructureData()
 
-\brief	Collects reporting data for the structure at each time step. 
+\brief	Collects reporting data for the structure at each time step.
 
-\details This is called during StepSimulation of the structure so that we
-can collect or setup any data that needs to be reported back to other systems.
-An example of this is setting the ReportPosition and ReportRotation values.
+\details This is called during StepSimulation of the structure so that we can collect or setup
+any data that needs to be reported back to other systems. An example of this is setting the
+ReportPosition and ReportRotation values. 
 
 \author	dcofer
 \date	2/25/2011
-
-\param [in,out]	lpSim	The pointer to a simulation. 
 **/
-void Structure::CollectStructureData(Simulator *lpSim)
+void Structure::CollectStructureData()
 {
-	if(lpSim && m_lpBody)
+	if(m_lpSim && m_lpBody)
 	{
 		m_oReportPosition = m_lpBody->ReportWorldPosition();
 		m_oReportRotation = m_lpBody->ReportRotation();
 	}
 }
 
-/**
-\fn	void Structure::Initialize(Simulator *lpSim)
-
-\brief	nitializes all parts and joints for this structure.
-
-\details This method creates all of the parts and joints for this structure.
-It calls the CreateParts and CreateJoints methods on the root 
-rigid body. It then calls it recursively on all children.
-
-\author	dcofer
-\date	2/25/2011
-
-\param [in,out]	lpSim	The pointer to a simulation. 
-**/
-void Structure::Initialize(Simulator *lpSim)
+void Structure::Initialize()
 {
-	if(!lpSim)
-		THROW_ERROR(Al_Err_lSimNotDefined, Al_Err_strSimNotDefined);
-
-	m_lpSim = lpSim;
-
 	if(m_lpBody)
 	{
 		//First create all of the model objects.
-		m_lpBody->CreateParts(lpSim, this);
+		m_lpBody->CreateParts();
 
 		//Then create all of the joints between the models.
-		m_lpBody->CreateJoints(lpSim, this);
+		m_lpBody->CreateJoints();
 	}
 
 	//Now lets disable any collisions that have been added to the exclusion list.
@@ -327,68 +305,45 @@ void Structure::Initialize(Simulator *lpSim)
 		lpPart1 = this->FindRigidBody(lpPair->m_strPart1ID);
 		lpPart2 = this->FindRigidBody(lpPair->m_strPart2ID);
 
-		lpPart1->DisableCollision(lpSim, lpPart2);
+		lpPart1->DisableCollision(lpPart2);
 	}
 }
 
-
-/**
-\fn	void Structure::ResetSimulation(Simulator *lpSim)
-
-\brief	Resets the simulation to time zero. 
-
-\details This method calls the ResetSimulation method on all subitems in order
-to reset the simulation back to the beginning.
-
-\author	dcofer
-\date	2/25/2011
-
-\param [in,out]	lpSim	The pointer to a simulation. 
-**/
-void Structure::ResetSimulation(Simulator *lpSim)
+void Structure::ResetSimulation()
 {
-	if(!lpSim)
-		THROW_ERROR(Al_Err_lSimNotDefined, Al_Err_strSimNotDefined);
-
 	if(m_lpBody)
 	{
-		m_lpBody->ResetSimulation(lpSim, this);
+		m_lpBody->ResetSimulation();
 		
-		CollectStructureData(lpSim);
+		CollectStructureData();
 
 		//We have to call this after method because some objects (ie: muscles and spindles, etc.) depend on other items
 		//already being reset to their original positions. So they must be done first and then these items get reset.
-		m_lpBody->AfterResetSimulation(lpSim, this);
+		m_lpBody->AfterResetSimulation();
 	}
 }
 
-
 /**
-\fn	void Structure::StepPhysicsEngine(Simulator *lpSim)
+\fn	void Structure::StepPhysicsEngine()
 
 \brief	Allows the organism and its parts to update at each time slice.
 
-\details This function is called for each structure/organism at every time slice.
-It gives the structures a chance to update any values. For instance, 
-the hydrodynamic simulation code needs to manually add drag and buoyancy
-forces to each rigid body every time slice. You need 
-to be VERY careful to keep all code within the StepSimulation methods short, sweet, 
-and very fast. They are in the main processing loop and even a small increase in the
-amount of processing time that occurrs within this loop will lead to major impacts on
-the ultimate performance of the system. 
+\details This function is called for each structure/organism at every time slice. It gives the
+structures a chance to update any values. For instance, the hydrodynamic simulation code needs to
+manually add drag and buoyancy forces to each rigid body every time slice. You need to be VERY
+careful to keep all code within the StepSimulation methods short, sweet, and very fast. They are
+in the main processing loop and even a small increase in the amount of processing time that
+occurrs within this loop will lead to major impacts on the ultimate performance of the system. 
 
 \author	dcofer
 \date	2/25/2011
-
-\param [in,out]	lpSim	The pointer to a simulation. 
 **/
-
-void Structure::StepPhysicsEngine(Simulator *lpSim)
+void Structure::StepPhysicsEngine()
 {
 	if(m_lpBody)
 	{
-		m_lpBody->StepSimulation(lpSim, this);
-		CollectStructureData(lpSim);
+		m_lpBody->StepSimulation();
+		CollectStructureData();
 	}
 }
 
@@ -665,13 +620,13 @@ void Structure::AddRoot(string strXml)
 	oXml.FindChildElement("RigidBody");
 
 	LoadRoot(oXml);
-	m_lpBody->Initialize(m_lpSim, this, NULL);
+	m_lpBody->Initialize();
 
 	//First create all of the model objects.
-	m_lpBody->CreateParts(m_lpSim, this);
+	m_lpBody->CreateParts();
 
 	//Then create all of the joints between the models.
-	m_lpBody->CreateJoints(m_lpSim, this);
+	m_lpBody->CreateJoints();
 }
 
 /**
@@ -741,55 +696,52 @@ void Structure::SetMotorInput(string strJointID, float fltInput)
 	lpJoint->MotorInput(fltInput);
 }
 
-
 /**
-\fn	void Structure::EnableCollision(Simulator *lpSim, RigidBody *lpCollisionBody)
+\fn	void Structure::EnableCollision(RigidBody *lpCollisionBody)
 
 \brief	Enables collision between the past-in object and all rigid bodies of this structure.
 
-\details This method enables collision responses between the rigid body being past
-in and all rigid bodies in the structure.
+\details This method enables collision responses between the rigid body being past in and all
+rigid bodies in the structure. 
 
 \author	dcofer
 \date	2/25/2011
 
-\param [in,out]	lpSim			The pointer to a simulation. 
-\param [in,out]	lpCollisionBody	his is a pointer to the body to enable collisions on.
+\param [in,out]	lpCollisionBody	his is a pointer to the body to enable collisions on. 
 **/
-void Structure::EnableCollision(Simulator *lpSim, RigidBody *lpCollisionBody)
+void Structure::EnableCollision(RigidBody *lpCollisionBody)
 {
 	CStdMap<string, RigidBody *>::iterator oPos;
 	RigidBody *lpBody = NULL;
 	for(oPos=m_aryRigidBodies.begin(); oPos!=m_aryRigidBodies.end(); ++oPos)
 	{
 		lpBody = oPos->second;
-		lpBody->EnableCollision(lpSim, lpCollisionBody);
+		lpBody->EnableCollision(lpCollisionBody);
 	}
 }
 
-
 /**
-\fn	void Structure::DisableCollision(Simulator *lpSim, RigidBody *lpCollisionBody)
+\fn	void Structure::DisableCollision(RigidBody *lpCollisionBody)
 
 \brief	Disables collision between the past-in object and all rigid bodies of this structure.
 
-\details This method disables collision responses between the rigid body being past
-in and all rigid bodies in the structure.
+\details This method disables collision responses between the rigid body being past in and all
+rigid bodies in the structure. 
 
 \author	dcofer
 \date	2/25/2011
 
-\param [in,out]	lpSim			The pointer to a simulation. 
-\param [in,out]	lpCollisionBody	This is a pointer to the body to disable collisions on.
+\param [in,out]	lpCollisionBody	This is a pointer to the body to disable collisions on. 
+
 **/
-void Structure::DisableCollision(Simulator *lpSim, RigidBody *lpCollisionBody)
+void Structure::DisableCollision(RigidBody *lpCollisionBody)
 {
 	CStdMap<string, RigidBody *>::iterator oPos;
 	RigidBody *lpBody = NULL;
 	for(oPos=m_aryRigidBodies.begin(); oPos!=m_aryRigidBodies.end(); ++oPos)
 	{
 		lpBody = oPos->second;
-		lpBody->DisableCollision(lpSim, lpCollisionBody);
+		lpBody->DisableCollision(lpCollisionBody);
 	}
 }
 
@@ -1005,7 +957,7 @@ try
 
 	m_lpBody->SetSystemPointers(m_lpSim, this, NULL, NULL);
 	m_lpBody->Load(oXml);
-	m_lpBody->CompileIDLists(m_lpSim, this);
+	m_lpBody->CompileIDLists();
 
 	return m_lpBody;
 }

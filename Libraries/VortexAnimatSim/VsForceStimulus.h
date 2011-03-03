@@ -90,11 +90,9 @@ namespace VortexAnimatSim
 
 			//ActiveItem overrides
 			virtual string Type() {return "ForceInput";};
-			virtual void Initialize(Simulator *lpSim);
-			virtual void Activate(Simulator *lpSim);
-			virtual void ResetSimulation(Simulator *lpSim);  
-			virtual void StepSimulation(Simulator *lpSim);
-			virtual void Deactivate(Simulator *lpSim);
+			virtual void Initialize();
+			virtual void ResetSimulation();  
+			virtual void StepSimulation();
 
 			virtual float *GetDataPointer(string strDataType);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);

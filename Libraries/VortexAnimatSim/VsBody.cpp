@@ -455,11 +455,11 @@ void VsBody::SetVisible(BOOL bVisible)
 	SetVisible(m_osgNode.get(), bVisible);
 }
 
-void VsBody::CreateBody(Simulator *lpSim, Structure *lpStructure)
+void VsBody::CreateBody()
 {
-	Initialize(lpSim, lpStructure);
-	SetupGraphics(lpSim, lpStructure);
-	SetupPhysics(lpSim, lpStructure);
+	Initialize();
+	SetupGraphics();
+	SetupPhysics();
 }
 
 void VsBody::EndGripDrag()

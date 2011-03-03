@@ -297,7 +297,7 @@ namespace AnimatGUI
 					if(m_lpSim)
 					{
 						HWND hWnd = (HWND) hParentWnd.ToInt32();
-						m_lpSim->WindowMgr()->RemoveSimulationWindow(m_lpSim, hWnd);
+						m_lpSim->WindowMgr()->RemoveSimulationWindow(hWnd);
 					}
 				}
 				catch(CStdErrorInfo oError)
@@ -868,10 +868,10 @@ namespace AnimatGUI
 					if(m_lpSim) 
 					{
 						AnimatSim::Charting::DataChartMgr *lpChartMgr = m_lpSim->DataChartMgr();
-						lpChartMgr->ReInitialize(m_lpSim);
+						lpChartMgr->ReInitialize();
 
 						AnimatSim::ExternalStimuli::ExternalStimuliMgr *lpStimMgr = m_lpSim->ExternalStimuliMgr();
-						lpStimMgr->ReInitialize(m_lpSim);
+						lpStimMgr->ReInitialize();
 					}
 				}
 				catch(CStdErrorInfo oError)

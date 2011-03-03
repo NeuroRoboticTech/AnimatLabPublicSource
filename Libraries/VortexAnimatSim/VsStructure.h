@@ -32,8 +32,8 @@ namespace VortexAnimatSim
 			virtual void *Assembly() {return (void *)m_lpAssembly;};
 			virtual void *GetMatrixPointer() {return m_osgMT.get();};
 
-			virtual void Initialize(Simulator *lpSim);
-			virtual void ResetSimulation(Simulator *lpSim);
+			virtual void Initialize();
+			virtual void ResetSimulation();
 			osgSim::DOFTransform* GetOSGNode();
 		};
 

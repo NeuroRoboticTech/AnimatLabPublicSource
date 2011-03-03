@@ -67,8 +67,8 @@ namespace AnimatSim
 				Attachment *SecondaryAttachment() {return m_lpSecondaryAttachment;};
 				void SecondaryAttachment(Attachment *lpVal) {m_lpSecondaryAttachment = lpVal;};
 
-				virtual void CreateParts(Simulator *lpSim, Structure *lpStructure);
-				virtual void AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput);
+				virtual void CreateParts();
+				virtual void AddExternalNodeInput(float fltInput);
 				virtual void Load(CStdXml &oXml);
 			};
 

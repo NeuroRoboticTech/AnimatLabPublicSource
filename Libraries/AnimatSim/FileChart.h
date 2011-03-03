@@ -28,14 +28,14 @@ namespace AnimatSim
 			void OutputFilename(string strVal) {m_strOutputFilename = strVal;};
 
 			virtual void Load(CStdXml &oXml);
-			virtual void SaveOutput(Simulator *lpSim);
+			virtual void SaveOutput();
 
 			//ActiveItem overrides
 			virtual string Type() {return "FileChart";};
 
-			virtual void ResetSimulation(Simulator *lpSim);
-			virtual void Initialize(Simulator *lpSim);
-			virtual void Deactivate(Simulator *lpSim);
+			virtual void ResetSimulation();
+			virtual void Initialize();
+			virtual void Deactivate();
 		};
 
 	}			//Charting

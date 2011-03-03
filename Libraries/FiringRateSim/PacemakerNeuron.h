@@ -63,7 +63,7 @@ namespace FiringRateSim
 
 			virtual unsigned char NeuronType();
 
-			virtual void StepSimulation(Simulator *lpSim, Organism *lpOrganism, FiringRateModule *lpModule);
+			virtual void StepSimulation();
 			virtual float *GetDataPointer(string strDataType);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 

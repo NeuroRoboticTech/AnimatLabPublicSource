@@ -85,69 +85,59 @@ BOOL DataChart::operator<(ActivatedItem *lpItem)
 void DataChart::StartTime(float fltVal) 
 {
 	ActivatedItem::StartTime(fltVal);
-
-	//If we are changing the always active then we need to re-initialize the chart mgr so it knows.
-	Simulator *lpSim = GetSimulator();
-	ReInitialize(lpSim);
+	ReInitialize();
 }
 
 void DataChart::EndTime(float fltVal) 
 {
 	ActivatedItem::EndTime(fltVal);
-
-	//If we are changing the always active then we need to re-initialize the chart mgr so it knows.
-	Simulator *lpSim = GetSimulator();
-	ReInitialize(lpSim);
+	ReInitialize();
 }
 
 void DataChart::SetStartEndTime(BOOL bVal)
 {
 	m_bSetStartEndTime = bVal;
 	ActivatedItem::AlwaysActive(!m_bSetStartEndTime);
-	
-	//If we are changing the always active then we need to re-initialize the chart mgr so it knows.
-	Simulator *lpSim = GetSimulator();
-	ReInitialize(lpSim);
+	ReInitialize();
 }
 
 void DataChart::CollectInterval(int iVal)
 {
 	m_iCollectInterval = iVal;
-	ReInitialize(GetSimulator());
+	ReInitialize();
 }
 
 void DataChart::CollectInterval(float fltVal)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "CollectInterval");
 
-	Simulator *lpSim = GetSimulator();
 	//Lets calculate the number of slices for the collect interval.
-	m_iCollectInterval = (int) (fltVal/lpSim->TimeStep());
+	m_iCollectInterval = (int) (fltVal/m_lpSim->TimeStep());
 	if(m_iCollectInterval<=0) m_iCollectInterval = 1;
 
-	ReInitialize(lpSim);
+	ReInitialize();
 }
 
 void DataChart::CollectTimeWindow(long lVal)
 {
 	m_lCollectTimeWindow = lVal;
-	ReInitialize(GetSimulator());
+	ReInitialize();
 }
 
 void DataChart::CollectTimeWindow(float fltVal)
 {
 	m_fltCollectTimeWindow = fltVal;
-	ReInitialize(GetSimulator());
+	ReInitialize();
 }
 
-void DataChart::Initialize(Simulator *lpSim)
+void DataChart::Initialize()
 {
-	ActivatedItem::Initialize(lpSim);
+	ActivatedItem::Initialize();
 
 	if(m_fltCollectTimeWindow <= 0)
 		m_lCollectTimeWindow = m_lEndSlice - m_lStartSlice;
 	else
-		m_lCollectTimeWindow = (long) (m_fltCollectTimeWindow / lpSim->TimeStep() + 0.5);
+		m_lCollectTimeWindow = (long) (m_fltCollectTimeWindow / m_lpSim->TimeStep() + 0.5);
 
 	//First lets determine the buffer space that will be required for this chart.
 	m_lColumnCount = CalculateChartColumnCount();
@@ -178,19 +168,19 @@ void DataChart::Initialize(Simulator *lpSim)
 	//Now initialize the data columns.
 	int iCount = m_aryDataColumns.GetSize();
 	for(int iCol=0; iCol<iCount; iCol++)
-		m_aryDataColumns[iCol]->Initialize(lpSim);
+		m_aryDataColumns[iCol]->Initialize();
 }
 
-void DataChart::ReInitialize(Simulator *lpSim)
+void DataChart::ReInitialize()
 {
 	if(!m_bInitialized)
-		Initialize(lpSim);
+		Initialize();
 	else
 	{
 		if(m_fltCollectTimeWindow <= 0)
 			m_lCollectTimeWindow = m_lEndSlice - m_lStartSlice;
 		else
-			m_lCollectTimeWindow = (long) (m_fltCollectTimeWindow / lpSim->TimeStep() + 0.5);
+			m_lCollectTimeWindow = (long) (m_fltCollectTimeWindow / m_lpSim->TimeStep() + 0.5);
 
 		long lColumnCount = CalculateChartColumnCount();
 		//We add 10 because we want the buffer to be bigger than the actual amount of data that is collected.
@@ -229,16 +219,16 @@ void DataChart::ReInitialize(Simulator *lpSim)
 		//Now initialize the data columns.
 		int iCount = m_aryDataColumns.GetSize();
 		for(int iCol=0; iCol<iCount; iCol++)
-			m_aryDataColumns[iCol]->ReInitialize(lpSim);
+			m_aryDataColumns[iCol]->ReInitialize();
 	}
 }
 
-void DataChart::ResetSimulation(Simulator *lpSim)
+void DataChart::ResetSimulation()
 {
-	ActivatedItem::ResetSimulation(lpSim);
+	ActivatedItem::ResetSimulation();
 	m_lCurrentCol = 0;
 	m_lCurrentRow = 0;
-	ReInitialize(lpSim);	
+	ReInitialize();	
 }
 
 long DataChart::CalculateChartColumnCount()
@@ -258,9 +248,8 @@ void DataChart::AddColumn(string strXml)
 	oXml.FindElement("Root");
 	oXml.FindChildElement("DataColumn");
 
-	Simulator *lpSim = GetSimulator();
 	LoadDataColumn(oXml);
-	ReInitialize(lpSim);
+	ReInitialize();
 }
 
 void DataChart::AddColumn(DataColumn *lpColumn)
@@ -404,35 +393,24 @@ BOOL DataChart::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 
 #pragma endregion
 
-void DataChart::Activate(Simulator *lpSim)
+void DataChart::StepSimulation()
 {
-	ActivatedItem::Activate(lpSim);
-}
-
-void DataChart::StepSimulation(Simulator *lpSim)
-{
-	if(!(lpSim->TimeSlice()%m_iCollectInterval))
+	if(!(m_lpSim->TimeSlice()%m_iCollectInterval))
 	{
 		m_lCurrentCol = 0;
 
 		if(m_aryTimeBuffer)
 		{
-			float fltTime = lpSim->Time();
-			m_aryTimeBuffer[m_lCurrentRow] = lpSim->Time();
+			float fltTime = m_lpSim->Time();
+			m_aryTimeBuffer[m_lCurrentRow] = m_lpSim->Time();
 		}
 
 		int iCount = m_aryDataColumns.GetSize();
 		for(int iCol=0; iCol<iCount; iCol++)
-			m_aryDataColumns[iCol]->StepSimulation(lpSim, this);
+			m_aryDataColumns[iCol]->StepSimulation();
 
 		m_lCurrentRow++;
 	}
-}
-
-
-void DataChart::Deactivate(Simulator *lpSim)
-{
-	ActivatedItem::Deactivate(lpSim);
 }
 
 void DataChart::AddData(int iColumn, int iRow, float fltVal)
@@ -540,7 +518,7 @@ try
 	if(!lpColumn)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "DataColumn");
 
-	lpColumn->SetSystemPointers(m_lpSim, NULL, NULL, NULL);
+	lpColumn->SetSystemPointers(m_lpSim, NULL, NULL, NULL, this);
 	lpColumn->Load(oXml);
 
 	AddColumn(lpColumn);

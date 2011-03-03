@@ -18,7 +18,7 @@ namespace IntegrateFireSim
 			virtual ~Connexion();
 			virtual void Load(CStdXml &oXml);
 
-			virtual void ResetSimulation(Simulator *lpSim, Structure *lpStruct);
+			virtual void ResetSimulation();
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
 #pragma region Accessor-Mutators

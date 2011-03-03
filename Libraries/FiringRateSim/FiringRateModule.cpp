@@ -51,12 +51,12 @@ void FiringRateModule::InactiveArray(BOOL bVal)
 
 
 
-void FiringRateModule::Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState)
+void FiringRateModule::Kill(BOOL bState)
 {
 	int iCount = m_aryNeurons.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		if(m_aryNeurons[iIndex])
-			m_aryNeurons[iIndex]->Kill(lpSim, lpOrganism, bState);
+			m_aryNeurons[iIndex]->Kill(bState);
 }
 
 int FiringRateModule::FindNeuronListPos(string strID, BOOL bThrowError)
@@ -74,40 +74,36 @@ int FiringRateModule::FindNeuronListPos(string strID, BOOL bThrowError)
 	return -1;
 }
 
-void FiringRateModule::ResetSimulation(Simulator *lpSim, Organism *lpOrganism)
+void FiringRateModule::ResetSimulation()
 {
 	int iCount = m_aryNeurons.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		if(m_aryNeurons[iIndex])
-			m_aryNeurons[iIndex]->ResetSimulation(lpSim, lpOrganism);
+			m_aryNeurons[iIndex]->ResetSimulation();
 }
 
-void FiringRateModule::Initialize(Simulator *lpSim, Structure *lpStructure)
+void FiringRateModule::Initialize()
 {
-	NeuralModule::Initialize(lpSim, lpStructure);
+	NeuralModule::Initialize();
 
-	Organism *lpOrganism = dynamic_cast<Organism *>(lpStructure);
+	Organism *lpOrganism = dynamic_cast<Organism *>(m_lpStructure);
 	if(!lpOrganism) 
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 
 	int iCount = m_aryNeurons.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		if(m_aryNeurons[iIndex])
-			m_aryNeurons[iIndex]->Initialize(lpSim, lpOrganism, this);
+			m_aryNeurons[iIndex]->Initialize();
 }
 
-void FiringRateModule::StepSimulation(Simulator *lpSim, Structure *lpStructure)
+void FiringRateModule::StepSimulation()
 {
-	NeuralModule::StepSimulation(lpSim, lpStructure);
-
-	Organism *lpOrganism = dynamic_cast<Organism *>(lpStructure);
-	if(!lpOrganism) 
-		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
+	NeuralModule::StepSimulation();
 
 	int iCount = m_aryNeurons.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		if(m_aryNeurons[iIndex])
-			m_aryNeurons[iIndex]->StepSimulation(lpSim, lpOrganism, this);
+			m_aryNeurons[iIndex]->StepSimulation();
 
 	//Swap the active array.
 	m_bActiveArray = !m_bActiveArray;
@@ -143,7 +139,7 @@ void FiringRateModule::AddNeuron(string strXml)
 	oXml.FindChildElement("Neuron");
 
 	Neuron *lpNeuron = LoadNeuron(oXml);
-	lpNeuron->Initialize(m_lpSim, m_lpOrganism, this);
+	lpNeuron->Initialize();
 }
 
 void FiringRateModule::RemoveNeuron(string strID, BOOL bThrowError)

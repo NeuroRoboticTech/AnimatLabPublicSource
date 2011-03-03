@@ -245,9 +245,8 @@ namespace IntegrateFireSim
 		virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
 #pragma endregion
 
-		virtual void AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput);
-		virtual void ResetSimulation(Simulator *lpSim, Structure *lpStruct);
-		virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
+		virtual void AddExternalNodeInput(float fltInput);
+		virtual void ResetSimulation();
 		//Node Overrides
 
 	friend class IntegrateFireNeuralModule;

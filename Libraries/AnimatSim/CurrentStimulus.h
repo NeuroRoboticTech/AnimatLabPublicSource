@@ -52,7 +52,7 @@ namespace AnimatSim
 			BOOL m_bCycleOn;
 			BOOL m_bBurstOn;
 
-			float GetCurrentOn(Simulator *lpSim);
+			float GetCurrentOn();
 
 		public:
 			CurrentStimulus();
@@ -83,11 +83,11 @@ namespace AnimatSim
 
 			//ActiveItem overrides
 			virtual string Type() {return "CurrentStimulus";};
-			virtual void Initialize(Simulator *lpSim);  
-			virtual void ResetSimulation(Simulator *lpSim);  
-			virtual void Activate(Simulator *lpSim);
-			virtual void StepSimulation(Simulator *lpSim);
-			virtual void Deactivate(Simulator *lpSim);
+			virtual void Initialize();  
+			virtual void ResetSimulation();  
+			virtual void Activate();
+			virtual void StepSimulation();
+			virtual void Deactivate();
 
 			virtual float *GetDataPointer(string strDataType);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);

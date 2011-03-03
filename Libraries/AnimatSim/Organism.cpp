@@ -84,69 +84,49 @@ catch(...)
 BOOL Organism::IsDead() 
 {return m_bDead;}
 
-/**
-\fn	void Organism::Kill(Simulator *lpSim, BOOL bState)
-
-\brief	Kills organism.
-
-\details Called to kill the organism. All neural items are disabled to prevent any further 
-neural activity, and all joints are disabled to allow free rotation, and all biomechancical 
-components are disabled so they can no longer produce forces.
-
-\author	dcofer
-\date	2/25/2011
-
-\param [in,out]	lpSim	The pointer to a simulation. 
-\param	bState			Set to true to kill, false to revive. 
-**/
-void Organism::Kill(Simulator *lpSim, BOOL bState)
+void Organism::Kill(BOOL bState)
 {
 	m_bDead = bState;
-	m_lpBody->Kill(lpSim, this, bState);
-	m_lpNervousSystem->Kill(lpSim, this, bState);
+	m_lpBody->Kill(bState);
+	m_lpNervousSystem->Kill(bState);
 }
 
-void Organism::Initialize(Simulator *lpSim)
+void Organism::Initialize()
 {
-	Structure::Initialize(lpSim);
+	Structure::Initialize();
 
-	m_lpNervousSystem->Initialize(lpSim, this);
+	m_lpNervousSystem->Initialize();
 }
 
-void Organism::ResetSimulation(Simulator *lpSim)
+void Organism::ResetSimulation()
 {
-	if(!lpSim)
-		THROW_ERROR(Al_Err_lSimNotDefined, Al_Err_strSimNotDefined);
-
 	if(m_lpBody)
 	{
-		m_lpBody->ResetSimulation(lpSim, this);
+		m_lpBody->ResetSimulation();
 		
-		CollectStructureData(lpSim);
+		CollectStructureData();
 	}
 
-	m_lpNervousSystem->ResetSimulation(lpSim, this);
+	m_lpNervousSystem->ResetSimulation();
 
 	//We have to call this after method because some objects (ie: muscles and spindles, etc.) depend on other items
 	//already being reset to their original positions. So they must be done first and then these items get reset.
 	if(m_lpBody)
-		m_lpBody->AfterResetSimulation(lpSim, this);
+		m_lpBody->AfterResetSimulation();
 }
 
 /**
-\fn	void Organism::StepNeuralEngine(Simulator *lpSim)
+\fn	void Organism::StepNeuralEngine()
 
 \brief	Step neural engine. 
 
 \author	dcofer
 \date	3/2/2011
-
-\param [in,out]	lpSim	If non-null, the pointer to a simulation. 
 **/
-void Organism::StepNeuralEngine(Simulator *lpSim)
+void Organism::StepNeuralEngine()
 {
 	if(!m_bDead)
-		m_lpNervousSystem->StepSimulation(lpSim, this);
+		m_lpNervousSystem->StepSimulation();
 }
 
 #pragma region DataAccesMethods
@@ -176,7 +156,7 @@ BOOL Organism::AddItem(string strItemType, string strXml, BOOL bThrowError)
 	{
 		try
 		{
-			m_lpNervousSystem->AddNeuralModule(GetSimulator(), this, strXml);
+			m_lpNervousSystem->AddNeuralModule(strXml);
 			return TRUE;
 		}
 		catch(CStdErrorInfo oError)
@@ -201,7 +181,7 @@ BOOL Organism::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 	{
 		try
 		{
-			m_lpNervousSystem->RemoveNeuralModule(GetSimulator(), this, strID);
+			m_lpNervousSystem->RemoveNeuralModule(strID);
 			return TRUE;
 		}
 		catch(CStdErrorInfo oError)

@@ -30,11 +30,11 @@ namespace VortexAnimatSim
 
 				virtual void CalculateServoVelocity();
 				virtual void SetVelocityToDesired();
-				virtual void UpdateData(Simulator *lpSim, Structure *lpStructure);
-				virtual void SetupPhysics(Simulator *lpSim, Structure *lpStructure);
+				virtual void UpdateData();
+				virtual void SetupPhysics();
 				virtual void DeletePhysics();
 				virtual void ResetGraphicsAndPhysics();
-				virtual void CreateCylinderGraphics(Simulator *lpSim, Structure *lpStructure);
+				virtual void CreateCylinderGraphics();
 
 			public:
 				VsHinge();
@@ -43,7 +43,7 @@ namespace VortexAnimatSim
 				virtual void Rotation(CStdFPoint &oPoint);
 				virtual void JointPosition(float fltPos);
 
-				virtual void SetupGraphics(Simulator *lpSim, Structure *lpStructure);
+				virtual void SetupGraphics();
 				virtual void SetAlpha();
 
 #pragma region DataAccesMethods
@@ -55,8 +55,8 @@ namespace VortexAnimatSim
 
 				virtual void EnableMotor(BOOL bVal);
 				virtual void EnableLimits(BOOL bVal);
-				virtual void CreateJoint(Simulator *lpSim, Structure *lpStructure);
-				virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
+				virtual void CreateJoint();
+				virtual void StepSimulation();
 			};
 
 		}		//Joints

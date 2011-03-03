@@ -22,15 +22,15 @@ public:
 	virtual BOOL HasContainedWindow();
 
 	virtual CStdPtrArray<SimulationWindow> *Windows() {return &m_aryWindows;};
-	virtual void Initialize(Simulator *lpSim) = 0;
-	virtual BOOL Update(Simulator *lpSim);	
+	virtual void Initialize() = 0;
+	virtual BOOL Update();	
 	virtual void Realize() = 0;
 	virtual void Close();
 
 	virtual SimulationWindow *FindSimulationWindow(HWND win, int &iIndex, BOOL bThrowError = TRUE);
 
 	virtual SimulationWindow *AddSimulationWindow(string strModule, string strType, BOOL bInit, HWND win, string strHudXml);
-	virtual void RemoveSimulationWindow(Simulator *lpSim, HWND win);
+	virtual void RemoveSimulationWindow(HWND win);
 	virtual void CloseAllWindows();
 	virtual void Load(CStdXml &oXml);
 };

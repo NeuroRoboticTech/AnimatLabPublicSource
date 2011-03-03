@@ -107,66 +107,81 @@ namespace AnimatSim
 		virtual void Reset() {};
 
 		/**
-		\fn	virtual void AnimatBase::Initialize(Simulator *lpSim)
+		\fn	virtual void AnimatBase::Initialize()
 		
 		\brief	Initializes this object. 
 		
 		\author	dcofer
 		\date	3/1/2011
-		
-		\param [in,out]	lpSim	The pointer to a simulation. 
 		**/
-		virtual void Initialize(Simulator *lpSim) {};
+
+		virtual void Initialize() {};
 
 		/**
-		\fn	virtual void AnimatBase::ResetSimulation(Simulator *lpSim)
+		\fn	virtual void AnimatBase::ResetSimulation()
 		
-		\brief	Resets the simulation back to time 0. 
+		\brief	Resets the simulation back to time 0.
 		
-		\details This method calls the ResetSimulation method on all subitems in order
-		to reset the simulation back to the beginning.
-
+		\details This method calls the ResetSimulation method on all subitems in order to reset the
+		simulation back to the beginning. 
+		
 		\author	dcofer
 		\date	3/1/2011
-		
-		\param [in,out]	lpSim	The pointer to a simulation. 
 		**/
-		virtual void ResetSimulation(Simulator *lpSim) {};
 
-		virtual void AfterResetSimulation(Simulator *lpSim, Structure *lpStructure) {};
+		virtual void ResetSimulation() {};
+
+		virtual void AfterResetSimulation() {};
 
 		/**
-		\fn	virtual void AnimatBase::ReInitialize(Simulator *lpSim)
+		\fn	virtual void AnimatBase::ReInitialize()
 		
 		\brief	Re-initialize this object. 
 		
 		\author	dcofer
 		\date	3/1/2011
-		
-		\param [in,out]	lpSim	The pointer to a simulation. 
 		**/
-		virtual void ReInitialize(Simulator *lpSim) {};
+
+		virtual void ReInitialize() {};
 
 		/**
-		\fn	virtual void AnimatBase::StepSimulation(Simulator *lpSim)
+		\fn	virtual void AnimatBase::Kill(BOOL bState = TRUE)
+		
+		\brief	Kills. 
+
+		\details Called to kill the organism, nervous system, neurons, and body parts. 
+		All neural items are disabled to prevent any further neural
+		activity, and all joints are disabled to allow free rotation, and all biomechancical components
+		are disabled so they can no longer produce forces. This method is only relevant to these types
+		of objects, but I am putting the definition in the base class because a variety of different
+		types of classes all need this method and I want it consolidated. Those classes that do not need
+		it do not have to call it or do anything when it is called.
+		
+		\author	dcofer
+		\date	3/3/2011
+		
+		\param	bState	true to state. 
+		**/
+		virtual void Kill(BOOL bState = TRUE) {};
+
+		/**
+		\fn	virtual void AnimatBase::StepSimulation()
 		
 		\brief	Step the simulation for this object.
-
-		\details This is called on an object each time it is stepped in the simulation.
-		this is where its simulation code is processed. However, StepSimulation is not 
-		necessarily called every single time that the simulation as a whole is stepped. 
-		A good example of this is that neural modules can have different integration time
-		steps. So a firing rate module may have a DT of 0.5 ms, while an integrate and fire
-		model may have one of 0.1 ms. So the firing rate module would only get its StepSimulation
-		method called every 5th time that the other module was called. This is all handed in 
-		the StepSimulation method of the Simulator and NervousSystem.
+		
+		\details This is called on an object each time it is stepped in the simulation. this is where its
+		simulation code is processed. However, StepSimulation is not necessarily called every single time
+		that the simulation as a whole is stepped. A good example of this is that neural modules can have
+		different integration time steps. So a firing rate module may have a DT of 0.5 ms, while an
+		integrate and fire model may have one of 0.1 ms. So the firing rate module would only get its
+		StepSimulation method called every 5th time that the other module was called. This is all handed
+		in the StepSimulation method of the Simulator and NervousSystem. 
 		
 		\author	dcofer
 		\date	3/1/2011
-		
-		\param [in,out]	lpSim	The pointer to a simulation. 
 		**/
-		virtual void StepSimulation(Simulator *lpSim) {};
+
+		virtual void StepSimulation() {};
 
 		/**
 		\fn	virtual void AnimatBase::SimStarting()

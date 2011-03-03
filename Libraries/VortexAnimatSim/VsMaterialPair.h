@@ -18,8 +18,8 @@ namespace VortexAnimatSim
 			virtual ~VsMaterialPair();
 
 			virtual int GetMaterialID(string strName);
-			virtual void RegisterMaterialTypes(Simulator *lpSim, CStdArray<string> aryMaterialTypes);
-			virtual void Initialize(Simulator *lpSim);
+			virtual void RegisterMaterialTypes(CStdArray<string> aryMaterialTypes);
+			virtual void Initialize();
 		};
 
 	}			// Visualization

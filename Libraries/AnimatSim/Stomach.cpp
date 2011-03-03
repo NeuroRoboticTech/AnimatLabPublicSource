@@ -92,17 +92,17 @@ void Stomach::EnergyLevel(float fltVal)
 }
 
 // There are no parts or joints to create for muscle attachment points.
-void Stomach::CreateParts(Simulator *lpSim, Structure *lpStructure)
+void Stomach::CreateParts()
 {
 }
 
-void Stomach::StepSimulation(Simulator *lpSim, Structure *lpStructure)
+void Stomach::StepSimulation()
 {
 	m_fltConsumptionRate = m_fltAdapterConsumptionRate + m_fltBaseConsumptionRate;
 	m_fltAdapterConsumptionRate = 0;
 
 	//We have the replenish rate in Quantity/s, but we need it in Quantity/timeslice. Lets recalculate it here.
-	m_fltConsumptionForStep = (m_fltConsumptionRate * lpSim->PhysicsTimeStep());
+	m_fltConsumptionForStep = (m_fltConsumptionRate * m_lpSim->PhysicsTimeStep());
 
 	m_fltEnergyLevel -= m_fltConsumptionForStep;
 
@@ -111,8 +111,11 @@ void Stomach::StepSimulation(Simulator *lpSim, Structure *lpStructure)
 
 	if(!m_bKilled && m_bKillOrganism && m_fltEnergyLevel == 0)
 	{
-		Organism *lpOrganism = dynamic_cast<Organism *>(lpStructure);
-		lpOrganism->Kill(lpSim, TRUE);
+		Organism *lpOrganism = dynamic_cast<Organism *>(m_lpStructure);
+		if(!lpOrganism)
+			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
+
+		lpOrganism->Kill(TRUE);
 		m_bKilled = TRUE;
 	}
 }
@@ -142,7 +145,7 @@ float *Stomach::GetDataPointer(string strDataType)
 	return NULL;
 }
 
-void Stomach::AddExternalNodeInput(Simulator *lpSim, Structure *lpStructure, float fltInput)
+void Stomach::AddExternalNodeInput(float fltInput)
 {
 	m_fltAdapterConsumptionRate += fltInput;
 	if(m_fltAdapterConsumptionRate < 0)

@@ -31,8 +31,8 @@ namespace AnimatSim
 			//ActiveItem overrides
 			virtual string Type() {return "MemoryChart";};
 
-			virtual void Initialize(Simulator *lpSim);
-			virtual void StepSimulation(Simulator *lpSim);
+			virtual void Initialize();
+			virtual void StepSimulation();
 		};
 
 	}			//Charting

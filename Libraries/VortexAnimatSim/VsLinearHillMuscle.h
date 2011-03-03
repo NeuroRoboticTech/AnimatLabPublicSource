@@ -24,11 +24,11 @@ public:
 	VsLinearHillMuscle();
 	virtual ~VsLinearHillMuscle();
 
-	virtual void CreateParts(Simulator *lpSim, Structure *lpStructure);
-	virtual void CreateJoints(Simulator *lpSim, Structure *lpStructure);
-	virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure);
-	virtual void AfterResetSimulation(Simulator *lpSim, Structure *lpStructure);
-	virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
+	virtual void CreateParts();
+	virtual void CreateJoints();
+	virtual void ResetSimulation();
+	virtual void AfterResetSimulation();
+	virtual void StepSimulation();
 };
 
 		}		//Bodies

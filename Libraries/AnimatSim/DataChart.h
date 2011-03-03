@@ -92,12 +92,10 @@ namespace AnimatSim
 #pragma endregion
 
 			virtual BOOL operator<(ActivatedItem *lpItem);
-			virtual void Initialize(Simulator *lpSim);
-			virtual void ReInitialize(Simulator *lpSim);
-			virtual void ResetSimulation(Simulator *lpSim);
-			virtual void Activate(Simulator *lpSim);
-			virtual void StepSimulation(Simulator *lpSim);
-			virtual void Deactivate(Simulator *lpSim);
+			virtual void Initialize();
+			virtual void ReInitialize();
+			virtual void ResetSimulation();
+			virtual void StepSimulation();
 
 			virtual BOOL Lock() {return TRUE;};
 			virtual void Unlock() {};

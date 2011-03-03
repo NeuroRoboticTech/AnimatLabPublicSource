@@ -51,7 +51,7 @@ namespace AnimatSim
 			virtual float *GetDataPointer(string strDataType);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 			virtual void Load(CStdXml &oXml, string strName);
-			virtual void SetupGraphics(Simulator *lpSim, Structure *lpStructure) = 0;
+			virtual void SetupGraphics() = 0;
 		};
 
 	}			// Environment

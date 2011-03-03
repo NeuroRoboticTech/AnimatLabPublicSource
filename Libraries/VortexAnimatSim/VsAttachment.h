@@ -24,10 +24,10 @@ public:
 	VsAttachment();
 	virtual ~VsAttachment();
 
-	virtual void Initialize(Simulator *lpSim, Structure *lpStructure) {};
-	virtual void CreateParts(Simulator *lpSim, Structure *lpStructure);
-	//virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure);
-	//virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
+	virtual void Initialize() {};
+	virtual void CreateParts();
+	//virtual void ResetSimulation();
+	//virtual void StepSimulation();
 	//virtual float *GetDataPointer(string strDataType);
 };
 

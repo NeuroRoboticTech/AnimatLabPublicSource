@@ -36,8 +36,8 @@ namespace AnimatSim
 			ReceptiveFieldPair();
 			virtual ~ReceptiveFieldPair();
 
-			void Initialize(Simulator *lpSim, Organism *lpOrganism, Node *lpSourceNode, string strTargetModule);
-			void ReceptiveFieldPair::StepSimulation(Simulator *lpSim, Structure *lpStructure);
+			void Initialize(string strTargetModule);
+			void StepSimulation();
 
 			virtual void Load(CStdXml &oXml);
 		};

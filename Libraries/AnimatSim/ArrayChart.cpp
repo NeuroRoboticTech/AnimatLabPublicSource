@@ -55,9 +55,9 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of ArrayChart\r\n", "", -1, FALSE, TRUE);}
 }
 
-void ArrayChart::Initialize(Simulator *lpSim)
+void ArrayChart::Initialize()
 {
-	ActivatedItem::Initialize(lpSim);
+	ActivatedItem::Initialize();
 
 	m_lColumnCount = m_vArraySize.x;
 	m_lRowCount = m_vArraySize.y;
@@ -82,20 +82,20 @@ void ArrayChart::Initialize(Simulator *lpSim)
 	//Now initialize the data columns.
 	int iCount = m_aryDataColumns.GetSize();
 	for(int iCol=0; iCol<iCount; iCol++)
-		m_aryDataColumns[iCol]->Initialize(lpSim);
+		m_aryDataColumns[iCol]->Initialize();
 }
 
-void ArrayChart::ReInitialize(Simulator *lpSim)
+void ArrayChart::ReInitialize()
 {
 }
 
-void ArrayChart::StepSimulation(Simulator *lpSim)
+void ArrayChart::StepSimulation()
 {
-	if(!(lpSim->TimeSlice()%m_iCollectInterval))
+	if(!(m_lpSim->TimeSlice()%m_iCollectInterval))
 	{
 		int iCount = m_aryDataColumns.GetSize();
 		for(int iCol=0; iCol<iCount; iCol++)
-			m_aryDataColumns[iCol]->StepSimulation(lpSim, this);
+			m_aryDataColumns[iCol]->StepSimulation();
 	}
 }
 

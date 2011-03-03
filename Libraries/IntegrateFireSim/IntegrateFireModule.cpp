@@ -73,9 +73,9 @@ void IntegrateFireNeuralModule::LoadInternal(CStdXml &oXml)
 	Name(oXml.GetChildString("Name", m_strName));
 
 	//This will add this object to the object list of the simulation.
-	Simulator *lpSim = GetSimulator();
-	if(lpSim)
-		lpSim->AddToObjectList(this);
+	Simulator *m_lpSim = GetSimulator();
+	if(m_lpSim)
+		m_lpSim->AddToObjectList(this);
 
 	TimeStep(oXml.GetChildFloat("TimeStep"));
 	m_dTimeStep = m_fltTimeStep * 1000;
@@ -1029,14 +1029,14 @@ BOOL IntegrateFireNeuralModule::RemoveItem(string strItemType, string strID, BOO
 
 #pragma endregion
 
-void IntegrateFireNeuralModule::Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState)
+void IntegrateFireNeuralModule::Kill(BOOL bState)
 {
 	int iSize = m_aryNeurons.GetSize(), iNeuron;
 	for(iNeuron=0; iNeuron<iSize; iNeuron++)
-		m_aryNeurons[iNeuron]->Kill(lpSim, lpOrganism, bState);
+		m_aryNeurons[iNeuron]->Kill(bState);
 }
 
-void IntegrateFireNeuralModule::ResetSimulation(Simulator *lpSim, Organism *lpOrganism)
+void IntegrateFireNeuralModule::ResetSimulation()
 {
 	m_dCurrentTime = 0;
 
@@ -1044,26 +1044,26 @@ void IntegrateFireNeuralModule::ResetSimulation(Simulator *lpSim, Organism *lpOr
 
 	int iSize = m_aryNeurons.GetSize(), iIndex;
 	for(iIndex=0; iIndex<iSize; iIndex++)
-		m_aryNeurons[iIndex]->ResetSimulation(lpSim, lpOrganism);
+		m_aryNeurons[iIndex]->ResetSimulation();
 
 	iSize = m_aryConnexion.GetSize();
 	for(iIndex=0; iIndex<iSize; iIndex++)
-		m_aryConnexion[iIndex]->ResetSimulation(lpSim, lpOrganism);
+		m_aryConnexion[iIndex]->ResetSimulation();
 
 	PreCalc();	
 }
 
-void IntegrateFireNeuralModule::Initialize(Simulator *lpSim, Structure *lpStructure)
+void IntegrateFireNeuralModule::Initialize()
 {
-	srand(lpSim->ManualRandomSeed());
+	srand(m_lpSim->ManualRandomSeed());
 
-	NeuralModule::Initialize(lpSim, lpStructure);
+	NeuralModule::Initialize();
 	PreCalc();
 }
 
-void IntegrateFireNeuralModule::StepSimulation(Simulator *lpSim, Structure *lpStructure)
+void IntegrateFireNeuralModule::StepSimulation()
 {
-	NeuralModule::StepSimulation(lpSim, lpStructure);
+	NeuralModule::StepSimulation();
 	CalcUpdate();
 }
 

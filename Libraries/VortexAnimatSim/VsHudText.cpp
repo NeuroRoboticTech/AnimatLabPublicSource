@@ -41,9 +41,9 @@ VsHudText::~VsHudText()
 {
 }
 
-void VsHudText::Initialize(Simulator *lpSim, osg::Projection *lpProjection)
+void VsHudText::Initialize(osg::Projection *lpProjection)
 {
-	AnimatBase *lpBase = lpSim->FindByID(m_strTargetID);
+	AnimatBase *lpBase = m_lpSim->FindByID(m_strTargetID);
 	m_lpData = lpBase->GetDataPointer(m_strDataType);
 
 	m_osgText = new osgText::Text;
@@ -59,7 +59,7 @@ void VsHudText::Initialize(Simulator *lpSim, osg::Projection *lpProjection)
     lpProjection->addChild(m_osgGeode.get());
 }
 
-void VsHudText::Update(Simulator *lpSim)
+void VsHudText::Update()
 {
     char str[1024];
 

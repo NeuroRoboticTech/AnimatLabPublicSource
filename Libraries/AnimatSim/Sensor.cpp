@@ -51,10 +51,10 @@ Sensor::~Sensor()
 }
 
 // There are no parts or joints to create for muscle attachment points.
-void Sensor::CreateParts(Simulator *lpSim, Structure *lpStructure)
+void Sensor::CreateParts()
 {}
 
-void Sensor::CreateJoints(Simulator *lpSim, Structure *lpStructure)
+void Sensor::CreateJoints()
 {}
 
 void Sensor::Load(CStdXml &oXml)

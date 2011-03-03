@@ -73,32 +73,29 @@ void ExternalInputStimulus::InputEquation(string strVal)
 	m_lpEval->Equation(m_strInputEquation);
 }
 
-void ExternalInputStimulus::Initialize(Simulator *lpSim)
+void ExternalInputStimulus::Initialize()
 {
-	if(!lpSim)
-		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
-
-	m_lpStructure = dynamic_cast<Structure *>(lpSim->FindByID(m_strStructureID));
+	m_lpStructure = dynamic_cast<Structure *>(m_lpSim->FindByID(m_strStructureID));
 	if(!m_lpStructure)
 		THROW_PARAM_ERROR(Al_Err_lStructureNotFound, Al_Err_strStructureNotFound, "ID: ", m_strStructureID);
 
-	m_lpNode = dynamic_cast<Node *>(lpSim->FindByID(m_strNodeID));
+	m_lpNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strNodeID));
 	if(!m_lpNode)
 		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strNodeID);
 }
 
-void ExternalInputStimulus::Activate(Simulator *lpSim)
+void ExternalInputStimulus::Activate()
 {
-	ExternalStimulus::Activate(lpSim);
+	ExternalStimulus::Activate();
 }
 
-void ExternalInputStimulus::StepSimulation(Simulator *lpSim)
+void ExternalInputStimulus::StepSimulation()
 {
 	try
 	{
-		m_lpEval->SetVariable("t", lpSim->Time());
+		m_lpEval->SetVariable("t", m_lpSim->Time());
 		m_fltInput = m_lpEval->Solve();
-		m_lpNode->AddExternalNodeInput(lpSim, m_lpStructure, m_fltInput);
+		m_lpNode->AddExternalNodeInput(m_fltInput);
 	}
 	catch(...)
 	{
@@ -106,9 +103,9 @@ void ExternalInputStimulus::StepSimulation(Simulator *lpSim)
 	}
 }
 
-void ExternalInputStimulus::Deactivate(Simulator *lpSim)
+void ExternalInputStimulus::Deactivate()
 {
-	ExternalStimulus::Deactivate(lpSim);
+	ExternalStimulus::Deactivate();
 }
 
 float *ExternalInputStimulus::GetDataPointer(string strDataType)

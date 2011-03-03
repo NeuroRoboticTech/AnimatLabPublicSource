@@ -338,7 +338,7 @@ BOOL VsCameraManipulator::DoMouseSpring(const GUIEventAdapter& ea, float x, floa
 	osg::Vec3 vTotalForce = vSpringForce - v3BodyForce;
 	float fltMass = -rbBody->GetMass();
 	vTotalForce *= rbBody->GetMass();
-	rbBody->AddForce(m_lpSim, vGrabPos.x(), vGrabPos.y(), vGrabPos.z(), vTotalForce.x(), vTotalForce.y(), vTotalForce.z(), FALSE);
+	rbBody->AddForce(vGrabPos.x(), vGrabPos.y(), vGrabPos.z(), vTotalForce.x(), vTotalForce.y(), vTotalForce.z(), FALSE);
 
 	//char strDest[150];
 	//sprintf(strDest, "MS: (%3.1f, %3.1f, %3.1f)-(%3.1f, %3.1f, %3.1f)  FORCE: (%3.1f, %3.1f, %3.1f)\n", vGrabPos[0], vGrabPos[1], vGrabPos[2], v3End[0], v3End[1], v3End[2], vTotalForce[0], vTotalForce[1], vTotalForce[2]);

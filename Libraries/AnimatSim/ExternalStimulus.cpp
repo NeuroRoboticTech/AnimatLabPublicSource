@@ -56,8 +56,7 @@ BOOL ExternalStimulus::SetData(string strDataType, string strValue, BOOL bThrowE
 
 	if(ActivatedItem::SetData(strDataType, strValue, bThrowError))
 	{
-		Simulator *lpSim = AnimatSim::GetSimulator();
-		lpSim->ExternalStimuliMgr()->ReInitialize(lpSim);
+		m_lpSim->ExternalStimuliMgr()->ReInitialize();
 		return TRUE;
 	}
 

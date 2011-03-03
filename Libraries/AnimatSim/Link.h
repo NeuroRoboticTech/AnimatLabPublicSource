@@ -22,7 +22,7 @@ namespace AnimatSim
 		///This is for reporting purposes.
 		float m_fltEnabled;
 
-		virtual void UpdateData(Simulator *lpSim, Structure *lpStructure);
+		virtual void UpdateData();
 
 	public:
 		Link();
@@ -34,8 +34,6 @@ namespace AnimatSim
 			m_bEnabled = bValue;
 			m_fltEnabled = (float) m_bEnabled;
 		};
-
-		virtual void Initialize(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
 	};
 
 }				//AnimatSim

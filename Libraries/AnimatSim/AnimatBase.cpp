@@ -85,9 +85,8 @@ AnimatBase::~AnimatBase()
 try
 {
 	//This will remove this object from the object list of the simulation.
-	Simulator *lpSim = GetSimulator();
-	if(lpSim)
-		lpSim->RemoveFromObjectList(this);
+	if(m_lpSim)
+		m_lpSim->RemoveFromObjectList(this);
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of AnimatBase\r\n", "", -1, FALSE, TRUE);}
@@ -456,9 +455,8 @@ void AnimatBase::Load(CStdXml &oXml)
 		m_strName = m_strID;
 
 	//This will add this object to the object list of the simulation.
-	Simulator *lpSim = GetSimulator();
-	if(lpSim)
-		lpSim->AddToObjectList(this);
+	if(m_lpSim)
+		m_lpSim->AddToObjectList(this);
 }
 
 }			//AnimatSim

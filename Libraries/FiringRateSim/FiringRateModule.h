@@ -32,11 +32,10 @@ namespace FiringRateSim
 		//NeuralModule overrides
 		virtual string ModuleName() {return Nl_NeuralModuleName();};
 
-		virtual void Kill(Simulator *lpSim, Organism *lpOrganism, BOOL bState = TRUE);
-		virtual void ResetSimulation(Simulator *lpSim, Organism *lpOrganism);
-
-		virtual void Initialize(Simulator *lpSim, Structure *lpStructure);
-		virtual void StepSimulation(Simulator *lpSim, Structure *lpStructure);
+		virtual void Kill(BOOL bState = TRUE);
+		virtual void Initialize();
+		virtual void ResetSimulation();
+		virtual void StepSimulation();
 		virtual void Load(CStdXml &oXml);
 
 #pragma region DataAccesMethods

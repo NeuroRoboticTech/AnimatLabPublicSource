@@ -120,7 +120,7 @@ void VsHinge::ResetGraphicsAndPhysics()
 
 	VsBody::BuildLocalMatrix();
 
-	SetupPhysics(m_lpSim, m_lpStructure);	
+	SetupPhysics();	
 }
 
 void VsHinge::Rotation(CStdFPoint &oPoint) 
@@ -150,7 +150,7 @@ void VsHinge::SetAlpha()
 
 }
 
-void VsHinge::CreateCylinderGraphics(Simulator *lpSim, Structure *lpStructure)
+void VsHinge::CreateCylinderGraphics()
 {
 	//Create the cylinder for the hinge
 	m_osgCylinder = CreateConeGeometry(CylinderHeight(), CylinderRadius(), CylinderRadius(), 30, true, true, true);
@@ -180,15 +180,15 @@ void VsHinge::CreateCylinderGraphics(Simulator *lpSim, Structure *lpStructure)
 	m_osgCylinderSS->setAttribute(m_osgCylinderMat.get(), osg::StateAttribute::ON);
 }
 
-void VsHinge::SetupGraphics(Simulator *lpSim, Structure *lpStructure)
+void VsHinge::SetupGraphics()
 {
 	//The parent osg object for the joint is actually the child rigid body object.
-	m_osgParent = ParentOSG(lpSim, lpStructure);
-	osg::ref_ptr<osg::Group> osgChild = ChildOSG(lpSim, lpStructure);
+	m_osgParent = ParentOSG();
+	osg::ref_ptr<osg::Group> osgChild = ChildOSG();
 
 	if(m_osgParent.valid())
 	{
-		CreateCylinderGraphics(lpSim, lpStructure);
+		CreateCylinderGraphics();
 
 		VsHingeLimit *lpUpperLimit = dynamic_cast<VsHingeLimit *>(m_lpUpperLimit);
 		VsHingeLimit *lpLowerLimit = dynamic_cast<VsHingeLimit *>(m_lpLowerLimit);
@@ -196,9 +196,9 @@ void VsHinge::SetupGraphics(Simulator *lpSim, Structure *lpStructure)
 
 		lpPosFlap->LimitPos(Hinge::JointPosition());
 
-		lpUpperLimit->SetupGraphics(lpSim, lpStructure);
-		lpLowerLimit->SetupGraphics(lpSim, lpStructure);
-		lpPosFlap->SetupGraphics(lpSim, lpStructure);
+		lpUpperLimit->SetupGraphics();
+		lpLowerLimit->SetupGraphics();
+		lpPosFlap->SetupGraphics();
 
 		//Add the parts to the group node.
 		CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
@@ -246,10 +246,10 @@ void VsHinge::DeletePhysics()
 	m_vxHinge = NULL;
 	m_vxJoint = NULL;
 
-	m_lpChild->EnableCollision(m_lpSim, m_lpParent);
+	m_lpChild->EnableCollision(m_lpParent);
 }
 
-void VsHinge::SetupPhysics(Simulator *lpSim, Structure *lpStructure)
+void VsHinge::SetupPhysics()
 {
 	if(m_vxHinge)
 		DeletePhysics();
@@ -260,7 +260,7 @@ void VsHinge::SetupPhysics(Simulator *lpSim, Structure *lpStructure)
 	if(!m_lpChild)
 		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
 
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(lpSim);
+	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
 	if(!lpVsSim)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
 
@@ -272,7 +272,7 @@ void VsHinge::SetupPhysics(Simulator *lpSim, Structure *lpStructure)
 	if(!lpVsChild)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody);
 
-	VxAssembly *lpAssem = (VxAssembly *) lpStructure->Assembly();
+	VxAssembly *lpAssem = (VxAssembly *) m_lpStructure->Assembly();
 
 	CStdFPoint vGlobal = this->GetOSGWorldCoords();
 	
@@ -293,7 +293,7 @@ void VsHinge::SetupPhysics(Simulator *lpSim, Structure *lpStructure)
 	lpVsSim->Universe()->addConstraint(m_vxHinge);
 
 	//Disable collisions between this object and its parent
-	m_lpChild->DisableCollision(lpSim, m_lpParent);
+	m_lpChild->DisableCollision(m_lpParent);
 
 	VsHingeLimit *lpUpperLimit = dynamic_cast<VsHingeLimit *>(m_lpUpperLimit);
 	VsHingeLimit *lpLowerLimit = dynamic_cast<VsHingeLimit *>(m_lpLowerLimit);
@@ -312,10 +312,10 @@ void VsHinge::SetupPhysics(Simulator *lpSim, Structure *lpStructure)
 		VsJoint::EnableLock(TRUE, m_fltPosition, m_fltMaxTorque);
 }
 
-void VsHinge::CreateJoint(Simulator *lpSim, Structure *lpStructure)
+void VsHinge::CreateJoint()
 {
-	SetupGraphics(lpSim, lpStructure);
-	SetupPhysics(lpSim, lpStructure);
+	SetupGraphics();
+	SetupPhysics();
 }
 
 
@@ -383,15 +383,15 @@ BOOL VsHinge::SetData(string strDataType, string strValue, BOOL bThrowError)
 //	Hinge::ResetSimulation(lpSim, lpStructure);
 //}
 
-void VsHinge::StepSimulation(Simulator *lpSim, Structure *lpStructure)
+void VsHinge::StepSimulation()
 {
-	UpdateData(lpSim, lpStructure);
+	UpdateData();
 	SetVelocityToDesired();
 }
 
-void VsHinge::UpdateData(Simulator *lpSim, Structure *lpStructure)
+void VsHinge::UpdateData()
 {
-	Hinge::UpdateData(lpSim, lpStructure);
+	Hinge::UpdateData();
 	m_fltRotationDeg = ((m_fltPosition/VX_PI)*180);
 }
 

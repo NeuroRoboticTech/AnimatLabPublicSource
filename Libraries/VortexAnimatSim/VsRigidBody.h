@@ -88,16 +88,16 @@ namespace VortexAnimatSim
 			float m_fltReportMass;
 			float m_fltReportVolume;
 
-			virtual void ProcessContacts(Simulator *lpSim);
+			virtual void ProcessContacts();
 
-			virtual void SetupGraphics(Simulator *lpSim, Structure *lpStructure);
+			virtual void SetupGraphics();
 			virtual void DeletePhysics();
-			virtual void CreateSensorPart(Simulator *lpSim, Structure *lpStructure);
-			virtual void CreateStaticPart(Simulator *lpSim, Structure *lpStructure);
-			virtual void CreateDynamicPart(Simulator *lpSim, Structure *lpStructure);
+			virtual void CreateSensorPart();
+			virtual void CreateStaticPart();
+			virtual void CreateDynamicPart();
 
 			CStdFPoint Physics_GetCurrentPosition();
-			virtual void SetFluidInteractions(Simulator *lpSim);
+			virtual void SetFluidInteractions();
 			virtual void GetBaseValues();
 
 		public:
@@ -111,16 +111,16 @@ namespace VortexAnimatSim
 
 			virtual int GetPartIndex(VxPart *vxP0, VxPart *vxP1);
 
-			virtual osg::Group *ParentOSG(Simulator *lpSim, Structure *lpStructure);
-			virtual void SetupPhysics(Simulator *lpSim, Structure *lpStructure);
+			virtual osg::Group *ParentOSG();
+			virtual void SetupPhysics();
 
-			virtual void SetBody(Simulator *lpSim, Structure *lpStructure);
+			virtual void SetBody();
 			
-			virtual void Initialize(Simulator *lpSim, Structure *lpStructure);
-			virtual void Physics_ResetSimulation(Simulator *lpSim, Structure *lpStructure);
-			virtual void Physics_EnableCollision(Simulator *lpSim, RigidBody *lpBody);
-			virtual void Physics_DisableCollision(Simulator *lpSim, RigidBody *lpBody);
-			virtual void Physics_CollectBodyData(Simulator *lpSim);
+			virtual void Initialize();
+			virtual void Physics_ResetSimulation();
+			virtual void Physics_EnableCollision(RigidBody *lpBody);
+			virtual void Physics_DisableCollision(RigidBody *lpBody);
+			virtual void Physics_CollectBodyData();
 			virtual float *Physics_GetDataPointer(string strDataType);
 			virtual void Physics_UpdateMatrix();
 			virtual void SetFreeze(BOOL bVal);
@@ -128,8 +128,8 @@ namespace VortexAnimatSim
 			virtual void Physics_SetColor();
 			virtual void Physics_TextureChanged();
 
-			virtual void Physics_AddBodyForce(Simulator *lpSim, float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits);
-			virtual void Physics_AddBodyTorque(Simulator *lpSim, float fltTx, float fltTy, float fltTz, BOOL bScaleUnits);
+			virtual void Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits);
+			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits);
 			virtual CStdFPoint Physics_GetVelocityAtPoint(float x, float y, float z);
 			virtual float Physics_GetMass();
 		};

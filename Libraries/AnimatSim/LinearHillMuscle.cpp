@@ -177,7 +177,7 @@ inline float LinearHillMuscle::Fact(float fltStim)
 	return fltAct;
 }
 
-void LinearHillMuscle::CalculateTension(Simulator *lpSim)
+void LinearHillMuscle::CalculateTension()
 {
 	//int i=0;
 	//if(lpSim->Time() >= 0.419)
@@ -187,14 +187,14 @@ void LinearHillMuscle::CalculateTension(Simulator *lpSim)
 	m_fltPrevLength = m_fltLength;
 
 	//Calculate the current muscle length.
-	m_fltLength = CalculateLength(lpSim);
+	m_fltLength = CalculateLength();
 
 	//Calculate the displacement of this muscle d = (x-x*)
 	m_fltDisplacement = m_fltLength-m_fltMuscleRestingLength;
 	m_fltDisplacementRatio = m_fltLength/m_fltMuscleRestingLength;
 
 	//Calculate the instantaneous velocity of change of the muscle length.
-	m_fltVmuscle = (m_fltLength-m_fltPrevLength)/lpSim->PhysicsTimeStep();
+	m_fltVmuscle = (m_fltLength-m_fltPrevLength)/m_lpSim->PhysicsTimeStep();
 
 	//Calculate averaged velocity
 	m_aryMuscleVelocities[m_iVelAvgIndex] = m_fltVmuscle;
@@ -218,7 +218,7 @@ void LinearHillMuscle::CalculateTension(Simulator *lpSim)
 	m_fltTdot = m_fltKseByB*(m_fltKpe*m_fltDisplacement + m_fltB*m_fltVmuscle - m_fltKpeByKse*m_fltInternalTension + m_fltA);  
 
 	//The new tension
-	m_fltInternalTension = m_fltInternalTension + m_fltTdot*lpSim->PhysicsTimeStep();
+	m_fltInternalTension = m_fltInternalTension + m_fltTdot*m_lpSim->PhysicsTimeStep();
 
 	//tension can never be negative, but we want to maintain the "internal" calculations so that the
 	//time constants are correct. If you shorten the muscle rapidly it will take it some time to 
@@ -251,14 +251,14 @@ void LinearHillMuscle::CalculateTension(Simulator *lpSim)
 		m_fltPeLength = m_fltMinPeLength;
 	}
 
-	m_fltVse = (m_fltSeLength-m_fltSeLPrev)/lpSim->PhysicsTimeStep();
-	m_fltVpe = (m_fltPeLength-m_fltPeLPrev)/lpSim->PhysicsTimeStep();
+	m_fltVse = (m_fltSeLength-m_fltSeLPrev)/m_lpSim->PhysicsTimeStep();
+	m_fltVpe = (m_fltPeLength-m_fltPeLPrev)/m_lpSim->PhysicsTimeStep();
 
 	m_fltIbRate = m_fltIbDischargeConstant*m_fltTension;
 }
 
 //Calculates the membrane voltage needed for the inverse dynamics of the muscle.
-void LinearHillMuscle::CalculateInverseDynamics(Simulator *lpSim, float fltLength, float fltVelocity, float fltT, float &fltVm, float &fltA)
+void LinearHillMuscle::CalculateInverseDynamics(float fltLength, float fltVelocity, float fltT, float &fltVm, float &fltA)
 {
 	//Calculate inverse dynamics force needed
 	m_fltPrevA = fltA;
@@ -279,13 +279,13 @@ void LinearHillMuscle::CalculateInverseDynamics(Simulator *lpSim, float fltLengt
 	else
 		fltVm = 0;
 
-	//if(lpSim->Time() > 2.092 && m_strName == "Left Tricep Stretch Receptor")
+	//if(m_lpSim->Time() > 2.092 && m_strName == "Left Tricep Stretch Receptor")
 	//	fltVm=fltVm;
 }
 
-void LinearHillMuscle::CreateJoints(Simulator *lpSim, Structure *lpStructure)
+void LinearHillMuscle::CreateJoints()
 {
-	MuscleBase::CreateJoints(lpSim, lpStructure);
+	MuscleBase::CreateJoints();
 
 	m_fltTLc = pow(m_fltTLwidth, 2);
 

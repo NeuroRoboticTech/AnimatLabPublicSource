@@ -24,13 +24,7 @@ namespace VortexAnimatSim
 				VsPlane();
 				virtual ~VsPlane();
 
-				//virtual void Selected(BOOL bValue, BOOL bSelectMultiple); 
-
-				//virtual void EnableCollision(Simulator *lpSim, RigidBody *lpBody);
-				//virtual void DisableCollision(Simulator *lpSim, RigidBody *lpBody);
-
-				virtual void CreateParts(Simulator *lpSim, Structure *lpStructure);
-				//virtual void ResetSimulation(Simulator *lpSim, Structure *lpStructure);
+				virtual void CreateParts();
 			};
 
 		}		//Bodies

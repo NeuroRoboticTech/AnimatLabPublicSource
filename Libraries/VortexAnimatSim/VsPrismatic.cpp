@@ -103,7 +103,7 @@ void VsPrismatic::EnableMotor(BOOL bVal)
 	m_fltPrevVelocity = -1000000;  //reset the prev velocity for the next usage
 }
 
-void VsPrismatic::CreateJoint(Simulator *lpSim, Structure *lpStructure)
+void VsPrismatic::CreateJoint()
 {
 	if(!m_lpParent)
 		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
@@ -111,7 +111,7 @@ void VsPrismatic::CreateJoint(Simulator *lpSim, Structure *lpStructure)
 	if(!m_lpChild)
 		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
 
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(lpSim);
+	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
 	if(!lpVsSim)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
 
@@ -122,7 +122,7 @@ void VsPrismatic::CreateJoint(Simulator *lpSim, Structure *lpStructure)
 	VsRigidBody *lpVsChild = dynamic_cast<VsRigidBody *>(m_lpChild);
 	if(!lpVsChild)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody);
-	VxAssembly *lpAssem = (VxAssembly *) lpStructure->Assembly();
+	VxAssembly *lpAssem = (VxAssembly *) m_lpStructure->Assembly();
 
 	CStdFPoint vChildPos = lpVsChild->GetOSGWorldCoords();
 	CStdFPoint vGlobal = vChildPos + m_lpThis->LocalPosition();
@@ -134,7 +134,7 @@ void VsPrismatic::CreateJoint(Simulator *lpSim, Structure *lpStructure)
 
 	//lpAssem->addConstraint(m_vxHinge);
 	lpVsSim->Universe()->addConstraint(m_vxPrismatic);
-	lpStructure->AddCollisionPair(m_lpParent->ID(), m_lpChild->ID());
+	m_lpStructure->AddCollisionPair(m_lpParent->ID(), m_lpChild->ID());
 
 	m_vxPrismatic->setLowerLimit(m_vxPrismatic->kLinearCoordinate, m_fltConstraintLow);
 	m_vxPrismatic->setUpperLimit(m_vxPrismatic->kLinearCoordinate, m_fltConstraintHigh);
@@ -157,7 +157,7 @@ void VsPrismatic::CreateJoint(Simulator *lpSim, Structure *lpStructure)
 	if(m_bEnableMotor)
 		VsJoint::EnableLock(TRUE, m_fltPosition, m_fltMaxForce);
 
-	m_fltDistanceUnits = lpSim->DistanceUnits();
+	m_fltDistanceUnits = m_lpSim->DistanceUnits();
 }
 
 
@@ -200,9 +200,9 @@ float *VsPrismatic::GetDataPointer(string strDataType)
 //}
 
 
-void VsPrismatic::StepSimulation(Simulator *lpSim, Structure *lpStructure)
+void VsPrismatic::StepSimulation()
 {
-	UpdateData(lpSim, lpStructure);
+	UpdateData();
 	SetVelocityToDesired();
 }
 //

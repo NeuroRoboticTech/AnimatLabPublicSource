@@ -45,7 +45,7 @@ namespace AnimatSim
 			Odor *FindOdorSource(string strOdorID, BOOL bThrowError = TRUE);
 			void AddOdorSource(Odor *lpOdor);
 			
-			float CalculateOdorValue(Simulator *lpSim, CStdFPoint &oSensorPos);
+			float CalculateOdorValue(CStdFPoint &oSensorPos);
 
 			virtual void Load(CStdXml &oXml);
 		};

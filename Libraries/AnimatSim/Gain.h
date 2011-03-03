@@ -66,7 +66,7 @@ namespace AnimatSim
 			virtual void Load(CStdXml &oXml);
 		};
 
-		Gain ANIMAT_PORT *LoadGain(string strName, CStdXml &oXml);
+		Gain ANIMAT_PORT *LoadGain(Simulator *lpSim, string strName, CStdXml &oXml);
 
 	}			//Gains
 }				//AnimatSim

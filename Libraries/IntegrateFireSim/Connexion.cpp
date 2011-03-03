@@ -390,7 +390,7 @@ double Connexion::GetProspectiveCond(BOOL bFreezeHebb)
 	return(max(0,G));	// get conductance, if not facil below 0
 }
 
-void Connexion::ResetSimulation(Simulator *lpSim, Structure *lpStruct)
+void Connexion::ResetSimulation()
 {
 	m_dGFacilCx = m_dBaseG;
 	m_dG = m_dBaseG;

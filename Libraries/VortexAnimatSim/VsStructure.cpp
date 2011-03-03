@@ -30,11 +30,11 @@ VsStructure::~VsStructure()
 }
 
 
-void VsStructure::Initialize(Simulator *lpSim)
+void VsStructure::Initialize()
 {
 	//m_lpAssembly = new VxAssembly();	
 
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(lpSim);
+	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
 	if(!lpVsSim)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
 
@@ -55,7 +55,7 @@ void VsStructure::Initialize(Simulator *lpSim)
 
 	lpVsSim->OSGRoot()->addChild(m_osgMT.get());
 
-	Structure::Initialize(lpSim);	
+	Structure::Initialize();	
 
 	//lpVsSim->Universe()->addAssembly(m_lpAssembly);
 
@@ -74,16 +74,16 @@ void VsStructure::Initialize(Simulator *lpSim)
  //   tm.t().set(m_oPosition.x, m_oPosition.y, fltPosZ);
 	//m_lpAssembly->transform(tm);
 
-	lpSim->DisableCollisions(this, m_aryExcludeCollisionList);
+	m_lpSim->DisableCollisions(this, m_aryExcludeCollisionList);
 }
 
-void VsStructure::ResetSimulation(Simulator *lpSim)
+void VsStructure::ResetSimulation()
 {
 	osg::Matrix m;	
 	m.makeTranslate(m_oPosition.x, m_oPosition.y, m_oPosition.z);
 	m_osgMT->setMatrix(m);
 
-	Structure::ResetSimulation(lpSim);
+	Structure::ResetSimulation();
 }
 
 	}			// Environment

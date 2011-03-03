@@ -90,20 +90,20 @@ CStdPostFixEval *VsForceStimulus::SetupEquation(string strEquation)
 
 void VsForceStimulus::RelativePositionX(float fltVal)
 {
-	Simulator *lpSim = GetSimulator();
-	m_oRelativePosition.x = fltVal * lpSim->InverseDistanceUnits();
+	Simulator *m_lpSim = GetSimulator();
+	m_oRelativePosition.x = fltVal * m_lpSim->InverseDistanceUnits();
 }
 
 void VsForceStimulus::RelativePositionY(float fltVal)
 {
-	Simulator *lpSim = GetSimulator();
-	m_oRelativePosition.y = fltVal * lpSim->InverseDistanceUnits();
+	Simulator *m_lpSim = GetSimulator();
+	m_oRelativePosition.y = fltVal * m_lpSim->InverseDistanceUnits();
 }
 
 void VsForceStimulus::RelativePositionZ(float fltVal)
 {
-	Simulator *lpSim = GetSimulator();
-	m_oRelativePosition.z = fltVal * lpSim->InverseDistanceUnits();
+	Simulator *m_lpSim = GetSimulator();
+	m_oRelativePosition.z = fltVal * m_lpSim->InverseDistanceUnits();
 }
 
 void VsForceStimulus::ForceXEquation(string strVal)
@@ -160,22 +160,22 @@ void VsForceStimulus::TorqueZEquation(string strVal)
 	m_lpTorqueZEval = SetupEquation(strVal);
 }
 
-void VsForceStimulus::Initialize(Simulator *lpSim)
+void VsForceStimulus::Initialize()
 {
-	if(!lpSim)
+	if(!m_lpSim)
 		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
 
-	ExternalStimulus::Initialize(lpSim);
+	ExternalStimulus::Initialize();
 
 	//Lets try and get the node we will dealing with.
-	m_lpStructure = lpSim->FindStructureFromAll(m_strStructureID);
+	m_lpStructure = m_lpSim->FindStructureFromAll(m_strStructureID);
 	m_lpBody = m_lpStructure->FindRigidBody(m_strBodyID);
 	m_lpVsBody = dynamic_cast<VsRigidBody *>(m_lpBody);
 }
 
-void VsForceStimulus::ResetSimulation(Simulator *lpSim)
+void VsForceStimulus::ResetSimulation()
 {
-	ExternalStimulus::ResetSimulation(lpSim);
+	ExternalStimulus::ResetSimulation();
 
 	m_fltForceX = m_fltForceY = m_fltForceZ = 0;
 	m_fltForceReportX = m_fltForceReportY = m_fltForceReportZ = 0;
@@ -183,12 +183,7 @@ void VsForceStimulus::ResetSimulation(Simulator *lpSim)
 	m_fltTorqueReportX = m_fltTorqueReportY = m_fltTorqueReportZ = 0;
 }
 
-void VsForceStimulus::Activate(Simulator *lpSim)
-{
-	ExternalStimulus::Activate(lpSim);
-}
-
-void VsForceStimulus::StepSimulation(Simulator *lpSim)
+void VsForceStimulus::StepSimulation()
 {
 	try
 	{
@@ -196,7 +191,7 @@ void VsForceStimulus::StepSimulation(Simulator *lpSim)
 		//engine steps. If you do not do this then the you will accumulate forces being applied during the neural steps, and the total
 		//force you apply will be greater than what it should be. To get around this we will only call the code in step simulation if
 		//the physics step count is equal to the step interval.
-		if(lpSim->PhysicsStepCount() == lpSim->PhysicsStepInterval())
+		if(m_lpSim->PhysicsStepCount() == m_lpSim->PhysicsStepInterval())
 		{
 			VxReal3 fltF, fltP;
 
@@ -213,23 +208,23 @@ void VsForceStimulus::StepSimulation(Simulator *lpSim)
 
 				if(m_lpForceXEval)
 				{
-					m_lpForceXEval->SetVariable("t", lpSim->Time());
+					m_lpForceXEval->SetVariable("t", m_lpSim->Time());
 					m_fltForceReportX = m_lpForceXEval->Solve();
-					m_fltForceX = m_fltForceReportX * lpSim->InverseMassUnits() * lpSim->InverseDistanceUnits();
+					m_fltForceX = m_fltForceReportX * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits();
 				}
 
 				if(m_lpForceYEval)
 				{
-					m_lpForceYEval->SetVariable("t", lpSim->Time());
+					m_lpForceYEval->SetVariable("t", m_lpSim->Time());
 					m_fltForceReportY = m_lpForceYEval->Solve();
-					m_fltForceY = m_fltForceReportY * lpSim->InverseMassUnits() * lpSim->InverseDistanceUnits();
+					m_fltForceY = m_fltForceReportY * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits();
 				}
 
 				if(m_lpForceZEval)
 				{
-					m_lpForceZEval->SetVariable("t", lpSim->Time());
+					m_lpForceZEval->SetVariable("t", m_lpSim->Time());
 					m_fltForceReportZ = m_lpForceZEval->Solve();
-					m_fltForceZ = m_fltForceReportZ * lpSim->InverseMassUnits() * lpSim->InverseDistanceUnits();
+					m_fltForceZ = m_fltForceReportZ * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits();
 				}
 
 				fltF[0] = m_fltForceX; fltF[1] = m_fltForceY; fltF[2] = m_fltForceZ;
@@ -246,23 +241,23 @@ void VsForceStimulus::StepSimulation(Simulator *lpSim)
 
 				if(m_lpTorqueXEval)
 				{
-					m_lpTorqueXEval->SetVariable("t", lpSim->Time());
+					m_lpTorqueXEval->SetVariable("t", m_lpSim->Time());
 					m_fltTorqueReportX = m_lpTorqueXEval->Solve();
-					m_fltTorqueX = m_fltTorqueReportX * lpSim->InverseMassUnits() * lpSim->InverseDistanceUnits() * lpSim->InverseDistanceUnits();
+					m_fltTorqueX = m_fltTorqueReportX * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits() * m_lpSim->InverseDistanceUnits();
 				}
 
 				if(m_lpTorqueYEval)
 				{
-					m_lpTorqueYEval->SetVariable("t", lpSim->Time());
+					m_lpTorqueYEval->SetVariable("t", m_lpSim->Time());
 					m_fltTorqueReportY = m_lpTorqueYEval->Solve();
-					m_fltTorqueY = m_fltTorqueReportY * lpSim->InverseMassUnits() * lpSim->InverseDistanceUnits() * lpSim->InverseDistanceUnits();
+					m_fltTorqueY = m_fltTorqueReportY * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits() * m_lpSim->InverseDistanceUnits();
 				}
 
 				if(m_lpTorqueZEval)
 				{
-					m_lpTorqueZEval->SetVariable("t", lpSim->Time());
+					m_lpTorqueZEval->SetVariable("t", m_lpSim->Time());
 					m_fltTorqueReportZ = m_lpTorqueZEval->Solve();
-					m_fltTorqueZ = m_fltTorqueReportZ * lpSim->InverseMassUnits() * lpSim->InverseDistanceUnits() * lpSim->InverseDistanceUnits();
+					m_fltTorqueZ = m_fltTorqueReportZ * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits() * m_lpSim->InverseDistanceUnits();
 				}
 
 				fltF[0] = m_fltTorqueX; fltF[1] = m_fltTorqueY; fltF[2] = m_fltTorqueZ;
@@ -276,11 +271,6 @@ void VsForceStimulus::StepSimulation(Simulator *lpSim)
 	{
 		LOG_ERROR("Error Occurred while setting Joint Velocity");
 	}
-}
-
-void VsForceStimulus::Deactivate(Simulator *lpSim)
-{
-	ExternalStimulus::Deactivate(lpSim);
 }
 
 float *VsForceStimulus::GetDataPointer(string strDataType)

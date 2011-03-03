@@ -50,8 +50,8 @@ namespace VortexAnimatSim
 
 			void UpdatePosition();
 
-			virtual void SetupGraphics(Simulator *lpSim, Structure *lpStructure);
-			virtual void SetupPhysics(Simulator *lpSim, Structure *lpStructure);
+			virtual void SetupGraphics();
+			virtual void SetupPhysics();
 			virtual void DeletePhysics() {};
 			virtual VxVector3 NormalizeAxis(CStdFPoint vLocalRot);
 			virtual void UpdatePositionAndRotationFromMatrix();
@@ -63,13 +63,13 @@ namespace VortexAnimatSim
 			VsJoint();
 			virtual ~VsJoint();
 
-			virtual osg::Group *ParentOSG(Simulator *lpSim, Structure *lpStructure);
-			virtual osg::Group *ChildOSG(Simulator *lpSim, Structure *lpStructure);
+			virtual osg::Group *ParentOSG();
+			virtual osg::Group *ChildOSG();
 
-			virtual void Initialize(Simulator *lpSim, Structure *lpStructure);
-			virtual void SetBody(Simulator *lpSim, Structure *lpStructure);
-			virtual void Physics_ResetSimulation(Simulator *lpSim, Structure *lpStructure);
-			virtual void Physics_CollectBodyData(Simulator *lpSim);
+			virtual void Initialize();
+			virtual void SetBody();
+			virtual void Physics_ResetSimulation();
+			virtual void Physics_CollectBodyData();
 			virtual float *Physics_GetDataPointer(string strDataType);
 
 			virtual Vx::VxConstraint* Constraint() {return m_vxJoint;};
@@ -78,10 +78,10 @@ namespace VortexAnimatSim
 			//Methods not used by joints.
 			virtual void Physics_UpdateMatrix();
 			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName);
-			virtual void Physics_EnableCollision(Simulator *lpSim, RigidBody *lpBody) {};
-			virtual void Physics_DisableCollision(Simulator *lpSim, RigidBody *lpBody) {};
-			virtual void Physics_AddBodyForce(Simulator *lpSim, float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits) {};
-			virtual void Physics_AddBodyTorque(Simulator *lpSim, float fltTx, float fltTy, float fltTz, BOOL bScaleUnits) {};
+			virtual void Physics_EnableCollision(RigidBody *lpBody) {};
+			virtual void Physics_DisableCollision(RigidBody *lpBody) {};
+			virtual void Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits) {};
+			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits) {};
 			virtual CStdFPoint Physics_GetVelocityAtPoint(float x, float y, float z) {CStdFPoint v; return v;};
 			virtual float Physics_GetMass() {return 0;};
 

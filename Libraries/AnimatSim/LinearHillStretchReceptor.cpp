@@ -83,9 +83,9 @@ LinearHillStretchReceptor::~LinearHillStretchReceptor()
 {
 }
 
-void LinearHillStretchReceptor::CalculateTension(Simulator *lpSim)
+void LinearHillStretchReceptor::CalculateTension()
 {
-	LinearHillMuscle::CalculateTension(lpSim);
+	LinearHillMuscle::CalculateTension();
 
 	m_fltIaRate = m_fltIaDischargeConstant*m_fltSeLength;
 	m_fltIIRate = m_fltIIDischargeConstant*m_fltPeLength;

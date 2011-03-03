@@ -540,22 +540,22 @@ void Simulator::ResetSimulation()
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
 		lpStructure = oPos->second;
-		lpStructure->ResetSimulation(this);
+		lpStructure->ResetSimulation();
 	}
 
 	int iSize = m_arySourcePhysicsAdapters.GetSize();
 	for(int iIndex=0; iIndex<iSize; iIndex++)
-		m_arySourcePhysicsAdapters[iIndex]->ResetSimulation(this, NULL);
+		m_arySourcePhysicsAdapters[iIndex]->ResetSimulation();
 
 	iSize = m_aryTargetPhysicsAdapters.GetSize();
 	for(int iIndex=0; iIndex<iSize; iIndex++)
-		m_aryTargetPhysicsAdapters[iIndex]->ResetSimulation(this, NULL);
+		m_aryTargetPhysicsAdapters[iIndex]->ResetSimulation();
 
-	m_oDataChartMgr.ResetSimulation(this);
-	m_oExternalStimuliMgr.ResetSimulation(this);
+	m_oDataChartMgr.ResetSimulation();
+	m_oExternalStimuliMgr.ResetSimulation();
 	
 	if(m_lpSimRecorder)
-		m_lpSimRecorder->ResetSimulation(this);
+		m_lpSimRecorder->ResetSimulation();
 }
 
 void Simulator::GenerateAutoSeed()
@@ -933,9 +933,9 @@ BOOL Simulator::AddItem(string strItemType, string strXml, BOOL bThrowError)
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "STIMULUS")
-		return m_oExternalStimuliMgr.AddStimulus(this, strXml);
+		return m_oExternalStimuliMgr.AddStimulus(strXml);
 	else if(strType == "DATACHART")
-		return m_oDataChartMgr.AddDataChart(this, strXml);
+		return m_oDataChartMgr.AddDataChart(strXml);
 	else if(strType == "STRUCTURE")
 	{
 		AddStructure(strXml);
@@ -959,9 +959,9 @@ BOOL Simulator::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "STIMULUS")
-		return m_oExternalStimuliMgr.RemoveStimulus(this, strID);
+		return m_oExternalStimuliMgr.RemoveStimulus(strID);
 	else if(strType == "DATACHART")
-		return m_oDataChartMgr.RemoveDataChart(this, strID);
+		return m_oDataChartMgr.RemoveDataChart(strID);
 	else if(strType == "STRUCTURE")
 	{
 		RemoveStructure(strID);
@@ -1118,7 +1118,7 @@ void Simulator::EnableCollisions(Structure *lpStruct, CStdPtrArray<CollisionPair
 		lpPart1 = lpStruct->FindRigidBody(lpPair->m_strPart1ID);
 		lpPart2 = lpStruct->FindRigidBody(lpPair->m_strPart2ID);
 		
-		lpPart1->EnableCollision(this, lpPart2);
+		lpPart1->EnableCollision(lpPart2);
 	}	
 }
 
@@ -1129,7 +1129,7 @@ void Simulator::EnableCollision(RigidBody *lpBody)
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
 		lpStructure = oPos->second;
-		lpStructure->EnableCollision(this, lpBody);
+		lpStructure->EnableCollision(lpBody);
 	}
 }
 
@@ -1146,7 +1146,7 @@ void Simulator::DisableCollisions(Structure *lpStruct, CStdPtrArray<CollisionPai
 		lpPart1 = lpStruct->FindRigidBody(lpPair->m_strPart1ID);
 		lpPart2 = lpStruct->FindRigidBody(lpPair->m_strPart2ID);
 		
-		lpPart1->DisableCollision(this, lpPart2);
+		lpPart1->DisableCollision(lpPart2);
 	}	
 }
 
@@ -1173,7 +1173,7 @@ void Simulator::DisableCollision(RigidBody *lpBody)
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
 		lpStructure = oPos->second;
-		lpStructure->DisableCollision(this, lpBody);
+		lpStructure->DisableCollision(lpBody);
 	}
 }
 
@@ -1215,14 +1215,14 @@ void Simulator::DisableCollision(RigidBody *lpBody)
 
 void Simulator::InitializeStructures()
 {
-	m_oMaterialMgr.Initialize(this);
+	m_oMaterialMgr.Initialize();
 
 	CStdMap<string, Structure *>::iterator oPos;
 	Structure *lpStructure = NULL;
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
 		lpStructure = oPos->second;
-		lpStructure->Initialize(this);
+		lpStructure->Initialize();
 	}
 
 	if(m_bEnableSimRecording)
@@ -1266,7 +1266,7 @@ inline void Simulator::StepNeuralEngine()
 			++m_oOrganismIterator)
 	{
 		m_lpSelOrganism = m_oOrganismIterator->second;
-		m_lpSelOrganism->StepNeuralEngine(this);
+		m_lpSelOrganism->StepNeuralEngine();
 	}
 }
 
@@ -1277,13 +1277,13 @@ inline void Simulator::StepPhysicsEngine()
 			++m_oStructureIterator)
 	{
 		m_lpSelStructure = m_oStructureIterator->second;
-		m_lpSelStructure->StepPhysicsEngine(this);
+		m_lpSelStructure->StepPhysicsEngine();
 	}
 
 	//Now lets step all Target adapters. This will be all items outputing
 	//to the physics engine. Examples are motorized joints and muscles.
 	for(int iIndex=0; iIndex<m_iTargetAdapterCount; iIndex++)
-		m_aryTargetPhysicsAdapters[iIndex]->StepSimulation(this, NULL);
+		m_aryTargetPhysicsAdapters[iIndex]->StepSimulation();
 
 	if(m_bRecordVideo)
 		RecordVideoFrame();
@@ -1294,16 +1294,16 @@ inline void Simulator::StepPhysicsEngine()
 
 inline void Simulator::Step()
 {
-	m_oExternalStimuliMgr.StepSimulation(this);
+	m_oExternalStimuliMgr.StepSimulation();
 
 	if(m_iPhysicsStepCount == m_iPhysicsStepInterval)
 		StepPhysicsEngine();
 
 	StepNeuralEngine();
 
-	m_oDataChartMgr.StepSimulation(this);
+	m_oDataChartMgr.StepSimulation();
 	if(m_lpSimRecorder) 
-		m_lpSimRecorder->StepSimulation(this);
+		m_lpSimRecorder->StepSimulation();
 
 	m_lTimeSlice++;
 	m_fltTime += m_fltTimeStep;
@@ -1352,7 +1352,7 @@ void Simulator::EnableVideoPlayback(string strKeyFrameID)
 		return;
 
 	KeyFrame *lpFrame = dynamic_cast<KeyFrame *>(m_lpSimRecorder->Find(strKeyFrameID));
-	lpFrame->EnableVideoPlayback(this);
+	lpFrame->EnableVideoPlayback();
 }
 
 void Simulator::DisableVideoPlayback()
@@ -1361,7 +1361,7 @@ void Simulator::DisableVideoPlayback()
 		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
 
 	if(m_lpVideoPlayback)
-		m_lpVideoPlayback->DisableVideoPlayback(this);
+		m_lpVideoPlayback->DisableVideoPlayback();
 }
 
 void Simulator::StartVideoPlayback()
@@ -1370,7 +1370,7 @@ void Simulator::StartVideoPlayback()
 		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
 
 	if(m_lpVideoPlayback)
-		m_lpVideoPlayback->StartVideoPlayback(this);
+		m_lpVideoPlayback->StartVideoPlayback();
 }
 
 void Simulator::StopVideoPlayback()
@@ -1379,7 +1379,7 @@ void Simulator::StopVideoPlayback()
 		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
 
 	if(m_lpVideoPlayback)
-		m_lpVideoPlayback->StopVideoPlayback(this);
+		m_lpVideoPlayback->StopVideoPlayback();
 }
 
 void Simulator::StepVideoPlayback(int iFrameCount)
@@ -1388,7 +1388,7 @@ void Simulator::StepVideoPlayback(int iFrameCount)
 		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
 
 	if(m_lpVideoPlayback)
-		m_lpVideoPlayback->StepVideoPlayback(this, iFrameCount);
+		m_lpVideoPlayback->StepVideoPlayback( iFrameCount);
 }
 
 void Simulator::SaveVideo(string strPath)
@@ -1397,7 +1397,7 @@ void Simulator::SaveVideo(string strPath)
 		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
 
 	if(m_lpVideoPlayback)
-		m_lpVideoPlayback->SaveVideo(this, strPath);
+		m_lpVideoPlayback->SaveVideo(strPath);
 }
 
 string Simulator::AddKeyFrame(string strType, long lStart, long lEnd)
@@ -1405,7 +1405,7 @@ string Simulator::AddKeyFrame(string strType, long lStart, long lEnd)
 	if(!m_lpSimRecorder)
 		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
 
-	KeyFrame *lpFrame = m_lpSimRecorder->Add(this, strType, lStart, lEnd);
+	KeyFrame *lpFrame = m_lpSimRecorder->Add(strType, lStart, lEnd);
 	return lpFrame->ID();
 }
 
@@ -1414,7 +1414,7 @@ void Simulator::RemoveKeyFrame(string strID)
 	if(!m_lpSimRecorder)
 		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
 
-	m_lpSimRecorder->Remove(this, strID);
+	m_lpSimRecorder->Remove(strID);
 }
 
 string Simulator::MoveKeyFrame(string strID, long lStart, long lEnd)
@@ -1429,8 +1429,8 @@ string Simulator::MoveKeyFrame(string strID, long lStart, long lEnd)
 		return lpFrame->ID();
 
 	//unsigned char iType = lpFrame->Type();
-	m_lpSimRecorder->Remove(this, strID);
-	lpFrame = m_lpSimRecorder->Add(this, lpFrame->Type(), lStart, lEnd);
+	m_lpSimRecorder->Remove(strID);
+	lpFrame = m_lpSimRecorder->Add(lpFrame->Type(), lStart, lEnd);
 	return lpFrame->ID();
 }
 
@@ -1442,10 +1442,10 @@ void Simulator::MoveSimulationToKeyFrame(string strKeyFrameID)
 	if(!Std_IsBlank(strKeyFrameID))
 	{
 		KeyFrame *lpFrame = dynamic_cast<KeyFrame *>(m_lpSimRecorder->Find(strKeyFrameID));
-		lpFrame->MakeCurrentFrame(this);
+		lpFrame->MakeCurrentFrame();
 	}
 	else if(m_lpSimStopPoint)
-		m_lpSimStopPoint->MakeCurrentFrame(this);
+		m_lpSimStopPoint->MakeCurrentFrame();
 }
 
 long Simulator::CalculateSnapshotByteSize()
@@ -1746,7 +1746,7 @@ void Simulator::AddOrganism(string strXml)
 	oXml.FindChildElement("Organism");
 
 	Organism *lpOrg = LoadOrganism(oXml);
-	lpOrg->Initialize(this);
+	lpOrg->Initialize();
 }
 
 void Simulator::RemoveOrganism(string strID, BOOL bThrowError)
@@ -1806,7 +1806,7 @@ void Simulator::AddStructure(string strXml)
 	oXml.FindChildElement("Structure");
 
 	Structure *lpStruct = LoadStructure(oXml);
-	lpStruct->Initialize(this);
+	lpStruct->Initialize();
 }
 
 void Simulator::RemoveStructure(string strID, BOOL bThrowError)

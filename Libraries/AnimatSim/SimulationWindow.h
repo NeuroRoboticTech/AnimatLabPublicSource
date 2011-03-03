@@ -72,8 +72,8 @@ namespace AnimatSim
 
 #pragma endregion
 
-		virtual void Initialize(Simulator *lpSim) = 0;
-		virtual void Update(Simulator *lpSim) = 0;
+		virtual void Initialize() = 0;
+		virtual void Update() = 0;
 		virtual void Close() = 0;
 		virtual void Load(CStdXml &oXml);
 		virtual void Load(string strXml);

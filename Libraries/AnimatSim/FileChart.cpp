@@ -55,28 +55,28 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of FileChart\r\n", "", -1, FALSE, TRUE);}
 }
 
-void FileChart::Initialize(Simulator *lpSim)
+void FileChart::Initialize()
 {
-	DataChart::Initialize(lpSim);
+	DataChart::Initialize();
 
 	//Now open the file stream for output.
 	oStream.open(AnimatSim::GetFilePath(m_strProjectPath, m_strOutputFilename).c_str());
 }
 
 
-void FileChart::Deactivate(Simulator *lpSim)
+void FileChart::Deactivate()
 {
-	DataChart::Deactivate(lpSim);
+	DataChart::Deactivate();
 
 	//Temporarry. We need to save the output file when deactivating.
 	//Later we can change this to make it more flexible. Mabey periodically
 	//dumping out the buffer once it gets full.
-	SaveOutput(lpSim);
+	SaveOutput();
 }
 
-void FileChart::ResetSimulation(Simulator *lpSim)
+void FileChart::ResetSimulation()
 {
-	DataChart::ResetSimulation(lpSim);
+	DataChart::ResetSimulation();
 
 	//re-open the file stream for output.
 	oStream.open(AnimatSim::GetFilePath(m_strProjectPath, m_strOutputFilename).c_str());
@@ -95,7 +95,7 @@ void FileChart::Load(CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf FileChart Element
 }
 
-void FileChart::SaveOutput(Simulator *lpSim)
+void FileChart::SaveOutput()
 {
 	long lRow, lCol, lIndex;
 
@@ -120,7 +120,7 @@ void FileChart::SaveOutput(Simulator *lpSim)
 	for(lRow=0; lRow<m_lRowCount; lRow++)
 	{
 		lTimeSlice = m_lStartSlice + (lRow * m_iCollectInterval);
-		fltTime = lTimeSlice * lpSim->TimeStep();
+		fltTime = lTimeSlice * m_lpSim->TimeStep();
 
 		//Add the time
 		oStream << lTimeSlice << "\t" << fltTime << "\t";

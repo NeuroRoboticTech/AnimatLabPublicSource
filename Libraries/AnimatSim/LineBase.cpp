@@ -92,7 +92,7 @@ LineBase::~LineBase()
 
 BOOL LineBase::AllowMouseManipulation() {return FALSE;}
 
-float LineBase::CalculateLength(Simulator *lpSim)
+float LineBase::CalculateLength()
 {
 	float fltLength=0;
 
@@ -109,16 +109,16 @@ float LineBase::CalculateLength(Simulator *lpSim)
 		lpAttach1 = lpAttach2;
 	}
 
-	return (fltLength * lpSim->DistanceUnits());
+	return (fltLength * m_lpSim->DistanceUnits());
 }
 
 
 // There are no parts or joints to create for muscle attachment points.
-void LineBase::CreateParts(Simulator *lpSim, Structure *lpStructure)
+void LineBase::CreateParts()
 {
 }
 
-void LineBase::CreateJoints(Simulator *lpSim, Structure *lpStructure)
+void LineBase::CreateJoints()
 {
 	m_aryAttachmentPoints.Clear();
 
@@ -128,7 +128,7 @@ void LineBase::CreateJoints(Simulator *lpSim, Structure *lpStructure)
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 	{
 		strID = m_aryAttachmentPointIDs[iIndex];
-		lpAttachment = dynamic_cast<Attachment *>(lpStructure->FindRigidBody(strID));
+		lpAttachment = dynamic_cast<Attachment *>(m_lpStructure->FindRigidBody(strID));
 		m_aryAttachmentPoints.Add(lpAttachment);
 	}
 
@@ -136,7 +136,7 @@ void LineBase::CreateJoints(Simulator *lpSim, Structure *lpStructure)
 		m_bEnabled = FALSE;
 
 	//Get the current length of the muscle.
-	m_fltLength = CalculateLength(lpSim);
+	m_fltLength = CalculateLength();
 	m_fltPrevLength = m_fltLength;
 }
 
