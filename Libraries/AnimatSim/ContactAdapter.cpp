@@ -78,6 +78,8 @@ catch(...)
 
 void ContactAdapter::Initialize()
 {
+	Adapter::Initialize();
+
 	Organism *lpOrganism = dynamic_cast<Organism *>(m_lpStructure);
 	if(!lpOrganism)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");

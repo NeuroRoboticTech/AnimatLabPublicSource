@@ -15,7 +15,6 @@ namespace FiringRateSim
 		{
 		protected:
 			FiringRateModule *m_lpFastModule;
-			Organism *m_lpOrganism;
 
 			CStdPtrArray<Synapse> m_arySynapses;
 
@@ -58,6 +57,7 @@ namespace FiringRateSim
 #pragma endregion
 
 			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
+			virtual void VerifySystemPointers();
 			virtual void ResetSimulation();
 			virtual void Initialize();
 			virtual void Load(CStdXml &oXml);

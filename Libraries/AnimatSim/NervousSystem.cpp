@@ -44,6 +44,7 @@ namespace AnimatSim
 **/
 NervousSystem::NervousSystem()
 {
+	m_lpOrganism = NULL;
 }
 
 /**
@@ -192,9 +193,28 @@ void NervousSystem::ResetSimulation()
 	}
 }
 
+void NervousSystem::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
+{
+	m_lpOrganism = dynamic_cast<Organism *>(lpStructure);
+
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
+}
+
+void NervousSystem::VerifySystemPointers()
+{
+	AnimatBase::VerifySystemPointers();
+
+	if(!m_lpStructure)
+		THROW_PARAM_ERROR(Al_Err_lStructureNotDefined, Al_Err_strStructureNotDefined, "Link: ", m_strID);
+
+	if(!m_lpOrganism) 
+		THROW_PARAM_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Link: ", m_strID);
+}
 
 void NervousSystem::Initialize()
 {
+	AnimatBase::Initialize();
+
 	NeuralModule *lpModule = NULL;
 	CStdPtrMap<string, NeuralModule>::iterator oPos;
 

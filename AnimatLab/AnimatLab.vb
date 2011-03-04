@@ -6,7 +6,7 @@ Imports System.Windows.Forms
 Imports System.Diagnostics
 Imports System.Reflection
 
-''' \namespace Forms 
+''' \namespace AnimatLab::Forms 
 '''
 ''' \brief  Contains classes related to showing the AnimatLab main form. 
 Namespace Forms

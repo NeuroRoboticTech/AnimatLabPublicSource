@@ -376,13 +376,6 @@ BOOL VsHinge::SetData(string strDataType, string strValue, BOOL bThrowError)
 
 #pragma endregion
 
-//
-//void VsHinge::ResetSimulation(Simulator *lpSim, Structure *lpStructure)
-//{
-//	VsJoint::ResetSimulation(lpSim, lpStructure);
-//	Hinge::ResetSimulation(lpSim, lpStructure);
-//}
-
 void VsHinge::StepSimulation()
 {
 	UpdateData();

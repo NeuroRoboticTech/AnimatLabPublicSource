@@ -32,12 +32,6 @@ VsSphere::~VsSphere()
 {
 
 }
-//
-//void VsSphere::Selected(BOOL bValue, BOOL bSelectMultiple)  
-//{
-//	Sphere::Selected(bValue, bSelectMultiple);
-//	VsRigidBody::Selected(bValue, bSelectMultiple);
-//}
 
 void VsSphere::CreateParts()
 {
@@ -66,52 +60,6 @@ void VsSphere::CreateJoints()
 	Sphere::CreateJoints();
 	VsRigidBody::Initialize();
 }
-//
-//void VsSphere::ResetSimulation(Simulator *lpSim, Structure *lpStructure)
-//{
-//	VsRigidBody::ResetSimulation(lpSim, lpStructure);
-//	Sphere::ResetSimulation(lpSim, lpStructure);
-//}
-//
-//void VsSphere::StepSimulation(Simulator *lpSim, Structure *lpStructure)
-//{
-//	Sphere::StepSimulation(lpSim, lpStructure);
-//	VsRigidBody::CollectBodyData(lpSim);
-//}
-//
-//void VsSphere::EnableCollision(Simulator *lpSim, RigidBody *lpBody)
-//{VsRigidBody::EnableCollision(lpSim, lpBody);}
-//
-//void VsSphere::DisableCollision(Simulator *lpSim, RigidBody *lpBody)
-//{VsRigidBody::DisableCollision(lpSim, lpBody);}
-//
-//float *VsSphere::GetDataPointer(string strDataType)
-//{
-//	string strType = Std_CheckString(strDataType);
-//	float *lpData = NULL;
-//
-//	lpData = Sphere::GetDataPointer(strDataType);
-//	if(lpData) return lpData;
-//
-//	lpData = VsRigidBody::GetPhysicsDataPointer(strDataType);
-//	if(lpData) return lpData;
-//
-//	THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "RigidBodyID: " + STR(m_strName) + "  DataType: " + strDataType);
-//
-//	return NULL;
-//}
-//
-//void VsSphere::AddForce(Simulator *lpSim, float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits)
-//{VsRigidBody::AddBodyForce(lpSim, fltPx, fltPy, fltPz, fltFx, fltFy, fltFz, bScaleUnits);}
-//
-//void VsSphere::AddTorque(Simulator *lpSim, float fltTx, float fltTy, float fltTz, BOOL bScaleUnits)
-//{VsRigidBody::AddBodyTorque(lpSim, fltTx, fltTy, fltTz, bScaleUnits);}
-//
-//CStdFPoint VsSphere::GetVelocityAtPoint(float x, float y, float z)
-//{return VsRigidBody::GetVelocityAtPoint(x, y, z);}
-//
-//float VsSphere::GetMass()
-//{return VsRigidBody::GetMass();}
 
 		}		//Bodies
 	}			// Environment

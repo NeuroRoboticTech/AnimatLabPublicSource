@@ -43,6 +43,8 @@ VsHudText::~VsHudText()
 
 void VsHudText::Initialize(osg::Projection *lpProjection)
 {
+	AnimatBase::Initialize();
+
 	AnimatBase *lpBase = m_lpSim->FindByID(m_strTargetID);
 	m_lpData = lpBase->GetDataPointer(m_strDataType);
 

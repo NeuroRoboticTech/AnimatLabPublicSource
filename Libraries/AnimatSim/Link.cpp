@@ -48,9 +48,7 @@ namespace AnimatSim
 
 Link::Link()
 {
-	m_lpSim = NULL;
-	m_lpStructure = NULL;
-	m_lpModule = NULL;
+	m_lpOrganism = NULL;
 
 	m_bEnabled = TRUE;
 	m_fltEnabled = 0;
@@ -79,5 +77,29 @@ catch(...)
 
 void Link::UpdateData()
 {}
+
+void Link::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
+{
+	m_lpOrganism = dynamic_cast<Organism *>(lpStructure);
+
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
+}
+
+void Link::VerifySystemPointers()
+{
+	AnimatBase::VerifySystemPointers();
+
+	if(!m_lpStructure)
+		THROW_PARAM_ERROR(Al_Err_lStructureNotDefined, Al_Err_strStructureNotDefined, "Link: ", m_strID);
+
+	if(!m_lpOrganism) 
+		THROW_PARAM_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Link: ", m_strID);
+
+	if(!m_lpModule) 
+		THROW_PARAM_ERROR(Al_Err_lNeuralModuleNotDefined, Al_Err_strNeuralModuleNotDefined, "Link: ", m_strID);
+
+	if(!m_lpNode) 
+		THROW_PARAM_ERROR(Al_Err_lNodeNotDefined, Al_Err_strNodeNotDefined, "Link: ", m_strID);
+}
 
 }			//AnimatSim

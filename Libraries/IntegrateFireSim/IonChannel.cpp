@@ -113,10 +113,6 @@ void  IonChannel::Minit(float fltVal)
 	m_fltMInit = fltVal;
 }; 
 
-void IonChannel::Initialize()
-{
-}
-
 float IonChannel::CalculateCurrent(float fltStep, float fltVm)
 {
 	if(m_bEnabled)

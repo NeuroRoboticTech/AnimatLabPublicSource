@@ -25,6 +25,8 @@ VsSimulationWindowMgr::~VsSimulationWindowMgr(void)
 
 void VsSimulationWindowMgr::Initialize()
 {
+	SimulationWindowMgr::Initialize();
+
 	int iCount = m_aryWindows.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		m_aryWindows[iIndex]->Initialize();

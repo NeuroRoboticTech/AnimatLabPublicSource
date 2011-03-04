@@ -33,10 +33,7 @@
 
 namespace AnimatSim
 {
-
 /**
-\fn	Node::Node()
-
 \brief	Default constructor. 
 
 \author	dcofer
@@ -44,14 +41,13 @@ namespace AnimatSim
 **/
 Node::Node()
 {
+	m_lpOrganism = NULL;
 	m_bEnabledMem = TRUE;
 	m_bEnabled = TRUE;
 	m_fltEnabled = 0;
 }
 
 /**
-\fn	Node::~Node()
-
 \brief	Destructor. 
 
 \author	dcofer
@@ -68,12 +64,10 @@ catch(...)
 }
 
 /**
-\fn	BOOL Node::Enabled()
-
 \brief	Tells whether this node is enabled.
 
-\details Some types of nodes can be enabled/disabled. For example, joints or muscles. 
-This tells what enabled state the node is in. This will not apply to every node object type.
+\details Some types of nodes can be enabled/disabled. For example, joints or muscles. This tells
+what enabled state the node is in. This will not apply to every node object type. 
 
 \author	dcofer
 \date	2/24/2011
@@ -83,11 +77,9 @@ This tells what enabled state the node is in. This will not apply to every node 
 BOOL Node::Enabled() {return m_bEnabled;}
 
 /**
-\fn	void Node::Enabled(BOOL bValue)
+\brief	Enables the node.
 
-\brief	Enables the node. 
-
-\details Some types of nodes can be enabled/disabled. This sets the enabled state of the object.
+\details Some types of nodes can be enabled/disabled. This sets the enabled state of the object. 
 
 \author	dcofer
 \date	2/24/2011
@@ -100,33 +92,11 @@ void Node::Enabled(BOOL bValue)
 	m_fltEnabled = (float) m_bEnabled;
 }
 
-/**
-\fn	void Node::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
-
-\brief	Attach this node to a source adapter. 
-
-\author	dcofer
-\date	3/2/2011
-
-\param [in,out]	lpStructure	The pointer to a structure. 
-\param [in,out]	lpAdapter	The pointer to an adapter. 
-**/
 void Node::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 {
 	m_lpSim->AttachSourceAdapter(lpStructure, lpAdapter);
 }
 
-/**
-\fn	void Node::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
-
-\brief	Attach this node to a target adapter. 
-
-\author	dcofer
-\date	3/2/2011
-
-\param [in,out]	lpStructure	The pointer to a structure. 
-\param [in,out]	lpAdapter	The pointer to an adapter. 
-**/
 void Node::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 {
 	m_lpSim->AttachTargetAdapter(lpStructure, lpAdapter);
@@ -145,16 +115,33 @@ void Node::Kill(BOOL bState)
 }
 
 /**
-\fn	void Node::UpdateData()
-
 \brief	Updates any reporting data for this time step. 
 
 \author	dcofer
 \date	3/2/2011
 **/
-
 void Node::UpdateData()
 {}
 
+void Node::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
+{
+	m_lpOrganism = dynamic_cast<Organism *>(lpStructure);
+
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
+}
+
+void Node::VerifySystemPointers()
+{
+	AnimatBase::VerifySystemPointers();
+
+	if(!m_lpStructure)
+		THROW_PARAM_ERROR(Al_Err_lStructureNotDefined, Al_Err_strStructureNotDefined, "Link: ", m_strID);
+
+	if(!m_lpOrganism) 
+		THROW_PARAM_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Link: ", m_strID);
+
+	if(!m_lpModule) 
+		THROW_PARAM_ERROR(Al_Err_lNeuralModuleNotDefined, Al_Err_strNeuralModuleNotDefined, "Link: ", m_strID);
+}
 
 }			//AnimatSim

@@ -1,13 +1,10 @@
-// Cone.h: interface for the Cone class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Cone.h
 
-#if !defined(AFX_ALCONE_H__B6B13C0B_D733_44AF_917D_372FE21A4A2D__INCLUDED_)
-#define AFX_ALCONE_H__B6B13C0B_D733_44AF_917D_372FE21A4A2D__INCLUDED_
+\brief	Declares the cone class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
@@ -15,40 +12,43 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
-			/*! \brief 
-				A Cone type of rigid body.
-
-				\remarks
-				This is a Cone type of rigid body. You can specify the dimensions of 
-				the radius and height for both the collision model and for the graphics model.
-
-				\sa
-				Body, Joint, CAlBox, CAlPlane, CAlCone, 
-				CAlCone, CAlMuscle, CAlAttachment, CAlSphere                                
-				 
-				\ingroup AnimatSim
-			*/
-
+			/**
+			\brief	Cone.
+			
+			\details This is a Cone type of rigid body. You can specify the dimensions of the radius and
+			height for both the collision model and for the graphics model. 
+			
+			\author	dcofer
+			\date	3/4/2011
+			**/
 			class ANIMAT_PORT Cone : public RigidBody
 			{
 			protected:
+				/// The lower radius of the cone
 				float m_fltLowerRadius;
-				float m_fltUpperRadius;
-				float m_fltHeight;
 
-				float m_fltCollisionLowerRadius;
-				float m_fltCollisionUpperRadius;
-				float m_fltCollisionHeight;
+				/// The upper radius of the cone
+				float m_fltUpperRadius;
+				
+				/// The height of the cone
+				float m_fltHeight;
 
 			public:
 				Cone();
 				virtual ~Cone();
 
+				virtual float LowerRadius();
+				virtual void LowerRadius(float fltVal, BOOL bUseScaling = TRUE);
+
+				virtual float UpperRadius();
+				virtual void UpperRadius(float fltVal, BOOL bUseScaling = TRUE);
+
+				virtual float Height();
+				virtual void Height(float fltVal, BOOL bUseScaling = TRUE);
+				
 				virtual void Load(CStdXml &oXml);
 			};
 
 		}		//Bodies
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALCONE_H__B6B13C0B_D733_44AF_917D_372FE21A4A2D__INCLUDED_)

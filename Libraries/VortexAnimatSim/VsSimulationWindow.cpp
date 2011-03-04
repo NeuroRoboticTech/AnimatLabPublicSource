@@ -209,6 +209,8 @@ void VsSimulationWindow::InitStandalone(Simulator *lpSim, VsSimulator *lpVsSim)
 
 void VsSimulationWindow::Initialize()
 {
+	SimulationWindow::Initialize();
+
 	m_lpWinMgr = dynamic_cast<VsSimulationWindowMgr *>(m_lpSim->WindowMgr());
 	if(!m_lpWinMgr)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsWinMgr, Vs_Err_strUnableToConvertToVsWinMgr);

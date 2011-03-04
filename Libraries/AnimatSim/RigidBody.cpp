@@ -31,6 +31,7 @@ namespace AnimatSim
 {
 	namespace Environment
 	{
+
 /**
 \fn	RigidBody::RigidBody()
 

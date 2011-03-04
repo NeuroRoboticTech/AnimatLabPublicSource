@@ -1,3 +1,9 @@
+/**
+\file	Box.h
+
+\brief	Declares the box class. 
+**/
+
 #pragma once
 
 namespace AnimatSim
@@ -36,23 +42,80 @@ namespace AnimatSim
 			class ANIMAT_PORT Box : public RigidBody
 			{
 			protected:
-				///The dimension vector for the graphic box.
+				///The length dimension of the box.
 				float m_fltLength;
+
+				///The width dimension of the box.
 				float m_fltWidth;
+
+				///The height dimension of the box.
 				float m_fltHeight;
 
 			public:
-				//This is a test comment.
 				Box();
 				virtual ~Box();
 
-				virtual float Length() {return m_fltLength;};
+				/**
+				\brief	Gets the length of the box. 
+
+				\author	dcofer
+				\date	3/4/2011
+
+				\return	Length of the box. 
+				**/
+				virtual float Length();
+
+				/**
+				\brief	Sets the length of the box. 
+
+				\author	dcofer
+				\date	3/4/2011
+
+				\param	fltVal		The new length value. 
+				\param	bUseScaling	true to use unit scaling on entered value. 
+				**/
 				virtual void Length(float fltVal, BOOL bUseScaling = TRUE);
 
-				virtual float Width() {return m_fltWidth;};
+				/**
+				\brief	Gets the width of the box. 
+
+				\author	dcofer
+				\date	3/4/2011
+
+				\return	Width of the box. 
+				**/
+				virtual float Width();
+
+				/**
+				\brief	Sets the width of the box. 
+
+				\author	dcofer
+				\date	3/4/2011
+
+				\param	fltVal		The new width value. 
+				\param	bUseScaling	true to use unit scaling on entered value. 
+				**/
 				virtual void Width(float fltVal, BOOL bUseScaling = TRUE);
 
-				virtual float Height() {return m_fltHeight;};
+				/**
+				\brief	Gets the height of the box. 
+
+				\author	dcofer
+				\date	3/4/2011
+
+				\return	Height of the box. 
+				**/
+				virtual float Height();
+
+				/**
+				\brief	Sets the Height of the box. 
+
+				\author	dcofer
+				\date	3/4/2011
+
+				\param	fltVal		The new height value. 
+				\param	bUseScaling	true to use unit scaling on entered value. 
+				**/				
 				virtual void Height(float fltVal, BOOL bUseScaling = TRUE);
 
 				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);

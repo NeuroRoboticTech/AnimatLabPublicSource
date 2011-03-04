@@ -15,6 +15,9 @@ namespace AnimatSim
 	class ANIMAT_PORT Link : public AnimatBase 
 	{
 	protected:
+		/// The pointer to this link's organism
+		Organism *m_lpOrganism;
+
 		///Determines if this Link is enabled. This will only have any effect if this Link can be disabled.
 		///The majority of Links, like rigid bodies, can not be disabled.
 		BOOL m_bEnabled;
@@ -34,6 +37,9 @@ namespace AnimatSim
 			m_bEnabled = bValue;
 			m_fltEnabled = (float) m_bEnabled;
 		};
+
+		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
+		virtual void VerifySystemPointers();
 	};
 
 }				//AnimatSim

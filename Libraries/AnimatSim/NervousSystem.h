@@ -28,6 +28,9 @@ namespace AnimatSim
 		class ANIMAT_PORT NervousSystem : public AnimatBase 
 		{
 		protected:
+			/// The pointer to this node's organism
+			Organism *m_lpOrganism;
+
 			CStdPtrMap<string, NeuralModule> m_aryNeuralModules;
 			CStdPtrArray<Adapter> m_aryAdapters;
 
@@ -47,6 +50,8 @@ namespace AnimatSim
 			virtual void Kill(BOOL bState = TRUE);
 			virtual void ResetSimulation();
 
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
+			virtual void VerifySystemPointers();
 			virtual void Initialize();
 			virtual void StepSimulation();
 

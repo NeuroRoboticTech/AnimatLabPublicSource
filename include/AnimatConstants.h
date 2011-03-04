@@ -358,6 +358,12 @@
 #define Al_Err_lInvalidSelMode -4042
 #define Al_Err_strInvalidSelMode "Invalid selection mode."
 
+#define Al_Err_lChartNotDefined -4043
+#define Al_Err_strChartNotDefined "Chart was not defined."
+
+#define Al_Err_lNodeNotDefined -4044
+#define Al_Err_strNodeNotDefined "Node was not defined."
+
 
 #define MAX_DATA_CHART_BUFFER 10485760
 

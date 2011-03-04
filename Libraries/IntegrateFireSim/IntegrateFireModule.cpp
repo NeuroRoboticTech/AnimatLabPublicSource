@@ -64,7 +64,7 @@ IntegrateFireNeuralModule::~IntegrateFireNeuralModule()
 void IntegrateFireNeuralModule::LoadInternal(CStdXml &oXml)
 {
 	int i;
-//Std_TraceMsg(0,"Starting to load");
+	VerifySystemPointers();
 
 	m_aryNeurons.RemoveAll();
 

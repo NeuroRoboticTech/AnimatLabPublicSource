@@ -33,12 +33,6 @@ VsCylinder::~VsCylinder()
 
 }
 
-//void VsCylinder::Selected(BOOL bValue, BOOL bSelectMultiple)  
-//{
-//	Cylinder::Selected(bValue, bSelectMultiple);
-//	VsRigidBody::Selected(bValue, bSelectMultiple);
-//}
-
 void VsCylinder::CreateParts()
 {
 	m_osgGeometry = CreateConeGeometry(m_fltHeight, m_fltRadius, m_fltRadius, 50, true, true, true);
@@ -66,54 +60,6 @@ void VsCylinder::CreateJoints()
 	Cylinder::CreateJoints();
 	VsRigidBody::Initialize();
 }
-/*
-void VsCylinder::ResetSimulation(Simulator *lpSim, Structure *lpStructure)
-{
-	VsRigidBody::ResetSimulation(lpSim, lpStructure);
-	Cylinder::ResetSimulation(lpSim, lpStructure);
-}
-
-void VsCylinder::StepSimulation(Simulator *lpSim, Structure *lpStructure)
-{
-	Cylinder::StepSimulation(lpSim, lpStructure);
-	VsRigidBody::CollectBodyData(lpSim);
-}
-
-float *VsCylinder::GetDataPointer(string strDataType)
-{
-	string strType = Std_CheckString(strDataType);
-	float *lpData = NULL;
-
-	lpData = Cylinder::GetDataPointer(strDataType);
-	if(lpData) return lpData;
-
-	lpData = VsRigidBody::GetPhysicsDataPointer(strDataType);
-	if(lpData) return lpData;
-
-	THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "RigidBodyID: " + STR(m_strName) + "  DataType: " + strDataType);
-
-	return NULL;
-}
-
-void VsCylinder::EnableCollision(Simulator *lpSim, RigidBody *lpBody)
-{VsRigidBody::EnableCollision(lpSim, lpBody);}
-
-void VsCylinder::DisableCollision(Simulator *lpSim, RigidBody *lpBody)
-{VsRigidBody::DisableCollision(lpSim, lpBody);}
-
-void VsCylinder::AddForce(Simulator *lpSim, float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits)
-{VsRigidBody::AddBodyForce(lpSim, fltPx, fltPy, fltPz, fltFx, fltFy, fltFz, bScaleUnits);}
-
-void VsCylinder::AddTorque(Simulator *lpSim, float fltTx, float fltTy, float fltTz, BOOL bScaleUnits)
-{VsRigidBody::AddBodyTorque(lpSim, fltTx, fltTy, fltTz, bScaleUnits);}
-
-CStdFPoint VsCylinder::GetVelocityAtPoint(float x, float y, float z)
-{return VsRigidBody::GetVelocityAtPoint(x, y, z);}
-
-float VsCylinder::GetMass()
-{return VsRigidBody::GetMass();}
-*/
-
 		}		//Bodies
 	}			// Environment
 }				//VortexAnimatSim

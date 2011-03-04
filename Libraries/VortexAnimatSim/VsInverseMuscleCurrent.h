@@ -23,7 +23,6 @@ namespace VortexAnimatSim
 			string m_strNeuralModule;
 			string m_strTargetNodeID;
 
-			Node *m_lpNode;
 			float *m_lpExternalCurrent;
 
 			string m_strMuscleID;
@@ -65,8 +64,6 @@ namespace VortexAnimatSim
 			virtual void Activate();
 			virtual void StepSimulation();
 			virtual void Deactivate();
-
-			//virtual void Modify(Simulator *lpSim, ActivatedItem *lpItem);
 		};
 
 	}			//ExternalStimuli

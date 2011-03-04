@@ -1,6 +1,8 @@
-// Box.cpp: implementation of the Box class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Box.cpp
+
+\brief	Implements the box class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -32,26 +34,12 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+/**
+\brief	Default constructor. 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-/*! \brief 
-   Constructs a box object..
-   		
-   \param lpParent This is a pointer to the parent of this rigid body. 
-	          If this value is null then it is assumed that this is
-						a root object and no joint is loaded to connect this
-						part to the parent.
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a box. 
-*/
-
+\author	dcofer
+\date	3/4/2011
+**/
 Box::Box()
 {
 	m_fltLength = 1;
@@ -59,19 +47,17 @@ Box::Box()
 	m_fltHeight = 1;
 }
 
-/*! \brief 
-   Destroys the box object..
-   		
-	 \return
-	 No return value.
+/**
+\brief	Destructor. 
 
-   \remarks
-   Destroys the box object..	 
-*/
-
+\author	dcofer
+\date	3/4/2011
+**/
 Box::~Box()
 {
 }
+
+float Box::Length() {return m_fltLength;}
 
 void Box::Length(float fltVal, BOOL bUseScaling)
 {
@@ -84,6 +70,8 @@ void Box::Length(float fltVal, BOOL bUseScaling)
 	Resize();
 }
 
+float Box::Width() {return m_fltWidth;}
+
 void Box::Width(float fltVal, BOOL bUseScaling)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "BoxSize.Width");
@@ -94,6 +82,8 @@ void Box::Width(float fltVal, BOOL bUseScaling)
 
 	Resize();
 }
+
+float Box::Height() {return m_fltHeight;}
 
 void Box::Height(float fltVal, BOOL bUseScaling)
 {
@@ -150,42 +140,6 @@ void Box::Load(CStdXml &oXml)
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
 }
-
-/*! \fn CStdFPoint CAlBox::CollisionBoxSize()
-   \brief
-   CollisionBoxSize property.
-      
-   \remarks
-   The dimension vector for the collision box.
-	 This is the accessor function for the m_oCollisionBoxSize element.
-*/
-/*! \fn void CAlBox::CollisionBoxSize(CStdFPoint &oPoint)
-   \brief
-   CollisionBoxSize property.
-      
-   \remarks
-   The dimension vector for the collision box.
-	 This is the mutator function for the m_oCollisionBoxSize element.
-*/
-
-
-/*! \fn CStdFPoint CAlBox::GraphicsBoxSize()
-   \brief
-   GraphicsBoxSize property.
-      
-   \remarks
-	 The dimension vector for the graphic box.
-	 This is the accessor function for the m_oGraphicsBoxSize element.
-*/
-/*! \fn void CAlBox::GraphicsBoxSize(CStdFPoint &oPoint)
-   \brief
-   GraphicsBoxSize property.
-      
-   \remarks
-	 The dimension vector for the graphic box.
-	 This is the mutator function for the m_oGraphicsBoxSize element.
-*/
-
 
 		}		//Bodies
 	}			//Environment

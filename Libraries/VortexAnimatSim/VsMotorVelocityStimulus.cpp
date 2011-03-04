@@ -70,9 +70,6 @@ void VsMotorVelocityStimulus::ResetSimulation()
 
 void VsMotorVelocityStimulus::Initialize()
 {
-	if(!m_lpSim)
-		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
-
 	ExternalStimulus::Initialize();
 
 	//Lets try and get the joint we will be injecting.

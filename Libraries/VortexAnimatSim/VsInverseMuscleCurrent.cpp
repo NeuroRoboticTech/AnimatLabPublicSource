@@ -47,8 +47,6 @@ VsInverseMuscleCurrent::~VsInverseMuscleCurrent()
 
 try
 {
-	m_lpOrganism = NULL;
-	m_lpNode = NULL;
 	m_lpExternalCurrent = NULL;
 	m_lpMuscle = NULL;
 	m_aryTime.RemoveAll();
@@ -61,9 +59,6 @@ catch(...)
 
 void VsInverseMuscleCurrent::Initialize()
 {
-	if(!m_lpSim)
-		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
-
 	ExternalStimulus::Initialize();
 
 	//Lets try and get the node we will dealing with.
@@ -153,6 +148,8 @@ float *VsInverseMuscleCurrent::GetDataPointer(string strDataType)
 
 void VsInverseMuscleCurrent::Load(CStdXml &oXml)
 {		
+	VerifySystemPointers();
+
 	oXml.IntoElem();  //Into Item Element
 
 	m_strID = Std_CheckString(oXml.GetChildString("ID"));

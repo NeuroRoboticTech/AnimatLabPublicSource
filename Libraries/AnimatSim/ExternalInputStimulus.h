@@ -18,10 +18,7 @@ namespace AnimatSim
 		{
 		protected:
 			string m_strStructureID;
-			Structure *m_lpStructure;
-
 			string m_strNodeID;
-			Node *m_lpNode;
 
 			string m_strInputEquation;
 			CStdPostFixEval *m_lpEval;

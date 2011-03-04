@@ -98,8 +98,8 @@ float ConstraintLimit::Alpha() {return m_vColor.a();}
 
 void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
 {
-	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
 	m_lpJoint = dynamic_cast<Joint *>(lpNode);
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
 }
 
 void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, float fltPosition)
@@ -107,6 +107,18 @@ void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure
 	SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
 	LimitPos(fltPosition);
 }
+		
+void ConstraintLimit::VerifySystemPointers()
+{
+	AnimatBase::VerifySystemPointers();
+
+	if(!m_lpStructure)
+		THROW_PARAM_ERROR(Al_Err_lStructureNotDefined, Al_Err_strStructureNotDefined, "ConstraintLimit: ", m_strName);
+
+	if(!m_lpJoint)
+		THROW_PARAM_ERROR(Al_Err_lJointNotDefined, Al_Err_strJointNotDefined, "ConstraintLimit: ", m_strName);
+}
+
 #pragma region DataAccesMethods
 
 float *ConstraintLimit::GetDataPointer(string strDataType)

@@ -40,10 +40,10 @@ namespace AnimatSim
 		Simulator *m_lpSim;
 
 		/// The pointer to this items parent Structure. If this is not relevant for this object then this is NULL
-		Structure *m_lpStructure;
+		AnimatSim::Environment::Structure *m_lpStructure;
 
 		/// The pointer to this items parentNeuralModule. If this is not relevant for this object then this is NULL
-		NeuralModule *m_lpModule; 
+		AnimatSim::Behavior::NeuralModule *m_lpModule; 
 
 		/// The pointer to this items parent Node. If this is not relevant for this object then this is NULL
 		Node *m_lpNode; 
@@ -83,7 +83,29 @@ namespace AnimatSim
 
 #pragma region DataAccesMethods
 
+		/**
+		\brief	Sets the system pointers.
+
+		\details There are a number of system pointers that are needed for use in the objects. The
+		primariy one being a pointer to the simulation object itself so that you can get global
+		parameters like the scale units and so on. However, each object may need other types of pointers
+		as well, for example neurons need to have a pointer to their parent structure/organism, and to
+		the NeuralModule they reside within. So different types of objects will need different sets of
+		system pointers. We call this method to set the pointers just after creation and before Load is
+		called. We then call VerifySystemPointers here, during Load and during Initialize in order to
+		ensure that the correct pointers have been set for each type of objects. These pointers can then
+		be safely used throughout the rest of the system. 
+
+		\author	dcofer
+		\date	3/2/2011
+
+		\param [in,out]	lpSim		The pointer to a simulation. 
+		\param [in,out]	lpStructure	The pointer to the parent structure. 
+		\param [in,out]	lpModule	The pointer to the parent module module. 
+		\param [in,out]	lpNode		The pointer to the parent node. 
+		**/
 		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
+		virtual void VerifySystemPointers();
 		virtual float *GetDataPointer(string strDataType);
 		virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 		virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE);
@@ -93,212 +115,29 @@ namespace AnimatSim
 
 #pragma region SimulationMethods
 
-		/**
-		\fn	virtual void AnimatBase::Reset()
-		
-		\brief	Resets this object.
+		virtual void Reset();
+		virtual void Initialize();
+		virtual void ResetSimulation();
+		virtual void AfterResetSimulation();
+		virtual void ReInitialize();
+		virtual void Kill(BOOL bState = TRUE);
+		virtual void StepSimulation();
 
-		\deatils Call this method to reset all data for this object back to
-		its pre-loaded state.
-		
-		\author	dcofer
-		\date	3/1/2011
-		**/
-		virtual void Reset() {};
-
-		/**
-		\fn	virtual void AnimatBase::Initialize()
-		
-		\brief	Initializes this object. 
-		
-		\author	dcofer
-		\date	3/1/2011
-		**/
-
-		virtual void Initialize() {};
-
-		/**
-		\fn	virtual void AnimatBase::ResetSimulation()
-		
-		\brief	Resets the simulation back to time 0.
-		
-		\details This method calls the ResetSimulation method on all subitems in order to reset the
-		simulation back to the beginning. 
-		
-		\author	dcofer
-		\date	3/1/2011
-		**/
-
-		virtual void ResetSimulation() {};
-
-		virtual void AfterResetSimulation() {};
-
-		/**
-		\fn	virtual void AnimatBase::ReInitialize()
-		
-		\brief	Re-initialize this object. 
-		
-		\author	dcofer
-		\date	3/1/2011
-		**/
-
-		virtual void ReInitialize() {};
-
-		/**
-		\fn	virtual void AnimatBase::Kill(BOOL bState = TRUE)
-		
-		\brief	Kills. 
-
-		\details Called to kill the organism, nervous system, neurons, and body parts. 
-		All neural items are disabled to prevent any further neural
-		activity, and all joints are disabled to allow free rotation, and all biomechancical components
-		are disabled so they can no longer produce forces. This method is only relevant to these types
-		of objects, but I am putting the definition in the base class because a variety of different
-		types of classes all need this method and I want it consolidated. Those classes that do not need
-		it do not have to call it or do anything when it is called.
-		
-		\author	dcofer
-		\date	3/3/2011
-		
-		\param	bState	true to state. 
-		**/
-		virtual void Kill(BOOL bState = TRUE) {};
-
-		/**
-		\fn	virtual void AnimatBase::StepSimulation()
-		
-		\brief	Step the simulation for this object.
-		
-		\details This is called on an object each time it is stepped in the simulation. this is where its
-		simulation code is processed. However, StepSimulation is not necessarily called every single time
-		that the simulation as a whole is stepped. A good example of this is that neural modules can have
-		different integration time steps. So a firing rate module may have a DT of 0.5 ms, while an
-		integrate and fire model may have one of 0.1 ms. So the firing rate module would only get its
-		StepSimulation method called every 5th time that the other module was called. This is all handed
-		in the StepSimulation method of the Simulator and NervousSystem. 
-		
-		\author	dcofer
-		\date	3/1/2011
-		**/
-
-		virtual void StepSimulation() {};
-
-		/**
-		\fn	virtual void AnimatBase::SimStarting()
-		
-		\brief	Called just before the simulation starts.
-
-		\details This method is called on each AnimatBase object when the simulation starts.
-		It allows it to perform any intialization prior to the beginning of the simulation that is needed.
-		
-		\author	dcofer
-		\date	3/1/2011
-		**/
-		virtual void SimStarting() {};
-
-		/**
-		\fn	virtual void AnimatBase::SimPausing()
-		
-		\brief	Called just before the simulation pauses.
-
-		\details This method is called on each AnimatBase object when the simulation pauses.
-		It allows it to perform any intialization prior to the pause of the simulation that is needed.
-		
-		\author	dcofer
-		\date	3/1/2011
-		**/
-		virtual void SimPausing() {};
-
-		/**
-		\fn	virtual void AnimatBase::SimStopping()
-		
-		\brief	Called just before the simulation stops.
-
-		\details This method is called on each AnimatBase object when the simulation stops.
-		It allows it to perform any intialization prior to the stop of the simulation that is needed.
-		
-		\author	dcofer
-		\date	3/1/2011
-		**/
-		virtual void SimStopping() {};
+		virtual void SimStarting();
+		virtual void SimPausing();
+		virtual void SimStopping();
 
 #pragma endregion
 
 #pragma region SnapshotMethods
 
-		/**
-		\fn	virtual long AnimatBase::CalculateSnapshotByteSize()
-		
-		\brief	Calculates the snapshot byte size.
-		
-		\details Sometimes the user may want to capture a snapshot of the simulation at a given point in
-		time, and then be able to go back to that specific point. To do this we grab a snapshot of all
-		the data in the system, including the neural variables. We essentially serialize the data into a
-		binary format for later re-use. This method calculates the number of bytes that will be required
-		to store the entire object. 
-		
-		\author	dcofer
-		\date	2/24/2011
-		
-		\return	The calculated snapshot byte size. 
-		**/
-		virtual long CalculateSnapshotByteSize() {return 0;};
-
-		/**
-		\fn	virtual void AnimatBase::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
-		
-		\brief	Saves a key frame snapshot.
-		
-		\details Sometimes the user may want to capture a snapshot of the simulation at a given point in
-		time, and then be able to go back to that specific point. To do this we grab a snapshot of all
-		the data in the system, including the neural variables. We essentially serialize the data into a
-		binary format for later re-use. This method goes through each module and saves its data into the
-		byte array. 
-		
-		\author	dcofer
-		\date	2/24/2011
-		
-		\param [in,out]	aryBytes	The array of bytes where the data is being stored. 
-		\param [in,out]	lIndex		Current zero-based index of the write position in the array. 
-		**/
-		virtual void SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex) {};
-
-		/**
-		\fn	virtual void AnimatBase::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
-		
-		\brief	Loads a key frame snapshot.
-		
-		\details Sometimes the user may want to capture a snapshot of the simulation at a given point in
-		time, and then be able to go back to that specific point. To do this we grab a snapshot of all
-		the data in the system, including the neural variables. We essentially serialize the data into a
-		binary format for later re-use. This method goes through each module and loads its data from the
-		byte array. 
-		
-		\author	dcofer
-		\date	2/24/2011
-		
-		\param [in,out]	aryBytes	The array of bytes where the data is being stored. 
-		\param [in,out]	lIndex		Current zero-based index of the read position in the array. 
-		**/
-		virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex) {};
+		virtual long CalculateSnapshotByteSize();
+		virtual void SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex);
+		virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex);
 
 #pragma endregion
 
-		/**
-		\fn	virtual void AnimatBase::VisualSelectionModeChanged(int iNewMode)
-		
-		\brief	Visual selection mode changed. 
-		
-		\details This is called whenever the visual selection mode of the simulation is changed.
-		This is when the user switches from selecting graphics, collision objects, joints, etc..
-
-		\author	dcofer
-		\date	3/1/2011
-		
-		\param	iNewMode	The new mode. 
-		**/
-		virtual void VisualSelectionModeChanged(int iNewMode) {};
-
+		virtual void VisualSelectionModeChanged(int iNewMode);
 		virtual void Load(CStdXml &oXml);
 	};
 

@@ -80,6 +80,8 @@ ReceptiveFieldPair::~ReceptiveFieldPair()
 
 void ReceptiveFieldPair::Initialize(string strTargetModule)
 {
+	AnimatBase::Initialize();
+
 	m_lpTargetNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strTargetNodeID));
 	if(!m_lpTargetNode)
 		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strTargetNodeID);

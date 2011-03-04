@@ -287,7 +287,7 @@ void Joint::Load(CStdXml &oXml)
 */
 
 
-/*! \fn virtual void Joint::CreateJoint(Simulator *lpSim, Structure *lpStructure)
+/*! \fn virtual void Joint::CreateJoint()
    \brief
    Enables the motor for a motorized joint.
       

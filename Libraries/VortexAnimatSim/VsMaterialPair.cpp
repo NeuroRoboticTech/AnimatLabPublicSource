@@ -50,6 +50,8 @@ void VsMaterialPair::RegisterMaterialTypes(CStdArray<string> aryMaterialTypes)
 
 void VsMaterialPair::Initialize()
 {
+	MaterialPair::Initialize();
+
 	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
 	if(!lpVsSim)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);

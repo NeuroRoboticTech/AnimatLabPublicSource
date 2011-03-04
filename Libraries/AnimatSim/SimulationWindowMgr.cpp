@@ -158,6 +158,8 @@ BOOL SimulationWindowMgr::HasContainedWindow()
 
 void SimulationWindowMgr::Load(CStdXml &oXml)
 {
+	VerifySystemPointers();
+
 	m_aryWindows.RemoveAll();
 
 	if(oXml.FindChildElement("WindowMgr", false))

@@ -70,6 +70,8 @@ int Materials::GetMaterialID(string strName)
 
 void Materials::Initialize()
 {
+	AnimatBase::Initialize();
+
 	RegisterMaterials();
 
 	MaterialPair *lpItem = NULL;

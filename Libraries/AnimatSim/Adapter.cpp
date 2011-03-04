@@ -105,6 +105,8 @@ float *Adapter::GetDataPointer(string strDataType)
 
 void Adapter::Initialize()
 {
+	Node::Initialize();
+
 	m_lpSourceNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strSourceID));
 	if(!m_lpSourceNode)
 		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strSourceID);

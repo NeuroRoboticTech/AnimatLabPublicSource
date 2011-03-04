@@ -36,6 +36,8 @@ void VsHud::Reset()
 
 void VsHud::Initialize()
 {
+	AnimatBase::Initialize();
+
 	m_osgProjection = new osg::Projection;
     m_osgProjection->setMatrix(osg::Matrix::ortho2D(0, 800, 0, 600));
 

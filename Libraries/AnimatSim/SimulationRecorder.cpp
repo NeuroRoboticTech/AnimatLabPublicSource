@@ -116,7 +116,7 @@ void SimulationRecorder::Load(string strProjectPath, string strFileName)
 
 void SimulationRecorder::Load(CStdXml &oXml)
 {
-	TRACE_DEBUG("Loading recorder keyframes from Xml.");
+	VerifySystemPointers();
 
 	Reset();
 

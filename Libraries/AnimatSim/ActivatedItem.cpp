@@ -429,16 +429,11 @@ BOOL ActivatedItem::Overlaps(ActivatedItem *lpItem)
 	return FALSE;
 }
 
-/**
-\fn	void ActivatedItem::Initialize()
 
-\brief	Initializes this object. 
-
-\author	dcofer
-\date	3/1/2011
-**/
 void ActivatedItem::Initialize()
 {
+	AnimatBase::Initialize();
+
 	if(m_bLoadedTime)
 	{
 		m_lStartSlice = (long) (m_fltStartTime / m_lpSim->TimeStep() + 0.5);

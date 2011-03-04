@@ -218,9 +218,18 @@ void NeuralModule::AttachTargetAdapter(Adapter *lpAdapter)
 
 void NeuralModule::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
 {
-	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
-
 	m_lpOrganism = dynamic_cast<Organism *>(lpStructure);
+
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
+}
+
+void NeuralModule::VerifySystemPointers()
+{
+	AnimatBase::VerifySystemPointers();
+
+	if(!m_lpStructure)
+		THROW_PARAM_ERROR(Al_Err_lStructureNotDefined, Al_Err_strStructureNotDefined, "ConstraintLimit: ", m_strName);
+
 	if(!m_lpOrganism) 
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 }

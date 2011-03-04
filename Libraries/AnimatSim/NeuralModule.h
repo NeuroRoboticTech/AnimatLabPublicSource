@@ -85,6 +85,7 @@ namespace AnimatSim
 			Organism *GetOrganism();
 
 			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
+			virtual void VerifySystemPointers();
 
 			virtual void AttachSourceAdapter(Adapter *lpAdapter);
 			virtual void AttachTargetAdapter(Adapter *lpAdapter);

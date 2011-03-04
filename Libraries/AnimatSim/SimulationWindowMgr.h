@@ -22,7 +22,6 @@ public:
 	virtual BOOL HasContainedWindow();
 
 	virtual CStdPtrArray<SimulationWindow> *Windows() {return &m_aryWindows;};
-	virtual void Initialize() = 0;
 	virtual BOOL Update();	
 	virtual void Realize() = 0;
 	virtual void Close();

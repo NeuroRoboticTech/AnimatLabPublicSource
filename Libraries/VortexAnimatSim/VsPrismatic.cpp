@@ -192,24 +192,13 @@ float *VsPrismatic::GetDataPointer(string strDataType)
 
 	return lpData;
 }
-//
-//void VsPrismatic::ResetSimulation(Simulator *lpSim, Structure *lpStructure)
-//{
-//	Prismatic::ResetSimulation(lpSim, lpStructure);
-//	VsJoint::ResetSimulation(lpSim, lpStructure);
-//}
-
 
 void VsPrismatic::StepSimulation()
 {
 	UpdateData();
 	SetVelocityToDesired();
 }
-//
-//void VsPrismatic::UpdateData(Simulator *lpSim)
-//{
-//	VsJoint::UpdateData(lpSim);
-//}
+
 		}		//Joints
 	}			// Environment
 }				//VortexAnimatSim

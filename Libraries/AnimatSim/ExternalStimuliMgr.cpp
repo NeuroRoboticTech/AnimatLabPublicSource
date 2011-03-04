@@ -93,7 +93,7 @@ void ExternalStimuliMgr::Load(string strProjectPath, string strFileName)
 
 void ExternalStimuliMgr::Load(CStdXml &oXml)
 {
-	TRACE_DEBUG("Loading external stimuli from Xml.");
+	VerifySystemPointers();
 
 	Reset();
 

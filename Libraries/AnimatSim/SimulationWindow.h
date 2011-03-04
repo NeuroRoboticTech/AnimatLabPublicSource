@@ -72,7 +72,6 @@ namespace AnimatSim
 
 #pragma endregion
 
-		virtual void Initialize() = 0;
 		virtual void Update() = 0;
 		virtual void Close() = 0;
 		virtual void Load(CStdXml &oXml);

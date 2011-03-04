@@ -15,7 +15,6 @@ namespace FiringRateSim
 		{
 		protected:
 			FiringRateModule *m_lpFastModule;
-			Organism *m_lpOrganism;
 
 			float m_fltCn;			//Membrane capacitance
 			float m_fltInvCn;		//Inverse membrane capacitance
@@ -118,6 +117,7 @@ namespace FiringRateSim
 			virtual void AddExternalNodeInput(float fltInput);
 
 			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
+			virtual void VerifySystemPointers();
 			virtual void Initialize();
 			virtual void ResetSimulation();
 			virtual void StepSimulation();

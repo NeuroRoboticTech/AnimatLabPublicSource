@@ -66,6 +66,8 @@ void DataColumn::DataType(string strType)
 
 void DataColumn::Initialize()
 {
+	AnimatBase::Initialize();
+
 	m_lpTarget = m_lpSim->FindByID(m_strTargetID);
 	m_lpDataValue = m_lpTarget->GetDataPointer(m_strDataType);
 
@@ -120,6 +122,14 @@ void DataColumn::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, Neu
 {
 	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
 	m_lpChart = lpChart;
+}
+	
+void DataColumn::VerifySystemPointers()
+{
+	AnimatBase::VerifySystemPointers();
+
+	if(!m_lpChart)
+		THROW_PARAM_ERROR(Al_Err_lChartNotDefined, Al_Err_strChartNotDefined, "DataColumn: ", m_strName);
 }
 
 void DataColumn::StepSimulation()

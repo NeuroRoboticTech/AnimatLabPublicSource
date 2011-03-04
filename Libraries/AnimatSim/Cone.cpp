@@ -1,6 +1,8 @@
-// Cone.cpp: implementation of the Cone class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Cone.cpp
+
+\brief	Implements the cone class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -31,50 +33,118 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+/**
+\brief	Default constructor. 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-/*! \brief 
-   Constructs a Cone object..
-   		
-   \param lpParent This is a pointer to the parent of this rigid body. 
-	          If this value is null then it is assumed that this is
-						a root object and no joint is loaded to connect this
-						part to the parent.
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a Cone. 
-*/
-
+\author	dcofer
+\date	3/4/2011
+**/
 Cone::Cone()
 {
 	m_fltLowerRadius = 1;
 	m_fltUpperRadius = 1;
 	m_fltHeight = 1;
-	m_fltCollisionLowerRadius = 1;
-	m_fltCollisionUpperRadius = 1;
-	m_fltCollisionHeight = 1;
 }
 
+/**
+\brief	Destructor. 
 
-/*! \brief 
-   Destroys the Cone object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the Cone object..	 
-*/
-
+\author	dcofer
+\date	3/4/2011
+**/
 Cone::~Cone()
 {
 
+}
+
+/**
+\brief	Gets the lower radius. 
+
+\author	dcofer
+\date	3/4/2011
+
+\return	Lower radius. 
+**/
+float Cone::LowerRadius() {return m_fltLowerRadius;}
+
+/**
+\brief	Sets the lower radius. 
+
+\author	dcofer
+\date	3/4/2011
+
+\param	fltVal		The new value. 
+\param	bUseScaling	true to use unit scaling on entered value. 
+**/
+void Cone::LowerRadius(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Cone.LowerRadius");
+	if(bUseScaling)
+		m_fltLowerRadius = fltVal * m_lpSim->InverseDistanceUnits();
+	else
+		m_fltLowerRadius = fltVal;
+
+	Resize();
+}
+
+/**
+\brief	Gets the upper radius. 
+
+\author	dcofer
+\date	3/4/2011
+
+\return	the upper radius. 
+**/
+float Cone::UpperRadius() {return m_fltUpperRadius;}
+
+/**
+\brief	Upper radius. 
+
+\author	dcofer
+\date	3/4/2011
+
+\param	fltVal		The new value. 
+\param	bUseScaling	true to use unit scaling on entered value. 
+**/
+void Cone::UpperRadius(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Cone.UpperRadius");
+	if(bUseScaling)
+		m_fltUpperRadius = fltVal * m_lpSim->InverseDistanceUnits();
+	else
+		m_fltUpperRadius = fltVal;
+
+	Resize();
+}
+
+/**
+\brief	Gets the height. 
+
+\author	dcofer
+\date	3/4/2011
+
+\return	The height. 
+**/
+float Cone::Height() {return m_fltHeight;}
+
+/**
+\brief	Sets the Height. 
+
+\author	dcofer
+\date	3/4/2011
+
+\param	fltVal		The new value. 
+\param	bUseScaling	true to use unit scaling on entered value. 
+**/
+void Cone::Height(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Cone.Height");
+	if(bUseScaling)
+		m_fltHeight = fltVal * m_lpSim->InverseDistanceUnits();
+	else
+		m_fltHeight = fltVal;
+
+	Resize();
 }
 
 void Cone::Load(CStdXml &oXml)
@@ -82,13 +152,9 @@ void Cone::Load(CStdXml &oXml)
 	RigidBody::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
-	m_fltLowerRadius = oXml.GetChildFloat("LowerRadius");
-	m_fltUpperRadius = oXml.GetChildFloat("UpperRadius");
-	m_fltHeight = oXml.GetChildFloat("Height");
-
-	m_fltCollisionLowerRadius = oXml.GetChildFloat("CollisionLowerRadius");
-	m_fltCollisionUpperRadius = oXml.GetChildFloat("CollisionUpperRadius");
-	m_fltCollisionHeight = oXml.GetChildFloat("CollisionHeight");
+	LowerRadius(oXml.GetChildFloat("LowerRadius"), m_fltLowerRadius);
+	UpperRadius(oXml.GetChildFloat("UpperRadius"), m_fltUpperRadius);
+	Height(oXml.GetChildFloat("Height"), m_fltHeight);
 	oXml.OutOfElem(); //OutOf RigidBody Element
 
 	Std_IsAboveMin((float) 0,m_fltLowerRadius, TRUE, "LowerRadius", TRUE);
@@ -96,13 +162,6 @@ void Cone::Load(CStdXml &oXml)
 	Std_IsAboveMin((float) 0, m_fltHeight, TRUE, "Height");
 	
 	if(m_fltLowerRadius == 0 && m_fltUpperRadius == 0)
-		THROW_PARAM_ERROR(Al_Err_lInvalidConeRadius, Al_Err_strInvalidConeRadius, "Body", m_strName);
-
-	Std_IsAboveMin((float) 0, m_fltCollisionLowerRadius, TRUE, "CollisionLowerRadius", TRUE);
-	Std_IsAboveMin((float) 0, m_fltCollisionUpperRadius, TRUE, "CollisionUpperRadius", TRUE);
-	Std_IsAboveMin((float) 0, m_fltCollisionHeight, TRUE, "CollisionHeight", FALSE);
-
-	if(m_fltCollisionLowerRadius == 0 && m_fltCollisionUpperRadius == 0)
 		THROW_PARAM_ERROR(Al_Err_lInvalidConeRadius, Al_Err_strInvalidConeRadius, "Body", m_strName);
 
 	m_lpSim->HasConvexMesh(TRUE);

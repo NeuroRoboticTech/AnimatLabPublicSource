@@ -245,6 +245,8 @@ int ActivatedItemMgr::FindListPos(string strID, BOOL bThrowError)
 
 void ActivatedItemMgr::Initialize()
 {
+	AnimatBase::Initialize();
+
 	int iCount = m_aryItems.GetSize();
 	for(int iChart=0; iChart<iCount; iChart++)
 		m_aryItems[iChart]->Initialize();

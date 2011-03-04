@@ -229,6 +229,8 @@ void FiringRateModule::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 //It then opens that file and loads it. 
 void FiringRateModule::Load(CStdXml &oXml)
 {
+	VerifySystemPointers();
+
 	CStdXml oNetXml;
 
 	//if(Std_IsBlank(m_strProjectPath)) 

@@ -162,9 +162,6 @@ void VsForceStimulus::TorqueZEquation(string strVal)
 
 void VsForceStimulus::Initialize()
 {
-	if(!m_lpSim)
-		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
-
 	ExternalStimulus::Initialize();
 
 	//Lets try and get the node we will dealing with.

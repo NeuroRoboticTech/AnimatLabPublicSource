@@ -75,6 +75,8 @@ void ExternalInputStimulus::InputEquation(string strVal)
 
 void ExternalInputStimulus::Initialize()
 {
+	ExternalStimulus::Initialize();
+
 	m_lpStructure = dynamic_cast<Structure *>(m_lpSim->FindByID(m_strStructureID));
 	if(!m_lpStructure)
 		THROW_PARAM_ERROR(Al_Err_lStructureNotFound, Al_Err_strStructureNotFound, "ID: ", m_strStructureID);

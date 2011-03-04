@@ -285,6 +285,8 @@ void Structure::CollectStructureData()
 
 void Structure::Initialize()
 {
+	AnimatBase::Initialize();
+
 	if(m_lpBody)
 	{
 		//First create all of the model objects.

@@ -20,7 +20,6 @@ namespace FiringRateSim
 Neuron::Neuron()
 {
 	m_lpFastModule = NULL;
-	m_lpOrganism = NULL;
 
 	m_bEnabled = TRUE;
 
@@ -365,17 +364,19 @@ void Neuron::Initialize()
 		m_arySynapses[iIndex]->Initialize();
 } 
 
-void Neuron::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *m_lpFastModule, Node *lpNode)
+void Neuron::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
 {
-	Node::SetSystemPointers(lpSim, lpStructure, m_lpFastModule, lpNode);
-	
-	m_lpFastModule = dynamic_cast<FiringRateModule *>(m_lpFastModule);
+	m_lpFastModule = dynamic_cast<FiringRateModule *>(lpModule);
+
+	Node::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
+}
+
+void Neuron::VerifySystemPointers()
+{
+	Node::VerifySystemPointers();
+
 	if(!m_lpFastModule)
 		THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpFastModule->ID());
-
-	m_lpOrganism = dynamic_cast<AnimatSim::Environment::Organism *>(m_lpStructure);
-	if(!m_lpOrganism)
-		THROW_PARAM_ERROR(Al_Err_lUnableToCastOrganismToDesiredType, Al_Err_strUnableToCastOrganismToDesiredType, "ID: ", m_lpStructure->ID());
 }
 
 void Neuron::ResetSimulation()

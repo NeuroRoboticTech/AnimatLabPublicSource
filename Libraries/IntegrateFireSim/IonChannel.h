@@ -94,7 +94,6 @@ namespace IntegrateFireSim
 
 		virtual float CalculateCurrent(float fltStep, float fltVm);
 
-		virtual void Initialize();
 		virtual void Load(CStdXml &oXml);
 		virtual void ResetSimulation();
 	};

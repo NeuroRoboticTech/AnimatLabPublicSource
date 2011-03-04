@@ -39,20 +39,15 @@ objects in the AnimatLab simulation environment.
 namespace AnimatSim
 {
 
-
 /**
-
-\fn	AnimatBase::AnimatBase()
-
 \brief	Constructs an AnimatBase object.
 
-\details Sets the ID to a default GUID value on creation.
-and selected is set to false by default.
+\details Sets the ID to a default GUID value on creation. and selected is set to false by
+default. 
 
 \author	dcofer
 \date	2/22/2011
 **/
-
 AnimatBase::AnimatBase()
 {
 	m_lpSim = NULL;
@@ -63,18 +58,13 @@ AnimatBase::AnimatBase()
 	m_bSelected = FALSE;
 }
 
-
 /**
-
-\fn	AnimatBase::~AnimatBase()
-
 \brief	Destroys the AnimatBase object..
 
-\details When an AnimatBase object is destroyed a call is made to
-   remove that object from the object list kept in the simulator. All 
-   objects are added to that list in their Load methods. The list allows
-   you to easily find objects based on ID or name, and to call some of the 
-   base methods like AddItem and SetData.
+\details When an AnimatBase object is destroyed a call is made to remove that object from the
+object list kept in the simulator. All objects are added to that list in their Load methods. The
+list allows you to easily find objects based on ID or name, and to call some of the base methods
+like AddItem and SetData. 
 
 \author	dcofer
 \date	2/22/2011
@@ -93,8 +83,6 @@ catch(...)
 }
 
 /**
-\fn	Simulator *AnimatBase::GetSimulator()
-
 \brief	Gets the simulator pointer. 
 
 \author	dcofer
@@ -105,8 +93,6 @@ catch(...)
 Simulator *AnimatBase::GetSimulator() {return m_lpSim;}
 
 /**
-\fn	Structure *AnimatBase::GetStructure()
-
 \brief	Gets the structure for this node. 
 
 \author	dcofer
@@ -117,8 +103,6 @@ Simulator *AnimatBase::GetSimulator() {return m_lpSim;}
 Structure *AnimatBase::GetStructure() {return m_lpStructure;}
 
 /**
-\fn	NeuralModule *AnimatBase::GetNeuralModule()
-
 \brief	Gets the neural module. 
 
 \author	dcofer
@@ -130,16 +114,13 @@ network nodes. All others will return NULL.
 NeuralModule *AnimatBase::GetNeuralModule() {return m_lpModule;}
 
 /**
-\fn	Node *AnimatBase::GetNode()
-
 \brief	Gets the node. 
 
 \author	dcofer
 \date	3/2/2011
 
-\return	Parent node pointer. If none exists it returns NULL
+\return	Parent node pointer. If none exists it returns NULL. 
 **/
-
 Node *AnimatBase::GetNode() {return m_lpNode;}
 
 /**
@@ -156,17 +137,14 @@ Node *AnimatBase::GetNode() {return m_lpNode;}
 string AnimatBase::ID() {return m_strID;}
 
 /**
-
-\fn	virtual void AnimatBase::ID(string strValue);
-		
 \brief	Sets the unique GUID ID of the object.
 
-\details ID value must not be blank or exception Al_Err_lIDBlank will be thrown.
+\details ID value must not be blank or exception Al_Err_lIDBlank will be thrown. 
 
 \author	dcofer
 \date	2/22/2011
-		
-\param	strValue	new ID string value. 
+
+\param	strID	new ID string value. 
 **/
 void AnimatBase::ID(string strID) 
 {
@@ -177,9 +155,6 @@ void AnimatBase::ID(string strID)
 }
 
 /**
-
-\fn	string AnimatBase::Name()
-
 \brief	Gets the name of this object. 
 
 \author	dcofer
@@ -190,9 +165,6 @@ void AnimatBase::ID(string strID)
 string AnimatBase::Name() {return m_strName;}
 
 /**
-
-\fn	void AnimatBase::Name(string strValue)
-
 \brief	Sets the name of the object. Blank is acceptable. 
 
 \author	dcofer
@@ -203,16 +175,13 @@ string AnimatBase::Name() {return m_strName;}
 void AnimatBase::Name(string strValue) {m_strName = strValue;}
 
 /**
-
-\fn	string AnimatBase::Type()
-
 \brief	returns the string type name of this object.
 
-\details Gets the string type description of this object. This is basically just another
-type of tag that can be applied by the developer of a class to differentiate it. An example
-of where this is used is in the synaptic types class. I use it to specify the synapse type
-as gated, modulatory, etc.. They still have different classes, but this gives a string description
-of that type. It is not mandatory and can be used how the class developer requires.
+\details Gets the string type description of this object. This is basically just another type of
+tag that can be applied by the developer of a class to differentiate it. An example of where this
+is used is in the synaptic types class. I use it to specify the synapse type as gated, modulatory,
+etc.. They still have different classes, but this gives a string description of that type. It is
+not mandatory and can be used how the class developer requires. 
 
 \author	dcofer
 \date	2/22/2011
@@ -222,9 +191,6 @@ of that type. It is not mandatory and can be used how the class developer requir
 string AnimatBase::Type() {return m_strType;}
 
 /**
-
-\fn	void AnimatBase::Type(string strValue)
-
 \brief	Sets the class type for this object. 
 
 \author	dcofer
@@ -235,16 +201,15 @@ string AnimatBase::Type() {return m_strType;}
 void AnimatBase::Type(string strValue) {m_strType = strValue;}
 
 /**
+\brief	Tells if this items is selected or not.
 
-\fn	BOOL AnimatBase::Selected()
+\details Body part items can be selected in the simulation by clicking on them while the
+simulation is in the correct mode. When selected the draggers are shown for manipulating the
+part. In the GUI parts can be selected by clicking on them in teh project workspace. Whenever
+this happens the selected variable is set so we know that the part is selected. Also, if we
+selected it in the simulation, then when applicable events are raised back up to the GUI to let
+it know that a part has been selected. 
 
-\brief	Tells if this items is selected or not. 
-
-\details Body part items can be selected in the simulation by clicking on them while the simulation
-is in the correct mode. When selected the draggers are shown for manipulating the part. In the GUI parts
-can be selected by clicking on them in teh project workspace. Whenever this happens the selected variable
-is set so we know that the part is selected. Also, if we selected it in the simulation, then when applicable
-events are raised back up to the GUI to let it know that a part has been selected.
 \author	dcofer
 \date	2/22/2011
 
@@ -253,72 +218,78 @@ events are raised back up to the GUI to let it know that a part has been selecte
 BOOL AnimatBase::Selected() {return m_bSelected;}
 
 /**
-
-\fn	void AnimatBase::Selected(BOOL bValue, BOOL bSelectMultiple)
-
 \brief	Selects this object.
 
-\details Selects or deselects this object. If selectmultiple is true and bValue 
-is true then it will try and add this item to a group of selected items. If selectmultiple
-is false then the currently selected item will be deselected and this one will be selected.
-All of this selection logic is actually taking place in the GUI. All the simulation does is
-have this variable that keeps track of whether THIS item is selected or not. Determining if
-it should be part of a group or not is done in the GUI project workspace.
+\details Selects or deselects this object. If selectmultiple is true and bValue is true then it
+will try and add this item to a group of selected items. If selectmultiple is false then the
+currently selected item will be deselected and this one will be selected. All of this selection
+logic is actually taking place in the GUI. All the simulation does is have this variable that
+keeps track of whether THIS item is selected or not. Determining if it should be part of a group
+or not is done in the GUI project workspace. 
 
 \author	dcofer
 \date	2/22/2011
 
 \param	bValue			true to select, false to deselect. 
-\param	bSelectMultiple	If true then this items is added as part of a group. 
-If false then it is removed from a group. 
+\param	bSelectMultiple	If true then this items is added as part of a group. If false then it is
+						removed from a group. 
 **/
 void AnimatBase::Selected(BOOL bValue, BOOL bSelectMultiple) {m_bSelected = bValue;}
 
 
 #pragma region DataAccesMethods
 
-/**
-\fn	void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
 
-\brief	Sets the system pointers. 
-
-\author	dcofer
-\date	3/2/2011
-
-\param [in,out]	lpSim		The pointer to a simulation. 
-\param [in,out]	lpStructure	The pointer to the parent structure. 
-\param [in,out]	lpModule	The pointer to the parent module module. 
-\param [in,out]	lpNode		The pointer to the parent node. 
-**/
+//Don't know why, but the documentation for this has to be in the .h file. When I try and put it here
+//it is not processed by doxygen. ????
 void AnimatBase::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
 {
 	m_lpSim = lpSim;
 	m_lpStructure = lpStructure;
 	m_lpModule = lpModule;
 	m_lpNode = lpNode;
+
+	VerifySystemPointers();
 }
 
+/**
+\brief	Verify that system pointers have been set correctly.
+
+\details The system pointers should be set just after an object is created. However, if for some
+reason it was not then this could cause read/write memory access errors later on because we would
+be using NULL pointers. This method is called during SetSystemPointers, Load, and Initialize to
+verify that the pointers for that type of object have been set correctly. We are calling three
+different places to ensure that it is checked before use. For example, if you are doing a Load
+call then you want to check it before attempting the load, but there may be an object that does
+not Load, but only does Initialize. So we need to check it there as well. 
+
+\author	dcofer
+\date	3/4/2011
+**/
+void AnimatBase::VerifySystemPointers()
+{
+	if(!m_lpSim)
+		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
+}
 
 /**
+\brief	Returns a float pointer to a data item of interest in this object.
 
-\fn	float *AnimatBase::GetDataPointer(string strDataType)
-
-\brief	Returns a float pointer to a data item of interest in this object. 
-
-\details This is a generic method used to get a pointer to data variable of interest. It is used by a variety
-of systems in the simulation. The most prominent are the data charting and stimulus classes.
-Within this method we associate a variable with a string name. By passing in the name of the 
-data type we are interested in we can recieve back a float pointer to that data type. We can use
-that to read or set the data item in other classes. For example, the data charting system gets the 
-pointer and then each time it needs to log a data point it reads the value into an array. 
+\details This is a generic method used to get a pointer to data variable of interest. It is used
+by a variety of systems in the simulation. The most prominent are the data charting and stimulus
+classes. Within this method we associate a variable with a string name. By passing in the name of
+the data type we are interested in we can recieve back a float pointer to that data type. We can
+use that to read or set the data item in other classes. For example, the data charting system
+gets the pointer and then each time it needs to log a data point it reads the value into an
+array. 
 
 \author	dcofer
 \date	2/22/2011
 
-\param	string name of the data item for which we are looking. 
+\param	strDataType	name of the data item for which we are looking. 
 
-\return	float pointer of the data item. If not found then it throws an exception.
-\exception If DataType is not found.
+\return	float pointer of the data item. If not found then it throws an exception. 
+\exception	If	DataType is not found. 
 **/
 float *AnimatBase::GetDataPointer(string strDataType)
 {
@@ -328,26 +299,26 @@ float *AnimatBase::GetDataPointer(string strDataType)
 }
 
 /**
+\brief	Set a variable based on a string data type name.
 
-\fn	BOOL AnimatBase::SetData(string strDataType, string strValue, BOOL bThrowError)
-
-\brief	Set a variable based on a string data type name. 
-
-\details This is a generic method that can be used to set any variable in an AnimatBase object
-by specifying the name of the variable and a string representation of that data. The GUI uses this 
-method to set data into variables in the simulation when the user changes them in the UI. The value string
-can be as simple as a float or int, or as complex as an xml packet. It is the developers responsibilty 
-to know what type of data is needed and to process it accordingly.
+\details This is a generic method that can be used to set any variable in an AnimatBase object by
+specifying the name of the variable and a string representation of that data. The GUI uses this
+method to set data into variables in the simulation when the user changes them in the UI. The
+value string can be as simple as a float or int, or as complex as an xml packet. It is the
+developers responsibilty to know what type of data is needed and to process it accordingly. 
 
 \author	dcofer
 \date	2/22/2011
 
 \param	strDataType	string name of the data type to set. 
-\param	strValue	The string value of the data. It is up to the developer to determine what this should be. 
-For example, in most cases it is simply a float and you just have to convert it to a float and make the appropriate
-mutator method call. However, it can be any type of string, including an entire xml packet. It is the developers
-responsibility to know how to set and process the data as required.
-\param	bThrowError	true to throw error if there is a problem. If false then it will not return an error, just return false. 
+\param	strValue	The string value of the data. It is up to the developer to determine what
+					this should be. For example, in most cases it is simply a float and you just
+					have to convert it to a float and make the appropriate mutator method call.
+					However, it can be any type of string, including an entire xml packet. It is
+					the developers responsibility to know how to set and process the data as
+					required. 
+\param	bThrowError	true to throw error if there is a problem. If false then it will not return
+					an error, just return false. 
 
 \return	true if it succeeds, false if it fails. 
 **/
@@ -363,25 +334,22 @@ BOOL AnimatBase::SetData(string strDataType, string strValue, BOOL bThrowError)
 }
 
 /**
-
-\fn	BOOL AnimatBase::AddItem(string strItemType, string strXml, BOOL bThrowError)
-
 \brief	Adds a new object to this parent.
 
-\details Generic method to add a new child item to this parent by specifying a string item
-type descriptor and an xml packet that can be used to load in the new object. The GUI uses this 
-method to create new items that were added with the user interface. The item type
-lets the method determine what type of item is being created, like synapse, neuron, body part, etc..
-It then gets the modulename, classname, and type from the xml and calls CreateObject to create
-the appropriate type of object. Then it passes in the xml packet to the new objects load method and
-does any needed initialization and adds it to the parent.
+\details Generic method to add a new child item to this parent by specifying a string item type
+descriptor and an xml packet that can be used to load in the new object. The GUI uses this method
+to create new items that were added with the user interface. The item type lets the method
+determine what type of item is being created, like synapse, neuron, body part, etc.. It then gets
+the modulename, classname, and type from the xml and calls CreateObject to create the appropriate
+type of object. Then it passes in the xml packet to the new objects load method and does any
+needed initialization and adds it to the parent. 
 
 \author	dcofer
 \date	2/22/2011
 
 \param	strItemType	String descriptor of the type of item that is being created. 
-\param	strXml		XML packet that is used to create and load the new item.
-\param	bThrowError	If true then throw an error if there is a problem, otherwise return false
+\param	strXml		XML packet that is used to create and load the new item. 
+\param	bThrowError	If true then throw an error if there is a problem, otherwise return false. 
 
 \return	true if it succeeds, false if it fails. 
 **/
@@ -394,21 +362,19 @@ BOOL AnimatBase::AddItem(string strItemType, string strXml, BOOL bThrowError)
 }
 
 /**
-\fn	BOOL AnimatBase::RemoveItem(string strItemType, string strID, BOOL bThrowError)
-
-\brief	Removes a child item from this parent. 
+\brief	Removes a child item from this parent.
 
 \details This is a generic method that is used to delete a child object from this parent. The GUI
-uses this method to remove objects from the simulation that have been deleted in the UI. The item type
-lets the method determine what type of item is being deleted, like synapse, neuron, body part, etc..
-The ID is then used to delete that specific item.
+uses this method to remove objects from the simulation that have been deleted in the UI. The item
+type lets the method determine what type of item is being deleted, like synapse, neuron, body
+part, etc.. The ID is then used to delete that specific item. 
 
 \author	dcofer
 \date	2/22/2011
 
 \param	strItemType	String descriptor of the type of item that is being created. 
 \param	strID		Unique ID of the item that will be removed. 
-\param	bThrowError	If true then throw an error if there is a problem, otherwise return false
+\param	bThrowError	If true then throw an error if there is a problem, otherwise return false. 
 
 \return	true if it succeeds, false if it fails. 
 **/
@@ -422,18 +388,214 @@ BOOL AnimatBase::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 
 #pragma endregion
 
+
+#pragma region SimulationMethods
+
 /**
-\fn	virtual void AnimatBase::Load(CStdXml &oXml);
+\brief	Resets this object.
 
-\brief	Loads the item using an XML data packet. 
+\deatils Call this method to reset all data for this object back to its pre-loaded state. 
 
-\details This method is responsible for loading the structure from a XMl
-configuration file. You should call this method even in your 
-overriden function becuase it loads all of the base properties
-for this object like ID and Name. It also includes this object in the
-simulators AddToObjectList so that the simulator knows about this object
-when you do a FindObject call. If you do not call this base method then
-it is up to you to add your item to the simulators list of objects.
+\author	dcofer
+\date	3/1/2011
+**/
+void AnimatBase::Reset() {};
+
+/**
+\brief	Initializes this object.
+
+\details After an object is loaded in it must be initialized before it can be used. This allows
+the object to retrieve any pointers or setup memory that it will need during execution. Each
+object is responsible for initializing any of its child objects, so you simply need to call this
+method on the containing class to init all child objects. It also calls VerifySystemPointers to
+make sure that the system pointers have been setup correctly. 
+
+\author	dcofer
+\date	3/1/2011
+**/
+void AnimatBase::Initialize()
+{
+	VerifySystemPointers();
+}
+
+/**
+\brief	Resets the simulation back to time 0.
+
+\details This method calls the ResetSimulation method on all subitems in order to reset the
+simulation back to the beginning. 
+
+\author	dcofer
+\date	3/1/2011
+**/
+void AnimatBase::ResetSimulation() {};
+
+/**
+\brief	Called after a simulation reset for some objects.
+
+\details This method is only used by some objects because they need to do some processing after
+the simulation has been reset. 
+
+\author	dcofer
+\date	3/4/2011
+**/
+void AnimatBase::AfterResetSimulation() {};
+
+/**
+\brief	Re-initialize this object.
+
+\details Some objects like data charts need to be re-initialized some times. An example of when
+that would be needed is when the simulation is re-started. 
+
+\author	dcofer
+\date	3/1/2011
+**/
+void AnimatBase::ReInitialize() {};
+
+/**
+\brief	Kills.
+
+\details Called to kill the organism, nervous system, neurons, and body parts. All neural items
+are disabled to prevent any further neural activity, and all joints are disabled to allow free
+rotation, and all biomechancical components are disabled so they can no longer produce forces.
+This method is only relevant to these types of objects, but I am putting the definition in the
+base class because a variety of different types of classes all need this method and I want it
+consolidated. Those classes that do not need it do not have to call it or do anything when it is
+called. 
+
+\author	dcofer
+\date	3/3/2011
+
+\param	bState	true to state. 
+**/
+void AnimatBase::Kill(BOOL bState) {};
+
+/**
+\brief	Step the simulation for this object.
+
+\details This is called on an object each time it is stepped in the simulation. this is where its
+simulation code is processed. However, StepSimulation is not necessarily called every single time
+that the simulation as a whole is stepped. A good example of this is that neural modules can have
+different integration time steps. So a firing rate module may have a DT of 0.5 ms, while an
+integrate and fire model may have one of 0.1 ms. So the firing rate module would only get its
+StepSimulation method called every 5th time that the other module was called. This is all handed
+in the StepSimulation method of the Simulator and NervousSystem. 
+
+\author	dcofer
+\date	3/1/2011
+**/
+void AnimatBase::StepSimulation() {};
+
+/**
+\brief	Called just before the simulation starts.
+
+\details This method is called on each AnimatBase object when the simulation starts. It allows it
+to perform any intialization prior to the beginning of the simulation that is needed. 
+
+\author	dcofer
+\date	3/1/2011
+**/
+void AnimatBase::SimStarting() {};
+
+/**
+\brief	Called just before the simulation pauses.
+
+\details This method is called on each AnimatBase object when the simulation pauses. It allows it
+to perform any intialization prior to the pause of the simulation that is needed. 
+
+\author	dcofer
+\date	3/1/2011
+**/
+void AnimatBase::SimPausing() {};
+
+/**
+\brief	Called just before the simulation stops.
+
+\details This method is called on each AnimatBase object when the simulation stops. It allows it
+to perform any intialization prior to the stop of the simulation that is needed. 
+
+\author	dcofer
+\date	3/1/2011
+**/
+void AnimatBase::SimStopping() {};
+
+#pragma endregion
+
+#pragma region SnapshotMethods
+
+/**
+\brief	Calculates the snapshot byte size.
+
+\details Sometimes the user may want to capture a snapshot of the simulation at a given point in
+time, and then be able to go back to that specific point. To do this we grab a snapshot of all
+the data in the system, including the neural variables. We essentially serialize the data into a
+binary format for later re-use. This method calculates the number of bytes that will be required
+to store the entire object. 
+
+\author	dcofer
+\date	2/24/2011
+
+\return	The calculated snapshot byte size. 
+**/
+long AnimatBase::CalculateSnapshotByteSize() {return 0;}
+
+/**
+\brief	Saves a key frame snapshot.
+
+\details Sometimes the user may want to capture a snapshot of the simulation at a given point in
+time, and then be able to go back to that specific point. To do this we grab a snapshot of all
+the data in the system, including the neural variables. We essentially serialize the data into a
+binary format for later re-use. This method goes through each module and saves its data into the
+byte array. 
+
+\author	dcofer
+\date	2/24/2011
+
+\param [in,out]	aryBytes	The array of bytes where the data is being stored. 
+\param [in,out]	lIndex		Current zero-based index of the write position in the array. 
+**/
+void AnimatBase::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex) {}
+
+/**
+\brief	Loads a key frame snapshot.
+
+\details Sometimes the user may want to capture a snapshot of the simulation at a given point in
+time, and then be able to go back to that specific point. To do this we grab a snapshot of all
+the data in the system, including the neural variables. We essentially serialize the data into a
+binary format for later re-use. This method goes through each module and loads its data from the
+byte array. 
+
+\author	dcofer
+\date	2/24/2011
+
+\param [in,out]	aryBytes	The array of bytes where the data is being stored. 
+\param [in,out]	lIndex		Current zero-based index of the read position in the array. 
+**/
+void AnimatBase::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex) {}
+
+#pragma endregion
+
+/**
+\brief	Visual selection mode changed.
+
+\details This is called whenever the visual selection mode of the simulation is changed. This is
+when the user switches from selecting graphics, collision objects, joints, etc.. 
+
+\author	dcofer
+\date	3/1/2011
+
+\param	iNewMode	The new mode. 
+**/
+void AnimatBase::VisualSelectionModeChanged(int iNewMode) {}
+
+/**
+\brief	Loads the item using an XML data packet.
+
+\details This method is responsible for loading the structure from a XMl configuration file. You
+should call this method even in your overriden function becuase it loads all of the base
+properties for this object like ID and Name. It also includes this object in the simulators
+AddToObjectList so that the simulator knows about this object when you do a FindObject call. If
+you do not call this base method then it is up to you to add your item to the simulators list of
+objects. 
 
 \author	dcofer
 \date	3/1/2011
@@ -442,6 +604,8 @@ it is up to you to add your item to the simulators list of objects.
 **/
 void AnimatBase::Load(CStdXml &oXml)
 {
+	VerifySystemPointers();
+
 	oXml.IntoElem();
 	m_strType = oXml.GetChildString("Type", m_strType);
 	m_strID = Std_CheckString(oXml.GetChildString("ID", m_strID));

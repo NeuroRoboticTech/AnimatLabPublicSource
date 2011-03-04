@@ -108,7 +108,7 @@ BOOL DataChartMgr::RemoveDataChart(string strID)
 
 void DataChartMgr::Load(CStdXml &oXml)
 {
-	TRACE_DEBUG("Loading data charts from Xml.");
+	VerifySystemPointers();
 
 	Reset();
 

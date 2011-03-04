@@ -32,19 +32,6 @@ VsPlane::VsPlane()
 VsPlane::~VsPlane()
 {
 }
-//
-//void VsPlane::Selected(BOOL bValue, BOOL bSelectMultiple)  
-//{
-//	Plane::Selected(bValue, bSelectMultiple);
-//	VsRigidBody::Selected(bValue, bSelectMultiple);
-//}
-//
-//void VsPlane::EnableCollision(Simulator *lpSim, RigidBody *lpBody)
-//{VsRigidBody::EnableCollision(lpSim, lpBody);}
-//
-//void VsPlane::DisableCollision(Simulator *lpSim, RigidBody *lpBody)
-//{VsRigidBody::DisableCollision(lpSim, lpBody);}
-
 
 void VsPlane::CreateParts()
 { 
@@ -62,12 +49,7 @@ void VsPlane::CreateParts()
 	Plane::CreateParts();
 	VsRigidBody::SetBody();
 }
-//
-//void VsPlane::ResetSimulation(Simulator *lpSim, Structure *lpStructure)
-//{
-//	VsRigidBody::ResetSimulation(lpSim, lpStructure);
-//	Plane::ResetSimulation(lpSim, lpStructure);
-//}
+
 		}		//Bodies
 	}			// Environment
 }				//VortexAnimatSim
