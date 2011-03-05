@@ -123,11 +123,13 @@ void Node::Kill(BOOL bState)
 void Node::UpdateData()
 {}
 
-void Node::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
+void Node::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
 {
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+
 	m_lpOrganism = dynamic_cast<Organism *>(lpStructure);
 
-	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
+	if(bVerify) VerifySystemPointers();
 }
 
 void Node::VerifySystemPointers()
@@ -136,12 +138,6 @@ void Node::VerifySystemPointers()
 
 	if(!m_lpStructure)
 		THROW_PARAM_ERROR(Al_Err_lStructureNotDefined, Al_Err_strStructureNotDefined, "Link: ", m_strID);
-
-	if(!m_lpOrganism) 
-		THROW_PARAM_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Link: ", m_strID);
-
-	if(!m_lpModule) 
-		THROW_PARAM_ERROR(Al_Err_lNeuralModuleNotDefined, Al_Err_strNeuralModuleNotDefined, "Link: ", m_strID);
 }
 
 }			//AnimatSim

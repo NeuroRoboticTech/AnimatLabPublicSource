@@ -39,6 +39,7 @@ VsSimulator::VsSimulator()
 	m_lpWinMgr->SetSystemPointers(this, NULL, NULL, NULL);
 	m_uUniverse = NULL;
 	m_vxFrame = NULL;
+	m_vsIntersect.SetSystemPointers(this, NULL, NULL, NULL);
 }
 
 VsSimulator::~VsSimulator()

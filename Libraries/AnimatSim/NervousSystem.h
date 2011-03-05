@@ -50,7 +50,7 @@ namespace AnimatSim
 			virtual void Kill(BOOL bState = TRUE);
 			virtual void ResetSimulation();
 
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify = TRUE);
 			virtual void VerifySystemPointers();
 			virtual void Initialize();
 			virtual void StepSimulation();

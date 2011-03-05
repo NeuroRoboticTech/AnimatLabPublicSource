@@ -56,7 +56,7 @@ namespace FiringRateSim
 			virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
 #pragma endregion
 
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify = TRUE);
 			virtual void VerifySystemPointers();
 			virtual void ResetSimulation();
 			virtual void Initialize();

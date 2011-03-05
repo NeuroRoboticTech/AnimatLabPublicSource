@@ -38,7 +38,7 @@ namespace AnimatSim
 			m_fltEnabled = (float) m_bEnabled;
 		};
 
-		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode);
+		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify = TRUE);
 		virtual void VerifySystemPointers();
 	};
 

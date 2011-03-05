@@ -364,11 +364,13 @@ void Neuron::Initialize()
 		m_arySynapses[iIndex]->Initialize();
 } 
 
-void Neuron::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
+void Neuron::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
 {
+	Node::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+
 	m_lpFastModule = dynamic_cast<FiringRateModule *>(lpModule);
 
-	Node::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
+	if(bVerify) VerifySystemPointers();
 }
 
 void Neuron::VerifySystemPointers()
@@ -377,6 +379,9 @@ void Neuron::VerifySystemPointers()
 
 	if(!m_lpFastModule)
 		THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpFastModule->ID());
+
+	if(!m_lpOrganism) 
+		THROW_PARAM_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Link: ", m_strID);
 }
 
 void Neuron::ResetSimulation()

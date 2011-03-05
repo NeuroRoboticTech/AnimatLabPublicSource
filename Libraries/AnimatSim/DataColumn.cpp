@@ -118,10 +118,12 @@ void DataColumn::SaveColumnNames(ofstream &oStream)
 	}
 }
 
-void DataColumn::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, DataChart *lpChart)
+void DataColumn::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, DataChart *lpChart, BOOL bVerify)
 {
-	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
 	m_lpChart = lpChart;
+
+	if(bVerify) VerifySystemPointers();
 }
 	
 void DataColumn::VerifySystemPointers()

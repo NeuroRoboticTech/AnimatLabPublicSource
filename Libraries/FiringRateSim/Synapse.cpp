@@ -131,11 +131,13 @@ void Synapse::Initialize()
 		m_arySynapses[iIndex]->Initialize();
 }
 
-void Synapse::SetSystemPointers(Simulator *m_lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
+void Synapse::SetSystemPointers(Simulator *m_lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
 {
+	Link::SetSystemPointers(m_lpSim, lpStructure, lpModule, lpNode, FALSE);
+
 	m_lpFastModule = dynamic_cast<FiringRateModule *>(lpModule);
 
-	Link::SetSystemPointers(m_lpSim, lpStructure, lpModule, lpNode);
+	if(bVerify) VerifySystemPointers();
 }
 
 void Synapse::VerifySystemPointers()
@@ -144,6 +146,9 @@ void Synapse::VerifySystemPointers()
 
 	if(!m_lpFastModule)
 		THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpFastModule->ID());
+
+	if(!m_lpOrganism) 
+		THROW_PARAM_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Link: ", m_strID);
 }
 
 #pragma region DataAccesMethods

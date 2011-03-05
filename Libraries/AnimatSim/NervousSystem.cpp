@@ -193,11 +193,13 @@ void NervousSystem::ResetSimulation()
 	}
 }
 
-void NervousSystem::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
+void NervousSystem::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
 {
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+
 	m_lpOrganism = dynamic_cast<Organism *>(lpStructure);
 
-	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
+	if(bVerify) VerifySystemPointers();
 }
 
 void NervousSystem::VerifySystemPointers()

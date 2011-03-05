@@ -54,7 +54,7 @@ namespace AnimatSim
 
 			float *DataValue() {return m_lpDataValue;};
 
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, DataChart *lpChart);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, DataChart *lpChart, BOOL bVerify = TRUE);
 			virtual void VerifySystemPointers();
 			virtual void Initialize();
 			virtual void ReInitialize();

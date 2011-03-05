@@ -96,15 +96,17 @@ void ConstraintLimit::Color(string strXml)
 
 float ConstraintLimit::Alpha() {return m_vColor.a();}
 
-void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
+void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
 {
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
 	m_lpJoint = dynamic_cast<Joint *>(lpNode);
-	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
+
+	if(bVerify) VerifySystemPointers();
 }
 
-void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, float fltPosition)
+void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, float fltPosition, BOOL bVerify)
 {
-	SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
+	SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
 	LimitPos(fltPosition);
 }
 		

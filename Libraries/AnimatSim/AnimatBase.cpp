@@ -242,14 +242,14 @@ void AnimatBase::Selected(BOOL bValue, BOOL bSelectMultiple) {m_bSelected = bVal
 
 //Don't know why, but the documentation for this has to be in the .h file. When I try and put it here
 //it is not processed by doxygen. ????
-void AnimatBase::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
+void AnimatBase::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
 {
 	m_lpSim = lpSim;
 	m_lpStructure = lpStructure;
 	m_lpModule = lpModule;
 	m_lpNode = lpNode;
 
-	VerifySystemPointers();
+	if(bVerify) VerifySystemPointers();
 }
 
 /**

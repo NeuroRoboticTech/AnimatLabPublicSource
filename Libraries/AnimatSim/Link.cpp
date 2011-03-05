@@ -78,11 +78,13 @@ catch(...)
 void Link::UpdateData()
 {}
 
-void Link::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode)
+void Link::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
 {
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+
 	m_lpOrganism = dynamic_cast<Organism *>(lpStructure);
 
-	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode);
+	if(bVerify) VerifySystemPointers();
 }
 
 void Link::VerifySystemPointers()
