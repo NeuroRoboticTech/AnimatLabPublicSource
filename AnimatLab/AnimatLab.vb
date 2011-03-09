@@ -54,18 +54,11 @@ Namespace Forms
                 Dim strAssemblyPath As String, strClassName As String
                 LoadConfigInfo(strAssemblyPath, strClassName)
 
-                Dim s() As String = System.Environment.GetCommandLineArgs()
-
                 Dim oAssembly As System.Reflection.Assembly = System.Reflection.Assembly.LoadFrom(strAssemblyPath)
                 Dim oApplication As Object = oAssembly.CreateInstance(strClassName)
 
-                If s.Length = 2 Then
-                    Dim oLoadInfo As MethodInfo = oApplication.GetType().GetMethod("CommandLineParams")
-                    oLoadInfo.Invoke(oApplication, s)
-                End If
-
-                Dim oShow As MethodInfo = oApplication.GetType().GetMethod("ShowDialog", New Type() {})
-                oShow.Invoke(oApplication, Nothing)
+                Dim oStartApp As MethodInfo = oApplication.GetType().GetMethod("StartApplication")
+                oStartApp.Invoke(oApplication, Nothing)
 
             Catch ex As Exception
                 If Not ex.InnerException Is Nothing Then
@@ -98,22 +91,8 @@ Namespace Forms
             Dim strExePath As String, strFile As String
             SplitPathAndFile(Application.ExecutablePath, strExePath, strFile)
 
-            'Open existing file
-            Dim strConfigFile As String = strExePath & "Animatlab.config"
-            Dim fs As System.IO.FileStream = New System.IO.FileStream(strConfigFile, System.IO.FileMode.Open, IO.FileAccess.Read)
-            Dim XmlIn As System.Xml.XmlTextReader = New System.Xml.XmlTextReader(fs)
-
-            XmlIn.WhitespaceHandling = System.Xml.WhitespaceHandling.None
-
-            'Moves the reader to the root element.
-            XmlIn.MoveToContent()
-
-            ' Double check this has the correct element name
-            If XmlIn.Name <> "AnimatLabConfig" Then Throw New ArgumentException("Root element must be 'AnimatLabConfig'")
-
-            If Not XmlIn.Read() Then Throw New ArgumentException("An element was expected but could not be read in")
-            If XmlIn.Name <> "AssemblyName" Then Throw New ArgumentException("Child element must be 'AssemblyName'")
-            Dim strAssemblyName As String = XmlIn.ReadString
+            Dim strAssemblyName As String = System.Configuration.ConfigurationSettings.AppSettings("AssemblyName")
+            strClassName = System.Configuration.ConfigurationSettings.AppSettings("ClassName")
 
             If IsFullPath(strAssemblyName) Then
                 strAssemblyPath = strAssemblyName
@@ -121,11 +100,6 @@ Namespace Forms
                 strAssemblyPath = strExePath & strAssemblyName
             End If
 
-            If Not XmlIn.Read() Then Throw New ArgumentException("An element was expected but could not be read in")
-            If XmlIn.Name <> "ClassName" Then Throw New ArgumentException("Child element must be 'ClassName'")
-            strClassName = XmlIn.ReadString
-
-            fs.Close()
         End Sub
 
         ''' \fn Private Shared Sub SplitPathAndFile(ByVal strFullPath As String, ByRef strPath As String, ByRef strFile As String)
@@ -179,6 +153,25 @@ Namespace Forms
 
         End Function
 
+        ''' \brief  Removes the extension of a filename. 
+        '''
+        ''' \author dcofer
+        ''' \date   3/9/2011
+        '''
+        ''' \param  strFile Filename with extension. 
+        '''
+        ''' \return Filename without extension. 
+        Private Shared Function RemoveExtension(ByVal strFile As String) As String
+            Dim aryParts() As String = Split(strFile, ".")
+
+            Dim iCount As Integer = aryParts.GetUpperBound(0)
+            If iCount <= 0 Then
+                Return "AnimatLab"
+            Else
+                Return aryParts(0)
+            End If
+
+        End Function
     End Class
 
 End Namespace

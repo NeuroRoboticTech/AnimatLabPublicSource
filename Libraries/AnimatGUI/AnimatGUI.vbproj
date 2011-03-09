@@ -88,9 +88,30 @@
       <HintPath>..\..\bin\MagicLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="nunit-gui-runner, Version=2.5.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\NUnit\lib\nunit-gui-runner.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.core, Version=2.5.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\NUnit\lib\nunit.core.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.core.interfaces, Version=2.5.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\NUnit\lib\nunit.core.interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\NUnit\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.util, Version=2.5.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\NUnit\lib\nunit.util.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -550,6 +571,7 @@
     <Compile Include="Forms\UnitScaleSettings.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Testing\nUnitApp.vb" />
     <Compile Include="FrameWork\DataDragHelper.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -569,6 +591,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="FrameWork\ScaledVector3.vb" />
+    <Compile Include="Testing\Simulation_Test.vb" />
     <Compile Include="FrameWork\UndoSystem\DiagramChangedEvent.vb">
       <SubType>Code</SubType>
     </Compile>

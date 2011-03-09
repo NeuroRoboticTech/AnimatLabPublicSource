@@ -1043,30 +1043,36 @@ Namespace Framework
 
         Public Shared Sub UpdateConfigFile()
             Try
-                Dim oXmlRead As New AnimatGUI.Interfaces.StdXml
-                'Dim readInfo as
-                oXmlRead.Load(Util.Application.ApplicationDirectory() & "AnimatLab.config")
-
-                oXmlRead.FindElement("AnimatLabConfig")
-                oXmlRead.FindChildElement("")
-
-                Dim strAssemName As String = oXmlRead.GetChildString("AssemblyName")
-                Dim strClassName As String = oXmlRead.GetChildString("ClassName")
-
-                oXmlRead = Nothing
-
-                Dim oXmlWrite As New AnimatGUI.Interfaces.StdXml
-
-                oXmlWrite.AddElement("AnimatLabConfig")
-                oXmlWrite.AddChildElement("AssemblyName", strAssemName)
-                oXmlWrite.AddChildElement("ClassName", strClassName)
-                oXmlWrite.AddChildElement("UpdateFrequency", Util.Application.AutoUpdateInterval.ToString)
+                System.Configuration.ConfigurationManager.AppSettings("UpdateFrequency") = Util.Application.AutoUpdateInterval.ToString
                 Dim dtTime As DateTime = Util.Application.LastAutoUpdateTime
-                oXmlWrite.AddChildElement("UpdateTime", dtTime.Month.ToString() & "/" & dtTime.Day.ToString & "/" & dtTime.Year.ToString)
+                System.Configuration.ConfigurationManager.AppSettings("UpdateFrequency") = dtTime.Month.ToString() & "/" & dtTime.Day.ToString & "/" & dtTime.Year.ToString
+                System.Configuration.ConfigurationManager.AppSettings("DefaultNewFolder") = Util.Application.DefaultNewFolder
 
-                oXmlWrite.AddChildElement("DefaultNewFolder", Util.Application.DefaultNewFolder)
 
-                oXmlWrite.Save(Util.Application.ApplicationDirectory() & "AnimatLab.config")
+                'Dim oXmlRead As New AnimatGUI.Interfaces.StdXml
+                ''Dim readInfo as
+                'oXmlRead.Load(Util.Application.ApplicationDirectory() & "AnimatLab.config")
+
+                'oXmlRead.FindElement("AnimatLabConfig")
+                'oXmlRead.FindChildElement("")
+
+                'Dim strAssemName As String = oXmlRead.GetChildString("AssemblyName")
+                'Dim strClassName As String = oXmlRead.GetChildString("ClassName")
+
+                'oXmlRead = Nothing
+
+                'Dim oXmlWrite As New AnimatGUI.Interfaces.StdXml
+
+                'oXmlWrite.AddElement("AnimatLabConfig")
+                'oXmlWrite.AddChildElement("AssemblyName", strAssemName)
+                'oXmlWrite.AddChildElement("ClassName", strClassName)
+                'oXmlWrite.AddChildElement("UpdateFrequency", Util.Application.AutoUpdateInterval.ToString)
+                'Dim dtTime As DateTime = Util.Application.LastAutoUpdateTime
+                'oXmlWrite.AddChildElement("UpdateTime", dtTime.Month.ToString() & "/" & dtTime.Day.ToString & "/" & dtTime.Year.ToString)
+
+                'oXmlWrite.AddChildElement("DefaultNewFolder", Util.Application.DefaultNewFolder)
+
+                'oXmlWrite.Save(Util.Application.ApplicationDirectory() & "AnimatLab.config")
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

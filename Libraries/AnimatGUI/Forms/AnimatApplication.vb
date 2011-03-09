@@ -1241,13 +1241,21 @@ Namespace Forms
 
 #Region " Initialization "
 
-        Public Overridable Sub CommandLineParams(ByVal strCmd As String, ByVal strParam As String)
+        Public Overridable Sub StartApplication()
 
             Try
-                m_strCommandLineParam = strParam
+                Dim args() As String = System.Environment.GetCommandLineArgs()
+
+                If args.Length > 1 Then
+                    m_strCommandLineParam = args(1)
+                End If
+
+                Me.ShowDialog()
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+
         End Sub
 
         Public Overrides Sub Initialize(Optional ByVal frmParent As AnimatForm = Nothing)
@@ -1350,18 +1358,12 @@ Namespace Forms
 
         Private Sub LoadUserConfig()
             Try
-                Dim oXml As New AnimatGUI.Interfaces.StdXml
-                oXml.Load(Me.ApplicationDirectory() & "AnimatLab.config")
+                m_strDefaultNewFolder = System.Configuration.ConfigurationManager.AppSettings("DefaultNewFolder")
 
-                oXml.FindElement("AnimatLabConfig")
-                oXml.FindChildElement("")
-
-                m_strDefaultNewFolder = oXml.GetChildString("DefaultNewFolder", "")
-
-                m_eAutoUpdateInterval = DirectCast([Enum].Parse(GetType(enumAutoUpdateInterval), oXml.GetChildString("UpdateFrequency", enumAutoUpdateInterval.Daily.ToString()), True), enumAutoUpdateInterval)
+                m_eAutoUpdateInterval = DirectCast([Enum].Parse(GetType(enumAutoUpdateInterval), System.Configuration.ConfigurationManager.AppSettings("UpdateFrequency"), True), enumAutoUpdateInterval)
 
                 Try
-                    Dim strDate As String = oXml.GetChildString("UpdateTime", "1/1/2001") '"27/12/2007 18:45:21" 
+                    Dim strDate As String = System.Configuration.ConfigurationManager.AppSettings("UpdateTime")
                     m_dtLastAutoUpdateTime = Date.Parse(strDate)
                 Catch exDate As System.Exception
                     'If for some reason it fails on the parsing of the update time then set it to some time way in the past.
@@ -3822,7 +3824,9 @@ Namespace Forms
                 If e.Cancel Then Return
 
                 'Deselect all currently selected items so that the property grids do not cause problems when closing.
-                Util.ProjectWorkspace.TreeView.SelectedNodes.Clear()
+                If Not Util.ProjectWorkspace Is Nothing AndAlso Not Util.ProjectWorkspace.TreeView Is Nothing AndAlso Not Util.ProjectWorkspace.TreeView.SelectedNodes Is Nothing Then
+                    Util.ProjectWorkspace.TreeView.SelectedNodes.Clear()
+                End If
 
                 'Shutdown the simulation if it is running. Must shut this down before closing the other stuff below or it throws an exception.
                 Me.SimulationInterface.ShutdownSimulation()
