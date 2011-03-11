@@ -1,6 +1,8 @@
-// LineBase.cpp: implementation of the LineBase class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	LineBase.cpp
+
+\brief	Implements the line base class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -38,26 +40,12 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+/**
+\brief	Default constructor. 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-/*! \brief 
-   Constructs a muscle object..
-   		
-   \param lpParent This is a pointer to the parent of this rigid body. 
-	          If this value is null then it is assumed that this is
-						a root object and no joint is loaded to connect this
-						part to the parent.
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a muscle. 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 LineBase::LineBase()
 {
 	m_bEnabled = TRUE;
@@ -69,16 +57,12 @@ LineBase::LineBase()
 	m_fltPrevLength = 0;
 }
 
-/*! \brief 
-   Destroys the muscle object..
-   		
-	 \return
-	 No return value.
+/**
+\brief	Destructor. 
 
-   \remarks
-   Destroys the muscle object..	 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 LineBase::~LineBase()
 {
 	try
@@ -90,8 +74,46 @@ LineBase::~LineBase()
 	{Std_TraceMsg(0, "Caught Error in desctructor of LineBase\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Gets the length of the line. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	Length of the line. 
+**/
+float LineBase::Length() {return m_fltLength;}
+
+/**
+\brief	Gets the previous length of the line. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	Previous length of the line. 
+**/
+float LineBase::PrevLength() {return m_fltPrevLength;}
+
 BOOL LineBase::AllowMouseManipulation() {return FALSE;}
 
+/**
+\brief	Gets the attachment points. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	Array of Attachment points. 
+**/
+CStdArray<Attachment *> *LineBase::AttachmentPoints() {return &m_aryAttachmentPoints;}
+
+/**
+\brief	Calculates the length of the line. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	The calculated length. 
+**/
 float LineBase::CalculateLength()
 {
 	float fltLength=0;
@@ -149,8 +171,8 @@ void LineBase::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into RigidBody Element
 
-	m_bEnabled = oXml.GetChildBool("Enabled", m_bEnabled);
-	m_bIsVisible = oXml.GetChildBool("IsVisible", m_bIsVisible);
+	Enabled(oXml.GetChildBool("Enabled", m_bEnabled));
+	IsVisible(oXml.GetChildBool("IsVisible", m_bIsVisible));
 
 	m_aryAttachmentPointIDs.Clear();
 	if(oXml.FindChildElement("Attachments", FALSE))
@@ -170,6 +192,7 @@ void LineBase::Load(CStdXml &oXml)
 	if(m_aryAttachmentPointIDs.GetSize() < 2)
 		m_bEnabled = FALSE;
 
+	//Load the colors
 	m_vDiffuse.Load(oXml, "Diffuse", false);
 	m_vAmbient.Load(oXml, "Ambient", false);
 	m_vSpecular.Load(oXml, "Specular", false);

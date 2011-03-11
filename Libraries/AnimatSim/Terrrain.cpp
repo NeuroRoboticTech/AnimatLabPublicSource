@@ -1,6 +1,8 @@
-// Terrain.cpp: implementation of the Terrain class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Terrrain.cpp
+
+\brief	Implements the terrrain class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -32,54 +34,32 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+/**
+\brief	Default constructor. 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+\details The density of this part is defaulted to zero, and it is setup to always be frozen.
 
-/*! \brief 
-   Constructs a Terrain object..
-   		
-   \param lpParent This is a pointer to the parent of this rigid body. 
-	          If this value is null then it is assumed that this is
-						a root object and no joint is loaded to connect this
-						part to the parent.
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a Terrain. 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 Terrain::Terrain()
 {
-	m_fltHeight = 0;
 	m_fltDensity = 0;
 	m_bFreeze = TRUE;
 	m_ptGrid.Set(5, 5, 0);
 }
 
-/*! \brief 
-   Destroys the Terrain object..
-   		
-	 \return
-	 No return value.
+/**
+\brief	Destructor. 
 
-   \remarks
-   Destroys the Terrain object..	 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 Terrain::~Terrain()
 {
 
 }
 
-float Terrain::Height()
-{return m_fltHeight;}
-
-void Terrain::Height(float fltVal)
-{m_fltHeight = fltVal;}
 
 void Terrain::Grid(CStdIPoint ptPoint)
 {
@@ -92,17 +72,9 @@ BOOL Terrain::AllowMouseManipulation() {return FALSE;}
 
 void Terrain::Load(CStdXml &oXml)
 {
-	AnimatBase::Load(oXml);
+	RigidBody::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
-
-	m_strTexture = oXml.GetChildString("Texture", "");
-	m_fltHeight = oXml.GetChildFloat("Height");
-
-	m_vDiffuse.Load(oXml, "Diffuse", false);
-	m_vAmbient.Load(oXml, "Ambient", false);
-	m_vSpecular.Load(oXml, "Specular", false);
-	m_fltShininess = oXml.GetChildFloat("Shininess", m_fltShininess);
 
 	m_strTerrainFile = oXml.GetChildString("TerrainFile", "");
 	if(Std_IsBlank(m_strTerrainFile))
@@ -114,28 +86,15 @@ void Terrain::Load(CStdXml &oXml)
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
 
-	m_oLocalPosition.Set(m_oLocalPosition.x, m_fltHeight, m_oLocalPosition.z);
-	m_oAbsPosition.Set(m_oAbsPosition.x, m_fltHeight, m_oAbsPosition.z);
+	//Reset the rotation to 0
 	m_oRotation.Set(0, 0, 0);
+
+	//Density is always zero
+	m_fltDensity = 0;
+
+	//This part type is always frozen
+	m_bFreeze = TRUE;
 }
-
-
-/*! \fn float Terrain::Height()
-   \brief
-   Height property.
-      
-   \remarks
-	 The height of the Terrain on the Y axis.
-	 This is the accessor function for the m_fltHeight element.
-*/
-/*! \fn void Terrain::Height(float fltVal)
-   \brief
-   Height property.
-      
-   \remarks
-	 The height of the Terrain on the Y axis.
-	 This is the mutator function for the m_fltHeight element.
-*/
 
 
 		}		//Bodies

@@ -1,13 +1,10 @@
-// Terrain.h: interface for the Terrain class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatSim\Terrain.h
 
-#if !defined(AFX_ALTERRAIN_H__8AABAE57_5434_4AEE_9C0B_B494E10A7AAC__INCLUDED_)
-#define AFX_ALTERRAIN_H__8AABAE57_5434_4AEE_9C0B_B494E10A7AAC__INCLUDED_
+\brief	Declares the terrain class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
@@ -15,46 +12,25 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
-			/*! \brief 
-				A ground Terrain type of rigid body.
+			/**
+			\brief	The Terrain base class. 
 
-				\remarks
-				This is a flat Terrain that can be used to define the ground
-				or the surface of the water. You can only have ONE of each.
-				If you attempt to define more than one of these types of objects
-				then it will cause an exception. However, you do not have to 
-				define one of these. There are other types that you can use
-				to define the ground, and if you are not simulating anything 
-				underwater, or are simulating deep water, then you do not need
-				to simulate the surface of the water.
-				 
-				All rigid bodies in the system will have the force of gravity actin
-				on it to push towards the ground Terrain. If you create objects that are
-				below the ground Terrain then the physics engine will see this as a
-				collision with the ground and attempt to push it back up above the
-				surface.
-
-				\sa
-				Body, Joint, CAlBox, Terrain, CAlCylinder, 
-				CAlCone, CAlMuscle, CAlAttachment, CAlSphere                                
-				 
-				\ingroup AnimatSim
-			*/
-
+			\details This is a mesh terrain object that defines the ground surface. You can have multiple
+			terrains defined within a simulation. Terrains can be translated around, but they cannot be 
+			rotated. 
+			
+			\author	dcofer
+			\date	3/10/2011
+			**/
 			class ANIMAT_PORT Terrain : public RigidBody 
 			{
 			protected:
-				///The height of the Terrain on the Y axis.
-				float m_fltHeight;
 				string m_strTerrainFile;
 				CStdIPoint m_ptGrid;
 
 			public:
 				Terrain();
 				virtual ~Terrain();
-
-				float Height();
-				void Height(float fltVal);
 
 				CStdIPoint Grid() {return m_ptGrid;};
 				void Grid(CStdIPoint ptPoint);
@@ -67,5 +43,3 @@ namespace AnimatSim
 		}		//Bodies
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALTERRAIN_H__8AABAE57_5434_4AEE_9C0B_B494E10A7AAC__INCLUDED_)

@@ -1,13 +1,10 @@
-// Mouth.h: interface for the Mouth class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatSim\Mouth.h
 
-#if !defined(AFX_ALMOUTH_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_)
-#define AFX_ALMOUTH_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_
+\brief	Declares the mouth class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
@@ -15,40 +12,56 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+			/**
+			\brief	The Mouth part type.
 
-			/*! \brief 
-				A Mouth type of joint.
-			   
-				\remarks
-				This type of joint is constrained so that it can only
-				rotate about one axis. You can define which axis it rotates
-				around in the configuration file using the normalized 
-				RotationAxis vector element. You can also specify the
-				rotational constraints for this joint. This prevents it
-				from rotating further than the constrained value.
-
-				Also, this joint is motorized. So you can specify a desired
-				velocity of motion at a given time step using the CNlInjectionMgr
-				and the physics engine will automatically apply the forces
-				necessary to move the joint at the desired velocity.
-
-				\sa
-				Joint, Mouth, CAlStaticJoint
-				 
-				\ingroup AnimatSim
-			*/
-
+			\details When the mouth part is within a user specified proximity to a food source it can 
+			be stimulated to eat from that food source. It then takes food energy from the source and 
+			transfers it to the stomach of the organism. Only one mouth can exist for an organism.
+			
+			\author	dcofer
+			\date	3/10/2011
+			**/
 			class ANIMAT_PORT Mouth : public Sensor   
 			{
 			protected:
+				/// The pointer to stomach for this organism
 				Stomach *m_lpStomach;
+
+				/// The eating rate. This is determined by neural input to this object. A neuron is connected to
+				/// this item through an adapter. The input value that comes in from the adapter via AddExternalNodeInput
+				/// controls the eating rate. 
 				float m_fltEatingRate;
-				float m_fltBiteSize;
+
+				/// Any food source that is further away than this minimum radius will not be available for eating.
 				float m_fltMinFoodRadius;
 
 			public:
 				Mouth();
 				virtual ~Mouth();
+
+				virtual float EatingRate();
+
+				/**
+				\brief	Gets the minium radius where food can be eaten. 
+
+				\author	dcofer
+				\date	3/4/2011
+
+				\return	the radius. 
+				**/
+				virtual float MinFoodRadius();
+
+				/**
+				\brief	Sets the minimum radius where food can be eaten. 
+
+				\author	dcofer
+				\date	3/4/2011
+
+				\param	fltVal		The new value. 
+				\param	bUseScaling	true to use unit scaling on entered value. 
+				**/
+				virtual void MinFoodRadius(float fltVal, BOOL bUseScaling = TRUE);
 
 				//Node Overrides
 				virtual void AddExternalNodeInput(float fltInput);
@@ -60,5 +73,3 @@ namespace AnimatSim
 		}		//Joints
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALMOUTH_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_)

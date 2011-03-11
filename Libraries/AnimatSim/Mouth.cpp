@@ -1,6 +1,8 @@
-// Mouth.cpp: implementation of the Mouth class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Mouth.cpp
+
+\brief	Implements the mouth class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -34,45 +36,27 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+/**
+\brief	Default constructor. 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-/*! \brief 
-   Constructs a Mouth.
-   		
-   \param lpParent This is a pointer to the parent rigid body of this joint. 
-   \param lpChild This is a pointer to the child rigid body of this joint. 
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a Mouth joint. 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 Mouth::Mouth()
 {
 	m_strID = "MOUTH";
 	m_strName = "Mouth";
 	m_lpStomach = NULL;
 	m_fltEatingRate = 0;
-	m_fltBiteSize = 2;
 	m_fltMinFoodRadius = 10;
 }
 
+/**
+\brief	Destructor. 
 
-/*! \brief 
-   Destroys the Mouth joint object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the Mouth joint object..	 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 Mouth::~Mouth()
 {
 	try
@@ -83,6 +67,40 @@ Mouth::~Mouth()
 	{Std_TraceMsg(0, "Caught Error in desctructor of Mouth\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Gets the eating rate. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	Eating rate. 
+**/
+float Mouth::EatingRate() {return m_fltEatingRate;}
+
+float Mouth::MinFoodRadius() {return m_fltRadius;}
+
+void Mouth::MinFoodRadius(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Mouth.MinFoodRadius", TRUE);
+	if(bUseScaling)
+		m_fltRadius = fltVal * m_lpSim->InverseDistanceUnits();
+	else
+		m_fltRadius = fltVal;
+}
+
+/**
+\brief	Step the simulation.
+
+\details At each time step the mouth first tries to find the food source that is closes to the mouth
+and is within its radius for being able to eat from that source. If it finds a source then it determines
+how big of a bite it can take of the food in this step and then calculates the energy it will get from that
+bite of food. It then reduces the food source quantity by the bite amount and increases the stomach energy
+content by the new amount.
+
+
+\author	dcofer
+\date	3/10/2011
+**/
 void Mouth::StepSimulation()
 {
 	if(m_lpStomach && m_fltEatingRate > 0)
@@ -147,10 +165,7 @@ void Mouth::Load(CStdXml &oXml)
 	m_strID = "MOUTH";
 	m_strName = "Mouth";
 
-	m_fltMinFoodRadius = oXml.GetChildFloat("MinimumFoodRadius", m_fltMinFoodRadius);
-	m_fltMinFoodRadius *= m_lpSim->InverseDistanceUnits();
-
-	Std_IsAboveMin((float) 0, m_fltMinFoodRadius, TRUE, "MinFoodRadius");
+	MinFoodRadius(oXml.GetChildFloat("MinimumFoodRadius", m_fltMinFoodRadius));
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
 }

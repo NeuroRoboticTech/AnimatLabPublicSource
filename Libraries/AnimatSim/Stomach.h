@@ -1,13 +1,9 @@
-// Stomach.h: interface for the Stomach class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatSim\Stomach.h
 
-#if !defined(AFX_ALSTOMACH_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_)
-#define AFX_ALSTOMACH_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_
-
-#if _MSC_VER > 1000
+\brief	Declares the stomach class. 
+**/
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
@@ -16,58 +12,64 @@ namespace AnimatSim
 		namespace Bodies
 		{
 
-			/*! \brief 
-				A Stomach type of joint.
-			   
-				\remarks
-				This type of joint is constrained so that it can only
-				rotate about one axis. You can define which axis it rotates
-				around in the configuration file using the normalized 
-				RotationAxis vector element. You can also specify the
-				rotational constraints for this joint. This prevents it
-				from rotating further than the constrained value.
+			/**
+			\brief	The Stomach object is responsible for holding food energy.
 
-				Also, this joint is motorized. So you can specify a desired
-				velocity of motion at a given time step using the CNlInjectionMgr
-				and the physics engine will automatically apply the forces
-				necessary to move the joint at the desired velocity.
-
-				\sa
-				Joint, Stomach, CAlStaticJoint
-				 
-				\ingroup AnimatSim
-			*/
-
+			\details The Mouth takes food from a food source and places its energy content (calories)
+			into the stomach. At each time step the energy content of the stomach is decremented by 
+			a user specified amount. If the energy content reaches zero then the organism is killed.
+			There can only be <b>ONE</b>
+			
+			\author	dcofer
+			\date	3/10/2011
+			**/
 			class ANIMAT_PORT Stomach : public RigidBody   
 			{
 			protected:
+				/// The maximum energy level that the stomach can hold. Even if the mouth tries to put more
+				/// energy into it it will not be allowed to exceed this level. 
 				float m_fltMaxEnergyLevel;
+
+				/// The current energy level
 				float m_fltEnergyLevel;
+
+				/// The current consumption rate. This is calculated by adding m_fltAdapterConsumptionRate and m_fltBaseConsumptionRate
 				float m_fltConsumptionRate;
+
+				/// The adapter consumption rate. This is set by any adapters that are connected to the stomach. This allows
+				/// neural systems to change the rate of consumption.
 				float m_fltAdapterConsumptionRate;
+
+				/// The base consumption rate. This is the standard, constant rate of consumption.
 				float m_fltBaseConsumptionRate;
+
+				/// The consumption for the current simulation step. This is the consumption rate times the time step size.
 				float m_fltConsumptionForStep;
+
+				/// If this is true then if the energy level reaches zero then the organism is killed.
 				BOOL m_bKillOrganism;
+
+				/// Set to true if the organism is killed.
 				BOOL m_bKilled;
 
 			public:
 				Stomach();
 				virtual ~Stomach();
 
-				float EnergyLevel() {return m_fltEnergyLevel;};
-				void EnergyLevel(float fltVal);
+				virtual float EnergyLevel();
+				virtual void EnergyLevel(float fltVal);
 
-				float ConsumptionRate() {return m_fltConsumptionRate;};
-				void ConsumptionRate(float fltVal) {m_fltConsumptionRate = fltVal;};
+				virtual float ConsumptionRate();
+				virtual void ConsumptionRate(float fltVal);
 
-				float BaseConsumptionRate() {return m_fltBaseConsumptionRate;};
-				void BaseConsumptionRate(float fltVal) {m_fltBaseConsumptionRate = fltVal;};
+				virtual float BaseConsumptionRate();
+				virtual void BaseConsumptionRate(float fltVal);
 
-				float MaxEnergyLevel() {return m_fltMaxEnergyLevel;};
-				void MaxEnergyLevel(float fltVal) {m_fltMaxEnergyLevel = fltVal;};
+				virtual float MaxEnergyLevel();
+				virtual void MaxEnergyLevel(float fltVal);
 
-				BOOL KillOrganism() {return m_bKillOrganism;};
-				void KillOrganism(BOOL bVal) {m_bKillOrganism = bVal;};
+				virtual BOOL KillOrganism();
+				virtual void KillOrganism(BOOL bVal);
 
 				virtual void CreateParts();
 
@@ -81,5 +83,3 @@ namespace AnimatSim
 		}		//Joints
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALSTOMACH_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_)

@@ -1,6 +1,8 @@
-// Sensor.cpp: implementation of the Sensor class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Sensor.cpp
+
+\brief	Implements the sensor class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -32,11 +34,12 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+/**
+\brief	Default constructor. 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
+\author	dcofer
+\date	3/10/2011
+**/
 Sensor::Sensor()
 {
 	m_fltDensity = 0;
@@ -45,9 +48,28 @@ Sensor::Sensor()
 	m_fltRadius = 1;
 }
 
+/**
+\brief	Destructor. 
+
+\author	dcofer
+\date	3/10/2011
+**/
 Sensor::~Sensor()
 {
 
+}
+
+float Sensor::Radius() {return m_fltRadius;}
+
+void Sensor::Radius(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Sensor.Radius");
+	if(bUseScaling)
+		m_fltRadius = fltVal * m_lpSim->InverseDistanceUnits();
+	else
+		m_fltRadius = fltVal;
+
+	Resize();
 }
 
 // There are no parts or joints to create for muscle attachment points.
@@ -59,29 +81,14 @@ void Sensor::CreateJoints()
 
 void Sensor::Load(CStdXml &oXml)
 {
-	if(!m_lpParent)
-		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
+	RigidBody::Load(oXml);
 
-	AnimatBase::Load(oXml);
-
-	//We do NOT want to call the rigid body load here. The reason is that
-	//a sensor is a leaf node. It can not have children. So the load is 
-	//a lot simpler.
 	oXml.IntoElem();  //Into RigidBody Element
-
-	Std_LoadPoint(oXml, "LocalPosition", m_oLocalPosition);
-
-	m_fltRadius = oXml.GetChildFloat("Radius", m_fltRadius);
-	Std_IsAboveMin((float) 0,m_fltRadius, TRUE, "Radius");
-	
-	m_bIsVisible = oXml.GetChildBool("IsVisible", m_bIsVisible);
-
-	m_vDiffuse.Load(oXml, "Diffuse", false);
-	m_vAmbient.Load(oXml, "Ambient", false);
-	m_vSpecular.Load(oXml, "Specular", false);
-	m_fltShininess = oXml.GetChildFloat("Shininess", m_fltShininess);
-
+	Radius(oXml.GetChildFloat("Radius", m_fltRadius));
 	oXml.OutOfElem(); //OutOf RigidBody Element
+
+	//Reset the rotation to 0 for sensors
+	m_oRotation.Set(0, 0, 0);
 }
 
 		}		//Bodies

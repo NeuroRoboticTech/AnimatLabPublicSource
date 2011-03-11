@@ -1,6 +1,8 @@
-// CAlCylinder.cpp: implementation of the CAlCylinder class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Cylinder.cpp
+
+\brief	Implements the cylinder class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -31,48 +33,54 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+/**
+\brief	Default constructor. 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-/*! \brief 
-   Constructs a cylinder object..
-   		
-   \param lpParent This is a pointer to the parent of this rigid body. 
-	          If this value is null then it is assumed that this is
-						a root object and no joint is loaded to connect this
-						part to the parent.
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a cylinder. 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 Cylinder::Cylinder()
 {
 	m_fltRadius = 1;
 	m_fltHeight = 1;
-	m_fltCollisionRadius = 1;
-	m_fltCollisionHeight = 1;
 }
 
+/**
+\brief	Destructor. 
 
-/*! \brief 
-   Destroys the cylinder object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the cylinder object..	 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 Cylinder::~Cylinder()
 {
 
+}
+
+float Cylinder::Radius() {return m_fltRadius;}
+
+void Cylinder::Radius(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Cylinder.Radius");
+	if(bUseScaling)
+		m_fltRadius = fltVal * m_lpSim->InverseDistanceUnits();
+	else
+		m_fltRadius = fltVal;
+
+	Resize();
+}
+
+
+float Cylinder::Height() {return m_fltHeight;}
+
+void Cylinder::Height(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Cylinder.Height");
+	if(bUseScaling)
+		m_fltHeight = fltVal * m_lpSim->InverseDistanceUnits();
+	else
+		m_fltHeight = fltVal;
+
+	Resize();
 }
 
 void Cylinder::Load(CStdXml &oXml)
@@ -80,18 +88,9 @@ void Cylinder::Load(CStdXml &oXml)
 	RigidBody::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
-	m_fltRadius = oXml.GetChildFloat("Radius");
-	m_fltHeight = oXml.GetChildFloat("Height");
-
-	m_fltCollisionRadius = oXml.GetChildFloat("CollisionRadius");
-	m_fltCollisionHeight = oXml.GetChildFloat("CollisionHeight");
+	Radius(oXml.GetChildFloat("Radius", m_fltRadius));
+	Height(oXml.GetChildFloat("Height"), m_fltHeight);
 	oXml.OutOfElem(); //OutOf RigidBody Element
-
-	Std_IsAboveMin((float) 0,m_fltRadius, TRUE, "Radius");
-	Std_IsAboveMin((float) 0, m_fltHeight, TRUE, "Height");
-	
-	Std_IsAboveMin((float) 0, m_fltCollisionRadius, TRUE, "CollisionRadius");
-	Std_IsAboveMin((float) 0, m_fltCollisionHeight, TRUE, "CollisionHeight");
 }
 
 

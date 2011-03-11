@@ -35,29 +35,43 @@ namespace AnimatSim
 				///Tension of the muscle in the last time slice.
 				float m_fltPrevTension;
 
+				/**
+				\brief	Calculates the tension. 
+				
+				\author	dcofer
+				\date	3/10/2011
+				**/
 				virtual void CalculateTension() = 0;
 
 			public:
 				MuscleBase();
 				virtual ~MuscleBase();
 
-				float Tension() {return m_fltTension;};
+				float Tension();
+				void Tension(float fltVal);
 
-				void Tension(float fltVal)
-				{
-					if(fltVal < 0)
-						THROW_PARAM_ERROR(Al_Err_lForceLessThanZero, Al_Err_strForceLessThanZero, "MuscleID", m_strName);
+				float MaxTension();
+				void MaxTension(float fltVal);
 
-					m_fltTension = fltVal;
-				};
+				float Vm();
+				float Tdot();
+				float PrevTension();
 
-				float MaxTension() {return m_fltMaxTension;};
-				float Vm() {return m_fltVm;};
-				float Tdot() {return m_fltTdot;};
-				float PrevTension() {return m_fltPrevTension;};
-
+				virtual BOOL Enabled();
 				virtual void Enabled(BOOL bVal);
 
+				/**
+				\brief	Calculates the activation needed for a given tension value. 
+				
+				\author	dcofer
+				\date	3/10/2011
+				
+				\param	fltLength		Length of the muscle. 
+				\param	fltVelocity		The velocity of change in muscle length. 
+				\param	fltT			The tension. 
+				\param [in,out]	fltVm	The required voltage activation level. 
+				\param [in,out]	fltA	The required activation level. 
+				**/
 				virtual void CalculateInverseDynamics(float fltLength, float fltVelocity, float fltT, float &fltVm, float &fltA) = 0;
 				virtual void AddExternalNodeInput(float fltInput);
 				virtual void Load(CStdXml &oXml);

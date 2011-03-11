@@ -1,6 +1,8 @@
-// OdorSensor.cpp: implementation of the OdorSensor class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	OdorSensor.cpp
+
+\brief	Implements the odor sensor class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -33,42 +35,24 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+/**
+\brief	Default constructor. 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-/*! \brief 
-   Constructs a muscle attachment object..
-   		
-   \param lpParent This is a pointer to the parent of this rigid body. 
-	          If this value is null then it is assumed that this is
-						a root object and no joint is loaded to connect this
-						part to the parent.
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a muscle attachment. 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 OdorSensor::OdorSensor()
 {
 	m_fltOdorValue = 0;
 	m_lpOdorType = NULL;
 }
 
-/*! \brief 
-   Destroys the muscle attachment object..
-   		
-	 \return
-	 No return value.
+/**
+\brief	Destructor. 
 
-   \remarks
-   Destroys the muscle attachment object..	 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 OdorSensor::~OdorSensor()
 {
 	m_lpOdorType = NULL;

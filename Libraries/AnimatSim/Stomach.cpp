@@ -1,6 +1,8 @@
-// Stomach.cpp: implementation of the Stomach class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Stomach.cpp
+
+\brief	Implements the stomach class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -32,24 +34,12 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+/**
+\brief	Default constructor. 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-/*! \brief 
-   Constructs a Stomach.
-   		
-   \param lpParent This is a pointer to the parent rigid body of this joint. 
-   \param lpChild This is a pointer to the child rigid body of this joint. 
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a Stomach joint. 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 Stomach::Stomach()
 {
 	m_strID = "STOMACH";
@@ -63,17 +53,12 @@ Stomach::Stomach()
 	m_fltConsumptionForStep = 0;
 }
 
+/**
+\brief	Destructor. 
 
-/*! \brief 
-   Destroys the Stomach joint object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the Stomach joint object..	 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 Stomach::~Stomach()
 {
 	try
@@ -83,13 +68,133 @@ Stomach::~Stomach()
 	{Std_TraceMsg(0, "Caught Error in desctructor of Stomach\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Gets the energy level. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	Current energy level. 
+**/
+float Stomach::EnergyLevel() {return m_fltEnergyLevel;}
+
+/**
+\brief	Sets the Energy level. 
+
+\details If the entered value is greater than m_fltMaxEnergyLevel then
+the value is defaulted to m_fltMaxEnergyLevel.
+
+\author	dcofer
+\date	3/10/2011
+
+\param	fltVal	The new value. 
+\exception Energy level cannot be less than zero.
+**/
 void Stomach::EnergyLevel(float fltVal) 
 {
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "EnergyLevel", TRUE);
+
 	if(fltVal > m_fltMaxEnergyLevel)
 		m_fltEnergyLevel = m_fltMaxEnergyLevel;
 	else
 		m_fltEnergyLevel = fltVal;
 }
+
+/**
+\brief	Gets the current consumption rate. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	Consumption rate. 
+**/
+float Stomach::ConsumptionRate() {return m_fltConsumptionRate;}
+
+/**
+\brief	Sets the consumption rate. 
+
+\author	dcofer
+\date	3/10/2011
+
+\param	fltVal	The new value. 
+\exception Consumption rate cannot be less than zero.
+**/
+void Stomach::ConsumptionRate(float fltVal) 
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "ConsumptionRate", TRUE);
+	m_fltConsumptionRate = fltVal;
+}
+
+/**
+\brief	Gets the base consumption rate. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	base consumption rate. 
+**/
+float Stomach::BaseConsumptionRate() {return m_fltBaseConsumptionRate;}
+
+/**
+\brief	Sets the Base consumption rate. 
+
+\author	dcofer
+\date	3/10/2011
+
+\param	fltVal	The flt value. 
+\exception Base Consumption rate cannot be less than zero.
+**/
+void Stomach::BaseConsumptionRate(float fltVal) 
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "BaseConsumptionRate", TRUE);
+	m_fltBaseConsumptionRate = fltVal;
+}
+
+/**
+\brief	Gets the maximum energy level. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	Max energy level. 
+**/
+float Stomach::MaxEnergyLevel() {return m_fltMaxEnergyLevel;}
+
+/**
+\brief	Sets the Maximum energy level. 
+
+\author	dcofer
+\date	3/10/2011
+
+\param	fltVal	The flt value. 
+\exception MaxEnergyLevel cannot be less than or equal to zero.
+**/
+void Stomach::MaxEnergyLevel(float fltVal) 
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "MaxEnergyLevel");
+	m_fltMaxEnergyLevel = fltVal;
+}
+
+/**
+\brief	Gets whether to kill the organism if energy level reaches zero. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	true if it should be killed when energy reaches zero. 
+**/
+BOOL Stomach::KillOrganism() {return m_bKillOrganism;}
+
+/**
+\brief	Sets whether or not to kill the organism when the energy level reaches zero. 
+
+\author	dcofer
+\date	3/10/2011
+
+\param	bVal	true to value. 
+**/
+void Stomach::KillOrganism(BOOL bVal) {m_bKillOrganism = bVal;}
+
 
 // There are no parts or joints to create for muscle attachment points.
 void Stomach::CreateParts()
@@ -161,13 +266,10 @@ void Stomach::Load(CStdXml &oXml)
 	Name("Stomach");
 	Type(oXml.GetChildString("Type", m_strType));
 
-	m_fltMaxEnergyLevel = oXml.GetChildFloat("MaxEnergyLevel", m_fltMaxEnergyLevel);
-	m_fltEnergyLevel = oXml.GetChildFloat("EnergyLevel", m_fltEnergyLevel);
-	m_fltBaseConsumptionRate = oXml.GetChildFloat("BaseConsumptionRate", m_fltBaseConsumptionRate);
-	m_bKillOrganism = oXml.GetChildBool("KillOrganism", TRUE);
-
-	Std_IsAboveMin((float) 0, m_fltEnergyLevel, TRUE, "EnergyLevel");
-	Std_IsAboveMin((float) 0, m_fltBaseConsumptionRate, TRUE, "BaseConsumptionRate");
+	MaxEnergyLevel(oXml.GetChildFloat("MaxEnergyLevel", m_fltMaxEnergyLevel));
+	EnergyLevel(oXml.GetChildFloat("EnergyLevel", m_fltEnergyLevel));
+	BaseConsumptionRate(oXml.GetChildFloat("BaseConsumptionRate", m_fltBaseConsumptionRate));
+	KillOrganism(oXml.GetChildBool("KillOrganism", TRUE));
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
 

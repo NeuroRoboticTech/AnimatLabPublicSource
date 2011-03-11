@@ -1,6 +1,8 @@
-// LineBase.h: interface for the LineBase class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	LineBase.h
+
+\brief	Declares the line base class. 
+**/
 
 #pragma once
 
@@ -10,6 +12,16 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+			/**
+			\brief	Base class for Line body part types.
+
+			\details This is the base class for all body part types that create lines to display in the simulation.
+			Examples of this type of object are muscles and springs. Attachment points are specified by the user and 
+			the muscle is drawn between these points.
+			
+			\author	dcofer
+			\date	3/10/2011
+			**/
 			class ANIMAT_PORT LineBase : public RigidBody  
 			{
 			protected:
@@ -29,12 +41,12 @@ namespace AnimatSim
 				LineBase();
 				virtual ~LineBase();
 
-				virtual float Length() {return m_fltLength;};
-				virtual float PrevLength() {return m_fltPrevLength;};
+				virtual float Length();
+				virtual float PrevLength();
 
 				virtual BOOL AllowMouseManipulation();
 
-				CStdArray<Attachment *> *AttachmentPoints() {return &m_aryAttachmentPoints;};
+				CStdArray<Attachment *> *AttachmentPoints();
 				virtual float CalculateLength();
 
 				virtual void CreateParts();

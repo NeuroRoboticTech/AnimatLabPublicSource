@@ -1,13 +1,10 @@
-// Sphere.h: interface for the Sphere class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Sphere.h
 
-#if !defined(AFX_ALSPHERE_H__B6B13C0B_D733_44AF_917D_372FE21A4A2D__INCLUDED_)
-#define AFX_ALSPHERE_H__B6B13C0B_D733_44AF_917D_372FE21A4A2D__INCLUDED_
+\brief	Declares the sphere class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
@@ -15,29 +12,45 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
-			/*! \brief 
-				A Sphere type of rigid body.
+			/**
+			\brief	Sphere. 
 
-				\remarks
-				This is a Sphere type of rigid body. You can specify the dimensions of 
-				the radius and height for both the collision model and for the graphics model.
-
-				\sa
-				Body, Joint, CAlBox, CAlPlane, CAlSphere, 
-				CAlCone, CAlMuscle, CAlAttachment, CAlSphere                                
-				 
-				\ingroup AnimatSim
-			*/
-
+			\details This is a Sphere type of rigid body. You can specify the dimensions of 
+				the radius for the model.
+			
+			\author	dcofer
+			\date	3/10/2011
+			**/
 			class ANIMAT_PORT Sphere : public RigidBody
 			{
 			protected:
+				/// The radius of the sphere
 				float m_fltRadius;
-				float m_fltCollisionRadius;
 
 			public:
 				Sphere();
 				virtual ~Sphere();
+				
+				/**
+				\brief	Gets the radius. 
+
+				\author	dcofer
+				\date	3/4/2011
+
+				\return	the radius. 
+				**/
+				virtual float Radius();
+
+				/**
+				\brief	Sets the radius. 
+
+				\author	dcofer
+				\date	3/4/2011
+
+				\param	fltVal		The new value. 
+				\param	bUseScaling	true to use unit scaling on entered value. 
+				**/
+				virtual void Radius(float fltVal, BOOL bUseScaling = TRUE);
 
 				virtual void Load(CStdXml &oXml);
 			};
@@ -46,4 +59,3 @@ namespace AnimatSim
 	}			// Environment
 }				//AnimatSim
 
-#endif // !defined(AFX_ALSPHERE_H__B6B13C0B_D733_44AF_917D_372FE21A4A2D__INCLUDED_)

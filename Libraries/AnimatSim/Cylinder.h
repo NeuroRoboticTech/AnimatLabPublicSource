@@ -1,13 +1,10 @@
-// Cylinder.h: interface for the Cylinder class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Cylinder.h
 
-#if !defined(AFX_ALCYLINDER_H__B6B13C0B_D733_44AF_917D_372FE21A4A2D__INCLUDED_)
-#define AFX_ALCYLINDER_H__B6B13C0B_D733_44AF_917D_372FE21A4A2D__INCLUDED_
+\brief	Declares the cylinder class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
@@ -15,32 +12,68 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
-			/*! \brief 
-				A cylinder type of rigid body.
+			/**
+			\brief	the Cylinder base class. 
+			
+			\details This is a cylinder type of rigid body. You can specify the dimensions of 
+		     the radius and height model.
 
-				\remarks
-				This is a cylinder type of rigid body. You can specify the dimensions of 
-				the radius and height for both the collision model and for the graphics model.
-
-				\sa
-				Body, Joint, CAlBox, CAlPlane, CAlCylinder, 
-				CAlCone, CAlMuscle, CAlAttachment, CAlSphere                                
-				 
-				\ingroup AnimatSim
-			*/
-
+			\author	dcofer
+			\date	3/10/2011
+			**/
 			class ANIMAT_PORT Cylinder : public RigidBody
 			{
 			protected:
+				/// The radius of the cylinder
 				float m_fltRadius;
+				/// The height of the cylinder
 				float m_fltHeight;
-
-				float m_fltCollisionRadius;
-				float m_fltCollisionHeight;
 
 			public:
 				Cylinder();
 				virtual ~Cylinder();
+
+				/**
+				\brief	Gets the radius. 
+
+				\author	dcofer
+				\date	3/4/2011
+
+				\return	the radius. 
+				**/
+				virtual float Radius();
+
+				/**
+				\brief	Sets the radius. 
+
+				\author	dcofer
+				\date	3/4/2011
+
+				\param	fltVal		The new value. 
+				\param	bUseScaling	true to use unit scaling on entered value. 
+				**/
+				virtual void Radius(float fltVal, BOOL bUseScaling = TRUE);
+
+				/**
+				\brief	Gets the height. 
+
+				\author	dcofer
+				\date	3/4/2011
+
+				\return	The height. 
+				**/
+				virtual float Height();
+
+				/**
+				\brief	Sets the Height. 
+
+				\author	dcofer
+				\date	3/4/2011
+
+				\param	fltVal		The new value. 
+				\param	bUseScaling	true to use unit scaling on entered value. 
+				**/
+				virtual void Height(float fltVal, BOOL bUseScaling = TRUE);
 
 				virtual void Load(CStdXml &oXml);
 			};
@@ -48,5 +81,3 @@ namespace AnimatSim
 		}		//Bodies
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALCYLINDER_H__B6B13C0B_D733_44AF_917D_372FE21A4A2D__INCLUDED_)

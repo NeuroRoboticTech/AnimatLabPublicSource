@@ -1,6 +1,8 @@
-// Spring.cpp: implementation of the Spring class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Spring.cpp
+
+\brief	Implements the spring class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -33,24 +35,12 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+/**
+\brief	Default constructor. 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-/*! \brief 
-   Constructs a Spring joint.
-   		
-   \param lpParent This is a pointer to the parent rigid body of this joint. 
-   \param lpChild This is a pointer to the child rigid body of this joint. 
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a Spring joint. 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 Spring::Spring()
 {
 	m_bInitEnabled = FALSE;
@@ -64,17 +54,12 @@ Spring::Spring()
 	m_fltEnergy = 0;
 }
 
+/**
+\brief	Destructor. 
 
-/*! \brief 
-   Destroys the Spring joint object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the Spring joint object..	 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 Spring::~Spring()
 {
 	try
@@ -86,6 +71,82 @@ Spring::~Spring()
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of Spring\r\n", "", -1, FALSE, TRUE);}
 }
+
+/**
+\brief	Tells whether the spring is enabled at startup of the simulation. 
+
+\author	dcofer
+\date	3/11/2011
+
+\return	true if it enabled at startup, false otherwise. 
+**/
+BOOL Spring::InitEnabled() {return m_bInitEnabled;}
+
+float Spring::NaturalLength() {return m_fltNaturalLength;}
+
+void Spring::NaturalLength(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Spring.NaturalLength");
+
+	if(bUseScaling)
+		m_fltNaturalLength = fltVal * m_lpSim->InverseDistanceUnits();
+	else
+		m_fltNaturalLength = fltVal;
+}
+
+float Spring::Stiffness() {return m_fltStiffness;}
+
+void Spring::Stiffness(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Spring.Stiffness");
+
+	if(bUseScaling)
+		m_fltStiffness = fltVal * m_lpSim->InverseMassUnits();
+	else
+		m_fltStiffness = fltVal;
+}
+
+float Spring::Damping() {return m_fltDamping;}
+
+void Spring::Damping(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Spring.Damping", TRUE);
+
+	if(bUseScaling)
+		m_fltDamping = fltVal/m_lpSim->DensityMassUnits();
+	else
+		m_fltDamping = fltVal;
+}
+
+/**
+\brief	Gets the curent displacement away from the natural length of the spring. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	displacement of the spring. 
+**/
+float Spring::Displacement() {return m_fltDisplacement;}
+
+/**
+\brief	Gets the current tension of the spring. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	Tension of the spring. 
+**/
+float Spring::Tension() {return m_fltTension;}
+
+/**
+\brief	Gets the current energy stored in the spring. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	Energy in the spring. 
+**/
+float Spring::Energy() {return m_fltEnergy;}
 
 // There are no parts or joints to create for muscle attachment points.
 void Spring::CreateParts()
@@ -118,17 +179,9 @@ void Spring::Load(CStdXml &oXml)
 	if(m_aryAttachmentPointIDs.GetSize() < 2)
 		m_bEnabled = FALSE;
 
-	m_fltNaturalLength = oXml.GetChildFloat("NaturalLength", m_fltNaturalLength);
-	m_fltStiffness = oXml.GetChildFloat("Stiffness", m_fltStiffness);
-	m_fltDamping = oXml.GetChildFloat("Damping", m_fltDamping);
-	
-	m_fltNaturalLength *= m_lpSim->InverseDistanceUnits();
-	m_fltStiffness *= m_lpSim->InverseMassUnits();
-	m_fltDamping = m_fltDamping/m_lpSim->DensityMassUnits();
-
-	Std_IsAboveMin((float) 0, m_fltNaturalLength, TRUE, "NaturalLength");
-	Std_IsAboveMin((float) 0, m_fltStiffness, TRUE, "Stiffness");
-	Std_IsAboveMin((float) 0, m_fltDamping, TRUE, "Damping", TRUE);
+	NaturalLength(oXml.GetChildFloat("NaturalLength", m_fltNaturalLength));
+	Stiffness(oXml.GetChildFloat("Stiffness", m_fltStiffness));
+	Damping(oXml.GetChildFloat("Damping", m_fltDamping));
 
 	m_bInitEnabled = m_bEnabled;
 

@@ -13,7 +13,7 @@ namespace AnimatSim
 		namespace Bodies
 		{
 			/**
-			\brief	Cone.
+			\brief	The Cone base class.
 			
 			\details This is a Cone type of rigid body. You can specify the dimensions of the radius and
 			height for both the collision model and for the graphics model. 
@@ -37,13 +37,67 @@ namespace AnimatSim
 				Cone();
 				virtual ~Cone();
 
+				/**
+				\brief	Gets the lower radius. 
+
+				\author	dcofer
+				\date	3/4/2011
+
+				\return	Lower radius. 
+				**/
 				virtual float LowerRadius();
+
+				/**
+				\brief	Sets the lower radius. 
+				
+				\author	dcofer
+				\date	3/4/2011
+				
+				\param	fltVal		The new value. 
+				\param	bUseScaling	true to use unit scaling on entered value. 
+				**/
 				virtual void LowerRadius(float fltVal, BOOL bUseScaling = TRUE);
 
+				/**
+				\brief	Gets the upper radius. 
+
+				\author	dcofer
+				\date	3/4/2011
+
+				\return	the upper radius. 
+				**/
 				virtual float UpperRadius();
+
+				/**
+				\brief	Upper radius. 
+
+				\author	dcofer
+				\date	3/4/2011
+
+				\param	fltVal		The new value. 
+				\param	bUseScaling	true to use unit scaling on entered value. 
+				**/
 				virtual void UpperRadius(float fltVal, BOOL bUseScaling = TRUE);
 
+				/**
+				\brief	Gets the height. 
+
+				\author	dcofer
+				\date	3/4/2011
+
+				\return	The height. 
+				**/
 				virtual float Height();
+
+				/**
+				\brief	Sets the Height. 
+
+				\author	dcofer
+				\date	3/4/2011
+
+				\param	fltVal		The new value. 
+				\param	bUseScaling	true to use unit scaling on entered value. 
+				**/
 				virtual void Height(float fltVal, BOOL bUseScaling = TRUE);
 				
 				virtual void Load(CStdXml &oXml);

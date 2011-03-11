@@ -1,6 +1,8 @@
-// LinearHillMuscle.cpp: implementation of the LinearHillMuscle class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	LinearHillMuscle.cpp
+
+\brief	Implements the linear hill muscle class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -40,26 +42,12 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+/**
+\brief	Default constructor. 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-/*! \brief 
-   Constructs a muscle object..
-   		
-   \param lpParent This is a pointer to the parent of this rigid body. 
-	          If this value is null then it is assumed that this is
-						a root object and no joint is loaded to connect this
-						part to the parent.
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a muscle. 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 LinearHillMuscle::LinearHillMuscle()
 {
 	m_fltKse = 0;
@@ -113,16 +101,12 @@ LinearHillMuscle::LinearHillMuscle()
 	m_fltAvgMuscleVel = 0;
 }
 
-/*! \brief 
-   Destroys the muscle object..
-   		
-	 \return
-	 No return value.
+/**
+\brief	Destructor. 
 
-   \remarks
-   Destroys the muscle object..	 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 LinearHillMuscle::~LinearHillMuscle()
 {
 	try

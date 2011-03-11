@@ -30,11 +30,10 @@ Namespace Forms
     ''' 		
     ''' \details The AnimatLab executable is essentially a small shell program that contains
     ''' very little code. All of the main code is located in the DLL and assembly modules. 
-    ''' All this exe shell does is load up the AnimatLab.config xml file to get the name of the
+    ''' All this exe shell does is load up the AnimatLab.exe.config xml file to get the name of the
     ''' assembly it is to load and the name of the class within that assembly that it must start.
-    ''' It then uses reflection to create an instance of that object and invoke the ShowDialog method.
-    ''' Before it shows the dialog it calls the CommandLineParams method to pass any command line arguments
-    ''' into the new AnimatLab form.  
+    ''' It then uses reflection to create an instance of that object and invoke the StartApplication
+    ''' method.
     '''
     ''' \author dcofer
     ''' \date   3/1/2011
@@ -91,8 +90,8 @@ Namespace Forms
             Dim strExePath As String, strFile As String
             SplitPathAndFile(Application.ExecutablePath, strExePath, strFile)
 
-            Dim strAssemblyName As String = System.Configuration.ConfigurationSettings.AppSettings("AssemblyName")
-            strClassName = System.Configuration.ConfigurationSettings.AppSettings("ClassName")
+            Dim strAssemblyName As String = System.Configuration.ConfigurationManager.AppSettings("AssemblyName")
+            strClassName = System.Configuration.ConfigurationManager.AppSettings("ClassName")
 
             If IsFullPath(strAssemblyName) Then
                 strAssemblyPath = strAssemblyName

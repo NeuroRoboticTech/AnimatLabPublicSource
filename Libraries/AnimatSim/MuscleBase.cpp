@@ -1,6 +1,8 @@
-// MuscleBase.cpp: implementation of the MuscleBase class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	MuscleBase.cpp
+
+\brief	Implements the muscle base class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -39,26 +41,12 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+/**
+\brief	Default constructor. 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-/*! \brief 
-   Constructs a muscle object..
-   		
-   \param lpParent This is a pointer to the parent of this rigid body. 
-	          If this value is null then it is assumed that this is
-						a root object and no joint is loaded to connect this
-						part to the parent.
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a muscle. 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 MuscleBase::MuscleBase()
 {
 	m_fltMaxTension = 0;
@@ -68,16 +56,12 @@ MuscleBase::MuscleBase()
 	m_fltPrevTension = 0;
 }
 
-/*! \brief 
-   Destroys the muscle object..
-   		
-	 \return
-	 No return value.
+/**
+\brief	Destructor. 
 
-   \remarks
-   Destroys the muscle object..	 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 MuscleBase::~MuscleBase()
 {
 	try
@@ -87,6 +71,106 @@ MuscleBase::~MuscleBase()
 	{Std_TraceMsg(0, "Caught Error in desctructor of MuscleBase\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Gets the tension of the muscle. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	Tension. 
+**/
+float MuscleBase::Tension() {return m_fltTension;}
+
+/**
+\brief	Sets the tension of the muscle. 
+
+\author	dcofer
+\date	3/10/2011
+
+\param	fltVal	The new value. 
+\exception Tension cannot be less than zero.
+**/
+void MuscleBase::Tension(float fltVal)
+{
+	if(fltVal < 0)
+		THROW_PARAM_ERROR(Al_Err_lForceLessThanZero, Al_Err_strForceLessThanZero, "MuscleID", m_strName);
+
+	m_fltTension = fltVal;
+}
+
+/**
+\brief	Gets the maximum tension. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	Maximum tension allowed. 
+**/
+float MuscleBase::MaxTension() {return m_fltMaxTension;}
+
+/**
+\brief	Sets the Maximum tension. 
+
+\author	dcofer
+\date	3/10/2011
+
+\param	fltVal	The new value. 
+\exception Max tension must be greater than zero.
+**/
+void MuscleBase::MaxTension(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Max Tension");
+	m_fltMaxTension = fltVal;
+}
+
+/**
+\brief	Gets the total stimulation applied to the muscle. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	Total Stim. 
+**/
+float MuscleBase::Vm() {return m_fltVm;}
+
+/**
+\brief	Gets the derivative of the tension. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	Derivated of tension. 
+**/
+float MuscleBase::Tdot() {return m_fltTdot;}
+
+/**
+\brief	Gets the previous tension. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	Previous tension. 
+**/
+float MuscleBase::PrevTension() {return m_fltPrevTension;}
+
+/**
+\brief	Gets whether the muscle is enabled. 
+
+\author	dcofer
+\date	3/10/2011
+
+\return	true if it enabled, false otherwise. 
+**/
+BOOL MuscleBase::Enabled() {return m_bEnabled;};
+
+/**
+\brief	Sets whether this muscle is Enabled. 
+
+\author	dcofer
+\date	3/10/2011
+
+\param	bVal	true to enable. 
+**/
 void MuscleBase::Enabled(BOOL bVal)
 {
 	m_bEnabled = bVal;
@@ -117,7 +201,7 @@ void MuscleBase::Load(CStdXml &oXml)
 	oXml.IntoElem();  //Into RigidBody Element
 
 	m_fltMaxTension = oXml.GetChildFloat("MaximumTension", m_fltMaxTension);
-	Std_IsAboveMin((float) 0, m_fltMaxTension, TRUE, "Max Tension");
+
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
 }

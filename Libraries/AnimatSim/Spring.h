@@ -1,13 +1,10 @@
-// Spring.h: interface for the Spring class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Spring.h
 
-#if !defined(AFX_ALSPRINGJOINT_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_)
-#define AFX_ALSPRINGJOINT_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_
+\brief	Declares the spring class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
@@ -16,28 +13,15 @@ namespace AnimatSim
 		namespace Bodies
 		{
 
-			/*! \brief 
-				A Spring type of joint.
-			   
-				\remarks
-				This type of joint is constrained so that it can only
-				rotate about one axis. You can define which axis it rotates
-				around in the configuration file using the normalized 
-				RotationAxis vector element. You can also specify the
-				rotational constraints for this joint. This prevents it
-				from rotating further than the constrained value.
+			/**
+			\brief	Spring body part type. 
+			
+			\details A spring can be connected between two attachment points. The user can
+			control the stiffness and damping, and natural length.
 
-				Also, this joint is motorized. So you can specify a desired
-				velocity of motion at a given time step using the CNlInjectionMgr
-				and the physics engine will automatically apply the forces
-				necessary to move the joint at the desired velocity.
-
-				\sa
-				Joint, Spring, CAlStaticJoint
-				 
-				\ingroup AnimatSim
-			*/
-
+			\author	dcofer
+			\date	3/10/2011
+			**/
 			class ANIMAT_PORT Spring : public LineBase   
 			{
 			protected:
@@ -50,11 +34,22 @@ namespace AnimatSim
 				///A pointer to the secondary attachment part.
 				Attachment *m_lpSecondaryAttachment;
 
+				/// The natural length of the spring. 
 				float m_fltNaturalLength;
+
+				/// The stiffness of the spring
 				float m_fltStiffness;
+
+				/// The damping of the spring
 				float m_fltDamping;
+
+				/// The current displacement of the spring from its natural length
 				float m_fltDisplacement;
+
+				/// The current force being applied by the spring
 				float m_fltTension;
+
+				/// The current energy contained in the spring
 				float m_fltEnergy;
 
 			public:
@@ -67,6 +62,75 @@ namespace AnimatSim
 				Attachment *SecondaryAttachment() {return m_lpSecondaryAttachment;};
 				void SecondaryAttachment(Attachment *lpVal) {m_lpSecondaryAttachment = lpVal;};
 
+				virtual BOOL InitEnabled();
+
+				/**
+				\brief	Gets the natural length of the spring. 
+				
+				\author	dcofer
+				\date	3/4/2011
+				
+				\return	natural length. 
+				**/
+				virtual float NaturalLength();
+
+				/**
+				\brief	Sets the natural length of the spring. 
+				
+				\author	dcofer
+				\date	3/4/2011
+				
+				\param	fltVal		The new value. 
+				\param	bUseScaling	true to use unit scaling on entered value. 
+				**/
+				virtual void NaturalLength(float fltVal, BOOL bUseScaling = TRUE);
+				
+				/**
+				\brief	Gets the stiffness of the spring. 
+				
+				\author	dcofer
+				\date	3/4/2011
+				
+				\return	stiffness. 
+				**/
+				virtual float Stiffness();
+
+				/**
+				\brief	Sets the stiffness of the spring. 
+				
+				\author	dcofer
+				\date	3/4/2011
+				
+				\param	fltVal		The new value. 
+				\param	bUseScaling	true to use unit scaling on entered value. 
+				**/
+				virtual void Stiffness(float fltVal, BOOL bUseScaling = TRUE);
+
+				/**
+				\brief	Gets the damping of the spring. 
+				
+				\author	dcofer
+				\date	3/4/2011
+				
+				\return	damping. 
+				**/
+				virtual float Damping();
+
+				/**
+				\brief	Sets the damping of the spring. 
+				
+				\author	dcofer
+				\date	3/4/2011
+				
+				\param	fltVal		The new value. 
+				\param	bUseScaling	true to use unit scaling on entered value. 
+				**/
+				virtual void Damping(float fltVal, BOOL bUseScaling = TRUE);
+				
+				virtual float Displacement();
+				virtual float Tension();
+				virtual float Energy();
+
 				virtual void CreateParts();
 				virtual void AddExternalNodeInput(float fltInput);
 				virtual void Load(CStdXml &oXml);
@@ -75,5 +139,3 @@ namespace AnimatSim
 		}		//Joints
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALSPRINGJOINT_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_)

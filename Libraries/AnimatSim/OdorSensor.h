@@ -1,13 +1,10 @@
-// OdorSensor.h: interface for the OdorSensor class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	OdorSensor.h
 
-#if !defined(AFX_ALODOR_SENSOR_H__EBC36518_3B2A_4634_9AB6_474F65149FCF__INCLUDED_)
-#define AFX_ALODOR_SENSOR_H__EBC36518_3B2A_4634_9AB6_474F65149FCF__INCLUDED_
+\brief	Declares the odor sensor class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
@@ -15,27 +12,22 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+			/**
+			\brief	Odor sensor part type. 
+			
+			\detials This part is added to a rigid body and detects odorants that are emitted from odor sources
+			in the environment. You can specify the Odor type that this sensor will detect.  
 
-			/*! \brief 
-				Specifies a point on a rigid body where a muscle is to be attached.
-			   
-				\remarks
-				This type of part specifies the position of a muscle attachment point.
-				All CAlMuscle objects must specify the ID for two of these types of 
-				object to determine where the ends of the muscle connect to the 
-				parent and child rigid bodies. 
-
-				\sa
-				Body, Joint, CAlBox, CAlPlane, CAlCylinder, 
-				CAlCone, CAlMuscle, CAlOdorSensor, CAlSphere                                
-				 
-				\ingroup AnimatSim
-			*/
-
+			\author	dcofer
+			\date	3/10/2011
+			**/
 			class ANIMAT_PORT OdorSensor : public Sensor  
 			{
 			protected:
+				/// The odor concentration value
 				float m_fltOdorValue;
+
+				/// Pointer to the type odor to detect
 				OdorType *m_lpOdorType;
 
 			public:
@@ -49,5 +41,3 @@ namespace AnimatSim
 		}		//Bodies
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALODOR_SENSOR_H__EBC36518_3B2A_4634_9AB6_474F65149FCF__INCLUDED_)

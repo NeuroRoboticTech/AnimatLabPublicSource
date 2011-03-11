@@ -1,13 +1,10 @@
-// AlSensor.h: interface for the CAlSensor class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatSim\Sensor.h
 
-#if !defined(AFX_ALSENSOR_H__41341DA4_DDA9_4B00_9198_27B628231EE2__INCLUDED_)
-#define AFX_ALSENSOR_H__41341DA4_DDA9_4B00_9198_27B628231EE2__INCLUDED_
+\brief	Declares the sensor class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace AnimatSim
 {
@@ -15,15 +12,46 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+				/**
+				\brief	Sensor base class.
 
+				\details This is a base class for sensor parts. The sensor is shown in the editor as a sphere.
+				This part is a pure base class that is not meant to be used stand-alone, only for derived class.
+				This includes things like odor sensors.
+				
+				\author	dcofer
+				\date	3/10/2011
+				**/
 				class ANIMAT_PORT Sensor : public RigidBody   
 				{
 				protected:
+					/// The radius of the sensor part. It is shown as a sphere object
 					float m_fltRadius;
 
 				public:
 					Sensor();
 					virtual ~Sensor();
+									
+					/**
+					\brief	Gets the radius. 
+
+					\author	dcofer
+					\date	3/4/2011
+
+					\return	the radius. 
+					**/
+					virtual float Radius();
+
+					/**
+					\brief	Sets the radius. 
+
+					\author	dcofer
+					\date	3/4/2011
+
+					\param	fltVal		The new value. 
+					\param	bUseScaling	true to use unit scaling on entered value. 
+					**/
+					virtual void Radius(float fltVal, BOOL bUseScaling = TRUE);
 
 					virtual void CreateParts();
 					virtual void CreateJoints();
@@ -34,5 +62,3 @@ namespace AnimatSim
 		}		//Bodies
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALSENSOR_H__41341DA4_DDA9_4B00_9198_27B628231EE2__INCLUDED_)

@@ -1,6 +1,8 @@
-// Sphere.cpp: implementation of the Sphere class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Sphere.cpp
+
+\brief	Implements the sphere class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -31,46 +33,39 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+/**
+\brief	Default constructor. 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-/*! \brief 
-   Constructs a Sphere object..
-   		
-   \param lpParent This is a pointer to the parent of this rigid body. 
-	          If this value is null then it is assumed that this is
-						a root object and no joint is loaded to connect this
-						part to the parent.
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a Sphere. 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 Sphere::Sphere()
 {
 	m_fltRadius = 1;
-	m_fltCollisionRadius = 1;
 }
 
+/**
+\brief	Destructor. 
 
-/*! \brief 
-   Destroys the Sphere object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the Sphere object..	 
-*/
-
+\author	dcofer
+\date	3/10/2011
+**/
 Sphere::~Sphere()
 {
 
+}
+
+float Sphere::Radius() {return m_fltRadius;}
+
+void Sphere::Radius(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Sphere.Radius");
+	if(bUseScaling)
+		m_fltRadius = fltVal * m_lpSim->InverseDistanceUnits();
+	else
+		m_fltRadius = fltVal;
+
+	Resize();
 }
 
 void Sphere::Load(CStdXml &oXml)
@@ -78,12 +73,8 @@ void Sphere::Load(CStdXml &oXml)
 	RigidBody::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
-	m_fltRadius = oXml.GetChildFloat("Radius");
-	m_fltCollisionRadius = oXml.GetChildFloat("CollisionRadius");
+	Radius(oXml.GetChildFloat("Radius", m_fltRadius));
 	oXml.OutOfElem(); //OutOf RigidBody Element
-
-	Std_IsAboveMin((float) 0,m_fltRadius, TRUE, "Radius");
-	Std_IsAboveMin((float) 0, m_fltCollisionRadius, TRUE, "CollisionRadius");
 }
 
 

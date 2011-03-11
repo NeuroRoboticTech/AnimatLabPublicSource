@@ -20,7 +20,7 @@ namespace AnimatSim
 		{
 
 			/*! \brief 
-				A box type of rigid body.
+				The Box base class.
 				 
 				\remarks
 				This is a box type of rigid body. You can specify the dimensions in 
