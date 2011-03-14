@@ -57,7 +57,7 @@ Namespace Forms
                 Dim oApplication As Object = oAssembly.CreateInstance(strClassName)
 
                 Dim oStartApp As MethodInfo = oApplication.GetType().GetMethod("StartApplication")
-                oStartApp.Invoke(oApplication, Nothing)
+                oStartApp.Invoke(oApplication, New Object() {True})
 
             Catch ex As Exception
                 If Not ex.InnerException Is Nothing Then

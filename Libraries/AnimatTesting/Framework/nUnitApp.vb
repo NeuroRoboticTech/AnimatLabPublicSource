@@ -11,17 +11,11 @@ Namespace Testing
     Public Class nUnitApp
 
 
-        Public Overridable Sub StartApplication()
+        Public Overridable Sub StartApplication(ByVal bModal As Boolean)
 
             Try
-                Dim argsOrig() As String = System.Environment.GetCommandLineArgs()
-
-                If argsOrig.Length < 2 Then
-                    Throw New System.Exception("you must specify the nUnit test file to run on the command line.")
-                End If
-
                 'Get the nUnit file
-                Dim args() As String = {argsOrig(1)}
+                Dim args() As String = {System.Configuration.ConfigurationManager.AppSettings("TestFile")}
 
                 'Run nUnit
                 NUnit.Gui.AppEntry.Main(args)

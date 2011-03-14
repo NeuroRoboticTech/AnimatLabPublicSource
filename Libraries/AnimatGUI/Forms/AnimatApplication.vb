@@ -1241,7 +1241,7 @@ Namespace Forms
 
 #Region " Initialization "
 
-        Public Overridable Sub StartApplication()
+        Public Overridable Sub StartApplication(ByVal bModal As Boolean)
 
             Try
                 Dim args() As String = System.Environment.GetCommandLineArgs()
@@ -1250,7 +1250,11 @@ Namespace Forms
                     m_strCommandLineParam = args(1)
                 End If
 
-                Me.ShowDialog()
+                If bModal Then
+                    Me.ShowDialog()
+                Else
+                    Me.Show()
+                End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -1371,7 +1375,16 @@ Namespace Forms
                 End Try
 
             Catch ex As System.Exception
+                'If for some reason it fails on the parsing of the update time then set it to some time way in the past.
+                m_dtLastAutoUpdateTime = DateTime.Parse("1/1/2001")
+                m_strDefaultNewFolder = ""
+                m_eAutoUpdateInterval = enumAutoUpdateInterval.Never
+
+                'The nUnit system eats my configuration settings, so I am changing this to only show this error
+                'when we are in production mode so this error does not get shown and these values are just defaulted.
+#If Not Debug Then
                 AnimatGUI.Framework.Util.DisplayError(ex)
+#End If
             End Try
         End Sub
 
