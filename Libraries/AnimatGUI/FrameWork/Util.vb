@@ -62,6 +62,13 @@ Namespace Framework
         Protected Shared m_bExportChartsInStandAloneSim As Boolean = False
         Protected Shared m_bExportChartsToFile As Boolean = False 'Determines if data charts are saved to a file or kept in memory for sim.
 
+        ''' Tells whether the current instance of the application is running in the testing environment
+        ''' If it is then we need to shunt all error messages aside and simply log them.
+        Protected Shared m_bIsTestingEnvironment As Boolean = False
+
+        ''' List of errors that have occured in the application.
+        Protected Shared m_aryErrors As New ArrayList
+
         Public Shared Property Application() As Forms.AnimatApplication
             Get
                 Return m_frmApplication
@@ -201,6 +208,21 @@ Namespace Framework
             End Get
             Set(ByVal Value As Boolean)
                 m_bExportChartsToFile = Value
+            End Set
+        End Property
+
+        Public Shared ReadOnly Property Errors() As ArrayList
+            Get
+                Return m_aryErrors
+            End Get
+        End Property
+
+        Public Shared Property IsTestingEnvironment() As Boolean
+            Get
+                Return m_bIsTestingEnvironment
+            End Get
+            Set(ByVal value As Boolean)
+                m_bIsTestingEnvironment = value
             End Set
         End Property
 
@@ -359,23 +381,30 @@ Namespace Framework
         Public Shared Sub DisplayError(ByVal exError As System.Exception)
 
             Try
-                If Not m_bDisplayingError Then
-                    m_bDisplayingError = True
-                    Dim frmError As New AnimatGUI.Forms.ErrorDisplay
-                    frmError.DisplayErrorDetails = m_bDisplayErrorDetails
-                    frmError.Size = m_szErrorFormSize
-                    frmError.Exception = exError
-                    frmError.ShowDialog()
+                If Not m_bIsTestingEnvironment Then
+                    If Not m_bDisplayingError Then
+                        m_bDisplayingError = True
+                        Dim frmError As New AnimatGUI.Forms.ErrorDisplay
+                        frmError.DisplayErrorDetails = m_bDisplayErrorDetails
+                        frmError.Size = m_szErrorFormSize
+                        frmError.Exception = exError
+                        frmError.ShowDialog()
 
-                    m_bDisplayErrorDetails = frmError.DisplayErrorDetails
-                    m_szErrorFormSize = frmError.Size
+                        m_bDisplayErrorDetails = frmError.DisplayErrorDetails
+                        m_szErrorFormSize = frmError.Size
 
-                    m_bDisplayingError = False
+                        m_bDisplayingError = False
+                    End If
                 End If
+
+                m_aryErrors.Add(exError)
 
             Catch ex As System.Exception
                 Try
-                    MessageBox.Show(exError.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    If Not m_bIsTestingEnvironment Then
+                        MessageBox.Show(exError.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End If
+                    m_aryErrors.Add(ex)
                     m_bDisplayingError = False
                 Catch ex1 As System.Exception
                     m_bDisplayingError = False

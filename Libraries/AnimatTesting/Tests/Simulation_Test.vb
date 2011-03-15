@@ -17,27 +17,40 @@ Namespace Testing
         Inherits NUnitFormTest
 
         Protected m_doApp As AnimatGUI.Forms.AnimatApplication
+        Protected m_doSimEvent As New Threading.ManualResetEvent(False)
 
         Public Overrides Sub Setup()
             MyBase.Setup()
-
-            Dim strDir As String = System.Environment.CurrentDirectory
-            Dim iVal As Integer = 5
 
             m_doApp = New AnimatGUI.Forms.AnimatApplication()
             'Dim doApp As New AnimatGUI.Forms.AnimatApplication()
             'm_doApp = doApp
             m_doApp.StartApplication(False)
+            AddHandler m_doApp.SimulationStopped, AddressOf Me.OnSimulationStopped
+
         End Sub
 
+        Public Overrides Sub TearDown()
+            m_doApp.Close()
+        End Sub
         <Test()> _
         Public Sub MySimTest()
             Dim iVal As Integer = 5
-            'If Not m_doApp Is Nothing Then
-            '    Dim doApp As AnimatGUI.Forms.AnimatApplication = DirectCast(m_doApp, AnimatGUI.Forms.AnimatApplication)
-            '    doApp.LoadProject("C:\Projects\AnimatLabSDK\Experiments\NewProject2\NewProject2.aproj")
-            'End If
 
+            m_doSimEvent.Reset()
+            m_doApp.LoadProject("C:\Projects\AnimatLabSDK\Experiments\NewProject2\NewProject2.aproj")
+            m_doApp.ToggleSimulation()
+
+            'Wait here till we get the simulation stopped event.
+            m_doSimEvent.WaitOne()
+
+            m_doApp.CloseProject(False)
+
+        End Sub
+
+
+        Private Sub OnSimulationStopped()
+            m_doSimEvent.Set()
         End Sub
 
     End Class
