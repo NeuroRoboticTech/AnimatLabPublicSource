@@ -1,42 +1,39 @@
-// ArrayChart.h: interface for the ArrayChart class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ArrayChart.h
 
-#if !defined(AFX_ARRAYCHART_H__D91DC66E_01F1_47FC_AB62_766BA63FCEF0__INCLUDED_)
-#define AFX_ARRAYCHART_H__D91DC66E_01F1_47FC_AB62_766BA63FCEF0__INCLUDED_
+\brief	Declares the array chart class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace AnimatSim
 {
 	namespace Charting
 	{
-
+		/**
+		\brief	Array chart. 
+		
+		\author	dcofer
+		\date	3/18/2011
+		**/
 		class ANIMAT_PORT ArrayChart : public DataChart  
 		{
 		protected:
+			/// Size of the 3-D array of data
 			CStdFPoint m_vArraySize;
 
 		public:
 			ArrayChart();
 			virtual ~ArrayChart();
 
-			virtual void CurrentRow(long iVal) {}; //We need to disable the ability to reset the current row. It should always be the same size as the array.
-
-			virtual void Load(CStdXml &oXml);
-			virtual void LoadChart(CStdXml &oXml);
-
-			//ActiveItem overrides
-			virtual string Type() {return "ArrayChart";};
+			virtual string Type();
+			virtual void CurrentRow(long iVal);
 
 			virtual void Initialize();
 			virtual void ReInitialize();
 			virtual void StepSimulation();
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			//Charting
 }				//AnimatSim
-
-#endif // !defined(AFX_ARRAYCHART_H__D91DC66E_01F1_47FC_AB62_766BA63FCEF0__INCLUDED_)

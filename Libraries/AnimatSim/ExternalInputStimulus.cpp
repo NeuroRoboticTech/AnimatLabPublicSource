@@ -1,6 +1,8 @@
-// ExternalInputStimulus.cpp: implementation of the ExternalInputStimulus class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ExternalInputStimulus.cpp
+
+\brief	Implements the external input stimulus class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -35,19 +37,25 @@ namespace AnimatSim
 {
 	namespace ExternalStimuli
 	{
+/**
+\brief	Default constructor. 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
+\author	dcofer
+\date	3/17/2011
+**/
 ExternalInputStimulus::ExternalInputStimulus()
 {
-	m_lpStructure = NULL;
 	m_lpNode = NULL;
 	m_lpEval = NULL;
 	m_fltInput = 0;
 }
 
+/**
+\brief	Destructor. 
+
+\author	dcofer
+\date	3/17/2011
+**/
 ExternalInputStimulus::~ExternalInputStimulus()
 {
 
@@ -60,6 +68,71 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of ExternalInputStimulus\r\n", "", -1, FALSE, TRUE);}
 }
 
+string ExternalInputStimulus::Type() {return "ExternalInput";}
+
+/**
+\brief	Gets the GUID ID of the target node that will be stimulated. 
+
+\author	dcofer
+\date	3/17/2011
+
+\return	GUID ID of the node. 
+**/
+string ExternalInputStimulus::TargetNodeID() {return m_strTargetNodeID;}
+
+/**
+\brief	Sets the GUID ID of the target node to stimulate. 
+
+\author	dcofer
+\date	3/17/2011
+
+\param	strID	GUID ID. 
+**/
+void ExternalInputStimulus::TargetNodeID(string strID)
+{
+	if(Std_IsBlank(strID)) 
+		THROW_ERROR(Al_Err_lBodyIDBlank, Al_Err_strBodyIDBlank);
+	m_strTargetNodeID = strID;
+}
+
+/**
+\brief	Gets the current input value. 
+
+\author	dcofer
+\date	3/17/2011
+
+\return	Current input value. 
+**/
+float ExternalInputStimulus::Input() {return m_fltInput;}
+
+/**
+\brief	Sets the current input value. 
+
+\author	dcofer
+\date	3/17/2011
+
+\param	fltVal	The new value. 
+**/
+void ExternalInputStimulus::Input(float fltVal) {m_fltInput = fltVal;}
+
+/**
+\brief	Gets the post-fix input equation used for the stimulus. 
+
+\author	dcofer
+\date	3/17/2011
+
+\return	Post-fix input equation string. 
+**/
+string ExternalInputStimulus::InputEquation() {return m_strInputEquation;}
+
+/**
+\brief	Sets the post-fix input equation string. 
+
+\author	dcofer
+\date	3/17/2011
+
+\param	strVal	The new equation string. 
+**/
 void ExternalInputStimulus::InputEquation(string strVal)
 {
 	//Initialize the postfix evaluator.
@@ -77,13 +150,9 @@ void ExternalInputStimulus::Initialize()
 {
 	ExternalStimulus::Initialize();
 
-	m_lpStructure = dynamic_cast<Structure *>(m_lpSim->FindByID(m_strStructureID));
-	if(!m_lpStructure)
-		THROW_PARAM_ERROR(Al_Err_lStructureNotFound, Al_Err_strStructureNotFound, "ID: ", m_strStructureID);
-
-	m_lpNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strNodeID));
+	m_lpNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strTargetNodeID));
 	if(!m_lpNode)
-		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strNodeID);
+		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strTargetNodeID);
 }
 
 void ExternalInputStimulus::Activate()
@@ -146,15 +215,8 @@ void ExternalInputStimulus::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Simulus Element
 
-	m_strStructureID = oXml.GetChildString("StructureID");
-	if(Std_IsBlank(m_strStructureID)) 
-		THROW_ERROR(Al_Err_lIDBlank, Al_Err_strIDBlank);
-
-	m_strNodeID = oXml.GetChildString("NodeID");
-	if(Std_IsBlank(m_strNodeID)) 
-		THROW_ERROR(Al_Err_lIDBlank, Al_Err_strIDBlank);
-
-	this->InputEquation(oXml.GetChildString("Input", "0"));
+	TargetNodeID(oXml.GetChildString("NodeID"));
+	InputEquation(oXml.GetChildString("Input", "0"));
 
 	oXml.OutOfElem(); //OutOf Simulus Element
 }

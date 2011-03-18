@@ -1,6 +1,8 @@
-// EquationGain.cpp: implementation of the EquationGain class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	EquationGain.cpp
+
+\brief	Implements the equation gain class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -9,40 +11,29 @@
 #include "Gain.h"
 #include "EquationGain.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+
 namespace AnimatSim
 {
 	namespace Gains
 	{
 
-/*! \brief 
-   Constructs an structure object..
-   		
-	 \return
-	 No return value.
+/**
+\brief	Default constructor. 
 
-   \remarks
-	 The constructor for a structure. 
-*/
-
+\author	dcofer
+\date	3/16/2011
+**/
 EquationGain::EquationGain()
 {
 	m_lpEval = NULL;
 }
 
+/**
+\brief	Destructor. 
 
-/*! \brief 
-   Destroys the structure object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the structure object..	 
-*/
-
+\author	dcofer
+\date	3/16/2011
+**/
 EquationGain::~EquationGain()
 {
 
@@ -53,6 +44,50 @@ try
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of EquationGain\r\n", "", -1, FALSE, TRUE);}
+}
+
+/**
+\brief	Gets the post-fix gain equation. 
+
+\author	dcofer
+\date	3/16/2011
+
+\return	Gain equation string. 
+**/
+string EquationGain::GainEquation() {return m_strGainEquation;}
+
+/**
+\brief	Sets the gain equation. 
+
+\author	dcofer
+\date	3/16/2011
+
+\param	strEquation	The post fix gain equation string. 
+**/
+void EquationGain::GainEquation(string strEquation)
+{
+	CStdPostFixEval *lpEval = new CStdPostFixEval;
+
+	try
+	{
+		lpEval->AddVariable("x");
+		lpEval->Equation(strEquation);
+	}
+	catch(CStdErrorInfo oError)
+	{
+		if(lpEval) delete lpEval;
+		RELAY_ERROR(oError);
+	}
+	catch(...)
+	{
+		if(lpEval) delete lpEval;
+		THROW_PARAM_ERROR(Std_Err_lSettingEquation, Std_Err_strSettingEquation, "Equation", strEquation);
+	}
+
+	//Initialize the postfix evaluator.
+	if(m_lpEval) 
+		{delete m_lpEval; m_lpEval = NULL;}
+	m_lpEval = lpEval;
 }
 
 float EquationGain::CalculateGain(float fltInput)
@@ -72,18 +107,9 @@ void EquationGain::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Adapter Element
 
-	m_strGainEquation = oXml.GetChildString("Equation");
+	GainEquation(oXml.GetChildString("Equation"));
 
 	oXml.OutOfElem(); //OutOf Adapter Element
-
-	//Initialize the postfix evaluator.
-	if(m_lpEval) 
-	{delete m_lpEval; m_lpEval = NULL;}
-
-	m_lpEval = new CStdPostFixEval;
-
-	m_lpEval->AddVariable("x");
-	m_lpEval->Equation(m_strGainEquation);
 }
 
 	}			//Gains

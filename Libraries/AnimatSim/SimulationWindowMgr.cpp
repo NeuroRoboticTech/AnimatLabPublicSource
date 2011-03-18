@@ -57,7 +57,7 @@ try
 	//Create a simulation window from the graphics library being used
 	lpWin = dynamic_cast<SimulationWindow *>(m_lpSim->CreateObject(strModule, "SimulationWindow", strType));
 
-	lpWin->SetSystemPointers(m_lpSim, NULL, NULL, NULL);
+	lpWin->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
 	lpWin->Load(strXml);
 
 	//initialize the window
@@ -207,7 +207,7 @@ try
 	if(!lpWin)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "SimulationWindow");
 
-	lpWin->SetSystemPointers(m_lpSim, NULL, NULL, NULL);
+	lpWin->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
 	lpWin->Load(oXml);
 
 	return lpWin;

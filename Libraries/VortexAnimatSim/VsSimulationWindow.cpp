@@ -246,7 +246,7 @@ void VsSimulationWindow::Load(CStdXml &oXml)
 
 	oXml.IntoElem(); //Into Window Element
 
-	m_vsHud.SetSystemPointers(m_lpSim, NULL, NULL, NULL); 
+	m_vsHud.SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE); 
 	m_vsHud.Load(oXml);
 
 	oXml.OutOfElem(); //OutOf Window Element

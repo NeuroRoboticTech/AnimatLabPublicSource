@@ -1,12 +1,12 @@
-// DataColumn.cpp: implementation of the DataColumn class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	DataColumn.cpp
 
+\brief	Implements the data column class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
 #include "AnimatBase.h"
-
 
 #include "Node.h"
 #include "IPhysicsBody.h"
@@ -34,11 +34,12 @@ namespace AnimatSim
 {
 	namespace Charting
 	{
+/**
+\brief	Default constructor.
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
+\author	dcofer
+\date	3/18/2011
+**/
 DataColumn::DataColumn()
 {
 	m_lpDataValue = NULL;
@@ -49,20 +50,122 @@ DataColumn::DataColumn()
 	m_iRowIndex = -1; 
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/18/2011
+**/
 DataColumn::~DataColumn()
 {
 	//Do not delete this pointer. It is just a reference.
 	m_lpDataValue = NULL;
 }
 
+/**
+\brief	Gets the number of columns for this DataColumn.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	Number of columns in the data buffer.
+**/
 int DataColumn::ColumnCount()
 {return 1;}
 
+/**
+\brief	Gets the column name.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	Column name.
+**/
+string DataColumn::ColumnName() {return m_strColumnName;}
+
+/**
+\brief	Sets the Column name.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strName	Name of the column. 
+**/
+void DataColumn::ColumnName(string strName) {m_strColumnName = strName;}
+
+/**
+\brief	Gets the show index. This determines the order in which the columns are saved out to the file.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	.
+**/
+int DataColumn::Index() {return m_iIndex;}
+
+/**
+\brief	Sets the show index. This determines the order in which the columns are saved out to the file.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	iIndex	Zero-based index of where to show this column in the chart. 
+**/
+void DataColumn::Index(int iIndex) {m_iIndex = iIndex;}
+
+/**
+\brief	Gets the data type of the variable we are collecting. This is the value passed into GetDataPointer.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	name of the data type to collect.
+**/
+string DataColumn::DataType() {return m_strDataType;}
+
+/**
+\brief	Sets the Data type of the variable we are collecting. This is the value passed into GetDataPointer.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strType	Data Type of the data to collect. 
+**/
 void DataColumn::DataType(string strType)
 {
 	m_strDataType = strType;
 	Initialize();
 }
+
+/**
+\brief	Query if this object is initialized.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	true if initialized, false if not.
+**/
+BOOL DataColumn::IsInitialized() {return m_bInitialized;}
+
+/**
+\brief	Sets whether this column is initialized.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	bVal	true to set that it is initialized. 
+**/
+void DataColumn::IsInitialized(BOOL bVal) {m_bInitialized = bVal;}
+
+/**
+\brief	Gets the pointer to the data value we are collecting.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	Pointer.
+**/
+float *DataColumn::DataValue() {return m_lpDataValue;};
 
 void DataColumn::Initialize()
 {
@@ -107,6 +210,14 @@ BOOL DataColumn::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+/**
+\brief	Saves this DataColumn name to the out stream for the file.
+
+\author	dcofer
+\date	3/18/2011
+
+\param [in,out]	oStream	The file stream. 
+**/
 void DataColumn::SaveColumnNames(ofstream &oStream)
 {
 	oStream << m_strColumnName;
@@ -118,7 +229,8 @@ void DataColumn::SaveColumnNames(ofstream &oStream)
 	}
 }
 
-void DataColumn::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, DataChart *lpChart, BOOL bVerify)
+void DataColumn::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule,
+	                               Node *lpNode, DataChart *lpChart, BOOL bVerify)
 {
 	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
 	m_lpChart = lpChart;
@@ -139,6 +251,13 @@ void DataColumn::StepSimulation()
 	m_lpChart->AddData(m_iColumnIndex, m_iRowIndex, *m_lpDataValue);
 }
 
+/**
+\brief	 Determines if this column has an index value less than the index value of the column being passed in.
+
+\details This is used to sort the columns based on the index value.
+
+\return	true if this objects index value is less than the object passed in, false otherwise.
+**/
 BOOL DataColumn::operator<(DataColumn *lpColumn)
 {
 	if(this->m_iIndex < lpColumn->m_iIndex)
@@ -182,7 +301,19 @@ void DataColumn::Load(CStdXml &oXml)
 	m_lpSim->AddToObjectList(this);
 }
 
+/**
+\brief	Compares two DataColumn items to find the one that is less than the other.
 
+\details This is used to sort DataColumns based on their index values.
+
+\author	dcofer
+\date	3/18/2011
+
+\param [in,out]	lpColumn1	Pointer to the first data column to test. 
+\param [in,out]	lpColumn2	Pointer to the second data column to test. 
+
+\return	true if index of column1 is less than column2.
+**/
 BOOL LessThanDataColumnCompare(DataColumn *lpColumn1, DataColumn *lpColumn2)
 {
 	return lpColumn1->operator<(lpColumn2);

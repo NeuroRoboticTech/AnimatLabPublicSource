@@ -1,6 +1,8 @@
-// ArrayChart.cpp: implementation of the ArrayChart class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ArrayChart.cpp
+
+\brief	Implements the array chart class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -36,15 +38,22 @@ namespace AnimatSim
 {
 	namespace Charting
 	{
+/**
+\brief	Default constructor.
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
+\author	dcofer
+\date	3/18/2011
+**/
 ArrayChart::ArrayChart()
 {
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/18/2011
+**/
 ArrayChart::~ArrayChart()
 {
 
@@ -54,6 +63,20 @@ try
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of ArrayChart\r\n", "", -1, FALSE, TRUE);}
 }
+
+string ArrayChart::Type() {return "ArrayChart";}
+
+/**
+\brief	Sets the Current row.
+
+\detals We need to disable the ability to reset the current row. It should always be the same size as the array.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	iVal	The new current row value. 
+**/
+void ArrayChart::CurrentRow(long iVal) {}
 
 void ArrayChart::Initialize()
 {
@@ -108,15 +131,6 @@ void ArrayChart::Load(CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf DataChart Element
 }
 
-
-void ArrayChart::LoadChart(CStdXml &oXml)
-{
-	DataChart::LoadChart(oXml);
-
-	oXml.IntoElem();
-	Std_LoadPoint(oXml, "Size", m_vArraySize);
-	oXml.OutOfElem();
-}
 
 	}			//Charting
 }				//AnimatSim

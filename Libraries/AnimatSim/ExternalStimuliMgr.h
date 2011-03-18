@@ -1,19 +1,21 @@
-// ExternalStimuliMgr.h: interface for the ExternalStimuliMgr class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ExternalStimuliMgr.h
 
-#if !defined(AFX_EXTERNALSTIMULIMGR_H__16DEACA1_2EE0_457B_893F_DC0526F2D544__INCLUDED_)
-#define AFX_EXTERNALSTIMULIMGR_H__16DEACA1_2EE0_457B_893F_DC0526F2D544__INCLUDED_
+\brief	Declares the external stimuli manager class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace AnimatSim
 {
 	namespace ExternalStimuli
 	{
-
+		/**
+		\brief	This class is derived from the ActivatedItemMgr and it handles all of the external stimuli. 
+		
+		\author	dcofer
+		\date	3/17/2011
+		**/
 		class ANIMAT_PORT ExternalStimuliMgr : public ActivatedItemMgr    
 		{
 		protected:
@@ -27,11 +29,9 @@ namespace AnimatSim
 			virtual BOOL AddStimulus(string strXml);
 			virtual BOOL RemoveStimulus(string strID);
 
-			virtual void Load(string strProjectPath, string strFileName);
+			//virtual void Load(string strProjectPath, string strFileName);
 			virtual void Load(CStdXml &oXml);
 		};
 
 	}			//ExternalStimuli
 }				//AnimatSim
-
-#endif // !defined(AFX_EXTERNALSTIMULIMGR_H__16DEACA1_2EE0_457B_893F_DC0526F2D544__INCLUDED_)

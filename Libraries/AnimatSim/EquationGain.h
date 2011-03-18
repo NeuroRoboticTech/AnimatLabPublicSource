@@ -1,28 +1,41 @@
-// EquationGain.h: interface for the EquationGain class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	EquationGain.h
 
-#if !defined(AFX_EQUATION_GAIN_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)
-#define AFX_EQUATION_GAIN_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_
+\brief	Declares the equation gain class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
 	namespace Gains
 	{
+			/**
+			\brief	Equation gain. 
 
+			\details This gain is a general type of gain that parses a string equation and evaluates it
+			using the supplied input parameter. This <b>will</b> be slower than the gains that use a compiled
+			equations, but this type of functionality provides some flexibility for the user to specify equations
+			that have not been hard coded.
+			
+			\author	dcofer
+			\date	3/16/2011
+			**/
 			class ANIMAT_PORT EquationGain : public Gain 
 			{
 			protected:
+				/// The post-fix gain equation
 				string m_strGainEquation;
+
+				/// The pointer to the postfix equation evaluator
 				CStdPostFixEval *m_lpEval;
 
 			public:
 				EquationGain();
 				virtual ~EquationGain();
+
+				virtual string GainEquation();
+				virtual void GainEquation(string strEquation);
 
 				virtual float CalculateGain(float fltInput);
 				virtual void Load(CStdXml &oXml);
@@ -30,5 +43,3 @@ namespace AnimatSim
 
 	}			//Gains
 }				//AnimatSim
-
-#endif // !defined(AFX_EQUATION_GAIN_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)

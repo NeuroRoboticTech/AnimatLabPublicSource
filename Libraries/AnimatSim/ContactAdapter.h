@@ -1,24 +1,35 @@
-// ContactAdapter.h: interface for the ContactAdapter class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ContactAdapter.h
 
-#if !defined(AFX_CONTACT_ADAPTER_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)
-#define AFX_CONTACT_ADAPTER_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_
+\brief	Declares the contact adapter class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
 	namespace Adapters
 	{
+		/**
+		\brief	Contact adapter that processes ReceptiveField contacts.
 
+		\details There is only a single ContactAdapter that processes all ReceptiveFieldPairs for a single RigidBody object.
+		It has a list of all ReceptiveFields for that body and loops through them to determine the stimulus that needs to 
+		be applied to the associated neurons. 
+		
+		\author	dcofer
+		\date	3/18/2011
+		**/
 		class ANIMAT_PORT ContactAdapter : public Adapter 
 		{
 		protected:
+			/// GUID ID of the source RigidBody.
 			string m_strSourceBodyID;
+
+			/// The name of the target NeuralModule.
 			string m_strTargetModule;
+
+			/// The array of ReceptiveFieldPair objects.
 			CStdPtrArray<ReceptiveFieldPair> m_aryFieldPairs; 
 
 			ReceptiveFieldPair *LoadFieldPair(CStdXml &oXml);
@@ -27,16 +38,18 @@ namespace AnimatSim
 			ContactAdapter();
 			virtual ~ContactAdapter();
 
+			virtual string SourceBodyID();
+			virtual void SourceBodyID(string strID);
+
+			virtual string SourceModule();
+
+			virtual string TargetModule();
+			virtual void TargetModule(string strModule);
+
 			virtual void Initialize();
 			virtual void StepSimulation();
-			virtual string SourceModule();
-			virtual string TargetModule();
-
-			//Node Overrides
 			virtual void Load(CStdXml &oXml);
 		};
 
 	}			//Adapters
 }				//AnimatSim
-
-#endif // !defined(AFX_CONTACT_ADAPTER_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)

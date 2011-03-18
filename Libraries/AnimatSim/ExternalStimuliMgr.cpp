@@ -1,6 +1,8 @@
-// ExternalStimuliMgr.cpp: implementation of the ExternalStimuliMgr class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ExternalStimuliMgr.cpp
+
+\brief	Implements the external stimuli manager class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -41,21 +43,40 @@ namespace AnimatSim
 {
 	namespace ExternalStimuli
 	{
+/**
+\brief	Default constructor. 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
+\author	dcofer
+\date	3/17/2011
+**/
 ExternalStimuliMgr::ExternalStimuliMgr()
 {
 
 }
 
+/**
+\brief	Destructor. 
+
+\author	dcofer
+\date	3/17/2011
+**/
 ExternalStimuliMgr::~ExternalStimuliMgr()
 {
 
 }
- 
+
+/**
+\brief	Creates a new stimulus from an xml definition and adds it to the manager.
+
+\details This is primarily used by the GUI to add new stimuli.
+
+\author	dcofer
+\date	3/17/2011
+
+\param	strXml	The xml data for loading in the new stimuli. 
+
+\return	true if it succeeds, false if it fails. 
+**/
 BOOL ExternalStimuliMgr::AddStimulus(string strXml)
 {
 	CStdXml oXml;
@@ -68,12 +89,22 @@ BOOL ExternalStimuliMgr::AddStimulus(string strXml)
 	return TRUE;
 }
 
+/**
+\brief	Removes the stimulus described by strID. 
+
+\author	dcofer
+\date	3/17/2011
+
+\param	strID	GUID ID for the stimulus to remove. 
+
+\return	true if it succeeds, false if it fails. 
+**/
 BOOL ExternalStimuliMgr::RemoveStimulus(string strID)
 {
 	Remove(strID);
 	return TRUE;
 }
-
+/*
 void ExternalStimuliMgr::Load(string strProjectPath, string strFileName)
 {
 	CStdXml oXml;
@@ -89,7 +120,7 @@ void ExternalStimuliMgr::Load(string strProjectPath, string strFileName)
 
 	TRACE_DEBUG("Finished loading external stimuli config file.");
 }
-
+*/
 
 void ExternalStimuliMgr::Load(CStdXml &oXml)
 {
@@ -112,7 +143,17 @@ void ExternalStimuliMgr::Load(CStdXml &oXml)
 	}
 }
 
+/**
+\brief	Loads an external stimuli. 
 
+\author	dcofer
+\date	3/17/2011
+
+\param [in,out]	oXml	The stimulus xml to load. 
+
+\return	null if it fails, else the external stimuli. 
+\exception Exception is thrown if there is a problem loading the stimulus.
+**/
 ExternalStimulus *ExternalStimuliMgr::LoadExternalStimuli(CStdXml &oXml)
 {
 	ExternalStimulus *lpStimulus = NULL;
@@ -129,7 +170,7 @@ try
 	if(!lpStimulus)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "ExternalStimulus");
 
-	lpStimulus->SetSystemPointers(m_lpSim, NULL, NULL, NULL);
+	lpStimulus->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
 	lpStimulus->Load(oXml);
 
 	Add(lpStimulus);

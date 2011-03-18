@@ -1,6 +1,8 @@
-// EnablerStimulus.cpp: implementation of the EnablerStimulus class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	EnablerStimulus.cpp
+
+\brief	Implements the enabler stimulus class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -36,16 +38,23 @@ namespace AnimatSim
 {
 	namespace ExternalStimuli
 	{
+/**
+\brief	Default constructor. 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
+\author	dcofer
+\date	3/17/2011
+**/
 EnablerStimulus::EnablerStimulus()
 {
 	m_bEnableWhenActive = TRUE;
 }
 
+/**
+\brief	Destructor. 
+
+\author	dcofer
+\date	3/17/2011
+**/
 EnablerStimulus::~EnablerStimulus()
 {
 
@@ -56,14 +65,60 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of EnablerStimulus\r\n", "", -1, FALSE, TRUE);}
 }
 
+string EnablerStimulus::Type() {return "EnablerInput";}
+
+/**
+\brief	Gets the GUID ID of the target node that will be enabled. 
+
+\author	dcofer
+\date	3/17/2011
+
+\return	GUID ID of the node. 
+**/
+string EnablerStimulus::TargetNodeID() {return m_strTargetNodeID;}
+
+/**
+\brief	Sets the GUID ID of the target node to enable. 
+
+\author	dcofer
+\date	3/17/2011
+
+\param	strID	GUID ID. 
+**/
+void EnablerStimulus::TargetNodeID(string strID)
+{
+	if(Std_IsBlank(strID)) 
+		THROW_ERROR(Al_Err_lBodyIDBlank, Al_Err_strBodyIDBlank);
+	m_strTargetNodeID = strID;
+}
+
+/**
+\brief	Tells if the node is enabled when active. This is used to control if we are enabling the
+node during the active period, or disabling it.
+
+\author	dcofer
+\date	3/17/2011
+
+\return	true if it enabled while active, false otherwise. 
+**/
+BOOL EnablerStimulus::EnableWhenActive() {return m_bEnableWhenActive;}
+
+/**
+\brief	Sets whether the node is enabled when active. This is used to control if we are enabling the
+node during the active period, or disabling it.
+
+\author	dcofer
+\date	3/17/2011
+
+\param	bVal	true to enable when active. 
+**/
+void EnablerStimulus::EnableWhenActive(BOOL bVal) {m_bEnableWhenActive = bVal;}
+
 void EnablerStimulus::Initialize()
 {
 	ExternalStimulus::Initialize();
 
-	//Lets try and get the node we will dealing with.
-	m_lpStructure = m_lpSim->FindStructureFromAll(m_strStructureID);
-
-	m_lpNode = m_lpStructure->FindNode(m_strBodyID);
+	m_lpNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strTargetNodeID));
 }
 
 void EnablerStimulus::Activate()
@@ -113,15 +168,8 @@ void EnablerStimulus::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Simulus Element
 
-	m_strStructureID = oXml.GetChildString("StructureID");
-	if(Std_IsBlank(m_strStructureID)) 
-		THROW_ERROR(Al_Err_lIDBlank, Al_Err_strIDBlank);
-
-	m_strBodyID = oXml.GetChildString("BodyID");
-	if(Std_IsBlank(m_strBodyID)) 
-		THROW_ERROR(Al_Err_lBodyIDBlank, Al_Err_strBodyIDBlank);
-
-	m_bEnableWhenActive = oXml.GetChildBool("EnableWhenActive", m_bEnableWhenActive);
+	TargetNodeID(oXml.GetChildString("BodyID"));
+	EnableWhenActive(oXml.GetChildBool("EnableWhenActive", m_bEnableWhenActive));
 
 	oXml.OutOfElem(); //OutOf Simulus Element
 

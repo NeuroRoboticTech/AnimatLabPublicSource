@@ -114,7 +114,7 @@ try
 	if(!lpItem)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "HudItem");
 
-	lpItem->SetSystemPointers(m_lpSim, NULL, NULL, NULL);
+	lpItem->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
 	lpItem->Load(oXml);
 
 	return lpItem;

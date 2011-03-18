@@ -137,7 +137,7 @@ void Neuron::Load(CStdXml &oXml)
 		if(m_lpCaActive)
 		{delete m_lpCaActive; m_lpCaActive = NULL;}
 		m_lpCaActive = new CaActivation(this, "ACTIVE");
-		m_lpCaActive->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this);
+		m_lpCaActive->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, TRUE);
 		m_lpCaActive->Load(oXml);
 	}
 
@@ -146,7 +146,7 @@ void Neuron::Load(CStdXml &oXml)
 		if(m_lpCaInactive)
 		{delete m_lpCaInactive; m_lpCaInactive = NULL;}
 		m_lpCaInactive = new CaActivation(this, "INACTIVE");
-		m_lpCaInactive->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this);
+		m_lpCaInactive->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, TRUE);
 		m_lpCaInactive->Load(oXml);
 	}
 
@@ -208,7 +208,7 @@ IonChannel *Neuron::LoadIonChannel(CStdXml &oXml)
 try
 {
 	lpIonChannel = new IonChannel();
-	lpIonChannel->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this);
+	lpIonChannel->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, TRUE);
 	lpIonChannel->Load(oXml);
 	m_aryIonChannels.Add(lpIonChannel);
 

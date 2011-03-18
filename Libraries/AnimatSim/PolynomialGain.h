@@ -1,30 +1,53 @@
-// PolynomialGain.h: interface for the PolynomialGain class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	PolynomialGain.h
 
-#if !defined(AFX_POLYGAIN_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)
-#define AFX_POLYGAIN_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_
+\brief	Declares the polynomial gain class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
 	namespace Gains
 	{
+			/**
+			\brief	Polynomial gain. 
+		
+			\details This gain calculates a polynomial shaped distribution curve. Out = A*In^3 + B*In^2 + C*In + D
 
+			\author	dcofer
+			\date	3/16/2011
+			**/
 			class ANIMAT_PORT PolynomialGain : public Gain 
 			{
 			protected:
+				/// The A parameter of the gain.
 				float m_fltA;
+
+				/// The B parameter of the gain.
 				float m_fltB;
+
+				/// The C parameter of the gain.
 				float m_fltC;
+
+				/// The D parameter of the gain.
 				float m_fltD;
 
 			public:
 				PolynomialGain();
 				virtual ~PolynomialGain();
+
+				float A();
+				void A(float fltVal);
+
+				float B();
+				void B(float fltVal);
+
+				float C();
+				void C(float fltVal);
+
+				float D();
+				void D(float fltVal);
 
 				virtual float CalculateGain(float fltInput);
 				virtual void Load(CStdXml &oXml);
@@ -32,5 +55,3 @@ namespace AnimatSim
 
 	}			//Gains
 }				//AnimatSim
-
-#endif // !defined(AFX_POLYGAIN_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)

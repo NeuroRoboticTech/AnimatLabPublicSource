@@ -88,7 +88,7 @@ namespace AnimatSim
 		**/
 		virtual void AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter);
 
-		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify = TRUE);
+		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
 		virtual void VerifySystemPointers();
 	};
 

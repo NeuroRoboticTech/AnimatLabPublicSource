@@ -232,7 +232,7 @@ void ContactSensor::Load(CStdXml &oXml)
 	if(!m_lpFieldGain)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "FieldGain");
 
-	m_lpFieldGain->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL);
+	m_lpFieldGain->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
 	m_lpFieldGain->Load(oXml);
 
 	oXml.IntoChildElement("CurrentGain");
@@ -244,7 +244,7 @@ void ContactSensor::Load(CStdXml &oXml)
 	if(!m_lpCurrentGain)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "FieldGain");
 
-	m_lpCurrentGain->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL);
+	m_lpCurrentGain->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
 	m_lpCurrentGain->Load(oXml);
 
 	if(m_lpCurrentGain->UseLimits())

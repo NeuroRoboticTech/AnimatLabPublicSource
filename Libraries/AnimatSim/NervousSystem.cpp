@@ -361,7 +361,7 @@ try
 	if(!lpModule)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "NeuralModule");
 
-	lpModule->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL);
+	lpModule->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
 
 	//Clean up the original class factory. We will use the one in the NeuralModule from now on.
 	if(lpFactory)
@@ -372,7 +372,7 @@ try
 	//that the sim have a pointer to this factory.
 	m_lpSim->AddNeuralModuleFactory(strModuleName, lpModule);
 
-	lpModule->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL);
+	lpModule->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
 	lpModule->Load(oXml);
 
 	AddNeuralModule(lpModule);
@@ -428,7 +428,7 @@ try
 	if(!lpAdapter)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Adapter");
 
-	lpAdapter->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL);
+	lpAdapter->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
 	lpAdapter->Load(oXml);
 
 	m_aryAdapters.Add(lpAdapter);

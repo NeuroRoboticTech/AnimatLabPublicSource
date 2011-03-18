@@ -1,41 +1,48 @@
-// MemoryChart.h: interface for the MemoryChart class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	MemoryChart.h
 
-#if !defined(AFX_MEMORYCHART_H__D91DC66E_01F1_47FC_AB62_766BA63FCEF0__INCLUDED_)
-#define AFX_MEMORYCHART_H__D91DC66E_01F1_47FC_AB62_766BA63FCEF0__INCLUDED_
+\brief	Declares the memory chart class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace AnimatSim
 {
 	namespace Charting
 	{
+		/**
+		\brief	Saves the data in memory.
 
+		\details This chart is primarily used by the GUI It keeps the data buffer filled up. If the 
+		buffer starts to run over it zeros out the data and starts back at the beginning. This allows the
+		AnimatGUI::Tools::DataChart to poll the MemoryChart on a regular bases so it can suck the data
+		up. When it does this it transfers the stored data from the MemoryChart to the GUI chart and erases it
+		from the MemoryChart and starts collecting all over again. If for some reason the GUI chart does not
+		retrieve the data before the buffer is about to fill up, then we start the collection over so we do 
+		not get a buffer overrun, and that data would be lost to the GUI chart.
+		
+		\author	dcofer
+		\date	3/18/2011
+		**/
 		class ANIMAT_PORT MemoryChart : public DataChart  
 		{
 		protected:
+			/// Critical section to lock access to the data buffer for writing.
 			CStdCriticalSection m_oRowCountLock;
 
 		public:
 			MemoryChart();
 			virtual ~MemoryChart();
 
+			virtual string Type();
+
 			virtual BOOL Lock();
 			virtual void Unlock();
 
-			virtual void Load(CStdXml &oXml);
-
-			//ActiveItem overrides
-			virtual string Type() {return "MemoryChart";};
-
 			virtual void Initialize();
 			virtual void StepSimulation();
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			//Charting
 }				//AnimatSim
-
-#endif // !defined(AFX_MEMORYCHART_H__D91DC66E_01F1_47FC_AB62_766BA63FCEF0__INCLUDED_)

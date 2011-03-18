@@ -133,8 +133,8 @@ void Hinge::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Joint Element
 
-	m_lpUpperLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this);
-	m_lpLowerLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this);
+	m_lpUpperLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
+	m_lpLowerLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
 	m_lpPosFlap->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, JointPosition());
 
 	m_lpUpperLimit->Load(oXml, "UpperLimit");

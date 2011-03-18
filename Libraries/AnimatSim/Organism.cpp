@@ -235,7 +235,7 @@ void Organism::Load(CStdXml &oXml)
 
 	oXml.IntoChildElement("NervousSystem");
 
-	m_lpNervousSystem->SetSystemPointers(m_lpSim, this, NULL, NULL);
+	m_lpNervousSystem->SetSystemPointers(m_lpSim, this, NULL, NULL, TRUE);
 	m_lpNervousSystem->Load(oXml);
 
 	oXml.OutOfElem();

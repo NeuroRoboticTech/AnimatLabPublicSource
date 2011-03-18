@@ -957,7 +957,7 @@ try
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "RigidBody");
 	m_lpBody->Parent(NULL);
 
-	m_lpBody->SetSystemPointers(m_lpSim, this, NULL, NULL);
+	m_lpBody->SetSystemPointers(m_lpSim, this, NULL, NULL, TRUE);
 	m_lpBody->Load(oXml);
 	m_lpBody->CompileIDLists();
 

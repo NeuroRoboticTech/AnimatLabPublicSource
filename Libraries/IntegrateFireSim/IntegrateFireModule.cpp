@@ -180,7 +180,7 @@ Neuron *IntegrateFireNeuralModule::LoadNeuron(CStdXml &oXml)
 
 		lpNeuron = new Neuron;
 
-		lpNeuron->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL);
+		lpNeuron->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL, TRUE);
 		lpNeuron->Load(oXml);
 
 		m_aryNeurons.Add(lpNeuron);
@@ -231,7 +231,7 @@ SpikingChemicalSynapse *IntegrateFireNeuralModule::LoadSpikingChemSyn(CStdXml &o
 	{
 
 		pSpikingChemSyn = new SpikingChemicalSynapse;
-		pSpikingChemSyn->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL);
+		pSpikingChemSyn->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL, TRUE);
 		pSpikingChemSyn->Load(oXml);
 		pSpikingChemSyn->SynapseTypeID(iIndex);
 
@@ -263,7 +263,7 @@ NonSpikingChemicalSynapse *IntegrateFireNeuralModule::LoadNonSpikingChemSyn(CStd
 	{
 
 		pNonSpikingChemSyn = new NonSpikingChemicalSynapse;
-		pNonSpikingChemSyn->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL);
+		pNonSpikingChemSyn->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL, TRUE);
 		pNonSpikingChemSyn->Load(oXml);
 		pNonSpikingChemSyn->SynapseTypeID(iIndex);
 
@@ -295,7 +295,7 @@ ElectricalSynapse *IntegrateFireNeuralModule::LoadElecSyn(CStdXml &oXml, int iIn
 	{
 
 		pElecSyn = new ElectricalSynapse;
-		pElecSyn->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL);
+		pElecSyn->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL, TRUE);
 		pElecSyn->Load(oXml);
 		pElecSyn->SynapseTypeID(iIndex);
 
@@ -326,7 +326,7 @@ Connexion *IntegrateFireNeuralModule::LoadConnexion(CStdXml &oXml)
 	{
 
 		pConnexion = new Connexion;
-		pConnexion->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL);
+		pConnexion->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL, TRUE);
 		pConnexion->Load(oXml);
 
 		m_aryConnexion.Add(pConnexion);

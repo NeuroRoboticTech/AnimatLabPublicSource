@@ -1,6 +1,8 @@
-// BellGain.cpp: implementation of the BellGain class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	BellGain.cpp
+
+\brief	Implements the bell gain class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -8,24 +10,17 @@
 #include "Gain.h"
 #include "BellGain.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+
 namespace AnimatSim
 {
 	namespace Gains
 	{
+/**
+\brief	Default constructor. 
 
-/*! \brief 
-   Constructs an structure object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a structure. 
-*/
-
+\author	dcofer
+\date	3/16/2011
+**/
 BellGain::BellGain()
 {
 	m_fltA = 0;
@@ -34,17 +29,12 @@ BellGain::BellGain()
 	m_fltD = 0;
 }
 
+/**
+\brief	Destructor. 
 
-/*! \brief 
-   Destroys the structure object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the structure object..	 
-*/
-
+\author	dcofer
+\date	3/16/2011
+**/
 BellGain::~BellGain()
 {
 
@@ -54,6 +44,86 @@ try
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of BellGain\r\n", "", -1, FALSE, TRUE);}
 }
+
+/**
+\brief	Gets A parameter of bell eqation: Out = B*e^(-C*(In-A)^2)+D
+
+\author	dcofer
+\date	3/16/2011
+
+\return	A param. 
+**/
+float BellGain::A() {return m_fltA;}
+
+/**
+\brief	Sets A parameter of bell eqation: Out = B*e^(-C*(In-A)^2)+D
+
+\author	dcofer
+\date	3/16/2011
+
+\param	fltVal	The new value. 
+**/
+void BellGain::A(float fltVal) {m_fltA = fltVal;}
+
+/**
+\brief	Gets B parameter of bell eqation: Out = B*e^(-C*(In-A)^2)+D
+
+\author	dcofer
+\date	3/16/2011
+
+\return	B param. 
+**/
+float BellGain::B() {return m_fltB;}
+
+/**
+\brief	Sets B parameter of bell eqation: Out = B*e^(-C*(In-A)^2)+D
+
+\author	dcofer
+\date	3/16/2011
+
+\param	fltVal	The new value. 
+**/
+void BellGain::B(float fltVal) {m_fltB = fltVal;}
+
+/**
+\brief	Gets C parameter of bell eqation: Out = B*e^(-C*(In-A)^2)+D
+
+\author	dcofer
+\date	3/16/2011
+
+\return	C param. 
+**/
+float BellGain::C() {return m_fltC;}
+
+/**
+\brief	Sets C parameter of bell eqation: Out = B*e^(-C*(In-A)^2)+D
+
+\author	dcofer
+\date	3/16/2011
+
+\param	fltVal	The new value. 
+**/
+void BellGain::C(float fltVal) {m_fltC = fltVal;}
+
+/**
+\brief	Sets D parameter of bell eqation: Out = B*e^(-C*(In-A)^2)+D
+
+\author	dcofer
+\date	3/16/2011
+
+\return	D param. 
+**/
+float BellGain::D() {return m_fltD;}
+
+/**
+\brief	Sets D parameter of bell eqation: Out = B*e^(-C*(In-A)^2)+D
+
+\author	dcofer
+\date	3/16/2011
+
+\param	fltVal	The new value. 
+**/
+void BellGain::D(float fltVal) {m_fltD = fltVal;}
 
 float BellGain::CalculateGain(float fltInput)
 {
@@ -80,10 +150,10 @@ void BellGain::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Adapter Element
 
-	m_fltA = oXml.GetChildFloat("A");
-	m_fltB = oXml.GetChildFloat("B");
-	m_fltC = oXml.GetChildFloat("C");
-	m_fltD = oXml.GetChildFloat("D");
+	A(oXml.GetChildFloat("A"));
+	B(oXml.GetChildFloat("B"));
+	C(oXml.GetChildFloat("C"));
+	D(oXml.GetChildFloat("D"));
 
 	oXml.OutOfElem(); //OutOf Adapter Element
 }

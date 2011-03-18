@@ -1,6 +1,8 @@
-// FileChart.cpp: implementation of the FileChart class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	FileChart.cpp
+
+\brief	Implements the file chart class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -36,15 +38,22 @@ namespace AnimatSim
 {
 	namespace Charting
 	{
+/**
+\brief	Default constructor.
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
+\author	dcofer
+\date	3/18/2011
+**/
 FileChart::FileChart()
 {
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/18/2011
+**/
 FileChart::~FileChart()
 {
 
@@ -53,6 +62,34 @@ try
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of FileChart\r\n", "", -1, FALSE, TRUE);}
+}
+
+string FileChart::Type() {return "FileChart";}
+
+/**
+\brief	Gets the output filename.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	Output file name.
+**/
+string FileChart::OutputFilename() {return m_strOutputFilename;}
+
+/**
+\brief	Sets the Output filename.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strVal	The new name. 
+**/
+void FileChart::OutputFilename(string strVal) 
+{
+	if(Std_IsBlank(strVal)) 
+		THROW_ERROR(Al_Err_lFilenameBlank, Al_Err_strFilenameBlank);
+
+	m_strOutputFilename = strVal;
 }
 
 void FileChart::Initialize()
@@ -88,13 +125,17 @@ void FileChart::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into FileChart Element
 
-	m_strOutputFilename = oXml.GetChildString("OutputFilename");
-	if(Std_IsBlank(m_strOutputFilename)) 
-		THROW_ERROR(Al_Err_lFilenameBlank, Al_Err_strFilenameBlank);
+	OutputFilename(oXml.GetChildString("OutputFilename"));
 
 	oXml.OutOfElem(); //OutOf FileChart Element
 }
 
+/**
+\brief	Saves the data to the specified output file in a tsv format.
+
+\author	dcofer
+\date	3/18/2011
+**/
 void FileChart::SaveOutput()
 {
 	long lRow, lCol, lIndex;

@@ -1,6 +1,8 @@
-// Gain.cpp: implementation of the Gain class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Gain.cpp
+
+\brief	Implements the gain base class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -31,24 +33,17 @@
 #include "Odor.h"
 #include "Simulator.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+
 namespace AnimatSim
 {
 	namespace Gains
 	{
+/**
+\brief	Default constructor. 
 
-/*! \brief 
-   Constructs an structure object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a structure. 
-*/
-
+\author	dcofer
+\date	3/16/2011
+**/
 Gain::Gain()
 {
 	m_bUseLimits = FALSE;
@@ -58,17 +53,12 @@ Gain::Gain()
 	m_fltUpperOutput = 0;
 }
 
+/**
+\brief	Destructor. 
 
-/*! \brief 
-   Destroys the structure object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the structure object..	 
-*/
-
+\author	dcofer
+\date	3/16/2011
+**/
 Gain::~Gain()
 {
 
@@ -79,20 +69,120 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Gain\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Tells whether limits should be used. 
+
+\author	dcofer
+\date	3/16/2011
+
+\return	true if using limits, false otherwise. 
+**/
+BOOL Gain::UseLimits() {return m_bUseLimits;}
+
+/**
+\brief	Sets if limits should be used. 
+
+\author	dcofer
+\date	3/16/2011
+
+\param	bVal	true to use limits. 
+**/
+void Gain::UseLimits(BOOL bVal) {m_bUseLimits = bVal;}
+
+/**
+\brief	Gets the lower limit. 
+
+\author	dcofer
+\date	3/16/2011
+
+\return	Lower limit. 
+**/
+float Gain::LowerLimit() {return m_fltLowerLimit;}
+
+/**
+\brief	Sets the Lower limit. 
+
+\author	dcofer
+\date	3/16/2011
+
+\param	fltVal	The new value. 
+**/
+void Gain::LowerLimit(float fltVal) {m_fltLowerLimit = fltVal;}
+
+/**
+\brief	Gets the upper limit. 
+
+\author	dcofer
+\date	3/16/2011
+
+\return	Upper limit. 
+**/
+float Gain::UpperLimit() {return m_fltUpperLimit;}
+
+/**
+\brief	Sets the Upper limit. 
+
+\author	dcofer
+\date	3/16/2011
+
+\param	fltVal	The new value. 
+**/
+void Gain::UpperLimit(float fltVal) {m_fltUpperLimit = fltVal;}
+
+/**
+\brief	Gets the lower output. 
+
+\author	dcofer
+\date	3/16/2011
+
+\return	The lower output. 
+**/
+float Gain::LowerOutput() {return m_fltLowerOutput;}
+
+/**
+\brief	Sets the Lower output. 
+
+\author	dcofer
+\date	3/16/2011
+
+\param	fltVal	The new value. 
+**/
+void Gain::LowerOutput(float fltVal) {m_fltLowerOutput = fltVal;}
+
+/**
+\brief	Gets the upper output. 
+
+\author	dcofer
+\date	3/16/2011
+
+\return	Upper output. 
+**/
+float Gain::UpperOutput() {return m_fltUpperOutput;}
+
+/**
+\brief	Sets the Upper output. 
+
+\author	dcofer
+\date	3/16/2011
+
+\param	fltVal	The new value. 
+**/
+void Gain::UpperOutput(float fltVal) {m_fltUpperOutput = fltVal;}
+
 void Gain::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 
 	oXml.IntoElem();  //Into Adapter Element
 
-	m_bUseLimits = oXml.GetChildBool("UseLimits", m_bUseLimits);
+	UseLimits(oXml.GetChildBool("UseLimits", m_bUseLimits));
 
 	if(m_bUseLimits)
 	{
-		m_fltLowerLimit = oXml.GetChildFloat("LowerLimit");
-		m_fltLowerOutput = oXml.GetChildFloat("LowerOutput");
-		m_fltUpperLimit = oXml.GetChildFloat("UpperLimit");
-		m_fltUpperOutput = oXml.GetChildFloat("UpperOutput");
+		LowerLimit(oXml.GetChildFloat("LowerLimit"));
+		LowerOutput(oXml.GetChildFloat("LowerOutput"));
+		UpperLimit(oXml.GetChildFloat("UpperLimit"));
+		UpperOutput(oXml.GetChildFloat("UpperOutput"));
 		
 		Std_IsAboveMin(m_fltLowerLimit, m_fltUpperLimit, TRUE, "UpperLimit");
 	}
@@ -100,6 +190,19 @@ void Gain::Load(CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf Adapter Element
 }
 
+/**
+\brief	Loads a gain object. 
+
+\author	dcofer
+\date	3/16/2011
+
+\param [in,out]	lpSim	Pointer to a simulation. 
+\param	strName			Name of the xml element. 
+\param [in,out]	oXml	The xml being loaded. 
+
+\return	Pointer to the loaded gain. 
+\exception Throws an exception if there is a problem during the load.
+**/
 Gain ANIMAT_PORT *LoadGain(Simulator *lpSim, string strName, CStdXml &oXml)
 {
 	Gain *lpGain = NULL;
@@ -116,7 +219,7 @@ Gain ANIMAT_PORT *LoadGain(Simulator *lpSim, string strName, CStdXml &oXml)
 		if(!lpGain)
 			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "CurrentGraph");
 
-		lpGain->SetSystemPointers(lpSim, NULL, NULL, NULL);
+		lpGain->SetSystemPointers(lpSim, NULL, NULL, NULL, TRUE);
 		lpGain->Load(oXml);
 
 		return lpGain;

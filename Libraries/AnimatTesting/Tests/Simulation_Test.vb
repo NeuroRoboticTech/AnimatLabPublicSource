@@ -10,15 +10,31 @@ Imports AnimatGUI
 Imports AnimatGUI.Framework
 Imports NUnit.Extensions.Forms
 
-Namespace Testing
+''' \namespace AnimatTesting::Tests 
+'''
+''' \brief  Contains unit test classes. 
+Namespace Tests
 
+    ''' \brief  Simulation Unit tests. 
+    '''
+    ''' \author dcofer
+    ''' \date   3/16/2011
     <TestFixture()> _
     Public Class Simulation_Test
         Inherits NUnitFormTest
 
+        ''' Reference to the animatlab application form
         Protected m_doApp As AnimatGUI.Forms.AnimatApplication
+
+        ''' A blocking event that is used to wait until a simulation has stopped.
         Protected m_doSimEvent As New Threading.ManualResetEvent(False)
 
+        ''' \brief  Sets up the tests
+        ''' 
+        ''' \details This opens the AnimatLab application form and hooks in the necessary events
+        '''
+        ''' \author dcofer
+        ''' \date   3/16/2011
         Public Overrides Sub Setup()
             MyBase.Setup()
 
@@ -30,10 +46,17 @@ Namespace Testing
 
         End Sub
 
+        ''' \brief  Tears down the test
+        ''' 		
+        ''' \details This closes the AnimatLab application form.
+        '''
+        ''' \author dcofer
+        ''' \date   3/16/2011
         Public Overrides Sub TearDown()
             m_doApp.Close()
         End Sub
-        <Test()> _
+
+         <Test()> _
         Public Sub MySimTest()
             Dim iVal As Integer = 5
 
@@ -48,7 +71,14 @@ Namespace Testing
 
         End Sub
 
-
+        ''' \brief  Called when the simulation stopped event is called.
+        ''' 		
+        ''' \details This is an event handler for the AnimatLab application. When the SimulationStopped event is fired
+        ''' 		 this is called and it sets the wait event to signal to the waiting test that the simulation has stopped running
+        ''' 		 and that it can then proceed with the rest of its processing. 
+        '''
+        ''' \author dcofer
+        ''' \date   3/16/2011
         Private Sub OnSimulationStopped()
             m_doSimEvent.Set()
         End Sub

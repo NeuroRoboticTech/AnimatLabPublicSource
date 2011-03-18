@@ -1,6 +1,8 @@
-// ExternalStimulus.cpp: implementation of the ExternalStimulus class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ExternalStimulus.cpp
+
+\brief	Implements the external stimulus class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -36,18 +38,24 @@ namespace AnimatSim
 {
 	namespace ExternalStimuli
 	{
+/**
+\brief	Default constructor. 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
+\author	dcofer
+\date	3/16/2011
+**/
 ExternalStimulus::ExternalStimulus()
 {
 }
 
+/**
+\brief	Destructor. 
+
+\author	dcofer
+\date	3/16/2011
+**/
 ExternalStimulus::~ExternalStimulus()
 {
-	m_fltInput = 0;
 }
 
 BOOL ExternalStimulus::SetData(string strDataType, string strValue, BOOL bThrowError)

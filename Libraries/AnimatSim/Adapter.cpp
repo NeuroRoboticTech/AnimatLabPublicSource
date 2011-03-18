@@ -1,6 +1,8 @@
-// Adapter.cpp: implementation of the Adapter class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Adapter.cpp
+
+\brief	Implements the adapter class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -29,24 +31,17 @@
 #include "Odor.h"
 #include "Simulator.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+
 namespace AnimatSim
 {
 	namespace Adapters
 	{
+/**
+\brief	Default constructor.
 
-/*! \brief 
-   Constructs an structure object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a structure. 
-*/
-
+\author	dcofer
+\date	3/18/2011
+**/
 Adapter::Adapter()
 {
 	m_lpGain = NULL;
@@ -55,17 +50,12 @@ Adapter::Adapter()
 	m_lpTargetNode = NULL;
 }
 
+/**
+\brief	Destructor.
 
-/*! \brief 
-   Destroys the structure object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the structure object..	 
-*/
-
+\author	dcofer
+\date	3/18/2011
+**/
 Adapter::~Adapter()
 {
 
@@ -80,8 +70,187 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Adapter\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Gets the name of the source NeuralModule.
 
-//Node Overrides
+\author	dcofer
+\date	3/18/2011
+
+\return	Source NeuralModule name.
+**/
+string Adapter::SourceModule() {return m_strSourceModule;}
+
+/**
+\brief	Sets the Source NeuralModule name.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strName	Name of the source NeuralModule. 
+**/
+void Adapter::SourceModule(string strName)
+{
+	if(Std_IsBlank(strName)) 
+		THROW_TEXT_ERROR(Al_Err_lModuleNameBlank, Al_Err_strModuleNameBlank, ". Source Module. ID: " + strName);
+	m_strSourceModule = strName;
+}
+
+/**
+\brief	Gets the GUID ID of the source node where we will get the source data variable.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	GUID ID of the source node.
+**/
+string Adapter::SourceID() {return m_strSourceID;}
+
+/**
+\brief	Sets the GUID ID of the Source node.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strID	GUID ID for the source node. 
+**/
+void Adapter::SourceID(string strID)
+{
+	if(Std_IsBlank(strID)) 
+		THROW_TEXT_ERROR(Al_Err_lDataTypeBlank, Al_Err_strDataTypeBlank, " Source ID");
+	m_strSourceID = strID;
+}
+
+/**
+\brief	Gets the source data type.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	Source data type.
+**/
+string Adapter::SourceDataType() {return m_strSourceDataType;}
+
+/**
+\brief	Sets the source data type.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strType	Source DataType. 
+**/
+void Adapter::SourceDataType(string strType)
+{
+	if(Std_IsBlank(strType)) 
+		THROW_TEXT_ERROR(Al_Err_lDataTypeBlank, Al_Err_strDataTypeBlank, " Source DataType");
+	m_strSourceDataType = strType;
+}
+
+/**
+\brief	Gets the source node.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	Pointer to the source node.
+**/
+Node *Adapter::SourceNode() {return m_lpSourceNode;}
+
+/**
+\brief	Gets the name of the target NeuralModule.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	Target NeuralModule name.
+**/
+string Adapter::TargetModule() {return m_strTargetModule;}
+
+/**
+\brief	Sets the target NeuralModule name.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strName	Name of the target NeuralModule. 
+**/
+void Adapter::TargetModule(string strName)
+{
+	if(Std_IsBlank(strName)) 
+		THROW_TEXT_ERROR(Al_Err_lModuleNameBlank, Al_Err_strModuleNameBlank, ". Target Module. ID: " + strName);
+	m_strTargetModule = strName;
+}
+
+/**
+\brief	Gets the GUID ID of the target node where we will add the transformed data variable.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	GUID ID of the target node.
+**/
+string Adapter::TargetID() {return m_strTargetID;}
+
+
+/**
+\brief	Sets the GUID ID of the target node.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strID	GUID ID for the target node. 
+**/
+void Adapter::TargetID(string strID)
+{
+	if(Std_IsBlank(strID)) 
+		THROW_TEXT_ERROR(Al_Err_lDataTypeBlank, Al_Err_strDataTypeBlank, " Target ID");
+	m_strTargetID = strID;
+}
+
+/**
+\brief	Gets the target data type.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	Target data type.
+**/
+string Adapter::TargetDataType() {return m_strTargetDataType;}
+
+/**
+\brief	Sets the target data type.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strType	Target DataType. 
+**/
+void Adapter::TargetDataType(string strType)
+{
+	if(Std_IsBlank(strType)) 
+		THROW_TEXT_ERROR(Al_Err_lDataTypeBlank, Al_Err_strDataTypeBlank, " Target DataType");
+	m_strTargetDataType = strType;
+}
+
+/**
+\brief	Gets the target node.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	Pointer to the target node.
+**/
+Node *Adapter::TargetNode() {return m_lpTargetNode;}
+
+/**
+\brief	Gets the poitner to the gain function.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	Pointer to the gain.
+**/
+Gain *Adapter::GetGain() {return m_lpGain;}
+
 void Adapter::AddExternalNodeInput(float fltInput)
 {
 	THROW_TEXT_ERROR(Al_Err_lOpNotDefinedForAdapter, Al_Err_strOpNotDefinedForAdapter, "AddExternalNodeInput");
@@ -137,38 +306,16 @@ void Adapter::Load(CStdXml &oXml)
 	oXml.IntoElem();  //Into Adapter Element
 
 	//Load Source Data
-	m_strSourceModule = oXml.GetChildString("SourceModule");
-	if(Std_IsBlank(m_strSourceModule)) 
-		THROW_TEXT_ERROR(Al_Err_lModuleNameBlank, Al_Err_strModuleNameBlank, ". Source Module. ID: " + m_strID);
+	SourceModule(oXml.GetChildString("SourceModule"));
+	SourceID(oXml.GetChildString("SourceID"));
+	SourceDataType(oXml.GetChildString("SourceDataType"));
 
-	m_strSourceID = oXml.GetChildString("SourceID");
-	if(Std_IsBlank(m_strSourceID)) 
-		THROW_TEXT_ERROR(Al_Err_lDataTypeBlank, Al_Err_strDataTypeBlank, " Source ID");
+	//Load Target Data
+	TargetModule(oXml.GetChildString("TargetModule"));
+	TargetID(oXml.GetChildString("TargetID"));
 
-	m_strSourceDataType = oXml.GetChildString("SourceDataType");
-	if(Std_IsBlank(m_strSourceDataType)) 
-		THROW_TEXT_ERROR(Al_Err_lDataTypeBlank, Al_Err_strDataTypeBlank, " Source DataType");
-
-	m_strTargetModule = oXml.GetChildString("TargetModule");
-	if(Std_IsBlank(m_strTargetModule)) 
-		THROW_TEXT_ERROR(Al_Err_lModuleNameBlank, Al_Err_strModuleNameBlank, ". Target Module. ID: " + m_strID);
-
-	m_strTargetID = oXml.GetChildString("TargetID");
-	if(Std_IsBlank(m_strTargetID)) 
-		THROW_TEXT_ERROR(Al_Err_lDataTypeBlank, Al_Err_strDataTypeBlank, " Target ID");
-
-	//Now lets load this gain object.
-	oXml.IntoChildElement("Gain");
-	string strModuleName = oXml.GetChildString("ModuleName", "");
-	string strType = oXml.GetChildString("Type");
-	oXml.OutOfElem(); //OutOf Gain Element
-
-	m_lpGain = dynamic_cast<AnimatSim::Gains::Gain *>(m_lpSim->CreateObject(strModuleName, "Gain", strType));
-	if(!m_lpGain)
-		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Gain");
-
-	m_lpGain->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this);
-	m_lpGain->Load(oXml);
+	m_lpGain = LoadGain(m_lpSim, "Gain", oXml);
+	m_lpGain->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, TRUE);
 
 	oXml.OutOfElem(); //OutOf Adapter Element
 }

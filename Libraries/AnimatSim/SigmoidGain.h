@@ -1,30 +1,53 @@
-// SigmoidGain.h: interface for the SigmoidGain class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatSim\SigmoidGain.h
 
-#if !defined(AFX_SIGMOID_GAIN_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)
-#define AFX_SIGMOID_GAIN_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_
+\brief	Declares the sigmoid gain class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
 	namespace Gains
 	{
+			/**
+			\brief	Sigmoid gain. 
+					
+			\details This gain calculates a sigmoidally shaped distribution curve. Out = D+(B/(1+e^(C*(A-In))))
 
+			\author	dcofer
+			\date	3/16/2011
+			**/
 			class ANIMAT_PORT SigmoidGain : public Gain 
 			{
 			protected:
+				/// The A parameter of the gain.
 				float m_fltA;
+
+				/// The B parameter of the gain.
 				float m_fltB;
+
+				/// The C parameter of the gain.
 				float m_fltC;
+
+				/// The D parameter of the gain.
 				float m_fltD;
 
 			public:
 				SigmoidGain();
 				virtual ~SigmoidGain();
+				
+				float A();
+				void A(float fltVal);
+
+				float B();
+				void B(float fltVal);
+
+				float C();
+				void C(float fltVal);
+
+				float D();
+				void D(float fltVal);
 
 				virtual float CalculateGain(float fltInput);
 				virtual void Load(CStdXml &oXml);
@@ -32,5 +55,3 @@ namespace AnimatSim
 
 	}			//Gains
 }				//AnimatSim
-
-#endif // !defined(AFX_SIGMOID_GAIN_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)

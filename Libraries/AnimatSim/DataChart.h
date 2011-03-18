@@ -1,3 +1,8 @@
+/**
+\file	DataChart.h
+
+\brief	Declares the data chart class.
+**/
 
 #pragma once
 
@@ -11,25 +16,62 @@ namespace AnimatSim
 	**/
 	namespace Charting
 	{
+		/**
+		\brief	Data chart base class.
 
+		\details This is the base class for all charting activity. It is derived from an ActivatedItem, so it has a start/end time where
+		it is activated and then deactivated. The user specifies a series of DataColumn objects for the chart. Each DataColumn is responsible
+		for collecting data for a single variable from somewhere in the system. You can control how often the data is collected. The data is
+		stored in memory buffers. There are several derived types of Data charts. The FileChart saves the stored data points into a file upon
+		deactivation, while the MemoryChart stores the data in-memory in a continuing basis.
+		
+		\author	dcofer
+		\date	3/18/2011
+		**/
 		class ANIMAT_PORT DataChart : public ActivatedItem  
 		{
 		protected:
+			/// Full pathname of the project file
 			string m_strProjectPath;
+
+			/// Filename of the configuration file
 			string m_strConfigFilename;
+
+			/// true to set the start and end time. If false then the chart collects continuously.
 			BOOL m_bSetStartEndTime;
+
+			/// Tells what the time slice step interval to use when collecting data. This is 
 			short m_iCollectInterval;
+
+			/// The number of time slices where we will collect data
 			long m_lCollectTimeWindow;
+
+			/// The time duration where we will collect data
 			float m_fltCollectTimeWindow;
 
+			/// The array of datacolumns columns. This is a sorted map that is used to get columns based on their ID.
+			// The columns added to this map are copies of the pointer. They are <b>not</b> deleted.
 			CStdMap<string, DataColumn *> m_aryColumnsMap;
+
+			/// The primary array of data columns. This array deletes the columns when destructed.
 			CStdPtrArray<DataColumn> m_aryDataColumns;
+
+			/// Buffer for time data points.
 			float *m_aryTimeBuffer;
+
+			/// Buffer for data variable points.
 			float *m_aryDataBuffer;
 
+			/// Number of data columns
 			long m_lColumnCount;
+
+			/// Number of rows in the buffer
 			long m_lRowCount;
+
+			/// The currently selected column
 			int m_lCurrentCol;
+
+			/// The currently selected row
 			int m_lCurrentRow;
 
 			virtual long CalculateChartColumnCount();
@@ -40,48 +82,49 @@ namespace AnimatSim
 			DataChart();
 			virtual ~DataChart();
 
+			virtual string Type();
+
 			virtual void StartTime(float fltVal);
 			virtual void EndTime(float fltVal);
 
-			BOOL SetStartEndTime() {return m_bSetStartEndTime;};
-			void SetStartEndTime(BOOL bVal);
+			virtual BOOL SetStartEndTime();
+			virtual void SetStartEndTime(BOOL bVal);
 
-			long BufferSize() {return m_lRowCount*m_lColumnCount;};
-			long UsedBufferSize() {return m_lCurrentCol*m_lCurrentRow;};
+			virtual long BufferSize();
+			virtual long UsedBufferSize();
 
-			long BufferByteSize() {return BufferSize()*sizeof(float);};
-			long UsedBufferByteSize() {return UsedBufferSize()*sizeof(float);};
+			virtual long BufferByteSize();
+			virtual long UsedBufferByteSize();
 
-			float *TimeBuffer() {return m_aryTimeBuffer;};
-			float *DataBuffer() {return m_aryDataBuffer;};
+			virtual float *TimeBuffer();
+			virtual float *DataBuffer();
 
-			int CollectInterval() {return m_iCollectInterval;};
-			void CollectInterval(int iVal);
-			void CollectInterval(float fltVal);
+			virtual int CollectInterval();
+			virtual void CollectInterval(int iVal);
+			virtual void CollectInterval(float fltVal);
 
-			long CollectTimeWindow() {return m_lCollectTimeWindow;};
-			void CollectTimeWindow(long lVal);
-			void CollectTimeWindow(float fltVal);
+			virtual long CollectTimeWindow();
+			virtual void CollectTimeWindow(long lVal);
+			virtual void CollectTimeWindow(float fltVal);
 
-			string ProjectPath() {return m_strProjectPath;};
-			void ProjectPath(string strVal) {m_strProjectPath = strVal;};
+			virtual string ProjectPath();
+			virtual void ProjectPath(string strVal);
 
-			long ColumnCount() {return m_lColumnCount;};
+			virtual long ColumnCount();
 
-			long CurrentRow() {return m_lCurrentRow;};
-			virtual void CurrentRow(long iVal) {m_lCurrentRow = iVal;};
+			virtual long CurrentRow();
+			virtual void CurrentRow(long iVal);
+
+			virtual BOOL Lock();
+			virtual void Unlock();
 
 			virtual void AddData(int iColumn, int iRow, float fltVal);
 
 			virtual void Load(string strProjectPath, string strConfigFile);
 			virtual void Load(CStdXml &oXml);
-			virtual void LoadChart(CStdXml &oXml);
-
-			//ActiveItem overrides
-			virtual string Type() {return "DataChart";};
 
 			virtual void AddColumn(DataColumn *lpColumn);
-			virtual void DataChart::AddColumn(string strXml);
+			virtual void AddColumn(string strXml);
 			virtual void RemoveColumn(string strID, BOOL bThrowError = TRUE);
 			virtual DataColumn *FindColumn(string strID, BOOL bThrowError = TRUE);
 
@@ -96,10 +139,6 @@ namespace AnimatSim
 			virtual void ReInitialize();
 			virtual void ResetSimulation();
 			virtual void StepSimulation();
-
-			virtual BOOL Lock() {return TRUE;};
-			virtual void Unlock() {};
-
 		};
 
 	}			//Charting

@@ -1,13 +1,10 @@
-// ExternalInputStimulus.h: interface for the ExternalInputStimulus class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ExternalInputStimulus.h
 
-#if !defined(AFX_EXTERNAL_INPUT_STIMULUS_H__AEBF2DF9_E7A0_4ED2_83CD_BE74B7D74E59__INCLUDED_)
-#define AFX_EXTERNAL_INPUT_STIMULUS_H__AEBF2DF9_E7A0_4ED2_83CD_BE74B7D74E59__INCLUDED_
+\brief	Declares the external input stimulus class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace AnimatSim
 {
@@ -17,28 +14,35 @@ namespace AnimatSim
 		class ANIMAT_PORT ExternalInputStimulus  : public ExternalStimulus
 		{
 		protected:
-			string m_strStructureID;
-			string m_strNodeID;
+			/// GUID ID of the target node to enable.
+			string m_strTargetNodeID;
 
+			/// The post-fix equation that controls the input values to the node.
 			string m_strInputEquation;
+
+			/// Pointer to the post-fix evaluator.
 			CStdPostFixEval *m_lpEval;
 
+			/// The current input value that will be applied to the node.
 			float m_fltInput;
 
 		public:
 			ExternalInputStimulus();
 			virtual ~ExternalInputStimulus();
 			
-			float Input() {return m_fltInput;};
-			void Input(float fltVal) {m_fltInput = fltVal;};
+			virtual string Type();
 
-			string InputEquation() {return m_strInputEquation;};
-			void InputEquation(string strVal);
+			virtual string TargetNodeID();
+			virtual void TargetNodeID(string strID);
+			
+			virtual float Input();
+			virtual void Input(float fltVal);
+
+			virtual string InputEquation();
+			virtual void InputEquation(string strVal);
 
 			virtual void Load(CStdXml &oXml);
 
-			//ActiveItem overrides
-			virtual string Type() {return "ExternalInput";};
 			virtual void Activate();
 			virtual void Initialize();
 			virtual void StepSimulation();
@@ -50,5 +54,3 @@ namespace AnimatSim
 
 	}			//ExternalStimuli
 }				//VortexAnimatSim
-
-#endif // !defined(AFX_EXTERNAL_INPUT_STIMULUS_H__AEBF2DF9_E7A0_4ED2_83CD_BE74B7D74E59__INCLUDED_)

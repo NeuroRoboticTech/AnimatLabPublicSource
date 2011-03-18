@@ -309,7 +309,7 @@ try
 	if(!lpNeuron)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Neuron");
 
-	lpNeuron->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL);
+	lpNeuron->SetSystemPointers(m_lpSim, m_lpStructure, this, NULL, TRUE);
 	lpNeuron->Load(oXml);
 	
 	m_aryNeurons.Add(lpNeuron);

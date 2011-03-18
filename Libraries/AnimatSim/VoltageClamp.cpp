@@ -1,6 +1,8 @@
-// VoltageClamp.cpp: implementation of the VoltageClamp class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	VoltageClamp.cpp
+
+\brief	Implements the voltage clamp class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -37,14 +39,14 @@ namespace AnimatSim
 {
 	namespace ExternalStimuli
 	{
+/**
+\brief	Default constructor. 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
+\author	dcofer
+\date	3/17/2011
+**/
 VoltageClamp::VoltageClamp()
 {
-	m_lpOrganism = NULL;
 	m_lpNode = NULL;
 	m_lpExternalCurrent = NULL;
 	m_lpTotalCurrent = NULL;
@@ -55,12 +57,17 @@ VoltageClamp::VoltageClamp()
 	m_fltTargetCurrent = 0;
 }
 
+/**
+\brief	Destructor. 
+
+\author	dcofer
+\date	3/17/2011
+**/
 VoltageClamp::~VoltageClamp()
 {
 
 try
 {
-	m_lpOrganism = NULL;
 	m_lpNode = NULL;
 	m_lpExternalCurrent = NULL;
 	m_lpTotalCurrent = NULL;
@@ -71,6 +78,51 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of VoltageClamp\r\n", "", -1, FALSE, TRUE);}
 }
 
+string VoltageClamp::Type() {return "VoltageClamp";}
+
+/**
+\brief	Gets the GUID ID of the target node that will be enabled. 
+
+\author	dcofer
+\date	3/17/2011
+
+\return	GUID ID of the node. 
+**/
+string VoltageClamp::TargetNodeID() {return m_strTargetNodeID;}
+
+/**
+\brief	Sets the GUID ID of the target node to enable. 
+
+\author	dcofer
+\date	3/17/2011
+
+\param	strID	GUID ID. 
+**/
+void VoltageClamp::TargetNodeID(string strID)
+{
+	if(Std_IsBlank(strID)) 
+		THROW_ERROR(Al_Err_lBodyIDBlank, Al_Err_strBodyIDBlank);
+	m_strTargetNodeID = strID;
+}
+
+/**
+\brief	Gets the target voltage for the clamp. 
+
+\author	dcofer
+\date	3/17/2011
+
+\return	Target voltage. 
+**/
+float VoltageClamp::Vtarget() {return m_fltVtarget;}
+
+/**
+\brief	Sets the target voltage for the clamp. 
+
+\author	dcofer
+\date	3/17/2011
+
+\param	fltVal	The new value. 
+**/
 void VoltageClamp::Vtarget(float fltVal)
 {
 	m_fltVtarget = fltVal;
@@ -82,7 +134,6 @@ void VoltageClamp::Initialize()
 	ExternalStimulus::Initialize();
 
 	//Lets try and get the node we will dealing with.
-	m_lpOrganism = m_lpSim->FindOrganism(m_strOrganismID);
 	m_lpNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strTargetNodeID));
 	if(!m_lpNode)
 		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strTargetNodeID);
@@ -97,8 +148,7 @@ void VoltageClamp::Initialize()
 
 	if(!m_lpExternalCurrent)
 		THROW_TEXT_ERROR(Al_Err_lDataPointNotFound, Al_Err_strDataPointNotFound, 
-		("Stimulus: " + m_strID + " OrganismID: " + m_strOrganismID + " NeuralModule: " +  
- 		 m_strNeuralModule + "Node: " + m_strTargetNodeID + " DataType: ExternalCurrent"));
+		("Stimulus: " + m_strID + "Node: " + m_strTargetNodeID + " DataType: ExternalCurrent"));
 }
 
 void VoltageClamp::Activate()
@@ -164,20 +214,8 @@ void VoltageClamp::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Simulus Element
 
-	m_strNeuralModule = oXml.GetChildString("ModuleName");
-	if(Std_IsBlank(m_strNeuralModule)) 
-		THROW_ERROR(Al_Err_lNeuralModuleNameBlank, Al_Err_strNeuralModuleNameBlank);
-
-	m_strOrganismID = oXml.GetChildString("OrganismID");
-
-	if(Std_IsBlank(m_strOrganismID))
-		THROW_PARAM_ERROR(Al_Err_lOrganismIDBlank, Al_Err_strOrganismIDBlank, "ID", m_strID);
-
-	m_strTargetNodeID = oXml.GetChildString("TargetNodeID");
-	if(Std_IsBlank(m_strTargetNodeID)) 
-		THROW_TEXT_ERROR(Al_Err_lDataTypeBlank, Al_Err_strDataTypeBlank, " Target ID");
-
-	m_fltVtarget = oXml.GetChildFloat("Vtarget", m_fltVtarget);
+	TargetNodeID(oXml.GetChildString("TargetNodeID"));
+	Vtarget(oXml.GetChildFloat("Vtarget", m_fltVtarget));
 
 	oXml.OutOfElem(); //OutOf Simulus Element
 }

@@ -1,6 +1,8 @@
-// PolynomialGain.cpp: implementation of the PolynomialGain class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	PolynomialGain.cpp
+
+\brief	Implements the polynomial gain class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -9,24 +11,17 @@
 #include "Gain.h"
 #include "PolynomialGain.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+
 namespace AnimatSim
 {
 	namespace Gains
 	{
+/**
+\brief	Default constructor. 
 
-/*! \brief 
-   Constructs an structure object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a structure. 
-*/
-
+\author	dcofer
+\date	3/16/2011
+**/
 PolynomialGain::PolynomialGain()
 {
 	m_fltA = 0;
@@ -35,17 +30,12 @@ PolynomialGain::PolynomialGain()
 	m_fltD = 0;
 }
 
+/**
+\brief	Destructor. 
 
-/*! \brief 
-   Destroys the structure object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the structure object..	 
-*/
-
+\author	dcofer
+\date	3/16/2011
+**/
 PolynomialGain::~PolynomialGain()
 {
 
@@ -55,6 +45,86 @@ try
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of PolynomialGain\r\n", "", -1, FALSE, TRUE);}
 }
+
+/**
+\brief	Gets A parameter of polynomial eqation: Out = A*In^3 + B*In^2 + C*In + D
+
+\author	dcofer
+\date	3/16/2011
+
+\return	A param. 
+**/
+float PolynomialGain::A() {return m_fltA;}
+
+/**
+\brief	Sets A parameter of polynomial eqation: Out = A*In^3 + B*In^2 + C*In + D
+
+\author	dcofer
+\date	3/16/2011
+
+\param	fltVal	The new value. 
+**/
+void PolynomialGain::A(float fltVal) {m_fltA = fltVal;}
+
+/**
+\brief	Gets B parameter of polynomial eqation: Out = A*In^3 + B*In^2 + C*In + D
+
+\author	dcofer
+\date	3/16/2011
+
+\return	B param. 
+**/
+float PolynomialGain::B() {return m_fltB;}
+
+/**
+\brief	Sets B parameter of polynomial eqation: Out = A*In^3 + B*In^2 + C*In + D
+
+\author	dcofer
+\date	3/16/2011
+
+\param	fltVal	The new value. 
+**/
+void PolynomialGain::B(float fltVal) {m_fltB = fltVal;}
+
+/**
+\brief	Gets C parameter of polynomial eqation: Out = A*In^3 + B*In^2 + C*In + D
+
+\author	dcofer
+\date	3/16/2011
+
+\return	C param. 
+**/
+float PolynomialGain::C() {return m_fltC;}
+
+/**
+\brief	Sets C parameter of polynomial eqation: Out = A*In^3 + B*In^2 + C*In + D
+
+\author	dcofer
+\date	3/16/2011
+
+\param	fltVal	The new value. 
+**/
+void PolynomialGain::C(float fltVal) {m_fltC = fltVal;}
+
+/**
+\brief	Sets D parameter of polynomial eqation: Out = A*In^3 + B*In^2 + C*In + D
+
+\author	dcofer
+\date	3/16/2011
+
+\return	D param. 
+**/
+float PolynomialGain::D() {return m_fltD;}
+
+/**
+\brief	Sets D parameter of polynomial eqation: Out = A*In^3 + B*In^2 + C*In + D
+
+\author	dcofer
+\date	3/16/2011
+
+\param	fltVal	The new value. 
+**/
+void PolynomialGain::D(float fltVal) {m_fltD = fltVal;}
 
 float PolynomialGain::CalculateGain(float fltInput)
 {
@@ -71,10 +141,10 @@ void PolynomialGain::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Adapter Element
 
-	m_fltA = oXml.GetChildFloat("A");
-	m_fltB = oXml.GetChildFloat("B");
-	m_fltC = oXml.GetChildFloat("C");
-	m_fltD = oXml.GetChildFloat("D");
+	A(oXml.GetChildFloat("A"));
+	B(oXml.GetChildFloat("B"));
+	C(oXml.GetChildFloat("C"));
+	D(oXml.GetChildFloat("D"));
 
 	oXml.OutOfElem(); //OutOf Adapter Element
 }

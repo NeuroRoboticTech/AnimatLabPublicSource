@@ -154,9 +154,9 @@ Simulator::Simulator()
 	m_vBackgroundColor[3] = 1;
 
 	m_lpWinMgr = NULL;
-	m_oDataChartMgr.SetSystemPointers(this, NULL, NULL, NULL);
-	m_oExternalStimuliMgr.SetSystemPointers(this, NULL, NULL, NULL);
-	m_oMaterialMgr.SetSystemPointers(this, NULL, NULL, NULL);
+	m_oDataChartMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
+	m_oExternalStimuliMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
+	m_oMaterialMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
 }
 
 
@@ -1676,19 +1676,12 @@ void Simulator::Load(CStdXml &oXml)
 		m_lpWinMgr->Load(oXml);
 
 	if(oXml.FindChildElement("ExternalStimuli", FALSE))
-	{
-		string strStimuliFile = oXml.GetChildString("ExternalStimuli", "");
-
-		if(!Std_IsBlank(strStimuliFile))
-			m_oExternalStimuliMgr.Load(m_strProjectPath, strStimuliFile);
-		else
-			m_oExternalStimuliMgr.Load(oXml);
-	}
+		m_oExternalStimuliMgr.Load(oXml);
 
 	if(m_lpSimRecorder && oXml.FindChildElement("RecorderKeyFrames", FALSE))
 	{
 		string strKeyframesFile = oXml.GetChildString("RecorderKeyFrames");
-		m_lpSimRecorder->SetSystemPointers(this, NULL, NULL, NULL);
+		m_lpSimRecorder->SetSystemPointers(this, NULL, NULL, NULL, TRUE);
 		m_lpSimRecorder->Load(m_strProjectPath, strKeyframesFile);
 	}
 
@@ -1940,7 +1933,7 @@ Structure *Simulator::LoadStructure(CStdXml &oXml)
 try
 {
 	lpStructure = dynamic_cast<Structure *>(m_lpAnimatClassFactory->CreateObject("Structure", "Structure", TRUE));
-	lpStructure->SetSystemPointers(this, NULL, NULL, NULL);
+	lpStructure->SetSystemPointers(this, NULL, NULL, NULL, TRUE);
 	lpStructure->Load(oXml);
 
 	AddStructure(lpStructure);
@@ -1978,7 +1971,7 @@ try
 	if(!lpOrganism)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 
-	lpOrganism->SetSystemPointers(this, NULL, NULL, NULL);
+	lpOrganism->SetSystemPointers(this, NULL, NULL, NULL, TRUE);
 	lpOrganism->Load(oXml);
 
 	AddOrganism(lpOrganism);
@@ -2006,7 +1999,7 @@ try
 {
 	lpOdorType = new OdorType();
 
-	lpOdorType->SetSystemPointers(this, NULL, NULL, NULL);
+	lpOdorType->SetSystemPointers(this, NULL, NULL, NULL, TRUE);
 	lpOdorType->Load(oXml);
 
 	AddOdorType(lpOdorType);

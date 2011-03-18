@@ -91,7 +91,7 @@ void Materials::RegisterMaterials()
 	m_lpPair = dynamic_cast<MaterialPair *>(m_lpSim->CreateObject("", "Material", "Default"));
 	if(!m_lpPair)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Material");
-	m_lpPair->SetSystemPointers(m_lpSim, NULL, NULL, NULL);
+	m_lpPair->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
 
 	m_lpPair->RegisterMaterialTypes(m_aryMaterialTypes);
 }
@@ -111,7 +111,7 @@ void Materials::CreateDefaultMaterial()
 		if(!lpItem)
 			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Material");
 
-		lpItem->SetSystemPointers(m_lpSim, NULL, NULL, NULL);
+		lpItem->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
 		lpItem->Material1("DEFAULT");
 		lpItem->Material2(strType);
 		lpItem->ScaleUnits();
@@ -187,7 +187,7 @@ try
 	if(!lpItem)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Material");
 
-	lpItem->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL);
+	lpItem->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
 	lpItem->Load(oXml);
 
 	return lpItem;

@@ -105,7 +105,7 @@ namespace AnimatSim
 		\param [in,out]	lpNode		The pointer to the parent node. 
 		\param	bVerify				true to call VerifySystemPointers. 
 		**/
-		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify = TRUE);
+		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
 		virtual void VerifySystemPointers();
 		virtual float *GetDataPointer(string strDataType);
 		virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);

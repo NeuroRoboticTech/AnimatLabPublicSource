@@ -1,17 +1,19 @@
-// Link.h: interface for the Adapter class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Link.h
 
-#if !defined(AFX_LINK_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)
-#define AFX_LINK_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_
+\brief	Declares the link base class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
-
+	/**
+	\brief	Base class for all link type objects. This is typically used for synapses. 
+	
+	\author	dcofer
+	\date	3/16/2011
+	**/
 	class ANIMAT_PORT Link : public AnimatBase 
 	{
 	protected:
@@ -31,17 +33,11 @@ namespace AnimatSim
 		Link();
 		virtual ~Link();
 
-		virtual BOOL Enabled() {return m_bEnabled;};
-		virtual void Enabled(BOOL bValue) 
-		{
-			m_bEnabled = bValue;
-			m_fltEnabled = (float) m_bEnabled;
-		};
+		virtual BOOL Enabled();
+		virtual void Enabled(BOOL bValue);
 
-		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify = TRUE);
+		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
 		virtual void VerifySystemPointers();
 	};
 
 }				//AnimatSim
-
-#endif // !defined(AFX_LINK_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)

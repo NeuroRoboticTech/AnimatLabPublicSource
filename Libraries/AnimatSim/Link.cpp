@@ -1,6 +1,8 @@
-// Link.cpp: implementation of the Link class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Link.cpp
+
+\brief	Implements the link class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -30,22 +32,15 @@
 #include "Odor.h"
 #include "Simulator.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+
 namespace AnimatSim
 {
+/**
+\brief	Default constructor. 
 
-/*! \brief 
-   Constructs an structure object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a structure. 
-*/
-
+\author	dcofer
+\date	3/16/2011
+**/
 Link::Link()
 {
 	m_lpOrganism = NULL;
@@ -54,17 +49,12 @@ Link::Link()
 	m_fltEnabled = 0;
 }
 
+/**
+\brief	Destructor. 
 
-/*! \brief 
-   Destroys the structure object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the structure object..	 
-*/
-
+\author	dcofer
+\date	3/16/2011
+**/
 Link::~Link()
 {
 
@@ -75,6 +65,36 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Link\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Gets whether the link is enabled. 
+
+\author	dcofer
+\date	3/16/2011
+
+\return	true if enabled, false if not. 
+**/
+BOOL Link::Enabled() {return m_bEnabled;};
+
+/**
+\brief	Sets whether the link is Enabled. 
+
+\author	dcofer
+\date	3/16/2011
+
+\param	bValue	true to enable. 
+**/
+void Link::Enabled(BOOL bValue) 
+{
+	m_bEnabled = bValue;
+	m_fltEnabled = (float) m_bEnabled;
+}
+
+/**
+\brief	Called during the StepSimulation method to allow the link to update any internal data for reporting purposes. 
+
+\author	dcofer
+\date	3/16/2011
+**/
 void Link::UpdateData()
 {}
 

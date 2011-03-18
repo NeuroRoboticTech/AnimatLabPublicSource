@@ -1,37 +1,43 @@
-// EnablerStimulus.h: interface for the EnablerStimulus class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	EnablerStimulus.h
 
-#if !defined(AFX_ENABLER_STIMULUS_H__AEBF2DF9_E7A0_4ED2_83CD_BE74B7D74E59__INCLUDED_)
-#define AFX_ENABLER_STIMULUS_H__AEBF2DF9_E7A0_4ED2_83CD_BE74B7D74E59__INCLUDED_
+\brief	Declares the enabler stimulus class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace AnimatSim
 {
 	namespace ExternalStimuli
 	{
-
+		/**
+		\brief	This stimulus enables or disables a joint or body part for a specified period of time. 
+		
+		\author	dcofer
+		\date	3/17/2011
+		**/
 		class ANIMAT_PORT EnablerStimulus  : public ExternalStimulus
 		{
 		protected:
-			Structure *m_lpStructure;
-			string m_strStructureID;
+			/// GUID ID of the target node to enable.
+			string m_strTargetNodeID;
 
-			Node *m_lpNode;
-
-			string m_strBodyID;
+			/// Tells whether the node is enabled while stimulus is active or not.
 			BOOL m_bEnableWhenActive;
 
 		public:
 			EnablerStimulus();
 			virtual ~EnablerStimulus();
 			
-			BOOL EnableWhenActive() {return m_bEnableWhenActive;};
-			void EnableWhenActive(BOOL bVal) {m_bEnableWhenActive = bVal;};
+			virtual string Type();
 
+			virtual string TargetNodeID();
+			virtual void TargetNodeID(string strID);
+
+			virtual BOOL EnableWhenActive();
+			virtual void EnableWhenActive(BOOL bVal);
+
+			virtual void Initialize();
 			virtual void Activate();
 			virtual void StepSimulation();
 			virtual void Deactivate();
@@ -39,12 +45,7 @@ namespace AnimatSim
 
 			virtual void Load(CStdXml &oXml);
 
-			//ActiveItem overrides
-			virtual string Type() {return "EnablerInput";};
-			virtual void Initialize();
 		};
 
 	}			//ExternalStimuli
 }				//VortexAnimatSim
-
-#endif // !defined(AFX_ENABLER_STIMULUS_H__AEBF2DF9_E7A0_4ED2_83CD_BE74B7D74E59__INCLUDED_)

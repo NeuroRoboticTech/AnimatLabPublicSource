@@ -1366,7 +1366,7 @@ void RigidBody::Load(CStdXml &oXml)
 	if(oXml.FindChildElement("ContactSensor", FALSE))
 	{
 		m_lpContactSensor = new AnimatSim::Environment::ContactSensor();
-		m_lpContactSensor->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this);
+		m_lpContactSensor->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
 		m_lpContactSensor->Load(oXml);
 	}
 
@@ -1416,7 +1416,7 @@ try
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "RigidBody");
 	lpChild->Parent(this);
 
-	lpChild->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this);
+	lpChild->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
 	lpChild->Load(oXml);
 
 	m_aryChildParts.Add(lpChild);
@@ -1467,7 +1467,7 @@ try
 		m_lpJointToParent->Parent(m_lpParent);
 		m_lpJointToParent->Child(this);
 
-		m_lpJointToParent->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this);
+		m_lpJointToParent->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
 		m_lpJointToParent->Load(oXml);
 	}
 
@@ -1562,7 +1562,7 @@ try
 {
 	lpOdor = new Odor(this);
 
-	lpOdor->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this);
+	lpOdor->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
 	lpOdor->Load(oXml);
 
 	AddOdor(lpOdor);

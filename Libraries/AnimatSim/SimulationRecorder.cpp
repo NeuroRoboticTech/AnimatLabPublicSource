@@ -152,7 +152,7 @@ try
 	if(!lpFrame)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "KeyFrame");
 
-	lpFrame->SetSystemPointers(m_lpSim, NULL, NULL, NULL);
+	lpFrame->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
 	lpFrame->Load(oXml);
 
 	Add(lpFrame);

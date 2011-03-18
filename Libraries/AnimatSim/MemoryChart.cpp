@@ -1,6 +1,8 @@
-// MemoryChart.cpp: implementation of the MemoryChart class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	MemoryChart.cpp
+
+\brief	Implements the memory chart class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -36,15 +38,22 @@ namespace AnimatSim
 {
 	namespace Charting
 	{
+/**
+\brief	Default constructor.
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
+\author	dcofer
+\date	3/18/2011
+**/
 MemoryChart::MemoryChart()
 {
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/18/2011
+**/
 MemoryChart::~MemoryChart()
 {
 
@@ -54,6 +63,8 @@ try
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of MemoryChart\r\n", "", -1, FALSE, TRUE);}
 }
+
+string MemoryChart::Type() {return "MemoryChart";}
 
 BOOL MemoryChart::Lock()
 {

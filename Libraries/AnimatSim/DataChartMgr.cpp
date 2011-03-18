@@ -1,6 +1,8 @@
-// DataChartMgr.cpp: implementation of the DataChartMgr class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	DataChartMgr.cpp
+
+\brief	Implements the data chart manager class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -35,17 +37,36 @@ namespace AnimatSim
 {
 	namespace Charting
 	{
+/**
+\brief	Default constructor.
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
+\author	dcofer
+\date	3/18/2011
+**/
 DataChartMgr::DataChartMgr()
 {}
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/18/2011
+**/
 DataChartMgr::~DataChartMgr()
 {}
 
+/**
+\brief	Searches for a DataColumn with the specified column name.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strChartKey  	GUID ID to the chart that contains the column of interest. 
+\param	strColumnName	Name of the DataColumn we are searching for. 
+\param	bThrowError  	If no column is found and this is true, then an exception is thrown, otherwise NULL is returned. 
+
+\return	Pointer to the found DataColumn, NULL if not found and bThrowError = FALSE.
+**/
 DataColumn *DataChartMgr::FindDataColumn(string strChartKey, string strColumnName, BOOL bThrowError)
 {
 	DataChart *lpChart = dynamic_cast<DataChart *>(Find(strChartKey, bThrowError));
@@ -55,6 +76,16 @@ DataColumn *DataChartMgr::FindDataColumn(string strChartKey, string strColumnNam
 	return lpColumn;
 }
 
+/**
+\brief	Removes the specified data column.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strChartKey  	GUID ID to the chart that contains the column of interest. 
+\param	strColumnName	Name of the DataColumn we are deleting. 
+\param	bThrowError  	If no column is found and this is true, then an exception is thrown, otherwise NULL is returned. 
+**/
 void DataChartMgr::RemoveDataColumn(string strChartKey, string strColumnName, BOOL bThrowError)
 {
 	DataChart *lpChart = dynamic_cast<DataChart *>(Find(strChartKey, bThrowError));
@@ -63,31 +94,33 @@ void DataChartMgr::RemoveDataColumn(string strChartKey, string strColumnName, BO
 	lpChart->RemoveColumn(strColumnName, bThrowError);
 }
 
+/**
+\brief	Adds a data column to the specified chart.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strChartKey  	GUID ID to the chart that contains the column of interest. 
+\param [in,out]	lpColumn	Pointer to the DataColumn to add. 
+**/
 void DataChartMgr::AddDataColumn(string strChartKey, DataColumn *lpColumn)
 {
 	DataChart *lpChart = dynamic_cast<DataChart *>(Find(strChartKey));
 	lpChart->AddColumn(lpColumn);	
 }
 
-void DataChartMgr::ModifyDataColumn(string strChartKey, string strColumnName, string strDataType)
-{
-	DataChart *lpChart = dynamic_cast<DataChart *>(Find(strChartKey));
-	if(!lpChart) return;
+/**
+\brief	Adds a data chart to the manager. 
 
-	DataColumn *lpColumn = lpChart->FindColumn(strColumnName, TRUE);
-	lpColumn->DataType(strDataType);
-	lpColumn->IsInitialized(FALSE);
-}
+\details This method is primiarly used by the GUI to add a new chart to the system by specifying an xml packet to load.
 
-void DataChartMgr::SetDataColumnIndex(string strChartKey, string strColumnName, int iIndex)
-{
-	DataChart *lpChart = dynamic_cast<DataChart *>(Find(strChartKey));
-	if(!lpChart) return;
+\author	dcofer
+\date	3/18/2011
 
-	DataColumn *lpColumn = lpChart->FindColumn(strColumnName, TRUE);
-	lpColumn->Index(iIndex);
-}
+\param	strXml	The xml data to load for the new chart. 
 
+\return	true if it succeeds, false if it fails.
+**/
 BOOL DataChartMgr::AddDataChart(string strXml)
 {
 	CStdXml oXml;
@@ -99,6 +132,16 @@ BOOL DataChartMgr::AddDataChart(string strXml)
 	return TRUE;
 }
 
+/**
+\brief	Removes the data chart described by ID.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strID	GUID ID of the chart to remove. 
+
+\return	true if it succeeds, false if it fails.
+**/
 BOOL DataChartMgr::RemoveDataChart(string strID)
 {
 	Remove(strID);
@@ -127,7 +170,17 @@ void DataChartMgr::Load(CStdXml &oXml)
 	}
 }
 
+/**
+\brief	Loads a data chart.
 
+\author	dcofer
+\date	3/18/2011
+
+\param [in,out]	oXml	The xml used to load the chart. 
+
+\return	Pointer to the new DataChart.
+\exception Throws an exception if there is a problem creating or loading the new chart.
+**/
 DataChart *DataChartMgr::LoadDataChart(CStdXml &oXml)
 {
 	DataChart *lpChart = NULL;
@@ -145,7 +198,7 @@ try
 	if(!lpChart)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "DataChart");
 
-	lpChart->SetSystemPointers(m_lpSim, NULL, NULL, NULL);
+	lpChart->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
 	if(!Std_IsBlank(strFilename))
 		lpChart->Load(m_lpSim->ProjectPath(), strFilename);
 	else

@@ -1,13 +1,10 @@
-// VoltageClamp.h: interface for the VoltageClamp class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	VoltageClamp.h
 
-#if !defined(AFX_VOLTAGE_CLAMP_H__AEBF2DF9_E7A0_4ED2_83CD_BE74B7D74E59__INCLUDED_)
-#define AFX_VOLTAGE_CLAMP_H__AEBF2DF9_E7A0_4ED2_83CD_BE74B7D74E59__INCLUDED_
-
-#if _MSC_VER > 1000
+\brief	Declares the voltage clamp class. 
+**/
 #pragma once
-#endif // _MSC_VER > 1000
+
 
 namespace AnimatSim
 {
@@ -17,33 +14,46 @@ namespace AnimatSim
 		class ANIMAT_PORT VoltageClamp  : public ExternalStimulus
 		{
 		protected:
-			Organism *m_lpOrganism;
-			string m_strOrganismID;
-
-			string m_strNeuralModule;
+			/// GUID ID of the node that will be clamped.
 			string m_strTargetNodeID;
 
-			Node *m_lpNode;
+			/// Pointer to the external current data variable within the node to clamp.
+			/// We will be adding our reverse currents here to clamp the voltage to a given level.
 			float *m_lpExternalCurrent;
+
+			/// The total current data variable within the node that is clamped
 			float *m_lpTotalCurrent;
+
+			/// The resting voltage data variable within the node to clamp.
 			float *m_lpVrest;
+
+			/// The conductance data variable within the node to clamp
 			float *m_lpGm;
 
+			/// The target voltage for the clamp.
 			float m_fltVtarget;
+
+			/// The target current for the clamp.
 			float m_fltTargetCurrent;
+
+			/// The active current is the target current - total current in the cell.
 			float m_fltActiveCurrent;
 
 		public:
 			VoltageClamp();
 			virtual ~VoltageClamp();
 
-			float Vtarget() {return m_fltVtarget;};
-			void Vtarget(float fltVal);
+			virtual string Type();
+			
+			virtual string TargetNodeID();
+			virtual void TargetNodeID(string strID);
+
+			virtual float Vtarget();
+			virtual void Vtarget(float fltVal);
 
 			virtual void Load(CStdXml &oXml);
 
 			//ActiveItem overrides
-			virtual string Type() {return "VoltageClamp";};
 			virtual void Initialize();  
 			virtual void Activate();
 			virtual void ResetSimulation();  
@@ -55,5 +65,3 @@ namespace AnimatSim
 
 	}			//ExternalStimuli
 }				//VortexAnimatSim
-
-#endif // !defined(AFX_VOLTAGE_CLAMPS_H__AEBF2DF9_E7A0_4ED2_83CD_BE74B7D74E59__INCLUDED_)

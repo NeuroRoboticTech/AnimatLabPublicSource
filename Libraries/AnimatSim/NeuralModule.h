@@ -65,13 +65,15 @@ namespace AnimatSim
 			NeuralModule();
 			virtual ~NeuralModule();
 
+			/**
+			\brief	Gets the module name.
+			
+			\author	dcofer
+			\date	3/18/2011
+			
+			\return	Module name.
+			**/
 			virtual string ModuleName() = 0;
-
-			virtual string ProjectPath();
-			virtual void ProjectPath(string strPath);
-
-			virtual string NeuralNetworkFile();
-			virtual void NeuralNetworkFile(string strFile);
 
 			virtual short TimeStepInterval();
 			virtual void TimeStepInterval(short iVal);
@@ -84,10 +86,53 @@ namespace AnimatSim
 			Simulator *GetSimulator();
 			Organism *GetOrganism();
 
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify = TRUE);
+			/**
+			\brief	Sets the system pointers.
+		
+			\details There are a number of system pointers that are needed for use in the objects. The
+			primariy one being a pointer to the simulation object itself so that you can get global
+			parameters like the scale units and so on. However, each object may need other types of pointers
+			as well, for example neurons need to have a pointer to their parent structure/organism, and to
+			the NeuralModule they reside within. So different types of objects will need different sets of
+			system pointers. We call this method to set the pointers just after creation and before Load is
+			called. We then call VerifySystemPointers here, during Load and during Initialize in order to
+			ensure that the correct pointers have been set for each type of objects. These pointers can then
+			be safely used throughout the rest of the system. 
+		
+			\author	dcofer
+			\date	3/2/2011
+		
+			\param [in,out]	lpSim		The pointer to a simulation. 
+			\param [in,out]	lpStructure	The pointer to the parent structure. 
+			\param [in,out]	lpModule	The pointer to the parent module module. 
+			\param [in,out]	lpNode		The pointer to the parent node. 
+			\param	bVerify				true to call VerifySystemPointers. 
+			**/
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
 			virtual void VerifySystemPointers();
 
+			/**
+			\brief	Attaches a source adapter.
+
+			\details This adds the specified adapter to this module. It can then process the adapters during a step of the simulation.
+
+			\author	dcofer
+			\date	3/18/2011
+
+			\param [in,out]	lpAdapter	Pointer to an adapter. 
+			**/
 			virtual void AttachSourceAdapter(Adapter *lpAdapter);
+
+/**
+			\brief	Attaches a target adapter.
+
+			\details This adds the specified adapter to this module. It can then process the adapters during a step of the simulation.
+
+			\author	dcofer
+			\date	3/18/2011
+
+			\param [in,out]	lpAdapter	Pointer to an adapter. 
+			**/
 			virtual void AttachTargetAdapter(Adapter *lpAdapter);
 
 			virtual BOOL NeedToStep();

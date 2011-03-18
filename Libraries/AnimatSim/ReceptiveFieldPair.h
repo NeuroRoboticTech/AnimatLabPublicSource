@@ -36,7 +36,7 @@ namespace AnimatSim
 			ReceptiveFieldPair();
 			virtual ~ReceptiveFieldPair();
 
-			void Initialize(string strTargetModule);
+			void Initialize();
 			void StepSimulation();
 
 			virtual void Load(CStdXml &oXml);

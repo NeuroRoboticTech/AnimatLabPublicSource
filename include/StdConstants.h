@@ -172,6 +172,9 @@
 #define Std_Err_lParamNotFound -2019
 #define Std_Err_strParamNotFound "The specified paramater was not found."
 
+#define Std_Err_lSettingEquation -2020
+#define Std_Err_strSettingEquation "An unexpected error occured while setting an equation."
+
 
 //*** PostFixEval Errors ****
 

@@ -1,37 +1,63 @@
-// DataColumn.h: interface for the DataColumn class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	DataColumn.h
 
-#if !defined(AFX_DATACOLUMN_H__391733E3_1E40_48EE_8ACF_BF4BFCE8C015__INCLUDED_)
-#define AFX_DATACOLUMN_H__391733E3_1E40_48EE_8ACF_BF4BFCE8C015__INCLUDED_
+\brief	Declares the data column class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace AnimatSim
 {
 	namespace Charting
 	{
+		/**
+		\brief	Data column class.
 
+		\details The data column class is responsible for collecting data from an object within the simulation
+		and then adding that to the data chart. You typically will not need to derive a new class from this to specialize
+		the data columnn. It is capable of getting any object in the system using its ID, and then you can specify the DataType
+		in a call to GetDataPointer for that object to get a pointer to variable you need to chart.
+		
+		\author	dcofer
+		\date	3/18/2011
+		**/
 		class ANIMAT_PORT DataColumn : public AnimatBase  
 		{
 		protected:
+			/// GUID ID of the target object that contains the variable we will be collecting.
 			string m_strTargetID;
+
+			/// The Data type of the variable we will be collecting. This is passed into the GetDataPointer method of the object.
 			string m_strDataType;
+
+			/// Pointer to the parent DataChart.
 			DataChart *m_lpChart;
 
+			/// Pointer to the target object that contains the data variable we will be collecting.
 			AnimatBase *m_lpTarget;
+
+			/// Pointer to the data variable we are collecting.
 			float *m_lpDataValue;
 
+			/// Determines whether how many other tabs are added after this data is written to the file.
 			int m_iAppendSpaces;
+
+			/// Name of this column. This is saved out at the top of the file.
 			string m_strColumnName;
+
+			/// true it this chart has been initialized
 			BOOL m_bInitialized;
+
+			/// Zero-based index for this chart. This tells where in the data columns that this column should be saved out.
+			/// This is used for sorting the data columns into the correct order.
 			int m_iIndex;
 
-			//These two indices are only used for 3D Array type charts. For normal line charts they are simply -1.
-			//However, if they are not -1 then that means we want to specify the column and row where we should add the data for this column
+			///This index is only used for 3D Array type charts. For normal line charts it is simply -1.
+			///However, if it is not -1 then that means we want to specify the column and row where we should add the data for this column
 			int m_iColumnIndex;
+
+			///This index is only used for 3D Array type charts. For normal line charts it is simply -1.
+			///However, if it is not -1 then that means we want to specify the column and row where we should add the data for this column
 			int m_iRowIndex; 
 
 		public:
@@ -40,21 +66,34 @@ namespace AnimatSim
 
 			virtual int ColumnCount();
 
-			string ColumnName() {return m_strColumnName;}
-			void ColumnName(string strName) {m_strColumnName = strName;}
+			virtual string ColumnName();
+			virtual void ColumnName(string strName);
 			
-			int Index() {return m_iIndex;}
-			void Index(int iIndex) {m_iIndex = iIndex;}
+			virtual int Index();
+			virtual void Index(int iIndex);
 
-			virtual string DataType() {return m_strDataType;}
+			virtual string DataType();
 			virtual void DataType(string strType);
 
-			BOOL IsInitialized() {return m_bInitialized;}
-			void IsInitialized(BOOL bVal) {m_bInitialized = bVal;}
+			virtual BOOL IsInitialized();
+			virtual void IsInitialized(BOOL bVal);
 
-			float *DataValue() {return m_lpDataValue;};
+			virtual float *DataValue();
+			
+			/**
+			\brief	Sets the system pointers.
 
-			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, DataChart *lpChart, BOOL bVerify = TRUE);
+			\author	dcofer
+			\date	3/18/2011
+
+			\param [in,out]	lpSim	   	The pointer to a simulation. 
+			\param [in,out]	lpStructure	The pointer to a structure. 
+			\param [in,out]	lpModule   	The pointer to a NeuralModule. 
+			\param [in,out]	lpNode	   	The pointer to a node. 
+			\param [in,out]	lpChart	   	The pointer to the parent chart. 
+			\param	bVerify			   	true to verify. 
+			**/
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, DataChart *lpChart, BOOL bVerify);
 			virtual void VerifySystemPointers();
 			virtual void Initialize();
 			virtual void ReInitialize();
@@ -70,5 +109,3 @@ namespace AnimatSim
 
 	}			//Charting
 }				//AnimatSim
-
-#endif // !defined(AFX_DATACOLUMN_H__391733E3_1E40_48EE_8ACF_BF4BFCE8C015__INCLUDED_)

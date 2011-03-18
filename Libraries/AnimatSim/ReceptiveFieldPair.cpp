@@ -78,7 +78,7 @@ ReceptiveFieldPair::~ReceptiveFieldPair()
 {
 }
 
-void ReceptiveFieldPair::Initialize(string strTargetModule)
+void ReceptiveFieldPair::Initialize()
 {
 	AnimatBase::Initialize();
 

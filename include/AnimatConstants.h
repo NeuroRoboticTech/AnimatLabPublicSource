@@ -364,6 +364,8 @@
 #define Al_Err_lNodeNotDefined -4044
 #define Al_Err_strNodeNotDefined "Node was not defined."
 
+#define Al_Err_lInvalidCurrentType -4045
+#define Al_Err_strInvalidCurrentType "An invalid current type was specified."
 
 #define MAX_DATA_CHART_BUFFER 10485760
 

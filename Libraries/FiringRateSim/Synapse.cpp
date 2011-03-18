@@ -279,7 +279,7 @@ try
 	if(!lpSynapse)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Synapse");
 
-	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpFastModule, m_lpNode);
+	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpFastModule, m_lpNode, TRUE);
 	lpSynapse->Load(oXml);
 	m_arySynapses.Add(lpSynapse);
 

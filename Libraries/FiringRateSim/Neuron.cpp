@@ -695,7 +695,7 @@ try
 	if(!lpSynapse)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Synapse");
 
-	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpFastModule, this);
+	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpFastModule, this, TRUE);
 	lpSynapse->Load(oXml);
 	AddSynapse(lpSynapse);
 

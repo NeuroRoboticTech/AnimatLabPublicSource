@@ -1,6 +1,8 @@
-// DataChart.cpp: implementation of the DataChart class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	DataChart.cpp
+
+\brief	Implements the data chart class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -36,10 +38,12 @@ namespace AnimatSim
 	namespace Charting
 	{
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\brief	Default constructor.
 
+\author	dcofer
+\date	3/18/2011
+**/
 DataChart::DataChart()
 {
 	m_lCollectTimeWindow = -1;
@@ -53,6 +57,12 @@ DataChart::DataChart()
 	m_lCurrentRow = 0;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/18/2011
+**/
 DataChart::~DataChart()
 {
 
@@ -66,6 +76,13 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of DataChart\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	 Compares the Start slice time of two data charts to tell if one is less than the other
+
+\details This is used within an operation that sorts the data charts.
+
+\return	true if this items start slice is less than the one passed in, false if not.
+**/
 BOOL DataChart::operator<(ActivatedItem *lpItem)
 {
 	DataChart *lpChart = dynamic_cast<DataChart *>(lpItem);
@@ -82,6 +99,8 @@ BOOL DataChart::operator<(ActivatedItem *lpItem)
 	return FALSE;
 }
 
+string DataChart::Type() {return "DataChart";}
+
 void DataChart::StartTime(float fltVal) 
 {
 	ActivatedItem::StartTime(fltVal);
@@ -94,6 +113,24 @@ void DataChart::EndTime(float fltVal)
 	ReInitialize();
 }
 
+/**
+\brief	Gets whether a start/end time is set for this chart.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	true if it start/end time is specified, false otherwise.
+**/
+BOOL DataChart::SetStartEndTime() {return m_bSetStartEndTime;}
+
+/**
+\brief	Sets whether a start/end time is specified for this chart.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	bVal	true to use the start/end time. 
+**/
 void DataChart::SetStartEndTime(BOOL bVal)
 {
 	m_bSetStartEndTime = bVal;
@@ -101,12 +138,104 @@ void DataChart::SetStartEndTime(BOOL bVal)
 	ReInitialize();
 }
 
+/**
+\brief	Gets the buffer size.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	The length of the data buffer.
+**/
+long DataChart::BufferSize() {return m_lRowCount*m_lColumnCount;}
+
+/**
+\brief	Gets the size of buffer that is currently used.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	used buffer size.
+**/
+long DataChart::UsedBufferSize() {return m_lCurrentCol*m_lCurrentRow;}
+
+/**
+\brief	Gets the buffer byte size.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	Buffer byte size.
+**/
+long DataChart::BufferByteSize() {return BufferSize()*sizeof(float);}
+
+/**
+\brief	Gets the used buffer byte size.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	Used buffer byte size.
+**/
+long DataChart::UsedBufferByteSize() {return UsedBufferSize()*sizeof(float);}
+
+/**
+\brief	Gets the time buffer.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	Pointer to the time buffer.
+**/
+float *DataChart::TimeBuffer() {return m_aryTimeBuffer;}
+
+/**
+\brief	Gets the data buffer.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	Pointer to the data buffer.
+**/
+float *DataChart::DataBuffer() {return m_aryDataBuffer;}
+
+/**
+\brief	Gets the collect interval.
+
+\details The collect data interval tells how many time slices should occur in-between
+collecting data.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	The collect interval.
+**/
+int DataChart::CollectInterval() {return m_iCollectInterval;};
+
+/**
+\brief	Sets the Collect interval using the time slice.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	iVal	The new interval. 
+**/
 void DataChart::CollectInterval(int iVal)
 {
 	m_iCollectInterval = iVal;
 	ReInitialize();
 }
 
+/**
+\brief	Sets the Collect interval using the time.
+
+\details This lets the user specify the collect interval using a time value.
+It then calculates the number of time slices for the collect interval.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	fltVal	The new time value. 
+**/
 void DataChart::CollectInterval(float fltVal)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "CollectInterval");
@@ -118,17 +247,123 @@ void DataChart::CollectInterval(float fltVal)
 	ReInitialize();
 }
 
+/**
+\brief	Gets the collect time window time slices.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	Number of time slices that data is collected.
+**/
+long DataChart::CollectTimeWindow() {return m_lCollectTimeWindow;}
+
+/**
+\brief	Sets the Collect time window using time slices.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	lVal	The new value in time slices. 
+**/
 void DataChart::CollectTimeWindow(long lVal)
 {
 	m_lCollectTimeWindow = lVal;
 	ReInitialize();
 }
 
+/**
+\brief	Sets the collect time window in time value.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	fltVal	The new time value. 
+**/
 void DataChart::CollectTimeWindow(float fltVal)
 {
 	m_fltCollectTimeWindow = fltVal;
+
+	if(m_fltCollectTimeWindow <= 0)
+		m_lCollectTimeWindow = m_lEndSlice - m_lStartSlice;
+	else
+		m_lCollectTimeWindow = (long) (m_fltCollectTimeWindow / m_lpSim->TimeStep() + 0.5);
+
 	ReInitialize();
 }
+
+/**
+\brief	Gets the project path.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	project path.
+**/
+string DataChart::ProjectPath() {return m_strProjectPath;}
+
+/**
+\brief	Sets the Project path.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strVal	The new value. 
+**/
+void DataChart::ProjectPath(string strVal) {m_strProjectPath = strVal;}
+
+/**
+\brief	Gets the column count.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	number of DataColumn objects.
+**/
+long DataChart::ColumnCount() {return m_lColumnCount;}
+
+/**
+\brief	Gets the current row.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	The currently selected row in the data buffer.
+**/
+long DataChart::CurrentRow() {return m_lCurrentRow;}
+
+/**
+\brief	Sets the Current row.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	iVal	The new current row value. 
+**/
+void DataChart::CurrentRow(long iVal) {m_lCurrentRow = iVal;}
+
+/**
+\brief	Locks this data chart buffer from being written by any other process.
+
+\details This is for multi-threaded environments. It is called just before data is added
+to the buffer to prevent any other process from modifying the buffer while we are doing so.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	true if it locks the buffer, false if it is already locked.
+**/
+BOOL DataChart::Lock() {return TRUE;}
+
+/**
+\brief	Unlocks this data chart buffer from being written by any other process.
+
+\details This is for multi-threaded environments. It is called just after data is added
+to the buffer to remove the lock so that other process can modify the buffer.
+
+\author	dcofer
+\date	3/18/2011
+**/
+void DataChart::Unlock() {}
 
 void DataChart::Initialize()
 {
@@ -231,6 +466,16 @@ void DataChart::ResetSimulation()
 	ReInitialize();	
 }
 
+/**
+\brief	Calculates the chart column count.
+
+\details Some data columns can have more than on column in the data buffer. We
+call the ColumnCount property of each column to find the total number for the chart.
+\author	dcofer
+\date	3/18/2011
+
+\return	The calculated chart column count.
+**/
 long DataChart::CalculateChartColumnCount()
 {
 	long lColCount=0;
@@ -241,6 +486,16 @@ long DataChart::CalculateChartColumnCount()
 	return lColCount;
 }
 
+/**
+\brief	Creates and adds a DataColumn from XML.
+
+\details This method is primarily used by the GUI to create a new data column when an xml packet is provided.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strXml	The xml packet to load for the data column. 
+**/
 void DataChart::AddColumn(string strXml)
 {
 	CStdXml oXml;
@@ -252,6 +507,14 @@ void DataChart::AddColumn(string strXml)
 	ReInitialize();
 }
 
+/**
+\brief	Adds a column. 
+
+\author	dcofer
+\date	3/18/2011
+
+\param [in,out]	lpColumn	Pointer to a DataColumn to add to the chart. 
+**/
 void DataChart::AddColumn(DataColumn *lpColumn)
 {
 	//First lets make sure this is a unique item key.
@@ -268,6 +531,15 @@ void DataChart::AddColumn(DataColumn *lpColumn)
 	m_aryDataColumns.Add(lpColumn);
 }
 
+/**
+\brief	Removes the column with the specified ID.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strID	GUID ID of the DataColumn to remove.
+\param	bThrowError	If true and the ID is not found then it throws an error, otherwise it does nothing.
+**/
 void DataChart::RemoveColumn(string strID, BOOL bThrowError)
 {
 	int iIndex=0;
@@ -278,6 +550,17 @@ void DataChart::RemoveColumn(string strID, BOOL bThrowError)
 	m_aryDataColumns.RemoveAt(iIndex);
 }
 
+/**
+\brief	Searches for a column that matches the specified ID.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strID	GUID ID of the column to find.
+\param	bThrowError	If true and the ID is not found then it throws an error, otherwise it does nothing.
+
+\return	null if it the column is not found and bThrowError is false, else a pointer to the found column.
+**/
 DataColumn *DataChart::FindColumn(string strID, BOOL bThrowError)
 {
 	DataColumn *lpColumn = NULL;
@@ -292,6 +575,18 @@ DataColumn *DataChart::FindColumn(string strID, BOOL bThrowError)
 	return lpColumn;
 }
 
+/**
+\brief	Searches for a column that matches the specified ID.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strID	GUID ID of the column to find.
+\param [in,out]	iIndex	Zero-based index of the found column in the array. 
+\param	bThrowError	If true and the ID is not found then it throws an error, otherwise it does nothing.
+
+\return	null if it the column is not found and bThrowError is false, else a pointer to the found column.
+**/
 DataColumn *DataChart::FindColumn(string strID, int &iIndex, BOOL bThrowError)
 {
 	int iCount = m_aryDataColumns.GetSize();
@@ -413,6 +708,16 @@ void DataChart::StepSimulation()
 	}
 }
 
+/**
+\brief	Adds a data element to the data buffer.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	iColumn	The column in the data buffer where we need to add the value. 
+\param	iRow   	The row in the data buffer where we need to add the value.
+\param	fltVal 	The new value to add. 
+**/
 void DataChart::AddData(int iColumn, int iRow, float fltVal)
 {
 	if(iColumn == -1 && iRow == -1)
@@ -430,6 +735,15 @@ void DataChart::AddData(int iColumn, int iRow, float fltVal)
 		m_aryDataBuffer[(iRow*m_lColumnCount) + iColumn] = fltVal;
 }
 
+/**
+\brief	Loads a data chart from a file.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	strProjectPath	Full pathname of the string project file. 
+\param	strConfigFile 	The string configuration file. 
+**/
 void DataChart::Load(string strProjectPath, string strConfigFile)
 {
 	CStdXml oXml;
@@ -468,15 +782,10 @@ void DataChart::Load(CStdXml &oXml)
 	m_aryDataBuffer = NULL;
 	m_aryDataColumns.RemoveAll();
 
-	float fltCollectInterval = oXml.GetChildFloat("CollectInterval");
-	Std_IsAboveMin((float) 0, fltCollectInterval, TRUE, "CollectInterval");
+	CollectInterval(oXml.GetChildFloat("CollectInterval"));
 
-	//Lets calculate the number of slices for the collect interval.
-	m_iCollectInterval = (int) (fltCollectInterval/m_lpSim->TimeStep());
-	if(m_iCollectInterval<=0) m_iCollectInterval = 1;
-
-	m_bSetStartEndTime = oXml.GetChildBool("SetStartEndTime", FALSE);
-	m_fltCollectTimeWindow = oXml.GetChildFloat("CollectTimeWindow", -1);
+	SetStartEndTime(oXml.GetChildBool("SetStartEndTime", FALSE));
+	CollectTimeWindow(oXml.GetChildFloat("CollectTimeWindow", -1));
 	
 	//If we are not setting start/end time then it is always active.
 	ActivatedItem::AlwaysActive(!m_bSetStartEndTime);
@@ -501,7 +810,17 @@ void DataChart::Load(CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf DataChart Element
 }
 
+/**
+\brief	Loads a data column.
 
+\author	dcofer
+\date	3/18/2011
+
+\param [in,out]	oXml	The xml to use when loading the data column. 
+
+\return	Pointer to the new DataColumn.
+\exception Throws an exception if there is an error creating or loading the DataColumn.
+**/
 DataColumn *DataChart::LoadDataColumn(CStdXml &oXml)
 {
 	DataColumn *lpColumn=NULL;
@@ -518,7 +837,7 @@ try
 	if(!lpColumn)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "DataColumn");
 
-	lpColumn->SetSystemPointers(m_lpSim, NULL, NULL, NULL, this);
+	lpColumn->SetSystemPointers(m_lpSim, NULL, NULL, NULL, this, TRUE);
 	lpColumn->Load(oXml);
 
 	AddColumn(lpColumn);
@@ -539,30 +858,6 @@ catch(...)
 }
 }
 
-void DataChart::LoadChart(CStdXml &oXml)
-{
-	oXml.FindElement("ChartConfiguration");
-	oXml.FindChildElement("DataChart");
-
-	ActivatedItem::Load(oXml);
-
-	oXml.IntoElem();
-
-	float fltCollectInterval = oXml.GetChildFloat("CollectInterval");
-	Std_IsAboveMin((float) 0, fltCollectInterval, TRUE, "CollectInterval");
-
-	//Lets calculate the number of slices for the collect interval.
-	m_iCollectInterval = (int) (fltCollectInterval/m_lpSim->TimeStep());
-	if(m_iCollectInterval<=0) m_iCollectInterval = 1;
-
-	m_bSetStartEndTime = oXml.GetChildBool("SetStartEndTime", FALSE);
-	m_fltCollectTimeWindow = oXml.GetChildFloat("CollectTimeWindow", -1);
-
-	//If we are not setting start/end time then it is always active.
-	ActivatedItem::AlwaysActive(!m_bSetStartEndTime);
-
-	oXml.OutOfElem();
-}
 
 	}			//Charting
 }				//AnimatSim

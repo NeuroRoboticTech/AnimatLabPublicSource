@@ -1,6 +1,8 @@
-// SigmoidGain.cpp: implementation of the SigmoidGain class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	SigmoidGain.cpp
+
+\brief	Implements the sigmoid gain class. 
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -9,24 +11,17 @@
 #include "Gain.h"
 #include "SigmoidGain.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
 namespace AnimatSim
 {
 	namespace Gains
 	{
 
-/*! \brief 
-   Constructs an structure object..
-   		
-	 \return
-	 No return value.
+/**
+\brief	Default constructor. 
 
-   \remarks
-	 The constructor for a structure. 
-*/
-
+\author	dcofer
+\date	3/16/2011
+**/
 SigmoidGain::SigmoidGain()
 {
 	m_fltA = 0;
@@ -35,17 +30,12 @@ SigmoidGain::SigmoidGain()
 	m_fltD = 0;
 }
 
+/**
+\brief	Destructor. 
 
-/*! \brief 
-   Destroys the structure object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the structure object..	 
-*/
-
+\author	dcofer
+\date	3/16/2011
+**/
 SigmoidGain::~SigmoidGain()
 {
 
@@ -55,6 +45,86 @@ try
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of SigmoidGain\r\n", "", -1, FALSE, TRUE);}
 }
+
+/**
+\brief	Gets A parameter of sigmoidal eqation: Out = D+(B/(1+e^(C*(A-In))))
+
+\author	dcofer
+\date	3/16/2011
+
+\return	A param. 
+**/
+float SigmoidGain::A() {return m_fltA;}
+
+/**
+\brief	Sets A parameter of sigmoidal eqation: Out = A*In^3 + B*In^2 + C*In + D
+
+\author	dcofer
+\date	3/16/2011
+
+\param	fltVal	The new value. 
+**/
+void SigmoidGain::A(float fltVal) {m_fltA = fltVal;}
+
+/**
+\brief	Gets B parameter of sigmoidal eqation: Out = D+(B/(1+e^(C*(A-In))))
+
+\author	dcofer
+\date	3/16/2011
+
+\return	B param. 
+**/
+float SigmoidGain::B() {return m_fltB;}
+
+/**
+\brief	Sets B parameter of sigmoidal eqation: Out = D+(B/(1+e^(C*(A-In))))
+
+\author	dcofer
+\date	3/16/2011
+
+\param	fltVal	The new value. 
+**/
+void SigmoidGain::B(float fltVal) {m_fltB = fltVal;}
+
+/**
+\brief	Gets C parameter of sigmoidal eqation: Out = D+(B/(1+e^(C*(A-In))))
+
+\author	dcofer
+\date	3/16/2011
+
+\return	C param. 
+**/
+float SigmoidGain::C() {return m_fltC;}
+
+/**
+\brief	Sets C parameter of sigmoidal eqation: Out = D+(B/(1+e^(C*(A-In))))
+
+\author	dcofer
+\date	3/16/2011
+
+\param	fltVal	The new value. 
+**/
+void SigmoidGain::C(float fltVal) {m_fltC = fltVal;}
+
+/**
+\brief	Sets D parameter of sigmoidal eqation: Out = D+(B/(1+e^(C*(A-In))))
+
+\author	dcofer
+\date	3/16/2011
+
+\return	D param. 
+**/
+float SigmoidGain::D() {return m_fltD;}
+
+/**
+\brief	Sets D parameter of sigmoidal eqation: Out = D+(B/(1+e^(C*(A-In))))
+
+\author	dcofer
+\date	3/16/2011
+
+\param	fltVal	The new value. 
+**/
+void SigmoidGain::D(float fltVal) {m_fltD = fltVal;}
 
 float SigmoidGain::CalculateGain(float fltInput)
 {
@@ -70,10 +140,10 @@ void SigmoidGain::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Adapter Element
 
-	m_fltA = oXml.GetChildFloat("A");
-	m_fltB = oXml.GetChildFloat("B");
-	m_fltC = oXml.GetChildFloat("C");
-	m_fltD = oXml.GetChildFloat("D");
+	A(oXml.GetChildFloat("A"));
+	B(oXml.GetChildFloat("B"));
+	C(oXml.GetChildFloat("C"));
+	D(oXml.GetChildFloat("D"));
 
 	oXml.OutOfElem(); //OutOf Adapter Element
 }

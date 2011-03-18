@@ -279,7 +279,7 @@ void IonChannel::Load(CStdXml &oXml)
 	if(!m_lpMinf)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Gain");
 
-	m_lpMinf->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL);
+	m_lpMinf->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, TRUE);
 	m_lpMinf->Load(oXml);
 
 	//Load Tm
@@ -292,7 +292,7 @@ void IonChannel::Load(CStdXml &oXml)
 	if(!m_lpTm)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Gain");
 
-	m_lpTm->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL);
+	m_lpTm->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, TRUE);
 	m_lpTm->Load(oXml);
 
 	Hinit(oXml.GetChildFloat("Hinit"));
@@ -308,7 +308,7 @@ void IonChannel::Load(CStdXml &oXml)
 	if(!m_lpHinf)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Gain");
 
-	m_lpHinf->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL);
+	m_lpHinf->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, TRUE);
 	m_lpHinf->Load(oXml);
 
 	//Load Th
@@ -321,7 +321,7 @@ void IonChannel::Load(CStdXml &oXml)
 	if(!m_lpTh)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Gain");
 
-	m_lpTh->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL);
+	m_lpTh->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, NULL, TRUE);
 	m_lpTh->Load(oXml);
 
 	oXml.OutOfElem(); //OutOf IonChannel Element

@@ -1,42 +1,53 @@
-// BellGain.h: interface for the BellGain class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	BellGain.h
 
-#if !defined(AFX_BELLGAIN_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)
-#define AFX_BELLGAIN_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_
+\brief	Declares the bell gain class. 
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
 	namespace Gains
 	{
+			/**
+			\brief	Bell gain class.
 
+			\details This gain calculates a bell shaped distribution curve. Out = B*e^(-C*(In-A)^2)+D
+			
+			\author	dcofer
+			\date	3/16/2011
+			**/
 			class ANIMAT_PORT BellGain : public Gain 
 			{
 			protected:
+				/// The A parameter of the gain.
 				float m_fltA;
+
+				/// The B parameter of the gain.
 				float m_fltB;
+
+				/// The C parameter of the gain.
 				float m_fltC;
+
+				/// The D parameter of the gain.
 				float m_fltD;
 
 			public:
 				BellGain();
 				virtual ~BellGain();
 
-				float A() {return m_fltA;}
-				void A(float fltVal) {m_fltA = fltVal;};
+				float A();
+				void A(float fltVal);
 
-				float B() {return m_fltB;}
-				void B(float fltVal) {m_fltB = fltVal;};
+				float B();
+				void B(float fltVal);
 
-				float C() {return m_fltC;}
-				void C(float fltVal) {m_fltC = fltVal;};
+				float C();
+				void C(float fltVal);
 
-				float D() {return m_fltD;}
-				void D(float fltVal) {m_fltD = fltVal;};
+				float D();
+				void D(float fltVal);
 
 				virtual float CalculateGain(float fltInput);
 				virtual void Load(CStdXml &oXml);
@@ -44,5 +55,3 @@ namespace AnimatSim
 
 	}			//Gains
 }				//AnimatSim
-
-#endif // !defined(AFX_BELLGAIN_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)

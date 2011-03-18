@@ -160,9 +160,27 @@ void NeuralModule::TimeStepInterval(short iVal)
 	m_iTimeStepInterval = iVal;
 }
 
+/**
+\brief	Gets the time step for this moudle in time units.
+
+\author	dcofer
+\date	3/18/2011
+
+\return	Time units for this modules time step.
+**/
 float NeuralModule::TimeStep()
 {return m_fltTimeStep;}
 
+/**
+\brief	Sets the Time step for this moudle in time units.
+
+\details This method calculates the required m_iTimeStepInterval.
+
+\author	dcofer
+\date	3/18/2011
+
+\param	fltVal	The flt value. 
+**/
 void NeuralModule::TimeStep(float fltVal)
 {
 	Std_IsAboveMin((float) 0, (float) fltVal, TRUE, "TimeStep");
@@ -179,18 +197,17 @@ void NeuralModule::TimeStep(float fltVal)
 		m_lpSim->TimeStep(m_fltTimeStep);
 }
 
-string NeuralModule::ProjectPath()
-{return m_strProjectPath;}
 
-void NeuralModule::ProjectPath(string strPath)
-{m_strProjectPath = strPath;}
+/**
+\brief	Tells whether this NeuralModule needs to call StepSimulation.
 
-string NeuralModule::NeuralNetworkFile()
-{return m_strNeuralNetworkFile;}
+\details This is determined by the m_iTimeStepInterval. We only step on some whole number interval of the physics time step.
 
-void NeuralModule::NeuralNetworkFile(string strFile)
-{m_strNeuralNetworkFile = strFile;}
+\author	dcofer
+\date	3/18/2011
 
+\return	true if it succeeds, false if it fails.
+**/
 BOOL NeuralModule::NeedToStep()
 {
 	m_iTimeStepCount++;
@@ -209,6 +226,7 @@ void NeuralModule::AttachSourceAdapter(Adapter *lpAdapter)
 {
 	m_arySourceAdapters.Add(lpAdapter);
 }
+
 
 void NeuralModule::AttachTargetAdapter(Adapter *lpAdapter)
 {
