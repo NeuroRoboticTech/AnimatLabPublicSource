@@ -1,6 +1,8 @@
-// CollisionPair.cpp: implementation of the CollisionPair class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ContactSensor.cpp
+
+\brief	Implements the contact sensor class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -32,25 +34,12 @@ namespace AnimatSim
 	namespace Environment
 	{
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\brief	Default constructor.
 
-/*! \brief 
-   Constructs a CollisionPair object..
-   		
-   \param lpParent This is a pointer to the parent of this rigid body. 
-	          If this value is null then it is assumed that this is
-						a root object and no joint is loaded to connect this
-						part to the parent.
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a CollisionPair. 
-*/
-
+\author	dcofer
+\date	3/22/2011
+**/
 ContactSensor::ContactSensor()
 {
 	m_lpFieldGain = NULL;
@@ -59,16 +48,12 @@ ContactSensor::ContactSensor()
 	m_fltMaxForce = 100;
 }
 
-/*! \brief 
-   Destroys the CollisionPair object..
-   		
-	 \return
-	 No return value.
+/**
+\brief	Destructor.
 
-   \remarks
-   Destroys the CollisionPair object..	 
-*/
-
+\author	dcofer
+\date	3/22/2011
+**/
 ContactSensor::~ContactSensor()
 {
 
@@ -86,12 +71,67 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of ContactSensor\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Gets the field Gain that modulates the contact force based on its distance from the center of the receptive field.
+
+\author	dcofer
+\date	3/22/2011
+
+\return	Gain pointer.
+**/
+Gain *ContactSensor::FieldGain() {return m_lpFieldGain;}
+
+/**
+\brief	Gets the Gain that calculates the current to apply to associated neurons using the modulated force of contact.
+
+\author	dcofer
+\date	3/22/2011
+
+\return	Gain pointer.
+**/
+Gain *ContactSensor::CurrentGain() {return m_lpCurrentGain;}
+
+/**
+\brief	Gets the distance between receptive field centers.
+
+\author	dcofer
+\date	3/22/2011
+
+\return	.
+**/
+float ContactSensor::ReceptiveFieldDistance() {return m_fltReceptiveFieldDistance;}
+
+/**
+\brief	Gets a receptive field based on its index in the array.
+
+\author	dcofer
+\date	3/22/2011
+
+\param	iIndex	Zero-based index of the ReceptiveField array. 
+
+\return	Pointer to the receptive field.
+\exception Exception is thrown if index is out of bounds.
+**/
 ReceptiveField *ContactSensor::GetReceptiveField(int iIndex)
 {
 	Std_InValidRange((int) 0, (m_aryFields.GetSize()-1), iIndex, TRUE, "Receptive Field Index");
 	return m_aryFields[iIndex];
 }
 
+/**
+\brief	Searches for the first receptive field that is closes to the specified location.
+
+\author	dcofer
+\date	3/22/2011
+
+\param [in,out]	aryFields	The array of ReceptiveFields to search. 
+\param	fltX			 	The x coordinate. 
+\param	fltY			 	The y coordinate. 
+\param	fltZ			 	The z coordinate. 
+\param [in,out]	iIndex   	Zero-based index of the found ReceptiveField. 
+
+\return	true if a ReceptiveField is found, false otherwise.
+**/
 BOOL ContactSensor::FindReceptiveField(CStdPtrArray<ReceptiveField> &aryFields, float fltX, float fltY, float fltZ, int &iIndex)
 {
 	int high = aryFields.GetSize(), low = -1, probe=0;
@@ -118,6 +158,18 @@ BOOL ContactSensor::FindReceptiveField(CStdPtrArray<ReceptiveField> &aryFields, 
 		return FALSE;
 }
 
+/**
+\brief	Searches for the first closest receptive field.
+
+\author	dcofer
+\date	3/22/2011
+
+\param	fltX	The x coordinate. 
+\param	fltY	The y coordinate. 
+\param	fltZ	The z coordinate. 
+
+\return	The found closest receptive field.
+**/
 int ContactSensor::FindClosestReceptiveField(float fltX, float fltY, float fltZ)
 {
 	int iSize = m_aryFields.GetSize(), iMinIndex = -1;
@@ -142,6 +194,17 @@ int ContactSensor::FindClosestReceptiveField(float fltX, float fltY, float fltZ)
 	return iMinIndex;
 }
 
+/**
+\brief	Adds a new ReceptiveField vertex.
+
+\author	dcofer
+\date	3/22/2011
+
+\param [in,out]	aryFields	The array of ReceptiveFields we will add to. 
+\param	fltX			 	The x coordinate. 
+\param	fltY			 	The y coordinate. 
+\param	fltZ			 	The z coordinate. 
+**/
 void ContactSensor::AddVertex(CStdPtrArray<ReceptiveField> &aryFields, float fltX, float fltY, float fltZ)
 {
 	int iIndex=-1, iVerifyIndex=-1;
@@ -159,21 +222,58 @@ void ContactSensor::AddVertex(CStdPtrArray<ReceptiveField> &aryFields, float flt
 	}
 }
 
+/**
+\brief	Searches for the first receptive field at the specified location.
+
+\author	dcofer
+\date	3/22/2011
+
+\param	fltX		  	The x coordinate. 
+\param	fltY		  	The y coordinate. 
+\param	fltZ		  	The  z coordinate. 
+\param [in,out]	iIndex	Zero-based index of the found receptive field. 
+
+\return	true if it succeeds, false if it fails.
+**/
 BOOL ContactSensor::FindReceptiveField(float fltX, float fltY, float fltZ, int &iIndex)
 {
 	return FindReceptiveField(m_aryFields, fltX, fltY, fltZ, iIndex);
 }
 
+/**
+\brief	Adds a ReceptiveField vertex.
+
+\author	dcofer
+\date	3/22/2011
+
+\param	fltX	The x coordinate. 
+\param	fltY	The y coordinate. 
+\param	fltZ	The z coordinate. 
+**/
 void ContactSensor::AddVertex(float fltX, float fltY, float fltZ)
 {
 	AddVertex(m_aryFields, fltX, fltY, fltZ);
 }
 
+/**
+\brief	Called when we are finished adding vertices. This is used for debugging purposes.
+
+\author	dcofer
+\date	3/22/2011
+**/
 void ContactSensor::FinishedAddingVertices()
 {
 	//DumpVertices(m_aryFields);
 }
 
+/**
+\brief	Dumps the vertices to console.
+
+\author	dcofer
+\date	3/22/2011
+
+\param [in,out]	aryFields	The array of ReceptiveFields. 
+**/
 void ContactSensor::DumpVertices(CStdPtrArray<ReceptiveField> &aryFields)
 {
 	int iSize = aryFields.GetSize();
@@ -186,6 +286,12 @@ void ContactSensor::DumpVertices(CStdPtrArray<ReceptiveField> &aryFields)
 	}
 }
 
+/**
+\brief	Clears the currents of ReceptiveFields.
+
+\author	dcofer
+\date	3/22/2011
+**/
 void ContactSensor::ClearCurrents()
 {
 	int iSize = m_aryFields.GetSize();
@@ -193,6 +299,15 @@ void ContactSensor::ClearCurrents()
 		m_aryFields[iField]->m_fltCurrent = 0;
 }
 
+/**
+\brief	Process a contact for all ReceptiveFields.
+
+\author	dcofer
+\date	3/22/2011
+
+\param	vPos			 	The position of the contact in global cooridnates. 
+\param	fltForceMagnitude	The force magnitude. 
+**/
 void ContactSensor::ProcessContact(StdVector3 vPos, float fltForceMagnitude)
 {
 	if(fltForceMagnitude > m_fltMaxForce)
@@ -270,6 +385,14 @@ void ContactSensor::Load(CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf Adapter Element
 }
 
+/**
+\brief	Loads a receptive field.
+
+\author	dcofer
+\date	3/22/2011
+
+\param [in,out]	oXml	The xml packet to load. 
+**/
 void ContactSensor::LoadReceptiveField(CStdXml &oXml)
 {
 	CStdFPoint vPoint;

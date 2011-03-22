@@ -1,37 +1,43 @@
-// Plane.h: interface for the Plane class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ContactSensor.h
 
-#if !defined(AFX_ALCONTACT_SENSOR_H__8AABAE57_5434_4AEE_9C0B_B494E10A7AAC__INCLUDED_)
-#define AFX_ALCONTACT_SENSOR_H__8AABAE57_5434_4AEE_9C0B_B494E10A7AAC__INCLUDED_
+\brief	Declares the contact sensor class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
+
 
 namespace AnimatSim
 {
 	namespace Environment
 	{
-		/*! \brief 
-			Keeps track of pairs of rigid bodies that should not be allowed to collide.
+		/**
+		\brief	Contact sensor for detecting receptive field contacts.
 
-			\remarks
-
-			\sa
-			Body, Joint, CAlBox, Plane, CAlCylinder, 
-			CAlCone, CAlMuscle, CAlAttachment, CAlSphere                                
-				
-			\ingroup AnimatSim
-		*/
-
+		\details Receptive fields can be defined over the surface of the body, and each one can be associated with
+		one or more neurons. ContactSensor is used by the RigidBody part to manage the receptive fields and contacts.
+		It contains the list of all receptive fields for that body part, and the other knowledge needed to convert 
+		a contact into a current within a neuron. 
+		
+		\author	dcofer
+		\date	3/22/2011
+		**/
 		class ANIMAT_PORT ContactSensor : public AnimatBase  
 		{
 		protected:
+			/// The array of ReceptiveField objects.
 			CStdPtrArray<ReceptiveField> m_aryFields;
+
+			/// The distance between ReceptiveField objects on the surface of the RigidBody.
 			float m_fltReceptiveFieldDistance;
+
+			/// The Gain function that modulates the force of contact based on the distance from the center of the ReceptiveField.
 			Gain *m_lpFieldGain;
+
+			/// The Gain that calculates the amount of current to apply to any associated neurons based on the modulated force value.
 			Gain *m_lpCurrentGain;
+
+			/// The maximum force force that we can use when calculating the current.
 			float m_fltMaxForce;
 
 			void LoadReceptiveField(CStdXml &oXml);
@@ -45,9 +51,9 @@ namespace AnimatSim
 			ContactSensor();
 			virtual ~ContactSensor();
 
-			Gain *FieldGain() {return m_lpFieldGain;};
-			Gain *CurrentGain() {return m_lpCurrentGain;};
-			float ReceptiveFieldDistance() {return m_fltReceptiveFieldDistance;};
+			Gain *FieldGain();
+			Gain *CurrentGain();
+			float ReceptiveFieldDistance();
 
 			ReceptiveField *GetReceptiveField(int iIndex);
 			BOOL FindReceptiveField(float fltX, float fltY, float fltZ, int &iIndex);
@@ -62,5 +68,3 @@ namespace AnimatSim
 
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALCONTACT_SENSOR_H__8AABAE57_5434_4AEE_9C0B_B494E10A7AAC__INCLUDED_)

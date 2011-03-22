@@ -1,3 +1,9 @@
+/**
+\file	ConstraintLimit.cpp
+
+\brief	Implements the constraint limit class.
+**/
+
 #include "stdafx.h"
 #include "AnimatBase.h"
 
@@ -25,7 +31,12 @@ namespace AnimatSim
 {
 	namespace Environment
 	{
+/**
+\brief	Default constructor.
 
+\author	dcofer
+\date	3/22/2011
+**/
 ConstraintLimit::ConstraintLimit()
 {
 	m_lpSim = NULL;
@@ -39,6 +50,12 @@ ConstraintLimit::ConstraintLimit()
 	m_bIsLowerLimit = TRUE;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/22/2011
+**/
 ConstraintLimit::~ConstraintLimit()
 {
 }
@@ -84,11 +101,40 @@ void ConstraintLimit::Stiffness(float fltVal, BOOL bUseScaling)
 	m_fltStiffness = fltVal;
 }
 
+/**
+\brief	Sets the color to use when displaying this contraint.
+
+\details Colors in OSG are between 0 and 1.
+
+\author	dcofer
+\date	3/22/2011
+
+\param	fltR	Red component of color. 
+\param	fltG	Green component of color. 
+\param	fltB	Blue component of color. 
+\param	fltA	Alpha component of color. 
+**/
 void ConstraintLimit::Color(float fltR, float fltG, float fltB, float fltA)
 {m_vColor.Set(fltR, fltG, fltB, fltA);}
 
+/**
+\brief	Gets the color that is used when displaying this constraint.
+
+\author	dcofer
+\date	3/22/2011
+
+\return	CStdColor pointer.
+**/
 CStdColor *ConstraintLimit::Color() {return &m_vColor;}
 
+/**
+\brief	Sets the color of this constraint using an xml packet.
+
+\author	dcofer
+\date	3/22/2011
+
+\param	strXml	The xml packet to use when loading the new color info. 
+**/
 void ConstraintLimit::Color(string strXml)
 {
 	m_vColor.Load(strXml, "Color");
@@ -96,6 +142,48 @@ void ConstraintLimit::Color(string strXml)
 
 float ConstraintLimit::Alpha() {return m_vColor.a();}
 
+/**
+\brief	Sets whether this is a lower limit or not..
+
+\author	dcofer
+\date	3/22/2011
+
+\param	bVal	true if lower limit. 
+**/
+void ConstraintLimit::IsLowerLimit(BOOL bVal) {m_bIsLowerLimit = bVal;}
+
+/**
+\brief	Query if this object is lower limit.
+
+\author	dcofer
+\date	3/22/2011
+
+\return	true if lower limit, false if not.
+**/
+BOOL ConstraintLimit::IsLowerLimit() {return m_bIsLowerLimit;}
+
+/**
+\brief	Sets the system pointers.
+		
+\details There are a number of system pointers that are needed for use in the objects. The
+primariy one being a pointer to the simulation object itself so that you can get global
+parameters like the scale units and so on. However, each object may need other types of pointers
+as well, for example neurons need to have a pointer to their parent structure/organism, and to
+the NeuralModule they reside within. So different types of objects will need different sets of
+system pointers. We call this method to set the pointers just after creation and before Load is
+called. We then call VerifySystemPointers here, during Load and during Initialize in order to
+ensure that the correct pointers have been set for each type of objects. These pointers can then
+be safely used throughout the rest of the system. 
+		
+\author	dcofer
+\date	3/2/2011
+		
+\param [in,out]	lpSim		The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to the parent structure. 
+\param [in,out]	lpModule	The pointer to the parent module module. 
+\param [in,out]	lpNode		The pointer to the parent node. 
+\param	bVerify				true to call VerifySystemPointers. 
+**/
 void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
 {
 	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
@@ -104,6 +192,19 @@ void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure
 	if(bVerify) VerifySystemPointers();
 }
 
+/**
+\brief	Sets a system pointers.
+
+\author	dcofer
+\date	3/22/2011
+
+\param [in,out]	lpSim	   	The pointer to a simulation. 
+\param [in,out]	lpStructure	The pointer to a structure. 
+\param [in,out]	lpModule   	The pointer to a module. 
+\param [in,out]	lpNode	   	The pointer to a node. 
+\param	fltPosition		   	The new position. 
+\param	bVerify			   	true to verify. 
+**/
 void ConstraintLimit::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, float fltPosition, BOOL bVerify)
 {
 	SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
@@ -179,6 +280,15 @@ BOOL ConstraintLimit::SetData(string strDataType, string strValue, BOOL bThrowEr
 
 #pragma endregion
 
+/**
+\brief	Loads the constraint limit.
+
+\author	dcofer
+\date	3/22/2011
+
+\param [in,out]	oXml	The xml packet to load. 
+\param	strName			Name of the xml element to load in. 
+**/
 void ConstraintLimit::Load(CStdXml &oXml, string strName)
 {
 	oXml.FindChildElement(strName);

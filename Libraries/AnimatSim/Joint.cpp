@@ -1,6 +1,8 @@
-// Joint.cpp: implementation of the Joint class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Joint.cpp
+
+\brief	Implements the joint class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -30,23 +32,12 @@ namespace AnimatSim
 	namespace Environment
 	{
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\brief	Default constructor.
 
-/*! \brief 
-   Constructs a joint object..
-   		
-   \param lpParent This is a pointer to the parent rigid body of this joint. 
-   \param lpChild This is a pointer to the child rigid body of this joint. 
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a joint. 
-*/
-
+\author	dcofer
+\date	3/22/2011
+**/
 Joint::Joint()
 {
 	m_lpChild = NULL;
@@ -63,26 +54,51 @@ Joint::Joint()
 	m_bEnableLimits = TRUE;
 }
 
+/**
+\brief	Destructor.
 
-/*! \brief 
-   Destroys the joint object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the joint object..	 
-*/
-
+\author	dcofer
+\date	3/22/2011
+**/
 Joint::~Joint()
 {
 	//We also do not delete our references to these objects.
 	m_lpParent = NULL;
 	m_lpChild = NULL;
 }
+			
+/**
+\brief	Tells whether this joint uses radians or meters for its measurements.
 
+\details This is defaulted to TRUE. You must override this and set it to the appropriate
+value for your derived classes.
+
+\author	dcofer
+\date	3/22/2011
+
+\return	true if it uses radians, false if it uses meters.
+**/
+BOOL Joint::UsesRadians() {return TRUE;}
+
+/**
+\brief	Gets the size of the graphical representation of this joint.
+
+\author	dcofer
+\date	3/22/2011
+
+\return	Size for the graphics object.
+**/
 float Joint::Size() {return m_fltSize;};
 
+/**
+\brief	Sets the size of the graphical representation of this joint.
+
+\author	dcofer
+\date	3/22/2011
+
+\param	fltVal	   	The new size value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
 void Joint::Size(float fltVal, BOOL bUseScaling)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "Joint.Size");
@@ -94,16 +110,54 @@ void Joint::Size(float fltVal, BOOL bUseScaling)
 	Resize();
 }
 
+/**
+\brief	Tells if the motor is enabled.
+
+\author	dcofer
+\date	3/22/2011
+
+\return	true if it is enabled, false otherwise.
+**/
 BOOL Joint::EnableMotor() {return m_bEnableMotor;};
 
+/**
+\brief	Enables\disables the motor.
+
+\details If this is a motorized joint then when you turn it on the
+physics engine will calculate the torque that needs to be
+applied to this joint in order for it to have the desired
+Velocity for its current load. 
+
+\author	dcofer
+\date	3/22/2011
+
+\param	bVal	true to enable. 
+**/
 void Joint::EnableMotor(BOOL bVal)
 {
 	m_bEnableMotor = bVal;
 	//TODO Add sim code here.
 }
 
+/**
+\brief	Gets the maximum velocity.
+
+\author	dcofer
+\date	3/22/2011
+
+\return	Maximum motor velocity that is allowed.
+**/
 float Joint::MaxVelocity() {return m_fltMaxVelocity;};
 
+/**
+\brief	Sets the maximum velocity allowed by the motorized joint.
+
+\author	dcofer
+\date	3/22/2011
+
+\param	fltVal	   	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
 void Joint::MaxVelocity(float fltVal, BOOL bUseScaling)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "Joint.MaxVelocity");
@@ -116,48 +170,176 @@ void Joint::MaxVelocity(float fltVal, BOOL bUseScaling)
 	//TODO Add sim code here.
 }
 
+/**
+\brief	Tells if ConstraintLimits are enabled.
+
+\author	dcofer
+\date	3/22/2011
+
+\return	true if it limits are enabled, false otherwise.
+**/
 BOOL Joint::EnableLimits() {return m_bEnableLimits;};
 
+/**
+\brief	Sets whether ContrainLimits are enabled or not.
+
+\author	dcofer
+\date	3/22/2011
+
+\param	bVal	true to enable. 
+**/
 void Joint::EnableLimits(BOOL bVal) {m_bEnableLimits = bVal;}
 
-//Node Overrides
+int Joint::VisualSelectionType() {return JOINT_SELECTION_MODE;}
+
+/**
+\brief	Gets the child RigidBody part for this joint.
+
+\author	dcofer
+\date	3/22/2011
+
+\return	Pointer to the child RigidBody for this joint.
+**/
+RigidBody *Joint::Child() {return m_lpChild;}
+
+/**
+\brief	Sets the Child RigidBody part for this joint.
+
+\author	dcofer
+\date	3/22/2011
+
+\param [in,out]	lpValue	IPointer to the child part. 
+**/
+void Joint::Child(RigidBody *lpValue) {m_lpChild = lpValue;}
+
+/**
+\brief	Gets the joint position.
+
+\author	dcofer
+\date	3/22/2011
+
+\return	Joint position.
+**/
+float Joint::JointPosition() {return m_fltPosition;}
+
+/**
+\brief	Sets the joint position.
+
+\author	dcofer
+\date	3/22/2011
+
+\param	fltPos	The new position. 
+**/
+void Joint::JointPosition(float fltPos) {m_fltPosition = fltPos;}
+
+/**
+\brief	Gets the joint velocity.
+
+\author	dcofer
+\date	3/22/2011
+
+\return	Joint Velocity.
+**/
+float Joint::JointVelocity() {return m_fltVelocity;}
+
+/**
+\brief	Sets the joint velocity.
+
+\author	dcofer
+\date	3/22/2011
+
+\param	fltVel	The new velocity. 
+**/
+void Joint::JointVelocity(float fltVel) {m_fltVelocity = fltVel;}
+
+/**
+\brief	Gets the joint force.
+
+\author	dcofer
+\date	3/22/2011
+
+\return	Joint force.
+**/
+float Joint::JointForce() {return m_fltForce;}
+
+/**
+\brief	Sets the joint force.
+
+\author	dcofer
+\date	3/22/2011
+
+\param	fltForce	The new force. 
+**/
+void Joint::JointForce(float fltForce) {m_fltForce = fltForce;}
+
+/**
+\brief	The velocity that is actually set using the physics method.
+
+\author	dcofer
+\date	3/22/2011
+
+\return	The velocity that was set.
+**/
+float Joint::SetVelocity() {return m_fltSetVelocity;}
+
+/**
+\brief	Gets the desired velocity.
+
+\author	dcofer
+\date	3/22/2011
+
+\return	Desired velocity.
+**/
+float Joint::DesiredVelocity() {return m_fltDesiredVelocity;}
+
+/**
+\brief	Sets the desired velocity.
+
+\author	dcofer
+\date	3/22/2011
+
+\param	fltVelocity	The new velocity. 
+**/
+void Joint::DesiredVelocity(float fltVelocity) {m_fltDesiredVelocity = fltVelocity;}
+
+/**
+\brief	Sets the desired velocity.
+
+\author	dcofer
+\date	3/22/2011
+
+\param	fltInput	The new velocity. 
+**/
+void Joint::MotorInput(float fltInput) {m_fltDesiredVelocity = fltInput;}
+
 void Joint::AddExternalNodeInput(float fltInput)
 {
 	m_fltDesiredVelocity += fltInput;
 }
 
+/**
+\brief	Sets the Set Velocity to the desired velocity.
+
+\author	dcofer
+\date	3/22/2011
+**/
 void Joint::SetVelocityToDesired()
 {
 	m_fltSetVelocity = m_fltDesiredVelocity;
 	m_fltDesiredVelocity = 0;
 }
 
+/**
+\brief	Creates the joint.
+
+\details This method is called by the derived class in the physics library. It makes the calls necessary to create the actual joint
+using the chosen phsyics API.
+
+\author	dcofer
+\date	3/22/2011
+**/
 void Joint::CreateJoint()
 {}
-
-
-/*! \brief 
-   Allows the joint to update itself for each timeslice.
-      
-   \param lpSim This is a pointer to the simulator.
-   \param lpStructure This is a pointer to the structure/Organism that
-                      this rigid body is a part of.
-   \param lStep This is the current time slice.
-
-	 \return
-	 No return value.
-
-	 \remarks
-   This function is called for each joint on every
-   time slice. It allows the joint to update itself. You need 
-	 to be VERY careful to keep all code within the StepSimulation methods short, sweet, 
-	 and very fast. They are in the main processing loop and even a small increase in the
-	 amount of processing time that occurrs within this loop will lead to major impacts on
-	 the ultimate performance of the system. 
-
-   \sa
-   Joint::StepSimulation, Simulator::StepSimulation
-*/
 
 void Joint::StepSimulation()
 {
@@ -219,24 +401,6 @@ void Joint::ResetSimulation()
 	m_fltForce = 0;
 }
 
-/*! \brief 
-   Loads a joint from an xml configuration file.
-      
-   \param lpSim This is a pointer to the simulator.
-   \param lpStructure This is a pointer to the structure/Organism that
-                      this rigid body is a part of.
-   \param oXml This is an xml object.
-
-	 \return
-	 No return value.
-
-	 \remarks
-	 This method is responsible for loading the joint from a XMl
-	 configuration file. You should call this method even in your 
-	 overriden function becuase it loads all of the base properties
-	 for the Joint. 
-*/
-
 void Joint::Load(CStdXml &oXml)
 {
 	BodyPart::Load(oXml);
@@ -262,183 +426,6 @@ void Joint::Load(CStdXml &oXml)
 
 	oXml.OutOfElem(); //OutOf Joint Element
 }
-
-
-
-/*! \fn virtual void Joint::EnableMotor(BOOL bVal)
-   \brief
-   Enables the motor for a motorized joint.
-      
-   \param bVal Turns the motor on or off.
-
-	 \return
-	 No return value.
-
-	 \remarks
-	 If this is a motorized joint then when you turn it on the
-	 physics engine will calculate the torque that needs to be
-	 applied to this joint in order for it to have the desired
-	 Velocity for its current load. This is a pure virtual function
-	 that must be overridden because you will need to call the
-	 physics engine API to enable/disable the joint motor.
-
-	 \sa
-	 Velocity
-*/
-
-
-/*! \fn virtual void Joint::CreateJoint()
-   \brief
-   Enables the motor for a motorized joint.
-      
-   \param lpSim This is a pointer to the simulator.
-   \param lpStructure This is a pointer to the structure/Organism that
-                      this rigid body is a part of.
-
-	 \return
-	 No return value.
-
-	 \remarks
-	 This method is used to create the joint and attach it to the
-	 parent and child parts.
-
-	 \sa
-	 CreateJoints, CreateParts
-*/
-
-
-/*! \fn unsigned char Joint::Type()
-   \brief
-   Joint type property.
-      
-   \remarks
-   The type for this joint. Examples are Static, Hinge, etc..
-	 This is the read-only accessor function for the m_iType element.
-*/
-
-
-/*! \fn string Joint::ID()
-   \brief
-   Joint ID property.
-      
-   \remarks
-	 The unique Id for this joint. It is unique for each structure, 
-	 but not across structures. So you could have two joints with the
-	 same ID in two different organisms.
-	 This is the accessor function for the m_strID element.
-*/
-/*! \fn void Joint::ID(string strValue)
-   \brief
-   Joint ID property.
-      
-   \remarks
-	 The unique Id for this joint. It is unique for each structure, 
-	 but not across structures. So you could have two joints with the
-	 same ID in two different organisms.
-	 This is the mutator function for the m_strID element.
-*/
-
-
-/*! \fn CStdFPoint Joint::RelativePosition()
-   \brief
-   RelativePosition property.
-      
-   \remarks
-	 The relative position of the of this joint
-	 in relation to the center of its parent rigid body. 
-	 This is the accessor function for the m_oRelPosition element.
-*/
-/*! \fn void Joint::RelativePosition(CStdFPoint &oPoint)
-   \brief
-   RelativePosition property.
-      
-   \remarks
-	 The relative position of the of this joint
-	 in relation to the center of its parent rigid body. 
-	 This is the mutator function for the m_oRelPosition element.
-*/
-
-
-/*! \fn CStdFPoint Joint::AbsolutePosition()
-   \brief
-   AbsolutePosition property.
-      
-   \remarks
-	 The absolute position of the joint in world coordinates.
-	 This is calcualted during loading of the joint using the position of 
-	 the parent part and the relative position specified in the configuration file.
-	 This is the accessor function for the m_oAbsPosition element.
-*/
-/*! \fn void Joint::AbsolutePosition(CStdFPoint &oPoint)
-   \brief
-   AbsolutePosition property.
-      
-   \remarks
-	 The absolute position of the joint in world coordinates.
-	 This is calcualted during loading of the joint using the position of 
-	 the parent part and the relative position specified in the configuration file.
-	 This is the mutator function for the m_oAbsPosition element.
-*/
-
-
-/*! \fn Body *Joint::Parent()
-   \brief
-   Parent property.
-      
-   \remarks
-	 The parent rigid body for this joint. 
-	 This is the accessor function for the m_lpParent element.
-*/
-/*! \fn void Joint::Parent(Body *lpValue)
-   \brief
-   Parent property.
-      
-   \remarks
-	 The parent rigid body for this joint. 
-	 This is the mutator function for the m_lpParent element.
-*/
-
-
-/*! \fn Body *Joint::Child()
-   \brief
-   Child property.
-      
-   \remarks
-	 The child rigid body for this joint. 
-	 This is the accessor function for the m_lpChild element.
-*/
-/*! \fn void Joint::Child(Body *lpValue)
-   \brief
-   Child property.
-      
-   \remarks
-	 The child rigid body for this joint. 
-	 This is the mutator function for the m_lpChild element.
-*/
-
-
-/*! \fn float Joint::Velocity()
-   \brief
-   Velocity property.
-      
-   \remarks
-	 This is the velocity to use for the motorized joint. The motor must be enabled
-	 for this parameter to have any effect.
-	 This is the accessor functions for the m_fltVelocity element.
-*/
-/*! \fn virtual void Joint::Velocity(float fltVelocity)
-   \brief
-   Velocity property.
-      
-   \remarks
-	 This is the velocity to use for the motorized joint. The motor must be enabled
-	 for this parameter to have any effect.
-	 This is the mutator functions for the m_fltVelocity element.
-	 The mutator function is actually a pure virtual function that needs to
-	 be overloaded this is because in the particular joint when you set the
-	 velocity if the motor is enabled then you need to make the physics engine
-	 API calls to set the velocity of that motor.
-*/
 
 	}			//Environment
 }				//AnimatSim

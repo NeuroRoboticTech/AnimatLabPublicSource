@@ -1,6 +1,8 @@
-// MaterialPair.cpp: implementation of the MaterialPair class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	MaterialPair.cpp
+
+\brief	Implements the material pair class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -30,11 +32,12 @@ namespace AnimatSim
 {
 	namespace Environment
 	{
+/**
+\brief	Default constructor.
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
+\author	dcofer
+\date	3/22/2011
+**/
 MaterialPair::MaterialPair()
 {
 	m_fltFrictionPrimary = 1;
@@ -51,9 +54,71 @@ MaterialPair::MaterialPair()
 	m_fltMaxAdhesive = 0;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/22/2011
+**/
 MaterialPair::~MaterialPair()
 {
 }
+
+string MaterialPair::Material1() {return m_strMaterial1;}
+
+void MaterialPair::Material1(string strMat) {m_strMaterial1 = strMat;}
+
+string MaterialPair::Material2() {return m_strMaterial2;}
+
+void MaterialPair::Material2(string strMat) {m_strMaterial2 = strMat;}
+
+float MaterialPair::FrictionPrimary() {return m_fltFrictionPrimary;}
+
+void MaterialPair::FrictionPrimary(float fltVal) {m_fltFrictionPrimary = fltVal;}
+
+float MaterialPair::FrictionSecondary() {return m_fltFrictionSecondary;}
+
+void MaterialPair::FrictionSecondary(float fltVal) {m_fltFrictionSecondary = fltVal;}
+
+float MaterialPair::MaxFrictionPrimary() {return m_fltMaxFrictionPrimary;}
+
+void MaterialPair::MaxFrictionPrimary(float fltVal) {m_fltMaxFrictionPrimary = fltVal;}
+
+float MaterialPair::MaxFrictionSecondary() {return m_fltMaxFrictionSecondary;}
+
+void MaterialPair::MaxFrictionSecondary(float fltVal) {m_fltMaxFrictionSecondary = fltVal;}
+
+float MaterialPair::SlipPrimary() {return m_fltSlipPrimary;}
+
+void MaterialPair::SlipPrimary(float fltVal) {m_fltSlipPrimary = fltVal;}
+
+float MaterialPair::SlipSecondary() {return m_fltSlipSecondary;}
+
+void MaterialPair::SlipSecondary(float fltVal) {m_fltSlipSecondary = fltVal;}
+
+float MaterialPair::SlidePrimary() {return m_fltSlidePrimary;}
+
+void MaterialPair::SlidePrimary(float fltVal) {m_fltSlidePrimary = fltVal;}
+
+float MaterialPair::SlideSecondary() {return m_fltSlideSecondary;}
+
+void MaterialPair::SlideSecondary(float fltVal) {m_fltSlideSecondary = fltVal;}
+
+float MaterialPair::Compliance() {return m_fltCompliance;}
+
+void MaterialPair::Compliance(float fltVal) {m_fltCompliance = fltVal;}
+
+float MaterialPair::Damping() {return m_fltDamping;}
+
+void MaterialPair::Damping(float fltVal) {m_fltDamping = fltVal;}
+
+float MaterialPair::Restitution() {return m_fltRestitution;}
+
+void MaterialPair::Restitution(float fltVal) {m_fltRestitution = fltVal;}
+
+float MaterialPair::MaxAdhesive() {return m_fltMaxAdhesive;}
+
+void MaterialPair::MaxAdhesive(float fltVal) {m_fltMaxAdhesive = fltVal;}
 
 void MaterialPair::ScaleUnits()
 {

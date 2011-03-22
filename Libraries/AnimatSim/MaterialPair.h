@@ -1,6 +1,9 @@
-// MaterialPair.h: interface for the MaterialPair class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	MaterialPair.h
+
+\brief	Declares the material pair class.
+**/
+
 #pragma once
 
 namespace AnimatSim
@@ -20,67 +23,104 @@ namespace AnimatSim
 
 	namespace Environment
 	{
+		/**
+		\brief	Describes the interaction between two RigidBody parts that collide within the environment.
 
+		\details Each RigidBody has an associated Material that is defined by a unique Material name. 
+		The physics engine keeps a table with all combinations of Material types. The MaterialType
+		object is used by us to populate the field of the table in the physics engine. It lists all
+		of the parameters that define how to types of Materials interact. This includes things like friction
+		compliance, etc.. This lets us control the behavior that occurs when two different RigidBodies collide.
+		
+		\author	dcofer
+		\date	3/22/2011
+		**/
 		class ANIMAT_PORT MaterialPair : public AnimatBase
 		{
 		protected:
+			/// The unique material name for first material
 			string m_strMaterial1;
+
+			/// The unique material name for second material
 			string m_strMaterial2;
 
+			/// The primary coefficient of friction parameter.
 			float m_fltFrictionPrimary;
+
+			/// The secondary coefficient of friction parameter.
 			float m_fltFrictionSecondary;
+
+			/// The maximum primary friction that can created.
 			float m_fltMaxFrictionPrimary;
+
+			/// The maximum secondary friction that can created.
 			float m_fltMaxFrictionSecondary;
+
+			/// The compliance of the collision between those two materials.
 			float m_fltCompliance;
+
+			/// The damping of the collision between those two materials.
 			float m_fltDamping;
+
+			/// The restitution of the collision between those two materials.
 			float m_fltRestitution;
+
+			/// The primary slip of the collision between those two materials.
 			float m_fltSlipPrimary;
+
+			/// The secondary slip of the collision between those two materials.
 			float m_fltSlipSecondary;
+
+			/// The primary slide of the collision between those two materials.
 			float m_fltSlidePrimary;
+
+			/// The primary slide of the collision between those two materials.
 			float m_fltSlideSecondary;
+
+			/// The maximum adhesion of the collision between those two materials.
 			float m_fltMaxAdhesive;
 
 		public:
 			MaterialPair();
 			virtual ~MaterialPair();
 			
-			virtual string Material1() {return m_strMaterial1;};
-			virtual void Material1(string strMat) {m_strMaterial1 = strMat;};
+			virtual string Material1();
+			virtual void Material1(string strMat);
 
-			virtual string Material2() {return m_strMaterial2;};
-			virtual void Material2(string strMat) {m_strMaterial2 = strMat;};
+			virtual string Material2();
+			virtual void Material2(string strMat);
 
-			virtual float FrictionPrimary() {return m_fltFrictionPrimary;};
-			virtual void FrictionPrimary(float fltVal) {m_fltFrictionPrimary = fltVal;};
-			virtual float FrictionSecondary() {return m_fltFrictionSecondary;};
-			virtual void FrictionSecondary(float fltVal) {m_fltFrictionSecondary = fltVal;};
+			virtual float FrictionPrimary();
+			virtual void FrictionPrimary(float fltVal);
+			virtual float FrictionSecondary();
+			virtual void FrictionSecondary(float fltVal);
 
-			virtual float MaxFrictionPrimary() {return m_fltMaxFrictionPrimary;};
-			virtual void MaxFrictionPrimary(float fltVal) {m_fltMaxFrictionPrimary = fltVal;};
-			virtual float MaxFrictionSecondary() {return m_fltMaxFrictionSecondary;};
-			virtual void MaxFrictionSecondary(float fltVal) {m_fltMaxFrictionSecondary = fltVal;};
+			virtual float MaxFrictionPrimary();
+			virtual void MaxFrictionPrimary(float fltVal);
+			virtual float MaxFrictionSecondary();
+			virtual void MaxFrictionSecondary(float fltVal);
 
-			virtual float SlipPrimary() {return m_fltSlipPrimary;};
-			virtual void SlipPrimary(float fltVal) {m_fltSlipPrimary = fltVal;};
-			virtual float SlipSecondary() {return m_fltSlipSecondary;};
-			virtual void SlipSecondary(float fltVal) {m_fltSlipSecondary = fltVal;};
+			virtual float SlipPrimary();
+			virtual void SlipPrimary(float fltVal);
+			virtual float SlipSecondary();
+			virtual void SlipSecondary(float fltVal);
 
-			virtual float SlidePrimary() {return m_fltSlidePrimary;};
-			virtual void SlidePrimary(float fltVal) {m_fltSlidePrimary = fltVal;};
-			virtual float SlideSecondary() {return m_fltSlideSecondary;};
-			virtual void SlideSecondary(float fltVal) {m_fltSlideSecondary = fltVal;};
+			virtual float SlidePrimary();
+			virtual void SlidePrimary(float fltVal);
+			virtual float SlideSecondary();
+			virtual void SlideSecondary(float fltVal);
 
-			virtual float Compliance() {return m_fltCompliance;};
-			virtual void Compliance(float fltVal) {m_fltCompliance = fltVal;};
+			virtual float Compliance();
+			virtual void Compliance(float fltVal);
 
-			virtual float Damping() {return m_fltDamping;};
-			virtual void Damping(float fltVal) {m_fltDamping = fltVal;};
+			virtual float Damping();
+			virtual void Damping(float fltVal);
 
-			virtual float Restitution() {return m_fltRestitution;};
-			virtual void Restitution(float fltVal) {m_fltRestitution = fltVal;};
+			virtual float Restitution();
+			virtual void Restitution(float fltVal);
 
-			virtual float MaxAdhesive() {return m_fltMaxAdhesive;};
-			virtual void MaxAdhesive(float fltVal) {m_fltMaxAdhesive = fltVal;};
+			virtual float MaxAdhesive();
+			virtual void MaxAdhesive(float fltVal);
 
 			virtual void ScaleUnits();
 			virtual int GetMaterialID(string strName) = 0;

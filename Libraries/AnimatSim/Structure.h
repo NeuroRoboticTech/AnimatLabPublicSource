@@ -33,10 +33,25 @@ namespace AnimatSim
 		class ANIMAT_PORT CollisionPair : public AnimatBase
 		{
 		public:
+			/// GUID ID of the first part of the collision pair.
 			string m_strPart1ID;
+			/// GUID ID of the second part of the collision pair.
 			string m_strPart2ID;
 
+			/**
+			\brief	Default constructor.
+			
+			\author	dcofer
+			\date	3/22/2011
+			**/
 			CollisionPair() {};
+
+			/**
+			\brief	Finaliser.
+			
+			\author	dcofer
+			\date	3/22/2011
+			**/
 			~CollisionPair() {};
 		};
 
