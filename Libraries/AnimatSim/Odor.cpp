@@ -1,6 +1,8 @@
-// Odor.cpp: implementation of the Odor class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Odor.cpp
+
+\brief	Implements the odor class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -25,24 +27,19 @@
 #include "Odor.h"
 #include "Simulator.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+
 namespace AnimatSim
 {
 	namespace Environment
 	{
+/**
+\brief	Constructor.
 
-/*! \brief 
-   Constructs an structure object..
-   		
-	 \return
-	 No return value.
+\author	dcofer
+\date	3/23/2011
 
-   \remarks
-	 The constructor for a structure. 
-*/
-
+\param [in,out]	lpParent	If non-null, the pointer to a parent. 
+**/
 Odor::Odor(RigidBody *lpParent)
 {
 	m_lpParent = lpParent;
@@ -51,17 +48,12 @@ Odor::Odor(RigidBody *lpParent)
 	m_bUseFoodQuantity = FALSE;
 }
 
+/**
+\brief	Destructor.
 
-/*! \brief 
-   Destroys the structure object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the structure object..	 
-*/
-
+\author	dcofer
+\date	3/23/2011
+**/
 Odor::~Odor()
 {
 
@@ -73,6 +65,60 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Odor\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Sets the odor type to emit for this odorant.
+
+\details This takes teh supplied odor type ID and finds that odor, and adds itself as a source.
+
+\author	dcofer
+\date	3/23/2011
+
+\param	strType	OdorType ID. 
+**/
+void Odor::SetOdorType(string strType)
+{
+	//Now lets find the odor type for this odor and add this one to it.
+	m_lpOdorType = m_lpSim->FindOdorType(strType);
+	m_lpOdorType->AddOdorSource(this);
+}
+
+/**
+\brief	Gets a pointer to the odor type.
+
+\author	dcofer
+\date	3/23/2011
+
+\return	Pointer to OdorType.
+**/
+OdorType  *Odor::GetOdorType() {return m_lpOdorType;}
+
+/**
+\brief	Sets the quantity that can be used when calculating the odor concentration.
+
+\details If m_bUseFoodQuantity is True then this value is not used.
+
+\author	dcofer
+\date	3/23/2011
+
+\param	fltVal	The new value. 
+**/
+void Odor::Quantity(float fltVal) 
+{
+	Std_IsAboveMin((float) 0, m_fltQuantity, TRUE, "Quantity");
+	m_fltQuantity = fltVal;
+}
+
+/**
+\brief	Gets the quantity that will be used when calculating the odor concentration.
+
+\details If m_bUseFoodQuantity is True then this return FoodQuantity from the parent RigidBody,
+else it returns m_fltQuantity.
+
+\author	dcofer
+\date	3/23/2011
+
+\return	Current quantity.
+**/
 float Odor::Quantity() 
 {
 	if(m_bUseFoodQuantity)
@@ -81,6 +127,41 @@ float Odor::Quantity()
 		return m_fltQuantity;
 };
 
+/**
+\brief	Tells whether we should use the FoodQuantity of the parent RigidBody when calculating the odor value.
+
+\author	dcofer
+\date	3/23/2011
+
+\return	true if it uses RigidBody food quantity, false else.
+**/
+BOOL Odor::UseFoodQuantity() {return m_bUseFoodQuantity;}
+
+/**
+\brief	Sets whether we should use the FoodQuantity of the parent RigidBody when calculating the odor value.
+
+\author	dcofer
+\date	3/23/2011
+
+\param	bVal	true if it uses RigidBody food quantity, false else.
+**/
+void Odor::UseFoodQuantity(BOOL bVal) {m_bUseFoodQuantity = bVal;}
+
+/**
+\brief	Calculates the odor value for this Odorant for a given odor sensor somewhere in the environment.
+
+\details The odor value that a sensor detects is determined by how far away a givent odorant is from it, the
+diffusion constant, and the quantity of the odor present at the source. This equation describes the relationship.
+fltVal = (this->Quantity() * lpType->DiffusionConstant()) / (fltDist * fltDist); 
+
+\author	dcofer
+\date	3/23/2011
+
+\param [in,out]	lpType	  	Pointer to the OdorType for which we are calculating the odor. 
+\param [in,out]	oSensorPos	The position to the odor sensor. 
+
+\return	The calculated odor value.
+**/
 float Odor::CalculateOdorValue(OdorType *lpType, CStdFPoint &oSensorPos)
 {
 	if(!m_lpParent) return 0;
@@ -93,41 +174,17 @@ float Odor::CalculateOdorValue(OdorType *lpType, CStdFPoint &oSensorPos)
 	return fltVal;
 }
 
-/*! \brief 
-   Loads a joint from an xml configuration file.
-      
-   \param lpSim This is a pointer to the simulator.
-   \param lpStructure This is a pointer to the structure/Organism that
-                      this rigid body is a part of.
-   \param oXml This is an xml object.
-
-	 \return
-	 No return value.
-
-	 \remarks
-	 This method is responsible for loading the joint from a XMl
-	 configuration file. You should call this method even in your 
-	 overriden function becuase it loads all of the base properties
-	 for the Joint. 
-*/
-
 void Odor::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 
 	oXml.IntoElem();  //Into Odor Element
 
-	string strOdorTypeID = Std_CheckString(oXml.GetChildString("OdorTypeID"));
-	m_fltQuantity = oXml.GetChildFloat("Quantity", m_fltQuantity);
-	Std_IsAboveMin((float) 0, m_fltQuantity, TRUE, "Quantity");
-
-	m_bUseFoodQuantity = oXml.GetChildFloat("UseFoodQuantity", m_bUseFoodQuantity);
+	SetOdorType(oXml.GetChildString("OdorTypeID"));
+	Quantity(oXml.GetChildFloat("Quantity", m_fltQuantity));
+	UseFoodQuantity(oXml.GetChildFloat("UseFoodQuantity", m_bUseFoodQuantity));
 
 	oXml.OutOfElem(); //OutOf Odor Element
-
-	//Now lets find the odor type for this odor and add this one to it.
-	m_lpOdorType = m_lpSim->FindOdorType(strOdorTypeID);
-	m_lpOdorType->AddOdorSource(this);
 }
 
 	}			// Environment

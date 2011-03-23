@@ -113,6 +113,12 @@ void VsSimulator::Gravity(float fltVal, BOOL bUseScaling)
 		m_uUniverse->setGravity(0, m_fltGravity, 0);
 }
 
+int VsSimulator::GetMaterialID(string strID)
+{
+	VxMaterialTable *lpMat = m_vxFrame->getMaterialTable();
+	return lpMat->getMaterialID(strID.c_str());
+}
+
 #pragma endregion
 
 

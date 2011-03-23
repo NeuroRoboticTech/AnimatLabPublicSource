@@ -1,6 +1,8 @@
-// OdorType.cpp: implementation of the OdorType class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	OdorType.cpp
+
+\brief	Implements the odor type class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -25,40 +27,28 @@
 #include "Odor.h"
 #include "Simulator.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+
 namespace AnimatSim
 {
 	namespace Environment
 	{
+/**
+\brief	Default constructor.
 
-/*! \brief 
-   Constructs an structure object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a structure. 
-*/
-
+\author	dcofer
+\date	3/23/2011
+**/
 OdorType::OdorType()
 {
 	m_fltDiffusionConstant = 1;
 }
 
+/**
+\brief	Destructor.
 
-/*! \brief 
-   Destroys the structure object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the structure object..	 
-*/
-
+\author	dcofer
+\date	3/23/2011
+**/
 OdorType::~OdorType()
 {
 
@@ -70,6 +60,46 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Odor\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Gets the diffusion constant.
+
+\author	dcofer
+\date	3/23/2011
+
+\return	Diffusion constant.
+**/
+float OdorType::DiffusionConstant() {return m_fltDiffusionConstant;};
+
+/**
+\brief	Sets the diffusion constant.
+
+\author	dcofer
+\date	3/23/2011
+
+\param	fltVal	   	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
+void OdorType::DiffusionConstant(float fltVal, BOOL bUseScaling) 
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Diffusion Constant");
+
+	if(bUseScaling)
+		fltVal = fltVal/(m_lpSim->DistanceUnits()*m_lpSim->DistanceUnits()); //Our diffusion constant is in m^2/s. We need to convert its distance units appropriately.
+
+	m_fltDiffusionConstant = fltVal;
+};
+
+/**
+\brief	Finds the odor source with the specified GUID ID.
+
+\author	dcofer
+\date	3/23/2011
+
+\param	strOdorID  	GUID ID of the Odor to find. 
+\param	bThrowError	If true and the odor is not found then throw an error, else return NULL if not found
+
+\return	null if Odor is not found and bThrowError=False, else the found odor source.
+**/
 Odor *OdorType::FindOdorSource(string strOdorID, BOOL bThrowError)
 {
 	Odor *lpOdor = NULL;
@@ -84,6 +114,14 @@ Odor *OdorType::FindOdorSource(string strOdorID, BOOL bThrowError)
 	return lpOdor;
 }
 
+/**
+\brief	Adds an odor source to the list of odors that are emitting this type of odor. 
+
+\author	dcofer
+\date	3/23/2011
+
+\param [in,out]	lpOdor	Pointer to an odor emitting this OdorType. 
+**/
 void OdorType::AddOdorSource(Odor *lpOdor)
 {
 	if(!FindOdorSource(lpOdor->ID(), FALSE))
@@ -92,6 +130,20 @@ void OdorType::AddOdorSource(Odor *lpOdor)
 	}
 }
 
+/**
+\brief	Calculates the odor value for this OdorType for a given sensor location.
+
+\details This loops through all of the odors that are emitting this OdorType and 
+calculates the odor strength for each one based on its distance from the specified
+sensor. This is the total odor strength for the sensor.
+
+\author	dcofer
+\date	3/23/2011
+
+\param [in,out]	oSensorPos	The sensor position. 
+
+\return	The total calculated odor value.
+**/
 float OdorType::CalculateOdorValue(CStdFPoint &oSensorPos)
 {
 	//Loop through each of the associated odors and calculate the value for each one.
@@ -110,33 +162,13 @@ float OdorType::CalculateOdorValue(CStdFPoint &oSensorPos)
 	return fltVal;
 }
 
-/*! \brief 
-   Loads a joint from an xml configuration file.
-      
-   \param lpSim This is a pointer to the simulator.
-   \param lpStructure This is a pointer to the structure/Organism that
-                      this rigid body is a part of.
-   \param oXml This is an xml object.
-
-	 \return
-	 No return value.
-
-	 \remarks
-	 This method is responsible for loading the joint from a XMl
-	 configuration file. You should call this method even in your 
-	 overriden function becuase it loads all of the base properties
-	 for the Joint. 
-*/
-
 void OdorType::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 
 	oXml.IntoElem();  //Into Joint Element
 
-	m_fltDiffusionConstant = oXml.GetChildFloat("DiffusionConstant", m_fltDiffusionConstant);
-	m_fltDiffusionConstant = m_fltDiffusionConstant/(m_lpSim->DistanceUnits()*m_lpSim->DistanceUnits()); //Our diffusion constant is in m^2/s. We need to convert its distance units appropriately.
-	Std_IsAboveMin((float) 0, m_fltDiffusionConstant, TRUE, "Diffusion Constant");
+	DiffusionConstant(oXml.GetChildFloat("DiffusionConstant", m_fltDiffusionConstant));
 
 	oXml.OutOfElem(); //OutOf Joint Element
 }

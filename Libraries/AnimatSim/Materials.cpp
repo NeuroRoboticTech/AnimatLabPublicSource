@@ -37,7 +37,6 @@ namespace AnimatSim
 
 Materials::Materials()
 {
-	m_lpPair = NULL;
 }
 
 Materials::~Materials()
@@ -45,9 +44,6 @@ Materials::~Materials()
 
 try
 {
-	if(m_lpPair)
-		{delete m_lpPair; m_lpPair = NULL;}
-
 	m_aryMaterialTypes.RemoveAll();
 	m_aryMaterialPairs.RemoveAll();
 }
@@ -61,18 +57,9 @@ void Materials::Reset()
 	m_aryMaterialPairs.RemoveAll();
 }
 
-int Materials::GetMaterialID(string strName)
-{
-	if(!m_lpPair)
-		THROW_ERROR(Al_Err_lMaterial_Pair_Not_Defined, Al_Err_strMaterial_Pair_Not_Defined);
-	return m_lpPair->GetMaterialID(strName);
-}
-
 void Materials::Initialize()
 {
 	AnimatBase::Initialize();
-
-	RegisterMaterials();
 
 	MaterialPair *lpItem = NULL;
 	int iCount = m_aryMaterialPairs.GetSize();
@@ -81,19 +68,6 @@ void Materials::Initialize()
 		lpItem = m_aryMaterialPairs[iIndex];
 		lpItem->Initialize();
 	}
-}
-
-void Materials::RegisterMaterials()
-{
-	if(m_lpPair)
-		{delete m_lpPair; m_lpPair = NULL;}	
-
-	m_lpPair = dynamic_cast<MaterialPair *>(m_lpSim->CreateObject("", "Material", "Default"));
-	if(!m_lpPair)
-		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Material");
-	m_lpPair->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
-
-	m_lpPair->RegisterMaterialTypes(m_aryMaterialTypes);
 }
 
 void Materials::CreateDefaultMaterial()
@@ -114,7 +88,7 @@ void Materials::CreateDefaultMaterial()
 		lpItem->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
 		lpItem->Material1("DEFAULT");
 		lpItem->Material2(strType);
-		lpItem->ScaleUnits();
+		lpItem->CreateDefaultUnits();
 
 		m_aryMaterialPairs.Add(lpItem);
 	}

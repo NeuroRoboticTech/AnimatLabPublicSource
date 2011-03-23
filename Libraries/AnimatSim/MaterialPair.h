@@ -96,35 +96,60 @@ namespace AnimatSim
 			virtual void FrictionSecondary(float fltVal);
 
 			virtual float MaxFrictionPrimary();
-			virtual void MaxFrictionPrimary(float fltVal);
+			virtual void MaxFrictionPrimary(float fltVal, BOOL bUseScaling = TRUE);
 			virtual float MaxFrictionSecondary();
-			virtual void MaxFrictionSecondary(float fltVal);
+			virtual void MaxFrictionSecondary(float fltVal, BOOL bUseScaling = TRUE);
 
 			virtual float SlipPrimary();
-			virtual void SlipPrimary(float fltVal);
+			virtual void SlipPrimary(float fltVal, BOOL bUseScaling = TRUE);
 			virtual float SlipSecondary();
-			virtual void SlipSecondary(float fltVal);
+			virtual void SlipSecondary(float fltVal, BOOL bUseScaling = TRUE);
 
 			virtual float SlidePrimary();
-			virtual void SlidePrimary(float fltVal);
+			virtual void SlidePrimary(float fltVal, BOOL bUseScaling = TRUE);
 			virtual float SlideSecondary();
-			virtual void SlideSecondary(float fltVal);
+			virtual void SlideSecondary(float fltVal, BOOL bUseScaling = TRUE);
 
 			virtual float Compliance();
-			virtual void Compliance(float fltVal);
+			virtual void Compliance(float fltVal, BOOL bUseScaling = TRUE);
 
 			virtual float Damping();
-			virtual void Damping(float fltVal);
+			virtual void Damping(float fltVal, BOOL bUseScaling = TRUE);
 
 			virtual float Restitution();
 			virtual void Restitution(float fltVal);
 
 			virtual float MaxAdhesive();
-			virtual void MaxAdhesive(float fltVal);
+			virtual void MaxAdhesive(float fltVal, BOOL bUseScaling = TRUE);
 
-			virtual void ScaleUnits();
+			/**
+			\brief	Gets a material identifier used by the physics engine.
+
+			\details This is a pure virtual function that must be overridden in the derived physics class.
+
+			\author	dcofer
+			\date	3/23/2011
+			
+			\param	strName	Name of the string. 
+			
+			\return	The material identifier.
+			**/
 			virtual int GetMaterialID(string strName) = 0;
+
+			/**
+			\brief	Registers the material types within the physics engine.
+
+			\details This is a pure virtual function that must be overridden in the derived physics class.
+			
+			\author	dcofer
+			\date	3/23/2011
+			
+			\param	aryMaterialTypes	List of types of the ary materials. 
+			**/
 			virtual void RegisterMaterialTypes(CStdArray<string> aryMaterialTypes) = 0;
+
+			virtual void CreateDefaultUnits();
+
 			virtual void Load(CStdXml &oXml);
 		};
 

@@ -239,7 +239,7 @@ void VsRigidBody::CreateDynamicPart()
 	m_vxPart = new VxPart;
 	m_vxSensor = m_vxPart;
 	m_vxSensor->setUserData((void*) m_lpThis);
-	int iMaterialID = m_lpThis->GetSimulator()->MaterialMgr()->GetMaterialID(m_lpThisBody->MaterialID());
+	int iMaterialID = m_lpThis->GetSimulator()->GetMaterialID(m_lpThisBody->MaterialID());
 
 	m_vxSensor->setName(m_lpThis->ID().c_str());               // Give it a name.
     m_vxSensor->setControl(m_eControlType);  // Set it to dynamic.
@@ -270,7 +270,7 @@ void VsRigidBody::CreateStaticPart()
 
 	Vx::VxReal44 vOffset;
 	VxOSG::copyOsgMatrix_to_VxReal44(m_osgMT->getMatrix(), vOffset);
-	int iMaterialID = m_lpThis->GetSimulator()->MaterialMgr()->GetMaterialID(m_lpThisBody->MaterialID());
+	int iMaterialID = m_lpThis->GetSimulator()->GetMaterialID(m_lpThisBody->MaterialID());
 
 	Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
 	if(vxSensor)

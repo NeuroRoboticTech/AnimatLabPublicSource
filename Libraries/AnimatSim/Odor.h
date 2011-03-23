@@ -1,58 +1,62 @@
-// Odor.h: interface for the Odor class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Odor.h
 
-#if !defined(AFX_ODOR_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)
-#define AFX_ODOR_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_
+\brief	Declares the odor class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
 	namespace Environment
 	{
-
+		/**
+		\brief	Odor. 
+		
+		\author	dcofer
+		\date	3/23/2011
+		**/
 		class ANIMAT_PORT Odor : public AnimatBase 
 		{
 		protected:
-				RigidBody *m_lpParent;
-				OdorType *m_lpOdorType;
+			/// Pointer to the parent RigidBody part that is emitting the odor.
+			RigidBody *m_lpParent;
 
-				///The unique Id for this odor. It is unique for each structure, 
-				///but not across structures. So you could have two rigid bodies with the
-				///same ID in two different organisms.
-				string m_strID;  
+			/// Pointer to the type of odor the body part is emitting.
+			OdorType *m_lpOdorType;
 
-				///The name for this body. 
-				string m_strName;  
+			///The unique Id for this odor. It is unique for each structure, 
+			///but not across structures. So you could have two rigid bodies with the
+			///same ID in two different organisms.
+			string m_strID;  
 
-				float m_fltQuantity;
-				BOOL m_bUseFoodQuantity;
+			///The name for this body. 
+			string m_strName;  
+
+			/// The quantity used to calculate the odor value. 
+			float m_fltQuantity;
+
+			/// If this is true then the food quantity of the parent RigidBody is used to calculate
+			/// the odor strength instead of the m_fltQuantity of this odor object.
+			BOOL m_bUseFoodQuantity;
 
 		public:
 			Odor(RigidBody *lpParent);
 			virtual ~Odor();
 
-			string ID() {return m_strID;};
-			void ID(string strValue) {m_strID = strValue;};
+			virtual void SetOdorType(string strType);
+			virtual OdorType  *GetOdorType();
 
-			string Name() {return m_strName;};
-			void Name(string strValue) {m_strName = strValue;};
+			virtual float Quantity();
+			virtual void Quantity(float fltVal);
 
-			float Quantity();
-			void Quantity(float fltVal) {m_fltQuantity = fltVal;};
-
-			BOOL UseFoodQuantity() {return m_bUseFoodQuantity;};
-			void UseFoodQuantity(BOOL bVal) {m_bUseFoodQuantity = bVal;};
+			virtual BOOL UseFoodQuantity();
+			virtual void UseFoodQuantity(BOOL bVal);
 			
-			float CalculateOdorValue(OdorType *lpType, CStdFPoint &oSensorPos);
+			virtual float CalculateOdorValue(OdorType *lpType, CStdFPoint &oSensorPos);
 
 			virtual void Load(CStdXml &oXml);
 		};
 
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ODOR_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)

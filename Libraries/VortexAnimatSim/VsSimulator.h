@@ -71,6 +71,7 @@ namespace VortexAnimatSim
 		virtual void AngularKineticLoss(float fltVal);
 		virtual void PhysicsTimeStep(float fltVal);
 		virtual void Gravity(float fltVal, BOOL bUseScaling = TRUE);
+		virtual int GetMaterialID(string strID);
 
 #pragma endregion
 

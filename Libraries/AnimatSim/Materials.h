@@ -1,31 +1,41 @@
-// Materials.h: interface for the Materials class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Materials.h
+
+\brief	Declares the materials class.
+**/
+
 #pragma once
 
 namespace AnimatSim
 {
 	namespace Environment
 	{
+		/**
+		\brief	Keeps track of all of the materials and the various material pair interaction parameters for the entire simulation. 
 
+		\details Materials can be defined within the simulation that have a unique name. RigidBody parts can then specify that it uses that
+		particular material using its unique name. The material defines how it interacts with the rest of the parts within the simulation. 
+		This includes things like friction, slip, and so on. The Materials object also keeps track of all MaterialPair combinations. For each
+		Material that is defined there must be MaterialPair objects defined for all combinations of that material and the other materials 
+		that have been defined. This lets the simulator know how to react if a material of type 1 collides with a material of type 2. This 
+		object keeps a list of all of these MaterialPairs and registers them with the Physics engine.
+		
+		\author	dcofer
+		\date	3/23/2011
+		**/
 		class ANIMAT_PORT Materials : public AnimatBase 
 		{
 		protected:
-			MaterialPair *m_lpPair;
-
 			CStdArray<string> m_aryMaterialTypes;
 			CStdPtrArray<MaterialPair> m_aryMaterialPairs;
 
 			virtual MaterialPair *LoadMaterialPair(CStdXml &oXml);
 
 			virtual void CreateDefaultMaterial();
-			virtual void RegisterMaterials();
 
 		public:
 			Materials();
 			virtual ~Materials();
-
-			virtual int GetMaterialID(string strID);
 
 			virtual void Reset();
 			virtual void Initialize();

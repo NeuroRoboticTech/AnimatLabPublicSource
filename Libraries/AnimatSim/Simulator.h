@@ -434,6 +434,8 @@ namespace AnimatSim
 
 			long SnapshotByteSize() {return m_lSnapshotByteSize;};
 
+			virtual int GetMaterialID(string strID) {return -1;}; //Must be implemented in physics override class.
+
 			DataChartMgr *DataChartMgr() {return &m_oDataChartMgr;};
 			ExternalStimuliMgr *ExternalStimuliMgr() {return &m_oExternalStimuliMgr;};
 			SimulationRecorder *SimulationRecorder() {return m_lpSimRecorder;};
