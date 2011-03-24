@@ -1,13 +1,10 @@
-// AlStaticJoint.h: interface for the Static class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatSim\Static.h
 
-#if !defined(AFX_ALSTATICJOINT_H__EE83858A_9B8D_4823_A346_4EC0197D4A1A__INCLUDED_)
-#define AFX_ALSTATICJOINT_H__EE83858A_9B8D_4823_A346_4EC0197D4A1A__INCLUDED_
+\brief	Declares the static class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
@@ -16,22 +13,18 @@ namespace AnimatSim
 		namespace Joints
 		{
 
-			/*! \brief 
-				A static type of joint that can not move.
+			/**
+			\brief	A static type of joint that can not move.
 
-				\remarks
-				This type of joint is constrained so that it can not move at all
-				relative to its parent. It can not rotate or translate. In essence
-				when you use this joint you are making these two rigid bodies behave
-				as if they were one part. When the parent part moves the same motion
-				will be applied to the child part.
-
-				\sa
-				Joint, Hinge, Static
-				 
-				\ingroup AnimatSim
-			*/
-
+			\details This type of joint is constrained so that it can not move at all
+			relative to its parent. It can not rotate or translate. In essence
+			when you use this joint you are making these two rigid bodies behave
+			as if they were one part. When the parent part moves the same motion
+			will be applied to the child part.
+			
+			\author	dcofer
+			\date	3/24/2011
+			**/
 			class ANIMAT_PORT Static : public Joint  
 			{
 			public:
@@ -44,5 +37,3 @@ namespace AnimatSim
 		}		//Joints
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALSTATICJOINT_H__EE83858A_9B8D_4823_A346_4EC0197D4A1A__INCLUDED_)

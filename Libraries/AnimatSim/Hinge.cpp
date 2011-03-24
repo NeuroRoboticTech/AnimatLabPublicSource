@@ -1,6 +1,8 @@
-// Hinge.cpp: implementation of the Hinge class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Hinge.cpp
+
+\brief	Implements the hinge class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -33,24 +35,12 @@ namespace AnimatSim
 	{
 		namespace Joints
 		{
+/**
+\brief	Default constructor.
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-/*! \brief 
-   Constructs a hinge joint.
-   		
-   \param lpParent This is a pointer to the parent rigid body of this joint. 
-   \param lpChild This is a pointer to the child rigid body of this joint. 
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a hinge joint. 
-*/
-
+\author	dcofer
+\date	3/24/2011
+**/
 Hinge::Hinge()
 {
 	m_lpUpperLimit = NULL;
@@ -61,17 +51,12 @@ Hinge::Hinge()
 	m_ftlServoGain = 100;
 }
 
+/**
+\brief	Destructor.
 
-/*! \brief 
-   Destroys the hinge joint object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the hinge joint object..	 
-*/
-
+\author	dcofer
+\date	3/24/2011
+**/
 Hinge::~Hinge()
 {
 try
@@ -98,20 +83,151 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Hinge\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Gets the radius cylinder of the cylinder used to display the hinge in the environment.
+
+\author	dcofer
+\date	3/24/2011
+
+\return	Radius of hinge cylinder.
+**/
 float Hinge::CylinderRadius() 
 {
 	return m_fltSize * 0.25f;
 };
 
+/**
+\brief	Gets the height of the cylinder used to display the hinge in the environment.
+
+\author	dcofer
+\date	3/24/2011
+
+\return	Height of hinge cylidner.
+**/
 float Hinge::CylinderHeight() 
 {
 	return m_fltSize;
 };
 
+/**
+\brief	Gets the width of the flaps used to display the hinge in the environment.
+
+\author	dcofer
+\date	3/24/2011
+
+\return	Flap width.
+**/
 float Hinge::FlapWidth() 
 {
 	return m_fltSize * 0.05f;
 };
+
+void Hinge::Enabled(BOOL bValue) 
+{
+	EnableMotor(bValue);
+	m_bEnabled = bValue;
+}
+
+/**
+\brief	Gets a pointer to the upper limit ConstraintLimit.
+
+\author	dcofer
+\date	3/24/2011
+
+\return	Pointer to ConstraintLimit.
+**/
+ConstraintLimit *Hinge::UpperLimit() {return m_lpUpperLimit;}
+
+/**
+\brief	Gets a pointer to the lower limit ConstraintLimit.
+
+\author	dcofer
+\date	3/24/2011
+
+\return	Pointer to ConstraintLimit.
+**/
+ConstraintLimit *Hinge::LowerLimit() {return m_lpLowerLimit;}
+
+/**
+\brief	Sets whether this is a servo motor or not.
+
+\details A servo motor is one where the position of the joint is specified instead of the velocity that is normally
+used to control the motor.
+
+\author	dcofer
+\date	3/24/2011
+
+\param	bServo	true to set to be a servo motor. 
+**/
+void Hinge::ServoMotor(BOOL bServo) {m_bServoMotor = bServo;}
+
+/**
+\brief	Gets whether this is set to be a servo motor.
+
+\author	dcofer
+\date	3/24/2011
+
+\return	true if it is a servo motor, false otherwise.
+**/
+BOOL Hinge::ServoMotor() {return m_bServoMotor;}
+
+/**
+\brief	Sets the servo gain used to calculate the new velocity for maintaining a position with a servo motor.
+
+\author	dcofer
+\date	3/24/2011
+
+\param	fltVal	The new gain value. 
+**/
+void Hinge::ServoGain(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "ServoGain", TRUE);
+	m_ftlServoGain= fltVal;
+}
+
+/**
+\brief	Gets the servo gain.
+
+\author	dcofer
+\date	3/24/2011
+
+\return	Servo gain.
+**/
+float Hinge::ServoGain() {return m_ftlServoGain;}
+
+/**
+\brief	Sets the Maximum torque.
+
+\author	dcofer
+\date	3/24/2011
+
+\param	fltVal	   	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
+void Hinge::MaxTorque(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "MaxTorque");
+
+	if(bUseScaling)
+		fltVal *= m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits() * m_lpSim->InverseDistanceUnits();
+
+	m_fltMaxTorque = fltVal;
+
+	//If max torque is over 1000 N then assume we mean infinity.
+	if(m_fltMaxTorque >= 1000)
+		m_fltMaxTorque = 1e35f;
+}
+
+/**
+\brief	Gets the maximum torque.
+
+\author	dcofer
+\date	3/24/2011
+
+\return	Maximum torque the motor can apply.
+**/
+float Hinge::MaxTorque() {return m_fltMaxTorque;}
+
 
 BOOL Hinge::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
@@ -140,14 +256,9 @@ void Hinge::Load(CStdXml &oXml)
 	m_lpUpperLimit->Load(oXml, "UpperLimit");
 	m_lpLowerLimit->Load(oXml, "LowerLimit");
 
-	m_fltMaxTorque = oXml.GetChildFloat("MaxTorque", m_fltMaxTorque) * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits() * m_lpSim->InverseDistanceUnits();
-
-	//If max torque is over 1000 N then assume we mean infinity.
-	if(m_fltMaxTorque >= 1000)
-		m_fltMaxTorque = 1e35f;
-
-	m_bServoMotor = oXml.GetChildBool("ServoMotor", m_bServoMotor);
-	m_ftlServoGain = oXml.GetChildFloat("ServoGain", m_ftlServoGain);
+	MaxTorque(oXml.GetChildFloat("MaxTorque", m_fltMaxTorque));
+	ServoMotor(oXml.GetChildBool("ServoMotor", m_bServoMotor));
+	ServoGain(oXml.GetChildFloat("ServoGain", m_ftlServoGain));
 
 	oXml.OutOfElem(); //OutOf Joint Element
 }

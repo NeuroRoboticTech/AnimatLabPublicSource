@@ -1,36 +1,31 @@
-// ReceptiveFieldPair.h: interface for the ReceptiveFieldPair class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ReceptiveFieldPair.h
 
-#if !defined(AFX_ALRECEPTIVE_FIELD_PAIR_H__8AABAE57_5434_4AEE_9C0B_B494E10A7AAC__INCLUDED_)
-#define AFX_ALRECEPTIVE_FIELD_PAIR_H__8AABAE57_5434_4AEE_9C0B_B494E10A7AAC__INCLUDED_
+\brief	Declares the receptive field pair class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
 	namespace Environment
 	{
-		/*! \brief 
-			Keeps track of pairs of rigid bodies that should not be allowed to collide.
-
-			\remarks
-
-			\sa
-			Body, Joint, CAlBox, Plane, CAlCylinder, 
-			CAlCone, CAlMuscle, CAlAttachment, CAlSphere                                
-				
-			\ingroup AnimatSim
-		*/
-
+		/**
+		\brief	Receptive field pair. 
+		
+		\author	dcofer
+		\date	3/24/2011
+		**/
 		class ANIMAT_PORT ReceptiveFieldPair : public AnimatBase 
 		{
 		public:
+			/// The vertex of the center of the receptive field to find for this pair.
 			StdVector3 m_vVertex;
-			Node *m_lpTargetNode;
+
+			/// GUID ID of the  target neuron where current will be injected.
 			string m_strTargetNodeID;
+
+			/// Pointer to the ReceptiveField associated with this pairing.
 			ReceptiveField *m_lpField;
 
 			ReceptiveFieldPair();
@@ -44,5 +39,3 @@ namespace AnimatSim
 
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALRECEPTIVE_FIELD_PAIR_H__8AABAE57_5434_4AEE_9C0B_B494E10A7AAC__INCLUDED_)

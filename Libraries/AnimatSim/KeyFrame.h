@@ -1,13 +1,10 @@
-// AlKeyFrame.h: interface for the KeyFrame class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	KeyFrame.h
 
-#if !defined(AFX_ALKEYFRAME_H__D91DC66E_01F1_47FC_AB62_766BA63FCEF0__INCLUDED_)
-#define AFX_ALKEYFRAME_H__D91DC66E_01F1_47FC_AB62_766BA63FCEF0__INCLUDED_
+\brief	Declares the key frame class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace AnimatSim
 {
@@ -17,32 +14,102 @@ namespace AnimatSim
 		class ANIMAT_PORT KeyFrame : public ActivatedItem  
 		{
 		protected:
+			/// Full pathname of the string project file
 			string m_strProjectPath;
+
+			/// Filename of the string configuration file
 			string m_strConfigFilename;
+
+			/// Zero-based index of the collect interval
 			short m_iCollectInterval;
 
 		public:
 			KeyFrame();
 			virtual ~KeyFrame();
 
-			int CollectInterval() {return m_iCollectInterval;};
-			void CollectInterval(int iVal) {m_iCollectInterval = iVal;};
+			int CollectInterval();
+			void CollectInterval(int iVal);
 
 			virtual void GenerateID();
 
 			virtual void Load(CStdXml &oXml);
 
-			//ActiveItem overrides
 			virtual BOOL operator<(ActivatedItem *lpItem);
 
+			/**
+			\brief	Enables the video playback.
+			
+			\author	dcofer
+			\date	3/24/2011
+			**/
 			virtual void EnableVideoPlayback() = 0;
+
+			/**
+			\brief	Disables the video playback.
+			
+			\author	dcofer
+			\date	3/24/2011
+			**/
 			virtual void DisableVideoPlayback() = 0;
+
+			/**
+			\brief	Starts a video playback.
+			
+			\author	dcofer
+			\date	3/24/2011
+			**/
 			virtual void StartVideoPlayback() = 0;
+
+			/**
+			\brief	Stop video playback.
+			
+			\author	dcofer
+			\date	3/24/2011
+			**/
 			virtual void StopVideoPlayback() = 0;
+
+			/**
+			\brief	Playback video frame.
+			
+			\author	dcofer
+			\date	3/24/2011
+			**/
 			virtual void PlaybackVideoFrame() = 0;
+
+			/**
+			\brief	Step video playback.
+			
+			\author	dcofer
+			\date	3/24/2011
+			
+			\param	iFrameCount	Number of frames. 
+			**/
 			virtual void StepVideoPlayback(int iFrameCount) = 0;
+
+			/**
+			\brief	Record video frame.
+			
+			\author	dcofer
+			\date	3/24/2011
+			**/
 			virtual void RecordVideoFrame() = 0;
+
+			/**
+			\brief	Saves a video.
+			
+			\author	dcofer
+			\date	3/24/2011
+			
+			\param	strPath	Full pathname of the string file. 
+			**/
 			virtual void SaveVideo(string strPath) = 0;
+
+			/**
+			\brief	Makes the current frame.
+			
+			\author	dcofer
+			\date	3/24/2011
+			**/
 			virtual void MakeCurrentFrame() = 0;
 		};
 
@@ -50,5 +117,3 @@ namespace AnimatSim
 
 	}			//Recording
 }				//AnimatSim
-
-#endif // !defined(AFX_ALKEYFRAME_H__D91DC66E_01F1_47FC_AB62_766BA63FCEF0__INCLUDED_)

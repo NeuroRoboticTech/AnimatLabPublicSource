@@ -7,50 +7,50 @@
 namespace AnimatSim
 {
 
-	float ANIMAT_PORT EvalGraph(unsigned char iGraphType, float fltA, float fltB, float fltC, float fltD, float fltQty)
-	{
-		float fltVal=0;
-		/*
+	//float ANIMAT_PORT EvalGraph(unsigned char iGraphType, float fltA, float fltB, float fltC, float fltD, float fltQty)
+	//{
+	//	float fltVal=0;
+	//	
 
-		switch(iGraphType)
-		{
-		case LINEAR_GRAPH:
-			if(fltA) fltVal = ((fltB/fltA)*fltQty + fltC);
-			break;
+	//	switch(iGraphType)
+	//	{
+	//	case LINEAR_GRAPH:
+	//		if(fltA) fltVal = ((fltB/fltA)*fltQty + fltC);
+	//		break;
 
-		case BELL_GRAPH:
-			if(fltB) 
-			{
-				fltVal = pow((float) (fltQty-fltA), (float) 2.0);
-				fltVal = exp(-fltC * fltVal);
-				fltVal = (fltB * fltVal) + fltD;	
-			}
-			//fltVal = (fltB * exp(-fltC * pow((fltQty-fltA), 2.0))) + fltD
+	//	case BELL_GRAPH:
+	//		if(fltB) 
+	//		{
+	//			fltVal = pow((float) (fltQty-fltA), (float) 2.0);
+	//			fltVal = exp(-fltC * fltVal);
+	//			fltVal = (fltB * fltVal) + fltD;	
+	//		}
+	//		//fltVal = (fltB * exp(-fltC * pow((fltQty-fltA), 2.0))) + fltD
 
-			//fltVal = (fltB * exp(-fltC * pow(((fltQty-fltA)/fltB), 2.0))) + fltD;
-			break;
+	//		//fltVal = (fltB * exp(-fltC * pow(((fltQty-fltA)/fltB), 2.0))) + fltD;
+	//		break;
 
-		case SIGMOID_GRAPH:
-			fltVal = (fltB/(1+exp(fltC*(fltA-fltQty)))) + fltD;
-			break;
+	//	case SIGMOID_GRAPH:
+	//		fltVal = (fltB/(1+exp(fltC*(fltA-fltQty)))) + fltD;
+	//		break;
 
-		case INVERSE_GRAPH:
-			fltVal = pow((fltQty-fltC), fltB);
-			if(fltVal)
-				fltVal = (fltA / fltVal) + fltD;
-			else
-				fltVal = 0;
-			break;
-			//fltVal = (fltA / ((fltQty-fltC)^fltB)) + fltD;
+	//	case INVERSE_GRAPH:
+	//		fltVal = pow((fltQty-fltC), fltB);
+	//		if(fltVal)
+	//			fltVal = (fltA / fltVal) + fltD;
+	//		else
+	//			fltVal = 0;
+	//		break;
+	//		//fltVal = (fltA / ((fltQty-fltC)^fltB)) + fltD;
 
-		case QUADRATIC_GRAPH:
-			fltVal = (fltA * pow((fltQty-fltC), fltB)) + fltD;
-			break;
+	//	case QUADRATIC_GRAPH:
+	//		fltVal = (fltA * pow((fltQty-fltC), fltB)) + fltD;
+	//		break;
 
-		}
-		*/
-		return fltVal;
-	}
+	//	}
+	//	
+	//	return fltVal;
+	//}
 
 
 	string ANIMAT_PORT GetFilePath(string strProjectPath, string strFilename)
@@ -67,19 +67,19 @@ namespace AnimatSim
 		return strPath;
 	}
 
-	float ANIMAT_PORT LoadScaledNumber(CStdXml oXml, string strName, BOOL bThrowError = TRUE, float fltDefault = 0)
-	{
-		float fltValue = fltDefault;
+	//float ANIMAT_PORT LoadScaledNumber(CStdXml oXml, string strName, BOOL bThrowError = TRUE, float fltDefault = 0)
+	//{
+	//	float fltValue = fltDefault;
 
-		if(oXml.FindChildElement(strName, bThrowError))
-		{
-			oXml.IntoChildElement(strName);
-			fltValue = oXml.GetAttribFloat("Actual", bThrowError, fltDefault);
-			oXml.OutOfElem();
-		}
+	//	if(oXml.FindChildElement(strName, bThrowError))
+	//	{
+	//		oXml.IntoChildElement(strName);
+	//		fltValue = oXml.GetAttribFloat("Actual", bThrowError, fltDefault);
+	//		oXml.OutOfElem();
+	//	}
 
-		return fltValue;
-	}
+	//	return fltValue;
+	//}
 
 }			//AnimatSim
 

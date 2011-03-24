@@ -1,34 +1,30 @@
-// Plane.h: interface for the Plane class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ReceptiveField.h
 
-#if !defined(AFX_ALRECEPTIVE_FIELD_H__8AABAE57_5434_4AEE_9C0B_B494E10A7AAC__INCLUDED_)
-#define AFX_ALRECEPTIVE_FIELD_H__8AABAE57_5434_4AEE_9C0B_B494E10A7AAC__INCLUDED_
+\brief	Declares the receptive field class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
 	namespace Environment
 	{
-		/*! \brief 
-			Keeps track of pairs of rigid bodies that should not be allowed to collide.
+		/**
+		\brief	Receptive field that generates current based on the amount of contact force, and how close it is to the center of the field.
 
-			\remarks
-
-			\sa
-			Body, Joint, CAlBox, Plane, CAlCylinder, 
-			CAlCone, CAlMuscle, CAlAttachment, CAlSphere                                
-				
-			\ingroup AnimatSim
-		*/
-
+		\details 
+		
+		\author	dcofer
+		\date	3/24/2011
+		**/
 		class ANIMAT_PORT ReceptiveField : public AnimatBase 
 		{
 		public:
+			/// The vertex of the center of the receptive field in global coordinates.
 			StdVector3 m_vVertex;
+
+			/// The accumulated current for this receptive field.
 			float m_fltCurrent;
 
 			ReceptiveField();
@@ -45,5 +41,3 @@ namespace AnimatSim
 
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALRECEPTIVE_FIELD_H__8AABAE57_5434_4AEE_9C0B_B494E10A7AAC__INCLUDED_)

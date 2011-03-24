@@ -1,3 +1,9 @@
+/**
+\file	SimulationRecorder.h
+
+\brief	Declares the simulation recorder class.
+**/
+
 #pragma once
 
 namespace AnimatSim
@@ -11,11 +17,19 @@ namespace AnimatSim
 	**/
 	namespace Recording
 	{
-
+		/**
+		\brief	Records the simulation keyframes and videos. 
+		
+		\author	dcofer
+		\date	3/24/2011
+		**/
 		class ANIMAT_PORT SimulationRecorder : public ActivatedItemMgr  
 		{
 		protected:
+			/// Array of video keyframes.
 			CStdArray<KeyFrame *> m_aryVideoFrames;
+
+			/// Array of key frames.
 			CStdArray<KeyFrame *> m_arySingleFrames;
 
 			KeyFrame *LoadKeyFrame(CStdXml &oXml);
@@ -27,7 +41,6 @@ namespace AnimatSim
 			virtual void Add(ActivatedItem *lpItem);
 			virtual KeyFrame *Add(string strType, long lStart, long lEnd);
 
-			virtual void Load(string strProjectPath, string strFileName);
 			virtual void Load(CStdXml &oXml);
 		};
 

@@ -1,6 +1,8 @@
-// Prismatic.cpp: implementation of the Prismatic class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Prismatic.cpp
+
+\brief	Implements the prismatic class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -32,24 +34,12 @@ namespace AnimatSim
 	{
 		namespace Joints
 		{
+/**
+\brief	Default constructor.
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-/*! \brief 
-   Constructs a Prismatic joint.
-   		
-   \param lpParent This is a pointer to the parent rigid body of this joint. 
-   \param lpChild This is a pointer to the child rigid body of this joint. 
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a Prismatic joint. 
-*/
-
+\author	dcofer
+\date	3/24/2011
+**/
 Prismatic::Prismatic()
 {
 	m_fltConstraintLow = (float) (-0.5*PI);
@@ -60,17 +50,12 @@ Prismatic::Prismatic()
 	m_fltPosition = 0;
 }
 
+/**
+\brief	Destructor.
 
-/*! \brief 
-   Destroys the Prismatic joint object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the Prismatic joint object..	 
-*/
-
+\author	dcofer
+\date	3/24/2011
+**/
 Prismatic::~Prismatic()
 {
 

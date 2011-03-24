@@ -1,13 +1,10 @@
-// BallSocket.h: interface for the BallSocket class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatSim\BallSocket.h
 
-#if !defined(AFX_BALLSOCKETJOINT_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_)
-#define AFX_BALLSOCKETJOINT_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_
+\brief	Declares the ball socket class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
@@ -16,28 +13,17 @@ namespace AnimatSim
 		namespace Joints
 		{
 
-			/*! \brief 
-				A BallSocket type of joint.
-			   
-				\remarks
-				This type of joint is constrained so that it can only
-				rotate about one axis. You can define which axis it rotates
-				around in the configuration file using the normalized 
-				RotationAxis vector element. You can also specify the
-				rotational constraints for this joint. This prevents it
-				from rotating further than the constrained value.
+			/**
+			\brief	A BallSocket type of joint.
+			
+			\details This joint allows free rotation around a point in space, and it allows 
+			rotation around line of the joint, but it does allow translations to occur. In order 
+			to constrain the motion of the joint you must place rigid bodies around it to prevent its
+			movement. Also, this joint type is not motorized.
 
-				Also, this joint is motorized. So you can specify a desired
-				velocity of motion at a given time step using the CNlInjectionMgr
-				and the physics engine will automatically apply the forces
-				necessary to move the joint at the desired velocity.
-
-				\sa
-				Joint, BallSocket, CAlStaticJoint
-				 
-				\ingroup AnimatSim
-			*/
-
+			\author	dcofer
+			\date	3/24/2011
+			**/
 			class ANIMAT_PORT BallSocket : public Joint    
 			{
 			protected:
@@ -64,5 +50,3 @@ namespace AnimatSim
 		}		//Joints
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALBALLSOCKETJOINT_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_)

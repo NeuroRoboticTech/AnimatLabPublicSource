@@ -1,6 +1,8 @@
-// ReceptiveFieldPair.cpp: implementation of the ReceptiveFieldPair class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ReceptiveFieldPair.cpp
+
+\brief	Implements the receptive field pair class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -36,44 +38,25 @@ namespace AnimatSim
 {
 	namespace Environment
 	{
+/**
+\brief	Default constructor.
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-/*! \brief 
-   Constructs a CollisionPair object..
-   		
-   \param lpParent This is a pointer to the parent of this rigid body. 
-	          If this value is null then it is assumed that this is
-						a root object and no joint is loaded to connect this
-						part to the parent.
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a CollisionPair. 
-*/
-
+\author	dcofer
+\date	3/24/2011
+**/
 ReceptiveFieldPair::ReceptiveFieldPair()
 {
 	m_vVertex[0] = 0; m_vVertex[1] = 0; m_vVertex[2] = 0;
-	m_lpTargetNode = NULL;
+	m_lpNode = NULL;
 	m_lpField = NULL;
 }
 
+/**
+\brief	Destructor.
 
-/*! \brief 
-   Destroys the CollisionPair object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the CollisionPair object..	 
-*/
-
+\author	dcofer
+\date	3/24/2011
+**/
 ReceptiveFieldPair::~ReceptiveFieldPair()
 {
 }
@@ -82,8 +65,8 @@ void ReceptiveFieldPair::Initialize()
 {
 	AnimatBase::Initialize();
 
-	m_lpTargetNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strTargetNodeID));
-	if(!m_lpTargetNode)
+	m_lpNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strTargetNodeID));
+	if(!m_lpNode)
 		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strTargetNodeID);
 
 	RigidBody *lpBody = dynamic_cast<RigidBody *>(m_lpNode);
@@ -108,10 +91,9 @@ void ReceptiveFieldPair::Initialize()
 void ReceptiveFieldPair::StepSimulation()
 {
 	if(m_lpField)
-		m_lpTargetNode->AddExternalNodeInput(m_lpField->m_fltCurrent);
+		m_lpNode->AddExternalNodeInput(m_lpField->m_fltCurrent);
 }
 
-//Node Overrides
 
 void ReceptiveFieldPair::Load(CStdXml &oXml)
 {

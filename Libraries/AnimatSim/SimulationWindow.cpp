@@ -1,3 +1,9 @@
+/**
+\file	SimulationWindow.cpp
+
+\brief	Implements the simulation Windows Form.
+**/
+
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
 #include "AnimatBase.h"
@@ -6,6 +12,12 @@
 namespace AnimatSim
 {
 
+/**
+\brief	Default constructor.
+
+\author	dcofer
+\date	3/24/2011
+**/
 SimulationWindow::SimulationWindow(void)
 {
 	m_HWND = NULL;
@@ -15,6 +27,14 @@ SimulationWindow::SimulationWindow(void)
 	m_bStandAlone = TRUE;
 }
 
+/**
+\brief	Constructor.
+
+\author	dcofer
+\date	3/24/2011
+
+\param	win	HWND Handle of the window. 
+**/
 SimulationWindow::SimulationWindow(HWND win)
 {
 	m_HWND = win;
@@ -24,9 +44,127 @@ SimulationWindow::SimulationWindow(HWND win)
 	m_bStandAlone = TRUE;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/24/2011
+**/
 SimulationWindow::~SimulationWindow(void)
 {
 }
+
+/**
+\brief	Sets the GUID ID of the structure to look at with the camera
+
+\author	dcofer
+\date	3/24/2011
+
+\param	strID	GUID ID of the structure. 
+**/
+void SimulationWindow::LookAtStructureID(string strID) 
+{
+	m_strLookAtStructureID = strID;
+	SetupTrackCamera();
+}
+
+/**
+\brief	Gets the look at structure GUID ID.
+
+\author	dcofer
+\date	3/24/2011
+
+\return	GUID ID.
+**/
+string SimulationWindow::LookAtStructureID() {return m_strLookAtStructureID;}
+
+/**
+\brief	Sets the RigidBody GUID ID to look at within the specified structure.
+
+\author	dcofer
+\date	3/24/2011
+
+\param	strID	GUID ID. 
+**/
+void SimulationWindow::LookAtBodyID(string strID) 
+{
+	m_strLookAtBodyID = strID;
+	SetupTrackCamera();
+}
+
+/**
+\brief	Gets the GUID ID of the RigidBody to look at.
+
+\author	dcofer
+\date	3/24/2011
+
+\return	GUID ID.
+**/
+string SimulationWindow::LookAtBodyID() {return m_strLookAtBodyID;}
+
+/**
+\brief	Sets whether camera tracking should be used.
+
+\author	dcofer
+\date	3/24/2011
+
+\param	bVal	true to use camera tracking. 
+**/
+void SimulationWindow::UsingTrackCamera(BOOL bVal) 
+{
+	m_bTrackCamera = bVal;
+	SetupTrackCamera();
+}
+
+/**
+\brief	Gets wheter camera tracking is being used.
+
+\author	dcofer
+\date	3/24/2011
+
+\return	true if camera tracking is being used.
+**/
+BOOL SimulationWindow::UsingTrackCamera() {return m_bTrackCamera;}
+
+/**
+\brief	Gets the HWND window identifier.
+
+\author	dcofer
+\date	3/24/2011
+
+\return	The handle of the window.
+**/
+HWND SimulationWindow::WindowID() {return m_HWND;}
+
+/**
+\brief	Sets the HWND Window identifier.
+
+\author	dcofer
+\date	3/24/2011
+
+\param	win	Handle of the window. 
+**/
+void SimulationWindow::WindowID(HWND win) {m_HWND = win;}
+
+/**
+\brief	Gets whether this window stands alone from all others.
+
+\author	dcofer
+\date	3/24/2011
+
+\return	true if it stands alone, false else.
+**/
+BOOL SimulationWindow::StandAlone() {return m_bStandAlone;}
+
+/**
+\brief	Sets whether this window stands alone.
+
+\author	dcofer
+\date	3/24/2011
+
+\param	bVal	true make stand alone. 
+**/
+void SimulationWindow::StandAlone(BOOL bVal) {m_bStandAlone = bVal;}
 
 #pragma region DataAccesMethods
 
@@ -74,6 +212,16 @@ BOOL SimulationWindow::SetData(string strDataType, string strValue, BOOL bThrowE
 
 #pragma endregion
 
+/**
+\brief	Sets up the track camera.
+
+\author	dcofer
+\date	3/24/2011
+
+\param	bTrackCamera			true to track camera. 
+\param	strLookAtStructureID	Identifier for the string look at structure. 
+\param	strLookAtBodyID			Identifier for the string look at body. 
+**/
 void SimulationWindow::SetupTrackCamera(BOOL bTrackCamera, string strLookAtStructureID, string strLookAtBodyID)
 {
 	m_bTrackCamera = bTrackCamera;

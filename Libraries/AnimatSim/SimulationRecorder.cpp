@@ -1,6 +1,8 @@
-// AlSimulationRecorder.cpp: implementation of the SimulationRecorder class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	SimulationRecorder.cpp
+
+\brief	Implements the simulation recorder class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -34,16 +36,24 @@ namespace AnimatSim
 {
 	namespace Recording
 	{
+/**
+\brief	Default constructor.
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
+\author	dcofer
+\date	3/24/2011
+**/
 SimulationRecorder::SimulationRecorder()
 {}
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/24/2011
+**/
 SimulationRecorder::~SimulationRecorder()
 {}
+
 
 void SimulationRecorder::Add(ActivatedItem *lpItem)
 {
@@ -62,7 +72,18 @@ void SimulationRecorder::Add(ActivatedItem *lpItem)
 	ActivatedItemMgr::Add(lpItem);
 }
 
+/**
+\brief	Adds a new keyframe type.
 
+\author	dcofer
+\date	3/24/2011
+
+\param	strType	the keyframe Type to add. 
+\param	lStart 	The start time of the keyframe. 
+\param	lEnd   	The end time of the keyframe. 
+
+\return	Pointer to the new keyframe.
+**/
 KeyFrame *SimulationRecorder::Add(string strType, long lStart, long lEnd)
 {
 	KeyFrame *lpFrame = NULL;
@@ -97,23 +118,6 @@ catch(...)
 }
 }
 
-
-void SimulationRecorder::Load(string strProjectPath, string strFileName)
-{
-	CStdXml oXml;
-
-	TRACE_DEBUG("Loading recorder keyframe config file.\r\n" + strProjectPath + "\r\nFileName: " + strFileName);
-
-	oXml.Load(AnimatSim::GetFilePath(strProjectPath, strFileName));
-
-	oXml.FindElement("SimulationRecorder");
-	oXml.FindChildElement("");
-
-	Load(oXml);
-
-	TRACE_DEBUG("Finished loading recorder keyframe config file.");
-}
-
 void SimulationRecorder::Load(CStdXml &oXml)
 {
 	VerifySystemPointers();
@@ -135,7 +139,16 @@ void SimulationRecorder::Load(CStdXml &oXml)
 	}
 }
 
+/**
+\brief	Loads a new key frame.
 
+\author	dcofer
+\date	3/24/2011
+
+\param [in,out]	oXml	The xml of the keyframe to load. 
+
+\return	Pointer to the new keyframe.
+**/
 KeyFrame *SimulationRecorder::LoadKeyFrame(CStdXml &oXml)
 {
 	KeyFrame *lpFrame = NULL;

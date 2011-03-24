@@ -1,15 +1,35 @@
+/**
+\file	SimulationWindow.h
+
+\brief	Declares the simulation Windows Form.
+**/
+
 #pragma once
 
 namespace AnimatSim
 {
+	/**
+	\brief	Base class for a simulation window.
 
+	\details Any number of simulation windows can be created for viewing the 3-D simulation environment. 
+	This has to be implemented by deriving a window for the type of graphics library you are using, osg for example.
+	
+	\author	dcofer
+	\date	3/24/2011
+	**/
 	class ANIMAT_PORT SimulationWindow : public AnimatBase
 	{
 	protected:
+		/// true if the window is seperate from all other windows.
 		BOOL m_bStandAlone;
 
+		/// Handle of the hwnd
 		HWND m_HWND;
+
+		/// The position of the window
 		CStdFPoint m_ptPosition;
+
+		/// Size of the window
 		CStdFPoint m_ptSize;
 
 		///The ID of the structure that the camera should look at initially. If this
@@ -28,6 +48,12 @@ namespace AnimatSim
 		///structure.
 		BOOL m_bTrackCamera;
 
+		/**
+		\brief	Implements code to do the camera tracking.
+		
+		\author	dcofer
+		\date	3/24/2011
+		**/
 		virtual void TrackCamera() = 0;
 
 	public:
@@ -35,33 +61,27 @@ namespace AnimatSim
 		SimulationWindow(HWND win);
 		~SimulationWindow(void);
 
-		virtual void LookAtStructureID(string strID) 
-		{
-			m_strLookAtStructureID = strID;
-			SetupTrackCamera();
-		};
-		virtual string LookAtStructureID() {return m_strLookAtStructureID;};
+		virtual void LookAtStructureID(string strID);
+		virtual string LookAtStructureID();
 
-		virtual void LookAtBodyID(string strID) 
-		{
-			m_strLookAtBodyID = strID;
-			SetupTrackCamera();
-		};
-		virtual string LookAtBodyID() {return m_strLookAtBodyID;};
+		virtual void LookAtBodyID(string strID);
+		virtual string LookAtBodyID();
 
-		virtual void UsingTrackCamera(BOOL bVal) 
-		{
-			m_bTrackCamera = bVal;
-			SetupTrackCamera();
-		};
-		virtual BOOL UsingTrackCamera() {return m_bTrackCamera;};
+		virtual void UsingTrackCamera(BOOL bVal);
+		virtual BOOL UsingTrackCamera();
 
-		virtual HWND WindowID() {return m_HWND;};
-		virtual void WindowID(HWND win) {m_HWND = win;};
+		virtual HWND WindowID();
+		virtual void WindowID(HWND win);
 
-		virtual BOOL StandAlone() {return m_bStandAlone;}
-		virtual void StandAlone(BOOL bVal) {m_bStandAlone = bVal;};
+		virtual BOOL StandAlone();
+		virtual void StandAlone(BOOL bVal);
 
+		/**
+		\brief	Sets up the camera tracking.
+		
+		\author	dcofer
+		\date	3/24/2011
+		**/
 		virtual void SetupTrackCamera() = 0;
 		virtual void SetupTrackCamera(BOOL bTrackCamera, string strLookAtStructureID, string strLookAtBodyID);
 
@@ -72,9 +92,32 @@ namespace AnimatSim
 
 #pragma endregion
 
+		/**
+		\brief	Updates this window.
+		
+		\author	dcofer
+		\date	3/24/2011
+		**/
 		virtual void Update() = 0;
+
+		/**
+		\brief	Closes this window.
+		
+		\author	dcofer
+		\date	3/24/2011
+		**/
 		virtual void Close() = 0;
+
 		virtual void Load(CStdXml &oXml);
+
+		/**
+		\brief	Loads this window from an xml string.
+		
+		\author	dcofer
+		\date	3/24/2011
+		
+		\param	strXml	The xml string to load. 
+		**/
 		virtual void Load(string strXml);
 	};
 

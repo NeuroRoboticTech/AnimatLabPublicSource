@@ -1,6 +1,8 @@
-// DelayLine.cpp: implementation of the DelayLine class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	DelayLine.cpp
+
+\brief	Implements the delay line class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -8,22 +10,15 @@
 
 #include "DelayLine.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
 namespace AnimatSim
 {
 
-/*! \brief 
-   Constructs an structure object..
-   		
-	 \return
-	 No return value.
+/**
+\brief	Default constructor.
 
-   \remarks
-	 The constructor for a structure. 
-*/
-
+\author	dcofer
+\date	3/24/2011
+**/
 DelayLine::DelayLine()
 {
 	m_iDelaySize=0;
@@ -32,17 +27,12 @@ DelayLine::DelayLine()
 	m_iReadIdx=0;
 }
 
+/**
+\brief	Destructor.
 
-/*! \brief 
-   Destroys the structure object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the structure object..	 
-*/
-
+\author	dcofer
+\date	3/24/2011
+**/
 DelayLine::~DelayLine()
 {
 
@@ -54,7 +44,15 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of DelayLine\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Initializes the Delay line.
 
+\author	dcofer
+\date	3/24/2011
+
+\param	fltDelayTime	Time of the delay. 
+\param	fltTimeStep 	The time step duration. 
+**/
 void DelayLine::Initialize(float fltDelayTime, float fltTimeStep)
 {
 	m_iDelaySize = fltDelayTime/fltTimeStep;
@@ -72,6 +70,16 @@ void DelayLine::Initialize(float fltDelayTime, float fltTimeStep)
 	m_iReadIdx = m_iDelayComp;
 }
 
+/**
+\brief	Adds a value to the begining of the line. 
+
+\details This increments the delay line appropriately.
+
+\author	dcofer
+\date	3/24/2011
+
+\param	fltVal	The new value. 
+**/
 void DelayLine::AddValue(float fltVal)
 {
 	m_aryRingBuf[m_iSaveIdx] = fltVal;
@@ -87,6 +95,14 @@ void DelayLine::AddValue(float fltVal)
 		m_iReadIdx++;
 }
 
+/**
+\brief	Reads the current value at the end of the delay line.
+
+\author	dcofer
+\date	3/24/2011
+
+\return	The value at the end of the line.
+**/
 float DelayLine::ReadValue()
 {return m_aryRingBuf[m_iReadIdx];}
 

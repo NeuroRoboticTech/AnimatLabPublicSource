@@ -1,6 +1,8 @@
-// Static.cpp: implementation of the Static class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Static.cpp
+
+\brief	Implements the static class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -35,39 +37,23 @@ namespace AnimatSim
 	{
 		namespace Joints
 		{
+/**
+\brief	Default constructor.
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-/*! \brief 
-   Constructs a static joint object..
-   		
-   \param lpParent This is a pointer to the parent rigid body of this joint. 
-   \param lpChild This is a pointer to the child rigid body of this joint. 
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a static joint. 
-*/
-
+\author	dcofer
+\date	3/24/2011
+**/
 Static::Static()
 {
 
 }
 
-/*! \brief 
-   Destroys the static joint object..
-   		
-	 \return
-	 No return value.
+/**
+\brief	Destructor.
 
-   \remarks
-   Destroys the static joint object..	 
-*/
-
+\author	dcofer
+\date	3/24/2011
+**/
 Static::~Static()
 {
 

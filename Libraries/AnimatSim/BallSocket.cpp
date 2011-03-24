@@ -1,6 +1,8 @@
-// BallSocket.cpp: implementation of the BallSocket class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	BallSocket.cpp
+
+\brief	Implements the ball socket class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -32,24 +34,12 @@ namespace AnimatSim
 	{
 		namespace Joints
 		{
+/**
+\brief	Default constructor.
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-/*! \brief 
-   Constructs a BallSocket joint.
-   		
-   \param lpParent This is a pointer to the parent rigid body of this joint. 
-   \param lpChild This is a pointer to the child rigid body of this joint. 
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a BallSocket joint. 
-*/
-
+\author	dcofer
+\date	3/24/2011
+**/
 BallSocket::BallSocket()
 {
 	m_fltConstraintAngle = (float) (0.25*PI);
@@ -57,17 +47,12 @@ BallSocket::BallSocket()
 	m_fltDamping = AL_INFINITY;
 }
 
+/**
+\brief	Destructor.
 
-/*! \brief 
-   Destroys the BallSocket joint object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the BallSocket joint object..	 
-*/
-
+\author	dcofer
+\date	3/24/2011
+**/
 BallSocket::~BallSocket()
 {
 
