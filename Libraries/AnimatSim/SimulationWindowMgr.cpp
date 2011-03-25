@@ -1,3 +1,9 @@
+/**
+\file	SimulationWindowMgr.cpp
+
+\brief	Implements the simulation window manager class.
+**/
+
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
 #include "ISimGUICallback.h"
@@ -34,10 +40,22 @@
 namespace AnimatSim
 {
 
+/**
+\brief	Default constructor.
+
+\author	dcofer
+\date	3/25/2011
+**/
 SimulationWindowMgr::SimulationWindowMgr(void)
 {
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/25/2011
+**/
 SimulationWindowMgr::~SimulationWindowMgr(void)
 {
 
@@ -49,6 +67,20 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of SimulationWindowMgr\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Adds a simulation window.
+
+\author	dcofer
+\date	3/25/2011
+
+\param	strModule	The dll module name. 
+\param	strType  	Type ID of window to create. 
+\param	bInit	 	true to initialise the window here. 
+\param	win		 	HWND Handle of the window. 
+\param	strXml   	The xml packet to use when creating the window. 
+
+\return	Pointer to the created SimulationWindow.
+**/
 SimulationWindow *SimulationWindowMgr::AddSimulationWindow(string strModule, string strType, BOOL bInit, HWND win, string strXml)
 {
 	SimulationWindow *lpWin=NULL;
@@ -85,6 +117,18 @@ catch(...)
 }
 }
 
+/**
+\brief	Searches for simulation window with the specified HWND.
+
+\author	dcofer
+\date	3/25/2011
+
+\param	win			  	Handle of the window to search for. 
+\param [in,out]	iIndex	Zero-based index of the found window in the array. 
+\param	bThrowError   	If true and no matching window is found then it throws an error, else it returns NULL. 
+
+\return	null if it fails and bThrowError is false, else the found simulation window or NULL.
+**/
 SimulationWindow *SimulationWindowMgr::FindSimulationWindow(HWND win, int &iIndex, BOOL bThrowError)
 {
 	int iCount = m_aryWindows.GetSize();
@@ -104,6 +148,14 @@ SimulationWindow *SimulationWindowMgr::FindSimulationWindow(HWND win, int &iInde
 
 }
 
+/**
+\brief	Removes the simulation window described by the HWND win.
+
+\author	dcofer
+\date	3/25/2011
+
+\param	win	Handle of the window. 
+**/
 void SimulationWindowMgr::RemoveSimulationWindow(HWND win)
 {
 	int iIndex = 0;
@@ -116,7 +168,14 @@ void SimulationWindowMgr::RemoveSimulationWindow(HWND win)
 	}
 }
 
+/**
+\brief	Updates all of the windows.
 
+\author	dcofer
+\date	3/25/2011
+
+\return	true if it succeeds, false if it fails.
+**/
 BOOL SimulationWindowMgr::Update()
 {
 	int iCount = m_aryWindows.GetSize();
@@ -126,11 +185,23 @@ BOOL SimulationWindowMgr::Update()
 	return TRUE;
 }
 
+/**
+\brief	Closes all windows.
+
+\author	dcofer
+\date	3/25/2011
+**/
 void SimulationWindowMgr::Close()
 {
 	CloseAllWindows();
 }
 
+/**
+\brief	Closes all windows internally.
+
+\author	dcofer
+\date	3/25/2011
+**/
 void SimulationWindowMgr::CloseAllWindows()
 {
 	int iCount = m_aryWindows.GetSize();
@@ -139,6 +210,12 @@ void SimulationWindowMgr::CloseAllWindows()
 	m_aryWindows.clear();
 }
 
+/**
+\brief	Sets up the cameras for each window.
+
+\author	dcofer
+\date	3/25/2011
+**/
 void SimulationWindowMgr::SetupCameras()
 {
 	int iCount = m_aryWindows.GetSize();
@@ -146,6 +223,14 @@ void SimulationWindowMgr::SetupCameras()
 		m_aryWindows[iIndex]->SetupTrackCamera();
 }
 
+/**
+\brief	Query if this object has contained window.
+
+\author	dcofer
+\date	3/25/2011
+
+\return	true if contained window, false if not.
+**/
 BOOL SimulationWindowMgr::HasContainedWindow()
 {
 	int iCount = m_aryWindows.GetSize();
@@ -192,6 +277,16 @@ void SimulationWindowMgr::Load(CStdXml &oXml)
 	}
 }
 
+/**
+\brief	Loads a simulation window.
+
+\author	dcofer
+\date	3/25/2011
+
+\param [in,out]	oXml	The xml for the window to load. 
+
+\return	Pointer to the new simulation window.
+**/
 SimulationWindow *SimulationWindowMgr::LoadSimulationWindow(CStdXml &oXml)
 {
 	SimulationWindow *lpWin=NULL;

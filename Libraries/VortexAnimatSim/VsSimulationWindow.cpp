@@ -126,8 +126,8 @@ void VsSimulationWindow::InitEmbedded(Simulator *lpSim, VsSimulator *lpVsSim)
 	osgCamera->setDrawBuffer(GL_BACK);
 	osgCamera->setReadBuffer(GL_BACK);
 
-	float *vColor = lpSim->BackgroundColor();
-	m_osgViewer->getCamera()->setClearColor(osg::Vec4(vColor[0], vColor[1], vColor[2], vColor[3]));
+	CStdColor *vColor = lpSim->BackgroundColor();
+	m_osgViewer->getCamera()->setClearColor(osg::Vec4(vColor->r(), vColor->g(), vColor->b(), vColor->a()));
 	m_osgViewer->addSlave(osgCamera.get());
 
 
@@ -179,8 +179,8 @@ void VsSimulationWindow::InitStandalone(Simulator *lpSim, VsSimulator *lpVsSim)
     // Create the window and run the threads.
     m_osgViewer->setUpViewInWindow(m_ptPosition.x, m_ptPosition.y, m_ptSize.x, m_ptSize.y);
 
-	float *vColor = lpSim->BackgroundColor();
-	m_osgViewer->getCamera()->setClearColor(osg::Vec4(vColor[0], vColor[1], vColor[2], vColor[3]));
+	CStdColor *vColor = lpSim->BackgroundColor();
+	m_osgViewer->getCamera()->setClearColor(osg::Vec4(vColor->r(), vColor->g(), vColor->b(), vColor->a()));
 	m_osgViewer->setSceneData(lpVsSim->OSGRoot());
 
 	int inheritanceMask = 

@@ -33,9 +33,46 @@ namespace AnimatSim
 		IBodyPartCallback(void);
 		virtual ~IBodyPartCallback(void);
 
+		/**
+		\brief	Called to signal to the GUI that the position of the body part changed.
+		
+		\author	dcofer
+		\date	3/25/2011
+		**/
 		virtual void PositionChanged() = 0;
+
+		/**
+		\brief	Called to signal to the GUI that the rotation of the body part changed.
+		
+		\author	dcofer
+		\date	3/25/2011
+		**/
 		virtual void RotationChanged() = 0;
+
+		/**
+		\brief	Called to signal to the GUI that the selected body part changed.
+		
+		\author	dcofer
+		\date	3/25/2011
+		
+		\param	bSelected	   	true if it was selected. 
+		\param	bSelectMultiple	true if multiple items were selected. 
+		**/
 		virtual void SelectionChanged(BOOL bSelected, BOOL bSelectMultiple) = 0;
+
+		/**
+		\brief	Called to signal to the GUI that a part was clicked while AddBody mode was active.
+		
+		\author	dcofer
+		\date	3/25/2011
+		
+		\param	fltPosX 	The x coordinate of the location clicked. 
+		\param	fltPosY 	The y coordinate of the location clicked. 
+		\param	fltPosZ 	The z coordinate of the location clicked. 
+		\param	fltNormX	The x normal of the location clicked. 
+		\param	fltNormY	The y normal of the location clicked. 
+		\param	fltNormZ	The z normal of the location clicked. 
+		**/
 		virtual void AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ) = 0;
 	};
 }

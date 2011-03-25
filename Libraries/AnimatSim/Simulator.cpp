@@ -143,10 +143,7 @@ Simulator::Simulator()
 	m_aviOpts.lpFormat = 0;
 	m_aviOpts.lpParms = 0;
 
-	m_vBackgroundColor[0] = 0.2f;
-	m_vBackgroundColor[1] = 0.2f;
-	m_vBackgroundColor[2] = 0.6f;
-	m_vBackgroundColor[3] = 1;
+	m_vBackgroundColor.Set(0.2f, 0.2f, 0.6f, 1);
 
 	m_lpSimCallback = NULL;
 	m_lpWinMgr = NULL;
@@ -220,82 +217,111 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Simulator\r\n", "", -1, FALSE, TRUE);}
 }
 
-float Simulator::TimeStep() 
-{return m_fltTimeStep;}
 
-void Simulator::TimeStep(float fltVal) 
+#pragma region AccessorMutators
+			
+#pragma region ProjectVariables
+
+string Simulator::ProjectPath() {return m_strProjectPath;}
+
+void Simulator::ProjectPath(string strPath) {m_strProjectPath = strPath;}
+
+string Simulator::ExecutablePath() {return m_strExecutablePath;}
+
+void Simulator::ExecutablePath(string strPath) {m_strExecutablePath = strPath;}
+
+string Simulator::SimulationFile() {return m_strSimulationFile;}
+
+void Simulator::SimulationFile(string strFile) {m_strSimulationFile = strFile;}
+
+BOOL Simulator::Paused() {return m_bPaused;}
+
+void Simulator::Paused(BOOL bVal) {m_bPaused = bVal;}
+
+BOOL Simulator::Initialized() {return m_bInitialized;}
+
+void Simulator::Initialized(BOOL bVal) {m_bInitialized = bVal;}
+
+CStdMap<string, AnimatBase *> *Simulator::ObjectList() {return &m_aryObjectList;}
+			
+DataChartMgr *Simulator::DataChartMgr() {return &m_oDataChartMgr;}
+
+ExternalStimuliMgr *Simulator::ExternalStimuliMgr() {return &m_oExternalStimuliMgr;}
+
+SimulationRecorder *Simulator::SimulationRecorder() {return m_lpSimRecorder;}
+
+Materials *Simulator::MaterialMgr() {return &m_oMaterialMgr;}
+
+SimulationWindowMgr *Simulator::WindowMgr() {return m_lpWinMgr;}
+
+int Simulator::VisualSelectionMode() {return m_iSelectionMode;}
+
+void Simulator::VisualSelectionMode(int iVal)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "TimeStep");
-	m_fltTimeStep = fltVal;
+	if(iVal <0 || iVal > SIMULATION_SELECTION_MODE)
+		THROW_PARAM_ERROR(Al_Err_lInvalidSelMode, Al_Err_strInvalidSelMode, "Selection Mode", iVal);
 
-	//Find the number of timeslices that need to occur before the physics system is updated
-	m_iPhysicsStepInterval = m_fltPhysicsTimeStep / m_fltTimeStep;
+	m_iSelectionMode = iVal;
+	
+	//Go through and call VisualSelectionModeChanged for all objects.
+	CStdMap<string, AnimatBase *>::iterator oPos;
+	AnimatBase *lpBase = NULL;
+	for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
+	{
+		lpBase = oPos->second;
+		if(lpBase && lpBase != this)
+			lpBase->VisualSelectionModeChanged(m_iSelectionMode);
+	}
+};
 
-	//Now recaculate the physics time step using the minimum time step as the base.
-	m_fltPhysicsTimeStep = m_fltTimeStep * m_iPhysicsStepInterval;
-}
 
-void Simulator::DistanceUnits(string strUnits)
-{
-	m_fltDistanceUnits = ConvertDistanceUnits(strUnits);
-	m_fltInverseDistanceUnits = 1/m_fltDistanceUnits;
-	m_fltDenominatorDistanceUnits = ConvertDenominatorDistanceUnits(strUnits);
-}
+BOOL Simulator::AddBodiesMode() {return m_bAddBodiesMode;}
 
-void Simulator::MassUnits(string strUnits)
-{
-	m_fltMassUnits = ConvertMassUnits(strUnits);
-	m_fltInverseMassUnits = 1/m_fltMassUnits;
-	m_fltDensityMassUnits = ConvertDensityMassUnits(strUnits);
-}
+void Simulator::AddBodiesMode(BOOL bVal) {m_bAddBodiesMode = bVal;}
+			
+ISimGUICallback *Simulator::SimCallback() {return m_lpSimCallback;}
 
-void Simulator::SimulateHydrodynamics(BOOL bVal)
-{
-	m_bSimulateHydrodynamics = bVal;
-}
+void Simulator::SimCallBack(ISimGUICallback *lpCallback) {m_lpSimCallback = lpCallback;}
 
-void Simulator::FluidDensity(float fltVal, BOOL bUseScaling)
-{
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "FluidDensity");
+#pragma endregion
 
-	if(bUseScaling)
-		fltVal *= pow(m_fltDenominatorDistanceUnits, 3);  //Perform a conversion if necessary because we may be using different units in the denominator.
+#pragma region EnvironmentVariables
 
-	m_fltFluidDensity = fltVal;
-}
+float Simulator::Time() {return m_fltTime;}
 
-void Simulator::Gravity(float fltVal, BOOL bUseScaling)
-{
-	//We must convert the gravity to use the correct scale.
-	if(bUseScaling)
-		fltVal /= m_fltDistanceUnits;
+long Simulator::Millisecond() {return (long) (Time() * 1000);}
 
-	m_fltGravity = fltVal;
-}
+long Simulator::MillisecondToSlice(long lMillisecond) {return (long) (lMillisecond / (m_fltTimeStep * 1000));}
 
-void Simulator::PhysicsTimeStep(float fltVal)
-{
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "PhysicsTimeStep");
+long Simulator::SliceToMillisecond(long lSlice) {return (long) (lSlice * m_fltTimeStep * 1000);}
 
-	//If no timestep has been set then start the time step with the physics system and then later on we will find the 
-	//real minimum value while looking at all of the neural modules.
-	if(m_fltTimeStep < 0 || m_fltTimeStep > fltVal)
-		m_fltTimeStep = fltVal;
+DWORD Simulator::StartSimTick() {return m_iStartSimTick;}
 
-	//Find the number of timeslices that need to occur before the physics system is updated
-	m_iPhysicsStepInterval = fltVal / m_fltTimeStep;
+long Simulator::TimeSlice() {return m_lTimeSlice;}
 
-	//Now recaculate the physics time step using the minimum time step as the base.
-	m_fltPhysicsTimeStep = m_fltTimeStep * m_iPhysicsStepInterval;
-}
+void Simulator::TimeSlice(long lVal) {m_lTimeSlice = lVal;}
 
-void Simulator::FrameRate(int iVal)
-{
-	Std_IsAboveMin((int) 0, iVal, TRUE, "FrameRate");
+long Simulator::PhysicsSliceCount() {return m_lPhysicsSliceCount;}
 
-	m_iFrameRate = iVal;
- 	m_fltFrameStep = (1/ (float) m_iFrameRate);
-}
+void Simulator::PhysicsSliceCount(long lVal) {m_lPhysicsSliceCount = lVal;}
+
+BOOL Simulator::ManualStepSimulation() {return m_bManualStepSimulation;}
+
+void Simulator::ManualStepSimulation(BOOL bVal) {m_bManualStepSimulation = bVal;}
+
+BOOL Simulator::SimRunning() {return m_bSimRunning;}
+
+BOOL Simulator::ForceFastMoving() {return m_bForceFastMoving;}
+
+void Simulator::ForceFastMoving(BOOL bVal) {m_bForceFastMoving = bVal;}
+
+BOOL Simulator::AutoGenerateRandomSeed() {return m_bAutoGenerateRandomSeed;}
+
+void Simulator::AutoGenerateRandomSeed(BOOL bVal) {m_bAutoGenerateRandomSeed = bVal;}
+
+int Simulator::ManualRandomSeed() {return m_iManualRandomSeed;}
+
+void Simulator::ManualRandomSeed(int iSeed) {m_iManualRandomSeed = iSeed;}
 
 float Simulator::LinearCompliance() {return m_fltLinearCompliance;}
 void Simulator::LinearCompliance(float fltVal, BOOL bUseScaling) 
@@ -355,31 +381,79 @@ void Simulator::AngularKineticLoss(float fltVal)
 	m_fltAngularKineticLoss = fltVal;
 }
 
-BOOL Simulator::IsPhysicsBeingUpdated()
+float Simulator::TimeStep() 
+{return m_fltTimeStep;}
+
+void Simulator::TimeStep(float fltVal) 
 {
-	if(m_iPhysicsStepCount == m_iPhysicsStepInterval)
-		return TRUE;
-	else
-		return FALSE;
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "TimeStep");
+	m_fltTimeStep = fltVal;
+
+	//Find the number of timeslices that need to occur before the physics system is updated
+	m_iPhysicsStepInterval = m_fltPhysicsTimeStep / m_fltTimeStep;
+
+	//Now recaculate the physics time step using the minimum time step as the base.
+	m_fltPhysicsTimeStep = m_fltTimeStep * m_iPhysicsStepInterval;
 }
 
-void Simulator::VisualSelectionMode(int iVal)
-{
-	if(iVal <0 || iVal > SIMULATION_SELECTION_MODE)
-		THROW_PARAM_ERROR(Al_Err_lInvalidSelMode, Al_Err_strInvalidSelMode, "Selection Mode", iVal);
+float Simulator::EndSimTime() {return m_fltEndSimTime;}
 
-	m_iSelectionMode = iVal;
-	
-	//Go through and call VisualSelectionModeChanged for all objects.
-	CStdMap<string, AnimatBase *>::iterator oPos;
-	AnimatBase *lpBase = NULL;
-	for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
-	{
-		lpBase = oPos->second;
-		if(lpBase && lpBase != this)
-			lpBase->VisualSelectionModeChanged(m_iSelectionMode);
-	}
-};
+void Simulator::EndSimTime(float fltVal) {m_fltEndSimTime = fltVal;}
+
+long Simulator::EndSimTimeSlice() {return m_lEndSimTimeSlice;}
+
+void Simulator::EndSimTimeSlice(long lVal) {m_lEndSimTimeSlice = lVal;}
+
+BOOL Simulator::Stopped() {return (m_bStopSimulation | m_bForceSimulationStop);}
+
+int Simulator::FrameRate() {return m_iFrameRate;}
+
+float Simulator::FrameStep() {return m_fltFrameStep;}
+
+void Simulator::FrameRate(int iVal)
+{
+	Std_IsAboveMin((int) 0, iVal, TRUE, "FrameRate");
+
+	m_iFrameRate = iVal;
+ 	m_fltFrameStep = (1/ (float) m_iFrameRate);
+}
+
+short Simulator::PhysicsStepInterval() {return m_iPhysicsStepInterval;}
+
+void Simulator::PhysicsStepInterval(short iVal) {m_iPhysicsStepInterval = iVal;}
+		
+void Simulator::PhysicsTimeStep(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "PhysicsTimeStep");
+
+	//If no timestep has been set then start the time step with the physics system and then later on we will find the 
+	//real minimum value while looking at all of the neural modules.
+	if(m_fltTimeStep < 0 || m_fltTimeStep > fltVal)
+		m_fltTimeStep = fltVal;
+
+	//Find the number of timeslices that need to occur before the physics system is updated
+	m_iPhysicsStepInterval = fltVal / m_fltTimeStep;
+
+	//Now recaculate the physics time step using the minimum time step as the base.
+	m_fltPhysicsTimeStep = m_fltTimeStep * m_iPhysicsStepInterval;
+}
+
+float Simulator::PhysicsTimeStep() {return m_fltPhysicsTimeStep;}
+
+long Simulator::PhysicsStepCount() {return m_iPhysicsStepCount;}
+
+float Simulator::Gravity() {return m_fltGravity;}
+
+void Simulator::Gravity(float fltVal, BOOL bUseScaling)
+{
+	//We must convert the gravity to use the correct scale.
+	if(bUseScaling)
+		fltVal /= m_fltDistanceUnits;
+
+	m_fltGravity = fltVal;
+}
+
+float Simulator::MouseSpringStiffness() {return m_fltMouseSpringStiffness;}
 
 void Simulator::MouseSpringStiffness(float fltVal, BOOL bUseScaling) 
 {
@@ -391,6 +465,8 @@ void Simulator::MouseSpringStiffness(float fltVal, BOOL bUseScaling)
 	m_fltMouseSpringStiffness = fltVal;
 }
 
+float Simulator::MouseSpringDamping() {return m_ftlMouseSpringDamping;}
+
 void Simulator::MouseSpringDamping(float fltVal, BOOL bUseScaling) 
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "MouseSpringDamping", TRUE);
@@ -398,6 +474,225 @@ void Simulator::MouseSpringDamping(float fltVal, BOOL bUseScaling)
 	if(bUseScaling)
 		fltVal = fltVal/this->DensityMassUnits();
 	m_ftlMouseSpringDamping = fltVal;
+}
+
+BOOL Simulator::SimulateHydrodynamics() {return m_bSimulateHydrodynamics;}
+
+void Simulator::SimulateHydrodynamics(BOOL bVal)
+{
+	m_bSimulateHydrodynamics = bVal;
+}
+
+float Simulator::FluidDensity() {return m_fltFluidDensity;}
+
+void Simulator::FluidDensity(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "FluidDensity");
+
+	if(bUseScaling)
+		fltVal *= pow(m_fltDenominatorDistanceUnits, 3);  //Perform a conversion if necessary because we may be using different units in the denominator.
+
+	m_fltFluidDensity = fltVal;
+}
+
+BOOL Simulator::HasConvexMesh() {return m_bHasConvexMesh;}
+
+void Simulator::HasConvexMesh(BOOL bVal) {m_bHasConvexMesh = bVal;}
+
+BOOL Simulator::HasTriangleMesh() {return m_bHasTriangleMesh;}
+
+void Simulator::HasTriangleMesh(BOOL bVal) {m_bHasTriangleMesh = bVal;}
+
+BOOL Simulator::HasHeightField() {return m_bHasHeightField;}
+
+void Simulator::HasHeightField(BOOL bVal) {m_bHasHeightField = bVal;}
+
+//Must be implemented in physics override class.
+int Simulator::GetMaterialID(string strID) {return -1;} 
+
+BOOL Simulator::IsPhysicsBeingUpdated()
+{
+	if(m_iPhysicsStepCount == m_iPhysicsStepInterval)
+		return TRUE;
+	else
+		return FALSE;
+}
+
+CStdColor *Simulator::BackgroundColor() {return  &m_vBackgroundColor;}
+
+void Simulator::BackgroundColor(float *vColor) {m_vBackgroundColor.Set(vColor[0], vColor[1], vColor[2], vColor[3]);}
+
+#pragma endregion
+
+#pragma region UnitScalingVariables
+			
+void Simulator::DistanceUnits(string strUnits)
+{
+	m_fltDistanceUnits = ConvertDistanceUnits(strUnits);
+	m_fltInverseDistanceUnits = 1/m_fltDistanceUnits;
+	m_fltDenominatorDistanceUnits = ConvertDenominatorDistanceUnits(strUnits);
+}
+
+float Simulator::DistanceUnits() {return m_fltDistanceUnits;}
+
+float Simulator::InverseDistanceUnits() {return m_fltInverseDistanceUnits;}
+
+//For items that use distance unit measures in the denominator we may want to use a differnt
+//scale that that used for the whole app. For example, if we are using a distance scale of decimeters
+//we will want to use centimeters for the density instead. This allows us to do that.
+float Simulator::DenominatorDistanceUnits() {return m_fltDenominatorDistanceUnits;}
+
+void Simulator::MassUnits(string strUnits)
+{
+	m_fltMassUnits = ConvertMassUnits(strUnits);
+	m_fltInverseMassUnits = 1/m_fltMassUnits;
+	m_fltDensityMassUnits = ConvertDensityMassUnits(strUnits);
+}
+
+float Simulator::MassUnits() {return m_fltMassUnits;}
+
+float Simulator::InverseMassUnits() {return m_fltInverseMassUnits;}
+
+//The editor will save out 1 Kg as 1000. So we need to convert 1000 to 1. We use this
+//density mass unit value to do this.
+float Simulator::DensityMassUnits() {return m_fltDensityMassUnits;}
+
+#pragma endregion
+			
+#pragma region RecordingVariables
+			
+long Simulator::VideoSliceCount() {return m_lVideoSliceCount;}
+
+void Simulator::VideoSliceCount(long lVal) {m_lVideoSliceCount = lVal;}
+
+int Simulator::VideoLoops() {return m_iVideoLoops;}
+
+void Simulator::VideoLoops(int iVal) {m_iVideoLoops = iVal;}
+
+KeyFrame *Simulator::VideoRecorder() {return m_lpVideoRecorder;}
+
+void Simulator::VideoRecorder(KeyFrame *lpFrame) {m_lpVideoRecorder = lpFrame;}
+
+KeyFrame *Simulator::VideoPlayback() {return m_lpVideoPlayback;}
+
+void Simulator::VideoPlayback(KeyFrame *lpFrame) {m_lpVideoPlayback = lpFrame;}
+
+BOOL Simulator::EnableSimRecording() {return m_bEnableSimRecording;}
+
+void Simulator::EnableSimRecording(BOOL bVal) {m_bEnableSimRecording = bVal;}
+
+long Simulator::SnapshotByteSize() {return m_lSnapshotByteSize;}
+
+#pragma endregion
+
+#pragma endregion
+
+#pragma region Methods
+
+#pragma region SimulationMethods
+
+/*! \brief 
+   Initializes all of the structures of this simulation.
+      
+	 \return
+	 No return value.
+
+	 \remarks
+	 This method runs through all of the "static" structures and organisms
+	 and calls their Initialize method.
+
+	 \sa
+	 Initialize, InitializeStructures
+*/
+
+void Simulator::InitializeStructures()
+{
+	m_oMaterialMgr.Initialize();
+
+	CStdMap<string, Structure *>::iterator oPos;
+	Structure *lpStructure = NULL;
+	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
+	{
+		lpStructure = oPos->second;
+		lpStructure->Initialize();
+	}
+
+	if(m_bEnableSimRecording)
+		m_lSnapshotByteSize = CalculateSnapshotByteSize();
+
+	if(m_bRecordVideo)
+	{
+		m_iVideoStepSize = (int) (m_fltVideoRecordFrameTime/m_fltPhysicsTimeStep);
+		m_lVideoStartSlice = (long) (m_fltVideoStartTime/m_fltTimeStep);
+		m_lVideoEndSlice = (long) (m_fltVideoEndTime/m_fltTimeStep);
+		m_iVideoStep = 0;
+
+		//First lets check if there is already an existing video file with that same
+		//name. If there is then get rid of it.
+		string strVideoFile = m_strProjectPath + m_strVideoFilename;
+		struct stat f__stat;
+		BOOL bFileExists = (stat(strVideoFile.c_str(), &f__stat) != 0);
+		if(bFileExists)
+			remove(strVideoFile.c_str( ));
+
+		m_lpAvi = new CStdAvi(strVideoFile, (int) (m_fltVideoPlaybackFrameTime*1000), NULL); 
+		m_lpAvi->m_aviOpts.cbFormat = m_aviOpts.cbFormat;
+		m_lpAvi->m_aviOpts.cbParms = m_aviOpts.cbParms;
+		m_lpAvi->m_aviOpts.dwBytesPerSecond = m_aviOpts.dwBytesPerSecond;
+		m_lpAvi->m_aviOpts.dwFlags = m_aviOpts.dwFlags;
+		m_lpAvi->m_aviOpts.dwInterleaveEvery = m_aviOpts.dwInterleaveEvery;
+		m_lpAvi->m_aviOpts.dwKeyFrameEvery = m_aviOpts.dwKeyFrameEvery;
+		m_lpAvi->m_aviOpts.dwQuality = m_aviOpts.dwQuality;
+		m_lpAvi->m_aviOpts.fccHandler = m_aviOpts.fccHandler;
+		m_lpAvi->m_aviOpts.fccType = m_aviOpts.fccType;
+		m_lpAvi->m_aviOpts.lpFormat = m_aviOpts.lpFormat;
+		m_lpAvi->m_aviOpts.lpParms = m_aviOpts.lpParms;
+	}
+
+}
+
+void Simulator::BlockSimulation() {m_bBlockSimulation = TRUE;}
+
+void Simulator::UnblockSimulation() {m_bBlockSimulation = FALSE; m_bSimBlockConfirm = FALSE;}
+
+BOOL Simulator::SimulationBlockConfirm() {return m_bSimBlockConfirm;}
+
+BOOL Simulator::WaitForSimulationBlock(long lTimeout)
+{
+	m_bBlockSimulation = TRUE;
+	long lTime = 0;
+	BOOL bDone = FALSE;
+	while(!bDone)
+	{
+		if(!m_bSimBlockConfirm)
+		{
+			Sleep(10);
+
+			lTime+=10;
+			if(lTimeout > 0 && lTime >= lTimeout)
+			{
+				bDone = TRUE;
+				m_bBlockSimulation = FALSE;
+			}
+		}
+		else
+			bDone = TRUE;
+	}
+
+	return m_bSimBlockConfirm;
+}
+
+BOOL Simulator::CheckSimulationBlock()
+{
+	if(m_bBlockSimulation)
+	{
+		m_bSimBlockConfirm = TRUE;
+		Sleep(1);
+	}
+	else
+		m_bSimBlockConfirm = FALSE;
+
+	return m_bSimBlockConfirm;
 }
 
 /*! \brief 
@@ -560,707 +855,6 @@ void Simulator::ResetSimulation()
 		m_lpSimRecorder->ResetSimulation();
 }
 
-void Simulator::GenerateAutoSeed()
-{
-	SYSTEMTIME st;
-	GetLocalTime(&st);
-
-	m_iManualRandomSeed = (unsigned) (st.wSecond + st.wMilliseconds + Std_IRand(0, 1000));
-	Std_SRand(m_iManualRandomSeed);
-	srand(m_iManualRandomSeed);
-}
-
-#pragma region DataAccesMethods
-
-/*! \brief 
-   Finds an organism with the specified ID.
-      
-   \param strOrganismID The ID of the organism to find. This is not case sensitive.
-	 \param bThrowError If this is TRUE and the ID is not found then an exception is
-	               thrown. If this is FALSE and the ID is not found then NULL
-								 is returned.
-
-	 \return
-	 Returns a pointer to the organism with the specified ID if one is found. If one
-	 is not found then it will either throw an exception or return NULL depending on 
-	 the value of bThrowError.
-
-	 \remarks
-   Finds an organism with the specified ID.
-
-	 \sa
-	 FindOrganism, FindStructure, FindStructureFromAll
-*/
-
-Organism *Simulator::FindOrganism(string strOrganismID, BOOL bThrowError)
-{
-	Organism *lpOrganism = NULL;
-	CStdPtrMap<string, Organism>::iterator oPos;
-	oPos = m_aryOrganisms.find(Std_CheckString(strOrganismID));
-
-	if(oPos != m_aryOrganisms.end())
-		lpOrganism =  oPos->second;
-	else if(bThrowError)
-		THROW_PARAM_ERROR(Al_Err_lOrganismIDNotFound, Al_Err_strOrganismIDNotFound, "OrganismID", strOrganismID);
-
-	return lpOrganism;
-}
-
-
-/*! \brief 
-   Finds a structure with the specified ID.
-      
-   \param strStructureID The ID of the structure to find. This is not case sensitive.
-	 \param bThrowError If this is TRUE and the ID is not found then an exception is
-	               thrown. If this is FALSE and the ID is not found then NULL
-								 is returned.
-
-	 \return
-	 Returns a pointer to the structure with the specified ID if one is found. If one
-	 is not found then it will either throw an exception or return NULL depending on 
-	 the value of bThrowError. This will only search the "static" structures. It will
-	 not search the organisms also. If you want to find a structure regardless if it 
-	 is an organism then you need to use FindStructureFromAll.
-
-	 \remarks
-   Finds a structure with the specified ID.
-
-	 \sa
-	 FindOrganism, FindStructure, FindStructureFromAll
-*/
-
-Structure *Simulator::FindStructure(string strStructureID, BOOL bThrowError)
-{
-	Structure *lpStructure = NULL;
-	CStdPtrMap<string, Structure>::iterator oPos;
-	oPos = m_aryStructures.find(Std_CheckString(strStructureID));
-
-	if(oPos != m_aryStructures.end())
-		lpStructure =  oPos->second;
-	else if(bThrowError)
-		THROW_PARAM_ERROR(Al_Err_lStructureIDNotFound, Al_Err_strStructureIDNotFound, "StructureID", strStructureID);
-
-	return lpStructure;
-}
-
-OdorType *Simulator::FindOdorType(string strOdorID, BOOL bThrowError)
-{
-	OdorType *lpOdorType = NULL;
-	CStdPtrMap<string, OdorType>::iterator oPos;
-	oPos = m_aryOdorTypes.find(Std_CheckString(strOdorID));
-
-	if(oPos != m_aryOdorTypes.end())
-		lpOdorType =  oPos->second;
-	else if(bThrowError)
-		THROW_PARAM_ERROR(Al_Err_lOdorIDNotFound, Al_Err_strOdorIDNotFound, "OdorID", strOdorID);
-
-	return lpOdorType;
-}
-
-/*! \brief 
-   Finds a structure or organism with the specified ID.
-      
-   \param strStructureID The ID of the structure to find. This is not case sensitive.
-	 \param bThrowError If this is TRUE and the ID is not found then an exception is
-	               thrown. If this is FALSE and the ID is not found then NULL
-								 is returned.
-
-	 \return
-	 Returns a pointer to the structure with the specified ID if one is found. If one
-	 is not found then it will either throw an exception or return NULL depending on 
-	 the value of bThrowError. This will search both the "static" structures and the
-	 organisms for the specified ID.
-
-	 \remarks
-   Finds a structure with the specified ID.
-
-	 \sa
-	 FindOrganism, FindStructure, FindStructureFromAll
-*/
-
-Structure *Simulator::FindStructureFromAll(string strStructureID, BOOL bThrowError)
-{
-	Structure *lpStructure = NULL;
-	CStdPtrMap<string, Structure>::iterator oPos;
-	oPos = m_aryAllStructures.find(Std_CheckString(strStructureID));
-
-	if(oPos != m_aryAllStructures.end())
-		lpStructure =  oPos->second;
-	else if(bThrowError)
-		THROW_PARAM_ERROR(Al_Err_lStructureIDNotFound, Al_Err_strStructureIDNotFound, "StructureID", strStructureID);
-
-	return lpStructure;
-}
-
-
-/*! \brief 
-   Finds a joint with the specified ID in the specified structure.
-      
-   \param strStructureID The ID of the structure to find. This is not case sensitive.
-   \param strJointID The ID of the joint within that structure to find. This is not case sensitive.
-	 \param bThrowError If this is TRUE and the ID's are not found then an exception is
-	               thrown. If this is FALSE and the ID's are not found then NULL
-								 is returned.
-
-	 \return
-	 Returns a pointer to the joint with the specified ID that is inside the specified 
-	 structure if one is found. If either the structure or joint are not found
-	 then it will either throw an exception or return NULL depending on 
-	 the value of bThrowError. This uses the FindStructureFromAll method to
-	 search both the "static" structures and the organisms for the specified 
-	 StructureID.
-
-	 \remarks
-   Finds a joint within a structure with the specified ID.
-
-	 \sa
-	 FindOrganism, FindStructure, FindStructureFromAll, FindRigidBody, FindJoint
-*/
-
-Joint *Simulator::FindJoint(string strStructureID, string strJointID, BOOL bThrowError)
-{
-	Structure *lpStructure = FindStructureFromAll(strStructureID, bThrowError);
-
-	if(lpStructure)
-		return lpStructure->FindJoint(strJointID, bThrowError);
-	else
-		return NULL;
-}
-
-
-/*! \brief 
-   Finds a rigid body with the specified ID in the specified structure.
-      
-   \param strStructureID The ID of the structure to find. This is not case sensitive.
-   \param strBodyID The ID of the rigid body within that structure to find. This is not case sensitive.
-	 \param bThrowError If this is TRUE and the ID's are not found then an exception is
-	               thrown. If this is FALSE and the ID's are not found then NULL
-								 is returned.
-
-	 \return
-	 Returns a pointer to the body with the specified ID that is inside the specified 
-	 structure if one is found. If either the structure or body are not found
-	 then it will either throw an exception or return NULL depending on 
-	 the value of bThrowError. This uses the FindStructureFromAll method to
-	 search both the "static" structures and the organisms for the specified 
-	 StructureID.
-
-	 \remarks
-   Finds a rigid body within a structure with the specified ID.
-
-	 \sa
-	 FindOrganism, FindStructure, FindStructureFromAll, FindRigidBody, FindJoint
-*/
-
-RigidBody *Simulator::FindRigidBody(string strStructureID, string strBodyID, BOOL bThrowError)
-{
-	Structure *lpStructure = FindStructureFromAll(strStructureID, bThrowError);
-
-	if(lpStructure)
-		return lpStructure->FindRigidBody(strBodyID, bThrowError);
-	else
-		return NULL;
-}
-
-
-//ClassFactory methods.
-
-IStdClassFactory *Simulator::FindNeuralModuleFactory(string strModuleName, BOOL bThrowError)
-{
-	IStdClassFactory *lpFactory = NULL;
-	CStdMap<string, IStdClassFactory *>::iterator oPos;
-	oPos = m_aryNeuralModuleFactories.find(Std_CheckString(strModuleName));
-
-	if(oPos != m_aryNeuralModuleFactories.end())
-		lpFactory =  oPos->second;
-	else if(bThrowError)
-		THROW_PARAM_ERROR(Al_Err_lModuleNameNotFound, Al_Err_strModuleNameNotFound, "ModuleName", strModuleName);
-
-	return lpFactory;
-}
-
-AnimatBase *Simulator::FindByID(string strID, BOOL bThrowError)
-{
-	AnimatBase *lpFind = NULL;
-	CStdMap<string, AnimatBase *>::iterator oPos;
-	oPos = m_aryObjectList.find(Std_CheckString(strID));
-
-	if(oPos != m_aryObjectList.end())
-		lpFind =  oPos->second;
-	else if(bThrowError)
-		THROW_PARAM_ERROR(Al_Err_lIDNotFound, Al_Err_strIDNotFound, "ID", strID);
-
-	return lpFind;
-}
-
-void Simulator::AddToObjectList(AnimatBase *lpItem)
-{
-	if(!FindByID(lpItem->ID(), FALSE))
-		m_aryObjectList.Add(lpItem->ID(), lpItem);
-}
-
-void Simulator::RemoveFromObjectList(AnimatBase *lpItem)
-{
-	if(FindByID(lpItem->ID(), FALSE))
-		m_aryObjectList.Remove(lpItem->ID());
-}
-
-float *Simulator::GetDataPointer(string strDataType)
-{
-	float *lpData=NULL;
-	string strType = Std_CheckString(strDataType);
-
-	if(strType == "TIME")
-		lpData = &m_fltTime;
-	else
-		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Simulator DataType: " + strDataType);
-
-	return lpData;
-}
-
-BOOL Simulator::SetData(string strDataType, string strValue, BOOL bThrowError)
-{
-	string strType = Std_CheckString(strDataType);
-
-	if(strType == "VISUALSELECTIONMODE")
-	{
-		VisualSelectionMode(atoi(strValue.c_str()));
-		return TRUE;
-	}
-	else if(strType == "ADDBODIESMODE")
-	{
-		AddBodiesMode(Std_ToBool(strValue));
-		return TRUE;
-	}
-	else if(strType == "DISTANCEUNITS")
-	{
-		DistanceUnits(strValue);
-		return TRUE;
-	}
-	else if(strType == "MASSUNITS")
-	{
-		DistanceUnits(strValue);
-		return TRUE;
-	}
-	else if(strType == "GRAVITY")
-	{
-		Gravity(atof(strValue.c_str()));
-		return TRUE;
-	}
-	else if(strType == "PHYSICSTIMESTEP")
-	{
-		PhysicsTimeStep(atof(strValue.c_str()));
-		return TRUE;
-	}
-	else if(strType == "SIMULATEHYDRODYNAMICS")
-	{
-		SimulateHydrodynamics(Std_ToBool(strValue));
-		return TRUE;
-	}
-	else if(strType == "FLUIDDENSITY")
-	{
-		FluidDensity(atof(strValue.c_str()));
-		return TRUE;
-	}
-	else if(strType == "AUTOGENERATERANDOMSEED")
-	{
-		AutoGenerateRandomSeed(Std_ToBool(strValue));
-		return TRUE;
-	}
-	else if(strType == "MANUALRANDOMSEED")
-	{
-		ManualRandomSeed(atof(strValue.c_str()));
-		return TRUE;
-	}
-	else if(strType == "FRAMERATE")
-	{
-		FrameRate(atoi(strValue.c_str()));
-		return TRUE;
-	}
-	else if(strType == "FORCEFASTMOVING")
-	{
-		ForceFastMoving(atoi(strValue.c_str()));
-		return TRUE;
-	}
-	else if(strType == "MOUSESPRINGSTIFFNESS")
-	{
-		MouseSpringStiffness(atof(strValue.c_str()));
-		return TRUE;
-	}
-	else if(strType == "MOUSESPRINGDAMPING")
-	{
-		MouseSpringDamping(atof(strValue.c_str()));
-		return TRUE;
-	}
-	else if(strType == "LINEARCOMPLIANCE")
-	{
-		LinearCompliance(atof(strValue.c_str()));
-		return TRUE;
-	}
-	else if(strType == "ANGULARCOMPLIANCE")
-	{
-		AngularCompliance(atof(strValue.c_str()));
-		return TRUE;
-	}
-	else if(strType == "LINEARDAMPING")
-	{
-		LinearDamping(atof(strValue.c_str()));
-		return TRUE;
-	}
-	else if(strType == "ANGULARDAMPING")
-	{
-		AngularDamping(atof(strValue.c_str()));
-		return TRUE;
-	}
-	else if(strType == "LINEARKINETICLOSS")
-	{
-		LinearKineticLoss(atof(strValue.c_str()));
-		return TRUE;
-	}
-	else if(strType == "ANGULARKINETICLOSS")
-	{
-		AngularKineticLoss(atof(strValue.c_str()));
-		return TRUE;
-	}
-
-	//If it was not one of those above then we have a problem.
-	if(bThrowError)
-		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
-
-	return FALSE;
-}
-
-BOOL Simulator::AddItem(string strItemType, string strXml, BOOL bThrowError)
-{
-	string strType = Std_CheckString(strItemType);
-
-	if(strType == "STIMULUS")
-		return m_oExternalStimuliMgr.AddStimulus(strXml);
-	else if(strType == "DATACHART")
-		return m_oDataChartMgr.AddDataChart(strXml);
-	else if(strType == "STRUCTURE")
-	{
-		AddStructure(strXml);
-		return TRUE;
-	}
-	else if(strType == "ORGANISM")
-	{
-		AddOrganism(strXml);
-		return TRUE;
-	}
-
-	//If it was not one of those above then we have a problem.
-	if(bThrowError)
-		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
-
-	return FALSE;
-}
-
-BOOL Simulator::RemoveItem(string strItemType, string strID, BOOL bThrowError)
-{
-	string strType = Std_CheckString(strItemType);
-
-	if(strType == "STIMULUS")
-		return m_oExternalStimuliMgr.RemoveStimulus(strID);
-	else if(strType == "DATACHART")
-		return m_oDataChartMgr.RemoveDataChart(strID);
-	else if(strType == "STRUCTURE")
-	{
-		RemoveStructure(strID);
-		return TRUE;
-	}
-	else if(strType == "ORGANISM")
-	{
-		RemoveOrganism(strID);
-		return TRUE;
-	}
-
-	//If it was not one of those above then we have a problem.
-	if(bThrowError)
-		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
-
-	return FALSE;
-}
-
-#pragma endregion
-
-void Simulator::AddNeuralModuleFactory(string strModuleName, NeuralModule *lpModule)
-{
-	if(!lpModule->ClassFactory())
-		THROW_PARAM_ERROR(Al_Err_lModuleClassFactoryNotDefined, Al_Err_strModuleClassFactoryNotDefined, "ModuleName", strModuleName);
-
-	if(!FindNeuralModuleFactory(strModuleName, FALSE))
-		m_aryNeuralModuleFactories.Add(Std_CheckString(strModuleName), lpModule->ClassFactory());
-}
-
-void Simulator::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
-{
-	string strModuleName = Std_CheckString(lpAdapter->SourceModule());
-
-	//If no neural module name is specified then this must be getting attached to the physics engine.
-	//Otherwise it gets attached to the specified neural module in an organism
-	if(strModuleName == "" || strModuleName == "ANIMATLAB")
-		m_arySourcePhysicsAdapters.Add(lpAdapter);
-	else
-	{
-		Organism *lpOrganism = dynamic_cast<Organism *>(lpStructure);
-		if(!lpOrganism)
-			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
-
-		NeuralModule *lpModule = lpOrganism->NervousSystem()->FindNeuralModule(strModuleName);
-		lpModule->AttachSourceAdapter(lpAdapter);
-	}
-}
-
-void Simulator::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
-{
-	string strModuleName = Std_CheckString(lpAdapter->TargetModule());
-
-	//If no neural module name is specified then this must be getting attached to the physics engine.
-	//Otherwise it gets attached to the specified neural module in an organism
-	if(strModuleName == "" || strModuleName == "ANIMATLAB")
-	{
-		m_aryTargetPhysicsAdapters.Add(lpAdapter);
-		m_iTargetAdapterCount = m_aryTargetPhysicsAdapters.GetSize();
-	}
-	else
-	{
-		Organism *lpOrganism = dynamic_cast<Organism *>(lpStructure);
-		if(!lpOrganism)
-			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
-
-		NeuralModule *lpModule = lpOrganism->NervousSystem()->FindNeuralModule(strModuleName);
-		lpModule->AttachTargetAdapter(lpAdapter);
-	}
-}
-
-void Simulator::AddFoodSource(RigidBody *lpFood)
-{
-	m_aryFoodSources.Add(lpFood);
-}
-
-RigidBody *Simulator::FindClosestFoodSource(CStdFPoint &oMouthPos, float fltMinRadius)
-{
-	RigidBody *lpFood = NULL, *lpMinFood = NULL;
-	float fltDist=0, fltMinDist=0;
-	int iCount = m_aryFoodSources.GetSize();
-
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-	{
-		lpFood = m_aryFoodSources[iIndex];
-		fltDist = Std_CalculateDistance(oMouthPos, lpFood->GetCurrentPosition());
-
-		if( (fltDist <= fltMinRadius) && ((fltDist < fltMinDist) || !lpMinFood))
-		{
-			fltMinDist = fltDist;
-			lpMinFood = lpFood;
-		}
-	}
-
-	return lpMinFood;
-}
-
-CStdSerialize *Simulator::CreateObject(string strModule, string strClassName, string strType, BOOL bThrowError)
-{
-	strModule = Std_CheckString(strModule);
-	
-	if(strModule == "" || strModule == "ANIMATLAB")
-	{
-		if(!m_lpAnimatClassFactory)
-			THROW_ERROR(Al_Err_lClassFactoryNotDefined, Al_Err_strClassFactoryNotDefined);
-
-		return m_lpAnimatClassFactory->CreateObject(strClassName, strType, bThrowError);
-	}
-	else
-	{
-		IStdClassFactory *lpFactory = FindNeuralModuleFactory(strModule, FALSE);
-
-		if(lpFactory)
-			return lpFactory->CreateObject(strClassName, strType, bThrowError);
-		else
-		{
-			//Lets load the dynamic library and get a pointer to the class factory.
-			lpFactory = LoadClassFactory(strModule);
-
-			//Now create an instance of a neural module. There is only one type of 
-			return lpFactory->CreateObject(strClassName, strType, bThrowError);
-		}
-	}
-
-	return NULL;
-}
-
-
-/*! \brief 
-   Enables collision between the past-in object and all rigid bodies of the simulator.
-      
-   \param lpBody  This is a pointer to the body to enable collisions on.
-
-	 \return
-	 No return value.
-
-	 \remarks
-	 This method enables collision responses between the rigid body being past
-	 in and all rigid bodies in the simulator.
-
-   \sa
-   EnableCollision, DisableCollision	
-*/
-
-void Simulator::EnableCollisions(Structure *lpStruct, CStdPtrArray<CollisionPair> &m_aryCollisionList)
-{
-	//Now lets disable any collisions that have been added to the exclusion list.
-	int iCount = m_aryCollisionList.GetSize();
-	CollisionPair *lpPair = NULL;
-	RigidBody *lpPart1=NULL, *lpPart2=NULL;
-
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-	{
-		lpPair =  m_aryCollisionList[iIndex];
-		lpPart1 = lpStruct->FindRigidBody(lpPair->m_strPart1ID);
-		lpPart2 = lpStruct->FindRigidBody(lpPair->m_strPart2ID);
-		
-		lpPart1->EnableCollision(lpPart2);
-	}	
-}
-
-void Simulator::EnableCollision(RigidBody *lpBody)
-{
-	CStdMap<string, Structure *>::iterator oPos;
-	Structure *lpStructure = NULL;
-	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
-	{
-		lpStructure = oPos->second;
-		lpStructure->EnableCollision(lpBody);
-	}
-}
-
-void Simulator::DisableCollisions(Structure *lpStruct, CStdPtrArray<CollisionPair> &m_aryCollisionList)
-{
-	//Now lets disable any collisions that have been added to the exclusion list.
-	int iCount = m_aryCollisionList.GetSize();
-	CollisionPair *lpPair = NULL;
-	RigidBody *lpPart1=NULL, *lpPart2=NULL;
-
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-	{
-		lpPair =  m_aryCollisionList[iIndex];
-		lpPart1 = lpStruct->FindRigidBody(lpPair->m_strPart1ID);
-		lpPart2 = lpStruct->FindRigidBody(lpPair->m_strPart2ID);
-		
-		lpPart1->DisableCollision(lpPart2);
-	}	
-}
-
-/*! \brief 
-   Disables collision between the past-in object and all rigid bodies of the simulator.
-      
-   \param lpBody This is a pointer to the body to disable collisions on.
-
-	 \return
-	 No return value.
-
-	 \remarks
-	 This method disables collision responses between the rigid body being past
-	 in and all rigid bodies in the simulator.
-
-   \sa
-   EnableCollision, DisableCollision	
-*/
-
-void Simulator::DisableCollision(RigidBody *lpBody)
-{
-	CStdMap<string, Structure *>::iterator oPos;
-	Structure *lpStructure = NULL;
-	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
-	{
-		lpStructure = oPos->second;
-		lpStructure->DisableCollision(lpBody);
-	}
-}
-
-
-/*! \fn virtual void Simulator::Initialize(int argc, const char **argv)
-   \brief
-   Initializes all aspects of the simulation to prepare it to be run.
-      
-	 \param argc Command line parameter count.
-	 \param argv Command line paramenters.
-
-	 \return
-	 No return value.
-
-	 \remarks
-	 This is a pure virtual method that must be implemented in the simulator application.
-	 It is where a lot of the nitty gritty details are done with initializing and 
-	 setting up the physics engine so that it can run. It is also where we initialize
-	 each structure to tell them to create their parts and joints.
-
-	 \sa
-	 Structure::Initialize, CreateParts, CreateJoints
-*/
-
-
-/*! \brief 
-   Initializes all of the structures of this simulation.
-      
-	 \return
-	 No return value.
-
-	 \remarks
-	 This method runs through all of the "static" structures and organisms
-	 and calls their Initialize method.
-
-	 \sa
-	 Initialize, InitializeStructures
-*/
-
-void Simulator::InitializeStructures()
-{
-	m_oMaterialMgr.Initialize();
-
-	CStdMap<string, Structure *>::iterator oPos;
-	Structure *lpStructure = NULL;
-	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
-	{
-		lpStructure = oPos->second;
-		lpStructure->Initialize();
-	}
-
-	if(m_bEnableSimRecording)
-		m_lSnapshotByteSize = CalculateSnapshotByteSize();
-
-	if(m_bRecordVideo)
-	{
-		m_iVideoStepSize = (int) (m_fltVideoRecordFrameTime/m_fltPhysicsTimeStep);
-		m_lVideoStartSlice = (long) (m_fltVideoStartTime/m_fltTimeStep);
-		m_lVideoEndSlice = (long) (m_fltVideoEndTime/m_fltTimeStep);
-		m_iVideoStep = 0;
-
-		//First lets check if there is already an existing video file with that same
-		//name. If there is then get rid of it.
-		string strVideoFile = m_strProjectPath + m_strVideoFilename;
-		struct stat f__stat;
-		BOOL bFileExists = (stat(strVideoFile.c_str(), &f__stat) != 0);
-		if(bFileExists)
-			remove(strVideoFile.c_str( ));
-
-		m_lpAvi = new CStdAvi(strVideoFile, (int) (m_fltVideoPlaybackFrameTime*1000), NULL); 
-		m_lpAvi->m_aviOpts.cbFormat = m_aviOpts.cbFormat;
-		m_lpAvi->m_aviOpts.cbParms = m_aviOpts.cbParms;
-		m_lpAvi->m_aviOpts.dwBytesPerSecond = m_aviOpts.dwBytesPerSecond;
-		m_lpAvi->m_aviOpts.dwFlags = m_aviOpts.dwFlags;
-		m_lpAvi->m_aviOpts.dwInterleaveEvery = m_aviOpts.dwInterleaveEvery;
-		m_lpAvi->m_aviOpts.dwKeyFrameEvery = m_aviOpts.dwKeyFrameEvery;
-		m_lpAvi->m_aviOpts.dwQuality = m_aviOpts.dwQuality;
-		m_lpAvi->m_aviOpts.fccHandler = m_aviOpts.fccHandler;
-		m_lpAvi->m_aviOpts.fccType = m_aviOpts.fccType;
-		m_lpAvi->m_aviOpts.lpFormat = m_aviOpts.lpFormat;
-		m_lpAvi->m_aviOpts.lpParms = m_aviOpts.lpParms;
-	}
-
-}
-
 inline void Simulator::StepNeuralEngine()
 {
 	for(m_oOrganismIterator=m_aryOrganisms.begin(); 
@@ -1293,7 +887,6 @@ inline void Simulator::StepPhysicsEngine()
 	m_lPhysicsSliceCount++;
 }
 
-
 inline void Simulator::Step()
 {
 	m_oExternalStimuliMgr.StepSimulation();
@@ -1310,7 +903,6 @@ inline void Simulator::Step()
 	m_lTimeSlice++;
 	m_fltTime += m_fltTimeStep;
 }
-
 
 /*! \brief 
    Steps the entire simulation forward by one time slice.
@@ -1343,210 +935,6 @@ void Simulator::RunSimulation()
 	Load(SimulationFile());
 	Initialize(0, NULL);
 	Simulate();
-}
-
-void Simulator::EnableVideoPlayback(string strKeyFrameID)
-{
-	if(!m_lpSimRecorder)
-		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
-
-	if(m_lpVideoPlayback && m_lpVideoPlayback->ID() == strKeyFrameID)
-		return;
-
-	KeyFrame *lpFrame = dynamic_cast<KeyFrame *>(m_lpSimRecorder->Find(strKeyFrameID));
-	lpFrame->EnableVideoPlayback();
-}
-
-void Simulator::DisableVideoPlayback()
-{
-	if(!m_lpSimRecorder)
-		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
-
-	if(m_lpVideoPlayback)
-		m_lpVideoPlayback->DisableVideoPlayback();
-}
-
-void Simulator::StartVideoPlayback()
-{
-	if(!m_lpSimRecorder)
-		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
-
-	if(m_lpVideoPlayback)
-		m_lpVideoPlayback->StartVideoPlayback();
-}
-
-void Simulator::StopVideoPlayback()
-{
-	if(!m_lpSimRecorder)
-		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
-
-	if(m_lpVideoPlayback)
-		m_lpVideoPlayback->StopVideoPlayback();
-}
-
-void Simulator::StepVideoPlayback(int iFrameCount)
-{
-	if(!m_lpSimRecorder)
-		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
-
-	if(m_lpVideoPlayback)
-		m_lpVideoPlayback->StepVideoPlayback( iFrameCount);
-}
-
-void Simulator::SaveVideo(string strPath)
-{
-	if(!m_lpSimRecorder)
-		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
-
-	if(m_lpVideoPlayback)
-		m_lpVideoPlayback->SaveVideo(strPath);
-}
-
-string Simulator::AddKeyFrame(string strType, long lStart, long lEnd)
-{
-	if(!m_lpSimRecorder)
-		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
-
-	KeyFrame *lpFrame = m_lpSimRecorder->Add(strType, lStart, lEnd);
-	return lpFrame->ID();
-}
-
-void Simulator::RemoveKeyFrame(string strID)
-{
-	if(!m_lpSimRecorder)
-		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
-
-	m_lpSimRecorder->Remove(strID);
-}
-
-string Simulator::MoveKeyFrame(string strID, long lStart, long lEnd)
-{
-	if(!m_lpSimRecorder)
-		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
-
-	KeyFrame *lpFrame = dynamic_cast<KeyFrame *>(m_lpSimRecorder->Find(strID));
-
-	//If neither the start or end slice is changed then jump out of here.
-	if(lpFrame->StartSlice() == lStart && lpFrame->EndSlice() == lEnd)
-		return lpFrame->ID();
-
-	//unsigned char iType = lpFrame->Type();
-	m_lpSimRecorder->Remove(strID);
-	lpFrame = m_lpSimRecorder->Add(lpFrame->Type(), lStart, lEnd);
-	return lpFrame->ID();
-}
-
-void Simulator::MoveSimulationToKeyFrame(string strKeyFrameID)
-{
-	if(!m_lpSimRecorder)
-		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
-
-	if(!Std_IsBlank(strKeyFrameID))
-	{
-		KeyFrame *lpFrame = dynamic_cast<KeyFrame *>(m_lpSimRecorder->Find(strKeyFrameID));
-		lpFrame->MakeCurrentFrame();
-	}
-	else if(m_lpSimStopPoint)
-		m_lpSimStopPoint->MakeCurrentFrame();
-}
-
-long Simulator::CalculateSnapshotByteSize()
-{
-	long lByteSize = 0;
-	CStdMap<string, Structure *>::iterator oPos;
-	Structure *lpStructure = NULL;
-	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
-	{
-		lpStructure = oPos->second;
-		lByteSize += lpStructure->CalculateSnapshotByteSize();
-	}
-
-	return lByteSize;
-}
-
-void Simulator::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
-{
-	CStdMap<string, Structure *>::iterator oPos;
-	Structure *lpStructure = NULL;
-	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
-	{
-		lpStructure = oPos->second;
-		lpStructure->SaveKeyFrameSnapshot(aryBytes, lIndex);
-	}
-}
-
-
-void Simulator::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
-{
-	CStdMap<string, Structure *>::iterator oPos;
-	Structure *lpStructure = NULL;
-	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
-	{
-		lpStructure = oPos->second;
-		lpStructure->LoadKeyFrameSnapshot(aryBytes, lIndex);
-	}
-}
-
-
-void Simulator::RecordVideoFrame()
-{
-	if(m_lpAvi && (m_lTimeSlice >= m_lVideoStartSlice) && (m_lTimeSlice <= m_lVideoEndSlice))
-	{
-		m_iVideoStep--;
-		if(m_iVideoStep <= 0)
-		{
-			m_lVideoFrame++;
-			//m_strVideoFile = "C:\\Projects\\Documentation\\Results\\Thesis\\Hi Speed Video\\Sim_Track_Error_Test\\VideoImages\\Frame_" + STR(m_lVideoFrame) + ".bmp";
-			//If this is the first
-			//m_lpAvi->AddWindowFrame(m_hSimulationWnd, FALSE, "");				
-			m_iVideoStep = m_iVideoStepSize;
-		}	
-	}
-
-	//If we have recorded the entire video then close it out.
-	if(m_lpAvi && m_lTimeSlice >= m_lVideoEndSlice)
-	{
-		delete m_lpAvi;
-		m_lpAvi = NULL;
-	}
-}
-
-BOOL Simulator::WaitForSimulationBlock(long lTimeout)
-{
-	m_bBlockSimulation = TRUE;
-	long lTime = 0;
-	BOOL bDone = FALSE;
-	while(!bDone)
-	{
-		if(!m_bSimBlockConfirm)
-		{
-			Sleep(10);
-
-			lTime+=10;
-			if(lTimeout > 0 && lTime >= lTimeout)
-			{
-				bDone = TRUE;
-				m_bBlockSimulation = FALSE;
-			}
-		}
-		else
-			bDone = TRUE;
-	}
-
-	return m_bSimBlockConfirm;
-}
-
-BOOL Simulator::CheckSimulationBlock()
-{
-	if(m_bBlockSimulation)
-	{
-		m_bSimBlockConfirm = TRUE;
-		Sleep(1);
-	}
-	else
-		m_bSimBlockConfirm = FALSE;
-
-	return m_bSimBlockConfirm;
 }
 
 void Simulator::SimStarting()
@@ -1585,6 +973,19 @@ void Simulator::SimStopping()
 	}
 }
 
+void Simulator::GenerateAutoSeed()
+{
+	SYSTEMTIME st;
+	GetLocalTime(&st);
+
+	m_iManualRandomSeed = (unsigned) (st.wSecond + st.wMilliseconds + Std_IRand(0, 1000));
+	Std_SRand(m_iManualRandomSeed);
+	srand(m_iManualRandomSeed);
+}
+
+#pragma endregion
+			
+#pragma region LoadMethods
 
 
 /*! \brief
@@ -1689,141 +1090,28 @@ void Simulator::Load(CStdXml &oXml)
 //Override used by derived class.
 void Simulator::Save(string strFile) {};
 
-/*! \brief 
-   Adds a new organism to the list of structures for this simulation.
-      
-   \param lpOrganism The new organism to be added.
-
-	 \return
-	 No return value.
-
-	 \remarks
-	 This method gets a list of all organisms and a list of referneces to
-	 all structures in this simulation that are mapped to their
-	 ID value. This allows us to use the STL find funtions to find organisms.
-	 This is more efficeient that using a loop and recursion.
-	 This also allows us to ensure that each organism/structure that is
-	 being added has a unique ID value. If you attempt to add a organism that
-	 has a ID that is already in the list then an exception will be thrown.
-	 Note that this method is NOT creating the object itself, that is done
-	 elsewhere. It is simply adding it to the organism list and adding 
-	 a reference to that created object to m_aryAllStructures list.
-
-	 \sa
-	 AddOrganism, AddStructure, m_aryAllStructures, m_aryOrganisms, m_aryStructures, 
-	 FindOrganism, FindStructure, FindStructureFromAll
-*/
-
-void Simulator::AddOrganism(Organism *lpOrganism)
+IStdClassFactory *Simulator::LoadClassFactory(string strModuleName)
 {
-	if(!lpOrganism)
-		THROW_ERROR(Al_Err_lStructureNotDefined, Al_Err_strStructureNotDefined);
+	IStdClassFactory *lpFactory=NULL;
 
-	try
-	{
-			m_aryAllStructures.Add(lpOrganism->ID(), lpOrganism);
-			m_aryOrganisms.Add(lpOrganism->ID(), lpOrganism);
-	}
-	catch(CStdErrorInfo oError)
-	{
-		oError.m_strError += " Duplicate Organism Key: " + lpOrganism->ID(); 
-		RELAY_ERROR(oError);
-	}
-}
-
-void Simulator::AddOrganism(string strXml)
+try
 {
-	CStdXml oXml;
-	oXml.Deserialize(strXml);
-	oXml.FindElement("Root");
-	oXml.FindChildElement("Organism");
-
-	Organism *lpOrg = LoadOrganism(oXml);
-	lpOrg->Initialize();
+	lpFactory = IStdClassFactory::LoadModule(strModuleName);
+	return lpFactory;
 }
-
-void Simulator::RemoveOrganism(string strID, BOOL bThrowError)
+catch(CStdErrorInfo oError)
 {
-	m_aryAllStructures.Remove(strID);
-	m_aryOrganisms.Remove(strID);
+	if(lpFactory) delete lpFactory;
+	RELAY_ERROR(oError);
+	return NULL;
 }
-
-
-/*! \brief 
-   Adds a new "static" structure to the list of structures for this simulation.
-      
-   \param lpStructure The new structure to be added.
-
-	 \return
-	 No return value.
-
-	 \remarks
-	 This method gets a list of all structures and a list of referneces to
-	 all structures in this simulation that are mapped to their
-	 ID value. This allows us to use the STL find funtions to find structures.
-	 This is more efficeient that using a loop and recursion.
-	 This also allows us to ensure that each organism/structure that is
-	 being added has a unique ID value. If you attempt to add a structure that
-	 has a ID that is already in the list then an exception will be thrown.
-	 Note that this method is NOT creating the object itself, that is done
-	 elsewhere. It is simply adding it to the structure list and adding 
-	 a reference to that created object to m_aryAllStructures list.
-
-	 \sa
-	 AddOrganism, AddStructure, m_aryAllStructures, m_aryOrganisms, m_aryStructures, 
-	 FindOrganism, FindStructure, FindStructureFromAll
-*/
-
-void Simulator::AddStructure(Structure *lpStructure)
+catch(...)
 {
-	if(!lpStructure)
-		THROW_ERROR(Al_Err_lStructureNotDefined, Al_Err_strStructureNotDefined);
-
-	try
-	{
-			m_aryAllStructures.Add(lpStructure->ID(), lpStructure);
-			m_aryStructures.Add(lpStructure->ID(), lpStructure);
-	}
-	catch(CStdErrorInfo oError)
-	{
-		oError.m_strError += " Duplicate structure Key: " + lpStructure->ID(); 
-		RELAY_ERROR(oError);
-	}
+	if(lpFactory) delete lpFactory;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
 }
-
-void Simulator::AddStructure(string strXml)
-{
-	CStdXml oXml;
-	oXml.Deserialize(strXml);
-	oXml.FindElement("Root");
-	oXml.FindChildElement("Structure");
-
-	Structure *lpStruct = LoadStructure(oXml);
-	lpStruct->Initialize();
 }
-
-void Simulator::RemoveStructure(string strID, BOOL bThrowError)
-{
-	m_aryAllStructures.Remove(strID);
-	m_aryStructures.Remove(strID);
-}
-
-void Simulator::AddOdorType(OdorType *lpOdorType)
-{
-	if(!lpOdorType)
-		THROW_ERROR(Al_Err_lOdorNotDefined, Al_Err_strOdorNotDefined);
-
-	try
-	{
-			m_aryOdorTypes.Add(lpOdorType->ID(), lpOdorType);
-	}
-	catch(CStdErrorInfo oError)
-	{
-		oError.m_strError += " Duplicate odor type Key: " + lpOdorType->ID(); 
-		RELAY_ERROR(oError);
-	}
-}
-
 
 /*! \brief 
    Loads all structures from from the configuration file for this simulation.
@@ -2043,54 +1331,58 @@ void Simulator::LoadAnimatModuleName(CStdXml &oXml, string &strAnimatModule)
 	strAnimatModule = oXml.GetChildString("AnimatModule");
 }
 
-/*
-CNlClassFactory *Simulator::LoadNeuralClassFactory(string strNeuralModule)
-{
-	CNlClassFactory *lpNeuralFactory=NULL;
+/*! \fn virtual void Simulator::Initialize(int argc, const char **argv)
+   \brief
+   Initializes all aspects of the simulation to prepare it to be run.
+      
+	 \param argc Command line parameter count.
+	 \param argv Command line paramenters.
 
-try
-{
-	lpNeuralFactory = dynamic_cast<CNlClassFactory *>(IStdClassFactory::LoadModule(strNeuralModule));
-	if(!lpNeuralFactory)
-		THROW_PARAM_ERROR(Al_Err_lModuleFactoryNotNeural, Al_Err_strModuleFactoryNotNeural, "NeuralModule", strNeuralModule);
-	return lpNeuralFactory;
-}
-catch(CStdErrorInfo oError)
-{
-	if(lpNeuralFactory) delete lpNeuralFactory;
-	RELAY_ERROR(oError);
-	return NULL;
-}
-catch(...)
-{
-	if(lpNeuralFactory) delete lpNeuralFactory;
-	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
-	return NULL;
-}
-}
+	 \return
+	 No return value.
+
+	 \remarks
+	 This is a pure virtual method that must be implemented in the simulator application.
+	 It is where a lot of the nitty gritty details are done with initializing and 
+	 setting up the physics engine so that it can run. It is also where we initialize
+	 each structure to tell them to create their parts and joints.
+
+	 \sa
+	 Structure::Initialize, CreateParts, CreateJoints
 */
 
-IStdClassFactory *Simulator::LoadClassFactory(string strModuleName)
-{
-	IStdClassFactory *lpFactory=NULL;
+#pragma endregion
 
-try
+#pragma region CreateMethods
+
+CStdSerialize *Simulator::CreateObject(string strModule, string strClassName, string strType, BOOL bThrowError)
 {
-	lpFactory = IStdClassFactory::LoadModule(strModuleName);
-	return lpFactory;
-}
-catch(CStdErrorInfo oError)
-{
-	if(lpFactory) delete lpFactory;
-	RELAY_ERROR(oError);
+	strModule = Std_CheckString(strModule);
+	
+	if(strModule == "" || strModule == "ANIMATLAB")
+	{
+		if(!m_lpAnimatClassFactory)
+			THROW_ERROR(Al_Err_lClassFactoryNotDefined, Al_Err_strClassFactoryNotDefined);
+
+		return m_lpAnimatClassFactory->CreateObject(strClassName, strType, bThrowError);
+	}
+	else
+	{
+		IStdClassFactory *lpFactory = FindNeuralModuleFactory(strModule, FALSE);
+
+		if(lpFactory)
+			return lpFactory->CreateObject(strClassName, strType, bThrowError);
+		else
+		{
+			//Lets load the dynamic library and get a pointer to the class factory.
+			lpFactory = LoadClassFactory(strModule);
+
+			//Now create an instance of a neural module. There is only one type of 
+			return lpFactory->CreateObject(strClassName, strType, bThrowError);
+		}
+	}
+
 	return NULL;
-}
-catch(...)
-{
-	if(lpFactory) delete lpFactory;
-	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
-	return NULL;
-}
 }
 
 Simulator *Simulator::CreateSimulator(int argc, const char **argv)
@@ -2326,6 +1618,906 @@ catch(...)
 }
 }
 
+#pragma endregion
+	
+#pragma region FindMethods
+
+IStdClassFactory *Simulator::FindNeuralModuleFactory(string strModuleName, BOOL bThrowError)
+{
+	IStdClassFactory *lpFactory = NULL;
+	CStdMap<string, IStdClassFactory *>::iterator oPos;
+	oPos = m_aryNeuralModuleFactories.find(Std_CheckString(strModuleName));
+
+	if(oPos != m_aryNeuralModuleFactories.end())
+		lpFactory =  oPos->second;
+	else if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lModuleNameNotFound, Al_Err_strModuleNameNotFound, "ModuleName", strModuleName);
+
+	return lpFactory;
+}
+
+
+/*! \brief 
+   Finds an organism with the specified ID.
+      
+   \param strOrganismID The ID of the organism to find. This is not case sensitive.
+	 \param bThrowError If this is TRUE and the ID is not found then an exception is
+	               thrown. If this is FALSE and the ID is not found then NULL
+								 is returned.
+
+	 \return
+	 Returns a pointer to the organism with the specified ID if one is found. If one
+	 is not found then it will either throw an exception or return NULL depending on 
+	 the value of bThrowError.
+
+	 \remarks
+   Finds an organism with the specified ID.
+
+	 \sa
+	 FindOrganism, FindStructure, FindStructureFromAll
+*/
+
+Organism *Simulator::FindOrganism(string strOrganismID, BOOL bThrowError)
+{
+	Organism *lpOrganism = NULL;
+	CStdPtrMap<string, Organism>::iterator oPos;
+	oPos = m_aryOrganisms.find(Std_CheckString(strOrganismID));
+
+	if(oPos != m_aryOrganisms.end())
+		lpOrganism =  oPos->second;
+	else if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lOrganismIDNotFound, Al_Err_strOrganismIDNotFound, "OrganismID", strOrganismID);
+
+	return lpOrganism;
+}
+
+
+/*! \brief 
+   Finds a structure with the specified ID.
+      
+   \param strStructureID The ID of the structure to find. This is not case sensitive.
+	 \param bThrowError If this is TRUE and the ID is not found then an exception is
+	               thrown. If this is FALSE and the ID is not found then NULL
+								 is returned.
+
+	 \return
+	 Returns a pointer to the structure with the specified ID if one is found. If one
+	 is not found then it will either throw an exception or return NULL depending on 
+	 the value of bThrowError. This will only search the "static" structures. It will
+	 not search the organisms also. If you want to find a structure regardless if it 
+	 is an organism then you need to use FindStructureFromAll.
+
+	 \remarks
+   Finds a structure with the specified ID.
+
+	 \sa
+	 FindOrganism, FindStructure, FindStructureFromAll
+*/
+
+Structure *Simulator::FindStructure(string strStructureID, BOOL bThrowError)
+{
+	Structure *lpStructure = NULL;
+	CStdPtrMap<string, Structure>::iterator oPos;
+	oPos = m_aryStructures.find(Std_CheckString(strStructureID));
+
+	if(oPos != m_aryStructures.end())
+		lpStructure =  oPos->second;
+	else if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lStructureIDNotFound, Al_Err_strStructureIDNotFound, "StructureID", strStructureID);
+
+	return lpStructure;
+}
+
+OdorType *Simulator::FindOdorType(string strOdorID, BOOL bThrowError)
+{
+	OdorType *lpOdorType = NULL;
+	CStdPtrMap<string, OdorType>::iterator oPos;
+	oPos = m_aryOdorTypes.find(Std_CheckString(strOdorID));
+
+	if(oPos != m_aryOdorTypes.end())
+		lpOdorType =  oPos->second;
+	else if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lOdorIDNotFound, Al_Err_strOdorIDNotFound, "OdorID", strOdorID);
+
+	return lpOdorType;
+}
+
+/*! \brief 
+   Finds a structure or organism with the specified ID.
+      
+   \param strStructureID The ID of the structure to find. This is not case sensitive.
+	 \param bThrowError If this is TRUE and the ID is not found then an exception is
+	               thrown. If this is FALSE and the ID is not found then NULL
+								 is returned.
+
+	 \return
+	 Returns a pointer to the structure with the specified ID if one is found. If one
+	 is not found then it will either throw an exception or return NULL depending on 
+	 the value of bThrowError. This will search both the "static" structures and the
+	 organisms for the specified ID.
+
+	 \remarks
+   Finds a structure with the specified ID.
+
+	 \sa
+	 FindOrganism, FindStructure, FindStructureFromAll
+*/
+
+Structure *Simulator::FindStructureFromAll(string strStructureID, BOOL bThrowError)
+{
+	Structure *lpStructure = NULL;
+	CStdPtrMap<string, Structure>::iterator oPos;
+	oPos = m_aryAllStructures.find(Std_CheckString(strStructureID));
+
+	if(oPos != m_aryAllStructures.end())
+		lpStructure =  oPos->second;
+	else if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lStructureIDNotFound, Al_Err_strStructureIDNotFound, "StructureID", strStructureID);
+
+	return lpStructure;
+}
+
+
+/*! \brief 
+   Finds a joint with the specified ID in the specified structure.
+      
+   \param strStructureID The ID of the structure to find. This is not case sensitive.
+   \param strJointID The ID of the joint within that structure to find. This is not case sensitive.
+	 \param bThrowError If this is TRUE and the ID's are not found then an exception is
+	               thrown. If this is FALSE and the ID's are not found then NULL
+								 is returned.
+
+	 \return
+	 Returns a pointer to the joint with the specified ID that is inside the specified 
+	 structure if one is found. If either the structure or joint are not found
+	 then it will either throw an exception or return NULL depending on 
+	 the value of bThrowError. This uses the FindStructureFromAll method to
+	 search both the "static" structures and the organisms for the specified 
+	 StructureID.
+
+	 \remarks
+   Finds a joint within a structure with the specified ID.
+
+	 \sa
+	 FindOrganism, FindStructure, FindStructureFromAll, FindRigidBody, FindJoint
+*/
+
+Joint *Simulator::FindJoint(string strStructureID, string strJointID, BOOL bThrowError)
+{
+	Structure *lpStructure = FindStructureFromAll(strStructureID, bThrowError);
+
+	if(lpStructure)
+		return lpStructure->FindJoint(strJointID, bThrowError);
+	else
+		return NULL;
+}
+
+
+/*! \brief 
+   Finds a rigid body with the specified ID in the specified structure.
+      
+   \param strStructureID The ID of the structure to find. This is not case sensitive.
+   \param strBodyID The ID of the rigid body within that structure to find. This is not case sensitive.
+	 \param bThrowError If this is TRUE and the ID's are not found then an exception is
+	               thrown. If this is FALSE and the ID's are not found then NULL
+								 is returned.
+
+	 \return
+	 Returns a pointer to the body with the specified ID that is inside the specified 
+	 structure if one is found. If either the structure or body are not found
+	 then it will either throw an exception or return NULL depending on 
+	 the value of bThrowError. This uses the FindStructureFromAll method to
+	 search both the "static" structures and the organisms for the specified 
+	 StructureID.
+
+	 \remarks
+   Finds a rigid body within a structure with the specified ID.
+
+	 \sa
+	 FindOrganism, FindStructure, FindStructureFromAll, FindRigidBody, FindJoint
+*/
+
+RigidBody *Simulator::FindRigidBody(string strStructureID, string strBodyID, BOOL bThrowError)
+{
+	Structure *lpStructure = FindStructureFromAll(strStructureID, bThrowError);
+
+	if(lpStructure)
+		return lpStructure->FindRigidBody(strBodyID, bThrowError);
+	else
+		return NULL;
+}
+
+
+
+AnimatBase *Simulator::FindByID(string strID, BOOL bThrowError)
+{
+	AnimatBase *lpFind = NULL;
+	CStdMap<string, AnimatBase *>::iterator oPos;
+	oPos = m_aryObjectList.find(Std_CheckString(strID));
+
+	if(oPos != m_aryObjectList.end())
+		lpFind =  oPos->second;
+	else if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lIDNotFound, Al_Err_strIDNotFound, "ID", strID);
+
+	return lpFind;
+}
+
+			
+RigidBody *Simulator::FindClosestFoodSource(CStdFPoint &oMouthPos, float fltMinRadius)
+{
+	RigidBody *lpFood = NULL, *lpMinFood = NULL;
+	float fltDist=0, fltMinDist=0;
+	int iCount = m_aryFoodSources.GetSize();
+
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+	{
+		lpFood = m_aryFoodSources[iIndex];
+		fltDist = Std_CalculateDistance(oMouthPos, lpFood->GetCurrentPosition());
+
+		if( (fltDist <= fltMinRadius) && ((fltDist < fltMinDist) || !lpMinFood))
+		{
+			fltMinDist = fltDist;
+			lpMinFood = lpFood;
+		}
+	}
+
+	return lpMinFood;
+}
+
+#pragma endregion
+
+#pragma region AddRemoveMethods
+
+void Simulator::AddToObjectList(AnimatBase *lpItem)
+{
+	if(!FindByID(lpItem->ID(), FALSE))
+		m_aryObjectList.Add(lpItem->ID(), lpItem);
+}
+
+void Simulator::RemoveFromObjectList(AnimatBase *lpItem)
+{
+	if(FindByID(lpItem->ID(), FALSE))
+		m_aryObjectList.Remove(lpItem->ID());
+}
+
+void Simulator::AddNeuralModuleFactory(string strModuleName, NeuralModule *lpModule)
+{
+	if(!lpModule->ClassFactory())
+		THROW_PARAM_ERROR(Al_Err_lModuleClassFactoryNotDefined, Al_Err_strModuleClassFactoryNotDefined, "ModuleName", strModuleName);
+
+	if(!FindNeuralModuleFactory(strModuleName, FALSE))
+		m_aryNeuralModuleFactories.Add(Std_CheckString(strModuleName), lpModule->ClassFactory());
+}
+
+void Simulator::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
+{
+	string strModuleName = Std_CheckString(lpAdapter->SourceModule());
+
+	//If no neural module name is specified then this must be getting attached to the physics engine.
+	//Otherwise it gets attached to the specified neural module in an organism
+	if(strModuleName == "" || strModuleName == "ANIMATLAB")
+		m_arySourcePhysicsAdapters.Add(lpAdapter);
+	else
+	{
+		Organism *lpOrganism = dynamic_cast<Organism *>(lpStructure);
+		if(!lpOrganism)
+			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
+
+		NeuralModule *lpModule = lpOrganism->NervousSystem()->FindNeuralModule(strModuleName);
+		lpModule->AttachSourceAdapter(lpAdapter);
+	}
+}
+
+void Simulator::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
+{
+	string strModuleName = Std_CheckString(lpAdapter->TargetModule());
+
+	//If no neural module name is specified then this must be getting attached to the physics engine.
+	//Otherwise it gets attached to the specified neural module in an organism
+	if(strModuleName == "" || strModuleName == "ANIMATLAB")
+	{
+		m_aryTargetPhysicsAdapters.Add(lpAdapter);
+		m_iTargetAdapterCount = m_aryTargetPhysicsAdapters.GetSize();
+	}
+	else
+	{
+		Organism *lpOrganism = dynamic_cast<Organism *>(lpStructure);
+		if(!lpOrganism)
+			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
+
+		NeuralModule *lpModule = lpOrganism->NervousSystem()->FindNeuralModule(strModuleName);
+		lpModule->AttachTargetAdapter(lpAdapter);
+	}
+}
+
+void Simulator::AddFoodSource(RigidBody *lpFood)
+{
+	m_aryFoodSources.Add(lpFood);
+}
+/*! \brief 
+   Adds a new organism to the list of structures for this simulation.
+      
+   \param lpOrganism The new organism to be added.
+
+	 \return
+	 No return value.
+
+	 \remarks
+	 This method gets a list of all organisms and a list of referneces to
+	 all structures in this simulation that are mapped to their
+	 ID value. This allows us to use the STL find funtions to find organisms.
+	 This is more efficeient that using a loop and recursion.
+	 This also allows us to ensure that each organism/structure that is
+	 being added has a unique ID value. If you attempt to add a organism that
+	 has a ID that is already in the list then an exception will be thrown.
+	 Note that this method is NOT creating the object itself, that is done
+	 elsewhere. It is simply adding it to the organism list and adding 
+	 a reference to that created object to m_aryAllStructures list.
+
+	 \sa
+	 AddOrganism, AddStructure, m_aryAllStructures, m_aryOrganisms, m_aryStructures, 
+	 FindOrganism, FindStructure, FindStructureFromAll
+*/
+
+void Simulator::AddOrganism(Organism *lpOrganism)
+{
+	if(!lpOrganism)
+		THROW_ERROR(Al_Err_lStructureNotDefined, Al_Err_strStructureNotDefined);
+
+	try
+	{
+			m_aryAllStructures.Add(lpOrganism->ID(), lpOrganism);
+			m_aryOrganisms.Add(lpOrganism->ID(), lpOrganism);
+	}
+	catch(CStdErrorInfo oError)
+	{
+		oError.m_strError += " Duplicate Organism Key: " + lpOrganism->ID(); 
+		RELAY_ERROR(oError);
+	}
+}
+
+void Simulator::AddOrganism(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Organism");
+
+	Organism *lpOrg = LoadOrganism(oXml);
+	lpOrg->Initialize();
+}
+
+void Simulator::RemoveOrganism(string strID, BOOL bThrowError)
+{
+	m_aryAllStructures.Remove(strID);
+	m_aryOrganisms.Remove(strID);
+}
+
+
+/*! \brief 
+   Adds a new "static" structure to the list of structures for this simulation.
+      
+   \param lpStructure The new structure to be added.
+
+	 \return
+	 No return value.
+
+	 \remarks
+	 This method gets a list of all structures and a list of referneces to
+	 all structures in this simulation that are mapped to their
+	 ID value. This allows us to use the STL find funtions to find structures.
+	 This is more efficeient that using a loop and recursion.
+	 This also allows us to ensure that each organism/structure that is
+	 being added has a unique ID value. If you attempt to add a structure that
+	 has a ID that is already in the list then an exception will be thrown.
+	 Note that this method is NOT creating the object itself, that is done
+	 elsewhere. It is simply adding it to the structure list and adding 
+	 a reference to that created object to m_aryAllStructures list.
+
+	 \sa
+	 AddOrganism, AddStructure, m_aryAllStructures, m_aryOrganisms, m_aryStructures, 
+	 FindOrganism, FindStructure, FindStructureFromAll
+*/
+
+void Simulator::AddStructure(Structure *lpStructure)
+{
+	if(!lpStructure)
+		THROW_ERROR(Al_Err_lStructureNotDefined, Al_Err_strStructureNotDefined);
+
+	try
+	{
+			m_aryAllStructures.Add(lpStructure->ID(), lpStructure);
+			m_aryStructures.Add(lpStructure->ID(), lpStructure);
+	}
+	catch(CStdErrorInfo oError)
+	{
+		oError.m_strError += " Duplicate structure Key: " + lpStructure->ID(); 
+		RELAY_ERROR(oError);
+	}
+}
+
+void Simulator::AddStructure(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Structure");
+
+	Structure *lpStruct = LoadStructure(oXml);
+	lpStruct->Initialize();
+}
+
+void Simulator::RemoveStructure(string strID, BOOL bThrowError)
+{
+	m_aryAllStructures.Remove(strID);
+	m_aryStructures.Remove(strID);
+}
+
+void Simulator::AddOdorType(OdorType *lpOdorType)
+{
+	if(!lpOdorType)
+		THROW_ERROR(Al_Err_lOdorNotDefined, Al_Err_strOdorNotDefined);
+
+	try
+	{
+			m_aryOdorTypes.Add(lpOdorType->ID(), lpOdorType);
+	}
+	catch(CStdErrorInfo oError)
+	{
+		oError.m_strError += " Duplicate odor type Key: " + lpOdorType->ID(); 
+		RELAY_ERROR(oError);
+	}
+}
+
+#pragma endregion
+
+#pragma region DataAccesMethods
+
+float *Simulator::GetDataPointer(string strDataType)
+{
+	float *lpData=NULL;
+	string strType = Std_CheckString(strDataType);
+
+	if(strType == "TIME")
+		lpData = &m_fltTime;
+	else
+		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Simulator DataType: " + strDataType);
+
+	return lpData;
+}
+
+BOOL Simulator::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(strType == "VISUALSELECTIONMODE")
+	{
+		VisualSelectionMode(atoi(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "ADDBODIESMODE")
+	{
+		AddBodiesMode(Std_ToBool(strValue));
+		return TRUE;
+	}
+	else if(strType == "DISTANCEUNITS")
+	{
+		DistanceUnits(strValue);
+		return TRUE;
+	}
+	else if(strType == "MASSUNITS")
+	{
+		DistanceUnits(strValue);
+		return TRUE;
+	}
+	else if(strType == "GRAVITY")
+	{
+		Gravity(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "PHYSICSTIMESTEP")
+	{
+		PhysicsTimeStep(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "SIMULATEHYDRODYNAMICS")
+	{
+		SimulateHydrodynamics(Std_ToBool(strValue));
+		return TRUE;
+	}
+	else if(strType == "FLUIDDENSITY")
+	{
+		FluidDensity(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "AUTOGENERATERANDOMSEED")
+	{
+		AutoGenerateRandomSeed(Std_ToBool(strValue));
+		return TRUE;
+	}
+	else if(strType == "MANUALRANDOMSEED")
+	{
+		ManualRandomSeed(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "FRAMERATE")
+	{
+		FrameRate(atoi(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "FORCEFASTMOVING")
+	{
+		ForceFastMoving(atoi(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "MOUSESPRINGSTIFFNESS")
+	{
+		MouseSpringStiffness(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "MOUSESPRINGDAMPING")
+	{
+		MouseSpringDamping(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "LINEARCOMPLIANCE")
+	{
+		LinearCompliance(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "ANGULARCOMPLIANCE")
+	{
+		AngularCompliance(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "LINEARDAMPING")
+	{
+		LinearDamping(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "ANGULARDAMPING")
+	{
+		AngularDamping(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "LINEARKINETICLOSS")
+	{
+		LinearKineticLoss(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "ANGULARKINETICLOSS")
+	{
+		AngularKineticLoss(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
+
+BOOL Simulator::AddItem(string strItemType, string strXml, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strItemType);
+
+	if(strType == "STIMULUS")
+		return m_oExternalStimuliMgr.AddStimulus(strXml);
+	else if(strType == "DATACHART")
+		return m_oDataChartMgr.AddDataChart(strXml);
+	else if(strType == "STRUCTURE")
+	{
+		AddStructure(strXml);
+		return TRUE;
+	}
+	else if(strType == "ORGANISM")
+	{
+		AddOrganism(strXml);
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
+
+	return FALSE;
+}
+
+BOOL Simulator::RemoveItem(string strItemType, string strID, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strItemType);
+
+	if(strType == "STIMULUS")
+		return m_oExternalStimuliMgr.RemoveStimulus(strID);
+	else if(strType == "DATACHART")
+		return m_oDataChartMgr.RemoveDataChart(strID);
+	else if(strType == "STRUCTURE")
+	{
+		RemoveStructure(strID);
+		return TRUE;
+	}
+	else if(strType == "ORGANISM")
+	{
+		RemoveOrganism(strID);
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
+
+	return FALSE;
+}
+
+#pragma endregion
+
+#pragma region RecorderMethods
+
+void Simulator::EnableVideoPlayback(string strKeyFrameID)
+{
+	if(!m_lpSimRecorder)
+		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
+
+	if(m_lpVideoPlayback && m_lpVideoPlayback->ID() == strKeyFrameID)
+		return;
+
+	KeyFrame *lpFrame = dynamic_cast<KeyFrame *>(m_lpSimRecorder->Find(strKeyFrameID));
+	lpFrame->EnableVideoPlayback();
+}
+
+void Simulator::DisableVideoPlayback()
+{
+	if(!m_lpSimRecorder)
+		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
+
+	if(m_lpVideoPlayback)
+		m_lpVideoPlayback->DisableVideoPlayback();
+}
+
+void Simulator::StartVideoPlayback()
+{
+	if(!m_lpSimRecorder)
+		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
+
+	if(m_lpVideoPlayback)
+		m_lpVideoPlayback->StartVideoPlayback();
+}
+
+void Simulator::StopVideoPlayback()
+{
+	if(!m_lpSimRecorder)
+		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
+
+	if(m_lpVideoPlayback)
+		m_lpVideoPlayback->StopVideoPlayback();
+}
+
+void Simulator::StepVideoPlayback(int iFrameCount)
+{
+	if(!m_lpSimRecorder)
+		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
+
+	if(m_lpVideoPlayback)
+		m_lpVideoPlayback->StepVideoPlayback( iFrameCount);
+}
+
+void Simulator::SaveVideo(string strPath)
+{
+	if(!m_lpSimRecorder)
+		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
+
+	if(m_lpVideoPlayback)
+		m_lpVideoPlayback->SaveVideo(strPath);
+}
+
+string Simulator::AddKeyFrame(string strType, long lStart, long lEnd)
+{
+	if(!m_lpSimRecorder)
+		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
+
+	KeyFrame *lpFrame = m_lpSimRecorder->Add(strType, lStart, lEnd);
+	return lpFrame->ID();
+}
+
+void Simulator::RemoveKeyFrame(string strID)
+{
+	if(!m_lpSimRecorder)
+		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
+
+	m_lpSimRecorder->Remove(strID);
+}
+
+string Simulator::MoveKeyFrame(string strID, long lStart, long lEnd)
+{
+	if(!m_lpSimRecorder)
+		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
+
+	KeyFrame *lpFrame = dynamic_cast<KeyFrame *>(m_lpSimRecorder->Find(strID));
+
+	//If neither the start or end slice is changed then jump out of here.
+	if(lpFrame->StartSlice() == lStart && lpFrame->EndSlice() == lEnd)
+		return lpFrame->ID();
+
+	//unsigned char iType = lpFrame->Type();
+	m_lpSimRecorder->Remove(strID);
+	lpFrame = m_lpSimRecorder->Add(lpFrame->Type(), lStart, lEnd);
+	return lpFrame->ID();
+}
+
+void Simulator::MoveSimulationToKeyFrame(string strKeyFrameID)
+{
+	if(!m_lpSimRecorder)
+		THROW_ERROR(Al_Err_lNoRecorderDefined, Al_Err_strNoRecorderDefined);
+
+	if(!Std_IsBlank(strKeyFrameID))
+	{
+		KeyFrame *lpFrame = dynamic_cast<KeyFrame *>(m_lpSimRecorder->Find(strKeyFrameID));
+		lpFrame->MakeCurrentFrame();
+	}
+	else if(m_lpSimStopPoint)
+		m_lpSimStopPoint->MakeCurrentFrame();
+}
+
+long Simulator::CalculateSnapshotByteSize()
+{
+	long lByteSize = 0;
+	CStdMap<string, Structure *>::iterator oPos;
+	Structure *lpStructure = NULL;
+	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
+	{
+		lpStructure = oPos->second;
+		lByteSize += lpStructure->CalculateSnapshotByteSize();
+	}
+
+	return lByteSize;
+}
+
+void Simulator::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
+{
+	CStdMap<string, Structure *>::iterator oPos;
+	Structure *lpStructure = NULL;
+	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
+	{
+		lpStructure = oPos->second;
+		lpStructure->SaveKeyFrameSnapshot(aryBytes, lIndex);
+	}
+}
+
+
+void Simulator::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
+{
+	CStdMap<string, Structure *>::iterator oPos;
+	Structure *lpStructure = NULL;
+	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
+	{
+		lpStructure = oPos->second;
+		lpStructure->LoadKeyFrameSnapshot(aryBytes, lIndex);
+	}
+}
+
+
+void Simulator::RecordVideoFrame()
+{
+	if(m_lpAvi && (m_lTimeSlice >= m_lVideoStartSlice) && (m_lTimeSlice <= m_lVideoEndSlice))
+	{
+		m_iVideoStep--;
+		if(m_iVideoStep <= 0)
+		{
+			m_lVideoFrame++;
+			//m_strVideoFile = "C:\\Projects\\Documentation\\Results\\Thesis\\Hi Speed Video\\Sim_Track_Error_Test\\VideoImages\\Frame_" + STR(m_lVideoFrame) + ".bmp";
+			//If this is the first
+			//m_lpAvi->AddWindowFrame(m_hSimulationWnd, FALSE, "");				
+			m_iVideoStep = m_iVideoStepSize;
+		}	
+	}
+
+	//If we have recorded the entire video then close it out.
+	if(m_lpAvi && m_lTimeSlice >= m_lVideoEndSlice)
+	{
+		delete m_lpAvi;
+		m_lpAvi = NULL;
+	}
+}
+
+#pragma endregion
+			
+#pragma region CollisionMethods
+
+
+/*! \brief 
+   Enables collision between the past-in object and all rigid bodies of the simulator.
+      
+   \param lpBody  This is a pointer to the body to enable collisions on.
+
+	 \return
+	 No return value.
+
+	 \remarks
+	 This method enables collision responses between the rigid body being past
+	 in and all rigid bodies in the simulator.
+
+   \sa
+   EnableCollision, DisableCollision	
+*/
+
+void Simulator::EnableCollisions(Structure *lpStruct, CStdPtrArray<CollisionPair> &m_aryCollisionList)
+{
+	//Now lets disable any collisions that have been added to the exclusion list.
+	int iCount = m_aryCollisionList.GetSize();
+	CollisionPair *lpPair = NULL;
+	RigidBody *lpPart1=NULL, *lpPart2=NULL;
+
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+	{
+		lpPair =  m_aryCollisionList[iIndex];
+		lpPart1 = lpStruct->FindRigidBody(lpPair->m_strPart1ID);
+		lpPart2 = lpStruct->FindRigidBody(lpPair->m_strPart2ID);
+		
+		lpPart1->EnableCollision(lpPart2);
+	}	
+}
+
+void Simulator::EnableCollision(RigidBody *lpBody)
+{
+	CStdMap<string, Structure *>::iterator oPos;
+	Structure *lpStructure = NULL;
+	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
+	{
+		lpStructure = oPos->second;
+		lpStructure->EnableCollision(lpBody);
+	}
+}
+
+void Simulator::DisableCollisions(Structure *lpStruct, CStdPtrArray<CollisionPair> &m_aryCollisionList)
+{
+	//Now lets disable any collisions that have been added to the exclusion list.
+	int iCount = m_aryCollisionList.GetSize();
+	CollisionPair *lpPair = NULL;
+	RigidBody *lpPart1=NULL, *lpPart2=NULL;
+
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+	{
+		lpPair =  m_aryCollisionList[iIndex];
+		lpPart1 = lpStruct->FindRigidBody(lpPair->m_strPart1ID);
+		lpPart2 = lpStruct->FindRigidBody(lpPair->m_strPart2ID);
+		
+		lpPart1->DisableCollision(lpPart2);
+	}	
+}
+
+/*! \brief 
+   Disables collision between the past-in object and all rigid bodies of the simulator.
+      
+   \param lpBody This is a pointer to the body to disable collisions on.
+
+	 \return
+	 No return value.
+
+	 \remarks
+	 This method disables collision responses between the rigid body being past
+	 in and all rigid bodies in the simulator.
+
+   \sa
+   EnableCollision, DisableCollision	
+*/
+
+void Simulator::DisableCollision(RigidBody *lpBody)
+{
+	CStdMap<string, Structure *>::iterator oPos;
+	Structure *lpStructure = NULL;
+	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
+	{
+		lpStructure = oPos->second;
+		lpStructure->DisableCollision(lpBody);
+	}
+}
+
+#pragma endregion
+
+#pragma region UnitScaleMethods
+
 float Simulator::ConvertDistanceUnits(string strUnits)
 {
 	strUnits = Std_CheckString(strUnits);
@@ -2445,6 +2637,12 @@ float Simulator::ConvertDensityMassUnits(string strUnits)
 
 	return (float) 1;
 }
+
+#pragma endregion
+
+#pragma endregion
+
+
 
 
 
