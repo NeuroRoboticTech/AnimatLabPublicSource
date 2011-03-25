@@ -91,6 +91,14 @@ void VsRigidBody::Physics_UpdateMatrix()
 	if(m_vxSensor)
 		m_vxSensor->updateFromNode();
 }
+ 
+void VsRigidBody::UpdatePositionAndRotationFromMatrix()
+{
+	VsBody::UpdatePositionAndRotationFromMatrix();
+
+	if(m_vxSensor)
+		m_vxSensor->updateFromNode();
+}
 
 void VsRigidBody::Physics_SetColor()
 {
@@ -138,7 +146,7 @@ void VsRigidBody::Initialize()
 {
 	GetBaseValues();
 }
- 
+
 osg::Group *VsRigidBody::ParentOSG()
 {
 	RigidBody *lpParent = NULL;

@@ -1,16 +1,15 @@
 #include "stdafx.h"
-#include "IBodyPartCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
 
 namespace AnimatSim
 {
 
-IBodyPartCallback::IBodyPartCallback(void)
+ISimGUICallback::ISimGUICallback(void)
 {
 }
 
-IBodyPartCallback::~IBodyPartCallback(void)
+ISimGUICallback::~ISimGUICallback(void)
 {
 }
 

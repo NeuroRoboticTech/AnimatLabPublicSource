@@ -119,6 +119,7 @@ Namespace Forms
         Friend WithEvents ShowPartOriginsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents ShowContactsToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents SelSimToolStripButton As System.Windows.Forms.ToolStripButton
+        Friend WithEvents SnapshotSimToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
         'Required by the Windows Form Designer
         Private components As System.ComponentModel.IContainer
@@ -202,6 +203,7 @@ Namespace Forms
             Me.ShowCenterOfMassToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
             Me.ShowPartOriginsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.ShowContactsToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
+            Me.SnapshotSimToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.SelSimToolStripButton = New System.Windows.Forms.ToolStripButton
             Me.AnimatStripContainer.ContentPanel.SuspendLayout()
             Me.AnimatStripContainer.TopToolStripPanel.SuspendLayout()
@@ -266,7 +268,7 @@ Namespace Forms
             '
             'FileToolStripMenuItem
             '
-            Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.OpenToolStripMenuItem, Me.toolStripSeparator2, Me.SaveToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.toolStripSeparator4, Me.CloseProjectToolStripMenuItem, Me.ExportStandaloneToolStripMenuItem, Me.ToolStripSeparator8, Me.ExitToolStripMenuItem})
+            Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.OpenToolStripMenuItem, Me.toolStripSeparator2, Me.SaveToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.toolStripSeparator4, Me.CloseProjectToolStripMenuItem, Me.ExportStandaloneToolStripMenuItem, Me.SnapshotSimToolStripMenuItem, Me.ToolStripSeparator8, Me.ExitToolStripMenuItem})
             Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
             Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
             Me.FileToolStripMenuItem.Text = "&File"
@@ -675,6 +677,12 @@ Namespace Forms
             Me.ShowContactsToolStripMenuItem.Name = "ShowContactsToolStripMenuItem"
             Me.ShowContactsToolStripMenuItem.Size = New System.Drawing.Size(207, 22)
             Me.ShowContactsToolStripMenuItem.Text = "Show Contacts"
+            '
+            'SnapshotSimToolStripMenuItem
+            '
+            Me.SnapshotSimToolStripMenuItem.Name = "SnapshotSimToolStripMenuItem"
+            Me.SnapshotSimToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+            Me.SnapshotSimToolStripMenuItem.Text = "Snapshot Sim"
             '
             'SelectionModeToolStripMenuItem
             '
@@ -1592,13 +1600,23 @@ Namespace Forms
                     strFile = DirectCast(oFile, String)
                     bAddModule = False
 
+                    'If strFile.Contains("nunit.fixtures.dll") Then
+                    '    strFile = strFile
+                    'End If
                     Try
                         Dim assemModule As System.Reflection.Assembly = Util.LoadAssembly(Util.GetFilePath(Me.ApplicationDirectory, strFile), False)
                         If Not assemModule Is Nothing Then
 
                             Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "About to get types: " & assemModule.FullName)
 
-                            Dim aryTypes() As Type = assemModule.GetTypes()
+                            Dim aryTypes() As Type
+                            Try
+                                aryTypes = assemModule.GetTypes()
+                            Catch ex As Exception
+                                'If we have trouble gettting the object types then this is not 
+                                'one of our dlls so skip it.
+                                ReDim aryTypes(0)
+                            End Try
 
                             Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "Starting to loop through: " & assemModule.FullName)
 
@@ -3215,8 +3233,6 @@ Namespace Forms
             Try
 
 #If Not Debug Then
-                m_SplashTimer.Interval = 2000
-                m_SplashTimer.Enabled = True
 #End If
             Catch ex As System.Exception
 
@@ -4126,6 +4142,14 @@ Namespace Forms
 
         Private Sub ShowContactsToolStripMenuItem_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ShowContactsToolStripMenuItem.CheckedChanged, ShowContactsToolStripMenuItem1.CheckedChanged
 
+        End Sub
+
+        Private Sub SnapshotSimToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SnapshotSimToolStripMenuItem.Click
+            Try
+                Me.SimulationInterface.SaveSimulationFile(Me.ProjectPath & "Snapshot.vxf")
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
         End Sub
 
 #End Region

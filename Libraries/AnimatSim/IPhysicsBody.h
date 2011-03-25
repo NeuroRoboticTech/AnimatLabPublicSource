@@ -22,6 +22,7 @@ namespace AnimatSim
 			virtual void Physics_UpdateMatrix() = 0;
 			virtual void Physics_CollectBodyData() = 0;
 			virtual void Physics_ResetSimulation() = 0;
+			virtual void Physics_AfterResetSimulation() = 0;
 			virtual float *Physics_GetDataPointer(string strDataType) = 0;
 			virtual void Physics_Selected(BOOL bValue, BOOL bSelectMultiple) = 0;  
 			virtual void Physics_EnableCollision(RigidBody *lpBody) = 0;

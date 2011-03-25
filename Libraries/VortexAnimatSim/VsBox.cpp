@@ -106,9 +106,6 @@ void VsBox::Resize()
 		
 		vxBox->setDimensions(m_fltLength, m_fltHeight, m_fltWidth);
 		GetBaseValues();
-
-		//Temp code. Lets save it out and make sure the collision stuff is actually correct.
-	    //VxPersistence::saveFrame("C:\\AnimatLabSDK\\VS9\\Experiments\\Test.vxf", VxPersistence::kAutoGenerateGraphics);
 	}
 }
 

@@ -340,6 +340,17 @@ void VsSimulator::StepSimulation()
 		OpenThreads::Thread::microSleep((unsigned long)(fltRemains*1000000.0));
 	}
 
+	////If we are running for a set time then lets stop once we reach that point.
+	//if(m_fltEndSimTime >0 && this->Time() >= m_fltEndSimTime)
+	//{
+	//	if(m_lpManagedInstance && m_lpEndingSimulationCallback)
+	//	{
+	//		PauseSimulation();
+	//	}
+	//	else
+	//		ShutdownSimulation();
+	//}
+
 }
 
 void VsSimulator::Simulate()
@@ -417,6 +428,12 @@ VsSimulator *VsSimulator::ConvertSimulator(Simulator *lpSim)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
 
 	return lpVsSim;
+}
+
+void VsSimulator::Save(string strFile) 
+{
+	//Temp code. Lets save it out and make sure the collision stuff is actually correct.
+	VxPersistence::saveFrame(strFile.c_str(), VxPersistence::kAutoGenerateGraphics);
 }
 
 

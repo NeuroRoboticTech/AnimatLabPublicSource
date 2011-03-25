@@ -221,16 +221,15 @@ void VsJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string 
 	{
 		m_osgChildOffsetMT = new osg::MatrixTransform;
 		m_osgChildOffsetMT->setName(strName + "ChildOffsetMT");
+		m_osgChildOffsetMT->addChild(m_osgMT.get());
 	}
 
 	if(!m_osgRoot.valid())
 	{
 		m_osgRoot = new osg::Group;
 		m_osgRoot->setName(strName + "_Root");
+		m_osgRoot->addChild(m_osgChildOffsetMT.get());
 	}
-
-	m_osgChildOffsetMT->addChild(m_osgMT.get());
-	m_osgRoot->addChild(m_osgChildOffsetMT.get());
 
 	LocalMatrix(SetupMatrix(localPos, localRot));
 

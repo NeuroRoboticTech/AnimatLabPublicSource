@@ -116,6 +116,7 @@ Namespace Forms
         Friend WithEvents ShowPartOriginsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents ShowContactsToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents SelSimToolStripButton As System.Windows.Forms.ToolStripButton
+        Friend WithEvents SnapshotSimToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
         'Required by the Windows Form Designer
         Private components As System.ComponentModel.IContainer
@@ -156,6 +157,19 @@ Namespace Forms
             Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator
             Me.CustomizeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.PreferencesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+            Me.SelectionModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+            Me.GraphicsObjectsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+            Me.CollisionObjectsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+            Me.JointsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+            Me.ReceptiveFieldsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+            Me.SimulationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+            Me.DisplayToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+            Me.ShowGraphicsGeometryToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
+            Me.ShowCollisionGeomoetryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+            Me.ShowJointsToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
+            Me.ShowCenterOfMassToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
+            Me.ShowPartOriginsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+            Me.ShowContactsToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
             Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.ContentsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.IndexToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
@@ -179,6 +193,7 @@ Namespace Forms
             Me.SelCollisionToolStripButton = New System.Windows.Forms.ToolStripButton
             Me.SelJointsToolStripButton = New System.Windows.Forms.ToolStripButton
             Me.SelRecFieldsToolStripButton = New System.Windows.Forms.ToolStripButton
+            Me.SelSimToolStripButton = New System.Windows.Forms.ToolStripButton
             Me.ToolStripDropDownButton1 = New System.Windows.Forms.ToolStripDropDownButton
             Me.ShowGraphicsGeometryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.ShowCollisionGeometryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
@@ -186,20 +201,7 @@ Namespace Forms
             Me.ShowCenterOfMassToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.ShowPartOriginToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.ShowContactsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.SelectionModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.GraphicsObjectsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.CollisionObjectsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.JointsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.ReceptiveFieldsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.SimulationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.DisplayToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.ShowGraphicsGeometryToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-            Me.ShowCollisionGeomoetryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.ShowJointsToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-            Me.ShowCenterOfMassToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-            Me.ShowPartOriginsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.ShowContactsToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-            Me.SelSimToolStripButton = New System.Windows.Forms.ToolStripButton
+            Me.SnapshotSimToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.AnimatStripContainer.ContentPanel.SuspendLayout()
             Me.AnimatStripContainer.TopToolStripPanel.SuspendLayout()
             Me.AnimatStripContainer.SuspendLayout()
@@ -263,7 +265,7 @@ Namespace Forms
             '
             'FileToolStripMenuItem
             '
-            Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.OpenToolStripMenuItem, Me.toolStripSeparator2, Me.SaveToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.toolStripSeparator4, Me.CloseProjectToolStripMenuItem, Me.ExportStandaloneToolStripMenuItem, Me.ToolStripSeparator8, Me.ExitToolStripMenuItem})
+            Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.OpenToolStripMenuItem, Me.toolStripSeparator2, Me.SaveToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.toolStripSeparator4, Me.CloseProjectToolStripMenuItem, Me.ExportStandaloneToolStripMenuItem, Me.SnapshotSimToolStripMenuItem, Me.ToolStripSeparator8, Me.ExitToolStripMenuItem})
             Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
             Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
             Me.FileToolStripMenuItem.Text = "&File"
@@ -319,7 +321,6 @@ Namespace Forms
             '
             'ExportStandaloneToolStripMenuItem
             '
-            Me.ExportStandaloneToolStripMenuItem.Image = Global.AnimatTools.ModuleInformation.ExportStandalone
             Me.ExportStandaloneToolStripMenuItem.Name = "ExportStandaloneToolStripMenuItem"
             Me.ExportStandaloneToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
             Me.ExportStandaloneToolStripMenuItem.Text = "Export Standalone Sim"
@@ -344,7 +345,6 @@ Namespace Forms
             '
             'UndoToolStripMenuItem
             '
-            Me.UndoToolStripMenuItem.Image = Global.AnimatTools.ModuleInformation.Undo
             Me.UndoToolStripMenuItem.Name = "UndoToolStripMenuItem"
             Me.UndoToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
             Me.UndoToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
@@ -352,7 +352,6 @@ Namespace Forms
             '
             'RedoToolStripMenuItem
             '
-            Me.RedoToolStripMenuItem.Image = Global.AnimatTools.ModuleInformation.Redo
             Me.RedoToolStripMenuItem.Name = "RedoToolStripMenuItem"
             Me.RedoToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Y), System.Windows.Forms.Keys)
             Me.RedoToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
@@ -371,28 +370,24 @@ Namespace Forms
             '
             'AddOrganismToolStripMenuItem
             '
-            Me.AddOrganismToolStripMenuItem.Image = Global.AnimatTools.ModuleInformation.AddOrganism
             Me.AddOrganismToolStripMenuItem.Name = "AddOrganismToolStripMenuItem"
             Me.AddOrganismToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
             Me.AddOrganismToolStripMenuItem.Text = "Add Organism"
             '
             'AddStructureToolStripMenuItem
             '
-            Me.AddStructureToolStripMenuItem.Image = Global.AnimatTools.ModuleInformation.AddStructure
             Me.AddStructureToolStripMenuItem.Name = "AddStructureToolStripMenuItem"
             Me.AddStructureToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
             Me.AddStructureToolStripMenuItem.Text = "Add Structure"
             '
             'AddTooToolStripMenuItem
             '
-            Me.AddTooToolStripMenuItem.Image = Global.AnimatTools.ModuleInformation.AddDataTool
             Me.AddTooToolStripMenuItem.Name = "AddTooToolStripMenuItem"
             Me.AddTooToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
             Me.AddTooToolStripMenuItem.Text = "Add Tool"
             '
             'DeleteToolStripMenuItem
             '
-            Me.DeleteToolStripMenuItem.Image = Global.AnimatTools.ModuleInformation.Delete
             Me.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem"
             Me.DeleteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete
             Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
@@ -407,7 +402,6 @@ Namespace Forms
             '
             'RunSimulationToolStripMenuItem
             '
-            Me.RunSimulationToolStripMenuItem.Image = Global.AnimatTools.ModuleInformation.Simulate
             Me.RunSimulationToolStripMenuItem.Name = "RunSimulationToolStripMenuItem"
             Me.RunSimulationToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5
             Me.RunSimulationToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
@@ -429,249 +423,6 @@ Namespace Forms
             Me.PreferencesToolStripMenuItem.Name = "PreferencesToolStripMenuItem"
             Me.PreferencesToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
             Me.PreferencesToolStripMenuItem.Text = "&Preferences"
-            '
-            'HelpToolStripMenuItem
-            '
-            Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.IndexToolStripMenuItem, Me.SearchToolStripMenuItem, Me.SupportToolStripMenuItem, Me.toolStripSeparator7, Me.AboutToolStripMenuItem})
-            Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-            Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
-            Me.HelpToolStripMenuItem.Text = "&Help"
-            '
-            'ContentsToolStripMenuItem
-            '
-            Me.ContentsToolStripMenuItem.Image = Global.AnimatTools.ModuleInformation.HelpContents
-            Me.ContentsToolStripMenuItem.Name = "ContentsToolStripMenuItem"
-            Me.ContentsToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
-            Me.ContentsToolStripMenuItem.Text = "&Contents"
-            '
-            'IndexToolStripMenuItem
-            '
-            Me.IndexToolStripMenuItem.Image = Global.AnimatTools.ModuleInformation.HelpIndex
-            Me.IndexToolStripMenuItem.Name = "IndexToolStripMenuItem"
-            Me.IndexToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
-            Me.IndexToolStripMenuItem.Text = "&Index"
-            '
-            'SearchToolStripMenuItem
-            '
-            Me.SearchToolStripMenuItem.Image = Global.AnimatTools.ModuleInformation.HelpSearch
-            Me.SearchToolStripMenuItem.Name = "SearchToolStripMenuItem"
-            Me.SearchToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
-            Me.SearchToolStripMenuItem.Text = "&Search"
-            '
-            'SupportToolStripMenuItem
-            '
-            Me.SupportToolStripMenuItem.Image = Global.AnimatTools.ModuleInformation.TechnicalSupport
-            Me.SupportToolStripMenuItem.Name = "SupportToolStripMenuItem"
-            Me.SupportToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
-            Me.SupportToolStripMenuItem.Text = "Support"
-            '
-            'toolStripSeparator7
-            '
-            Me.toolStripSeparator7.Name = "toolStripSeparator7"
-            Me.toolStripSeparator7.Size = New System.Drawing.Size(119, 6)
-            '
-            'AboutToolStripMenuItem
-            '
-            Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-            Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
-            Me.AboutToolStripMenuItem.Text = "&About..."
-            '
-            'AnimatToolStrip
-            '
-            Me.AnimatToolStrip.Dock = System.Windows.Forms.DockStyle.None
-            Me.AnimatToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.OpenToolStripButton, Me.SaveToolStripButton, Me.toolStripSeparator1, Me.HelpToolStripButton, Me.ToolStripSeparator5, Me.AddOrganismStripButton, Me.AddStructureToolStripButton, Me.AddToolToolStripButton, Me.DeleteToolStripButton, Me.ToolStripSeparator9, Me.SelGraphicsToolStripButton, Me.SelCollisionToolStripButton, Me.SelJointsToolStripButton, Me.SelRecFieldsToolStripButton, Me.SelSimToolStripButton, Me.ToolStripDropDownButton1})
-            Me.AnimatToolStrip.Location = New System.Drawing.Point(3, 24)
-            Me.AnimatToolStrip.Name = "AnimatToolStrip"
-            Me.AnimatToolStrip.SecurityMgr = Nothing
-            Me.AnimatToolStrip.Size = New System.Drawing.Size(421, 25)
-            Me.AnimatToolStrip.TabIndex = 2
-            Me.AnimatToolStrip.ToolName = ""
-            '
-            'NewToolStripButton
-            '
-            Me.NewToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.NewToolStripButton.Image = CType(resources.GetObject("NewToolStripButton.Image"), System.Drawing.Image)
-            Me.NewToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.NewToolStripButton.Name = "NewToolStripButton"
-            Me.NewToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.NewToolStripButton.Text = "&New"
-            '
-            'OpenToolStripButton
-            '
-            Me.OpenToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.OpenToolStripButton.Image = CType(resources.GetObject("OpenToolStripButton.Image"), System.Drawing.Image)
-            Me.OpenToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.OpenToolStripButton.Name = "OpenToolStripButton"
-            Me.OpenToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.OpenToolStripButton.Text = "&Open"
-            '
-            'SaveToolStripButton
-            '
-            Me.SaveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.SaveToolStripButton.Image = CType(resources.GetObject("SaveToolStripButton.Image"), System.Drawing.Image)
-            Me.SaveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.SaveToolStripButton.Name = "SaveToolStripButton"
-            Me.SaveToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.SaveToolStripButton.Text = "&Save"
-            '
-            'toolStripSeparator1
-            '
-            Me.toolStripSeparator1.Name = "toolStripSeparator1"
-            Me.toolStripSeparator1.Size = New System.Drawing.Size(6, 25)
-            '
-            'HelpToolStripButton
-            '
-            Me.HelpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.HelpToolStripButton.Image = CType(resources.GetObject("HelpToolStripButton.Image"), System.Drawing.Image)
-            Me.HelpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.HelpToolStripButton.Name = "HelpToolStripButton"
-            Me.HelpToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.HelpToolStripButton.Text = "He&lp"
-            '
-            'ToolStripSeparator5
-            '
-            Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
-            Me.ToolStripSeparator5.Size = New System.Drawing.Size(6, 25)
-            '
-            'AddOrganismStripButton
-            '
-            Me.AddOrganismStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.AddOrganismStripButton.Image = Global.AnimatTools.ModuleInformation.AddOrganism1
-            Me.AddOrganismStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.AddOrganismStripButton.Name = "AddOrganismStripButton"
-            Me.AddOrganismStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.AddOrganismStripButton.Text = "Add Organism"
-            '
-            'AddStructureToolStripButton
-            '
-            Me.AddStructureToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.AddStructureToolStripButton.Image = Global.AnimatTools.ModuleInformation.AddStructure
-            Me.AddStructureToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.AddStructureToolStripButton.Name = "AddStructureToolStripButton"
-            Me.AddStructureToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.AddStructureToolStripButton.Text = "Add Structure"
-            '
-            'AddToolToolStripButton
-            '
-            Me.AddToolToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.AddToolToolStripButton.Image = Global.AnimatTools.ModuleInformation.AddDataTool
-            Me.AddToolToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.AddToolToolStripButton.Name = "AddToolToolStripButton"
-            Me.AddToolToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.AddToolToolStripButton.Text = "Add Data Tool"
-            '
-            'DeleteToolStripButton
-            '
-            Me.DeleteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.DeleteToolStripButton.Image = Global.AnimatTools.ModuleInformation.Delete
-            Me.DeleteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.DeleteToolStripButton.Name = "DeleteToolStripButton"
-            Me.DeleteToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.DeleteToolStripButton.Text = "Delete"
-            Me.DeleteToolStripButton.ToolTipText = "Delete selected workspace item"
-            '
-            'ToolStripSeparator9
-            '
-            Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
-            Me.ToolStripSeparator9.Size = New System.Drawing.Size(6, 25)
-            '
-            'SelGraphicsToolStripButton
-            '
-            Me.SelGraphicsToolStripButton.CheckOnClick = True
-            Me.SelGraphicsToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.SelGraphicsToolStripButton.Image = CType(resources.GetObject("SelGraphicsToolStripButton.Image"), System.Drawing.Image)
-            Me.SelGraphicsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.SelGraphicsToolStripButton.Name = "SelGraphicsToolStripButton"
-            Me.SelGraphicsToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.SelGraphicsToolStripButton.Text = "SelectGraphics"
-            Me.SelGraphicsToolStripButton.ToolTipText = "Select graphics objects only"
-            '
-            'SelCollisionToolStripButton
-            '
-            Me.SelCollisionToolStripButton.CheckOnClick = True
-            Me.SelCollisionToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.SelCollisionToolStripButton.Image = CType(resources.GetObject("SelCollisionToolStripButton.Image"), System.Drawing.Image)
-            Me.SelCollisionToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.SelCollisionToolStripButton.Name = "SelCollisionToolStripButton"
-            Me.SelCollisionToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.SelCollisionToolStripButton.Text = "Select Collision Objects"
-            Me.SelCollisionToolStripButton.ToolTipText = "Select collision objects only."
-            '
-            'SelJointsToolStripButton
-            '
-            Me.SelJointsToolStripButton.CheckOnClick = True
-            Me.SelJointsToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.SelJointsToolStripButton.Image = CType(resources.GetObject("SelJointsToolStripButton.Image"), System.Drawing.Image)
-            Me.SelJointsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.SelJointsToolStripButton.Name = "SelJointsToolStripButton"
-            Me.SelJointsToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.SelJointsToolStripButton.Text = "Select Joints"
-            Me.SelJointsToolStripButton.ToolTipText = "Select joints only"
-            '
-            'SelRecFieldsToolStripButton
-            '
-            Me.SelRecFieldsToolStripButton.CheckOnClick = True
-            Me.SelRecFieldsToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.SelRecFieldsToolStripButton.Image = CType(resources.GetObject("SelRecFieldsToolStripButton.Image"), System.Drawing.Image)
-            Me.SelRecFieldsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.SelRecFieldsToolStripButton.Name = "SelRecFieldsToolStripButton"
-            Me.SelRecFieldsToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.SelRecFieldsToolStripButton.Text = "Select Receptive Fields"
-            Me.SelRecFieldsToolStripButton.ToolTipText = "Select receptive fields only"
-            '
-            'ToolStripDropDownButton1
-            '
-            Me.ToolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-            Me.ToolStripDropDownButton1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowGraphicsGeometryToolStripMenuItem, Me.ShowCollisionGeometryToolStripMenuItem, Me.ShowJointsToolStripMenuItem, Me.ShowCenterOfMassToolStripMenuItem, Me.ShowPartOriginToolStripMenuItem, Me.ShowContactsToolStripMenuItem})
-            Me.ToolStripDropDownButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-            Me.ToolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
-            Me.ToolStripDropDownButton1.Size = New System.Drawing.Size(61, 22)
-            Me.ToolStripDropDownButton1.Text = "Display "
-            Me.ToolStripDropDownButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-            Me.ToolStripDropDownButton1.ToolTipText = "Display Options"
-            '
-            'ShowGraphicsGeometryToolStripMenuItem
-            '
-            Me.ShowGraphicsGeometryToolStripMenuItem.CheckOnClick = True
-            Me.ShowGraphicsGeometryToolStripMenuItem.Name = "ShowGraphicsGeometryToolStripMenuItem"
-            Me.ShowGraphicsGeometryToolStripMenuItem.Size = New System.Drawing.Size(207, 22)
-            Me.ShowGraphicsGeometryToolStripMenuItem.Text = "Show Graphics Geometry"
-            '
-            'ShowCollisionGeometryToolStripMenuItem
-            '
-            Me.ShowCollisionGeometryToolStripMenuItem.CheckOnClick = True
-            Me.ShowCollisionGeometryToolStripMenuItem.Name = "ShowCollisionGeometryToolStripMenuItem"
-            Me.ShowCollisionGeometryToolStripMenuItem.Size = New System.Drawing.Size(207, 22)
-            Me.ShowCollisionGeometryToolStripMenuItem.Text = "Show Collision Geometry"
-            '
-            'ShowJointsToolStripMenuItem
-            '
-            Me.ShowJointsToolStripMenuItem.CheckOnClick = True
-            Me.ShowJointsToolStripMenuItem.Name = "ShowJointsToolStripMenuItem"
-            Me.ShowJointsToolStripMenuItem.Size = New System.Drawing.Size(207, 22)
-            Me.ShowJointsToolStripMenuItem.Text = "Show Joints"
-            '
-            'ShowCenterOfMassToolStripMenuItem
-            '
-            Me.ShowCenterOfMassToolStripMenuItem.CheckOnClick = True
-            Me.ShowCenterOfMassToolStripMenuItem.Name = "ShowCenterOfMassToolStripMenuItem"
-            Me.ShowCenterOfMassToolStripMenuItem.Size = New System.Drawing.Size(207, 22)
-            Me.ShowCenterOfMassToolStripMenuItem.Text = "Show Center of Mass"
-            '
-            'ShowPartOriginToolStripMenuItem
-            '
-            Me.ShowPartOriginToolStripMenuItem.CheckOnClick = True
-            Me.ShowPartOriginToolStripMenuItem.Name = "ShowPartOriginToolStripMenuItem"
-            Me.ShowPartOriginToolStripMenuItem.Size = New System.Drawing.Size(207, 22)
-            Me.ShowPartOriginToolStripMenuItem.Text = "Show Part Origin"
-            '
-            'ShowContactsToolStripMenuItem
-            '
-            Me.ShowContactsToolStripMenuItem.CheckOnClick = True
-            Me.ShowContactsToolStripMenuItem.Name = "ShowContactsToolStripMenuItem"
-            Me.ShowContactsToolStripMenuItem.Size = New System.Drawing.Size(207, 22)
-            Me.ShowContactsToolStripMenuItem.Text = "Show Contacts"
             '
             'SelectionModeToolStripMenuItem
             '
@@ -753,6 +504,187 @@ Namespace Forms
             Me.ShowContactsToolStripMenuItem1.Size = New System.Drawing.Size(214, 22)
             Me.ShowContactsToolStripMenuItem1.Text = "Show Contacts"
             '
+            'HelpToolStripMenuItem
+            '
+            Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.IndexToolStripMenuItem, Me.SearchToolStripMenuItem, Me.SupportToolStripMenuItem, Me.toolStripSeparator7, Me.AboutToolStripMenuItem})
+            Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
+            Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
+            Me.HelpToolStripMenuItem.Text = "&Help"
+            '
+            'ContentsToolStripMenuItem
+            '
+            Me.ContentsToolStripMenuItem.Name = "ContentsToolStripMenuItem"
+            Me.ContentsToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+            Me.ContentsToolStripMenuItem.Text = "&Contents"
+            '
+            'IndexToolStripMenuItem
+            '
+            Me.IndexToolStripMenuItem.Name = "IndexToolStripMenuItem"
+            Me.IndexToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+            Me.IndexToolStripMenuItem.Text = "&Index"
+            '
+            'SearchToolStripMenuItem
+            '
+            Me.SearchToolStripMenuItem.Name = "SearchToolStripMenuItem"
+            Me.SearchToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+            Me.SearchToolStripMenuItem.Text = "&Search"
+            '
+            'SupportToolStripMenuItem
+            '
+            Me.SupportToolStripMenuItem.Name = "SupportToolStripMenuItem"
+            Me.SupportToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+            Me.SupportToolStripMenuItem.Text = "Support"
+            '
+            'toolStripSeparator7
+            '
+            Me.toolStripSeparator7.Name = "toolStripSeparator7"
+            Me.toolStripSeparator7.Size = New System.Drawing.Size(119, 6)
+            '
+            'AboutToolStripMenuItem
+            '
+            Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
+            Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+            Me.AboutToolStripMenuItem.Text = "&About..."
+            '
+            'AnimatToolStrip
+            '
+            Me.AnimatToolStrip.Dock = System.Windows.Forms.DockStyle.None
+            Me.AnimatToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.OpenToolStripButton, Me.SaveToolStripButton, Me.toolStripSeparator1, Me.HelpToolStripButton, Me.ToolStripSeparator5, Me.AddOrganismStripButton, Me.AddStructureToolStripButton, Me.AddToolToolStripButton, Me.DeleteToolStripButton, Me.ToolStripSeparator9, Me.SelGraphicsToolStripButton, Me.SelCollisionToolStripButton, Me.SelJointsToolStripButton, Me.SelRecFieldsToolStripButton, Me.SelSimToolStripButton, Me.ToolStripDropDownButton1})
+            Me.AnimatToolStrip.Location = New System.Drawing.Point(3, 24)
+            Me.AnimatToolStrip.Name = "AnimatToolStrip"
+            Me.AnimatToolStrip.SecurityMgr = Nothing
+            Me.AnimatToolStrip.Size = New System.Drawing.Size(390, 25)
+            Me.AnimatToolStrip.TabIndex = 2
+            Me.AnimatToolStrip.ToolName = ""
+            '
+            'NewToolStripButton
+            '
+            Me.NewToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.NewToolStripButton.Image = CType(resources.GetObject("NewToolStripButton.Image"), System.Drawing.Image)
+            Me.NewToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.NewToolStripButton.Name = "NewToolStripButton"
+            Me.NewToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.NewToolStripButton.Text = "&New"
+            '
+            'OpenToolStripButton
+            '
+            Me.OpenToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.OpenToolStripButton.Image = CType(resources.GetObject("OpenToolStripButton.Image"), System.Drawing.Image)
+            Me.OpenToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.OpenToolStripButton.Name = "OpenToolStripButton"
+            Me.OpenToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.OpenToolStripButton.Text = "&Open"
+            '
+            'SaveToolStripButton
+            '
+            Me.SaveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.SaveToolStripButton.Image = CType(resources.GetObject("SaveToolStripButton.Image"), System.Drawing.Image)
+            Me.SaveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.SaveToolStripButton.Name = "SaveToolStripButton"
+            Me.SaveToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.SaveToolStripButton.Text = "&Save"
+            '
+            'toolStripSeparator1
+            '
+            Me.toolStripSeparator1.Name = "toolStripSeparator1"
+            Me.toolStripSeparator1.Size = New System.Drawing.Size(6, 25)
+            '
+            'HelpToolStripButton
+            '
+            Me.HelpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.HelpToolStripButton.Image = CType(resources.GetObject("HelpToolStripButton.Image"), System.Drawing.Image)
+            Me.HelpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.HelpToolStripButton.Name = "HelpToolStripButton"
+            Me.HelpToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.HelpToolStripButton.Text = "He&lp"
+            '
+            'ToolStripSeparator5
+            '
+            Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
+            Me.ToolStripSeparator5.Size = New System.Drawing.Size(6, 25)
+            '
+            'AddOrganismStripButton
+            '
+            Me.AddOrganismStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.AddOrganismStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.AddOrganismStripButton.Name = "AddOrganismStripButton"
+            Me.AddOrganismStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.AddOrganismStripButton.Text = "Add Organism"
+            '
+            'AddStructureToolStripButton
+            '
+            Me.AddStructureToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.AddStructureToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.AddStructureToolStripButton.Name = "AddStructureToolStripButton"
+            Me.AddStructureToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.AddStructureToolStripButton.Text = "Add Structure"
+            '
+            'AddToolToolStripButton
+            '
+            Me.AddToolToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.AddToolToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.AddToolToolStripButton.Name = "AddToolToolStripButton"
+            Me.AddToolToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.AddToolToolStripButton.Text = "Add Data Tool"
+            '
+            'DeleteToolStripButton
+            '
+            Me.DeleteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.DeleteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.DeleteToolStripButton.Name = "DeleteToolStripButton"
+            Me.DeleteToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.DeleteToolStripButton.Text = "Delete"
+            Me.DeleteToolStripButton.ToolTipText = "Delete selected workspace item"
+            '
+            'ToolStripSeparator9
+            '
+            Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
+            Me.ToolStripSeparator9.Size = New System.Drawing.Size(6, 25)
+            '
+            'SelGraphicsToolStripButton
+            '
+            Me.SelGraphicsToolStripButton.CheckOnClick = True
+            Me.SelGraphicsToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.SelGraphicsToolStripButton.Image = CType(resources.GetObject("SelGraphicsToolStripButton.Image"), System.Drawing.Image)
+            Me.SelGraphicsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.SelGraphicsToolStripButton.Name = "SelGraphicsToolStripButton"
+            Me.SelGraphicsToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.SelGraphicsToolStripButton.Text = "SelectGraphics"
+            Me.SelGraphicsToolStripButton.ToolTipText = "Select graphics objects only"
+            '
+            'SelCollisionToolStripButton
+            '
+            Me.SelCollisionToolStripButton.CheckOnClick = True
+            Me.SelCollisionToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.SelCollisionToolStripButton.Image = CType(resources.GetObject("SelCollisionToolStripButton.Image"), System.Drawing.Image)
+            Me.SelCollisionToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.SelCollisionToolStripButton.Name = "SelCollisionToolStripButton"
+            Me.SelCollisionToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.SelCollisionToolStripButton.Text = "Select Collision Objects"
+            Me.SelCollisionToolStripButton.ToolTipText = "Select collision objects only."
+            '
+            'SelJointsToolStripButton
+            '
+            Me.SelJointsToolStripButton.CheckOnClick = True
+            Me.SelJointsToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.SelJointsToolStripButton.Image = CType(resources.GetObject("SelJointsToolStripButton.Image"), System.Drawing.Image)
+            Me.SelJointsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.SelJointsToolStripButton.Name = "SelJointsToolStripButton"
+            Me.SelJointsToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.SelJointsToolStripButton.Text = "Select Joints"
+            Me.SelJointsToolStripButton.ToolTipText = "Select joints only"
+            '
+            'SelRecFieldsToolStripButton
+            '
+            Me.SelRecFieldsToolStripButton.CheckOnClick = True
+            Me.SelRecFieldsToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.SelRecFieldsToolStripButton.Image = CType(resources.GetObject("SelRecFieldsToolStripButton.Image"), System.Drawing.Image)
+            Me.SelRecFieldsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.SelRecFieldsToolStripButton.Name = "SelRecFieldsToolStripButton"
+            Me.SelRecFieldsToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.SelRecFieldsToolStripButton.Text = "Select Receptive Fields"
+            Me.SelRecFieldsToolStripButton.ToolTipText = "Select receptive fields only"
+            '
             'SelSimToolStripButton
             '
             Me.SelSimToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
@@ -763,6 +695,66 @@ Namespace Forms
             Me.SelSimToolStripButton.Text = "Selection Simulation mode"
             Me.SelSimToolStripButton.ToolTipText = "Simulation select mode. This allows you to pick and move objects in the simulatio" & _
                 "n using the mouse."
+            '
+            'ToolStripDropDownButton1
+            '
+            Me.ToolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+            Me.ToolStripDropDownButton1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowGraphicsGeometryToolStripMenuItem, Me.ShowCollisionGeometryToolStripMenuItem, Me.ShowJointsToolStripMenuItem, Me.ShowCenterOfMassToolStripMenuItem, Me.ShowPartOriginToolStripMenuItem, Me.ShowContactsToolStripMenuItem})
+            Me.ToolStripDropDownButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+            Me.ToolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
+            Me.ToolStripDropDownButton1.Size = New System.Drawing.Size(61, 22)
+            Me.ToolStripDropDownButton1.Text = "Display "
+            Me.ToolStripDropDownButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+            Me.ToolStripDropDownButton1.ToolTipText = "Display Options"
+            '
+            'ShowGraphicsGeometryToolStripMenuItem
+            '
+            Me.ShowGraphicsGeometryToolStripMenuItem.CheckOnClick = True
+            Me.ShowGraphicsGeometryToolStripMenuItem.Name = "ShowGraphicsGeometryToolStripMenuItem"
+            Me.ShowGraphicsGeometryToolStripMenuItem.Size = New System.Drawing.Size(207, 22)
+            Me.ShowGraphicsGeometryToolStripMenuItem.Text = "Show Graphics Geometry"
+            '
+            'ShowCollisionGeometryToolStripMenuItem
+            '
+            Me.ShowCollisionGeometryToolStripMenuItem.CheckOnClick = True
+            Me.ShowCollisionGeometryToolStripMenuItem.Name = "ShowCollisionGeometryToolStripMenuItem"
+            Me.ShowCollisionGeometryToolStripMenuItem.Size = New System.Drawing.Size(207, 22)
+            Me.ShowCollisionGeometryToolStripMenuItem.Text = "Show Collision Geometry"
+            '
+            'ShowJointsToolStripMenuItem
+            '
+            Me.ShowJointsToolStripMenuItem.CheckOnClick = True
+            Me.ShowJointsToolStripMenuItem.Name = "ShowJointsToolStripMenuItem"
+            Me.ShowJointsToolStripMenuItem.Size = New System.Drawing.Size(207, 22)
+            Me.ShowJointsToolStripMenuItem.Text = "Show Joints"
+            '
+            'ShowCenterOfMassToolStripMenuItem
+            '
+            Me.ShowCenterOfMassToolStripMenuItem.CheckOnClick = True
+            Me.ShowCenterOfMassToolStripMenuItem.Name = "ShowCenterOfMassToolStripMenuItem"
+            Me.ShowCenterOfMassToolStripMenuItem.Size = New System.Drawing.Size(207, 22)
+            Me.ShowCenterOfMassToolStripMenuItem.Text = "Show Center of Mass"
+            '
+            'ShowPartOriginToolStripMenuItem
+            '
+            Me.ShowPartOriginToolStripMenuItem.CheckOnClick = True
+            Me.ShowPartOriginToolStripMenuItem.Name = "ShowPartOriginToolStripMenuItem"
+            Me.ShowPartOriginToolStripMenuItem.Size = New System.Drawing.Size(207, 22)
+            Me.ShowPartOriginToolStripMenuItem.Text = "Show Part Origin"
+            '
+            'ShowContactsToolStripMenuItem
+            '
+            Me.ShowContactsToolStripMenuItem.CheckOnClick = True
+            Me.ShowContactsToolStripMenuItem.Name = "ShowContactsToolStripMenuItem"
+            Me.ShowContactsToolStripMenuItem.Size = New System.Drawing.Size(207, 22)
+            Me.ShowContactsToolStripMenuItem.Text = "Show Contacts"
+            '
+            'SnapshotSimToolStripMenuItem
+            '
+            Me.SnapshotSimToolStripMenuItem.Name = "SnapshotSimToolStripMenuItem"
+            Me.SnapshotSimToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+            Me.SnapshotSimToolStripMenuItem.Text = "Snapshot Sim"
             '
             'AnimatApplication_ToolStrips
             '
@@ -833,6 +825,9 @@ Namespace Forms
 
         End Sub
 
+        Private Sub SnapshotSimToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SnapshotSimToolStripMenuItem.Click
+
+        End Sub
     End Class
 
 End Namespace

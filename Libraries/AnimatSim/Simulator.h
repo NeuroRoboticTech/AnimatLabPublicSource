@@ -12,25 +12,6 @@
 namespace AnimatSim
 {
 
-		/*! \brief 
-			The main simulator system.
-
-			\remarks
-			This is the root object used to create and manage the entire
-			simulation. You tell it the the path to the simulation file
-			to use and it takes care of loading the files and creating all
-			of the objects like organisms and structures. Then at each time
-			step you need to step the simulation by one slice.
-
-			\sa
-			Organism, Structure, Body, Joint, CNlSimulator
-			 
-			\ingroup AnimatSim
-		*/
-		typedef void (*ManagedCallbackPtr)(void *);
-
-		//void *lpInstance
-
 		class ANIMAT_PORT Simulator : public AnimatBase
 		{
 		protected:
@@ -185,25 +166,6 @@ namespace AnimatSim
 			///used for the random number generator.
 			int m_iManualRandomSeed;
 
-			///This is a void pointer to the gc handle of a managed simulator wrapper class from the
-			///ManagedAnimatTools project. It is used in the callback routines. If certain callback 
-			///routines are defined, like UpdateDataCallback, then when the simulator has collected
-			///the desired amount of information it will invoke this callback and pass the ManagedInstance
-			///pointer back as a param. Inside that callback function the instance pointer will be cast 
-			///back into the appropraite managed Simulator object and then the UpdateData even will be
-			///fired. Any forms, like graphs, that have subscribed to this event will be notified that 
-			///they need to query the simulation object for the latest data and update their graphs.
-			///This system allows the unmanaged animat simulation to provide notifications to the
-			///managed editor system, while maintaining strict STL compliance.
-			void *m_lpManagedInstance;
-
-			///Callback Function pointer that will be called each time the simulator needs to notify
-			///any subscribing applications to update their data. This will only be fired if it is set.
-			ManagedCallbackPtr m_lpUpdateDataCallback;
-			ManagedCallbackPtr m_lpStartSimulationCallback;
-			ManagedCallbackPtr m_lpPauseSimulationCallback;
-			ManagedCallbackPtr m_lpEndingSimulationCallback;
-
 			DataChartMgr m_oDataChartMgr;
 			ExternalStimuliMgr m_oExternalStimuliMgr;
 			SimulationRecorder *m_lpSimRecorder;
@@ -235,6 +197,8 @@ namespace AnimatSim
 			BOOL m_bBlockSimulation;
 			BOOL m_bSimBlockConfirm;
 			BOOL CheckSimulationBlock();
+			
+			ISimGUICallback *m_lpSimCallback;
 
 			virtual void LoadEnvironment(CStdXml &oXml);
 			Structure *LoadStructure(CStdXml &oXml);
@@ -436,27 +400,15 @@ namespace AnimatSim
 
 			virtual int GetMaterialID(string strID) {return -1;}; //Must be implemented in physics override class.
 
+			virtual	ISimGUICallback *SimCallback() {return m_lpSimCallback;};
+			virtual void SimCallBack(ISimGUICallback *lpCallback) {m_lpSimCallback = lpCallback;};
+
 			DataChartMgr *DataChartMgr() {return &m_oDataChartMgr;};
 			ExternalStimuliMgr *ExternalStimuliMgr() {return &m_oExternalStimuliMgr;};
 			SimulationRecorder *SimulationRecorder() {return m_lpSimRecorder;};
 			Materials *MaterialMgr() {return &m_oMaterialMgr;};
 			SimulationWindowMgr *WindowMgr() {return m_lpWinMgr;};
 
-			ManagedCallbackPtr UpdateDataCallback() {return m_lpUpdateDataCallback;};
-			void UpdateDataCallback(ManagedCallbackPtr lpFunc) {m_lpUpdateDataCallback = lpFunc;};
-
-			ManagedCallbackPtr StartSimulationCallback() {return m_lpStartSimulationCallback;};
-			void StartSimulationCallback(ManagedCallbackPtr lpFunc) {m_lpStartSimulationCallback = lpFunc;};
-
-			ManagedCallbackPtr PauseSimulationCallback() {return m_lpPauseSimulationCallback;};
-			void PauseSimulationCallback(ManagedCallbackPtr lpFunc) {m_lpPauseSimulationCallback = lpFunc;};
-
-			ManagedCallbackPtr EndingSimulationCallback() {return m_lpEndingSimulationCallback;};
-			void EndingSimulationCallback(ManagedCallbackPtr lpFunc) {m_lpEndingSimulationCallback = lpFunc;};
-
-			void *ManagedInstance() {return m_lpManagedInstance;};
-			void ManagedInstance(void *lpVal) {m_lpManagedInstance = lpVal;};
-				
 			//NeuralModule methods.
 			IStdClassFactory *FindNeuralModuleFactory(string strModuleName, BOOL bThrowError = FALSE);
 			void AddNeuralModuleFactory(string strModuleName, NeuralModule *lpModule);
@@ -486,6 +438,7 @@ namespace AnimatSim
 			virtual void RunSimulation();
 			virtual void Load(string strFileName = "");
 			virtual void Load(CStdXml &oXml);
+			virtual void Save(string strFile);
 
 			static IStdClassFactory *LoadClassFactory(string strModuleName);
 			static Simulator *CreateSimulator(string strSimulationFile);

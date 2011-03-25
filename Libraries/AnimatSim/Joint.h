@@ -129,6 +129,7 @@ namespace AnimatSim
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
 			virtual void ResetSimulation();
+			virtual void AfterResetSimulation();
 			virtual void StepSimulation();
 			virtual void Load(CStdXml &oXml);
 		};

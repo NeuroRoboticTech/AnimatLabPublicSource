@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
+#include "ISimGUICallback.h"
 #include "AnimatBase.h"
 
 #include "Gain.h"

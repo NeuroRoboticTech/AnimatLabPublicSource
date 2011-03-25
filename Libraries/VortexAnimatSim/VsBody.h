@@ -55,6 +55,7 @@ namespace VortexAnimatSim
 
 			virtual void LocalMatrix(osg::Matrix osgLocalMT);
 
+			virtual void ResetGraphicsAndPhysics() {};
 			virtual void SetupGraphics() = 0;
 			virtual void SetupPhysics() = 0;
 			virtual void DeleteGraphics();
@@ -62,7 +63,6 @@ namespace VortexAnimatSim
 			virtual void CreateSelectedGraphics(string strName);
 			virtual void CreateDragger(string strName);
 			virtual void AttachedPartMovedOrRotated(string strID);
-			virtual void ResetGraphicsAndPhysics() {};
 			virtual void UpdatePositionAndRotationFromMatrix();
 
 		public:
@@ -87,6 +87,7 @@ namespace VortexAnimatSim
 			virtual BoundingBox Physics_GetBoundingBox();
 			virtual void Physics_SetColor() {};
 			virtual void Physics_TextureChanged() {};
+			virtual void Physics_AfterResetSimulation() {};
 
 			virtual void SetTexture(string strTexture);
 			virtual void SetCulling();

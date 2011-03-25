@@ -9,15 +9,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatSimulator", "AnimatSi
 		{A79592E1-88E3-44CE-8FBC-7B7CE7180E4A} = {A79592E1-88E3-44CE-8FBC-7B7CE7180E4A}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatLibrary", "..\..\Libraries\AnimatLibrary\AnimatLibrary.vcproj", "{8B8F6222-8001-4BC5-B047-C6A5772B2755}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatLibrary", "..\..\Libraries\AnimatSim\AnimatSim.vcproj", "{8B8F6222-8001-4BC5-B047-C6A5772B2755}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BootstrapLoader", "..\..\Libraries\BootstrapLoader\BootstrapLoader.vcproj", "{A79592E1-88E3-44CE-8FBC-7B7CE7180E4A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FastNeuralNet", "..\..\Libraries\FastNeuralNet\FastNeuralNet.vcproj", "{A3C7B1DB-E0BC-4B31-A7AD-DEE5D59E0C70}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FastNeuralNet", "..\..\Libraries\FiringRateSim\FiringRateSim.vcproj", "{A3C7B1DB-E0BC-4B31-A7AD-DEE5D59E0C70}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RealisticNeuralNet", "..\..\Libraries\RealisticNeuralNet\RealisticNeuralNet.vcproj", "{49F8BE86-8187-4BC7-ABD5-B1A66A12F2ED}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RealisticNeuralNet", "..\..\Libraries\IntegrateFireSim\IntegrateFireSim.vcproj", "{49F8BE86-8187-4BC7-ABD5-B1A66A12F2ED}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VortexAnimatLibrary", "..\..\Libraries\VortexAnimatLibrary\VortexAnimatLibrary.vcproj", "{C57E9FAC-C948-4386-A585-54FB1876FBCE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VortexAnimatLibrary", "..\..\Libraries\VortexAnimatSim\VortexAnimatSim.vcproj", "{C57E9FAC-C948-4386-A585-54FB1876FBCE}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8B8F6222-8001-4BC5-B047-C6A5772B2755} = {8B8F6222-8001-4BC5-B047-C6A5772B2755}
 		{D1B49952-2999-4336-AE54-525373AA6251} = {D1B49952-2999-4336-AE54-525373AA6251}

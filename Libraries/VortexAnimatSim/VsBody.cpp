@@ -201,6 +201,7 @@ osg::MatrixTransform* VsBody::GetMatrixTransform()
 	return m_osgMT.get();
 }
 
+//DWC: When you do this you are going to have to call UpdateNode on all child objects as well.
 void VsBody::UpdatePositionAndRotationFromMatrix()
 {
 	LocalMatrix(m_osgMT->getMatrix());

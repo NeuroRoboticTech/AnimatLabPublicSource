@@ -33,14 +33,14 @@ namespace VortexAnimatSim
 				virtual void UpdateData();
 				virtual void SetupPhysics();
 				virtual void DeletePhysics();
-				virtual void ResetGraphicsAndPhysics();
 				virtual void CreateCylinderGraphics();
+				virtual void ResetGraphicsAndPhysics();
 
 			public:
 				VsHinge();
 				virtual ~VsHinge();
 
-				virtual void Rotation(CStdFPoint &oPoint);
+				virtual void Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
 				virtual void JointPosition(float fltPos);
 
 				virtual void SetupGraphics();
@@ -48,8 +48,8 @@ namespace VortexAnimatSim
 
 #pragma region DataAccesMethods
 
-			virtual float *GetDataPointer(string strDataType);
-			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+				virtual float *GetDataPointer(string strDataType);
+				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
 #pragma endregion
 

@@ -214,6 +214,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SimGUICallback.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SimulatorInterface.cpp"
 				>
 			</File>
@@ -253,6 +257,10 @@
 			</File>
 			<File
 				RelativePath=".\resource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SimGUICallback.h"
 				>
 			</File>
 			<File

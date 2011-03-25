@@ -3,6 +3,7 @@
 #include "Logger.h"
 #include "PropertyUpdateException.h"
 #include "SimulatorInterface.h"
+#include "SimGUICallback.h"
 #include "DataObjectInterface.h"
 #include "BodyPartCallback.h"
 

@@ -18,6 +18,7 @@
 namespace AnimatSim
 {
 	class IBodyPartCallback;
+	class IGUI_AppCallback;
 	class AnimatBase;
 	class Simulator;
 	class Node;
@@ -141,6 +142,7 @@ using namespace AnimatSim::Gains;
 using namespace AnimatSim::Recording;
 
 #include "IBodyPartCallback.h"
+#include "ISimGUICallback.h"
 #include "AnimatBase.h"
 #include "DelayLine.h"
 #include "Gain.h"

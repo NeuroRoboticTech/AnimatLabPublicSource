@@ -4,6 +4,7 @@
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
+#include "ISimGUICallback.h"
 #include "AnimatBase.h"
 
 #include <sys/types.h>
@@ -114,12 +115,6 @@ Simulator::Simulator()
 	m_bHasTriangleMesh = FALSE;
 	m_bHasHeightField = FALSE;
 
-	m_lpManagedInstance = NULL;
-	m_lpUpdateDataCallback = NULL;
-	m_lpStartSimulationCallback = NULL;
-	m_lpPauseSimulationCallback = NULL;
-	m_lpEndingSimulationCallback = NULL;
-
 	m_bAutoGenerateRandomSeed = TRUE;
 	m_iManualRandomSeed = 12345;
 
@@ -153,6 +148,7 @@ Simulator::Simulator()
 	m_vBackgroundColor[2] = 0.6f;
 	m_vBackgroundColor[3] = 1;
 
+	m_lpSimCallback = NULL;
 	m_lpWinMgr = NULL;
 	m_oDataChartMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
 	m_oExternalStimuliMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
@@ -203,6 +199,12 @@ try
 		m_lpWinMgr->Close();
 		delete m_lpWinMgr;
 		m_lpWinMgr = NULL;
+	}
+
+	if(m_lpSimCallback)
+	{
+		delete m_lpSimCallback;
+		m_lpSimCallback = NULL;
 	}
 
 	m_aryNeuralModuleFactories.RemoveAll();
@@ -1679,15 +1681,13 @@ void Simulator::Load(CStdXml &oXml)
 		m_oExternalStimuliMgr.Load(oXml);
 
 	if(m_lpSimRecorder && oXml.FindChildElement("RecorderKeyFrames", FALSE))
-	{
-		string strKeyframesFile = oXml.GetChildString("RecorderKeyFrames");
-		m_lpSimRecorder->SetSystemPointers(this, NULL, NULL, NULL, TRUE);
-		m_lpSimRecorder->Load(m_strProjectPath, strKeyframesFile);
-	}
+		m_lpSimRecorder->Load(oXml);
 
 	TRACE_DEBUG("Finished loading simulator config from Xml.");
 }
 
+//Override used by derived class.
+void Simulator::Save(string strFile) {};
 
 /*! \brief 
    Adds a new organism to the list of structures for this simulation.

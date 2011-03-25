@@ -99,6 +99,7 @@ namespace VortexAnimatSim
 			CStdFPoint Physics_GetCurrentPosition();
 			virtual void SetFluidInteractions();
 			virtual void GetBaseValues();
+			virtual void UpdatePositionAndRotationFromMatrix();
 
 		public:
 			VsRigidBody();

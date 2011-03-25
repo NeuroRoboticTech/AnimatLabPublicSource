@@ -9,6 +9,7 @@
 
 #include "Node.h"
 #include "IPhysicsBody.h"
+#include "ISimGUICallback.h"
 #include "BodyPart.h"
 #include "Joint.h"
 #include "ReceptiveField.h"

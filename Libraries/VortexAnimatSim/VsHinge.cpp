@@ -114,19 +114,22 @@ void VsHinge::EnableMotor(BOOL bVal)
 	m_fltPrevVelocity = -1000000;  //reset the prev velocity for the next usage
 }
 
-
 void VsHinge::ResetGraphicsAndPhysics()
 {
-
 	VsBody::BuildLocalMatrix();
 
 	SetupPhysics();	
 }
 
-void VsHinge::Rotation(CStdFPoint &oPoint) 
+void VsHinge::Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent, BOOL bUpdateMatrix) 
 {
 	m_oRotation = oPoint;
+	m_oReportRotation = m_oRotation;
+
 	ResetGraphicsAndPhysics();
+
+	if(m_lpCallback && bFireChangeEvent)
+		m_lpCallback->RotationChanged();
 }
 
 void VsHinge::JointPosition(float fltPos)

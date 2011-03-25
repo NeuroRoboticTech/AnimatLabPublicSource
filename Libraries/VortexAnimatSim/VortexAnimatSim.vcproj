@@ -149,7 +149,7 @@
 				AdditionalDependencies="VxOSG-2.6.lib Vx.lib VxPersistence.lib VxVehicle.lib MeGlobals.lib McdConvex.lib McdConvexCreateHull.lib McdCommon.lib McdFrame.lib McdPrimitives.lib McdRGHeightField.lib McdTriangleMesh.lib Mdt.lib MdtKea.lib MdtBcl.lib VxPs.lib netapi32.lib comctl32.lib wsock32.lib oldnames.lib pthread.lib osg.lib osgDB.lib osgFX.lib osgGA.lib osgManipulator.lib osgParticle.lib osgSim.lib osgShadow.lib osgText.lib osgTerrain.lib osgUtil.lib osgViewer.lib OpenThreads.lib SDL_static.lib opengl32.lib winmm.lib"
 				OutputFile="$(OutDir)/VortexAnimatSim_vc9.dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\..\lib;..\Vortex_26\lib.rel\win32_VC9;..\Vortex_26\3rdParty\pthreads\lib.rel\win32_VC9;..\Vortex_26\osg/lib.dbg/win32_VC9;..\Vortex_26\3rdParty/sdl/lib.rel/win32_VC9;..\Vortex_26\3rdParty\boost\lib\win32"
+				AdditionalLibraryDirectories="..\..\lib;..\Vortex_26\lib.rel\win32_VC9;..\Vortex_26\3rdParty\pthreads\lib.rel\win32_VC9;..\Vortex_26\osg/lib.rel/win32_VC9;..\Vortex_26\3rdParty/sdl/lib.rel/win32_VC9;..\Vortex_26\3rdParty\boost\lib\win32"
 				IgnoreDefaultLibraryNames="LIBCMT"
 				GenerateDebugInformation="true"
 				SubSystem="2"

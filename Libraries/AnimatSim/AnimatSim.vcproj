@@ -152,7 +152,7 @@
 				EnableCOMDATFolding="2"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
-				ImportLibrary="$(OutDir)/AnimatSim_vc7.lib"
+				ImportLibrary="$(OutDir)/AnimatSim_vc9.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -317,6 +317,10 @@
 			</File>
 			<File
 				RelativePath=".\IPhysicsBody.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ISimGUICallback.cpp"
 				>
 			</File>
 			<File
@@ -611,6 +615,10 @@
 			</File>
 			<File
 				RelativePath=".\IPhysicsBody.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ISimGUICallback.h"
 				>
 			</File>
 			<File

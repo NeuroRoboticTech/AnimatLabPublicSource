@@ -6,6 +6,7 @@
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
+#include "ISimGUICallback.h"
 #include "AnimatBase.h"
 
 #include "Node.h"
@@ -973,15 +974,20 @@ void RigidBody::Kill(BOOL bState)
 
 void RigidBody::ResetSimulation()
 {
-	int iCount = m_aryChildParts.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryChildParts[iIndex]->ResetSimulation();
+	///It is <b>very</b> important that the physcis of the rigid body is reset
+    /// before the joint and the child parts. The reason is that we want the position
+    /// of this part to be rest first and then child parts because if we do not then
+    /// when we do an UpdateFromNode on the physcis object it will be in the wrong location.
+    /// We must reset the position from the root out, not leafs in.
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_ResetSimulation();
 
 	if(m_lpJointToParent)
 		m_lpJointToParent->ResetSimulation();
 
-	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->Physics_ResetSimulation();
+	int iCount = m_aryChildParts.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		m_aryChildParts[iIndex]->ResetSimulation();
 }
 
 void RigidBody::AfterResetSimulation()

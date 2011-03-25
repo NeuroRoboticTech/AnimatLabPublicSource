@@ -88,6 +88,7 @@ namespace VortexAnimatSim
 		virtual void StopSimulation();
 		virtual BOOL StartSimulation();
 		virtual BOOL PauseSimulation();
+		virtual void Save(string strFile);
 
 		static VsSimulator *ConvertSimulator(Simulator *lpSim);
 	};

@@ -6,6 +6,7 @@
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
+#include "ISimGUICallback.h"
 #include "AnimatBase.h"
 
 #include "Node.h"
@@ -390,15 +391,23 @@ BOOL Joint::SetData(string strDataType, string strValue, BOOL bThrowError)
 
 void Joint::ResetSimulation()
 {
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_ResetSimulation();
+
 	m_fltSetVelocity = 0;
 	m_fltDesiredVelocity = 0;
 	m_fltPrevVelocity = 0;
 
 	EnableMotor(m_bEnableMotorInit);
+	JointPosition(0);
+	JointVelocity(0);
+	JointForce(0);
+}
 
-	m_fltPosition = 0;
-	m_fltVelocity = 0;
-	m_fltForce = 0;
+void Joint::AfterResetSimulation()
+{
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_AfterResetSimulation();
 }
 
 void Joint::Load(CStdXml &oXml)
