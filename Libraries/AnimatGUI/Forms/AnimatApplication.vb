@@ -1299,6 +1299,7 @@ Namespace Forms
                 'This handler is used as a callback to get the editor to saveout the xml configuration file and send it back to the simulation
                 AddHandler m_doSimInterface.OnSimulationCreate, AddressOf Me.OnCreateSimulation
                 AddHandler m_doSimInterface.SimulationRunning, AddressOf Me.OnSimulationRunning
+                AddHandler m_doSimInterface.NeedToStopSimulation, AddressOf Me.OnNeedToStopSimulation
 
                 Util.Simulation.VisualSelectionMode = DataObjects.Simulation.enumVisualSelectionMode.SelectGraphics
 
@@ -3376,6 +3377,8 @@ Namespace Forms
             Try
                 Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
+                Me.Simulation.SimulationAtEndTime = False
+
                 'If the simulation is not started then go ahead and get it going.
                 If Not Me.SimulationInterface.SimOpen Then
                     Me.CreateSimulation(False)
@@ -3627,6 +3630,23 @@ Namespace Forms
 
                 'When the simulation is created we need to initialize all sim refereces.
                 Me.Simulation.InitializeSimulationReferences()
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        ''' \brief  Event that is fired when the simulation signals that it needs to be shut down.
+        ''' 		
+        ''' \details This event only sets the SimulationAtEndTime flag to true, and then exits. This is
+        ''' 		 so the simulation processing loop can continue running. We later check within the
+        ''' 		 SimulationController timer code whether this flag is set. If it is then we stop the
+        ''' 		 simulation there and reset the flag.
+        '''
+        ''' \author dcofer
+        ''' \date   3/26/2011
+        Protected Overridable Sub OnNeedToStopSimulation()
+            Try
+                Util.Simulation.SimulationAtEndTime = True
             Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

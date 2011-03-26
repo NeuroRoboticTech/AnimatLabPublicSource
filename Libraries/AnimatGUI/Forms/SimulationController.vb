@@ -552,6 +552,12 @@ Namespace Forms
             End Set
         End Property
 
+        Public ReadOnly Property CurrentSimulationTime() As Single
+            Get
+                Return CSng(Me.ctrlTimeRuler.CurrentMillisecond * 0.001)
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -864,6 +870,11 @@ Namespace Forms
 
                 Me.ctrlTimeRuler.CurrentMillisecond = Util.Application.SimulationInterface.CurrentMillisecond
                 'Util.Application.StatusBar.Panels(0).Text = GenerateStatusBarText(-1)
+
+                If Util.Simulation.SimulationAtEndTime Then
+                    Util.Application.StopSimulation()
+                    Util.Simulation.SimulationAtEndTime = False
+                End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

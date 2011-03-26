@@ -272,6 +272,7 @@ namespace AnimatSim
 			virtual void AddTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits);
 			virtual CStdFPoint GetVelocityAtPoint(float x, float y, float z);
 			virtual float GetMass();
+			virtual void UpdatePhysicsPosFromGraphics();
 
 			virtual void EnableCollision(RigidBody *lpBody);
 			virtual void DisableCollision(RigidBody *lpBody);

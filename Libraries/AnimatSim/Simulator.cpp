@@ -396,13 +396,29 @@ void Simulator::TimeStep(float fltVal)
 	m_fltPhysicsTimeStep = m_fltTimeStep * m_iPhysicsStepInterval;
 }
 
+BOOL Simulator::SetEndSimTime() {return m_bSetEndSim;}
+
+void Simulator::SetEndSimTime(BOOL bVal) {m_bSetEndSim = bVal;}
+
 float Simulator::EndSimTime() {return m_fltEndSimTime;}
 
-void Simulator::EndSimTime(float fltVal) {m_fltEndSimTime = fltVal;}
+void Simulator::EndSimTime(float fltVal) 
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "EndSimTime");
+
+	m_fltEndSimTime = fltVal;
+	m_lEndSimTimeSlice = fltVal/m_fltTimeStep; 
+}
 
 long Simulator::EndSimTimeSlice() {return m_lEndSimTimeSlice;}
 
-void Simulator::EndSimTimeSlice(long lVal) {m_lEndSimTimeSlice = lVal;}
+void Simulator::EndSimTimeSlice(long lVal) 
+{
+	Std_IsAboveMin((long) 0, lVal, TRUE, "EndSimTimeSlice");
+
+	m_lEndSimTimeSlice = lVal;
+	m_fltEndSimTime = m_lEndSimTimeSlice*m_fltTimeStep;
+}
 
 BOOL Simulator::Stopped() {return (m_bStopSimulation | m_bForceSimulationStop);}
 
@@ -807,6 +823,12 @@ void Simulator::Reset()
 	if(m_lpWinMgr)
 		m_lpWinMgr->Close();
 
+	if(m_lpSimCallback)
+	{
+		delete m_lpSimCallback;
+		m_lpSimCallback = NULL;
+	}
+
 	m_aryNeuralModuleFactories.RemoveAll();
 
 	m_arySourcePhysicsAdapters.RemoveAll();
@@ -855,7 +877,7 @@ void Simulator::ResetSimulation()
 		m_lpSimRecorder->ResetSimulation();
 }
 
-inline void Simulator::StepNeuralEngine()
+void Simulator::StepNeuralEngine()
 {
 	for(m_oOrganismIterator=m_aryOrganisms.begin(); 
 	    m_oOrganismIterator!=m_aryOrganisms.end(); 
@@ -866,7 +888,7 @@ inline void Simulator::StepNeuralEngine()
 	}
 }
 
-inline void Simulator::StepPhysicsEngine()
+void Simulator::StepPhysicsEngine()
 {
 	for(m_oStructureIterator=m_aryAllStructures.begin(); 
 	    m_oStructureIterator!=m_aryAllStructures.end(); 
@@ -887,7 +909,7 @@ inline void Simulator::StepPhysicsEngine()
 	m_lPhysicsSliceCount++;
 }
 
-inline void Simulator::Step()
+void Simulator::Step()
 {
 	m_oExternalStimuliMgr.StepSimulation();
 
@@ -983,6 +1005,36 @@ void Simulator::GenerateAutoSeed()
 	srand(m_iManualRandomSeed);
 }
 
+/**
+\brief	Checks the simulation end time.
+
+\details This checks whether the user has set the simulation to automatically end or not.
+If it has and the simulation time is greater than or equal to the end time then it stops the simulation.
+If we are running using the GUI then the m_lpSimCallback should be set. It pauses the simulation and then
+calls the NeedToStopSimulation event callback. This signals to the GUI that it needs to stop the simulation.
+If we are running standalone then the simulation is shutdown direclty.
+
+\author	dcofer
+\date	3/26/2011
+**/
+void Simulator::CheckEndSimulationTime()
+{
+	//If we are running for a set time then lets stop once we reach that point.
+	if(m_bSetEndSim && !m_bPaused)
+	{
+		if(m_fltEndSimTime >0 && this->Time() >= m_fltEndSimTime)
+		{
+			if(m_lpSimCallback)
+			{
+				PauseSimulation();
+				m_lpSimCallback->NeedToStopSimulation();
+			}
+			else
+				ShutdownSimulation();
+		}
+	}
+}
+
 #pragma endregion
 			
 #pragma region LoadMethods
@@ -1064,9 +1116,8 @@ void Simulator::Load(CStdXml &oXml)
 	m_bPaused = oXml.GetChildBool("StartPaused", m_bPaused);
 	m_bEnableSimRecording = oXml.GetChildBool("EnableSimRecording", m_bEnableSimRecording);
 	
-	BOOL bSetEndSim = oXml.GetChildBool("SetSimEnd", FALSE);
-	if(bSetEndSim)
-		m_fltEndSimTime = oXml.GetChildFloat("SimEndTime", m_fltEndSimTime);
+	SetEndSimTime(oXml.GetChildBool("SetSimEnd", FALSE));
+	EndSimTime(oXml.GetChildFloat("SimEndTime", m_fltEndSimTime));
  
 	if(m_bEnableSimRecording)
 		m_lpSimRecorder = CreateSimulationRecorder();
@@ -2189,6 +2240,16 @@ BOOL Simulator::SetData(string strDataType, string strValue, BOOL bThrowError)
 	else if(strType == "ANGULARKINETICLOSS")
 	{
 		AngularKineticLoss(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "SETENDSIMTIME")
+	{
+		SetEndSimTime(Std_ToBool(strValue));
+		return TRUE;
+	}
+	else if(strType == "ENDSIMTIME")
+	{
+		EndSimTime(atof(strValue.c_str()));
 		return TRUE;
 	}
 

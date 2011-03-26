@@ -340,17 +340,7 @@ void VsSimulator::StepSimulation()
 		OpenThreads::Thread::microSleep((unsigned long)(fltRemains*1000000.0));
 	}
 
-	////If we are running for a set time then lets stop once we reach that point.
-	//if(m_fltEndSimTime >0 && this->Time() >= m_fltEndSimTime)
-	//{
-	//	if(m_lpManagedInstance && m_lpEndingSimulationCallback)
-	//	{
-	//		PauseSimulation();
-	//	}
-	//	else
-	//		ShutdownSimulation();
-	//}
-
+	CheckEndSimulationTime();
 }
 
 void VsSimulator::Simulate()

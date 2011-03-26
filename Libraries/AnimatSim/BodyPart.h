@@ -174,6 +174,7 @@ namespace AnimatSim
 			virtual void Selected(BOOL bValue, BOOL bSelectMultiple); 
 			virtual void AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ);
 			virtual void VisualSelectionModeChanged(int iNewMode);
+			virtual void UpdatePhysicsPosFromGraphics();
 
 			virtual void Load(CStdXml &oXml);
 		};

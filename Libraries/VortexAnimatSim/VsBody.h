@@ -88,6 +88,7 @@ namespace VortexAnimatSim
 			virtual void Physics_SetColor() {};
 			virtual void Physics_TextureChanged() {};
 			virtual void Physics_AfterResetSimulation() {};
+			virtual void Physics_UpdateNode() {};
 
 			virtual void SetTexture(string strTexture);
 			virtual void SetCulling();

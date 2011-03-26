@@ -19,6 +19,7 @@ namespace AnimatSim
 			virtual void SetFreeze(BOOL bVal) = 0;
 			virtual void SetDensity(float fltVal) = 0;
 
+			virtual void Physics_UpdateNode() = 0;
 			virtual void Physics_UpdateMatrix() = 0;
 			virtual void Physics_CollectBodyData() = 0;
 			virtual void Physics_ResetSimulation() = 0;

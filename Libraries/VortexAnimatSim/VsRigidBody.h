@@ -128,6 +128,7 @@ namespace VortexAnimatSim
 			virtual void SetDensity(float fltVal);
 			virtual void Physics_SetColor();
 			virtual void Physics_TextureChanged();
+			virtual void Physics_UpdateNode();
 
 			virtual void Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits);
 			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits);

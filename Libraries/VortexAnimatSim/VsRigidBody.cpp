@@ -50,7 +50,7 @@ VsRigidBody::~VsRigidBody()
 
 try
 {
-	int i= 5;
+	//int i= 5;
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of VsRigidBody\r\n", "", -1, FALSE, TRUE);}
@@ -88,14 +88,18 @@ void VsRigidBody::Physics_UpdateMatrix()
 {
 	VsBody::Physics_UpdateMatrix();
 
-	if(m_vxSensor)
-		m_vxSensor->updateFromNode();
+	Physics_UpdateNode();
 }
  
 void VsRigidBody::UpdatePositionAndRotationFromMatrix()
 {
 	VsBody::UpdatePositionAndRotationFromMatrix();
 
+	m_lpThis->UpdatePhysicsPosFromGraphics();
+}
+
+void VsRigidBody::Physics_UpdateNode()
+{
 	if(m_vxSensor)
 		m_vxSensor->updateFromNode();
 }

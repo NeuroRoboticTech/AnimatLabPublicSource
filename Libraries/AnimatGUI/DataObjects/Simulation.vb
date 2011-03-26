@@ -56,6 +56,7 @@ Namespace DataObjects
 
         Protected m_bSetSimEnd As Boolean = False
         Protected m_snSimEndTime As ScaledNumber
+        Protected m_bSimulationAtEndTime As Boolean = False
 
         Protected m_strAPI_File As String = ""
 
@@ -182,6 +183,8 @@ Namespace DataObjects
                 Return m_bSetSimEnd
             End Get
             Set(ByVal Value As Boolean)
+                SetSimData("SetEndSimTime", Value.ToString, True)
+
                 m_bSetSimEnd = Value
 
                 'Refresh the property grid 
@@ -200,7 +203,29 @@ Namespace DataObjects
                     Throw New System.Exception("The simulation end time must be greater than 0.")
                 End If
 
+                SetSimData("EndSimTime", Value.ActualValue.ToString, True)
+
                 m_snSimEndTime.CopyData(Value)
+            End Set
+        End Property
+
+        ''' \brief  When the simulation end time is set to true then the simulation should end after
+        ''' 		the user defined time period. While the simulation is processing it checks these values
+        ''' 		and when it reaches the correct time it fires a NeedToStopSimulation event. This event
+        ''' 		then sets this boolean to true. Each time the SimulationController timer is called it checks
+        ''' 		this value. If it is true then it stops the simulation, and resets the value. This was done this
+        ''' 		way because it is not possible to call StopSimulation directly from the NeedToStopSimulation event
+        ''' 		because the simulation must be running. This creates a blocking event, locking the system up. We need
+        ''' 		for the event code to continue on about its business and let the simulation loop keep running, and then
+        ''' 		later this thread can call StopSimulation.
+        '''
+        ''' \value  .
+        Public Overridable Property SimulationAtEndTime() As Boolean
+            Get
+                Return m_bSimulationAtEndTime
+            End Get
+            Set(ByVal value As Boolean)
+                m_bSimulationAtEndTime = value
             End Set
         End Property
 

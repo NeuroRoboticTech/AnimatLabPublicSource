@@ -212,6 +212,9 @@ namespace AnimatSim
 			///The current simulation time.
 			float m_fltTime;
 
+			/// true if we the user has manually set the simulation end time.
+			BOOL m_bSetEndSim;
+
 			///The time when the simulation should end.
 			float m_fltEndSimTime;
 
@@ -387,18 +390,19 @@ namespace AnimatSim
 
 			virtual void InitializeStructures();
 
-			BOOL CheckSimulationBlock();
+			virtual BOOL CheckSimulationBlock();
+			virtual void CheckEndSimulationTime();
 
-			void StepNeuralEngine();
-			void StepPhysicsEngine();
-			void Step();
+			virtual void StepNeuralEngine();
+			virtual void StepPhysicsEngine();
+			virtual void Step();
 
 			//These functions are called internally when the simulation is about to start up or pause.
 			virtual void SimStarting();
 			virtual void SimPausing();
 			virtual void SimStopping();
 			
-			void GenerateAutoSeed();
+			virtual void GenerateAutoSeed();
 
 #pragma endregion
 
@@ -504,6 +508,9 @@ namespace AnimatSim
 
 			virtual float TimeStep();
 			virtual void TimeStep(float fltVal);
+
+			virtual BOOL SetEndSimTime();
+			virtual void SetEndSimTime(BOOL bVal);
 
 			virtual float EndSimTime();
 			virtual void EndSimTime(float fltVal);

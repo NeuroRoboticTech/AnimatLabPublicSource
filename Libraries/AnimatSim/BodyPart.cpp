@@ -895,6 +895,20 @@ BOOL BodyPart::SetData(string strDataType, string strValue, BOOL bThrowError)
 
 #pragma endregion
 
+/**
+\brief	Updates the physics position from graphics.
+
+\details This updates the position of the physcis node directly
+from the scenegraph position of the graphics node for this item, and then
+does the same for all child items.
+
+\author	dcofer
+\date	3/26/2011
+**/
+void BodyPart::UpdatePhysicsPosFromGraphics()
+{
+}
+
 void BodyPart::Load(CStdXml &oXml)
 {
 	Node::Load(oXml);

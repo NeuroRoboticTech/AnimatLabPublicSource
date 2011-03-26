@@ -1284,6 +1284,16 @@ int RigidBody::FindChildListPos(string strID, BOOL bThrowError)
 	return -1;
 }
 
+void RigidBody::UpdatePhysicsPosFromGraphics()
+{
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_UpdateNode();
+
+	int iCount = m_aryChildParts.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		m_aryChildParts[iIndex]->UpdatePhysicsPosFromGraphics();
+}
+
 #pragma endregion
 
 
