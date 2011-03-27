@@ -77,7 +77,9 @@ namespace VortexAnimatSim
 
 			virtual CStdFPoint GetOSGWorldCoords(osg::MatrixTransform *osgMT);
 			virtual CStdFPoint GetOSGWorldCoords();
-			
+			virtual osg::Matrix GetOSGWorldMatrix();
+			virtual osg::Matrix GetOSGWorldMatrix(osg::MatrixTransform *osgMT);
+
 			virtual void EndGripDrag();
 
 			virtual string Physics_ID();

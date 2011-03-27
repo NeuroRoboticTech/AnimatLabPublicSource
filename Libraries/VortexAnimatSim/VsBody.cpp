@@ -177,6 +177,17 @@ CStdFPoint VsBody::GetOSGWorldCoords(osg::MatrixTransform *osgMT)
 	return vPoint;
 }
 
+osg::Matrix VsBody::GetOSGWorldMatrix()
+{
+	return GetOSGWorldMatrix(m_osgMT.get());
+}
+
+osg::Matrix VsBody::GetOSGWorldMatrix(osg::MatrixTransform *osgMT)
+{
+	WorldCoordinateNodeVisitor ncv;
+	osgMT->accept(ncv);
+	return ncv.MatrixTransform();
+}
 
 void VsBody::WorldToBodyCoords(VxReal3 vWorld, StdVector3 &vLocalPos)
 {

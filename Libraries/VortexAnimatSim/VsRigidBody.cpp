@@ -88,7 +88,7 @@ void VsRigidBody::Physics_UpdateMatrix()
 {
 	VsBody::Physics_UpdateMatrix();
 
-	Physics_UpdateNode();
+	m_lpThis->UpdatePhysicsPosFromGraphics();
 }
  
 void VsRigidBody::UpdatePositionAndRotationFromMatrix()
