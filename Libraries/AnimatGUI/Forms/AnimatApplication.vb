@@ -1301,6 +1301,11 @@ Namespace Forms
                 AddHandler m_doSimInterface.SimulationRunning, AddressOf Me.OnSimulationRunning
                 AddHandler m_doSimInterface.NeedToStopSimulation, AddressOf Me.OnNeedToStopSimulation
 
+                AddHandler Me.SimulationStarting, AddressOf Me.OnSimulationStarting
+                AddHandler Me.SimulationResuming, AddressOf Me.OnSimulationResuming
+                AddHandler Me.SimulationPaused, AddressOf Me.OnSimulationPaused
+                AddHandler Me.SimulationStopped, AddressOf Me.OnSimulationStopped
+
                 Util.Simulation.VisualSelectionMode = DataObjects.Simulation.enumVisualSelectionMode.SelectGraphics
 
             Catch ex As System.Exception
@@ -3650,6 +3655,66 @@ Namespace Forms
             Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+        End Sub
+
+        ''' \brief  Called when the simulation starting event is called.
+        ''' 		
+        ''' \details This is an event handler for the AnimatLab application. When the SimulationStarting event is fired
+        ''' 		 this is called. Override this method if you need to know this information in your test.
+        '''
+        ''' \author dcofer
+        ''' \date   3/16/2011
+        Protected Overridable Sub OnSimulationStarting()
+            'We need to set the visualselection modes so that only the simulation mode is available.
+            Util.Simulation.SetVisualSelectionModeForSimStarting(True)
+        End Sub
+
+        ''' \brief  Called when the simulation started event is called.
+        ''' 		
+        ''' \details This is an event handler for the AnimatLab application. When the SimulationStarted event is fired
+        ''' 		 this is called. Override this method if you need to know this information in your test.
+        '''
+        ''' \author dcofer
+        ''' \date   3/16/2011
+        Protected Overridable Sub OnSimulationStarted()
+
+        End Sub
+
+        ''' \brief  Called when the simulation resuming event is called.
+        ''' 		
+        ''' \details This is an event handler for the AnimatLab application. When the SimulationResuming event is fired
+        ''' 		 this is called. Override this method if you need to know this information in your test.
+        '''
+        ''' \author dcofer
+        ''' \date   3/16/2011
+        Protected Overridable Sub OnSimulationResuming()
+            'We need to set the visualselection modes so that only the simulation mode is available.
+            Util.Simulation.SetVisualSelectionModeForSimStarting(True)
+        End Sub
+
+        ''' \brief  Called when the simulation pausing event is called.
+        ''' 		
+        ''' \details This is an event handler for the AnimatLab application. When the SimulationPausing event is fired
+        ''' 		 this is called. Override this method if you need to know this information in your test.
+        '''
+        ''' \author dcofer
+        ''' \date   3/16/2011
+        Protected Overridable Sub OnSimulationPaused()
+            'We need to release the other visualselection modes.
+            Util.Simulation.SetVisualSelectionModeForSimStarting(False)
+        End Sub
+
+        ''' \brief  Called when the simulation stopped event is called.
+        ''' 		
+        ''' \details This is an event handler for the AnimatLab application. When the SimulationStopped event is fired
+        ''' 		 this is called Override this method if you need to know this information in your test, but be sure
+        ''' 		 to call the base class method.
+        '''
+        ''' \author dcofer
+        ''' \date   3/16/2011
+        Protected Overridable Sub OnSimulationStopped()
+            'We need to release the other visualselection modes.
+            Util.Simulation.SetVisualSelectionModeForSimStarting(False)
         End Sub
 
         Protected Overridable Sub OnPreferences(ByVal sender As Object, ByVal e As EventArgs) Handles PreferencesToolStripMenuItem.Click

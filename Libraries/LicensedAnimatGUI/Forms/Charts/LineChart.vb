@@ -2474,6 +2474,20 @@ Namespace Forms.Charts
 
 #End Region
 
+
+        Protected Overrides Sub OnFormClosed(ByVal e As System.Windows.Forms.FormClosedEventArgs)
+            MyBase.OnFormClosed(e)
+
+            'Remove the simulationhandlers
+            RemoveHandler Util.Application.SimulationStarting, AddressOf Me.OnSimulationStarting
+            RemoveHandler Util.Application.SimulationResuming, AddressOf Me.OnSimulationResuming
+            RemoveHandler Util.Application.SimulationStarted, AddressOf Me.OnSimulationStarted
+            RemoveHandler Util.Application.SimulationPaused, AddressOf Me.OnSimulationPaused
+            RemoveHandler Util.Application.SimulationStopped, AddressOf Me.OnSimulationStopped
+            m_bAddedHandlers = False
+
+        End Sub
+
         Protected Overrides Sub OnAddAxis(ByVal sender As Object, ByVal e As System.EventArgs)
 
             Try

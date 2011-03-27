@@ -585,6 +585,48 @@ Namespace DataObjects
             RaiseEvent VisualSelectionModeChanged()
         End Sub
 
+        ''' \brief  Enables/Disables the visual selection modes while the simulation is running.
+        ''' 		
+        ''' \details When the simulation is running then <b>ONLY</b> the simulation mode is available.
+        ''' 		 You cannot edit or move the other parts. You must pause the simulation if you want to do that.
+        ''' 		 This method ensures that only the simulation mode can be selected.
+        '''
+        ''' \author dcofer
+        ''' \date   3/27/2011
+        '''
+        ''' \param  bSimStarting    true to simulation starting. 
+        Public Sub SetVisualSelectionModeForSimStarting(ByVal bSimStarting As Boolean)
+
+            If bSimStarting Then
+                Util.Application.SelGraphicsToolStripButton.Enabled = False
+                Util.Application.SelCollisionToolStripButton.Enabled = False
+                Util.Application.SelJointsToolStripButton.Enabled = False
+                Util.Application.SelRecFieldsToolStripButton.Enabled = False
+                Util.Application.SelSimToolStripButton.Enabled = True
+
+                Util.Application.GraphicsObjectsToolStripMenuItem.Enabled = False
+                Util.Application.CollisionObjectsToolStripMenuItem.Enabled = False
+                Util.Application.JointsToolStripMenuItem.Enabled = False
+                Util.Application.ReceptiveFieldsToolStripMenuItem.Enabled = False
+                Util.Application.SimulationToolStripMenuItem.Enabled = True
+
+                Me.VisualSelectionMode = enumVisualSelectionMode.Simulation
+            Else
+                Util.Application.SelGraphicsToolStripButton.Enabled = True
+                Util.Application.SelCollisionToolStripButton.Enabled = True
+                Util.Application.SelJointsToolStripButton.Enabled = True
+                Util.Application.SelRecFieldsToolStripButton.Enabled = True
+                Util.Application.SelSimToolStripButton.Enabled = True
+
+                Util.Application.GraphicsObjectsToolStripMenuItem.Enabled = True
+                Util.Application.CollisionObjectsToolStripMenuItem.Enabled = True
+                Util.Application.JointsToolStripMenuItem.Enabled = True
+                Util.Application.ReceptiveFieldsToolStripMenuItem.Enabled = True
+                Util.Application.SimulationToolStripMenuItem.Enabled = True
+            End If
+
+        End Sub
+
 #Region " DataObject Methods "
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
