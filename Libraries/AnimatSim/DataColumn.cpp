@@ -46,7 +46,6 @@ DataColumn::DataColumn()
 	m_lpDataValue = NULL;
 	m_iAppendSpaces = 0;
 	m_bInitialized = FALSE;
-	m_iIndex = -1;
 	m_iColumnIndex = -1;
 	m_iRowIndex = -1; 
 }
@@ -74,45 +73,12 @@ DataColumn::~DataColumn()
 int DataColumn::ColumnCount()
 {return 1;}
 
-/**
-\brief	Gets the column name.
-
-\author	dcofer
-\date	3/18/2011
-
-\return	Column name.
-**/
-string DataColumn::ColumnName() {return m_strColumnName;}
-
-/**
-\brief	Sets the Column name.
-
-\author	dcofer
-\date	3/18/2011
-
-\param	strName	Name of the column. 
-**/
-void DataColumn::ColumnName(string strName) {m_strColumnName = strName;}
-
-/**
-\brief	Gets the show index. This determines the order in which the columns are saved out to the file.
-
-\author	dcofer
-\date	3/18/2011
-
-\return	.
-**/
-int DataColumn::Index() {return m_iIndex;}
-
-/**
-\brief	Sets the show index. This determines the order in which the columns are saved out to the file.
-
-\author	dcofer
-\date	3/18/2011
-
-\param	iIndex	Zero-based index of where to show this column in the chart. 
-**/
-void DataColumn::Index(int iIndex) {m_iIndex = iIndex;}
+void DataColumn::Name(string strValue) 
+{
+	if(Std_IsBlank(strValue)) 
+		THROW_TEXT_ERROR(Std_Err_lBlankAttrib, Std_Err_strBlankAttrib, "Attribute: ColumnName");
+	m_strName = strValue;
+}
 
 /**
 \brief	Gets the data type of the variable we are collecting. This is the value passed into GetDataPointer.
@@ -134,8 +100,107 @@ string DataColumn::DataType() {return m_strDataType;}
 **/
 void DataColumn::DataType(string strType)
 {
+	if(Std_IsBlank(strType)) 
+		THROW_TEXT_ERROR(Std_Err_lBlankAttrib, Std_Err_strBlankAttrib, "Attribute: DataType");
+
 	m_strDataType = strType;
-	Initialize();
+}
+
+/**
+\brief	Gets the GUID ID of the item to chart.
+
+\author	dcofer
+\date	3/26/2011
+
+\return	ID of item to chart.
+**/
+string DataColumn::TargetID() {return m_strTargetID;}
+
+/**
+\brief	Sets the GUID ID of teh item to chart.
+
+\author	dcofer
+\date	3/26/2011
+
+\param	strID	ID of the item to chart. 
+**/
+void DataColumn::TargetID(string strID)
+{
+	if(Std_IsBlank(strID)) 
+		THROW_TEXT_ERROR(Std_Err_lBlankAttrib, Std_Err_strBlankAttrib, "Attribute: TargetID");
+	m_strTargetID = strID;
+}
+
+/**
+\brief	Gets how many spaces to append.
+
+\author	dcofer
+\date	3/26/2011
+
+\return	Number of appends spaces.
+**/
+int DataColumn::AppendSpaces() {return m_iAppendSpaces;}
+
+/**
+\brief	Sets whether to append spaces.
+
+\author	dcofer
+\date	3/26/2011
+
+\param	iSpaces	The spaces to append. 
+**/
+void DataColumn::AppendSpaces(int iSpaces)
+{
+	Std_InValidRange((int) 0, (int) 10, iSpaces, TRUE, "AppendSpaces");
+	m_iAppendSpaces = iSpaces;
+}
+
+/**
+\brief	Gets the column index.
+
+\author	dcofer
+\date	3/26/2011
+
+\return	Column index.
+**/
+int DataColumn::ColumnIndex() {return m_iColumnIndex;}
+
+/**
+\brief	Sets the Column index.
+
+\author	dcofer
+\date	3/26/2011
+
+\param	iIndex	Zero-based index of the column. 
+**/
+void DataColumn::ColumnIndex(int iIndex)
+{
+	Std_IsAboveMin((int) -1, iIndex, TRUE, "ColumnIndex", TRUE);
+	m_iColumnIndex = iIndex;
+}
+
+/**
+\brief	Gets the row index.
+
+\author	dcofer
+\date	3/26/2011
+
+\return	row index.
+**/
+int DataColumn::RowIndex() {return m_iRowIndex;}
+
+/**
+\brief	Sets the Row index.
+
+\author	dcofer
+\date	3/26/2011
+
+\param	iIndex	Zero-based index of the row. 
+**/
+void DataColumn::RowIndex(int iIndex)
+{
+	Std_IsAboveMin((int) -1, iIndex, TRUE, "RowIndex", TRUE);
+	m_iRowIndex = iIndex;
 }
 
 /**
@@ -192,15 +257,19 @@ BOOL DataColumn::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
+	if(AnimatBase::SetData(strDataType, strValue, FALSE))
+		return TRUE;
+
 	if(strType == "COLUMNINDEX")
 	{
-		Index(atoi(strValue.c_str()));
+		//ColumnIndex(atoi(strValue.c_str()));
 		return TRUE;
 	}
 
 	if(strType == "DATATYPE")
 	{
 		DataType(strValue);
+		Initialize();
 		return TRUE;
 	}
 
@@ -221,7 +290,7 @@ BOOL DataColumn::SetData(string strDataType, string strValue, BOOL bThrowError)
 **/
 void DataColumn::SaveColumnNames(ofstream &oStream)
 {
-	oStream << m_strColumnName;
+	oStream << m_strName;
 
 	if(m_iAppendSpaces > 0)
 	{
@@ -261,11 +330,8 @@ void DataColumn::StepSimulation()
 **/
 BOOL DataColumn::operator<(DataColumn *lpColumn)
 {
-	if(this->m_iIndex < lpColumn->m_iIndex)
+	if(this->m_iColumnIndex < lpColumn->m_iColumnIndex)
 		return TRUE;
-
-	//if(this->m_strID < lpColumn->m_strID)
-	//	return TRUE;
 
 	return FALSE;
 }
@@ -276,25 +342,11 @@ void DataColumn::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into DataColumn Element
 
-	m_strTargetID = oXml.GetChildString("TargetID");
-	if(Std_IsBlank(m_strTargetID)) 
-		THROW_TEXT_ERROR(Std_Err_lBlankAttrib, Std_Err_strBlankAttrib, "Attribute: TargetID");
-
-	m_strDataType = oXml.GetChildString("DataType");
-	if(Std_IsBlank(m_strDataType)) 
-		THROW_TEXT_ERROR(Std_Err_lBlankAttrib, Std_Err_strBlankAttrib, "Attribute: DataType");
-
-	m_strColumnName = oXml.GetChildString("ColumnName");
-	if(Std_IsBlank(m_strColumnName)) 
-		THROW_TEXT_ERROR(Std_Err_lBlankAttrib, Std_Err_strBlankAttrib, "Attribute: ColumnName");
-
-	m_iAppendSpaces = oXml.GetChildInt("AppendSpaces", m_iAppendSpaces);
-	Std_InValidRange((int) 0, (int) 10, m_iAppendSpaces, TRUE, "AppendSpaces");
-
-	m_iIndex = oXml.GetChildInt("Index", m_iIndex);
-
-	m_iColumnIndex = oXml.GetChildInt("Column", m_iColumnIndex);
-	m_iRowIndex = oXml.GetChildInt("Row", m_iColumnIndex);
+	TargetID(oXml.GetChildString("TargetID"));
+	DataType(oXml.GetChildString("DataType"));
+	AppendSpaces(oXml.GetChildInt("AppendSpaces", m_iAppendSpaces));
+	ColumnIndex(oXml.GetChildInt("Column", m_iColumnIndex));
+	RowIndex(oXml.GetChildInt("Row", m_iColumnIndex));
 
 	oXml.OutOfElem(); //OutOf DataColumn Element
 

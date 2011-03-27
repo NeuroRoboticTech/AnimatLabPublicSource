@@ -163,6 +163,9 @@ Namespace Forms.Tools
         Public Overloads Overrides Sub LoadExternalFile(ByVal strFilename As String)
             MyBase.LoadExternalFile(strFilename)
 
+            Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "DataChart", Me.GetSimulationXml("DataChart"), True)
+            InitializeSimulationReferences()
+
             CreateWorkspaceTreeView(m_doToolHolder, m_doToolHolder.WorkspaceNode)
         End Sub
 
@@ -188,6 +191,16 @@ Namespace Forms.Tools
 #End Region
 
 #Region " Events "
+
+        Protected Overrides Sub OnFormClosing(ByVal e As System.Windows.Forms.FormClosingEventArgs)
+            MyBase.OnFormClosing(e)
+
+            Try
+                Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, "DataChart", Me.ID, True)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
 
         Protected Overrides Sub OnFormClosed(ByVal e As System.Windows.Forms.FormClosedEventArgs)
             MyBase.OnFormClosed(e)

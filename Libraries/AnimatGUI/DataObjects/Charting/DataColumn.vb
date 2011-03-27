@@ -98,11 +98,15 @@ Namespace DataObjects.Charting
                 If Value.Trim.Length <= 0 Then
                     Throw New System.Exception("The name of the data column can not be blank.")
                 End If
+                SetSimData("Name", Value, True)
 
                 If m_bAutoAddToAxis Then
                     m_strName = Value
 
-                    If Not m_doParent Is Nothing AndAlso Not m_doParent.WorkspaceNode Is Nothing Then Me.CreateWorkspaceTreeView(m_doParent, m_doParent.WorkspaceNode)
+                    If Not m_doParent Is Nothing AndAlso Not m_doParent.WorkspaceNode Is Nothing Then
+                        Me.RemoveWorksapceTreeView()
+                        Me.CreateWorkspaceTreeView(m_doParent, m_doParent.WorkspaceNode)
+                    End If
                 Else
                     m_strName = Value
                 End If

@@ -705,7 +705,6 @@ Namespace Framework
 #Region " Workspace Methods "
 
         Public Overridable Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node)
-            'Me.RemoveWorksapceTreeView()
 
             m_tnWorkspaceNode = Util.ProjectWorkspace.AddTreeNode(doParentNode, Me.Name, Me.WorkspaceImageName)
             m_tnWorkspaceNode.Tag = Me

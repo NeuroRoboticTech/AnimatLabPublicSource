@@ -326,7 +326,10 @@ developers responsibilty to know what type of data is needed and to process it a
 BOOL AnimatBase::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	if(strDataType == "NAME")
+	{
 		Name(strValue);
+		return TRUE;
+	}
 
 	//If we are using the AnimatBase function then there are no data pointer, so throw an error.
 	if(bThrowError)

@@ -573,7 +573,9 @@ Namespace DataObjects.Charting
         End Property
 
         Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+            'We explicitly do NOT Call the base init here. The reason is that the Axis does not have a corresponding
+            ' object within the simulation. It is only an organiaztional tool within the GUI. It does not exist in the simulation.
+            'MyBase.InitializeSimulationReferences()
 
             Dim doColumn As AnimatGUI.DataObjects.Charting.DataColumn
             For Each deEntry As DictionaryEntry In m_aryDataColumns

@@ -42,18 +42,12 @@ namespace AnimatSim
 			/// Determines whether how many other tabs are added after this data is written to the file.
 			int m_iAppendSpaces;
 
-			/// Name of this column. This is saved out at the top of the file.
-			string m_strColumnName;
-
 			/// true it this chart has been initialized
 			BOOL m_bInitialized;
 
-			/// Zero-based index for this chart. This tells where in the data columns that this column should be saved out.
-			/// This is used for sorting the data columns into the correct order.
-			int m_iIndex;
-
-			///This index is only used for 3D Array type charts. For normal line charts it is simply -1.
-			///However, if it is not -1 then that means we want to specify the column and row where we should add the data for this column
+			///This index is used to determine where in the array buffer that the data is stored. This is direclty related to the
+			/// index in the array that is used in the GUI to retrieve the data, so they must match or the data plotted in the GUI
+			/// will be for a different variable.
 			int m_iColumnIndex;
 
 			///This index is only used for 3D Array type charts. For normal line charts it is simply -1.
@@ -66,17 +60,25 @@ namespace AnimatSim
 
 			virtual int ColumnCount();
 
-			virtual string ColumnName();
-			virtual void ColumnName(string strName);
-			
-			virtual int Index();
-			virtual void Index(int iIndex);
+			virtual void Name(string strValue);
 
 			virtual string DataType();
 			virtual void DataType(string strType);
 
+			virtual string TargetID();
+			virtual void TargetID(string strID);
+
+			virtual int AppendSpaces();
+			virtual void AppendSpaces(int iSpaces);
+
 			virtual BOOL IsInitialized();
 			virtual void IsInitialized(BOOL bVal);
+
+			virtual int ColumnIndex();
+			virtual void ColumnIndex(int iIndex);
+
+			virtual int RowIndex();
+			virtual void RowIndex(int iIndex);
 
 			virtual float *DataValue();
 			

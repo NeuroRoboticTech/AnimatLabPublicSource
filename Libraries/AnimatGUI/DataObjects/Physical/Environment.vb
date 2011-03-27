@@ -572,6 +572,7 @@ Namespace DataObjects.Physical
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node)
 
             MyBase.CreateWorkspaceTreeView(doParent, doParentNode)
+            m_tnWorkspaceNode.Select()
 
             m_tnOrganisms = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Organisms", "AnimatGUI.Organisms.gif")
             m_tnStructures = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Structures", "AnimatGUI.Structures.gif")

@@ -800,9 +800,6 @@ void DataChart::Load(CStdXml &oXml)
 	{
 		oXml.FindChildByIndex(iColumn);
 		lpColumn = LoadDataColumn(oXml);
-
-		if(lpColumn->Index() < 0)
-			lpColumn->Index(iColumn);
 	}
 
 	oXml.OutOfElem();
