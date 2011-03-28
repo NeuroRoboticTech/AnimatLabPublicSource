@@ -561,41 +561,19 @@ Namespace DataObjects.Physical
         Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As Point) As Boolean
 
             If tnSelectedNode Is m_tnWorkspaceNode Then
-                ' Create the menu items
-                Dim mcDelete As New MenuCommand("Delete Structure", "DeleteStructure", Util.Application.ToolStripImages.ImageList, _
-                                              Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Delete.gif"), _
-                                              New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
+                Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete Structure", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
+                Dim mcClone As New System.Windows.Forms.ToolStripMenuItem("Clone Structure", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Me.OnCloneStructure))
 
                 ' Create the popup menu object
-                Dim popup As New PopupMenu
-
-                Dim mcClone As New MenuCommand("Clone Structure", "CloneStructure", _
-                                                      New EventHandler(AddressOf Me.OnCloneStructure))
-
-                ' Define the list of menu commands
-                popup.MenuCommands.AddRange(New MenuCommand() {mcDelete, mcClone})
-
+                Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Physical.PhysicalStructure.WorkspaceTreeviewPopupMenu", Util.SecurityMgr)
+                popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcDelete, mcClone})
 
                 If Me.RootBody Is Nothing Then
-                    Dim mcAddRoot As New MenuCommand("Add root body", "AddRootBody", _
-                                                      New EventHandler(AddressOf Me.OnAddRootBody))
-                    popup.MenuCommands.Add(mcAddRoot)
+                    Dim mcAddRoot As New System.Windows.Forms.ToolStripMenuItem("Add root body", Util.Application.ToolStripImages.GetImage("AnimatGUI.Blank.gif"), New EventHandler(AddressOf Me.OnAddRootBody))
+                    popup.Items.Add(mcAddRoot)
                 End If
 
-                Dim mcSepExpand As MenuCommand = New MenuCommand("-")
-                Dim mcExpandAll As New MenuCommand("Expand All", tnSelectedNode, _
-                                                  New EventHandler(AddressOf Me.OnExpandAll))
-                Dim mcCollapseAll As New MenuCommand("Collapse All", tnSelectedNode, _
-                                                  New EventHandler(AddressOf Me.OnCollapseAll))
-                popup.MenuCommands.AddRange(New MenuCommand() {mcSepExpand, mcExpandAll, mcCollapseAll})
-
-                mcExpandAll.ImageList = Util.Application.ToolStripImages.ImageList
-                mcExpandAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Expand.gif")
-                mcCollapseAll.ImageList = Util.Application.ToolStripImages.ImageList
-                mcCollapseAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Collapse.gif")
-
-                ' Show it!
-                Dim selected As MenuCommand = popup.TrackPopup(ptPoint)
+                Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
 
                 Return True
             ElseIf tnSelectedNode Is m_tnBodyPlanNode Then
@@ -616,71 +594,6 @@ Namespace DataObjects.Physical
         End Function
 
 #End Region
-
-        '#Region " BodyPlan TreeView "
-
-        '        Public Overridable Sub CreateBodyPlanTreeView(ByVal dsSim As AnimatGUI.DataObjects.Simulation, _
-        '                                                       ByRef frmHierarchy As Forms.BodyPlan.Hierarchy)
-
-        '            frmHierarchy.TreeView.Nodes.Clear()
-
-        '            Dim myAssembly As System.Reflection.Assembly
-        '            myAssembly = System.Reflection.Assembly.Load("AnimatGUI")
-        '            frmHierarchy.ImageManager.AddImage(myAssembly, Me.WorkspaceImageName)
-
-        '            m_bpStructureNode = frmHierarchy.TreeView.Nodes.Add(Me.Name)
-        '            m_bpStructureNode.ImageIndex = frmHierarchy.ImageManager.GetImageIndex(Me.WorkspaceImageName)
-        '            m_bpStructureNode.SelectedImageIndex = frmHierarchy.ImageManager.GetImageIndex(Me.WorkspaceImageName)
-        '            m_bpStructureNode.Tag = Me
-
-        '            If Not m_dbRoot Is Nothing Then
-        '                m_dbRoot.CreateBodyPlanTreeView(dsSim, Me, Nothing, frmHierarchy)
-        '            End If
-
-        '            frmHierarchy.TreeView.ExpandAll()
-
-        '        End Sub
-
-        '        Public Overridable Function BodyPlanTreeviewPopupMenu(ByRef tnSelectedNode As TreeNode, ByVal ptPoint As Point) As Boolean
-
-        '            If tnSelectedNode Is m_bpStructureNode Then
-        '                ' Create the popup menu object
-        '                Dim popup As New PopupMenu
-
-        '                ' Create the menu items
-        '                Dim mcExpandAll As New MenuCommand("Expand All", tnSelectedNode, _
-        '                                                  New EventHandler(AddressOf Me.OnExpandAll))
-        '                Dim mcCollapseAll As New MenuCommand("Collapse All", tnSelectedNode, _
-        '                                                  New EventHandler(AddressOf Me.OnCollapseAll))
-        '                popup.MenuCommands.AddRange(New MenuCommand() {mcExpandAll, mcCollapseAll})
-
-        '                mcExpandAll.ImageList = Util.Application.ToolStripImages.ImageList
-        '                mcExpandAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Expand.gif")
-        '                mcCollapseAll.ImageList = Util.Application.ToolStripImages.ImageList
-        '                mcCollapseAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Collapse.gif")
-
-        '                ' Show it!
-        '                Dim selected As MenuCommand = popup.TrackPopup(ptPoint)
-
-        '                Return True
-        '            ElseIf Not m_dbRoot Is Nothing Then
-        '                'Lets check the rigidbody/joint objects below this one.
-        '                Return m_dbRoot.BodyPlanTreeviewPopupMenu(tnSelectedNode, ptPoint)
-        '            End If
-
-        '            Return False
-        '        End Function
-
-        '        Public Overridable Function BodyPlanTreeviewDoubleClick(ByRef tnSelectedNode As TreeNode) As Boolean
-
-        '            If tnSelectedNode Is m_tnWorkspaceNode Then
-        '                Return True
-        '            End If
-
-        '            Return False
-        '        End Function
-
-        '#End Region
 
 #Region " Data Item TreeView "
 

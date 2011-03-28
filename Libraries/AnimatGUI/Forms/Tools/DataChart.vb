@@ -334,38 +334,21 @@ Namespace Forms.Tools
         Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As System.Drawing.Point) As Boolean
 
             If tnSelectedNode Is Me.WorkspaceNode Then
-                ' Create the menu items
-                Dim mcDelete As New MenuCommand("Delete Chart", "DeleteChart", Util.Application.ToolStripImages.ImageList, _
-                                                  Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Delete.gif"), _
-                                                  New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
-                Dim mcAddAxis As New MenuCommand("Add Axis", "AddAxis", Util.Application.ToolStripImages.ImageList, _
-                                                  Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.AddChartAxis.gif"), _
-                                                  New EventHandler(AddressOf Me.OnAddAxis))
-                Dim mcClearCharts As New MenuCommand("Clear Charts", "ClearCharts", _
-                                                  New EventHandler(AddressOf Me.OnClearCharts))
+                Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete Chart", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
+                Dim mcAddAxis As New System.Windows.Forms.ToolStripMenuItem("Add Axis", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddChartAxis.gif"), New EventHandler(AddressOf Me.OnAddAxis))
+                Dim mcClearCharts As New System.Windows.Forms.ToolStripMenuItem("Clear Charts", Util.Application.ToolStripImages.GetImage("AnimatGUI.Blank.gif"), New EventHandler(AddressOf Me.OnClearCharts))
+                Dim mcSepExpand As New ToolStripSeparator()
+                Dim mcExpandAll As New System.Windows.Forms.ToolStripMenuItem("Expand All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Expand.gif"), New EventHandler(AddressOf Me.OnExpandAll))
+                Dim mcCollapseAll As New System.Windows.Forms.ToolStripMenuItem("Collapse All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Collapse.gif"), New EventHandler(AddressOf Me.OnCollapseAll))
 
-                Dim mcSepExpand As MenuCommand = New MenuCommand("-")
-                Dim mcExpandAll As New MenuCommand("Expand All", tnSelectedNode, _
-                                                  New EventHandler(AddressOf Me.OnExpandAll))
-                Dim mcCollapseAll As New MenuCommand("Collapse All", tnSelectedNode, _
-                                                  New EventHandler(AddressOf Me.OnCollapseAll))
-
-                mcExpandAll.ImageList = Util.Application.ToolStripImages.ImageList
-                mcExpandAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Expand.gif")
-                mcCollapseAll.ImageList = Util.Application.ToolStripImages.ImageList
-                mcCollapseAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Collapse.gif")
+                mcExpandAll.Tag = tnSelectedNode
+                mcCollapseAll.Tag = tnSelectedNode
 
                 ' Create the popup menu object
-                Dim popup As New PopupMenu
-                popup.MenuCommands.Add(mcDelete)
-                If m_aryAxisList.Count < 6 Then
-                    popup.MenuCommands.Add(mcAddAxis)
-                End If
-                popup.MenuCommands.Add(mcClearCharts)
-                popup.MenuCommands.AddRange(New MenuCommand() {mcSepExpand, mcExpandAll, mcCollapseAll})
+                Dim popup As New AnimatContextMenuStrip("AnimatGUI.Forms.Tools.DataChart.WorkspaceTreeviewPopupMenu", Util.SecurityMgr)
+                popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcDelete, mcAddAxis, mcClearCharts, mcSepExpand, mcExpandAll, mcCollapseAll})
 
-                ' Show it!
-                Dim selected As MenuCommand = popup.TrackPopup(ptPoint)
+                Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
 
                 Return True
             Else

@@ -170,19 +170,19 @@ Namespace DataObjects.Physical
         Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As Point) As Boolean
 
             If tnSelectedNode Is m_tnWorkspaceNode Then
-                Dim mcInsert As System.Windows.Forms.ToolStripMenuItem
-
                 Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete Organism", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
                 Dim mcClone As New System.Windows.Forms.ToolStripMenuItem("Clone Organism", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Me.OnCloneStructure))
 
                 ' Create the popup menu object
                 Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Physical.Organism.WorkspaceTreeviewPopupMenu", Util.SecurityMgr)
-                popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcInsert, mcClone})
+                popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcDelete, mcClone})
 
                 If Me.RootBody Is Nothing Then
-                    Dim mcAddRoot As New System.Windows.Forms.ToolStripMenuItem("Add root body", Util.Application.ToolStripImages.GetImage("AnimatGUI.NOTHING.gif"), New EventHandler(AddressOf Me.OnAddRootBody))
+                    Dim mcAddRoot As New System.Windows.Forms.ToolStripMenuItem("Add root body", Util.Application.ToolStripImages.GetImage("AnimatGUI.Blank.gif"), New EventHandler(AddressOf Me.OnAddRootBody))
                     popup.Items.Add(mcAddRoot)
                 End If
+
+                Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
 
                 Return True
             ElseIf tnSelectedNode Is m_tnBodyPlanNode OrElse tnSelectedNode Is m_tnBehavioralSystem Then

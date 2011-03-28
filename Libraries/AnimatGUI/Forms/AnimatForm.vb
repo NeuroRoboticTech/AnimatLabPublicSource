@@ -738,11 +738,11 @@ Namespace Forms
         Protected Overridable Sub OnExpandAll(ByVal sender As Object, ByVal e As System.EventArgs)
 
             Try
-                If Not sender Is Nothing AndAlso TypeOf sender Is Crownwood.Magic.Menus.MenuCommand Then
-                    Dim mcCommand As Crownwood.Magic.Menus.MenuCommand = DirectCast(sender, Crownwood.Magic.Menus.MenuCommand)
+                If Not sender Is Nothing AndAlso TypeOf sender Is ToolStripMenuItem Then
+                    Dim mcCommand As ToolStripMenuItem = DirectCast(sender, ToolStripMenuItem)
 
-                    If Not mcCommand.Tag Is Nothing AndAlso TypeOf mcCommand.Tag Is TreeNode Then
-                        Dim tnNode As TreeNode = DirectCast(mcCommand.Tag, TreeNode)
+                    If Not mcCommand.Tag Is Nothing AndAlso TypeOf mcCommand.Tag Is Crownwood.DotNetMagic.Controls.Node Then
+                        Dim tnNode As Crownwood.DotNetMagic.Controls.Node = DirectCast(mcCommand.Tag, Crownwood.DotNetMagic.Controls.Node)
                         tnNode.ExpandAll()
                     End If
                 End If
@@ -756,11 +756,11 @@ Namespace Forms
         Protected Overridable Sub OnCollapseAll(ByVal sender As Object, ByVal e As System.EventArgs)
 
             Try
-                If Not sender Is Nothing AndAlso TypeOf sender Is Crownwood.Magic.Menus.MenuCommand Then
-                    Dim mcCommand As Crownwood.Magic.Menus.MenuCommand = DirectCast(sender, Crownwood.Magic.Menus.MenuCommand)
+                If Not sender Is Nothing AndAlso TypeOf sender Is ToolStripMenuItem Then
+                    Dim mcCommand As ToolStripMenuItem = DirectCast(sender, ToolStripMenuItem)
 
-                    If Not mcCommand.Tag Is Nothing AndAlso TypeOf mcCommand.Tag Is TreeNode Then
-                        Dim tnNode As TreeNode = DirectCast(mcCommand.Tag, TreeNode)
+                    If Not mcCommand.Tag Is Nothing AndAlso TypeOf mcCommand.Tag Is Crownwood.DotNetMagic.Controls.Node Then
+                        Dim tnNode As Crownwood.DotNetMagic.Controls.Node = DirectCast(mcCommand.Tag, Crownwood.DotNetMagic.Controls.Node)
                         tnNode.Collapse()
                     End If
                 End If

@@ -420,62 +420,41 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overridable Function BodyPlanTreeviewPopupMenu(ByRef tnSelectedNode As TreeNode, ByVal ptPoint As Point) As Boolean
+        Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As System.Drawing.Point) As Boolean
 
             If tnSelectedNode Is m_bpBodyNode Then
-                ' Create the popup menu object
-                Dim popup As New PopupMenu
-
-                ' Create the menu items
+                Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Physical.BodyPart.WorkspaceTreeviewPopupMenu", Util.SecurityMgr)
 
                 If Me.AllowStimulus AndAlso Me.CompatibleStimuli.Count > 0 Then
                     ' Create the menu items
-                    Dim mcAddStimulus As New MenuCommand("Add Stimulus", "AddStimulus", Util.Application.ToolStripImages.ImageList, _
-                                                         Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.AddStimulus.gif"), _
-                                                         New EventHandler(AddressOf Me.OnAddStimulus))
-                    popup.MenuCommands.Add(mcAddStimulus)
+                    Dim mcAddStimulus As New System.Windows.Forms.ToolStripMenuItem("Add Stimulus", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddStimulus.gif"), New EventHandler(AddressOf Me.OnAddStimulus))
+                    popup.Items.Add(mcAddStimulus)
                 End If
 
-                Dim mcSwapPart As New MenuCommand("Swap Part", "SwapPart", Util.Application.ToolStripImages.ImageList, _
-                                             Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Swap.gif"), _
-                                             New EventHandler(AddressOf Me.OnSwapBodyPart))
-                popup.MenuCommands.Add(mcSwapPart)
+                Dim mcSwapPart As New System.Windows.Forms.ToolStripMenuItem("Swap Part", Util.Application.ToolStripImages.GetImage("AnimatGUI.Swap.gif"), New EventHandler(AddressOf Me.OnSwapBodyPart))
+                popup.Items.Add(mcSwapPart)
 
-                Dim mcCut As New MenuCommand("Cut", "Cut", Util.Application.ToolStripImages.ImageList, _
-                                             Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Cut.gif"), _
-                                             Shortcut.CtrlX, New EventHandler(AddressOf Me.OnCutBodyPart))
-                Dim mcCopy As New MenuCommand("Copy", "Copy", Util.Application.ToolStripImages.ImageList, _
-                                                Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Copy.gif"), _
-                                                Shortcut.CtrlC, New EventHandler(AddressOf Me.OnCopyBodyPart))
-                Dim mcDelete As New MenuCommand("Delete", "Delete", Util.Application.ToolStripImages.ImageList, _
-                                                     Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Delete.gif"), _
-                                                     New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
-                popup.MenuCommands.AddRange(New MenuCommand() {mcCut, mcCopy, mcDelete})
+                Dim mcCut As New System.Windows.Forms.ToolStripMenuItem("Cut", Util.Application.ToolStripImages.GetImage("AnimatGUI.Cut.gif"), New EventHandler(AddressOf Me.OnCutBodyPart))
+                Dim mcCopy As New System.Windows.Forms.ToolStripMenuItem("Copy", Util.Application.ToolStripImages.GetImage("AnimatGUI.Copy.gif"), New EventHandler(AddressOf Me.OnCopyBodyPart))
+                Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete Chart", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
+                popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcCut, mcCopy, mcDelete})
 
                 If Not Me.ParentStructure Is Nothing AndAlso Not Me.ParentStructure.BodyEditor Is Nothing Then
-                    Util.Application.ToolStripImages.AddImage("AnimatGUI.Relabel.gif")
-                    Dim mcRelabel As New MenuCommand("Relabel Children", "RelabelChildren", Util.Application.ToolStripImages.ImageList, _
-                                                      Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Relabel.gif"), _
-                                                      New EventHandler(AddressOf Me.OnRelabelChildren))
-                    popup.MenuCommands.Add(mcRelabel)
+                    Dim mcRelabel As New System.Windows.Forms.ToolStripMenuItem("Relabel Children", Util.Application.ToolStripImages.GetImage("AnimatGUI.Relabel.gif"), New EventHandler(AddressOf Me.OnRelabelChildren))
+                    popup.Items.Add(mcRelabel)
                 End If
 
+                Dim mcSepExpand As New ToolStripSeparator()
+                Dim mcExpandAll As New System.Windows.Forms.ToolStripMenuItem("Expand All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Expand.gif"), New EventHandler(AddressOf Me.OnExpandAll))
+                Dim mcCollapseAll As New System.Windows.Forms.ToolStripMenuItem("Collapse All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Collapse.gif"), New EventHandler(AddressOf Me.OnCollapseAll))
 
-                Dim mcSepExpand As MenuCommand = New MenuCommand("-")
-                Dim mcExpandAll As New MenuCommand("Expand All", tnSelectedNode, _
-                                                  New EventHandler(AddressOf Me.OnExpandAll))
-                Dim mcCollapseAll As New MenuCommand("Collapse All", tnSelectedNode, _
-                                                  New EventHandler(AddressOf Me.OnCollapseAll))
+                mcExpandAll.Tag = tnSelectedNode
+                mcCollapseAll.Tag = tnSelectedNode
 
-                mcExpandAll.ImageList = Util.Application.ToolStripImages.ImageList
-                mcExpandAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Expand.gif")
-                mcCollapseAll.ImageList = Util.Application.ToolStripImages.ImageList
-                mcCollapseAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Collapse.gif")
+                ' Create the popup menu object
+                popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcSepExpand, mcExpandAll, mcCollapseAll})
 
-                popup.MenuCommands.AddRange(New MenuCommand() {mcSepExpand, mcExpandAll, mcCollapseAll})
-
-                ' Show it!
-                Dim selected As MenuCommand = popup.TrackPopup(ptPoint)
+                Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
 
                 Return True
             End If

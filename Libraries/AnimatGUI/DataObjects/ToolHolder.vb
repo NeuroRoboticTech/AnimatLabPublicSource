@@ -194,18 +194,13 @@ Namespace DataObjects
         Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As Point) As Boolean
 
             If tnSelectedNode Is m_tnWorkspaceNode Then
-
-                ' Create the menu items
-                Dim mcDelete As New MenuCommand("Delete Viewer ", "DeleteViewer", Util.Application.ToolStripImages.ImageList, _
-                                                  Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Delete.gif"), _
-                                                  New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
+                Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete Viewer", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
 
                 ' Create the popup menu object
-                Dim popup As New PopupMenu
-                popup.MenuCommands.Add(mcDelete)
+                Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.ToolHolder.WorkspaceTreeviewPopupMenu", Util.SecurityMgr)
+                popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcDelete})
 
-                ' Show it!
-                Dim selected As MenuCommand = popup.TrackPopup(ptPoint)
+                Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
 
                 Return True
             End If

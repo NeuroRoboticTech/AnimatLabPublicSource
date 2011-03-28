@@ -733,13 +733,13 @@ Namespace DataObjects.Physical
             MyBase.RemoveWorksapceTreeView()
         End Sub
 
-        Public Overrides Function BodyPlanTreeviewPopupMenu(ByRef tnSelectedNode As TreeNode, ByVal ptPoint As Point) As Boolean
+        Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As System.Drawing.Point) As Boolean
 
             If tnSelectedNode Is m_bpBodyNode Then
-                Return MyBase.BodyPlanTreeviewPopupMenu(tnSelectedNode, ptPoint)
+                Return MyBase.WorkspaceTreeviewPopupMenu(tnSelectedNode, ptPoint)
             Else
                 If Not m_JointToParent Is Nothing Then
-                    If m_JointToParent.BodyPlanTreeviewPopupMenu(tnSelectedNode, ptPoint) Then
+                    If m_JointToParent.WorkspaceTreeviewPopupMenu(tnSelectedNode, ptPoint) Then
                         Return True
                     End If
                 End If
@@ -747,7 +747,7 @@ Namespace DataObjects.Physical
                 Dim doChild As AnimatGUI.DataObjects.Physical.RigidBody
                 For Each deEntry As DictionaryEntry In m_aryChildBodies
                     doChild = DirectCast(deEntry.Value, DataObjects.Physical.RigidBody)
-                    If doChild.BodyPlanTreeviewPopupMenu(tnSelectedNode, ptPoint) Then
+                    If doChild.WorkspaceTreeviewPopupMenu(tnSelectedNode, ptPoint) Then
                         Return True
                     End If
                 Next

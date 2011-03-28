@@ -366,19 +366,17 @@ Namespace DataObjects
             If m_doEnvironment.WorkspaceTreeviewPopupMenu(tnSelectedNode, ptPoint) Then Return True
 
             If tnSelectedNode Is m_tnWorkspaceNode Then
-                Dim popup As New PopupMenu
-                Dim mcExpandAll As New MenuCommand("Expand All", tnSelectedNode, _
-                                                  New EventHandler(AddressOf Me.OnExpandAll))
-                Dim mcCollapseAll As New MenuCommand("Collapse All", tnSelectedNode, _
-                                                  New EventHandler(AddressOf Me.OnCollapseAll))
+                Dim mcExpandAll As New System.Windows.Forms.ToolStripMenuItem("Expand All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Expand.gif"), New EventHandler(AddressOf Me.OnExpandAll))
+                Dim mcCollapseAll As New System.Windows.Forms.ToolStripMenuItem("Collapse All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Collapse.gif"), New EventHandler(AddressOf Me.OnCollapseAll))
 
-                mcExpandAll.ImageList = Util.Application.ToolStripImages.ImageList
-                mcExpandAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Expand.gif")
-                mcCollapseAll.ImageList = Util.Application.ToolStripImages.ImageList
-                mcCollapseAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Collapse.gif")
+                mcExpandAll.Tag = tnSelectedNode
+                mcCollapseAll.Tag = tnSelectedNode
 
-                popup.MenuCommands.AddRange(New MenuCommand() {mcExpandAll, mcCollapseAll})
-                Dim selected As MenuCommand = popup.TrackPopup(ptPoint)
+                ' Create the popup menu object
+                Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Simulation.WorkspaceTreeviewPopupMenu", Util.SecurityMgr)
+                popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcExpandAll, mcCollapseAll})
+
+                Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
 
                 Return True
             End If
@@ -414,40 +412,30 @@ Namespace DataObjects
 
         Protected Overridable Sub CreateToolViewerPopupMenu(ByVal tnSelected As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As Point)
 
-            Dim popup As New PopupMenu
+            Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Simulation.CreateToolViewerPopupMenu", Util.SecurityMgr)
 
             If Util.Application.ToolPlugins.Count > 0 Then
-                Dim mcAddTool As New MenuCommand("Add Data Tool", "AddToolViewer")
+                Dim mcAddTool As New System.Windows.Forms.ToolStripMenuItem("Add Data Tool", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddDataTool.gif"))
 
-                mcAddTool.ImageList = Util.Application.ToolStripImages.ImageList
-                mcAddTool.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.AddDataTool.gif")
-
-                Dim mcTool As MenuCommand
                 For Each doTool As Forms.Tools.ToolForm In Util.Application.ToolPlugins
-                    mcTool = New MenuCommand(doTool.Name, New EventHandler(AddressOf Me.OnAddToolViewer))
-                    mcTool.Tag = doTool
-                    Util.Application.ToolStripImages.AddImage(doTool.TabImageName, doTool.TabImage)
-                    mcTool.ImageList = Util.Application.ToolStripImages.ImageList
-                    mcTool.ImageIndex = Util.Application.ToolStripImages.GetImageIndex(doTool.TabImageName)
-                    mcAddTool.MenuCommands.Add(mcTool)
+                    Dim mcTool As New System.Windows.Forms.ToolStripMenuItem(doTool.Name, doTool.TabImage, New EventHandler(AddressOf Me.OnAddToolViewer))
+                    mcAddTool.DropDown.Items.Add(mcTool)
                 Next
 
-                popup.MenuCommands.Add(mcAddTool)
+                popup.Items.Add(mcAddTool)
             End If
 
-            Dim mcSepExpand As MenuCommand = New MenuCommand("-")
-            Dim mcExpandAll As New MenuCommand("Expand All", tnSelected, _
-                                              New EventHandler(AddressOf Me.OnExpandAll))
-            Dim mcCollapseAll As New MenuCommand("Collapse All", tnSelected, _
-                                              New EventHandler(AddressOf Me.OnCollapseAll))
+            Dim mcSepExpand As New ToolStripSeparator()
+            Dim mcExpandAll As New System.Windows.Forms.ToolStripMenuItem("Expand All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Expand.gif"), New EventHandler(AddressOf Me.OnExpandAll))
+            Dim mcCollapseAll As New System.Windows.Forms.ToolStripMenuItem("Collapse All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Collapse.gif"), New EventHandler(AddressOf Me.OnCollapseAll))
 
-            mcExpandAll.ImageList = Util.Application.ToolStripImages.ImageList
-            mcExpandAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Expand.gif")
-            mcCollapseAll.ImageList = Util.Application.ToolStripImages.ImageList
-            mcCollapseAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Collapse.gif")
+            mcExpandAll.Tag = tnSelected
+            mcCollapseAll.Tag = tnSelected
 
-            popup.MenuCommands.AddRange(New MenuCommand() {mcSepExpand, mcExpandAll, mcCollapseAll})
-            Dim selected As MenuCommand = popup.TrackPopup(ptPoint)
+            ' Create the popup menu object
+            popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcSepExpand, mcExpandAll, mcCollapseAll})
+
+            Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
 
             Return
 
@@ -455,20 +443,17 @@ Namespace DataObjects
 
         Protected Overridable Sub CreateStimuliPopupMenu(ByVal tnSelected As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As Point)
 
-            Dim popup As New PopupMenu
+            Dim mcExpandAll As New System.Windows.Forms.ToolStripMenuItem("Expand All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Expand.gif"), New EventHandler(AddressOf Me.OnExpandAll))
+            Dim mcCollapseAll As New System.Windows.Forms.ToolStripMenuItem("Collapse All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Collapse.gif"), New EventHandler(AddressOf Me.OnCollapseAll))
 
-            Dim mcExpandAll As New MenuCommand("Expand All", tnSelected, _
-                                              New EventHandler(AddressOf Me.OnExpandAll))
-            Dim mcCollapseAll As New MenuCommand("Collapse All", tnSelected, _
-                                              New EventHandler(AddressOf Me.OnCollapseAll))
+            mcExpandAll.Tag = tnSelected
+            mcCollapseAll.Tag = tnSelected
 
-            mcExpandAll.ImageList = Util.Application.ToolStripImages.ImageList
-            mcExpandAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Expand.gif")
-            mcCollapseAll.ImageList = Util.Application.ToolStripImages.ImageList
-            mcCollapseAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Collapse.gif")
+            ' Create the popup menu object
+            Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Simulation.CreateStimuliPopupMenu", Util.SecurityMgr)
+            popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcExpandAll, mcCollapseAll})
 
-            popup.MenuCommands.AddRange(New MenuCommand() {mcExpandAll, mcCollapseAll})
-            Dim selected As MenuCommand = popup.TrackPopup(ptPoint)
+            Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
 
             Return
 
@@ -953,8 +938,8 @@ Namespace DataObjects
         Protected Overridable Sub OnAddToolViewer(ByVal sender As Object, ByVal e As System.EventArgs)
 
             Try
-                If TypeOf sender Is MenuCommand Then
-                    Dim mcCommand As MenuCommand = DirectCast(sender, MenuCommand)
+                If TypeOf sender Is ToolStripMenuItem Then
+                    Dim mcCommand As ToolStripMenuItem = DirectCast(sender, ToolStripMenuItem)
 
                     If Not mcCommand.Tag Is Nothing AndAlso TypeOf mcCommand.Tag Is Forms.Tools.ToolForm Then
                         Dim doTool As Forms.Tools.ToolForm = DirectCast(mcCommand.Tag, Forms.Tools.ToolForm)
