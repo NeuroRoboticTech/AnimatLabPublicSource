@@ -98,7 +98,7 @@ namespace AnimatSim
 			/// Manager for SimulationWindows
 			SimulationWindowMgr *m_lpWinMgr;
 
-			//This is the currect visual selection mode used within the GUI.
+			///This is the currect visual selection mode used within the GUI.
 			int m_iSelectionMode;
 
 			/// true if the AddBodies mode is enabled within the GUI.
@@ -365,10 +365,37 @@ namespace AnimatSim
 
 #pragma region AddRemoveMethods
 
+			/**
+			\brief	Adds a new organism to the list of structures for this simulation.
+
+			\details This method gets a list of all organisms and a list of referneces to
+			all structures in this simulation that are mapped to their
+			ID value. This allows us to use the STL find funtions to find organisms.
+			This is more efficeient that using a loop and recursion.
+			This also allows us to ensure that each organism/structure that is
+			being added has a unique ID value. If you attempt to add a organism that
+			has a ID that is already in the list then an exception will be thrown.
+			Note that this method is NOT creating the object itself, that is done
+			elsewhere. It is simply adding it to the organism list and adding 
+			a reference to that created object to m_aryAllStructures list.
+
+			\author	dcofer
+			\date	3/28/2011
+
+			\param [in,out]	lpOrganism	Pointer to an organism. 
+			**/
 			void AddOrganism(Organism *lpOrganism);
 			void AddOrganism(string strXml);
 			void RemoveOrganism(string strID, BOOL bThrowError = TRUE);
 
+			/**
+			\brief	Adds a new "static" structure to the list of structures for this simulation.
+
+			\author	dcofer
+			\date	3/28/2011
+
+			\param [in,out]	lpStructure	Pointer to the structure to add. 
+			**/
 			void AddStructure(Structure *lpStructure);
 			void AddStructure(string strXml);
 			void RemoveStructure(string strID, BOOL bThrowError = TRUE);
@@ -407,9 +434,25 @@ namespace AnimatSim
 #pragma endregion
 
 #pragma region RecorderMethods
+
+			/**
+			\brief	Creates the simulation recorder.
 			
+			\author	dcofer
+			\date	3/28/2011
+			
+			\return	Pointer to the SimulationRecorder.
+			**/
 			virtual SimulationRecorder *CreateSimulationRecorder() = 0;
+
 			virtual long CalculateSnapshotByteSize();
+
+			/**
+			\brief	Takes a snapshot of the current frame.
+			
+			\author	dcofer
+			\date	3/28/2011
+			**/
 			virtual void SnapshotStopFrame() = 0;
 
 			virtual void RecordVideoFrame();
@@ -585,10 +628,44 @@ namespace AnimatSim
 			virtual int VideoLoops();
 			virtual void VideoLoops(int iVal);
 
+			/**
+			\brief	Gets the video recorder.
+
+			\author	dcofer
+			\date	3/28/2011
+
+			\return	Pointer to the video recorder.
+			**/
 			virtual KeyFrame *VideoRecorder();
+
+			/**
+			\brief	Sets the video recorder.
+
+			\author	dcofer
+			\date	3/28/2011
+
+			\param [in,out]	lpFrame	Pointer to a frame. 
+			**/
 			virtual void VideoRecorder(KeyFrame *lpFrame);
 
+			/**
+			\brief	Gets the video playback frame.
+
+			\author	dcofer
+			\date	3/28/2011
+
+			\return	Pointer to the video playback frame.
+			**/
 			virtual KeyFrame *VideoPlayback();
+
+			/**
+			\brief	Sets the video playback frame.
+
+			\author	dcofer
+			\date	3/28/2011
+
+			\param [in,out]	lpFrame	Pointer to the video playback frame. 
+			**/
 			virtual void VideoPlayback(KeyFrame *lpFrame);
 
 			virtual BOOL EnableSimRecording();
@@ -612,14 +689,98 @@ namespace AnimatSim
 			virtual void Reset(); //Resets the entire application back to the default state 
 			virtual void ResetSimulation(); //Resets the current simulation back to time 0.0
 
+			/**
+			\brief	Initializes this object.
+			
+			\author	dcofer
+			\date	3/28/2011
+
+			\details This is a pure virtual method that must be implemented in the simulator application.
+			 It is where a lot of the nitty gritty details are done with initializing and 
+			 setting up the physics engine so that it can run. It is also where we initialize
+			 each structure to tell them to create their parts and joints.
+
+			\param	argc	The argc parameter from the command line. 
+			\param	argv	The argv parameter from the command line. 
+			**/
 			virtual void Initialize(int argc, const char **argv) = 0;
+
+			/**
+			\brief	Step the simulation one complete physics time step.
+
+			\details This will step the simulation by one physics time step, but this may end up 
+			stepping the neural engines multiple times because they typically have smaller integration
+			time steps than the physics engine.
+			
+			\author	dcofer
+			\date	3/28/2011
+			**/
 			virtual void StepSimulation();
+
+			/**
+			\brief	Simulates the system.
+
+			\details This starts the simulation running. This method does not return until the simulation 
+			has been stopped. It is a blocking call. It loops through and calls the Step method repeatedly.
+			
+			\author	dcofer
+			\date	3/28/2011
+			**/
 			virtual void Simulate() = 0;
+
+			/**
+			\brief	Shuts down the simulation.
+			
+			\author	dcofer
+			\date	3/28/2011
+			**/
 			virtual void ShutdownSimulation() = 0;
+
+			/**
+			\brief	Toggles the simulation between running and paused.
+			
+			\author	dcofer
+			\date	3/28/2011
+			**/
 			virtual void ToggleSimulation() = 0;
+
+			/**
+			\brief	Stops the simulation and resets it.
+			
+			\author	dcofer
+			\date	3/28/2011
+			**/
 			virtual void StopSimulation() = 0;
+
+			/**
+			\brief	Starts the simulation.
+			
+			\author	dcofer
+			\date	3/28/2011
+			
+			\return	true if it succeeds, false if it fails.
+			**/
 			virtual BOOL StartSimulation() = 0;
+
+			/**
+			\brief	Pauses the simulation.
+			
+			\author	dcofer
+			\date	3/28/2011
+			
+			\return	true if it succeeds, false if it fails.
+			**/
 			virtual BOOL PauseSimulation() = 0;
+
+			/**
+			\brief	Runs the simulation.
+
+			\details This is different from the Simulate method. This is used when the AnimatSimulator is running standalone.
+			It Loads the simulation from the specified file, initailizes it, and the calls Simulate.
+			
+			\author	dcofer
+			\date	3/28/2011
+			**/
 			virtual void RunSimulation();
 
 #pragma endregion
@@ -628,7 +789,6 @@ namespace AnimatSim
 
 			virtual void Load(string strFileName = "");
 			virtual void Load(CStdXml &oXml);
-			virtual void Save(string strFile);
 
 			static IStdClassFactory *LoadClassFactory(string strModuleName);
 
@@ -701,8 +861,32 @@ namespace AnimatSim
 #pragma region CollisionMethods
 
 			virtual void EnableCollisions(Structure *lpStruct, CStdPtrArray<CollisionPair> &m_aryCollisionList);
-			virtual void EnableCollision(RigidBody *lpBody);
 			virtual void DisableCollisions(Structure *lpStruct, CStdPtrArray<CollisionPair> &m_aryCollisionList);
+
+			/**
+			\brief	Enables collision between the past-in body and all rigid bodies of the simulator.
+
+			\remarks This method enables collision responses between the rigid body being past
+			in and all rigid bodies in the simulator.
+
+			\author	dcofer
+			\date	3/28/2011
+
+			\param [in,out]	lpBody	Pointer to a body. 
+			**/
+			virtual void EnableCollision(RigidBody *lpBody);
+
+			/**
+			\brief	Disables collision between the past-in body and all rigid bodies of the simulator.
+
+			\remarks This method disables collision responses between the rigid body being past
+			in and all rigid bodies in the simulator.
+
+			\author	dcofer
+			\date	3/28/2011
+
+			\param [in,out]	lpBody	Pointer to a body. 
+			**/
 			virtual void DisableCollision(RigidBody *lpBody);
 
 #pragma endregion

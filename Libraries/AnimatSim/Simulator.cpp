@@ -1,6 +1,8 @@
-// Simulator.cpp: implementation of the Simulator class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Simulator.cpp
+
+\brief	Implements the simulator class.
+**/
 
 #include "stdafx.h"
 #include "IBodyPartCallback.h"
@@ -35,24 +37,17 @@
 namespace AnimatSim
 {
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
 
 Simulator *g_lpSimulator = NULL;
 Simulator ANIMAT_PORT *GetSimulator() 
 {return g_lpSimulator;};
 
-/*! \brief 
-   Constructs an simulator object..
-   		
-	 \return
-	 No return value.
+/**
+\brief	Default constructor.
 
-   \remarks
-	 The constructor for a simulator. 
-*/
-
+\author	dcofer
+\date	3/28/2011
+**/
 Simulator::Simulator()
 {
 	m_strID = "SIMULATOR";
@@ -152,17 +147,12 @@ Simulator::Simulator()
 	m_oMaterialMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
 }
 
+/**
+\brief	Destructor.
 
-/*! \brief 
-   Destroys the simulator object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the simulator object..	 
-*/
-
+\author	dcofer
+\date	3/28/2011
+**/
 Simulator::~Simulator()
 {
 
@@ -222,40 +212,190 @@ catch(...)
 			
 #pragma region ProjectVariables
 
+/**
+\brief	Gets the project path.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Project path.
+**/
 string Simulator::ProjectPath() {return m_strProjectPath;}
 
+/**
+\brief	Sets the project path.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strPath	Full pathname of the project file. 
+**/
 void Simulator::ProjectPath(string strPath) {m_strProjectPath = strPath;}
 
+/**
+\brief	Gets the directory path to the executable.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Path to the executable.
+**/
 string Simulator::ExecutablePath() {return m_strExecutablePath;}
 
+/**
+\brief	Sets the Executable path.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strPath	Full pathname to the executable file. 
+**/
 void Simulator::ExecutablePath(string strPath) {m_strExecutablePath = strPath;}
 
+/**
+\brief	Gets the simulation filename.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Simulation filename.
+**/
 string Simulator::SimulationFile() {return m_strSimulationFile;}
 
+/**
+\brief	Sets the simulation filename.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strFile	The simulation filename. 
+**/
 void Simulator::SimulationFile(string strFile) {m_strSimulationFile = strFile;}
 
+/**
+\brief	Gets whether the Simulation is paused.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	true if it succeeds, false if it fails.
+**/
 BOOL Simulator::Paused() {return m_bPaused;}
 
+/**
+\brief	Sets the Paused flag.
+
+\details This mutator should <b>not</b> called to pause the simulation. If you want to pause the simulation you
+need to call the PauseSimulation method.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	bVal	true to value. 
+**/
 void Simulator::Paused(BOOL bVal) {m_bPaused = bVal;}
 
+/**
+\brief	Tells if the simulation has been initialized or not. 
+
+\author	dcofer
+\date	3/28/2011
+
+\return	true if Initialized, false else.
+**/
 BOOL Simulator::Initialized() {return m_bInitialized;}
 
+/**
+\brief	Sets whether the simulation has been Initialized. 
+
+\author	dcofer
+\date	3/28/2011
+
+\param	bVal	true if initialized. 
+**/
 void Simulator::Initialized(BOOL bVal) {m_bInitialized = bVal;}
 
+/**
+\brief	Gets the list of pointers to all objects in the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Pointer to list of objects.
+**/
 CStdMap<string, AnimatBase *> *Simulator::ObjectList() {return &m_aryObjectList;}
-			
+
+/**
+\brief	Gets the data chart manager.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Pointer to DataChartMgr.
+**/
 DataChartMgr *Simulator::DataChartMgr() {return &m_oDataChartMgr;}
 
+/**
+\brief	Gets the external stimuli manager.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Pointer to ExternalStimuliMgr.
+**/
 ExternalStimuliMgr *Simulator::ExternalStimuliMgr() {return &m_oExternalStimuliMgr;}
 
+/**
+\brief	Gets the simulation recorder.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Pointer to SimulationRecorder.
+**/
 SimulationRecorder *Simulator::SimulationRecorder() {return m_lpSimRecorder;}
 
+/**
+\brief	Gets the material manager.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Pointer to Materials.
+**/
 Materials *Simulator::MaterialMgr() {return &m_oMaterialMgr;}
 
+/**
+\brief	Gets the window manager.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Pointer to SimulationWindowMgr.
+**/
 SimulationWindowMgr *Simulator::WindowMgr() {return m_lpWinMgr;}
 
+/**
+\brief	Gets the visual selection mode.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Visual selection mode.
+**/
 int Simulator::VisualSelectionMode() {return m_iSelectionMode;}
 
+/**
+\brief	Sets the visual selection mode.
+
+\details This loops through all ojects in the simulation and calls VisualSelectionModeChanged to let
+it know when the selection mode has changed in the GUI.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	iVal	The new value. 
+**/
 void Simulator::VisualSelectionMode(int iVal)
 {
 	if(iVal <0 || iVal > SIMULATION_SELECTION_MODE)
@@ -274,56 +414,261 @@ void Simulator::VisualSelectionMode(int iVal)
 	}
 };
 
+/**
+\brief	Gets the Adds bodies mode.
 
+\author	dcofer
+\date	3/28/2011
+
+\return	true if GUI is in AddBody mode, false else.
+**/
 BOOL Simulator::AddBodiesMode() {return m_bAddBodiesMode;}
 
+/**
+\brief	Sets the AddBodies mode. 
+
+\details Within the GUI the user can select the AddBodies mode. When they click on another part it will 
+add a new part at that location. The simulation needs to know if it is in that mode in order to behave in 
+the correct manner. This flag lets it know the state of that mode.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	bVal	new value. 
+**/
 void Simulator::AddBodiesMode(BOOL bVal) {m_bAddBodiesMode = bVal;}
-			
+
+/**
+\brief	Calback object from the simulation.
+
+\details This class allows the simulation to make callbacks to the GUI.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	NULL if running standalone simulation, else a pointer to the callback object.
+**/
 ISimGUICallback *Simulator::SimCallback() {return m_lpSimCallback;}
 
+/**
+\brief	Sets the calback object from the simulation.
+
+\details This class allows the simulation to make callbacks to the GUI.
+
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	lpCallback	Pointer to a callback. 
+**/
 void Simulator::SimCallBack(ISimGUICallback *lpCallback) {m_lpSimCallback = lpCallback;}
 
 #pragma endregion
 
 #pragma region EnvironmentVariables
 
+/**
+\brief	Gets the current simulation time in seconds.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Simulation time.
+**/
 float Simulator::Time() {return m_fltTime;}
 
+/**
+\brief	Gets the current simulation time in millisecond.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Simulation time.
+**/
 long Simulator::Millisecond() {return (long) (Time() * 1000);}
 
+/**
+\brief	Calculates the number of time slices from a supplied number of milliseconds.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	lMillisecond	The millisecond to convert. 
+
+\return	Number of time slices.
+**/
 long Simulator::MillisecondToSlice(long lMillisecond) {return (long) (lMillisecond / (m_fltTimeStep * 1000));}
 
+/**
+\brief	Calculates the number of milliseconds from a supplied number of time slices.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	lSlice	The time slices to convert. 
+
+\return	Number of milliseconds.
+**/
 long Simulator::SliceToMillisecond(long lSlice) {return (long) (lSlice * m_fltTimeStep * 1000);}
 
+/**
+\brief	The time slice tick at which the simulation start.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	tick when the simulation begins.
+**/
 DWORD Simulator::StartSimTick() {return m_iStartSimTick;}
 
+/**
+\brief	Gets the current time slice.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Time Slice.
+**/
 long Simulator::TimeSlice() {return m_lTimeSlice;}
 
+/**
+\brief	Sets the current time slice.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	lVal	The new value. 
+**/
 void Simulator::TimeSlice(long lVal) {m_lTimeSlice = lVal;}
 
+/**
+\brief	Gets the physics time slice count.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Physics time slice count.
+**/
 long Simulator::PhysicsSliceCount() {return m_lPhysicsSliceCount;}
 
+/**
+\brief	Sets the physics time slice count.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	lVal	The new value. 
+**/
 void Simulator::PhysicsSliceCount(long lVal) {m_lPhysicsSliceCount = lVal;}
 
+/**
+\brief	Gets whether the simulation is being stepped manually by the user.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	true if manual stepping, false else.
+**/
 BOOL Simulator::ManualStepSimulation() {return m_bManualStepSimulation;}
 
+/**
+\brief	Sets whether the simulation is being stepped manually by the user.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	bVal	true to step manually. 
+**/
 void Simulator::ManualStepSimulation(BOOL bVal) {m_bManualStepSimulation = bVal;}
 
+/**
+\brief	Gets whether the simulation is running.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	true if it is running, false else.
+**/
 BOOL Simulator::SimRunning() {return m_bSimRunning;}
 
+/**
+\brief	Gets whether we have set the simulation to force fast moving calculations.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	true if it force, false else.
+**/
 BOOL Simulator::ForceFastMoving() {return m_bForceFastMoving;}
 
+/**
+\brief	Set simulation to Force fast moving caculations.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	bVal	true to force. 
+**/
 void Simulator::ForceFastMoving(BOOL bVal) {m_bForceFastMoving = bVal;}
 
+/**
+\brief	Gets whether to automatically generate a random seed.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	true if auto generating seed, false to if using currently set seed.
+**/
 BOOL Simulator::AutoGenerateRandomSeed() {return m_bAutoGenerateRandomSeed;}
 
+/**
+\brief	Sets whether to automatically generate random seed.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	bVal	true to generate automatic seed. 
+**/
 void Simulator::AutoGenerateRandomSeed(BOOL bVal) {m_bAutoGenerateRandomSeed = bVal;}
 
+/**
+\brief	Gets the manual random seed value.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	seed value.
+**/
 int Simulator::ManualRandomSeed() {return m_iManualRandomSeed;}
 
+/**
+\brief	Sets the manual random seed value.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	iSeed	The seed. 
+**/
 void Simulator::ManualRandomSeed(int iSeed) {m_iManualRandomSeed = iSeed;}
 
+/**
+\brief	Gets the linear compliance of the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Linear compliance of the simulation.
+**/
 float Simulator::LinearCompliance() {return m_fltLinearCompliance;}
+
+/**
+\brief	Sets the linear compliance of the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	fltVal	   	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
 void Simulator::LinearCompliance(float fltVal, BOOL bUseScaling) 
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "LinearCompliance");
@@ -334,7 +679,25 @@ void Simulator::LinearCompliance(float fltVal, BOOL bUseScaling)
 	m_fltLinearCompliance = fltVal;
 }
 
+/**
+\brief	Gets the angular compliance of the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Angular compliance of the simulation.
+**/
 float Simulator::AngularCompliance() {return m_fltAngularCompliance;}
+
+/**
+\brief	Sets the angular compliance of the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	fltVal	   	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
 void Simulator::AngularCompliance(float fltVal, BOOL bUseScaling) 
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "AngularCompliance");
@@ -345,7 +708,25 @@ void Simulator::AngularCompliance(float fltVal, BOOL bUseScaling)
 	m_fltAngularCompliance = fltVal;
 }
 
+/**
+\brief	Gets the linear damping of the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Linear damping of the simulation.
+**/
 float Simulator::LinearDamping() {return m_fltLinearDamping;}
+
+/**
+\brief	Sets the linear damping of the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	fltVal	   	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
 void Simulator::LinearDamping(float fltVal, BOOL bUseScaling) 
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "LinearDamping");
@@ -356,7 +737,25 @@ void Simulator::LinearDamping(float fltVal, BOOL bUseScaling)
 	m_fltLinearDamping = fltVal;
 }
 
+/**
+\brief	Gets the angular damping of the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Angular damping of the simulation.
+**/
 float Simulator::AngularDamping() {return m_fltAngularDamping;}
+
+/**
+\brief	Sets the angular damping of the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	fltVal	   	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
 void Simulator::AngularDamping(float fltVal, BOOL bUseScaling) 
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "AngularDamping");
@@ -367,23 +766,75 @@ void Simulator::AngularDamping(float fltVal, BOOL bUseScaling)
 	m_fltAngularDamping = fltVal;
 }
 
+/**
+\brief	Gets the linear kinetic loss of the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Linear kinetic loss.
+**/
 float Simulator::LinearKineticLoss() {return m_fltLinearKineticLoss;}
+
+/**
+\brief	Sets the linear kinetic loss of the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	fltVal	The new value. 
+**/
 void Simulator::LinearKineticLoss(float fltVal) 
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "LinearKineticLoss");
 	m_fltLinearKineticLoss = fltVal;
 }
 
+/**
+\brief	Gets the angular kinetic loss of teh simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	angular kinetic loss.
+**/
 float Simulator::AngularKineticLoss() {return m_fltAngularKineticLoss;}
+
+/**
+\brief	Sets the angular kinetic loss of the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	fltVal	The new value. 
+**/
 void Simulator::AngularKineticLoss(float fltVal) 
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "AngularKineticLoss");
 	m_fltAngularKineticLoss = fltVal;
 }
 
+/**
+\brief	Gets the smallest integration time step used within the simulation.
+
+\details This is the base time step that is used for the individual time slice.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	smallest time step for the simulation.
+**/
 float Simulator::TimeStep() 
 {return m_fltTimeStep;}
 
+/**
+\brief	Sets the smallest integration time step used within the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	fltVal	The new time value. 
+**/
 void Simulator::TimeStep(float fltVal) 
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "TimeStep");
@@ -396,12 +847,44 @@ void Simulator::TimeStep(float fltVal)
 	m_fltPhysicsTimeStep = m_fltTimeStep * m_iPhysicsStepInterval;
 }
 
+/**
+\brief	Gets whether to use the set simulation end time.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	true to use the sim end time, false else.
+**/
 BOOL Simulator::SetEndSimTime() {return m_bSetEndSim;}
 
+/**
+\brief	Sets whether to use the simulation end time.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	bVal	true to use simulation end time. 
+**/
 void Simulator::SetEndSimTime(BOOL bVal) {m_bSetEndSim = bVal;}
 
+/**
+\brief	Gets the time at which to automatically end the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Simulation end time.
+**/
 float Simulator::EndSimTime() {return m_fltEndSimTime;}
 
+/**
+\brief	Sets the time at which to automatically end the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	fltVal	The new value. 
+**/
 void Simulator::EndSimTime(float fltVal) 
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "EndSimTime");
@@ -410,8 +893,24 @@ void Simulator::EndSimTime(float fltVal)
 	m_lEndSimTimeSlice = fltVal/m_fltTimeStep; 
 }
 
+/**
+\brief	Gets the time slice at which to automatically end the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Time slice to end simulation.
+**/
 long Simulator::EndSimTimeSlice() {return m_lEndSimTimeSlice;}
 
+/**
+\brief	Sets the time slice at which to automatically end the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	lVal	The new time slice value. 
+**/
 void Simulator::EndSimTimeSlice(long lVal) 
 {
 	Std_IsAboveMin((long) 0, lVal, TRUE, "EndSimTimeSlice");
@@ -420,12 +919,46 @@ void Simulator::EndSimTimeSlice(long lVal)
 	m_fltEndSimTime = m_lEndSimTimeSlice*m_fltTimeStep;
 }
 
+/**
+\brief	Tells if the simulation has been stopped.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	true if it is stopped, false else.
+**/
 BOOL Simulator::Stopped() {return (m_bStopSimulation | m_bForceSimulationStop);}
 
+/**
+\brief	Gets the frame rate used for the simulation windows in cylces per second.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Frame rate in cylces per second.
+**/
 int Simulator::FrameRate() {return m_iFrameRate;}
 
+/**
+\brief	Gets the frame step time.
+
+\details This is the time between simulation frames.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Frame duration.
+**/
 float Simulator::FrameStep() {return m_fltFrameStep;}
 
+/**
+\brief	Sets the frame rate in cycles per second.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	iVal	The new value. 
+**/
 void Simulator::FrameRate(int iVal)
 {
 	Std_IsAboveMin((int) 0, iVal, TRUE, "FrameRate");
@@ -434,10 +967,42 @@ void Simulator::FrameRate(int iVal)
  	m_fltFrameStep = (1/ (float) m_iFrameRate);
 }
 
+/**
+\brief	Gets the physics step interval.
+
+\details This is the physics time step divided by the m_fltTimeStep. m_fltTimeStep is the 
+smallest integration time step in the system. So this is how many total time slices occur 
+between each iteration of the physics engine.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Physics step interval.
+**/
 short Simulator::PhysicsStepInterval() {return m_iPhysicsStepInterval;}
 
+/**
+\brief	Sets the physics step interval.
+
+\details This is the physics time step divided by the m_fltTimeStep. m_fltTimeStep is the 
+smallest integration time step in the system. So this is how many total time slices occur 
+between each iteration of the physics engine.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	iVal	The new value. 
+**/
 void Simulator::PhysicsStepInterval(short iVal) {m_iPhysicsStepInterval = iVal;}
-		
+
+/**
+\brief	Sets the integration time step for the physics engine.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	fltVal	The new value. 
+**/
 void Simulator::PhysicsTimeStep(float fltVal)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "PhysicsTimeStep");
@@ -454,12 +1019,48 @@ void Simulator::PhysicsTimeStep(float fltVal)
 	m_fltPhysicsTimeStep = m_fltTimeStep * m_iPhysicsStepInterval;
 }
 
+/**
+\brief	Gets the integration time step for the physics engine.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Physics time step.
+**/
 float Simulator::PhysicsTimeStep() {return m_fltPhysicsTimeStep;}
 
+/**
+\brief	Gets the physics step count.
+
+\details This is a counter that keeps track of how many time slices have occured since the StepSimulation method
+started. We use this to know how many more slices to go until the physics engine steps.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Physisc step count variable.
+**/
 long Simulator::PhysicsStepCount() {return m_iPhysicsStepCount;}
 
+/**
+\brief	Gets the gravity value.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Gravity.
+**/
 float Simulator::Gravity() {return m_fltGravity;}
 
+/**
+\brief	Sets the Gravity value.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	fltVal	   	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
 void Simulator::Gravity(float fltVal, BOOL bUseScaling)
 {
 	//We must convert the gravity to use the correct scale.
@@ -469,8 +1070,27 @@ void Simulator::Gravity(float fltVal, BOOL bUseScaling)
 	m_fltGravity = fltVal;
 }
 
+/**
+\brief	Gets the mouse spring stiffness.
+
+\details The user can grab onto objects using a mouse spring. This sets the stiffness of that spring.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Stiffness of the mouse spring.
+**/
 float Simulator::MouseSpringStiffness() {return m_fltMouseSpringStiffness;}
 
+/**
+\brief	Sets the mouse spring stiffness.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	fltVal	   	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
 void Simulator::MouseSpringStiffness(float fltVal, BOOL bUseScaling) 
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "MouseSpringStiffness", TRUE);
@@ -481,8 +1101,27 @@ void Simulator::MouseSpringStiffness(float fltVal, BOOL bUseScaling)
 	m_fltMouseSpringStiffness = fltVal;
 }
 
+/**
+\brief	Gets the mouse spring damping.
+
+\details The user can grab onto objects using a mouse spring. This sets the damping of that spring.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	damping.
+**/
 float Simulator::MouseSpringDamping() {return m_ftlMouseSpringDamping;}
 
+/**
+\brief	Sets the mouse spring damping.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	fltVal	   	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
 void Simulator::MouseSpringDamping(float fltVal, BOOL bUseScaling) 
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "MouseSpringDamping", TRUE);
@@ -492,15 +1131,58 @@ void Simulator::MouseSpringDamping(float fltVal, BOOL bUseScaling)
 	m_ftlMouseSpringDamping = fltVal;
 }
 
+/**
+\brief	Gets whether the simulation uses hydrodynamics.
+
+\details Tells whether or not we will be doing hydrodynamic simulations.
+If you are not doing stuff underwater then be sure this is set to
+FALSE. The hydrodynamics adds extra overhead that can slow the
+simulation down slightly.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	true if it uses hydrodynamics, false else.
+**/
 BOOL Simulator::SimulateHydrodynamics() {return m_bSimulateHydrodynamics;}
 
+/**
+\brief	Sets whether the simulation uses hydrodynamics.
+
+\details Tells whether or not we will be doing hydrodynamic simulations.
+If you are not doing stuff underwater then be sure this is set to
+FALSE. The hydrodynamics adds extra overhead that can slow the
+simulation down slightly.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	bVal	true use hydrodynamics. 
+**/
 void Simulator::SimulateHydrodynamics(BOOL bVal)
 {
 	m_bSimulateHydrodynamics = bVal;
 }
 
+/**
+\brief	Gets the density of the fluid medium.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	fluid density.
+**/
 float Simulator::FluidDensity() {return m_fltFluidDensity;}
 
+/**
+\brief	Sets the density of the fluid medium.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	fltVal	   	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
 void Simulator::FluidDensity(float fltVal, BOOL bUseScaling)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "FluidDensity");
@@ -511,21 +1193,88 @@ void Simulator::FluidDensity(float fltVal, BOOL bUseScaling)
 	m_fltFluidDensity = fltVal;
 }
 
+/**
+\brief	Query if this simulation has convex mesh.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	true if convex mesh, false if not.
+**/
 BOOL Simulator::HasConvexMesh() {return m_bHasConvexMesh;}
 
+/**
+\brief	Sets if this simulation has convex mesh.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	bVal	true if has convex mesh. 
+**/
 void Simulator::HasConvexMesh(BOOL bVal) {m_bHasConvexMesh = bVal;}
 
+/**
+\brief	Query if this simulation has triangle mesh.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	true if triangle mesh, false if not.
+**/
 BOOL Simulator::HasTriangleMesh() {return m_bHasTriangleMesh;}
 
+/**
+\brief	Sets if this simulation has triangle mesh.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	bVal	true if has triangle mesh. 
+**/
 void Simulator::HasTriangleMesh(BOOL bVal) {m_bHasTriangleMesh = bVal;}
 
+/**
+\brief	Query if this simulation has a height field.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	true if height field, false if not.
+**/
 BOOL Simulator::HasHeightField() {return m_bHasHeightField;}
 
+/**
+\brief	Sets if this simulation has a height field.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	bVal	true if has a height field. 
+**/
 void Simulator::HasHeightField(BOOL bVal) {m_bHasHeightField = bVal;}
 
-//Must be implemented in physics override class.
+/**
+\brief	Gets a material identifier from the physics engine for the specified unique ID.
+
+\details This method must be implemented within the derived class for the physics engine.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strID	Identifier for the material. 
+
+\return	The material identifier.
+**/
 int Simulator::GetMaterialID(string strID) {return -1;} 
 
+/**
+\brief	Query if this object is physics being updated on this time slice.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	true if physics being updated, false if not.
+**/
 BOOL Simulator::IsPhysicsBeingUpdated()
 {
 	if(m_iPhysicsStepCount == m_iPhysicsStepInterval)
@@ -534,14 +1283,44 @@ BOOL Simulator::IsPhysicsBeingUpdated()
 		return FALSE;
 }
 
+/**
+\brief	Gets the background color.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Pointer to the background color.
+**/
 CStdColor *Simulator::BackgroundColor() {return  &m_vBackgroundColor;}
 
+/**
+\brief	Sets the background color.
+
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	vColor	Pointer to the color. 
+**/
 void Simulator::BackgroundColor(float *vColor) {m_vBackgroundColor.Set(vColor[0], vColor[1], vColor[2], vColor[3]);}
 
 #pragma endregion
 
 #pragma region UnitScalingVariables
-			
+
+/**
+\brief	Sets the distance units.
+
+\details The physcis engine in AnimatLab uses an arbitrary unit for mass and distance. It is up to the user
+to decide what those units are. So for example, one distance unit can be a standard meter, or it could be a 
+centimeter. However, internally all distance measurements must remain consistent and be scaled by the same amount.
+This method calculates the conversion factor used throughout the simulation to insure that all distance units are
+scaled by the same values. 
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strUnits	The string identifer of the distance units to use. 
+**/
 void Simulator::DistanceUnits(string strUnits)
 {
 	m_fltDistanceUnits = ConvertDistanceUnits(strUnits);
@@ -549,15 +1328,54 @@ void Simulator::DistanceUnits(string strUnits)
 	m_fltDenominatorDistanceUnits = ConvertDenominatorDistanceUnits(strUnits);
 }
 
+/**
+\brief	Gets the distance units used in the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Distance units used.
+**/
 float Simulator::DistanceUnits() {return m_fltDistanceUnits;}
 
+/**
+\brief	Gets the inverse distance units.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Inverse distance units.
+**/
 float Simulator::InverseDistanceUnits() {return m_fltInverseDistanceUnits;}
 
-//For items that use distance unit measures in the denominator we may want to use a differnt
-//scale that that used for the whole app. For example, if we are using a distance scale of decimeters
-//we will want to use centimeters for the density instead. This allows us to do that.
+/**
+\brief	Gets the denominator distance units.
+
+\details For items that use distance unit measures in the denominator we may want to use a differnt
+scale that that used for the whole app. For example, if we are using a distance scale of decimeters
+we will want to use centimeters for the density instead. This allows us to do that.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Denominator distance units.
+**/
 float Simulator::DenominatorDistanceUnits() {return m_fltDenominatorDistanceUnits;}
 
+/**
+\brief	Sets the mass units.
+
+\details The physcis engine in AnimatLab uses an arbitrary unit for mass and distance. It is up to the user
+to decide what those units are. So for example, one mass unit can be a standard kilogram, or it could be a 
+gram. However, internally all mass measurements must remain consistent and be scaled by the same amount.
+This method calculates the conversion factor used throughout the simulation to insure that all distance units are
+scaled by the same values. 
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strUnits	The string identifer of the mass units to use. 
+**/
 void Simulator::MassUnits(string strUnits)
 {
 	m_fltMassUnits = ConvertMassUnits(strUnits);
@@ -565,38 +1383,118 @@ void Simulator::MassUnits(string strUnits)
 	m_fltDensityMassUnits = ConvertDensityMassUnits(strUnits);
 }
 
+/**
+\brief	Gets the mass units.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Mass units.
+**/
 float Simulator::MassUnits() {return m_fltMassUnits;}
 
+/**
+\brief	Gets the inverse mass units.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Inverse mass units.
+**/
 float Simulator::InverseMassUnits() {return m_fltInverseMassUnits;}
 
-//The editor will save out 1 Kg as 1000. So we need to convert 1000 to 1. We use this
-//density mass unit value to do this.
+/**
+\brief	Gets the density mass units.
+
+\details The editor will save out 1 Kg as 1000. So we need to convert 1000 to 1. We use this
+density mass unit value to do this.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Density mass units.
+**/
 float Simulator::DensityMassUnits() {return m_fltDensityMassUnits;}
 
 #pragma endregion
 			
 #pragma region RecordingVariables
-			
+
+/**
+\brief	Gets the video slice count.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	video slice count.
+**/
 long Simulator::VideoSliceCount() {return m_lVideoSliceCount;}
 
+/**
+\brief	Sets the video slice count.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	lVal	The new value. 
+**/
 void Simulator::VideoSliceCount(long lVal) {m_lVideoSliceCount = lVal;}
 
+/**
+\brief	Gets the video loops.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	video loops.
+**/
 int Simulator::VideoLoops() {return m_iVideoLoops;}
 
+/**
+\brief	Sets the video loops.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	iVal	The new value. 
+**/
 void Simulator::VideoLoops(int iVal) {m_iVideoLoops = iVal;}
 
-KeyFrame *Simulator::VideoRecorder() {return m_lpVideoRecorder;}
 
+KeyFrame *Simulator::VideoRecorder() {return m_lpVideoRecorder;}
 void Simulator::VideoRecorder(KeyFrame *lpFrame) {m_lpVideoRecorder = lpFrame;}
 
 KeyFrame *Simulator::VideoPlayback() {return m_lpVideoPlayback;}
-
 void Simulator::VideoPlayback(KeyFrame *lpFrame) {m_lpVideoPlayback = lpFrame;}
 
+/**
+\brief	Tells whehter simulation recording is enabled.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	true if recording is enabled, false else.
+**/
 BOOL Simulator::EnableSimRecording() {return m_bEnableSimRecording;}
 
+/**
+\brief	Sets whether simulation recording is Enabled.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	bVal	true to enable. 
+**/
 void Simulator::EnableSimRecording(BOOL bVal) {m_bEnableSimRecording = bVal;}
 
+/**
+\brief	Gets the snapshot byte size.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	snapshot byte size.
+**/
 long Simulator::SnapshotByteSize() {return m_lSnapshotByteSize;}
 
 #pragma endregion
@@ -607,20 +1505,15 @@ long Simulator::SnapshotByteSize() {return m_lSnapshotByteSize;}
 
 #pragma region SimulationMethods
 
-/*! \brief 
-   Initializes all of the structures of this simulation.
-      
-	 \return
-	 No return value.
+/**
+\brief	Initializes all of the structures of this simulation.
 
-	 \remarks
-	 This method runs through all of the "static" structures and organisms
-	 and calls their Initialize method.
+\details This method runs through all of the "static" structures and organisms
+and calls their Initialize method.
 
-	 \sa
-	 Initialize, InitializeStructures
-*/
-
+\author	dcofer
+\date	3/28/2011
+**/
 void Simulator::InitializeStructures()
 {
 	m_oMaterialMgr.Initialize();
@@ -667,12 +1560,60 @@ void Simulator::InitializeStructures()
 
 }
 
+/**
+\brief	Blocks the simulation from stepping.
+
+\details The simulation and GUI are running in multi-threaded environment. When we make changes to the simulation
+from the GUI we need to block processing of the simulation thread while we make those changes to prevent memory corruption.
+This method initiates a block. We then call WaitForSimulationBlock to wait until the block takes effect before we make our
+changes.
+
+\author	dcofer
+\date	3/28/2011
+**/
 void Simulator::BlockSimulation() {m_bBlockSimulation = TRUE;}
 
+/**
+\brief	Unblock simulation.
+
+\details The simulation and GUI are running in multi-threaded environment. When we make changes to the simulation
+from the GUI we need to block processing of the simulation thread while we make those changes to prevent memory corruption.
+This method unblocks the simulation to allow processing to resume.
+
+\author	dcofer
+\date	3/28/2011
+**/
 void Simulator::UnblockSimulation() {m_bBlockSimulation = FALSE; m_bSimBlockConfirm = FALSE;}
 
+/**
+\brief	Confirms that the simulation has been blocked.
+
+\details The simulation and GUI are running in multi-threaded environment. When we make changes to the simulation
+from the GUI we need to block processing of the simulation thread while we make those changes to prevent memory corruption.
+This method tells whether the simulation has been blocked.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	true if it is blocked, false else.
+**/
 BOOL Simulator::SimulationBlockConfirm() {return m_bSimBlockConfirm;}
 
+/**
+\brief	Wait for simulation block.
+
+\details The simulation and GUI are running in multi-threaded environment. When we make changes to the simulation
+from the GUI we need to block processing of the simulation thread while we make those changes to prevent memory corruption.
+This method sets the block simulation variable to true, and then waits until the simulation block is confirmed or a timeout
+occurs.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	lTimeout	The timeout period in time slices. 
+
+\return	true if it succeeds in getting the simulation block, false if it fails.
+**/
 BOOL Simulator::WaitForSimulationBlock(long lTimeout)
 {
 	m_bBlockSimulation = TRUE;
@@ -698,6 +1639,18 @@ BOOL Simulator::WaitForSimulationBlock(long lTimeout)
 	return m_bSimBlockConfirm;
 }
 
+/**
+\brief	Checks whether or not a simulation block has been requested.
+
+\details This is called within the StepSimulation code. It checks whether someone has
+requested a simulation block. If they have then it sets the m_bSimBlockConfirm flag to true.
+This blocks the simulation and lets the WaitForSimulationBlock code to proceed.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	true if it blocks, false if it not.
+**/
 BOOL Simulator::CheckSimulationBlock()
 {
 	if(m_bBlockSimulation)
@@ -711,20 +1664,15 @@ BOOL Simulator::CheckSimulationBlock()
 	return m_bSimBlockConfirm;
 }
 
-/*! \brief 
-   Resets all objects of the simulation.
-      
-	 \return
-	 No return value.
+/**
+\brief	Resets all objects of the simulation to their unloaded state.
 
-	 \remarks
-	 Use this function to completely reset a simulation to its initial default settings.
-	 This will destroy all organisms and strcutres defined within the simulation
+\details Use this function to completely reset a simulation to its initial default settings.
+This will destroy all organisms and strcutres defined within the simulation
 
-	 \sa
-	 ~Simulator, LoadSimulation
-*/
-
+\author	dcofer
+\date	3/28/2011
+**/
 void Simulator::Reset()
 {
 	m_fltTime = 0;
@@ -843,7 +1791,12 @@ void Simulator::Reset()
 	m_lpSelStructure = NULL;
 }
 
-//This resets the the simulation to its orginal settings at time 0
+/**
+\brief	Resets the the simulation to its orginal settings at time 0
+
+\author	dcofer
+\date	3/28/2011
+**/
 void Simulator::ResetSimulation()
 {
 	m_fltTime = 0;
@@ -877,6 +1830,12 @@ void Simulator::ResetSimulation()
 		m_lpSimRecorder->ResetSimulation();
 }
 
+/**
+\brief	Step the neural engine of each organism.
+
+\author	dcofer
+\date	3/28/2011
+**/
 void Simulator::StepNeuralEngine()
 {
 	for(m_oOrganismIterator=m_aryOrganisms.begin(); 
@@ -888,6 +1847,12 @@ void Simulator::StepNeuralEngine()
 	}
 }
 
+/**
+\brief	Calls StepPhysicsEngine of all structures.
+
+\author	dcofer
+\date	3/28/2011
+**/
 void Simulator::StepPhysicsEngine()
 {
 	for(m_oStructureIterator=m_aryAllStructures.begin(); 
@@ -909,6 +1874,12 @@ void Simulator::StepPhysicsEngine()
 	m_lPhysicsSliceCount++;
 }
 
+/**
+\brief	Steps the simulation forward by one time slice.
+
+\author	dcofer
+\date	3/28/2011
+**/
 void Simulator::Step()
 {
 	m_oExternalStimuliMgr.StepSimulation();
@@ -945,13 +1916,37 @@ void Simulator::Step()
 	 Structure::StepSimulation, Body::StepSimulation, Joint::StepSimulation
 */
 
+/**
+\brief	Steps the entire simulation forward by one physics integration time step.
+
+\details This method steps the entire simulation forward by one physics time step. 
+Remember that there are typically multiple neural steps for a given physcis step, so this
+will step the simulation as a whole several times for a given physics time step. It goes through
+and calls StepSimulation for every structure/organism object, which in turn calls
+StepSimulation for each rigid body and joint of each of those objects. So you need 
+to be VERY careful to keep all code within the StepSimulation methods short, sweet, 
+and very fast. They are in the main processing loop and even a small increase in the
+amount of processing time that occurrs within this loop will lead to major impacts on
+the ultimate performance of the system.
+
+\author	dcofer
+\date	3/28/2011
+**/
 void Simulator::StepSimulation()
 {
 	for(m_iPhysicsStepCount=1; m_iPhysicsStepCount<=m_iPhysicsStepInterval; m_iPhysicsStepCount++)
 		Step();
 }
 
+/**
+\brief	Runs the simulation.
 
+\details This is primarily used when running the simulation in stand-alone mode. It loads the project file, 
+initializes the simulation, and the calls Simulate.
+
+\author	dcofer
+\date	3/28/2011
+**/
 void Simulator::RunSimulation()
 {
 	Load(SimulationFile());
@@ -959,6 +1954,15 @@ void Simulator::RunSimulation()
 	Simulate();
 }
 
+/**
+\brief	Simulation starting event.
+
+\details This method is called on all objects when the simulation begins starting. It is to let the
+objects know about this event so they can do any pre-processing required before the simulation starts.
+
+\author	dcofer
+\date	3/28/2011
+**/
 void Simulator::SimStarting()
 {
 	CStdMap<string, AnimatBase *>::iterator oPos;
@@ -971,6 +1975,15 @@ void Simulator::SimStarting()
 	}
 }
 
+/**
+\brief	Simulation pausing event.
+
+\details This method is called on all objects when the simulation begins pausing. It is to let the
+objects know about this event so they can do any pre-processing required before the simulation pauses.
+
+\author	dcofer
+\date	3/28/2011
+**/
 void Simulator::SimPausing()
 {
 	CStdMap<string, AnimatBase *>::iterator oPos;
@@ -983,6 +1996,15 @@ void Simulator::SimPausing()
 	}
 }
 
+/**
+\brief	Simulation stopping event.
+
+\details This method is called on all objects when the simulation begins stopping. It is to let the
+objects know about this event so they can do any pre-processing required before the simulation stops.
+
+\author	dcofer
+\date	3/28/2011
+**/
 void Simulator::SimStopping()
 {
 	CStdMap<string, AnimatBase *>::iterator oPos;
@@ -995,6 +2017,12 @@ void Simulator::SimStopping()
 	}
 }
 
+/**
+\brief	Generates an automatic seed value based on the current time.
+
+\author	dcofer
+\date	3/28/2011
+**/
 void Simulator::GenerateAutoSeed()
 {
 	SYSTEMTIME st;
@@ -1040,25 +2068,14 @@ void Simulator::CheckEndSimulationTime()
 #pragma region LoadMethods
 
 
-/*! \brief
-   Loads the simulation from an xml configuration file.
-      
-	 \param strFileName the name of the configuration file to load.
-	               It uses this and m_strProjectPath to get the
-								 full path to the location of the file.
+/**
+\brief	Loads the simulation from an xml configuration file.
 
-	 \return
-	 No return value.
+\author	dcofer
+\date	3/28/2011
 
-	 \remarks
-	 This method is responsible for loading the entire simulation 
-	 from a XMl configuration file. It loads all of the "static" 
-	 structures and organisms. 
-
-	 \sa
-	 Load, LoadEnvironment
-*/
-
+\param	strFileName	The string to load. 
+**/
 void Simulator::Load(string strFileName)
 {
 	CStdXml oXml;
@@ -1083,23 +2100,6 @@ void Simulator::Load(string strFileName)
 	TRACE_DEBUG("Finished loading simulator config file.");
 }
 
-
-/*! \brief
-   Loads the simulation from an xml configuration file.
-      
-   \param oXml  This is an xml object.
-
-	 \return
-	 No return value.
-
-	 \remarks
-	 This method is responsible for loading the entire simulation 
-	 from a XMl configuration file. It loads all of the "static" 
-	 structures and organisms. 
-
-	 \sa
-	 Load, LoadEnvironment
-*/
 
 void Simulator::Load(CStdXml &oXml)
 {
@@ -1138,9 +2138,17 @@ void Simulator::Load(CStdXml &oXml)
 	TRACE_DEBUG("Finished loading simulator config from Xml.");
 }
 
-//Override used by derived class.
-void Simulator::Save(string strFile) {};
+/**
+\brief	Loads the class factory specified in the DLL module name.
 
+\author	dcofer
+\date	3/28/2011
+
+\param	strModuleName	Name of the dll module. 
+
+\return	Pointer to the class factory.
+\exception Throws an exception if there is an error creating the class factory.
+**/
 IStdClassFactory *Simulator::LoadClassFactory(string strModuleName)
 {
 	IStdClassFactory *lpFactory=NULL;
@@ -1164,22 +2172,15 @@ catch(...)
 }
 }
 
-/*! \brief 
-   Loads all structures from from the configuration file for this simulation.
-      
-   \param oXml This is an xml object.
 
-	 \return
-	 No return value.
+/**
+\brief	Loads all structures from from the configuration file for this simulation.
 
-	 \remarks
-	 This method loads all "static" structures and organisms specified in the 
-	 simulation configuration file.
+\author	dcofer
+\date	3/28/2011
 
-	 \sa
-	 Load, LoadEnvironment
-*/
-
+\param [in,out]	oXml	The xml. 
+**/
 void Simulator::LoadEnvironment(CStdXml &oXml)
 {
 	TRACE_DEBUG("Loading structures from Xml.");
@@ -1264,7 +2265,17 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 	TRACE_DEBUG("Finished loading structures from Xml.");
 }
 
+/**
+\brief	Loads a structure.
 
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	oXml	The xml that defines the structure to load. 
+
+\return	Pointer to the structure.
+\exception Throws an exception if there is a problem creating or loading the structure.
+**/
 Structure *Simulator::LoadStructure(CStdXml &oXml)
 {
 	Structure *lpStructure = NULL;
@@ -1292,7 +2303,17 @@ catch(...)
 }
 }
 
+/**
+\brief	Loads an organism.
 
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	oXml	The xml that defines the organism to load. 
+
+\return	Pointer to the organism.
+\exception Throws an exception if there is a problem creating or loading the organism.
+**/
 Organism *Simulator::LoadOrganism(CStdXml &oXml)
 {
 	Organism *lpOrganism = NULL;
@@ -1330,6 +2351,18 @@ catch(...)
 }
 }
 
+/**
+\brief	Loads an odor type.
+
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	oXml	The xml that defines the odor type to load. 
+
+\return	Pointer to the odor type.
+\exception Throws an exception if there is a problem creating or loading the odor type.
+
+**/
 OdorType *Simulator::LoadOdorType(CStdXml &oXml)
 {
 	OdorType *lpOdorType = NULL;
@@ -1358,6 +2391,15 @@ catch(...)
 }
 }
 
+/**
+\brief	Loads an animat module name.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strFile				   	The string file. 
+\param [in,out]	strAnimatModule	The string animat module. 
+**/
 void Simulator::LoadAnimatModuleName(string strFile, string &strAnimatModule)
 {
 	CStdXml oXml;
@@ -1374,6 +2416,15 @@ void Simulator::LoadAnimatModuleName(string strFile, string &strAnimatModule)
 	TRACE_DEBUG("Finished loading simulator module name.");
 }
 
+/**
+\brief	Loads an animat module name.
+
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	oXml		   	The xml. 
+\param [in,out]	strAnimatModule	The string animat module. 
+**/
 void Simulator::LoadAnimatModuleName(CStdXml &oXml, string &strAnimatModule)
 {
 	oXml.FindElement("Simulation");
@@ -1382,30 +2433,28 @@ void Simulator::LoadAnimatModuleName(CStdXml &oXml, string &strAnimatModule)
 	strAnimatModule = oXml.GetChildString("AnimatModule");
 }
 
-/*! \fn virtual void Simulator::Initialize(int argc, const char **argv)
-   \brief
-   Initializes all aspects of the simulation to prepare it to be run.
-      
-	 \param argc Command line parameter count.
-	 \param argv Command line paramenters.
-
-	 \return
-	 No return value.
-
-	 \remarks
-	 This is a pure virtual method that must be implemented in the simulator application.
-	 It is where a lot of the nitty gritty details are done with initializing and 
-	 setting up the physics engine so that it can run. It is also where we initialize
-	 each structure to tell them to create their parts and joints.
-
-	 \sa
-	 Structure::Initialize, CreateParts, CreateJoints
-*/
-
 #pragma endregion
 
 #pragma region CreateMethods
 
+/**
+\brief	Creates an object using a class factory.
+
+\details The method takes a dll module name, a class name, and a class type and creates an object. The dll is loaded
+using the specified dll module name. A StdClassFactory pointer is retrieved from the dll, and then we call the CreateObject
+method of the class factory to create the actual object we need. This allows us to create objects of any type in a modular manner
+by simply specifying the name of the dll and the class we want.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strModule   	The dll module name. 
+\param	strClassName	Name of the class to create. 
+\param	strType			The specific type of the class to create. 
+\param	bThrowError 	true to throw error if there is a problem. 
+
+\return	Pointer to the created object.
+**/
 CStdSerialize *Simulator::CreateObject(string strModule, string strClassName, string strType, BOOL bThrowError)
 {
 	strModule = Std_CheckString(strModule);
@@ -1436,6 +2485,19 @@ CStdSerialize *Simulator::CreateObject(string strModule, string strClassName, st
 	return NULL;
 }
 
+/**
+\brief	Creates a simulator from the command line.
+
+\details This method is primarily used when running the simulator in stand-alone mode.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	argc	The argc parameter from the command line. 
+\param	argv	The argv parameter from the command line. 
+
+\return	Pointer to the new simulator.
+**/
 Simulator *Simulator::CreateSimulator(int argc, const char **argv)
 {	
 	string strExecutablePath, strExeFile;
@@ -1502,6 +2564,16 @@ Simulator *Simulator::CreateSimulator(int argc, const char **argv)
 	return CreateSimulator(strProject);
 }
 
+/**
+\brief	Creates a simulator from a simulator file.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strSimulationFile	The string simulation file. 
+
+\return	Pointer to the new simulator.
+**/
 Simulator *Simulator::CreateSimulator(string strSimulationFile)
 {
 	Simulator *lpSim = NULL;
@@ -1591,7 +2663,16 @@ catch(...)
 }
 }
 
+/**
+\brief	Creates a simulator from an xml packet.
 
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	oXml	The xml to load. 
+
+\return	Pointer to the new simulator.
+**/
 Simulator *Simulator::CreateSimulator(CStdXml &oXml)
 {
 	Simulator *lpSim = NULL;
@@ -1673,6 +2754,18 @@ catch(...)
 	
 #pragma region FindMethods
 
+/**
+\brief	Searches for the first neural module factory with the matching name.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strModuleName	Name of the string module to find. 
+\param	bThrowError  	true to throw error if there is a problem. 
+
+\return	null if it fails and bThrowError=false, else the found neural module factory.
+\exception If bThrowError=True and no factory is found it throws an exception.
+**/
 IStdClassFactory *Simulator::FindNeuralModuleFactory(string strModuleName, BOOL bThrowError)
 {
 	IStdClassFactory *lpFactory = NULL;
@@ -1687,27 +2780,20 @@ IStdClassFactory *Simulator::FindNeuralModuleFactory(string strModuleName, BOOL 
 	return lpFactory;
 }
 
+/**
+\brief	Searches for the first organism with the specified ID.
 
-/*! \brief 
-   Finds an organism with the specified ID.
-      
-   \param strOrganismID The ID of the organism to find. This is not case sensitive.
-	 \param bThrowError If this is TRUE and the ID is not found then an exception is
-	               thrown. If this is FALSE and the ID is not found then NULL
-								 is returned.
+\details This searches only the organisms. It does not include structures.
 
-	 \return
-	 Returns a pointer to the organism with the specified ID if one is found. If one
-	 is not found then it will either throw an exception or return NULL depending on 
-	 the value of bThrowError.
+\author	dcofer
+\date	3/28/2011
 
-	 \remarks
-   Finds an organism with the specified ID.
+\param	strOrganismID	GUID ID for the organism. 
+\param	bThrowError  	true to throw error if no organism is found. 
 
-	 \sa
-	 FindOrganism, FindStructure, FindStructureFromAll
-*/
-
+\return	null if it fails, else the found organism.
+\exception If bThrowError=True and no organism is found it throws an exception.
+**/
 Organism *Simulator::FindOrganism(string strOrganismID, BOOL bThrowError)
 {
 	Organism *lpOrganism = NULL;
@@ -1723,28 +2809,21 @@ Organism *Simulator::FindOrganism(string strOrganismID, BOOL bThrowError)
 }
 
 
-/*! \brief 
-   Finds a structure with the specified ID.
-      
-   \param strStructureID The ID of the structure to find. This is not case sensitive.
-	 \param bThrowError If this is TRUE and the ID is not found then an exception is
-	               thrown. If this is FALSE and the ID is not found then NULL
-								 is returned.
 
-	 \return
-	 Returns a pointer to the structure with the specified ID if one is found. If one
-	 is not found then it will either throw an exception or return NULL depending on 
-	 the value of bThrowError. This will only search the "static" structures. It will
-	 not search the organisms also. If you want to find a structure regardless if it 
-	 is an organism then you need to use FindStructureFromAll.
+/**
+\brief	Searches for the first structure with the specified ID.
 
-	 \remarks
-   Finds a structure with the specified ID.
+\details This searches only the structures. It does not include organisms.
 
-	 \sa
-	 FindOrganism, FindStructure, FindStructureFromAll
-*/
+\author	dcofer
+\date	3/28/2011
 
+\param	strStructureID	GUID ID for the structure. 
+\param	bThrowError  	true to throw error if no structure is found. 
+
+\return	null if it fails, else the found structure.
+\exception If bThrowError=True and no structure is found it throws an exception.
+**/
 Structure *Simulator::FindStructure(string strStructureID, BOOL bThrowError)
 {
 	Structure *lpStructure = NULL;
@@ -1759,6 +2838,18 @@ Structure *Simulator::FindStructure(string strStructureID, BOOL bThrowError)
 	return lpStructure;
 }
 
+/**
+\brief	Searches for the first odor type with the specified ID.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strOdorID	GUID ID for the odor type. 
+\param	bThrowError  	true to throw error if no odor type is found. 
+
+\return	null if it fails, else the found odor type.
+\exception If bThrowError=True and no odor type is found it throws an exception.
+**/
 OdorType *Simulator::FindOdorType(string strOdorID, BOOL bThrowError)
 {
 	OdorType *lpOdorType = NULL;
@@ -1773,27 +2864,21 @@ OdorType *Simulator::FindOdorType(string strOdorID, BOOL bThrowError)
 	return lpOdorType;
 }
 
-/*! \brief 
-   Finds a structure or organism with the specified ID.
-      
-   \param strStructureID The ID of the structure to find. This is not case sensitive.
-	 \param bThrowError If this is TRUE and the ID is not found then an exception is
-	               thrown. If this is FALSE and the ID is not found then NULL
-								 is returned.
 
-	 \return
-	 Returns a pointer to the structure with the specified ID if one is found. If one
-	 is not found then it will either throw an exception or return NULL depending on 
-	 the value of bThrowError. This will search both the "static" structures and the
-	 organisms for the specified ID.
+/**
+\brief	Searches for the first structure with the specified ID.
 
-	 \remarks
-   Finds a structure with the specified ID.
+\details This searches both the structures and organisms.
 
-	 \sa
-	 FindOrganism, FindStructure, FindStructureFromAll
-*/
+\author	dcofer
+\date	3/28/2011
 
+\param	strStructureID	GUID ID for the structure. 
+\param	bThrowError  	true to throw error if no structure is found. 
+
+\return	null if it fails, else the found structure.
+\exception If bThrowError=True and no structure is found it throws an exception.
+**/
 Structure *Simulator::FindStructureFromAll(string strStructureID, BOOL bThrowError)
 {
 	Structure *lpStructure = NULL;
@@ -1808,31 +2893,26 @@ Structure *Simulator::FindStructureFromAll(string strStructureID, BOOL bThrowErr
 	return lpStructure;
 }
 
+/**
+\brief	Finds a joint with the specified ID in the specified structure.
 
-/*! \brief 
-   Finds a joint with the specified ID in the specified structure.
-      
-   \param strStructureID The ID of the structure to find. This is not case sensitive.
-   \param strJointID The ID of the joint within that structure to find. This is not case sensitive.
-	 \param bThrowError If this is TRUE and the ID's are not found then an exception is
-	               thrown. If this is FALSE and the ID's are not found then NULL
-								 is returned.
+\details Returns a pointer to the joint with the specified ID that is inside the specified structure if
+one is found. If either the structure or joint are not found then it will either throw an
+exception or return NULL depending on the value of bThrowError. This uses the
+FindStructureFromAll method to search both the "static" structures and the organisms for the
+specified StructureID.
 
-	 \return
-	 Returns a pointer to the joint with the specified ID that is inside the specified 
-	 structure if one is found. If either the structure or joint are not found
-	 then it will either throw an exception or return NULL depending on 
-	 the value of bThrowError. This uses the FindStructureFromAll method to
-	 search both the "static" structures and the organisms for the specified 
-	 StructureID.
+\author	dcofer
+\date	3/28/2011
 
-	 \remarks
-   Finds a joint within a structure with the specified ID.
+\param	strStructureID	GUID ID for the structure. 
+\param	strJointID	  	GUID ID for the joint. 
+\param	bThrowError   	true to throw error if no structure is found. 
 
-	 \sa
-	 FindOrganism, FindStructure, FindStructureFromAll, FindRigidBody, FindJoint
-*/
+\return	null if it fails, else the found structure.
 
+\exception	If	bThrowError=True and no structure or joint is found it throws an exception. 
+**/
 Joint *Simulator::FindJoint(string strStructureID, string strJointID, BOOL bThrowError)
 {
 	Structure *lpStructure = FindStructureFromAll(strStructureID, bThrowError);
@@ -1843,31 +2923,25 @@ Joint *Simulator::FindJoint(string strStructureID, string strJointID, BOOL bThro
 		return NULL;
 }
 
+/**
+\brief	Finds a rigid body with the specified ID in the specified structure.
 
-/*! \brief 
-   Finds a rigid body with the specified ID in the specified structure.
-      
-   \param strStructureID The ID of the structure to find. This is not case sensitive.
-   \param strBodyID The ID of the rigid body within that structure to find. This is not case sensitive.
-	 \param bThrowError If this is TRUE and the ID's are not found then an exception is
-	               thrown. If this is FALSE and the ID's are not found then NULL
-								 is returned.
+\details Returns a pointer to the body with the specified ID that is inside the specified structure if
+one is found. If either the structure or body are not found then it will either throw an
+exception or return NULL depending on the value of bThrowError. This uses the
+FindStructureFromAll method to search both the "static" structures and the organisms for the
+specified StructureID.
 
-	 \return
-	 Returns a pointer to the body with the specified ID that is inside the specified 
-	 structure if one is found. If either the structure or body are not found
-	 then it will either throw an exception or return NULL depending on 
-	 the value of bThrowError. This uses the FindStructureFromAll method to
-	 search both the "static" structures and the organisms for the specified 
-	 StructureID.
+\author	dcofer
+\date	3/28/2011
 
-	 \remarks
-   Finds a rigid body within a structure with the specified ID.
+\param	strStructureID	GUID ID for the structure. 
+\param	strBodyID	  	GUID ID for the bodu. 
+\param	bThrowError   	true to throw error if no structure is found. 
 
-	 \sa
-	 FindOrganism, FindStructure, FindStructureFromAll, FindRigidBody, FindJoint
-*/
-
+\return	null if it fails, else the found structure.
+\exception	If	bThrowError=True and no structure or body is found it throws an exception. 
+**/
 RigidBody *Simulator::FindRigidBody(string strStructureID, string strBodyID, BOOL bThrowError)
 {
 	Structure *lpStructure = FindStructureFromAll(strStructureID, bThrowError);
@@ -1878,8 +2952,21 @@ RigidBody *Simulator::FindRigidBody(string strStructureID, string strBodyID, BOO
 		return NULL;
 }
 
+/**
+\brief	Searches for the object with the specified ID.
 
+\details This loops through the list of all objects (m_aryObjectList) in the simulation
+and tries to find one with a matching ID.
 
+\author	dcofer
+\date	3/28/2011
+
+\param	strID	   	GUID ID for the object to find. 
+\param	bThrowError	true to throw error nothing is found. 
+
+\return	null if it fails, else the found by identifier.
+\exception	If	bThrowError=True and no objects is found it throws an exception. 
+**/
 AnimatBase *Simulator::FindByID(string strID, BOOL bThrowError)
 {
 	AnimatBase *lpFind = NULL;
@@ -1894,7 +2981,17 @@ AnimatBase *Simulator::FindByID(string strID, BOOL bThrowError)
 	return lpFind;
 }
 
-			
+/**
+\brief	Searches for the food source that is closest to the specified mouth position and not beyond a given radius.
+
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	oMouthPos	The mouth position. 
+\param	fltMinRadius	 	The minimum radius. 
+
+\return	null if it fails, else the found closest food source.
+**/
 RigidBody *Simulator::FindClosestFoodSource(CStdFPoint &oMouthPos, float fltMinRadius)
 {
 	RigidBody *lpFood = NULL, *lpMinFood = NULL;
@@ -1920,18 +3017,45 @@ RigidBody *Simulator::FindClosestFoodSource(CStdFPoint &oMouthPos, float fltMinR
 
 #pragma region AddRemoveMethods
 
+/**
+\brief	Adds an object to the list of all simulation objects. 
+
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	lpItem	Pointer to the item to add. 
+**/
 void Simulator::AddToObjectList(AnimatBase *lpItem)
 {
 	if(!FindByID(lpItem->ID(), FALSE))
 		m_aryObjectList.Add(lpItem->ID(), lpItem);
 }
 
+/**
+\brief	Removes an object from the list of all simulation objects.
+
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	lpItem	Pointer to the item to remove. 
+**/
 void Simulator::RemoveFromObjectList(AnimatBase *lpItem)
 {
 	if(FindByID(lpItem->ID(), FALSE))
 		m_aryObjectList.Remove(lpItem->ID());
 }
 
+/**
+\brief	Adds a neural module factory to the list of factories for this simulation.
+
+\details This method ensures that the module is only added to the list once.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strModuleName   	Name of the dll module. 
+\param [in,out]	lpModule	Pointer to thea module to add. 
+**/
 void Simulator::AddNeuralModuleFactory(string strModuleName, NeuralModule *lpModule)
 {
 	if(!lpModule->ClassFactory())
@@ -1941,6 +3065,15 @@ void Simulator::AddNeuralModuleFactory(string strModuleName, NeuralModule *lpMod
 		m_aryNeuralModuleFactories.Add(Std_CheckString(strModuleName), lpModule->ClassFactory());
 }
 
+/**
+\brief	Attaches a source adapter.
+
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	lpStructure	Pointer to a structure. 
+\param [in,out]	lpAdapter  	Pointer to an adapter. 
+**/
 void Simulator::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 {
 	string strModuleName = Std_CheckString(lpAdapter->SourceModule());
@@ -1960,6 +3093,15 @@ void Simulator::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 	}
 }
 
+/**
+\brief	Attaches a target adapter.
+
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	lpStructure	Pointer to a structure. 
+\param [in,out]	lpAdapter  	Pointer to an adapter. 
+**/
 void Simulator::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 {
 	string strModuleName = Std_CheckString(lpAdapter->TargetModule());
@@ -1982,34 +3124,19 @@ void Simulator::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 	}
 }
 
+/**
+\brief	Adds a food source to the list of all simulation food sources. 
+
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	lpFood	Pointer to a food. 
+**/
 void Simulator::AddFoodSource(RigidBody *lpFood)
 {
 	m_aryFoodSources.Add(lpFood);
 }
-/*! \brief 
-   Adds a new organism to the list of structures for this simulation.
-      
-   \param lpOrganism The new organism to be added.
 
-	 \return
-	 No return value.
-
-	 \remarks
-	 This method gets a list of all organisms and a list of referneces to
-	 all structures in this simulation that are mapped to their
-	 ID value. This allows us to use the STL find funtions to find organisms.
-	 This is more efficeient that using a loop and recursion.
-	 This also allows us to ensure that each organism/structure that is
-	 being added has a unique ID value. If you attempt to add a organism that
-	 has a ID that is already in the list then an exception will be thrown.
-	 Note that this method is NOT creating the object itself, that is done
-	 elsewhere. It is simply adding it to the organism list and adding 
-	 a reference to that created object to m_aryAllStructures list.
-
-	 \sa
-	 AddOrganism, AddStructure, m_aryAllStructures, m_aryOrganisms, m_aryStructures, 
-	 FindOrganism, FindStructure, FindStructureFromAll
-*/
 
 void Simulator::AddOrganism(Organism *lpOrganism)
 {
@@ -2028,6 +3155,16 @@ void Simulator::AddOrganism(Organism *lpOrganism)
 	}
 }
 
+/**
+\brief	Adds an organism defined by an xml data packet. 
+
+\details This is primarily used by the GUI to create a new organism within the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strXml	The xml packet to load. 
+**/
 void Simulator::AddOrganism(string strXml)
 {
 	CStdXml oXml;
@@ -2039,37 +3176,22 @@ void Simulator::AddOrganism(string strXml)
 	lpOrg->Initialize();
 }
 
+/**
+\brief	Removes an organism by its ID.
+
+\details This is primarily used by the GUI to remove an organism from the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strID	   	GUID ID of the organism to remove. 
+\param	bThrowError	true to throw error if the organism is not found. 
+**/
 void Simulator::RemoveOrganism(string strID, BOOL bThrowError)
 {
 	m_aryAllStructures.Remove(strID);
 	m_aryOrganisms.Remove(strID);
 }
-
-
-/*! \brief 
-   Adds a new "static" structure to the list of structures for this simulation.
-      
-   \param lpStructure The new structure to be added.
-
-	 \return
-	 No return value.
-
-	 \remarks
-	 This method gets a list of all structures and a list of referneces to
-	 all structures in this simulation that are mapped to their
-	 ID value. This allows us to use the STL find funtions to find structures.
-	 This is more efficeient that using a loop and recursion.
-	 This also allows us to ensure that each organism/structure that is
-	 being added has a unique ID value. If you attempt to add a structure that
-	 has a ID that is already in the list then an exception will be thrown.
-	 Note that this method is NOT creating the object itself, that is done
-	 elsewhere. It is simply adding it to the structure list and adding 
-	 a reference to that created object to m_aryAllStructures list.
-
-	 \sa
-	 AddOrganism, AddStructure, m_aryAllStructures, m_aryOrganisms, m_aryStructures, 
-	 FindOrganism, FindStructure, FindStructureFromAll
-*/
 
 void Simulator::AddStructure(Structure *lpStructure)
 {
@@ -2088,6 +3210,16 @@ void Simulator::AddStructure(Structure *lpStructure)
 	}
 }
 
+/**
+\brief	Adds an structure defined by an xml data packet. 
+
+\details This is primarily used by the GUI to create a new organism within the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strXml	The xml packet to load. 
+**/
 void Simulator::AddStructure(string strXml)
 {
 	CStdXml oXml;
@@ -2099,12 +3231,32 @@ void Simulator::AddStructure(string strXml)
 	lpStruct->Initialize();
 }
 
+/**
+\brief	Removes a structure by its ID.
+
+\details This is primarily used by the GUI to remove a structure from the simulation.
+
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strID	   	Identifier for the structure. 
+\param	bThrowError	true to throw error if the structure is not found. 
+**/
 void Simulator::RemoveStructure(string strID, BOOL bThrowError)
 {
 	m_aryAllStructures.Remove(strID);
 	m_aryStructures.Remove(strID);
 }
 
+/**
+\brief	Adds an odor type. 
+
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	lpOdorType	Pointer to an odor type. 
+**/
 void Simulator::AddOdorType(OdorType *lpOdorType)
 {
 	if(!lpOdorType)
@@ -2316,6 +3468,14 @@ BOOL Simulator::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 
 #pragma region RecorderMethods
 
+/**
+\brief	Enables the video playback.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strKeyFrameID	GUID ID for the string key frame. 
+**/
 void Simulator::EnableVideoPlayback(string strKeyFrameID)
 {
 	if(!m_lpSimRecorder)
@@ -2328,6 +3488,12 @@ void Simulator::EnableVideoPlayback(string strKeyFrameID)
 	lpFrame->EnableVideoPlayback();
 }
 
+/**
+\brief	Disables the video playback.
+
+\author	dcofer
+\date	3/28/2011
+**/
 void Simulator::DisableVideoPlayback()
 {
 	if(!m_lpSimRecorder)
@@ -2337,6 +3503,12 @@ void Simulator::DisableVideoPlayback()
 		m_lpVideoPlayback->DisableVideoPlayback();
 }
 
+/**
+\brief	Starts a video playback.
+
+\author	dcofer
+\date	3/28/2011
+**/
 void Simulator::StartVideoPlayback()
 {
 	if(!m_lpSimRecorder)
@@ -2346,6 +3518,12 @@ void Simulator::StartVideoPlayback()
 		m_lpVideoPlayback->StartVideoPlayback();
 }
 
+/**
+\brief	Stop video playback.
+
+\author	dcofer
+\date	3/28/2011
+**/
 void Simulator::StopVideoPlayback()
 {
 	if(!m_lpSimRecorder)
@@ -2355,6 +3533,14 @@ void Simulator::StopVideoPlayback()
 		m_lpVideoPlayback->StopVideoPlayback();
 }
 
+/**
+\brief	Step video playback.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	iFrameCount	Number of frames. 
+**/
 void Simulator::StepVideoPlayback(int iFrameCount)
 {
 	if(!m_lpSimRecorder)
@@ -2364,6 +3550,14 @@ void Simulator::StepVideoPlayback(int iFrameCount)
 		m_lpVideoPlayback->StepVideoPlayback( iFrameCount);
 }
 
+/**
+\brief	Saves a video.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strPath	Full pathname of the string file. 
+**/
 void Simulator::SaveVideo(string strPath)
 {
 	if(!m_lpSimRecorder)
@@ -2373,6 +3567,18 @@ void Simulator::SaveVideo(string strPath)
 		m_lpVideoPlayback->SaveVideo(strPath);
 }
 
+/**
+\brief	Adds a key frame.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strType	Type of the string. 
+\param	lStart 	The start time slice. 
+\param	lEnd   	The end time slice. 
+
+\return	.
+**/
 string Simulator::AddKeyFrame(string strType, long lStart, long lEnd)
 {
 	if(!m_lpSimRecorder)
@@ -2382,6 +3588,14 @@ string Simulator::AddKeyFrame(string strType, long lStart, long lEnd)
 	return lpFrame->ID();
 }
 
+/**
+\brief	Removes the key frame described by strID.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strID	GUID ID for the key frame. 
+**/
 void Simulator::RemoveKeyFrame(string strID)
 {
 	if(!m_lpSimRecorder)
@@ -2390,6 +3604,18 @@ void Simulator::RemoveKeyFrame(string strID)
 	m_lpSimRecorder->Remove(strID);
 }
 
+/**
+\brief	Move key frame.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strID 	GUID ID for the key frame. 
+\param	lStart 	The start time slice. 
+\param	lEnd   	The end time slice. 
+
+\return	.
+**/
 string Simulator::MoveKeyFrame(string strID, long lStart, long lEnd)
 {
 	if(!m_lpSimRecorder)
@@ -2407,6 +3633,14 @@ string Simulator::MoveKeyFrame(string strID, long lStart, long lEnd)
 	return lpFrame->ID();
 }
 
+/**
+\brief	Move simulation to key frame.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strKeyFrameID	GUID ID for the key frame. 
+**/
 void Simulator::MoveSimulationToKeyFrame(string strKeyFrameID)
 {
 	if(!m_lpSimRecorder)
@@ -2421,6 +3655,14 @@ void Simulator::MoveSimulationToKeyFrame(string strKeyFrameID)
 		m_lpSimStopPoint->MakeCurrentFrame();
 }
 
+/**
+\brief	Calculates the snapshot byte size.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	The calculated snapshot byte size.
+**/
 long Simulator::CalculateSnapshotByteSize()
 {
 	long lByteSize = 0;
@@ -2435,6 +3677,15 @@ long Simulator::CalculateSnapshotByteSize()
 	return lByteSize;
 }
 
+/**
+\brief	Saves a key frame snapshot.
+
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	aryBytes	Array of bytes for the snapshot. 
+\param [in,out]	lIndex  	Index into the byte array. 
+**/
 void Simulator::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 {
 	CStdMap<string, Structure *>::iterator oPos;
@@ -2446,7 +3697,15 @@ void Simulator::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 	}
 }
 
+/**
+\brief	Loads a key frame snapshot.
 
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	aryBytes	Array of bytes for the snapshot. 
+\param [in,out]	lIndex  	Index into the byte array. 
+**/
 void Simulator::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 {
 	CStdMap<string, Structure *>::iterator oPos;
@@ -2458,7 +3717,12 @@ void Simulator::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 	}
 }
 
+/**
+\brief	Record video frame.
 
+\author	dcofer
+\date	3/28/2011
+**/
 void Simulator::RecordVideoFrame()
 {
 	if(m_lpAvi && (m_lTimeSlice >= m_lVideoStartSlice) && (m_lTimeSlice <= m_lVideoEndSlice))
@@ -2486,23 +3750,17 @@ void Simulator::RecordVideoFrame()
 			
 #pragma region CollisionMethods
 
+/**
+\brief	Enables collision between the past-in pairs of objects.
 
-/*! \brief 
-   Enables collision between the past-in object and all rigid bodies of the simulator.
-      
-   \param lpBody  This is a pointer to the body to enable collisions on.
+\details This method enables collision responses between the rigid body pairs that are past in.
 
-	 \return
-	 No return value.
+\author	dcofer
+\date	3/28/2011
 
-	 \remarks
-	 This method enables collision responses between the rigid body being past
-	 in and all rigid bodies in the simulator.
-
-   \sa
-   EnableCollision, DisableCollision	
-*/
-
+\param [in,out]	lpStruct		  	Pointer to a structure. 
+\param [in,out]	m_aryCollisionList	List of CollisionPair objects. 
+**/
 void Simulator::EnableCollisions(Structure *lpStruct, CStdPtrArray<CollisionPair> &m_aryCollisionList)
 {
 	//Now lets disable any collisions that have been added to the exclusion list.
@@ -2531,6 +3789,17 @@ void Simulator::EnableCollision(RigidBody *lpBody)
 	}
 }
 
+/**
+\brief	Disables collision between the past-in pairs of objects.
+
+\details This method enables collision responses between the pairs of rigid body objects that were past in.
+
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	lpStruct		  	Pointer to a structure. 
+\param [in,out]	m_aryCollisionList	List of CollisionPair objects. 
+**/
 void Simulator::DisableCollisions(Structure *lpStruct, CStdPtrArray<CollisionPair> &m_aryCollisionList)
 {
 	//Now lets disable any collisions that have been added to the exclusion list.
@@ -2548,21 +3817,6 @@ void Simulator::DisableCollisions(Structure *lpStruct, CStdPtrArray<CollisionPai
 	}	
 }
 
-/*! \brief 
-   Disables collision between the past-in object and all rigid bodies of the simulator.
-      
-   \param lpBody This is a pointer to the body to disable collisions on.
-
-	 \return
-	 No return value.
-
-	 \remarks
-	 This method disables collision responses between the rigid body being past
-	 in and all rigid bodies in the simulator.
-
-   \sa
-   EnableCollision, DisableCollision	
-*/
 
 void Simulator::DisableCollision(RigidBody *lpBody)
 {
@@ -2579,6 +3833,19 @@ void Simulator::DisableCollision(RigidBody *lpBody)
 
 #pragma region UnitScaleMethods
 
+/**
+\brief	Convert the string ID of the distance units to a conversion factor.
+
+\details This determines the scaling factor that is used within the simulation to scale the arbitrary units
+to the distance units chosen by the user.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strUnits	The string ID the distance units. 
+
+\return	conversion factor for the units chosen.
+**/
 float Simulator::ConvertDistanceUnits(string strUnits)
 {
 	strUnits = Std_CheckString(strUnits);
@@ -2609,6 +3876,19 @@ float Simulator::ConvertDistanceUnits(string strUnits)
 	return (float) 1;
 }
 
+/**
+\brief	Convert the string ID of the distance units to a conversion factor for the denominator of the distance units.
+
+\details This determines the scaling factor that is used within the simulation to scale the arbitrary units
+to the denominator distance units chosen by the user.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strUnits	The string units. 
+
+\return	.
+**/
 float Simulator::ConvertDenominatorDistanceUnits(string strUnits)
 {
 	strUnits = Std_CheckString(strUnits);
@@ -2639,6 +3919,19 @@ float Simulator::ConvertDenominatorDistanceUnits(string strUnits)
 	return (float) 1;
 }
 
+/**
+\brief	Convert the string ID of the mass units to a conversion factor.
+
+\details This determines the scaling factor that is used within the simulation to scale the arbitrary units
+to the mass units chosen by the user.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strUnits	The string ID the mass units. 
+
+\return	conversion factor for the units chosen.
+**/
 float Simulator::ConvertMassUnits(string strUnits)
 {
 	strUnits = Std_CheckString(strUnits);
@@ -2669,6 +3962,19 @@ float Simulator::ConvertMassUnits(string strUnits)
 	return (float) 1;
 }
 
+/**
+\brief	Convert the string ID of the density units to a conversion factor.
+
+\details This determines the scaling factor that is used within the simulation to scale the arbitrary units
+to the density units chosen by the user.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strUnits	The string ID the density units. 
+
+\return	conversion factor for the units chosen.
+**/
 float Simulator::ConvertDensityMassUnits(string strUnits)
 {
 	strUnits = Std_CheckString(strUnits);
@@ -2702,164 +4008,5 @@ float Simulator::ConvertDensityMassUnits(string strUnits)
 #pragma endregion
 
 #pragma endregion
-
-
-
-
-
-
-/*! \fn long Simulator::TimeSlice()
-   \brief
-   TimeSlice property.
-      
-   \remarks
-	 The current time slice. This a long value.
-	 This is the accessor function for the m_lTimeSlice element.
-*/
-/*! \fn void Simulator::TimeSlice(long lVal)
-   \brief
-   TimeSlice property.
-      
-   \remarks
-	 The current time slice. This a long value.
-	 This is the mutator function for the m_lTimeSlice element.
-*/
-
-
-/*! \fn string Simulator::ProjectPath()
-   \brief
-   ProjectPath property.
-      
-   \remarks
-	 The directory path where the simulation configuration files are located.
-	 This is the accessor function for the m_strProjectPath element.
-*/
-/*! \fn void Simulator::ProjectPath(string strPath)
-   \brief
-   ProjectPath property.
-      
-   \remarks
-	 The directory path where the simulation configuration files are located.
-	 This is the mutator function for the m_strProjectPath element.
-*/
-
-
-/*! \fn string Simulator::SimulationFile()
-   \brief
-   SimulationFile property.
-      
-   \remarks
-	 The name of the Animat Simulation (ASIM) file.
-	 This is the accessor function for the m_strSimulationFile element.
-*/
-/*! \fn void Simulator::SimulationFile(string strFile)
-   \brief
-   SimulationFile property.
-      
-   \remarks
-	 The name of the Animat Simulation (ASIM) file.
-	 This is the mutator function for the m_strSimulationFile element.
-*/
-
-
-
-/*! \fn float Simulator::StepIncrement()
-   \brief
-   StepIncrement property.
-      
-   \remarks
-	 The time increment for each time slice in the simulation. 
-	 This is the accessor function for the m_fltStepIncrement element.
-*/
-/*! \fn void Simulator::StepIncrement(float fltVal)
-   \brief
-   StepIncrement property.
-      
-   \remarks
-	 The time increment for each time slice in the simulation. 
-	 This is the mutator function for the m_fltStepIncrement element.
-*/
-
-
-/*! \fn ClassFactory *Simulator::ClassFactory()
-   \brief
-   ClassFactory property.
-      
-   \remarks
-	 This is a copy of the class factory associated with this executable. There
-	 can only be one class factory per executable and it should have NO state.
-	 This is the accessor function for the m_lpClassFactory element.
-*/
-/*! \fn void Simulator::ClassFactory(ClassFactory *lpFactory)
-   \brief
-   ClassFactory property.
-      
-   \remarks
-	 This is a copy of the class factory associated with this executable. There
-	 can only be one class factory per executable and it should have NO state.
-	 This is the mutator function for the m_lpClassFactory element.
-*/
-
-
-/*! \fn float Simulator::Gravity() 
-   \brief
-   Gravity property.
-      
-   \remarks
-	 The acceleration of gravity to use in the simulation.
-	 This is the accessor function for the m_fltGravity element.
-*/
-/*! \fn void Simulator::Gravity(float fltVal)
-   \brief
-   Gravity property.
-      
-   \remarks
-	 The acceleration of gravity to use in the simulation.
-	 This is the mutator function for the m_fltGravity element.
-*/
-
-
-/*! \fn BOOL Simulator::SimulateHydrodynamics()
-   \brief
-   SimulateHydrodynamics property.
-      
-   \remarks
-	 Tells whether or not we will be doing hydrodynamic simulations.
-	 If you are not doing stuff underwater then be sure this is set to
-	 FALSE. The hydrodynamics adds extra overhead that can slow the
-	 simulation down slightly.
-	 This is the accessor function for the m_bSimulateHydrodynamics element.
-*/
-/*! \fn void Simulator::SimulateHydrodynamics(BOOL bVal)
-   \brief
-   SimulateHydrodynamics property.
-      
-   \remarks
-	 Tells whether or not we will be doing hydrodynamic simulations.
-	 If you are not doing stuff underwater then be sure this is set to
-	 FALSE. The hydrodynamics adds extra overhead that can slow the
-	 simulation down slightly.
-	 This is the mutator function for the m_bSimulateHydrodynamics element.
-*/
-
-
-/*! \fn float Simulator::FluidDensity()
-   \brief
-   FluidDensity property.
-      
-   \remarks
-	 Density of the fluid for hydrodynamic simulations. This is not
-	 used if m_bSimulateHydrodynamics is FALSE.
-	 This is the accessor function for the m_fltFluidDensity element.
-*/
-/*! \fn void Simulator::FluidDensity(float fltVal)
-   \brief
-   FluidDensity property.
-      
-   \remarks
-	 Density of the fluid for hydrodynamic simulations. This is not
-	 used if m_bSimulateHydrodynamics is FALSE.
-	 This is the mutator function for the m_fltFluidDensity element.
-*/
 
 }			//AnimatSim
