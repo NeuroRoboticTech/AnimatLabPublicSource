@@ -267,6 +267,10 @@ Namespace Framework
             Return iIndex
         End Function
 
+        Public Function GetImage(ByVal strImageName As String) As Image
+            Return m_imgList.Images(GetImageIndex(strImageName))
+        End Function
+
         Public Overloads Shared Sub ImageToXml(ByRef oXml As Interfaces.StdXml, ByVal strName As String, ByVal image As Image)
 
             Dim sb As System.Text.StringBuilder = New System.Text.StringBuilder

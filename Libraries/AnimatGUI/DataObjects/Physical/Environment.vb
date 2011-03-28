@@ -597,12 +597,12 @@ Namespace DataObjects.Physical
         Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As Point) As Boolean
 
             If tnSelectedNode Is m_tnOrganisms Then
-                PopupOrganismMenu(ptPoint)
+                PopupStructureMenu(tnSelectedNode, ptPoint, False)
                 Return True
             End If
 
             If tnSelectedNode Is m_tnStructures Then
-                PopupStructuresMenu(ptPoint)
+                PopupStructureMenu(tnSelectedNode, ptPoint, True)
                 Return True
             End If
 
@@ -619,83 +619,42 @@ Namespace DataObjects.Physical
             Next
 
             If tnSelectedNode Is m_tnWorkspaceNode Then
-                Dim popup As New PopupMenu
-                Dim mcExpandAll As New MenuCommand("Expand All", tnSelectedNode, _
-                                                  New EventHandler(AddressOf Me.OnExpandAll))
-                Dim mcCollapseAll As New MenuCommand("Collapse All", tnSelectedNode, _
-                                                  New EventHandler(AddressOf Me.OnCollapseAll))
+                Dim mcExpandAll As New System.Windows.Forms.ToolStripMenuItem("Expand All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Expand.gif"), New EventHandler(AddressOf Me.OnExpandAll))
+                Dim mcCollapseAll As New System.Windows.Forms.ToolStripMenuItem("Collapse All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Collapse.gif"), New EventHandler(AddressOf Me.OnCollapseAll))
 
-                mcExpandAll.ImageList = Util.Application.ToolStripImages.ImageList
-                mcExpandAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Expand.gif")
-                mcCollapseAll.ImageList = Util.Application.ToolStripImages.ImageList
-                mcCollapseAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Collapse.gif")
+                mcExpandAll.Tag = tnSelectedNode
+                mcCollapseAll.Tag = tnSelectedNode
 
-                popup.MenuCommands.AddRange(New MenuCommand() {mcExpandAll, mcCollapseAll})
-                Dim selected As MenuCommand = popup.TrackPopup(ptPoint)
+                ' Create the popup menu object
+                Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Physical.Environment.WorkspaceTreeviewPopupMenu", Util.SecurityMgr)
+                popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcExpandAll, mcCollapseAll})
             End If
 
             Return False
         End Function
 
-        Protected Overridable Sub PopupOrganismMenu(ByVal ptPoint As Point)
+        Protected Overridable Sub PopupStructureMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As Point, ByVal bStruct As Boolean)
 
-            ' Create the menu items
-            Dim mcInsert As New MenuCommand("New Organism", "NewOrganism", Util.Application.ToolStripImages.ImageList, _
-                                              Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.AddOrganism.gif"), _
-                                              New EventHandler(AddressOf Me.OnNewOrganism))
+            Dim mcInsert As System.Windows.Forms.ToolStripMenuItem
 
-            Dim mcSepExpand As MenuCommand = New MenuCommand("-")
-            Dim mcExpandAll As New MenuCommand("Expand All", m_tnOrganisms, _
-                                              New EventHandler(AddressOf Me.OnExpandAll))
-            Dim mcCollapseAll As New MenuCommand("Collapse All", m_tnOrganisms, _
-                                                New EventHandler(AddressOf Me.OnCollapseAll))
+            If bStruct Then
+                mcInsert = New System.Windows.Forms.ToolStripMenuItem("New Structure", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddStructure.gif"), New EventHandler(AddressOf Me.OnNewStructure))
+            Else
+                mcInsert = New System.Windows.Forms.ToolStripMenuItem("New Organism", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddOrganism.gif"), New EventHandler(AddressOf Me.OnNewOrganism))
+            End If
 
-            mcExpandAll.ImageList = Util.Application.ToolStripImages.ImageList
-            mcExpandAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Expand.gif")
-            mcCollapseAll.ImageList = Util.Application.ToolStripImages.ImageList
-            mcCollapseAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Collapse.gif")
+            Dim mcSepExpand As New ToolStripSeparator()
+            Dim mcExpandAll As New System.Windows.Forms.ToolStripMenuItem("Expand All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Expand.gif"), New EventHandler(AddressOf Me.OnExpandAll))
+            Dim mcCollapseAll As New System.Windows.Forms.ToolStripMenuItem("Collapse All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Collapse.gif"), New EventHandler(AddressOf Me.OnCollapseAll))
 
-            ' Create the popup menu object
-            Dim popup As New PopupMenu
-
-            ' Define the list of menu commands
-            popup.MenuCommands.Add(mcInsert)
-            popup.MenuCommands.AddRange(New MenuCommand() {mcSepExpand, mcExpandAll, mcCollapseAll})
-
-            ' Show it!
-            Dim selected As MenuCommand = popup.TrackPopup(ptPoint)
-
-        End Sub
-
-        Protected Overridable Sub PopupStructuresMenu(ByVal ptPoint As Point)
-
-            ' Create the menu items
-            Dim mcInsert As New MenuCommand("New Structure", "NewStructure", Util.Application.ToolStripImages.ImageList, _
-                                              Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.AddStructure.gif"), _
-                                              New EventHandler(AddressOf Me.OnNewStructure))
-
-            Dim mcSepExpand As MenuCommand = New MenuCommand("-")
-            Dim mcExpandAll As New MenuCommand("Expand All", m_tnStructures, _
-                                              New EventHandler(AddressOf Me.OnExpandAll))
-            Dim mcCollapseAll As New MenuCommand("Collapse All", m_tnStructures, _
-                                                New EventHandler(AddressOf Me.OnCollapseAll))
-
-            mcExpandAll.ImageList = Util.Application.ToolStripImages.ImageList
-            mcExpandAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Expand.gif")
-            mcCollapseAll.ImageList = Util.Application.ToolStripImages.ImageList
-            mcCollapseAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Collapse.gif")
+            mcExpandAll.Tag = tnSelectedNode
+            mcCollapseAll.Tag = tnSelectedNode
 
             ' Create the popup menu object
-            Dim popup As New PopupMenu
+            Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Physical.Environment.PopupStructureMenu", Util.SecurityMgr)
+            popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcInsert, mcSepExpand, mcExpandAll, mcCollapseAll})
 
-            ' Define the list of menu commands
-            popup.MenuCommands.Add(mcInsert)
-
-            popup.MenuCommands.AddRange(New MenuCommand() {mcSepExpand, mcExpandAll, mcCollapseAll})
-
-            ' Show it!
-            Dim selected As MenuCommand = popup.TrackPopup(ptPoint)
-
+            Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
         End Sub
 
         Public Overrides Function WorkspaceTreeviewDoubleClick(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node) As Boolean

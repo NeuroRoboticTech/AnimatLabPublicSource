@@ -286,34 +286,20 @@ Namespace DataObjects.Charting
         Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As System.Drawing.Point) As Boolean
 
             If tnSelectedNode Is m_tnWorkspaceNode Then
-                ' Create the menu items
-                Dim mcDelete As New MenuCommand("Delete Axis", "DeleteAxis", Util.Application.ToolStripImages.ImageList, _
-                                                  Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Delete.gif"), _
-                                                  New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
+                Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete Axis", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
+                Dim mcAddItem As New System.Windows.Forms.ToolStripMenuItem("Add Item", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddChartItem.gif"), New EventHandler(AddressOf Me.OnAddDataItem))
+                Dim mcSepExpand As New ToolStripSeparator()
+                Dim mcExpandAll As New System.Windows.Forms.ToolStripMenuItem("Expand All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Expand.gif"), New EventHandler(AddressOf Me.OnExpandAll))
+                Dim mcCollapseAll As New System.Windows.Forms.ToolStripMenuItem("Collapse All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Collapse.gif"), New EventHandler(AddressOf Me.OnCollapseAll))
 
-                Dim mcAddItem As New MenuCommand("Add Item", "AddItem", Util.Application.ToolStripImages.ImageList, _
-                                                  Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.AddChartItem.gif"), _
-                                                  New EventHandler(AddressOf Me.OnAddDataItem))
-
-                Dim mcSepExpand As MenuCommand = New MenuCommand("-")
-                Dim mcExpandAll As New MenuCommand("Expand All", tnSelectedNode, _
-                                                  New EventHandler(AddressOf Me.OnExpandAll))
-                Dim mcCollapseAll As New MenuCommand("Collapse All", tnSelectedNode, _
-                                                  New EventHandler(AddressOf Me.OnCollapseAll))
-
-                mcExpandAll.ImageList = Util.Application.ToolStripImages.ImageList
-                mcExpandAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Expand.gif")
-                mcCollapseAll.ImageList = Util.Application.ToolStripImages.ImageList
-                mcCollapseAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Collapse.gif")
+                mcExpandAll.Tag = tnSelectedNode
+                mcCollapseAll.Tag = tnSelectedNode
 
                 ' Create the popup menu object
-                Dim popup As New PopupMenu
-                popup.MenuCommands.Add(mcDelete)
-                popup.MenuCommands.Add(mcAddItem)
-                popup.MenuCommands.AddRange(New MenuCommand() {mcSepExpand, mcExpandAll, mcCollapseAll})
+                Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Charting.Axis.WorkspaceTreeviewPopupMenu", Util.SecurityMgr)
+                popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcDelete, mcAddItem, mcSepExpand, mcExpandAll, mcCollapseAll})
 
-                ' Show it!
-                Dim selected As MenuCommand = popup.TrackPopup(ptPoint)
+                Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
 
                 Return True
             Else

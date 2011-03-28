@@ -459,8 +459,11 @@ Namespace Forms
         Private Sub ctrlTreeView_ShowContextMenuNode(ByVal tc As Crownwood.DotNetMagic.Controls.TreeControl, ByVal e As Crownwood.DotNetMagic.Controls.CancelNodeEventArgs) Handles ctrlTreeView.ShowContextMenuNode
 
             Try
-                'We will always be showing our own context menu, so set the cancel to true
-                e.Cancel = True
+                'We will set the contextmenunode property within our call to WorkspaceTreeViewPopupMenu
+                e.Cancel = False
+
+                'Clear the context menu node before we set it again.
+                ctrlTreeView.ContextMenuNode = Nothing
 
                 Dim ptPoint As Point = tc.MousePosition
 
