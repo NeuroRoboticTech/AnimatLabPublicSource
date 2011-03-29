@@ -224,7 +224,7 @@ Namespace DataObjects.Behavior.Nodes
 
         End Sub
 
-        Public Overrides Sub CreateDiagramDropDownTree(ByVal tvTree As TreeView, ByVal tnParent As TreeNode)
+        Public Overrides Sub CreateDiagramDropDownTree(ByVal tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node)
         End Sub
 
 

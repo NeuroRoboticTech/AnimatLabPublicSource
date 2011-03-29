@@ -9,7 +9,7 @@ Namespace TypeHelpers
     Public Class DropDownTreeEditor
         Inherits UITypeEditor
         Private edSvc As IWindowsFormsEditorService
-        Private m_treeView As TreeView
+        Private m_treeView As Crownwood.DotNetMagic.Controls.TreeControl
         Private m_bFirstSelect As Boolean = True
 
         Public Overloads Overrides Function GetEditStyle(ByVal context As _
@@ -42,8 +42,8 @@ Namespace TypeHelpers
             Me.edSvc = DirectCast(oEdSvc, IWindowsFormsEditorService)
 
             ' prepare the listbox
-            m_treeView = New System.Windows.Forms.TreeView
-            m_treeView.Sorted = True
+            m_treeView = New Crownwood.DotNetMagic.Controls.TreeControl
+            m_treeView.SelectMode = Crownwood.DotNetMagic.Controls.SelectMode.Single
             Dim ctrlTree As System.Windows.Forms.Control = DirectCast(m_treeView, System.Windows.Forms.Control)
             doValue.BuildPropertyDropDown(ctrlTree)
             AddHandler m_treeView.AfterSelect, AddressOf Me.handleSelection
@@ -57,7 +57,7 @@ Namespace TypeHelpers
             Return value
         End Function
 
-        Private Sub handleSelection(ByVal sender As Object, ByVal e As TreeViewEventArgs)
+        Private Sub handleSelection(ByVal sender As System.Object, ByVal e As System.EventArgs)
             If Me.edSvc Is Nothing Then Return
 
             'This event is called when the treeview is first displayed. I obviously do not 
@@ -71,7 +71,7 @@ Namespace TypeHelpers
             'If a node is selected and it does not have a tag value then this is a 'Filler' Node
             'and not really a value node. We only close the drop down when the user has selected
             'a value node.
-            If Not e.Node Is Nothing AndAlso Not e.Node.Tag Is Nothing Then
+            If Not m_treeView.SelectedNode Is Nothing AndAlso Not m_treeView.SelectedNode.Tag Is Nothing Then
                 Me.edSvc.CloseDropDown()
             End If
         End Sub

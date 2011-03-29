@@ -28,7 +28,7 @@ Namespace DataObjects.Physical
 #Region " Attributes "
 
         Protected m_strDescription As String = ""
-        Protected m_bpBodyNode As TreeNode
+        Protected m_bpBodyNode As Crownwood.DotNetMagic.Controls.Node
         Protected m_ButtonImage As System.Drawing.Image
 
         Protected m_svLocalPosition As ScaledVector3
@@ -73,7 +73,7 @@ Namespace DataObjects.Physical
         End Property
 
         <Browsable(False)> _
-        Public Overridable ReadOnly Property BodyTreeNode() As TreeNode
+        Public Overridable ReadOnly Property BodyTreeNode() As Crownwood.DotNetMagic.Controls.Node
             Get
                 Return m_bpBodyNode
             End Get
@@ -372,13 +372,13 @@ Namespace DataObjects.Physical
 
         End Function
 
-        Public Overridable Function CreateJointTreeView(ByRef tvTree As TreeView, ByVal tnParent As TreeNode, _
-                                                        ByVal thSelectedPart As TypeHelpers.LinkedBodyPart) As TreeNode
+        Public Overridable Function CreateJointTreeView(ByRef tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, _
+                                                        ByVal thSelectedPart As TypeHelpers.LinkedBodyPart) As Crownwood.DotNetMagic.Controls.Node
             Return Nothing
         End Function
 
-        Public Overridable Function CreateRigidBodyTreeView(ByRef tvTree As TreeView, ByVal tnParent As TreeNode, _
-                                                           ByVal thSelectedPart As TypeHelpers.LinkedBodyPart) As TreeNode
+        Public Overridable Function CreateRigidBodyTreeView(ByRef tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, _
+                                                           ByVal thSelectedPart As TypeHelpers.LinkedBodyPart) As Crownwood.DotNetMagic.Controls.Node
             Return Nothing
         End Function
 

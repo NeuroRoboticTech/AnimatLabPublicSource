@@ -45,7 +45,7 @@ Namespace Forms.Tools
         'Do not modify it using the code editor.
         Friend WithEvents btnCancel As System.Windows.Forms.Button
         Friend WithEvents btnOk As System.Windows.Forms.Button
-        Friend WithEvents tvStructures As System.Windows.Forms.TreeView
+        Friend WithEvents tvStructures As Crownwood.DotNetMagic.Controls.TreeControl
         Friend WithEvents ctrlSplitter As System.Windows.Forms.Splitter
         Friend WithEvents pnlItems As System.Windows.Forms.Panel
         Friend WithEvents ctrlProperties As System.Windows.Forms.PropertyGrid
@@ -56,7 +56,7 @@ Namespace Forms.Tools
             Me.pnlItems = New System.Windows.Forms.Panel
             Me.ctrlProperties = New System.Windows.Forms.PropertyGrid
             Me.ctrlSplitter = New System.Windows.Forms.Splitter
-            Me.tvStructures = New System.Windows.Forms.TreeView
+            Me.tvStructures = New Crownwood.DotNetMagic.Controls.TreeControl
             Me.pnlItems.SuspendLayout()
             Me.SuspendLayout()
             '
@@ -120,15 +120,19 @@ Namespace Forms.Tools
             'tvStructures
             '
             Me.tvStructures.Dock = System.Windows.Forms.DockStyle.Left
-            Me.tvStructures.FullRowSelect = True
-            Me.tvStructures.HideSelection = False
+            Me.tvStructures.DoubleClickExpand = Crownwood.DotNetMagic.Controls.ClickExpandAction.None
+            Me.tvStructures.FocusNode = Nothing
+            Me.tvStructures.HotBackColor = System.Drawing.Color.Empty
+            Me.tvStructures.HotForeColor = System.Drawing.Color.Empty
             Me.tvStructures.ImageIndex = -1
             Me.tvStructures.Location = New System.Drawing.Point(0, 0)
             Me.tvStructures.Name = "tvStructures"
+            Me.tvStructures.SelectedNode = Nothing
+            Me.tvStructures.SelectedNoFocusBackColor = System.Drawing.SystemColors.Control
             Me.tvStructures.SelectedImageIndex = -1
             Me.tvStructures.Size = New System.Drawing.Size(280, 432)
-            Me.tvStructures.Sorted = True
             Me.tvStructures.TabIndex = 2
+            Me.tvStructures.SelectMode = Crownwood.DotNetMagic.Controls.SelectMode.Single
             '
             'SelectDataItem
             '
@@ -170,7 +174,7 @@ Namespace Forms.Tools
             End Get
         End Property
 
-        Public ReadOnly Property TreeView() As System.Windows.Forms.TreeView
+        Public ReadOnly Property TreeView() As Crownwood.DotNetMagic.Controls.TreeControl
             Get
                 Return tvStructures
             End Get
@@ -298,18 +302,19 @@ Namespace Forms.Tools
 
         End Sub
 
-        Private Sub tvStructures_AfterSelect(ByVal sender As Object, ByVal e As System.Windows.Forms.TreeViewEventArgs) Handles tvStructures.AfterSelect
+        Private Sub ctrlTreeView_AfterSelectionChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tvStructures.AfterSelectionChanged
 
             Try
-
-                If Not e.Node Is Nothing AndAlso Not e.Node.Tag Is Nothing AndAlso TypeOf e.Node.Tag Is DataObjects.DragObject Then
-                    Dim doDrag As DataObjects.DragObject = DirectCast(e.Node.Tag, DataObjects.DragObject)
-                    m_doDataColumn = m_doColumnType.CreateDataColumn(doDrag, False)
-                    m_doDataColumn.SelectionInProgress = True  'Make sure that any property changes do not cause the chart to update
-                    ctrlProperties.SelectedObject = m_doDataColumn.Properties()
-                Else
-                    m_doDataColumn = Nothing
-                    ctrlProperties.SelectedObject = Nothing
+                If tvStructures.SelectedNodes.Count > 0 Then
+                    If Not tvStructures.SelectedNode Is Nothing AndAlso Not tvStructures.SelectedNode.Tag Is Nothing AndAlso TypeOf tvStructures.SelectedNode.Tag Is DataObjects.DragObject Then
+                        Dim doDrag As DataObjects.DragObject = DirectCast(tvStructures.SelectedNode.Tag, DataObjects.DragObject)
+                        m_doDataColumn = m_doColumnType.CreateDataColumn(doDrag, False)
+                        m_doDataColumn.SelectionInProgress = True  'Make sure that any property changes do not cause the chart to update
+                        ctrlProperties.SelectedObject = m_doDataColumn.Properties()
+                    Else
+                        m_doDataColumn = Nothing
+                        ctrlProperties.SelectedObject = Nothing
+                    End If
                 End If
 
             Catch ex As System.Exception
@@ -318,41 +323,27 @@ Namespace Forms.Tools
 
         End Sub
 
-        Private Sub tvStructures_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles tvStructures.MouseDown
+        Private Sub ctrlTreeView_ShowContextMenuNode(ByVal tc As Crownwood.DotNetMagic.Controls.TreeControl, ByVal e As Crownwood.DotNetMagic.Controls.CancelNodeEventArgs) Handles tvStructures.ShowContextMenuNode
 
             Try
-                If e.Button = MouseButtons.Right Then
-                    Dim ctl As Control = CType(sender, System.Windows.Forms.Control)
+                'We will set the contextmenunode property within our call
+                e.Cancel = False
 
-                    Dim tnSelected As TreeNode = tvStructures.GetNodeAt(e.X, e.Y)
-                    If Not tnSelected Is Nothing Then
-                        tvStructures.SelectedNode = tnSelected
-                    End If
+                Dim mcExpandAll As New System.Windows.Forms.ToolStripMenuItem("Expand All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Expand.gif"), New EventHandler(AddressOf Me.OnExpandAll))
+                Dim mcCollapseAll As New System.Windows.Forms.ToolStripMenuItem("Collapse All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Collapse.gif"), New EventHandler(AddressOf Me.OnCollapseAll))
 
-                    ' Create the menu items
-                    Dim mcExpandAll As New MenuCommand("Expand All", "ExpandAll", _
-                                                      New EventHandler(AddressOf Me.OnExpandAll))
-                    Dim mcCollapseAll As New MenuCommand("Collapse All", "CollapseAll", New EventHandler(AddressOf Me.OnCollapseAll))
+                mcExpandAll.Tag = e.Node.Tag
+                mcCollapseAll.Tag = e.Node.Tag
 
-                    mcExpandAll.ImageList = Util.Application.ToolStripImages.ImageList
-                    mcExpandAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Expand.gif")
-                    mcCollapseAll.ImageList = Util.Application.ToolStripImages.ImageList
-                    mcCollapseAll.ImageIndex = Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Collapse.gif")
+                ' Create the popup menu object
+                Dim popup As New AnimatContextMenuStrip("Forms.Tools.SelectDataItem.ShowContextMenuNode", Util.SecurityMgr)
+                popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcExpandAll, mcCollapseAll})
 
-                    ' Create the popup menu object
-                    Dim popup As New PopupMenu
+                tvStructures.ContextMenuNode = popup
 
-                    ' Define the list of menu commands
-                    popup.MenuCommands.AddRange(New MenuCommand() {mcExpandAll, _
-                                                                  mcCollapseAll})
-
-                    ' Show it!
-                    Dim selected As MenuCommand = popup.TrackPopup(ctl.PointToScreen(New Point(e.X, e.Y)))
-                End If
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
-
         End Sub
 
         Protected Sub OnExpandAll(ByVal sender As Object, ByVal e As System.EventArgs)

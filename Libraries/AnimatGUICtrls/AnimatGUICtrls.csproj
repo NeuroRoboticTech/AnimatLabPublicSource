@@ -57,6 +57,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\Strips\AnimatContextMenuStrip.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Strips\AnimatMenuStrip.cs">
       <SubType>Component</SubType>

@@ -789,6 +789,7 @@ namespace AnimatSim
 
 			virtual void Load(string strFileName = "");
 			virtual void Load(CStdXml &oXml);
+			virtual void Save(string strFilename);
 
 			static IStdClassFactory *LoadClassFactory(string strModuleName);
 

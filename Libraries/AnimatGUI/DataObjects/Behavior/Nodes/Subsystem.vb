@@ -181,7 +181,7 @@ Namespace DataObjects.Behavior.Nodes
             End If
         End Sub
 
-        Public Overrides Sub CreateDiagramDropDownTree(ByVal tvTree As TreeView, ByVal tnParent As TreeNode)
+        Public Overrides Sub CreateDiagramDropDownTree(ByVal tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node)
         End Sub
 
         Public Overrides Sub CheckForErrors()
@@ -201,7 +201,7 @@ Namespace DataObjects.Behavior.Nodes
 
         End Sub
 
-        Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As TreeNode, ByVal tpTemplatePartType As Type) As TreeNode
+        Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, ByVal tpTemplatePartType As Type) As Crownwood.DotNetMagic.Controls.Node
         End Function
 
 #Region " DataObject Methods "

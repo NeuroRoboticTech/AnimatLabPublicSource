@@ -2100,6 +2100,16 @@ void Simulator::Load(string strFileName)
 	TRACE_DEBUG("Finished loading simulator config file.");
 }
 
+/**
+\brief	Saves the simulation file.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strFilename	The string to save. 
+**/
+void Simulator::Save(string strFilename) {};
+
 
 void Simulator::Load(CStdXml &oXml)
 {

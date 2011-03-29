@@ -910,8 +910,9 @@ Namespace DataObjects.Behavior
 
         End Function
 
-        Public Overridable Sub CreateDiagramDropDownTree(ByVal tvTree As TreeView, ByVal tnParent As TreeNode)
-            Dim tnNode As TreeNode = tnParent.Nodes.Add(Me.Text)
+        Public Overridable Sub CreateDiagramDropDownTree(ByVal tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node)
+            Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(Me.Text)
+            tnParent.Nodes.Add(tnNode)
             tnNode.Tag = New TypeHelpers.LinkedNode(m_ParentEditor, Me)
         End Sub
 

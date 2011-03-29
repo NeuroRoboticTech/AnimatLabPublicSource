@@ -318,21 +318,18 @@ Namespace Framework
 
         End Sub
 
-        Protected Overridable Sub FormatDropDownTree(ByRef tvTree As TreeView, ByVal iTotalNodes As Integer)
+        Protected Overridable Sub FormatDropDownTree(ByRef tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal iTotalNodes As Integer)
 
-            tvTree.HideSelection = False
-            If tvTree.ItemHeight > 0 Then
-                If tvTree.Height / tvTree.ItemHeight < iTotalNodes Then
+            If tvTree.MinimumNodeHeight > 0 Then
+                If tvTree.Height / tvTree.MinimumNodeHeight < iTotalNodes Then
                     ' try to keep the listbox small but sufficient
-                    Dim adjHei As Integer = (iTotalNodes + 2) * tvTree.ItemHeight
+                    Dim adjHei As Integer = (iTotalNodes + 2) * tvTree.MinimumNodeHeight
                     If adjHei > 500 Then adjHei = 500
                     tvTree.Height = adjHei
                 End If
             Else ' safeguard, although it shouldn't happen
                 tvTree.Height = 200
             End If
-
-            tvTree.Sorted = True ' present in alphabetical order
 
         End Sub
 

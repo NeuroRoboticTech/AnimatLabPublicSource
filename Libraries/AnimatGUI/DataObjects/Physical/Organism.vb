@@ -211,13 +211,14 @@ Namespace DataObjects.Physical
 
 #Region " Data Item TreeView "
 
-        Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As TreeNode, ByVal tpTemplatePartType As Type) As TreeNode
+        Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, ByVal tpTemplatePartType As Type) As Crownwood.DotNetMagic.Controls.Node
 
             Dim myAssembly As System.Reflection.Assembly
             myAssembly = System.Reflection.Assembly.Load(Me.AssemblyModuleName)
             frmDataItem.ImageManager.AddImage(myAssembly, Me.WorkspaceImageName)
 
-            Dim tnNode As TreeNode = frmDataItem.TreeView.Nodes.Add(Me.Name)
+            Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(Me.Name)
+            frmDataItem.TreeView.Nodes.Add(tnNode)
             tnNode.ImageIndex = frmDataItem.ImageManager.GetImageIndex(Me.WorkspaceImageName)
             tnNode.SelectedImageIndex = frmDataItem.ImageManager.GetImageIndex(Me.WorkspaceImageName)
             tnNode.Tag = Me
@@ -227,8 +228,8 @@ Namespace DataObjects.Physical
             frmDataItem.ImageManager.AddImage(myAssembly, "AnimatGUI.DefaultObject.gif")
             frmDataItem.ImageManager.AddImage(myAssembly, "AnimatGUI.DefaultLink.gif")
 
-            Dim tnBodyplanNode As TreeNode
-            tnBodyplanNode = tnNode.Nodes.Add("Body Plan")
+            Dim tnBodyplanNode As New Crownwood.DotNetMagic.Controls.Node("Body Plan")
+            tnBodyplanNode = tnNode.Nodes.Add(tnBodyplanNode)
             tnBodyplanNode.ImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.Joint.gif")
             tnBodyplanNode.SelectedImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.Joint.gif")
 
@@ -236,18 +237,18 @@ Namespace DataObjects.Physical
                 m_dbRoot.CreateDataItemTreeView(frmDataItem, tnBodyplanNode, tpTemplatePartType)
             End If
 
-            Dim tnBehavioralNode As TreeNode
-            tnBehavioralNode = tnNode.Nodes.Add("Behavioral System")
+            Dim tnBehavioralNode As New Crownwood.DotNetMagic.Controls.Node("Behavioral System")
+            tnBehavioralNode = tnNode.Nodes.Add(tnBehavioralNode)
             tnBehavioralNode.ImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.Neuron.gif")
             tnBehavioralNode.SelectedImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.Neuron.gif")
 
-            Dim tnNodes As TreeNode
-            tnNodes = tnBehavioralNode.Nodes.Add("Nodes")
+            Dim tnNodes As New Crownwood.DotNetMagic.Controls.Node("Nodes")
+            tnNodes = tnBehavioralNode.Nodes.Add(tnNodes)
             tnNodes.ImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.DefaultObject.gif")
             tnNodes.SelectedImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.DefaultObject.gif")
 
-            Dim tnLinks As TreeNode
-            tnLinks = tnBehavioralNode.Nodes.Add("Links")
+            Dim tnLinks As New Crownwood.DotNetMagic.Controls.Node("Links")
+            tnLinks = tnBehavioralNode.Nodes.Add(tnLinks)
             tnLinks.ImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.DefaultLink.gif")
             tnLinks.SelectedImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.DefaultLink.gif")
 

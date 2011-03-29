@@ -50,13 +50,13 @@ Namespace TypeHelpers
         Public Overrides Sub BuildPropertyDropDown(ByRef ctrlDropDown As System.Windows.Forms.Control)
             If m_doStructure Is Nothing Then Return
 
-            If Not TypeOf (ctrlDropDown) Is TreeView Then
+            If Not TypeOf (ctrlDropDown) Is Crownwood.DotNetMagic.Controls.TreeControl Then
                 Throw New System.Exception("The control passed into LinkedSynapse.BuildPropertyDropDown is not a treeview type")
             End If
 
-            Dim tvTree As TreeView = DirectCast(ctrlDropDown, TreeView)
+            Dim tvTree As Crownwood.DotNetMagic.Controls.TreeControl = DirectCast(ctrlDropDown, Crownwood.DotNetMagic.Controls.TreeControl)
 
-            tvTree.BeginUpdate()
+            tvTree.SuspendLayout()
             tvTree.Nodes.Clear()
 
             If Util.IsTypeOf(m_tpBodyPartType, GetType(AnimatGUI.DataObjects.Physical.Joint), False) Then
@@ -70,7 +70,7 @@ Namespace TypeHelpers
 
             MyBase.FormatDropDownTree(tvTree, 8)
 
-            tvTree.EndUpdate()
+            tvTree.ResumeLayout()
             tvTree.Invalidate()
 
         End Sub

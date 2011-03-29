@@ -374,7 +374,7 @@ Namespace DataObjects.ExternalStimuli
             Return Nothing
         End Function
 
-        Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As TreeNode, ByVal tpTemplatePartType As Type) As TreeNode
+        Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, ByVal tpTemplatePartType As Type) As Crownwood.DotNetMagic.Controls.Node
 
             'If a template part type is supplied and this part is not one of those template types then do not add it to the tree view
             If tpTemplatePartType Is Nothing OrElse (Not tpTemplatePartType Is Nothing AndAlso Util.IsTypeOf(Me.GetType(), tpTemplatePartType, False)) Then
@@ -382,8 +382,8 @@ Namespace DataObjects.ExternalStimuli
                 myAssembly = System.Reflection.Assembly.Load(Me.AssemblyModuleName)
                 frmDataItem.ImageManager.AddImage(myAssembly, Me.WorkspaceImageName)
 
-                Dim tnNode As TreeNode
-                Dim tnStimuli As TreeNode = Nothing
+                Dim tnNode As Crownwood.DotNetMagic.Controls.Node
+                Dim tnStimuli As Crownwood.DotNetMagic.Controls.Node = Nothing
                 For Each tnNode In frmDataItem.TreeView.Nodes
                     If tnNode.Text = "Stimuli" Then
                         tnStimuli = tnNode
@@ -391,10 +391,11 @@ Namespace DataObjects.ExternalStimuli
                 Next
 
                 If tnStimuli Is Nothing Then
-                    tnStimuli = frmDataItem.TreeView.Nodes.Add("Stimuli")
+                    tnStimuli = frmDataItem.TreeView.Nodes.Add(New Crownwood.DotNetMagic.Controls.Node("Stimuli"))
                 End If
 
-                tnNode = tnStimuli.Nodes.Add(Me.ItemName)
+                tnNode = New Crownwood.DotNetMagic.Controls.Node(Me.ItemName)
+                tnStimuli.Nodes.Add(tnNode)
                 tnNode.ImageIndex = frmDataItem.ImageManager.GetImageIndex(Me.WorkspaceImageName)
                 tnNode.SelectedImageIndex = frmDataItem.ImageManager.GetImageIndex(Me.WorkspaceImageName)
                 tnNode.Tag = Me

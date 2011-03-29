@@ -424,8 +424,9 @@ Namespace Forms.Behavior
 
         End Sub
 
-        Public Overridable Sub CreateDiagramDropDownTree(ByVal tvTree As TreeView, ByVal tnParent As TreeNode)
-            Dim tnNode As TreeNode = tnParent.Nodes.Add(Me.TabPageName)
+        Public Overridable Sub CreateDiagramDropDownTree(ByVal tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node)
+            Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(Me.TabPageName)
+            tnParent.Nodes.Add(tnNode)
 
             Dim bdDiagram As Forms.Behavior.Diagram
             For Each deEntry As DictionaryEntry In m_aryDiagrams

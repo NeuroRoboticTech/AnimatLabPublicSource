@@ -508,14 +508,14 @@ Namespace DataObjects.Physical
             Return aryBodies
         End Function
 
-        Public Overridable Function CreateJointTreeView(ByRef tvTree As TreeView, ByVal tnParent As TreeNode, _
-                                                      ByVal thSelectedPart As TypeHelpers.LinkedBodyPart) As TreeNode
+        Public Overridable Function CreateJointTreeView(ByRef tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, _
+                                                      ByVal thSelectedPart As TypeHelpers.LinkedBodyPart) As Crownwood.DotNetMagic.Controls.Node
 
-            Dim tnOrganism As TreeNode
+            Dim tnOrganism As New Crownwood.DotNetMagic.Controls.Node(Me.Name)
             If Not tnParent Is Nothing Then
-                tnOrganism = tnParent.Nodes.Add(Me.Name)
+                tnParent.Nodes.Add(tnOrganism)
             Else
-                tnOrganism = tvTree.Nodes.Add(Me.Name)
+                tvTree.Nodes.Add(tnOrganism)
             End If
             tnOrganism.ForeColor = Color.Black
 
@@ -526,14 +526,14 @@ Namespace DataObjects.Physical
             Return tnOrganism
         End Function
 
-        Public Overridable Function CreateRigidBodyTreeView(ByRef tvTree As TreeView, ByVal tnParent As TreeNode, _
-                                                            ByVal thSelectedPart As TypeHelpers.LinkedBodyPart) As TreeNode
+        Public Overridable Function CreateRigidBodyTreeView(ByRef tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, _
+                                                            ByVal thSelectedPart As TypeHelpers.LinkedBodyPart) As Crownwood.DotNetMagic.Controls.Node
 
-            Dim tnOrganism As TreeNode
+            Dim tnOrganism As New Crownwood.DotNetMagic.Controls.Node(Me.Name)
             If Not tnParent Is Nothing Then
-                tnOrganism = tnParent.Nodes.Add(Me.Name)
+                tnParent.Nodes.Add(tnOrganism)
             Else
-                tnOrganism = tvTree.Nodes.Add(Me.Name)
+                tvTree.Nodes.Add(tnOrganism)
             End If
             tnOrganism.ForeColor = Color.Black
 
@@ -597,13 +597,14 @@ Namespace DataObjects.Physical
 
 #Region " Data Item TreeView "
 
-        Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As TreeNode, ByVal tpTemplatePartType As Type) As TreeNode
+        Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, ByVal tpTemplatePartType As Type) As Crownwood.DotNetMagic.Controls.Node
 
             Dim myAssembly As System.Reflection.Assembly
             myAssembly = System.Reflection.Assembly.Load(Me.AssemblyModuleName)
             frmDataItem.ImageManager.AddImage(myAssembly, Me.WorkspaceImageName)
 
-            Dim tnNode As TreeNode = frmDataItem.TreeView.Nodes.Add(Me.Name)
+            Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(Me.Name)
+            frmDataItem.TreeView.Nodes.Add(tnNode)
             tnNode.ImageIndex = frmDataItem.ImageManager.GetImageIndex(Me.WorkspaceImageName)
             tnNode.SelectedImageIndex = frmDataItem.ImageManager.GetImageIndex(Me.WorkspaceImageName)
             tnNode.Tag = Me

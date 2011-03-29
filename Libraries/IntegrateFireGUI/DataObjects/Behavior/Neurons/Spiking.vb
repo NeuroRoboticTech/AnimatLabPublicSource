@@ -491,9 +491,9 @@ Namespace DataObjects.Behavior.Neurons
 
         End Function
 
-        Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As AnimatGUI.Forms.Tools.SelectDataItem, ByVal tnParent As TreeNode, ByVal tpTemplatePartType As Type) As TreeNode
+        Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As AnimatGUI.Forms.Tools.SelectDataItem, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, ByVal tpTemplatePartType As Type) As Crownwood.DotNetMagic.Controls.Node
 
-            Dim tnNode As TreeNode = MyBase.CreateDataItemTreeView(frmDataItem, tnParent, tpTemplatePartType)
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateDataItemTreeView(frmDataItem, tnParent, tpTemplatePartType)
 
             'Add the ion channels
             If Not tnNode Is Nothing Then

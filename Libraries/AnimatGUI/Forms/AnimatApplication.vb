@@ -2564,8 +2564,8 @@ Namespace Forms
                 'm_dockManager.ClearContents()
             End If
 
-            For Each mdiChild As Form In Me.ChildForms
-                mdiChild.Close()
+            For Each myChild As Form In Me.ChildForms
+                myChild.Close()
             Next
 
             'If we have a simulation up and running then completely shut it down and start over for the new project
@@ -3250,41 +3250,41 @@ Namespace Forms
 #Region " Windows Management "
 
 
-        Public Overridable Function EditBehavioralSystem(ByVal doOrganism As DataObjects.Physical.Organism) As AnimatGUI.Forms.MdiChild
+        Public Overridable Function EditBehavioralSystem(ByVal doOrganism As DataObjects.Physical.Organism) As AnimatForm
 
             Try
-                'First lets verify that there is not already an open window for this organism.
-                Dim frmEditor As Forms.Behavior.Editor
-                For Each oChild As Form In Util.Application.ChildForms
-                    If TypeOf oChild Is Forms.Behavior.Editor Then
-                        frmEditor = DirectCast(oChild, Forms.Behavior.Editor)
-                        If frmEditor.Organism Is doOrganism Then
-                            frmEditor.MakeVisible()
-                            Return frmEditor
-                        End If
-                    End If
-                Next
+                ''First lets verify that there is not already an open window for this organism.
+                'Dim frmEditor As Forms.Behavior.Editor
+                'For Each oChild As Form In Util.Application.ChildForms
+                '    If TypeOf oChild Is Forms.Behavior.Editor Then
+                '        frmEditor = DirectCast(oChild, Forms.Behavior.Editor)
+                '        If frmEditor.Organism Is doOrganism Then
+                '            frmEditor.MakeVisible()
+                '            Return frmEditor
+                '        End If
+                '    End If
+                'Next
 
-                Dim frmMdi As New AnimatGUI.Forms.Behavior.Editor
-                Dim frmBase As AnimatForm
+                'Dim frmMdi As New AnimatGUI.Forms.Behavior.Editor
+                'Dim frmBase As AnimatForm
 
-                Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                'Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-                frmMdi.Organism = doOrganism
-                frmMdi.Initialize(Me, frmBase)
-                frmMdi.Title = "Edit " & doOrganism.Name
+                'frmMdi.Organism = doOrganism
+                'frmMdi.Initialize(Me, frmBase)
+                'frmMdi.Title = "Edit " & doOrganism.Name
 
-                If System.IO.File.Exists(Util.GetFilePath(Util.Application.ProjectPath, doOrganism.BehavioralEditorFile)) Then
-                    frmMdi.LoadEditorFile(doOrganism.BehavioralEditorFile)
-                End If
+                'If System.IO.File.Exists(Util.GetFilePath(Util.Application.ProjectPath, doOrganism.BehavioralEditorFile)) Then
+                '    frmMdi.LoadEditorFile(doOrganism.BehavioralEditorFile)
+                'End If
 
-                frmMdi.ShowAnimatForm()
+                'frmMdi.ShowAnimatForm()
 
-                doOrganism.BehaviorEditor = frmMdi
+                'doOrganism.BehaviorEditor = frmMdi
 
-                Me.Cursor = System.Windows.Forms.Cursors.Arrow
+                'Me.Cursor = System.Windows.Forms.Cursors.Arrow
 
-                Return frmMdi
+                'Return frmMdi
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
@@ -3320,17 +3320,17 @@ Namespace Forms
         End Sub
 
 
-        Public Overridable Function EditEnvironment() As AnimatGUI.Forms.MdiChild
+        Public Overridable Function EditEnvironment() As AnimatForm
 
             Try
 
-                Dim frmMdi As Form = DirectCast(Util.LoadClass("VortexOsgAnimatTools", "VortexOsgAnimatTools.Forms.SimTest"), Form)
-                frmMdi.MdiParent = Me
-                frmMdi.Show()
+                'Dim frmMdi As Form = DirectCast(Util.LoadClass("VortexOsgAnimatTools", "VortexOsgAnimatTools.Forms.SimTest"), Form)
+                'frmMdi.MdiParent = Me
+                'frmMdi.Show()
 
-                Me.Cursor = System.Windows.Forms.Cursors.Arrow
+                'Me.Cursor = System.Windows.Forms.Cursors.Arrow
 
-                Return Nothing
+                'Return Nothing
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally

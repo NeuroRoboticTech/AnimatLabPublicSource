@@ -1126,11 +1126,12 @@ Namespace Forms.Behavior
             Next
         End Sub
 
-        Public Overridable Sub CreateDiagramDropDownTree(ByVal tvTree As TreeView)
+        Public Overridable Sub CreateDiagramDropDownTree(ByVal tvTree As Crownwood.DotNetMagic.Controls.TreeControl)
 
             Try
 
-                Dim tnNode As TreeNode = tvTree.Nodes.Add("Behavioral Network")
+                Dim tnNode As New Crownwood.DotNetMagic.Controls.Node("Behavioral Network")
+                tvTree.Nodes.Add(tnNode)
 
                 Dim bdDiagram As Forms.Behavior.Diagram
                 For Each deEntry As DictionaryEntry In m_aryDiagrams
@@ -2358,19 +2359,30 @@ Namespace Forms.Behavior
             e.Cancel = True
         End Sub
 
-        Protected Overrides Sub MdiChild_Closing(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles MyBase.Closing
-            Try
-                MyBase.MdiChild_Closing(sender, e)
 
+        Protected Overrides Sub OnFormClosing(ByVal e As System.Windows.Forms.FormClosingEventArgs)
+            MyBase.OnFormClosing(e)
+
+            Try
                 If Not m_doOrganism Is Nothing Then
                     m_doOrganism.BehaviorEditor = Nothing
                 End If
 
                 Util.ModificationHistory.RemoveMdiEvents(Me)
 
+                'RemoveHandler Util.Application.UnitsChanged, AddressOf Me.Application_UnitsChanged
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+        End Sub
+
+        Protected Overrides Sub OnFormClosed(ByVal e As System.Windows.Forms.FormClosedEventArgs)
+            MyBase.OnFormClosed(e)
+
+            'If Not m_doStructure Is Nothing Then
+            '    m_doStructure.BodyEditor = Nothing
+            'End If
+
         End Sub
 
 #End Region

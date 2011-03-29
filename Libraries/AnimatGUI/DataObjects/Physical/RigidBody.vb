@@ -671,8 +671,8 @@ Namespace DataObjects.Physical
 
         End Function
 
-        Public Overrides Function CreateJointTreeView(ByRef tvTree As TreeView, ByVal tnParent As TreeNode, _
-                                                      ByVal thSelectedPart As TypeHelpers.LinkedBodyPart) As TreeNode
+        Public Overrides Function CreateJointTreeView(ByRef tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, _
+                                                      ByVal thSelectedPart As TypeHelpers.LinkedBodyPart) As Crownwood.DotNetMagic.Controls.Node
 
             If Not m_JointToParent Is Nothing Then
                 tnParent = m_JointToParent.CreateJointTreeView(tvTree, tnParent, thSelectedPart)
@@ -686,11 +686,11 @@ Namespace DataObjects.Physical
 
         End Function
 
-        Public Overrides Function CreateRigidBodyTreeView(ByRef tvTree As TreeView, ByVal tnParent As TreeNode, _
-                                                          ByVal thSelectedPart As TypeHelpers.LinkedBodyPart) As TreeNode
+        Public Overrides Function CreateRigidBodyTreeView(ByRef tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, _
+                                                          ByVal thSelectedPart As TypeHelpers.LinkedBodyPart) As Crownwood.DotNetMagic.Controls.Node
 
-            Dim tnBody As TreeNode
-            tnBody = tnParent.Nodes.Add(Me.Name)
+            Dim tnBody As New Crownwood.DotNetMagic.Controls.Node(Me.Name)
+            tnParent.Nodes.Add(tnBody)
             tnBody.ForeColor = Color.Red
             Dim thPart As TypeHelpers.LinkedBodyPart = DirectCast(thSelectedPart.Clone(thSelectedPart.Parent, False, Nothing), TypeHelpers.LinkedBodyPart)
             thPart.BodyPart = Me
@@ -756,15 +756,15 @@ Namespace DataObjects.Physical
             Return False
         End Function
 
-        Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As TreeNode, ByVal tpTemplatePartType As Type) As TreeNode
+        Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, ByVal tpTemplatePartType As Type) As Crownwood.DotNetMagic.Controls.Node
 
             If tpTemplatePartType Is Nothing OrElse (Not tpTemplatePartType Is Nothing AndAlso Util.IsTypeOf(Me.GetType(), tpTemplatePartType, False)) Then
-                Dim tnJointToParent As TreeNode
+                Dim tnJointToParent As Crownwood.DotNetMagic.Controls.Node
                 If Not m_JointToParent Is Nothing Then
                     tnJointToParent = m_JointToParent.CreateDataItemTreeView(frmDataItem, tnParent, tpTemplatePartType)
                 End If
 
-                Dim tnNewParent As TreeNode
+                Dim tnNewParent As Crownwood.DotNetMagic.Controls.Node
                 If m_JointToParent Is Nothing Then
                     tnNewParent = MyBase.CreateDataItemTreeView(frmDataItem, tnParent, tpTemplatePartType)
                 Else

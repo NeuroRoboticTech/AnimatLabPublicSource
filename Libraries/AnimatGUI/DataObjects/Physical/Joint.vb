@@ -123,11 +123,11 @@ Namespace DataObjects.Physical
             m_bEnableLimts = doOrigJoint.m_bEnableLimts
         End Sub
 
-        Public Overrides Function CreateJointTreeView(ByRef tvTree As TreeView, ByVal tnParent As TreeNode, _
-                                                      ByVal thSelectedPart As TypeHelpers.LinkedBodyPart) As TreeNode
+        Public Overrides Function CreateJointTreeView(ByRef tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, _
+                                                      ByVal thSelectedPart As TypeHelpers.LinkedBodyPart) As Crownwood.DotNetMagic.Controls.Node
 
-            Dim tnJoint As TreeNode
-            tnJoint = tnParent.Nodes.Add(Me.Name)
+            Dim tnJoint As New Crownwood.DotNetMagic.Controls.Node(Me.Name)
+            tnParent.Nodes.Add(tnJoint)
             tnJoint.ForeColor = Color.Red
             Dim thPart As TypeHelpers.LinkedBodyPart = DirectCast(thSelectedPart.Clone(thSelectedPart.Parent, False, Nothing), TypeHelpers.LinkedBodyPart)
             thPart.BodyPart = Me
