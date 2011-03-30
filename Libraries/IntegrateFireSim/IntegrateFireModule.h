@@ -1,52 +1,78 @@
-// IntegrateFireModule.h: interface for the IntegrateFireNeuralModule class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file
+C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\IntegrateFireSim\IntegrateFireModule.h
 
-#if !defined(AFX_NERVOUSSYSTEM_H__6581CA8B_B028_4C79_A98B_33514514B867__INCLUDED_)
-#define AFX_NERVOUSSYSTEM_H__6581CA8B_B028_4C79_A98B_33514514B867__INCLUDED_
+\brief	Declares the integrate fire module class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
-// these forward declarations are necessary because 
-//class Neuron;
-//class SpikingChemicalSynapse;
-//class NonSpikingChemicalSynapse;
-//class ElectricalSynapse;
-//class CurrentStimulus;
-//class Connexion;
 
 namespace IntegrateFireSim
 {
+	/**
+	\brief	Integrate and fire neural module. 
 
+	\details This neural module implements the integrate and fire neural models.
+	
+	\author	dcofer
+	\date	3/30/2011
+	**/
 	class ADV_NEURAL_PORT IntegrateFireNeuralModule : public AnimatSim::Behavior::NeuralModule 
 	{
 	protected:
 		// NervousSystem
+		/// The time step of the neural module
 		double m_dTimeStep;
 
+		/// true if ttx drug is applied to the nervous system.
 		BOOL m_bTTX;
+
+		/// true if cadium is applied to the nervous system.
 		BOOL m_bCd;
+
+		/// true if this nervous system is using a hodgkin-huxely model.
 		BOOL m_bHH;
 
 	// NervousSystem/Synapses/SpikingSynapses
+		/// true to retain hebbian memory
 		BOOL m_bRetainHebbMemory;
+
+		/// true to use critical period during hebbian learning.
 		BOOL m_bUseCriticalPeriod;
+
+		/// The start time of the critical period for hebbian learning.
 		double m_dStartCriticalPeriod;
+
+		/// The end time of the critical period for hebbian learning.
 		double m_dEndCriticalPeriod;
+
+		/// true to freeze hebbian learning.
 		BOOL m_bFreezeHebb;
 
 	// internal Hebb stuff
+		/// true if hebbian learning needs to be initialized
 		BOOL m_bNeedInitialiseHebb;		
+
+		/// true to randomise hebbian learning values.
 		BOOL m_bRandomisedHebb;
+
+		/// true to freeze learning.
 		BOOL m_bFreezeLearning;	// used internally as flag, not saved
 
+		/// The array of neurons in this neural module.
 		CStdPtrArray<Neuron> m_aryNeurons;
+
+		/// The array of spiking chem synapses in this neural module.
 		CStdPtrArray<SpikingChemicalSynapse> m_arySpikingChemSyn;
+
+		/// The array of non-spiking chemical synapses in this neural module.
 		CStdPtrArray<NonSpikingChemicalSynapse> m_aryNonSpikingChemSyn;
+
+		/// The array of electrical synapses in this neural module.
 		CStdPtrArray<ElectricalSynapse> m_aryElecSyn;
-		//CStdPtrArray<CurrentStimulus> m_aryStim;
+
+		/// The array of connexions in this neural module.
 		CStdPtrArray<Connexion> m_aryConnexion;
 
 		Neuron *LoadNeuron(CStdXml &oXml);
@@ -54,12 +80,12 @@ namespace IntegrateFireSim
 		SpikingChemicalSynapse *LoadSpikingChemSyn(CStdXml &oXml, int iIndex);
 		NonSpikingChemicalSynapse *LoadNonSpikingChemSyn(CStdXml &oXml, int iIndex);
 		ElectricalSynapse *LoadElecSyn(CStdXml &oXml, int iIndex);
-		//CurrentStimulus *LoadStim(CStdXml &oXml);
 		Connexion *LoadConnexion(CStdXml &oXml);
 		void InitSynapse(Connexion *pCx);
 
 	/////////////////////////////
 	// ENGINE
+		/// Current time of the simulation
 		double m_dCurrentTime;
 
 		virtual void LoadInternal(CStdXml &oXml);
@@ -70,51 +96,47 @@ namespace IntegrateFireSim
 
 		void ResetIDs();
 
-	////////////////////////
-		void SetCurrentTime(double t) {m_dCurrentTime=t;}
-		double GetCurrentTime() {return m_dCurrentTime;}
-		double GetTimeStep() {return m_dTimeStep;}
-
-	// neuron stuff
-		int GetNeuronCount() {return m_aryNeurons.size();}
-		Neuron *GetNeuronAt(int i) {return m_aryNeurons[i];}
-
-	// stim stuff
-		//int GetStimCount() {return m_aryStim.size();}
-		//CurrentStimulus *GetStimAt(int i) {return m_aryStim[i];}
-
-	// connexion stuff
-		int GetConnexionCount() {return m_aryConnexion.size();}
-		Connexion *GetConnexionAt(int i) {return m_aryConnexion[i];}
-
 #pragma region Accessor-Mutators
 
-		void Cd(BOOL bVal) {m_bCd = bVal;}; 
-		BOOL Cd() {return m_bCd;}
+	////////////////////////
+		void SetCurrentTime(double t);
+		double GetCurrentTime();
+		double GetTimeStep();
 
-		void TTX(BOOL bVal) {m_bTTX = bVal;}; 
-		BOOL TTX() {return m_bTTX;}
+	// neuron stuff
+		int GetNeuronCount();
+		Neuron *GetNeuronAt(int i);
 
-		void HH(BOOL bVal) {m_bHH = bVal;}; 
-		BOOL HH() {return m_bHH;}
+	// connexion stuff
+		int GetConnexionCount();
+		Connexion *GetConnexionAt(int i);
+
+		void Cd(BOOL bVal);
+		BOOL Cd();
+
+		void TTX(BOOL bVal);
+		BOOL TTX();
+
+		void HH(BOOL bVal);
+		BOOL HH();
 
 		virtual void TimeStep(float fltVal);
-		virtual float TimeStep() {return m_fltTimeStep;};
+		virtual float TimeStep();
 
-		void RetainHebbMemory(BOOL bVal) {m_bRetainHebbMemory = bVal;}; 
-		BOOL RetainHebbMemory() {return m_bRetainHebbMemory;};
+		void RetainHebbMemory(BOOL bVal);
+		BOOL RetainHebbMemory();
 
-		void UseCriticalPeriod(BOOL bVal) {m_bUseCriticalPeriod = bVal;}; 
-		BOOL UseCriticalPeriod() {return m_bUseCriticalPeriod;};
+		void UseCriticalPeriod(BOOL bVal);
+		BOOL UseCriticalPeriod();
 
-		void StartCriticalPeriod(double dVal) {m_dStartCriticalPeriod = dVal;}; 
-		double StartCriticalPeriod() {return m_dStartCriticalPeriod;};
+		void StartCriticalPeriod(double dVal); 
+		double StartCriticalPeriod();
 
-		void EndCriticalPeriod(double dVal) {m_dEndCriticalPeriod = dVal;}; 
-		double EndCriticalPeriod() {return m_dEndCriticalPeriod;};
+		void EndCriticalPeriod(double dVal);
+		double EndCriticalPeriod();
 
-		void FreezeHebb(BOOL bVal) {m_bFreezeHebb = bVal;}; 
-		BOOL FreezeHebb() {return m_bFreezeHebb;};
+		void FreezeHebb(BOOL bVal);
+		BOOL FreezeHebb();
 
 		void SpikePeak(double dVal); 
 		double SpikePeak();
@@ -128,15 +150,19 @@ namespace IntegrateFireSim
 		void AbsoluteRefr(double dVal); 
 		double AbsoluteRefr();
 
+		// Synapse stuff
+		int GetSpikingChemSynCount();
+		SpikingChemicalSynapse *GetSpikingChemSynAt(int i);
+		int GetNonSpikingChemSynCount();
+		NonSpikingChemicalSynapse *GetNonSpikingChemSynAt(int i);
+		int GetElecSynCount();
+		ElectricalSynapse *GetElecSynAt(int i);
+
+		//NeuralModule Overrides
+		virtual string ModuleName();
+
 #pragma endregion
 
-	// Synapse stuff
-		int GetSpikingChemSynCount() {return m_arySpikingChemSyn.size();}
-		SpikingChemicalSynapse *GetSpikingChemSynAt(int i) {return m_arySpikingChemSyn[i];}
-		int GetNonSpikingChemSynCount() {return m_aryNonSpikingChemSyn.size();}
-		NonSpikingChemicalSynapse *GetNonSpikingChemSynAt(int i) {return m_aryNonSpikingChemSyn[i];}
-		int GetElecSynCount() {return m_aryElecSyn.size();}
-		ElectricalSynapse *GetElecSynAt(int i) {return m_aryElecSyn[i];}
 
 	// the CALCULATION
 		void PreCalc();
@@ -146,9 +172,6 @@ namespace IntegrateFireSim
 		void ScaleCondForVoltDep(double& G,double postV,double maxV,double minV,double scl);
 		void ScaleCondForNonSpiking(double& G,double PreV,double ThreshV,double SaturateV);
 
-
-		//NeuralModule Overrides
-		virtual string ModuleName() {return Rn_NeuralModuleName();};
 
 #pragma region DataAccesMethods
 		virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
@@ -186,5 +209,3 @@ namespace IntegrateFireSim
 
 }				//IntegrateFireSim
 
-
-#endif // !defined(AFX_NERVOUSSYSTEM_H__6581CA8B_B028_4C79_A98B_33514514B867__INCLUDED_)

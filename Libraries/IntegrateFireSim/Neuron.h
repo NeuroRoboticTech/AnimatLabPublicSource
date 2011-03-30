@@ -1,3 +1,8 @@
+/**
+\file	IntegrateFireSim\Neuron.h
+
+\brief	Declares the neuron class.
+**/
 
 #pragma once
 
@@ -10,114 +15,246 @@ class IntegrateFireNeuralModule;
 **/
 namespace IntegrateFireSim
 {
+	/**
+	\brief	Integrate and fire neuron model. 
 
+	\details This class implements an integrate and fire neuron model.
+	
+	\author	dcofer
+	\date	3/30/2011
+	**/
 	class ADV_NEURAL_PORT Neuron : public AnimatSim::Node
 	{
 	protected:
+		/// The pointer to the parent IntegrateFireNeuralModule
 		IntegrateFireNeuralModule *m_lpRealModule;
 
 
 	/////////////////////////////////////
 	// LOADABLE PARAMETERS
 
+		/// The static spike peak.
 		static double m_dSpikePeak;
+
+		/// The static spike strength used when calculating the action potential
 		static double m_dSpikeStrength;
-		static double m_dAHPEquilPot;		// equil pot for K
+
+		/// The static after-hyperpolarizing equil pot. Typically equil pot for K
+		static double m_dAHPEquilPot;
+
+		/// The static calcium equil pot
 		static double m_dCaEquilPot;
+
+		/// The static absolute refractory period after an action potential
 		static double m_dAbsoluteRefr;
 
-		float m_fltIonChannelStandin;
-
+		/// Integer ID for the neuron. This is its index in the array of neruons in the neural module.
 		int m_iNeuronID;
 
-	// electrical state
+		/// Sets whether the neuron is disabled or not.
 		BOOL m_bZapped;
-	// individual, basic properties
+
+		// individual, basic properties
+			/// The resting potential of the neuron
 			double m_dRestingPot;
+
+			/// Size of the neuron. This is essentially equivalent to the membrane conductance. 
 			double m_dSize;
+
+			/// The time constant for the neuron.
 			double m_dTimeConst;
+
+			/// The membrane capacitance.
 			double m_dCm;
+
+			/// The initial voltage threshold for the neuron.
 			double m_dInitialThresh;
+
+			/// The amount of relative accommodation. This ranges from 0 to 1.
 			double m_dRelativeAccom;
+
+			/// The accommodation time constant.
 			double m_dAccomTimeConst;
+
+			/// The after-hyperpolarizing conductance amplitude.
 			double m_dAHPAmp;
+
+			/// The after-hyperpolarizing time constant
 			double m_dAHPTimeConst;
+
 	// burster properties
+			/// The maximum conductance of the calcium current.
 			double m_dGMaxCa;
-			double m_dVM;		//activation mid point
-			double m_dSM;		// activation slope
-			double m_dMTimeConst;	// activation time constant
-			double m_dVH;		// inactivation
+
+			/// Activation mid point of the calcium current.
+			double m_dVM;		
+
+			/// Activation slope of the calcium current.
+			double m_dSM;	
+
+			/// activation time constant the calcium current.
+			double m_dMTimeConst;	
+
+			/// Inactivation mid point of the calcium current.
+			double m_dVH;
+
+			/// Inactivation slope of the calcium current.
 			double m_dSH;
+
+			/// Inactivation time constant the calcium current.
 			double m_dHTimeConst;
 
-		CStdArray<double> m_aryTonicInputPeriod;
-		CStdArray<int> m_aryTonicInputPeriodType;
-		double m_dToniCurrentStimulusulus;
-		double m_dNoise;
+			/// An array of tonic inputs that can be applied to the neuron.
+			CStdArray<double> m_aryTonicInputPeriod;
 
-		CStdPtrArray<IonChannel> m_aryIonChannels;
-		CaActivation *m_lpCaActive;
-		CaActivation *m_lpCaInactive;
+			/// An array of tonic input types that can be applied to the neuron.
+			CStdArray<int> m_aryTonicInputPeriodType;
+
+			/// A tonic current stimulus that can be applied to the neuron.
+			double m_dToniCurrentStimulusulus;
+
+			/// The noise being applied to the membrane.
+			double m_dNoise;
+
+			/// The array of ion channels.
+			CStdPtrArray<IonChannel> m_aryIonChannels;
+
+			/// The pointer to the calcium activation object.
+			CaActivation *m_lpCaActive;
+
+			/// The pointer to the calcium inactivation object.
+			CaActivation *m_lpCaInactive;
 
 	//////////////////////////////
 	// WORKING STUFF
+		/// The statoc time step.
 		static double m_dDT;
+
+		/// The membrane potential.
 		double m_dMemPot;
+
+		/// The next membrane potential.
 		double m_dNewMemPot;
+
+		/// The voltage threshold
 		double m_dThresh;
+
+		/// true if spike occured.
 		BOOL m_bSpike;		// spike flag
 
 		// electrical synapse current
+		/// The electrical synaptic current.
 		double m_dElecSynCur;
-		double m_dElecSynCond;
-		// non-spiking chemical synapse current
-		double m_dNonSpikingSynCur;
-		double m_dNonSpikingSynCond;
-		// calculation stuff
-		double m_dRefrCountDown;
-		double m_dDCTH;	// expon decline working factor for thresh accomm
-		double m_dDGK;	// expon decline factor for AHP
-		double m_dGK;	// cummulative amp of AHP conductance
-		double m_dGTot;	// cummulative total contuctance
-		float m_fltGTotal; //Reported g total
 
+		/// The electrical synaptic condutance.
+		double m_dElecSynCond;
+
+		// non-spiking chemical synapse current
+		/// The non-spiking synaptic current
+		double m_dNonSpikingSynCur;
+
+		/// The non-spiking synaptic condutance.
+		double m_dNonSpikingSynCond;
+
+		// calculation stuff
+		/// The refractory count down
+		double m_dRefrCountDown;
+
+		/// exponential decline working factor for threshold accommodation
+		double m_dDCTH;	
+
+		/// exponential decline factor for AHP
+		double m_dDGK;	
+
+		/// cummulative amplitude of AHP conductance
+		double m_dGK;	
+
+		/// cummulative total contuctance
+		double m_dGTot;	
+		
+		/// Reported g total
+		float m_fltGTotal; 
+
+		/// The stimulus current.
 		double m_dStim;
+
+		/// The adapter current.
 		float m_fltAdapterI;
-		float m_fltAdapterMemoryI;  //Used to allow datacharts to track current input from adapters.
+
+		/// The adapter current memory. This is used to allow datacharts to track current input from adapters.
+		float m_fltAdapterMemoryI;  
+
+		/// The external current.
 		float m_fltExternalI;
+
+		/// The ioin channel current.
 		float m_fltChannelI;
+
+		/// The ion channel current memory. This is used to allow datacharts to track current input from ion channels.
 		float m_fltChannelMemoryI;
+
+		/// The total current.
 		float m_fltTotalI;
+
+		/// The total current memory. This is used to allow datacharts to track current input from ion channels.
 		float m_fltTotalMemoryI;
+
+		/// The memory potential. This is for reporting purposes.
 		float m_fltMemPot;
-		float m_fltThresholdMemory;  //Used to allow us to chart the threshold if needed.
+
+		/// The threshold potential memory. Used to allow us to chart the threshold if needed.
+		float m_fltThresholdMemory;  
+
+		/// The electrical synaptic current memory. Used for reporting purposes.
 		float m_fltElecSynCurMemory;
+
+		/// The spiking synaptic current memory. Used for reporting purposes.
 		float m_fltSpikingSynCurMemory;
+
+		/// The non-spiking synaptic current memory. Used for reporting purposes.
 		float m_fltNonSpikingSynCurMemory;
+
+		/// The spike memory. Used for reporting purposes.
 		float m_fltSpike;
 
+		/// Number of ion channels.
 		int m_iIonChannels;
 
 		// for bursting	
+		/// The activation variable.
 		double m_dM;
+
+		/// The inactivation variable.
 		double m_dH;
 
 		//Vars to calculate the firing frequency of this neuron.
+		/// Time of the last spike
 		double m_fltLastSpikeTime;
+
+		/// The firing frequency
 		float m_fltFiringFreq;
 
 		//Used to return the membrane conductance of this neuron in GetDataPointers.
+		/// The membrane conductance. Used for reporting purposes.
 		float m_fltGm;
+
+		/// The rest potential. Used for reporting purposes. 
 		float m_fltVrest;
 
-		CStdArray<double> m_arySynG;	// current conductance of each synaptic type
+		/// Current conductance of each synaptic type
+		CStdArray<double> m_arySynG;	
 		
-		CStdArray<double> m_aryFacilSponSynG;	// facilitated initial g increase caused by spontaneous input
-		CStdArray<double> m_aryNextSponSynTime;	// time to next spontaneous occurrence of this syn type
+		/// facilitated initial g increase caused by spontaneous input
+		CStdArray<double> m_aryFacilSponSynG;	
 
-		CStdArray<double> m_aryDG;	// exponential decline factor in syn G COULD THIS BE STATIC???? (or put in synapse??)
-		CStdArray<double> m_aryFacilD;		// exponential decline factor in facilitation COULD THIS BE STATIC???? (or put in synapse??)
+		/// Time to next spontaneous occurrence of this syn type
+		CStdArray<double> m_aryNextSponSynTime;	
+
+		/// exponential decline factor in syn G.
+		CStdArray<double> m_aryDG;	
+
+		/// exponential decline factor in facilitation.
+		CStdArray<double> m_aryFacilD;		
 
 		virtual IonChannel *LoadIonChannel(CStdXml &oXml);
 		IonChannel *FindIonChannel(string strID, BOOL bThrowError);
@@ -134,99 +271,73 @@ namespace IntegrateFireSim
 		virtual ~Neuron();
 		virtual void Load(CStdXml &oXml);
 
-		int NeuronID() {return m_iNeuronID;};
-		void NeuronID(int iID) {m_iNeuronID = iID;};
+#pragma region Accessor-Mutators
 
-		virtual BOOL Enabled() {return m_bZapped;};
-		virtual void Enabled(BOOL bValue) {m_bZapped = bValue;};
+		int NeuronID();
+		void NeuronID(int iID);
+
+		virtual BOOL Enabled();
+		virtual void Enabled(BOOL bValue);
 
 	//////
 	// ENGINE
-		double GetRestingPot() {return m_dRestingPot;}
-		double GetMemPot() {return m_bZapped?0:(m_bSpike?m_dSpikePeak:m_dMemPot);}
-		double GetThresh() {return m_bZapped?0:m_dThresh;}
-		BOOL GetSpike() {return m_bZapped?FALSE:m_bSpike;}
-		BOOL GetZapped() {return m_bZapped;}
-		void IncrementStim(double stim) {m_dStim+=stim;}
-		void InElectricalSynapseCurr(double cur) {m_dElecSynCur+=cur;}
-		void InElectricalSynapseCond(double cond) {m_dElecSynCond+=cond;}
-		void IncNonSpikingSynCurr(double cur) {m_dNonSpikingSynCur+=cur;}
-		void IncNonSpikingSynCond(double cond) {m_dNonSpikingSynCond+=cond;}
+		double GetRestingPot();
+		double GetMemPot();
+		double GetThresh();
+		BOOL GetSpike();
+		BOOL GetZapped();
+		void IncrementStim(double stim);
+		void InElectricalSynapseCurr(double cur);
+		void InElectricalSynapseCond(double cond);
+		void IncNonSpikingSynCurr(double cur);
+		void IncNonSpikingSynCond(double cond);
 
-		CStdPtrArray<IonChannel> *IonChannels() {return &m_aryIonChannels;};
+		CStdPtrArray<IonChannel> *IonChannels();
 
-#pragma region Accessor-Mutators
+		void RestingPotential(double dVal) ;
+		double RestingPotential();
 
-		void RestingPotential(double dVal) 
-		{
-			//The mempot variables are calculated, so we do not want to just re-set them to the new value.
-			//instead lets adjust them by the difference between the old and new resting potential.
-			double dDiff = dVal - m_dRestingPot;
+		void Size(double dVal);
+		double Size();
 
-			m_dRestingPot = dVal;
-			m_dMemPot += dDiff;
-			m_dNewMemPot += dDiff;
-		};
-		double RestingPotential() {return m_dRestingPot;};
+		void TimeConstant(double dVal);
+		double TimeConstant();
 
-		void Size(double dVal) 
-		{
-			m_dSize = dVal;
-			m_fltGm = (float) (1/(m_dSize*1e6));
-			m_dCm = m_dTimeConst*m_dSize;
-		};
-		double Size() {return m_dSize;};
+		void InitialThreshold(double dVal) ;
+		double InitialThreshold();
 
-		void TimeConstant(double dVal) 
-		{
-			m_dTimeConst = dVal;
-			m_dCm = m_dTimeConst*m_dSize;
-		};
-		double TimeConstant() {return m_dTimeConst;};
+		void RelativeAccomodation(double dVal);
+		double RelativeAccomodation();
 
-		void InitialThreshold(double dVal) {m_dInitialThresh = dVal;};
-		double InitialThreshold() {return m_dInitialThresh;};
+		void AccomodationTimeConstant(double dVal);
+		double AccomodationTimeConstant();
 
-		void RelativeAccomodation(double dVal) {m_dRelativeAccom = dVal;};
-		double RelativeAccomodation() {return m_dRelativeAccom;};
+		void AHPAmplitude(double dVal);
+		double AHPAmplitude();
 
-		void AccomodationTimeConstant(double dVal) 
-		{
-			m_dAccomTimeConst = dVal;
-			m_dDCTH=exp(-m_dDT/m_dAccomTimeConst);
-		};
-		double AccomodationTimeConstant() {return m_dAccomTimeConst;};
+		void AHPTimeConstant(double dVal);
+		double AHPTimeConstant();
 
-		void AHPAmplitude(double dVal) {m_dAHPAmp = dVal;};
-		double AHPAmplitude() {return m_dAHPAmp;};
+		void BurstGMaxCa(double dVal);
+		double BurstGMaxCa();
 
-		void AHPTimeConstant(double dVal) 
-		{
-			m_dAHPTimeConst = dVal;
-			m_dDGK=exp(-m_dDT/m_dAHPTimeConst);
-		};
-		double AHPTimeConstant() {return m_dAHPTimeConst;};
+		void BurstVm(double dVal);
+		double BurstVm();
 
-		void BurstGMaxCa(double dVal) {m_dGMaxCa = dVal;};
-		double BurstGMaxCa() {return m_dGMaxCa;};
+		void BurstSm(double dVal);
+		double BurstSm();
 
-		void BurstVm(double dVal) {m_dVM = dVal;};
-		double BurstVm() {return m_dVM;};
+		void BurstMTimeConstant(double dVal);
+		double BurstMTimeConstant();
 
-		void BurstSm(double dVal) {m_dSM = dVal;};
-		double BurstSm() {return m_dSM;};
+		void BurstVh(double dVal);
+		double BurstVh();
 
-		void BurstMTimeConstant(double dVal) {m_dMTimeConst = dVal;};
-		double BurstMTimeConstant() {return m_dMTimeConst;};
+		void BurstSh(double dVal);
+		double BurstSh();
 
-		void BurstVh(double dVal) {m_dVH = dVal;};
-		double BurstVh() {return m_dVH;};
-
-		void BurstSh(double dVal) {m_dSH = dVal;};
-		double BurstSh() {return m_dSH;};
-
-		void BurstHTimeConstant(double dVal) {m_dHTimeConst = dVal;};
-		double BurstHTimeConstant() {return m_dHTimeConst;};
+		void BurstHTimeConstant(double dVal);
+		double BurstHTimeConstant();
 		
 #pragma endregion
 

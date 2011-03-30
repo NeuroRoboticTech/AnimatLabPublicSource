@@ -1,6 +1,8 @@
-// NervousSystem.cpp: implementation of the IntegrateFireNeuralModule class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file IntegrateFireModule.cpp
+
+\brief	Implements the integrate fire module class.
+**/
 
 #include "stdafx.h"
 #include "IonChannel.h"
@@ -18,10 +20,12 @@
 namespace IntegrateFireSim
 {
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\brief	Default constructor.
 
+\author	dcofer
+\date	3/30/2011
+**/
 IntegrateFireNeuralModule::IntegrateFireNeuralModule()
 {
 	m_lpClassFactory =  new IntegrateFireSim::ClassFactory;
@@ -49,6 +53,12 @@ IntegrateFireNeuralModule::IntegrateFireNeuralModule()
 
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/30/2011
+**/
 IntegrateFireNeuralModule::~IntegrateFireNeuralModule()
 {
 
@@ -61,6 +71,445 @@ IntegrateFireNeuralModule::~IntegrateFireNeuralModule()
 	{Std_TraceMsg(0, "Caught Error in desctructor of IntegrateFireNeuralModule\r\n", "", -1, FALSE, TRUE);}
 }
 
+
+#pragma region Accessor-Mutators
+
+/**
+\brief	Sets the current time.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	t	time. 
+**/
+void IntegrateFireNeuralModule::SetCurrentTime(double t) {m_dCurrentTime=t;}
+
+/**
+\brief	Gets the current time.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	The current time.
+**/
+double IntegrateFireNeuralModule::GetCurrentTime() {return m_dCurrentTime;}
+
+/**
+\brief	Gets the time step.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	The time step.
+**/
+double IntegrateFireNeuralModule::GetTimeStep() {return m_dTimeStep;}
+
+/**
+\brief	Gets the neuron count.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	The neuron count.
+**/
+int IntegrateFireNeuralModule::GetNeuronCount() {return m_aryNeurons.size();}
+
+/**
+\brief	Gets a neuron at specified index.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	i	The index. 
+
+\return	Pointer to the neuron at.
+**/
+Neuron *IntegrateFireNeuralModule::GetNeuronAt(int i) {return m_aryNeurons[i];}
+
+/**
+\brief	Gets the connexion count.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	The connexion count.
+**/
+int IntegrateFireNeuralModule::GetConnexionCount() {return m_aryConnexion.size();}
+
+/**
+\brief	Gets a connexion at specified index.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	i	The index. 
+
+\return	Pointer to the connexion at.
+**/
+Connexion *IntegrateFireNeuralModule::GetConnexionAt(int i) {return m_aryConnexion[i];}
+
+/**
+\brief	Sets whether Cadmium is applied to the nervous system.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	bVal	true to use cadmium. 
+**/
+void IntegrateFireNeuralModule::Cd(BOOL bVal) {m_bCd = bVal;}
+
+/**
+\brief	Gets whether Cadmium is applied to the nervous system.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	true if Cd applied, false else.
+**/
+BOOL IntegrateFireNeuralModule::Cd() {return m_bCd;}
+
+/**
+\brief	Sets whether ttx is applied to the nervous system.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	bVal	true to use ttx. 
+**/
+void IntegrateFireNeuralModule::TTX(BOOL bVal) {m_bTTX = bVal;}
+
+/**
+\brief	Gets whether ttx is applied to the nervous system.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	true if ttx applied, false else.
+**/
+BOOL IntegrateFireNeuralModule::TTX() {return m_bTTX;}
+
+/**
+\brief	Sets whether hodgkin-huxely model is used.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	bVal	true to use HH. 
+**/
+void IntegrateFireNeuralModule::HH(BOOL bVal) {m_bHH = bVal;}
+
+/**
+\brief	Gets whether hodgkin-huxely model is used.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	true if HH used, false else.
+**/
+BOOL IntegrateFireNeuralModule::HH() {return m_bHH;}
+
+/**
+\brief	Sets the Time step.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	fltVal	The new value. 
+**/
+void IntegrateFireNeuralModule::TimeStep(float fltVal)
+{
+	Std_InValidRange((float) 1e-10, (float) 1, fltVal, TRUE, "TimeStep");
+
+	m_fltTimeStep = fltVal;
+	m_dTimeStep = m_fltTimeStep * 1000;
+	Neuron::m_dDT=m_dTimeStep;
+
+	//We must update the facilitation decay constant when we change the timestep.
+	SpikingChemicalSynapse *lpSyn;
+	int iCount = m_arySpikingChemSyn.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+	{
+		lpSyn = m_arySpikingChemSyn[iIndex];
+		lpSyn->m_dFacilD = exp(-m_dTimeStep/lpSyn->m_dFacilDecay);
+	}
+}
+
+/**
+\brief	Gets the time step.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	time step.
+**/
+float IntegrateFireNeuralModule::TimeStep() {return m_fltTimeStep;}
+
+/**
+\brief	Sets whether to retain hebbian memory.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	bVal	true to retain. 
+**/
+void IntegrateFireNeuralModule::RetainHebbMemory(BOOL bVal) {m_bRetainHebbMemory = bVal;}
+
+/**
+\brief	Gets whether to  retain hebbian memory.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	true if retaining, false else.
+**/
+BOOL IntegrateFireNeuralModule::RetainHebbMemory() {return m_bRetainHebbMemory;}
+
+/**
+\brief	Sets whether to use critical period.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	bVal	true to use critical period. 
+**/
+void IntegrateFireNeuralModule::UseCriticalPeriod(BOOL bVal) {m_bUseCriticalPeriod = bVal;}
+
+/**
+\brief	Gets whether to use critical period.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	true if critical period used. 
+**/
+BOOL IntegrateFireNeuralModule::UseCriticalPeriod() {return m_bUseCriticalPeriod;}
+
+/**
+\brief	Sets the start time of the critical period.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void IntegrateFireNeuralModule::StartCriticalPeriod(double dVal) {m_dStartCriticalPeriod = dVal;}
+
+/**
+\brief	Gets the start time of the critical period.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	start time.
+**/
+double IntegrateFireNeuralModule::StartCriticalPeriod() {return m_dStartCriticalPeriod;}
+
+/**
+\brief	Sets the end time of the critical period.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void IntegrateFireNeuralModule::EndCriticalPeriod(double dVal) {m_dEndCriticalPeriod = dVal;}
+
+/**
+\brief	Gets the end time of the critical period.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	end time.
+**/
+double IntegrateFireNeuralModule::EndCriticalPeriod() {return m_dEndCriticalPeriod;}
+
+/**
+\brief	Sets whether to freeze hebbian learning.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	bVal	true to freeze. 
+**/
+void IntegrateFireNeuralModule::FreezeHebb(BOOL bVal) {m_bFreezeHebb = bVal;}
+
+/**
+\brief	Sets whether to freeze hebbian learning.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	true if frozen, false else.
+**/
+BOOL IntegrateFireNeuralModule::FreezeHebb() {return m_bFreezeHebb;}
+
+/**
+\brief	Sets the spike peak.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void IntegrateFireNeuralModule::SpikePeak(double dVal) {Neuron::m_dSpikePeak = dVal;}
+
+/**
+\brief	Gets the spike peak.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	spike peak.
+**/
+double IntegrateFireNeuralModule::SpikePeak() {return Neuron::m_dSpikePeak;}
+
+/**
+\brief	Sets the spike strength.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void IntegrateFireNeuralModule::SpikeStrength(double dVal) {Neuron::m_dSpikeStrength = dVal;}
+
+/**
+\brief	Gets the spike strength.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	spike strength.
+**/
+double IntegrateFireNeuralModule::SpikeStrength() {return Neuron::m_dSpikeStrength;}
+
+/**
+\brief	Sets the calcium equilibrium potential.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void IntegrateFireNeuralModule::CaEquilPot(double dVal) {Neuron::m_dCaEquilPot = dVal;}
+
+/**
+\brief	Gets the calcium equilibrium potential.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	potential.
+**/
+double IntegrateFireNeuralModule::CaEquilPot() {return Neuron::m_dCaEquilPot;}
+
+/**
+\brief	Sets the absolute refractory period.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void IntegrateFireNeuralModule::AbsoluteRefr(double dVal) {Neuron::m_dAbsoluteRefr = dVal;}
+
+/**
+\brief	Gets the absolute refractory period.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	refractory period.
+**/
+double IntegrateFireNeuralModule::AbsoluteRefr() {return Neuron::m_dAbsoluteRefr;}
+
+/**
+\brief	Gets the spiking chemical synapse count.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	The count.
+**/
+int IntegrateFireNeuralModule::GetSpikingChemSynCount() {return m_arySpikingChemSyn.size();}
+
+/**
+\brief	Gets a spiking chemical synapse at the specified array index.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	i	The index. 
+
+\return	null if it fails, else the spiking chem syn at.
+**/
+SpikingChemicalSynapse *IntegrateFireNeuralModule::GetSpikingChemSynAt(int i) {return m_arySpikingChemSyn[i];}
+
+/**
+\brief	Gets the non-spiking chemical synapse count.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	The non-spiking chemical synapse count.
+**/
+int IntegrateFireNeuralModule::GetNonSpikingChemSynCount() {return m_aryNonSpikingChemSyn.size();}
+
+/**
+\brief	Gets a non-spiking chemical synapse at the specified index.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	i	The index. 
+
+\return	null if it fails, else the non spiking chem syn at.
+**/
+NonSpikingChemicalSynapse *IntegrateFireNeuralModule::GetNonSpikingChemSynAt(int i) {return m_aryNonSpikingChemSyn[i];}
+
+/**
+\brief	Gets the electrical synapse count.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	The electrical synapse count.
+**/
+int IntegrateFireNeuralModule::GetElecSynCount() {return m_aryElecSyn.size();}
+
+/**
+\brief	Gets an electrical synapse at the specified index.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	i	The index. 
+
+\return	null if it fails, else the elec syn at.
+**/
+ElectricalSynapse *IntegrateFireNeuralModule::GetElecSynAt(int i) {return m_aryElecSyn[i];}
+
+/**
+\brief	Gets the module name.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	module name.
+**/
+string IntegrateFireNeuralModule::ModuleName() {return Rn_NeuralModuleName();}
+
+#pragma endregion
+
+/**
+\brief	Interal method to load the module data.
+
+\author	dcofer
+\date	3/30/2011
+
+\param [in,out]	oXml	The xml to load. 
+**/
 void IntegrateFireNeuralModule::LoadInternal(CStdXml &oXml)
 {
 	int i;
@@ -170,6 +619,16 @@ void IntegrateFireNeuralModule::LoadInternal(CStdXml &oXml)
 //Std_TraceMsg(0,"connexion count = "+STR(GetConnexionCount()));
 }
 
+/**
+\brief	Loads a neuron.
+
+\author	dcofer
+\date	3/30/2011
+
+\param [in,out]	oXml	The xml to use when loading the neuron. 
+
+\return	Pointer to the neuron.
+**/
 Neuron *IntegrateFireNeuralModule::LoadNeuron(CStdXml &oXml)
 {
 	Neuron *lpNeuron=NULL;
@@ -201,6 +660,16 @@ Neuron *IntegrateFireNeuralModule::LoadNeuron(CStdXml &oXml)
 	}
 }
 
+/**
+\brief	Loads a synapse type.
+
+\author	dcofer
+\date	3/30/2011
+
+\param [in,out]	oXml	The xml to use when loading the synapse type. 
+
+\return	Pointer to the synapse type.
+**/
 SynapseType *IntegrateFireNeuralModule::LoadSynapseType(CStdXml &oXml)
 {
 	oXml.IntoElem();
@@ -221,6 +690,17 @@ SynapseType *IntegrateFireNeuralModule::LoadSynapseType(CStdXml &oXml)
 	return lpType;
 }
 
+/**
+\brief	Loads a spiking chemical synapse.
+
+\author	dcofer
+\date	3/30/2011
+
+\param [in,out]	oXml	The xml to use when loading the synapse. 
+\param	iIndex			Index where the synpase will be added in the array. 
+
+\return	Pointer to the spiking chemical synapse.
+**/
 SpikingChemicalSynapse *IntegrateFireNeuralModule::LoadSpikingChemSyn(CStdXml &oXml, int iIndex)
 {
 	SpikingChemicalSynapse *pSpikingChemSyn=NULL;
@@ -253,6 +733,17 @@ SpikingChemicalSynapse *IntegrateFireNeuralModule::LoadSpikingChemSyn(CStdXml &o
 	}
 }
 
+/**
+\brief	Loads a non-spiking chemical synapse.
+
+\author	dcofer
+\date	3/30/2011
+
+\param [in,out]	oXml	The xml to use when loading the synapse. 
+\param	iIndex			Index where the synpase will be added in the array. 
+
+\return	Pointer to the synapse.
+**/
 NonSpikingChemicalSynapse *IntegrateFireNeuralModule::LoadNonSpikingChemSyn(CStdXml &oXml, int iIndex)
 {
 	NonSpikingChemicalSynapse *pNonSpikingChemSyn=NULL;
@@ -285,6 +776,17 @@ NonSpikingChemicalSynapse *IntegrateFireNeuralModule::LoadNonSpikingChemSyn(CStd
 	}
 }
 
+/**
+\brief	Loads an electrical synapse.
+
+\author	dcofer
+\date	3/30/2011
+
+\param [in,out]	oXml	The xml to use when loading the synapse. 
+\param	iIndex			Index where the synpase will be added in the array. 
+
+\return	Pointer to the synapse.
+**/
 ElectricalSynapse *IntegrateFireNeuralModule::LoadElecSyn(CStdXml &oXml, int iIndex)
 {
 	ElectricalSynapse  *pElecSyn=NULL;
@@ -317,6 +819,16 @@ ElectricalSynapse *IntegrateFireNeuralModule::LoadElecSyn(CStdXml &oXml, int iIn
 	}
 }
 
+/**
+\brief	Loads a connexion.
+
+\author	dcofer
+\date	3/30/2011
+
+\param [in,out]	oXml	The xml to use when loading the connection. 
+
+\return	Pointer to the connexion.
+**/
 Connexion *IntegrateFireNeuralModule::LoadConnexion(CStdXml &oXml)
 {
 	Connexion *pConnexion=NULL;
@@ -347,6 +859,12 @@ Connexion *IntegrateFireNeuralModule::LoadConnexion(CStdXml &oXml)
 	}
 }
 
+/**
+\brief	Resets the integer IDs of the various objects when things move around in the array for some reason.
+
+\author	dcofer
+\date	3/30/2011
+**/
 void IntegrateFireNeuralModule::ResetIDs()
 {
 	int iCount = m_arySpikingChemSyn.GetSize();
@@ -377,7 +895,20 @@ void IntegrateFireNeuralModule::ResetIDs()
 // THE ENGINE
 //
 
+/**
+\brief	Gets a scale electrical conductance.
 
+\author	dcofer
+\date	3/30/2011
+
+\param	minG	 	The minimum conductance. 
+\param	maxG	 	The maximum conductance. 
+\param	jV		 	The juntional voltage. 
+\param	ThreshV  	The threshold voltage. 
+\param	SaturateV	The saturate voltage. 
+
+\return	The scale electrical conductance.
+**/
 double IntegrateFireNeuralModule::GetScaleElecCond(double minG,double maxG,double jV, double ThreshV,double SaturateV)
 {
 	if (maxG==minG)			// NON rectifying
@@ -390,6 +921,18 @@ double IntegrateFireNeuralModule::GetScaleElecCond(double minG,double maxG,doubl
 	return minG+(maxG-minG)*(jV-ThreshV)/(SaturateV-ThreshV);
 }
 
+/**
+\brief	Scale conductance for volt dependance.
+
+\author	dcofer
+\date	3/30/2011
+
+\param [in,out]	G	The conductance to scale. 
+\param	postV	 	The post-synaptic voltage. 
+\param	maxV	 	The maximum voltage. 
+\param	minV	 	The minimum voltage. 
+\param	scl		 	The scale factor. 
+**/
 void IntegrateFireNeuralModule::ScaleCondForVoltDep(double& G,double postV,double maxV,double minV,double scl)
 {
 	//dwc There was an inconsistency here. If the post-Vm was less than maxV then it
@@ -408,6 +951,18 @@ double vScl=(postV-minV)/(maxV-minV);
 }
 
 // pass in reference to maximum conductance
+
+/**
+\brief	Scale conductance for non-spiking chemical synapse.
+
+\author	dcofer
+\date	3/30/2011
+
+\param [in,out]	G	The conductance to scale.
+\param	PreV	 	The pre-synaptic voltage.
+\param	ThreshV  	The threshold voltage. 
+\param	SaturateV	The saturate voltage. 
+**/
 void IntegrateFireNeuralModule::ScaleCondForNonSpiking(double& G,double PreV,double ThreshV,double SaturateV)
 {
 	if (PreV<=ThreshV)
@@ -416,6 +971,12 @@ void IntegrateFireNeuralModule::ScaleCondForNonSpiking(double& G,double PreV,dou
 		G=G*(PreV-ThreshV)/(SaturateV-ThreshV);
 }
 
+/**
+\brief	performs post-step calculations.
+
+\author	dcofer
+\date	3/30/2011
+**/
 void IntegrateFireNeuralModule::PostCalc()
 {
 	int i;
@@ -433,6 +994,14 @@ void IntegrateFireNeuralModule::PostCalc()
 	}
 }
 
+/**
+\brief	Initialises the synapse.
+
+\author	dcofer
+\date	3/30/2011
+
+\param [in,out]	pCx	Pointer to the connection to initialize. 
+**/
 void IntegrateFireNeuralModule::InitSynapse(Connexion *pCx)
 {
 	pCx->m_lpSynType = dynamic_cast<SynapseType *>(m_lpSim->FindByID(pCx->SynapseTypeID()));
@@ -458,6 +1027,12 @@ void IntegrateFireNeuralModule::InitSynapse(Connexion *pCx)
 	}
 }
 
+/**
+\brief	Performs pre-step calculations.
+
+\author	dcofer
+\date	3/30/2011
+**/
 void IntegrateFireNeuralModule::PreCalc()
 {
 	int i;
@@ -509,6 +1084,12 @@ FOLLOWING COMMENTS ARE FROM NEUROSIM - I don't really understand them any more!!
 	//}
 }
 
+/**
+\brief	Calculates the update during the step of the simulation.
+
+\author	dcofer
+\date	3/30/2011
+**/
 void IntegrateFireNeuralModule::CalcUpdate()
 {
 	int i;
@@ -696,36 +1277,17 @@ void IntegrateFireNeuralModule::CalcUpdate()
 
 //NeuralModule overrides
 
-void IntegrateFireNeuralModule::TimeStep(float fltVal)
-{
-	Std_InValidRange((float) 1e-10, (float) 1, fltVal, TRUE, "TimeStep");
+/**
+\brief	Searches for a neuron by the specified ID and returns its position in the list.
 
-	m_fltTimeStep = fltVal;
-	m_dTimeStep = m_fltTimeStep * 1000;
-	Neuron::m_dDT=m_dTimeStep;
+\author	dcofer
+\date	3/30/2011
 
-	//We must update the facilitation decay constant when we change the timestep.
-	SpikingChemicalSynapse *lpSyn;
-	int iCount = m_arySpikingChemSyn.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-	{
-		lpSyn = m_arySpikingChemSyn[iIndex];
-		lpSyn->m_dFacilD = exp(-m_dTimeStep/lpSyn->m_dFacilDecay);
-	}
-}
+\param	strID	   	GUID ID for the neuron. 
+\param	bThrowError	true to throw error if neuron not found. 
 
-void IntegrateFireNeuralModule::SpikePeak(double dVal) {Neuron::m_dSpikePeak = dVal;}; 
-double IntegrateFireNeuralModule::SpikePeak() {return Neuron::m_dSpikePeak;};
-
-void IntegrateFireNeuralModule::SpikeStrength(double dVal) {Neuron::m_dSpikeStrength = dVal;}; 
-double IntegrateFireNeuralModule::SpikeStrength() {return Neuron::m_dSpikeStrength;};
-
-void IntegrateFireNeuralModule::CaEquilPot(double dVal) {Neuron::m_dCaEquilPot = dVal;}; 
-double IntegrateFireNeuralModule::CaEquilPot() {return Neuron::m_dCaEquilPot;};
-
-void IntegrateFireNeuralModule::AbsoluteRefr(double dVal) {Neuron::m_dAbsoluteRefr = dVal;}; 
-double IntegrateFireNeuralModule::AbsoluteRefr() {return Neuron::m_dAbsoluteRefr;};
-
+\return	The found neuron list position.
+**/
 int IntegrateFireNeuralModule::FindNeuronListPos(string strID, BOOL bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
@@ -741,6 +1303,17 @@ int IntegrateFireNeuralModule::FindNeuronListPos(string strID, BOOL bThrowError)
 	return -1;
 }
 
+/**
+\brief	Searches for a synapse by the specified ID and returns its position in the list.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	strID	   	GUID ID for the synapse. 
+\param	bThrowError true to throw error if synapse not found. 
+
+\return	The found synapse list position.
+**/
 int IntegrateFireNeuralModule::FindSynapseListPos(string strID, BOOL bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
@@ -756,6 +1329,17 @@ int IntegrateFireNeuralModule::FindSynapseListPos(string strID, BOOL bThrowError
 	return -1;
 }
 
+/**
+\brief	Searches for a spiking chemical synapse by the specified ID and returns its position in the list.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	strID	   	GUID ID for the synapse. 
+\param	bThrowError true to throw error if synapse not found. 
+
+\return	The found synapse list position.
+**/
 int IntegrateFireNeuralModule::FindSpikingChemListPos(string strID, BOOL bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
@@ -771,6 +1355,17 @@ int IntegrateFireNeuralModule::FindSpikingChemListPos(string strID, BOOL bThrowE
 	return -1;
 }
 
+/**
+\brief	Searches for a non-spiking chemical synapse by the specified ID and returns its position in the list.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	strID	   	GUID ID for the synapse. 
+\param	bThrowError true to throw error if synapse not found. 
+
+\return	The found synapse list position.
+**/
 int IntegrateFireNeuralModule::FindNonSpikingChemListPos(string strID, BOOL bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
@@ -786,6 +1381,17 @@ int IntegrateFireNeuralModule::FindNonSpikingChemListPos(string strID, BOOL bThr
 	return -1;
 }
 
+/**
+\brief	Searches for an electrical synapse by the specified ID and returns its position in the list.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	strID	   	GUID ID for the synapse. 
+\param	bThrowError true to throw error if synapse not found. 
+
+\return	The found synapse list position.
+**/
 int IntegrateFireNeuralModule::FindElectricalListPos(string strID, BOOL bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
@@ -892,6 +1498,14 @@ BOOL IntegrateFireNeuralModule::SetData(string strDataType, string strValue, BOO
 	return FALSE;
 }
 
+/**
+\brief	Adds a neuron by using xml. 
+
+\author	dcofer
+\date	3/30/2011
+
+\param	strXml	The string xml to load. 
+**/
 void IntegrateFireNeuralModule::AddNeuron(string strXml)
 {
 	CStdXml oXml;
@@ -903,6 +1517,15 @@ void IntegrateFireNeuralModule::AddNeuron(string strXml)
 	PreCalc();
 }
 
+/**
+\brief	Removes the neuron with the specified ID.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	strID	   	GUID ID for the neuron to remove. 
+\param	bThrowError	true to throw error if no neuron is found. 
+**/
 void IntegrateFireNeuralModule::RemoveNeuron(string strID, BOOL bThrowError)
 {
 	int iPos = FindNeuronListPos(strID, bThrowError);
@@ -910,6 +1533,14 @@ void IntegrateFireNeuralModule::RemoveNeuron(string strID, BOOL bThrowError)
 	PreCalc();
 }
 
+/**
+\brief	Adds a synapse by xml. 
+
+\author	dcofer
+\date	3/30/2011
+
+\param	strXml	The xml to load. 
+**/
 void IntegrateFireNeuralModule::AddSynapse(string strXml)
 {
 	CStdXml oXml;
@@ -921,6 +1552,14 @@ void IntegrateFireNeuralModule::AddSynapse(string strXml)
 	PreCalc();
 }
 
+/**
+\brief	Adds a synapse type by xml. 
+
+\author	dcofer
+\date	3/30/2011
+
+\param	strXml	The xml to load. 
+**/
 void IntegrateFireNeuralModule::AddSynapseType(string strXml)
 {
 	CStdXml oXml;
@@ -932,6 +1571,15 @@ void IntegrateFireNeuralModule::AddSynapseType(string strXml)
 	PreCalc();
 }
 
+/**
+\brief	Removes the synapse with the specified ID.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	strID	   	GUUId for the string. 
+\param	bThrowError	true to throw error. 
+**/
 void IntegrateFireNeuralModule::RemoveSynapse(string strID, BOOL bThrowError)
 {
 	int iPos = FindSynapseListPos(strID, bThrowError);

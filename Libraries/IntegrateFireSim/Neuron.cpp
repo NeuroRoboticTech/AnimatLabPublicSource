@@ -1,6 +1,8 @@
-// Neuron.cpp: implementation of the Neuron class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	IntegrateFireSim\Neuron.cpp
+
+\brief	Implements the neuron class.
+**/
 
 #include "stdafx.h"
 #include "IonChannel.h"
@@ -16,9 +18,7 @@
 namespace IntegrateFireSim
 {
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+
 double Neuron::m_dSpikePeak=0;
 double Neuron::m_dSpikeStrength=1;
 double Neuron::m_dAHPEquilPot=-70;		// equil pot for K
@@ -26,6 +26,12 @@ double Neuron::m_dCaEquilPot=200;
 double Neuron::m_dAbsoluteRefr=2;
 double Neuron::m_dDT=0.5;
 
+/**
+\brief	Default constructor.
+
+\author	dcofer
+\date	3/30/2011
+**/
 Neuron::Neuron()
 {
 
@@ -85,7 +91,6 @@ Neuron::Neuron()
 	m_fltNonSpikingSynCurMemory = 0;
 	m_iIonChannels = 0;
 	m_fltSpike = 0;
-	m_fltIonChannelStandin = 0;
 	m_dCm = 0;
 	m_fltGm = 0;
 	m_fltVrest = 0;
@@ -95,6 +100,12 @@ Neuron::Neuron()
 	m_lpCaInactive = NULL;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/30/2011
+**/
 Neuron::~Neuron()
 {
 	if(m_lpCaActive)
@@ -104,6 +115,470 @@ Neuron::~Neuron()
 		{delete m_lpCaInactive; m_lpCaInactive = NULL;}
 }
 
+
+#pragma region Accessor-Mutators
+
+/**
+\brief	Gets the neuron ID.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	Neuron ID.
+**/
+int Neuron::NeuronID() {return m_iNeuronID;}
+
+/**
+\brief	Sets the Neuron ID.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	iID	The identifier. 
+**/
+void Neuron::NeuronID(int iID) {m_iNeuronID = iID;}
+
+BOOL Neuron::Enabled() {return m_bZapped;}
+
+void Neuron::Enabled(BOOL bValue) {m_bZapped = bValue;}
+
+/**
+\brief	Gets the resting potential.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	The resting potential.
+**/
+double Neuron::GetRestingPot() {return m_dRestingPot;}
+
+/**
+\brief	Gets the membrane potential.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	The membrane potential.
+**/
+double Neuron::GetMemPot() {return m_bZapped?0:(m_bSpike?m_dSpikePeak:m_dMemPot);}
+
+/**
+\brief	Gets the votlge threshold.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	The votlge threshold.
+**/
+double Neuron::GetThresh() {return m_bZapped?0:m_dThresh;}
+
+/**
+\brief	Gets whether a spike occured.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	true if it spiked, false else.
+**/
+BOOL Neuron::GetSpike() {return m_bZapped?FALSE:m_bSpike;}
+
+/**
+\brief	Gets if the neuron is disabled.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	true if it is disabled, false else.
+**/
+BOOL Neuron::GetZapped() {return m_bZapped;}
+
+/**
+\brief	Increments the current stimulus.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	stim	The stim. 
+**/
+void Neuron::IncrementStim(double stim) {m_dStim+=stim;}
+
+/**
+\brief	Increments electrical synapse current.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	cur	The current. 
+**/
+void Neuron::InElectricalSynapseCurr(double cur) {m_dElecSynCur+=cur;}
+
+/**
+\brief	Increments electrical synapse conductance.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	cond	The conductance. 
+**/
+void Neuron::InElectricalSynapseCond(double cond) {m_dElecSynCond+=cond;}
+
+/**
+\brief	Increment non-spiking syn current.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	cur	The current. 
+**/
+void Neuron::IncNonSpikingSynCurr(double cur) {m_dNonSpikingSynCur+=cur;}
+
+/**
+\brief	Increment non-spiking syn conductance.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	cond	The conductance. 
+**/
+void Neuron::IncNonSpikingSynCond(double cond) {m_dNonSpikingSynCond+=cond;}
+
+/**
+\brief	Gets the ion channels.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	Pointer to array of ion channels.
+**/
+CStdPtrArray<IonChannel> *Neuron::IonChannels() {return &m_aryIonChannels;}
+
+/**
+\brief	Sets the resting potential.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void Neuron::RestingPotential(double dVal) 
+{
+	//The mempot variables are calculated, so we do not want to just re-set them to the new value.
+	//instead lets adjust them by the difference between the old and new resting potential.
+	double dDiff = dVal - m_dRestingPot;
+
+	m_dRestingPot = dVal;
+	m_dMemPot += dDiff;
+	m_dNewMemPot += dDiff;
+}
+
+/**
+\brief	Gets the resting potential.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	resting potential.
+**/
+double Neuron::RestingPotential() {return m_dRestingPot;}
+
+/**
+\brief	Sets the size of the neuron.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void Neuron::Size(double dVal) 
+{
+	m_dSize = dVal;
+	m_fltGm = (float) (1/(m_dSize*1e6));
+	m_dCm = m_dTimeConst*m_dSize;
+}
+
+/**
+\brief	Gets the size of the neuron.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	size.
+**/
+double Neuron::Size() {return m_dSize;}
+
+/**
+\brief	Sets the time constant.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void Neuron::TimeConstant(double dVal) 
+{
+	m_dTimeConst = dVal;
+	m_dCm = m_dTimeConst*m_dSize;
+}
+
+/**
+\brief	Gets the time constant.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	time constant.
+**/
+double Neuron::TimeConstant() {return m_dTimeConst;}
+
+/**
+\brief	Sets the initial threshold.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void Neuron::InitialThreshold(double dVal) {m_dInitialThresh = dVal;}
+
+/**
+\brief	Gets the initial threshold.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	initial threshold.
+**/
+double Neuron::InitialThreshold() {return m_dInitialThresh;}
+
+/**
+\brief	Sets the relative accomodation value.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void Neuron::RelativeAccomodation(double dVal) {m_dRelativeAccom = dVal;}
+
+/**
+\brief	Gets the relative accomodation.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	relative accomodation.
+**/
+double Neuron::RelativeAccomodation() {return m_dRelativeAccom;}
+
+/**
+\brief	Sets the accomodation time constant.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void Neuron::AccomodationTimeConstant(double dVal) 
+{
+	m_dAccomTimeConst = dVal;
+	m_dDCTH=exp(-m_dDT/m_dAccomTimeConst);
+}
+
+/**
+\brief	Gets the accomodation time constant.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	accomodation time constant.
+**/
+double Neuron::AccomodationTimeConstant() {return m_dAccomTimeConst;}
+
+/**
+\brief	Sets the after-hyperpolarizing conductance amplitude.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void Neuron::AHPAmplitude(double dVal) {m_dAHPAmp = dVal;}
+
+/**
+\brief	Gets the after-hyperpolarizing conductance amplitude.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	AHP Amplitude.
+**/
+double Neuron::AHPAmplitude() {return m_dAHPAmp;}
+
+/**
+\brief	Sets the after-hyperpolarizing time constant.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void Neuron::AHPTimeConstant(double dVal) 
+{
+	m_dAHPTimeConst = dVal;
+	m_dDGK=exp(-m_dDT/m_dAHPTimeConst);
+}
+
+/**
+\brief	Gets the after-hyperpolarizing time constant.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	AHP time constant.
+**/
+double Neuron::AHPTimeConstant() {return m_dAHPTimeConst;}
+
+/**
+\brief	Sets the burst maximum calcium conductance.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The value. 
+**/
+void Neuron::BurstGMaxCa(double dVal) {m_dGMaxCa = dVal;}
+
+/**
+\brief	Gets the burst maximum calcium conductance.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	conductance.
+**/
+double Neuron::BurstGMaxCa() {return m_dGMaxCa;}
+
+/**
+\brief	Sets the burst activation mid point.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void Neuron::BurstVm(double dVal) {m_dVM = dVal;}
+
+/**
+\brief	Gets the burst activation mid point.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	Mid-point.
+**/
+double Neuron::BurstVm() {return m_dVM;}
+
+/**
+\brief	Sets the burst Activation slope.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void Neuron::BurstSm(double dVal) {m_dSM = dVal;}
+
+/**
+\brief	Gets the burst Activation slope.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	slope.
+**/
+double Neuron::BurstSm() {return m_dSM;}
+
+/**
+\brief	Gets the burst activation time constant.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void Neuron::BurstMTimeConstant(double dVal) {m_dMTimeConst = dVal;}
+
+/**
+\brief	Gets the burst activation time constant.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	time constant.
+**/
+double Neuron::BurstMTimeConstant() {return m_dMTimeConst;}
+
+/**
+\brief	Sets the burst inactivation mid point.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void Neuron::BurstVh(double dVal) {m_dVH = dVal;}
+
+/**
+\brief	Gets the burst inactivation mid point.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	mid point.
+**/
+double Neuron::BurstVh() {return m_dVH;}
+
+/**
+\brief	Sets the burst inactivation slope.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void Neuron::BurstSh(double dVal) {m_dSH = dVal;}
+
+/**
+\brief	Gets the burst inactivation slope.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	slope.
+**/
+double Neuron::BurstSh() {return m_dSH;}
+
+/**
+\brief	Sets the burst inactivation time constant.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	dVal	The new value. 
+**/
+void Neuron::BurstHTimeConstant(double dVal) {m_dHTimeConst = dVal;}
+
+/**
+\brief	Gets the burst inactivation time constant.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	time constant.
+**/
+double Neuron::BurstHTimeConstant() {return m_dHTimeConst;}
+		
+#pragma endregion
 
 void Neuron::Load(CStdXml &oXml)
 {
@@ -201,6 +676,16 @@ void Neuron::Load(CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf Neuron Element
 }
 
+/**
+\brief	Loads an ion channel.
+
+\author	dcofer
+\date	3/30/2011
+
+\param [in,out]	oXml	The xml to load. 
+
+\return	Pointer to the loaded ion channel.
+**/
 IonChannel *Neuron::LoadIonChannel(CStdXml &oXml)
 {
 	IonChannel *lpIonChannel = NULL;
@@ -288,6 +773,14 @@ void Neuron::StoreSpikeForFreqAnalysis(IntegrateFireNeuralModule *lpNS)
 //
 //}
 
+/**
+\brief	Calculates the firing freq.
+
+\author	dcofer
+\date	3/30/2011
+
+\param [in,out]	lpNS	Pointer to the neural module. 
+**/
 void Neuron::CalculateFiringFreq(IntegrateFireNeuralModule *lpNS)
 {
 	if(m_bSpike)
@@ -308,6 +801,14 @@ void Neuron::CalculateFiringFreq(IntegrateFireNeuralModule *lpNS)
 ///////////////////////////////////////
 // ENGINE
 
+/**
+\brief	Initialization routine.
+
+\author	dcofer
+\date	3/30/2011
+
+\param [in,out]	lpNS	Pointer to the neural module. 
+**/
 void Neuron::PreCalc(IntegrateFireNeuralModule *lpNS)
 {
 //Std_TraceMsg(0,"In Neuron::PreCalc");
@@ -381,6 +882,14 @@ void Neuron::PreCalc(IntegrateFireNeuralModule *lpNS)
 	m_fltMemPot = m_dMemPot * 0.001;
 }
 
+/**
+\brief	Calculates the final update during a step.
+
+\author	dcofer
+\date	3/30/2011
+
+\param [in,out]	lpNS	Pointer to the neural module. 
+**/
 void Neuron::CalcUpdateFinal(IntegrateFireNeuralModule *lpNS)
 {
 	int i;
@@ -414,6 +923,14 @@ void Neuron::CalcUpdateFinal(IntegrateFireNeuralModule *lpNS)
 	//ASSERT(m_dStim==0.);	// ready for next iteration
 }
 
+/**
+\brief	Called when simulation is ended.
+
+\author	dcofer
+\date	3/30/2011
+
+\param [in,out]	lpNS	Pointer to the neural module. 
+**/
 void Neuron::PostCalc(IntegrateFireNeuralModule *lpNS)
 {
 	m_arySynG.RemoveAll();	// current conductance of each synaptic type
@@ -423,7 +940,14 @@ void Neuron::PostCalc(IntegrateFireNeuralModule *lpNS)
 	m_aryNextSponSynTime.RemoveAll();	// time to next occurrence of this syn type
 }
 
+/**
+\brief	Calculates the update during a time step.
 
+\author	dcofer
+\date	3/30/2011
+
+\param [in,out]	lpNS	Pointer to the neural module. 
+**/
 void Neuron::CalcUpdate(IntegrateFireNeuralModule *lpNS)
 {
 	double GS,GSI;		// total synaptic cond, current
@@ -638,6 +1162,17 @@ void Neuron::AddExternalNodeInput(float fltInput)
 	}
 }
 
+/**
+\brief	Searches for an ion channel with the matching ID.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	strID	   	GUID ID of the channel to find. 
+\param	bThrowError	true to throw error if channel is not found. 
+
+\return	Pointer to the ion channel.
+**/
 IonChannel *Neuron::FindIonChannel(string strID, BOOL bThrowError)
 {
 	for(int iChannel=0; iChannel<m_iIonChannels; iChannel++)
@@ -650,6 +1185,17 @@ IonChannel *Neuron::FindIonChannel(string strID, BOOL bThrowError)
 	return NULL;
 }	
 
+/**
+\brief	Searches for an ion channel with the specified ID and returns its position in the array.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	strID	   	GUID ID for of the channel to find. 
+\param	bThrowError	true to throw error if channel is not found. 
+
+\return	The found ion channel list position.
+**/
 int Neuron::FindIonChannelListPos(string strID, BOOL bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
@@ -681,7 +1227,6 @@ void Neuron::ResetSimulation()
 	m_fltNonSpikingSynCurMemory = 0;
 	m_iIonChannels = 0;
 	m_fltSpike = 0;
-	m_fltIonChannelStandin = 0;
 	m_fltTotalI = 0;
 	m_fltTotalMemoryI = 0;
 	m_fltSpike = 0;
@@ -856,6 +1401,14 @@ BOOL Neuron::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+/**
+\brief	Adds an ion channel from an xml packet definition. 
+
+\author	dcofer
+\date	3/30/2011
+
+\param	strXml	The xml to load. 
+**/
 void Neuron::AddIonChannel(string strXml)
 {
 	CStdXml oXml;
@@ -867,6 +1420,15 @@ void Neuron::AddIonChannel(string strXml)
 	lpChannel->Initialize();
 }
 
+/**
+\brief	Removes the ion channel.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	strID	   	GUID ID for the channel to remove. 
+\param	bThrowError	true to throw error if channel is not found. 
+**/
 void Neuron::RemoveIonChannel(string strID, BOOL bThrowError)
 {
 	int iPos = FindIonChannelListPos(strID, bThrowError);
