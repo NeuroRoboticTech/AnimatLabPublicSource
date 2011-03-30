@@ -1,6 +1,8 @@
-// Brain.cpp: implementation of the FiringRateModule class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	FiringRateModule.cpp
+
+\brief	Implements the firing rate module class.
+**/
 
 #include "stdafx.h"
 
@@ -11,17 +13,24 @@
 
 namespace FiringRateSim
 {
+/**
+\brief	Default constructor.
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
+\author	dcofer
+\date	3/29/2011
+**/
 FiringRateModule::FiringRateModule()
 {
 	m_lpClassFactory =  new FiringRateSim::ClassFactory;
 	m_bActiveArray = FALSE;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/29/2011
+**/
 FiringRateModule::~FiringRateModule()
 {
 
@@ -33,22 +42,65 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of FiringRateModule\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Gets the active array.
+
+\details Within the neuron it keeps a two bit array to keep track of the previous and current membrane potential calculations.
+This tells which of these array elements is currently the active one.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	true for array element 1, false for array element 0.
+**/
 BOOL FiringRateModule::ActiveArray()
 {return m_bActiveArray;}
 
+/**
+\brief	Sets the active array.
+
+\details Within the neuron it keeps a two bit array to keep track of the previous and current membrane potential calculations.
+This sets which of these array elements is currently the active one.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	bVal	true for array element 1, false for array element 0.
+**/
 void FiringRateModule::ActiveArray(BOOL bVal)
 {
 	m_bActiveArray = bVal;
 }
 
+/**
+\brief	Gets the inactive array.
+
+\details Within the neuron it keeps a two bit array to keep track of the previous and current membrane potential calculations.
+This tells which of these array elements is currently the inactive one.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	true for array element 1, false for array element 0.
+**/
 BOOL FiringRateModule::InactiveArray()
 {return !m_bActiveArray;}
 
+/**
+\brief	Sets the inactive array.
+
+\details Within the neuron it keeps a two bit array to keep track of the previous and current membrane potential calculations.
+This sets which of these array elements is currently the inactive one.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	bVal	true for array element 1, false for array element 0.
+**/
 void FiringRateModule::InactiveArray(BOOL bVal)
 {
 	m_bActiveArray = !bVal;
 }
-
 
 
 void FiringRateModule::Kill(BOOL bState)
@@ -59,6 +111,17 @@ void FiringRateModule::Kill(BOOL bState)
 			m_aryNeurons[iIndex]->Kill(bState);
 }
 
+/**
+\brief	Searches for the neuron with the specified ID and returns its position in the list.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strID	   	GUID ID of the neruon to find. 
+\param	bThrowError	true to throw error if nothing found. 
+
+\return	The found neuron list position.
+**/
 int FiringRateModule::FindNeuronListPos(string strID, BOOL bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
@@ -131,6 +194,14 @@ BOOL FiringRateModule::SetData(string strDataType, string strValue, BOOL bThrowE
 	return FALSE;
 }
 
+/**
+\brief	Adds a neuron to the module. 
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strXml	The xml to use when loading the neuron. 
+**/
 void FiringRateModule::AddNeuron(string strXml)
 {
 	CStdXml oXml;
@@ -142,6 +213,15 @@ void FiringRateModule::AddNeuron(string strXml)
 	lpNeuron->Initialize();
 }
 
+/**
+\brief	Removes the neuron with the specified ID.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strID	   	GUID ID for the neuron. 
+\param	bThrowError	true to throw error if neuron found. 
+**/
 void FiringRateModule::RemoveNeuron(string strID, BOOL bThrowError)
 {
 	int iPos = FindNeuronListPos(strID, bThrowError);
@@ -188,6 +268,12 @@ BOOL FiringRateModule::RemoveItem(string strItemType, string strID, BOOL bThrowE
 
 #pragma endregion
 
+/**
+\brief	Generates an automatic seed value.
+
+\author	dcofer
+\date	3/29/2011
+**/
 void FiringRateModule::GenerateAutoSeed()
 {
 	SYSTEMTIME st;
@@ -225,8 +311,6 @@ void FiringRateModule::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 }
 
 
-//This gets the Nervous system configuration file and loads in the filename
-//It then opens that file and loads it. 
 void FiringRateModule::Load(CStdXml &oXml)
 {
 	VerifySystemPointers();
@@ -241,21 +325,7 @@ void FiringRateModule::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into NeuralModule Element
 
-	m_strNeuralNetworkFile = oXml.GetChildString("NeuralNetFile", "");
-
-	TRACE_DEBUG("Loading nervous system config file.\r\nProjectPath: " + m_strProjectPath + "\r\nFile: " + m_strNeuralNetworkFile);
-
-	if(!Std_IsBlank(m_strNeuralNetworkFile)) 
-	{
-		oNetXml.Load(AnimatSim::GetFilePath(m_strProjectPath, m_strNeuralNetworkFile));
-
-		oNetXml.FindElement("NeuralModule");
-		oNetXml.FindChildElement("NetworkSize");
-
-		LoadNetworkXml(oNetXml);
-	}
-	else
-		LoadNetworkXml(oXml);
+	LoadNetworkXml(oXml);
 
 	oXml.OutOfElem(); //OutOf NeuralModule Element
 
@@ -264,6 +334,14 @@ void FiringRateModule::Load(CStdXml &oXml)
 	TRACE_DEBUG("Finished loading nervous system config file.");
 }
 
+/**
+\brief	Loads the network configuration.
+
+\author	dcofer
+\date	3/29/2011
+
+\param [in,out]	oXml	The xml to load. 
+**/
 void FiringRateModule::LoadNetworkXml(CStdXml &oXml)
 {
 	short iNeuron, iTotalNeurons;
@@ -292,7 +370,16 @@ void FiringRateModule::LoadNetworkXml(CStdXml &oXml)
 	//*** End Loading Neurons. *****
 }
 
+/**
+\brief	Loads a neuron.
 
+\author	dcofer
+\date	3/29/2011
+
+\param [in,out]	oXml	The xml to load for the neuron. 
+
+\return	Pointer to the loaded neuron.
+**/
 Neuron *FiringRateModule::LoadNeuron(CStdXml &oXml)
 {
 	Neuron *lpNeuron=NULL;

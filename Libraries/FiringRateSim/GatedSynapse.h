@@ -1,30 +1,39 @@
-// GatedSynapse.h: interface for the GatedSynapse class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	GatedSynapse.h
 
-#if !defined(AFX_GATEDSYNAPSE_H__21B27420_19DA_47AD_846E_7EBEDC8147D9__INCLUDED_)
-#define AFX_GATEDSYNAPSE_H__21B27420_19DA_47AD_846E_7EBEDC8147D9__INCLUDED_
+\brief	Declares the gated synapse class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace FiringRateSim
 {
 	namespace Synapses
 	{
+		/**
+		\brief	Gated firing rate synapse. 
 
+		\details A gated synapse modulates another, regular synapse that is also connected to the same post-synaptic neuron.
+		It gates it, or turns it on or off. Regular synapses  keep a list of all of synapses that modulate it. While it is 
+		calculating its synaptic current it calls CalculateModulation for all CompoundSynapses
+		to determine how to modulate itself. The user can have the gate initially on or off, and activity in the pre-synaptic neuron
+		controls closing/opening of the gate.
+		
+		\author	dcofer
+		\date	3/30/2011
+		**/
 		class FAST_NET_PORT GatedSynapse : public Synapse    
 		{
 		protected:
+			/// Tells whether the gate is initially open or closed.
 			unsigned char m_iInitialGateValue;
 
 		public:
 			GatedSynapse();
 			virtual ~GatedSynapse();
 
-			unsigned char InitialGateValue() {return m_iInitialGateValue;};
-			void InitialGateValue(unsigned char iVal) {m_iInitialGateValue = iVal;};
+			virtual unsigned char InitialGateValue();
+			virtual void InitialGateValue(unsigned char iVal);
 
 			virtual float CalculateModulation(FiringRateModule *lpModule);
 
@@ -38,5 +47,3 @@ namespace FiringRateSim
 
 	}			//Synapses
 }				//FiringRateSim
-
-#endif // !defined(AFX_GATEDSYNAPSE_H__21B27420_19DA_47AD_846E_7EBEDC8147D9__INCLUDED_)

@@ -1,30 +1,48 @@
-// RandomNeuron.h: interface for the RandomNeuron class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	RandomNeuron.h
 
-#if !defined(AFX_RANDOMNEURON_H__D9D0316C_3191_429A_B3DF_1B52CF9E68BC__INCLUDED_)
-#define AFX_RANDOMNEURON_H__D9D0316C_3191_429A_B3DF_1B52CF9E68BC__INCLUDED_
+\brief	Declares the random neuron class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace FiringRateSim
 {
 	namespace Neurons
 	{
+		/**
+		\brief	Random firing rate neuron.
 
+		\details This neuron has intrinsic currents that are randomly generated. It has a high current and low current.
+		The low current is a constant. The high current and the burst durations are calculated using random variables. Each one
+		has a gain function. A random number between 0 and 100 is generated and fed into the gain function and this determines the
+		current and/or the duration value. 
+		
+		\author	dcofer
+		\date	3/29/2011
+		**/
 		class FAST_NET_PORT RandomNeuron  : public Neuron 
 		{
 		protected:
+			/// Duration of the current mode (HI or LOW)
 			float m_fltITime;
+
+			/// Type of the intrinsic current that is active (HI or LOW)
 			unsigned char m_iIntrinsicType;
+
+			/// The active intrinsic current.
 			float m_fltIntrinsic;
 
+			/// The low intrinsic current
 			float m_fltIl;
 
+			/// Pointer to the graph used to calculate the hi current.
 			AnimatSim::Gains::Gain *m_lpCurrentGraph;
+
+			/// The pointer to the graph used to calculate the hi current duration.
 			AnimatSim::Gains::Gain *m_lpBurstGraph;
+
+			/// The pointer to the graph used to calculate the low current duration.
 			AnimatSim::Gains::Gain *m_lpIBurstGraph;
 
 			void HighCurrentOn();
@@ -75,5 +93,3 @@ namespace FiringRateSim
 
 	}			//Neurons
 }				//FiringRateSim
-
-#endif // !defined(AFX_RANDOMNEURON_H__D9D0316C_3191_429A_B3DF_1B52CF9E68BC__INCLUDED_)

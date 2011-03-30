@@ -1,6 +1,8 @@
-// RNeuron.cpp: implementation of the Neuron class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Neuron.cpp
+
+\brief	Implements the neuron class.
+**/
 
 #include "stdafx.h"
 
@@ -13,10 +15,12 @@ namespace FiringRateSim
 	namespace Neurons
 	{
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\brief	Default constructor.
 
+\author	dcofer
+\date	3/29/2011
+**/
 Neuron::Neuron()
 {
 	m_lpFastModule = NULL;
@@ -59,6 +63,12 @@ Neuron::Neuron()
 	m_bGainType = TRUE;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/29/2011
+**/
 Neuron::~Neuron()
 {
 
@@ -70,24 +80,78 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Neuron\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Gets the membrane capacitance.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	membrane capacitance.
+**/
 float Neuron::Cn()
 {return m_fltCn;}
 
+/**
+\brief	Sets the membrane capacitance.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void Neuron::Cn(float fltVal)
 {
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Cn");
+
 	m_fltCn=fltVal;
 	m_fltInvCn = 1/m_fltCn;
 }
 
+/**
+\brief	Gets the membrane conductance.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	membrane conductance.
+**/
 float Neuron::Gn()
 {return m_fltGn;}
 
-void Neuron::Gn(float fltVal)
-{m_fltGn=fltVal;}
+/**
+\brief	Sets the membrane conductance.
 
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
+void Neuron::Gn(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Cn");
+
+	m_fltGn=fltVal;
+}
+
+/**
+\brief	Gets the voltage threshold for firing.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	voltage threshold.
+**/
 float Neuron::Vth()
 {return m_fltVth;}
 
+/**
+\brief	Sets the voltage threshold for firing.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void Neuron::Vth(float fltVal)
 {
 	float fltDiff = fltVal - m_fltVthi;
@@ -96,37 +160,160 @@ void Neuron::Vth(float fltVal)
 	m_fltVth += fltDiff;
 }
 
+/**
+\brief	Gets the minimum firing frequency.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	minimum firing frequency.
+**/
 float Neuron::Fmin()
 {return m_fltFmin;}
 
-void Neuron::Fmin(float fltVal)
-{m_fltFmin=fltVal;}
+/**
+\brief	Sets the minimum firing frequency.
 
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
+void Neuron::Fmin(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Fmin", TRUE);
+
+	m_fltFmin=fltVal;
+}
+
+/**
+\brief	Gets the firing frequency gain.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	firing frequency gain.
+**/
 float Neuron::Gain()
 {return m_fltGain;}
 
+/**
+\brief	Sets the firing frequency gain.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void Neuron::Gain(float fltVal)
 {
-	if(fltVal==0) THROW_ERROR(Nl_Err_lInvalidGain, Nl_Err_strInvalidGain);
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Gain");
 	m_fltGain=fltVal;
 }
 
+/**
+\brief	Gets the external current.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	external current.
+**/
 float Neuron::ExternalI()
 {return m_fltExternalI;}
 
+/**
+\brief	Sets the external current.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void Neuron::ExternalI(float fltVal)
 {m_fltExternalI=fltVal;}
 
+/**
+\brief	Gets the rest potential.
 
+\author	dcofer
+\date	3/29/2011
+
+\return	rest potential.
+**/
 float Neuron::Vrest()
 {return m_fltVrest;}
 
+/**
+\brief	Sets the rest potential.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void Neuron::Vrest(float fltVal)
 {m_fltVrest = fltVal;}
 
+/**
+\brief	Gets the maximum noise voltage.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	maximum noise voltage.
+**/
 float Neuron::VNoiseMax()
 {return m_fltVNoiseMax;}
 
+/**
+\brief	Gets whether to use noise.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	true if it uses noise, false else.
+**/
+BOOL Neuron::UseNoise() {return m_bUseNoise;}
+
+/**
+\brief	Sets whether to use noise.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	bVal	true to use noise. 
+**/
+void Neuron::UseNoise(BOOL bVal) {m_bUseNoise = bVal;}
+
+/**
+\brief	Gets whether to use accommodation.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	true to use accommodation, false else.
+**/
+BOOL Neuron::UseAccom() {return m_bUseAccom;}
+
+/**
+\brief	Sets whether to use accommodation.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	bVal	true to use accommodation, false else.
+**/
+void Neuron::UseAccom(BOOL bVal) {m_bUseAccom = bVal;}
+
+/**
+\brief	Sets the maximum noise voltage.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void Neuron::VNoiseMax(float fltVal)
 {
 	m_fltVNoiseMax = fltVal;
@@ -137,11 +324,29 @@ void Neuron::VNoiseMax(float fltVal)
 		m_bUseNoise = FALSE;
 }
 
+/**
+\brief	Gets the relative accomodation.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	relative accomodation.
+**/
 float Neuron::RelativeAccomodation()
 {return m_fltRelativeAccom;}
 
+/**
+\brief	Sets the relative accomodation.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void Neuron::RelativeAccomodation(float fltVal)
 {
+	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "RelativeAccomodation");
+
 	m_fltRelativeAccom = fltVal;
 
 	if(m_fltRelativeAccom != 0)
@@ -155,9 +360,25 @@ void Neuron::RelativeAccomodation(float fltVal)
 		m_fltDCTH = 0;
 }
 
+/**
+\brief	Gets the accomodation time constant.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	accomodation time constant.
+**/
 float Neuron::AccomodationTimeConstant()
 {return m_fltAccomTimeConst;}
 
+/**
+\brief	Sets the accomodation time constant.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void Neuron::AccomodationTimeConstant(float fltVal)
 {
 	m_fltAccomTimeConst = fltVal;
@@ -168,31 +389,98 @@ void Neuron::AccomodationTimeConstant(float fltVal)
 		m_fltDCTH = 0;
 }
 
+/**
+\brief	Gets the gain type. (Old way or new way)
+
+\author	dcofer
+\date	3/29/2011
+
+\return	true to use new way, false to use old way.
+**/
 BOOL Neuron::GainType()
 {return m_bGainType;}
 
+/**
+\brief	Sets the gain type. (Old way or new way)
+
+\author	dcofer
+\date	3/29/2011
+
+\param	bVal	true to use new way, false to use old way.
+**/
 void Neuron::GainType(BOOL bVal)
 {m_bGainType = bVal;}
 
+/**
+\brief	Gets the membrane voltage.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	membrane voltage.
+**/
 float Neuron::Vn()
 {return m_fltVn;}
 
+/**
+\brief	Calculates the current firing frequency.
+
+\author	dcofer
+\date	3/29/2011
+
+\param [in,out]	m_lpFastModule	Pointer to a fast module. 
+
+\return	firing frequency.
+**/
 float Neuron::FiringFreq(FiringRateModule *m_lpFastModule)
 {
 	return CalculateFiringFrequency(m_aryVn[m_lpFastModule->ActiveArray()], m_aryVth[m_lpFastModule->ActiveArray()]);
 }
 
+/**
+\brief	Gets the intrinsic current.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	intrinsic current.
+**/
 float Neuron::IntrinsicCurrent()
 {return m_fltIntrinsicI;}
 
+/**
+\brief	Sets the intrinsic current.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void Neuron::IntrinsicCurrent(float fltVal)
 {m_fltIntrinsicI = fltVal;}
 
+/**
+\brief	Gets the neuron type.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	neuron type.
+**/
 unsigned char Neuron::NeuronType()
 {return RUGULAR_NEURON;}
 
+/**
+\brief	Gets a pointer to the synapses array.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	Pointer to the synapses.
+**/
 CStdPtrArray<Synapse> *Neuron::GetSynapses()
 {return &m_arySynapses;}
+
 
 void Neuron::AddSynapse(Synapse *lpSynapse)
 {
@@ -201,6 +489,14 @@ void Neuron::AddSynapse(Synapse *lpSynapse)
 	m_arySynapses.Add(lpSynapse);
 }
 
+/**
+\brief	Adds a synapse using an xml packet. 
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strXml	The xml of the synapse to add. 
+**/
 void Neuron::AddSynapse(string strXml)
 {
 	CStdXml oXml;
@@ -212,6 +508,14 @@ void Neuron::AddSynapse(string strXml)
 	lpSynapse->Initialize();
 }
 
+/**
+\brief	Removes the synapse described by iIndex.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	iIndex	Zero-based index of the synapse in the array. 
+**/
 void Neuron::RemoveSynapse(int iIndex)
 {
 	if( iIndex<0 || iIndex>=m_arySynapses.GetSize() ) 
@@ -219,12 +523,31 @@ void Neuron::RemoveSynapse(int iIndex)
 	m_arySynapses.RemoveAt(iIndex);
 }
 
+/**
+\brief	Removes the synapse by the GUID ID.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strID	   	GUID ID for the synapse to remove. 
+\param	bThrowError	true to throw error if synaspe not found. 
+**/
 void Neuron::RemoveSynapse(string strID, BOOL bThrowError)
 {
 	int iPos = FindSynapseListPos(strID, bThrowError);
 	m_arySynapses.RemoveAt(iPos);
 }
 
+/**
+\brief	Gets a synapse by its index in the array.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	iIndex	Zero-based index of the synaspe to return. 
+
+\return	null if it fails, else the synapse.
+**/
 Synapse *Neuron::GetSynapse(int iIndex)
 {
 	if( iIndex<0 || iIndex>=m_arySynapses.GetSize() ) 
@@ -232,6 +555,17 @@ Synapse *Neuron::GetSynapse(int iIndex)
 	return m_arySynapses[iIndex];
 }
 
+/**
+\brief	Searches for a synapse with the specified ID and returns its position in the list.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strID	   	GUID ID of the synapse to find. 
+\param	bThrowError	true to throw error if no synapse is found. 
+
+\return	The found synapse list position.
+**/
 int Neuron::FindSynapseListPos(string strID, BOOL bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
@@ -247,9 +581,23 @@ int Neuron::FindSynapseListPos(string strID, BOOL bThrowError)
 	return -1;
 }
 
+/**
+\brief	Gets the total number of synapses.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	The total number of synapses.
+**/
 int Neuron::TotalSynapses()
 {return m_arySynapses.GetSize();}
 
+/**
+\brief	Clears the synapses list.
+
+\author	dcofer
+\date	3/29/2011
+**/
 void Neuron::ClearSynapses()
 {m_arySynapses.RemoveAll();}
 
@@ -290,7 +638,17 @@ void Neuron::StepSimulation()
 	}
 }
 
+/**
+\brief	Calculates the firing frequency of the neuron.
 
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVn 	The membrane potential. 
+\param	fltVth	The threshold potential. 
+
+\return	The calculated firing frequency.
+**/
 float Neuron::CalculateFiringFrequency(float fltVn, float fltVth)
 {
 	float fltFreq;
@@ -327,10 +685,30 @@ float Neuron::CalculateFiringFrequency(float fltVn, float fltVth)
 	return fltFreq;
 }
 
+/**
+\brief	Calculates the intrinsic current.
 
+\author	dcofer
+\date	3/29/2011
+
+\param [in,out]	m_lpFastModule	Pointer to the parent FiringRateModule. 
+\param	fltInputCurrent		  	The input current. 
+
+\return	The calculated intrinsic current.
+**/
 float Neuron::CalculateIntrinsicCurrent(FiringRateModule *m_lpFastModule, float fltInputCurrent)
 {return 0;}
 
+/**
+\brief	Calculates the total incoming synaptic current.
+
+\author	dcofer
+\date	3/29/2011
+
+\param [in,out]	m_lpFastModule	Pointer to the parent FiringRateModule. 
+
+\return	The calculated synaptic current.
+**/
 float Neuron::CalculateSynapticCurrent(FiringRateModule *m_lpFastModule)
 {
 	unsigned char iSynapse, iCount;
@@ -349,6 +727,14 @@ float Neuron::CalculateSynapticCurrent(FiringRateModule *m_lpFastModule)
 	return fltSynapticI;
 }
 
+/**
+\brief	Injects current into this neuron.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new current to add. 
+**/
 void Neuron::InjectCurrent(float fltVal)
 {m_fltExternalI+=fltVal;}
 
@@ -625,39 +1011,36 @@ void Neuron::Load(CStdXml &oXml)
 
 	m_arySynapses.RemoveAll();
 
-	//m_strName = oXml.GetChildString("Name", "");
-	m_bEnabled = oXml.GetChildBool("Enabled", TRUE);
+	Enabled(oXml.GetChildBool("Enabled", TRUE));
 
-	m_fltCn = oXml.GetChildFloat("Cn");
-	m_fltInvCn = 1/m_fltCn;
-	m_fltGn = oXml.GetChildFloat("Gn");
-	m_fltVrest = oXml.GetChildFloat("Vrest", 0);
-	m_fltVth = oXml.GetChildFloat("Vth");
-	m_fltVthi = m_fltVth;
-	m_fltFmin = oXml.GetChildFloat("Fmin");
-	m_fltGain = oXml.GetChildFloat("Gain");
-	m_fltExternalI = oXml.GetChildFloat("ExternalI");
-	m_fltVNoiseMax = fabs(oXml.GetChildFloat("VNoiseMax", m_fltVNoiseMax));
+	Cn(oXml.GetChildFloat("Cn"));
+	Gn(oXml.GetChildFloat("Gn"));
+	Vrest(oXml.GetChildFloat("Vrest", 0));
+	Vth(oXml.GetChildFloat("Vth"));
+	Fmin(oXml.GetChildFloat("Fmin"));
+	Gain(oXml.GetChildFloat("Gain"));
+	ExternalI(oXml.GetChildFloat("ExternalI"));
+	VNoiseMax(fabs(oXml.GetChildFloat("VNoiseMax", m_fltVNoiseMax)));
 
 	m_fltVndisp = m_fltVrest;
 	m_fltVthdisp = m_fltVrest + m_fltVth;
 
-	m_bGainType = oXml.GetChildBool("GainType", TRUE);
+	GainType(oXml.GetChildBool("GainType", TRUE));
 
 	m_aryVth[0] = m_aryVth[1] = m_fltVth;
 
 	if(m_fltVNoiseMax != 0)
-		m_bUseNoise = TRUE;
+		UseNoise(TRUE);
 	else
-		m_bUseNoise = FALSE;
+		UseNoise(FALSE);
 
-	m_fltRelativeAccom = fabs(oXml.GetChildFloat("RelativeAccom", m_fltRelativeAccom));
-	m_fltAccomTimeConst = fabs(oXml.GetChildFloat("AccomTimeConst", m_fltAccomTimeConst));
+	RelativeAccomodation(fabs(oXml.GetChildFloat("RelativeAccom", m_fltRelativeAccom)));
+	AccomodationTimeConstant(fabs(oXml.GetChildFloat("AccomTimeConst", m_fltAccomTimeConst)));
 
 	if(m_fltRelativeAccom != 0)
-		m_bUseAccom = TRUE;
+		UseAccom(TRUE);
 	else
-		m_bUseAccom = FALSE;
+		UseAccom(FALSE);
 
 	//*** Begin Loading Synapses. *****
 	if(oXml.FindChildElement("Synapses", FALSE))
@@ -679,7 +1062,16 @@ void Neuron::Load(CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf Neuron Element
 }
 
+/**
+\brief	Loads a synapse.
 
+\author	dcofer
+\date	3/29/2011
+
+\param [in,out]	oXml	The xml to load. 
+
+\return	Pointer to the created synapse.
+**/
 Synapse *Neuron::LoadSynapse(CStdXml &oXml)
 {
 	string strType;

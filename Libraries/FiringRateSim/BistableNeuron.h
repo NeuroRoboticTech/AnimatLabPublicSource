@@ -1,26 +1,38 @@
-// BistableNeuron.h: interface for the BistableNeuron class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	BistableNeuron.h
 
-#if !defined(AFX_BISTABLENEURON_H__D9D0316C_3191_429A_B3DF_1B52CF9E68BC__INCLUDED_)
-#define AFX_BISTABLENEURON_H__D9D0316C_3191_429A_B3DF_1B52CF9E68BC__INCLUDED_
+\brief	Declares the bistable neuron class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace FiringRateSim
 {
 	namespace Neurons
 	{
+		/**
+		\brief	Bistable firing rate neuron.
 
+		\details This is a very simple bi-stable neuron model. When the steady-state membrane voltage is pulled above
+		a threshold then the hi current is turned on. It will remain on until the threshold is pulled back down below the
+		threshold. Then the low current will be turned on.
+		
+		\author	dcofer
+		\date	3/29/2011
+		**/
 		class FAST_NET_PORT BistableNeuron  : public Neuron 
 		{
 		protected:
+			/// The active intrinsic current
 			float m_fltIntrinsic;
+
+			/// The threshold voltage
 			float m_fltVsth;
 
+			/// The low current
 			float m_fltIl;
+
+			/// The high current
 			float m_fltIh;
 
 			virtual float CalculateIntrinsicCurrent(FiringRateModule *lpModule, float fltInputCurrent);
@@ -43,10 +55,6 @@ namespace FiringRateSim
 
 			virtual unsigned char NeuronType();
 
-			//virtual long CalculateSnapshotByteSize();
-			//virtual void SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex);
-			//virtual void LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex);
-
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
 			virtual void Load(CStdXml &oXml);
@@ -54,5 +62,3 @@ namespace FiringRateSim
 
 	}			//Neurons
 }				//FiringRateSim
-
-#endif // !defined(AFX_BISTABLENEURON_H__D9D0316C_3191_429A_B3DF_1B52CF9E68BC__INCLUDED_)

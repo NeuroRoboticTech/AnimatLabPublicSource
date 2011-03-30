@@ -1,22 +1,27 @@
-// TonicNeuron.h: interface for the TonicNeuron class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	TonicNeuron.h
 
-#if !defined(AFX_TONICNEURON_H__1FCC8987_0FBA_4BC7_BAFC_1F480BA58768__INCLUDED_)
-#define AFX_TONICNEURON_H__1FCC8987_0FBA_4BC7_BAFC_1F480BA58768__INCLUDED_
+\brief	Declares the tonic neuron class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace FiringRateSim
 {
 	namespace Neurons
 	{
+		/**
+		\brief	Tonic firing rate neuron.
 
+		\details This neuron has a tonic intrinsic current that is applied to the neuron.
+		
+		\author	dcofer
+		\date	3/29/2011
+		**/
 		class FAST_NET_PORT TonicNeuron : public Neuron  
 		{
 		protected:
+			/// The tonic current.
 			float m_fltIh;
 
 			virtual float CalculateIntrinsicCurrent(FiringRateModule *lpModule, float fltInputCurrent);
@@ -37,6 +42,3 @@ namespace FiringRateSim
 
 	}			//Neurons
 }				//FiringRateSim
-
-
-#endif // !defined(AFX_TONICNEURON_H__1FCC8987_0FBA_4BC7_BAFC_1F480BA58768__INCLUDED_)

@@ -1,6 +1,8 @@
-// BistableNeuron.cpp: implementation of the BistableNeuron class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	BistableNeuron.cpp
+
+\brief	Implements the bistable neuron class.
+**/
 
 #include "stdafx.h"
 
@@ -14,10 +16,12 @@ namespace FiringRateSim
 	namespace Neurons
 	{
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\brief	Default constructor.
 
+\author	dcofer
+\date	3/30/2011
+**/
 BistableNeuron::BistableNeuron()
 {
 	m_fltIntrinsic=0;
@@ -26,6 +30,12 @@ BistableNeuron::BistableNeuron()
 	m_fltIh = 0;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/30/2011
+**/
 BistableNeuron::~BistableNeuron()
 {
 
@@ -36,30 +46,102 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of BistableNeuron\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Gets the intrinsic current.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	intrinsic current.
+**/
 float BistableNeuron::IntrinsicCurrent()
 {return m_fltIntrinsic;}
 
+/**
+\brief	Sets the intrinsic current.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	fltVal	The new value. 
+**/
 void BistableNeuron::IntrinsicCurrent(float fltVal)
 {m_fltIntrinsic=fltVal;}
 
+/**
+\brief	Gets the low current.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	low current.
+**/
 float BistableNeuron::Il()
 {return m_fltIl;}
 
+/**
+\brief	Sets the low current
+
+\author	dcofer
+\date	3/30/2011
+
+\param	fltVal	The new value. 
+**/
 void BistableNeuron::Il(float fltVal)
 {m_fltIl=fltVal;}
 
+/**
+\brief	Gets the high current.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	The high current.
+**/
 float BistableNeuron::Ih()
 {return m_fltIh;}
 
+/**
+\brief	Sets the high current.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	fltVal	The new value. 
+**/
 void BistableNeuron::Ih(float fltVal)
 {m_fltIh=fltVal;}
 
+/**
+\brief	Gets the threshold voltage.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	threshold voltage.
+**/
 float BistableNeuron::Vsth()
 {return m_fltVsth;}
 
+/**
+\brief	Sets the threshold voltage.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	fltVal	The new value. 
+**/
 void BistableNeuron::Vsth(float fltVal)
 {m_fltVsth=fltVal;}
 
+/**
+\brief	Gets the neuron type.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	neuron type.
+**/
 unsigned char BistableNeuron::NeuronType()
 {return BISTABLE_NEURON;}
 
@@ -72,28 +154,6 @@ float BistableNeuron::CalculateIntrinsicCurrent(FiringRateModule *lpModule, floa
 
 	return m_fltIntrinsic;
 }
-//
-//long BistableNeuron::CalculateSnapshotByteSize()
-//{
-//	//We need bytes for the internal state variables for this neuron.
-//	return (Neuron::CalculateSnapshotByteSize() + sizeof(m_iIntrinsicType));
-//}
-//
-//void BistableNeuron::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
-//{
-//	Neuron::SaveKeyFrameSnapshot(aryBytes, lIndex);
-//
-//	memcpy((void *) (aryBytes+lIndex), (void *)&m_iIntrinsicType, sizeof(m_iIntrinsicType));
-//  lIndex += sizeof(m_iIntrinsicType);
-//}
-//
-//void BistableNeuron::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
-//{
-//	Neuron::LoadKeyFrameSnapshot(aryBytes, lIndex);
-//
-//	memcpy((void *)&m_iIntrinsicType, (void *) (aryBytes+lIndex), sizeof(m_iIntrinsicType));
-//  lIndex += sizeof(m_iIntrinsicType);
-//}
 
 #pragma region DataAccesMethods
 
@@ -137,9 +197,9 @@ void BistableNeuron::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Neuron Element
 
-	m_fltVsth= oXml.GetChildFloat("Vsth");
-	m_fltIl = oXml.GetChildFloat("Il");
-	m_fltIh = oXml.GetChildFloat("Ih");
+	Vsth(oXml.GetChildFloat("Vsth"));
+	Il(oXml.GetChildFloat("Il"));
+	Ih(oXml.GetChildFloat("Ih"));
 
 	oXml.OutOfElem(); //OutOf Neuron Element
 }

@@ -1,6 +1,8 @@
-// RandomNeuron.cpp: implementation of the RandomNeuron class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	RandomNeuron.cpp
+
+\brief	Implements the random neuron class.
+**/
 
 #include "stdafx.h"
 
@@ -14,10 +16,12 @@ namespace FiringRateSim
 	namespace Neurons
 	{
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\brief	Default constructor.
 
+\author	dcofer
+\date	3/29/2011
+**/
 RandomNeuron::RandomNeuron()
 {
 	m_fltITime=0;
@@ -36,6 +40,12 @@ RandomNeuron::RandomNeuron()
 	m_lpIBurstGraph = NULL;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/29/2011
+**/
 RandomNeuron::~RandomNeuron()
 {
 
@@ -49,33 +59,113 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of RandomNeuron\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Gets the duration of the active current mode.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	duration.
+**/
 float RandomNeuron::ITime()
 {return m_fltITime;}
 
+/**
+\brief	Sets the duration of the active current mode.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void RandomNeuron::ITime(float fltVal)
 {m_fltITime=fltVal;}
 
+/**
+\brief	Gets the active intrinsic type (HI or LOW).
+
+\author	dcofer
+\date	3/29/2011
+
+\return	intrinsic type.
+**/
 unsigned char RandomNeuron::IntrinsicType()
 {return m_iIntrinsicType;}
 
+/**
+\brief	Sets the active intrinsic type (HI or LOW).
+
+\author	dcofer
+\date	3/29/2011
+
+\param	iVal	The new value. 
+**/
 void RandomNeuron::IntrinsicType(unsigned char iVal)
 {m_iIntrinsicType=iVal;}
 
+/**
+\brief	Gets the active intrinsic current.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	intrinsic current.
+**/
 float RandomNeuron::IntrinsicCurrent()
 {return m_fltIntrinsic;}
 
+/**
+\brief	Sets the active intrinsic current.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void RandomNeuron::IntrinsicCurrent(float fltVal)
 {m_fltIntrinsic=fltVal;}
 
+/**
+\brief	Gets the low current.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	low current.
+**/
 float RandomNeuron::Il()
 {return m_fltIl;}
 
+/**
+\brief	Sets the low current.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void RandomNeuron::Il(float fltVal)
 {m_fltIl=fltVal;}
 
+/**
+\brief	Gets the neuron type.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	neuron type.
+**/
 unsigned char RandomNeuron::NeuronType()
 {return RANDOM_NEURON;}
 
+/**
+\brief	Sets the current distribution.
+
+\author	dcofer
+\date	3/29/2011
+
+\param [in,out]	lpGain	Pointer to a gain. 
+**/
 void RandomNeuron::CurrentDistribution(AnimatSim::Gains::Gain *lpGain)
 {
 	if(lpGain)
@@ -86,6 +176,14 @@ void RandomNeuron::CurrentDistribution(AnimatSim::Gains::Gain *lpGain)
 	}
 }
 
+/**
+\brief	Sets the current distribution using an xml packet.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strXml	The xml packet defining the gain. 
+**/
 void RandomNeuron::CurrentDistribution(string strXml)
 {
 	CStdXml oXml;
@@ -94,6 +192,14 @@ void RandomNeuron::CurrentDistribution(string strXml)
 	CurrentDistribution(AnimatSim::Gains::LoadGain(m_lpSim, "CurrentGraph", oXml));
 }
 
+/**
+\brief	Sets the burst length distribution.
+
+\author	dcofer
+\date	3/29/2011
+
+\param [in,out]	lpGain	Pointer to a gain. 
+**/
 void RandomNeuron::BurstLengthDistribution(AnimatSim::Gains::Gain *lpGain)
 {
 	if(lpGain)
@@ -104,6 +210,14 @@ void RandomNeuron::BurstLengthDistribution(AnimatSim::Gains::Gain *lpGain)
 	}
 }
 
+/**
+\brief	Sets the burst length distribution using an xml packet.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strXml	The xml packet defining the gain. 
+**/
 void RandomNeuron::BurstLengthDistribution(string strXml)
 {
 	CStdXml oXml;
@@ -112,6 +226,14 @@ void RandomNeuron::BurstLengthDistribution(string strXml)
 	BurstLengthDistribution(AnimatSim::Gains::LoadGain(m_lpSim, "BurstGraph", oXml));
 }
 
+/**
+\brief	Sets the interbusrt length distribution.
+
+\author	dcofer
+\date	3/29/2011
+
+\param [in,out]	lpGain	Pointer to a gain. 
+**/
 void RandomNeuron::InterbusrtLengthDistribution(AnimatSim::Gains::Gain *lpGain)
 {
 	if(lpGain)
@@ -122,6 +244,14 @@ void RandomNeuron::InterbusrtLengthDistribution(AnimatSim::Gains::Gain *lpGain)
 	}
 }
 
+/**
+\brief	Sets the interbusrt length distribution using an xml packet.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strXml	The xml packet defining the gain. 
+**/
 void RandomNeuron::InterbusrtLengthDistribution(string strXml)
 {
 	CStdXml oXml;
@@ -130,6 +260,12 @@ void RandomNeuron::InterbusrtLengthDistribution(string strXml)
 	InterbusrtLengthDistribution(AnimatSim::Gains::LoadGain(m_lpSim, "InterBurstGraph", oXml));
 }
 
+/**
+\brief	Turns the high current on.
+
+\author	dcofer
+\date	3/29/2011
+**/
 void RandomNeuron::HighCurrentOn()
 {
 	double dblRand;
@@ -140,15 +276,21 @@ void RandomNeuron::HighCurrentOn()
 	dblRand = Std_DRand(0, 100);
 
 	//Now run it through the random variable equation to get the actual value.
-	m_fltITime = m_lpBurstGraph->CalculateGain((float) dblRand);  //Nl_EvalGraph(m_iBurstGraphType, m_fltBurstA, m_fltBurstB, m_fltBurstC, m_fltBurstD, (float) dblRand);
+	m_fltITime = m_lpBurstGraph->CalculateGain((float) dblRand);  
 
 	//Lets get a random number for the current to use.
 	dblRand = Std_DRand(0, 100);
 
 	//Now run it through the random variable equation to get the actual value.
-	m_fltIntrinsic =  m_lpCurrentGraph->CalculateGain((float) dblRand); //Nl_EvalGraph(m_iCurrentGraphType, m_fltCurrentA, m_fltCurrentB, m_fltCurrentC, m_fltCurrentD, (float) dblRand);
+	m_fltIntrinsic =  m_lpCurrentGraph->CalculateGain((float) dblRand); 
 }
 
+/**
+\brief	Turns the low current on.
+
+\author	dcofer
+\date	3/29/2011
+**/
 void RandomNeuron::LowCurrentOn()
 {
 	double dblRand;
@@ -160,7 +302,7 @@ void RandomNeuron::LowCurrentOn()
 	dblRand = Std_DRand(0, 100);
 
 	//Now run it through the random variable equation to get the actual value.
-	m_fltITime = m_lpIBurstGraph->CalculateGain((float) dblRand); //Nl_EvalGraph(m_iIBurstGraphType, m_fltIBurstA, m_fltIBurstB, m_fltIBurstC, m_fltIBurstD, (float) dblRand);
+	m_fltITime = m_lpIBurstGraph->CalculateGain((float) dblRand); 
 }
 
 float RandomNeuron::CalculateIntrinsicCurrent(FiringRateModule *lpModule, float fltInputCurrent)
@@ -257,7 +399,7 @@ void RandomNeuron::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Neuron Element
 
-	m_fltIl = oXml.GetChildFloat("Il");
+	Il(oXml.GetChildFloat("Il"));
 
 	CurrentDistribution(AnimatSim::Gains::LoadGain(m_lpSim, "CurrentGraph", oXml));
 	BurstLengthDistribution(AnimatSim::Gains::LoadGain(m_lpSim, "BurstGraph", oXml));

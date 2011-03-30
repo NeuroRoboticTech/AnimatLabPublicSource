@@ -1,8 +1,17 @@
+/**
+\file	NeuralUtils.h
 
+\brief	Declares the neural utilities class.
+**/
+
+/**
+\brief	Gets the neural module name.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	neural module name.
+**/
 string Nl_NeuralModuleName();
-
-float FAST_NET_PORT Nl_EvalGraph(unsigned char iGraphType, float fltA, float fltB, float fltC, float fltD, float fltQty);
-string FAST_NET_PORT Nl_GetFilePath(string strProjectPath, string strFilename);
-//IStdClassFactory FAST_NET_PORT *GetStdClassFactory();
 
 //#pragma comment(linker, "/EXPORT:GetStdClassFactory") 

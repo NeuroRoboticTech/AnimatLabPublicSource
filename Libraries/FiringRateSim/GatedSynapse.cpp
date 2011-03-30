@@ -1,6 +1,8 @@
-// GatedSynapse.cpp: implementation of the GatedSynapse class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	GatedSynapse.cpp
+
+\brief	Implements the gated synapse class.
+**/
 
 #include "stdafx.h"
 
@@ -13,21 +15,48 @@ namespace FiringRateSim
 {
 	namespace Synapses
 	{
+/**
+\brief	Default constructor.
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
+\author	dcofer
+\date	3/30/2011
+**/
 GatedSynapse::GatedSynapse()
 {
 	m_iInitialGateValue=0;
 	m_strType = "GATED";
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/30/2011
+**/
 GatedSynapse::~GatedSynapse()
 {
 
 }
+
+/**
+\brief	Gets the initial gate value.
+
+\author	dcofer
+\date	3/30/2011
+
+\return	initial gate value.
+**/
+unsigned char GatedSynapse::InitialGateValue() {return m_iInitialGateValue;}
+
+/**
+\brief	Sets the initial gate value.
+
+\author	dcofer
+\date	3/30/2011
+
+\param	iVal	The new value. 
+**/
+void GatedSynapse::InitialGateValue(unsigned char iVal) {m_iInitialGateValue = iVal;}
 
 float GatedSynapse::CalculateModulation(FiringRateModule *lpModule)
 {
@@ -83,7 +112,7 @@ void GatedSynapse::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into GatedSynapse Element
 
-	m_iInitialGateValue = (unsigned char) oXml.GetChildInt("InitialGateValue");
+	InitialGateValue((unsigned char) oXml.GetChildInt("InitialGateValue"));
 
 	oXml.OutOfElem(); //OutOf GatedSynapse Element
 }

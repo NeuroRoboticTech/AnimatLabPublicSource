@@ -1,6 +1,8 @@
-// TonicNeuron.cpp: implementation of the TonicNeuron class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	TonicNeuron.cpp
+
+\brief	Implements the tonic neuron class.
+**/
 
 #include "stdafx.h"
 
@@ -14,27 +16,58 @@ namespace FiringRateSim
 	namespace Neurons
 	{
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\brief	Default constructor.
 
+\author	dcofer
+\date	3/29/2011
+**/
 TonicNeuron::TonicNeuron()
 {
 	m_fltIh=0;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/29/2011
+**/
 TonicNeuron::~TonicNeuron()
 {
 
 }
 
+/**
+\brief	Gets the tonic current.
 
+\author	dcofer
+\date	3/29/2011
+
+\return	tonic current.
+**/
 float TonicNeuron::Ih()
 {return m_fltIh;}
 
+/**
+\brief	Sets the tonic current.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void TonicNeuron::Ih(float fltVal)
 {m_fltIh=fltVal;}
 
+/**
+\brief	Gets the neuron type.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	neuron type.
+**/
 unsigned char TonicNeuron::NeuronType()
 {return TONIC_NEURON;}
 
@@ -71,7 +104,7 @@ void TonicNeuron::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Neuron Element
 
-	m_fltIh = oXml.GetChildFloat("Ih");
+	Ih(oXml.GetChildFloat("Ih"));
 
 	oXml.OutOfElem(); //OutOf Neuron Element
 }

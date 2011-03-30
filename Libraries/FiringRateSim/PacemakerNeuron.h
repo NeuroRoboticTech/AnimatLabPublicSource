@@ -1,13 +1,11 @@
-// PacemakerNeuron.h: interface for the PacemakerNeuron class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	PacemakerNeuron.h
 
-#if !defined(AFX_PACEMAKERNEURON_H__7517B0B1_A6A9_433F_B7D0_759913935693__INCLUDED_)
-#define AFX_PACEMAKERNEURON_H__7517B0B1_A6A9_433F_B7D0_759913935693__INCLUDED_
+\brief	Declares the pacemaker neuron class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
+
 
 namespace FiringRateSim
 {
@@ -17,15 +15,34 @@ namespace FiringRateSim
 		class FAST_NET_PORT PacemakerNeuron  : public Neuron
 		{
 		protected:
+			/// The hyperpolarizing current that brings the membrane potential back down after it has been firing.
 			float m_fltIl;
+
+			/// The slope of the linear function that is used to calculate the length of time that Il current remains active.
 			float m_fltIh;
+
+			/// A lower steady state threshold. If the steady state voltage of the neuron goes below this value then the Il current is locked on until that voltage rises above this threshold.
 			float m_fltVssm;
+
+			/// The slope of the linear function that is used to calculate the length of time that Il current remains active.
 			float m_fltMtl;
+
+			/// The intercept of the linear function that is used to calculate the length of time that Il current remains active.
 			float m_fltBtl;
+
+			/// This is the length of time that the Ih current remains active.
 			float m_fltTh;
+
+			/// Time that the current intrinsic current mode is active.
 			float m_fltITime;
+
+			/// The interburst interval
 			float m_fltInterburstInterval;
+
+			/// The steady state voltage
 			float m_fltVss;
+
+			/// Type of the intrinsic current that is active. (HI or LOW)
 			unsigned char m_iIntrinsicType;
 
 			void HighCurrentOn();
@@ -78,5 +95,3 @@ namespace FiringRateSim
 
 	}			//Neurons
 }				//FiringRateSim
-
-#endif // !defined(AFX_PACEMAKERNEURON_H__7517B0B1_A6A9_433F_B7D0_759913935693__INCLUDED_)

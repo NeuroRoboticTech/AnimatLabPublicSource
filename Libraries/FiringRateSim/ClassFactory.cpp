@@ -1,6 +1,8 @@
-// NlClassFactory.cpp: implementation of the ClassFactory class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ClassFactory.cpp
+
+\brief	Implements the class factory class.
+**/
 
 #include "stdafx.h"
 
@@ -18,21 +20,27 @@
 namespace FiringRateSim
 {
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
+/**
+\brief	Default constructor.
+	
+\author	dcofer
+\date	3/30/2011
+**/
 ClassFactory::ClassFactory()
 {
 
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/30/2011
+**/
 ClassFactory::~ClassFactory()
 {
 
 }
-
-// ************* Neuron Type Conversion functions ******************************
 
 Neuron *ClassFactory::CreateNeuron(string strType, BOOL bThrowError)
 {
@@ -81,6 +89,7 @@ catch(...)
 
 // ************* Synapse Type Conversion functions ******************************
 
+
 Synapse *ClassFactory::CreateSynapse(string strType, BOOL bThrowError)
 {
 	Synapse *lpSynapse=NULL;
@@ -125,6 +134,7 @@ catch(...)
 
 // ************* DataColumn Type Conversion functions ******************************
 
+
 DataColumn *ClassFactory::CreateDataColumn(string strType, BOOL bThrowError)
 {
 	DataColumn *lpColumn=NULL;
@@ -162,6 +172,7 @@ catch(...)
 
 
 // ************* External Stimulus Type Conversion functions ******************************
+
 
 ExternalStimulus *ClassFactory::CreateExternalStimulus(string strType, BOOL bThrowError)
 {
@@ -204,6 +215,7 @@ catch(...)
 
 
 // ************* External Neural Module Conversion functions ******************************
+
 
 NeuralModule *ClassFactory::CreateNeuralModule(string strType, BOOL bThrowError)
 {

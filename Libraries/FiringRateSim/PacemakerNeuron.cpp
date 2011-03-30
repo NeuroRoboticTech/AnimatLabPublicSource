@@ -1,6 +1,8 @@
-// PacemakerNeuron.cpp: implementation of the PacemakerNeuron class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	PacemakerNeuron.cpp
+
+\brief	Implements the pacemaker neuron class.
+**/
 
 #include "stdafx.h"
 
@@ -13,11 +15,12 @@ namespace FiringRateSim
 {
 	namespace Neurons
 	{ 
+/**
+\brief	Default constructor.
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
+\author	dcofer
+\date	3/29/2011
+**/
 PacemakerNeuron::PacemakerNeuron()
 {
 	m_fltIl=(float) 0;
@@ -35,60 +38,201 @@ PacemakerNeuron::PacemakerNeuron()
 	m_fltInterburstInterval = 0;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/29/2011
+**/
 PacemakerNeuron::~PacemakerNeuron()
 {
 
 }
 
+/**
+\brief	Gets the low intrinsic current value.
 
+\author	dcofer
+\date	3/29/2011
+
+\return	Current value.
+**/
 float PacemakerNeuron::Il()
 {return m_fltIl;}
 
+/**
+\brief	Sets the low intrinsic current value.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void PacemakerNeuron::Il(float fltVal)
 {m_fltIl=fltVal;}
 
+/**
+\brief	Gets the high intrinsic current value.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	Current value.
+**/
 float PacemakerNeuron::Ih()
 {return m_fltIh;}
 
+/**
+\brief	Sets the high intrinsic current value.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void PacemakerNeuron::Ih(float fltVal)
 {m_fltIh=fltVal;}
 
+/**
+\brief	Gets the lower steady state threshold.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	threshold value.
+**/
 float PacemakerNeuron::Vssm()
 {return m_fltVssm;}
 
+/**
+\brief	Sets the lower steady state threshold.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void PacemakerNeuron::Vssm(float fltVal)
 {m_fltVssm=fltVal;}
 
+/**
+\brief	Gets the slope used to calculate length of time that Il current remains active.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	slope.
+**/
 float PacemakerNeuron::Mtl()
 {return m_fltMtl;}
 
+/**
+\brief	Sets the slope used to calculate length of time that Il current remains active.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void PacemakerNeuron::Mtl(float fltVal)
 {m_fltMtl=fltVal;}
 
+/**
+\brief	Gets the intercept used to calculate length of time that Il current remains active.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	intercept.
+**/
 float PacemakerNeuron::Btl()
 {return m_fltBtl;}
 
+/**
+\brief	Sets the intercept used to calculate length of time that Il current remains active.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void PacemakerNeuron::Btl(float fltVal)
 {m_fltBtl=fltVal;}
 
+/**
+\brief	Gets the time that the high current is active.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	Time for high current.
+**/
 float PacemakerNeuron::Th()
 {return m_fltTh;}
 
+/**
+\brief	Sets the time that the high current is active.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void PacemakerNeuron::Th(float fltVal)
 {m_fltTh=fltVal;}
 
+/**
+\brief	Gets the duration for the current mode.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	duration.
+**/
 float PacemakerNeuron::ITime()
 {return m_fltITime;}
 
+/**
+\brief	Sets the duration for the current mode.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void PacemakerNeuron::ITime(float fltVal)
 {m_fltITime=fltVal;}
 
+/**
+\brief	Gets the intrinsic current type. (HI or LOW)
+
+\author	dcofer
+\date	3/29/2011
+
+\return	current type.
+**/
 unsigned char PacemakerNeuron::IntrinsicType()
 {return m_iIntrinsicType;}
 
+/**
+\brief	Sets the intrinsic current type. (HI or LOW)
+
+\author	dcofer
+\date	3/29/2011
+
+\param	iVal	The new value. 
+**/
 void PacemakerNeuron::IntrinsicType(unsigned char iVal)
 {m_iIntrinsicType=iVal;}
 
+/**
+\brief	Gets the neuron type.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	Neuron type.
+**/
 unsigned char PacemakerNeuron::NeuronType()
 {return PACEMAKER_NEURON;}
 
@@ -109,7 +253,12 @@ float PacemakerNeuron::CalculateIntrinsicCurrent(FiringRateModule *lpModule, flo
 	return m_fltIntrinsicI;
 }
 
+/**
+\brief	Turns the high current on.
 
+\author	dcofer
+\date	3/29/2011
+**/
 void PacemakerNeuron::HighCurrentOn()
 {
 	m_fltITime = m_fltTh;
@@ -117,6 +266,14 @@ void PacemakerNeuron::HighCurrentOn()
 	m_iIntrinsicType=IH_CURRENT;
 }
 
+/**
+\brief	Turns the low current on.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVss	The steady state voltage. 
+**/
 void PacemakerNeuron::LowCurrentOn(float fltVss)
 {
 	if(m_iIntrinsicType == IL_CURRENT)
@@ -162,25 +319,6 @@ void PacemakerNeuron::StepSimulation()
 
 		if( ((m_aryVn[m_lpFastModule->InactiveArray()] - m_fltVth) < 1e-6) && ((m_aryVn[m_lpFastModule->ActiveArray()] - m_fltVth) > 1e-6) )
 			LowCurrentOn(0);
-
-	//I was having problems where Vnactive = 2e-9 and vth=0 it would not reset the high current on when you hit it with a current inject.
-	//This was because of round off error. I used this subtraction stuff to get around it instead of the straight <> compares.
-	//if(m_iIntrinsicType == IL_CURRENT)
-	//{
-	//	if( ((m_aryVn[lpModule->InactiveArray()] - m_fltVth) > 1e-6) && ((m_aryVn[lpModule->ActiveArray()] - m_fltVth) < 1e-6) )
-	//		HighCurrentOn();
-
-	//	//if( (m_aryVn[lpModule->InactiveArray()] >= m_fltVth) && (m_aryVn[lpModule->ActiveArray()] < m_fltVth) )
-	//	//	HighCurrentOn();
-	//}
-	//else
-	//{
-	//	if( ((m_aryVn[lpModule->InactiveArray()] - m_fltVth) < 1e-6) && ((m_aryVn[lpModule->ActiveArray()] - m_fltVth) > 1e-6) )
-	//		LowCurrentOn(0);
-
-	//	//if( (m_aryVn[lpModule->InactiveArray()] < m_fltVth) && (m_aryVn[lpModule->ActiveArray()] >= m_fltVth) )
-	//	//	LowCurrentOn(0);
-	//}
 }
 
 long PacemakerNeuron::CalculateSnapshotByteSize()
@@ -281,12 +419,12 @@ void PacemakerNeuron::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Neuron Element
 
-	m_fltIl = oXml.GetChildFloat("Il");
-	m_fltIh = oXml.GetChildFloat("Ih");
-	m_fltVssm = oXml.GetChildFloat("Vssm");
-	m_fltMtl = oXml.GetChildFloat("Mtl");
-	m_fltBtl = oXml.GetChildFloat("Btl");
-	m_fltTh = oXml.GetChildFloat("Th");
+	Il(oXml.GetChildFloat("Il"));
+	Ih(oXml.GetChildFloat("Ih"));
+	Vssm(oXml.GetChildFloat("Vssm"));
+	Mtl(oXml.GetChildFloat("Mtl"));
+	Btl(oXml.GetChildFloat("Btl"));
+	Th(oXml.GetChildFloat("Th"));
 
 	oXml.OutOfElem(); //OutOf Neuron Element
 }

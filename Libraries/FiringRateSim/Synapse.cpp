@@ -1,6 +1,8 @@
-// Synapse.cpp: implementation of the Synapse class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Synapse.cpp
+
+\brief	Implements the synapse class.
+**/
 
 #include "stdafx.h"
 
@@ -13,15 +15,16 @@ namespace FiringRateSim
 	namespace Synapses
 	{
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\brief	Default constructor.
 
+\author	dcofer
+\date	3/29/2011
+**/
 Synapse::Synapse()
 {
 	m_lpFastModule = NULL;
 
-	m_bEnabled = TRUE;
 	m_lpFromNeuron = NULL;
 	m_lpToNeuron = NULL;
 	m_fltWeight=0;
@@ -29,6 +32,12 @@ Synapse::Synapse()
 	m_strType = "REGULAR";
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/29/2011
+**/
 Synapse::~Synapse()
 {
 
@@ -40,27 +49,75 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Synapse\r\n", "", -1, FALSE, TRUE);}
 }
 
-BOOL Synapse::Enabled()
-{return m_bEnabled;}
+/**
+\brief	Gets the synaptic weight.
 
-void Synapse::Enabled(BOOL bVal)
-{m_bEnabled=bVal;}
+\author	dcofer
+\date	3/29/2011
 
+\return	synaptic weight.
+**/
 float Synapse::Weight()
 {return m_fltWeight;}
 
+/**
+\brief	Sets the synaptic weight.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
 void Synapse::Weight(float fltVal)
 {m_fltWeight=fltVal;}
 
+/**
+\brief	Gets a pointer to the synaptic weight.
+
+\details This is so that other items can alter the synaptic weight.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	Pointer to the weight.
+**/
 float *Synapse::WeightPointer()
 {return &m_fltWeight;}
 
+/**
+\brief	Gets the synaptic modulation.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	synaptic modulation.
+**/
 float Synapse::Modulation()
 {return m_fltModulation;}
 
+/**
+\brief	Gets a pointer to the synaptic modulation.
+
+\details This is so that other items can alter the synaptic modulation.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	pointer to the synaptic modulation.
+**/
 float *Synapse::ModulationPointer()
 {return &m_fltModulation;}
 
+/**
+\brief	Gets a pointer to a compound synapse.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	iCompoundIndex	Zero-based index of the synapse. 
+
+\return	Pointer to the compound synapse.
+**/
 Synapse *Synapse::GetCompoundSynapse(short iCompoundIndex)
 {
 
@@ -69,6 +126,14 @@ Synapse *Synapse::GetCompoundSynapse(short iCompoundIndex)
 	return m_arySynapses[iCompoundIndex];
 }
 
+/**
+\brief	Adds a compound synapse to this one. 
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strXml	The xml packet to load. 
+**/
 void Synapse::AddSynapse(string strXml)
 {
 	CStdXml oXml;
@@ -80,12 +145,32 @@ void Synapse::AddSynapse(string strXml)
 	lpSynapse->Initialize();
 }
 
+/**
+\brief	Removes the copmound synapse specified by ID.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strID	   	GUID ID for the synaspe to remove. 
+\param	bThrowError	true to throw error if synapse is not found. 
+**/
 void Synapse::RemoveSynapse(string strID, BOOL bThrowError)
 {
 	int iPos = FindSynapseListPos(strID, bThrowError);
 	m_arySynapses.RemoveAt(iPos);
 }
 
+/**
+\brief	Searches for the first synapse list position.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strID	   	Identifier for the string. 
+\param	bThrowError	true to throw error. 
+
+\return	The found synapse list position.
+**/
 int Synapse::FindSynapseListPos(string strID, BOOL bThrowError)
 {
 	string sID = Std_ToUpper(Std_Trim(strID));
@@ -101,6 +186,16 @@ int Synapse::FindSynapseListPos(string strID, BOOL bThrowError)
 	return -1;
 }
 
+/**
+\brief	Calculates the synaptic modulation.
+
+\author	dcofer
+\date	3/29/2011
+
+\param [in,out]	m_lpFastModule	Pointer to a fast module. 
+
+\return	The calculated modulation.
+**/
 float Synapse::CalculateModulation(FiringRateModule *m_lpFastModule)
 {
 	m_fltModulation=1;
@@ -264,6 +359,16 @@ void Synapse::Load(CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf Synapse Element
 }
 
+/**
+\brief	Loads a synapse.
+
+\author	dcofer
+\date	3/29/2011
+
+\param [in,out]	oXml	The xml packet to load. 
+
+\return	Pointer to the loaded synapse.
+**/
 Synapse *Synapse::LoadSynapse(CStdXml &oXml)
 {
 	Synapse *lpSynapse=NULL;

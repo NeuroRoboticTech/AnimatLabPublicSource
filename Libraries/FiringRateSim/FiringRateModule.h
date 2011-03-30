@@ -1,23 +1,43 @@
-// Brain.h: interface for the FiringRateModule class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	FiringRateModule.h
 
-#if !defined(AFX_BRAIN_H__092F1F0E_3D90_4E91_81E8_19022622D6EA__INCLUDED_)
-#define AFX_BRAIN_H__092F1F0E_3D90_4E91_81E8_19022622D6EA__INCLUDED_
+\brief	Declares the firing rate module class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
+/**
+\brief	Contains all of the classes that imlement the firing rate neural model.
+**/
 namespace FiringRateSim
 {
+	/**
+	\brief	Firing rate neural module.
 
+	\details This neural module implements a firing rate neural model. The firing rate model is a more abstract representation
+	of the neuron than an integrate and fire system. This type of model assumes that there is a linear relationship between 
+	cell depolarization and firing rate. After the neuron has depolarized beyond its threshold its firing rate increases linearly between
+	0 and 1	relative to the membrane potential and a gain value. Synapses inject current into post-synaptic neurons based on the firing rate.
+	The synaptic weight is the amount of current to inject, and this is multiplied by the firing rate of the pre-synaptic neuron. this model also 
+	has modulatory and gated synapses.<br>
+	Another feature of this model is that there are a few different types of neruons. These primarily differ based on how they implement intrinsic
+	currents. Intrinsic currents are currents that are internal to the neuron. An exmample of this is the pacemaker neuron that generates currents
+	internally to model bursting behavior.
+	
+	\author	dcofer
+	\date	3/29/2011
+	**/
 	class FAST_NET_PORT FiringRateModule : public AnimatSim::Behavior::NeuralModule  
 	{
 	protected:
+		/// Size of the neural network.
 		CStdIPoint m_oNetworkSize;
+
+		/// The array of neurons in this module.
 		CStdPtrArray<Neuron> m_aryNeurons;
 
+		/// Within the neuron it keeps a two bit array to keep track of the previous and current membrane potential calculations.
+		/// This tells which of these array elements is currently the active one.
 		BOOL m_bActiveArray;
 
 		Neuron *LoadNeuron(CStdXml &oXml);
@@ -29,7 +49,14 @@ namespace FiringRateSim
 		FiringRateModule();
 		virtual ~FiringRateModule();
 
-		//NeuralModule overrides
+		/**
+		\brief	Gets the module name.
+		
+		\author	dcofer
+		\date	3/29/2011
+		
+		\return	.
+		**/
 		virtual string ModuleName() {return Nl_NeuralModuleName();};
 
 		virtual void Kill(BOOL bState = TRUE);
@@ -62,5 +89,3 @@ namespace FiringRateSim
 	};
 
 }				//FiringRateSim
-
-#endif // !defined(AFX_BRAIN_H__092F1F0E_3D90_4E91_81E8_19022622D6EA__INCLUDED_)

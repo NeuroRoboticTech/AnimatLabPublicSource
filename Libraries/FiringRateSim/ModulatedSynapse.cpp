@@ -1,6 +1,8 @@
-// ModulatedSynapse.cpp: implementation of the ModulatedSynapse class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ModulatedSynapse.cpp
+
+\brief	Implements the modulated synapse class.
+**/
 
 #include "stdafx.h"
 
@@ -14,15 +16,23 @@ namespace FiringRateSim
 	namespace Synapses
 	{
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\brief	Default constructor.
 
+\author	dcofer
+\date	3/30/2011
+**/
 ModulatedSynapse::ModulatedSynapse()
 {
 	m_strType = "MODULATED";
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/30/2011
+**/
 ModulatedSynapse::~ModulatedSynapse()
 {
 

@@ -1,19 +1,27 @@
-// ModulatedSynapse.h: interface for the ModulatedSynapse class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ModulatedSynapse.h
 
-#if !defined(AFX_MODULATEDSYNAPSE_H__08C962A1_0861_455D_9EDD_F51E9E8AE94B__INCLUDED_)
-#define AFX_MODULATEDSYNAPSE_H__08C962A1_0861_455D_9EDD_F51E9E8AE94B__INCLUDED_
+\brief	Declares the modulated synapse class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace FiringRateSim
 {
 	namespace Synapses
 	{
+		/**
+		\brief	Modulated firing rate synapse. 
 
+		\details A modulatory synapse modulates another, regular synapse that is also connected to the same post-synaptic neuron.
+		It modulates its weight by amplyifing or reducing it. Regular synapses  keep a list of all of 
+		synapses that modulate it. While it is calculating its synaptic current it calls CalculateModulation for all CompoundSynapses
+		to determine how to modulate itself. If the weight of this synapse is less than one then it reduces the output of the modulated synapse, if its
+		weight is above one then it amplifies the modulated synapse.
+
+		\author	dcofer
+		\date	3/30/2011
+		**/
 		class FAST_NET_PORT ModulatedSynapse : public Synapse    
 		{
 		public:
@@ -29,5 +37,3 @@ namespace FiringRateSim
 
 	}			//Synapses
 }				//FiringRateSim
-
-#endif // !defined(AFX_MODULATEDSYNAPSE_H__08C962A1_0861_455D_9EDD_F51E9E8AE94B__INCLUDED_)
