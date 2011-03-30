@@ -316,6 +316,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\IMotorizedJoint.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\IPhysicsBody.cpp"
 				>
 			</File>
@@ -611,6 +615,10 @@
 			</File>
 			<File
 				RelativePath=".\IBodyPartCallback.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IMotorizedJoint.h"
 				>
 			</File>
 			<File

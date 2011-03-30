@@ -59,6 +59,7 @@ namespace AnimatSim
 	namespace Environment
 	{
 		class IPhysicsBody;
+		class IMotorizedJoint;
 		class BodyPart;
 		class ConstraintLimit;
 		class RigidBody;
@@ -142,6 +143,7 @@ using namespace AnimatSim::Gains;
 using namespace AnimatSim::Recording;
 
 #include "IBodyPartCallback.h"
+#include "IMotorizedJoint.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
 #include "DelayLine.h"

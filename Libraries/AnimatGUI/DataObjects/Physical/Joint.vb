@@ -203,13 +203,12 @@ Namespace DataObjects.Physical
             Me.ID = doExisting.ID
             Me.Description = doExisting.Description
             Me.EnableLimits = doExisting.m_bEnableLimts
-            m_bpBodyNode = doOriginal.BodyTreeNode
+            m_tnWorkspaceNode = doOriginal.WorkspaceNode
 
             Util.Application.WorkspaceImages.AddImage(Me.WorkspaceImageName)
 
-            m_bpBodyNode.ImageIndex = Util.Application.WorkspaceImages.GetImageIndex(Me.WorkspaceImageName)
-            m_bpBodyNode.SelectedImageIndex = Util.Application.WorkspaceImages.GetImageIndex(Me.WorkspaceImageName)
-            m_bpBodyNode.Tag = Me
+            m_tnWorkspaceNode.Image = Util.Application.WorkspaceImages.GetImage(Me.WorkspaceImageName)
+            m_tnWorkspaceNode.Tag = Me
 
         End Sub
 

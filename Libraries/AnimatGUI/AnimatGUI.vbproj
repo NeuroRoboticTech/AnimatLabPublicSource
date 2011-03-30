@@ -1150,6 +1150,9 @@
     <EmbeddedResource Include="Graphics\BodyPlan\Z.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Graphics\Blank.gif" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="DataObjects\ProgramModules\" />
     <Folder Include="Forms\ProgramModules\" />
     <Folder Include="My Project\" />

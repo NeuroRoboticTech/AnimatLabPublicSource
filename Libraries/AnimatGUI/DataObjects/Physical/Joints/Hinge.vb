@@ -74,58 +74,6 @@ Namespace DataObjects.Physical.Joints
             End Set
         End Property
 
-        'Public Overridable Property MinAngle() As ScaledNumber
-        '    Get
-        '        Return m_snMinAngle
-        '    End Get
-        '    Set(ByVal value As ScaledNumber)
-        '        If value.ActualValue > m_snMaxAngle.ActualValue Then
-        '            Throw New System.Exception("The minimum angle cannot be larger than the maximum angle.")
-        '        End If
-        '        If value.ActualValue < -180 Then
-        '            Throw New System.Exception("The minium angle cannot be less than -180 degrees.")
-        '        End If
-        '        If value.ActualValue > 180 Then
-        '            Throw New System.Exception("The minium angle cannot be greater than 180 degrees.")
-        '        End If
-
-        '        SetSimData("MinAngle", Util.DegreesToRadians(CSng(value.ActualValue)).ToString(), True)
-        '        m_snMinAngle.CopyData(value)
-        '    End Set
-        'End Property
-
-        'Public Overridable ReadOnly Property MinAngleRadians() As Single
-        '    Get
-        '        Return Util.DegreesToRadians(CSng(m_snMinAngle.ActualValue))
-        '    End Get
-        'End Property
-
-        'Public Overridable Property MaxAngle() As ScaledNumber
-        '    Get
-        '        Return m_snMaxAngle
-        '    End Get
-        '    Set(ByVal value As ScaledNumber)
-        '        If value.ActualValue < m_snMinAngle.ActualValue Then
-        '            Throw New System.Exception("The maximum angle cannot be less than the minimum angle.")
-        '        End If
-        '        If value.ActualValue < -180 Then
-        '            Throw New System.Exception("The maximum angle cannot be less than -180 degrees.")
-        '        End If
-        '        If value.ActualValue > 180 Then
-        '            Throw New System.Exception("The maximum angle cannot be greater than 180 degrees.")
-        '        End If
-
-        '        SetSimData("MaxAngle", Util.DegreesToRadians(CSng(value.ActualValue)).ToString(), True)
-        '        m_snMaxAngle.CopyData(value)
-        '    End Set
-        'End Property
-
-        'Public Overridable ReadOnly Property MaxAngleRadians() As Single
-        '    Get
-        '        Return Util.DegreesToRadians(CSng(m_snMaxAngle.ActualValue))
-        '    End Get
-        'End Property
-
         Public Overridable Property EnableMotor() As Boolean
             Get
                 Return m_bEnableMotor
@@ -143,6 +91,13 @@ Namespace DataObjects.Physical.Joints
             Set(ByVal value As Boolean)
                 SetSimData("ServoMotor", value.ToString, True)
                 m_bServoMotor = value
+
+                If m_bServoMotor Then
+                    m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("Position", "Position", "rad", "rad", -3.142, 3.142, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)
+                Else
+                    m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("DesiredVelocity", "Desired Velocity", "m/s", "m/s", -5, 5, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)
+                End If
+
             End Set
         End Property
 
@@ -151,15 +106,9 @@ Namespace DataObjects.Physical.Joints
                 Return m_snMaxTorque
             End Get
             Set(ByVal value As ScaledNumber)
-                'If value.ActualValue < m_snMinAngle.ActualValue Then
-                '    Throw New System.Exception("The maximum angle cannot be less than the minimum angle.")
-                'End If
-                'If value.ActualValue < -180 Then
-                '    Throw New System.Exception("The maximum angle cannot be less than -180 degrees.")
-                'End If
-                'If value.ActualValue > 180 Then
-                '    Throw New System.Exception("The maximum angle cannot be greater than 180 degrees.")
-                'End If
+                If value.ActualValue <= 0 Then
+                    Throw New System.Exception("The maximum torque must be greater than zero.")
+                End If
 
                 SetSimData("MaxTorque", value.ActualValue.ToString(), True)
                 m_snMaxTorque.CopyData(value)
@@ -171,15 +120,9 @@ Namespace DataObjects.Physical.Joints
                 Return m_snMaxVelocity
             End Get
             Set(ByVal value As ScaledNumber)
-                'If value.ActualValue < m_snMinAngle.ActualValue Then
-                '    Throw New System.Exception("The maximum angle cannot be less than the minimum angle.")
-                'End If
-                'If value.ActualValue < -180 Then
-                '    Throw New System.Exception("The maximum angle cannot be less than -180 degrees.")
-                'End If
-                'If value.ActualValue > 180 Then
-                '    Throw New System.Exception("The maximum angle cannot be greater than 180 degrees.")
-                'End If
+                If value.ActualValue <= 0 Then
+                    Throw New System.Exception("The maximum velocity must be greater than zero.")
+                End If
 
                 SetSimData("MaxVelocity", m_snMaxVelocity.ActualValue.ToString(), True)
                 m_snMaxVelocity.CopyData(value)
@@ -219,6 +162,23 @@ Namespace DataObjects.Physical.Joints
             m_snMaxTorque = New AnimatGUI.Framework.ScaledNumber(Me, "MaxTorque", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Newton-Meters", "Nm")
             m_snMaxVelocity = New AnimatGUI.Framework.ScaledNumber(Me, "MaxVelocity", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "rad/s", "rad/s")
 
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointRotation", "Rotation", "Radians", "rad", -3.14, 3.14))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointRotationDeg", "Rotation (Deg)", "Degrees", "o", -180, 180))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointActualVelocity", "Velocity", "m/s", "m/s", -5, 5))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointDesiredVelocity", "Desired Velocity", "m/s", "m/s", -5, 5))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Enable", "Enable", "", "", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyPositionX", "Position X Axis", "Meters", "m", -10, 10))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyPositionY", "Position Y Axis", "Meters", "m", -10, 10))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyPositionZ", "Position Z Axis", "Meters", "m", -10, 10))
+            m_thDataTypes.ID = "JointRotation"
+
+        End Sub
+
+        Public Overrides Sub InitAfterAppStart()
+            MyBase.InitAfterAppStart()
+            AddCompatibleStimulusType("MotorVelocity")
+            AddCompatibleStimulusType("EnablerInput")
+            AddCompatibleStimulusType("PositionClamp")
         End Sub
 
         Public Overrides Sub ClearIsDirty()
@@ -307,16 +267,9 @@ Namespace DataObjects.Physical.Joints
             m_snMaxTorque.LoadData(oXml, "MaxTorque")
             m_snMaxTorque.LoadData(oXml, "MaxVelocity")
 
-            m_bEnableMotor = oXml.GetChildBool("EnableMotor", m_bEnableMotor)
-            m_bServoMotor = oXml.GetChildBool("ServoMotor", m_bServoMotor)
-            m_fltServoGain = oXml.GetChildFloat("ServoGain", m_fltServoGain)
-
-            'based on whether this is a servo motor or not the incoming data type will change.
-            If (m_bServoMotor) Then
-                m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("Position", "Position", "rad", "rad", -3.142, 3.142, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)
-            Else
-                m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("DesiredVelocity", "Desired Velocity", "rad/s", "rad/s", -5, 5, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)
-            End If
+            EnableMotor = oXml.GetChildBool("EnableMotor", m_bEnableMotor)
+            ServoMotor = oXml.GetChildBool("ServoMotor", m_bServoMotor)
+            ServoGain = oXml.GetChildFloat("ServoGain", m_fltServoGain)
 
             oXml.OutOfElem() 'Outof Joint Element
 

@@ -156,9 +156,7 @@ Namespace Forms.Tools
 #Region " Attributes "
 
         Protected m_imgManager As New AnimatGUI.Framework.ImageManager
-        Protected m_nodeStructures As TreeNode
         Protected m_doDataColumn As DataObjects.Charting.DataColumn
-        'Protected m_doAxis As DataObjects.Charting.Axis
         Protected m_doColumnType As AnimatGUI.DataObjects.Charting.DataColumn
 
         Protected m_doSelectedStructure As DataObjects.Physical.PhysicalStructure
@@ -180,12 +178,6 @@ Namespace Forms.Tools
             End Get
         End Property
 
-        Public ReadOnly Property StructuresTreeNode() As TreeNode
-            Get
-                Return m_nodeStructures
-            End Get
-        End Property
-
         Public Overridable Property ColumnType() As AnimatGUI.DataObjects.Charting.DataColumn
             Get
                 Return m_doColumnType
@@ -194,15 +186,6 @@ Namespace Forms.Tools
                 m_doColumnType = Value
             End Set
         End Property
-
-        'Public Property Axis() As DataObjects.Charting.Axis
-        '    Get
-        '        Return m_doAxis
-        '    End Get
-        '    Set(ByVal Value As DataObjects.Charting.Axis)
-        '        m_doAxis = Value
-        '    End Set
-        'End Property
 
         Public Property DataColumn() As DataObjects.Charting.DataColumn
             Get

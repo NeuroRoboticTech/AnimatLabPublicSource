@@ -54,6 +54,7 @@ Namespace DataObjects.ExternalStimuli
                 'Now add it back in the list with the new name
                 m_strName = Value.Trim
 
+                Me.RemoveWorksapceTreeView()
                 Me.CreateWorkspaceTreeView(Util.Simulation, Util.Simulation.StimuliTreeNode)
                 If Not m_tnWorkspaceNode Is Nothing Then
                     Util.ProjectWorkspace.TreeView.SelectedNode = m_tnWorkspaceNode

@@ -735,7 +735,7 @@ Namespace DataObjects.Physical
 
         Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As System.Drawing.Point) As Boolean
 
-            If tnSelectedNode Is m_bpBodyNode Then
+            If tnSelectedNode Is m_tnWorkspaceNode Then
                 Return MyBase.WorkspaceTreeviewPopupMenu(tnSelectedNode, ptPoint)
             Else
                 If Not m_JointToParent Is Nothing Then

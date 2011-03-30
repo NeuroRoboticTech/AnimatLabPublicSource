@@ -28,7 +28,6 @@ Namespace DataObjects.Physical
 #Region " Attributes "
 
         Protected m_strDescription As String = ""
-        Protected m_bpBodyNode As Crownwood.DotNetMagic.Controls.Node
         Protected m_ButtonImage As System.Drawing.Image
 
         Protected m_svLocalPosition As ScaledVector3
@@ -70,13 +69,6 @@ Namespace DataObjects.Physical
             Set(ByVal Value As String)
                 Me.Name = Value
             End Set
-        End Property
-
-        <Browsable(False)> _
-        Public Overridable ReadOnly Property BodyTreeNode() As Crownwood.DotNetMagic.Controls.Node
-            Get
-                Return m_bpBodyNode
-            End Get
         End Property
 
         'Type tells what type of bodypart (hinge, box, etc..
@@ -422,7 +414,7 @@ Namespace DataObjects.Physical
 
         Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As System.Drawing.Point) As Boolean
 
-            If tnSelectedNode Is m_bpBodyNode Then
+            If tnSelectedNode Is m_tnWorkspaceNode Then
                 Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Physical.BodyPart.WorkspaceTreeviewPopupMenu", Util.SecurityMgr)
 
                 If Me.AllowStimulus AndAlso Me.CompatibleStimuli.Count > 0 Then
@@ -480,7 +472,6 @@ Namespace DataObjects.Physical
                 doStimulus.Name = "Stimulus_" & Util.Simulation.NewStimuliIndex
 
                 Util.Simulation.ProjectStimuli.Add(doStimulus.ID, doStimulus)
-                doStimulus.CreateWorkspaceTreeView(Util.Simulation, Util.Simulation.StimuliTreeNode)
             End If
         End Sub
 

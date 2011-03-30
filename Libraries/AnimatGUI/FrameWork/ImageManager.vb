@@ -49,6 +49,10 @@ Namespace Framework
             Return -1
         End Function
 
+        Public Function ContainsImage(ByVal strImageName As String) As Boolean
+            Return m_aryImages.Contains(strImageName.ToUpper.Trim)
+        End Function
+
         Public Function AddImage(ByVal strImageName As String, _
                                  Optional ByVal bThrowError As Boolean = True) As Boolean
 
@@ -268,6 +272,10 @@ Namespace Framework
         End Function
 
         Public Function GetImage(ByVal strImageName As String) As Image
+            If Not ContainsImage(strImageName) Then
+                AddImage(strImageName)
+            End If
+
             Return m_imgList.Images(GetImageIndex(strImageName))
         End Function
 
