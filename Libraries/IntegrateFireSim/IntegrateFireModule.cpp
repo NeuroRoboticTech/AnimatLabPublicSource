@@ -498,7 +498,7 @@ ElectricalSynapse *IntegrateFireNeuralModule::GetElecSynAt(int i) {return m_aryE
 
 \return	module name.
 **/
-string IntegrateFireNeuralModule::ModuleName() {return Rn_NeuralModuleName();}
+string IntegrateFireNeuralModule::ModuleName() {return "IntegrateFireSim";}
 
 #pragma endregion
 
@@ -1587,6 +1587,15 @@ void IntegrateFireNeuralModule::RemoveSynapse(string strID, BOOL bThrowError)
 	PreCalc();
 }
 
+/**
+\brief	Removes the synapse type by ID.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	strID	   	GUID ID for the synapse type to remove. 
+\param	bThrowError	true to throw error if synapse type was not found. 
+**/
 void IntegrateFireNeuralModule::RemoveSynapseType(string strID, BOOL bThrowError)
 {
 	SynapseType *lpType = dynamic_cast<SynapseType *>(GetSimulator()->FindByID(strID, bThrowError));

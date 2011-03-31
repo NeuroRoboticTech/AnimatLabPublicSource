@@ -1,6 +1,8 @@
-// SynapseType.h: interface for the SpikingChemicalSynapse class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	SynapseType.h
+
+\brief	Declares the synapse type class.
+**/
 
 #pragma once
 
@@ -8,8 +10,16 @@ namespace IntegrateFireSim
 {
 	namespace Synapses
 	{
+		/**
+		\brief	Synapse type base class. 
+		
+		\details All of the other synapse types are derived from this common base. 
+		This includes the SpikingChemicalSynapse, NonSpikingChemicalSynapse, and ElectricalSynapse.
 
-		class ADV_NEURAL_PORT SynapseType : public AnimatBase  
+		\author	dcofer
+		\date	3/31/2011
+		**/
+		class ADV_NEURAL_PORT SynapseType : public AnimatSim::AnimatBase  
 		{
 		public:
 			 SynapseType();
@@ -17,16 +27,18 @@ namespace IntegrateFireSim
 
 #pragma region Accessor-Mutators
 
-			 void NeuralModule(IntegrateFireNeuralModule *lpModule) {m_lpModule = lpModule;};
+			 void NeuralModule(IntegrateFireNeuralModule *lpModule);
 
-			 int SynapseTypeID() {return m_iSynapseTypeID;};
-			 void SynapseTypeID(int iID) {m_iSynapseTypeID = iID;};
+			 int SynapseTypeID();
+			 void SynapseTypeID(int iID);
 
 #pragma endregion
 
 		protected:
+			/// Pointer to the parent IntegrateFireNeuralModule.
 			IntegrateFireNeuralModule *m_lpModule;
 
+			/// Integre ID for the synapse type
 			int m_iSynapseTypeID;
 		};
 

@@ -1,3 +1,9 @@
+/**
+\file	Connexion.h
+
+\brief	Declares the connexion class.
+**/
+
 #pragma once
 
 namespace IntegrateFireSim
@@ -9,8 +15,18 @@ namespace IntegrateFireSim
 	**/
 	namespace Synapses
 	{
+		/**
+		\brief	Synaptic Connexion.
 
-		class ADV_NEURAL_PORT Connexion : public AnimatBase  
+		\details This is a synaptic connection between two neurons. It uses the SynapseType to determine how it behaves.
+		(non-spiking chemical, spiking chemical, or eletrical). It has a base conductance value that is varied depending on the type of
+		synapse. For example, a spiking chemical synapse increases the conductance to the maximum value when a spike occurs, and then
+		exponentially declines to zero.
+		
+		\author	dcofer
+		\date	3/31/2011
+		**/
+		class ADV_NEURAL_PORT Connexion : public AnimatSim::AnimatBase  
 		{
 		public:
 			Connexion();
@@ -23,57 +39,75 @@ namespace IntegrateFireSim
 
 #pragma region Accessor-Mutators
 
-		void BaseConductance(double dVal) 
-		{
-			//The mempot variables are calculated, so we do not want to just re-set them to the new value.
-			//instead lets adjust them by the difference between the old and new resting potential.
-			double dDiff = dVal - m_dBaseG;
+			void BaseConductance(double dVal);
+			double BaseConductance();
 
-			m_dBaseG = dVal;
-			m_dG += dDiff;
-			m_dGFacilCx += dDiff;
-		};
-		double BaseConductance() {return m_dBaseG;};
+			void Delay(double dVal);
+			double Delay();
 
-		void Delay(double dVal) {m_dDelay = dVal;};
-		double Delay() {return m_dDelay;};
+			string SynapseTypeID();
+			void SynapseTypeID(string strID);
 
-		string SynapseTypeID() {return m_strSynapseTypeID;};
-		void SynapseTypeID(string strID) {m_strSynapseTypeID = strID;};
+			string SourceID();
+			void SourceID(string strID);
 
-		string SourceID() {return m_strSourceID;};
-		void SourceID(string strID) {m_strSourceID = strID;};
+			string TargetID();
+			void TargetID(string strID);
 
-		string TargetID() {return m_strTargetID;};
-		void TargetID(string strID) {m_strTargetID = strID;};
-
-		void ResetIDs();
+			void ResetIDs();
 
 #pragma endregion
 
 		protected:
+			/// The pointer to the parent IntegrateFireNeuralModule.
 			IntegrateFireNeuralModule *m_lpModule;
 
 		// LOADABLE
+			/// GUID ID for the source Neuron.
 			string m_strSourceID;
+
+			/// GUID ID for the target Neuron.
 			string m_strTargetID;
+
+			/// GUID ID for the synapse type to use.
 			string m_strSynapseTypeID;
 
-			SynapseType *m_lpSynType;  //Pointer to the synapse type for this connection.
+			/// Pointer to the synapse type for this connection.
+			SynapseType *m_lpSynType;  
+
+			/// Pointer to the source Neuron.
 			Neuron *m_lpSource;
+
+			/// Pointer to the target Neuron.
 			Neuron *m_lpTarget;
 
+			/// Zero-based index of the source neuron.
 			int m_iSource;
+
+			/// Zero-based index of the target neuron.
 			int m_iTarget;
+
+			/// Zero-based index of the synaspe type.
 			int m_iType;
+
+			/// Identifier ID for this connection.
 			int m_iID;
+
+			/// The synaptic delay.
 			double m_dDelay;
-			double m_dGFacilCx;		// facilitated increase in g when input occurs
+
+			/// facilitated increase in g when input occurs
+			double m_dGFacilCx;		
+
+			/// The synaptic conductance.
 			double m_dG;
+
+			/// Sets whether there is a partial block hold
 			double m_dPartialBlockHold;
 
 		// WORKING
 		// stuff for spiking chemical synapses
+			/// Delay line for synaptic delays.
 			DoubleList m_TransitCx;
 
 			double FacilD();
@@ -88,23 +122,47 @@ namespace IntegrateFireSim
 			double Consolidation();
 			double MaxGVoltDepRel();
  
+			/// The base conductance.
 			double m_dBaseG;			// standard baseline conductance
 			
+			/// List of hebbian events.
 			DoubleList m_HebbList;
+
+			/// The time since previous hebb event
 			double m_dTimeSincePrevHebbEvent;
+
+			/// The partial block
 			double m_dPartialBlock;
+
+			/// The previous spike latency
 			double m_dPreviousSpikeLatency;
 
+			/**
+			\brief	Appends the transit spike.
+			
+			\author	dcofer
+			\date	3/31/2011
+			**/
 			void AppendTransitSpike() {m_TransitCx.AddTail(m_dDelay);}
+
 			void DecrementLatencies(double dt,BOOL FreezeLearning=FALSE);
 			void DecrementFacilitation();
+
+			/**
+			\brief	Gets the time to next spike pointer.
+			
+			\author	dcofer
+			\date	3/31/2011
+			
+			\return	null if it fails, else the time to next spike pointer.
+			**/
 			double *GetTimeToNextSpikePtr() {return m_TransitCx.First();}
 			double ProcessOutput(BOOL bFreezeHebb=FALSE);
 			double GetProspectiveCond(BOOL bFreezeHebb);
 			void IncrementHebbian();
 
 
-		friend class IntegrateFireNeuralModule;
+		friend class IntegrateFireSim::IntegrateFireNeuralModule;
 		};
 
 	}			//Synapses

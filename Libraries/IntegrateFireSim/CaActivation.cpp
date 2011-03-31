@@ -1,6 +1,8 @@
-// CaActivation.cpp: implementation of the CaActivation class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	CaActivation.cpp
+
+\brief	Implements the ca activation class.
+**/
 
 #include "stdafx.h"
 #include "IonChannel.h"
@@ -16,7 +18,6 @@
 namespace IntegrateFireSim
 {
 
-
 CaActivation::CaActivation(Neuron *lpParent, string strActivationType)
 {
 	if(!lpParent)
@@ -26,6 +27,12 @@ CaActivation::CaActivation(Neuron *lpParent, string strActivationType)
 	m_strActivationType = Std_ToUpper(Std_Trim(strActivationType));
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/31/2011
+**/
 CaActivation::~CaActivation()
 {
 }

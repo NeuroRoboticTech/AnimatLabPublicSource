@@ -360,7 +360,7 @@ namespace IntegrateFireSim
 		virtual void ResetSimulation();
 		//Node Overrides
 
-	friend class IntegrateFireNeuralModule;
+	friend class IntegrateFireSim::IntegrateFireNeuralModule;
 	};
 
 }				//IntegrateFireSim

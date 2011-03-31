@@ -1,13 +1,10 @@
-// ElecSyn.h: interface for the ElectricalSynapse class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ElectricalSynapse.h
 
-#if !defined(AFX_ELECSYN_H__3D41A66D_6746_48F6_8F0C_685EF62CC07C__INCLUDED_)
-#define AFX_ELECSYN_H__3D41A66D_6746_48F6_8F0C_685EF62CC07C__INCLUDED_
+\brief	Declares the electrical synapse class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace IntegrateFireSim
 {
@@ -23,37 +20,37 @@ namespace IntegrateFireSim
 
 #pragma region Accessor-Mutators
 
-		void LowCoupling(double dVal) {m_dLowCoup = dVal;};
-		double LowCoupling() {return m_dLowCoup;};
+			void LowCoupling(double dVal);
+			double LowCoupling();
 
-		void HighCoupling(double dVal) {m_dHiCoup = dVal;};
-		double HighCoupling() {return m_dHiCoup;};
+			void HighCoupling(double dVal);
+			double HighCoupling();
 
-		void TurnOnThreshold(double dVal) {m_dTurnOnV = dVal;};
-		double TurnOnThreshold() {return m_dTurnOnV;};
+			void TurnOnThreshold(double dVal);
+			double TurnOnThreshold();
 
-		void TurnOnSaturate(double dVal) {m_dSaturateV = dVal;};
-		double TurnOnSaturate() {return m_dSaturateV;};
-
-		//int SynapseTypeID() {return m_iSynapseTypeID;};
-		//void SynapseTypeID(int iID) {m_iSynapseTypeID = iID;};
-
-		virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+			void TurnOnSaturate(double dVal);
+			double TurnOnSaturate();
 
 #pragma endregion
 
+			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+
 		protected:
-			//int m_iSynapseTypeID;
-			//string m_strName;
+			/// The low coupling voltage.
 			double m_dLowCoup;
+
+			/// The hi coupling voltage.
 			double m_dHiCoup;
+
+			/// The turn on voltage level
 			double m_dTurnOnV;
+
+			/// The saturation voltage level
 			double m_dSaturateV;
 
-		friend class IntegrateFireNeuralModule;
+		friend class IntegrateFireSim::IntegrateFireNeuralModule;
 		};
 
 	}			//Synapses
 }				//IntegrateFireSim
-
-#endif // !defined(AFX_ELECSYN_H__3D41A66D_6746_48F6_8F0C_685EF62CC07C__INCLUDED_)

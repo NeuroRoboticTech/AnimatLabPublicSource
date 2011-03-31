@@ -1,6 +1,8 @@
-// DoubleList.cpp: implementation of the DoubleList class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	DoubleList.cpp
+
+\brief	Implements the double list class.
+**/
 
 #include "stdafx.h"
 
@@ -8,10 +10,16 @@ namespace IntegrateFireSim
 {
 	namespace Utilities
 	{
+/**
+\brief	Adds a head. 
 
-//////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
+\author	dcofer
+\date	3/31/2011
 
+\param	d	The. 
+
+\return	index.
+**/
 int DoubleList::AddHead(double d)		// add to start of list, reset iterator
 {
 	listelem *temp=new listelem;
@@ -26,6 +34,17 @@ int DoubleList::AddHead(double d)		// add to start of list, reset iterator
 }
 
 // return 0 if ENOMEM
+
+/**
+\brief	Adds a tail. 
+
+\author	dcofer
+\date	3/31/2011
+
+\param	d	The. 
+
+\return	index.
+**/
 int DoubleList::AddTail(double d)		// add to end of list, reset iterator
 {
 	listelem* temp=new listelem;
@@ -42,8 +61,15 @@ int DoubleList::AddTail(double d)		// add to end of list, reset iterator
 	tail->data=d;
 	return 1;
 }
-	
 
+/**
+\brief	Deletes this object.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	.
+**/
 int DoubleList::Del(void)		// delete 1st item on list, reset iterator
 {
 	if (head==0)
@@ -55,6 +81,12 @@ int DoubleList::Del(void)		// delete 1st item on list, reset iterator
 	return 1;
 }
 
+/**
+\brief	Releases this object.
+
+\author	dcofer
+\date	3/31/2011
+**/
 void DoubleList::Release(void)
 {
 	while (head!=0)
@@ -64,6 +96,15 @@ void DoubleList::Release(void)
 
 // Starts at head of list, returns pointer to data item, advances to next
 // item.  When at end, returns 0 and resets to start
+
+/**
+\brief	Gets the iterate.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	null if it fails, else.
+**/
 double *DoubleList::Iterate(void)
 {
 	if (cursor==0) 
@@ -76,6 +117,14 @@ double *DoubleList::Iterate(void)
 	return d;
 }
 
+/**
+\brief	Removes the head.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	.
+**/
 double DoubleList::RemoveHead()
 {
 	//ASSERT(IsEmpty()==FALSE);

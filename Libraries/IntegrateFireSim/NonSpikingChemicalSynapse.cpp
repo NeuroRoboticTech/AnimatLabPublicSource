@@ -1,6 +1,8 @@
-// NonSpikingChemSyn.cpp: implementation of the NonSpikingChemicalSynapse class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file NonSpikingChemicalSynapse.cpp
+
+\brief	Implements the non spiking chemical synapse class.
+**/
 
 #include "stdafx.h"
 #include "SynapseType.h"
@@ -11,10 +13,12 @@ namespace IntegrateFireSim
 	namespace Synapses
 	{
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\brief	Default constructor.
 
+\author	dcofer
+\date	3/31/2011
+**/
 NonSpikingChemicalSynapse::NonSpikingChemicalSynapse() : SynapseType()
 {
 	m_dEquil = 0;
@@ -23,10 +27,100 @@ NonSpikingChemicalSynapse::NonSpikingChemicalSynapse() : SynapseType()
 	m_dSaturateV = 0;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/31/2011
+**/
 NonSpikingChemicalSynapse::~NonSpikingChemicalSynapse()
 {
 
 }
+
+#pragma region Accessor-Mutators
+
+/**
+\brief	Sets the equilibrium potential.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	dVal	The new value. 
+**/
+void NonSpikingChemicalSynapse::EquilibriumPotential(double dVal) {m_dEquil = dVal;}
+
+/**
+\brief	Gets the equilibrium potential.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	equilibrium potential.
+**/
+double NonSpikingChemicalSynapse::EquilibriumPotential() {return m_dEquil;}
+
+/**
+\brief	Sets the maximum synaptic conductance.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	dVal	The new value. 
+**/
+void NonSpikingChemicalSynapse::MaxSynapticConductance(double dVal) {m_dSynAmp = dVal;}
+
+/**
+\brief	Gets the maximum synaptic conductance.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	synaptic conductance.
+**/
+double NonSpikingChemicalSynapse::MaxSynapticConductance() {return m_dSynAmp;}
+
+/**
+\brief	Sets the pre-synaptic threshold.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	dVal	The new value. 
+**/
+void NonSpikingChemicalSynapse::PreSynapticThreshold(double dVal) {m_dThreshV = dVal;}
+
+/**
+\brief	Gets the pre-synaptic threshold.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	pre-synaptic threshold.
+**/
+double NonSpikingChemicalSynapse::PreSynapticThreshold() {return m_dThreshV;}
+
+/**
+\brief	Sets the pre-synaptic saturation level.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	dVal	The new value. 
+**/
+void NonSpikingChemicalSynapse::PreSynapticSaturationLevel(double dVal) {m_dSaturateV = dVal;}
+
+/**
+\brief	Gets the pre-synaptic saturation level.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	saturation level.
+**/
+double NonSpikingChemicalSynapse::PreSynapticSaturationLevel() {return m_dSaturateV;}
+
+#pragma endregion
 
 #pragma region DataAccesMethods
 

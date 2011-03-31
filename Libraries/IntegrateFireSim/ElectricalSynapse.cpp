@@ -1,6 +1,8 @@
-// ElecSyn.cpp: implementation of the ElectricalSynapse class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file ElectricalSynapse.cpp
+
+\brief	Implements the electrical synapse class.
+**/
 
 #include "stdafx.h"
 #include "SynapseType.h"
@@ -11,10 +13,12 @@ namespace IntegrateFireSim
 	namespace Synapses
 	{
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\brief	Default constructor.
 
+\author	dcofer
+\date	3/31/2011
+**/
 ElectricalSynapse::ElectricalSynapse() : SynapseType()
 {
 	m_dLowCoup = 0;
@@ -23,10 +27,100 @@ ElectricalSynapse::ElectricalSynapse() : SynapseType()
 	m_dSaturateV = 0;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/31/2011
+**/
 ElectricalSynapse::~ElectricalSynapse()
 {
 
 }
+
+#pragma region Accessor-Mutators
+
+/**
+\brief	Sets the low coupling voltage.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	dVal	The new value. 
+**/
+void ElectricalSynapse::LowCoupling(double dVal) {m_dLowCoup = dVal;}
+
+/**
+\brief	Gets the low coupling voltage.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	low coupling voltage.
+**/
+double ElectricalSynapse::LowCoupling() {return m_dLowCoup;}
+
+/**
+\brief	Sets the high coupling voltage.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	dVal	The new value. 
+**/
+void ElectricalSynapse::HighCoupling(double dVal) {m_dHiCoup = dVal;}
+
+/**
+\brief	Gets the high coupling voltage.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	high coupling voltage.
+**/
+double ElectricalSynapse::HighCoupling() {return m_dHiCoup;}
+
+/**
+\brief	Sets the turn-on threshold voltage.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	dVal	The new value. 
+**/
+void ElectricalSynapse::TurnOnThreshold(double dVal) {m_dTurnOnV = dVal;}
+
+/**
+\brief	Gets the turn-on threshold voltage.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	threshold voltage.
+**/
+double ElectricalSynapse::TurnOnThreshold() {return m_dTurnOnV;}
+
+/**
+\brief	Sets the turn-on saturation voltage.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	dVal	The new value. 
+**/
+void ElectricalSynapse::TurnOnSaturate(double dVal) {m_dSaturateV = dVal;}
+
+/**
+\brief	Gets the turn-on saturation voltage.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	saturation voltage.
+**/
+double ElectricalSynapse::TurnOnSaturate() {return m_dSaturateV;}
+
+#pragma endregion
 
 #pragma region DataAccesMethods
 

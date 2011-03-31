@@ -1,6 +1,8 @@
-// Connexion.cpp: implementation of the Connexion class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Connexion.cpp
+
+\brief	Implements the connexion class.
+**/
 
 #include "stdafx.h"
 #include "IonChannel.h"
@@ -18,10 +20,12 @@ namespace IntegrateFireSim
 	namespace Synapses
 	{
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\brief	Default constructor.
 
+\author	dcofer
+\date	3/31/2011
+**/
 Connexion::Connexion()
 {
 	m_iSource = -1;
@@ -38,6 +42,19 @@ Connexion::Connexion()
 	m_dPreviousSpikeLatency = 0;
 	m_dPartialBlockHold = 0;
 }
+
+/**
+\brief	Constructor.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	type		The synapse type. 
+\param	ID			The identifier. 
+\param	delay   	The synaptic delay. 
+\param	topBlock	The top block. 
+\param	botBlock	The bottom block. 
+**/
 Connexion::Connexion(int type, int ID, double delay,float topBlock,float botBlock)
 {
 	m_iSource = -1;
@@ -57,11 +74,134 @@ Connexion::Connexion(int type, int ID, double delay,float topBlock,float botBloc
 	m_dPartialBlockHold = 0;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/31/2011
+**/
 Connexion::~Connexion()
 {
 
 }
 
+#pragma region Accessor-Mutators
+
+/**
+\brief	Sets the base conductance.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	dVal	The new value. 
+**/
+void Connexion::BaseConductance(double dVal) 
+{
+	//The mempot variables are calculated, so we do not want to just re-set them to the new value.
+	//instead lets adjust them by the difference between the old and new resting potential.
+	double dDiff = dVal - m_dBaseG;
+
+	m_dBaseG = dVal;
+	m_dG += dDiff;
+	m_dGFacilCx += dDiff;
+}
+
+/**
+\brief	Gets the base conductance.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	base conductance.
+**/
+double Connexion::BaseConductance() {return m_dBaseG;}
+
+/**
+\brief	Sets the synaptic delay.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	dVal	The new value. 
+**/
+void Connexion::Delay(double dVal) {m_dDelay = dVal;}
+
+/**
+\brief	Gets the synaptic delay.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	synaptic delay.
+**/
+double Connexion::Delay() {return m_dDelay;}
+
+/**
+\brief	Gets the synapse type identifier.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	synapse type identifier.
+**/
+string Connexion::SynapseTypeID() {return m_strSynapseTypeID;}
+
+/**
+\brief	Sets the synapse type identifier.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	strID	Synapse Type ID. 
+**/
+void Connexion::SynapseTypeID(string strID) {m_strSynapseTypeID = strID;}
+
+/**
+\brief	Gets the source neuron ID.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	ID.
+**/
+string Connexion::SourceID() {return m_strSourceID;}
+
+/**
+\brief	Sets the source neuron ID.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	strID	ID.
+**/
+void Connexion::SourceID(string strID) {m_strSourceID = strID;}
+
+/**
+\brief	Gets the target neuron ID.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	ID.
+**/
+string Connexion::TargetID() {return m_strTargetID;}
+
+/**
+\brief	Sets the target neuron ID.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	strID	ID. 
+**/
+void Connexion::TargetID(string strID) {m_strTargetID = strID;}
+
+/**
+\brief	Resets the IDs of the synapse types.
+
+\author	dcofer
+\date	3/31/2011
+**/
 void Connexion::ResetIDs()
 {
 	if(m_lpSynType)
@@ -74,6 +214,16 @@ void Connexion::ResetIDs()
 		m_iTarget = m_lpTarget->NeuronID();
 }
 
+#pragma endregion
+
+/**
+\brief	Gets the facilitation decrement value.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	facilitation decrement.
+**/
 double Connexion::FacilD() 
 {
 	if(m_lpSynType)
@@ -89,6 +239,14 @@ double Connexion::FacilD()
 	return 0;
 }
 
+/**
+\brief	Gets the relative facilitation.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	relative facilitation.
+**/
 double Connexion::RelFacil()
 {
 	if(m_lpSynType)
@@ -104,6 +262,12 @@ double Connexion::RelFacil()
 	return 0;
 }
 
+/**
+\brief	Decrements the facilitation.
+
+\author	dcofer
+\date	3/31/2011
+**/
 void Connexion::DecrementFacilitation() 
 {
 	if (RelFacil()==1) 
@@ -112,6 +276,14 @@ void Connexion::DecrementFacilitation()
 		m_dGFacilCx=m_dG+(m_dGFacilCx-m_dG)*FacilD();
 }
 
+/**
+\brief	Gets whether the synapse type is voltage dependent.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	true if it is voltage dependent, false else.
+**/
 BOOL Connexion::VoltDep()
 {
 	if(m_lpSynType)
@@ -127,6 +299,14 @@ BOOL Connexion::VoltDep()
 	return FALSE;
 }
 
+/**
+\brief	Gets if the synapse type is Hebbian.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	true if it is hebbian, false else.
+**/
 BOOL Connexion::Hebbian()
 {
 	if(m_lpSynType)
@@ -142,6 +322,14 @@ BOOL Connexion::Hebbian()
 	return FALSE;
 }
 
+/**
+\brief	Increments the hebbian weight.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	new weight.
+**/
 double Connexion::HebbIncrement()
 {
 	if(m_lpSynType)
@@ -157,6 +345,14 @@ double Connexion::HebbIncrement()
 	return 0;
 }
 
+/**
+\brief	Gets the hebbian time window.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	hebbian time window.
+**/
 double Connexion::HebbTimeWindow()
 {
 	if(m_lpSynType)
@@ -172,6 +368,14 @@ double Connexion::HebbTimeWindow()
 	return 0;
 }
 
+/**
+\brief	Gets the maximum hebbian conductance.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	maximum hebbian conductance.
+**/
 double Connexion::MaxGHebb()
 {
 	if(m_lpSynType)
@@ -187,6 +391,14 @@ double Connexion::MaxGHebb()
 	return 0;
 }
 
+/**
+\brief	Gets whether forgetting is allowed.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	true if forgetting is allowed, false else.
+**/
 BOOL Connexion::AllowForgetting()
 {
 	if(m_lpSynType)
@@ -202,6 +414,14 @@ BOOL Connexion::AllowForgetting()
 	return FALSE;
 }
 
+/**
+\brief	Gets the forgetting time window.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	forgetting time window.
+**/
 double Connexion::ForgettingWindow()
 {
 	if(m_lpSynType)
@@ -217,6 +437,14 @@ double Connexion::ForgettingWindow()
 	return 0;
 }
 
+/**
+\brief	Gets the consolidation factor.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	consolidation factor.
+**/
 double Connexion::Consolidation()
 {
 	if(m_lpSynType)
@@ -232,6 +460,14 @@ double Connexion::Consolidation()
 	return 0;
 }
 
+/**
+\brief	Gets the maximum conductance for voltage dependent.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	conductance.
+**/
 double Connexion::MaxGVoltDepRel()
 {
 	if(m_lpSynType)
@@ -272,6 +508,15 @@ void Connexion::Load(CStdXml &oXml)
 ////////////////////////////////////
 // WORKING
 
+/**
+\brief	Decrements latencies.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	dt			  	The time step. 
+\param	FreezeLearning	true to freeze learning. 
+**/
 void Connexion::DecrementLatencies(double dt,BOOL FreezeLearning)
 {
 	double *pTimeToNext;
@@ -306,6 +551,12 @@ void Connexion::DecrementLatencies(double dt,BOOL FreezeLearning)
 	}
 }
 
+/**
+\brief	Increments hebbian values.
+
+\author	dcofer
+\date	3/31/2011
+**/
 void Connexion::IncrementHebbian()
 {
 	if (Hebbian())
@@ -330,6 +581,16 @@ void Connexion::IncrementHebbian()
 	}
 }
 
+/**
+\brief	Process the output described of the connection.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	bFreezeHebb	true to freeze hebb. 
+
+\return	.
+**/
 double Connexion::ProcessOutput(BOOL bFreezeHebb)
 {
 // if allowing forgetting, decrement Hebb augmentation by fraction of ForgettingWindow
@@ -367,6 +628,16 @@ double Connexion::ProcessOutput(BOOL bFreezeHebb)
 	return G;
 }
 
+/**
+\brief	Gets a prospective condutance.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	bFreezeHebb	true to freeze hebb. 
+
+\return	The prospective condutance.
+**/
 double Connexion::GetProspectiveCond(BOOL bFreezeHebb)
 {
 	double G=m_dGFacilCx;

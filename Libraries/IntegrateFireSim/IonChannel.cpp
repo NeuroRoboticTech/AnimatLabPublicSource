@@ -1,6 +1,8 @@
-// IonChannel.cpp: implementation of the IonChannel class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	IonChannel.cpp
+
+\brief	Implements the ion channel class.
+**/
 
 #include "StdAfx.h"
 #include "IonChannel.h"
@@ -14,22 +16,16 @@
 #include "IntegrateFireModule.h"
 #include "ClassFactory.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+
 namespace IntegrateFireSim
 {
 
-/*! \brief 
-   Constructs an structure object..
-   		
-	 \return
-	 No return value.
+/**
+\brief	Default constructor.
 
-   \remarks
-	 The constructor for a structure. 
-*/
-
+\author	dcofer
+\date	3/31/2011
+**/
 IonChannel::IonChannel()
 {
 	m_bEnabled = TRUE;
@@ -61,17 +57,12 @@ IonChannel::IonChannel()
 	m_fltTh = 0;
 }
 
+/**
+\brief	Destructor.
 
-/*! \brief 
-   Destroys the structure object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the structure object..	 
-*/
-
+\author	dcofer
+\date	3/31/2011
+**/
 IonChannel::~IonChannel()
 {
 
@@ -86,6 +77,57 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of IonChannel\r\n", "", -1, FALSE, TRUE);}
 }
 
+
+#pragma region Accessor-Mutators
+
+/**
+\brief	Enables the ion channel.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	bVal	true to enable. 
+**/
+void  IonChannel::Enabled(BOOL bVal) {m_bEnabled = bVal;}
+
+/**
+\brief	Gets whether this channel is enabled.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	true if enabled, false else.
+**/
+BOOL  IonChannel::Enabled() {return m_bEnabled;}
+
+/**
+\brief	Sets maximum conductance.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	fltVal	The new value. 
+**/
+void  IonChannel::Gmax(float fltVal) {m_fltGmax = fltVal;}
+
+/**
+\brief	Gets maximum conductance.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	maximum conductance.
+**/
+float  IonChannel::Gmax() {return m_fltGmax;}
+
+/**
+\brief	Sets initial conductance.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	fltVal	The new value. 
+**/
 void  IonChannel::Ginit(float fltVal) 
 {
 	//The mempot variables are calculated, so we do not want to just re-set them to the new value.
@@ -95,6 +137,24 @@ void  IonChannel::Ginit(float fltVal)
 	m_fltGInit = fltVal;
 }; 
 
+/**
+\brief	Sets initial conductance.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	conductance.
+**/
+float  IonChannel::Ginit() {return m_fltGInit;}
+
+/**
+\brief	Sets Hinit.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	fltVal	The new value. 
+**/
 void  IonChannel::Hinit(float fltVal) 
 {
 	//The mempot variables are calculated, so we do not want to just re-set them to the new value.
@@ -104,6 +164,24 @@ void  IonChannel::Hinit(float fltVal)
 	m_fltHInit = fltVal;
 }; 
 
+/**
+\brief	Gets Hinit.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	Hinit.
+**/
+float  IonChannel::Hinit() {return m_fltHInit;}
+
+/**
+\brief	Sets Minit.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	fltVal	The new value. 
+**/
 void  IonChannel::Minit(float fltVal) 
 {
 	//The mempot variables are calculated, so we do not want to just re-set them to the new value.
@@ -113,6 +191,129 @@ void  IonChannel::Minit(float fltVal)
 	m_fltMInit = fltVal;
 }; 
 
+/**
+\brief	Gets Minit.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	Minit.
+**/
+float  IonChannel::Minit() {return m_fltMInit;}
+
+/**
+\brief	Sets MPower.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	fltVal	The new value. 
+**/
+void  IonChannel::MPower(float fltVal) {m_fltMPower = fltVal;}
+
+/**
+\brief	Gets MPower.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	MPower.
+**/
+float  IonChannel::MPower() {return m_fltMPower;}
+
+/**
+\brief	Sets HPower.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	fltVal	The new value. 
+**/
+void  IonChannel::HPower(float fltVal) {m_fltHPower = fltVal;}
+
+/**
+\brief	Gets HPower.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	HPower.
+**/
+float  IonChannel::HPower() {return m_fltHPower;}
+
+/**
+\brief	Sets the equilibrium potential.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	fltVal	The new value. 
+**/
+void  IonChannel::EquilibriumPotential(float fltVal) {m_fltEquilibriumPotential = fltVal;}
+
+/**
+\brief	Gets the equilibrium potential.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	equilibrium potential.
+**/
+float  IonChannel::EquilibriumPotential() {return m_fltEquilibriumPotential;}
+
+/**
+\brief	Sets Nm.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	fltVal	The new value. 
+**/
+void  IonChannel::Nm(float fltVal) {m_fltNm = fltVal;}
+
+/**
+\brief	Gets Nm.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	Nm.
+**/
+float  IonChannel::Nm() {return m_fltNm;}
+
+/**
+\brief	Sets Nh.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	fltVal	The new value. 
+**/
+void  IonChannel::Nh(float fltVal) {m_fltNh = fltVal;}
+
+/**
+\brief	Gets Nh.
+
+\author	dcofer
+\date	3/31/2011
+
+\return	Nh.
+**/
+float  IonChannel::Nh() {return m_fltNh;}
+
+#pragma endregion
+
+/**
+\brief	Calculates the current.
+
+\author	dcofer
+\date	3/31/2011
+
+\param	fltStep	The time step. 
+\param	fltVm  	The membrane votlage. 
+
+\return	The calculated current.
+**/
 float IonChannel::CalculateCurrent(float fltStep, float fltVm)
 {
 	if(m_bEnabled)

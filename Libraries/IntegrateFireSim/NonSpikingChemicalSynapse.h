@@ -1,19 +1,25 @@
-// NonSpikingChemSyn.h: interface for the NonSpikingChemicalSynapse class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file NonSpikingChemicalSynapse.h
 
-#if !defined(AFX_NONSPIKINGCHEMSYN_H__364646F7_CCAC_49C0_8B61_BFCCDC72E7F0__INCLUDED_)
-#define AFX_NONSPIKINGCHEMSYN_H__364646F7_CCAC_49C0_8B61_BFCCDC72E7F0__INCLUDED_
+\brief	Declares the non spiking chemical synapse class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
+
 
 namespace IntegrateFireSim
 {
 	namespace Synapses
 	{
+		/**
+		\brief	Non-spiking chemical synapse type.
 
+		\details This synapse type changes its conductance in a graded manner based on the pre-synaptic neurons
+		membrane potential. This emulates a steady release of neurotransmitter onto the post-synaptic cell.
+		
+		\author	dcofer
+		\date	3/31/2011
+		**/
 		class ADV_NEURAL_PORT NonSpikingChemicalSynapse : public SynapseType  
 		{
 		public:
@@ -23,34 +29,37 @@ namespace IntegrateFireSim
 
 #pragma region Accessor-Mutators
 
-		void EquilibriumPotential(double dVal) {m_dEquil = dVal;};
-		double EquilibriumPotential() {return m_dEquil;};
+			void EquilibriumPotential(double dVal);
+			double EquilibriumPotential();
 
-		void MaxSynapticConductance(double dVal) {m_dSynAmp = dVal;};
-		double MaxSynapticConductance() {return m_dSynAmp;};
+			void MaxSynapticConductance(double dVal);
+			double MaxSynapticConductance();
 
-		void PreSynapticThreshold(double dVal) {m_dThreshV = dVal;};
-		double PreSynapticThreshold() {return m_dThreshV;};
+			void PreSynapticThreshold(double dVal);
+			double PreSynapticThreshold();
 
-		void PreSynapticSaturationLevel(double dVal) {m_dSaturateV = dVal;};
-		double PreSynapticSaturationLevel() {return m_dSaturateV;};
-
-		virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+			void PreSynapticSaturationLevel(double dVal);
+			double PreSynapticSaturationLevel();
 
 #pragma endregion
 
+			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+
 		protected:
-			//int m_iSynapseTypeID;
-			//string m_strName;
+			/// The equilibruim potential
 			double m_dEquil;
+
+			/// base syn amp, before vd or hebb
 			double m_dSynAmp;
+
+			/// The threshold voltage
 			double m_dThreshV;
+
+			/// The saturation voltage
 			double m_dSaturateV;
 
-		friend class IntegrateFireNeuralModule;
+		friend class IntegrateFireSim::IntegrateFireNeuralModule;
 		};
 
 	}			//Synapses
 }				//IntegrateFireSim
-
-#endif // !defined(AFX_NONSPIKINGCHEMSYN_H__364646F7_CCAC_49C0_8B61_BFCCDC72E7F0__INCLUDED_)

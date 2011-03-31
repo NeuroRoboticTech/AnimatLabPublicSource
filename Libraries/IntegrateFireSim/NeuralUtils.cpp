@@ -1,3 +1,9 @@
+/**
+\file	NeuralUtils.cpp
+
+\brief	Implements the neural utilities class.
+**/
+
 #include "stdafx.h"
 #include "IonChannel.h"
 #include "SynapseType.h"
@@ -10,11 +16,6 @@
 #include "IntegrateFireModule.h"
 #include "IonChannelSigmoid.h"
 #include "ClassFactory.h"
-
-string Rn_NeuralModuleName()
-{
-	return "IntegrateFireSim";
-}
 
 
 extern "C" __declspec(dllexport) IStdClassFactory* __cdecl GetStdClassFactory() 

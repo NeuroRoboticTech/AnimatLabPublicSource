@@ -1,6 +1,8 @@
-// ClassFactory.cpp: implementation of the ClassFactory class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	ClassFactory.cpp
+
+\brief	Implements the class factory class.
+**/
 
 #include "stdafx.h"
 #include "IonChannel.h"
@@ -18,15 +20,23 @@
 namespace IntegrateFireSim
 {
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\brief	Default constructor.
 
+\author	dcofer
+\date	3/31/2011
+**/
 ClassFactory::ClassFactory()
 {
 
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/31/2011
+**/
 ClassFactory::~ClassFactory()
 {
 
@@ -34,6 +44,7 @@ ClassFactory::~ClassFactory()
 
 
 // ************* External Stimulus Type Conversion functions ******************************
+
 
 ExternalStimulus *ClassFactory::CreateExternalStimulus(string strType, BOOL bThrowError)
 {
@@ -75,6 +86,7 @@ catch(...)
 
 // ************* External Neural Module Conversion functions ******************************
 
+
 NeuralModule *ClassFactory::CreateNeuralModule(string strType, BOOL bThrowError)
 {
 	NeuralModule *lpModule=NULL;
@@ -113,6 +125,7 @@ catch(...)
 
 
 // ************* DataColumn Type Conversion functions ******************************
+
 
 DataColumn *ClassFactory::CreateDataColumn(string strType, BOOL bThrowError)
 {
@@ -155,6 +168,7 @@ catch(...)
 
 // ************* Gain Type Conversion functions ******************************
 
+
 Gain *ClassFactory::CreateGain(string strType, BOOL bThrowError)
 {
 	Gain *lpGain=NULL;
@@ -193,6 +207,7 @@ catch(...)
 
 
 // ************* Neuron Type Conversion functions ******************************
+
 
 Neuron *ClassFactory::CreateNeuron(string strType, BOOL bThrowError)
 {
@@ -233,6 +248,7 @@ catch(...)
 
 // ************* Synapse Type Conversion functions ******************************
 
+
 Connexion *ClassFactory::CreateSynapse(string strType, BOOL bThrowError)
 {
 	Connexion *lpSynapse=NULL;
@@ -270,6 +286,7 @@ catch(...)
 
 
 // ************* Synapse Type Conversion functions ******************************
+
 
 SynapseType *ClassFactory::CreateSynapseType(string strType, BOOL bThrowError)
 {
@@ -312,6 +329,7 @@ catch(...)
 
 
 // ************* Ion Channel Conversion functions ******************************
+
 
 IonChannel *ClassFactory::CreateIonChannel(string strType, BOOL bThrowError)
 {

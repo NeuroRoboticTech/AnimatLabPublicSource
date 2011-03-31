@@ -1,50 +1,87 @@
-// IonChannel.h: interface for the IonChannel class.
-//
-//////////////////////////////////////////////////////////////////////
 
-#if !defined(AFX_ION_CHANNEL_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)
-#define AFX_ION_CHANNEL_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace IntegrateFireSim
 {
-	class ADV_NEURAL_PORT IonChannel : public AnimatBase 
+	/**
+	\brief	Ion channel. 
+
+	\details This implemements a basic Hodgkin-Huxely ion channel that can be added to the Neuron.
+	
+	\author	dcofer
+	\date	3/31/2011
+	**/
+	class ADV_NEURAL_PORT IonChannel : public AnimatSim::AnimatBase 
 	{
 	protected:
-		string m_strID;
-		string m_strName;
-
+		/// The initial conductance.
 		float m_fltGInit;
+
+		/// The initial activation
 		float m_fltMInit;
+
+		/// The initial inactivation
 		float m_fltHInit;
 
+		/// true to enable, false to disable
 		BOOL m_bEnabled;
+
+		/// The maximum conductance
 		float m_fltGmax;
+
+		/// The active conductance
 		float m_fltG;
+
+		/// The activation exponent in the equation.
 		float m_fltMPower;
+
+		/// The inactivation exponent in the equation.
 		float m_fltHPower;
+
+		/// The equilibrium potential
 		float m_fltEquilibriumPotential;
 
+		/// The current activation level
 		float m_fltM;
+
+		/// The Nm
 		float m_fltNm;
+
+		/// The Minf gain function
 		AnimatSim::Gains::Gain *m_lpMinf;
+
+		/// The Tm gain function
 		AnimatSim::Gains::Gain *m_lpTm;
 
+		/// The current inactivation level.
 		float m_fltH;
+
+		/// The Nh
 		float m_fltNh;
+
+		/// The Hinf gain function
 		AnimatSim::Gains::Gain *m_lpHinf;
+
+		/// The Th gain function
 		AnimatSim::Gains::Gain *m_lpTh;
 
 		//Calculated variables.
+		/// The total activation level
 		float m_fltTotalAct;
+
+		/// The current
 		float m_fltI;
 
+		/// The Minf value
 		float m_fltMinf;
+
+		/// The Hinf value
 		float m_fltHinf;
+
+		/// The Tm value
 		float m_fltTm;
+
+		/// The Th value
 		float m_fltTh;
 
 	public:
@@ -53,43 +90,43 @@ namespace IntegrateFireSim
 
 #pragma region Accessor-Mutators
 
-		string ID() {return m_strID;};
+		void Enabled(BOOL bVal);
+		BOOL Enabled();
 
-		void Enabled(BOOL bVal) {m_bEnabled = bVal;}; 
-		BOOL Enabled() {return m_bEnabled;};
-
-		void Gmax(float fltVal) {m_fltGmax = fltVal;}; 
-		float Gmax() {return m_fltGmax;};
+		void Gmax(float fltVal);
+		float Gmax();
 
 		void Ginit(float fltVal);
-		float Ginit() {return m_fltGInit;};
+		float Ginit();
 
 		void Hinit(float fltVal);
-		float Hinit() {return m_fltHInit;};
+		float Hinit();
 
 		void Minit(float fltVal);
-		float Minit() {return m_fltMInit;};
+		float Minit();
 
-		void MPower(float fltVal) {m_fltMPower = fltVal;};
-		float MPower() {return m_fltMPower;};
+		void MPower(float fltVal);
+		float MPower();
 
-		void HPower(float fltVal) {m_fltHPower = fltVal;};
-		float HPower() {return m_fltHPower;};
+		void HPower(float fltVal);
+		float HPower();
 
-		void EquilibriumPotential(float fltVal) {m_fltEquilibriumPotential = fltVal;};
-		float EquilibriumPotential() {return m_fltEquilibriumPotential;};
+		void EquilibriumPotential(float fltVal);
+		float EquilibriumPotential();
 
-		void Nm(float fltVal) {m_fltNm = fltVal;};
-		float Nm() {return m_fltNm;};
+		void Nm(float fltVal);
+		float Nm();
 
-		void Nh(float fltVal) {m_fltNh = fltVal;};
-		float Nh() {return m_fltNh;};
+		void Nh(float fltVal);
+		float Nh();
 
 #pragma endregion
 
 #pragma region DataAccesMethods
+
 		virtual float *GetDataPointer(string strDataType);
 		virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+
 #pragma endregion
 
 		virtual float CalculateCurrent(float fltStep, float fltVm);
@@ -98,5 +135,3 @@ namespace IntegrateFireSim
 		virtual void ResetSimulation();
 	};
 }				//AnimatSim
-
-#endif // !defined(AFX_ION_CHANNEL_H__9FEE3153_B3B6_4064_B93B_35265C06E366__INCLUDED_)

@@ -1,6 +1,8 @@
-// SpikingChemSyn.h: interface for the SpikingChemicalSynapse class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file SpikingChemicalSynapse.h
+
+\brief	Declares the spiking chemical synapse class.
+**/
 
 #pragma once
 
@@ -8,7 +10,15 @@ namespace IntegrateFireSim
 {
 	namespace Synapses
 	{
+		/**
+		\brief	Spiking chemical synapse type.
 
+		\details This synapse type increases the conductance to the max value when a spike occurs and then it
+		decays exponentially back to zero.
+		
+		\author	dcofer
+		\date	3/31/2011
+		**/
 		class ADV_NEURAL_PORT SpikingChemicalSynapse : public SynapseType  
 		{
 		public:
@@ -18,99 +28,127 @@ namespace IntegrateFireSim
 
 #pragma region Accessor-Mutators
 
-		void EquilibriumPotential(double dVal) {m_dEquil = dVal;};
-		double EquilibriumPotential() {return m_dEquil;};
+			void EquilibriumPotential(double dVal);
+			double EquilibriumPotential();
 
-		void SynapticConductance(double dVal) {m_dSynAmp = dVal;};
-		double SynapticConductance() {return m_dSynAmp;};
+			void SynapticConductance(double dVal);
+			double SynapticConductance();
 
-		void DecayRate(double dVal) {m_dDecay = dVal;};
-		double DecayRate() {return m_dDecay;};
+			void DecayRate(double dVal);
+			double DecayRate();
 
-		double FacilD() {return m_dFacilD;};
+			double FacilD();
 
-		void RelativeFacilitation(double dVal) {m_dRelFacil = dVal;};
-		double RelativeFacilitation() {return m_dRelFacil;};
-		double RelFacil() {return m_dRelFacil;};
+			void RelativeFacilitation(double dVal);
+			double RelativeFacilitation();
+			double RelFacil();
 
-		void FacilitationDecay(double dVal);
-		double FacilitationDecay() {return m_dFacilDecay;};
-		double FacilDecay() {return m_dFacilDecay;};
+			void FacilitationDecay(double dVal);
+			double FacilitationDecay();
+			double FacilDecay();
 
-		void VoltageDependent(BOOL bVal) {m_bVoltDep = bVal;};
-		BOOL VoltageDependent() {return m_bVoltDep;};
-		BOOL VoltDep() {return m_bVoltDep;};
+			void VoltageDependent(BOOL bVal);
+			BOOL VoltageDependent();
+			BOOL VoltDep();
 
-		void MaxRelativeConductance(double dVal) {m_dMaxRelCond = dVal;};
-		double MaxRelativeConductance() {return m_dMaxRelCond;};
-		double MaxGVoltDepRel() {return m_dMaxRelCond;};
+			void MaxRelativeConductance(double dVal);
+			double MaxRelativeConductance();
+			double MaxGVoltDepRel();
 
-		void SaturatePotential(double dVal) {m_dSatPSPot = dVal;};
-		double SaturatePotential() {return m_dSatPSPot;};
-		double SatPSPot() {return m_dSatPSPot;}; 
+			void SaturatePotential(double dVal);
+			double SaturatePotential();
+			double SatPSPot();
 
-		void ThresholdPotential(double dVal) {m_dThreshPSPot = dVal;};
-		double ThresholdPotential() {return m_dThreshPSPot;};
-		double ThreshPSPot() {return m_dThreshPSPot;}; 
+			void ThresholdPotential(double dVal);
+			double ThresholdPotential();
+			double ThreshPSPot();
 
-		void Hebbian(BOOL bVal) {m_bHebbian = bVal;};
-		BOOL Hebbian() {return m_bHebbian;};
+			void Hebbian(BOOL bVal);
+			BOOL Hebbian();
 
-		void MaxAugmentedConductance(double dVal) {m_dMaxAugCond = dVal;};
-		double MaxAugmentedConductance() {return m_dMaxAugCond;};
-		double MaxGHebb() {return m_dMaxAugCond;};
+			void MaxAugmentedConductance(double dVal);
+			double MaxAugmentedConductance();
+			double MaxGHebb() ;
 
-		void LearningIncrement(double dVal) {m_dLearningInc = dVal;};
-		double LearningIncrement() {return m_dLearningInc;};
-		double HebbIncrement() {return m_dLearningInc;};
+			void LearningIncrement(double dVal);
+			double LearningIncrement();
+			double HebbIncrement();
 
-		void LearningTimeWindow(double dVal) {m_dLearningTime = dVal;};
-		double LearningTimeWindow() {return m_dLearningTime;};
-		double HebbTimeWindow() {return m_dLearningTime;};
+			void LearningTimeWindow(double dVal);
+			double LearningTimeWindow();
+			double HebbTimeWindow();
 
-		void AllowForgetting(BOOL bVal) {m_bAllowForget = bVal;};
-		BOOL AllowForgetting() {return m_bAllowForget;};
-		BOOL AllowForget() {return m_bAllowForget;}; 
+			void AllowForgetting(BOOL bVal);
+			BOOL AllowForgetting();
+			BOOL AllowForget();
 
-		void ForgettingTimeWindow(double dVal) {m_dForgetTime = dVal;};
-		double ForgettingTimeWindow() {return m_dForgetTime;};
-		double ForgettingWindow() {return m_dForgetTime;};
+			void ForgettingTimeWindow(double dVal);
+			double ForgettingTimeWindow();
+			double ForgettingWindow();
 
-		void ConsolidationFactor(double dVal) {m_dConsolidation = dVal;};
-		double ConsolidationFactor() {return m_dConsolidation;};
-		double Consolidation() {return m_dConsolidation;}; 
-
-		virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+			void ConsolidationFactor(double dVal);
+			double ConsolidationFactor();
+			double Consolidation();
 
 #pragma endregion
 
-		protected:
-			//IntegrateFireNeuralModule *m_lpModule;
+			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
-			//int m_iSynapseTypeID;
-			//string m_strName;
+		protected:
+
+			/// The equilibruim potential
 			double m_dEquil;
-			double m_dSynAmp;		// base syn amp, before vd or hebb
+
+			/// base syn amp, before vd or hebb
+			double m_dSynAmp;		
+
+			/// The synaptic decay
 			double m_dDecay;
+
+			/// The facilitation
 			double m_dFacilD;
+
+			/// The relative facilitation amount.
 			double m_dRelFacil;
+
+			/// The facilitation decay
 			double m_dFacilDecay;
 
+			/// true if voltage dependent
 			BOOL m_bVoltDep;
+
+			/// The maximum relative conductance
 			double m_dMaxRelCond;
+
+			/// The saturation post-synaptic potential
 			double m_dSatPSPot;
+
+			/// The threshold post-synaptic potential
 			double m_dThreshPSPot;
 
+			/// true if hebbian learning is used.
 			BOOL m_bHebbian;
+
+			/// The maximum augmented conductance
 			double m_dMaxAugCond;
+
+			/// The learning increment
 			double m_dLearningInc;
+
+			/// Learning time window.
 			double m_dLearningTime;
+
+			/// true if forgetting is allowed.
 			BOOL m_bAllowForget;
+
+			/// Forgetting time window
 			double m_dForgetTime;
+
+			/// The consolidation factor
 			double m_dConsolidation;
 
-		friend class IntegrateFireNeuralModule;
-		friend class Neuron;
+		friend class IntegrateFireSim::IntegrateFireNeuralModule;
+		friend class IntegrateFireSim::Neuron;
 		};
 
 	}			//Synapses

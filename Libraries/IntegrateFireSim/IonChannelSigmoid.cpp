@@ -1,28 +1,24 @@
-// IonChannelSigmoid.cpp: implementation of the IonChannelSigmoid class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file IonChannelSigmoid.cpp
+
+\brief	Implements the ion channel sigmoid class.
+**/
 
 #include "StdAfx.h"
 #include "IonChannelSigmoid.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+
 namespace IntegrateFireSim
 {
 	namespace Gains
 	{
 
-/*! \brief 
-   Constructs an structure object..
-   		
-	 \return
-	 No return value.
+/**
+\brief	Default constructor.
 
-   \remarks
-	 The constructor for a structure. 
-*/
-
+\author	dcofer
+\date	3/31/2011
+**/
 IonChannelSigmoid::IonChannelSigmoid()
 {
 	m_fltA = 0;
@@ -35,17 +31,12 @@ IonChannelSigmoid::IonChannelSigmoid()
 	m_fltH = 1;
 }
 
+/**
+\brief	Destructor.
 
-/*! \brief 
-   Destroys the structure object..
-   		
-	 \return
-	 No return value.
-
-   \remarks
-   Destroys the structure object..	 
-*/
-
+\author	dcofer
+\date	3/31/2011
+**/
 IonChannelSigmoid::~IonChannelSigmoid()
 {
 
