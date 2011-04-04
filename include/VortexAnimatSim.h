@@ -136,6 +136,7 @@ namespace VortexAnimatSim
 	{
 		class VsBody;
 		class VsJoint;
+		class VsMotorizedJoint;
 		class VsLine;
 		class VsMaterialPair;
 		class VsOrganism;
@@ -215,6 +216,7 @@ using namespace Vx;
 
 #include "VsBody.h"
 #include "VsJoint.h"
+#include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsPlane.h"
 #include "VsBox.h"

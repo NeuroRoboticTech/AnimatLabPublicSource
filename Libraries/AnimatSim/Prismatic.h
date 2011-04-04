@@ -30,7 +30,7 @@ namespace AnimatSim
 			\author	dcofer
 			\date	3/24/2011
 			**/
-			class ANIMAT_PORT Prismatic : public Joint    
+			class ANIMAT_PORT Prismatic : public MotorizedJoint    
 			{
 			protected:
 				///This is the minimum radian value that the joint can rotate about its axis.
@@ -41,19 +41,13 @@ namespace AnimatSim
 				///Its orginal position is used as zero radians.
 				float m_fltConstraintHigh;
 
-				float m_fltMaxForce;
-
-				float m_ftlServoGain;
-				BOOL m_bServoMotor;
-
-				void CalculateServoVelocity();
-
 			public:
 				Prismatic();
 				virtual ~Prismatic();
 
 				virtual BOOL UsesRadians() {return FALSE;};
 
+				virtual void AddExternalNodeInput(float fltInput);
 				virtual void Load(CStdXml &oXml);
 			};
 

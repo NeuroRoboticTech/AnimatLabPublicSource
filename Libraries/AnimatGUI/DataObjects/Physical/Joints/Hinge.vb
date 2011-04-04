@@ -22,7 +22,7 @@ Namespace DataObjects.Physical.Joints
         Protected m_doLowerLimit As ConstraintLimit
         Protected m_doUpperLimit As ConstraintLimit
         Protected m_bEnableMotor As Boolean = False
-        Protected m_snMaxTorque As AnimatGUI.Framework.ScaledNumber
+        Protected m_snMaxForce As AnimatGUI.Framework.ScaledNumber
         Protected m_snMaxVelocity As AnimatGUI.Framework.ScaledNumber
         Protected m_bServoMotor As Boolean = False
         Protected m_fltServoGain As Single = 100
@@ -101,17 +101,17 @@ Namespace DataObjects.Physical.Joints
             End Set
         End Property
 
-        Public Overridable Property MaxTorque() As ScaledNumber
+        Public Overridable Property MaxForce() As ScaledNumber
             Get
-                Return m_snMaxTorque
+                Return m_snMaxForce
             End Get
             Set(ByVal value As ScaledNumber)
                 If value.ActualValue <= 0 Then
                     Throw New System.Exception("The maximum torque must be greater than zero.")
                 End If
 
-                SetSimData("MaxTorque", value.ActualValue.ToString(), True)
-                m_snMaxTorque.CopyData(value)
+                SetSimData("MaxForce", value.ActualValue.ToString(), True)
+                m_snMaxForce.CopyData(value)
             End Set
         End Property
 
@@ -159,7 +159,12 @@ Namespace DataObjects.Physical.Joints
             m_doLowerLimit.LimitPos.ActualValue = -45
             m_doUpperLimit.LimitPos.ActualValue = 45
 
-            m_snMaxTorque = New AnimatGUI.Framework.ScaledNumber(Me, "MaxTorque", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Newton-Meters", "Nm")
+            If Me.UsesRadians Then
+                'If we are using radians then this is a torque value.
+                m_snMaxForce = New AnimatGUI.Framework.ScaledNumber(Me, "MaxForce", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Newton-Meters", "Nm")
+            Else
+                m_snMaxForce = New AnimatGUI.Framework.ScaledNumber(Me, "MaxForce", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Newtons", "N")
+            End If
             m_snMaxVelocity = New AnimatGUI.Framework.ScaledNumber(Me, "MaxVelocity", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "rad/s", "rad/s")
 
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointRotation", "Rotation", "Radians", "rad", -3.14, 3.14))
@@ -186,7 +191,7 @@ Namespace DataObjects.Physical.Joints
             If Not m_doLowerLimit Is Nothing Then m_doLowerLimit.ClearIsDirty()
             If Not m_doUpperLimit Is Nothing Then m_doUpperLimit.ClearIsDirty()
 
-            If Not m_snMaxTorque Is Nothing Then m_snMaxTorque.ClearIsDirty()
+            If Not m_snMaxForce Is Nothing Then m_snMaxForce.ClearIsDirty()
             If Not m_snMaxVelocity Is Nothing Then m_snMaxVelocity.ClearIsDirty()
         End Sub
 
@@ -208,7 +213,7 @@ Namespace DataObjects.Physical.Joints
             m_bEnableMotor = doOrig.m_bEnableMotor
             m_bServoMotor = doOrig.m_bServoMotor
             m_fltServoGain = doOrig.ServoGain
-            m_snMaxTorque = DirectCast(doOrig.m_snMaxTorque.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
+            m_snMaxForce = DirectCast(doOrig.m_snMaxForce.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_snMaxVelocity = DirectCast(doOrig.m_snMaxVelocity.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_snSize = DirectCast(doOrig.m_snSize.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
         End Sub
@@ -235,12 +240,18 @@ Namespace DataObjects.Physical.Joints
                                         "Constraints", "Sets the values for the maximum angle constraint.", pbNumberBag, _
                                         "", GetType(AnimatGUI.TypeHelpers.ConstrainLimitTypeConverter)))
 
-            pbNumberBag = m_snMaxTorque.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Max Motor Torque", pbNumberBag.GetType(), "MaxTorque", _
-                                        "Motor Properties", "Sets the maximum torque that this motor can apply to obtain a desired velocity of movement.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            pbNumberBag = m_snMaxForce.Properties
+            If Me.UsesRadians Then
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Max Motor Torque", pbNumberBag.GetType(), "MaxForce", _
+                                            "Motor Properties", "Sets the maximum torque that this motor can apply to obtain a desired velocity of movement.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            Else
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Max Motor Force", pbNumberBag.GetType(), "MaxForce", _
+                                            "Motor Properties", "Sets the maximum force that this motor can apply to obtain a desired velocity of movement.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            End If
 
-            pbNumberBag = m_snMaxTorque.Properties
+            pbNumberBag = m_snMaxVelocity.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Max Velocity", pbNumberBag.GetType(), "MaxVelocity", _
                                         "Motor Properties", "Sets the maximum positive or negative velocity that the motor can move this part.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
@@ -264,8 +275,8 @@ Namespace DataObjects.Physical.Joints
 
             m_doLowerLimit.LoadData(oXml, "LowerLimit")
             m_doUpperLimit.LoadData(oXml, "UpperLimit")
-            m_snMaxTorque.LoadData(oXml, "MaxTorque")
-            m_snMaxTorque.LoadData(oXml, "MaxVelocity")
+            m_snMaxForce.LoadData(oXml, "MaxForce")
+            m_snMaxVelocity.LoadData(oXml, "MaxVelocity")
 
             EnableMotor = oXml.GetChildBool("EnableMotor", m_bEnableMotor)
             ServoMotor = oXml.GetChildBool("ServoMotor", m_bServoMotor)
@@ -282,8 +293,8 @@ Namespace DataObjects.Physical.Joints
 
             m_doLowerLimit.SaveData(oXml, "LowerLimit")
             m_doUpperLimit.SaveData(oXml, "UpperLimit")
-            m_snMaxTorque.SaveData(oXml, "MaxTorque")
-            m_snMaxTorque.SaveData(oXml, "MaxVelocity")
+            m_snMaxForce.SaveData(oXml, "MaxForce")
+            m_snMaxVelocity.SaveData(oXml, "MaxVelocity")
 
             oXml.AddChildElement("EnableMotor", m_bEnableMotor)
             oXml.AddChildElement("ServoMotor", m_bServoMotor)
@@ -300,6 +311,9 @@ Namespace DataObjects.Physical.Joints
 
             m_doLowerLimit.SaveSimulationXml(oXml, Me, "LowerLimit")
             m_doUpperLimit.SaveSimulationXml(oXml, Me, "UpperLimit")
+
+            m_snMaxForce.SaveSimulationXml(oXml, Me, "MaxForce")
+            m_snMaxVelocity.SaveSimulationXml(oXml, Me, "MaxVelocity")
 
             oXml.AddChildElement("EnableMotor", m_bEnableMotor)
             oXml.AddChildElement("ServoMotor", m_bServoMotor)

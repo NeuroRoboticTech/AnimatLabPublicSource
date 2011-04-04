@@ -42,12 +42,6 @@ namespace AnimatSim
 Joint::Joint()
 {
 	m_lpChild = NULL;
-	m_fltSetVelocity = 0;
-	m_fltDesiredVelocity = 0;
-	m_fltMaxVelocity = 100;
-	m_fltPrevVelocity = -1000000;
-	m_bEnableMotor = FALSE;
-	m_bEnableMotorInit = FALSE;
 	m_fltPosition = 0;
 	m_fltVelocity = 0;
 	m_fltForce = 0;
@@ -111,65 +105,7 @@ void Joint::Size(float fltVal, BOOL bUseScaling)
 	Resize();
 }
 
-/**
-\brief	Tells if the motor is enabled.
 
-\author	dcofer
-\date	3/22/2011
-
-\return	true if it is enabled, false otherwise.
-**/
-BOOL Joint::EnableMotor() {return m_bEnableMotor;};
-
-/**
-\brief	Enables\disables the motor.
-
-\details If this is a motorized joint then when you turn it on the
-physics engine will calculate the torque that needs to be
-applied to this joint in order for it to have the desired
-Velocity for its current load. 
-
-\author	dcofer
-\date	3/22/2011
-
-\param	bVal	true to enable. 
-**/
-void Joint::EnableMotor(BOOL bVal)
-{
-	m_bEnableMotor = bVal;
-	//TODO Add sim code here.
-}
-
-/**
-\brief	Gets the maximum velocity.
-
-\author	dcofer
-\date	3/22/2011
-
-\return	Maximum motor velocity that is allowed.
-**/
-float Joint::MaxVelocity() {return m_fltMaxVelocity;};
-
-/**
-\brief	Sets the maximum velocity allowed by the motorized joint.
-
-\author	dcofer
-\date	3/22/2011
-
-\param	fltVal	   	The new value. 
-\param	bUseScaling	true to use unit scaling. 
-**/
-void Joint::MaxVelocity(float fltVal, BOOL bUseScaling)
-{
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Joint.MaxVelocity");
-
-	if(bUseScaling && !UsesRadians())
-		m_fltMaxVelocity = fltVal * m_lpSim->InverseDistanceUnits();
-	else
-		m_fltMaxVelocity = fltVal;
-
-	//TODO Add sim code here.
-}
 
 /**
 \brief	Tells if ConstraintLimits are enabled.
@@ -190,6 +126,29 @@ BOOL Joint::EnableLimits() {return m_bEnableLimits;};
 \param	bVal	true to enable. 
 **/
 void Joint::EnableLimits(BOOL bVal) {m_bEnableLimits = bVal;}
+
+/**
+\brief	Gets a position value within the constraint limits.
+
+\details If limits are enabled then it checks to see if the specified
+position is within the limits. If it is not, then it adjusts the position
+to be at the limit and returns that value.
+
+\param	fltPos	The position to check. 
+
+\return	The position within limits.
+**/
+float Joint::GetPositionWithinLimits(float fltPos)
+{return fltPos;}
+
+/**
+\brief Gets the entire range of movement within the limits. If limits are
+not enabled then it returns -1.
+
+\return	The calculated limit range.
+**/
+float Joint::GetLimitRange()
+{return -1;}
 
 int Joint::VisualSelectionType() {return JOINT_SELECTION_MODE;}
 
@@ -273,62 +232,6 @@ float Joint::JointForce() {return m_fltForce;}
 **/
 void Joint::JointForce(float fltForce) {m_fltForce = fltForce;}
 
-/**
-\brief	The velocity that is actually set using the physics method.
-
-\author	dcofer
-\date	3/22/2011
-
-\return	The velocity that was set.
-**/
-float Joint::SetVelocity() {return m_fltSetVelocity;}
-
-/**
-\brief	Gets the desired velocity.
-
-\author	dcofer
-\date	3/22/2011
-
-\return	Desired velocity.
-**/
-float Joint::DesiredVelocity() {return m_fltDesiredVelocity;}
-
-/**
-\brief	Sets the desired velocity.
-
-\author	dcofer
-\date	3/22/2011
-
-\param	fltVelocity	The new velocity. 
-**/
-void Joint::DesiredVelocity(float fltVelocity) {m_fltDesiredVelocity = fltVelocity;}
-
-/**
-\brief	Sets the desired velocity.
-
-\author	dcofer
-\date	3/22/2011
-
-\param	fltInput	The new velocity. 
-**/
-void Joint::MotorInput(float fltInput) {m_fltDesiredVelocity = fltInput;}
-
-void Joint::AddExternalNodeInput(float fltInput)
-{
-	m_fltDesiredVelocity += fltInput;
-}
-
-/**
-\brief	Sets the Set Velocity to the desired velocity.
-
-\author	dcofer
-\date	3/22/2011
-**/
-void Joint::SetVelocityToDesired()
-{
-	m_fltSetVelocity = m_fltDesiredVelocity;
-	m_fltDesiredVelocity = 0;
-}
 
 /**
 \brief	Creates the joint.
@@ -389,16 +292,13 @@ BOOL Joint::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Joint::AddExternalNodeInput(float fltInput) {}
+
 void Joint::ResetSimulation()
 {
 	if(m_lpPhysicsBody)
 		m_lpPhysicsBody->Physics_ResetSimulation();
 
-	m_fltSetVelocity = 0;
-	m_fltDesiredVelocity = 0;
-	m_fltPrevVelocity = 0;
-
-	EnableMotor(m_bEnableMotorInit);
 	JointPosition(0);
 	JointVelocity(0);
 	JointForce(0);
@@ -427,8 +327,6 @@ void Joint::Load(CStdXml &oXml)
 	m_oReportLocalPosition = m_oLocalPosition * m_lpSim->DistanceUnits();
 	m_oReportWorldPosition = m_oAbsPosition * m_lpSim->DistanceUnits();
 
-	EnableMotor(oXml.GetChildBool("EnableMotor", m_bEnableMotor));
-	MaxVelocity(oXml.GetChildFloat("MaxVelocity", m_fltMaxVelocity));
 	EnableLimits(oXml.GetChildBool("EnableLimits", m_bEnableLimits));
 
 	Size(oXml.GetChildFloat("Size", m_fltSize));

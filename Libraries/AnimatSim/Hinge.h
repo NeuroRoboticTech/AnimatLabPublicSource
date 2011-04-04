@@ -36,7 +36,7 @@ namespace AnimatSim
 			\author	dcofer
 			\date	3/24/2011
 			**/
-			class ANIMAT_PORT Hinge : public Joint    
+			class ANIMAT_PORT Hinge : public AnimatSim::Environment::MotorizedJoint    
 			{
 			protected:
 				/// Upper limit constring pointer.
@@ -47,15 +47,6 @@ namespace AnimatSim
 
 				/// Pointer to a constraint that is used to represent the position flap.
 				ConstraintLimit *m_lpPosFlap;
-
-				/// The maximum torque that the motor can apply.
-				float m_fltMaxTorque;
-
-				/// The gain of the servo motor.
-				float m_ftlServoGain;
-
-				/// true if this is a servo motor. A servo motor is position controlled instead of velocity controlled.
-				BOOL m_bServoMotor;
 
 				/**
 				\brief	Creates the cylinder graphics for the visible hinge.
@@ -78,16 +69,12 @@ namespace AnimatSim
 				virtual ConstraintLimit *UpperLimit() ;
 				virtual ConstraintLimit *LowerLimit();
 
-				virtual void ServoMotor(BOOL bServo);
-				virtual BOOL ServoMotor();
+				virtual float GetPositionWithinLimits(float fltPos);
+				virtual float GetLimitRange();
 
-				virtual void ServoGain(float fltVal);
-				virtual float ServoGain();
-
-				virtual void MaxTorque(float fltVal, BOOL bUseScaling = TRUE);
-				virtual float MaxTorque();
-
+				virtual void ResetSimulation();
 				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+				virtual void AddExternalNodeInput(float fltInput);
 
 				virtual void Load(CStdXml &oXml);
 			};

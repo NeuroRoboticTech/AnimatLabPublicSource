@@ -64,6 +64,7 @@ namespace AnimatSim
 		class ConstraintLimit;
 		class RigidBody;
 		class Joint;
+		class MotorizedJoint;
 		class Structure;
 		class Organism;
 		class ContactSensor;
@@ -162,6 +163,7 @@ using namespace AnimatSim::Recording;
 #include "ContactAdapter.h"
 #include "ConstraintLimit.h"
 #include "Joint.h"
+#include "MotorizedJoint.h"
 #include "BallSocket.h"
 #include "Hinge.h"
 #include "Prismatic.h"

@@ -5,6 +5,7 @@
 #include "StdAfx.h"
 #include "VsBody.h"
 #include "VsJoint.h"
+#include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsSimulator.h"
 #include "VsDragger.h"
@@ -20,7 +21,6 @@ namespace VortexAnimatSim
 
 VsJoint::VsJoint()
 {
-	m_bMotorOn = FALSE;
 	m_vxJoint = NULL;
 }
 
@@ -40,51 +40,6 @@ VxVector3 VsJoint::NormalizeAxis(CStdFPoint vLocalRot)
 	VxVector3 axis((double) vNorm[0], (double) vNorm[1], (double) vNorm[2]);
 
 	return axis;
-}
-
-void VsJoint::EnableMotor(BOOL bOn, float fltDesiredVelocity, float fltMaxForce)
-{
-  if (m_vxJoint)
-	{   
-		if(bOn)
-		{
-			if(m_vxJoint->getControl(m_iCoordID) != Vx::VxConstraint::CoordinateControlEnum::kControlMotorized)
-				m_vxJoint->setControl(m_iCoordID, Vx::VxConstraint::CoordinateControlEnum::kControlMotorized);
-
-			m_vxJoint->setMotorDesiredVelocity(m_iCoordID, fltDesiredVelocity);
-
-			//DWC Need to fix the stuff to set the min/max force for motor. Does not work right now.
-			//m_vxJoint->setMotorParameters(m_iCoordID, fltDesiredVelocity, -fltMaxForce, fltMaxForce);
-			//turn on the motor (disabling lock or free mode)
-		}
-		else
-			m_vxJoint->setControl(m_iCoordID, Vx::VxConstraint::CoordinateControlEnum::kControlFree);
-
-		m_bMotorOn = bOn;
-	}
-}
-
-void VsJoint::EnableLock(BOOL bOn, float fltPosition, float fltMaxLockForce)
-{
-	if (m_vxJoint)
-	{ 		
-		if(bOn)
-		{
-			//set the lock parameters
-			m_vxJoint->setLockParameters(m_iCoordID, fltPosition, -fltMaxLockForce, fltMaxLockForce);
-			//turn on the lock (disabling motorized or free mode)
-			m_vxJoint->setControl(m_iCoordID, VxConstraint::CoordinateControlEnum::kControlLocked);
-		}
-		else if (m_bMotorOn)
-			EnableMotor(TRUE, 0, fltMaxLockForce);
-		else
-			m_vxJoint->setControl(m_iCoordID, VxConstraint::CoordinateControlEnum::kControlFree);
-	}
-}
-
-void VsJoint::SetVelocity(float fltDesiredVelocity, float fltMaxForce)
-{
-	m_vxJoint->setMotorDesiredVelocity(m_iCoordID, fltDesiredVelocity);
 }
 
 void VsJoint::UpdatePosition()

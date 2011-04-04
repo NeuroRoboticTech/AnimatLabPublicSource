@@ -42,32 +42,6 @@ namespace AnimatSim
 			///The child rigid body for this joint. 
 			RigidBody *m_lpChild;
 
-			///This is the velocity to use for the motorized joint. The motor must be enabled
-			///for this parameter to have any effect. 
-			/// Velocities can be in rad/sec or m/s depending on the type of joint. UsesRadians lets you know whether it is using radians.
-			float m_fltSetVelocity;
-
-			/// This is the desired velocity of the motorized joint. IE the target we are shooting for.
-			/// The Desired velocity must get reset at each time step to zero, so it can be added to using AddExternalInput for the
-			/// next time step. m_fltSetVelocity then keeps track of what we set the velocity of the motor to be.
-			/// Velocities can be in rad/sec or m/s depending on the type of joint. UsesRadians lets you know whether it is using radians.
-			float m_fltDesiredVelocity;
-
-			/// The maximum velocity that the motorized joint can attain.
-			/// Velocities can be in rad/sec or m/s depending on the type of joint. UsesRadians lets you know whether it is using radians.
-			float m_fltMaxVelocity;
-
-			/// The previous velocity of the motorized joint in the last time step.
-			/// Velocities can be in rad/sec or m/s depending on the type of joint. UsesRadians lets you know whether it is using radians.
-			float m_fltPrevVelocity;
-
-			/// If true then the motor for this joint is enabled.
-			BOOL m_bEnableMotor;
-
-			/// Tells whether the motor was enabled when the sim started. This is used when 
-			/// resetting the simulation back to its initial settings.
-			BOOL m_bEnableMotorInit;
-
 			/// If true then any ConstraintLimits for this joint are enabled.
 			BOOL m_bEnableLimits;
 
@@ -85,8 +59,6 @@ namespace AnimatSim
 			///Scales the size of the graphics for this joint.
 			float m_fltSize;
 
-			virtual void SetVelocityToDesired();
-
 		public:
 			Joint();
 			virtual ~Joint();
@@ -99,11 +71,8 @@ namespace AnimatSim
 			virtual BOOL EnableLimits();
 			virtual void EnableLimits(BOOL bVal);
 
-			virtual BOOL EnableMotor();
-			virtual void EnableMotor(BOOL bVal);
-
-			virtual float MaxVelocity();
-			virtual void MaxVelocity(float fltVal, BOOL bUseScaling = TRUE);
+			virtual float GetPositionWithinLimits(float fltPos);
+			virtual float GetLimitRange();
 
 			virtual int VisualSelectionType();
 
@@ -117,17 +86,12 @@ namespace AnimatSim
 			virtual float JointForce();
 			virtual void JointForce(float fltForce);
 
-			virtual float SetVelocity();
-			virtual float DesiredVelocity();
-			virtual void DesiredVelocity(float fltVelocity);
-			virtual void MotorInput(float fltInput);
-
 			virtual void CreateJoint();
 
-			virtual void AddExternalNodeInput(float fltInput);
 			virtual float *GetDataPointer(string strDataType);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
+			virtual void AddExternalNodeInput(float fltInput);
 			virtual void ResetSimulation();
 			virtual void AfterResetSimulation();
 			virtual void StepSimulation();

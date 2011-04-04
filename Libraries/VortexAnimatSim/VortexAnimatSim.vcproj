@@ -293,6 +293,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\VsMotorizedJoint.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\VsMotorVelocityStimulus.cpp"
 				>
 			</File>
@@ -460,6 +464,10 @@
 			</File>
 			<File
 				RelativePath=".\VsMaterialPair.h"
+				>
+			</File>
+			<File
+				RelativePath=".\VsMotorizedJoint.h"
 				>
 			</File>
 			<File

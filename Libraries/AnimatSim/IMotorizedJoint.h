@@ -8,22 +8,39 @@ namespace AnimatSim
 
 		class ANIMAT_PORT IMotorizedJoint
 		{
-		protected:
-
 		public:
 			IMotorizedJoint(void);
 			virtual ~IMotorizedJoint(void);
 
-			virtual BOOL EnableMotor() = 0;
-			virtual void EnableMotor(BOOL bVal) = 0;
+			virtual void Physics_SetVelocityToDesired() = 0;
+			virtual void Physics_EnableLock(BOOL bOn, float fltPosition, float fltMaxLockForce) = 0;
 
-			virtual float MaxVelocity() = 0;
-			virtual void MaxVelocity(float fltVal, BOOL bUseScaling = TRUE) = 0;
+			/**
+			\brief	Enables\disables the motor.
 
-			virtual float SetVelocity() = 0;
-			virtual float DesiredVelocity() = 0;
-			virtual void DesiredVelocity(float fltVelocity) = 0;
-			virtual void MotorInput(float fltInput) = 0;
+			\details If this is a motorized joint then when you turn it on the physics engine will calculate the
+			torque that needs to be applied to this joint in order for it to have the desired Velocity for
+			its current load.
+
+			\author	dcofer
+			\date	4/3/2011
+
+			\param	bOn				  	true to enable. 
+			\param	fltDesiredVelocity	The desired motor velocity. 
+			\param	fltMaxForce		  	The maximum motor force. 
+			**/
+			virtual void Physics_EnableMotor(BOOL bOn, float fltDesiredVelocity, float fltMaxForce) = 0;
+	
+			/**
+			\brief	Sets the maximum forces allowed by the motorized joint.
+
+			\author	dcofer
+			\date	3/22/2011
+
+			\param	fltVal	   	The new value. 
+			\param	bUseScaling	true to use unit scaling. 
+			**/
+			virtual void Physics_MaxForce(float fltVal) = 0;
 		};
 
 	}

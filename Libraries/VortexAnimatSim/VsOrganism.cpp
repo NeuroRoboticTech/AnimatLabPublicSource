@@ -6,6 +6,7 @@
 #include "VsOrganism.h"
 #include "VsBody.h"
 #include "VsJoint.h"
+#include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsSimulator.h"
 #include "VsDragger.h"

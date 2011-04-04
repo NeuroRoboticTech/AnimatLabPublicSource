@@ -2,6 +2,7 @@
 #include "StdAfx.h"
 #include "VsBody.h"
 #include "VsJoint.h"
+#include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsHingeLimit.h"
 #include "VsHinge.h"
@@ -22,6 +23,8 @@ VsHinge::VsHinge()
 	m_lpThis = this;
 	m_lpThisJoint = this;
 	m_lpPhysicsBody = this;
+	m_lpPhysicsMotorJoint = this;
+	m_lpThisMotorJoint = this;
 	m_vxHinge = NULL;
 	m_fltRotationDeg = 0;
 
@@ -54,65 +57,6 @@ void VsHinge::EnableLimits(BOOL bVal)
 		m_vxHinge->setLimitsActive(m_vxHinge->kAngularCoordinate, m_bEnableLimits);	
 }
 
-//If this is a servo motor then the "velocity" signal is not really a velocity signal in this case. 
-//It is the desired position and we must convert it to the velocity needed to reach and maintian that position.
-void VsHinge::CalculateServoVelocity()
-{
-	if(!m_vxHinge)
-		return;
-
-	float fltError = m_fltDesiredVelocity - m_fltPosition;
-
-	if(m_bEnableLimits)
-	{
-		if(m_fltDesiredVelocity>m_lpUpperLimit->LimitPos())
-			m_fltDesiredVelocity = m_lpUpperLimit->LimitPos();
-		if(m_fltDesiredVelocity<m_lpLowerLimit->LimitPos())
-			m_fltDesiredVelocity = m_lpLowerLimit->LimitPos();
-
-		float fltProp = fltError / (m_lpUpperLimit->LimitPos()-m_lpLowerLimit->LimitPos());
-
-		m_fltDesiredVelocity = fltProp * m_ftlServoGain; 
-	}
-	else
-		m_fltDesiredVelocity = fltError * m_fltMaxVelocity; 
-}
-
-void VsHinge::SetVelocityToDesired()
-{
-	if(m_bEnableMotor)
-	{			
-		if(m_bServoMotor)
-			CalculateServoVelocity();
-
-		if(m_fltDesiredVelocity>m_fltMaxVelocity)
-			m_fltDesiredVelocity = m_fltMaxVelocity;
-
-		if(m_fltDesiredVelocity < -m_fltMaxVelocity)
-			m_fltDesiredVelocity = -m_fltMaxVelocity;
-
-		m_fltSetVelocity = m_fltDesiredVelocity;
-		m_fltDesiredVelocity = 0;
-
-		//Only do anything if the velocity value has changed
-		if( fabs(m_fltVelocity - m_fltSetVelocity) > 1e-4)
-		{
-			if(fabs(m_fltSetVelocity) > 1e-4)
-				VsJoint::SetVelocity(m_fltSetVelocity, m_fltMaxTorque);
-			else
-				VsJoint::EnableLock(TRUE, m_fltPosition, m_fltMaxTorque);
-		}
-		
-		m_fltPrevVelocity = m_fltSetVelocity;
-	}
-}
-
-void VsHinge::EnableMotor(BOOL bVal)
-{
-	VsJoint::EnableMotor(bVal, m_fltSetVelocity, m_fltMaxTorque);
-	m_bEnableMotor = bVal;
-	m_fltPrevVelocity = -1000000;  //reset the prev velocity for the next usage
-}
 
 void VsHinge::ResetGraphicsAndPhysics()
 {
@@ -312,7 +256,7 @@ void VsHinge::SetupPhysics()
 
 	//If the motor is enabled then it will start out with a velocity of	zero.
 	if(m_bEnableMotor)
-		VsJoint::EnableLock(TRUE, m_fltPosition, m_fltMaxTorque);
+		EnableLock(TRUE, m_fltPosition, m_fltMaxForce);
 }
 
 void VsHinge::CreateJoint()

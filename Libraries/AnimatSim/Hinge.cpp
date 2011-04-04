@@ -5,6 +5,7 @@
 **/
 
 #include "stdafx.h"
+#include "IMotorizedJoint.h"
 #include "IBodyPartCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -13,6 +14,7 @@
 #include "IPhysicsBody.h"
 #include "BodyPart.h"
 #include "Joint.h"
+#include "MotorizedJoint.h"
 #include "ReceptiveField.h"
 #include "ContactSensor.h"
 #include "RigidBody.h"
@@ -47,9 +49,6 @@ Hinge::Hinge()
 	m_lpUpperLimit = NULL;
 	m_lpLowerLimit = NULL;
 	m_lpPosFlap = NULL;
-	m_fltMaxTorque = 1000;
-	m_bServoMotor = FALSE;
-	m_ftlServoGain = 100;
 }
 
 /**
@@ -149,86 +148,37 @@ ConstraintLimit *Hinge::UpperLimit() {return m_lpUpperLimit;}
 **/
 ConstraintLimit *Hinge::LowerLimit() {return m_lpLowerLimit;}
 
-/**
-\brief	Sets whether this is a servo motor or not.
-
-\details A servo motor is one where the position of the joint is specified instead of the velocity that is normally
-used to control the motor.
-
-\author	dcofer
-\date	3/24/2011
-
-\param	bServo	true to set to be a servo motor. 
-**/
-void Hinge::ServoMotor(BOOL bServo) {m_bServoMotor = bServo;}
-
-/**
-\brief	Gets whether this is set to be a servo motor.
-
-\author	dcofer
-\date	3/24/2011
-
-\return	true if it is a servo motor, false otherwise.
-**/
-BOOL Hinge::ServoMotor() {return m_bServoMotor;}
-
-/**
-\brief	Sets the servo gain used to calculate the new velocity for maintaining a position with a servo motor.
-
-\author	dcofer
-\date	3/24/2011
-
-\param	fltVal	The new gain value. 
-**/
-void Hinge::ServoGain(float fltVal)
+float Hinge::GetPositionWithinLimits(float fltPos)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "ServoGain", TRUE);
-	m_ftlServoGain= fltVal;
+	if(m_bEnableLimits)
+	{
+		if(fltPos>m_lpUpperLimit->LimitPos())
+			fltPos = m_lpUpperLimit->LimitPos();
+		if(fltPos<m_lpLowerLimit->LimitPos())
+			fltPos = m_lpLowerLimit->LimitPos();
+	}
+
+	return fltPos;
 }
 
-/**
-\brief	Gets the servo gain.
-
-\author	dcofer
-\date	3/24/2011
-
-\return	Servo gain.
-**/
-float Hinge::ServoGain() {return m_ftlServoGain;}
-
-/**
-\brief	Sets the Maximum torque.
-
-\author	dcofer
-\date	3/24/2011
-
-\param	fltVal	   	The new value. 
-\param	bUseScaling	true to use unit scaling. 
-**/
-void Hinge::MaxTorque(float fltVal, BOOL bUseScaling)
+float Hinge::GetLimitRange()
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "MaxTorque");
-
-	if(bUseScaling)
-		fltVal *= m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits() * m_lpSim->InverseDistanceUnits();
-
-	m_fltMaxTorque = fltVal;
-
-	//If max torque is over 1000 N then assume we mean infinity.
-	if(m_fltMaxTorque >= 1000)
-		m_fltMaxTorque = 1e35f;
+	if(m_bEnableLimits)
+		return (m_lpUpperLimit->LimitPos()-m_lpLowerLimit->LimitPos());
+	else
+		return -1;
 }
 
-/**
-\brief	Gets the maximum torque.
+void Hinge::ResetSimulation()
+{
+	Joint::ResetSimulation();
 
-\author	dcofer
-\date	3/24/2011
+	m_fltSetVelocity = 0;
+	m_fltDesiredVelocity = 0;
+	m_fltPrevVelocity = 0;
 
-\return	Maximum torque the motor can apply.
-**/
-float Hinge::MaxTorque() {return m_fltMaxTorque;}
-
+	EnableMotor(m_bEnableMotorInit);
+}
 
 BOOL Hinge::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
@@ -244,9 +194,14 @@ BOOL Hinge::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Hinge::AddExternalNodeInput(float fltInput)
+{
+	m_fltDesiredVelocity += fltInput;
+}
+
 void Hinge::Load(CStdXml &oXml)
 {
-	Joint::Load(oXml);
+	MotorizedJoint::Load(oXml);
 
 	oXml.IntoElem();  //Into Joint Element
 
@@ -256,10 +211,6 @@ void Hinge::Load(CStdXml &oXml)
 
 	m_lpUpperLimit->Load(oXml, "UpperLimit");
 	m_lpLowerLimit->Load(oXml, "LowerLimit");
-
-	MaxTorque(oXml.GetChildFloat("MaxTorque", m_fltMaxTorque));
-	ServoMotor(oXml.GetChildBool("ServoMotor", m_bServoMotor));
-	ServoGain(oXml.GetChildFloat("ServoGain", m_ftlServoGain));
 
 	oXml.OutOfElem(); //OutOf Joint Element
 }

@@ -1,13 +1,10 @@
-// Injection.h: interface for the VsMotorVelocityStimulus class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	VsMotorVelocityStimulus.h
 
-#if !defined(AFX_MOTOR_VELOCITY_STIMULUS_H__AEBF2DF9_E7A0_4ED2_83CD_BE74B7D74E59__INCLUDED_)
-#define AFX_MOTOR_VELOCITY_STIMULUS_H__AEBF2DF9_E7A0_4ED2_83CD_BE74B7D74E59__INCLUDED_
+\brief	Declares the vs motor velocity stimulus class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 namespace VortexAnimatSim
 {
@@ -19,7 +16,7 @@ namespace VortexAnimatSim
 		protected:
 			string m_strStructureID;
 			string m_strJointID;
-			Joint *m_lpJoint;
+			MotorizedJoint *m_lpJoint;
 
 			float *m_lpPosition;
 			float *m_lpVelocity;
@@ -64,5 +61,3 @@ namespace VortexAnimatSim
 
 	}			//ExternalStimuli
 }				//VortexAnimatSim
-
-#endif // !defined(AFX_MOTOR_VELOCITY_STIMULUS_H__AEBF2DF9_E7A0_4ED2_83CD_BE74B7D74E59__INCLUDED_)

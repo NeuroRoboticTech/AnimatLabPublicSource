@@ -5,6 +5,7 @@
 **/
 
 #include "stdafx.h"
+#include "IMotorizedJoint.h"
 #include "IBodyPartCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -13,6 +14,7 @@
 #include "IPhysicsBody.h"
 #include "BodyPart.h"
 #include "Joint.h"
+#include "MotorizedJoint.h"
 #include "ReceptiveField.h"
 #include "ContactSensor.h"
 #include "RigidBody.h"
@@ -45,9 +47,6 @@ Prismatic::Prismatic()
 {
 	m_fltConstraintLow = (float) (-0.5*PI);
 	m_fltConstraintHigh = (float) (0.5*PI);
-	m_fltMaxForce = 1000;
-	m_bServoMotor = FALSE;
-	m_ftlServoGain = 100;
 	m_fltPosition = 0;
 }
 
@@ -60,6 +59,11 @@ Prismatic::Prismatic()
 Prismatic::~Prismatic()
 {
 
+}
+
+void Prismatic::AddExternalNodeInput(float fltInput)
+{
+	m_fltDesiredVelocity += fltInput;
 }
 
 void Prismatic::Load(CStdXml &oXml)
@@ -76,15 +80,23 @@ void Prismatic::Load(CStdXml &oXml)
 		oXml.OutOfElem(); //OutOf Constraint Element
 	}
 
-	//For a prismatic it is really max force, not max torque. I am leaving the naming alone to be consistent, but the unit conversion should be correct.
-	m_fltMaxForce = oXml.GetChildFloat("MaxForce", m_fltMaxForce) * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits();
 
-	m_bServoMotor = oXml.GetChildBool("ServoMotor", m_bServoMotor);
-	m_ftlServoGain = oXml.GetChildFloat("ServoGain", m_ftlServoGain);
+	EnableMotor(oXml.GetChildBool("EnableMotor", m_bEnableMotor));
+	MaxVelocity(oXml.GetChildFloat("MaxVelocity", m_fltMaxVelocity));
 
-	//If max torque is over 1000 N then assume we mean infinity.
-	if(m_fltMaxForce >= 1000)
-		m_fltMaxForce = 1e35f;
+	MaxForce(oXml.GetChildFloat("MaxForce", m_fltMaxForce));
+	ServoMotor(oXml.GetChildBool("ServoMotor", m_bServoMotor));
+	ServoGain(oXml.GetChildFloat("ServoGain", m_ftlServoGain));
+
+	////For a prismatic it is really max force, not max torque. I am leaving the naming alone to be consistent, but the unit conversion should be correct.
+	//m_fltMaxForce = oXml.GetChildFloat("MaxForce", m_fltMaxForce) * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits();
+
+	//m_bServoMotor = oXml.GetChildBool("ServoMotor", m_bServoMotor);
+	//m_ftlServoGain = oXml.GetChildFloat("ServoGain", m_ftlServoGain);
+
+	////If max torque is over 1000 N then assume we mean infinity.
+	//if(m_fltMaxForce >= 1000)
+	//	m_fltMaxForce = 1e35f;
 
 	oXml.OutOfElem(); //OutOf Joint Element
 }

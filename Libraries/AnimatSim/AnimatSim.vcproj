@@ -368,6 +368,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MotorizedJoint.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Mouth.cpp"
 				>
 			</File>
@@ -667,6 +671,10 @@
 			</File>
 			<File
 				RelativePath=".\Mesh.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MotorizedJoint.h"
 				>
 			</File>
 			<File

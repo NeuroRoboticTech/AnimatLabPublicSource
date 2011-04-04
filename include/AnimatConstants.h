@@ -367,6 +367,9 @@
 #define Al_Err_lInvalidCurrentType -4045
 #define Al_Err_strInvalidCurrentType "An invalid current type was specified."
 
+#define Al_Err_lJointNotMotorized -4046
+#define Al_Err_strJointNotMotorized "The specified joint was not motorized."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 #define PI 3.14159

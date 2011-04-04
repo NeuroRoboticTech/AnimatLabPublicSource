@@ -1479,6 +1479,7 @@ Namespace DataObjects.Physical
             If frmSelectParts.ShowDialog() <> DialogResult.OK Then Return False
 
             m_JointToParent = DirectCast(frmSelectParts.SelectedPart.Clone(Me, False, Nothing), Joint)
+            m_JointToParent.SetDefaultSizes()
 
             Me.ParentStructure.NewJointIndex = Me.ParentStructure.NewJointIndex + 1
             m_JointToParent.Name = "Joint_" & Me.ParentStructure.NewJointIndex
@@ -1710,11 +1711,6 @@ Namespace DataObjects.Physical
             doGraphics.Diffuse = Drawing.Color.Blue
 
             Me.AddChildBody(doGraphics, False)
-
-        End Sub
-
-        'This is called when creating a new body part. It sets the size of the part to its defaults.
-        Public Overridable Sub SetDefaultSizes()
 
         End Sub
 

@@ -280,8 +280,6 @@ namespace AnimatSim
 			virtual void CreateParts();
 			virtual void CreateJoints();
 
-			virtual void CompileIDLists();
-
 #pragma region DataAccesMethods
 
 			virtual float *GetDataPointer(string strDataType);

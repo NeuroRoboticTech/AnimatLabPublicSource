@@ -146,6 +146,10 @@ Namespace DataObjects.Physical
 
         End Function
 
+        Public Overrides Sub SetDefaultSizes()
+            m_snSize.ActualValue = 0.2 * Util.Environment.DistanceUnitValue
+        End Sub
+
         Public Overrides Function FindBodyPartByName(ByVal strName As String) As BodyPart
 
             If Me.Name = strName Then

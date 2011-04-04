@@ -1,10 +1,13 @@
-// VsPrismatic.cpp: implementation of the VsPrismatic class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	VsPrismatic.cpp
+
+\brief	Implements the vs prismatic class.
+**/
 
 #include "StdAfx.h"
 #include "VsBody.h"
 #include "VsJoint.h"
+#include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsPrismatic.h"
 #include "VsSimulator.h"
@@ -17,21 +20,31 @@ namespace VortexAnimatSim
 		namespace Joints
 		{
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\brief	Default constructor.
 
+\author	dcofer
+\date	3/31/2011
+**/
 VsPrismatic::VsPrismatic()
 {
 	m_lpThis = this;
 	m_lpThisJoint = this;
 	m_lpPhysicsBody = this;
+	m_lpPhysicsMotorJoint = this;
+	m_lpThisMotorJoint = this;
 	m_vxPrismatic = NULL;
 	m_fltConstraintLow = -0.5*VX_PI;
 	m_fltConstraintHigh = 0.5*VX_PI;
 	m_fltDistanceUnits = 0;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	3/31/2011
+**/
 VsPrismatic::~VsPrismatic()
 {
 
@@ -45,63 +58,63 @@ VsPrismatic::~VsPrismatic()
 
 //If this is a servo motor then the "velocity" signal is not really a velocity signal in this case. 
 //It is the desired position and we must convert it to the velocity needed to reach and maintian that position.
-void VsPrismatic::CalculateServoVelocity()
-{
-	if(!m_vxPrismatic)
-		return;
-
-	float fltError = m_fltDesiredVelocity - m_fltPosition;
-/*
-	if(m_bEnableLimits)
-	{
-		if(m_fltDesiredVelocity>m_fltConstraintHigh)
-			m_fltDesiredVelocity = m_fltConstraintHigh;
-		if(m_fltDesiredVelocity<m_fltConstraintLow)
-			m_fltDesiredVelocity = m_fltConstraintLow;
-
-		float fltProp = fltError / (m_fltConstraintHigh-m_fltConstraintLow);
-
-		m_fltDesiredVelocity = fltProp * m_ftlServoGain; 
-	}
-	else
-		m_fltDesiredVelocity = fltError * m_fltMaxVelocity; */
-}
-
-void VsPrismatic::SetVelocityToDesired()
-{
-	if(m_bEnableMotor)
-	{			
-		if(m_bServoMotor)
-			CalculateServoVelocity();
-
-		if(m_fltDesiredVelocity>m_fltMaxVelocity)
-			m_fltDesiredVelocity = m_fltMaxVelocity;
-
-		if(m_fltDesiredVelocity < -m_fltMaxVelocity)
-			m_fltDesiredVelocity = -m_fltMaxVelocity;
-
-		m_fltSetVelocity = m_fltDesiredVelocity;
-		m_fltDesiredVelocity = 0;
-
-		//Only do anything if the velocity value has changed
-		if( fabs(m_fltVelocity - m_fltSetVelocity) > 1e-4)
-		{
-			if(fabs(m_fltSetVelocity) > 1e-4)
-				VsJoint::SetVelocity(m_fltSetVelocity, m_fltMaxForce);
-			else
-				VsJoint::EnableLock(TRUE, m_fltPosition, m_fltMaxForce);
-		}
-		
-		m_fltPrevVelocity = m_fltSetVelocity;
-	}
-}
-
-void VsPrismatic::EnableMotor(BOOL bVal)
-{
-	VsJoint::EnableMotor(bVal, m_fltSetVelocity, m_fltMaxForce);
-	m_bEnableMotor = bVal;
-	m_fltPrevVelocity = -1000000;  //reset the prev velocity for the next usage
-}
+//void VsPrismatic::CalculateServoVelocity()
+//{
+//	if(!m_vxPrismatic)
+//		return;
+//
+//	float fltError = m_fltDesiredVelocity - m_fltPosition;
+///*
+//	if(m_bEnableLimits)
+//	{
+//		if(m_fltDesiredVelocity>m_fltConstraintHigh)
+//			m_fltDesiredVelocity = m_fltConstraintHigh;
+//		if(m_fltDesiredVelocity<m_fltConstraintLow)
+//			m_fltDesiredVelocity = m_fltConstraintLow;
+//
+//		float fltProp = fltError / (m_fltConstraintHigh-m_fltConstraintLow);
+//
+//		m_fltDesiredVelocity = fltProp * m_ftlServoGain; 
+//	}
+//	else
+//		m_fltDesiredVelocity = fltError * m_fltMaxVelocity; */
+//}
+//
+//void VsPrismatic::SetVelocityToDesired()
+//{
+//	if(m_bEnableMotor)
+//	{			
+//		if(m_bServoMotor)
+//			CalculateServoVelocity();
+//
+//		if(m_fltDesiredVelocity>m_fltMaxVelocity)
+//			m_fltDesiredVelocity = m_fltMaxVelocity;
+//
+//		if(m_fltDesiredVelocity < -m_fltMaxVelocity)
+//			m_fltDesiredVelocity = -m_fltMaxVelocity;
+//
+//		m_fltSetVelocity = m_fltDesiredVelocity;
+//		m_fltDesiredVelocity = 0;
+//
+//		//Only do anything if the velocity value has changed
+//		if( fabs(m_fltVelocity - m_fltSetVelocity) > 1e-4)
+//		{
+//			if(fabs(m_fltSetVelocity) > 1e-4)
+//				VsJoint::SetVelocity(m_fltSetVelocity, m_fltMaxForce);
+//			else
+//				VsJoint::EnableLock(TRUE, m_fltPosition, m_fltMaxForce);
+//		}
+//		
+//		m_fltPrevVelocity = m_fltSetVelocity;
+//	}
+//}
+//
+//void VsPrismatic::EnableMotor(BOOL bVal)
+//{
+//	VsJoint::EnableMotor(bVal, m_fltSetVelocity, m_fltMaxForce);
+//	m_bEnableMotor = bVal;
+//	m_fltPrevVelocity = -1000000;  //reset the prev velocity for the next usage
+//}
 
 void VsPrismatic::CreateJoint()
 {
@@ -155,7 +168,7 @@ void VsPrismatic::CreateJoint()
 
 	//If the motor is enabled then it will start out with a velocity of	zero.
 	if(m_bEnableMotor)
-		VsJoint::EnableLock(TRUE, m_fltPosition, m_fltMaxForce);
+		EnableLock(TRUE, m_fltPosition, m_fltMaxForce);
 
 	m_fltDistanceUnits = m_lpSim->DistanceUnits();
 }

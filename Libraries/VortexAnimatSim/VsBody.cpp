@@ -2,6 +2,7 @@
 #include <stdarg.h>
 #include "VsBody.h"
 #include "VsJoint.h"
+#include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsOrganism.h"
 #include "VsStructure.h"

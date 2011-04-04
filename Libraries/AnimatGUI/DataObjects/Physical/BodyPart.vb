@@ -412,6 +412,11 @@ Namespace DataObjects.Physical
 
         End Sub
 
+        'This is called when creating a new body part. It sets the size of the part to its defaults.
+        Public Overridable Sub SetDefaultSizes()
+
+        End Sub
+
         Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As System.Drawing.Point) As Boolean
 
             If tnSelectedNode Is m_tnWorkspaceNode Then

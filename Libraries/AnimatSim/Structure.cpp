@@ -5,6 +5,7 @@
 **/
 
 #include "stdafx.h"
+#include "IMotorizedJoint.h"
 #include "IBodyPartCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -13,6 +14,7 @@
 #include "IPhysicsBody.h"
 #include "BodyPart.h"
 #include "Joint.h"
+#include "MotorizedJoint.h"
 #include "ReceptiveField.h"
 #include "ContactSensor.h"
 #include "RigidBody.h"
@@ -37,8 +39,6 @@ namespace AnimatSim
 	{
 
 /**
-\fn	Structure::Structure()
-
 \brief	Default constructor. 
 
 \author	dcofer
@@ -52,8 +52,6 @@ Structure::Structure()
 }
 
 /**
-\fn	Structure::~Structure()
-
 \brief	Destructor. 
 
 \author	dcofer
@@ -74,8 +72,6 @@ catch(...)
 }
 
 /**
-\fn	void Structure::Sim(Simulator *lpSim)
-
 \brief	Sets the simulator object. 
 
 \author	dcofer
@@ -87,8 +83,6 @@ void Structure::Sim(Simulator *lpSim)
 {m_lpSim = lpSim;}
 
 /**
-\fn	RigidBody *Structure::Body()
-
 \brief	Gets the root body. 
 
 \details Gets the root body of the structure. 
@@ -102,8 +96,6 @@ RigidBody *Structure::Body()
 {return m_lpBody;}
 
 /**
-\fn	CStdFPoint Structure::Position()
-
 \brief	Gets the current position of the structure. 
 
 \author	dcofer
@@ -115,8 +107,6 @@ CStdFPoint Structure::Position()
 {return m_oPosition;}
 
 /**
-\fn	void Structure::Position(CStdFPoint &oPoint)
-
 \brief	Sets the position of the structure. 
 
 \author	dcofer
@@ -128,8 +118,6 @@ void Structure::Position(CStdFPoint &oPoint)
 {m_oPosition = oPoint;}
 
 /**
-\fn	CStdFPoint Structure::ReportPosition()
-
 \brief	Gets the position that is reported back to the GUI.
 
 \details Internally the simulation represents both space and mass abstractly. It scales the number based
@@ -145,8 +133,6 @@ CStdFPoint Structure::ReportPosition()
 {return m_oReportPosition;}
 
 /**
-\fn	void Structure::ReportPosition(CStdFPoint &oPoint)
-
 \brief	sets the reported position. 
 
 \author	dcofer
@@ -158,8 +144,6 @@ void Structure::ReportPosition(CStdFPoint &oPoint)
 {m_oReportPosition = oPoint;}
 
 /**
-\fn	void Structure::ReportPosition(float fltX, float fltY, float fltZ)
-
 \brief	sets the reported position. 
 
 \author	dcofer
@@ -173,8 +157,6 @@ void Structure::ReportPosition(float fltX, float fltY, float fltZ)
 {m_oReportPosition.Set(fltX, fltY, fltZ);}
 
 /**
-\fn	CStdFPoint Structure::ReportRotation()
-
 \brief	Gets the rotation that is reported back to the GUI.
 
 \author	dcofer
@@ -187,8 +169,6 @@ CStdFPoint Structure::ReportRotation()
 {return m_oReportRotation;}
 
 /**
-\fn	void Structure::ReportRotation(CStdFPoint &oPoint)
-
 \brief	Sets the report rotation in radians. 
 
 \author	dcofer
@@ -200,8 +180,6 @@ void Structure::ReportRotation(CStdFPoint &oPoint)
 {m_oReportRotation = oPoint;}
 
 /**
-\fn	void Structure::ReportRotation(float fltX, float fltY, float fltZ)
-
 \brief	Sets the report rotation in radians. 
 
 \author	dcofer
@@ -215,8 +193,6 @@ void Structure::ReportRotation(float fltX, float fltY, float fltZ)
 {m_oReportRotation.Set(fltX, fltY, fltZ);}
 
 /**
-\fn	CStdPtrArray<CollisionPair> Structure::ExclusionList()
-
 \brief	Gets the collision exclusion list as an array.
 
 \details The collision exclusion list in an array of CollisionPair objects.
@@ -236,8 +212,6 @@ CStdPtrArray<CollisionPair> Structure::ExclusionList()
 {return m_aryExcludeCollisionList;}
 
 /**
-\fn	IBodyPartCallback *Structure::Callback()
-
 \brief	Gets the IBodyPartCallback pointer for this structure. 
 
 \author	dcofer
@@ -249,8 +223,6 @@ IBodyPartCallback *Structure::Callback()
 {return m_lpCallback;}
 
 /**
-\fn	void Structure::Callback(IBodyPartCallback *lpCallback)
-
 \brief	Sets the IBodyPartCallback pointer for this structure. 
 
 \details This is used by the GUI interface to pass in a pointer to a 
@@ -263,9 +235,8 @@ callback object that will communicate events back up to the GUI.
 **/
 void Structure::Callback(IBodyPartCallback *lpCallback) 
 {m_lpCallback = lpCallback;}
-/**
-\fn	void Structure::CollectStructureData()
 
+/**
 \brief	Collects reporting data for the structure at each time step.
 
 \details This is called during StepSimulation of the structure so that we can collect or setup
@@ -327,8 +298,6 @@ void Structure::ResetSimulation()
 }
 
 /**
-\fn	void Structure::StepPhysicsEngine()
-
 \brief	Allows the organism and its parts to update at each time slice.
 
 \details This function is called for each structure/organism at every time slice. It gives the
@@ -351,8 +320,6 @@ void Structure::StepPhysicsEngine()
 }
 
 /**
-\fn	void Structure::AddJointToList(Joint *lpJoint)
-
 \brief	Adds a new joint to the list of all joints for this structure.
 
 \details There are two reasons for this method. The first is to get a list of references to all
@@ -387,8 +354,6 @@ void Structure::AddJointToList(Joint *lpJoint)
 }
 
 /**
-\fn	void Structure::AddRigidBodyToList(RigidBody *lpBody)
-
 \brief	Adds a new rigid body to the list of all bodies for this structure.
 
 \details There are two reasons for this method. The first is to get a list of references to all
@@ -425,8 +390,6 @@ void Structure::AddRigidBodyToList(RigidBody *lpBody)
 
 
 /**
-\fn	Joint *Structure::FindJoint(string strJointID, BOOL bThrowError)
-
 \brief	Finds a joint with a specified ID within this structure.
 
 \details This function searches the list of joints associated with this structure 
@@ -459,8 +422,6 @@ Joint *Structure::FindJoint(string strJointID, BOOL bThrowError)
 
 
 /**
-\fn	RigidBody *Structure::FindRigidBody(string strBodyID, BOOL bThrowError)
-
 \brief	Finds a rigid body with a specified ID within this structure.
 
 \details This function searches the list of rigid bodies associated with this structure 
@@ -493,8 +454,6 @@ RigidBody *Structure::FindRigidBody(string strBodyID, BOOL bThrowError)
 
 
 /**
-\fn	Node *Structure::FindNode(string strID, BOOL bThrowError)
-
 \brief	Searches for a Node with the given ID. 
 
 \author	dcofer
@@ -602,8 +561,6 @@ BOOL Structure::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 }
 
 /**
-\fn	void Structure::AddRoot(string strXml)
-
 \brief	Creates and adds a root body part. 
 
 \details This method is primarily used by the GUI to add a new root body to the structure.
@@ -633,8 +590,6 @@ void Structure::AddRoot(string strXml)
 }
 
 /**
-\fn	void Structure::RemoveRoot(string strID, BOOL bThrowError)
-
 \brief	Removes the root based on ID. 
 
 \details This is primarily used by the GUI to remove the root from the structure when 
@@ -662,8 +617,6 @@ void Structure::RemoveRoot(string strID, BOOL bThrowError)
 #pragma endregion
 
 /**
-\fn	void Structure::EnableMotor(string strJointID, BOOL bVal)
-
 \brief	Enables the given joints motor. 
 
 \author	dcofer
@@ -674,14 +627,15 @@ void Structure::RemoveRoot(string strID, BOOL bThrowError)
 **/
 void Structure::EnableMotor(string strJointID, BOOL bVal)
 {
-	Joint *lpJoint = FindJoint(strJointID);
-	lpJoint->EnableMotor(bVal);
+	MotorizedJoint *lpJoint = dynamic_cast<MotorizedJoint *>(FindJoint(strJointID));
+	if(lpJoint)
+		lpJoint->EnableMotor(bVal);
+	else
+		THROW_PARAM_ERROR(Al_Err_lJointNotMotorized, Al_Err_strJointNotMotorized, "ID", strJointID);
 }
 
 
 /**
-\fn	void Structure::SetMotorInput(string strJointID, float fltInput)
-
 \brief	Sets the velocity for the specified joint.
 
 \details This method attempts to locate a joint within a structure and set its velocity.
@@ -695,13 +649,14 @@ The velocity will only have any effect if the motor for that joint has been enab
 **/
 void Structure::SetMotorInput(string strJointID, float fltInput)
 {
-	Joint *lpJoint = FindJoint(strJointID);
-	lpJoint->MotorInput(fltInput);
+	MotorizedJoint *lpJoint = dynamic_cast<MotorizedJoint *>(FindJoint(strJointID));
+	if(lpJoint)
+		lpJoint->MotorInput(fltInput);
+	else
+		THROW_PARAM_ERROR(Al_Err_lJointNotMotorized, Al_Err_strJointNotMotorized, "ID", strJointID);
 }
 
 /**
-\fn	void Structure::EnableCollision(RigidBody *lpCollisionBody)
-
 \brief	Enables collision between the past-in object and all rigid bodies of this structure.
 
 \details This method enables collision responses between the rigid body being past in and all
@@ -724,8 +679,6 @@ void Structure::EnableCollision(RigidBody *lpCollisionBody)
 }
 
 /**
-\fn	void Structure::DisableCollision(RigidBody *lpCollisionBody)
-
 \brief	Disables collision between the past-in object and all rigid bodies of this structure.
 
 \details This method disables collision responses between the rigid body being past in and all
@@ -750,8 +703,6 @@ void Structure::DisableCollision(RigidBody *lpCollisionBody)
 
 
 /**
-\fn	long Structure::CalculateSnapshotByteSize()
-
 \brief	Calculates the snapshot byte size. 
 
 \details Sometimes the user may want to capture a snapshot of the simulation at a given point in time,
@@ -768,8 +719,6 @@ long Structure::CalculateSnapshotByteSize()
 {return 0;}
 
 /**
-\fn	void Structure::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
-
 \brief	Saves a key frame snapshot. 
 
 \details Sometimes the user may want to capture a snapshot of the simulation at a given point in time,
@@ -787,8 +736,6 @@ void Structure::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 {}
 
 /**
-\fn	void Structure::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
-
 \brief	Loads a key frame snapshot. 
 
 \details Sometimes the user may want to capture a snapshot of the simulation at a given point in time,
@@ -821,8 +768,6 @@ void Structure::Load(CStdXml &oXml)
 
 
 /**
-\fn	void Structure::AddCollisionPair(string strID1, string strID2)
-
 \brief	Adds a collision pair to m_aryExcludeCollisionList
 
 \author	dcofer
@@ -841,8 +786,6 @@ void Structure::AddCollisionPair(string strID1, string strID2)
 }
 
 /**
-\fn	void Structure::LoadCollisionPair(CStdXml &oXml)
-
 \brief	Loads a collision pair. 
 
 \author	dcofer
@@ -881,8 +824,6 @@ catch(...)
 }
 
 /**
-\fn	void Structure::LoadLayout(CStdXml &oXml)
-
 \brief	Loads the layout for this structure from an asl configuration file.
 
 \details This method opens up the Animat Structure Layout (ASL) file that was associated with
@@ -930,8 +871,6 @@ void Structure::LoadLayout(CStdXml &oXml)
 
 
 /**
-\fn	RigidBody *Structure::LoadRoot(CStdXml &oXml)
-
 \brief	Loads the root rigid body. 
 
 \author	dcofer

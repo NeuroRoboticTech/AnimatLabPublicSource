@@ -14,7 +14,7 @@ namespace VortexAnimatSim
 		namespace Joints
 		{
 
-			class VORTEX_PORT VsHinge : public VsJoint, public AnimatSim::Environment::Joints::Hinge     
+			class VORTEX_PORT VsHinge : public VsMotorizedJoint, public AnimatSim::Environment::Joints::Hinge     
 			{
 			protected:
 				Vx::VxHinge *m_vxHinge;
@@ -28,8 +28,6 @@ namespace VortexAnimatSim
 
 				osg::ref_ptr<osg::MatrixTransform> m_osgHingeMT;
 
-				virtual void CalculateServoVelocity();
-				virtual void SetVelocityToDesired();
 				virtual void UpdateData();
 				virtual void SetupPhysics();
 				virtual void DeletePhysics();
@@ -53,7 +51,6 @@ namespace VortexAnimatSim
 
 #pragma endregion
 
-				virtual void EnableMotor(BOOL bVal);
 				virtual void EnableLimits(BOOL bVal);
 				virtual void CreateJoint();
 				virtual void StepSimulation();

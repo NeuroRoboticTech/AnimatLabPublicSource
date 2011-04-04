@@ -1,11 +1,14 @@
-// MotorVelocityStimulus.cpp: implementation of the VsMotorVelocityStimulus class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	VsMotorVelocityStimulus.cpp
+
+\brief	Implements the vs motor velocity stimulus class.
+**/
 
 #include "stdafx.h"
 
 #include "VsBody.h"
 #include "VsJoint.h"
+#include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsSimulator.h"
 
@@ -16,11 +19,12 @@ namespace VortexAnimatSim
 {
 	namespace ExternalStimuli
 	{
+/**
+\brief	Default constructor.
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
+\author	dcofer
+\date	4/3/2011
+**/
 VsMotorVelocityStimulus::VsMotorVelocityStimulus()
 {
 	m_lpJoint = NULL;
@@ -32,6 +36,12 @@ VsMotorVelocityStimulus::VsMotorVelocityStimulus()
 	m_lpVelocity = NULL;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	4/3/2011
+**/
 VsMotorVelocityStimulus::~VsMotorVelocityStimulus()
 {
 
@@ -44,7 +54,14 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of VsMotorVelocityStimulus\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Sets the velocity equation used to control the motor speed over time.
 
+\author	dcofer
+\date	4/3/2011
+
+\param	strVal	The post-fix velocity equation string. 
+**/
 void VsMotorVelocityStimulus::VelocityEquation(string strVal)
 {
 	//Initialize the postfix evaluator.
@@ -73,7 +90,10 @@ void VsMotorVelocityStimulus::Initialize()
 	ExternalStimulus::Initialize();
 
 	//Lets try and get the joint we will be injecting.
-	m_lpJoint = m_lpSim->FindJoint(m_strStructureID, m_strJointID);
+	m_lpJoint = dynamic_cast<MotorizedJoint *>(m_lpSim->FindJoint(m_strStructureID, m_strJointID));
+	if(!m_lpJoint)
+		THROW_PARAM_ERROR(Al_Err_lJointNotMotorized, Al_Err_strJointNotMotorized, "ID", m_strJointID);
+
 	m_lpPosition = m_lpJoint->GetDataPointer("JOINTPOSITION");
 	m_lpVelocity = m_lpJoint->GetDataPointer("JOINTACTUALVELOCITY");
 }

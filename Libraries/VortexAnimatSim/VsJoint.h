@@ -31,7 +31,6 @@ namespace VortexAnimatSim
 		class VORTEX_PORT VsJoint : public VsBody
 		{
 		protected:
-			BOOL m_bMotorOn;
 			Vx::VxConstraint *m_vxJoint;
 			Vx::VxConstraint::CoordinateID m_iCoordID;
 
@@ -43,10 +42,6 @@ namespace VortexAnimatSim
 			osg::ref_ptr< osg::MatrixTransform> m_osgChildOffsetMT;
 
 			Joint *m_lpThisJoint;
-
-			void EnableMotor(BOOL bOn, float fltDesiredVelocity, float fltMaxForce);
-			void EnableLock(BOOL bOn, float fltPosition, float fltMaxLockForce);
-			void SetVelocity(float fltDesiredVelocity, float fltMaxForce);
 
 			void UpdatePosition();
 
