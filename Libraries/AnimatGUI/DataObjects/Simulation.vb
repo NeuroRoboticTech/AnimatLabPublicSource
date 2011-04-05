@@ -188,8 +188,8 @@ Namespace DataObjects
                 m_bSetSimEnd = Value
 
                 'Refresh the property grid 
-                If Not Util.ProjectProperties Is Nothing Then
-                    Util.ProjectProperties.RefreshProperties()
+                If Not Util.ProjectWorkspace Is Nothing Then
+                    Util.ProjectWorkspace.RefreshProperties()
                 End If
             End Set
         End Property

@@ -155,8 +155,8 @@ Namespace DataObjects.ExternalStimuli
                    TypeOf Util.ProjectWorkspace.TreeView.SelectedNode.Tag Is AnimatGUI.Framework.DataObject Then
 
                     Dim doNode As AnimatGUI.Framework.DataObject = DirectCast(Util.ProjectWorkspace.TreeView.SelectedNode.Tag, AnimatGUI.Framework.DataObject)
-                    If Not Util.ProjectProperties Is Nothing Then
-                        Util.ProjectProperties.RefreshProperties()
+                    If Not Util.ProjectWorkspace Is Nothing Then
+                        Util.ProjectWorkspace.RefreshProperties()
                     End If
                 End If
             End Set
@@ -171,8 +171,8 @@ Namespace DataObjects.ExternalStimuli
                 SetSimData("ValueType", Value.ToString, True)
                 m_eValueType = Value
 
-                If Not Util.ProjectProperties Is Nothing Then
-                    Util.ProjectProperties.RefreshProperties()
+                If Not Util.ProjectWorkspace Is Nothing Then
+                    Util.ProjectWorkspace.RefreshProperties()
                 End If
             End Set
         End Property

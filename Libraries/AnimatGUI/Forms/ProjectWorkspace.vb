@@ -163,6 +163,56 @@ Namespace Forms
             Return tnNode
         End Function
 
+        Public Sub RefreshProperties()
+
+            If ctrlTreeView.SelectedNodes.Count > 1 Then
+                Dim iCount As Integer = ctrlTreeView.SelectedNodes.Count - 1
+                Dim aryItems(iCount) As PropertyBag
+                Dim iIndex As Integer = 0
+                For Each tnNode As Crownwood.DotNetMagic.Controls.Node In ctrlTreeView.SelectedNodes
+                    If Not tnNode.Tag Is Nothing Then
+                        If Util.IsTypeOf(tnNode.Tag.GetType, GetType(Framework.DataObject), False) Then
+                            Dim doObj As Framework.DataObject = DirectCast(tnNode.Tag, Framework.DataObject)
+                            aryItems(iIndex) = doObj.Properties
+                            iIndex = iIndex + 1
+                        ElseIf Util.IsTypeOf(tnNode.Tag.GetType, GetType(Forms.AnimatForm), False) Then
+                            Dim doObj As Forms.AnimatForm = DirectCast(tnNode.Tag, Forms.AnimatForm)
+                            aryItems(iIndex) = doObj.Properties
+                            iIndex = iIndex + 1
+                        End If
+                    Else
+                        iCount = iCount - 1
+                        ReDim Preserve aryItems(iCount)
+                    End If
+                Next
+
+                If iCount >= 0 Then
+                    Util.ProjectProperties.PropertyData = Nothing
+                    Util.ProjectProperties.PropertyArray = aryItems
+                Else
+                    Util.ProjectProperties.PropertyData = Nothing
+                    Util.ProjectProperties.PropertyArray = Nothing
+                End If
+            Else
+                Util.ProjectProperties.PropertyArray = Nothing
+
+                If Not ctrlTreeView.SelectedNode Is Nothing AndAlso Not ctrlTreeView.SelectedNode.Tag Is Nothing Then
+                    If Util.IsTypeOf(ctrlTreeView.SelectedNode.Tag.GetType, GetType(Framework.DataObject), False) Then
+                        Dim doObj As Framework.DataObject = DirectCast(ctrlTreeView.SelectedNode.Tag, Framework.DataObject)
+                        Util.ProjectProperties.PropertyData = doObj.Properties
+                    ElseIf Util.IsTypeOf(ctrlTreeView.SelectedNode.Tag.GetType, GetType(Forms.AnimatForm), False) Then
+                        Dim doObj As Forms.AnimatForm = DirectCast(ctrlTreeView.SelectedNode.Tag, Forms.AnimatForm)
+                        Util.ProjectProperties.PropertyData = doObj.Properties
+                    Else
+                        Util.ProjectProperties.PropertyData = Nothing
+                    End If
+                Else
+                    Util.ProjectProperties.PropertyData = Nothing
+                End If
+            End If
+
+        End Sub
+
 #End Region
 
 #Region " Events "

@@ -130,8 +130,8 @@ Namespace DataObjects.Physical
             Set(ByVal Value As Boolean)
                 m_bTrackCamera = Value
 
-                If Not Util.ProjectProperties Is Nothing Then
-                    Util.ProjectProperties.RefreshProperties()
+                If Not Util.ProjectWorkspace Is Nothing Then
+                    Util.ProjectWorkspace.RefreshProperties()
                 End If
 
                 SetCameraTracking()
@@ -150,8 +150,8 @@ Namespace DataObjects.Physical
                     m_thLinkedPart = New TypeHelpers.LinkedBodyPartTree(m_thLinkedStructure.PhysicalStructure, Nothing, GetType(DataObjects.Physical.BodyPart))
                 End If
 
-                If Not Util.ProjectProperties Is Nothing Then
-                    Util.ProjectProperties.RefreshProperties()
+                If Not Util.ProjectWorkspace Is Nothing Then
+                    Util.ProjectWorkspace.RefreshProperties()
                 End If
 
                 SetCameraTracking()
@@ -166,8 +166,8 @@ Namespace DataObjects.Physical
             Set(ByVal Value As AnimatGUI.TypeHelpers.LinkedBodyPartTree)
                 m_thLinkedPart = Value
 
-                If Not Util.ProjectProperties Is Nothing Then
-                    Util.ProjectProperties.RefreshProperties()
+                If Not Util.ProjectWorkspace Is Nothing Then
+                    Util.ProjectWorkspace.RefreshProperties()
                 End If
 
                 SetCameraTracking()

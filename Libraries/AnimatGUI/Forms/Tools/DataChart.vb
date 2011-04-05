@@ -94,7 +94,7 @@ Namespace Forms.Tools
                 If m_bAutoCollectDataInterval Then
                     ResetCollectDataInterval()
                 End If
-                Util.ProjectProperties.RefreshProperties()
+                Util.ProjectWorkspace.RefreshProperties()
             End Set
         End Property
 
@@ -161,7 +161,7 @@ Namespace Forms.Tools
             Set(ByVal Value As Boolean)
                 SetSimData("SetStartEndTime", Value.ToString, True)
                 m_bSetStartEndTime = Value
-                Util.ProjectProperties.RefreshProperties()
+                Util.ProjectWorkspace.RefreshProperties()
             End Set
         End Property
 

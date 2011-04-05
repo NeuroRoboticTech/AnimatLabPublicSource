@@ -353,7 +353,7 @@ Namespace Forms.Charts
                 If m_bUpdateChartAtEnd AndAlso Not m_bSetStartEndTime Then
                     Me.SetStartEndTime = True
                 Else
-                    Util.ProjectProperties.RefreshProperties()
+                    Util.ProjectWorkspace.RefreshProperties()
                 End If
 
             End Set
@@ -366,7 +366,7 @@ Namespace Forms.Charts
             Set(ByVal Value As Boolean)
                 SetSimData("SetStartEndTime", Value.ToString, True)
                 m_bSetStartEndTime = Value
-                Util.ProjectProperties.RefreshProperties()
+                Util.ProjectWorkspace.RefreshProperties()
 
                 If m_bSetStartEndTime Then
                     Me.XAutoScale = enumScaleControl.MinMax

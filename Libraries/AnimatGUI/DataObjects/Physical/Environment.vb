@@ -508,8 +508,8 @@ Namespace DataObjects.Physical
                 m_bAutoGenerateRandomSeed = Value
 
                 'Reselect this node to see if we need to display the manual seed or not.
-                If Not Util.ProjectProperties Is Nothing Then
-                    Util.ProjectProperties.RefreshProperties()
+                If Not Util.ProjectWorkspace Is Nothing Then
+                    Util.ProjectWorkspace.RefreshProperties()
                 End If
             End Set
         End Property
