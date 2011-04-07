@@ -1,0 +1,20 @@
+FEATURE mcd mathngin 2.3 permanent uncounted \
+	HOSTID=CMLMD=2F35D0CE672439C3442EC2924470D41A ISSUER="CMLabs \
+	Simulations Inc." ISSUED=15-Feb-2007 NOTICE="Licensed to \
+	Georgia State University for use in AnimatLab - A 3D Graphics \
+	Simulator for Biological and Robotic Control Systems. For \
+	non-commercial use only." SN=RL013-012 SIGN="0141 1A0B 5E88 \
+	475B 115E 265E 9995 3CE1 2123 D3B8 8603 77E7 7A92 51DA C56E \
+	6C98 0859 3624 11C6 715B C8C5" SIGN2="029B ACE1 D848 94B7 7901 \
+	95E3 410C F916 9907 3589 4C00 61B4 5C36 1C63 8565 8E40 EBC2 \
+	C36A BA3F 9455 1C9D"
+FEATURE mdt mathngin 2.3 permanent uncounted \
+	HOSTID=CMLMD=2F35D0CE672439C3442EC2924470D41A ISSUER="CMLabs \
+	Simulations Inc." ISSUED=15-Feb-2007 NOTICE="Licensed to \
+	Georgia State University for use in AnimatLab - A 3D Graphics \
+	Simulator for Biological and Robotic Control Systems. For \
+	non-commercial use only." SN=RL013-012 SIGN="006D 593D 90DA \
+	DE58 5E32 15B3 ACE3 519D 4D4B D168 AE00 1533 31FC 5571 6063 \
+	2C29 59D4 FD80 3F70 0E0D 2593" SIGN2="024B ABAE 2A04 CB64 A90D \
+	4E03 412A 9CC9 445D C4AF 8603 773B 2128 2C29 2BF3 A04C CD83 \
+	89A6 FFCF 2770 1F59"

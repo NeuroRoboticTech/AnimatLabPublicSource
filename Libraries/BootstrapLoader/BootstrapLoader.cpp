@@ -13,6 +13,19 @@ BOOL APIENTRY DllMain( HANDLE hModule,
     return TRUE;
 }
 
+/**
+\brief	Boot strap method to run an arbitary library.
+
+\author	dcofer
+\date	4/7/2011
+
+\exception	strError	Thrown when string error. 
+
+\param	argc	The argc. 
+\param	argv	The argv. 
+
+\return	.
+**/
 int BOOTSTRAP_LOADER_PORT BootStrap_RunLibrary(int argc, const char **argv)
 {
 	int iParam=0;
