@@ -14,7 +14,7 @@ Imports AnimatGUI.Framework
 
 Namespace DataObjects.Physical.Joints
 
-    Public Class Hinge
+    Public Class Prismatic
         Inherits Physical.Joint
 
 #Region " Attributes "
@@ -31,28 +31,27 @@ Namespace DataObjects.Physical.Joints
 
 #Region " Properties "
 
-
         Public Overrides ReadOnly Property WorkspaceImageName() As String
             Get
-                Return "AnimatGUI.Joint.gif"
+                Return "AnimatGUI.Prismatic_Treeview.gif"
             End Get
         End Property
 
         Public Overrides ReadOnly Property ButtonImageName() As String
             Get
-                Return "AnimatGUI.Joint.gif"
+                Return "AnimatGUI.Prismatic_Button.gif"
             End Get
         End Property
 
         Public Overrides ReadOnly Property Type() As String
             Get
-                Return "Hinge"
+                Return "Prismatic"
             End Get
         End Property
 
         Public Overrides ReadOnly Property PartType() As System.Type
             Get
-                Return GetType(AnimatGUI.DataObjects.Physical.Joints.Hinge)
+                Return GetType(AnimatGUI.DataObjects.Physical.Joints.Prismatic)
             End Get
         End Property
 
@@ -142,6 +141,21 @@ Namespace DataObjects.Physical.Joints
             End Set
         End Property
 
+        Public Overrides ReadOnly Property UsesRadians() As Boolean
+            Get
+                Return False
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property InputStimulus() As String
+            Get
+                If m_bServoMotor Then
+                    Return "Position"
+                Else
+                    Return MyBase.InputStimulus
+                End If
+            End Get
+        End Property
 
 #End Region
 
@@ -159,18 +173,17 @@ Namespace DataObjects.Physical.Joints
             m_doLowerLimit.LimitPos.ActualValue = -45
             m_doUpperLimit.LimitPos.ActualValue = 45
 
-            m_snMaxForce = New AnimatGUI.Framework.ScaledNumber(Me, "MaxForce", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Newton-Meters", "Nm")
+            m_snMaxForce = New AnimatGUI.Framework.ScaledNumber(Me, "MaxForce", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Newtons", "N")
             m_snMaxVelocity = New AnimatGUI.Framework.ScaledNumber(Me, "MaxVelocity", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "rad/s", "rad/s")
 
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointRotation", "Rotation", "Radians", "rad", -3.14, 3.14))
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointRotationDeg", "Rotation (Deg)", "Degrees", "o", -180, 180))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointPosition", "Position", "Meters", "m", -10, 10))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointActualVelocity", "Velocity", "m/s", "m/s", -5, 5))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointDesiredVelocity", "Desired Velocity", "m/s", "m/s", -5, 5))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Enable", "Enable", "", "", 0, 1))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyPositionX", "Position X Axis", "Meters", "m", -10, 10))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyPositionY", "Position Y Axis", "Meters", "m", -10, 10))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyPositionZ", "Position Z Axis", "Meters", "m", -10, 10))
-            m_thDataTypes.ID = "JointRotation"
+            m_thDataTypes.ID = "JointPosition"
 
         End Sub
 
@@ -191,7 +204,7 @@ Namespace DataObjects.Physical.Joints
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As Framework.DataObject, ByVal bCutData As Boolean, ByVal doRoot As Framework.DataObject) As Framework.DataObject
-            Dim oNewNode As New Joints.Hinge(doParent)
+            Dim oNewNode As New Joints.Prismatic(doParent)
             oNewNode.CloneInternal(Me, bCutData, doRoot)
             If Not doRoot Is Nothing AndAlso doRoot Is Me Then oNewNode.AfterClone(Me, bCutData, doRoot, oNewNode)
             Return oNewNode
@@ -201,7 +214,7 @@ Namespace DataObjects.Physical.Joints
                                             ByVal doRoot As AnimatGUI.Framework.DataObject)
             MyBase.CloneInternal(doOriginal, bCutData, doRoot)
 
-            Dim doOrig As Joints.Hinge = DirectCast(doOriginal, Joints.Hinge)
+            Dim doOrig As Joints.Prismatic = DirectCast(doOriginal, Joints.Prismatic)
             m_doLowerLimit = DirectCast(doOrig.m_doLowerLimit.Clone(Me, bCutData, doRoot), ConstraintLimit)
             m_doUpperLimit = DirectCast(doOrig.m_doUpperLimit.Clone(Me, bCutData, doRoot), ConstraintLimit)
 
@@ -236,8 +249,8 @@ Namespace DataObjects.Physical.Joints
                                         "", GetType(AnimatGUI.TypeHelpers.ConstrainLimitTypeConverter)))
 
             pbNumberBag = m_snMaxForce.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Max Motor Torque", pbNumberBag.GetType(), "MaxForce", _
-                                            "Motor Properties", "Sets the maximum torque that this motor can apply to obtain a desired velocity of movement.", pbNumberBag, _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Max Motor Force", pbNumberBag.GetType(), "MaxForce", _
+                                            "Motor Properties", "Sets the maximum force that this motor can apply to obtain a desired velocity of movement.", pbNumberBag, _
                                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snMaxVelocity.Properties

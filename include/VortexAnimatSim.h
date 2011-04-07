@@ -160,7 +160,9 @@ namespace VortexAnimatSim
 		{
 			class VsBallSocket;
 			class VsHinge;
+			class VsHingeLimit;
 			class VsPrismatic;
+			class VsPrismaticLimit;
 		}
 	}
 
@@ -225,7 +227,9 @@ using namespace Vx;
 #include "VsSphere.h"
 
 #include "VsHinge.h"
+#include "VsHingeLimit.h"
 #include "VsPrismatic.h"
+#include "VsPrismaticLimit.h"
 #include "VsBallSocket.h"
 
 #include "VsAttachment.h"

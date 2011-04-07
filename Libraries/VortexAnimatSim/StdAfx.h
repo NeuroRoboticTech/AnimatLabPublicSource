@@ -172,7 +172,9 @@ namespace VortexAnimatSim
 		{
 			class VsBallSocket;
 			class VsHinge;
+			class VsHingeLimit;
 			class VsPrismatic;
+			class VsPrismaticLimit;
 		}
 	}
 

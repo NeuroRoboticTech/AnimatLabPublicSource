@@ -18,6 +18,7 @@
 #include "ReceptiveField.h"
 #include "ContactSensor.h"
 #include "RigidBody.h"
+#include "ConstraintLimit.h"
 #include "Prismatic.h"
 #include "Structure.h"
 #include "Organism.h"
@@ -45,9 +46,9 @@ namespace AnimatSim
 **/
 Prismatic::Prismatic()
 {
-	m_fltConstraintLow = (float) (-0.5*PI);
-	m_fltConstraintHigh = (float) (0.5*PI);
-	m_fltPosition = 0;
+	m_lpUpperLimit = NULL;
+	m_lpLowerLimit = NULL;
+	m_lpPosFlap = NULL;
 }
 
 /**
@@ -58,7 +59,146 @@ Prismatic::Prismatic()
 **/
 Prismatic::~Prismatic()
 {
+try
+{
+	if(m_lpUpperLimit)
+	{
+		delete m_lpUpperLimit;
+		m_lpUpperLimit = NULL;
+	}
 
+	if(m_lpLowerLimit)
+	{
+		delete m_lpLowerLimit;
+		m_lpLowerLimit = NULL;
+	}
+
+	if(m_lpPosFlap)
+	{
+		delete m_lpPosFlap;
+		m_lpPosFlap = NULL;
+	}
+}
+catch(...)
+{Std_TraceMsg(0, "Caught Error in desctructor of Prismatic\r\n", "", -1, FALSE, TRUE);}
+}
+
+/**
+\brief	Gets the radius cylinder of the cylinder used to display the
+axis of the prismatic joint in the environment.
+
+\author	dcofer
+\date	3/24/2011
+
+\return	Radius of axis cylinder.
+**/
+float Prismatic::CylinderRadius() 
+{
+	return m_fltSize * 0.25f;
+};
+
+/**
+\brief	Gets the height of the cylinder used to display the 
+axis of the prismatic joint in the environment. If limits are 
+enabled then this is the range between the two limits. If not then
+it is defaulted to proportion of the size variable.
+
+\author	dcofer
+\date	3/24/2011
+
+\return	Height of hinge cylidner.
+**/
+float Prismatic::CylinderHeight() 
+{
+	if(m_bEnableLimits)
+		return GetLimitRange();
+	else
+		return m_fltSize*10;
+};
+
+/**
+\brief	Gets the width of the flaps used to display the hinge in the environment.
+
+\author	dcofer
+\date	3/24/2011
+
+\return	Flap width.
+**/
+float Prismatic::BoxSize() 
+{
+	return m_fltSize * 0.5f;
+};
+
+void Prismatic::Enabled(BOOL bValue) 
+{
+	EnableMotor(bValue);
+	m_bEnabled = bValue;
+}
+
+/**
+\brief	Gets a pointer to the upper limit ConstraintLimit.
+
+\author	dcofer
+\date	3/24/2011
+
+\return	Pointer to ConstraintLimit.
+**/
+ConstraintLimit *Prismatic::UpperLimit() {return m_lpUpperLimit;}
+
+/**
+\brief	Gets a pointer to the lower limit ConstraintLimit.
+
+\author	dcofer
+\date	3/24/2011
+
+\return	Pointer to ConstraintLimit.
+**/
+ConstraintLimit *Prismatic::LowerLimit() {return m_lpLowerLimit;}
+
+float Prismatic::GetPositionWithinLimits(float fltPos)
+{
+	if(m_bEnableLimits)
+	{
+		if(fltPos>m_lpUpperLimit->LimitPos())
+			fltPos = m_lpUpperLimit->LimitPos();
+		if(fltPos<m_lpLowerLimit->LimitPos())
+			fltPos = m_lpLowerLimit->LimitPos();
+	}
+
+	return fltPos;
+}
+
+float Prismatic::GetLimitRange()
+{
+	if(m_bEnableLimits)
+		return (m_lpUpperLimit->LimitPos()-m_lpLowerLimit->LimitPos());
+	else
+		return -1;
+}
+
+void Prismatic::ResetSimulation()
+{
+	Joint::ResetSimulation();
+
+	m_fltSetVelocity = 0;
+	m_fltDesiredVelocity = 0;
+	m_fltPrevVelocity = 0;
+
+	EnableMotor(m_bEnableMotorInit);
+}
+
+BOOL Prismatic::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(Joint::SetData(strType, strValue, FALSE))
+		return TRUE;
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
 }
 
 void Prismatic::AddExternalNodeInput(float fltInput)
@@ -68,35 +208,16 @@ void Prismatic::AddExternalNodeInput(float fltInput)
 
 void Prismatic::Load(CStdXml &oXml)
 {
-	Joint::Load(oXml);
+	MotorizedJoint::Load(oXml);
 
 	oXml.IntoElem();  //Into Joint Element
 
-	if(oXml.FindChildElement("Constraint", FALSE))
-	{
-		oXml.IntoChildElement("Constraint");  //Into Constraint Element
-		m_fltConstraintLow = oXml.GetAttribFloat("Low", m_fltConstraintLow);
-		m_fltConstraintHigh = oXml.GetAttribFloat("High", m_fltConstraintHigh);
-		oXml.OutOfElem(); //OutOf Constraint Element
-	}
+	m_lpUpperLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
+	m_lpLowerLimit->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
+	m_lpPosFlap->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, JointPosition());
 
-
-	EnableMotor(oXml.GetChildBool("EnableMotor", m_bEnableMotor));
-	MaxVelocity(oXml.GetChildFloat("MaxVelocity", m_fltMaxVelocity));
-
-	MaxForce(oXml.GetChildFloat("MaxForce", m_fltMaxForce));
-	ServoMotor(oXml.GetChildBool("ServoMotor", m_bServoMotor));
-	ServoGain(oXml.GetChildFloat("ServoGain", m_ftlServoGain));
-
-	////For a prismatic it is really max force, not max torque. I am leaving the naming alone to be consistent, but the unit conversion should be correct.
-	//m_fltMaxForce = oXml.GetChildFloat("MaxForce", m_fltMaxForce) * m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits();
-
-	//m_bServoMotor = oXml.GetChildBool("ServoMotor", m_bServoMotor);
-	//m_ftlServoGain = oXml.GetChildFloat("ServoGain", m_ftlServoGain);
-
-	////If max torque is over 1000 N then assume we mean infinity.
-	//if(m_fltMaxForce >= 1000)
-	//	m_fltMaxForce = 1e35f;
+	m_lpUpperLimit->Load(oXml, "UpperLimit");
+	m_lpLowerLimit->Load(oXml, "LowerLimit");
 
 	oXml.OutOfElem(); //OutOf Joint Element
 }

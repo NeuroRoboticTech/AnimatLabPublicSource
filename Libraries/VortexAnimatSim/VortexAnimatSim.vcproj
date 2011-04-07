@@ -325,6 +325,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\VsPrismaticLimit.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\VsRigidBody.cpp"
 				>
 			</File>
@@ -496,6 +500,10 @@
 			</File>
 			<File
 				RelativePath=".\VsPrismatic.h"
+				>
+			</File>
+			<File
+				RelativePath=".\VsPrismaticLimit.h"
 				>
 			</File>
 			<File

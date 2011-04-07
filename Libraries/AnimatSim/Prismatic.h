@@ -33,21 +33,45 @@ namespace AnimatSim
 			class ANIMAT_PORT Prismatic : public MotorizedJoint    
 			{
 			protected:
-				///This is the minimum radian value that the joint can rotate about its axis.
-				///Its orginal position is used as zero radians.
-				float m_fltConstraintLow;
+				/// Upper limit constring pointer.
+				ConstraintLimit *m_lpUpperLimit;
 
-				///This is the maximum radian value that the joint can rotate about its axis.
-				///Its orginal position is used as zero radians.
-				float m_fltConstraintHigh;
+				/// Lower limit constring pointer.
+				ConstraintLimit *m_lpLowerLimit;
+
+				/// Pointer to a constraint that is used to represent the position flap.
+				ConstraintLimit *m_lpPosFlap;
+
+				/**
+				\brief	Creates the cylinder graphics for the axis of movement.
+				
+				\author	dcofer
+				\date	4/7/2011
+				**/
+				virtual void CreateCylinderGraphics() = 0;
 
 			public:
 				Prismatic();
 				virtual ~Prismatic();
 
+				float CylinderRadius();
+				float CylinderHeight();
+				float BoxSize();
+
+				virtual void Enabled(BOOL bValue);
+
+				virtual ConstraintLimit *UpperLimit() ;
+				virtual ConstraintLimit *LowerLimit();
+
+				virtual float GetPositionWithinLimits(float fltPos);
+				virtual float GetLimitRange();
+
 				virtual BOOL UsesRadians() {return FALSE;};
 
+				virtual void ResetSimulation();
+				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 				virtual void AddExternalNodeInput(float fltInput);
+
 				virtual void Load(CStdXml &oXml);
 			};
 
