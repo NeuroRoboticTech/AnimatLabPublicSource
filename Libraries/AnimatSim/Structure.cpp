@@ -337,7 +337,7 @@ not destroyed when the list is destroyed. It is a list of references only.
 \param [in,out]	lpJoint	pointer to a joint. 
 **/
 
-void Structure::AddJointToList(Joint *lpJoint)
+void Structure::AddJoint(Joint *lpJoint)
 {
 	if(!lpJoint)
 		THROW_PARAM_ERROR(Al_Err_lJointNotDefined, Al_Err_strJointNotDefined, "StructureID", m_strName);
@@ -349,6 +349,28 @@ void Structure::AddJointToList(Joint *lpJoint)
 	catch(CStdErrorInfo oError)
 	{
 		oError.m_strError += " Duplicate joint Key: " + lpJoint->Name() + " in Structure: " + m_strName; 
+		THROW_ERROR(oError.m_lError, oError.m_strError);
+	}
+}
+
+/**
+\brief	Removes the joint with the specified ID. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strID	ID of the joint to remove
+\exception If ID is not found.
+**/
+void Structure::RemoveJoint(string strID)
+{
+	try
+	{
+		m_aryJoints.Remove(strID);
+	}
+	catch(CStdErrorInfo oError)
+	{
+		oError.m_strError += " Joint not found Key: " + strID + " in Structure: " + m_strName;
 		THROW_ERROR(oError.m_lError, oError.m_strError);
 	}
 }
@@ -371,7 +393,7 @@ not destroyed when the list is destroyed. It is a list of references only.
 \param [in,out]	lpBody	The pointer to a body. 
 **/
 
-void Structure::AddRigidBodyToList(RigidBody *lpBody)
+void Structure::AddRigidBody(RigidBody *lpBody)
 {
 	if(!lpBody)
 		THROW_PARAM_ERROR(Al_Err_lBodyNotDefined, Al_Err_strBodyNotDefined, "StructureID", m_strName);
@@ -387,6 +409,28 @@ void Structure::AddRigidBodyToList(RigidBody *lpBody)
 	}
 }
 
+
+/**
+\brief	Removes the rigid body with the specified ID. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strID	ID of the body to remove
+\exception If ID is not found.
+**/
+void Structure::RemoveRigidBody(string strID)
+{
+	try
+	{
+		m_aryRigidBodies.Remove(strID);
+	}
+	catch(CStdErrorInfo oError)
+	{
+		oError.m_strError += " RigidBody not found Key: " + strID + " in Structure: " + m_strName;
+		THROW_ERROR(oError.m_lError, oError.m_strError);
+	}
+}
 
 
 /**
@@ -899,7 +943,7 @@ try
 
 	m_lpBody->SetSystemPointers(m_lpSim, this, NULL, NULL, TRUE);
 	m_lpBody->Load(oXml);
-	m_lpBody->CompileIDLists();
+	AddRigidBody(m_lpBody);
 
 	return m_lpBody;
 }

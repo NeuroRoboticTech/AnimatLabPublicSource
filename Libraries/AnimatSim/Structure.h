@@ -184,8 +184,10 @@ namespace AnimatSim
 			virtual void StepPhysicsEngine();
 			virtual void ResetSimulation();
 
-			void AddJointToList(Joint *lpJoint);
-			void AddRigidBodyToList(RigidBody *lpBody);
+			void AddJoint(Joint *lpJoint);
+			void RemoveJoint(string strID);
+			void AddRigidBody(RigidBody *lpBody);
+			void RemoveRigidBody(string strID);
 
 			virtual Joint *FindJoint(string strJointID, BOOL bThrowError = TRUE);
 			virtual RigidBody *FindRigidBody(string strBodyID, BOOL bThrowError = TRUE);

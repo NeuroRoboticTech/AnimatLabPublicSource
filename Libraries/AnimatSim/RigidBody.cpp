@@ -34,8 +34,6 @@ namespace AnimatSim
 	{
 
 /**
-\fn	RigidBody::RigidBody()
-
 \brief	Default constructor. 
 
 \author	dcofer
@@ -79,8 +77,6 @@ RigidBody::RigidBody()
 }
 
 /**
-\fn	RigidBody::~RigidBody()
-
 \brief	Destructor. 
 
 \author	dcofer
@@ -110,8 +106,6 @@ int RigidBody::VisualSelectionType()
 }
 
 /**
-\fn	CStdColor *RigidBody::Ambient()
-
 \brief	Gets the ambient color value. 
 
 \author	dcofer
@@ -122,8 +116,6 @@ int RigidBody::VisualSelectionType()
 CStdColor *RigidBody::Ambient() {return &m_vAmbient;}
 
 /**
-\fn	void RigidBody::Ambient(CStdColor &aryColor)
-
 \brief	Sets the Ambient color. 
 
 \author	dcofer
@@ -138,8 +130,6 @@ void RigidBody::Ambient(CStdColor &aryColor)
 }
 
 /**
-\fn	void RigidBody::Ambient(float *aryColor)
-
 \brief	Sets the Ambient color. 
 
 \author	dcofer
@@ -154,8 +144,6 @@ void RigidBody::Ambient(float *aryColor)
 }
 
 /**
-\fn	void RigidBody::Ambient(string strXml)
-
 \brief	Loads the Ambient color from an XML data packet. 
 
 \author	dcofer
@@ -171,8 +159,6 @@ void RigidBody::Ambient(string strXml)
 }
 
 /**
-\fn	CStdColor *RigidBody::Diffuse()
-
 \brief	Gets the diffuse color. 
 
 \author	dcofer
@@ -183,8 +169,6 @@ void RigidBody::Ambient(string strXml)
 CStdColor *RigidBody::Diffuse() {return &m_vDiffuse;}
 
 /**
-\fn	void RigidBody::Diffuse(CStdColor &aryColor)
-
 \brief	Sets the Diffuse color. 
 
 \author	dcofer
@@ -199,8 +183,6 @@ void RigidBody::Diffuse(CStdColor &aryColor)
 }
 
 /**
-\fn	void RigidBody::Diffuse(float *aryColor)
-
 \brief	Sets the Diffuse color. 
 
 \author	dcofer
@@ -215,8 +197,6 @@ void RigidBody::Diffuse(float *aryColor)
 }
 
 /**
-\fn	void RigidBody::Diffuse(string strXml)
-
 \brief	Loads the Diffuse color from an XML data packet. 
 
 \author	dcofer
@@ -231,8 +211,6 @@ void RigidBody::Diffuse(string strXml)
 }
 
 /**
-\fn	CStdColor *RigidBody::Specular()
-
 \brief	Gets the specular color. 
 
 \author	dcofer
@@ -243,8 +221,6 @@ void RigidBody::Diffuse(string strXml)
 CStdColor *RigidBody::Specular() {return &m_vSpecular;}
 
 /**
-\fn	void RigidBody::Specular(CStdColor &aryColor)
-
 \brief	Sets the Specular color. 
 
 \author	dcofer
@@ -259,8 +235,6 @@ void RigidBody::Specular(CStdColor &aryColor)
 }
 
 /**
-\fn	void RigidBody::Specular(float *aryColor)
-
 \brief	Sets the Specular color. 
 
 \author	dcofer
@@ -275,8 +249,6 @@ void RigidBody::Specular(float *aryColor)
 }
 
 /**
-\fn	void RigidBody::Specular(string strXml)
-
 \brief	Loads the Specular color from an XML data packet.  
 
 \author	dcofer
@@ -291,8 +263,6 @@ void RigidBody::Specular(string strXml)
 }
 
 /**
-\fn	float RigidBody::Shininess()
-
 \brief	Gets the shininess. 
 
 \author	dcofer
@@ -304,8 +274,6 @@ void RigidBody::Specular(string strXml)
 float RigidBody::Shininess() {return m_fltShininess;}
 
 /**
-\fn	void RigidBody::Shininess(float fltVal)
-
 \brief	Sets the shininess value. 
 
 \author	dcofer
@@ -321,8 +289,6 @@ void RigidBody::Shininess(float fltVal)
 }
 
 /**
-\fn	string RigidBody::Texture()
-
 \brief	Gets the texture filename. 
 
 \author	dcofer
@@ -333,8 +299,6 @@ void RigidBody::Shininess(float fltVal)
 string RigidBody::Texture() {return m_strTexture;}
 
 /**
-\fn	void RigidBody::Texture(string strValue)
-
 \brief	Sets the Texture filename. 
 
 \author	dcofer
@@ -349,8 +313,6 @@ void RigidBody::Texture(string strValue)
 }
 
 /**
-\fn	CStdFPoint RigidBody::CenterOfMass()
-
 \brief	Gets the user specified center of mass. 
 
 \details If this is (0, 0, 0) then the default COM is used for the part. This is
@@ -364,8 +326,6 @@ only used if the user sets it to something.
 CStdFPoint RigidBody::CenterOfMass() {return m_oCenterOfMass;}
 
 /**
-\fn	void RigidBody::CenterOfMass(CStdFPoint &oPoint)
-
 \brief	Sets the user specified center of mass for this part. 
 
 \author	dcofer
@@ -376,8 +336,6 @@ CStdFPoint RigidBody::CenterOfMass() {return m_oCenterOfMass;}
 void RigidBody::CenterOfMass(CStdFPoint &oPoint) {m_oCenterOfMass = oPoint;}
 
 /**
-\fn	CStdPtrArray<RigidBody> *RigidBody::ChildParts()
-
 \brief	Gets the array of child parts. 
 
 \author	dcofer
@@ -388,8 +346,6 @@ void RigidBody::CenterOfMass(CStdFPoint &oPoint) {m_oCenterOfMass = oPoint;}
 CStdPtrArray<RigidBody> *RigidBody::ChildParts() {return &m_aryChildParts;}
 
 /**
-\fn	Joint *RigidBody::JointToParent()
-
 \brief	Gets the joint to parent. 
 
 \author	dcofer
@@ -400,8 +356,6 @@ CStdPtrArray<RigidBody> *RigidBody::ChildParts() {return &m_aryChildParts;}
 Joint *RigidBody::JointToParent() {return m_lpJointToParent;}
 
 /**
-\fn	void RigidBody::JointToParent(Joint *lpValue)
-
 \brief	Sets the joint to parent. 
 
 \author	dcofer
@@ -412,8 +366,6 @@ Joint *RigidBody::JointToParent() {return m_lpJointToParent;}
 void RigidBody::JointToParent(Joint *lpValue) {m_lpJointToParent = lpValue;}
 
 /**
-\fn	ContactSensor *RigidBody::ContactSensor()
-
 \brief	Gets the receptive field contact sensor. 
 
 \author	dcofer
@@ -424,8 +376,6 @@ void RigidBody::JointToParent(Joint *lpValue) {m_lpJointToParent = lpValue;}
 ContactSensor *RigidBody::ContactSensor() {return m_lpContactSensor;}
 
 /**
-\fn	float RigidBody::Density()
-
 \brief	Gets the uniform density. 
 
 \author	dcofer
@@ -436,8 +386,6 @@ ContactSensor *RigidBody::ContactSensor() {return m_lpContactSensor;}
 float RigidBody::Density() {return m_fltDensity;}
 
 /**
-\fn	void RigidBody::Density(float fltVal)
-
 \brief	Sets the uniform density of this part. 
 
 \author	dcofer
@@ -459,8 +407,6 @@ void RigidBody::Density(float fltVal)
 };
 
 /**
-\fn	float *RigidBody::Cd()
-
 \brief	Gets the coefficient of drag array. 
 
 \author	dcofer
@@ -471,8 +417,6 @@ void RigidBody::Density(float fltVal)
 float *RigidBody::Cd() {return m_vCd;}
 
 /**
-\fn	void RigidBody::Cd(float *vVal)
-
 \brief	Sets the drag coefficients for each dimension.
 
 \author	dcofer
@@ -484,8 +428,6 @@ void RigidBody::Cd(float *vVal)
 {m_vCd[0] = vVal[0]; m_vCd[1] = vVal[1]; m_vCd[2] = vVal[2];}
 
 /**
-\fn	float RigidBody::Volume()
-
 \brief	Gets the volume of this part. 
 
 \author	dcofer
@@ -496,8 +438,6 @@ void RigidBody::Cd(float *vVal)
 float RigidBody::Volume() {return m_fltVolume;}
 
 /**
-\fn	float RigidBody::XArea()
-
 \brief	Gets the area of this part in the x dimension. 
 
 \author	dcofer
@@ -509,8 +449,6 @@ float RigidBody::Volume() {return m_fltVolume;}
 float RigidBody::XArea() {return m_fltXArea;}
 
 /**
-\fn	float RigidBody::YArea()
-
 \brief	Gets the area of this part in the y dimension. 
 
 \author	dcofer
@@ -521,8 +459,6 @@ float RigidBody::XArea() {return m_fltXArea;}
 float RigidBody::YArea() {return m_fltYArea;}
 
 /**
-\fn	float RigidBody::ZArea()
-
 \brief	Gets the area of this part in the z dimension. 
 
 \author	dcofer
@@ -533,8 +469,6 @@ float RigidBody::YArea() {return m_fltYArea;}
 float RigidBody::ZArea() {return m_fltZArea;}
 
 /**
-\fn	BOOL RigidBody::Freeze()
-
 \brief	Tells if this part is frozen or not
 
 \details Specifies if the part should frozen in place to the world. If a rigid body 
@@ -549,8 +483,6 @@ and other forces will not act on it.
 BOOL RigidBody::Freeze() {return m_bFreeze;}
 
 /**
-\fn	void RigidBody::Freeze(BOOL bVal)
-
 \brief	Freezes. 
 
 \details Specifies if the part should frozen in place to the world. If a rigid body 
@@ -571,8 +503,6 @@ void RigidBody::Freeze(BOOL bVal)
 }
 
 /**
-\fn	BOOL RigidBody::IsContactSensor()
-
 \brief	Query if this object is contact sensor. 
 
 \author	dcofer
@@ -583,8 +513,6 @@ void RigidBody::Freeze(BOOL bVal)
 BOOL RigidBody::IsContactSensor() {return m_bIsContactSensor;}
 
 /**
-\fn	void RigidBody::IsContactSensor(BOOL bVal)
-
 \brief	Sets whether this is a contact sensor. 
 
 \author	dcofer
@@ -595,8 +523,6 @@ BOOL RigidBody::IsContactSensor() {return m_bIsContactSensor;}
 void RigidBody::IsContactSensor(BOOL bVal) {m_bIsContactSensor = bVal;}
 
 /**
-\fn	BOOL RigidBody::IsCollisionObject()
-
 \brief	Query if this object is collision object. 
 
 \author	dcofer
@@ -607,8 +533,6 @@ void RigidBody::IsContactSensor(BOOL bVal) {m_bIsContactSensor = bVal;}
 BOOL RigidBody::IsCollisionObject() {return m_bIsCollisionObject;}
 
 /**
-\fn	void RigidBody::IsCollisionObject(BOOL bVal)
-
 \brief	Sets whether this part is a collision object. 
 
 \author	dcofer
@@ -619,8 +543,6 @@ BOOL RigidBody::IsCollisionObject() {return m_bIsCollisionObject;}
 void RigidBody::IsCollisionObject(BOOL bVal) {m_bIsCollisionObject = bVal;}
 
 /**
-\fn	BOOL RigidBody::IsFoodSource()
-
 \brief	Query if this object is food source. 
 
 \author	dcofer
@@ -631,8 +553,6 @@ void RigidBody::IsCollisionObject(BOOL bVal) {m_bIsCollisionObject = bVal;}
 BOOL RigidBody::IsFoodSource() {return m_bFoodSource;}
 
 /**
-\fn	void RigidBody::IsFoodSource(BOOL bVal)
-
 \brief	Sets if this is a food source. 
 
 \author	dcofer
@@ -643,8 +563,6 @@ BOOL RigidBody::IsFoodSource() {return m_bFoodSource;}
 void RigidBody::IsFoodSource(BOOL bVal) {m_bFoodSource = bVal;}
 
 /**
-\fn	float RigidBody::FoodQuantity()
-
 \brief	Gets the food quantity. 
 
 \author	dcofer
@@ -655,8 +573,6 @@ void RigidBody::IsFoodSource(BOOL bVal) {m_bFoodSource = bVal;}
 float RigidBody::FoodQuantity() {return m_fltFoodQuantity;}
 
 /**
-\fn	void RigidBody::FoodQuantity(float fltVal)
-
 \brief	Sets the Food quantity. 
 
 \author	dcofer
@@ -672,8 +588,6 @@ void RigidBody::FoodQuantity(float fltVal)
 }
 
 /**
-\fn	float RigidBody::FoodEaten()
-
 \brief	Gets the amount of food eaten. 
 
 \author	dcofer
@@ -684,8 +598,6 @@ void RigidBody::FoodQuantity(float fltVal)
 float RigidBody::FoodEaten() {return m_fltFoodEaten;}
 
 /**
-\fn	void RigidBody::FoodEaten(float fltVal)
-
 \brief	Sets the amount of food eaten. 
 
 \author	dcofer
@@ -696,8 +608,6 @@ float RigidBody::FoodEaten() {return m_fltFoodEaten;}
 void RigidBody::FoodEaten(float fltVal) {m_fltFoodEaten = fltVal;}
 
 /**
-\fn	float RigidBody::FoodReplenishRate()
-
 \brief	Gets the food replenish rate. 
 
 \author	dcofer
@@ -708,8 +618,6 @@ void RigidBody::FoodEaten(float fltVal) {m_fltFoodEaten = fltVal;}
 float RigidBody::FoodReplenishRate() {return m_fltFoodReplenishRate;}
 
 /**
-\fn	void RigidBody::FoodReplenishRate(float fltVal)
-
 \brief	Sets the food replenish rate. 
 
 \author	dcofer
@@ -720,8 +628,6 @@ float RigidBody::FoodReplenishRate() {return m_fltFoodReplenishRate;}
 void RigidBody::FoodReplenishRate(float fltVal) {m_fltFoodReplenishRate = fltVal;}
 
 /**
-\fn	float RigidBody::FoodEnergyContent()
-
 \brief	Gets the food energy content. 
 
 \author	dcofer
@@ -732,8 +638,6 @@ void RigidBody::FoodReplenishRate(float fltVal) {m_fltFoodReplenishRate = fltVal
 float RigidBody::FoodEnergyContent() {return m_fltFoodEnergyContent;}
 
 /**
-\fn	void RigidBody::FoodEnergyContent(float fltVal)
-
 \brief	Sets the food energy content. 
 
 \author	dcofer
@@ -749,8 +653,6 @@ void RigidBody::FoodEnergyContent(float fltVal)
 }
 
 /**
-\fn	float RigidBody::LinearVelocityDamping()
-
 \brief	Gets the linear velocity damping for this body part. 
 
 \author	dcofer
@@ -761,8 +663,6 @@ void RigidBody::FoodEnergyContent(float fltVal)
 float RigidBody::LinearVelocityDamping() {return m_fltLinearVelocityDamping;}
 
 /**
-\fn	void RigidBody::LinearVelocityDamping(float fltVal)
-
 \brief	Sets the Linear velocity damping. 
 
 \author	dcofer
@@ -778,8 +678,6 @@ void RigidBody::LinearVelocityDamping(float fltVal)
 }
 
 /**
-\fn	float RigidBody::AngularVelocityDamping()
-
 \brief	Gets the angular velocity damping. 
 
 \author	dcofer
@@ -790,8 +688,6 @@ void RigidBody::LinearVelocityDamping(float fltVal)
 float RigidBody::AngularVelocityDamping() {return m_fltAngularVelocityDamping;}
 
 /**
-\fn	void RigidBody::AngularVelocityDamping(float fltVal)
-
 \brief	Sets the angular velocity damping. 
 
 \author	dcofer
@@ -807,8 +703,6 @@ void RigidBody::AngularVelocityDamping(float fltVal)
 }
 
 /**
-\fn	string RigidBody::MaterialID()
-
 \brief	Gets the material ID for this part.
 
 \details Each rigid body part can be associated with a specific type of material. 
@@ -824,8 +718,6 @@ is defined in the GUI and this is a unique ID string that specifies which one to
 string RigidBody::MaterialID() {return m_strMaterialID;}
 
 /**
-\fn	void RigidBody::MaterialID(string strID) CStdFPoint RigidBody::GetCurrentPosition()
-
 \brief	Sets the Material ID for this part. 
 
 \details Each rigid body part can be associated with a specific type of material. 
@@ -841,8 +733,6 @@ is defined in the GUI and this is a unique ID string that specifies which one to
 void RigidBody::MaterialID(string strID) {m_strMaterialID = strID;}
 
 /**
-\fn	float RigidBody::SurfaceContactCount()
-
 \brief	Gets the surface contact count. 
 
 \author	dcofer
@@ -853,8 +743,6 @@ void RigidBody::MaterialID(string strID) {m_strMaterialID = strID;}
 float RigidBody::SurfaceContactCount() {return m_fltSurfaceContactCount;}
 
 /**
-\fn	void RigidBody::AddSurfaceContact(RigidBody *lpContactedSurface)
-
 \brief	Increments the surface contact count when this part collides with something in the
 virtual world
 
@@ -874,8 +762,6 @@ void RigidBody::AddSurfaceContact(RigidBody *lpContactedSurface)
 }
 
 /**
-\fn	void RigidBody::RemoveSurfaceContact(RigidBody *lpContactedSurface)
-
 \brief	Decrements the surface contact count when this part stops colliding with something in the
 virtual world
 
@@ -898,8 +784,6 @@ void RigidBody::RemoveSurfaceContact(RigidBody *lpContactedSurface)
 }
 
 /**
-\fn	void RigidBody::Eat(float fltVal, long lTimeSlice)
-
 \brief	This item is eating the specified amount of food. 
 
 \author	dcofer
@@ -919,8 +803,6 @@ void RigidBody::Eat(float fltVal, long lTimeSlice)
 }
 
 /**
-\fn	void RigidBody::EnableCollision(RigidBody *lpBody)
-
 \brief	Enables collision between the past-in object and this object.
 
 \details This method enables collision responses between the rigid body being past in and this
@@ -940,8 +822,6 @@ void RigidBody::EnableCollision(RigidBody *lpBody)
 }
 
 /**
-\fn	void RigidBody::DisableCollision(RigidBody *lpBody)
-
 \brief	Disables collision between the past-in object and this object.
 
 \details This method disables collision responses between the rigid body being past in and this
@@ -1001,8 +881,6 @@ void RigidBody::AfterResetSimulation()
 }
 
 /**
-\fn	void RigidBody::CreateParts()
-
 \brief	Allows the rigid body to create its parts using the chosen physics engine.
 
 \details This function can not be truly implemented in the Animat library. It must be implemented
@@ -1036,8 +914,6 @@ void RigidBody::CreateParts()
 }
 
 /**
-\fn	void RigidBody::CreateJoints()
-
 \brief	Allows the rigid body to create its joints using the chosen physics engine.
 
 \details This function can not be truly implemented in the Animat library. It must be implemented
@@ -1209,8 +1085,6 @@ BOOL RigidBody::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 }
 
 /**
-\fn	void RigidBody::AddRigidBody(string strXml)
-
 \brief	Creates and adds a rigid body. 
 
 \author	dcofer
@@ -1237,8 +1111,6 @@ void RigidBody::AddRigidBody(string strXml)
 }
 
 /**
-\fn	void RigidBody::RemoveRigidBody(string strID, BOOL bThrowError)
-
 \brief	Removes the rigid body with the specified ID. 
 
 \author	dcofer
@@ -1252,11 +1124,10 @@ void RigidBody::RemoveRigidBody(string strID, BOOL bThrowError)
 {
 	int iPos = FindChildListPos(strID, bThrowError);
 	m_aryChildParts.RemoveAt(iPos);
+	m_lpStructure->RemoveRigidBody(strID);
 }
 
 /**
-\fn	int RigidBody::FindChildListPos(string strID, BOOL bThrowError)
-
 \brief	Finds the array index for the child part with the specified ID
 
 \author	dcofer
@@ -1403,8 +1274,6 @@ void RigidBody::Load(CStdXml &oXml)
 }
 
 /**
-\fn	RigidBody *RigidBody::LoadRigidBody(CStdXml &oXml)
-
 \brief	Loads a child rigid body. 
 
 \author	dcofer
@@ -1436,6 +1305,7 @@ try
 	lpChild->Load(oXml);
 
 	m_aryChildParts.Add(lpChild);
+	m_lpStructure->AddRigidBody(lpChild);
 
 	return lpChild;
 }
@@ -1454,8 +1324,6 @@ catch(...)
 }
 
 /**
-\fn	Joint *RigidBody::LoadJoint(CStdXml &oXml)
-
 \brief	Loads a child joint. 
 
 \author	dcofer
@@ -1485,6 +1353,8 @@ try
 
 		m_lpJointToParent->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
 		m_lpJointToParent->Load(oXml);
+
+		m_lpStructure->AddJoint(m_lpJointToParent);
 	}
 
 	return m_lpJointToParent;
@@ -1506,33 +1376,6 @@ catch(...)
 }
 
 /**
-\fn	void RigidBody::CompileIDLists()
-
-\brief	This goes through and adds all rigid bodies and joints to their respective lists in the
-structure.
-
-\details This is so that we can keep track of all of the rigid bodies and joints in a given
-structure. 
-
-\author	dcofer
-\date	3/2/2011
-**/
-void RigidBody::CompileIDLists()
-{
-	if(m_lpJointToParent)
-		m_lpStructure->AddJointToList(m_lpJointToParent);
-
-	//Add me and then add child parts
-	m_lpStructure->AddRigidBodyToList(this);
-
-	int iCount = m_aryChildParts.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryChildParts[iIndex]->CompileIDLists();
-}
-
-/**
-\fn	void RigidBody::AddOdor(Odor *lpOdor)
-
 \brief	Adds an odor source to this body part. 
 
 \author	dcofer
@@ -1558,8 +1401,6 @@ void RigidBody::AddOdor(Odor *lpOdor)
 }
 
 /**
-\fn	Odor *RigidBody::LoadOdor(CStdXml &oXml)
-
 \brief	Loads an odor source. 
 
 \author	dcofer
@@ -1600,9 +1441,6 @@ catch(...)
 }
 
 /**
-\fn	void RigidBody::AddForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy,
-float fltFz, BOOL bScaleUnits)
-
 \brief	Adds a force to this body at a specified position. 
 
 \author	dcofer
@@ -1625,8 +1463,6 @@ void RigidBody::AddForce(float fltPx, float fltPy, float fltPz, float fltFx, flo
 }
 
 /**
-\fn	void RigidBody::AddTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits)
-
 \brief	Adds a torque to this body about its center. 
 
 \author	dcofer
@@ -1645,8 +1481,6 @@ void RigidBody::AddTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnit
 }
 
 /**
-\fn	CStdFPoint RigidBody::GetVelocityAtPoint(float x, float y, float z)
-
 \brief	Gets a velocity of this body at specified point in the body. 
 
 \author	dcofer
@@ -1669,8 +1503,6 @@ CStdFPoint RigidBody::GetVelocityAtPoint(float x, float y, float z)
 }
 
 /**
-\fn	float RigidBody::GetMass()
-
 \brief	Gets the mass of this part. 
 
 \author	dcofer

@@ -69,6 +69,11 @@ BOOL ExternalStimulus::SetData(string strDataType, string strValue, BOOL bThrowE
 		return TRUE;
 	}
 
+	//Value type tells whether this is using an equation or constant. This is determined in the
+	//derived class. Lets set this to true here just so we do not generate an exception.
+	if(strType == "VALUETYPE")
+		return TRUE;
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
