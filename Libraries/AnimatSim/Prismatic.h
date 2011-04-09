@@ -12,7 +12,7 @@ namespace AnimatSim
 	{
 		namespace Joints
 		{
-
+ 
 			/**
 			\brief	A Prismatic type of joint.
 						   
