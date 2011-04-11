@@ -65,12 +65,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="VxOSG-2.6.lib Vx.lib VxPersistence.lib VxVehicle.lib MeGlobals.lib McdConvex.lib McdConvexCreateHull.lib McdCommon.lib McdFrame.lib McdPrimitives.lib McdRGHeightField.lib McdTriangleMesh.lib Mdt.lib MdtKea.lib MdtBcl.lib VxPs.lib netapi32.lib comctl32.lib wsock32.lib oldnames.lib pthread.lib osgd.lib osgDBd.lib osgFXd.lib osgGAd.lib osgManipulatord.lib osgParticled.lib osgSimd.lib osgShadowd.lib osgTextd.lib osgTerraind.lib osgUtild.lib osgViewerd.lib OpenThreadsd.lib SDL_static.lib opengl32.lib winmm.lib"
-				OutputFile="$(OutDir)/VortexAnimatSim_vc9D.dll"
+				OutputFile="..\..\bin\VortexAnimatSim_vc9D.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\lib;..\Vortex_26\lib.dbg\win32_VC9;..\Vortex_26\3rdParty\pthreads\lib.rel\win32_VC9;..\Vortex_26\osg/lib.dbg/win32_VC9;..\Vortex_26\3rdParty/sdl/lib.rel/win32_VC9;..\Vortex_26\3rdParty\boost\lib\win32"
 				IgnoreDefaultLibraryNames="MSVCRT,LIBC,LIBCD,LIBCMT,LIBCMTD"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/VortexAnimatSim.pdb"
+				ProgramDatabaseFile="..\..\bin\VortexAnimatSim.pdb"
 				SubSystem="2"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -97,7 +97,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="Copy &quot;$(OutDir)\VortexAnimatSim_vc9D.lib&quot; ..\..\lib\VortexAnimatSim_vc9D.lib&#x0D;&#x0A;Copy &quot;$(TargetPath)&quot; ..\..\bin&#x0D;&#x0A;"
+				CommandLine="Copy &quot;$(OutDir)\VortexAnimatSim_vc9D.lib&quot; ..\..\lib\VortexAnimatSim_vc9D.lib&#x0D;"
 			/>
 		</Configuration>
 		<Configuration
@@ -147,7 +147,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="VxOSG-2.6.lib Vx.lib VxPersistence.lib VxVehicle.lib MeGlobals.lib McdConvex.lib McdConvexCreateHull.lib McdCommon.lib McdFrame.lib McdPrimitives.lib McdRGHeightField.lib McdTriangleMesh.lib Mdt.lib MdtKea.lib MdtBcl.lib VxPs.lib netapi32.lib comctl32.lib wsock32.lib oldnames.lib pthread.lib osg.lib osgDB.lib osgFX.lib osgGA.lib osgManipulator.lib osgParticle.lib osgSim.lib osgShadow.lib osgText.lib osgTerrain.lib osgUtil.lib osgViewer.lib OpenThreads.lib SDL_static.lib opengl32.lib winmm.lib"
-				OutputFile="$(OutDir)/VortexAnimatSim_vc9.dll"
+				OutputFile="..\..\bin\VortexAnimatSim_vc9.dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\lib;..\Vortex_26\lib.rel\win32_VC9;..\Vortex_26\3rdParty\pthreads\lib.rel\win32_VC9;..\Vortex_26\osg/lib.rel/win32_VC9;..\Vortex_26\3rdParty/sdl/lib.rel/win32_VC9;..\Vortex_26\3rdParty\boost\lib\win32"
 				IgnoreDefaultLibraryNames="LIBCMT"
@@ -180,7 +180,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="Copy &quot;$(OutDir)\VortexAnimatSim_vc9.lib&quot; ..\..\lib\VortexAnimatSim_vc9.lib&#x0D;&#x0A;Copy &quot;$(TargetPath)&quot; ..\..\bin&#x0D;&#x0A;"
+				CommandLine="Copy &quot;$(OutDir)\VortexAnimatSim_vc9.lib&quot; ..\..\lib\VortexAnimatSim_vc9.lib&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>

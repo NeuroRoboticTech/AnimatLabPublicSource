@@ -29,7 +29,7 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				CommandLine="Copy &quot;$(OutDir)\AnimatSimulator.exe&quot; ..\..\bin\AnimatSimulator.exe&#x0D;&#x0A;"
+				CommandLine="&#x0D;&#x0A;"
 				Outputs="$(OutDir)\regsvr32.trg"
 			/>
 			<Tool
@@ -74,7 +74,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib netapi32.lib wsock32.lib"
-				OutputFile=".\Debug/AnimatSimulator.exe"
+				OutputFile="..\..\bin\AnimatSimulatorD.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="..\..\lib"
@@ -106,7 +106,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="Copy &quot;$(OutDir)\AnimatSimulator.exe&quot; ..\..\bin\AnimatSimulatorD.exe"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -124,7 +124,7 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				CommandLine="Copy &quot;$(OutDir)\AnimatSimulator.exe&quot; ..\..\bin\AnimatSimulator.exe&#x0D;&#x0A;"
+				CommandLine="&#x0D;&#x0A;"
 				Outputs="$(OutDir)\regsvr32.trg"
 			/>
 			<Tool
@@ -170,7 +170,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib netapi32.lib wsock32.lib"
-				OutputFile=".\Release/AnimatSimulator.exe"
+				OutputFile="..\..\bin\AnimatSimulator.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="..\..\lib"
@@ -201,7 +201,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="Copy &quot;$(OutDir)\AnimatSimulator.exe&quot; ..\..\bin\AnimatSimulator.exe"
+				CommandLine=""
 			/>
 		</Configuration>
 	</Configurations>

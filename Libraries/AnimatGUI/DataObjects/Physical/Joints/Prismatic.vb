@@ -170,8 +170,8 @@ Namespace DataObjects.Physical.Joints
             m_doUpperLimit.PairedLimit = m_doLowerLimit
             m_doLowerLimit.IsLowerLimit = True
             m_doUpperLimit.IsLowerLimit = False
-            m_doLowerLimit.LimitPos.ActualValue = -45
-            m_doUpperLimit.LimitPos.ActualValue = 45
+            m_doLowerLimit.AngleLimit = False
+            m_doUpperLimit.AngleLimit = False
 
             m_snMaxForce = New AnimatGUI.Framework.ScaledNumber(Me, "MaxForce", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Newtons", "N")
             m_snMaxVelocity = New AnimatGUI.Framework.ScaledNumber(Me, "MaxVelocity", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "rad/s", "rad/s")
@@ -201,6 +201,12 @@ Namespace DataObjects.Physical.Joints
 
             If Not m_snMaxForce Is Nothing Then m_snMaxForce.ClearIsDirty()
             If Not m_snMaxVelocity Is Nothing Then m_snMaxVelocity.ClearIsDirty()
+        End Sub
+
+        Public Overrides Sub SetDefaultSizes()
+            m_snSize.ActualValue = 0.02 * Util.Environment.DistanceUnitValue
+            m_doLowerLimit.LimitPos.ActualValue = -1 * Util.Environment.DistanceUnitValue
+            m_doUpperLimit.LimitPos.ActualValue = 1 * Util.Environment.DistanceUnitValue
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As Framework.DataObject, ByVal bCutData As Boolean, ByVal doRoot As Framework.DataObject) As Framework.DataObject

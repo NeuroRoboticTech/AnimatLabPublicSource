@@ -35,6 +35,7 @@ VsHinge::VsHinge()
 	m_lpUpperLimit->LimitPos(0.25*VX_PI, FALSE);
 	m_lpLowerLimit->LimitPos(-0.25*VX_PI, FALSE);
 	m_lpPosFlap->LimitPos(Hinge::JointPosition(), FALSE);
+	m_lpPosFlap->IsShowPosition(TRUE);
 
 	m_lpUpperLimit->Color(1, 1, 1, 1);
 	m_lpLowerLimit->Color(1, 0, 0, 1);
@@ -55,6 +56,12 @@ void VsHinge::EnableLimits(BOOL bVal)
 
 	if(m_vxHinge)
 		m_vxHinge->setLimitsActive(m_vxHinge->kAngularCoordinate, m_bEnableLimits);	
+
+	if(m_bEnableLimits)
+	{
+		if(m_lpLowerLimit) m_lpLowerLimit->SetLimitPos();
+		if(m_lpUpperLimit) m_lpUpperLimit->SetLimitPos();
+	}
 }
 
 
@@ -245,11 +252,11 @@ void VsHinge::SetupPhysics()
 	VsHingeLimit *lpUpperLimit = dynamic_cast<VsHingeLimit *>(m_lpUpperLimit);
 	VsHingeLimit *lpLowerLimit = dynamic_cast<VsHingeLimit *>(m_lpLowerLimit);
 
-	//Re-enable the limits once we have initialized the joint
-	EnableLimits(m_bEnableLimits);
-
 	lpUpperLimit->HingeRef(m_vxHinge);
 	lpLowerLimit->HingeRef(m_vxHinge);
+
+	//Re-enable the limits once we have initialized the joint
+	EnableLimits(m_bEnableLimits);
 
 	m_vxJoint = m_vxHinge;
 	m_iCoordID = m_vxHinge->kAngularCoordinate;

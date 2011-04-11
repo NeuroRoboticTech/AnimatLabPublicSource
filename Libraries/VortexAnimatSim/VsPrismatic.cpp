@@ -43,9 +43,10 @@ VsPrismatic::VsPrismatic()
 	m_lpLowerLimit = new VsPrismaticLimit();
 	m_lpPosFlap = new VsPrismaticLimit();
 
-	m_lpUpperLimit->LimitPos(0.25*VX_PI, FALSE);
-	m_lpLowerLimit->LimitPos(-0.25*VX_PI, FALSE);
+	m_lpUpperLimit->LimitPos(1, FALSE);
+	m_lpLowerLimit->LimitPos(-1, FALSE);
 	m_lpPosFlap->LimitPos(Prismatic::JointPosition(), FALSE);
+	m_lpPosFlap->IsShowPosition(TRUE);
 
 	m_lpUpperLimit->Color(1, 1, 1, 1);
 	m_lpLowerLimit->Color(1, 0, 0, 1);
@@ -73,6 +74,12 @@ void VsPrismatic::EnableLimits(BOOL bVal)
 
 	if(m_vxPrismatic)
 		m_vxPrismatic->setLimitsActive(m_vxPrismatic->kLinearCoordinate, m_bEnableLimits);	
+
+	if(m_bEnableLimits)
+	{
+		if(m_lpLowerLimit) m_lpLowerLimit->SetLimitPos();
+		if(m_lpUpperLimit) m_lpUpperLimit->SetLimitPos();
+	}
 }
 
 
@@ -118,7 +125,7 @@ void VsPrismatic::SetAlpha()
 void VsPrismatic::CreateCylinderGraphics()
 {
 	//Create the cylinder for the Prismatic
-	m_osgCylinder = CreateConeGeometry(CylinderHeight(), CylinderRadius(), CylinderRadius(), 30, true, true, true);
+	m_osgCylinder = CreateConeGeometry(CylinderHeight(), CylinderRadius(), CylinderRadius(), 10, true, true, true);
 	osg::ref_ptr<osg::Geode> osgCylinder = new osg::Geode;
 	osgCylinder->addDrawable(m_osgCylinder.get());
 
@@ -215,7 +222,7 @@ void VsPrismatic::DeletePhysics()
 }
 
 void VsPrismatic::SetupPhysics()
-{/*
+{
 	if(m_vxPrismatic)
 		DeletePhysics();
 
@@ -247,7 +254,7 @@ void VsPrismatic::SetupPhysics()
 	Vx::VxReal3 vxRot;
 	vTrans.getRotationEulerAngles(vxRot);
 
-	CStdFPoint vLocalRot(vxRot[0], vxRot[1], vxRot[2]); //= m_lpThis->Rotation();
+	CStdFPoint vLocalRot(vxRot[0], vxRot[1], vxRot[2]);
 
     VxVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
 	VxVector3 axis = NormalizeAxis(vLocalRot);
@@ -263,19 +270,18 @@ void VsPrismatic::SetupPhysics()
 	VsPrismaticLimit *lpUpperLimit = dynamic_cast<VsPrismaticLimit *>(m_lpUpperLimit);
 	VsPrismaticLimit *lpLowerLimit = dynamic_cast<VsPrismaticLimit *>(m_lpLowerLimit);
 
-	//Re-enable the limits once we have initialized the joint
-	EnableLimits(m_bEnableLimits);
-
 	lpUpperLimit->PrismaticRef(m_vxPrismatic);
 	lpLowerLimit->PrismaticRef(m_vxPrismatic);
 
+	//Re-enable the limits once we have initialized the joint
+	EnableLimits(m_bEnableLimits);
+
 	m_vxJoint = m_vxPrismatic;
-	m_iCoordID = m_vxPrismatic->kAngularCoordinate;
+	m_iCoordID = m_vxPrismatic->kLinearCoordinate;
 
 	//If the motor is enabled then it will start out with a velocity of	zero.
 	if(m_bEnableMotor)
 		EnableLock(TRUE, m_fltPosition, m_fltMaxForce);
-		*/
 }
 
 void VsPrismatic::CreateJoint()
@@ -345,68 +351,6 @@ void VsPrismatic::StepSimulation()
 	UpdateData();
 	SetVelocityToDesired();
 }
-
-
-
-/*
-void VsPrismatic::CreateJoint()
-{
-	if(!m_lpParent)
-		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
-
-	if(!m_lpChild)
-		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
-
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
-	if(!lpVsSim)
-		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
-
-	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpParent);
-	if(!lpVsParent)
-		THROW_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody);
-
-	VsRigidBody *lpVsChild = dynamic_cast<VsRigidBody *>(m_lpChild);
-	if(!lpVsChild)
-		THROW_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody);
-	VxAssembly *lpAssem = (VxAssembly *) m_lpStructure->Assembly();
-
-	CStdFPoint vChildPos = lpVsChild->GetOSGWorldCoords();
-	CStdFPoint vGlobal = vChildPos + m_lpThis->LocalPosition();
-	CStdFPoint vLocalRot = m_lpThis->Rotation();
-
-    VxVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
-    VxVector3 axis((double) vLocalRot.x, (double) vLocalRot.y, (double) vLocalRot.z); 
-	m_vxPrismatic = new VxPrismatic(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
-
-	//lpAssem->addConstraint(m_vxPrismatic);
-	lpVsSim->Universe()->addConstraint(m_vxPrismatic);
-	m_lpStructure->AddCollisionPair(m_lpParent->ID(), m_lpChild->ID());
-
-	m_vxPrismatic->setLowerLimit(m_vxPrismatic->kLinearCoordinate, m_fltConstraintLow);
-	m_vxPrismatic->setUpperLimit(m_vxPrismatic->kLinearCoordinate, m_fltConstraintHigh);
-	//m_vxPrismatic->setLimitsActive(m_vxPrismatic->kLinearCoordinate, m_bEnableLimits);
-
-	//m_vxPrismatic->setLowerLimit(m_vxPrismatic->kLinearCoordinate, m_fltConstraintLow, 0,  m_fltRestitution, m_fltStiffness, m_fltDamping);
-	//m_vxPrismatic->setUpperLimit(m_vxPrismatic->kLinearCoordinate, m_fltConstraintHigh, 0, m_fltRestitution, m_fltStiffness, m_fltDamping);
-	//m_vxPrismatic->setLimitsActive(m_vxPrismatic->kLinearCoordinate, m_bEnableLimits);	
-
-    //m_vxPrismatic->setRelaxationParameters(m_vxPrismatic->kConstraintP1, m_fltStiffness, m_fltDamping, 0, true );
-    //m_vxPrismatic->setRelaxationParameters(m_vxPrismatic->kConstraintP2, m_fltStiffness, m_fltDamping, 0, true );
-    //m_vxPrismatic->setRelaxationParameters(m_vxPrismatic->kConstraintA0, m_fltStiffness, m_fltDamping, 0, true );
-    //m_vxPrismatic->setRelaxationParameters(m_vxPrismatic->kConstraintA1, m_fltStiffness, m_fltDamping, 0, true );
-    //m_vxPrismatic->setRelaxationParameters(m_vxPrismatic->kConstraintA2, m_fltStiffness, m_fltDamping, 0, true );
-
-	m_vxJoint = m_vxPrismatic;
-	m_iCoordID = m_vxPrismatic->kLinearCoordinate;
-
-	//If the motor is enabled then it will start out with a velocity of	zero.
-	if(m_bEnableMotor)
-		EnableLock(TRUE, m_fltPosition, m_fltMaxForce);
-
-	m_fltDistanceUnits = m_lpSim->DistanceUnits();
-}
-*/
-
 
 		}		//Joints
 	}			// Environment

@@ -26,7 +26,7 @@ namespace VortexAnimatSim
 				virtual void PrismaticRef(Vx::VxPrismatic *vxPrismatic);
 
 				virtual void Alpha(float fltA);
-				virtual void LimitPos(float fltVal, BOOL bUseScaling = TRUE, BOOL bOverrideSameCheck = FALSE);
+				virtual void SetLimitPos();
 
 				osg::Geometry *BoxGeometry() {return m_osgBox.get();};
 				osg::MatrixTransform *BoxTranslateMT() {return m_osgBoxTranslateMT.get();};

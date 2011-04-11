@@ -64,11 +64,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)/AnimatSim_vc9D.dll"
+				OutputFile="..\..\bin\AnimatSim_vc9D.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\lib"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/AnimatSim.pdb"
+				ProgramDatabaseFile="..\..\bin\AnimatSim.pdb"
 				SubSystem="2"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -95,7 +95,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="Copy &quot;$(OutDir)\AnimatSim_vc9D.lib&quot; ..\..\lib\AnimatSim_vc9D.lib&#x0D;&#x0A;Copy &quot;$(TargetPath)&quot; ..\..\bin&#x0D;&#x0A;"
+				CommandLine="Copy &quot;$(OutDir)\AnimatSim_vc9D.lib&quot; ..\..\lib\AnimatSim_vc9D.lib&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -143,7 +143,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)/AnimatSim_vc9.dll"
+				OutputFile="..\..\bin\AnimatSim_vc9.dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\lib"
 				GenerateDebugInformation="true"
@@ -175,7 +175,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="Copy &quot;$(OutDir)\AnimatSim_vc9.lib&quot; ..\..\lib\AnimatSim_vc9.lib&#x0D;&#x0A;Copy &quot;$(TargetPath)&quot; ..\..\bin&#x0D;&#x0A;"
+				CommandLine="Copy &quot;$(OutDir)\AnimatSim_vc9.lib&quot; ..\..\lib\AnimatSim_vc9.lib&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>

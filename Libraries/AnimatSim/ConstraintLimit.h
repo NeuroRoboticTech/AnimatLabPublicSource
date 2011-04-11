@@ -43,6 +43,10 @@ namespace AnimatSim
 			/// The color used to display the limit.
 			CStdColor m_vColor;
 
+			/// Tells whether this contstraint is actually just being used to show the current position of the joint,
+			/// as opposed to being used to show the limit of a constraint.
+			BOOL m_bIsShowPosition;
+
 		public:
 			ConstraintLimit();
 			virtual ~ConstraintLimit();
@@ -68,6 +72,14 @@ namespace AnimatSim
 			\param	bOverrideSameCheck	true to override the check of whether the currentpos = new pos. 
 			**/
 			virtual void LimitPos(float fltVal, BOOL bUseScaling = TRUE, BOOL bOverrideSameCheck = FALSE);
+
+			/**
+			\brief	Sets the limit position using the current value set within the object.
+						
+			\author	dcofer
+			\date	4/11/2011
+			**/
+			virtual void SetLimitPos() = 0;
 
 			/**
 			\brief	Gets the damping value of the contraint.
@@ -157,6 +169,9 @@ namespace AnimatSim
 
 			virtual void IsLowerLimit(BOOL bVal);
 			virtual BOOL IsLowerLimit();
+
+			virtual void IsShowPosition(BOOL bVal);
+			virtual BOOL IsShowPosition();
 
 			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, float fltPosition, BOOL bVerify);
 			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);

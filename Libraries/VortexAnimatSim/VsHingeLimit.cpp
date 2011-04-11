@@ -29,10 +29,6 @@ VsHingeLimit::~VsHingeLimit()
 void VsHingeLimit::HingeRef(Vx::VxHinge *vxHinge)
 {
 	m_vxHinge = vxHinge;
-
-	//Make sure we set the limit pos
-	LimitPos(m_fltLimitPos, TRUE, TRUE);
-
 }
 
 void VsHingeLimit::Alpha(float fltA)
@@ -50,15 +46,8 @@ void VsHingeLimit::Alpha(float fltA)
 	}
 }
 
-void VsHingeLimit::LimitPos(float fltVal, BOOL bUseScaling, BOOL bOverrideSameCheck)
+void VsHingeLimit::SetLimitPos()
 {
-	//If the values are the same then skip setting this step to preven having to
-	//recalculate the matrix positions repeatedly. Only do this when the new position is
-	// different than the old one.
-	if(fabs(fltVal - m_fltLimitPos) < 1e-5 && !bOverrideSameCheck)
-		return;
-
-	ConstraintLimit::LimitPos(fltVal, bUseScaling);
 
 	CStdFPoint vPos(0, 0, 0), vRot(0, 0, 0); 
 

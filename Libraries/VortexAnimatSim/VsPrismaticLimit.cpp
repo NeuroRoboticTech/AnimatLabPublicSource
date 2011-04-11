@@ -29,10 +29,6 @@ VsPrismaticLimit::~VsPrismaticLimit()
 void VsPrismaticLimit::PrismaticRef(Vx::VxPrismatic *vxPrismatic)
 {
 	m_vxPrismatic = vxPrismatic;
-
-	//Make sure we set the limit pos
-	LimitPos(m_fltLimitPos, TRUE, TRUE);
-
 }
 
 void VsPrismaticLimit::Alpha(float fltA)
@@ -50,33 +46,24 @@ void VsPrismaticLimit::Alpha(float fltA)
 	}
 }
 
-void VsPrismaticLimit::LimitPos(float fltVal, BOOL bUseScaling, BOOL bOverrideSameCheck)
+void VsPrismaticLimit::SetLimitPos()
 {
-	//If the values are the same then skip setting this step to preven having to
-	//recalculate the matrix positions repeatedly. Only do this when the new position is
-	// different than the old one.
-	if(fabs(fltVal - m_fltLimitPos) < 1e-5 && !bOverrideSameCheck)
-		return;
-
-	ConstraintLimit::LimitPos(fltVal, bUseScaling);
-
 	CStdFPoint vPos(0, 0, 0), vRot(0, 0, 0); 
 
 	Prismatic *lpPrismatic = dynamic_cast<Prismatic *>(m_lpJoint);
-/*
-	//Reset the position and rotation of the Box.
-	if(m_osgBoxRotateMT.valid() && m_osgBoxTranslateMT.valid() && lpPrismatic)
-	{
 
-		float fltHeight = lpPrismatic->CylinderHeight();
+	////Reset the position and rotation of the Box.
+	//if(m_osgBoxRotateMT.valid() && m_osgBoxTranslateMT.valid() && lpPrismatic)
+	//{
+	//	float fltHeight = lpPrismatic->CylinderHeight();
 
-		vPos.Set(0, 0, 0); vRot.Set(0, 0, -m_fltLimitPos); 
-		m_osgBoxRotateMT->setMatrix(SetupMatrix(vPos, vRot));
+	//	vPos.Set(0, 0, 0); vRot.Set(0, 0, -m_fltLimitPos); 
+	//	m_osgBoxRotateMT->setMatrix(SetupMatrix(vPos, vRot));
 
-		vPos.Set((fltHeight/2)*sin(-m_fltLimitPos), -(fltHeight/2)*cos(-m_fltLimitPos), 0); vRot.Set(0, 0, 0); 
-		m_osgBoxTranslateMT->setMatrix(SetupMatrix(vPos, vRot));
-	}
-*/
+	//	vPos.Set((fltHeight/2)*sin(-m_fltLimitPos), -(fltHeight/2)*cos(-m_fltLimitPos), 0); vRot.Set(0, 0, 0); 
+	//	m_osgBoxTranslateMT->setMatrix(SetupMatrix(vPos, vRot));
+	//}
+
 	//Set the limit on the physics Prismatic object.
 	if(m_vxPrismatic)
 	{
@@ -104,7 +91,7 @@ void VsPrismaticLimit::SetupGraphics()
 		CStdFPoint vPos(0, 0, 0), vRot(0, 0, 0); 
 
 		//Translate box
-		vPos.Set(m_fltLimitPos, 0, 0); 
+		vPos.Set(0, 0, m_fltLimitPos); 
 		vRot.Set(0, 0, 0); 
 		m_osgBoxTranslateMT = new osg::MatrixTransform();
 		m_osgBoxTranslateMT->setMatrix(SetupMatrix(vPos, vRot));

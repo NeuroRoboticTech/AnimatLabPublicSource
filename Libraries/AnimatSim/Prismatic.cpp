@@ -94,7 +94,7 @@ axis of the prismatic joint in the environment.
 **/
 float Prismatic::CylinderRadius() 
 {
-	return m_fltSize * 0.25f;
+	return m_fltSize;
 };
 
 /**
@@ -126,7 +126,7 @@ float Prismatic::CylinderHeight()
 **/
 float Prismatic::BoxSize() 
 {
-	return m_fltSize * 0.5f;
+	return m_fltSize * 3;
 };
 
 void Prismatic::Enabled(BOOL bValue) 

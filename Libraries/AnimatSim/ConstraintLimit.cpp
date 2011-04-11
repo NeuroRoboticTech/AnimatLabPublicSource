@@ -49,6 +49,7 @@ ConstraintLimit::ConstraintLimit()
 	m_fltRestitution = 0;
 	m_fltStiffness = 0;
 	m_bIsLowerLimit = TRUE;
+	m_bIsShowPosition = FALSE;
 }
 
 /**
@@ -65,10 +66,18 @@ float ConstraintLimit::LimitPos() {return m_fltLimitPos;}
 
 void ConstraintLimit::LimitPos(float fltVal, BOOL bUseScaling, BOOL bOverrideSameCheck) 
 {
+	//If the values are the same then skip setting this step to preven having to
+	//recalculate the matrix positions repeatedly. Only do this when the new position is
+	// different than the old one.
+	if(fabs(fltVal - m_fltLimitPos) < 1e-5 && !bOverrideSameCheck)
+		return;
+
 	if(bUseScaling && m_lpSim && m_lpJoint && !m_lpJoint->UsesRadians())
 		m_fltLimitPos = fltVal * m_lpSim->InverseDistanceUnits();
 	else
 		m_fltLimitPos = fltVal;
+
+	SetLimitPos();
 }
 
 float ConstraintLimit::Damping() {return m_fltDamping;};
@@ -162,6 +171,28 @@ void ConstraintLimit::IsLowerLimit(BOOL bVal) {m_bIsLowerLimit = bVal;}
 \return	true if lower limit, false if not.
 **/
 BOOL ConstraintLimit::IsLowerLimit() {return m_bIsLowerLimit;}
+
+/**
+\brief	Sets whether this contstraint is actually just being used to show the current position of the joint,
+as opposed to being used to show the limit of a constraint..
+
+\author	dcofer
+\date	4/11/2011
+
+\param	bVal	true to set this to be a position limit.
+**/
+void ConstraintLimit::IsShowPosition(BOOL bVal) {m_bIsShowPosition = bVal;}
+
+/**
+\brief	Gets whether this contstraint is actually just being used to show the current position of the joint,
+as opposed to being used to show the limit of a constraint..
+
+\author	dcofer
+\date	4/11/2011
+
+\return	true if show position, false if not.
+**/
+BOOL ConstraintLimit::IsShowPosition() {return m_bIsShowPosition;}
 
 /**
 \brief	Sets the system pointers.

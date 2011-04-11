@@ -27,7 +27,7 @@ namespace VortexAnimatSim
 				virtual void HingeRef(Vx::VxHinge *vxHinge);
 
 				virtual void Alpha(float fltA);
-				virtual void LimitPos(float fltVal, BOOL bUseScaling = TRUE, BOOL bOverrideSameCheck = FALSE);
+				virtual void SetLimitPos();
 
 				osg::Geometry *FlapGeometry() {return m_osgFlap.get();};
 				osg::MatrixTransform *FlapTranslateMT() {return m_osgFlapTranslateMT.get();};
