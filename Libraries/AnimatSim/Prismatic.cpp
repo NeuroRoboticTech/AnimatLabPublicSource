@@ -97,24 +97,6 @@ float Prismatic::CylinderRadius()
 	return m_fltSize;
 };
 
-/**
-\brief	Gets the height of the cylinder used to display the 
-axis of the prismatic joint in the environment. If limits are 
-enabled then this is the range between the two limits. If not then
-it is defaulted to proportion of the size variable.
-
-\author	dcofer
-\date	3/24/2011
-
-\return	Height of hinge cylidner.
-**/
-float Prismatic::CylinderHeight() 
-{
-	if(m_bEnableLimits)
-		return GetLimitRange();
-	else
-		return m_fltSize*10;
-};
 
 /**
 \brief	Gets the width of the flaps used to display the hinge in the environment.

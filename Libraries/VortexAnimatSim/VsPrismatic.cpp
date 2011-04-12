@@ -116,40 +116,6 @@ void VsPrismatic::SetAlpha()
 	m_lpUpperLimit->Alpha(m_fltAlpha);
 	m_lpLowerLimit->Alpha(m_fltAlpha);
 	m_lpPosFlap->Alpha(m_fltAlpha);
-
-	if(m_osgCylinderMat.valid() && m_osgCylinderSS.valid())
-		SetMaterialAlpha(m_osgCylinderMat.get(), m_osgCylinderSS.get(), m_fltAlpha);
-
-}
-
-void VsPrismatic::CreateCylinderGraphics()
-{
-	//Create the cylinder for the Prismatic
-	m_osgCylinder = CreateConeGeometry(CylinderHeight(), CylinderRadius(), CylinderRadius(), 10, true, true, true);
-	osg::ref_ptr<osg::Geode> osgCylinder = new osg::Geode;
-	osgCylinder->addDrawable(m_osgCylinder.get());
-
-	CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
-	m_osgCylinderMT = new osg::MatrixTransform();
-	m_osgCylinderMT->setMatrix(SetupMatrix(vPos, vRot));
-	m_osgCylinderMT->addChild(osgCylinder.get());
-
-	//create a material to use with the pos flap
-	if(!m_osgCylinderMat.valid())
-		m_osgCylinderMat = new osg::Material();		
-
-	//create a stateset for this node
-	m_osgCylinderSS = m_osgCylinderMT->getOrCreateStateSet();
-
-	//set the diffuse property of this node to the color of this body	
-	m_osgCylinderMat->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.1, 0.1, 0.1, 1));
-	m_osgCylinderMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(1, 0.25, 1, 1));
-	m_osgCylinderMat->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(0.25, 0.25, 0.25, 1));
-	m_osgCylinderMat->setShininess(osg::Material::FRONT_AND_BACK, 64);
-	m_osgCylinderSS->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
-
-	//apply the material
-	m_osgCylinderSS->setAttribute(m_osgCylinderMat.get(), osg::StateAttribute::ON);
 }
 
 void VsPrismatic::SetupGraphics()
@@ -160,8 +126,6 @@ void VsPrismatic::SetupGraphics()
 
 	if(m_osgParent.valid())
 	{
-		CreateCylinderGraphics();
-
 		VsPrismaticLimit *lpUpperLimit = dynamic_cast<VsPrismaticLimit *>(m_lpUpperLimit);
 		VsPrismaticLimit *lpLowerLimit = dynamic_cast<VsPrismaticLimit *>(m_lpLowerLimit);
 		VsPrismaticLimit *lpPosFlap = dynamic_cast<VsPrismaticLimit *>(m_lpPosFlap);
@@ -178,10 +142,13 @@ void VsPrismatic::SetupGraphics()
 		osg::ref_ptr<osg::MatrixTransform> m_osgPrismaticMT = new osg::MatrixTransform();
 		m_osgPrismaticMT->setMatrix(SetupMatrix(vPos, vRot));
 
-		m_osgPrismaticMT->addChild(m_osgCylinderMT.get());
-		m_osgPrismaticMT->addChild(lpUpperLimit->BoxTranslateMT());
-		m_osgPrismaticMT->addChild(lpLowerLimit->BoxTranslateMT());
-		m_osgPrismaticMT->addChild(lpPosFlap->BoxTranslateMT());
+		m_osgPrismaticMT->addChild(lpUpperLimit->BoxMT());
+		m_osgPrismaticMT->addChild(lpUpperLimit->CylinderMT());
+
+		m_osgPrismaticMT->addChild(lpLowerLimit->BoxMT());
+		m_osgPrismaticMT->addChild(lpLowerLimit->CylinderMT());
+
+		m_osgPrismaticMT->addChild(lpPosFlap->BoxMT());
 
 		m_osgNode = m_osgPrismaticMT.get();
 

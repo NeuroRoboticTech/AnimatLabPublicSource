@@ -18,17 +18,10 @@ namespace VortexAnimatSim
 			protected:
 				Vx::VxPrismatic *m_vxPrismatic;
 
-				//Graphics objects for the hinge drawing code
-				osg::ref_ptr<osg::Geometry> m_osgCylinder;
-				osg::ref_ptr<osg::MatrixTransform> m_osgCylinderMT;
-				osg::ref_ptr<osg::Material> m_osgCylinderMat;
-				osg::ref_ptr<osg::StateSet> m_osgCylinderSS;
-
 				osg::ref_ptr<osg::MatrixTransform> m_osgPrismaticMT;
 
 				virtual void SetupPhysics();
 				virtual void DeletePhysics();
-				virtual void CreateCylinderGraphics();
 				virtual void ResetGraphicsAndPhysics();
 
 			public:

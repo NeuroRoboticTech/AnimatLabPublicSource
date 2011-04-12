@@ -42,20 +42,11 @@ namespace AnimatSim
 				/// Pointer to a constraint that is used to represent the position flap.
 				ConstraintLimit *m_lpPosFlap;
 
-				/**
-				\brief	Creates the cylinder graphics for the axis of movement.
-				
-				\author	dcofer
-				\date	4/7/2011
-				**/
-				virtual void CreateCylinderGraphics() = 0;
-
 			public:
 				Prismatic();
 				virtual ~Prismatic();
 
 				float CylinderRadius();
-				float CylinderHeight();
 				float BoxSize();
 
 				virtual void Enabled(BOOL bValue);
