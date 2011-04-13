@@ -242,6 +242,7 @@ void VsHinge::SetupPhysics()
 	VxVector3 axis = NormalizeAxis(vLocalRot);
 
 	m_vxHinge = new VxHinge(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
+	m_vxHinge->setName(m_strID.c_str());
 
 	//lpAssem->addConstraint(m_vxHinge);
 	lpVsSim->Universe()->addConstraint(m_vxHinge);

@@ -70,12 +70,15 @@ void VsMotorizedJoint::Physics_SetVelocityToDesired()
 		m_lpThisMotorJoint->DesiredVelocity(0);
 
 		//Only do anything if the velocity value has changed
-		if( fabs(m_lpThisJoint->JointVelocity() - fltSetVelocity) > 1e-4)
+		if(m_vxJoint && fabs(m_lpThisJoint->JointVelocity() - fltSetVelocity) > 1e-4)
 		{
 			if(fabs(fltSetVelocity) > 1e-4 && m_vxJoint)
 				m_vxJoint->setMotorDesiredVelocity(m_iCoordID, fltSetVelocity);
 			else
-				m_lpThisMotorJoint->EnableLock(TRUE, m_lpThisJoint->JointPosition(), fltMaxForce);
+			{
+				if(m_vxJoint->getControl(m_iCoordID) != Vx::VxConstraint::CoordinateControlEnum::kControlLocked)
+					m_lpThisMotorJoint->EnableLock(TRUE, m_vxJoint->getCoordinateCurrentPosition(m_iCoordID), fltMaxForce);
+			}
 		}
 
 		m_lpThisMotorJoint->PrevVelocity(fltSetVelocity);
@@ -109,11 +112,9 @@ void VsMotorizedJoint::Physics_EnableMotor(BOOL bOn, float fltDesiredVelocity, f
 			if(m_vxJoint->getControl(m_iCoordID) != Vx::VxConstraint::CoordinateControlEnum::kControlMotorized)
 				m_vxJoint->setControl(m_iCoordID, Vx::VxConstraint::CoordinateControlEnum::kControlMotorized);
 
+			float fltForce = m_lpThisMotorJoint->MaxForce();
+			m_vxJoint->setMotorMaximumForce(m_iCoordID, fltForce);
 			m_vxJoint->setMotorDesiredVelocity(m_iCoordID, fltDesiredVelocity);
-
-			//DWC Need to fix the stuff to set the min/max force for motor. Does not work right now.
-			//m_vxJoint->setMotorParameters(m_iCoordID, fltDesiredVelocity, -fltMaxForce, fltMaxForce);
-			//turn on the motor (disabling lock or free mode)
 		}
 		else
 			m_vxJoint->setControl(m_iCoordID, Vx::VxConstraint::CoordinateControlEnum::kControlFree);

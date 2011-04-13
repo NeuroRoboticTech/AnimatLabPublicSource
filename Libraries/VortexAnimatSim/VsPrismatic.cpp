@@ -227,6 +227,7 @@ void VsPrismatic::SetupPhysics()
 	VxVector3 axis = NormalizeAxis(vLocalRot);
 
 	m_vxPrismatic = new VxPrismatic(lpVsParent->Part(), lpVsChild->Part(), pos.v, axis.v); 
+	m_vxPrismatic->setName(m_strID.c_str());
 
 	//lpAssem->addConstraint(m_vxPrismatic);
 	lpVsSim->Universe()->addConstraint(m_vxPrismatic);
