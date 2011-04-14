@@ -2993,6 +2993,7 @@ Namespace Forms
                 frmChild.TabPage = tabPage
             Else
                 frmChild.TabPage = New Crownwood.DotNetMagic.Controls.TabPage(frmChild.Title, frmChild)
+                frmChild.TabPage.Selected = True
                 Me.AnimatTabbedGroups.ActiveLeaf.TabPages.Add(frmChild.TabPage)
             End If
 
@@ -3002,6 +3003,7 @@ Namespace Forms
             Me.SortedChildForms.Add(frmChild.ID, frmChild)
             Me.ChildForms.Add(frmChild)
 
+            'frmChild
         End Sub
 
         Public Overridable Sub RemoveChildForm(ByRef frmChild As Forms.ExternalFileForm)

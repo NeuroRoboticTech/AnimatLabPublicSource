@@ -313,8 +313,8 @@ Namespace Forms
 
         Public Overridable Sub AddToSimulation()
 
-            Dim frmAnimat As AnimatForm = DirectCast(Me.Control, AnimatForm)
-            frmAnimat.AddToSimulation()
+            'Dim frmAnimat As AnimatForm = DirectCast(Me.Control, AnimatForm)
+            'frmAnimat.AddToSimulation()
 
             'If Not m_frmControl Is Nothing AndAlso m_frmControl.UseDocking Then
             '    'First lets save all Docking Forms associated with this application.
@@ -330,8 +330,8 @@ Namespace Forms
 
         Public Overridable Sub RemoveFromSimulation()
 
-            Dim frmAnimat As AnimatForm = DirectCast(Me.Control, AnimatForm)
-            frmAnimat.RemoveFromSimulation()
+            'Dim frmAnimat As AnimatForm = DirectCast(Me.Control, AnimatForm)
+            'frmAnimat.RemoveFromSimulation()
 
             'If Not m_frmControl Is Nothing AndAlso m_frmControl.UseDocking Then
             '    'First lets save all Docking Forms associated with this application.

@@ -392,12 +392,6 @@ Namespace Forms
             Return oXml.Serialize()
         End Function
 
-        Public Overridable Sub AddToSimulation()
-        End Sub
-
-        Public Overridable Sub RemoveFromSimulation()
-        End Sub
-
         Public Overridable Sub OnBeforeFormAdded()
         End Sub
 

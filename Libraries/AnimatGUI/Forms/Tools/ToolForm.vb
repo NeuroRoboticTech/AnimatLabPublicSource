@@ -141,25 +141,6 @@ Namespace Forms.Tools
         Protected Overridable Sub DroppedDragData(ByVal doDrag As Framework.DataDragHelper)
         End Sub
 
-        Public Overrides Sub AddToSimulation()
-
-            'If we do not find a datachart with this id then add one.
-            If Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
-                Dim strXml As String = Me.GetSimulationXml("DataChart")
-                Util.Application.SimulationInterface.AddItem("Simulator", "DataChart", strXml, True)
-            End If
-
-        End Sub
-
-        Public Overrides Sub RemoveFromSimulation()
-
-            'If we do not find a datachart with this id then add one.
-            If Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
-                Util.Application.SimulationInterface.RemoveItem("Simulator", "DataChart", Me.ID, True)
-            End If
-
-        End Sub
-
         Public Overloads Overrides Sub LoadExternalFile(ByVal strFilename As String)
             MyBase.LoadExternalFile(strFilename)
 
@@ -191,6 +172,22 @@ Namespace Forms.Tools
 #End Region
 
 #Region " Events "
+
+        Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
+
+            Try
+                'If we do not find a datachart with this id then add one.
+                If Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
+                    Dim strXml As String = Me.GetSimulationXml("DataChart")
+                    Util.Application.SimulationInterface.AddItem("Simulator", "DataChart", strXml, True)
+                    InitializeSimulationReferences()
+                End If
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Sub
 
         Protected Overrides Sub OnFormClosing(ByVal e As System.Windows.Forms.FormClosingEventArgs)
             MyBase.OnFormClosing(e)
