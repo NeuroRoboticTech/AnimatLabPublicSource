@@ -31,18 +31,24 @@ namespace AnimatSim
 				///This should be normalized.
 				CStdFPoint m_oConstraintAxis;
 
-				///This is the minimum radian value that the joint can rotate about its axis.
-				///Its orginal position is used as zero radians.
-				float m_fltConstraintAngle;
+				/////This is the minimum radian value that the joint can rotate about its axis.
+				/////Its orginal position is used as zero radians.
+				//float m_fltConstraintAngle;
 
-				///This is the maximum radian value that the joint can rotate about its axis.
-				///Its orginal position is used as zero radians.
-				float m_fltStiffness;
-				float m_fltDamping;
+				/////This is the maximum radian value that the joint can rotate about its axis.
+				/////Its orginal position is used as zero radians.
+				//float m_fltStiffness;
+
+				///// The  damping
+				//float m_fltDamping;
 
 			public:
 				BallSocket();
 				virtual ~BallSocket();
+
+				float CylinderRadius();
+				float CylinderHeight();
+				float BallRadius();
 
 				virtual void Load(CStdXml &oXml);
 			};

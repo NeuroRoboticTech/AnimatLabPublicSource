@@ -41,10 +41,32 @@ namespace VortexAnimatSim
 			osg::Matrix m_osgChildOffsetMatrix;
 			osg::ref_ptr< osg::MatrixTransform> m_osgChildOffsetMT;
 
+#pragma region DefaultBallGraphicsItems
+
+			//Graphics objects for the default joint drawing code
+			/// The osg default ball geometry.
+			osg::ref_ptr<osg::Geometry> m_osgDefaultBall;
+
+			/// The osg default ball matrix transform.
+			osg::ref_ptr<osg::MatrixTransform> m_osgDefaultBallMT;
+
+			/// The osg default ball material.
+			osg::ref_ptr<osg::Material> m_osgDefaultBallMat;
+
+			/// The osg default ball state set.
+			osg::ref_ptr<osg::StateSet> m_osgDefaultBallSS;
+
+			/// The osg joint matrix transform.
+			osg::ref_ptr<osg::MatrixTransform> m_osgJointMT;
+
+#pragma endregion
+
+
 			Joint *m_lpThisJoint;
 
 			void UpdatePosition();
 
+			virtual void CreateDefaultBallGraphics();
 			virtual void SetupGraphics();
 			virtual void SetupPhysics();
 			virtual void DeletePhysics() {};
@@ -61,11 +83,14 @@ namespace VortexAnimatSim
 			virtual osg::Group *ParentOSG();
 			virtual osg::Group *ChildOSG();
 
+			virtual void SetAlpha();
+
 			virtual void Initialize();
 			virtual void SetBody();
 			virtual void Physics_ResetSimulation();
 			virtual void Physics_CollectBodyData();
 			virtual float *Physics_GetDataPointer(string strDataType);
+			virtual BOOL Physics_SetData(string strDataType, string strValue);
 
 			virtual Vx::VxConstraint* Constraint() {return m_vxJoint;};
 			virtual Vx::VxConstraint::CoordinateID CoordinateID() {return m_iCoordID;};

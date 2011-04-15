@@ -8,7 +8,10 @@
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsSimulator.h"
+#include "VsOsgUserData.h"
+#include "VsOsgUserDataVisitor.h"
 #include "VsDragger.h"
+
 
 namespace VortexAnimatSim
 {
@@ -22,6 +25,7 @@ namespace VortexAnimatSim
 VsJoint::VsJoint()
 {
 	m_vxJoint = NULL;
+	m_iCoordID = -1; //-1 if not used.
 }
 
 VsJoint::~VsJoint()
@@ -61,20 +65,24 @@ void VsJoint::Physics_CollectBodyData()
 
 		UpdatePosition();
 
-		if(m_vxJoint->isAngular(m_iCoordID) == true)
+		//Only attempt to make these calls if the coordinate ID is a valid number.
+		if(m_iCoordID >= 0)
 		{
-			m_lpThisJoint->JointPosition(m_vxJoint->getCoordinateCurrentPosition (m_iCoordID)); 
-			m_lpThisJoint->JointVelocity(m_vxJoint->getCoordinateVelocity (m_iCoordID));
-			m_lpThisJoint->JointForce(m_vxJoint->getCoordinateForce (m_iCoordID));
-		}
-		else
-		{
-			float fltDistanceUnits = m_lpThis->GetSimulator()->DistanceUnits();
-			float fltMassUnits = m_lpThis->GetSimulator()->MassUnits();
+			if(m_vxJoint->isAngular(m_iCoordID) == true)
+			{
+				m_lpThisJoint->JointPosition(m_vxJoint->getCoordinateCurrentPosition (m_iCoordID)); 
+				m_lpThisJoint->JointVelocity(m_vxJoint->getCoordinateVelocity (m_iCoordID));
+				m_lpThisJoint->JointForce(m_vxJoint->getCoordinateForce (m_iCoordID));
+			}
+			else
+			{
+				float fltDistanceUnits = m_lpThis->GetSimulator()->DistanceUnits();
+				float fltMassUnits = m_lpThis->GetSimulator()->MassUnits();
 
-			m_lpThisJoint->JointPosition(m_vxJoint->getCoordinateCurrentPosition (m_iCoordID) * fltDistanceUnits); 
-			m_lpThisJoint->JointVelocity(m_vxJoint->getCoordinateVelocity(m_iCoordID) * fltDistanceUnits);
-			m_lpThisJoint->JointForce(m_vxJoint->getCoordinateForce(m_iCoordID) * fltMassUnits * fltDistanceUnits);
+				m_lpThisJoint->JointPosition(m_vxJoint->getCoordinateCurrentPosition (m_iCoordID) * fltDistanceUnits); 
+				m_lpThisJoint->JointVelocity(m_vxJoint->getCoordinateVelocity(m_iCoordID) * fltDistanceUnits);
+				m_lpThisJoint->JointForce(m_vxJoint->getCoordinateForce(m_iCoordID) * fltMassUnits * fltDistanceUnits);
+			}
 		}
 	}
 }
@@ -111,8 +119,102 @@ osg::Group *VsJoint::ChildOSG()
 	return NULL;
 }
 
+void VsJoint::SetAlpha()
+{
+	VsBody::SetAlpha();
+
+	if(m_osgDefaultBallMat.valid() && m_osgDefaultBallSS.valid())
+		SetMaterialAlpha(m_osgDefaultBallMat.get(), m_osgDefaultBallSS.get(), m_lpThis->Alpha());
+}
+
+/**
+\brief	Creates the default ball graphics.
+
+\author	dcofer
+\date	4/15/2011
+**/
+void VsJoint::CreateDefaultBallGraphics()
+{
+	//Create the cylinder for the hinge
+	m_osgDefaultBall = CreateSphereGeometry(15, 15, m_lpThisJoint->Size());
+	osg::ref_ptr<osg::Geode> osgBall = new osg::Geode;
+	osgBall->addDrawable(m_osgDefaultBall.get());
+
+	CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
+	m_osgDefaultBallMT = new osg::MatrixTransform();
+	m_osgDefaultBallMT->setMatrix(SetupMatrix(vPos, vRot));
+	m_osgDefaultBallMT->addChild(osgBall.get());
+
+	//create a material to use with the pos flap
+	if(!m_osgDefaultBallMat.valid())
+		m_osgDefaultBallMat = new osg::Material();		
+
+	//create a stateset for this node
+	m_osgDefaultBallSS = m_osgDefaultBallMT->getOrCreateStateSet();
+
+	//set the diffuse property of this node to the color of this body	
+	m_osgDefaultBallMat->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(0.1, 0.1, 0.1, 1));
+	m_osgDefaultBallMat->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(1, 0.25, 1, 1));
+	m_osgDefaultBallMat->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(0.25, 0.25, 0.25, 1));
+	m_osgDefaultBallMat->setShininess(osg::Material::FRONT_AND_BACK, 64);
+	m_osgDefaultBallSS->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
+
+	//apply the material
+	m_osgDefaultBallSS->setAttribute(m_osgDefaultBallMat.get(), osg::StateAttribute::ON);
+}
+
+
+/**
+\brief	Sets up the graphics for the joint.
+
+\detail This base joint class sets up a default ball graphics object. A few of the joint
+classes do not have any special graphics associated with them, so simply knowing where the joint
+is located is enough, and a ball to define that position is sufficient. This base code creates
+that graphics so that each derived class does not have to. If a joint does need special 
+graphics then just override this function and define it yourself, but do not call this base method.
+
+\author	dcofer
+\date	4/15/2011
+**/
 void VsJoint::SetupGraphics()
 {
+	//The parent osg object for the joint is actually the child rigid body object.
+	m_osgParent = ParentOSG();
+	osg::ref_ptr<osg::Group> osgChild = ChildOSG();
+
+	if(m_osgParent.valid())
+	{
+		//Create the sphere.
+		CreateDefaultBallGraphics();
+
+		//Add the parts to the group node.
+		CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
+		vPos.Set(0, 0, 0); vRot.Set(0, VX_PI/2, 0); 
+		
+		m_osgJointMT = new osg::MatrixTransform();
+		m_osgJointMT->setMatrix(SetupMatrix(vPos, vRot));
+
+		m_osgJointMT->addChild(m_osgDefaultBallMT.get());
+
+		m_osgNode = m_osgJointMT.get();
+
+		VsBody::BuildLocalMatrix();
+
+		SetAlpha();
+		SetCulling();
+		SetVisible(m_lpThis->IsVisible());
+
+		//Add it to the scene graph.
+		m_osgParent->addChild(m_osgRoot.get());
+
+		//Set the position with the world coordinates.
+		m_lpThis->AbsolutePosition(VsBody::GetOSGWorldCoords());
+
+		//We need to set the UserData on the OSG side so we can do picking.
+		//We need to use a node visitor to set the user data for all drawable nodes in all geodes for the group.
+		osg::ref_ptr<VsOsgUserDataVisitor> osgVisitor = new VsOsgUserDataVisitor(this);
+		osgVisitor->traverse(*m_osgMT);
+	}
 }
 
 void VsJoint::SetupPhysics()
@@ -222,6 +324,19 @@ void VsJoint::Physics_ResetSimulation()
 		m_lpThisJoint->JointVelocity(0);
 		m_lpThisJoint->JointForce(0);
 	}
+}
+
+
+BOOL VsJoint::Physics_SetData(string strDataType, string strValue)
+{
+
+	if(strDataType == "ATTACHEDPARTMOVEDORROTATED")
+	{
+		AttachedPartMovedOrRotated(strValue);
+		return true;
+	}
+
+	return FALSE;
 }
 
 	}			// Environment

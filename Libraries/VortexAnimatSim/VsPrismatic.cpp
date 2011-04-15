@@ -139,18 +139,18 @@ void VsPrismatic::SetupGraphics()
 		//Add the parts to the group node.
 		CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
 		vPos.Set(0, 0, 0); vRot.Set(0, VX_PI/2, 0); 
-		osg::ref_ptr<osg::MatrixTransform> m_osgPrismaticMT = new osg::MatrixTransform();
-		m_osgPrismaticMT->setMatrix(SetupMatrix(vPos, vRot));
+		m_osgJointMT = new osg::MatrixTransform();
+		m_osgJointMT->setMatrix(SetupMatrix(vPos, vRot));
 
-		m_osgPrismaticMT->addChild(lpUpperLimit->BoxMT());
-		m_osgPrismaticMT->addChild(lpUpperLimit->CylinderMT());
+		m_osgJointMT->addChild(lpUpperLimit->BoxMT());
+		m_osgJointMT->addChild(lpUpperLimit->CylinderMT());
 
-		m_osgPrismaticMT->addChild(lpLowerLimit->BoxMT());
-		m_osgPrismaticMT->addChild(lpLowerLimit->CylinderMT());
+		m_osgJointMT->addChild(lpLowerLimit->BoxMT());
+		m_osgJointMT->addChild(lpLowerLimit->CylinderMT());
 
-		m_osgPrismaticMT->addChild(lpPosFlap->BoxMT());
+		m_osgJointMT->addChild(lpPosFlap->BoxMT());
 
-		m_osgNode = m_osgPrismaticMT.get();
+		m_osgNode = m_osgJointMT.get();
 
 		VsBody::BuildLocalMatrix();
 
@@ -295,12 +295,8 @@ float *VsPrismatic::GetDataPointer(string strDataType)
 
 BOOL VsPrismatic::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
-
-	if(strDataType == "ATTACHEDPARTMOVEDORROTATED")
-	{
-		AttachedPartMovedOrRotated(strValue);
+	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;
-	}
 
 	if(Prismatic::SetData(strDataType, strValue, FALSE))
 		return true;

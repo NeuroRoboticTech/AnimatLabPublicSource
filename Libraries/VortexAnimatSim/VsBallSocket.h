@@ -1,13 +1,10 @@
-// VsBallSocket.h: interface for the VsBallSocket class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	VsBallSocket.h
 
-#if !defined(AFX_VSBALLSOCKETJOINT_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_)
-#define AFX_VSBALLSOCKETJOINT_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_
+\brief	Declares the vortex ball socket class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace VortexAnimatSim
 {
@@ -15,26 +12,43 @@ namespace VortexAnimatSim
 	{
 		namespace Joints
 		{
+			/**
+			\brief	Vortex ball-and-socket joint class.
 
+			\details This class implements a spherical, or ball and socket joint.
+			This type of joint prevents linear motion for all three dimensions, but
+			allows angular motion around all three axises. This type of joint does
+			not have any contraint limits available for it. To prevent motion for
+			this joint you must use rigid bodies within the simulation to constrain
+			the movement. This joit type also is not motorized. It can only be passively
+			moved, or it can be controlled through muscle movements.
+			
+			\author	dcofer
+			\date	4/15/2011
+			**/
 			class VORTEX_PORT VsBallSocket : public VsJoint, public AnimatSim::Environment::Joints::BallSocket     
 			{
 			protected:
+				/// The vortex socket class.
 				Vx::VxBallAndSocket *m_vxSocket;
 
-				virtual void SetVelocityToDesired();
+				virtual void SetupPhysics();
+				virtual void DeletePhysics();
+				virtual void ResetGraphicsAndPhysics();
 
 			public:
 				VsBallSocket();
 				virtual ~VsBallSocket();
 
-				//virtual void Selected(BOOL bValue, BOOL bSelectMultiple); 
+#pragma region DataAccesMethods
 
-				virtual void EnableMotor(BOOL bVal);
+				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+
+#pragma endregion
+
 				virtual void CreateJoint();
 			};
 
 		}		//Joints
 	}			// Environment
 }				//VortexAnimatSim
-
-#endif // !defined(AFX_VSBALLSOCKETJOINT_H__FB4AFDAA_982E_4893_83F3_05BFF60F5643__INCLUDED_)

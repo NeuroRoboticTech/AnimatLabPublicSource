@@ -1,3 +1,8 @@
+/**
+\file	VsHinge.cpp
+
+\brief	Implements the vortex hinge class.
+**/
 
 #include "StdAfx.h"
 #include "VsBody.h"
@@ -18,6 +23,12 @@ namespace VortexAnimatSim
 		namespace Joints
 		{
 
+/**
+\brief	Default constructor.
+
+\author	dcofer
+\date	4/15/2011
+**/
 VsHinge::VsHinge()
 {
 	m_lpThis = this;
@@ -45,6 +56,12 @@ VsHinge::VsHinge()
 	m_lpUpperLimit->IsLowerLimit(FALSE);
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	4/15/2011
+**/
 VsHinge::~VsHinge()
 {
 	//ConstraintLimits are deleted in the base objects.
@@ -90,7 +107,6 @@ void VsHinge::JointPosition(float fltPos)
 		m_lpPosFlap->LimitPos(fltPos);
 }
 
-
 void VsHinge::SetAlpha()
 {
 	VsJoint::SetAlpha();
@@ -104,6 +120,12 @@ void VsHinge::SetAlpha()
 
 }
 
+/**
+\brief	Creates the cylinder graphics.
+
+\author	dcofer
+\date	4/15/2011
+**/
 void VsHinge::CreateCylinderGraphics()
 {
 	//Create the cylinder for the hinge
@@ -157,15 +179,16 @@ void VsHinge::SetupGraphics()
 		//Add the parts to the group node.
 		CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
 		vPos.Set(0, 0, 0); vRot.Set(0, VX_PI/2, 0); 
-		osg::ref_ptr<osg::MatrixTransform> m_osgHingeMT = new osg::MatrixTransform();
-		m_osgHingeMT->setMatrix(SetupMatrix(vPos, vRot));
+		
+		m_osgJointMT = new osg::MatrixTransform();
+		m_osgJointMT->setMatrix(SetupMatrix(vPos, vRot));
 
-		m_osgHingeMT->addChild(m_osgCylinderMT.get());
-		m_osgHingeMT->addChild(lpUpperLimit->FlapTranslateMT());
-		m_osgHingeMT->addChild(lpLowerLimit->FlapTranslateMT());
-		m_osgHingeMT->addChild(lpPosFlap->FlapTranslateMT());
+		m_osgJointMT->addChild(m_osgCylinderMT.get());
+		m_osgJointMT->addChild(lpUpperLimit->FlapTranslateMT());
+		m_osgJointMT->addChild(lpLowerLimit->FlapTranslateMT());
+		m_osgJointMT->addChild(lpPosFlap->FlapTranslateMT());
 
-		m_osgNode = m_osgHingeMT.get();
+		m_osgNode = m_osgJointMT.get();
 
 		VsBody::BuildLocalMatrix();
 
@@ -312,12 +335,8 @@ float *VsHinge::GetDataPointer(string strDataType)
 
 BOOL VsHinge::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
-
-	if(strDataType == "ATTACHEDPARTMOVEDORROTATED")
-	{
-		AttachedPartMovedOrRotated(strValue);
+	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;
-	}
 
 	if(Hinge::SetData(strDataType, strValue, FALSE))
 		return true;

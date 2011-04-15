@@ -18,8 +18,7 @@ namespace VortexAnimatSim
 			protected:
 				Vx::VxPrismatic *m_vxPrismatic;
 
-				osg::ref_ptr<osg::MatrixTransform> m_osgPrismaticMT;
-
+				virtual void SetupGraphics();
 				virtual void SetupPhysics();
 				virtual void DeletePhysics();
 				virtual void ResetGraphicsAndPhysics();
@@ -31,7 +30,6 @@ namespace VortexAnimatSim
 				virtual void Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
 				virtual void JointPosition(float fltPos);
 
-				virtual void SetupGraphics();
 				virtual void SetAlpha();
 
 #pragma region DataAccesMethods
