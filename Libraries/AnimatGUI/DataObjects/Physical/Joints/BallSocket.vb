@@ -49,7 +49,7 @@ Namespace DataObjects.Physical.Joints
 
         Public Overrides ReadOnly Property UsesRadians() As Boolean
             Get
-                Return False
+                Return True
             End Get
         End Property
 
