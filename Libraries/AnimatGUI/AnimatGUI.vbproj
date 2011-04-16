@@ -394,6 +394,7 @@
     <Compile Include="DataObjects\Physical\Joints\Hinge.vb" />
     <Compile Include="DataObjects\Physical\Joints\Prismatic.vb" />
     <Compile Include="DataObjects\Physical\Joints\StaticJoint.vb" />
+    <Compile Include="DataObjects\Physical\Joints\Universal.vb" />
     <Compile Include="DataObjects\Physical\Odor.vb">
       <SubType>Code</SubType>
     </Compile>
