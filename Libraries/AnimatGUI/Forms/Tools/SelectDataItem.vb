@@ -272,6 +272,14 @@ Namespace Forms.Tools
                     Throw New System.Exception("The name of the data column must not be blank")
                 End If
 
+                If m_doDataColumn.DataItem Is Nothing Then
+                    Throw New System.Exception("A data item must be set!")
+                End If
+
+                If Not m_doDataColumn.DataItem.CanBeCharted Then
+                    Throw New System.Exception("Please select a data item that can be charted.")
+                End If
+
                 If m_doDataColumn.DataType Is Nothing OrElse m_doDataColumn.DataType.Value Is Nothing OrElse m_doDataColumn.DataType.Value Is Nothing Then
                     Throw New System.Exception("Please select a data type for this data item.")
                 End If
@@ -293,7 +301,12 @@ Namespace Forms.Tools
                         Dim doDrag As DataObjects.DragObject = DirectCast(tvStructures.SelectedNode.Tag, DataObjects.DragObject)
                         m_doDataColumn = m_doColumnType.CreateDataColumn(doDrag, False)
                         m_doDataColumn.SelectionInProgress = True  'Make sure that any property changes do not cause the chart to update
-                        ctrlProperties.SelectedObject = m_doDataColumn.Properties()
+
+                        If doDrag.CanBeCharted Then
+                            ctrlProperties.SelectedObject = m_doDataColumn.Properties()
+                        Else
+                            ctrlProperties.SelectedObject = Nothing
+                        End If
                     Else
                         m_doDataColumn = Nothing
                         ctrlProperties.SelectedObject = Nothing
