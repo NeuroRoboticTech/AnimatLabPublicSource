@@ -73,20 +73,8 @@ Namespace DataObjects.Physical.Joints
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyPositionX", "Position X Axis", "Meters", "m", -10, 10))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyPositionY", "Position Y Axis", "Meters", "m", -10, 10))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyPositionZ", "Position Z Axis", "Meters", "m", -10, 10))
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("PrimaryAxisDisplacement", "Primary Axis Displacement", "Meters", "m", -10, 10))
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("SecondaryAxisDisplacement", "Secondary Axis Displacement", "Meters", "m", -10, 10))
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ThirdAxisDisplacement", "Third Axis Displacement", "Meters", "m", -10, 10))
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("RotationAboutPrimary", "Rotation about Primary Axis", "Radians", "rad", -3.14, 3.14))
             m_thDataTypes.ID = "BodyPositionX"
 
-        End Sub
-
-        Public Overrides Sub InitAfterAppStart()
-            MyBase.InitAfterAppStart()
-        End Sub
-
-        Public Overrides Sub ClearIsDirty()
-            MyBase.ClearIsDirty()
         End Sub
 
         Public Overrides Sub SetDefaultSizes()
@@ -100,57 +88,6 @@ Namespace DataObjects.Physical.Joints
             Return oNewNode
         End Function
 
-        Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
-                                            ByVal doRoot As AnimatGUI.Framework.DataObject)
-            MyBase.CloneInternal(doOriginal, bCutData, doRoot)
-
-            Dim doOrig As Joints.Universal = DirectCast(doOriginal, Joints.Universal)
-
-            m_snSize = DirectCast(doOrig.m_snSize.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
-        End Sub
-
-        Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
-
-        End Sub
-
-        Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
-            MyBase.BuildProperties(propTable)
-
-            'Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag
-
-
-        End Sub
-
-
-        Public Overloads Overrides Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
-            MyBase.LoadData(doStructure, oXml)
-
-            oXml.IntoElem() 'Into Joint Element
-
-
-            oXml.OutOfElem() 'Outof Joint Element
-
-        End Sub
-
-        Public Overloads Overrides Sub SaveData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
-            MyBase.SaveData(doStructure, oXml)
-
-            oXml.IntoElem() 'Into Joint Elemement
-
-            oXml.OutOfElem() 'Outof Joint Element
-
-        End Sub
-
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
-            MyBase.SaveSimulationXml(oXml, nmParentControl, strName)
-
-            oXml.IntoElem()
-
-
-            oXml.OutOfElem()
-
-        End Sub
 
     End Class
 

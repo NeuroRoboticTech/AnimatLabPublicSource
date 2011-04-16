@@ -14,7 +14,7 @@ Imports AnimatGUI.Framework
 
 Namespace DataObjects.Physical.Joints
 
-    Public Class BallSocket
+    Public Class Distance
         Inherits Physical.Joint
 
 #Region " Attributes "
@@ -37,19 +37,24 @@ Namespace DataObjects.Physical.Joints
 
         Public Overrides ReadOnly Property Type() As String
             Get
-                Return "BallSocket"
+                Return "Distance"
             End Get
         End Property
 
         Public Overrides ReadOnly Property PartType() As System.Type
             Get
-                Return GetType(AnimatGUI.DataObjects.Physical.Joints.BallSocket)
+                Return GetType(AnimatGUI.DataObjects.Physical.Joints.Distance)
             End Get
         End Property
 
-        Public Overrides ReadOnly Property UsesRadians() As Boolean
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property ModuleName() As String
             Get
-                Return True
+#If Not Debug Then
+                Return "VortexAnimatPrivateSim_VC9.dll"
+#Else
+                Return "VortexAnimatPrivateSim_VC9D.dll"
+#End If
             End Get
         End Property
 
@@ -71,17 +76,23 @@ Namespace DataObjects.Physical.Joints
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As Framework.DataObject, ByVal bCutData As Boolean, ByVal doRoot As Framework.DataObject) As Framework.DataObject
-            Dim oNewNode As New Joints.BallSocket(doParent)
+            Dim oNewNode As New Joints.Distance(doParent)
             oNewNode.CloneInternal(Me, bCutData, doRoot)
             If Not doRoot Is Nothing AndAlso doRoot Is Me Then oNewNode.AfterClone(Me, bCutData, doRoot, oNewNode)
             Return oNewNode
         End Function
 
-        Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
-                                            ByVal doRoot As AnimatGUI.Framework.DataObject)
-            MyBase.CloneInternal(doOriginal, bCutData, doRoot)
+        Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
 
-            Dim doOrig As Joints.BallSocket = DirectCast(doOriginal, Joints.BallSocket)
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Name", m_strID.GetType(), "Name", _
+                                        "Part Properties", "The name of this item.", m_strName))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("ID", Me.ID.GetType(), "ID", _
+                                        "Part Properties", "ID", Me.ID, True))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Description", m_strDescription.GetType(), "Description", _
+                                        "Part Properties", "Sets the description for this body part.", m_strDescription, _
+                                        GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
 
         End Sub
 

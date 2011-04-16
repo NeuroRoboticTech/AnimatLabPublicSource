@@ -40,6 +40,7 @@
 #include "Vx/VxBallAndSocket.h"
 #include "Vx/VxHomokinetic.h"
 #include "Vx/VxUniversal.h"
+#include "Vx/VxDistanceJoint.h"
 #include "Vx/VxSpring.h"
 
 #include "Vx/VxMaterialTable.h"

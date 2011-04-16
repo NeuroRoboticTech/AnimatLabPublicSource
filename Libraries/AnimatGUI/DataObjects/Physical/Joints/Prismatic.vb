@@ -229,7 +229,6 @@ Namespace DataObjects.Physical.Joints
             m_fltServoGain = doOrig.ServoGain
             m_snMaxForce = DirectCast(doOrig.m_snMaxForce.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_snMaxVelocity = DirectCast(doOrig.m_snMaxVelocity.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
-            m_snSize = DirectCast(doOrig.m_snSize.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()

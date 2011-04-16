@@ -78,15 +78,6 @@ Namespace DataObjects.Physical.Joints
             Return oNewNode
         End Function
 
-        Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
-                                            ByVal doRoot As AnimatGUI.Framework.DataObject)
-            MyBase.CloneInternal(doOriginal, bCutData, doRoot)
-
-            Dim doOrig As Joints.StaticJoint = DirectCast(doOriginal, Joints.StaticJoint)
-
-            m_snSize = DirectCast(doOrig.m_snSize.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
-        End Sub
-
         ''' \brief  Initializes the simulation references.
         ''' 		
         ''' \details I am overriding this method and doing nothing because there is no actual static joint class in the simulation code.
