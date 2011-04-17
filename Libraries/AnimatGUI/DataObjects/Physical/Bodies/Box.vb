@@ -23,6 +23,11 @@ Namespace DataObjects.Physical.Bodies
         Protected m_snHeight As AnimatGUI.Framework.ScaledNumber
         Protected m_snLength As AnimatGUI.Framework.ScaledNumber
 
+        Protected m_iWidthSections As Integer = 1
+        Protected m_iHeightSections As Integer = 1
+        Protected m_iLengthSections As Integer = 1
+
+
 #End Region
 
 #Region " Properties "
@@ -90,6 +95,45 @@ Namespace DataObjects.Physical.Bodies
             End Set
         End Property
 
+        Public Overridable Property LengthSections() As Integer
+            Get
+                Return m_iLengthSections
+            End Get
+            Set(ByVal value As Integer)
+                If value <= 0 Then
+                    Throw New System.Exception("The length sections of the box cannot be less than or equal to zero.")
+                End If
+                SetSimData("LengthSections", value.ToString, True)
+                m_iLengthSections = value
+            End Set
+        End Property
+
+        Public Overridable Property WidthSections() As Integer
+            Get
+                Return m_iWidthSections
+            End Get
+            Set(ByVal value As Integer)
+                If value <= 0 Then
+                    Throw New System.Exception("The width sections of the box cannot be less than or equal to zero.")
+                End If
+                SetSimData("WidthSections", value.ToString, True)
+                m_iWidthSections = value
+            End Set
+        End Property
+
+        Public Overridable Property HeightSections() As Integer
+            Get
+                Return m_iHeightSections
+            End Get
+            Set(ByVal value As Integer)
+                If value <= 0 Then
+                    Throw New System.Exception("The height sections of the box cannot be less than or equal to zero.")
+                End If
+                SetSimData("HeightSections", value.ToString, True)
+                m_iHeightSections = value
+            End Set
+        End Property
+
 #End Region
 
         Public Sub New(ByVal doParent As Framework.DataObject)
@@ -137,6 +181,9 @@ Namespace DataObjects.Physical.Bodies
             m_snWidth = DirectCast(doOrig.m_snWidth.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_snLength = DirectCast(doOrig.m_snLength.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
 
+            m_iWidthSections = doOrig.m_iWidthSections
+            m_iLengthSections = doOrig.m_iLengthSections
+            m_iHeightSections = doOrig.m_iHeightSections
         End Sub
 
         Public Overrides Sub SetDefaultSizes()
@@ -165,6 +212,15 @@ Namespace DataObjects.Physical.Bodies
                                         "Size", "Sets the height of the box.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Length Sections", Me.LengthSections.GetType(), "LengthSections", _
+                                        "Size", "The number of geometric sections to split the length of the box up by.", Me.LengthSections))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Width Sections", Me.LengthSections.GetType(), "WidthSections", _
+                                        "Size", "The number of geometric sections to split the width of the box up by.", Me.WidthSections))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Height Sections", Me.HeightSections.GetType(), "HeightSections", _
+                                        "Size", "The number of geometric sections to split the height of the box up by.", Me.HeightSections))
+
         End Sub
 
 
@@ -176,6 +232,10 @@ Namespace DataObjects.Physical.Bodies
             m_snLength.LoadData(oXml, "Length")
             m_snWidth.LoadData(oXml, "Width")
             m_snHeight.LoadData(oXml, "Height")
+
+            m_iLengthSections = oXml.GetChildInt("LengthSections", m_iLengthSections)
+            m_iWidthSections = oXml.GetChildInt("WidthSections", m_iWidthSections)
+            m_iHeightSections = oXml.GetChildInt("HeightSections", m_iHeightSections)
 
             oXml.OutOfElem() 'Outof RigidBody Element
 
@@ -190,6 +250,10 @@ Namespace DataObjects.Physical.Bodies
             m_snWidth.SaveData(oXml, "Width")
             m_snHeight.SaveData(oXml, "Height")
 
+            oXml.AddChildElement("LengthSections", m_iLengthSections)
+            oXml.AddChildElement("WidthSections", m_iWidthSections)
+            oXml.AddChildElement("HeightSections", m_iHeightSections)
+
             oXml.OutOfElem() 'Outof BodyPart Element
 
         End Sub
@@ -202,6 +266,10 @@ Namespace DataObjects.Physical.Bodies
             m_snLength.SaveSimulationXml(oXml, Me, "Length")
             m_snWidth.SaveSimulationXml(oXml, Me, "Width")
             m_snHeight.SaveSimulationXml(oXml, Me, "Height")
+
+            oXml.AddChildElement("LengthSections", m_iLengthSections)
+            oXml.AddChildElement("WidthSections", m_iWidthSections)
+            oXml.AddChildElement("HeightSections", m_iHeightSections)
 
             oXml.OutOfElem()
 

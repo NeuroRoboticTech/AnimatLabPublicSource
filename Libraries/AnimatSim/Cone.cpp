@@ -45,6 +45,7 @@ Cone::Cone()
 	m_fltLowerRadius = 1;
 	m_fltUpperRadius = 1;
 	m_fltHeight = 1;
+	m_iSides = 10;
 }
 
 /**
@@ -103,6 +104,31 @@ void Cone::Height(float fltVal, BOOL bUseScaling)
 
 	Resize();
 }
+/**
+\brief	Sets  the number of sides used to draw the cone.
+
+\author	dcofer
+\date	4/17/2011
+
+\param	iVal	The new value.
+**/
+void Cone::Sides(int iVal)
+{
+	Std_IsAboveMin((int) 10, iVal, TRUE, "Cone.Sides", TRUE);
+	m_iSides = iVal;
+
+	Resize();
+}
+
+/**
+\brief	Gets the number of sides used to draw the cone.
+
+\author	dcofer
+\date	4/17/2011
+
+\return	sections.
+**/
+int Cone::Sides() {return m_iSides;}
 
 BOOL Cone::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
@@ -129,6 +155,12 @@ BOOL Cone::SetData(string strDataType, string strValue, BOOL bThrowError)
 		return TRUE;
 	}
 
+	if(strType == "SIDES")
+	{
+		Sides(atoi(strValue.c_str()));
+		return TRUE;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -141,9 +173,12 @@ void Cone::Load(CStdXml &oXml)
 	RigidBody::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
+
 	LowerRadius(oXml.GetChildFloat("LowerRadius", m_fltLowerRadius));
 	UpperRadius(oXml.GetChildFloat("UpperRadius", m_fltUpperRadius));
 	Height(oXml.GetChildFloat("Height"), m_fltHeight);
+	Sides(oXml.GetChildInt("Sides", m_iSides));
+
 	oXml.OutOfElem(); //OutOf RigidBody Element
 
 	m_lpSim->HasConvexMesh(TRUE);

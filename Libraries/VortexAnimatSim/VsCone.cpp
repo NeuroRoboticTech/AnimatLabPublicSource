@@ -36,7 +36,7 @@ VsCone::~VsCone()
 
 void VsCone::CreateParts()
 {
-	m_osgGeometry = CreateConeGeometry(m_fltHeight, m_fltUpperRadius, m_fltLowerRadius, 50, true, true, true);
+	m_osgGeometry = CreateConeGeometry(m_fltHeight, m_fltUpperRadius, m_fltLowerRadius, m_iSides, true, true, true);
 	osg::Geode *osgGroup = new osg::Geode;
 	osgGroup->addDrawable(m_osgGeometry.get());
 
@@ -80,7 +80,7 @@ void VsCone::Resize()
 		m_osgGeometry.release();
 
 		//Create a new box geometry with the new sizes.
-		m_osgGeometry = CreateConeGeometry(m_fltHeight, m_fltUpperRadius, m_fltLowerRadius, 50, true, true, true);
+		m_osgGeometry = CreateConeGeometry(m_fltHeight, m_fltUpperRadius, m_fltLowerRadius, m_iSides, true, true, true);
 		m_osgGeometry->setName(m_lpThis->Name() + "_Geometry");
 
 		//Add it to the geode.

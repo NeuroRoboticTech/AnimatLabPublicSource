@@ -45,11 +45,20 @@ namespace AnimatSim
 				///The length dimension of the box.
 				float m_fltLength;
 
+				/// The number of sections to split the box length into.
+				int m_iLengthSections;
+
 				///The width dimension of the box.
 				float m_fltWidth;
 
+				/// The number of sections to split the box width into.
+				int m_iWidthSections;
+
 				///The height dimension of the box.
 				float m_fltHeight;
+
+				/// The number of sections to split the box height into.
+				int m_iHeightSections;
 
 			public:
 				Box();
@@ -117,6 +126,19 @@ namespace AnimatSim
 				\param	bUseScaling	true to use unit scaling on entered value. 
 				**/				
 				virtual void Height(float fltVal, BOOL bUseScaling = TRUE);
+
+				virtual void LengthSections(int iVal);
+				virtual int LengthSections();
+
+				virtual void WidthSections(int iVal);
+				virtual int WidthSections();
+
+				virtual void HeightSections(int iVal);
+				virtual int HeightSections();
+
+				virtual float LengthSegmentSize();
+				virtual float WidthSegmentSize();
+				virtual float HeightSegmentSize();
 
 				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 				virtual void Load(CStdXml &oXml);

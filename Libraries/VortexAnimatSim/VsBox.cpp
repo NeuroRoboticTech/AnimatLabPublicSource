@@ -37,7 +37,7 @@ VsBox::~VsBox()
 
 void VsBox::CreateParts()
 {
-	m_osgGeometry = CreateBoxGeometry(m_fltLength, m_fltHeight, m_fltWidth, m_fltLength, m_fltHeight, m_fltWidth);
+	m_osgGeometry = CreateBoxGeometry(Length(), Height(), Width(), LengthSegmentSize(), HeightSegmentSize(), WidthSegmentSize());
 	m_osgGeometry->setName(m_lpThis->Name() + "_Geometry");
 
 	osg::Geode *osgGroup = new osg::Geode;
@@ -83,7 +83,7 @@ void VsBox::Resize()
 		m_osgGeometry.release();
 
 		//Create a new box geometry with the new sizes.
-		m_osgGeometry = CreateBoxGeometry(m_fltLength, m_fltHeight, m_fltWidth, m_fltLength, m_fltHeight, m_fltWidth);
+		m_osgGeometry = CreateBoxGeometry(Length(), Height(), Width(), LengthSegmentSize(), HeightSegmentSize(), WidthSegmentSize());
 		m_osgGeometry->setName(m_lpThis->Name() + "_Geometry");
 
 		//Add it to the geode.

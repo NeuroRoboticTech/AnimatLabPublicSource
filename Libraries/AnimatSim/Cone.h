@@ -33,6 +33,9 @@ namespace AnimatSim
 				/// The height of the cone
 				float m_fltHeight;
 
+				/// The number of sides used to draw the cone.
+				int m_iSides;
+
 			public:
 				Cone();
 				virtual ~Cone();
@@ -100,6 +103,9 @@ namespace AnimatSim
 				**/
 				virtual void Height(float fltVal, BOOL bUseScaling = TRUE);
 				
+				virtual void Sides(int iVal);
+				virtual int Sides();
+
 				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 				virtual void Load(CStdXml &oXml);
 			};

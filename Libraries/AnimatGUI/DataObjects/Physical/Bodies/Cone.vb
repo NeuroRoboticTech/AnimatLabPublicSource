@@ -23,6 +23,8 @@ Namespace DataObjects.Physical.Bodies
         Protected m_snUpperRadius As AnimatGUI.Framework.ScaledNumber
         Protected m_snHeight As AnimatGUI.Framework.ScaledNumber
 
+        Protected m_iSides As Integer = 10
+
 #End Region
 
 #Region " Properties "
@@ -90,6 +92,19 @@ Namespace DataObjects.Physical.Bodies
             End Set
         End Property
 
+        Public Overridable Property Sides() As Integer
+            Get
+                Return m_iSides
+            End Get
+            Set(ByVal value As Integer)
+                If value < 10 Then
+                    Throw New System.Exception("The number of sides for the cone cannot be less than ten.")
+                End If
+                SetSimData("Sides", value.ToString, True)
+                m_iSides = value
+            End Set
+        End Property
+
 #End Region
 
         Public Sub New(ByVal doParent As Framework.DataObject)
@@ -137,6 +152,8 @@ Namespace DataObjects.Physical.Bodies
             m_snUpperRadius = DirectCast(doOrig.m_snUpperRadius.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_snLowerRadius = DirectCast(doOrig.m_snLowerRadius.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
 
+            m_iSides = doOrig.m_iSides
+
         End Sub
 
         Public Overrides Sub SetDefaultSizes()
@@ -165,6 +182,9 @@ Namespace DataObjects.Physical.Bodies
                                         "Size", "Sets the height of the cone.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Sides", Me.Sides.GetType(), "Sides", _
+                                        "Size", "The number of sides used to draw the cone.", Me.Sides))
+
         End Sub
 
 
@@ -176,6 +196,8 @@ Namespace DataObjects.Physical.Bodies
             m_snLowerRadius.LoadData(oXml, "LowerRadius")
             m_snUpperRadius.LoadData(oXml, "UpperRadius")
             m_snHeight.LoadData(oXml, "Height")
+
+            m_iSides = oXml.GetChildInt("Sides", m_iSides)
 
             oXml.OutOfElem() 'Outof RigidBody Element
 
@@ -190,6 +212,8 @@ Namespace DataObjects.Physical.Bodies
             m_snUpperRadius.SaveData(oXml, "UpperRadius")
             m_snHeight.SaveData(oXml, "Height")
 
+            oXml.AddChildElement("Sides", m_iSides)
+
             oXml.OutOfElem() 'Outof BodyPart Element
 
         End Sub
@@ -202,6 +226,8 @@ Namespace DataObjects.Physical.Bodies
             m_snLowerRadius.SaveSimulationXml(oXml, Me, "LowerRadius")
             m_snUpperRadius.SaveSimulationXml(oXml, Me, "UpperRadius")
             m_snHeight.SaveSimulationXml(oXml, Me, "Height")
+
+            oXml.AddChildElement("Sides", m_iSides)
 
             oXml.OutOfElem()
 
