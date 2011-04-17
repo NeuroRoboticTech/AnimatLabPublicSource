@@ -109,7 +109,7 @@ namespace AnimatSim
 			class BallSocket;
 			class Hinge;
 			class Prismatic;
-			class Static;
+			class LinearJoint;
 		}
 	}
 

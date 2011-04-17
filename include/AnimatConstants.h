@@ -370,6 +370,9 @@
 #define Al_Err_lJointNotMotorized -4046
 #define Al_Err_strJointNotMotorized "The specified joint was not motorized."
 
+#define Al_Err_lInvalidLinearType -4047
+#define Al_Err_strInvalidLinearType "An invlaid linear joint type was specified."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 #define PI 3.14159

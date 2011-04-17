@@ -133,7 +133,7 @@ void VsJoint::SetAlpha()
 \author	dcofer
 \date	4/15/2011
 **/
-void VsJoint::CreateDefaultBallGraphics()
+void VsJoint::CreateJointGraphics()
 {
 	//Create the cylinder for the hinge
 	m_osgDefaultBall = CreateSphereGeometry(15, 15, m_lpThisJoint->Size());
@@ -161,6 +161,8 @@ void VsJoint::CreateDefaultBallGraphics()
 
 	//apply the material
 	m_osgDefaultBallSS->setAttribute(m_osgDefaultBallMat.get(), osg::StateAttribute::ON);
+
+	m_osgJointMT->addChild(m_osgDefaultBallMT.get());
 }
 
 
@@ -184,9 +186,6 @@ void VsJoint::SetupGraphics()
 
 	if(m_osgParent.valid())
 	{
-		//Create the sphere.
-		CreateDefaultBallGraphics();
-
 		//Add the parts to the group node.
 		CStdFPoint vPos(0, 0, 0), vRot(VX_PI/2, 0, 0); 
 		vPos.Set(0, 0, 0); vRot.Set(0, VX_PI/2, 0); 
@@ -194,9 +193,10 @@ void VsJoint::SetupGraphics()
 		m_osgJointMT = new osg::MatrixTransform();
 		m_osgJointMT->setMatrix(SetupMatrix(vPos, vRot));
 
-		m_osgJointMT->addChild(m_osgDefaultBallMT.get());
-
 		m_osgNode = m_osgJointMT.get();
+
+		//Create the sphere.
+		CreateJointGraphics();
 
 		VsBody::BuildLocalMatrix();
 

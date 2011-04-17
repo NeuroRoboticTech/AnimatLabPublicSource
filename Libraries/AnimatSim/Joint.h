@@ -26,9 +26,7 @@ namespace AnimatSim
 		to the child object. The different sub classes will define 
 		data parameters that specify the motion that they joint can 
 		perform. For instance, a HingeJoint is constrained to rotate
-		about one axis just like the hinge on a door. But if you simply
-		wanted one part act as if it is phyiscally connected to its parent
-		part then you would use a StaticJoint.<br><br>
+		about one axis just like the hinge on a door.<br><br>
 		Some joints can be motorized, and some cannot. Hinge and Prismatic 
 		joints are currently the only joints that are motorized. So all of the
 		parameters related to motors are only relevant for those joint types.

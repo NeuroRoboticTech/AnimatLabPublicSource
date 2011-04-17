@@ -55,9 +55,6 @@ namespace VortexAnimatSim
 				/// The osg cylinder state set.
 				osg::ref_ptr<osg::StateSet> m_osgCylinderSS;
 
-				/// The osg hinge matrix transform.
-				osg::ref_ptr<osg::MatrixTransform> m_osgHingeMT;
-
 				virtual void SetupGraphics();
 				virtual void UpdateData();
 				virtual void SetupPhysics();

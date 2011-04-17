@@ -66,7 +66,7 @@ namespace VortexAnimatSim
 
 			void UpdatePosition();
 
-			virtual void CreateDefaultBallGraphics();
+			virtual void CreateJointGraphics();
 			virtual void SetupGraphics();
 			virtual void SetupPhysics();
 			virtual void DeletePhysics() {};

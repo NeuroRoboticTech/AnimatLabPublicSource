@@ -344,6 +344,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LinearJoint.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\LineBase.cpp"
 				>
 			</File>
@@ -461,10 +465,6 @@
 			</File>
 			<File
 				RelativePath=".\Spring.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Static.cpp"
 				>
 			</File>
 			<File
@@ -650,6 +650,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LinearJoint.h"
+				>
+			</File>
+			<File
 				RelativePath=".\LineBase.h"
 				>
 			</File>
@@ -767,10 +771,6 @@
 			</File>
 			<File
 				RelativePath=".\Spring.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Static.h"
 				>
 			</File>
 			<File

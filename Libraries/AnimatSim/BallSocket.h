@@ -1,5 +1,5 @@
 /**
-\file	C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatSim\BallSocket.h
+\file	BallSocket.h
 
 \brief	Declares the ball socket class.
 **/

@@ -36,6 +36,9 @@
 #include "Vx/VxHomokinetic.h"
 #include "Vx/VxUniversal.h"
 #include "Vx/VxDistanceJoint.h"
+#include "Vx/VxLinear1.h"
+#include "Vx/VxLinear2.h"
+#include "Vx/VxLinear3.h"
 #include "Vx/VxSpring.h"
 
 #include "Vx/VxMaterialTable.h"

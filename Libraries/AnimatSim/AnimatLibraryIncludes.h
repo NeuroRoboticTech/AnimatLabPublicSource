@@ -56,8 +56,10 @@ namespace AnimatSim
 
 		namespace Joints
 		{
+			class BallSocket;
 			class Hinge;
-			class Static;
+			class Prismatic;
+			class LinearJoint;
 		}
 	}
 

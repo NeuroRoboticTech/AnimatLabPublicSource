@@ -101,7 +101,7 @@ namespace AnimatSim
 			class BallSocket;
 			class Hinge;
 			class Prismatic;
-			class Static;
+			class LinearJoint;
 		}
 	}
 
@@ -167,7 +167,7 @@ using namespace AnimatSim::Recording;
 #include "BallSocket.h"
 #include "Hinge.h"
 #include "Prismatic.h"
-#include "Static.h"
+#include "LinearJoint.h"
 #include "ContactSensor.h"
 #include "Odor.h"
 #include "OdorType.h"
