@@ -104,6 +104,38 @@ void Cone::Height(float fltVal, BOOL bUseScaling)
 	Resize();
 }
 
+BOOL Cone::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(RigidBody::SetData(strType, strValue, FALSE))
+		return TRUE;
+
+	if(strType == "LOWERRADIUS")
+	{
+		LowerRadius(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "UPPERRADIUS")
+	{
+		UpperRadius(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "HEIGHT")
+	{
+		Height(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
+
 void Cone::Load(CStdXml &oXml)
 {
 	RigidBody::Load(oXml);

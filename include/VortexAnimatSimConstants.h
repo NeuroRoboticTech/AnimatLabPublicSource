@@ -93,6 +93,8 @@
 #define Vs_Err_lGeometryMismatch -4031
 #define Vs_Err_strGeometryMismatch "Mismatch between the geometry type."
 
+#define Vs_Err_lRemovingCollisionGeometry -4032
+#define Vs_Err_strRemovingCollisionGeometry "Error removing existing collision geometry."
 
 #endif // __VS_ERROR_CONSTANTS_H__
 

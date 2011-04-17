@@ -370,7 +370,7 @@ Namespace DataObjects.Physical
             Return bpPart
         End Function
 
-        Public Overridable Function AddRootBody(Optional ByVal rbRootToAdd As AnimatGUI.DataObjects.Physical.RigidBody = Nothing) As Boolean
+        Public Overridable Function AddRootBody(Optional ByVal rbRootToAdd As AnimatGUI.DataObjects.Physical.RigidBody = Nothing, Optional ByVal bAddDefaultGraphics As Boolean = True) As Boolean
 
             If Not m_dbRoot Is Nothing Then
                 Throw New System.Exception("A root body already exists for this body!")
@@ -380,6 +380,7 @@ Namespace DataObjects.Physical
                 Dim frmSelectParts As New Forms.BodyPlan.SelectPartType()
                 frmSelectParts.PartType = GetType(Physical.RigidBody)
                 frmSelectParts.IsRoot = True
+                bAddDefaultGraphics = frmSelectParts.chkAddGraphics.Checked
 
                 If frmSelectParts.ShowDialog() <> DialogResult.OK Then Return False
 
@@ -396,7 +397,9 @@ Namespace DataObjects.Physical
 
             m_dbRoot = rbRootToAdd
 
-            m_dbRoot.CreateDefaultGraphicsObject()
+            If bAddDefaultGraphics Then
+                m_dbRoot.CreateDefaultGraphicsObject()
+            End If
 
             If Not m_dbRoot Is Nothing Then
                 m_dbRoot.CreateWorkspaceTreeView(Me, m_tnBodyPlanNode)

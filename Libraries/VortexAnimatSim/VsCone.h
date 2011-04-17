@@ -26,6 +26,7 @@ namespace VortexAnimatSim
 
 				virtual void CreateParts();
 				virtual void CreateJoints();
+				virtual void Resize();
 			};
 
 		}		//Bodies

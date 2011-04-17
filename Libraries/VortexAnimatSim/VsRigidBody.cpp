@@ -225,7 +225,10 @@ void VsRigidBody::CreateSensorPart()
 	m_vxSensor->setUserData((void*) m_lpThis);
 
 	m_vxSensor->setName(m_lpThis->ID().c_str());               // Give it a name.
-    m_vxSensor->addGeometry(m_vxGeometry, 0);
+    m_vxCollisionGeometry = m_vxSensor->addGeometry(m_vxGeometry, 0);
+	string strName = m_lpThis->ID() + "_CollisionGeometry";
+	m_vxCollisionGeometry->setName(strName.c_str());
+
 	m_vxSensor->setControl(VxEntity::kControlNode);
 
 	if(lpVsParent)
@@ -256,6 +259,9 @@ void VsRigidBody::CreateDynamicPart()
 	m_vxSensor->setName(m_lpThis->ID().c_str());               // Give it a name.
     m_vxSensor->setControl(m_eControlType);  // Set it to dynamic.
     m_vxCollisionGeometry = m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisBody->Density());
+
+	string strName = m_lpThis->ID() + "_CollisionGeometry";
+	m_vxCollisionGeometry->setName(strName.c_str());
 	m_vxSensor->setFastMoving(true);
 
 	//if this body is frozen; freeze it
@@ -286,7 +292,11 @@ void VsRigidBody::CreateStaticPart()
 
 	Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
 	if(vxSensor)
+	{
 	    m_vxCollisionGeometry = vxSensor->addGeometry(m_vxGeometry, iMaterialID, vOffset, m_lpThisBody->Density());
+		string strName = m_lpThis->ID() + "_CollisionGeometry";
+		m_vxCollisionGeometry->setName(strName.c_str());
+	}
 }
 
 void VsRigidBody::DeletePhysics()

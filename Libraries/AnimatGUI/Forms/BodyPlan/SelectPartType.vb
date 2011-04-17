@@ -268,7 +268,7 @@ Namespace Forms.BodyPlan
 
                 rdCollision.Checked = True
                 chkAddGraphics.Checked = True
-                If Not m_bIsRigidBody OrElse (m_bIsRigidBody AndAlso m_bIsRoot) Then
+                If Not m_bIsRigidBody Then
                     rdCollision.Enabled = False
                     rdCollision.Visible = False
                     rdGraphics.Enabled = False
@@ -277,6 +277,16 @@ Namespace Forms.BodyPlan
                     chkAddGraphics.Visible = False
                     chkIsSensor.Enabled = False
                     chkIsSensor.Visible = False
+                ElseIf (m_bIsRigidBody AndAlso m_bIsRoot) Then
+                    rdCollision.Enabled = False
+                    rdCollision.Visible = True
+                    rdGraphics.Enabled = False
+                    rdGraphics.Visible = True
+                    chkAddGraphics.Enabled = True
+                    chkAddGraphics.Visible = True
+                    chkIsSensor.Enabled = False
+                    chkIsSensor.Visible = True
+                    chkIsSensor.Checked = False
                 End If
 
             Catch ex As System.Exception
