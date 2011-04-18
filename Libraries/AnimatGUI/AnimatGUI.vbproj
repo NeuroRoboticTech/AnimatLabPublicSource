@@ -370,6 +370,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataObjects\Physical\Bodies\Cone.vb" />
+    <Compile Include="DataObjects\Physical\Bodies\Plane.vb" />
     <Compile Include="DataObjects\Physical\BodyPart.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -576,6 +577,7 @@
     <Compile Include="FrameWork\ScaledNumber.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FrameWork\ScaledVector2.vb" />
     <Compile Include="FrameWork\ScaledVector3.vb" />
     <Compile Include="FrameWork\UndoSystem\DiagramChangedEvent.vb">
       <SubType>Code</SubType>
