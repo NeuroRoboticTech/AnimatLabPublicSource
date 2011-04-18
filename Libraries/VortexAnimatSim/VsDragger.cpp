@@ -87,6 +87,10 @@ void VsDragger::SetupMatrix()
 		//We will also use that setting for the minimum scale of the autotransform.
 		float fltMaxDim = m_lpVsBody->Physics_GetBoundingRadius();
 
+		Simulator *lpSim = GetSimulator();
+		if(fltMaxDim > (lpSim->InverseDistanceUnits()/2.0f))
+			fltMaxDim = (lpSim->InverseDistanceUnits()/2.0f);
+
 		//Use an equation to calculate the radius here. This seemed to work best. 
 		//I tried several size values and found a good radius scale that fit it. Then
 		//I did a regression to find this equation of the line for the radius.

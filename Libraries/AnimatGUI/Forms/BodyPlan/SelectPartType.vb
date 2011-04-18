@@ -181,6 +181,8 @@ Namespace Forms.BodyPlan
         Protected m_tpPartType As System.Type
         Protected m_bIsRoot As Boolean = False
         Protected m_bIsRigidBody As Boolean = False
+        Protected m_bHasDynamics As Boolean = True
+        Protected m_bDefaultAddGraphics As Boolean = True
 
 #End Region
 
@@ -266,32 +268,67 @@ Namespace Forms.BodyPlan
                 m_mgrIconImages.ImageList.ImageSize = New Size(iMaxWidth, iMaxHeight)
                 ctrlPartTypes.LargeImageList = m_mgrIconImages.ImageList
 
-                rdCollision.Checked = True
-                chkAddGraphics.Checked = True
-                If Not m_bIsRigidBody Then
-                    rdCollision.Enabled = False
-                    rdCollision.Visible = False
-                    rdGraphics.Enabled = False
-                    rdGraphics.Visible = False
-                    chkAddGraphics.Enabled = False
-                    chkAddGraphics.Visible = False
-                    chkIsSensor.Enabled = False
-                    chkIsSensor.Visible = False
-                ElseIf (m_bIsRigidBody AndAlso m_bIsRoot) Then
-                    rdCollision.Enabled = False
-                    rdCollision.Visible = True
-                    rdGraphics.Enabled = False
-                    rdGraphics.Visible = True
-                    chkAddGraphics.Enabled = True
-                    chkAddGraphics.Visible = True
-                    chkIsSensor.Enabled = False
-                    chkIsSensor.Visible = True
-                    chkIsSensor.Checked = False
-                End If
+                SetOptions(True)
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+
+        End Sub
+
+        Protected Sub SetJointOptions(ByVal bInit As Boolean)
+            'If it is a joint then do this.
+            rdCollision.Enabled = False
+            rdCollision.Visible = False
+            rdGraphics.Enabled = False
+            rdGraphics.Visible = False
+            chkAddGraphics.Enabled = False
+            chkAddGraphics.Visible = False
+            chkIsSensor.Enabled = False
+            chkIsSensor.Visible = False
+        End Sub
+
+        Protected Sub SetRigidBodyOptions(ByVal bInit As Boolean)
+
+            rdCollision.Visible = True
+            rdGraphics.Visible = True
+            chkAddGraphics.Visible = True
+            chkIsSensor.Visible = True
+            chkAddGraphics.Checked = m_bDefaultAddGraphics
+
+            If m_bIsRoot Then
+                rdCollision.Checked = True
+                rdCollision.Enabled = False
+                rdGraphics.Enabled = False
+                chkAddGraphics.Enabled = True
+                chkIsSensor.Enabled = False
+                If bInit Then chkIsSensor.Checked = False
+            Else
+                rdCollision.Enabled = m_bHasDynamics
+                rdGraphics.Enabled = m_bHasDynamics
+                chkAddGraphics.Enabled = m_bHasDynamics
+                chkIsSensor.Enabled = m_bHasDynamics
+                If bInit AndAlso m_bHasDynamics Then chkIsSensor.Checked = False
+            End If
+
+        End Sub
+
+        Protected Sub SetRigidBodyOptions(ByVal bInit As Boolean, ByVal bpBody As Physical.RigidBody)
+            If Not bpBody Is Nothing Then
+                m_bHasDynamics = bpBody.HasDynamics
+                m_bDefaultAddGraphics = bpBody.DefaultAddGraphics
+            End If
+
+            SetRigidBodyOptions(bInit)
+        End Sub
+
+        Protected Sub SetOptions(ByVal bInit As Boolean, Optional ByVal bpBody As Physical.RigidBody = Nothing)
+
+            If Not m_bIsRigidBody Then
+                SetJointOptions(bInit)
+            Else
+                SetRigidBodyOptions(bInit, bpBody)
+            End If
 
         End Sub
 
@@ -344,22 +381,9 @@ Namespace Forms.BodyPlan
                 If ctrlPartTypes.SelectedItems.Count > 0 Then
                     Dim liItem As ListViewItem = ctrlPartTypes.SelectedItems(0)
 
-                    If liItem.Tag Is Nothing AndAlso Util.IsTypeOf(liItem.Tag.GetType(), GetType(Physical.RigidBody), False) Then
+                    If Not liItem.Tag Is Nothing AndAlso Util.IsTypeOf(liItem.Tag.GetType(), GetType(Physical.RigidBody), False) Then
                         Dim bpBody As Physical.RigidBody = DirectCast(liItem.Tag, Physical.RigidBody)
-                        If Not bpBody.HasDynamics Then
-                            rdCollision.Enabled = False
-                            rdGraphics.Enabled = False
-                            rdGraphics.Checked = True
-                            chkAddGraphics.Enabled = False
-                            chkAddGraphics.Checked = False
-                            chkIsSensor.Enabled = False
-                            chkIsSensor.Checked = False
-                        Else
-                            rdCollision.Enabled = False
-                            rdGraphics.Enabled = False
-                            chkAddGraphics.Enabled = False
-                            chkIsSensor.Enabled = False
-                        End If
+                        SetOptions(False, bpBody)
                     End If
                 End If
 

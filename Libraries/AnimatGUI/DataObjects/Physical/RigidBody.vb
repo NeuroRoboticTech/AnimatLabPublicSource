@@ -168,6 +168,18 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
+        ''' \brief  Gets the default add graphics setting.
+        ''' 		
+        ''' \details Sometimes you only want to add a collision object without also adding a graphics object. 
+        ''' 		 An example of this is the plane. This property lets us know about that.
+        '''
+        ''' \value  .
+        Public Overridable ReadOnly Property DefaultAddGraphics() As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
         Public Overrides ReadOnly Property DefaultVisualSelectionMode() As Simulation.enumVisualSelectionMode
             Get
                 If Me.IsCollisionObject Then

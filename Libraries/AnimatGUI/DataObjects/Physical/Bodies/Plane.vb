@@ -81,11 +81,23 @@ Namespace DataObjects.Physical.Bodies
             End Set
         End Property
 
+        Public Overrides ReadOnly Property DefaultAddGraphics() As Boolean
+            Get
+                Return False
+            End Get
+        End Property
+
 #End Region
 
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
             m_strDescription = ""
+
+            'Start out white, and ambiently lit.
+            m_clAmbient = Color.FromArgb(255, 255, 255, 255)
+            m_clDiffuse = Color.FromArgb(255, 255, 255, 255)
+            m_clSpecular = Color.FromArgb(255, 64, 64, 64)
+            m_fltShininess = 64
 
             m_svSize = New ScaledVector2(Me, "Size", "Size of the visible plane.", "Meters", "m")
 
@@ -117,9 +129,33 @@ Namespace DataObjects.Physical.Bodies
         End Sub
 
         Public Overrides Sub SetDefaultSizes()
-            Dim fltVal As Single = 1 * Util.Environment.DistanceUnitValue
+            Dim fltVal As Single = 100 * Util.Environment.DistanceUnitValue
             m_svSize.CopyData(fltVal, fltVal)
         End Sub
+
+#Region " Add-Remove to List Methods "
+
+        ''' \brief  Before add to list.
+        '''
+        ''' \author dcofer
+        ''' \date   4/18/2011
+        '''
+        ''' \exception  Exception   If not adding as root body of a structure or to another plane or terrain.
+        '''
+        ''' \param  bThrowError (optional) Throw exception if there is a problem.
+        '''
+        ''' \details A plane can only be added as the root body of a structure or to another plane. We must check
+        ''' that here before it is added to the list. If this is not a valid case the throw an exception.
+        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
+            If Not ((Me.IsRoot AndAlso Util.IsTypeOf(Me.Parent.GetType(), GetType(PhysicalStructure), False)) OrElse _
+               (Util.IsTypeOf(Me.Parent.GetType(), GetType(Plane), False))) Then
+                Throw New System.Exception("You can only add a plane as the root body of a structure, or to another plane or terrain object.")
+            End If
+
+            MyBase.BeforeAddToList(bThrowError)
+        End Sub
+
+#End Region
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)

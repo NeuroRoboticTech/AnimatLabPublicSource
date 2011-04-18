@@ -44,29 +44,31 @@ namespace AnimatSim
 			class ANIMAT_PORT Plane : public RigidBody 
 			{
 			protected:
-				///The height of the plane on the Y axis.
-				float m_fltHeight;
-				CStdFPoint m_ptCorner;
 				CStdFPoint m_ptSize;
-				CStdIPoint m_ptGrid;
+				
+				int m_iWidthSegments;
+				int m_iLengthSegments;
 
 			public:
 				Plane();
 				virtual ~Plane();
 
-				float Height();
-				void Height(float fltVal);
+				virtual float CornerX();
+				virtual float CornerY();
+				
+				virtual float GridX();
+				virtual float GridY();
 
-				CStdFPoint Corner() {return m_ptCorner;};
-				void Corner(CStdFPoint ptPoint) {m_ptCorner = ptPoint;};
+				virtual CStdFPoint Size();
+				virtual void Size(CStdFPoint ptPoint, BOOL bUseScaling = TRUE);
 
-				CStdFPoint Size() {return m_ptSize;};
-				void Size(CStdFPoint ptPoint);
+				virtual int WidthSegments();
+				virtual void WidthSegments(int iVal);
 
-				CStdIPoint Grid() {return m_ptGrid;};
-				void Grid(CStdIPoint ptPoint);
+				virtual int LengthSegments();
+				virtual void LengthSegments(int iVal);
 
-				virtual BOOL AllowMouseManipulation();
+				//virtual BOOL AllowMouseManipulation();
 
 				virtual void Load(CStdXml &oXml);
 			};

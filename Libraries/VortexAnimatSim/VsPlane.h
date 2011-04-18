@@ -1,13 +1,10 @@
-// VsPlane.h: interface for the VsPlane class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	VsPlane.h
 
-#if !defined(AFX_VSPLANE_H__76C24FAB_0AFC_4822_BCA0_D3055E824E6E__INCLUDED_)
-#define AFX_VSPLANE_H__76C24FAB_0AFC_4822_BCA0_D3055E824E6E__INCLUDED_
+\brief	Declares the vortex plane class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace VortexAnimatSim
 {
@@ -25,10 +22,9 @@ namespace VortexAnimatSim
 				virtual ~VsPlane();
 
 				virtual void CreateParts();
+				virtual void Resize();
 			};
 
 		}		//Bodies
 	}			// Environment
 }				//VortexAnimatSim
-
-#endif // !defined(AFX_VSPLANE_H__76C24FAB_0AFC_4822_BCA0_D3055E824E6E__INCLUDED_)
