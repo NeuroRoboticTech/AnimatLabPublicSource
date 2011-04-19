@@ -67,25 +67,33 @@ void VsSimulationWindow::SetupTrackCamera()
 				lpBody = lpStructure->FindRigidBody(m_strLookAtBodyID);
 
 			if(lpBody)
-			{
-				CStdFPoint oPos = lpBody->GetCurrentPosition();
-				VxVector3 position(oPos.x, oPos.y, oPos.z);
+				SetCameraLookAt(lpBody->GetCurrentPosition());
+			else
+				SetCameraLookAt(lpStructure->Position());
 
-				osg::Vec3d eye, center, up;
-				osg::Vec3d target(position.v[0], position.v[1], position.v[2]);
-				osg::Vec3d pos(position.v[0]+50, position.v[1]+10, position.v[2]);
-				m_osgManip->getHomePosition(eye, center, up);
-
-				up = osg::Vec3d(0, 1, 0);
-				m_osgManip->setHomePosition(pos, target, up, false );
-				m_osgManip->home(0);
-				
-				m_lpTrackBody = lpBody;
-			}
+			m_lpTrackBody = lpBody;
 		} 
 	}
 	else
+	{
 		m_lpTrackBody = NULL;
+		CStdFPoint vDefault(0, 0, 0);
+		SetCameraLookAt(vDefault);
+	}
+}
+
+void VsSimulationWindow::SetCameraLookAt(CStdFPoint oTarget)
+{
+	VxVector3 position(oTarget.x, oTarget.y, oTarget.z);
+
+	osg::Vec3d eye, center, up;
+	osg::Vec3d target(position.v[0], position.v[1], position.v[2]);
+	osg::Vec3d pos(position.v[0]+50, position.v[1]+10, position.v[2]);
+	m_osgManip->getHomePosition(eye, center, up);
+
+	up = osg::Vec3d(0, 1, 0);
+	m_osgManip->setHomePosition(pos, target, up, false );
+	m_osgManip->home(0);
 }
 
 void VsSimulationWindow::TrackCamera()

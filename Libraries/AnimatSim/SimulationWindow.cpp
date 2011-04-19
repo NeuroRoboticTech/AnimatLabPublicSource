@@ -231,6 +231,18 @@ void SimulationWindow::SetupTrackCamera(BOOL bTrackCamera, string strLookAtStruc
 	SetupTrackCamera();
 }
 
+/**
+\brief	Manually sets a camera look at position.
+
+\details This can be used to manually set where the camera is looking at.
+
+\author	dcofer
+\date	4/19/2011
+
+\param	oTarget	Target position to look at.
+**/
+void SimulationWindow::SetCameraLookAt(CStdFPoint oTarget) {}
+
 void SimulationWindow::Load(string strXml)
 {
 	//If it is blank then skip the loading.

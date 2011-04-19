@@ -84,6 +84,7 @@ namespace AnimatSim
 		**/
 		virtual void SetupTrackCamera() = 0;
 		virtual void SetupTrackCamera(BOOL bTrackCamera, string strLookAtStructureID, string strLookAtBodyID);
+		virtual void SetCameraLookAt(CStdFPoint oTarget);
 
 #pragma region DataAccesMethods
 
