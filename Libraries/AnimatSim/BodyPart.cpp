@@ -726,6 +726,67 @@ allows that child class to perform any necessary graphics/physics calls for the 
 **/
 void BodyPart::Resize() {};
 
+/**
+\brief	Gets whether this body part can be translated along the x-axis by the user with the drag handlers.
+
+\author	dcofer
+\date	4/21/2011
+
+\return	true if can drag along x-axis.
+**/
+BOOL BodyPart::AllowTranslateDragX() {return TRUE;}
+
+
+/**
+\brief	Gets whether this body part can be translated along the y-axis by the user with the drag handlers.
+
+\author	dcofer
+\date	4/21/2011
+
+\return	true if can drag along y-axis.
+**/
+BOOL BodyPart::AllowTranslateDragY() {return TRUE;}
+
+/**
+\brief	Gets whether this body part can be translated along the z-axis by the user with the drag handlers.
+
+\author	dcofer
+\date	4/21/2011
+
+\return	true if can drag along z-axis.
+**/
+BOOL BodyPart::AllowTranslateDragZ() {return TRUE;}
+
+/**
+\brief	Gets whether this body part can be rotated along the x-axis by the user with the drag handlers.
+
+\author	dcofer
+\date	4/21/2011
+
+\return	true if can rotate along x-axis.
+**/
+BOOL BodyPart::AllowRotateDragX() {return TRUE;}
+
+/**
+\brief	Gets whether this body part can be rotated along the y-axis by the user with the drag handlers.
+
+\author	dcofer
+\date	4/21/2011
+
+\return	true if can rotate along y-axis.
+**/
+BOOL BodyPart::AllowRotateDragY() {return TRUE;}
+
+/**
+\brief	Gets whether this body part can be rotated along the z-axis by the user with the drag handlers.
+
+\author	dcofer
+\date	4/21/2011
+
+\return	true if can rotate along z-axis.
+**/
+BOOL BodyPart::AllowRotateDragZ() {return TRUE;}
+
 #pragma endregion
 
 void BodyPart::Selected(BOOL bValue, BOOL bSelectMultiple)

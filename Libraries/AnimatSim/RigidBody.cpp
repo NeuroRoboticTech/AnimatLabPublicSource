@@ -742,6 +742,30 @@ void RigidBody::MaterialID(string strID) {m_strMaterialID = strID;}
 **/
 float RigidBody::SurfaceContactCount() {return m_fltSurfaceContactCount;}
 
+BOOL RigidBody::AllowTranslateDragX() 
+{
+	if(m_lpParent)
+		return TRUE;
+	else
+		return FALSE;
+}
+
+BOOL RigidBody::AllowTranslateDragY()
+{
+	if(m_lpParent)
+		return TRUE;
+	else
+		return FALSE;
+}
+
+BOOL RigidBody::AllowTranslateDragZ()
+{
+	if(m_lpParent)
+		return TRUE;
+	else
+		return FALSE;
+}
+
 /**
 \brief	Increments the surface contact count when this part collides with something in the
 virtual world

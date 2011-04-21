@@ -35,19 +35,28 @@ osg::Geometry* createCircleGeometry(float radius, unsigned int numSegments)
     return geometry;
 }
 
-VsTrackballDragger::VsTrackballDragger()
+VsTrackballDragger::VsTrackballDragger(BOOL bAllowRotateX, BOOL bAllowRotateY, BOOL bAllowRotateZ)
 {
-    _xDragger = new osgManipulator::RotateCylinderDragger();
-    addChild(_xDragger.get());
-    addDragger(_xDragger.get());
+	if(bAllowRotateX)
+	{
+		_xDragger = new osgManipulator::RotateCylinderDragger();
+		addChild(_xDragger.get());
+		addDragger(_xDragger.get());
+	}
 
-    _yDragger = new osgManipulator::RotateCylinderDragger();
-    addChild(_yDragger.get());
-    addDragger(_yDragger.get());
+	if(bAllowRotateY)
+	{
+		_yDragger = new osgManipulator::RotateCylinderDragger();
+		addChild(_yDragger.get());
+		addDragger(_yDragger.get());
+	}
 
-    _zDragger = new osgManipulator::RotateCylinderDragger();
-    addChild(_zDragger.get());
-    addDragger(_zDragger.get());
+	if(bAllowRotateZ)
+	{
+		_zDragger = new osgManipulator::RotateCylinderDragger();
+		addChild(_zDragger.get());
+		addDragger(_zDragger.get());
+	}
 
     setParentDragger(getParentDragger());
 }
@@ -58,6 +67,10 @@ VsTrackballDragger::~VsTrackballDragger(void)
 
 void VsTrackballDragger::setupDefaultGeometry()
 {
+	//If there are no valid draggers then skip creating the geometry.
+	if(!_xDragger.valid() && !_xDragger.valid() && !_xDragger.valid())
+		return;
+
     osg::Geode* geode = new osg::Geode;
     {
         osg::TessellationHints* hints = new osg::TessellationHints;

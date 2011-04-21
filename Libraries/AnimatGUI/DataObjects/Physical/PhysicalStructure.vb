@@ -380,11 +380,11 @@ Namespace DataObjects.Physical
                 Dim frmSelectParts As New Forms.BodyPlan.SelectPartType()
                 frmSelectParts.PartType = GetType(Physical.RigidBody)
                 frmSelectParts.IsRoot = True
-                bAddDefaultGraphics = frmSelectParts.chkAddGraphics.Checked
 
                 If frmSelectParts.ShowDialog() <> DialogResult.OK Then Return False
 
                 rbRootToAdd = DirectCast(frmSelectParts.SelectedPart.Clone(Me, False, Nothing), RigidBody)
+                bAddDefaultGraphics = frmSelectParts.chkAddGraphics.Checked
             End If
 
             rbRootToAdd.SetDefaultSizes()

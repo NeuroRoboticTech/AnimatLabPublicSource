@@ -295,9 +295,9 @@ Namespace Forms.BodyPlan
             chkAddGraphics.Visible = True
             chkIsSensor.Visible = True
             chkAddGraphics.Checked = m_bDefaultAddGraphics
+            rdCollision.Checked = True
 
             If m_bIsRoot Then
-                rdCollision.Checked = True
                 rdCollision.Enabled = False
                 rdGraphics.Enabled = False
                 chkAddGraphics.Enabled = True

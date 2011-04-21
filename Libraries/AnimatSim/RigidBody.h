@@ -265,6 +265,10 @@ namespace AnimatSim
 
 			virtual float SurfaceContactCount();
 
+			virtual BOOL AllowTranslateDragX();
+			virtual BOOL AllowTranslateDragY();
+			virtual BOOL AllowTranslateDragZ();
+
 			virtual void Eat(float fltVal, long lTimeSlice);
 			virtual void AddSurfaceContact(RigidBody *lpContactedSurface);
 			virtual void RemoveSurfaceContact(RigidBody *lpContactedSurface);

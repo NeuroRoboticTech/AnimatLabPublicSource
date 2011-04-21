@@ -162,6 +162,14 @@ namespace AnimatSim
 			virtual float GetBoundingRadius();
 			virtual void Resize();
 
+			virtual BOOL AllowTranslateDragX();
+			virtual BOOL AllowTranslateDragY();
+			virtual BOOL AllowTranslateDragZ();
+
+			virtual BOOL AllowRotateDragX();
+			virtual BOOL AllowRotateDragY();
+			virtual BOOL AllowRotateDragZ();
+
 #pragma endregion
 
 #pragma region DataAccesMethods

@@ -15,7 +15,7 @@ namespace VortexAnimatSim
 			virtual ~VsTrackballDragger(void);
 
 			public:
-				VsTrackballDragger();
+				VsTrackballDragger(BOOL bAllowRotateX, BOOL bAllowRotateY, BOOL bAllowRotateZ);
 
 				/** Setup default geometry for dragger. */
 				void setupDefaultGeometry();

@@ -18,7 +18,8 @@ namespace VortexAnimatSim
 				osg::ref_ptr< VsTrackballDragger >	_tbDragger;
 
 			public:
-				VsDragger(VsBody *lpParent);
+				VsDragger(VsBody *lpParent, BOOL bAllowTranslateX, BOOL bAllowTranslateY, BOOL bAllowTranslateZ, 
+					      BOOL bAllowRotateX, BOOL bAllowRotateY, BOOL bAllowRotateZ);
 
 				/** Setup default geometry for dragger. */
 				void setupDefaultGeometry();

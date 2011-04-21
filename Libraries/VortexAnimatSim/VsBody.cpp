@@ -115,7 +115,8 @@ void VsBody::CreateDragger(string strName)
 
 		if(lpVsSim->OsgCmdMgr())
 		{
-			m_osgDragger = new VsDragger(this);
+			m_osgDragger = new VsDragger(this, m_lpThis->AllowTranslateDragX(), m_lpThis->AllowTranslateDragY(), m_lpThis->AllowTranslateDragX(),
+										 m_lpThis->AllowRotateDragX(), m_lpThis->AllowRotateDragY(), m_lpThis->AllowRotateDragZ());
 			m_osgDragger->setName(strName + "_Dragger");
 
 			m_osgDragger->setupDefaultGeometry();

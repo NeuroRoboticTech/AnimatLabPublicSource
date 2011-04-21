@@ -14,7 +14,8 @@ namespace VortexAnimatSim
 	namespace Visualization
 	{
 
-VsDragger::VsDragger(VsBody *lpParent)
+VsDragger::VsDragger(VsBody *lpParent, BOOL bAllowTranslateX, BOOL bAllowTranslateY, BOOL bAllowTranslateZ, 
+					 BOOL bAllowRotateX, BOOL bAllowRotateY, BOOL bAllowRotateZ)
 {
 	if(!lpParent)
 		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
@@ -36,11 +37,11 @@ VsDragger::VsDragger(VsBody *lpParent)
 	_sizeTransform->setMatrix(osg::Matrix::scale(100, 100, 100));
 	_autoTransform->addChild(_sizeTransform.get());
 
-	_tbDragger = new VsTrackballDragger(); 
+	_tbDragger = new VsTrackballDragger(bAllowRotateX, bAllowRotateY, bAllowRotateZ); 
 	_tbDragger->setName("TrackballDragger");
 	_sizeTransform->addChild(_tbDragger.get());
 
-	_transDragger = new VsTranslateAxisDragger();
+	_transDragger = new VsTranslateAxisDragger(bAllowTranslateX, bAllowTranslateY, bAllowTranslateZ);
 	_transDragger->setName("TranslateAxisDragger");
 	_sizeTransform->addChild(_transDragger.get());
 
