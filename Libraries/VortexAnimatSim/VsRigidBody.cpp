@@ -386,7 +386,7 @@ void VsRigidBody::ProcessContacts()
 	}
 }
 
-void VsRigidBody::Physics_CollectBodyData()
+void VsRigidBody::Physics_CollectData()
 {
 	float fDisUnits = m_lpThis->GetSimulator()->DistanceUnits();
 	float fMassUnits = m_lpThis->GetSimulator()->MassUnits();
@@ -396,7 +396,6 @@ void VsRigidBody::Physics_CollectBodyData()
 	{
 		m_vxSensor->getPosition(vData);
 		m_lpThis->AbsolutePosition(vData[0], vData[1], vData[2]);
-		m_lpThis->ReportWorldPosition(m_lpThis->AbsolutePosition() * fDisUnits);
 
 		m_vxSensor->getOrientationEulerAngles(vData);
 		m_lpThis->ReportRotation(vData[0], vData[1], vData[2]);
@@ -406,7 +405,6 @@ void VsRigidBody::Physics_CollectBodyData()
 		//If we are here then we did not have a physics component, just and OSG one.
 		CStdFPoint vPos = VsBody::GetOSGWorldCoords();
 		m_lpThis->AbsolutePosition(vPos.x, vPos.y, vPos.z);
-		m_lpThis->ReportWorldPosition(m_lpThis->AbsolutePosition() * fDisUnits);
 
 		//Get Rotation
 		//m_lpThis->ReportRotation(QuaterionToEuler(m_osgLocalMatrix.getRotate());
@@ -458,7 +456,6 @@ void VsRigidBody::Physics_ResetSimulation()
 
 		//Set the position with the world coordinates.
 		m_lpThis->AbsolutePosition(VsBody::GetOSGWorldCoords());
-		m_lpThis->ReportWorldPosition(m_lpThis->AbsolutePosition() * m_lpThis->GetSimulator()->DistanceUnits());
 		m_lpThis->ReportRotation(m_lpThis->Rotation());
 	}
 

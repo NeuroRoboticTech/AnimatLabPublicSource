@@ -26,7 +26,7 @@ VsCylinder::VsCylinder()
 {
 	m_lpThis = this;
 	m_lpThisBody = this;
-	m_lpPhysicsBody = this;
+	PhysicsBody(this);
 }
 
 VsCylinder::~VsCylinder()

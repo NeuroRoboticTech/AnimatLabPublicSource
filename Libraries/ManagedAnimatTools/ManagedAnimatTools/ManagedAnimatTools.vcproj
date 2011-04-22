@@ -194,15 +194,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\BodyPartCallback.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\DataObjectInterface.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\Logger.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MovableItemCallback.cpp"
 				>
 			</File>
 			<File
@@ -236,15 +236,15 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\BodyPartCallback.h"
-				>
-			</File>
-			<File
 				RelativePath=".\DataObjectInterface.h"
 				>
 			</File>
 			<File
 				RelativePath=".\Logger.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MovableItemCallback.h"
 				>
 			</File>
 			<File

@@ -88,7 +88,7 @@ namespace VortexAnimatSim
 			virtual void Initialize();
 			virtual void SetBody();
 			virtual void Physics_ResetSimulation();
-			virtual void Physics_CollectBodyData();
+			virtual void Physics_CollectData();
 			virtual float *Physics_GetDataPointer(string strDataType);
 			virtual BOOL Physics_SetData(string strDataType, string strValue);
 

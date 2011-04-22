@@ -111,11 +111,11 @@ namespace AnimatSim
 			///This is the list of other body part ID's to exclude from collision tests.
 			CStdPtrArray<CollisionPair> m_aryExcludeCollisionList;
 
-			///This is a pointer to an instance of the IBodyPartCallback interface. This
+			///This is a pointer to an instance of the IMovableItemCallback interface. This
 			///interface is used to send back information to the GUI. If you are running in
 			///simulation mode only then this will be NULL and no info will be sent back up.
 			///If you are running with the GUI then it makes the calls back up to it.
-			IBodyPartCallback *m_lpCallback;
+			IMovableItemCallback *m_lpCallback;
 
 			virtual void LoadLayout(CStdXml &oXml);
 			virtual void LoadCollisionPair(CStdXml &oXml);
@@ -147,8 +147,8 @@ namespace AnimatSim
 			virtual CStdPtrArray<CollisionPair> ExclusionList();
 			virtual void AddCollisionPair(string strID1, string strID2);
 
-			virtual IBodyPartCallback *Callback();
-			virtual void Callback(IBodyPartCallback *lpCallback);
+			virtual IMovableItemCallback *Callback();
+			virtual void Callback(IMovableItemCallback *lpCallback);
 
 			/**
 			\fn	virtual void Structure::*Assembly() = 0;

@@ -33,11 +33,11 @@ namespace AnimatSim
 	namespace Environment
 	{
 
-IPhysicsBody::IPhysicsBody(void)
+IPhysicsBase::IPhysicsBase(void)
 {
 }
 
-IPhysicsBody::~IPhysicsBody(void)
+IPhysicsBase::~IPhysicsBase(void)
 {
 }
 

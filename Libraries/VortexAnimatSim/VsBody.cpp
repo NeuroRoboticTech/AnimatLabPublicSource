@@ -224,12 +224,11 @@ void VsBody::UpdatePositionAndRotationFromMatrix()
 	osg::Vec3 vL = m_osgLocalMatrix.getTrans();
 	CStdFPoint vLocal(vL.x(), vL.y(), vL.z());
 	vLocal.ClearNearZero();
-	m_lpThis->LocalPosition(vLocal, FALSE, TRUE, FALSE);
+	m_lpThis->Position(vLocal, FALSE, TRUE, FALSE);
 	
 	CStdFPoint vWorldPos = GetOSGWorldCoords();
 	vWorldPos.ClearNearZero();
 	m_lpThis->AbsolutePosition(vWorldPos.x, vWorldPos.y, vWorldPos.z);
-	m_lpThis->ReportWorldPosition(m_lpThis->AbsolutePosition() * m_lpThis->GetSimulator()->DistanceUnits());
 	
 	//Now lets get the euler angle rotation
 	Vx::VxReal44 vxTM;
@@ -251,21 +250,25 @@ void VsBody::UpdatePositionAndRotationFromMatrix()
 
 void VsBody::Physics_UpdateMatrix()
 {
-	LocalMatrix(SetupMatrix(m_lpThis->LocalPosition(), m_lpThis->Rotation()));
-	m_osgMT->setMatrix(m_osgLocalMatrix);
-	m_osgDragger->SetupMatrix();
+	if(m_osgMT.valid())
+	{
+		LocalMatrix(SetupMatrix(m_lpThis->Position(), m_lpThis->Rotation()));
+		m_osgMT->setMatrix(m_osgLocalMatrix);
 
-	//If we are here then we did not have a physics component, just and OSG one.
-	CStdFPoint vPos = VsBody::GetOSGWorldCoords();
-	vPos.ClearNearZero();
-	m_lpThis->AbsolutePosition(vPos.x, vPos.y, vPos.z);
-	m_lpThis->ReportWorldPosition(m_lpThis->AbsolutePosition() * m_lpThis->GetSimulator()->DistanceUnits());
+		if(m_osgDragger.valid())
+			m_osgDragger->SetupMatrix();
+
+		//If we are here then we did not have a physics component, just and OSG one.
+		CStdFPoint vPos = VsBody::GetOSGWorldCoords();
+		vPos.ClearNearZero();
+		m_lpThis->AbsolutePosition(vPos.x, vPos.y, vPos.z);
+	}
 }
 
 void VsBody::BuildLocalMatrix()
 {
 	//build the local matrix
-	BuildLocalMatrix(m_lpThis->LocalPosition(), m_lpThis->Rotation(), m_lpThis->Name());
+	BuildLocalMatrix(m_lpThis->Position(), m_lpThis->Rotation(), m_lpThis->Name());
 }
 
 void VsBody::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName)
@@ -491,9 +494,9 @@ void VsBody::EndGripDrag()
 
 		CStdFPoint vLocal = vWorldPos - vParent;
 
-		if(vLocal != m_lpThis->LocalPosition())
+		if(vLocal != m_lpThis->Position())
 		{
-			m_lpThis->LocalPosition(vLocal, FALSE, TRUE);
+			m_lpThis->Position(vLocal, FALSE, TRUE);
 			return; //Only one operation can be done at a time. If it is translate then cannot be rotate.
 		}
 	}

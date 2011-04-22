@@ -17,7 +17,7 @@
 //Simulation Objects
 namespace AnimatSim
 {
-	class IBodyPartCallback;
+	class IMovableItemCallback;
 	class IGUI_AppCallback;
 	class AnimatBase;
 	class Simulator;
@@ -58,6 +58,7 @@ namespace AnimatSim
 
 	namespace Environment
 	{
+		class IPhysicsBase;
 		class IPhysicsBody;
 		class IMotorizedJoint;
 		class BodyPart;
@@ -143,7 +144,7 @@ using namespace AnimatSim::ExternalStimuli;
 using namespace AnimatSim::Gains;
 using namespace AnimatSim::Recording;
 
-#include "IBodyPartCallback.h"
+#include "IMovableItemCallback.h"
 #include "IMotorizedJoint.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
@@ -155,7 +156,9 @@ using namespace AnimatSim::Recording;
 #include "SigmoidGain.h"
 #include "Node.h"
 #include "Link.h"
+#include "IPhysicsBase.h"
 #include "IPhysicsBody.h"
+#include "MovableItem.h"
 #include "BodyPart.h"
 #include "ReceptiveField.h"
 #include "ReceptiveFieldPair.h"

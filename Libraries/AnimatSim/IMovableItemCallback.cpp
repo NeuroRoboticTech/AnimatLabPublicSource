@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "IBodyPartCallback.h"
+#include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
 
@@ -11,7 +11,7 @@ namespace AnimatSim
 \author	dcofer
 \date	3/25/2011
 **/
-IBodyPartCallback::IBodyPartCallback(void)
+IMovableItemCallback::IMovableItemCallback(void)
 {
 }
 
@@ -21,7 +21,7 @@ IBodyPartCallback::IBodyPartCallback(void)
 \author	dcofer
 \date	3/25/2011
 **/
-IBodyPartCallback::~IBodyPartCallback(void)
+IMovableItemCallback::~IMovableItemCallback(void)
 {
 }
 

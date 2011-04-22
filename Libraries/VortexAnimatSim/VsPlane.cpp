@@ -30,7 +30,7 @@ VsPlane::VsPlane()
 {
 	m_lpThis = this;
 	m_lpThisBody = this;
-	m_lpPhysicsBody = this;
+	PhysicsBody(this);
 	m_bCullBackfaces = TRUE; //we want back face culling on by default for planes.
 }
 

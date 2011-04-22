@@ -34,7 +34,7 @@ VsPrismatic::VsPrismatic()
 {
 	m_lpThis = this;
 	m_lpThisJoint = this;
-	m_lpPhysicsBody = this;
+	PhysicsBody(this);
 	m_lpPhysicsMotorJoint = this;
 	m_lpThisMotorJoint = this;
 	m_vxPrismatic = NULL;

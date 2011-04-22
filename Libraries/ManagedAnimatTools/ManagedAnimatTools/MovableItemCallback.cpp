@@ -5,38 +5,38 @@
 #include "SimulatorInterface.h"
 #include "SimGUICallback.h"
 #include "DataObjectInterface.h"
-#include "BodyPartCallback.h"
+#include "MovableItemCallback.h"
 
 namespace AnimatGUI
 {
 	namespace Interfaces
 	{
 
-BodyPartCallback::BodyPartCallback(DataObjectInterface ^doObj)
+MovableItemCallback::MovableItemCallback(DataObjectInterface ^doObj)
 {
 	m_doObj = doObj;
 }
 
-BodyPartCallback::~BodyPartCallback(void)
+MovableItemCallback::~MovableItemCallback(void)
 {
 }
 
-void BodyPartCallback::PositionChanged()
+void MovableItemCallback::PositionChanged()
 {
 	m_doObj->FirePositionChangedEvent();
 }
 
-void BodyPartCallback::RotationChanged()
+void MovableItemCallback::RotationChanged()
 {
 	m_doObj->FireRotationChangedEvent();
 }
 
-void BodyPartCallback::SelectionChanged(BOOL bSelected, BOOL bSelectMultiple)
+void MovableItemCallback::SelectionChanged(BOOL bSelected, BOOL bSelectMultiple)
 {
 	m_doObj->FireSelectionChangedEvent(bSelected, bSelectMultiple);
 }
 
-void BodyPartCallback::AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ)
+void MovableItemCallback::AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ)
 {
 	m_doObj->FireAddBodyClickedEvent(fltPosX, fltPosY, fltPosZ, fltNormX, fltNormY, fltNormZ);
 }

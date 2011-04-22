@@ -33,7 +33,7 @@ VsHinge::VsHinge()
 {
 	m_lpThis = this;
 	m_lpThisJoint = this;
-	m_lpPhysicsBody = this;
+	PhysicsBody(this);
 	m_lpPhysicsMotorJoint = this;
 	m_lpThisMotorJoint = this;
 	m_vxHinge = NULL;
@@ -94,7 +94,8 @@ void VsHinge::Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent, BOOL bUpdateMa
 	m_oRotation = oPoint;
 	m_oReportRotation = m_oRotation;
 
-	ResetGraphicsAndPhysics();
+	if(bUpdateMatrix)
+		ResetGraphicsAndPhysics();
 
 	if(m_lpCallback && bFireChangeEvent)
 		m_lpCallback->RotationChanged();

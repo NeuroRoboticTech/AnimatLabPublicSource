@@ -27,9 +27,9 @@ protected:
 	float *m_lpWorldPositionY;
 	float *m_lpWorldPositionZ;
 
-	float *m_lpLocalPositionX;
-	float *m_lpLocalPositionY;
-	float *m_lpLocalPositionZ;
+	float *m_lpPositionX;
+	float *m_lpPositionY;
+	float *m_lpPositionZ;
 
 	float *m_lpRotationX;
 	float *m_lpRotationY;
@@ -42,16 +42,16 @@ public:
 
 #pragma region Properties
 
-			property float LocalPosition[int]
+			property float Position[int]
 			{
 				float get(int i) 
 				{
-					if(i == 0 && m_lpLocalPositionX)
-						return *m_lpLocalPositionX;
-					else if(i == 1 && m_lpLocalPositionY)
-						return *m_lpLocalPositionY;
-					else if(i == 2 && m_lpLocalPositionZ)
-						return *m_lpLocalPositionZ;
+					if(i == 0 && m_lpPositionX)
+						return *m_lpPositionX;
+					else if(i == 1 && m_lpPositionY)
+						return *m_lpPositionY;
+					else if(i == 2 && m_lpPositionZ)
+						return *m_lpPositionZ;
 					else
 						return 0;
 				}

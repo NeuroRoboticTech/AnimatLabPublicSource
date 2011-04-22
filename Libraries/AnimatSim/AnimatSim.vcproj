@@ -312,11 +312,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\IBodyPartCallback.cpp"
+				RelativePath=".\IMotorizedJoint.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\IMotorizedJoint.cpp"
+				RelativePath=".\IMovableItemCallback.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\IPhysicsBase.cpp"
 				>
 			</File>
 			<File
@@ -377,6 +381,10 @@
 			</File>
 			<File
 				RelativePath=".\Mouth.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MovableItem.cpp"
 				>
 			</File>
 			<File
@@ -618,11 +626,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\IBodyPartCallback.h"
+				RelativePath=".\IMotorizedJoint.h"
 				>
 			</File>
 			<File
-				RelativePath=".\IMotorizedJoint.h"
+				RelativePath=".\IMovableItemCallback.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IPhysicsBase.h"
 				>
 			</File>
 			<File
@@ -683,6 +695,10 @@
 			</File>
 			<File
 				RelativePath=".\Mouth.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MovableItem.h"
 				>
 			</File>
 			<File

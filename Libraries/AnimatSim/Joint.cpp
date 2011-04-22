@@ -5,12 +5,14 @@
 **/
 
 #include "stdafx.h"
-#include "IBodyPartCallback.h"
+#include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
 
 #include "Node.h"
+#include "IPhysicsBase.h"
 #include "IPhysicsBody.h"
+#include "MovableItem.h"
 #include "BodyPart.h"
 #include "Joint.h"
 #include "ReceptiveField.h"
@@ -323,9 +325,7 @@ void Joint::Load(CStdXml &oXml)
 		THROW_PARAM_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined, "JointID", m_strName);
 
 	//Reset the absolute position differently for a joint. It is derived from the child object, not the parent.
-	m_oAbsPosition = m_lpChild->AbsolutePosition() + m_oLocalPosition;
-	m_oReportLocalPosition = m_oLocalPosition * m_lpSim->DistanceUnits();
-	m_oReportWorldPosition = m_oAbsPosition * m_lpSim->DistanceUnits();
+	AbsolutePosition(m_lpChild->AbsolutePosition() + m_oPosition);
 
 	EnableLimits(oXml.GetChildBool("EnableLimits", m_bEnableLimits));
 

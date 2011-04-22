@@ -21,13 +21,14 @@ namespace VortexAnimatSim
 			protected:
 				Vx::VxSpring *m_vxSpring;
 
-				virtual void CollectBodyData();
 
 			public:
 				VsSpring();
 				virtual ~VsSpring();
 
 				virtual void Enabled(BOOL bVal);
+
+				virtual void Physics_CollectData();
 
 				virtual void CreateParts();
 				virtual void CreateJoints();

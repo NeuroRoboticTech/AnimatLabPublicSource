@@ -10,14 +10,14 @@ namespace AnimatGUI
 	namespace Interfaces
 	{
 
-class BodyPartCallback : public AnimatSim::IBodyPartCallback
+class MovableItemCallback : public AnimatSim::IMovableItemCallback
 {
 protected:
 	gcroot<DataObjectInterface ^>  m_doObj;
 
 public:
-	BodyPartCallback(DataObjectInterface ^doObj);
-	virtual ~BodyPartCallback(void);
+	MovableItemCallback(DataObjectInterface ^doObj);
+	virtual ~MovableItemCallback(void);
 
 	virtual void PositionChanged();
 	virtual void RotationChanged();

@@ -30,7 +30,7 @@ VsBallSocket::VsBallSocket()
 {
 	m_lpThis = this;
 	m_lpThisJoint = this;
-	m_lpPhysicsBody = this;
+	PhysicsBody(this);
 	m_vxSocket = NULL;
 }
 

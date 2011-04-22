@@ -5,12 +5,14 @@
 **/
 
 #include "stdafx.h"
-#include "IBodyPartCallback.h"
+#include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
 
 #include "Node.h"
+#include "IPhysicsBase.h"
 #include "IPhysicsBody.h"
+#include "MovableItem.h"
 #include "BodyPart.h"
 #include "Link.h"
 #include "Gain.h"

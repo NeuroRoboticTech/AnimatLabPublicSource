@@ -5,7 +5,7 @@
 #include "SimulatorInterface.h"
 #include "SimGUICallback.h"
 #include "DataObjectInterface.h"
-#include "BodyPartCallback.h"
+#include "MovableItemCallback.h"
 
 namespace AnimatGUI
 {
@@ -21,18 +21,18 @@ DataObjectInterface::DataObjectInterface(Interfaces::SimulatorInterface ^SimInt,
 
 	//If this is a bodypart or struture type then lets add the callbacks to it so those
 	//classes can fire managed events back up to the gui.
-	BodyPartCallback *lpCallback = NULL;
+	MovableItemCallback *lpCallback = NULL;
 	BodyPart *lpPart = dynamic_cast<BodyPart *>(m_lpBase);
 	Structure *lpStruct = dynamic_cast<Structure *>(m_lpBase);
 	if(lpPart)
 	{
-		lpCallback = new BodyPartCallback(this);
+		lpCallback = new MovableItemCallback(this);
 		lpPart->Callback(lpCallback);
 		GetPointers();
 	}
 	else if(lpStruct)
 	{
-		lpCallback = new BodyPartCallback(this);
+		lpCallback = new MovableItemCallback(this);
 		lpStruct->Callback(lpCallback);
 		GetPointers();
 	}
@@ -42,9 +42,9 @@ void DataObjectInterface::GetPointers()
 {
 	try
 	{
-		m_lpLocalPositionX = m_lpBase->GetDataPointer("LOCALPOSITIONX");
-		m_lpLocalPositionY = m_lpBase->GetDataPointer("LOCALPOSITIONY");
-		m_lpLocalPositionZ = m_lpBase->GetDataPointer("LOCALPOSITIONZ");
+		m_lpPositionX = m_lpBase->GetDataPointer("POSITIONX");
+		m_lpPositionY = m_lpBase->GetDataPointer("POSITIONY");
+		m_lpPositionZ = m_lpBase->GetDataPointer("POSITIONZ");
 
 		m_lpWorldPositionX = m_lpBase->GetDataPointer("WORLDPOSITIONX");
 		m_lpWorldPositionY = m_lpBase->GetDataPointer("WORLDPOSITIONY");
@@ -56,9 +56,9 @@ void DataObjectInterface::GetPointers()
 	}
 	catch(...)
 	{
-		m_lpLocalPositionX = NULL;
-		m_lpLocalPositionY = NULL;
-		m_lpLocalPositionZ = NULL;
+		m_lpPositionX = NULL;
+		m_lpPositionY = NULL;
+		m_lpPositionZ = NULL;
 
 		m_lpWorldPositionX = NULL;
 		m_lpWorldPositionY = NULL;

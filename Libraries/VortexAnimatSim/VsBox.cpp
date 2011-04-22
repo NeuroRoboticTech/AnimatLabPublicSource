@@ -28,7 +28,7 @@ VsBox::VsBox()
 {
 	m_lpThis = this;
 	m_lpThisBody = this;
-	m_lpPhysicsBody = this;
+	PhysicsBody(this);
 }
 
 VsBox::~VsBox()

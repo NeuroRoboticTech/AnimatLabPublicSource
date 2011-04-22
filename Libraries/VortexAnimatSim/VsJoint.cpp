@@ -52,10 +52,9 @@ void VsJoint::UpdatePosition()
 	m_vxJoint->getPartAttachmentPosition(0, vPos);
 
 	m_lpThis->AbsolutePosition(vPos[0], vPos[0], vPos[0]);
-	m_lpThis->ReportWorldPosition(m_lpThis->AbsolutePosition() * m_lpThis->GetSimulator()->DistanceUnits());
 }
 
-void VsJoint::Physics_CollectBodyData()
+void VsJoint::Physics_CollectData()
 {
 	if(m_lpThis && m_vxJoint)
 	{
@@ -250,7 +249,7 @@ void VsJoint::UpdatePositionAndRotationFromMatrix()
 
 void VsJoint::Physics_UpdateMatrix()
 {
-	LocalMatrix(SetupMatrix(m_lpThis->LocalPosition(), m_lpThis->Rotation()));
+	LocalMatrix(SetupMatrix(m_lpThis->Position(), m_lpThis->Rotation()));
 	m_osgMT->setMatrix(m_osgLocalMatrix);
 	m_osgDragger->SetupMatrix();
 
@@ -263,7 +262,6 @@ void VsJoint::Physics_UpdateMatrix()
 	CStdFPoint vPos = VsBody::GetOSGWorldCoords();
 	vPos.ClearNearZero();
 	m_lpThis->AbsolutePosition(vPos.x, vPos.y, vPos.z);
-	m_lpThis->ReportWorldPosition(m_lpThis->AbsolutePosition() * m_lpThis->GetSimulator()->DistanceUnits());
 }
 
 void VsJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName)

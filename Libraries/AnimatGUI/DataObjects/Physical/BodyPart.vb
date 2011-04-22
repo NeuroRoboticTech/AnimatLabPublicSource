@@ -187,7 +187,7 @@ Namespace DataObjects.Physical
                 Return m_svLocalPosition
             End Get
             Set(ByVal value As Framework.ScaledVector3)
-                Me.SetSimData("LocalPosition", value.GetSimulationXml("LocalPosition"), True)
+                Me.SetSimData("Position", value.GetSimulationXml("Position"), True)
                 m_svLocalPosition.CopyData(value)
                 RaiseEvent PartMoved(Me)
             End Set
@@ -212,7 +212,7 @@ Namespace DataObjects.Physical
                     value.Z.ActualValue = value.Z.ActualValue - bpParent.WorldPosition.Z.ActualValue
                     value.IgnoreChangeValueEvents = False
 
-                    Me.SetSimData("LocalPosition", value.GetSimulationXml("LocalPosition"), True)
+                    Me.SetSimData("Position", value.GetSimulationXml("Position"), True)
                     m_svLocalPosition.CopyData(value)
 
                     If Not m_doInterface Is Nothing Then
@@ -590,7 +590,7 @@ Namespace DataObjects.Physical
                 oXml.AddChildElement("ModuleName", Me.ModuleName)
             End If
 
-            m_svLocalPosition.SaveSimulationXml(oXml, Me, "LocalPosition")
+            m_svLocalPosition.SaveSimulationXml(oXml, Me, "Position")
             Me.RadianRotation.SaveSimulationXml(oXml, Me, "Rotation")
 
             oXml.OutOfElem() 'Outof BodyPart Element
@@ -700,7 +700,7 @@ Namespace DataObjects.Physical
         'This is different from the OnPositionChanged event. Those events come up from the simulation.
         Protected Overridable Sub OnLocalPositionValueChanged()
             Try
-                Me.SetSimData("LocalPosition", m_svLocalPosition.GetSimulationXml("LocalPosition"), True)
+                Me.SetSimData("Position", m_svLocalPosition.GetSimulationXml("Position"), True)
                 Util.ProjectProperties.RefreshProperties()
                 RaiseEvent PartMoved(Me)
             Catch ex As System.Exception
@@ -719,7 +719,7 @@ Namespace DataObjects.Physical
                     m_svLocalPosition.Z.ActualValue = m_svWorldPosition.Z.ActualValue - bpParent.WorldPosition.Z.ActualValue
                     m_svLocalPosition.IgnoreChangeValueEvents = False
 
-                    Me.SetSimData("LocalPosition", m_svLocalPosition.GetSimulationXml("LocalPosition"), True)
+                    Me.SetSimData("Position", m_svLocalPosition.GetSimulationXml("Position"), True)
                     Util.ProjectProperties.RefreshProperties()
                     RaiseEvent PartMoved(Me)
                 End If
@@ -749,7 +749,7 @@ Namespace DataObjects.Physical
             Try
                 If Not m_doInterface Is Nothing Then
 
-                    m_svLocalPosition.CopyData(m_doInterface.LocalPosition(0), m_doInterface.LocalPosition(1), m_doInterface.LocalPosition(2))
+                    m_svLocalPosition.CopyData(m_doInterface.Position(0), m_doInterface.Position(1), m_doInterface.Position(2))
                     m_svWorldPosition.CopyData(m_doInterface.WorldPosition(0), m_doInterface.WorldPosition(1), m_doInterface.WorldPosition(2))
 
                     RaiseEvent PartMoved(Me)

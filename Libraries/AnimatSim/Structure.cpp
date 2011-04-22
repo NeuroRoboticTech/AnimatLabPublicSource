@@ -6,12 +6,14 @@
 
 #include "stdafx.h"
 #include "IMotorizedJoint.h"
-#include "IBodyPartCallback.h"
+#include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
 #include "AnimatBase.h"
 
 #include "Node.h"
+#include "IPhysicsBase.h"
 #include "IPhysicsBody.h"
+#include "MovableItem.h"
 #include "BodyPart.h"
 #include "Joint.h"
 #include "MotorizedJoint.h"
@@ -212,18 +214,18 @@ CStdPtrArray<CollisionPair> Structure::ExclusionList()
 {return m_aryExcludeCollisionList;}
 
 /**
-\brief	Gets the IBodyPartCallback pointer for this structure. 
+\brief	Gets the IMovableItemCallback pointer for this structure. 
 
 \author	dcofer
 \date	2/25/2011
 
 \return	null if it fails, else. 
 **/
-IBodyPartCallback *Structure::Callback() 
+IMovableItemCallback *Structure::Callback() 
 {return m_lpCallback;}
 
 /**
-\brief	Sets the IBodyPartCallback pointer for this structure. 
+\brief	Sets the IMovableItemCallback pointer for this structure. 
 
 \details This is used by the GUI interface to pass in a pointer to a 
 callback object that will communicate events back up to the GUI.
@@ -233,7 +235,7 @@ callback object that will communicate events back up to the GUI.
 
 \param [in,out]	lpCallback	The pointer to a callback. 
 **/
-void Structure::Callback(IBodyPartCallback *lpCallback) 
+void Structure::Callback(IMovableItemCallback *lpCallback) 
 {m_lpCallback = lpCallback;}
 
 /**

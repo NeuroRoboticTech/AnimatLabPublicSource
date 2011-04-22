@@ -28,7 +28,7 @@
 //Simulation Objects
 namespace AnimatSim
 {
-	class IBodyPartCallback;
+	class IMovableItemCallback;
 	class AnimatBase;
 	class Simulator;
 	class Node;

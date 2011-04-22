@@ -83,7 +83,7 @@ void VsSpring::Enabled(BOOL bVal)
 		m_vxSpring->enable(m_bEnabled);
 }
 
-void VsSpring::CollectBodyData()
+void VsSpring::Physics_CollectData()
 {
 	if(m_vxSpring)
 	{
