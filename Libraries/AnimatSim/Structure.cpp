@@ -11,7 +11,7 @@
 #include "AnimatBase.h"
 
 #include "Node.h"
-#include "IPhysicsBase.h"
+#include "IPhysicsMovableItem.h"
 #include "IPhysicsBody.h"
 #include "MovableItem.h"
 #include "BodyPart.h"
@@ -50,7 +50,8 @@ Structure::Structure()
 {
 	m_lpSim = NULL;
 	m_lpBody = NULL;
-	m_lpCallback = NULL;
+	m_lpPhysicsMovableItem = NULL;
+	m_fltSize = 0.02f;
 }
 
 /**
@@ -98,101 +99,41 @@ RigidBody *Structure::Body()
 {return m_lpBody;}
 
 /**
-\brief	Gets the current position of the structure. 
+\brief	Gets the size of the graphical representation of this joint.
 
 \author	dcofer
-\date	2/25/2011
+\date	3/22/2011
 
-\return	CStdFPoint position. 
+\return	Size for the graphics object.
 **/
-CStdFPoint Structure::Position() 
-{return m_oPosition;}
+float Structure::Size() {return m_fltSize;};
 
 /**
-\brief	Sets the position of the structure. 
+\brief	Sets the size of the graphical representation of this joint.
 
 \author	dcofer
-\date	2/25/2011
+\date	3/22/2011
 
-\param [in,out]	oPoint	The new position. 
+\param	fltVal	   	The new size value. 
+\param	bUseScaling	true to use unit scaling. 
 **/
-void Structure::Position(CStdFPoint &oPoint) 
-{m_oPosition = oPoint;}
+void Structure::Size(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Structure.Size");
+	if(bUseScaling)
+		m_fltSize = fltVal * m_lpSim->InverseDistanceUnits();
+	else
+		m_fltSize = fltVal;
 
-/**
-\brief	Gets the position that is reported back to the GUI.
+	//TODO
+	//Resize();
+}
 
-\details Internally the simulation represents both space and mass abstractly. It scales the number based
-on the users setting of MassUnits and DistanceUnits. So this means that for information that is reported back
-to the user it must be rescaled appropriately to appear correct for them. This variable
-
-\author	dcofer
-\date	2/25/2011
-
-\return	. 
-**/
-CStdFPoint Structure::ReportPosition() 
-{return m_oReportPosition;}
-
-/**
-\brief	sets the reported position. 
-
-\author	dcofer
-\date	2/25/2011
-
-\param [in,out]	oPoint	The reported position. 
-**/
-void Structure::ReportPosition(CStdFPoint &oPoint) 
-{m_oReportPosition = oPoint;}
-
-/**
-\brief	sets the reported position. 
-
-\author	dcofer
-\date	2/25/2011
-
-\param	fltX	The x coordinate. 
-\param	fltY	The y coordinate. 
-\param	fltZ	The z coordinate. 
-**/
-void Structure::ReportPosition(float fltX, float fltY, float fltZ)
-{m_oReportPosition.Set(fltX, fltY, fltZ);}
-
-/**
-\brief	Gets the rotation that is reported back to the GUI.
-
-\author	dcofer
-\date	2/25/2011
-
-\return	CStdFPoint rotation in radians. 
-**/
-
-CStdFPoint Structure::ReportRotation() 
-{return m_oReportRotation;}
-
-/**
-\brief	Sets the report rotation in radians. 
-
-\author	dcofer
-\date	2/25/2011
-
-\param [in,out]	oPoint	The new rotation value. 
-**/
-void Structure::ReportRotation(CStdFPoint &oPoint) 
-{m_oReportRotation = oPoint;}
-
-/**
-\brief	Sets the report rotation in radians. 
-
-\author	dcofer
-\date	2/25/2011
-
-\param	fltX	The x rotation. 
-\param	fltY	The y rotation. 
-\param	fltZ	The z rotation. 
-**/
-void Structure::ReportRotation(float fltX, float fltY, float fltZ) 
-{m_oReportRotation.Set(fltX, fltY, fltZ);}
+void Structure::Selected(BOOL bValue, BOOL bSelectMultiple)
+{
+	AnimatBase::Selected(bValue, bSelectMultiple);
+	MovableItem::Selected(bValue, bSelectMultiple);
+}
 
 /**
 \brief	Gets the collision exclusion list as an array.
@@ -214,31 +155,6 @@ CStdPtrArray<CollisionPair> Structure::ExclusionList()
 {return m_aryExcludeCollisionList;}
 
 /**
-\brief	Gets the IMovableItemCallback pointer for this structure. 
-
-\author	dcofer
-\date	2/25/2011
-
-\return	null if it fails, else. 
-**/
-IMovableItemCallback *Structure::Callback() 
-{return m_lpCallback;}
-
-/**
-\brief	Sets the IMovableItemCallback pointer for this structure. 
-
-\details This is used by the GUI interface to pass in a pointer to a 
-callback object that will communicate events back up to the GUI.
-
-\author	dcofer
-\date	2/25/2011
-
-\param [in,out]	lpCallback	The pointer to a callback. 
-**/
-void Structure::Callback(IMovableItemCallback *lpCallback) 
-{m_lpCallback = lpCallback;}
-
-/**
 \brief	Collects reporting data for the structure at each time step.
 
 \details This is called during StepSimulation of the structure so that we can collect or setup
@@ -248,19 +164,20 @@ ReportPosition and ReportRotation values.
 \author	dcofer
 \date	2/25/2011
 **/
-void Structure::CollectStructureData()
+void Structure::UpdateData()
 {
-	if(m_lpSim && m_lpBody)
-	{
-		m_oReportPosition = m_lpBody->ReportWorldPosition();
-		m_oReportRotation = m_lpBody->ReportRotation();
-	}
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->Physics_CollectData();
 }
 
-void Structure::Initialize()
+void Structure::UpdatePhysicsPosFromGraphics()
 {
-	AnimatBase::Initialize();
+	if(m_lpBody)
+		m_lpBody->UpdatePhysicsPosFromGraphics();
+}
 
+void Structure::Create()
+{
 	if(m_lpBody)
 	{
 		//First create all of the model objects.
@@ -270,28 +187,19 @@ void Structure::Initialize()
 		m_lpBody->CreateJoints();
 	}
 
-	//Now lets disable any collisions that have been added to the exclusion list.
-	int iCount = m_aryExcludeCollisionList.GetSize();
-	CollisionPair *lpPair = NULL;
-	RigidBody *lpPart1=NULL, *lpPart2=NULL;
-
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-	{
-		lpPair =	m_aryExcludeCollisionList[iIndex];
-		lpPart1 = this->FindRigidBody(lpPair->m_strPart1ID);
-		lpPart2 = this->FindRigidBody(lpPair->m_strPart2ID);
-
-		lpPart1->DisableCollision(lpPart2);
-	}
+	m_lpSim->DisableCollisions(this, m_aryExcludeCollisionList);
 }
 
 void Structure::ResetSimulation()
 {
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->Physics_ResetSimulation();
+
 	if(m_lpBody)
 	{
 		m_lpBody->ResetSimulation();
 		
-		CollectStructureData();
+		UpdateData();
 
 		//We have to call this after method because some objects (ie: muscles and spindles, etc.) depend on other items
 		//already being reset to their original positions. So they must be done first and then these items get reset.
@@ -317,7 +225,7 @@ void Structure::StepPhysicsEngine()
 	if(m_lpBody)
 	{
 		m_lpBody->StepSimulation();
-		CollectStructureData();
+		UpdateData();
 	}
 }
 
@@ -530,31 +438,20 @@ Node *Structure::FindNode(string strID, BOOL bThrowError)
 
 #pragma region DataAccesMethods
 
+void Structure::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+{
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
+	m_lpMovableSim = lpSim;
+}
+
 float *Structure::GetDataPointer(string strDataType)
 {
 	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);
 
-	if(strType == "LOCALPOSITIONX" || strType == "LOCALPOSITIONY" || strType == "LOCALPOSITIONZ")
-		return NULL;
-
-	if(strType == "POSITIONX" || strType == "WORLDPOSITIONX")
-		return &m_oReportPosition.x;
-
-	if(strType == "POSITIONY" || strType == "WORLDPOSITIONY")
-		return &m_oReportPosition.y;
-
-	if(strType == "POSITIONZ" || strType == "WORLDPOSITIONZ")
-		return &m_oReportPosition.z;
-
-	if(strType == "ROTATIONX")
-		return &m_oReportRotation.x;
-
-	if(strType == "ROTATIONY")
-		return &m_oReportRotation.y;
-
-	if(strType == "ROTATIONZ")
-		return &m_oReportRotation.z;
+	lpData = MovableItem::GetDataPointer(strDataType);
+	if(lpData)
+		return lpData;
 
 	THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Simulator DataType: " + strDataType);
 
@@ -564,6 +461,9 @@ float *Structure::GetDataPointer(string strDataType)
 BOOL Structure::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
+
+	if(MovableItem::SetData(strDataType, strValue, FALSE))
+		return TRUE;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
@@ -803,9 +703,9 @@ void Structure::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 
-	oXml.IntoElem();  //Into Layout Element
+	MovableItem::Load(oXml);
 
-	Std_LoadPoint(oXml, "Position", m_oPosition);
+	oXml.IntoElem();  //Into Layout Element
 
 	LoadLayout(oXml);
 
@@ -887,6 +787,8 @@ void Structure::LoadLayout(CStdXml &oXml)
 {
 	string strModule;
 	string strType;
+
+	Size(oXml.GetChildFloat("Size", m_fltSize));
 
 	BOOL bFound = FALSE;
 	if(oXml.FindChildElement("Body", FALSE))

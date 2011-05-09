@@ -61,9 +61,9 @@ namespace VortexAnimatSim
 
 #pragma endregion
 
-
 			Joint *m_lpThisJoint;
 
+			virtual void SetThisPointers();
 			void UpdatePosition();
 
 			virtual void CreateJointGraphics();
@@ -89,7 +89,6 @@ namespace VortexAnimatSim
 			virtual void SetBody();
 			virtual void Physics_ResetSimulation();
 			virtual void Physics_CollectData();
-			virtual float *Physics_GetDataPointer(string strDataType);
 			virtual BOOL Physics_SetData(string strDataType, string strValue);
 
 			virtual Vx::VxConstraint* Constraint() {return m_vxJoint;};
@@ -97,6 +96,7 @@ namespace VortexAnimatSim
 
 			//Methods not used by joints.
 			virtual void Physics_UpdateMatrix();
+			virtual void Physics_RotationChanged();
 			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName);
 			virtual void Physics_EnableCollision(RigidBody *lpBody) {};
 			virtual void Physics_DisableCollision(RigidBody *lpBody) {};

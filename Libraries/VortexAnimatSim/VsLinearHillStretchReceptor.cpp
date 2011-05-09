@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
@@ -25,10 +26,6 @@ namespace VortexAnimatSim
 
 VsLinearHillStretchReceptor::VsLinearHillStretchReceptor()
 {
-	m_lpThis = this;
-	m_lpThisBody = this;
-	PhysicsBody(this);
-	m_lpLineBase = this;
 }
 
 VsLinearHillStretchReceptor::~VsLinearHillStretchReceptor()

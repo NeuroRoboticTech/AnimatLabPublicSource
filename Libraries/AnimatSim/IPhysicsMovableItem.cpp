@@ -4,7 +4,7 @@
 #include "AnimatBase.h"
 
 #include "Node.h"
-#include "IPhysicsBase.h"
+#include "IPhysicsMovableItem.h"
 #include "IPhysicsBody.h"
 #include "MovableItem.h"
 #include "BodyPart.h"
@@ -33,11 +33,11 @@ namespace AnimatSim
 	namespace Environment
 	{
 
-IPhysicsBase::IPhysicsBase(void)
+IPhysicsMovableItem::IPhysicsMovableItem(void)
 {
 }
 
-IPhysicsBase::~IPhysicsBase(void)
+IPhysicsMovableItem::~IPhysicsMovableItem(void)
 {
 }
 

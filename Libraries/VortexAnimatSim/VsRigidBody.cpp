@@ -3,8 +3,11 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
+#include "VsJoint.h"
 #include "VsRigidBody.h"
+#include "VsStructure.h"
 #include "VsSimulator.h"
 #include "VsOsgUserData.h"
 #include "VsOsgUserDataVisitor.h"
@@ -56,6 +59,18 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of VsRigidBody\r\n", "", -1, FALSE, TRUE);}
 }
 
+void VsRigidBody::SetThisPointers()
+{
+	VsBody::SetThisPointers();
+	m_lpThisRB = dynamic_cast<RigidBody *>(this);
+	if(!m_lpThisRB)
+		THROW_TEXT_ERROR(Vs_Err_lThisPointerNotDefined, Vs_Err_strThisPointerNotDefined, "m_lpThisRB, " + m_lpThisAB->Name());
+
+	m_lpThisRB->PhysicsBody(this);
+	if(!m_lpThisRB)
+		THROW_TEXT_ERROR(Vs_Err_lThisPointerNotDefined, Vs_Err_strThisPointerNotDefined, "m_lpThisRB, " + m_lpThisAB->Name());
+}
+
 Vx::VxCollisionSensor* VsRigidBody::Sensor()
 {
 	return m_vxSensor;
@@ -80,22 +95,22 @@ CStdFPoint VsRigidBody::Physics_GetCurrentPosition()
 {
 	Vx::VxReal3Ptr vPos = NULL;
 	m_vxSensor->getPosition(vPos);
-	m_lpThis->AbsolutePosition(vPos[0], vPos[1], vPos[2]);
-	return m_lpThis->AbsolutePosition();
+	m_lpThisMI->AbsolutePosition(vPos[0], vPos[1], vPos[2]);
+	return m_lpThisMI->AbsolutePosition();
 }
 
 void VsRigidBody::Physics_UpdateMatrix()
 {
 	VsBody::Physics_UpdateMatrix();
 
-	m_lpThis->UpdatePhysicsPosFromGraphics();
+	m_lpThisRB->UpdatePhysicsPosFromGraphics();
 }
  
 void VsRigidBody::UpdatePositionAndRotationFromMatrix()
 {
 	VsBody::UpdatePositionAndRotationFromMatrix();
 
-	m_lpThis->UpdatePhysicsPosFromGraphics();
+	m_lpThisRB->UpdatePhysicsPosFromGraphics();
 }
 
 void VsRigidBody::Physics_UpdateNode()
@@ -106,12 +121,12 @@ void VsRigidBody::Physics_UpdateNode()
 
 void VsRigidBody::Physics_SetColor()
 {
-	SetColor(*m_lpThisBody->Ambient(), *m_lpThisBody->Diffuse(), *m_lpThisBody->Specular(), m_lpThisBody->Shininess()); 
+	SetColor(*m_lpThisRB->Ambient(), *m_lpThisRB->Diffuse(), *m_lpThisRB->Specular(), m_lpThisRB->Shininess()); 
 }
 
 void VsRigidBody::Physics_TextureChanged()
 {
-	SetTexture(m_lpThisBody->Texture());
+	SetTexture(m_lpThisRB->Texture());
 }
 
 void VsRigidBody::SetFreeze(BOOL bVal)
@@ -136,13 +151,13 @@ void VsRigidBody::GetBaseValues()
 		//Simulate buoyancy
 		//Fb = Pl * (Ms/Ps) * G
 		m_fltMass = m_vxPart->getMass();  //mass is in unit scale values. (ie. grams)
-		float fltVolume = m_fltMass/m_lpThisBody->Density();   //volume is in unit scale values. (ie. decimeters^3)
+		float fltVolume = m_fltMass/m_lpThisRB->Density();   //volume is in unit scale values. (ie. decimeters^3)
 
 		//We need to convert the mass to grams and the volume to cubic meters for reporting purposes.
-		m_fltReportMass = m_fltMass*m_lpThis->GetSimulator()->MassUnits();
-		m_fltReportVolume = fltVolume*(pow(m_lpThis->GetSimulator()->DistanceUnits(), 3));
-		m_fltBuoyancy = -(m_lpThis->GetSimulator()->FluidDensity() * fltVolume * m_lpThis->GetSimulator()->Gravity());
-		m_fltReportBuoyancy = m_fltBuoyancy * m_lpThis->GetSimulator()->MassUnits() * m_lpThis->GetSimulator()->DistanceUnits();
+		m_fltReportMass = m_fltMass*m_lpThisAB->GetSimulator()->MassUnits();
+		m_fltReportVolume = fltVolume*(pow(m_lpThisAB->GetSimulator()->DistanceUnits(), 3));
+		m_fltBuoyancy = -(m_lpThisAB->GetSimulator()->FluidDensity() * fltVolume * m_lpThisAB->GetSimulator()->Gravity());
+		m_fltReportBuoyancy = m_fltBuoyancy * m_lpThisAB->GetSimulator()->MassUnits() * m_lpThisAB->GetSimulator()->DistanceUnits();
 	}
 }
 
@@ -155,46 +170,22 @@ osg::Group *VsRigidBody::ParentOSG()
 {
 	RigidBody *lpParent = NULL;
 
-	if(m_lpThis) lpParent = m_lpThis->Parent();
+	if(m_lpThisRB)
+	{
+		lpParent = m_lpThisRB->Parent();
 
-	if(lpParent)
-	{
-		VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(lpParent);
-		if(lpVsParent) return lpVsParent->GetMatrixTransform();
+		VsMovableItem *lpItem = NULL;
+
+		if(lpParent)
+			lpItem = dynamic_cast<VsMovableItem *>(lpParent);
+		else
+			lpItem = dynamic_cast<VsMovableItem *>(m_lpThisRB->GetStructure());
+
+		if(lpItem)
+			return lpItem->GetMatrixTransform();
 	}
-	else if(m_lpThis->GetStructure())
-	{
-		void *lpGroup = m_lpThis->GetStructure()->GetMatrixPointer();
-		osg::Group *osgGroup = (osg::Group*) lpGroup;
-		return osgGroup;
-	}
+	
 	return NULL;
-}
-
-void VsRigidBody::SetupGraphics()
-{
-	m_osgParent = ParentOSG();
-
-	if(m_osgParent.valid())
-	{
-		BuildLocalMatrix();
-
-		SetColor(*m_lpThisBody->Ambient(), *m_lpThisBody->Diffuse(), *m_lpThisBody->Specular(), m_lpThisBody->Shininess());
-		SetTexture(m_lpThisBody->Texture());
-		SetCulling();
-		SetVisible(m_lpThis->IsVisible());
-
-		//Add it to the scene graph.
-		m_osgParent->addChild(m_osgRoot.get());
-
-		//Set the position with the world coordinates.
-		m_lpThis->AbsolutePosition(VsBody::GetOSGWorldCoords());
-
-		//We need to set the UserData on the OSG side so we can do picking.
-		//We need to use a node visitor to set the user data for all drawable nodes in all geodes for the group.
-		osg::ref_ptr<VsOsgUserDataVisitor> osgVisitor = new VsOsgUserDataVisitor(this);
-		osgVisitor->traverse(*m_osgMT);
-	}
 }
 
 void VsRigidBody::SetupPhysics()
@@ -205,9 +196,9 @@ void VsRigidBody::SetupPhysics()
 	{
 		//If the parent is not null and the joint is null then that means we need to statically link this part to 
 		//its parent. So we do not create a physics part, we just get a link to its parents part.
-		if(m_lpThisBody->IsContactSensor())
+		if(m_lpThisRB->IsContactSensor())
 			CreateSensorPart();
-		else if(m_lpThis->Parent() && !m_lpThisBody->JointToParent())
+		else if(m_lpThisRB->Parent() && !m_lpThisRB->JointToParent())
 			CreateStaticPart();
 		else
 			CreateDynamicPart();
@@ -218,15 +209,15 @@ void VsRigidBody::SetupPhysics()
 
 void VsRigidBody::CreateSensorPart()
 {
-	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThis->Parent());
+	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisRB->Parent());
 
 	m_vxSensor = new VxCollisionSensor;
 	m_vxPart = NULL;
-	m_vxSensor->setUserData((void*) m_lpThis);
+	m_vxSensor->setUserData((void*) m_lpThisRB);
 
-	m_vxSensor->setName(m_lpThis->ID().c_str());               // Give it a name.
+	m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
     m_vxCollisionGeometry = m_vxSensor->addGeometry(m_vxGeometry, 0);
-	string strName = m_lpThis->ID() + "_CollisionGeometry";
+	string strName = m_lpThisAB->ID() + "_CollisionGeometry";
 	m_vxCollisionGeometry->setName(strName.c_str());
 
 	m_vxSensor->setControl(VxEntity::kControlNode);
@@ -244,7 +235,7 @@ void VsRigidBody::CreateSensorPart()
 	}
 	else
 	{
-		m_vxSensor->freeze(m_lpThisBody->Freeze());
+		m_vxSensor->freeze(m_lpThisRB->Freeze());
 	}
 }
 
@@ -253,48 +244,48 @@ void VsRigidBody::CreateDynamicPart()
 	// Create the physics object.
 	m_vxPart = new VxPart;
 	m_vxSensor = m_vxPart;
-	m_vxSensor->setUserData((void*) m_lpThis);
-	int iMaterialID = m_lpThis->GetSimulator()->GetMaterialID(m_lpThisBody->MaterialID());
+	m_vxSensor->setUserData((void*) m_lpThisRB);
+	int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
 
-	m_vxSensor->setName(m_lpThis->ID().c_str());               // Give it a name.
+	m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
     m_vxSensor->setControl(m_eControlType);  // Set it to dynamic.
-    m_vxCollisionGeometry = m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisBody->Density());
+    m_vxCollisionGeometry = m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density());
 
-	string strName = m_lpThis->ID() + "_CollisionGeometry";
+	string strName = m_lpThisAB->ID() + "_CollisionGeometry";
 	m_vxCollisionGeometry->setName(strName.c_str());
 	m_vxSensor->setFastMoving(true);
 
 	//if this body is frozen; freeze it
-	m_vxSensor->freeze(m_lpThisBody->Freeze());
+	m_vxSensor->freeze(m_lpThisRB->Freeze());
 
 	//if the center of mass isn't the graphical center then set the offset relative to position and orientation
 	if(m_vxPart)
 	{
-		CStdFPoint vCOM = m_lpThisBody->CenterOfMass();
+		CStdFPoint vCOM = m_lpThisRB->CenterOfMass();
 		if(vCOM.x != 0 || vCOM.y != 0 || vCOM.z != 0)
 			m_vxPart->setCOMOffset(vCOM.x, vCOM.y, vCOM.z);
 
-		if(m_lpThisBody->LinearVelocityDamping() > 0)
-			m_vxPart->setLinearVelocityDamping(m_lpThisBody->LinearVelocityDamping());
+		if(m_lpThisRB->LinearVelocityDamping() > 0)
+			m_vxPart->setLinearVelocityDamping(m_lpThisRB->LinearVelocityDamping());
 
-		if(m_lpThisBody->AngularVelocityDamping() > 0)
-			m_vxPart->setAngularVelocityDamping(m_lpThisBody->AngularVelocityDamping());
+		if(m_lpThisRB->AngularVelocityDamping() > 0)
+			m_vxPart->setAngularVelocityDamping(m_lpThisRB->AngularVelocityDamping());
 	}
 }
 
 void VsRigidBody::CreateStaticPart()
 {
-	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThis->Parent());
+	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisRB->Parent());
 
 	Vx::VxReal44 vOffset;
 	VxOSG::copyOsgMatrix_to_VxReal44(m_osgMT->getMatrix(), vOffset);
-	int iMaterialID = m_lpThis->GetSimulator()->GetMaterialID(m_lpThisBody->MaterialID());
+	int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(m_lpThisRB->MaterialID());
 
 	Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
 	if(vxSensor)
 	{
-	    m_vxCollisionGeometry = vxSensor->addGeometry(m_vxGeometry, iMaterialID, vOffset, m_lpThisBody->Density());
-		string strName = m_lpThis->ID() + "_CollisionGeometry";
+	    m_vxCollisionGeometry = vxSensor->addGeometry(m_vxGeometry, iMaterialID, vOffset, m_lpThisRB->Density());
+		string strName = m_lpThisAB->ID() + "_CollisionGeometry";
 		m_vxCollisionGeometry->setName(strName.c_str());
 	}
 }
@@ -303,7 +294,7 @@ void VsRigidBody::DeletePhysics()
 {
 	if(m_vxSensor)
 	{
-		VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThis->GetSimulator());
+		VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThisAB->GetSimulator());
 		if(!lpVsSim)
 			THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
 
@@ -320,7 +311,7 @@ void VsRigidBody::SetBody()
 	if(m_vxSensor)
 	{
 		//VxAssembly *lpAssem = (VxAssembly *) lpStructure->Assembly();
-		VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThis->GetSimulator());
+		VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThisAB->GetSimulator());
 
 		osg::MatrixTransform *lpMT = dynamic_cast<osg::MatrixTransform *>(m_osgMT.get());
 		m_vxSensor->setNode(lpMT);               // Connect to the node.
@@ -333,14 +324,14 @@ void VsRigidBody::SetBody()
 
 void VsRigidBody::SetFluidInteractions()
 {
-	if(m_lpThis->GetSimulator()->SimulateHydrodynamics() && m_vxCollisionGeometry && m_lpThisBody->Density() > 0)
+	if(m_lpThisAB->GetSimulator()->SimulateHydrodynamics() && m_vxCollisionGeometry && m_lpThisRB->Density() > 0)
 	{
 		m_vxCollisionGeometry->setDefaultFluidInteractionForceFn();
 		VxCollisionGeometry::FluidInteractionData data;
 		//data.mMagnusCoefficient = 0;
 		//data.mBuoyancyCenter = VxVector3(0, 0, 0);
 		//data.mBuoyancyForceScale = 1;
-		data.mDragCoefficient = VxVector3(m_lpThisBody->Cd());
+		data.mDragCoefficient = VxVector3(m_lpThisRB->Cd());
 		m_vxCollisionGeometry->setFluidInteractionData(data);
 	}
 }
@@ -355,7 +346,7 @@ int VsRigidBody::GetPartIndex(VxPart *vxP0, VxPart *vxP1)
 
 void VsRigidBody::ProcessContacts()
 {
-	ContactSensor *lpSensor = m_lpThisBody->ContactSensor();
+	ContactSensor *lpSensor = m_lpThisRB->ContactSensor();
 
 	if(m_vxPart && lpSensor)
 	{
@@ -388,25 +379,24 @@ void VsRigidBody::ProcessContacts()
 
 void VsRigidBody::Physics_CollectData()
 {
-	float fDisUnits = m_lpThis->GetSimulator()->DistanceUnits();
-	float fMassUnits = m_lpThis->GetSimulator()->MassUnits();
+	float fDisUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
+	float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
 	Vx::VxReal3 vData;
 
 	if(m_vxSensor)
 	{
 		m_vxSensor->getPosition(vData);
-		m_lpThis->AbsolutePosition(vData[0], vData[1], vData[2]);
+		m_lpThisMI->AbsolutePosition(vData[0], vData[1], vData[2]);
 
 		m_vxSensor->getOrientationEulerAngles(vData);
-		m_lpThis->ReportRotation(vData[0], vData[1], vData[2]);
+		m_lpThisMI->ReportRotation(vData[0], vData[1], vData[2]);
 	}
 	else
 	{
 		//If we are here then we did not have a physics component, just and OSG one.
-		CStdFPoint vPos = VsBody::GetOSGWorldCoords();
-		m_lpThis->AbsolutePosition(vPos.x, vPos.y, vPos.z);
+		UpdateAbsolutePosition();
 
-		//Get Rotation
+		//TODO: Get Rotation
 		//m_lpThis->ReportRotation(QuaterionToEuler(m_osgLocalMatrix.getRotate());
 	}
 
@@ -444,20 +434,13 @@ void VsRigidBody::Physics_CollectData()
 		m_vAngularAcceleration[2] = vAccel[2];
 	}
 
-	if(m_lpThisBody->ContactSensor()) 
+	if(m_lpThisRB->ContactSensor()) 
 		ProcessContacts();
 }
 
 void VsRigidBody::Physics_ResetSimulation()
 {
-	if(m_osgMT.valid())
-	{
-		BuildLocalMatrix();
-
-		//Set the position with the world coordinates.
-		m_lpThis->AbsolutePosition(VsBody::GetOSGWorldCoords());
-		m_lpThis->ReportRotation(m_lpThis->Rotation());
-	}
+	VsBody::Physics_ResetSimulation();
 
 	if(m_vxSensor)
 	{
@@ -492,7 +475,7 @@ void VsRigidBody::Physics_EnableCollision(RigidBody *lpBody)
 	if(!lpVsBody)
 		THROW_PARAM_ERROR(Al_Err_lUnableToCastBodyToDesiredType, Al_Err_strUnableToCastBodyToDesiredType, "Type", "VsRigidBody");
 
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThis->GetSimulator());
+	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThisAB->GetSimulator());
 
 	if(!lpVsSim)
 		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
@@ -512,7 +495,7 @@ void VsRigidBody::Physics_DisableCollision(RigidBody *lpBody)
 	if(!lpVsBody)
 		THROW_PARAM_ERROR(Al_Err_lUnableToCastBodyToDesiredType, Al_Err_strUnableToCastBodyToDesiredType, "Type", "VsRigidBody");
 
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThis->GetSimulator());
+	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThisAB->GetSimulator());
 
 	if(!lpVsSim)
 		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
@@ -590,21 +573,19 @@ float *VsRigidBody::Physics_GetDataPointer(string strDataType)
 	if(strType == "VOLUME")
 		return &m_fltReportVolume;
 
-	THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "RigidBodyID: " + STR(lpBody->ID()) + "  DataType: " + strDataType);
-
 	return NULL;
 }
 
 void VsRigidBody::Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits)
 {
-	if(m_vxPart && (fltFx || fltFy || fltFz) && !m_lpThisBody->Freeze())
+	if(m_vxPart && (fltFx || fltFy || fltFz) && !m_lpThisRB->Freeze())
 	{
 		VxReal3 fltF, fltP;
 		if(bScaleUnits)
 		{
-			fltF[0] = fltFx * (m_lpThis->GetSimulator()->InverseMassUnits() * m_lpThis->GetSimulator()->InverseDistanceUnits());
-			fltF[1] = fltFy * (m_lpThis->GetSimulator()->InverseMassUnits() * m_lpThis->GetSimulator()->InverseDistanceUnits());
-			fltF[2] = fltFz * (m_lpThis->GetSimulator()->InverseMassUnits() * m_lpThis->GetSimulator()->InverseDistanceUnits());
+			fltF[0] = fltFx * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
+			fltF[1] = fltFy * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
+			fltF[2] = fltFz * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
 		}
 		else
 		{
@@ -628,9 +609,9 @@ void VsRigidBody::Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, B
 		VxReal3 fltT;
 		if(bScaleUnits)
 		{
-			fltT[0] = fltTx * (m_lpThis->GetSimulator()->InverseMassUnits() * m_lpThis->GetSimulator()->InverseDistanceUnits() * m_lpThis->GetSimulator()->InverseDistanceUnits());
-			fltT[1] = fltTy * (m_lpThis->GetSimulator()->InverseMassUnits() * m_lpThis->GetSimulator()->InverseDistanceUnits() * m_lpThis->GetSimulator()->InverseDistanceUnits());
-			fltT[2] = fltTz * (m_lpThis->GetSimulator()->InverseMassUnits() * m_lpThis->GetSimulator()->InverseDistanceUnits() * m_lpThis->GetSimulator()->InverseDistanceUnits());
+			fltT[0] = fltTx * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
+			fltT[1] = fltTy * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
+			fltT[2] = fltTz * (m_lpThisAB->GetSimulator()->InverseMassUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits() * m_lpThisAB->GetSimulator()->InverseDistanceUnits());
 		}
 		else
 		{

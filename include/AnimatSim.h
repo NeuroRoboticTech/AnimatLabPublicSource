@@ -58,7 +58,7 @@ namespace AnimatSim
 
 	namespace Environment
 	{
-		class IPhysicsBase;
+		class IPhysicsMovableItem;
 		class IPhysicsBody;
 		class IMotorizedJoint;
 		class BodyPart;
@@ -156,7 +156,7 @@ using namespace AnimatSim::Recording;
 #include "SigmoidGain.h"
 #include "Node.h"
 #include "Link.h"
-#include "IPhysicsBase.h"
+#include "IPhysicsMovableItem.h"
 #include "IPhysicsBody.h"
 #include "MovableItem.h"
 #include "BodyPart.h"

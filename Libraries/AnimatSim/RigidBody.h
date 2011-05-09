@@ -70,21 +70,6 @@ namespace AnimatSim
 			///is (0, 0, 0) then the default COM is used.
 			CStdFPoint m_oCenterOfMass;
 
-			///The ambient color to apply to this part. It is specified as red, green, blue, and alpha.
-			CStdColor m_vAmbient;
-
-			///The diffuse color to apply to this part. It is specified as red, green, blue, and alpha.
-			CStdColor m_vDiffuse;
-
-			///The specular color to apply to this part. It is specified as red, green, blue, and alpha.
-			CStdColor m_vSpecular;
-
-			///The shininess of the part. A value between 0 and 128. 
-			float m_fltShininess;
-
-			///An optional texture to apply to the rigid body.
-			string m_strTexture;
-
 			///Specifies if the part should frozen in place to the world. If a rigid body 
 			///is frozen then it is as if it is nailed in place and can not move. Gravity and 
 			///and other forces will not act on it.
@@ -186,28 +171,7 @@ namespace AnimatSim
 			RigidBody();
 			virtual ~RigidBody();
 
-			virtual CStdColor *Ambient();
-			virtual void Ambient(CStdColor &aryColor);
-			virtual void Ambient(float *aryColor);
-			virtual void Ambient(string strXml);
-
-			virtual CStdColor *Diffuse();
-			virtual void Diffuse(CStdColor &aryColor);
-			virtual void Diffuse(float *aryColor);
-			virtual void Diffuse(string strXml);
-
-			virtual CStdColor *Specular();
-			virtual void Specular(CStdColor &aryColor);
-			virtual void Specular(float *aryColor);
-			virtual void Specular(string strXml);
-
-			virtual float Shininess();
-			virtual void Shininess(float fltVal);
-
 			virtual int VisualSelectionType();
-
-			string Texture();
-			void Texture(string strValue);
 
 			CStdFPoint CenterOfMass();
 			void CenterOfMass(CStdFPoint &oPoint);

@@ -5,6 +5,7 @@
 **/
 
 #include "StdAfx.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
@@ -28,9 +29,7 @@ namespace VortexAnimatSim
 **/
 VsBallSocket::VsBallSocket()
 {
-	m_lpThis = this;
-	m_lpThisJoint = this;
-	PhysicsBody(this);
+	SetThisPointers();
 	m_vxSocket = NULL;
 }
 
@@ -42,13 +41,6 @@ VsBallSocket::VsBallSocket()
 **/
 VsBallSocket::~VsBallSocket()
 {
-}
-
-void VsBallSocket::ResetGraphicsAndPhysics()
-{
-	VsBody::BuildLocalMatrix();
-
-	SetupPhysics();	
 }
 
 void VsBallSocket::DeletePhysics()
@@ -101,7 +93,7 @@ void VsBallSocket::SetupPhysics()
 	Vx::VxReal3 vxRot;
 	vTrans.getRotationEulerAngles(vxRot);
 
-	CStdFPoint vLocalRot(vxRot[0], vxRot[1], vxRot[2]); //= m_lpThis->Rotation();
+	CStdFPoint vLocalRot(vxRot[0], vxRot[1], vxRot[2]); //= m_lpThisMI->Rotation();
 
     VxVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
 	VxVector3 axis = NormalizeAxis(vLocalRot);

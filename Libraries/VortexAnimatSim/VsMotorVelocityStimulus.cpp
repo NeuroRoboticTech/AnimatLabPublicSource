@@ -6,6 +6,7 @@
 
 #include "stdafx.h"
 
+#include "VsMovableItem.h"
 #include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"

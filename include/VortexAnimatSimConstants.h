@@ -96,5 +96,8 @@
 #define Vs_Err_lRemovingCollisionGeometry -4032
 #define Vs_Err_strRemovingCollisionGeometry "Error removing existing collision geometry."
 
+#define Vs_Err_lThisPointerNotDefined -4033
+#define Vs_Err_strThisPointerNotDefined "A This pointer was not defined."
+
 #endif // __VS_ERROR_CONSTANTS_H__
 

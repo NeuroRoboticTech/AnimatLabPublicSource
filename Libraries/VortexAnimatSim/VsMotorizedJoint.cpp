@@ -5,6 +5,7 @@
 **/
 
 #include "StdAfx.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
@@ -25,6 +26,15 @@ VsMotorizedJoint::VsMotorizedJoint()
 
 VsMotorizedJoint::~VsMotorizedJoint()
 {
+}
+
+void VsMotorizedJoint::SetThisPointers()
+{
+	VsJoint::SetThisPointers();
+
+	m_lpThisMotorJoint = dynamic_cast<MotorizedJoint *>(this);
+	if(!m_lpThisMotorJoint)
+		THROW_TEXT_ERROR(Vs_Err_lThisPointerNotDefined, Vs_Err_strThisPointerNotDefined, "m_lpThisMotorJoint, " + m_lpThisAB->Name());
 }
 
 //If this is a servo motor then the "velocity" signal is not really a velocity signal in this case. 

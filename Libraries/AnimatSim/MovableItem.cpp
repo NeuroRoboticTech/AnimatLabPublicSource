@@ -10,7 +10,7 @@
 #include "AnimatBase.h"
 
 #include "Node.h"
-#include "IPhysicsBase.h"
+#include "IPhysicsMovableItem.h"
 #include "IPhysicsBody.h"
 #include "MovableItem.h"
 #include "BodyPart.h"
@@ -45,7 +45,7 @@ MovableItem::MovableItem(void)
 	m_bIsVisible = TRUE;
 	m_lpCallback = NULL;
 	m_lpParent = NULL;
-	m_lpPhysicsBase = NULL;
+	m_lpPhysicsMovableItem = NULL;
 	m_lpMovableSim = NULL;
 
 	m_fltGraphicsAlpha = 1;
@@ -54,6 +54,11 @@ MovableItem::MovableItem(void)
 	m_fltReceptiveFieldsAlpha = 1;
 	m_fltSimulationAlpha = 1;
 	m_fltAlpha = 1;
+
+	m_vAmbient.Set(0.1f, 0.1f, 0.1f, 1);
+	m_vDiffuse.Set(1, 0, 0, 1);
+	m_vSpecular.Set(0.25f, 0.25f, 0.25f, 1);
+	m_fltShininess = 64;
 }
 
 /**
@@ -138,7 +143,7 @@ CStdFPoint MovableItem::Position() {return m_oPosition;}
 \param	bFireChangeEvent	If true then this will call the IMovableItemCallback->PositionChanged
 							callback method to inform the GUI that the part has moved. If false
 							then this callback will be skipped. 
-\param	bUpdateMatrix		If true then the IPhysicsBase->Physics_UpdateMatrix method will be
+\param	bUpdateMatrix		If true then the IPhysicsMovableItem->Physics_UpdateMatrix method will be
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
@@ -150,8 +155,8 @@ void MovableItem::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChang
 		m_oPosition = oPoint;
 	m_oReportPosition = m_oPosition * m_lpMovableSim->DistanceUnits();
 
-	if(m_lpPhysicsBase && bUpdateMatrix)
-		m_lpPhysicsBase->Physics_UpdateMatrix();
+	if(m_lpPhysicsMovableItem && bUpdateMatrix)
+		m_lpPhysicsMovableItem->Physics_PositionChanged();
 
 	if(m_lpCallback && bFireChangeEvent)
 		m_lpCallback->PositionChanged();
@@ -171,7 +176,7 @@ void MovableItem::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChang
 \param	bFireChangeEvent	If true then this will call the IMovableItemCallback->PositionChanged
 							callback method to inform the GUI that the part has moved. If false
 							then this callback will be skipped. 
-\param	bUpdateMatrix		If true then the IPhysicsBase->Physics_UpdateMatrix method will be
+\param	bUpdateMatrix		If true then the IPhysicsMovableItem->Physics_UpdateMatrix method will be
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
@@ -194,7 +199,7 @@ reset the local position using an xml data packet.
 \param	bFireChangeEvent	If true then this will call the IMovableItemCallback->PositionChanged
 							callback method to inform the GUI that the part has moved. If false
 							then this callback will be skipped. 
-\param	bUpdateMatrix		If true then the IPhysicsBase->Physics_UpdateMatrix method will be
+\param	bUpdateMatrix		If true then the IPhysicsMovableItem->Physics_UpdateMatrix method will be
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
@@ -340,7 +345,7 @@ CStdFPoint MovableItem::Rotation()	{return m_oRotation;}
 \param	bFireChangeEvent	If true then this will call the IMovableItemCallback->RotationChanged
 							callback method to inform the GUI that the part has moved. If false
 							then this callback will be skipped. 
-\param	bUpdateMatrix		If true then the IPhysicsBase->Physics_UpdateMatrix method will be
+\param	bUpdateMatrix		If true then the IPhysicsMovableItem->Physics_UpdateMatrix method will be
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
@@ -349,8 +354,8 @@ void MovableItem::Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent, BOOL bUpda
 	m_oRotation = oPoint;
 	m_oReportRotation = m_oRotation;
 
-	if(m_lpPhysicsBase && bUpdateMatrix)
-		m_lpPhysicsBase->Physics_UpdateMatrix();
+	if(m_lpPhysicsMovableItem && bUpdateMatrix)
+		m_lpPhysicsMovableItem->Physics_RotationChanged();
 
 	if(m_lpCallback && bFireChangeEvent)
 		m_lpCallback->RotationChanged();
@@ -368,7 +373,7 @@ void MovableItem::Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent, BOOL bUpda
 \param	bFireChangeEvent	If true then this will call the IMovableItemCallback->RotationChanged
 							callback method to inform the GUI that the part has moved. If false
 							then this callback will be skipped. 
-\param	bUpdateMatrix		If true then the IPhysicsBase->Physics_UpdateMatrix method will be
+\param	bUpdateMatrix		If true then the IPhysicsMovableItem->Physics_UpdateMatrix method will be
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
@@ -389,7 +394,7 @@ by the GUI to reset the rotation using an xml data packet.
 \param	bFireChangeEvent	If true then this will call the IMovableItemCallback->RotationChanged
 							callback method to inform the GUI that the part has moved. If false
 							then this callback will be skipped. 
-\param	bUpdateMatrix		If true then the IPhysicsBase->Physics_UpdateMatrix method will be
+\param	bUpdateMatrix		If true then the IPhysicsMovableItem->Physics_UpdateMatrix method will be
 							called so that the osg graphics will be updated. If false then this
 							will be skipped. 
 **/
@@ -459,8 +464,8 @@ void MovableItem::IsVisible(BOOL bVal)
 {
 	m_bIsVisible = bVal;
 
-	if(m_lpPhysicsBase)
-		m_lpPhysicsBase->SetVisible(m_bIsVisible);
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->SetVisible(m_bIsVisible);
 }
 
 /**
@@ -488,8 +493,8 @@ void MovableItem::GraphicsAlpha(float fltVal)
 
 	m_fltGraphicsAlpha = fltVal;
 
-	if(m_lpPhysicsBase)
-		m_lpPhysicsBase->SetAlpha();
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->SetAlpha();
 }
 
 /**
@@ -517,8 +522,8 @@ void MovableItem::CollisionsAlpha(float fltVal)
 
 	m_fltCollisionsAlpha = fltVal;
 
-	if(m_lpPhysicsBase)
-		m_lpPhysicsBase->SetAlpha();
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->SetAlpha();
 }
 
 /**
@@ -546,8 +551,8 @@ void MovableItem::JointsAlpha(float fltVal)
 
 	m_fltJointsAlpha = fltVal;
 
-	if(m_lpPhysicsBase)
-		m_lpPhysicsBase->SetAlpha();
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->SetAlpha();
 }
 
 /**
@@ -575,8 +580,8 @@ void MovableItem::ReceptiveFieldsAlpha(float fltVal)
 
 	m_fltReceptiveFieldsAlpha = fltVal;
 
-	if(m_lpPhysicsBase)
-		m_lpPhysicsBase->SetAlpha();
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->SetAlpha();
 }
 
 /**
@@ -604,8 +609,8 @@ void MovableItem::SimulationAlpha(float fltVal)
 
 	m_fltSimulationAlpha = fltVal;
 
-	if(m_lpPhysicsBase)
-		m_lpPhysicsBase->SetAlpha();
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->SetAlpha();
 }
 
 /**
@@ -635,6 +640,213 @@ void MovableItem::Alpha(float fltAlpha)
 	Std_InValidRange((float) 0, (float) 1, fltAlpha, TRUE, "Alpha");
 
 	m_fltAlpha = fltAlpha;
+}
+
+/**
+\brief	Gets the ambient color value. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Pointer to color data
+**/
+CStdColor *MovableItem::Ambient() {return &m_vAmbient;}
+
+/**
+\brief	Sets the Ambient color. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	aryColor	The color data. 
+**/
+void MovableItem::Ambient(CStdColor &aryColor)
+{
+	m_vAmbient = aryColor;
+	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_SetColor();
+}
+
+/**
+\brief	Sets the Ambient color. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	aryColor	The color data. 
+**/
+void MovableItem::Ambient(float *aryColor)
+{
+	m_vAmbient.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
+	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_SetColor();
+}
+
+/**
+\brief	Loads the Ambient color from an XML data packet. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml	The color data in an xml data packet
+**/
+
+void MovableItem::Ambient(string strXml)
+{
+	m_vAmbient.Load(strXml, "Ambient");
+	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_SetColor();
+}
+
+/**
+\brief	Gets the diffuse color. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Pointer to color data
+**/
+CStdColor *MovableItem::Diffuse() {return &m_vDiffuse;}
+
+/**
+\brief	Sets the Diffuse color. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	aryColor	The color data. 
+**/
+void MovableItem::Diffuse(CStdColor &aryColor)
+{
+	m_vDiffuse = aryColor;
+	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_SetColor();
+}
+
+/**
+\brief	Sets the Diffuse color. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	aryColor	The color data. 
+**/
+void MovableItem::Diffuse(float *aryColor)
+{
+	m_vDiffuse.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
+	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_SetColor();
+}
+
+/**
+\brief	Loads the Diffuse color from an XML data packet. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml	The color data in an xml data packet
+**/
+void MovableItem::Diffuse(string strXml)
+{
+	m_vDiffuse.Load(strXml, "Diffuse");
+	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_SetColor();
+}
+
+/**
+\brief	Gets the specular color. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Pointer to color data
+**/
+CStdColor *MovableItem::Specular() {return &m_vSpecular;}
+
+/**
+\brief	Sets the Specular color. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	aryColor	The color data. 
+**/
+void MovableItem::Specular(CStdColor &aryColor)
+{
+	m_vSpecular = aryColor;
+	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_SetColor();
+}
+
+/**
+\brief	Sets the Specular color. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	aryColor	The color data. 
+**/
+void MovableItem::Specular(float *aryColor)
+{
+	m_vSpecular.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
+	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_SetColor();
+}
+
+/**
+\brief	Loads the Specular color from an XML data packet.  
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml	The color data in an xml data packet
+**/
+void MovableItem::Specular(string strXml)
+{
+	m_vSpecular.Load(strXml, "Specular");
+	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_SetColor();
+}
+
+/**
+\brief	Gets the shininess. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Shininess value. 
+**/
+
+float MovableItem::Shininess() {return m_fltShininess;}
+
+/**
+\brief	Sets the shininess value. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltVal	The new value. 
+**/
+void MovableItem::Shininess(float fltVal)
+{
+	Std_InValidRange((float) 0, (float) 128, fltVal, TRUE, "Shininess");
+	m_fltShininess = fltVal;
+	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_SetColor();
+}
+
+/**
+\brief	Gets the texture filename. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Texture filename. 
+**/
+string MovableItem::Texture() {return m_strTexture;}
+
+/**
+\brief	Sets the Texture filename. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strValue	The texture filename. 
+**/
+void MovableItem::Texture(string strValue)
+{
+	m_strTexture = strValue;
+	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_TextureChanged();
 }
 
 /**
@@ -669,7 +881,7 @@ directly without having to overload a bunch of methods in each box, sphere, etc.
 
 \return	Pointer to Vs interface, NULL else. 
 **/
-IPhysicsBase *MovableItem::PhysicsBase() {return m_lpPhysicsBase;}
+IPhysicsMovableItem *MovableItem::PhysicsMovableItem() {return m_lpPhysicsMovableItem;}
 
 /**
 \brief	Sets the physics body interface pointer. This is an interface reference to the Vs version
@@ -681,7 +893,7 @@ directly without having to overload a bunch of methods in each box, sphere, etc.
 
 \param [in,out]	lpBody	The pointer to the phsyics body interface. 
 **/
-void MovableItem::PhysicsBase(IPhysicsBase *lpBody) {m_lpPhysicsBase = lpBody;}
+void MovableItem::PhysicsMovableItem(IPhysicsMovableItem *lpBody) {m_lpPhysicsMovableItem = lpBody;}
 
 /**
 \brief	Gets the bounding radius of this part. 
@@ -693,8 +905,8 @@ void MovableItem::PhysicsBase(IPhysicsBase *lpBody) {m_lpPhysicsBase = lpBody;}
 **/
 float MovableItem::GetBoundingRadius()
 {
-	if(m_lpPhysicsBase)
-		return m_lpPhysicsBase->Physics_GetBoundingRadius();
+	if(m_lpPhysicsMovableItem)
+		return m_lpPhysicsMovableItem->Physics_GetBoundingRadius();
 	else
 		return 1;
 }
@@ -764,8 +976,8 @@ BOOL MovableItem::AllowRotateDragZ() {return TRUE;}
 
 void MovableItem::Selected(BOOL bValue, BOOL bSelectMultiple)
 {
-	if(m_lpPhysicsBase)
-		m_lpPhysicsBase->Physics_Selected(bValue, bSelectMultiple);
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->Physics_Selected(bValue, bSelectMultiple);
 
 	if(m_lpCallback)
 		m_lpCallback->SelectionChanged(bValue, bSelectMultiple);
@@ -785,8 +997,32 @@ change the current Alpha value of the objects so the display is correct.
 **/
 void MovableItem::VisualSelectionModeChanged(int iNewMode)
 {
-	if(m_lpPhysicsBase)
-		m_lpPhysicsBase->SetAlpha();
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->SetAlpha();
+}
+/**
+\brief	Called when the user clicks on this object while the AddBody mode is active.
+
+\details When the user selects the AddBody mode in the GUI then the simulation detects when a
+part is clicked in the simulation window. (This occurs in the VsCameraManipulator class). It gets
+the position of the click in global coordinates, and the normal vector for the surface that was
+clicked. We then need to pass this info back up the GUI and let it know the click occurred. This
+method uses the IMovableItemCallback object to send this info back up to the GUI. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltPosX		The position x coordinate. 
+\param	fltPosY		The position y coordinate. 
+\param	fltPosZ		The position z coordinate. 
+\param	fltNormX	The normal x coordinate. 
+\param	fltNormY	The normal y coordinate. 
+\param	fltNormZ	The normal z coordinate. 
+**/
+void MovableItem::AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ)
+{
+	//Do nothing here in the base. This could be a strucutre, and we do not want to do anything for that class.
+	//You need to implmenent this in the derived bodypart class.
 }
 
 #pragma region DataAccesMethods
@@ -875,6 +1111,36 @@ BOOL MovableItem::SetData(string strDataType, string strValue, BOOL bThrowError)
 		return true;
 	}
 
+	if(strDataType == "AMBIENT")
+	{
+		Ambient(strValue);
+		return TRUE;
+	}
+	
+	if(strDataType == "DIFFUSE")
+	{
+		Diffuse(strValue);
+		return TRUE;
+	}
+	
+	if(strDataType == "SPECULAR")
+	{
+		Specular(strValue);
+		return TRUE;
+	}
+	
+	if(strDataType == "SHININESS")
+	{
+		Shininess(atof(strValue.c_str()));
+		return TRUE;
+	}
+	
+	if(strDataType == "TEXTURE")
+	{
+		Texture(strValue);
+		return TRUE;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -908,6 +1174,13 @@ void MovableItem::Load(CStdXml &oXml)
 	JointsAlpha(oXml.GetChildFloat("JointsAlpha", m_fltJointsAlpha));
 	ReceptiveFieldsAlpha(oXml.GetChildFloat("ReceptiveFieldsAlpha", m_fltReceptiveFieldsAlpha));
 	SimulationAlpha(oXml.GetChildFloat("SimulationAlpha", m_fltSimulationAlpha));
+
+	m_vDiffuse.Load(oXml, "Diffuse", false);
+	m_vAmbient.Load(oXml, "Ambient", false);
+	m_vSpecular.Load(oXml, "Specular", false);
+	m_fltShininess = oXml.GetChildFloat("Shininess", m_fltShininess);
+
+	m_strTexture = oXml.GetChildString("Texture", "");
 
 	oXml.OutOfElem(); //OutOf Element
 }

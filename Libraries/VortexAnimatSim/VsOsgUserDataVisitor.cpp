@@ -1,10 +1,12 @@
 #include "StdAfx.h"
 
 #include "VsMouseSpring.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
+#include "VsStructure.h"
 #include "VsSimulator.h"
 #include "VsOsgUserDataVisitor.h"
 #include "VsOsgUserData.h"
@@ -15,29 +17,14 @@ namespace VortexAnimatSim
 	namespace Visualization
 	{
 
-VsOsgUserDataVisitor::VsOsgUserDataVisitor(VsRigidBody *lpBody) : osg::NodeVisitor(osg::NodeVisitor::TRAVERSE_ALL_CHILDREN )
+VsOsgUserDataVisitor::VsOsgUserDataVisitor(VsMovableItem *lpItem) : osg::NodeVisitor(osg::NodeVisitor::TRAVERSE_ALL_CHILDREN )
 {
-	m_lpVsBody = lpBody;
-	m_lpBody = dynamic_cast<RigidBody *>(lpBody);
-	m_lpVsJoint = NULL;
-	m_lpJoint = NULL;
+	m_lpItem = lpItem;
 }
-
-VsOsgUserDataVisitor::VsOsgUserDataVisitor(VsJoint *lpJoint) : osg::NodeVisitor(osg::NodeVisitor::TRAVERSE_ALL_CHILDREN )
-{
-	m_lpVsBody = NULL;
-	m_lpBody = NULL;
-	m_lpVsJoint = lpJoint;
-	m_lpJoint = dynamic_cast<Joint *>(lpJoint);
-}
-
 
 VsOsgUserDataVisitor::~VsOsgUserDataVisitor(void)
 {
-	m_lpVsBody = NULL;
-	m_lpBody = NULL;
-	m_lpVsJoint = NULL;
-	m_lpJoint = NULL;
+	m_lpItem = NULL;
 }
 
 void VsOsgUserDataVisitor::apply(osg::Geode &osgGeode)
@@ -49,17 +36,10 @@ void VsOsgUserDataVisitor::apply(osg::Geode &osgGeode)
 		osg::Drawable *lpDraw = osgGeode.getDrawable(iIdx);
 		if(lpDraw)
 		{
-			if(m_lpBody)
-			{
-				lpDraw->setName(m_lpBody->Name() + "_Drawable");
-				lpDraw->setUserData(new VsOsgUserData(m_lpVsBody));
-			}
-			else if(m_lpJoint)
-			{
-				lpDraw->setName(m_lpJoint->Name() + "_Drawable");
-				lpDraw->setUserData(new VsOsgUserData(m_lpVsJoint));
-			}
-
+			AnimatBase *lpAB = dynamic_cast<AnimatBase *>(m_lpItem);
+			if(lpAB)
+				lpDraw->setName(lpAB->Name() + "_Drawable");
+			lpDraw->setUserData(new VsOsgUserData(m_lpItem));
 		}
 	}
 }

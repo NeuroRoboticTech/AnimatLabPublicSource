@@ -33,7 +33,6 @@ Namespace DataObjects.Physical
         Protected m_bContactSensor As Boolean
         Protected m_bIsCollisionObject As Boolean = False
         Protected m_snDensity As ScaledNumber
-        Protected m_strTexture As String = ""
 
         Protected m_svCOM As ScaledVector3
 
@@ -59,11 +58,6 @@ Namespace DataObjects.Physical
 
         Protected m_bIsRoot As Boolean = False
 
-        Protected m_clAmbient As System.Drawing.Color
-        Protected m_clDiffuse As System.Drawing.Color
-        Protected m_clSpecular As System.Drawing.Color
-        Protected m_fltShininess As Single = 64
-
 #End Region
 
 #Region " Properties "
@@ -87,52 +81,6 @@ Namespace DataObjects.Physical
             Get
                 Return "RigidBody"
             End Get
-        End Property
-
-        Public Overridable Property Ambient() As System.Drawing.Color
-            Get
-                Return m_clAmbient
-            End Get
-            Set(ByVal value As System.Drawing.Color)
-                SetSimData("Ambient", Util.SaveColorXml("Ambient", value), True)
-                m_clAmbient = value
-            End Set
-        End Property
-
-        Public Overridable Property Diffuse() As System.Drawing.Color
-            Get
-                Return m_clDiffuse
-            End Get
-            Set(ByVal value As System.Drawing.Color)
-                SetSimData("Diffuse", Util.SaveColorXml("Diffuse", value), True)
-                m_clDiffuse = value
-            End Set
-        End Property
-
-        Public Overridable Property Specular() As System.Drawing.Color
-            Get
-                Return m_clSpecular
-            End Get
-            Set(ByVal value As System.Drawing.Color)
-                SetSimData("Specular", Util.SaveColorXml("Specular", value), True)
-                m_clSpecular = value
-            End Set
-        End Property
-
-        Public Overridable Property Shininess() As Single
-            Get
-                Return m_fltShininess
-            End Get
-            Set(ByVal value As Single)
-                If (value < 0) Then
-                    Throw New System.Exception("Shininess must be greater than or equal to zero.")
-                End If
-                If (value > 128) Then
-                    Throw New System.Exception("Shininess must be less than 128.")
-                End If
-                SetSimData("Shininess", value.ToString(), True)
-                m_fltShininess = value
-            End Set
         End Property
 
         Public Overridable Property Freeze() As Boolean
@@ -356,38 +304,6 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
-        Public Overridable Property Texture() As String
-            Get
-                Return m_strTexture
-            End Get
-            Set(ByVal Value As String)
-                If Not Value Is Nothing Then
-                    Dim strPath As String, strFile As String
-                    If Util.DetermineFilePath(Value, strPath, strFile) Then
-                        Value = strFile
-                    End If
-                End If
-
-                'Check to see if the file exists.
-                If Value.Trim.Length > 0 Then
-                    If Not File.Exists(Value) Then
-                        Throw New System.Exception("The specified file does not exist: " & Value)
-                    End If
-
-                    'Attempt to load the file first to make sure it is a valid image file.
-                    Try
-                        Dim bm As New Bitmap(Value)
-                    Catch ex As System.Exception
-                        Throw New System.Exception("Unable to load the texture file. This does not appear to be a vaild image file.")
-                    End Try
-                End If
-
-                SetSimData("Texture", Value, True)
-                m_strTexture = Value
-
-            End Set
-        End Property
-
         Public Overridable Property OdorSources() As Collections.SortedOdors
             Get
                 Return m_aryOdorSources
@@ -481,11 +397,6 @@ Namespace DataObjects.Physical
 
         Public Sub New(ByVal doParent As AnimatGUI.Framework.DataObject)
             MyBase.New(doParent)
-
-            m_clAmbient = Color.FromArgb(255, 25, 25, 25)
-            m_clDiffuse = Color.FromArgb(255, 255, 0, 0)
-            m_clSpecular = Color.FromArgb(255, 64, 64, 64)
-            m_fltShininess = 64
 
             m_thDataTypes.DataTypes.Clear()
 
@@ -872,17 +783,6 @@ Namespace DataObjects.Physical
             'propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Texture", GetType(String), "Texture", _
             '                            "Visibility", "Sets the bmp texture file to wrap onto this body part.", Me.Texture, GetType(TypeHelpers.ImageFileEditor))) 'GetType(System.Windows.Forms.Design.FileNameEditor)))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Ambient", m_clAmbient.GetType(), "Ambient", _
-                                        "Visibility", "Sets the ambient color for this item.", m_clAmbient))
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Diffuse", m_clDiffuse.GetType(), "Diffuse", _
-                                        "Visibility", "Sets the diffuse color for this item.", m_clDiffuse))
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Specular", m_clSpecular.GetType(), "Specular", _
-                                        "Visibility", "Sets the specular color for this item.", m_clSpecular))
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Shininess", m_fltShininess.GetType(), "Shininess", _
-                                        "Visibility", "Sets the shininess for this item.", m_fltShininess))
 
         End Sub
 
@@ -914,11 +814,6 @@ Namespace DataObjects.Physical
                 m_JointToParent = Nothing
             End If
 
-            m_clAmbient = doOrigPart.m_clAmbient
-            m_clDiffuse = doOrigPart.m_clDiffuse
-            m_clSpecular = doOrigPart.m_clSpecular
-            m_fltShininess = doOrigPart.m_fltShininess
-
             m_bFreeze = False   '' only the root object can be frozen.
             m_bContactSensor = doOrigPart.m_bContactSensor
             m_bIsCollisionObject = doOrigPart.m_bIsCollisionObject
@@ -935,8 +830,6 @@ Namespace DataObjects.Physical
             m_snFoodReplenishRate = DirectCast(doOrigPart.m_snFoodReplenishRate, ScaledNumber)
             m_snFoodEnergyContent = DirectCast(doOrigPart.m_snFoodEnergyContent, ScaledNumber)
             m_svCOM = DirectCast(doOrigPart.m_svCOM.Clone(Me, bCutData, doRoot), ScaledVector3)
-
-            m_strTexture = doOrigPart.m_strTexture
 
             m_aryChildBodies.Clear()
 
@@ -1088,11 +981,6 @@ Namespace DataObjects.Physical
 
             oXml.IntoElem() 'Into RigidBody Element
 
-            m_clAmbient = Util.LoadColor(oXml, "Ambient", m_clAmbient)
-            m_clDiffuse = Util.LoadColor(oXml, "Diffuse", m_clDiffuse)
-            m_clSpecular = Util.LoadColor(oXml, "Specular", m_clSpecular)
-            m_fltShininess = oXml.GetChildFloat("Shininess", m_fltShininess)
-
             m_bContactSensor = oXml.GetChildBool("IsContactSensor", m_bContactSensor)
             m_bIsCollisionObject = oXml.GetChildBool("IsCollisionObject", m_bIsCollisionObject)
 
@@ -1105,9 +993,6 @@ Namespace DataObjects.Physical
                 m_fltCa = oXml.GetChildFloat("Ca", m_fltCa)
                 m_fltCar = oXml.GetChildFloat("Car", m_fltCar)
             End If
-
-            m_strTexture = oXml.GetChildString("Texture", m_strTexture)
-            m_strTexture = Util.VerifyFilePath(m_strTexture)
 
             If ScaledNumber.IsValidXml(oXml, "Density") Then
                 m_snDensity.LoadData(oXml, "Density")
@@ -1207,11 +1092,6 @@ Namespace DataObjects.Physical
 
             oXml.IntoElem() 'Into Child Elemement
 
-            Util.SaveColor(oXml, "Ambient", m_clAmbient)
-            Util.SaveColor(oXml, "Diffuse", m_clDiffuse)
-            Util.SaveColor(oXml, "Specular", m_clSpecular)
-            oXml.AddChildElement("Shininess", m_fltShininess)
-
             oXml.AddChildElement("IsContactSensor", m_bContactSensor)
             oXml.AddChildElement("IsCollisionObject", m_bIsCollisionObject)
 
@@ -1220,7 +1100,6 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("Ca", m_fltCa)
             oXml.AddChildElement("Car", m_fltCar)
 
-            oXml.AddChildElement("Texture", m_strTexture)
             m_snDensity.SaveData(oXml, "Density")
             m_svCOM.SaveData(oXml, "COM")
 
@@ -1305,11 +1184,6 @@ Namespace DataObjects.Physical
 
             oXml.IntoElem() 'Into Child Elemement
 
-            Util.SaveColor(oXml, "Ambient", m_clAmbient)
-            Util.SaveColor(oXml, "Diffuse", m_clDiffuse)
-            Util.SaveColor(oXml, "Specular", m_clSpecular)
-            oXml.AddChildElement("Shininess", m_fltShininess)
-
             oXml.AddChildElement("IsContactSensor", m_bContactSensor)
             oXml.AddChildElement("IsCollisionObject", m_bIsCollisionObject)
 
@@ -1318,7 +1192,6 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("Ca", m_fltCa)
             oXml.AddChildElement("Car", m_fltCar)
 
-            oXml.AddChildElement("Texture", m_strTexture)
             m_snDensity.SaveSimulationXml(oXml, Me, "Density")
             m_svCOM.SaveSimulationXml(oXml, Me, "COM")
 

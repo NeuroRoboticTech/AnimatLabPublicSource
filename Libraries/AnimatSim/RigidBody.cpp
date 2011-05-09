@@ -10,7 +10,7 @@
 #include "AnimatBase.h"
 
 #include "Node.h"
-#include "IPhysicsBase.h"
+#include "IPhysicsMovableItem.h"
 #include "IPhysicsBody.h"
 #include "MovableItem.h"
 #include "BodyPart.h"
@@ -51,11 +51,6 @@ RigidBody::RigidBody()
 	m_fltXArea = 0;
 	m_fltYArea = 0;
 	m_fltZArea = 0;
-
-	m_vAmbient.Set(0.1f, 0.1f, 0.1f, 1);
-	m_vDiffuse.Set(1, 0, 0, 1);
-	m_vSpecular.Set(0.25f, 0.25f, 0.25f, 1);
-	m_fltShininess = 64;
 
 	m_vCd[0] = m_vCd[1] = m_vCd[2] = 0;
 
@@ -105,213 +100,6 @@ int RigidBody::VisualSelectionType()
 		return COLLISION_SELECTION_MODE;
 	else
 		return GRAPHICS_SELECTION_MODE;
-}
-
-/**
-\brief	Gets the ambient color value. 
-
-\author	dcofer
-\date	3/2/2011
-
-\return	Pointer to color data
-**/
-CStdColor *RigidBody::Ambient() {return &m_vAmbient;}
-
-/**
-\brief	Sets the Ambient color. 
-
-\author	dcofer
-\date	3/2/2011
-
-\param [in,out]	aryColor	The color data. 
-**/
-void RigidBody::Ambient(CStdColor &aryColor)
-{
-	m_vAmbient = aryColor;
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
-}
-
-/**
-\brief	Sets the Ambient color. 
-
-\author	dcofer
-\date	3/2/2011
-
-\param [in,out]	aryColor	The color data. 
-**/
-void RigidBody::Ambient(float *aryColor)
-{
-	m_vAmbient.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
-}
-
-/**
-\brief	Loads the Ambient color from an XML data packet. 
-
-\author	dcofer
-\date	3/2/2011
-
-\param	strXml	The color data in an xml data packet
-**/
-
-void RigidBody::Ambient(string strXml)
-{
-	m_vAmbient.Load(strXml, "Ambient");
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
-}
-
-/**
-\brief	Gets the diffuse color. 
-
-\author	dcofer
-\date	3/2/2011
-
-\return	Pointer to color data
-**/
-CStdColor *RigidBody::Diffuse() {return &m_vDiffuse;}
-
-/**
-\brief	Sets the Diffuse color. 
-
-\author	dcofer
-\date	3/2/2011
-
-\param [in,out]	aryColor	The color data. 
-**/
-void RigidBody::Diffuse(CStdColor &aryColor)
-{
-	m_vDiffuse = aryColor;
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
-}
-
-/**
-\brief	Sets the Diffuse color. 
-
-\author	dcofer
-\date	3/2/2011
-
-\param [in,out]	aryColor	The color data. 
-**/
-void RigidBody::Diffuse(float *aryColor)
-{
-	m_vDiffuse.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
-}
-
-/**
-\brief	Loads the Diffuse color from an XML data packet. 
-
-\author	dcofer
-\date	3/2/2011
-
-\param	strXml	The color data in an xml data packet
-**/
-void RigidBody::Diffuse(string strXml)
-{
-	m_vDiffuse.Load(strXml, "Diffuse");
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
-}
-
-/**
-\brief	Gets the specular color. 
-
-\author	dcofer
-\date	3/2/2011
-
-\return	Pointer to color data
-**/
-CStdColor *RigidBody::Specular() {return &m_vSpecular;}
-
-/**
-\brief	Sets the Specular color. 
-
-\author	dcofer
-\date	3/2/2011
-
-\param [in,out]	aryColor	The color data. 
-**/
-void RigidBody::Specular(CStdColor &aryColor)
-{
-	m_vSpecular = aryColor;
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
-}
-
-/**
-\brief	Sets the Specular color. 
-
-\author	dcofer
-\date	3/2/2011
-
-\param [in,out]	aryColor	The color data. 
-**/
-void RigidBody::Specular(float *aryColor)
-{
-	m_vSpecular.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
-}
-
-/**
-\brief	Loads the Specular color from an XML data packet.  
-
-\author	dcofer
-\date	3/2/2011
-
-\param	strXml	The color data in an xml data packet
-**/
-void RigidBody::Specular(string strXml)
-{
-	m_vSpecular.Load(strXml, "Specular");
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
-}
-
-/**
-\brief	Gets the shininess. 
-
-\author	dcofer
-\date	3/2/2011
-
-\return	Shininess value. 
-**/
-
-float RigidBody::Shininess() {return m_fltShininess;}
-
-/**
-\brief	Sets the shininess value. 
-
-\author	dcofer
-\date	3/2/2011
-
-\param	fltVal	The new value. 
-**/
-void RigidBody::Shininess(float fltVal)
-{
-	Std_InValidRange((float) 0, (float) 128, fltVal, TRUE, "Shininess");
-	m_fltShininess = fltVal;
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_SetColor();
-}
-
-/**
-\brief	Gets the texture filename. 
-
-\author	dcofer
-\date	3/2/2011
-
-\return	Texture filename. 
-**/
-string RigidBody::Texture() {return m_strTexture;}
-
-/**
-\brief	Sets the Texture filename. 
-
-\author	dcofer
-\date	3/2/2011
-
-\param	strValue	The texture filename. 
-**/
-void RigidBody::Texture(string strValue)
-{
-	m_strTexture = strValue;
-	if(m_lpPhysicsBody) m_lpPhysicsBody->Physics_TextureChanged();
 }
 
 /**
@@ -885,8 +673,8 @@ void RigidBody::ResetSimulation()
     /// of this part to be rest first and then child parts because if we do not then
     /// when we do an UpdateFromNode on the physcis object it will be in the wrong location.
     /// We must reset the position from the root out, not leafs in.
-	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->Physics_ResetSimulation();
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->Physics_ResetSimulation();
 
 	if(m_lpJointToParent)
 		m_lpJointToParent->ResetSimulation();
@@ -1008,10 +796,10 @@ float *RigidBody::GetDataPointer(string strDataType)
 	if(strType == "ENABLE")
 		return &m_fltEnabled;
 
-	if(m_lpPhysicsBody)
+	if(m_lpPhysicsMovableItem)
 	{
 		float *lpData = NULL;
-		lpData = m_lpPhysicsBody->Physics_GetDataPointer(strDataType);
+		lpData = m_lpPhysicsMovableItem->Physics_GetDataPointer(strDataType);
 		if(lpData) return lpData;
 	}
 
@@ -1037,37 +825,6 @@ BOOL RigidBody::SetData(string strDataType, string strValue, BOOL bThrowError)
 		Density(atof(strValue.c_str()));
 		return TRUE;
 	}
-
-	if(strType == "AMBIENT")
-	{
-		Ambient(strValue);
-		return TRUE;
-	}
-	
-	if(strType == "DIFFUSE")
-	{
-		Diffuse(strValue);
-		return TRUE;
-	}
-	
-	if(strType == "SPECULAR")
-	{
-		Specular(strValue);
-		return TRUE;
-	}
-	
-	if(strType == "SHININESS")
-	{
-		Shininess(atof(strValue.c_str()));
-		return TRUE;
-	}
-	
-	if(strType == "TEXTURE")
-	{
-		Texture(strValue);
-		return TRUE;
-	}
-
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
@@ -1204,8 +961,6 @@ void RigidBody::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into RigidBody Element
 
-	m_strTexture = oXml.GetChildString("Texture", "");
-
 	if(oXml.FindChildElement("COM", FALSE))
 		Std_LoadPoint(oXml, "COM", m_oCenterOfMass);
 	else
@@ -1246,11 +1001,6 @@ void RigidBody::Load(CStdXml &oXml)
 
 	Std_InValidRange((float) 0, (float) 1000, m_fltLinearVelocityDamping, TRUE, "LinearVelocityDamping");
 	Std_InValidRange((float) 0, (float) 1000, m_fltAngularVelocityDamping, TRUE, "AngularVelocityDamping");
-
-	m_vDiffuse.Load(oXml, "Diffuse", false);
-	m_vAmbient.Load(oXml, "Ambient", false);
-	m_vSpecular.Load(oXml, "Specular", false);
-	m_fltShininess = oXml.GetChildFloat("Shininess", m_fltShininess);
 
 	//Only load the joint if there is a parent object and this body uses joints.
 	if(m_lpParent && m_bUsesJoint)

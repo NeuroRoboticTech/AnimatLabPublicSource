@@ -140,6 +140,7 @@ namespace VortexAnimatSim
 
 	namespace Environment
 	{
+		class VsMovableItem;
 		class VsBody;
 		class VsJoint;
 		class VsMotorizedJoint;
@@ -222,6 +223,8 @@ using namespace Vx;
 
 #include "VsClassFactory.h"
 
+#include "VsMovableItem.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"

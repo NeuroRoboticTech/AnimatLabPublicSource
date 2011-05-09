@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
@@ -25,6 +26,7 @@ namespace VortexAnimatSim
 
 VsSpring::VsSpring()
 {
+	SetThisPointers();
 	m_vxSpring = NULL;
 	m_lpLineBase = this;
 }

@@ -1,14 +1,16 @@
 #include "StdAfx.h"
 #include "VsMouseSpring.h"
 #include "VsCameraManipulator.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
+#include "VsJoint.h"
 #include "VsRigidBody.h"
+#include "VsStructure.h"
 #include "VsSimulator.h"
 #include "VsOsgUserData.h"
 #include "VsSimulationWindow.h"
 #include "VsSimulationWindowMgr.h"
 #include "VsDragger.h"
-
 
 namespace VortexAnimatSim
 {

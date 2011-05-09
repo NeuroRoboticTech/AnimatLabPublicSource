@@ -5,17 +5,18 @@
 **/
 
 #include "StdAfx.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsPrismaticLimit.h"
 #include "VsRigidBody.h"
 #include "VsPrismatic.h"
+#include "VsStructure.h"
 #include "VsSimulator.h"
 #include "VsOsgUserData.h"
 #include "VsOsgUserDataVisitor.h"
 #include "VsDragger.h"
-
 
 namespace VortexAnimatSim
 {
@@ -32,11 +33,7 @@ namespace VortexAnimatSim
 **/
 VsPrismatic::VsPrismatic()
 {
-	m_lpThis = this;
-	m_lpThisJoint = this;
-	PhysicsBody(this);
-	m_lpPhysicsMotorJoint = this;
-	m_lpThisMotorJoint = this;
+	SetThisPointers();
 	m_vxPrismatic = NULL;
 
 	m_lpUpperLimit = new VsPrismaticLimit();
@@ -80,25 +77,6 @@ void VsPrismatic::EnableLimits(BOOL bVal)
 		if(m_lpLowerLimit) m_lpLowerLimit->SetLimitPos();
 		if(m_lpUpperLimit) m_lpUpperLimit->SetLimitPos();
 	}
-}
-
-
-void VsPrismatic::ResetGraphicsAndPhysics()
-{
-	VsBody::BuildLocalMatrix();
-
-	SetupPhysics();	
-}
-
-void VsPrismatic::Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent, BOOL bUpdateMatrix) 
-{
-	m_oRotation = oPoint;
-	m_oReportRotation = m_oRotation;
-
-	ResetGraphicsAndPhysics();
-
-	if(m_lpCallback && bFireChangeEvent)
-		m_lpCallback->RotationChanged();
 }
 
 void VsPrismatic::JointPosition(float fltPos)
@@ -156,13 +134,13 @@ void VsPrismatic::SetupGraphics()
 
 		SetAlpha();
 		SetCulling();
-		SetVisible(m_lpThis->IsVisible());
+		SetVisible(m_lpThisMI->IsVisible());
 
 		//Add it to the scene graph.
 		m_osgParent->addChild(m_osgRoot.get());
 
 		//Set the position with the world coordinates.
-		m_lpThis->AbsolutePosition(VsBody::GetOSGWorldCoords());
+		UpdateAbsolutePosition();
 
 		//We need to set the UserData on the OSG side so we can do picking.
 		//We need to use a node visitor to set the user data for all drawable nodes in all geodes for the group.

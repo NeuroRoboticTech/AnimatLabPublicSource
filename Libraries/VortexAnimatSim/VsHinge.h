@@ -60,13 +60,11 @@ namespace VortexAnimatSim
 				virtual void SetupPhysics();
 				virtual void DeletePhysics();
 				virtual void CreateCylinderGraphics();
-				virtual void ResetGraphicsAndPhysics();
 
 			public:
 				VsHinge();
 				virtual ~VsHinge();
 
-				virtual void Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
 				virtual void JointPosition(float fltPos);
 
 				virtual void SetAlpha();

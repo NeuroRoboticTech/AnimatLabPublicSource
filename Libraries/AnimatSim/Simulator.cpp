@@ -13,7 +13,7 @@
 #include <sys/stat.h>
 #include "Gain.h"
 #include "Node.h"
-#include "IPhysicsBase.h"
+#include "IPhysicsMovableItem.h"
 #include "IPhysicsBody.h"
 #include "MovableItem.h"
 #include "BodyPart.h"
@@ -1525,7 +1525,7 @@ void Simulator::InitializeStructures()
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
 	{
 		lpStructure = oPos->second;
-		lpStructure->Initialize();
+		lpStructure->Create();
 	}
 
 	if(m_bEnableSimRecording)
@@ -3240,7 +3240,7 @@ void Simulator::AddStructure(string strXml)
 	oXml.FindChildElement("Structure");
 
 	Structure *lpStruct = LoadStructure(oXml);
-	lpStruct->Initialize();
+	lpStruct->Create();
 }
 
 /**

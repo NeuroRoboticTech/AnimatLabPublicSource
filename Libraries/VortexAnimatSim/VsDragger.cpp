@@ -1,8 +1,10 @@
 #include "StdAfx.h"
 
-#include "VsDragger.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
+#include "VsJoint.h"
 #include "VsRigidBody.h"
+#include "VsStructure.h"
 #include "VsSimulator.h"
 #include "VsOsgUserData.h"
 #include "VsDragger.h"
@@ -14,13 +16,13 @@ namespace VortexAnimatSim
 	namespace Visualization
 	{
 
-VsDragger::VsDragger(VsBody *lpParent, BOOL bAllowTranslateX, BOOL bAllowTranslateY, BOOL bAllowTranslateZ, 
+VsDragger::VsDragger(VsMovableItem *lpParent, BOOL bAllowTranslateX, BOOL bAllowTranslateY, BOOL bAllowTranslateZ, 
 					 BOOL bAllowRotateX, BOOL bAllowRotateY, BOOL bAllowRotateZ)
 {
 	if(!lpParent)
 		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
 
-	m_lpVsBody = lpParent;
+	m_lpVsParent = lpParent;
 
 	//Create the gripperMT and default it to loc=0, rot=0
 	m_osgGripperMT = new osg::MatrixTransform();
@@ -67,26 +69,26 @@ void VsDragger::setupDefaultGeometry()
 void VsDragger::AddToScene()
 {
 	SetupMatrix();
-	if(m_lpVsBody && m_lpVsBody->RootGroup() && m_osgGripperMT.valid())
-		if(!m_lpVsBody->RootGroup()->containsNode(m_osgGripperMT.get()))
-			m_lpVsBody->RootGroup()->addChild(m_osgGripperMT.get());
+	if(m_lpVsParent && m_lpVsParent->RootGroup() && m_osgGripperMT.valid())
+		if(!m_lpVsParent->RootGroup()->containsNode(m_osgGripperMT.get()))
+			m_lpVsParent->RootGroup()->addChild(m_osgGripperMT.get());
 }
 
 void VsDragger::RemoveFromScene()
 {
-	if(m_lpVsBody && m_lpVsBody->RootGroup() && m_osgGripperMT.valid())
-		if(m_lpVsBody->RootGroup()->containsNode(m_osgGripperMT.get()))
-			m_lpVsBody->RootGroup()->removeChild(m_osgGripperMT.get());
+	if(m_lpVsParent && m_lpVsParent->RootGroup() && m_osgGripperMT.valid())
+		if(m_lpVsParent->RootGroup()->containsNode(m_osgGripperMT.get()))
+			m_lpVsParent->RootGroup()->removeChild(m_osgGripperMT.get());
 }
 
 void VsDragger::SetupMatrix()
 {
-	if(m_lpVsBody && m_lpVsBody->RootGroup() && m_osgGripperMT.valid())
+	if(m_lpVsParent && m_lpVsParent->RootGroup() && m_osgGripperMT.valid())
 	{
 		//This gives the radius of the boundign sphere for the selected part.
 		//We will multiply that by 2 and then scale the entire dragger by that amount.
 		//We will also use that setting for the minimum scale of the autotransform.
-		float fltMaxDim = m_lpVsBody->Physics_GetBoundingRadius();
+		float fltMaxDim = m_lpVsParent->Physics_GetBoundingRadius();
 
 		Simulator *lpSim = GetSimulator();
 		if(fltMaxDim > (lpSim->InverseDistanceUnits()/2.0f))
@@ -102,7 +104,7 @@ void VsDragger::SetupMatrix()
 
 		//We use the final matrix here instead of local matrix because the joint can have an additional offset that
 		//must be taken into account when setting up the dragger.
-		m_osgGripperMT->setMatrix(m_lpVsBody->FinalMatrix());
+		m_osgGripperMT->setMatrix(m_lpVsParent->FinalMatrix());
 		
 		//Set the matrix for the dragger back to default.
 		osg::Matrix mtNull = osg::Matrix::identity();
@@ -111,7 +113,7 @@ void VsDragger::SetupMatrix()
 
 		//Lets setup the grip to zero out the rotation of the body so that it points 
 		//to the default axis of the parent it is connected to. 
-		osg::Matrix tempMT = m_lpVsBody->LocalMatrix(), invMT;
+		osg::Matrix tempMT = m_lpVsParent->LocalMatrix(), invMT;
 		tempMT.setTrans(osg::Vec3f(0, 0, 0));
 		invMT.invert(tempMT);
 

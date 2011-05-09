@@ -6,18 +6,21 @@ namespace AnimatSim
 	{
 
 
-		class ANIMAT_PORT IPhysicsBase
+		class ANIMAT_PORT IPhysicsMovableItem
 		{
 		protected:
 
 		public:
-			IPhysicsBase(void);
-			virtual ~IPhysicsBase(void);
+			IPhysicsMovableItem(void);
+			virtual ~IPhysicsMovableItem(void);
 
 			virtual void SetVisible(BOOL bVisible) = 0;
 			virtual void SetAlpha() = 0;
 
 			virtual void Physics_UpdateMatrix() = 0;
+			virtual void Physics_ResetGraphicsAndPhysics() = 0;
+			virtual void Physics_PositionChanged() = 0;
+			virtual void Physics_RotationChanged() = 0;
 			virtual void Physics_CollectData() = 0;
 			virtual void Physics_ResetSimulation() = 0;
 			virtual void Physics_AfterResetSimulation() = 0;
@@ -26,6 +29,7 @@ namespace AnimatSim
 			virtual float Physics_GetBoundingRadius() = 0;
 			virtual BoundingBox Physics_GetBoundingBox() = 0;
 			virtual void Physics_SetColor() = 0;
+			virtual void Physics_TextureChanged() = 0;
 		};
 
 	}

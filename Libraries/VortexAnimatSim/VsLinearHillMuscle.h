@@ -19,6 +19,7 @@ namespace VortexAnimatSim
 class VORTEX_PORT VsLinearHillMuscle : public AnimatSim::Environment::Bodies::LinearHillMuscle, public VsLine
 {
 protected:	
+	virtual void SetThisPointers();
 
 public:
 	VsLinearHillMuscle();

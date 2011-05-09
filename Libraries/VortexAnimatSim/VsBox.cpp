@@ -3,11 +3,13 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsBox.h"
+#include "VsStructure.h"
 #include "VsSimulator.h"
 #include "VsOsgUserData.h"
 #include "VsOsgUserDataVisitor.h"
@@ -26,9 +28,7 @@ namespace VortexAnimatSim
 
 VsBox::VsBox()
 {
-	m_lpThis = this;
-	m_lpThisBody = this;
-	PhysicsBody(this);
+	SetThisPointers();
 }
 
 VsBox::~VsBox()
@@ -38,12 +38,12 @@ VsBox::~VsBox()
 void VsBox::CreateParts()
 {
 	m_osgGeometry = CreateBoxGeometry(Length(), Height(), Width(), LengthSegmentSize(), HeightSegmentSize(), WidthSegmentSize());
-	m_osgGeometry->setName(m_lpThis->Name() + "_Geometry");
+	m_osgGeometry->setName(m_lpThisAB->Name() + "_Geometry");
 
 	osg::Geode *osgGroup = new osg::Geode;
 	osgGroup->addDrawable(m_osgGeometry.get());
 	m_osgNode = osgGroup;
-	m_osgNode->setName(m_lpThis->Name() + "_Node");
+	m_osgNode->setName(m_lpThisAB->Name() + "_Node");
 
 	if(IsCollisionObject())
 		m_vxGeometry = new VxBox(m_fltLength, m_fltHeight, m_fltWidth);
@@ -54,7 +54,7 @@ void VsBox::CreateParts()
 	m_fltYArea = m_fltLength * m_fltWidth;
 	m_fltZArea = m_fltHeight * m_fltLength;
 
-	VsRigidBody::CreateBody();
+	VsRigidBody::CreateItem();
 	Box::CreateParts();
 	VsRigidBody::SetBody();
 }
@@ -75,7 +75,7 @@ void VsBox::Resize()
 	{
 		osg::Geode *osgGroup = dynamic_cast<osg::Geode *>(m_osgNode.get());
 		if(!osgGroup)
-			THROW_TEXT_ERROR(Vs_Err_lNodeNotGeode, Vs_Err_strNodeNotGeode, m_lpThis->Name());
+			THROW_TEXT_ERROR(Vs_Err_lNodeNotGeode, Vs_Err_strNodeNotGeode, m_lpThisAB->Name());
 
 		if(osgGroup && osgGroup->containsDrawable(m_osgGeometry.get()))
 			osgGroup->removeDrawable(m_osgGeometry.get());
@@ -84,7 +84,7 @@ void VsBox::Resize()
 
 		//Create a new box geometry with the new sizes.
 		m_osgGeometry = CreateBoxGeometry(Length(), Height(), Width(), LengthSegmentSize(), HeightSegmentSize(), WidthSegmentSize());
-		m_osgGeometry->setName(m_lpThis->Name() + "_Geometry");
+		m_osgGeometry->setName(m_lpThisAB->Name() + "_Geometry");
 
 		//Add it to the geode.
 		osgGroup->addDrawable(m_osgGeometry.get());
@@ -103,7 +103,7 @@ void VsBox::Resize()
 		VxBox *vxBox = dynamic_cast<VxBox *>(m_vxGeometry);
 
 		if(!vxBox)
-			THROW_TEXT_ERROR(Vs_Err_lGeometryMismatch, Vs_Err_strGeometryMismatch, m_lpThis->Name());
+			THROW_TEXT_ERROR(Vs_Err_lGeometryMismatch, Vs_Err_strGeometryMismatch, m_lpThisAB->Name());
 		
 		vxBox->setDimensions(m_fltLength, m_fltHeight, m_fltWidth);
 		GetBaseValues();

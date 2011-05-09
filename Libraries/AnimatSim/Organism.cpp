@@ -11,7 +11,7 @@
 
 #include "Gain.h"
 #include "Node.h"
-#include "IPhysicsBase.h"
+#include "IPhysicsMovableItem.h"
 #include "IPhysicsBody.h"
 #include "MovableItem.h"
 #include "BodyPart.h"
@@ -38,8 +38,6 @@
 #include "Simulator.h"
 
 /**
-\fn	Organism::Organism()
-
 \brief	Default constructor. 
 
 \author	dcofer
@@ -52,8 +50,6 @@ Organism::Organism()
 }
 
 /**
-\fn	Organism::~Organism()
-
 \brief	Destructor. 
 
 \author	dcofer
@@ -75,8 +71,6 @@ catch(...)
 }
 
 /**
-\fn	BOOL Organism::IsDead()
-
 \brief	Query if this object is dead. 
 
 \author	dcofer
@@ -107,7 +101,7 @@ void Organism::ResetSimulation()
 	{
 		m_lpBody->ResetSimulation();
 		
-		CollectStructureData();
+		UpdateData();
 	}
 
 	m_lpNervousSystem->ResetSimulation();
@@ -137,6 +131,9 @@ void Organism::StepNeuralEngine()
 BOOL Organism::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
+
+	if(Structure::SetData(strDataType, strValue, FALSE))
+		return TRUE;
 
 	//if(strType == "TIMESTEP")
 	//{

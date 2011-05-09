@@ -72,6 +72,21 @@ namespace AnimatSim
 			/// The current alpha transparency for this body part.
 			float m_fltAlpha; //Current alpha
 
+			///The ambient color to apply to this part. It is specified as red, green, blue, and alpha.
+			CStdColor m_vAmbient;
+
+			///The diffuse color to apply to this part. It is specified as red, green, blue, and alpha.
+			CStdColor m_vDiffuse;
+
+			///The specular color to apply to this part. It is specified as red, green, blue, and alpha.
+			CStdColor m_vSpecular;
+
+			///The shininess of the part. A value between 0 and 128. 
+			float m_fltShininess;
+
+			///An optional texture to apply to the rigid body.
+			string m_strTexture;
+
 			/// This is an interface pointer to a callback class that allows us to notify the gui
 			/// of events that occur within the simulation.
 			IMovableItemCallback *m_lpCallback;
@@ -79,7 +94,7 @@ namespace AnimatSim
 			/// This is an interface references to the Vs version of this object.
 			/// It will allow us to call methods directly in the Vs (OSG) version of the object
 			/// directly without having to overload a bunch of methods in each box, sphere, etc..
-			IPhysicsBase *m_lpPhysicsBase;
+			IPhysicsMovableItem *m_lpPhysicsMovableItem;
 
 		public:
 			MovableItem(void);
@@ -142,11 +157,33 @@ namespace AnimatSim
 			virtual float Alpha();
 			virtual void Alpha(float fltAlpha);
 
+
+			virtual CStdColor *Ambient();
+			virtual void Ambient(CStdColor &aryColor);
+			virtual void Ambient(float *aryColor);
+			virtual void Ambient(string strXml);
+
+			virtual CStdColor *Diffuse();
+			virtual void Diffuse(CStdColor &aryColor);
+			virtual void Diffuse(float *aryColor);
+			virtual void Diffuse(string strXml);
+
+			virtual CStdColor *Specular();
+			virtual void Specular(CStdColor &aryColor);
+			virtual void Specular(float *aryColor);
+			virtual void Specular(string strXml);
+
+			virtual float Shininess();
+			virtual void Shininess(float fltVal);
+
+			virtual string Texture();
+			virtual void Texture(string strValue);
+
 			virtual IMovableItemCallback *Callback();
 			virtual void Callback(IMovableItemCallback *lpCallback);
 
-			virtual IPhysicsBase *PhysicsBase();
-			virtual void PhysicsBase(IPhysicsBase *lpBase);
+			virtual IPhysicsMovableItem *PhysicsMovableItem();
+			virtual void PhysicsMovableItem(IPhysicsMovableItem *lpBase);
 
 			virtual float GetBoundingRadius();
 
@@ -167,6 +204,7 @@ namespace AnimatSim
 
 #pragma endregion
 
+			virtual void AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ);
 			virtual void Selected(BOOL bValue, BOOL bSelectMultiple); 
 			virtual void VisualSelectionModeChanged(int iNewMode);
 

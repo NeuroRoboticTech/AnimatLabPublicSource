@@ -12,8 +12,6 @@ namespace AnimatSim
 	{
 
 		/**
-		\class	Organism
-		
 		\brief	A dynamic organism that is controlled by a neural network.
 		
 		\details An organism is a type of Structure. The difference between 
@@ -32,7 +30,6 @@ namespace AnimatSim
 		class ANIMAT_PORT Organism : public Structure
 		{
 		protected:
-
 			/// The pointer to the nervous system
 			NervousSystem *m_lpNervousSystem;
 

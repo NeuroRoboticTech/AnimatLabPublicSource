@@ -5,12 +5,15 @@
 **/
 
 #include "StdAfx.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
+#include "VsJoint.h"
 #include "VsHingeLimit.h"
 #include "VsHinge.h"
+#include "VsStructure.h"
 #include "VsSimulator.h"
 #include "VsOsgUserData.h"
 #include "VsOsgUserDataVisitor.h"
@@ -31,11 +34,7 @@ namespace VortexAnimatSim
 **/
 VsHinge::VsHinge()
 {
-	m_lpThis = this;
-	m_lpThisJoint = this;
-	PhysicsBody(this);
-	m_lpPhysicsMotorJoint = this;
-	m_lpThisMotorJoint = this;
+	SetThisPointers();
 	m_vxHinge = NULL;
 	m_fltRotationDeg = 0;
 
@@ -79,26 +78,6 @@ void VsHinge::EnableLimits(BOOL bVal)
 		if(m_lpLowerLimit) m_lpLowerLimit->SetLimitPos();
 		if(m_lpUpperLimit) m_lpUpperLimit->SetLimitPos();
 	}
-}
-
-
-void VsHinge::ResetGraphicsAndPhysics()
-{
-	VsBody::BuildLocalMatrix();
-
-	SetupPhysics();	
-}
-
-void VsHinge::Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent, BOOL bUpdateMatrix) 
-{
-	m_oRotation = oPoint;
-	m_oReportRotation = m_oRotation;
-
-	if(bUpdateMatrix)
-		ResetGraphicsAndPhysics();
-
-	if(m_lpCallback && bFireChangeEvent)
-		m_lpCallback->RotationChanged();
 }
 
 void VsHinge::JointPosition(float fltPos)
@@ -195,13 +174,13 @@ void VsHinge::SetupGraphics()
 
 		SetAlpha();
 		SetCulling();
-		SetVisible(m_lpThis->IsVisible());
+		SetVisible(m_lpThisMI->IsVisible());
 
 		//Add it to the scene graph.
 		m_osgParent->addChild(m_osgRoot.get());
 
 		//Set the position with the world coordinates.
-		m_lpThis->AbsolutePosition(VsBody::GetOSGWorldCoords());
+		UpdateAbsolutePosition();
 
 		//We need to set the UserData on the OSG side so we can do picking.
 		//We need to use a node visitor to set the user data for all drawable nodes in all geodes for the group.
@@ -260,7 +239,7 @@ void VsHinge::SetupPhysics()
 	Vx::VxReal3 vxRot;
 	vTrans.getRotationEulerAngles(vxRot);
 
-	CStdFPoint vLocalRot(vxRot[0], vxRot[1], vxRot[2]); //= m_lpThis->Rotation();
+	CStdFPoint vLocalRot(vxRot[0], vxRot[1], vxRot[2]); //= m_lpThisMI->Rotation();
 
     VxVector3 pos((double) vGlobal.x, (double) vGlobal.y, (double)  vGlobal.z); 
 	VxVector3 axis = NormalizeAxis(vLocalRot);

@@ -1,9 +1,12 @@
 #include "StdAfx.h"
 
+#include "VsMovableItem.h"
+#include "VsBody.h"
+#include "VsJoint.h"
+#include "VsRigidBody.h"
 #include "VsDragger.h"
 #include "VsTranslateAxisDragger.h"
-#include "VsBody.h"
-#include "VsRigidBody.h"
+#include "VsStructure.h"
 #include "VsSimulator.h"
 #include "VsOsgUserData.h"
 

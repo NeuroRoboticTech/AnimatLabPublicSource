@@ -21,13 +21,11 @@ namespace VortexAnimatSim
 				virtual void SetupGraphics();
 				virtual void SetupPhysics();
 				virtual void DeletePhysics();
-				virtual void ResetGraphicsAndPhysics();
 
 			public:
 				VsPrismatic();
 				virtual ~VsPrismatic();
 
-				virtual void Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
 				virtual void JointPosition(float fltPos);
 
 				virtual void SetAlpha();

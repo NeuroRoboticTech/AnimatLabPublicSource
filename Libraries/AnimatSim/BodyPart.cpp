@@ -10,7 +10,7 @@
 #include "AnimatBase.h"
 
 #include "Node.h"
-#include "IPhysicsBase.h"
+#include "IPhysicsMovableItem.h"
 #include "IPhysicsBody.h"
 #include "MovableItem.h"
 #include "BodyPart.h"
@@ -65,8 +65,8 @@ BodyPart::~BodyPart(void)
 **/
 void BodyPart::UpdateData()
 {
-	if(m_lpPhysicsBase)
-		m_lpPhysicsBase->Physics_CollectData();
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->Physics_CollectData();
 }
 
 /**
@@ -93,7 +93,6 @@ directly without having to overload a bunch of methods in each box, sphere, etc.
 **/
 void BodyPart::PhysicsBody(IPhysicsBody *lpBody) 
 {
-	m_lpPhysicsBase = lpBody;
 	m_lpPhysicsBody = lpBody;
 }
 
@@ -134,25 +133,6 @@ void BodyPart::VisualSelectionModeChanged(int iNewMode)
 	MovableItem::VisualSelectionModeChanged(iNewMode);
 }
 
-/**
-\brief	Called when the user clicks on this object while the AddBody mode is active.
-
-\details When the user selects the AddBody mode in the GUI then the simulation detects when a
-part is clicked in the simulation window. (This occurs in the VsCameraManipulator class). It gets
-the position of the click in global coordinates, and the normal vector for the surface that was
-clicked. We then need to pass this info back up the GUI and let it know the click occurred. This
-method uses the IMovableItemCallback object to send this info back up to the GUI. 
-
-\author	dcofer
-\date	3/2/2011
-
-\param	fltPosX		The position x coordinate. 
-\param	fltPosY		The position y coordinate. 
-\param	fltPosZ		The position z coordinate. 
-\param	fltNormX	The normal x coordinate. 
-\param	fltNormY	The normal y coordinate. 
-\param	fltNormZ	The normal z coordinate. 
-**/
 void BodyPart::AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ)
 {
 	if(m_lpCallback)

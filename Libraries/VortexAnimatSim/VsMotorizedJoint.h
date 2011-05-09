@@ -12,6 +12,7 @@ namespace VortexAnimatSim
 			MotorizedJoint *m_lpThisMotorJoint;
 			BOOL m_bMotorOn;
 
+			virtual void SetThisPointers();
 			virtual void CalculateServoVelocity();
 
 		public:

@@ -10,7 +10,7 @@ namespace VortexAnimatSim
 			protected:
 				virtual ~VsDragger(void);
 
-				VsBody *m_lpVsBody;
+				VsMovableItem *m_lpVsParent;
 				osg::ref_ptr< osg::MatrixTransform> m_osgGripperMT;
 				osg::ref_ptr< osg::AutoTransform > _autoTransform;
 				osg::ref_ptr< osg::MatrixTransform > _sizeTransform;
@@ -18,7 +18,7 @@ namespace VortexAnimatSim
 				osg::ref_ptr< VsTrackballDragger >	_tbDragger;
 
 			public:
-				VsDragger(VsBody *lpParent, BOOL bAllowTranslateX, BOOL bAllowTranslateY, BOOL bAllowTranslateZ, 
+				VsDragger(VsMovableItem *lpParent, BOOL bAllowTranslateX, BOOL bAllowTranslateY, BOOL bAllowTranslateZ, 
 					      BOOL bAllowRotateX, BOOL bAllowRotateY, BOOL bAllowRotateZ);
 
 				/** Setup default geometry for dragger. */

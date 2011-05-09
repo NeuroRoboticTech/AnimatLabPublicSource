@@ -5,6 +5,7 @@
 **/
 
 #include "StdAfx.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
@@ -28,9 +29,7 @@ namespace VortexAnimatSim
 **/
 VsPlane::VsPlane()
 {
-	m_lpThis = this;
-	m_lpThisBody = this;
-	PhysicsBody(this);
+	SetThisPointers();
 	m_bCullBackfaces = TRUE; //we want back face culling on by default for planes.
 }
 
@@ -55,7 +54,7 @@ void VsPlane::CreateParts()
 	//Create the geometry and osg drawable nodes.
 	m_eControlType = VxEntity::kControlNode;  //This is not a dynamic part.
 
-	VsRigidBody::CreateBody();
+	VsRigidBody::CreateItem();
 	Plane::CreateParts();
 	VsRigidBody::SetBody();
 }
@@ -67,7 +66,7 @@ void VsPlane::Resize()
 	//{
 	//	osg::Geode *osgGroup = dynamic_cast<osg::Geode *>(m_osgNode.get());
 	//	if(!osgGroup)
-	//		THROW_TEXT_ERROR(Vs_Err_lNodeNotGeode, Vs_Err_strNodeNotGeode, m_lpThis->Name());
+	//		THROW_TEXT_ERROR(Vs_Err_lNodeNotGeode, Vs_Err_strNodeNotGeode, m_lpThisAB->Name());
 
 	//	if(osgGroup && osgGroup->containsDrawable(m_osgGeometry.get()))
 	//		osgGroup->removeDrawable(m_osgGeometry.get());
@@ -76,7 +75,7 @@ void VsPlane::Resize()
 
 	//	//Create a new box geometry with the new sizes.
 	//	m_osgGeometry = CreateBoxGeometry(Length(), Height(), Width(), LengthSegmentSize(), HeightSegmentSize(), WidthSegmentSize());
-	//	m_osgGeometry->setName(m_lpThis->Name() + "_Geometry");
+	//	m_osgGeometry->setName(m_lpThisAB->Name() + "_Geometry");
 
 	//	//Add it to the geode.
 	//	osgGroup->addDrawable(m_osgGeometry.get());
@@ -95,7 +94,7 @@ void VsPlane::Resize()
 	//	VxBox *vxBox = dynamic_cast<VxBox *>(m_vxGeometry);
 
 	//	if(!vxBox)
-	//		THROW_TEXT_ERROR(Vs_Err_lGeometryMismatch, Vs_Err_strGeometryMismatch, m_lpThis->Name());
+	//		THROW_TEXT_ERROR(Vs_Err_lGeometryMismatch, Vs_Err_strGeometryMismatch, m_lpThisAB->Name());
 	//	
 	//	vxBox->setDimensions(m_fltLength, m_fltHeight, m_fltWidth);
 	//	GetBaseValues();

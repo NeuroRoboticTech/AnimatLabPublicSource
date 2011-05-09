@@ -76,23 +76,11 @@ namespace AnimatSim
 			\sa
 			Structure, Organism, Body, Joint
 		*/
-		class ANIMAT_PORT Structure : public AnimatBase 
+		class ANIMAT_PORT Structure : public AnimatBase, public MovableItem 
 		{
 		protected:
 			///The root rigid body object of this structure.
 			RigidBody *m_lpBody;
-
-			///The initial position of this structure in world coordinates.
-			///The root rigid body position is relative to this position.
-			CStdFPoint m_oPosition;
-
-			/// This is used for reporting the position back to the GUI. It is the position scaled for
-			/// distance units.
-			CStdFPoint m_oReportPosition;
-
-			/// This is used for reporting the rotation back to the GUI. We need to keep the
-			/// regular rotation information so it can be used during a simulation reset.
-			CStdFPoint m_oReportRotation;
 
 			///A list of rigid bodies contained within this structure.
 			///The objects in this list are references only. They are not
@@ -117,6 +105,9 @@ namespace AnimatSim
 			///If you are running with the GUI then it makes the calls back up to it.
 			IMovableItemCallback *m_lpCallback;
 
+			/// The radius of the graphical sphere shown for the structure position.
+			float m_fltSize;
+
 			virtual void LoadLayout(CStdXml &oXml);
 			virtual void LoadCollisionPair(CStdXml &oXml);
 			virtual RigidBody *LoadRoot(CStdXml &oXml);
@@ -124,7 +115,7 @@ namespace AnimatSim
 			virtual void AddRoot(string strXml);
 			virtual void RemoveRoot(string strID, BOOL bThrowError = TRUE);
 			
-			virtual void CollectStructureData();
+			virtual void UpdateData();
 
 		public:
 			Structure();
@@ -133,22 +124,11 @@ namespace AnimatSim
 			void Sim(Simulator *lpSim);
 			virtual RigidBody *Body();
 
-			virtual CStdFPoint Position();
-			virtual void Position(CStdFPoint &oPoint);
-
-			virtual CStdFPoint ReportPosition();
-			virtual void ReportPosition(CStdFPoint &oPoint);
-			virtual void ReportPosition(float fltX, float fltY, float fltZ);
-
-			virtual CStdFPoint ReportRotation();
-			virtual void ReportRotation(CStdFPoint &oPoint);
-			virtual void ReportRotation(float fltX, float fltY, float fltZ);
+			virtual float Size();
+			virtual void Size(float fltVal, BOOL bUseScaling = TRUE);
 
 			virtual CStdPtrArray<CollisionPair> ExclusionList();
 			virtual void AddCollisionPair(string strID1, string strID2);
-
-			virtual IMovableItemCallback *Callback();
-			virtual void Callback(IMovableItemCallback *lpCallback);
 
 			/**
 			\fn	virtual void Structure::*Assembly() = 0;
@@ -165,22 +145,7 @@ namespace AnimatSim
 			**/
 			virtual void *Assembly() = 0;
 
-			/**
-			\fn	virtual void Structure::*GetMatrixPointer() = 0;
-			
-			\brief	Gets the osg matrix pointer. 
-
-			\details This is a pure virtual method that is used in the derived class to return 
-			a pointer to the osg matrix object of the structure. 
-						
-			\author	dcofer
-			\date	2/25/2011
-			
-			\return	null if it fails, else the matrix pointer. 
-			**/
-			virtual void *GetMatrixPointer() = 0;
-
-			virtual void Initialize();
+			virtual void Create();
 			virtual void StepPhysicsEngine();
 			virtual void ResetSimulation();
 
@@ -200,8 +165,12 @@ namespace AnimatSim
 			virtual void EnableCollision(RigidBody *lpCollisionBody);
 			virtual void DisableCollision(RigidBody *lpCollisionBody);
 
+			virtual void Selected(BOOL bValue, BOOL bSelectMultiple); 
+			virtual void UpdatePhysicsPosFromGraphics();
+
 #pragma region DataAccesMethods
 
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
 			virtual float *GetDataPointer(string strDataType);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE);

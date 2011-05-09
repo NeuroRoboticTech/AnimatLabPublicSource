@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
@@ -24,9 +25,7 @@ namespace VortexAnimatSim
 
 VsCylinder::VsCylinder()
 {
-	m_lpThis = this;
-	m_lpThisBody = this;
-	PhysicsBody(this);
+	SetThisPointers();
 }
 
 VsCylinder::~VsCylinder()
@@ -48,7 +47,7 @@ void VsCylinder::CreateParts()
 	m_fltYArea = 2*m_fltRadius*m_fltHeight;
 	m_fltZArea = 2*VX_PI*m_fltRadius*m_fltRadius;
 
-	VsRigidBody::CreateBody();
+	VsRigidBody::CreateItem();
 	Cylinder::CreateParts();
 	VsRigidBody::SetBody();
 }

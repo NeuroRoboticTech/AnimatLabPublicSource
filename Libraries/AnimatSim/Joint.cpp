@@ -10,7 +10,7 @@
 #include "AnimatBase.h"
 
 #include "Node.h"
-#include "IPhysicsBase.h"
+#include "IPhysicsMovableItem.h"
 #include "IPhysicsBody.h"
 #include "MovableItem.h"
 #include "BodyPart.h"
@@ -264,10 +264,10 @@ float *Joint::GetDataPointer(string strDataType)
 	if(strType == "ENABLE")
 		return &m_fltEnabled;
 
-	if(m_lpPhysicsBody)
+	if(m_lpPhysicsMovableItem)
 	{
 		float *lpData = NULL;
-		lpData = m_lpPhysicsBody->Physics_GetDataPointer(strDataType);
+		lpData = m_lpPhysicsMovableItem->Physics_GetDataPointer(strDataType);
 		if(lpData) return lpData;
 	}
 
@@ -298,8 +298,8 @@ void Joint::AddExternalNodeInput(float fltInput) {}
 
 void Joint::ResetSimulation()
 {
-	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->Physics_ResetSimulation();
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->Physics_ResetSimulation();
 
 	JointPosition(0);
 	JointVelocity(0);
@@ -308,8 +308,8 @@ void Joint::ResetSimulation()
 
 void Joint::AfterResetSimulation()
 {
-	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->Physics_AfterResetSimulation();
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->Physics_AfterResetSimulation();
 }
 
 void Joint::Load(CStdXml &oXml)

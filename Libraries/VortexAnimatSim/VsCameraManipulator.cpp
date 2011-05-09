@@ -2,8 +2,11 @@
 
 #include "VsMouseSpring.h"
 #include "VsCameraManipulator.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
+#include "VsJoint.h"
 #include "VsRigidBody.h"
+#include "VsStructure.h"
 #include "VsSimulator.h"
 #include "VsOsgUserData.h"
 #include "VsDragger.h"
@@ -203,6 +206,7 @@ void VsCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapte
 
 	RigidBody *lpBody = NULL;
 	Joint *lpJoint = NULL;
+	Structure *lpStruct = NULL;
     if (m_osgViewer->computeIntersections(x,y,intersections))
     {
 
@@ -222,6 +226,7 @@ void VsCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapte
 				{
 					lpBody = osgData->GetBody();
 					lpJoint = osgData->GetJoint();
+					lpStruct = osgData->GetStructure();
 
 					m_vPickPoint = hitr->getWorldIntersectPoint();
 					m_vPickNormal = hitr->getWorldIntersectNormal();
@@ -233,6 +238,11 @@ void VsCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapte
 							if(lpBody && lpBody->AllowMouseManipulation() && lpBody->IsVisible() && (lpBody->VisualSelectionType() & m_lpSim->VisualSelectionMode()) )
 							{
 								m_lpPicked = lpBody;
+								return;
+							}
+							if(lpStruct && lpStruct->IsVisible() )
+							{
+								m_lpPicked = lpStruct;
 								return;
 							}
 							break;

@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
@@ -24,9 +25,7 @@ namespace VortexAnimatSim
 
 VsAttachment::VsAttachment()
 {
-	m_lpThis = this;
-	m_lpThisBody = this;
-	PhysicsBody(this);
+	SetThisPointers();
 }
 
 VsAttachment::~VsAttachment()
@@ -47,7 +46,7 @@ void VsAttachment::CreateParts()
 	m_osgNode = osgGroup;
 	m_vxGeometry = NULL;  //No physics part.
 
-	VsRigidBody::CreateBody();
+	VsRigidBody::CreateItem();
 }
 
 		}		//Bodies

@@ -96,13 +96,18 @@ Namespace DataObjects.Physical
             'in the simulation that these changes have occured. It will need to re-adjust the joint to take this into account.
             If Not doParent Is Nothing AndAlso Util.IsTypeOf(doParent.GetType, GetType(DataObjects.Physical.BodyPart)) Then
                 Dim bpChild As DataObjects.Physical.BodyPart = DirectCast(doParent, DataObjects.Physical.BodyPart)
-                AddHandler bpChild.PartMoved, AddressOf Me.OnAttachedPartMoved
-                AddHandler bpChild.PartRotated, AddressOf Me.OnAttachedPartRotated
+                AddHandler bpChild.Moved, AddressOf Me.OnAttachedPartMoved
+                AddHandler bpChild.Rotated, AddressOf Me.OnAttachedPartRotated
 
-                If Not bpChild.Parent Is Nothing AndAlso Util.IsTypeOf(bpChild.Parent.GetType, GetType(DataObjects.Physical.BodyPart)) Then
-                    Dim bpParent As DataObjects.Physical.BodyPart = DirectCast(bpChild.Parent, DataObjects.Physical.BodyPart)
-                    AddHandler bpParent.PartMoved, AddressOf Me.OnAttachedPartMoved
-                    AddHandler bpParent.PartRotated, AddressOf Me.OnAttachedPartRotated
+                If Not bpChild.Parent Is Nothing AndAlso Util.IsTypeOf(bpChild.Parent.GetType, GetType(DataObjects.Physical.RigidBody)) Then
+                    Dim bpParent As DataObjects.Physical.RigidBody = DirectCast(bpChild.Parent, DataObjects.Physical.RigidBody)
+                    AddHandler bpParent.Moved, AddressOf Me.OnAttachedPartMoved
+                    AddHandler bpParent.Rotated, AddressOf Me.OnAttachedPartRotated
+
+                    If bpParent.IsRoot Then
+                        AddHandler Me.ParentStructure.Moved, AddressOf Me.OnAttachedPartMoved
+                        AddHandler Me.ParentStructure.Rotated, AddressOf Me.OnAttachedPartRotated
+                    End If
                 End If
             End If
 

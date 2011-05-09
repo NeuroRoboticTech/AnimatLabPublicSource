@@ -305,6 +305,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\VsMovableItem.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\VsOrganism.cpp"
 				>
 			</File>
@@ -480,6 +484,10 @@
 			</File>
 			<File
 				RelativePath=".\VsMouseSpring.h"
+				>
+			</File>
+			<File
+				RelativePath=".\VsMovableItem.h"
 				>
 			</File>
 			<File

@@ -37,6 +37,13 @@ Namespace DataObjects.Physical
         Protected m_bVisible As Boolean = True
         Protected m_Transparencies As BodyTransparencies
 
+        Protected m_clAmbient As System.Drawing.Color
+        Protected m_clDiffuse As System.Drawing.Color
+        Protected m_clSpecular As System.Drawing.Color
+        Protected m_fltShininess As Single = 64
+
+        Protected m_strTexture As String = ""
+
 #End Region
 
 #Region " Properties "
@@ -189,7 +196,7 @@ Namespace DataObjects.Physical
             Set(ByVal value As Framework.ScaledVector3)
                 Me.SetSimData("Position", value.GetSimulationXml("Position"), True)
                 m_svLocalPosition.CopyData(value)
-                RaiseEvent PartMoved(Me)
+                RaiseEvent Moved(Me)
             End Set
         End Property
 
@@ -230,7 +237,7 @@ Namespace DataObjects.Physical
             Set(ByVal value As Framework.ScaledVector3)
                 Me.SetSimData("Rotation", value.GetSimulationXml("Rotation"), True)
                 m_svRotation.CopyData(value)
-                RaiseEvent PartRotated(Me)
+                RaiseEvent Rotated(Me)
             End Set
         End Property
 
@@ -269,6 +276,84 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
+        Public Overridable Property Ambient() As System.Drawing.Color
+            Get
+                Return m_clAmbient
+            End Get
+            Set(ByVal value As System.Drawing.Color)
+                SetSimData("Ambient", Util.SaveColorXml("Ambient", value), True)
+                m_clAmbient = value
+            End Set
+        End Property
+
+        Public Overridable Property Diffuse() As System.Drawing.Color
+            Get
+                Return m_clDiffuse
+            End Get
+            Set(ByVal value As System.Drawing.Color)
+                SetSimData("Diffuse", Util.SaveColorXml("Diffuse", value), True)
+                m_clDiffuse = value
+            End Set
+        End Property
+
+        Public Overridable Property Specular() As System.Drawing.Color
+            Get
+                Return m_clSpecular
+            End Get
+            Set(ByVal value As System.Drawing.Color)
+                SetSimData("Specular", Util.SaveColorXml("Specular", value), True)
+                m_clSpecular = value
+            End Set
+        End Property
+
+        Public Overridable Property Shininess() As Single
+            Get
+                Return m_fltShininess
+            End Get
+            Set(ByVal value As Single)
+                If (value < 0) Then
+                    Throw New System.Exception("Shininess must be greater than or equal to zero.")
+                End If
+                If (value > 128) Then
+                    Throw New System.Exception("Shininess must be less than 128.")
+                End If
+                SetSimData("Shininess", value.ToString(), True)
+                m_fltShininess = value
+            End Set
+        End Property
+
+        Public Overridable Property Texture() As String
+            Get
+                Return m_strTexture
+            End Get
+            Set(ByVal Value As String)
+                If Not Value Is Nothing Then
+                    Dim strPath As String, strFile As String
+                    If Util.DetermineFilePath(Value, strPath, strFile) Then
+                        Value = strFile
+                    End If
+                End If
+
+                'Check to see if the file exists.
+                If Value.Trim.Length > 0 Then
+                    If Not File.Exists(Value) Then
+                        Throw New System.Exception("The specified file does not exist: " & Value)
+                    End If
+
+                    'Attempt to load the file first to make sure it is a valid image file.
+                    Try
+                        Dim bm As New Bitmap(Value)
+                    Catch ex As System.Exception
+                        Throw New System.Exception("Unable to load the texture file. This does not appear to be a vaild image file.")
+                    End Try
+                End If
+
+                SetSimData("Texture", Value, True)
+                m_strTexture = Value
+
+            End Set
+        End Property
+
 #End Region
 
         <Browsable(False)> _
@@ -285,6 +370,11 @@ Namespace DataObjects.Physical
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
             m_strDescription = ""
+
+            m_clAmbient = Color.FromArgb(255, 25, 25, 25)
+            m_clDiffuse = Color.FromArgb(255, 255, 0, 0)
+            m_clSpecular = Color.FromArgb(255, 64, 64, 64)
+            m_fltShininess = 64
 
             m_svLocalPosition = New ScaledVector3(Me, "LocalPosition", "Location of the object relative to its parent.", "Meters", "m")
             m_svWorldPosition = New ScaledVector3(Me, "WorldPosition", "Location of the object relative to the center of the world.", "Meters", "m")
@@ -316,6 +406,13 @@ Namespace DataObjects.Physical
             m_svRotation = DirectCast(bpOrig.m_svRotation.Clone(Me, bCutData, doRoot), Framework.ScaledVector3)
             m_Transparencies = DirectCast(bpOrig.m_Transparencies.Clone(Me, bCutData, doRoot), BodyTransparencies)
             m_bVisible = bpOrig.m_bVisible
+            m_strDescription = bpOrig.m_strDescription
+
+            m_clAmbient = bpOrig.m_clAmbient
+            m_clDiffuse = bpOrig.m_clDiffuse
+            m_clSpecular = bpOrig.m_clSpecular
+            m_fltShininess = bpOrig.m_fltShininess
+            m_strTexture = bpOrig.m_strTexture
 
             AddHandler m_svLocalPosition.ValueChanged, AddressOf Me.OnLocalPositionValueChanged
             AddHandler m_svWorldPosition.ValueChanged, AddressOf Me.OnWorldPositionValueChanged
@@ -522,6 +619,18 @@ Namespace DataObjects.Physical
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Description", m_strDescription.GetType(), "Description", _
                                         "Part Properties", "Sets the description for this body part.", m_strDescription, _
                                         GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Ambient", m_clAmbient.GetType(), "Ambient", _
+                                        "Visibility", "Sets the ambient color for this item.", m_clAmbient))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Diffuse", m_clDiffuse.GetType(), "Diffuse", _
+                                        "Visibility", "Sets the diffuse color for this item.", m_clDiffuse))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Specular", m_clSpecular.GetType(), "Specular", _
+                                        "Visibility", "Sets the specular color for this item.", m_clSpecular))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Shininess", m_fltShininess.GetType(), "Shininess", _
+                                        "Visibility", "Sets the shininess for this item.", m_fltShininess))
         End Sub
 
         Public Overridable Overloads Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
@@ -545,6 +654,14 @@ Namespace DataObjects.Physical
             m_svLocalPosition.LoadData(oXml, "LocalPosition")
             m_svRotation.LoadData(oXml, "Rotation")
 
+            m_clAmbient = Util.LoadColor(oXml, "Ambient", m_clAmbient)
+            m_clDiffuse = Util.LoadColor(oXml, "Diffuse", m_clDiffuse)
+            m_clSpecular = Util.LoadColor(oXml, "Specular", m_clSpecular)
+            m_fltShininess = oXml.GetChildFloat("Shininess", m_fltShininess)
+
+            m_strTexture = oXml.GetChildString("Texture", m_strTexture)
+            m_strTexture = Util.VerifyFilePath(m_strTexture)
+
             oXml.OutOfElem() 'Outof BodyPart Element
 
         End Sub
@@ -561,6 +678,12 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("Description", m_strDescription)
             m_Transparencies.SaveData(oXml)
             oXml.AddChildElement("IsVisible", m_bVisible)
+
+            Util.SaveColor(oXml, "Ambient", m_clAmbient)
+            Util.SaveColor(oXml, "Diffuse", m_clDiffuse)
+            Util.SaveColor(oXml, "Specular", m_clSpecular)
+            oXml.AddChildElement("Shininess", m_fltShininess)
+            oXml.AddChildElement("Texture", m_strTexture)
 
             If Me.ModuleName.Length > 0 Then
                 oXml.AddChildElement("ModuleName", Me.ModuleName)
@@ -585,6 +708,12 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("Description", m_strDescription)
             m_Transparencies.SaveSimulationXml(oXml, Me)
             oXml.AddChildElement("IsVisible", m_bVisible)
+
+            Util.SaveColor(oXml, "Ambient", m_clAmbient)
+            Util.SaveColor(oXml, "Diffuse", m_clDiffuse)
+            Util.SaveColor(oXml, "Specular", m_clSpecular)
+            oXml.AddChildElement("Shininess", m_fltShininess)
+            oXml.AddChildElement("Texture", m_strTexture)
 
             If Me.ModuleName.Length > 0 Then
                 oXml.AddChildElement("ModuleName", Me.ModuleName)
@@ -631,9 +760,9 @@ Namespace DataObjects.Physical
 
 #Region " Events "
 
-        Public Event PartMoved(ByRef bpPart As AnimatGUI.DataObjects.Physical.BodyPart)
-        Public Event PartRotated(ByRef bpPart As AnimatGUI.DataObjects.Physical.BodyPart)
-        Public Event PartSized(ByRef bpPart As AnimatGUI.DataObjects.Physical.BodyPart)
+        Public Event Moved(ByRef bpPart As AnimatGUI.DataObjects.Physical.BodyPart)
+        Public Event Rotated(ByRef bpPart As AnimatGUI.DataObjects.Physical.BodyPart)
+        Public Event Sized(ByRef bpPart As AnimatGUI.DataObjects.Physical.BodyPart)
 
         Protected Overridable Sub OnAddStimulus(ByVal sender As Object, ByVal e As System.EventArgs)
 
@@ -702,7 +831,7 @@ Namespace DataObjects.Physical
             Try
                 Me.SetSimData("Position", m_svLocalPosition.GetSimulationXml("Position"), True)
                 Util.ProjectProperties.RefreshProperties()
-                RaiseEvent PartMoved(Me)
+                RaiseEvent Moved(Me)
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -721,7 +850,7 @@ Namespace DataObjects.Physical
 
                     Me.SetSimData("Position", m_svLocalPosition.GetSimulationXml("Position"), True)
                     Util.ProjectProperties.RefreshProperties()
-                    RaiseEvent PartMoved(Me)
+                    RaiseEvent Moved(Me)
                 End If
 
             Catch ex As System.Exception
@@ -733,7 +862,7 @@ Namespace DataObjects.Physical
             Try
                 Me.SetSimData("Rotation", Me.RadianRotation.GetSimulationXml("Rotation"), True)
                 Util.ProjectProperties.RefreshProperties()
-                RaiseEvent PartRotated(Me)
+                RaiseEvent Rotated(Me)
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -752,7 +881,7 @@ Namespace DataObjects.Physical
                     m_svLocalPosition.CopyData(m_doInterface.Position(0), m_doInterface.Position(1), m_doInterface.Position(2))
                     m_svWorldPosition.CopyData(m_doInterface.WorldPosition(0), m_doInterface.WorldPosition(1), m_doInterface.WorldPosition(2))
 
-                    RaiseEvent PartMoved(Me)
+                    RaiseEvent Moved(Me)
 
                     Util.Application.ProjectProperties.RefreshProperties()
                 End If
@@ -783,7 +912,7 @@ Namespace DataObjects.Physical
                     m_svRotation.Z.ActualValue = Util.RadiansToDegrees(CSng(m_doInterface.Rotation(2)))
                     m_svRotation.IgnoreChangeValueEvents = False
 
-                    RaiseEvent PartRotated(Me)
+                    RaiseEvent Rotated(Me)
 
                     Util.Application.ProjectProperties.RefreshProperties()
                 End If

@@ -2,8 +2,11 @@
 
 #include "VsMouseSpring.h"
 #include "VsDraggerHandler.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
+#include "VsJoint.h"
 #include "VsRigidBody.h"
+#include "VsStructure.h"
 #include "VsSimulator.h"
 #include "VsOsgUserData.h"
 #include "VsDragger.h"
@@ -98,10 +101,10 @@ void VsDraggerHandler::EndGripDrag()
 	if(m_osgActiveDragger && m_osgActiveDragger->getUserData())
 	{
 		VsOsgUserData *osgData = dynamic_cast<VsOsgUserData *>(m_osgActiveDragger->getUserData());
-		if(osgData && osgData->GetBodyPart())
+		if(osgData && osgData->GetMovable())
 		{
-			VsBody *lpBody = osgData->GetBodyPart();
-			lpBody->EndGripDrag();
+			VsMovableItem *lpItem = osgData->GetVsMovable();
+			lpItem->EndGripDrag();
 		}
 	}
 }

@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
@@ -61,7 +62,7 @@ osg::Geometry *VsLine::CreateLineGeometry()
     linesGeom->setVertexArray(m_aryLines.get());
     
     // set the colors as before, plus using the above
-	CStdColor &aryDiffuse = *m_lpThisBody->Diffuse();
+	CStdColor &aryDiffuse = *m_lpThisRB->Diffuse();
     osg::Vec4Array* colors = new osg::Vec4Array;
     colors->push_back(osg::Vec4(aryDiffuse[0], aryDiffuse[1], aryDiffuse[2], aryDiffuse[3]));
     linesGeom->setColorArray(colors);
@@ -110,13 +111,13 @@ void VsLine::DrawLine()
 
 void VsLine::SetupGraphics()
 {
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThis->GetSimulator());
+	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThisAB->GetSimulator());
 	if(!lpVsSim)
 		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
 
 	//Add it to the root scene graph because the vertices are in global coords.
 	lpVsSim->OSGRoot()->addChild(m_osgNode.get());
-	SetVisible(m_lpThis->IsVisible());
+	SetVisible(m_lpThisMI->IsVisible());
 }
 
 
@@ -129,7 +130,7 @@ void VsLine::CreateParts()
 	m_osgNode = osgGroup;
 	m_vxGeometry = NULL;
 
-	VsRigidBody::CreateBody();
+	VsRigidBody::CreateItem();
 	VsRigidBody::SetBody();
 }
 
@@ -147,7 +148,7 @@ void VsLine::CalculateForceVector(Attachment *lpPrim, Attachment *lpSec, float f
 
 void VsLine::StepSimulation(float fltTension)
 {
-	if(m_lpThis->Enabled())
+	if(m_lpThisBP->Enabled())
 	{
 		//Dont bother with this unless there is actually tension developed by the muscle.
 		if(fltTension > 1e-5)

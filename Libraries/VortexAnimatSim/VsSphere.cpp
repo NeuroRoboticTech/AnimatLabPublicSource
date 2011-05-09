@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
 #include "VsRigidBody.h"
 #include "VsSphere.h"
@@ -22,9 +23,7 @@ namespace VortexAnimatSim
 
 VsSphere::VsSphere()
 {
-	m_lpThis = this;
-	m_lpThisBody = this;
-	PhysicsBody(this);
+	SetThisPointers();
 	m_cgSphere = NULL;
 }
 
@@ -47,7 +46,7 @@ void VsSphere::CreateParts()
 	m_fltYArea = m_fltXArea;
 	m_fltZArea = m_fltXArea;
 
-	VsRigidBody::CreateBody();
+	VsRigidBody::CreateItem();
 	Sphere::CreateParts();
 	VsRigidBody::SetBody();
 }

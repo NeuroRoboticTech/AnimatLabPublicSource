@@ -62,7 +62,7 @@ namespace VortexAnimatSim
 			VxCollisionGeometry *m_vxCollisionGeometry;
 			VxNode m_vxGraphicNode;
 
-			RigidBody *m_lpThisBody;
+			RigidBody *m_lpThisRB;
 
 			//Keeps track of the bouyancy force applied to this rigid body at each time step.
 			//We need the report variable because it must be rescaled back for display.
@@ -88,9 +88,10 @@ namespace VortexAnimatSim
 			float m_fltReportMass;
 			float m_fltReportVolume;
 
+			virtual void SetThisPointers();
+
 			virtual void ProcessContacts();
 
-			virtual void SetupGraphics();
 			virtual void DeletePhysics();
 			virtual void CreateSensorPart();
 			virtual void CreateStaticPart();

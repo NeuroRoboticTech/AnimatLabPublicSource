@@ -1,13 +1,10 @@
-// VsOrganism.h: interface for the VsOrganism class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	VsStructure.h
 
-#if !defined(AFX_VSSTRUCTURE_H__8E0C0060_8F52_4E17_BF36_B05EFE795684__INCLUDED_)
-#define AFX_VSSTRUCTURE_H__8E0C0060_8F52_4E17_BF36_B05EFE795684__INCLUDED_
+\brief	Declares the vortex structure class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace VortexAnimatSim
 {
@@ -19,25 +16,32 @@ namespace VortexAnimatSim
 	**/
 	namespace Environment
 	{
-		class VORTEX_PORT VsStructure : public AnimatSim::Environment::Structure   
+		/**
+		\brief	Vortex physical structure implementation. 
+		
+		\author	dcofer
+		\date	4/25/2011
+		**/
+		class VORTEX_PORT VsStructure : public AnimatSim::Environment::Structure,  public VsMovableItem   
 		{
 		protected:
+			Structure *m_lpThisST;
 			Vx::VxAssembly *m_lpAssembly;
-			osg::ref_ptr<osg::MatrixTransform> m_osgMT;
+
+			virtual void SetThisPointers();
+			virtual void SetupPhysics();
+			virtual void UpdatePositionAndRotationFromMatrix();
 
 		public:
 			VsStructure();
 			virtual ~VsStructure();
 
 			virtual void *Assembly() {return (void *)m_lpAssembly;};
-			virtual void *GetMatrixPointer() {return m_osgMT.get();};
 
-			virtual void Initialize();
+			virtual osg::Group *ParentOSG();
+			virtual void Create();
 			virtual void ResetSimulation();
-			osgSim::DOFTransform* GetOSGNode();
 		};
 
 	}			// Environment
 }				//VortexAnimatSim
-
-#endif // !defined(AFX_VSSTRUCTURE_H__8E0C0060_8F52_4E17_BF36_B05EFE795684__INCLUDED_)

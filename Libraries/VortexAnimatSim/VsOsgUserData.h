@@ -8,27 +8,25 @@ namespace VortexAnimatSim
 		class VsOsgUserData : public osg::Referenced
 		{
 			protected:
-				VsBody *m_lpVsBodyPart;
-
-				VsRigidBody *m_lpVsBody;
-				RigidBody *m_lpBody;
-				
-				VsJoint *m_lpVsJoint;
-				Joint *m_lpJoint;
+				VsMovableItem *m_lpItem;
 
 			public:
-				VsOsgUserData(VsBody *lpBody);
-				VsOsgUserData(VsRigidBody *lpBody);
-				VsOsgUserData(VsJoint *lpJoint);
+				VsOsgUserData(VsMovableItem *lpItem);
 				~VsOsgUserData(void);
 
-				VsBody *GetBodyPart() {return m_lpVsBodyPart;};
+				VsBody *GetBodyPart() {return dynamic_cast<VsBody *>(m_lpItem);};
 
-				VsRigidBody *GetVsBody() {return m_lpVsBody;};
-				RigidBody *GetBody() {return m_lpBody;};
+				VsMovableItem *GetVsMovable() {return m_lpItem;};
+				MovableItem *GetMovable() {return dynamic_cast<MovableItem *>(m_lpItem);};
 
-				VsJoint *GetVsJoint() {return m_lpVsJoint;};
-				Joint *GetJoint() {return m_lpJoint;};
+				VsRigidBody *GetVsBody() {return dynamic_cast<VsRigidBody *>(m_lpItem);};
+				RigidBody *GetBody() {return dynamic_cast<RigidBody *>(m_lpItem);};
+
+				VsJoint *GetVsJoint() {return dynamic_cast<VsJoint *>(m_lpItem);};
+				Joint *GetJoint() {return dynamic_cast<Joint *>(m_lpItem);};
+
+				VsStructure *GetVsStucture() {return dynamic_cast<VsStructure *>(m_lpItem);};
+				Structure *GetStructure() {return dynamic_cast<Structure *>(m_lpItem);};
 		};
 
 	}// end Visualization

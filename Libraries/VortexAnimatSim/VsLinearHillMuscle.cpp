@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
@@ -25,10 +26,7 @@ namespace VortexAnimatSim
 
 VsLinearHillMuscle::VsLinearHillMuscle()
 {
-	m_lpThis = this;
-	m_lpThisBody = this;
-	PhysicsBody(this);
-	m_lpLineBase = this;
+	SetThisPointers();
 }
 
 VsLinearHillMuscle::~VsLinearHillMuscle()
@@ -39,6 +37,15 @@ try
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of VsLinearHillMuscle\r\n", "", -1, FALSE, TRUE);}
+}
+
+void VsLinearHillMuscle::SetThisPointers()
+{
+	VsRigidBody::SetThisPointers();
+
+	m_lpLineBase = dynamic_cast<LineBase *>(this);
+	if(!m_lpLineBase)
+		THROW_TEXT_ERROR(Vs_Err_lThisPointerNotDefined, Vs_Err_strThisPointerNotDefined, "m_lpLineBase, " + m_lpThisAB->Name());
 }
 
 void VsLinearHillMuscle::CreateParts()

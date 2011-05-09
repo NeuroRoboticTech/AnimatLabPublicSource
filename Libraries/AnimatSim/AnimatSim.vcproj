@@ -320,11 +320,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\IPhysicsBase.cpp"
+				RelativePath=".\IPhysicsBody.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\IPhysicsBody.cpp"
+				RelativePath=".\IPhysicsMovableItem.cpp"
 				>
 			</File>
 			<File
@@ -634,11 +634,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\IPhysicsBase.h"
+				RelativePath=".\IPhysicsBody.h"
 				>
 			</File>
 			<File
-				RelativePath=".\IPhysicsBody.h"
+				RelativePath=".\IPhysicsMovableItem.h"
 				>
 			</File>
 			<File

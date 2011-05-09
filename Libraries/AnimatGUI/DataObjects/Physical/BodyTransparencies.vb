@@ -182,6 +182,13 @@ Namespace DataObjects.Physical
                     m_fltRecFieldTrans = 50
                     m_fltSimTrans = 100
                 End If
+            ElseIf Util.IsTypeOf(m_doParent.GetType, GetType(PhysicalStructure), False) Then
+
+                m_fltGraphicsTrans = 50
+                m_fltCollisionsTrans = 50
+                m_fltJointsTrans = 50
+                m_fltRecFieldTrans = 50
+                m_fltSimTrans = 100
             End If
 
         End Sub

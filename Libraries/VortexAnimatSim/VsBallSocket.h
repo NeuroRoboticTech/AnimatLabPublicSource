@@ -34,7 +34,6 @@ namespace VortexAnimatSim
 
 				virtual void SetupPhysics();
 				virtual void DeletePhysics();
-				virtual void ResetGraphicsAndPhysics();
 
 			public:
 				VsBallSocket();

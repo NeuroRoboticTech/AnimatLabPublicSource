@@ -18,18 +18,14 @@ namespace VortexAnimatSim
 
 		protected:
 			Vx::VxAssembly *m_lpAssembly;
-			osg::ref_ptr<osg::MatrixTransform> m_osgMT;
 
 		public:
 			VsOrganism();
 			virtual ~VsOrganism();
 
 			virtual void *Assembly() {return (void *)m_lpAssembly;};
-			virtual void *GetMatrixPointer() {return m_osgMT.get();};
 
-			virtual void Initialize();
 			virtual void ResetSimulation();
-			void AddOSGNode(osg::ref_ptr<osg::Group> grpScene);
 		};
 
 	}			// Environment

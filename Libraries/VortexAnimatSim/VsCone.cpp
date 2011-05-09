@@ -3,9 +3,12 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
+#include "VsJoint.h"
 #include "VsRigidBody.h"
 #include "VsCone.h"
+#include "VsStructure.h"
 #include "VsSimulator.h"
 #include "VsOsgUserData.h"
 #include "VsOsgUserDataVisitor.h"
@@ -24,9 +27,7 @@ namespace VortexAnimatSim
 
 VsCone::VsCone()
 {
-	m_lpThis = this;
-	m_lpThisBody = this;
-	PhysicsBody(this);
+	SetThisPointers();
 }
 
 VsCone::~VsCone()
@@ -51,7 +52,7 @@ void VsCone::CreateParts()
 	m_fltYArea = 2*m_fltLowerRadius*m_fltHeight;
 	m_fltZArea = 2*VX_PI*m_fltLowerRadius*m_fltLowerRadius;
 
-	VsRigidBody::CreateBody();
+	VsRigidBody::CreateItem();
 	Cone::CreateParts();
 	VsRigidBody::SetBody();
 }
@@ -72,7 +73,7 @@ void VsCone::Resize()
 	{
 		osg::Geode *osgGroup = dynamic_cast<osg::Geode *>(m_osgNode.get());
 		if(!osgGroup)
-			THROW_TEXT_ERROR(Vs_Err_lNodeNotGeode, Vs_Err_strNodeNotGeode, m_lpThis->Name());
+			THROW_TEXT_ERROR(Vs_Err_lNodeNotGeode, Vs_Err_strNodeNotGeode, m_lpThisAB->Name());
 
 		if(osgGroup && osgGroup->containsDrawable(m_osgGeometry.get()))
 			osgGroup->removeDrawable(m_osgGeometry.get());
@@ -81,7 +82,7 @@ void VsCone::Resize()
 
 		//Create a new box geometry with the new sizes.
 		m_osgGeometry = CreateConeGeometry(m_fltHeight, m_fltUpperRadius, m_fltLowerRadius, m_iSides, true, true, true);
-		m_osgGeometry->setName(m_lpThis->Name() + "_Geometry");
+		m_osgGeometry->setName(m_lpThisAB->Name() + "_Geometry");
 
 		//Add it to the geode.
 		osgGroup->addDrawable(m_osgGeometry.get());
@@ -105,7 +106,7 @@ void VsCone::Resize()
 
 		int iMaterialID = m_lpSim->GetMaterialID(MaterialID());
 		m_vxGeometry = VxConvexMesh::createFromNode(m_osgNode.get());
-		Vx::VxCollisionGeometry *vxCollisionGeometry = m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisBody->Density());
+		Vx::VxCollisionGeometry *vxCollisionGeometry = m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density());
 
 		GetBaseValues();
 	}

@@ -3,15 +3,16 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
+#include "VsMovableItem.h"
 #include "VsBody.h"
 #include "VsJoint.h"
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
+#include "VsStructure.h"
 #include "VsSimulator.h"
 #include "VsOsgUserData.h"
 #include "VsOsgUserDataVisitor.h"
 #include "VsDragger.h"
-
 
 namespace VortexAnimatSim
 {
@@ -30,6 +31,17 @@ VsJoint::VsJoint()
 
 VsJoint::~VsJoint()
 {
+}
+
+void VsJoint::SetThisPointers()
+{
+	VsBody::SetThisPointers();
+
+	m_lpThisJoint = dynamic_cast<Joint *>(this);
+	if(!m_lpThisJoint)
+		THROW_TEXT_ERROR(Vs_Err_lThisPointerNotDefined, Vs_Err_strThisPointerNotDefined, "m_lpThisJoint, " + m_lpThisAB->Name());
+
+	m_lpThisJoint->PhysicsBody(this);
 }
 
 VxVector3 VsJoint::NormalizeAxis(CStdFPoint vLocalRot)
@@ -51,14 +63,14 @@ void VsJoint::UpdatePosition()
 	Vx::VxReal3 vPos;
 	m_vxJoint->getPartAttachmentPosition(0, vPos);
 
-	m_lpThis->AbsolutePosition(vPos[0], vPos[0], vPos[0]);
+	m_lpThisMI->AbsolutePosition(vPos[0], vPos[0], vPos[0]);
 }
 
 void VsJoint::Physics_CollectData()
 {
-	if(m_lpThis && m_vxJoint)
+	if(m_lpThisJoint && m_vxJoint)
 	{
-		VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThis->Parent());
+		VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisJoint->Parent());
 		if(!lpVsParent)
 			THROW_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody);
 
@@ -75,8 +87,8 @@ void VsJoint::Physics_CollectData()
 			}
 			else
 			{
-				float fltDistanceUnits = m_lpThis->GetSimulator()->DistanceUnits();
-				float fltMassUnits = m_lpThis->GetSimulator()->MassUnits();
+				float fltDistanceUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
+				float fltMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
 
 				m_lpThisJoint->JointPosition(m_vxJoint->getCoordinateCurrentPosition (m_iCoordID) * fltDistanceUnits); 
 				m_lpThisJoint->JointVelocity(m_vxJoint->getCoordinateVelocity(m_iCoordID) * fltDistanceUnits);
@@ -86,17 +98,9 @@ void VsJoint::Physics_CollectData()
 	}
 }
 
-float *VsJoint::Physics_GetDataPointer(string strDataType)
-{
-	string strType = Std_CheckString(strDataType);
-	Joint *lpBody = dynamic_cast<Joint *>(this);
-
-	return NULL;
-}
-
 osg::Group *VsJoint::ParentOSG()
 {
-	RigidBody *lpParent = m_lpThis->Parent();
+	RigidBody *lpParent = m_lpThisJoint->Parent();
 	if(lpParent)
 	{
 		VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(lpParent);
@@ -123,7 +127,12 @@ void VsJoint::SetAlpha()
 	VsBody::SetAlpha();
 
 	if(m_osgDefaultBallMat.valid() && m_osgDefaultBallSS.valid())
-		SetMaterialAlpha(m_osgDefaultBallMat.get(), m_osgDefaultBallSS.get(), m_lpThis->Alpha());
+		SetMaterialAlpha(m_osgDefaultBallMat.get(), m_osgDefaultBallSS.get(), m_lpThisMI->Alpha());
+}
+
+void VsJoint::Physics_RotationChanged()
+{
+	Physics_ResetGraphicsAndPhysics();
 }
 
 /**
@@ -201,13 +210,13 @@ void VsJoint::SetupGraphics()
 
 		SetAlpha();
 		SetCulling();
-		SetVisible(m_lpThis->IsVisible());
+		SetVisible(m_lpThisMI->IsVisible());
 
 		//Add it to the scene graph.
 		m_osgParent->addChild(m_osgRoot.get());
 
 		//Set the position with the world coordinates.
-		m_lpThis->AbsolutePosition(VsBody::GetOSGWorldCoords());
+		UpdateAbsolutePosition();
 
 		//We need to set the UserData on the OSG side so we can do picking.
 		//We need to use a node visitor to set the user data for all drawable nodes in all geodes for the group.
@@ -249,7 +258,7 @@ void VsJoint::UpdatePositionAndRotationFromMatrix()
 
 void VsJoint::Physics_UpdateMatrix()
 {
-	LocalMatrix(SetupMatrix(m_lpThis->Position(), m_lpThis->Rotation()));
+	LocalMatrix(SetupMatrix(m_lpThisMI->Position(), m_lpThisMI->Rotation()));
 	m_osgMT->setMatrix(m_osgLocalMatrix);
 	m_osgDragger->SetupMatrix();
 
@@ -259,9 +268,7 @@ void VsJoint::Physics_UpdateMatrix()
 		ChildOffsetMatrix(lpVsChild->LocalMatrix());
 
 	//If we are here then we did not have a physics component, just and OSG one.
-	CStdFPoint vPos = VsBody::GetOSGWorldCoords();
-	vPos.ClearNearZero();
-	m_lpThis->AbsolutePosition(vPos.x, vPos.y, vPos.z);
+	UpdateAbsolutePosition();
 }
 
 void VsJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName)
