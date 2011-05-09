@@ -249,7 +249,11 @@ void MovableItem::AbsolutePosition(CStdFPoint &oPoint)
 \param	fltY	The y coordinate. 
 \param	fltZ	The z coordinate. 
 **/
-void MovableItem::AbsolutePosition(float fltX, float fltY, float fltZ) {m_oAbsPosition.Set(fltX, fltY, fltZ);}
+void MovableItem::AbsolutePosition(float fltX, float fltY, float fltZ) 
+{
+	m_oAbsPosition.Set(fltX, fltY, fltZ);
+	m_oReportWorldPosition = m_oAbsPosition * m_lpMovableSim->DistanceUnits();
+}
 
 /**
 \brief	Gets the current position of this part. 

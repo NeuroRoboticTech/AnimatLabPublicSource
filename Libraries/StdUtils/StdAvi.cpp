@@ -1,3 +1,9 @@
+/**
+\file	StdAvi.cpp
+
+\brief	Implements the standard avi class.
+**/
+
 /*   CStdAvi.cpp
 
    A C++ class for creating AVI files
@@ -33,6 +39,9 @@
 #include <vfw.h>
 #include "StdBitmap.h"
 #include "StdAvi.h"
+
+namespace StdUtils
+{
 
 //#include "win32_LastError.h"
 
@@ -491,6 +500,9 @@ unsigned int FormatAviMessage(HRESULT code, char *buf,unsigned int len) {
   strncpy(buf,msg,n); buf[n]=0;
   return mlen;
 }
+
+}				//StdUtils
+
 
 
 

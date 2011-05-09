@@ -608,7 +608,7 @@ objects.
 
 \param [in,out]	oXml	The CStdXml xml data packet to load. 
 **/
-void AnimatBase::Load(CStdXml &oXml)
+void AnimatBase::Load(StdUtils::CStdXml &oXml)
 {
 	VerifySystemPointers();
 

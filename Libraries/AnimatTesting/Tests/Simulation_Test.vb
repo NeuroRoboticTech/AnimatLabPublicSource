@@ -31,6 +31,13 @@ Namespace Tests
 
         End Sub
 
+        <Test()> _
+       Public Sub CompareTest()
+
+            CompareSimResults("Test_", 0.1, "C:\Projects\AnimatLabSDK\Experiments\nUnitTest\nUnitTest.aproj")
+
+        End Sub
+
 
     End Class
 

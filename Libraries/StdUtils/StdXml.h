@@ -1,17 +1,25 @@
-// StdXml.h: interface for the CStdXml class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	StdXml.h
 
-#if !defined(AFX_STDXML_H__FB208131_9BF4_4780_9326_20152582F9F0__INCLUDED_)
-#define AFX_STDXML_H__FB208131_9BF4_4780_9326_20152582F9F0__INCLUDED_
+\brief	Declares the standard xml class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
+namespace StdUtils
+{
+/**
+\brief	A standard xml manipulation class.
+
+\details This class is used to load, save, and manipulate xml data packets.
+
+\author	dcofer
+\date	5/4/2011
+**/
 class STD_UTILS_PORT CStdXml : public CMarkupSTL
 {
 protected:
+	/// Stack of tags
 	stack<string> m_aryTagStack;
 
 	virtual void ClearTagStack();
@@ -110,4 +118,4 @@ public:
 	virtual void Save(string strFilename);
 };
 
-#endif // !defined(AFX_STDXML_H__FB208131_9BF4_4780_9326_20152582F9F0__INCLUDED_)
+}				//StdUtils

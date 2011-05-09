@@ -1,3 +1,11 @@
+/**
+\file	StdUtilFunctions.h
+
+\brief	Declares the standard utility functions class.
+**/
+
+namespace StdUtils
+{
 
 //#define STD_LOG_DB_ON 
 #define STD_LOG_DB_DSN ""
@@ -309,4 +317,4 @@ typedef float StdVector3[3];
 // Vector Functions
 //***************************************************************************************************************
 
-
+}				//StdUtils

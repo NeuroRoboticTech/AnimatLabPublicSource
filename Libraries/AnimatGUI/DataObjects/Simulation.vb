@@ -325,6 +325,15 @@ Namespace DataObjects
             Return doObject
         End Function
 
+        Public Overridable Overloads Function CreateForm(ByVal strClassType As String, _
+                                                        ByVal doParent As AnimatGUI.Framework.DataObject) As Forms.AnimatForm
+
+            Dim aryClassName() As String = Split(strClassType, ".")
+            Dim strAssembly As String = aryClassName(0)
+            Dim frmObject As Forms.AnimatForm = DirectCast(Util.LoadClass(strAssembly, strClassType, doParent), Forms.AnimatForm)
+            Return frmObject
+        End Function
+
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node)
 
             Util.Application.WorkspaceImages.ImageList.ImageSize = New Size(25, 25)

@@ -27,6 +27,9 @@
 #include "stdafx.h"
 #include "StdBitmap.h"
 
+namespace StdUtils
+{
+
 /*! \page bmps_in_memory drawing on Bitmaps in Memory
  *
  *   If you want to use bitmaps in memory and draw upon them,
@@ -74,5 +77,5 @@ CStdBitmap::operator HBITMAP() const {
   return bitmap_;
 }
 
-
+}				//StdUtils
 

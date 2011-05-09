@@ -139,7 +139,7 @@ namespace AnimatSim
 #pragma endregion
 
 		virtual void VisualSelectionModeChanged(int iNewMode);
-		virtual void Load(CStdXml &oXml);
+		virtual void Load(StdUtils::CStdXml &oXml);
 	};
 
 }				//AnimatSim

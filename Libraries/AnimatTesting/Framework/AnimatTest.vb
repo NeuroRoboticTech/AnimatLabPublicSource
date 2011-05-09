@@ -88,7 +88,7 @@ Namespace Framework
         Public Overridable Sub RunSimulation(Optional ByVal strProject As String = "", Optional ByVal bCloseProject As Boolean = True)
 
             If strProject.Trim.Length > 0 Then
-                m_doApp.LoadProject("C:\Projects\AnimatLabSDK\Experiments\NewProject\NewProject.aproj")
+                m_doApp.LoadProject(strProject)
             End If
 
             m_doApp.ToggleSimulation()
@@ -102,6 +102,22 @@ Namespace Framework
                     Throw New System.Exception("Exeeded maximum simulation timeout period.")
                 End If
             End While
+
+            If bCloseProject Then
+                m_doApp.CloseProject(False)
+            End If
+
+        End Sub
+
+        Public Overridable Sub CompareSimResults(ByVal strTestFilePrefix As String, ByVal dblMaxError As Double, Optional ByVal strProject As String = "", Optional ByVal bCloseProject As Boolean = True)
+
+            RunSimulation(strProject, False)
+
+            'Now lets go through the open data windows and export their data.
+            m_doApp.ExportDataCharts(strTestFilePrefix)
+
+            'Now we need to compare the chart data and throw an error if any of it is outside of a certain threshold.
+            m_doApp.CompareExportedDataCharts(strTestFilePrefix, dblMaxError)
 
             If bCloseProject Then
                 m_doApp.CloseProject(False)

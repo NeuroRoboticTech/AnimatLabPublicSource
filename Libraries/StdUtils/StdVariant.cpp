@@ -1,13 +1,20 @@
-// StdVariant.cpp: implementation of the CStdVariant class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	StdVariant.cpp
+
+\brief	Implements the standard variant class.
+**/
 
 #include "stdafx.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+namespace StdUtils
+{
 
+/**
+\brief	Default constructor.
+
+\author	dcofer
+\date	5/4/2011
+**/
 CStdVariant::CStdVariant()
 {
 	m_bCreatedVar = false;
@@ -27,6 +34,12 @@ CStdVariant::CStdVariant()
 	m_lpString = NULL;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	5/4/2011
+**/
 CStdVariant::~CStdVariant()
 {
 
@@ -38,12 +51,34 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of CStdVariant\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Gets the variant type.
+
+\author	dcofer
+\date	5/4/2011
+
+\return	type.
+**/
 int CStdVariant::VariantType()
 {return m_iVariantType;}
 
+/**
+\brief	Gets the variant type name.
+
+\author	dcofer
+\date	5/4/2011
+
+\return	type.
+**/
 string CStdVariant::VariantTypeName()
 {return Std_ConstToVariantType(m_iVariantType);}
 
+/**
+\brief	Resets the variant data.
+
+\author	dcofer
+\date	5/4/2011
+**/
 void CStdVariant::Reset()
 {
 
@@ -80,6 +115,16 @@ void CStdVariant::Reset()
 	m_lpString = NULL;
 }
 
+/**
+\brief	Gets a short value.
+
+\author	dcofer
+\date	5/4/2011
+
+\param	bConvert	true to convert. 
+
+\return	The short value.
+**/
 short CStdVariant::GetShort(bool bConvert)
 {
 	if(!bConvert && (m_iVariantType!=StdVtShort) )
@@ -124,6 +169,14 @@ short CStdVariant::GetShort(bool bConvert)
 	return -1;
 }
 
+/**
+\brief	Gets the short pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\return	exception if it fails, else pointer to a value.
+**/
 short *CStdVariant::GetShortPtr()
 {
 	if(!m_lpShort || (m_iVariantType!=StdVtShort) )
@@ -131,6 +184,14 @@ short *CStdVariant::GetShortPtr()
 	return m_lpShort;
 }
 
+/**
+\brief	Sets the value.
+
+\author	dcofer
+\date	5/4/2011
+
+\param	Val	The value. 
+**/
 void CStdVariant::SetValue(short Val)
 {
 	Reset();
@@ -140,6 +201,14 @@ void CStdVariant::SetValue(short Val)
 	*m_lpShort = Val;
 }
 
+/**
+\brief	Sets a value pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\param [in,out]	lpVal	Pointer to a value. 
+**/
 void CStdVariant::SetPtr(short *lpVal)
 {
 	Reset();
@@ -148,8 +217,16 @@ void CStdVariant::SetPtr(short *lpVal)
 	m_bCreatedVar = false;
 }
 
+/**
+\brief	Gets a long value.
 
+\author	dcofer
+\date	5/4/2011
 
+\param	bConvert	true to convert. 
+
+\return	The long value.
+**/
 long CStdVariant::GetLong(bool bConvert)
 {
 	if(!bConvert && (m_iVariantType!=StdVtLong) )
@@ -194,6 +271,14 @@ long CStdVariant::GetLong(bool bConvert)
 	return -1;
 }
 
+/**
+\brief	Gets the long pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\return	exception if it fails, else pointer to a value.
+**/
 long *CStdVariant::GetLongPtr()
 {
 	if(!m_lpLong || (m_iVariantType!=StdVtLong) )
@@ -201,6 +286,14 @@ long *CStdVariant::GetLongPtr()
 	return m_lpLong;
 }
 
+/**
+\brief	Sets a value.
+
+\author	dcofer
+\date	5/4/2011
+
+\param	Val	The value. 
+**/
 void CStdVariant::SetValue(long Val)
 {
 	Reset();
@@ -210,6 +303,14 @@ void CStdVariant::SetValue(long Val)
 	*m_lpLong = Val;
 }
 
+/**
+\brief	Sets a pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\param [in,out]	lpVal	Pointer to a value. 
+**/
 void CStdVariant::SetPtr(long *lpVal)
 {
 	Reset();
@@ -218,8 +319,16 @@ void CStdVariant::SetPtr(long *lpVal)
 	m_bCreatedVar = false;
 }
 
+/**
+\brief	Gets a float.
 
+\author	dcofer
+\date	5/4/2011
 
+\param	bConvert	true to convert. 
+
+\return	The float.
+**/
 float CStdVariant::GetFloat(bool bConvert)
 {
 	if(!bConvert && (m_iVariantType!=StdVtFloat) )
@@ -264,6 +373,15 @@ float CStdVariant::GetFloat(bool bConvert)
 	return -1;
 }
 
+/**
+\brief	Gets the float pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\return	exception if it fails, else pointer to a value.
+
+**/
 float *CStdVariant::GetFloatPtr()
 {
 	if(!m_lpFloat || (m_iVariantType!=StdVtFloat) )
@@ -271,6 +389,14 @@ float *CStdVariant::GetFloatPtr()
 	return m_lpFloat;
 }
 
+/**
+\brief	Sets a value.
+
+\author	dcofer
+\date	5/4/2011
+
+\param	Val	The value. 
+**/
 void CStdVariant::SetValue(float Val)
 {
 	Reset();
@@ -280,6 +406,14 @@ void CStdVariant::SetValue(float Val)
 	*m_lpFloat = Val;
 }
 
+/**
+\brief	Sets a pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\param [in,out]	lpVal	Pointer to a value. 
+**/
 void CStdVariant::SetPtr(float *lpVal)
 {
 	Reset();
@@ -288,8 +422,16 @@ void CStdVariant::SetPtr(float *lpVal)
 	m_bCreatedVar = false;
 }
 
+/**
+\brief	Gets a double.
 
+\author	dcofer
+\date	5/4/2011
 
+\param	bConvert	true to convert. 
+
+\return	The double.
+**/
 double CStdVariant::GetDouble(bool bConvert)
 {
 	if(!bConvert && (m_iVariantType!=StdVtDouble) )
@@ -334,6 +476,15 @@ double CStdVariant::GetDouble(bool bConvert)
 	return -1;
 }
 
+/**
+\brief	Gets the double pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\return	exception if it fails, else pointer to a value.
+
+**/
 double *CStdVariant::GetDoublePtr()
 {
 	if(!m_lpDouble || (m_iVariantType!=StdVtDouble) )
@@ -341,6 +492,14 @@ double *CStdVariant::GetDoublePtr()
 	return m_lpDouble;
 }
 
+/**
+\brief	Sets a value.
+
+\author	dcofer
+\date	5/4/2011
+
+\param	Val	The value. 
+**/
 void CStdVariant::SetValue(double Val)
 {
 	Reset();
@@ -350,6 +509,14 @@ void CStdVariant::SetValue(double Val)
 	*m_lpDouble = Val;
 }
 
+/**
+\brief	Sets a pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\param [in,out]	lpVal	Pointer to a value. 
+**/
 void CStdVariant::SetPtr(double *lpVal)
 {
 	Reset();
@@ -358,8 +525,16 @@ void CStdVariant::SetPtr(double *lpVal)
 	m_bCreatedVar = false;
 }
 
+/**
+\brief	Gets a bool.
 
+\author	dcofer
+\date	5/4/2011
 
+\param	bConvert	true to convert. 
+
+\return	bool value.
+**/
 bool CStdVariant::GetBool(bool bConvert)
 {
 	if(!bConvert && (m_iVariantType!=StdVtBool) )
@@ -404,6 +579,15 @@ bool CStdVariant::GetBool(bool bConvert)
 	return false;
 }
 
+/**
+\brief	Gets the bool pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\return	exception if it fails, else pointer to a value.
+
+**/
 bool *CStdVariant::GetBoolPtr()
 {
 	if(!m_lpBool || (m_iVariantType!=StdVtBool) )
@@ -411,6 +595,14 @@ bool *CStdVariant::GetBoolPtr()
 	return m_lpBool;
 }
 
+/**
+\brief	Sets a value.
+
+\author	dcofer
+\date	5/4/2011
+
+\param	Val	true to value. 
+**/
 void CStdVariant::SetValue(bool Val)
 {
 	Reset();
@@ -420,6 +612,14 @@ void CStdVariant::SetValue(bool Val)
 	*m_lpBool = Val;
 }
 
+/**
+\brief	Sets a pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\param [in,out]	lpVal	Pointer to a value. 
+**/
 void CStdVariant::SetPtr(bool *lpVal)
 {
 	Reset();
@@ -428,8 +628,16 @@ void CStdVariant::SetPtr(bool *lpVal)
 	m_bCreatedVar = false;
 }
 
+/**
+\brief	Gets a character.
 
+\author	dcofer
+\date	5/4/2011
 
+\param	bConvert	true to convert. 
+
+\return	The character.
+**/
 char CStdVariant::GetChar(bool bConvert)
 {
 	if(!bConvert && (m_iVariantType!=StdVtDouble) )
@@ -477,6 +685,15 @@ char CStdVariant::GetChar(bool bConvert)
 	return -1;
 }
 
+/**
+\brief	Gets the character pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\return	exception if it fails, else pointer to a value.
+
+**/
 char *CStdVariant::GetCharPtr()
 {
 	if(!m_lpChar || (m_iVariantType!=StdVtChar) )
@@ -484,6 +701,14 @@ char *CStdVariant::GetCharPtr()
 	return m_lpChar;
 }
 
+/**
+\brief	Sets a value.
+
+\author	dcofer
+\date	5/4/2011
+
+\param	Val	The value. 
+**/
 void CStdVariant::SetValue(char Val)
 {
 	Reset();
@@ -493,6 +718,14 @@ void CStdVariant::SetValue(char Val)
 	*m_lpChar = Val;
 }
 
+/**
+\brief	Sets a pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\param [in,out]	lpVal	Pointer to a value. 
+**/
 void CStdVariant::SetPtr(char *lpVal)
 {
 	Reset();
@@ -501,8 +734,16 @@ void CStdVariant::SetPtr(char *lpVal)
 	m_bCreatedVar = false;
 }
 
+/**
+\brief	Gets an unsigned character.
 
+\author	dcofer
+\date	5/4/2011
 
+\param	bConvert	true to convert. 
+
+\return	The unsigned character.
+**/
 unsigned char CStdVariant::GetUChar(bool bConvert)
 {
 	if(!bConvert && (m_iVariantType!=StdVtUChar) )
@@ -547,6 +788,15 @@ unsigned char CStdVariant::GetUChar(bool bConvert)
 	return -1;
 }
 
+/**
+\brief	Gets the unsigned character pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\return	exception if it fails, else pointer to a value.
+
+**/
 unsigned char *CStdVariant::GetUCharPtr()
 {
 	if(!m_lpUChar || (m_iVariantType!=StdVtUChar) )
@@ -554,6 +804,14 @@ unsigned char *CStdVariant::GetUCharPtr()
 	return m_lpUChar;
 }
 
+/**
+\brief	Sets a value.
+
+\author	dcofer
+\date	5/4/2011
+
+\param	Val	The value. 
+**/
 void CStdVariant::SetValue(unsigned char Val)
 {
 	Reset();
@@ -563,6 +821,14 @@ void CStdVariant::SetValue(unsigned char Val)
 	*m_lpUChar = Val;
 }
 
+/**
+\brief	Sets a pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\param [in,out]	lpVal	Pointer to a value. 
+**/
 void CStdVariant::SetPtr(unsigned char *lpVal)
 {
 	Reset();
@@ -571,8 +837,16 @@ void CStdVariant::SetPtr(unsigned char *lpVal)
 	m_bCreatedVar = false;
 }
 
+/**
+\brief	Gets an unsigned short.
 
+\author	dcofer
+\date	5/4/2011
 
+\param	bConvert	true to convert. 
+
+\return	The unsigned short.
+**/
 unsigned short CStdVariant::GetUShort(bool bConvert)
 {
 	if(!bConvert && (m_iVariantType!=StdVtUShort) )
@@ -617,6 +891,15 @@ unsigned short CStdVariant::GetUShort(bool bConvert)
 	return -1;
 }
 
+/**
+\brief	Gets the unsigned short pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\return	exception if it fails, else pointer to a value.
+
+**/
 unsigned short *CStdVariant::GetUShortPtr()
 {
 	if(!m_lpUShort || (m_iVariantType!=StdVtUShort) )
@@ -624,6 +907,14 @@ unsigned short *CStdVariant::GetUShortPtr()
 	return m_lpUShort;
 }
 
+/**
+\brief	Sets a value.
+
+\author	dcofer
+\date	5/4/2011
+
+\param	Val	The value. 
+**/
 void CStdVariant::SetValue(unsigned short Val)
 {
 	Reset();
@@ -633,6 +924,14 @@ void CStdVariant::SetValue(unsigned short Val)
 	*m_lpUShort = Val;
 }
 
+/**
+\brief	Sets a pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\param [in,out]	lpVal	Pointer to a value. 
+**/
 void CStdVariant::SetPtr(unsigned short *lpVal)
 {
 	Reset();
@@ -641,8 +940,16 @@ void CStdVariant::SetPtr(unsigned short *lpVal)
 	m_bCreatedVar = false;
 }
 
+/**
+\brief	Gets an unsigned long.
 
+\author	dcofer
+\date	5/4/2011
 
+\param	bConvert	true to convert. 
+
+\return	The unsinged long.
+**/
 unsigned long CStdVariant::GetULong(bool bConvert)
 {
 	if(!bConvert && (m_iVariantType!=StdVtULong) )
@@ -687,6 +994,14 @@ unsigned long CStdVariant::GetULong(bool bConvert)
 	return -1;
 }
 
+/**
+\brief	Gets the unsigned long pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\return	exception if it fails, else pointer to a value.
+**/
 unsigned long *CStdVariant::GetULongPtr()
 {
 	if(!m_lpULong || (m_iVariantType!=StdVtULong) )
@@ -694,6 +1009,14 @@ unsigned long *CStdVariant::GetULongPtr()
 	return m_lpULong;
 }
 
+/**
+\brief	Sets a value.
+
+\author	dcofer
+\date	5/4/2011
+
+\param	Val	The value. 
+**/
 void CStdVariant::SetValue(unsigned long Val)
 {
 	Reset();
@@ -703,6 +1026,14 @@ void CStdVariant::SetValue(unsigned long Val)
 	*m_lpULong = Val;
 }
 
+/**
+\brief	Sets a pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\param [in,out]	lpVal	Pointer to a value. 
+**/
 void CStdVariant::SetPtr(unsigned long *lpVal)
 {
 	Reset();
@@ -711,8 +1042,16 @@ void CStdVariant::SetPtr(unsigned long *lpVal)
 	m_bCreatedVar = false;
 }
 
+/**
+\brief	Gets an int.
 
+\author	dcofer
+\date	5/4/2011
 
+\param	bConvert	true to convert. 
+
+\return	The int.
+**/
 int CStdVariant::GetInt(bool bConvert)
 {
 	if(!bConvert && (m_iVariantType!=StdVtInt) )
@@ -757,6 +1096,14 @@ int CStdVariant::GetInt(bool bConvert)
 	return -1;
 }
 
+/**
+\brief	Gets the int pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\return	exception if it fails, else pointer to a value.
+**/
 int *CStdVariant::GetIntPtr()
 {
 	if(!m_lpInt || (m_iVariantType!=StdVtInt) )
@@ -764,6 +1111,14 @@ int *CStdVariant::GetIntPtr()
 	return m_lpInt;
 }
 
+/**
+\brief	Sets a value.
+
+\author	dcofer
+\date	5/4/2011
+
+\param	Val	The value. 
+**/
 void CStdVariant::SetValue(int Val)
 {
 	Reset();
@@ -773,6 +1128,14 @@ void CStdVariant::SetValue(int Val)
 	*m_lpInt = Val;
 }
 
+/**
+\brief	Sets a pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\param [in,out]	lpVal	Pointer to a value. 
+**/
 void CStdVariant::SetPtr(int *lpVal)
 {
 	Reset();
@@ -781,8 +1144,16 @@ void CStdVariant::SetPtr(int *lpVal)
 	m_bCreatedVar = false;
 }
 
+/**
+\brief	Gets an unsigned int.
 
+\author	dcofer
+\date	5/4/2011
 
+\param	bConvert	true to convert. 
+
+\return	The unsigned int.
+**/
 unsigned int CStdVariant::GetUInt(bool bConvert)
 {
 	if(!bConvert && (m_iVariantType!=StdVtUInt) )
@@ -827,6 +1198,14 @@ unsigned int CStdVariant::GetUInt(bool bConvert)
 	return -1;
 }
 
+/**
+\brief	Gets the unsigned int pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\return	exception if it fails, else pointer to a value.
+**/
 unsigned int *CStdVariant::GetUIntPtr()
 {
 	if(!m_lpUInt || (m_iVariantType!=StdVtUInt) )
@@ -834,6 +1213,14 @@ unsigned int *CStdVariant::GetUIntPtr()
 	return m_lpUInt;
 }
 
+/**
+\brief	Sets a value.
+
+\author	dcofer
+\date	5/4/2011
+
+\param	Val	The value. 
+**/
 void CStdVariant::SetValue(unsigned int Val)
 {
 	Reset();
@@ -843,6 +1230,14 @@ void CStdVariant::SetValue(unsigned int Val)
 	*m_lpUInt = Val;
 }
 
+/**
+\brief	Sets a pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\param [in,out]	lpVal	Pointer to a value. 
+**/
 void CStdVariant::SetPtr(unsigned int *lpVal)
 {
 	Reset();
@@ -851,7 +1246,14 @@ void CStdVariant::SetPtr(unsigned int *lpVal)
 	m_bCreatedVar = false;
 }
 
+/**
+\brief	Gets a string version of the value.
 
+\author	dcofer
+\date	5/4/2011
+
+\return	The numeric string.
+**/
 string CStdVariant::GetNumericString()
 {
 	switch (m_iVariantType)
@@ -891,7 +1293,16 @@ string CStdVariant::GetNumericString()
 	return "";
 }
 
+/**
+\brief	Gets a string version of the value.
 
+\author	dcofer
+\date	5/4/2011
+
+\param	bConvert	true to convert. 
+
+\return	The string.
+**/
 string CStdVariant::GetString(bool bConvert)
 {
 	if(!bConvert && (m_iVariantType!=StdVtString) )
@@ -936,6 +1347,14 @@ string CStdVariant::GetString(bool bConvert)
 	return "";
 }
 
+/**
+\brief	Gets the string pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\return	exception if it fails, else pointer to a value.
+**/
 string *CStdVariant::GetStringPtr()
 {
 	if(!m_lpString || (m_iVariantType!=StdVtString) )
@@ -943,6 +1362,14 @@ string *CStdVariant::GetStringPtr()
 	return m_lpString;
 }
 
+/**
+\brief	Sets a value.
+
+\author	dcofer
+\date	5/4/2011
+
+\param	Val	The value. 
+**/
 void CStdVariant::SetValue(string Val)
 {
 	Reset();
@@ -952,6 +1379,14 @@ void CStdVariant::SetValue(string Val)
 	*m_lpString = Val;
 }
 
+/**
+\brief	Sets a pointer.
+
+\author	dcofer
+\date	5/4/2011
+
+\param [in,out]	lpVal	Pointer to a value. 
+**/
 void CStdVariant::SetPtr(string *lpVal)
 {
 	Reset();
@@ -960,7 +1395,14 @@ void CStdVariant::SetPtr(string *lpVal)
 	m_bCreatedVar = false;
 }
 
+/**
+\brief	Copies the given variant.
 
+\author	dcofer
+\date	5/4/2011
+
+\param [in,out]	oVar	The variable. 
+**/
 void CStdVariant::Copy(CStdVariant &oVar)
 {
 	switch (oVar.m_iVariantType)
@@ -1010,6 +1452,14 @@ void CStdVariant::Copy(CStdVariant &oVar)
 	}
 }
 
+/**
+\brief	= casting operator.
+
+\author	dcofer
+\date	5/4/2011
+
+\param [in,out]	oVar	The variable. 
+**/
 void CStdVariant::operator=(CStdVariant &oVar)
 {
 	if(oVar.m_bCreatedVar)
@@ -1080,7 +1530,14 @@ void CStdVariant::operator=(CStdVariant &oVar)
 
 }
 
+/**
+\brief	Makes a deep copy of this object.
 
+\author	dcofer
+\date	5/4/2011
+
+\return	Pointer to the new object.
+**/
 CStdSerialize *CStdVariant::Clone()
 {
 	CStdVariant *lpVar=NULL;
@@ -1105,7 +1562,14 @@ catch(...)
 }
 }
 
+/**
+\brief	Traces this object to an output stream.
 
+\author	dcofer
+\date	5/4/2011
+
+\param [in,out]	oOs	The output stream. 
+**/
 void CStdVariant::Trace(ostream &oOs)
 {
 	oOs << "(VT: " << Std_ConstToVariantType(m_iVariantType) << "\tVal: ";
@@ -1160,6 +1624,15 @@ void CStdVariant::Trace(ostream &oOs)
 }
 
 //CStdSerialize overloads
+
+/**
+\brief	Loads the variant.
+
+\author	dcofer
+\date	5/4/2011
+
+\param [in,out]	oXml	The CStdXml & to load. 
+**/
 void CStdVariant::Load(CStdXml &oXml)
 {
 	short sVal;
@@ -1253,6 +1726,14 @@ void CStdVariant::Load(CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf Variant Element
 }
 
+/**
+\brief	Saves the variant.
+
+\author	dcofer
+\date	5/4/2011
+
+\param [in,out]	oXml	The CStdXml & to save. 
+**/
 void CStdVariant::Save(CStdXml &oXml)
 {
 	string strEmpty;
@@ -1325,3 +1806,4 @@ void CStdVariant::Save(CStdXml &oXml)
 	oXml.OutOfElem(); //OutOf Variant Element
 }
 
+}				//StdUtils

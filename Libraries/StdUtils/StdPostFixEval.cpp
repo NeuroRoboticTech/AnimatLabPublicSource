@@ -1,38 +1,80 @@
-// StdPostFixEval.cpp: implementation of the CStdPostFixEval class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	StdPostFixEval.cpp
+
+\brief	Implements the standard post fix equation evaluation class.
+**/
 
 #include "stdafx.h"
 
+namespace StdUtils
+{
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\brief	Default constructor.
 
+\author	dcofer
+\date	5/3/2011
+**/
 CStdPostFixEval::CStdPostFixEval()
 {
 	m_dblSolution = 0.0;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	5/3/2011
+**/
 CStdPostFixEval::~CStdPostFixEval()
 {
 
 }
 
+/**
+\brief	Gets the solution.
 
+\author	dcofer
+\date	5/3/2011
+
+\return	solution of the equation.
+**/
 double CStdPostFixEval::Solution()
 {return m_dblSolution;}
 
+/**
+\brief	Gets the post-fix equation.
+
+\author	dcofer
+\date	5/3/2011
+
+\return	post-fix equation.
+**/
 string CStdPostFixEval::Equation()
 {return m_strEquation;}
 
+/**
+\brief	Sets the post-fix Equation.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	strVal	The new equation. 
+**/
 void CStdPostFixEval::Equation(string strVal)
 {
 	SavePostFixInArray(strVal);
 	m_strEquation = strVal;
 }
 
+/**
+\brief	Adds a variable. 
 
+\author	dcofer
+\date	5/3/2011
+
+\param	strVarName	Name of the variable. 
+**/
 void CStdPostFixEval::AddVariable(string strVarName)
 {
 	CStdVariable *lpVar = FindVariable(strVarName);
@@ -44,6 +86,15 @@ void CStdPostFixEval::AddVariable(string strVarName)
 	m_aryVariables.Add(lpVar);
 }
 
+/**
+\brief	Sets the value of a variable.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	strVarName	Name of the variable. 
+\param	dblVal	  	The new value. 
+**/
 void CStdPostFixEval::SetVariable(string strVarName, double dblVal)
 {
 	CStdVariable *lpVar = FindVariable(strVarName);
@@ -53,6 +104,16 @@ void CStdPostFixEval::SetVariable(string strVarName, double dblVal)
 	lpVar->m_dblValue = dblVal;
 }
 
+/**
+\brief	Searches for the a variable with the specified name.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	strVarName	Name of the variable. 
+
+\return	Pointer to found variable.
+**/
 CStdVariable *CStdPostFixEval::FindVariable(string strVarName)
 {
 	int iSize = m_aryVariables.GetSize(), i;
@@ -67,7 +128,14 @@ CStdVariable *CStdPostFixEval::FindVariable(string strVarName)
 	return NULL;
 }
 
+/**
+\brief	Fill in variables.
 
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	aryPostFix	The post-fix array. 
+**/
 void CStdPostFixEval::FillInVariables(CStdArray<string> &aryPostFix)
 {
 	int iSize=aryPostFix.GetSize(), i;
@@ -85,7 +153,14 @@ void CStdPostFixEval::FillInVariables(CStdArray<string> &aryPostFix)
 	}
 }
 
+/**
+\brief	Solves the equation using the defined variable values.
 
+\author	dcofer
+\date	5/3/2011
+
+\return	solution to the equation.
+**/
 double CStdPostFixEval::Solve()
 {
 	CStdArray<string> aryPostFix;
@@ -207,8 +282,14 @@ double CStdPostFixEval::Solve()
 	return dblVal;
 }
 
+/**
+\brief	Saves a post fix in array.
 
+\author	dcofer
+\date	5/3/2011
 
+\param [in,out]	strEqu	The equation. 
+**/
 void CStdPostFixEval::SavePostFixInArray(string &strEqu)
 {
 	long lSize = strEqu.length();
@@ -234,8 +315,16 @@ void CStdPostFixEval::SavePostFixInArray(string &strEqu)
 
 }
 
+/**
+\brief	Gets the parameters.
 
+\author	dcofer
+\date	5/3/2011
 
+\param [in,out]	dblLeft 	The double left. 
+\param [in,out]	dblRight	The double right. 
+\param	iNumParams			Number of parameters. 
+**/
 void CStdPostFixEval::GetParams(double &dblLeft, double &dblRight, int iNumParams)
 {
 	dblLeft = 0.0;
@@ -253,3 +342,4 @@ void CStdPostFixEval::GetParams(double &dblLeft, double &dblRight, int iNumParam
 
 }
 
+}				//StdUtils

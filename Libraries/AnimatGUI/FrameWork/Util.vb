@@ -1129,6 +1129,49 @@ Namespace Framework
             End Try
         End Function
 
+        Public Shared Sub ReadCSVFileToArray(ByVal strFilename As String, ByRef aryColumns() As String, ByRef aryData(,) As Double)
+            Dim num_rows As Integer
+            Dim num_cols As Integer
+            Dim iCol As Integer
+            Dim iRow As Integer
+
+            ' Load the file.
+            'Check if file exist
+            If File.Exists(strfilename) Then
+                Dim tmpstream As StreamReader = File.OpenText(strFilename)
+                Dim aryLines() As String
+                Dim aryLine() As String
+
+                'Load content of file to strLines array
+                Dim strData As String = tmpstream.ReadToEnd()
+                aryLines = strData.Split(vbLf.ToCharArray())
+
+                If (aryLines.Length < 2) Then
+                    Throw New System.Exception("No data in file: " & strFilename)
+                End If
+
+                aryColumns = aryLines(0).Split(vbTab.ToCharArray)
+                ReDim Preserve aryColumns(aryColumns.Length - 2)
+
+                'Remove one for the header and one to make the index work.
+                num_rows = aryLines.Length - 1 - 1
+                num_cols = aryColumns.Length - 1
+
+                ReDim aryData(num_cols, num_rows)
+
+                ' Copy the data into the array. Skip the header row.
+                For iRow = 1 To num_rows
+                    aryLine = aryLines(iRow).Split(vbTab.ToCharArray)
+
+                    For iCol = 0 To num_cols
+                        aryData(iCol, iRow) = CDbl(aryLine(iCol))
+                    Next
+                Next
+
+            End If
+
+        End Sub
+
         '    Public Function IntersectLineRectangle(ByVal a1 As Point, ByVal a2 As Point, ByVal topRight As Point, ByVal bottomLeft As Point) As Boolean
 
         '        if(IntersectLineLine(min, topRight, a1, a2);

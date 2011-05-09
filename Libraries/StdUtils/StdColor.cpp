@@ -1,4 +1,13 @@
+/**
+\file	StdColor.cpp
+
+\brief	Implements the standard color class.
+**/
+
 #include "StdAfx.h"
+
+namespace StdUtils
+{
 
 
 CStdColor::CStdColor()
@@ -10,6 +19,7 @@ CStdColor::CStdColor()
 	m_fltMaxRange = 1;
 }
 
+
 CStdColor::CStdColor(float fltMaxRange)
 {
 	m_fltR = 0;
@@ -19,17 +29,127 @@ CStdColor::CStdColor(float fltMaxRange)
 	m_fltMaxRange = fltMaxRange;
 }
 
-CStdColor::CStdColor(float valx, float valy, float valz, float vala, float fltMaxRange)
+CStdColor::CStdColor(float valr, float valg, float valb, float vala, float fltMaxRange)
 {
 	m_fltMaxRange = fltMaxRange;
 
-	r(valx);
-	g(valy);
-	b(valz);
+	r(valr);
+	g(valg);
+	b(valb);
 	a(vala);
 }
 
+/**
+\brief	Sets the red value of the color
 
+\author	dcofer
+\date	5/3/2011
+
+\param	fltR	   	The new red value. 
+\param	bThrowError	true to throw error if there is a problem. 
+**/
+void CStdColor::r(float fltR, BOOL bThrowError)
+{
+	if(Std_InValidRange((float) 0, (float) 1, fltR, bThrowError, "R"))
+		m_fltR = fltR;
+}
+
+/**
+\brief	Gets the red value of the color
+
+\author	dcofer
+\date	5/3/2011
+
+\return	color value.
+**/
+float CStdColor::r() {return m_fltR;}
+
+/**
+\brief	Sets the green value of the color
+
+\author	dcofer
+\date	5/3/2011
+
+\param	fltG	   	The new green value. 
+\param	bThrowError	true to throw error if there is a problem.
+**/
+void CStdColor::g(float fltG, BOOL bThrowError)
+{
+	if(Std_InValidRange((float) 0, (float) 1, fltG, bThrowError, "G"))
+		m_fltG = fltG;
+}
+
+/**
+\brief	Gets the green value of the color
+
+\author	dcofer
+\date	5/3/2011
+
+\return	color value.
+**/
+float CStdColor::g() {return m_fltG;}
+
+/**
+\brief	Sets the blue value of the color
+
+\author	dcofer
+\date	5/3/2011
+
+\param	fltB	   	The new blue value. 
+\param	bThrowError	true to throw error if there is a problem.
+**/
+void CStdColor::b(float fltB, BOOL bThrowError)
+{
+	if(Std_InValidRange((float) 0, (float) 1, fltB, bThrowError, "B"))
+		m_fltB = fltB;
+}
+
+/**
+\brief	Gets the blue value of the color
+
+\author	dcofer
+\date	5/3/2011
+
+\return	color value.
+**/
+float CStdColor::b() {return m_fltB;}
+
+/**
+\brief	Sets the alpha value of the color
+
+\author	dcofer
+\date	5/3/2011
+
+\param	fltA	   	The new alpha value. 
+\param	bThrowError	true to throw error if there is a problem.
+**/
+void CStdColor::a(float fltA, BOOL bThrowError)
+{
+	if(Std_InValidRange((float) 0, (float) 1, fltA, bThrowError, "A"))
+		m_fltA = fltA;
+}
+
+/**
+\brief	Gets the alpha value of the color
+
+\author	dcofer
+\date	5/3/2011
+
+\return	color value.
+**/
+float CStdColor::a() {return m_fltA;}
+
+/**
+\brief	Sets the color values.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	R	   	The red value. 
+\param	G	   	The green value. 
+\param	B	   	The blue value. 
+\param	A	   	The alpha value. 
+**/
 void CStdColor::Set(float R, float G, float B, float A)
 {
 	r(R);
@@ -38,6 +158,16 @@ void CStdColor::Set(float R, float G, float B, float A)
 	a(A);
 }
 
+/**
+\brief	== casting operator.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	oPoint	The point. 
+
+\return	The result of the operation.
+**/
 bool CStdColor::operator==(const CStdColor &oPoint)
 {
 	if( (m_fltR == oPoint.m_fltR) && (m_fltB == oPoint.m_fltB) && (m_fltG == oPoint.m_fltG) && (m_fltA == oPoint.m_fltA) )
@@ -45,6 +175,16 @@ bool CStdColor::operator==(const CStdColor &oPoint)
 	return false;
 };
 
+/**
+\brief	!= casting operator.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	oPoint	The point. 
+
+\return	The result of the operation.
+**/
 bool CStdColor::operator!=(const CStdColor &oPoint)
 {
 	if( (m_fltR == oPoint.m_fltR) && (m_fltB == oPoint.m_fltB) && (m_fltG == oPoint.m_fltG) && (m_fltA == oPoint.m_fltA) )
@@ -52,6 +192,14 @@ bool CStdColor::operator!=(const CStdColor &oPoint)
 	return true;
 };
 
+/**
+\brief	= casting operator.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	oPoint	The point. 
+**/
 void CStdColor::operator=(const CStdColor &oPoint)
 {
 	m_fltR=oPoint.m_fltR;
@@ -60,6 +208,14 @@ void CStdColor::operator=(const CStdColor &oPoint)
 	m_fltA=oPoint.m_fltA;
 };
 
+/**
+\brief	+= casting operator.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	oPoint	The point. 
+**/
 void CStdColor::operator+=(const CStdColor &oPoint)
 {
 	m_fltR+=oPoint.m_fltR;
@@ -68,6 +224,14 @@ void CStdColor::operator+=(const CStdColor &oPoint)
 	m_fltA+=oPoint.m_fltA;
 };
 
+/**
+\brief	-= casting operator.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	oPoint	The point. 
+**/
 void CStdColor::operator-=(const CStdColor &oPoint)
 {
 	m_fltR-=oPoint.m_fltR;
@@ -76,6 +240,16 @@ void CStdColor::operator-=(const CStdColor &oPoint)
 	m_fltA-=oPoint.m_fltA;
 };
 
+/**
+\brief	+ casting operator.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	oPoint	The point. 
+
+\return	The result of the operation.
+**/
 CStdColor CStdColor::operator+(const CStdColor &oPoint)
 {
 	CStdColor oNewPoint(m_fltMaxRange);
@@ -87,6 +261,16 @@ CStdColor CStdColor::operator+(const CStdColor &oPoint)
 	return oNewPoint;
 };
 
+/**
+\brief	- casting operator.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	oPoint	The point. 
+
+\return	The result of the operation.
+**/
 CStdColor CStdColor::operator-(const CStdColor &oPoint)
 {
 	CStdColor oNewPoint(m_fltMaxRange);
@@ -98,6 +282,14 @@ CStdColor CStdColor::operator-(const CStdColor &oPoint)
 	return oNewPoint;
 };
 
+/**
+\brief	+= casting operator.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	fltVal	The value. 
+**/
 void CStdColor::operator+=(const float fltVal)
 {
 	m_fltR+=fltVal;
@@ -106,6 +298,14 @@ void CStdColor::operator+=(const float fltVal)
 	m_fltA+=fltVal;
 };
 
+/**
+\brief	-= casting operator.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	fltVal	The value. 
+**/
 void CStdColor::operator-=(const float fltVal)
 {
 	m_fltR-=fltVal;
@@ -114,6 +314,14 @@ void CStdColor::operator-=(const float fltVal)
 	m_fltA-=fltVal;
 };
 
+/**
+\brief	*= casting operator.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	fltVal	The value. 
+**/
 void CStdColor::operator*=(const float fltVal)
 {
 	m_fltR*=fltVal;
@@ -122,6 +330,14 @@ void CStdColor::operator*=(const float fltVal)
 	m_fltA*=fltVal;
 };
 
+/**
+\brief	/= casting operator.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	fltVal	The value. 
+**/
 void CStdColor::operator/=(const float fltVal)
 {
 	if(fltVal)
@@ -135,6 +351,16 @@ void CStdColor::operator/=(const float fltVal)
 		THROW_ERROR(Std_Err_lDivByZero, Std_Err_strDivByZero);
 };
 
+/**
+\brief	+ casting operator.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	fltVal	The value. 
+
+\return	The result of the operation.
+**/
 CStdColor CStdColor::operator+(const float fltVal)
 {
 	CStdColor oNewPoint(m_fltMaxRange);
@@ -146,6 +372,16 @@ CStdColor CStdColor::operator+(const float fltVal)
 	return oNewPoint;
 };
 
+/**
+\brief	- casting operator.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	fltVal	The value. 
+
+\return	The result of the operation.
+**/
 CStdColor CStdColor::operator-(const float fltVal)
 {
 	CStdColor oNewPoint(m_fltMaxRange);
@@ -157,6 +393,16 @@ CStdColor CStdColor::operator-(const float fltVal)
 	return oNewPoint;
 };
 
+/**
+\brief	* casting operator.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	fltVal	The value. 
+
+\return	The result of the operation.
+**/
 CStdColor CStdColor::operator*(const float fltVal)
 {
 	CStdColor oNewPoint(m_fltMaxRange);
@@ -168,6 +414,16 @@ CStdColor CStdColor::operator*(const float fltVal)
 	return oNewPoint;
 };
 
+/**
+\brief	/ casting operator.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	fltVal	The value. 
+
+\return	The result of the operation.
+**/
 CStdColor CStdColor::operator/(const float fltVal)
 {
 	if(!fltVal)
@@ -182,9 +438,23 @@ CStdColor CStdColor::operator/(const float fltVal)
 	return oNewPoint;
 };
 
+/**
+\brief	Gets the magnitude of the color.
+
+\author	dcofer
+\date	5/3/2011
+
+\return	Magnitude.
+**/
 double CStdColor::Magnitude()
 {return sqrt( (m_fltR*m_fltR) + (m_fltB*m_fltB) + (m_fltG*m_fltG) + (m_fltA*m_fltA) );};
 
+/**
+\brief	Normalizes the color.
+
+\author	dcofer
+\date	5/3/2011
+**/
 void CStdColor::Normalize()
 {
 	double dblMag = Magnitude();
@@ -205,8 +475,18 @@ void CStdColor::Normalize()
 	}
 };
 
-//This method checks each value to see if it is less than m_fltA give tolerance.
-//If it is then it just sets it to zero.
+
+/**
+\brief	Clears the near zero described by fltTolerance.
+
+\details This method checks each value to see if it is less than m_fltA give tolerance.
+If it is then it just sets it to zero.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	fltTolerance	The tolerance. 
+**/
 void CStdColor::ClearNearZero(float fltTolerance)
 {
 	if(fabs(m_fltR) < fltTolerance)
@@ -219,6 +499,16 @@ void CStdColor::ClearNearZero(float fltTolerance)
 		m_fltA = 0;
 }
 
+/**
+\brief	[] casting operator.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	iIndex	Zero-based index of the. 
+
+\return	The result of the operation.
+**/
 float CStdColor::operator[](const int iIndex)
 {
 	switch(iIndex)
@@ -237,6 +527,16 @@ float CStdColor::operator[](const int iIndex)
 	return 0;
 };
 
+/**
+\brief	Loads the color.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	oXml	The xml used to load data. 
+\param	strParamName	Name of the string parameter. 
+\param	bThrowError 	true to throw error if there is a problem. 
+**/
 void CStdColor::Load(CStdXml &oXml, string strParamName, BOOL bThrowError)
 {
 	if(oXml.FindChildElement(strParamName, bThrowError))
@@ -253,7 +553,16 @@ void CStdColor::Load(CStdXml &oXml, string strParamName, BOOL bThrowError)
 	//If not found then use the default settings.
 }
 
+/**
+\brief	Loads the color.
 
+\author	dcofer
+\date	5/3/2011
+
+\param	strXml			The xml used to load data. 
+\param	strParamName	Name of the string parameter. 
+\param	bThrowError 	true to throw error if there is a problem. 
+**/
 void CStdColor::Load(string strXml, string strParamName, BOOL bThrowError)
 {
 	CStdXml oXml;
@@ -263,3 +572,6 @@ void CStdColor::Load(string strXml, string strParamName, BOOL bThrowError)
 	
 	Load(oXml, strParamName, bThrowError);
 }
+
+
+}				//StdUtils

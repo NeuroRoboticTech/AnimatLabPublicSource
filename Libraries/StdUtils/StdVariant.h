@@ -1,15 +1,16 @@
-// StdVariant.h: interface for the CStdVariant class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	StdVariant.h
 
-#if !defined(AFX_STDVARIANT_H__F994980A_5C39_4141_948D_A2115FEDFC53__INCLUDED_)
-#define AFX_STDVARIANT_H__F994980A_5C39_4141_948D_A2115FEDFC53__INCLUDED_
+\brief	Declares the standard variant class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
-
+namespace StdUtils
+{
+/**
+\brief	Values that represent StdVariantType. 
+**/
 enum StdVariantType
 {
 	StdVtEmpty = -1,
@@ -27,24 +28,56 @@ enum StdVariantType
 	StdVtString = 11
 };
 
+/**
+\brief	Standard variant type. 
+
+\author	dcofer
+\date	5/4/2011
+**/
 class STD_UTILS_PORT CStdVariant : public CStdSerialize  
 {
 protected:
+	/// true if created variable
 	bool m_bCreatedVar;
+
+	/// Variant type
 	int m_iVariantType;
 
-	short *m_lpShort;							// StdVtShort	2-byte signed int.
-	long *m_lpLong;								// StdVtLong	4-byte signed int.
-	float *m_lpFloat;							// StdVtFloat	4-byte real.
-	double *m_lpDouble;						// StdVtDouble	8-byte real.
-	bool *m_lpBool;								// StdVtBool	Boolean.
-	char *m_lpChar;								// StdVtChar	Char.
-	unsigned char *m_lpUChar;			// StdVtUChar	Unsigned char.
-	unsigned short *m_lpUShort;		// StdVtUShort	2 byte unsigned int.
-	unsigned long *m_lpULong;			// StdVtULong	4 byte unsigned int.
-	int *m_lpInt;									// StdVtInt	2 byte signed int.
-	unsigned int *m_lpUInt;				// StdVtUInt	2 byte unsigned int.
-	string *m_lpString;						// StdVtString	string.
+	/// StdVtShort	2-byte signed int.
+	short *m_lpShort;							
+
+	/// StdVtLong	4-byte signed int.
+	long *m_lpLong;	
+
+	/// StdVtFloat	4-byte real.
+	float *m_lpFloat;	
+
+	/// StdVtDouble	8-byte real.
+	double *m_lpDouble;	
+
+	/// StdVtBool	Boolean.				
+	bool *m_lpBool;
+
+	/// StdVtChar	Char.
+	char *m_lpChar;		
+
+	/// StdVtUChar	Unsigned char.
+	unsigned char *m_lpUChar;
+
+	/// StdVtUShort	2 byte unsigned int.
+	unsigned short *m_lpUShort;
+
+	/// StdVtULong	4 byte unsigned int.
+	unsigned long *m_lpULong;			
+
+	/// StdVtInt	2 byte signed int.
+	int *m_lpInt;
+
+	/// StdVtUInt	2 byte unsigned int.
+	unsigned int *m_lpUInt;				
+
+	/// StdVtString	string.
+	string *m_lpString;						
 
 public:
 	CStdVariant();
@@ -125,4 +158,4 @@ public:
 	virtual void Save(CStdXml &oXml);
 };
 
-#endif // !defined(AFX_STDVARIANT_H__F994980A_5C39_4141_948D_A2115FEDFC53__INCLUDED_)
+}				//StdUtils

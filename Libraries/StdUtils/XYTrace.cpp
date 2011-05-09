@@ -1,6 +1,9 @@
 
 #include "stdafx.h"
 
+namespace StdUtils
+{
+
 // private helper class
 class XYTraceHelper
 {
@@ -175,6 +178,13 @@ string GetLevel(const int nLevel)
 	return "NONE";
 }
 
+/**
+\brief	Resets the log.
+
+\author	dcofer
+\date	5/4/2011
+
+**/
 void STD_UTILS_PORT Std_ResetLog()
 {
 	theHelper.Lock();
@@ -189,6 +199,18 @@ void STD_UTILS_PORT Std_ResetLog()
 	theHelper.Unlock();
 }
 
+/**
+\brief	Logs a message.
+
+\author	dcofer
+\date	5/4/2011
+
+\param	nLevel			The log level. 
+\param	bPrintHeader	true to print header. 
+\param	strFormat   	The string format. 
+
+\return	.
+**/
 void STD_UTILS_PORT Std_Log(const int nLevel, bool bPrintHeader, LPCTSTR strFormat, ...)
 {
 	// if the specified trace level is greater than
@@ -266,3 +288,4 @@ void STD_UTILS_PORT Std_Log(const int nLevel, bool bPrintHeader, LPCTSTR strForm
 	theHelper.Unlock();
 }
 
+}				//StdUtils

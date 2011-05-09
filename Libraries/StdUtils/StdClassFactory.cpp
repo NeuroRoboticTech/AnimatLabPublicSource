@@ -1,20 +1,44 @@
-// StdClassFactory.cpp: implementation of the IStdClassFactory class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	StdClassFactory.cpp
+
+\brief	Implements the standard class factory class.
+**/
 
 #include "stdafx.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
 
+namespace StdUtils
+{
+
+/**
+\brief	Default constructor.
+
+\author	dcofer
+\date	5/3/2011
+**/
 IStdClassFactory::IStdClassFactory()
 {
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	5/3/2011
+**/
 IStdClassFactory::~IStdClassFactory()
 {}
 
+/**
+\brief	Loads a DLL module by name and attempts to call the GetStdClassFactory method to get a pointer to the class factory.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	strModuleName	Name of the DLL module. 
+
+\return	Pointer to the loaded module, exception if not found.
+**/
 IStdClassFactory *IStdClassFactory::LoadModule(string strModuleName)
 {
 	TRACE_DEBUG("Loading Module: " + strModuleName);
@@ -59,6 +83,7 @@ IStdClassFactory *IStdClassFactory::LoadModule(string strModuleName)
 }
 
 
+}				//StdUtils
 
 
 

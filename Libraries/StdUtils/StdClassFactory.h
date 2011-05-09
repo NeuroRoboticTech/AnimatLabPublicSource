@@ -1,20 +1,40 @@
-// StdClassFactory.h: interface for the IStdClassFactory class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	StdClassFactory.h
 
-#if !defined(AFX_CLASSFACTORY_H__E227ABE1_471E_11D4_BD86_00A0CC2405DA__INCLUDED_)
-#define AFX_CLASSFACTORY_H__E227ABE1_471E_11D4_BD86_00A0CC2405DA__INCLUDED_
+\brief	Declares the standard class factory class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
+namespace StdUtils
+{
+/**
+\brief	Standard class factory. 
+
+\details This is a standard interface used for all class factories. To make your library able able to be loaded 
+you need to derive a class from this and then implement the GetStdClassFactory method within your new DLL.
+
+\author	dcofer
+\date	5/3/2011
+**/
 class STD_UTILS_PORT IStdClassFactory 
 {
 public:
 	IStdClassFactory();
 	virtual ~IStdClassFactory();
 
+	/**
+	\brief	Creates an object of the specified class and object types.
+	
+	\author	dcofer
+	\date	5/3/2011
+	
+	\param	strClassType 	Type of the class. 
+	\param	strObjectType	Type of the object. 
+	\param	bThrowError  	true to throw error if there is a problem. 
+	
+	\return	null if it fails and bThrowError is false, else a pointer to the created object.
+	**/
 	virtual CStdSerialize *CreateObject(string strClassType, string strObjectType, BOOL bThrowError = TRUE) = 0;
 
 	static IStdClassFactory *LoadModule(string strModuleName);
@@ -22,4 +42,5 @@ public:
 
 typedef IStdClassFactory *(*GetClassFactory)(void); 
 
-#endif // !defined(AFX_CLASSFACTORY_H__E227ABE1_471E_11D4_BD86_00A0CC2405DA__INCLUDED_)
+}				//StdUtils
+

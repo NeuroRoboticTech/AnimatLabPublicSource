@@ -457,6 +457,78 @@ Namespace Forms.Tools
             Return dblTimeStep
         End Function
 
+        Public Overridable Function ExportDataFilename(Optional ByVal strPrefix As String = "") As String
+            Return Util.Application.ProjectPath & strPrefix & Me.Title & ".txt"
+        End Function
+
+        Public Overridable Sub ExportChartData(Optional ByVal strFile As String = "", Optional ByVal strPrefix As String = "")
+
+        End Sub
+
+        Public Overridable Sub CompareExportedData(ByVal strPrefix As String, ByVal dblMaxError As Double)
+
+            'Lets try and load the original file and then the new test file.
+            Dim aryTemplateColumns() As String
+            Dim aryTestColumns() As String
+            Dim aryTemplateData(,) As Double
+            Dim aryTestData(,) As Double
+
+            'Load the template file data.
+            Util.ReadCSVFileToArray(Me.ExportDataFilename, aryTemplateColumns, aryTemplateData)
+
+            'Load the test file data.
+            Util.ReadCSVFileToArray(Me.ExportDataFilename(strPrefix), aryTestColumns, aryTestData)
+
+            'Now lets compare the column names. We need to have the same number and they should match identically.
+            CompareExportDataColumns(aryTemplateColumns, aryTestColumns)
+
+            'Then Compare data itself. It should be the same amount of data and each entry should be within the 
+            'maximum error when comparing between template and test.
+            CompareExportedDataRows(aryTemplateColumns, aryTemplateData, aryTestData, dblMaxError)
+
+        End Sub
+
+        Protected Overridable Sub CompareExportDataColumns(ByVal aryTemplateColumns() As String, ByVal aryTestColumns() As String)
+
+            'First check the number of columns. If they mismatch then there is an obvious problem.
+            If (aryTemplateColumns.Length <> aryTestColumns.Length) Then
+                Throw New System.Exception("The template and test columns do not match for file: " & Me.ExportDataFilename)
+            End If
+
+            Dim iCols As Integer = aryTestColumns.Length - 1
+            For iCol As Integer = 0 To iCols
+                If aryTemplateColumns(iCol).ToUpper.Trim <> aryTestColumns(iCol).ToUpper.Trim Then
+                    Throw New System.Exception("A template and test column does not match for file: '" & Me.ExportDataFilename & _
+                                               "', Template Column: '" & aryTemplateColumns(iCol) & "', Test Column: '" & aryTestColumns(iCol) & "'")
+                End If
+            Next
+
+        End Sub
+
+        Protected Overridable Sub CompareExportedDataRows(ByVal aryTemplateColumns() As String, ByVal aryTemplateData(,) As Double, ByVal aryTestData(,) As Double, ByVal dblMaxError As Double)
+
+            'First check to make sure the number of rows match.
+
+            If (UBound(aryTemplateData, 2) <> UBound(aryTestData, 2)) Then
+                Throw New System.Exception("The template and test row counts do not match for file: " & Me.ExportDataFilename)
+            End If
+
+            Dim iCols As Integer = UBound(aryTemplateData, 1)
+            Dim iRows As Integer = UBound(aryTemplateData, 2)
+            For iCol As Integer = 0 To iCols
+
+                For iRow As Integer = 0 To iRows
+                    If Math.Abs(aryTemplateData(iCol, iRow) - aryTestData(iCol, iRow)) > dblMaxError Then
+                        Throw New System.Exception("Data mismatch for file: '" & Me.ExportDataFilename & _
+                                                   "', Column: '" & aryTemplateColumns(iCol) & "', Template Value: '" & _
+                                                   aryTemplateData(iCol, iRow) & "', Test Data: '" & aryTestData(iCol, iRow) & "'")
+                    End If
+
+                Next
+
+            Next
+        End Sub
+
         Public Overridable Sub UpdateChartConfiguration(ByVal bReconfigureData As Boolean)
 
         End Sub

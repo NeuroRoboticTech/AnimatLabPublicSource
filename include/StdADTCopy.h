@@ -1,7 +1,6 @@
 #ifndef __STD_ADT_COPY_H__
 #define __STD_ADT_COPY_H__
 
-class CStdSerialize;
 
 template<typename T>
 void STL_CopyPtrArray(CStdPtrArray<T> &aryOriginal, CStdPtrArray<T> &aryNew)

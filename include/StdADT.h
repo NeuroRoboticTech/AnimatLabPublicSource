@@ -1,8 +1,6 @@
 #ifndef __STD_ADT_DLL_H__
 #define __STD_ADT_DLL_H__
 
-class CStdSerialize;
-
 template <class T>
 // the linked list class
 class CStdPtrArray : public vector<T*>

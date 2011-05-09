@@ -15,6 +15,9 @@
 #include <map>
 #include <vector>
 
+namespace StdUtils
+{
+
 #ifdef _DEBUG
 #define _DS(i) (i?&(m_strDoc.c_str())[m_aPos[i].nStartL]:0)
 #define MARKUP_SETDEBUGSTATE m_pMainDS=_DS(m_iPos); m_pChildDS=_DS(m_iPosChild)
@@ -199,5 +202,7 @@ protected:
 	std::string x_TextToDoc( const char* szText, bool bAttrib = false ) const;
 	std::string x_TextFromDoc( int nLeft, int nRight ) const;
 };
+
+}				//StdUtils
 
 #endif // !defined(AFX_MARKUPSTL_H__948A2705_9E68_11D2_A0BF_00105A27C570__INCLUDED_)

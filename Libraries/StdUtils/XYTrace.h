@@ -5,6 +5,9 @@
 #include <tchar.h>
 #include <stdio.h>
 
+namespace StdUtils
+{
+
 enum TraceLevel
 {
 	TraceNone = 0, // no trace
@@ -19,5 +22,7 @@ extern string GetTraceFilePrefix();
 extern void SetTraceLevel(const int nLevel);
 extern int GetTraceLevel();
 //extern void Std_Log(const int nLevel, LPCTSTR strFormat, ...);
+
+}				//StdUtils
 
 #endif // XY_TRACE_H

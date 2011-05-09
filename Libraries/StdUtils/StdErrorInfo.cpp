@@ -1,20 +1,37 @@
-// ErrorInfo.cpp: implementation of the CErrorInfo class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	StdErrorInfo.cpp
+
+\brief	Implements the standard error information class.
+**/
 
 #include "stdafx.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+namespace StdUtils
+{
 
+/**
+\brief	Default constructor.
+
+\author	dcofer
+\date	5/3/2011
+**/
 CStdErrorInfo::CStdErrorInfo()
 {
 	m_lError = 0;
 	m_lSourceLine = 0;
 }
 
-	
+/**
+\brief	Constructor.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	lError		 	The error number. 
+\param	strError	 	The error message. 
+\param	strSourceFile	The source filename. 
+\param	lSourceLine  	Source line number. 
+**/
 CStdErrorInfo::CStdErrorInfo(long lError, string strError, string strSourceFile, long lSourceLine)
 {
 	m_lError = lError;
@@ -23,6 +40,12 @@ CStdErrorInfo::CStdErrorInfo(long lError, string strError, string strSourceFile,
 	m_lSourceLine = lSourceLine;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	5/3/2011
+**/
 CStdErrorInfo::~CStdErrorInfo()
 {
 
@@ -34,7 +57,14 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of CStdErrorInfo\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Logs the error to the loggin mechanism.
 
+\author	dcofer
+\date	5/3/2011
+
+\return	.
+**/
 string CStdErrorInfo::Log()
 {
 	string strText;
@@ -53,3 +83,5 @@ string CStdErrorInfo::Log()
 
 	return strText;
 }
+
+}				//StdUtils

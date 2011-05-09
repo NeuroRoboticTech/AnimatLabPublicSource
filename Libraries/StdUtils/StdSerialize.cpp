@@ -1,6 +1,8 @@
-// StdSerialize.cpp: implementation of the CStdSerialize class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	StdSerialize.cpp
+
+\brief	Implements the standard serialize class.
+**/
 
 #include "stdafx.h"
 
@@ -10,57 +12,123 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+namespace StdUtils
+{
+/**
+\brief	Default constructor.
 
+\author	dcofer
+\date	5/3/2011
+**/
 CStdSerialize::CStdSerialize()
 {
 
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	5/3/2011
+**/
 CStdSerialize::~CStdSerialize()
 {
 
 }
 
+/**
+\brief	Makes a deep copy of this object.
+
+\author	dcofer
+\date	5/3/2011
+
+\return	null if it fails, else a copy of this object.
+**/
 CStdSerialize *CStdSerialize::Clone()
 {return NULL;}
 
+/**
+\brief	Traces this object to an output stream.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	oOs	The output stream. 
+**/
 void CStdSerialize::Trace(ostream &oOs)
 {}
 
+/**
+\brief	Loads this object from an xml packet.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	oXml	The xml to load. 
+**/
 void CStdSerialize::Load(CStdXml &oXml)
 {}
 
+/**
+\brief	Saves this object to an xml packet..
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	oXml	The xml to save. 
+**/
 void CStdSerialize::Save(CStdXml &oXml)
 {}
 
+/**
+\brief	 writes to an output stream
 
+\return	output stream
+**/
 ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdSerialize *lpObj)
 {
 	lpObj->Trace(oOs);
 	return oOs;
 }
 
+/**
+\brief	 writes to an output stream
+
+\return	output stream
+**/
 ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdIPoint oPoint)
 {
 	oOs << "(" << oPoint.x << ", " << oPoint.y << ", " << oPoint.z << ")";
 	return oOs;
 }
 
+/**
+\brief	 writes to an output stream
+
+\return	output stream
+**/
 ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdLPoint oPoint)
 {
 	oOs << "(" << oPoint.x << ", " << oPoint.y << ", " << oPoint.z << ")";
 	return oOs;
 }
 
+/**
+\brief	 writes to an output stream
+
+\return	output stream
+**/
 ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdFPoint oPoint)
 {
 	oOs << "(" << oPoint.x << ", " << oPoint.y << ", " << oPoint.z << ")";
 	return oOs;
 }
 
+/**
+\brief	 writes to an output stream
+
+\return	output stream
+**/
 ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdDPoint oPoint)
 {
 	oOs << "(" << oPoint.x << ", " << oPoint.y << ", " << oPoint.z << ")";
@@ -69,6 +137,19 @@ ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdDPoint oPoint)
 
 
 //Save To Xml
+
+/**
+\brief	Standard save point.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	oXml  	The xml to save. 
+\param	strName		  	Name of the xml packet. 
+\param [in,out]	oPoint	The point to save. 
+
+\return	.
+**/
 void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdIPoint &oPoint)
 {
 	oXml.AddChildElement(strName);
@@ -79,6 +160,18 @@ void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdIPoint &oPo
 	oXml.OutOfElem();
 }
 
+/**
+\brief	Standard save point.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	oXml  	The xml to save. 
+\param	strName		  	Name of the xml packet. 
+\param [in,out]	oPoint	The point to save. 
+
+\return	.
+**/
 void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdLPoint &oPoint)
 {
 	oXml.AddChildElement(strName);
@@ -89,6 +182,18 @@ void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdLPoint &oPo
 	oXml.OutOfElem();
 }
 
+/**
+\brief	Standard save point.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	oXml  	The xml to save. 
+\param	strName		  	Name of the xml packet. 
+\param [in,out]	oPoint	The point to save. 
+
+\return	.
+**/
 void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdFPoint &oPoint)
 {
 	oXml.AddChildElement(strName);
@@ -99,6 +204,18 @@ void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdFPoint &oPo
 	oXml.OutOfElem();
 }
 
+/**
+\brief	Standard save point.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	oXml  	The xml to save. 
+\param	strName		  	Name of the xml packet. 
+\param [in,out]	oPoint	The point to save. 
+
+\return	.
+**/
 void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdDPoint &oPoint)
 {
 	oXml.AddChildElement(strName);
@@ -111,6 +228,20 @@ void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdDPoint &oPo
 
 
 //Load From Xml
+
+/**
+\brief	Standard load point.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	oXml  	The xml to load. 
+\param	strName		  	Name of the xml element. 
+\param [in,out]	oPoint	The point to load. 
+\param	bThrowError   	true to throw error if there is a problem. 
+
+\return	.
+**/
 bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdIPoint &oPoint, bool bThrowError)
 {
 	if(oXml.FindChildElement(strName, bThrowError))
@@ -126,6 +257,21 @@ bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdIPoint &oPo
 	return false;
 }
 
+//Load From Xml
+
+/**
+\brief	Standard load point.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	oXml  	The xml to load. 
+\param	strName		  	Name of the xml element. 
+\param [in,out]	oPoint	The point to load. 
+\param	bThrowError   	true to throw error if there is a problem. 
+
+\return	.
+**/
 bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdLPoint &oPoint, bool bThrowError)
 {
 	if(oXml.FindChildElement(strName, bThrowError))
@@ -141,6 +287,21 @@ bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdLPoint &oPo
 	return false;
 }
 
+//Load From Xml
+
+/**
+\brief	Standard load point.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	oXml  	The xml to load. 
+\param	strName		  	Name of the xml element. 
+\param [in,out]	oPoint	The point to load. 
+\param	bThrowError   	true to throw error if there is a problem. 
+
+\return	.
+**/
 bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdFPoint &oPoint, bool bThrowError)
 {
 	if(oXml.FindChildElement(strName, bThrowError))
@@ -156,6 +317,21 @@ bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdFPoint &oPo
 	return false;
 }
 
+//Load From Xml
+
+/**
+\brief	Standard load point.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	oXml  	The xml to load. 
+\param	strName		  	Name of the xml element. 
+\param [in,out]	oPoint	The point to load. 
+\param	bThrowError   	true to throw error if there is a problem. 
+
+\return	.
+**/
 bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdDPoint &oPoint, bool bThrowError)
 {
 	if(oXml.FindChildElement(strName, bThrowError))
@@ -171,6 +347,18 @@ bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdDPoint &oPo
 	return false;
 }
 
+/**
+\brief	Standard load point.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	oXml  	The xml to load. 
+\param	iIndex		  	Zero-based index of the child element to load. 
+\param [in,out]	oPoint	The point to load. 
+
+\return	.
+**/
 void STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, int iIndex, CStdIPoint &oPoint)
 {
 	oXml.FindChildByIndex(iIndex);
@@ -181,6 +369,18 @@ void STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, int iIndex, CStdIPoint &oPoint)
 	oXml.OutOfElem();
 }
 
+/**
+\brief	Standard load point.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	oXml  	The xml to load. 
+\param	iIndex		  	Zero-based index of the child element to load. 
+\param [in,out]	oPoint	The point to load. 
+
+\return	.
+**/
 void STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, int iIndex, CStdLPoint &oPoint)
 {
 	oXml.FindChildByIndex(iIndex);
@@ -191,6 +391,18 @@ void STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, int iIndex, CStdLPoint &oPoint)
 	oXml.OutOfElem();
 }
 
+/**
+\brief	Standard load point.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	oXml  	The xml to load. 
+\param	iIndex		  	Zero-based index of the child element to load. 
+\param [in,out]	oPoint	The point to load. 
+
+\return	.
+**/
 void STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, int iIndex, CStdFPoint &oPoint)
 {
 	oXml.FindChildByIndex(iIndex);
@@ -201,6 +413,18 @@ void STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, int iIndex, CStdFPoint &oPoint)
 	oXml.OutOfElem();
 }
 
+/**
+\brief	Standard load point.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	oXml  	The xml to load. 
+\param	iIndex		  	Zero-based index of the child element to load. 
+\param [in,out]	oPoint	The point to load. 
+
+\return	.
+**/
 void STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, int iIndex, CStdDPoint &oPoint)
 {
 	oXml.FindChildByIndex(iIndex);
@@ -211,23 +435,68 @@ void STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, int iIndex, CStdDPoint &oPoint)
 	oXml.OutOfElem();
 }
 
+/**
+\brief	Calculates the distance between two points.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	ptA	The point a. 
+\param [in,out]	ptB	The point b. 
+
+\return	.
+**/
 double STD_UTILS_PORT Std_CalculateDistance(CStdIPoint &ptA, CStdIPoint &ptB)
 {
 	return (double) sqrt( (double) (pow((double)(ptA.x-ptB.x), 2) + pow((double)(ptA.y-ptB.y), 2) + pow((double)(ptA.z-ptB.z), 2)) );
 }
 
+/**
+\brief	Calculates the distance between two points.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	ptA	The point a. 
+\param [in,out]	ptB	The point b. 
+
+\return	.
+**/
 double STD_UTILS_PORT Std_CalculateDistance(CStdLPoint &ptA, CStdLPoint &ptB)
 {
 	return (double) sqrt( (double) (pow((double)(ptA.x-ptB.x), 2) + pow((double)(ptA.y-ptB.y), 2) + pow((double)(ptA.z-ptB.z), 2)) );
 }
 
+/**
+\brief	Calculates the distance between two points.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	ptA	The point a. 
+\param [in,out]	ptB	The point b. 
+
+\return	.
+**/
 double STD_UTILS_PORT Std_CalculateDistance(CStdFPoint &ptA, CStdFPoint &ptB)
 {
 	return sqrt( pow((ptA.x-ptB.x), 2) + pow((ptA.y-ptB.y), 2) + pow((ptA.z-ptB.z), 2) );
 }
 
+/**
+\brief	Calculates the distance between two points.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	ptA	The point a. 
+\param [in,out]	ptB	The point b. 
+
+\return	.
+**/
 double STD_UTILS_PORT Std_CalculateDistance(CStdDPoint &ptA, CStdDPoint &ptB)
 {
 	return sqrt( pow((ptA.x-ptB.x), 2) + pow((ptA.y-ptB.y), 2) + pow((ptA.z-ptB.z), 2) );
 }
 
+}				//StdUtils

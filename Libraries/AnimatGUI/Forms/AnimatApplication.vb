@@ -2788,6 +2788,32 @@ Namespace Forms
 
         End Sub
 
+        Public Overridable Sub ExportDataCharts(Optional ByVal strPrefix As String = "")
+
+            Dim frmChart As Tools.DataChart
+            For Each frmAnimat As AnimatForm In Me.ChildForms
+
+                If Util.IsTypeOf(frmAnimat.GetType(), GetType(Tools.DataChart), False) Then
+                    frmChart = DirectCast(frmAnimat, Tools.DataChart)
+                    frmChart.ExportChartData(, strPrefix)
+                End If
+            Next
+
+        End Sub
+
+        Public Overridable Sub CompareExportedDataCharts(ByVal strPrefix As String, ByVal dblMaxError As Double)
+
+            Dim frmChart As Tools.DataChart
+            For Each frmAnimat As AnimatForm In Me.ChildForms
+
+                If Util.IsTypeOf(frmAnimat.GetType(), GetType(Tools.DataChart), False) Then
+                    frmChart = DirectCast(frmAnimat, Tools.DataChart)
+                    frmChart.CompareExportedData(strPrefix, dblMaxError)
+                End If
+            Next
+
+        End Sub
+
 #End Region
 
 #Region " Load/Save Methods "
@@ -3099,10 +3125,10 @@ Namespace Forms
                                                       Optional ByVal iDisplaySizeY As Integer = 150)
             Dim iImageIndex As Integer = m_mgrToolStripImages.FindImageName(frmDock.IconName)
             If iImageIndex > -1 Then
-                frmDock.Content = New AnimatGUICtrls.Docking.AnimatContent(dockManager, frmDock, frmDock.Title, m_mgrToolStripImages.ImageList, iImageIndex)
+                frmDock.Content = New AnimatGuiCtrls.Docking.AnimatContent(dockManager, frmDock, frmDock.Title, m_mgrToolStripImages.ImageList, iImageIndex)
                 dockManager.Contents.Add(frmDock.Content)
             Else
-                frmDock.Content = New AnimatGUICtrls.Docking.AnimatContent(dockManager, frmDock, frmDock.Title)
+                frmDock.Content = New AnimatGuiCtrls.Docking.AnimatContent(dockManager, frmDock, frmDock.Title)
                 dockManager.Contents.Add(frmDock.Content)
             End If
             frmDock.Content.BackgroundForm = bBackgroundForm

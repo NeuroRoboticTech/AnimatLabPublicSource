@@ -1,21 +1,37 @@
-// StdPostFixEval.h: interface for the CStdPostFixEval class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	StdPostFixEval.h
 
-#if !defined(AFX_STDPOSTFIXEVAL_H__588F66E1_A393_11D4_ADA4_00E098064C82__INCLUDED_)
-#define AFX_STDPOSTFIXEVAL_H__588F66E1_A393_11D4_ADA4_00E098064C82__INCLUDED_
+\brief	Declares the standard post fix evaluation class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
+namespace StdUtils
+{
+/**
+\brief	Standard post fix evaluation class.
+
+\details This evaluates a post-fix equation.
+
+\author	dcofer
+\date	5/3/2011
+**/
 class STD_UTILS_PORT CStdPostFixEval  
 {
 protected:
+	/// The post-fix equation
 	string m_strEquation;
+
+	/// internal array used to store the equation parts.
 	CStdArray<string> m_aryPostFix;
+
+	/// Array of variables
 	CStdPtrArray<CStdVariable> m_aryVariables;
+
+	/// Stack of equation parts.
 	CStdStack<double> m_aryStack;
+
+	/// The double solution value
 	double m_dblSolution;
 
 	void SavePostFixInArray(string &strEqu);
@@ -38,4 +54,4 @@ public:
 	double Solve();
 };
 
-#endif // !defined(AFX_STDPOSTFIXEVAL_H__588F66E1_A393_11D4_ADA4_00E098064C82__INCLUDED_)
+}				//StdUtils

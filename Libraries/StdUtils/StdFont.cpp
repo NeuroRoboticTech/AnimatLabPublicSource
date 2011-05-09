@@ -1,13 +1,19 @@
-// StdFont.cpp: implementation of the CStdFont class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	StdFont.cpp
+
+\brief	Implements the standard font class.
+**/
 
 #include "stdafx.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+namespace StdUtils
+{
+/**
+\brief	Default constructor.
 
+\author	dcofer
+\date	5/3/2011
+**/
 CStdFont::CStdFont()
 {
 	m_strName = "Arial";
@@ -19,11 +25,27 @@ CStdFont::CStdFont()
 	m_bUnderline = false;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	5/3/2011
+**/
 CStdFont::~CStdFont()
 {
 
 }
 
+/**
+\brief	Loads the font.
+
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	oXml	The xml to load. 
+\param	strParamName	Name of the font xml parameter. 
+\param	bThrowError 	true to throw error if there is a problem. 
+**/
 void CStdFont::Load(CStdXml &oXml, string strParamName, bool bThrowError)
 {
 	if(oXml.FindChildElement(strParamName, bThrowError))
@@ -42,7 +64,15 @@ void CStdFont::Load(CStdXml &oXml, string strParamName, bool bThrowError)
 	}
 }
 
+/**
+\brief	Saves the font.
 
+\author	dcofer
+\date	5/3/2011
+
+\param [in,out]	oXml	The xml to save. 
+\param	strParamName	Name of the font xml parameter. 
+**/
 void CStdFont::Save(CStdXml &oXml, string strParamName)
 {
 	oXml.AddChildElement(strParamName);
@@ -54,3 +84,5 @@ void CStdFont::Save(CStdXml &oXml, string strParamName)
 	oXml.SetChildAttrib("Strikethrough", m_bStrikethrough);
 	oXml.SetChildAttrib("Underline", m_bUnderline);
 }
+
+}				//StdUtils

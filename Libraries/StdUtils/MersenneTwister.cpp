@@ -53,6 +53,9 @@
 static unsigned long mt[N]; /* the array for the state vector  */
 static int mti=N+1; /* mti==N+1 means mt[N] is not initialized */
 
+namespace StdUtils
+{
+
 /* initializes mt[N] with a seed */
 void init_genrand(unsigned long s)
 {
@@ -170,4 +173,5 @@ double genrand_res53(void)
 } 
 /* These real versions are due to Isaku Wada, 2002/01/09 added */
 
+}				//StdUtils
 

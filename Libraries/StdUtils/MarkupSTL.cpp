@@ -16,6 +16,8 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+namespace StdUtils
+{
 
 void CMarkupSTL::operator=( const CMarkupSTL& markup )
 {
@@ -1372,3 +1374,5 @@ int CMarkupSTL::x_RemoveElem( int iPos )
 	return iPosPrev;
 }
 
+
+}				//StdUtils

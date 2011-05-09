@@ -54,14 +54,17 @@ using namespace std;
 #define STD_TRACE_TO_DEBUGGER 
 #define STD_TRACE_TO_FILE true
 
-class CStdFont;
-class CStdVariable;
-class CStdPostFixEval;
-class CMarkupSTL;
-class CStdXml;
-class CStdCriticalSection;
-class CStdBitmap;
-class CStdAvi;
+namespace StdUtils
+{
+	class CStdFont;
+	class CStdVariable;
+	class CStdPostFixEval;
+	class CMarkupSTL;
+	class CStdXml;
+	class CStdCriticalSection;
+	class CStdBitmap;
+	class CStdAvi;
+}
 
 #ifndef THROW_ERROR
 	#define THROW_ERROR(lError, strError) Std_ThrowError(lError, strError, __FILE__, __LINE__)
@@ -97,5 +100,6 @@ class CStdAvi;
 	#include "StdLogFile.h"
 #endif
 
+using namespace StdUtils;
 
 #endif // __STD_UTILS_DLL_H__

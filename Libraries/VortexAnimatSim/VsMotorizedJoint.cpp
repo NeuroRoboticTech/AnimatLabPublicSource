@@ -35,6 +35,8 @@ void VsMotorizedJoint::SetThisPointers()
 	m_lpThisMotorJoint = dynamic_cast<MotorizedJoint *>(this);
 	if(!m_lpThisMotorJoint)
 		THROW_TEXT_ERROR(Vs_Err_lThisPointerNotDefined, Vs_Err_strThisPointerNotDefined, "m_lpThisMotorJoint, " + m_lpThisAB->Name());
+
+	m_lpThisMotorJoint->PhysicsMotorJoint(this);
 }
 
 //If this is a servo motor then the "velocity" signal is not really a velocity signal in this case. 

@@ -1,3 +1,9 @@
+/**
+\file	StdBitmap.h
+
+\brief	Declares the standard bitmap class.
+**/
+
 /* 
    Bitmap.h
 
@@ -23,22 +29,65 @@
 
    René Nyffenegger rene.nyffenegger@adp-gmbh.ch
 */
+namespace StdUtils
+{
 
 #if !defined( _BITMAP_H )
 #define _BITMAP_H
 
+/**
+\brief	Standard bitmap. 
+
+\author	dcofer
+\date	5/4/2011
+**/
 class STD_UTILS_PORT CStdBitmap {
   public:
-    CStdBitmap();
-    CStdBitmap(std::string const& file_name);
-    CStdBitmap(HBITMAP bmp);
 
+    /**
+    \brief	Default constructor.
+    
+    \author	dcofer
+    \date	5/4/2011
+    **/
+    CStdBitmap();
+
+    /**
+    \brief	Constructor.
+    
+    \author	dcofer
+    \date	5/4/2011
+    
+    \param	file_name	Filename of the file. 
+    **/
+    CStdBitmap(std::string const& file_name);
+
+	/**
+	\brief	Constructor.
+	
+	\author	dcofer
+	\date	5/4/2011
+	
+	\param	bmp	Handle of the bitmap. 
+	**/
+	CStdBitmap(HBITMAP bmp);
+
+    /**
+    \brief	HBITMAP casting operator.
+    
+    \author	dcofer
+    \date	5/4/2011
+    **/
     operator HBITMAP() const;
 
   protected:
+    /// The memory device-context
     friend class MemoryDC;
+
+    /// Handle of the bitmap
     HBITMAP bitmap_;
 };
 
+}				//StdUtils
 
 #endif  // #if !defined( _ZLIBENGN_H )

@@ -52,6 +52,9 @@ namespace AnimatSim
 			MotorizedJoint(void);
 			virtual ~MotorizedJoint(void);
 
+			virtual IMotorizedJoint *PhysicsMotorJoint();
+			virtual void PhysicsMotorJoint(IMotorizedJoint *lpJoint);
+
 			virtual BOOL EnableMotor();
 			virtual void EnableMotor(BOOL bVal);
 

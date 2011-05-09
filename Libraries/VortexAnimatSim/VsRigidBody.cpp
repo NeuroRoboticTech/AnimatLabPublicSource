@@ -67,8 +67,6 @@ void VsRigidBody::SetThisPointers()
 		THROW_TEXT_ERROR(Vs_Err_lThisPointerNotDefined, Vs_Err_strThisPointerNotDefined, "m_lpThisRB, " + m_lpThisAB->Name());
 
 	m_lpThisRB->PhysicsBody(this);
-	if(!m_lpThisRB)
-		THROW_TEXT_ERROR(Vs_Err_lThisPointerNotDefined, Vs_Err_strThisPointerNotDefined, "m_lpThisRB, " + m_lpThisAB->Name());
 }
 
 Vx::VxCollisionSensor* VsRigidBody::Sensor()

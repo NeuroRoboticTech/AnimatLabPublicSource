@@ -1,18 +1,26 @@
-// StdVariable.h: interface for the CStdVariable class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	StdVariable.h
 
-#if !defined(AFX_STDVARIABLE_H__588F66E2_A393_11D4_ADA4_00E098064C82__INCLUDED_)
-#define AFX_STDVARIABLE_H__588F66E2_A393_11D4_ADA4_00E098064C82__INCLUDED_
+\brief	Declares the standard variable class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
+namespace StdUtils
+{
+/**
+\brief	A variable that is used within the CStdPostFixEval class. 
+
+\author	dcofer
+\date	5/4/2011
+**/
 class STD_UTILS_PORT CStdVariable  
 {
 public:
+	/// The variable name.
 	string m_strVariable;
+
+	/// The variable value.
 	double m_dblValue;
 
 	CStdVariable();
@@ -20,4 +28,4 @@ public:
 
 };
 
-#endif // !defined(AFX_STDVARIABLE_H__588F66E2_A393_11D4_ADA4_00E098064C82__INCLUDED_)
+}				//StdUtils

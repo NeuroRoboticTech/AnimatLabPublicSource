@@ -1,23 +1,41 @@
-// StdFont.h: interface for the CStdFont class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	StdFont.h
 
-#if !defined(AFX_STDFONT_H__0FE6F490_A4DE_467F_B44A_93A4EBE63D47__INCLUDED_)
-#define AFX_STDFONT_H__0FE6F490_A4DE_467F_B44A_93A4EBE63D47__INCLUDED_
+\brief	Declares the standard font class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
+namespace StdUtils
+{
+/**
+\brief	Standard font. 
+
+\author	dcofer
+\date	5/3/2011
+**/
 class STD_UTILS_PORT CStdFont  
 {
 public:
+	/// Name of the font
 	string m_strName;
+
+	/// Size of the font
 	float m_fltSize;
+
+	/// The weight of the font.
 	float m_fltWeight;
+
+	/// true for bold font.
 	bool m_bBold;
+
+	/// true for italic font.
 	bool m_bItalic;
+
+	/// true for Strikethrough font.
 	bool m_bStrikethrough;
+
+	/// true for Underline font.
 	bool m_bUnderline;
 
 public:
@@ -28,4 +46,5 @@ public:
 	virtual void Save(CStdXml &oXml, string strParamName);
 };
 
-#endif // !defined(AFX_STDFONT_H__0FE6F490_A4DE_467F_B44A_93A4EBE63D47__INCLUDED_)
+}				//StdUtils
+

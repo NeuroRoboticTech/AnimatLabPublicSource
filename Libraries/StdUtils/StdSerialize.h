@@ -1,14 +1,22 @@
-// StdSerialize.h: interface for the CStdXmlSerialize class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	StdSerialize.h
 
-#if !defined(AFX_STDSERIALIZE_H__E3CB9FC1_892C_446F_9DE6_F2575DE1EE37__INCLUDED_)
-#define AFX_STDSERIALIZE_H__E3CB9FC1_892C_446F_9DE6_F2575DE1EE37__INCLUDED_
+\brief	Declares the standard serialize class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
+namespace StdUtils
+{
+/**
+\brief	Standard serialize class. 
+
+\details This is a very low level base class. All objects with this system are derived from this base so they 
+have the ability to load, clone, save and trace.
+
+\author	dcofer
+\date	5/3/2011
+**/
 class STD_UTILS_PORT CStdSerialize  
 {
 public:
@@ -47,4 +55,4 @@ double STD_UTILS_PORT Std_CalculateDistance(CStdLPoint &ptA, CStdLPoint &ptB);
 double STD_UTILS_PORT Std_CalculateDistance(CStdFPoint &ptA, CStdFPoint &ptB);
 double STD_UTILS_PORT Std_CalculateDistance(CStdDPoint &ptA, CStdDPoint &ptB);
 
-#endif // !defined(AFX_STDSERIALIZE_H__E3CB9FC1_892C_446F_9DE6_F2575DE1EE37__INCLUDED_)
+}				//StdUtils

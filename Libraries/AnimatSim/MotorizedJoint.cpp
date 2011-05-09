@@ -55,6 +55,33 @@ MotorizedJoint::~MotorizedJoint(void)
 }
 
 /**
+\brief	Gets the physics body interface pointer. This is an interface reference to the Vs version
+of this object. It will allow us to call methods directly in the Vs (OSG) version of the object
+directly without having to overload a bunch of methods in each joint.. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Pointer to Vs interface, NULL else. 
+**/
+IMotorizedJoint *MotorizedJoint::PhysicsMotorJoint() {return m_lpPhysicsMotorJoint;}
+
+/**
+\brief	Sets the physics motorized joint interface pointer. This is an interface reference to the Vs version
+of this object. It will allow us to call methods directly in the Vs (OSG) version of the object
+directly without having to overload a bunch of methods in each joint.. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	lpBody	The pointer to the phsyics body interface. 
+**/
+void MotorizedJoint::PhysicsMotorJoint(IMotorizedJoint *lpJoint) 
+{
+	m_lpPhysicsMotorJoint = lpJoint;
+}
+
+/**
 \brief	Tells if the motor is enabled.
 
 \author	dcofer

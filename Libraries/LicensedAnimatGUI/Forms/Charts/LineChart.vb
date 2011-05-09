@@ -1647,15 +1647,17 @@ Namespace Forms.Charts
 
         End Sub
 
-        Protected Overridable Sub ViewChartData()
+        Public Overridable Sub ViewChartData()
             Dim frmLineData As New LineData
 
             PackageChartDataIntoArrays(frmLineData.m_aryNames, frmLineData.m_aryData)
             frmLineData.ShowDialog()
         End Sub
 
-        Protected Overridable Sub ExportChartData()
-            Dim strFile As String = Util.Application.ProjectPath & Me.Title & ".txt"
+        Public Overrides Sub ExportChartData(Optional ByVal strFile As String = "", Optional ByVal strPrefix As String = "")
+            If strFile.Trim.Length = 0 Then
+                strFile = ExportDataFilename(strPrefix)
+            End If
 
             Dim sr As StreamWriter = File.CreateText(strFile)
 

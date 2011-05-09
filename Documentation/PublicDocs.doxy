@@ -712,7 +712,6 @@ EXCLUDE_PATTERNS       = *Designer* \
                          IntegrateFireGUI \
                          LicensedAnimatGUI \
                          ManagedAnimatTools \
-                         StdUtils \
                          AnimatLabScripter \
                          AnimatLabScriptTester \
                          AnimatWizard \
@@ -1492,7 +1491,9 @@ PREDEFINED             = ANIMAT_PORT= \
                          ADV_NEURAL_PORT= \
                          VORTEX_PORT= \
                          FPGA_NET_PORT= \
-                         VORTEX_PRIVATE_PORT=
+                         VORTEX_PRIVATE_PORT= \
+                         "<Test()> _=" \
+                         "<TestFixture()> _="
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then 
 # this tag can be used to specify a list of macro names that should be expanded. 

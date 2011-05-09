@@ -1,26 +1,86 @@
+/**
+\file	StdFixed.cpp
+
+\brief	Implements the standard fixed-point number class.
+**/
+
 #include "StdAfx.h"
 
+namespace StdUtils
+{
+/**
+\brief	Constructor.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	iM	  	Number of bits to the left of the decimal point. 
+\param	iN	  	Number of bits to the right of the decimal point. 
+\param	iMultM	Number of bits to the left of the decimal point during multiplication. 
+\param	iMultN	Number of bits to the right of the decimal point during multiplication. 
+**/
 CStdFixed::CStdFixed(int iM, int iN, int iMultM, int iMultN)
 {
 	Configure(iM, iN, iMultM, iMultN);
 }
 
+/**
+\brief	Constructor.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	iM	  	Number of bits to the left of the decimal point. 
+\param	iN	  	Number of bits to the right of the decimal point. 
+\param	dblVal	The initial floating-point value of the variable. 
+\param	iMultM	Number of bits to the left of the decimal point during multiplication. 
+\param	iMultN	Number of bits to the right of the decimal point during multiplication. 
+**/
 CStdFixed::CStdFixed(int iM, int iN, double dblVal, int iMultM, int iMultN)
 { 
 	Configure(iM, iN, iMultM, iMultN);
 	Fixed( (long) Convert(dblVal));
 }
 
+/**
+\brief	Constructor.
+
+\author	dcofer
+\date	5/3/2011
+
+\param	iM	  	Number of bits to the left of the decimal point. 
+\param	iN	  	Number of bits to the right of the decimal point. 
+\param	lVal  	The initial fixed-point value of the variable.
+\param	iMultM	Number of bits to the left of the decimal point during multiplication. 
+\param	iMultN	Number of bits to the right of the decimal point during multiplication. 
+**/
 CStdFixed::CStdFixed(int iM, int iN, long lVal, int iMultM, int iMultN)
 {
 	Configure(iM, iN, iMultM, iMultN);
 	Fixed( (long) lVal);
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	5/3/2011
+**/
 CStdFixed::~CStdFixed(void)
 {
 }
 
+/**
+\brief	Configures the fixed-point representation values.
+
+\author	dcofer
+\date	4/1/2011
+
+\param	iM	  	Number of bits to the left of the decimal point. 
+\param	iN	  	Number of bits to the right of the decimal point. 
+\param	iMultM	Number of bits to the left of the decimal point during multiplication. 
+\param	iMultN	Number of bits to the right of the decimal point during multiplication. 
+**/
 void CStdFixed::Configure(int iM, int iN, int iMultM, int iMultN)
 {
 	//if(iM < 1)
@@ -68,3 +128,6 @@ void CStdFixed::Configure(int iM, int iN, int iMultM, int iMultN)
 //	fxC = (fxC.FixedVal() + fxB.FixedVal());
 //	return fxC;		
 //}
+// 
+
+}				//StdUtils
