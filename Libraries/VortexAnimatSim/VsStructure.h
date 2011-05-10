@@ -26,6 +26,7 @@ namespace VortexAnimatSim
 		{
 		protected:
 			Structure *m_lpThisST;
+			VsRigidBody *m_lpVsBody;
 			Vx::VxAssembly *m_lpAssembly;
 
 			virtual void SetThisPointers();
@@ -36,6 +37,7 @@ namespace VortexAnimatSim
 			VsStructure();
 			virtual ~VsStructure();
 
+			virtual void Body(RigidBody *lpBody);
 			virtual void *Assembly() {return (void *)m_lpAssembly;};
 
 			virtual osg::Group *ParentOSG();

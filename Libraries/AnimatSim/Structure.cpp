@@ -86,6 +86,17 @@ void Structure::Sim(Simulator *lpSim)
 {m_lpSim = lpSim;}
 
 /**
+\brief	Sets the root body.
+
+\author	dcofer
+\date	5/10/2011
+
+\param [in,out]	lpBody	Pointer to the root body.
+
+**/
+void Structure::Body(RigidBody *lpBody) {m_lpBody = lpBody;}
+
+/**
 \brief	Gets the root body. 
 
 \details Gets the root body of the structure. 
@@ -840,9 +851,10 @@ try
 	strType = oXml.GetChildString("Type");
 	oXml.OutOfElem(); //OutOf Child Element
 
-	m_lpBody = dynamic_cast<RigidBody *>(m_lpSim->CreateObject(strModule, "RigidBody", strType));
-	if(!m_lpBody)
+	RigidBody *lpBody = dynamic_cast<RigidBody *>(m_lpSim->CreateObject(strModule, "RigidBody", strType));
+	if(!lpBody)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "RigidBody");
+	Body(lpBody);
 	m_lpBody->Parent(NULL);
 
 	m_lpBody->SetSystemPointers(m_lpSim, this, NULL, NULL, TRUE);
@@ -854,6 +866,7 @@ try
 catch(CStdErrorInfo oError)
 {
 	if(m_lpBody) delete m_lpBody;
+	Body(NULL);
 	RELAY_ERROR(oError);
 	return NULL;
 }

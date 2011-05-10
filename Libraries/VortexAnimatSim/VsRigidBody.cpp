@@ -115,6 +115,7 @@ void VsRigidBody::Physics_UpdateNode()
 {
 	if(m_vxSensor)
 		m_vxSensor->updateFromNode();
+	UpdateAbsolutePosition();
 }
 
 void VsRigidBody::Physics_SetColor()

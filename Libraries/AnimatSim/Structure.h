@@ -122,6 +122,8 @@ namespace AnimatSim
 			virtual ~Structure();
 
 			void Sim(Simulator *lpSim);
+
+			virtual void Body(RigidBody *lpBody);
 			virtual RigidBody *Body();
 
 			virtual float Size();

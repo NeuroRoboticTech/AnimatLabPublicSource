@@ -27,6 +27,7 @@ namespace VortexAnimatSim
 **/
 VsStructure::VsStructure()
 {
+	m_lpVsBody = NULL;
 	SetThisPointers();
 }
 
@@ -39,6 +40,14 @@ VsStructure::VsStructure()
 VsStructure::~VsStructure()
 {
 	m_lpAssembly = NULL;
+}
+
+void VsStructure::Body(RigidBody *lpBody)
+{
+	Structure::Body(lpBody);
+	m_lpVsBody = dynamic_cast<VsRigidBody *>(lpBody);
+	if(!m_lpVsBody)
+		THROW_TEXT_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody, "ID: " + lpBody->Name());
 }
 
 void VsStructure::SetThisPointers()
@@ -86,7 +95,9 @@ void VsStructure::UpdatePositionAndRotationFromMatrix()
 {
 	VsMovableItem::UpdatePositionAndRotationFromMatrix();
 
-	m_lpThisST->UpdatePhysicsPosFromGraphics();
+	m_lpVsBody->EndGripDrag();
+
+	//m_lpThisST->UpdatePhysicsPosFromGraphics();
 }
 
 	}			// Environment

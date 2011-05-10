@@ -101,7 +101,7 @@ void VsSimulationWindow::SetCameraLookAt(CStdFPoint oTarget)
 
 void VsSimulationWindow::TrackCamera()
 {
-	CStdFPoint oPos = m_lpTrackBody->GetCurrentPosition();
+	CStdFPoint oPos = m_lpTrackBody->AbsolutePosition();
 	VxVector3 position(oPos.x, oPos.y, oPos.z);
 
 	osg::Vec3 v(position[0], position[1], position[2]); 
