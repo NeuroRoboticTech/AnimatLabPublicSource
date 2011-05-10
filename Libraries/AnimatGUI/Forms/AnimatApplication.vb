@@ -2564,13 +2564,11 @@ Namespace Forms
                 'm_dockManager.ClearContents()
             End If
 
-            For Each myChild As Form In Me.ChildForms
-                myChild.Close()
-            Next
+            ClearChildForms()
 
             'If we have a simulation up and running then completely shut it down and start over for the new project
             'This will need to be changed
-            'Me.SimulationInterface.ShutdownSimulation()
+            Me.SimulationInterface.ShutdownSimulation()
 
             CreateImageManager()
 
@@ -3029,12 +3027,25 @@ Namespace Forms
             Me.SortedChildForms.Add(frmChild.ID, frmChild)
             Me.ChildForms.Add(frmChild)
 
-            'frmChild
         End Sub
 
         Public Overridable Sub RemoveChildForm(ByRef frmChild As Forms.ExternalFileForm)
             If Not frmChild.TabPage Is Nothing Then
+                Dim leaf As TabGroupLeaf = Me.AnimatTabbedGroups.FirstLeaf()
+
+                While Not leaf Is Nothing
+                    If leaf.TabPages.Contains(frmChild.TabPage) Then
+                        leaf.TabPages.Remove(frmChild.TabPage)
+                        Return
+                    End If
+                    leaf = Me.AnimatTabbedGroups.NextLeaf(leaf)
+                End While
+
             End If
+        End Sub
+
+        Public Overridable Sub ClearChildForms()
+            Me.AnimatTabbedGroups.RootSequence.Clear()
         End Sub
 
 #End Region
