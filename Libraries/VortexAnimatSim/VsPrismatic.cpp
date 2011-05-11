@@ -130,7 +130,7 @@ void VsPrismatic::SetupGraphics()
 
 		m_osgNode = m_osgJointMT.get();
 
-		VsBody::BuildLocalMatrix();
+		BuildLocalMatrix();
 
 		SetAlpha();
 		SetCulling();
@@ -154,11 +154,7 @@ void VsPrismatic::DeletePhysics()
 	if(!m_vxPrismatic)
 		return;
 
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
-	if(!lpVsSim)
-		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
-
-	lpVsSim->Universe()->removeConstraint(m_vxPrismatic);
+	GetVsSimulator()->Universe()->removeConstraint(m_vxPrismatic);
 	delete m_vxPrismatic;
 	m_vxPrismatic = NULL;
 	m_vxJoint = NULL;
@@ -176,10 +172,6 @@ void VsPrismatic::SetupPhysics()
 
 	if(!m_lpChild)
 		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
-
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
-	if(!lpVsSim)
-		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
 
 	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpParent);
 	if(!lpVsParent)
@@ -208,7 +200,7 @@ void VsPrismatic::SetupPhysics()
 	m_vxPrismatic->setName(m_strID.c_str());
 
 	//lpAssem->addConstraint(m_vxPrismatic);
-	lpVsSim->Universe()->addConstraint(m_vxPrismatic);
+	GetVsSimulator()->Universe()->addConstraint(m_vxPrismatic);
 
 	//Disable collisions between this object and its parent
 	m_lpChild->DisableCollision(m_lpParent);

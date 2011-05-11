@@ -119,6 +119,7 @@ namespace VortexAnimatSim
 			virtual void SetBody();
 			
 			virtual void Initialize();
+			virtual void BuildLocalMatrix();
 			virtual void Physics_ResetSimulation();
 			virtual void Physics_EnableCollision(RigidBody *lpBody);
 			virtual void Physics_DisableCollision(RigidBody *lpBody);

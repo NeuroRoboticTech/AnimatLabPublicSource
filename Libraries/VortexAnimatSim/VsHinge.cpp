@@ -170,7 +170,7 @@ void VsHinge::SetupGraphics()
 
 		m_osgNode = m_osgJointMT.get();
 
-		VsBody::BuildLocalMatrix();
+		BuildLocalMatrix();
 
 		SetAlpha();
 		SetCulling();
@@ -194,11 +194,7 @@ void VsHinge::DeletePhysics()
 	if(!m_vxHinge)
 		return;
 
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
-	if(!lpVsSim)
-		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
-
-	lpVsSim->Universe()->removeConstraint(m_vxHinge);
+	GetVsSimulator()->Universe()->removeConstraint(m_vxHinge);
 	delete m_vxHinge;
 	m_vxHinge = NULL;
 	m_vxJoint = NULL;
@@ -216,10 +212,6 @@ void VsHinge::SetupPhysics()
 
 	if(!m_lpChild)
 		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
-
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
-	if(!lpVsSim)
-		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
 
 	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpParent);
 	if(!lpVsParent)
@@ -248,7 +240,7 @@ void VsHinge::SetupPhysics()
 	m_vxHinge->setName(m_strID.c_str());
 
 	//lpAssem->addConstraint(m_vxHinge);
-	lpVsSim->Universe()->addConstraint(m_vxHinge);
+	GetVsSimulator()->Universe()->addConstraint(m_vxHinge);
 
 	//Disable collisions between this object and its parent
 	m_lpChild->DisableCollision(m_lpParent);

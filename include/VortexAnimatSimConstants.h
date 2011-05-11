@@ -4,13 +4,13 @@
 //*** Errors ****
 
 #define Vs_Err_lUnableToConvertToVsSimulator -4000
-#define Vs_Err_strUnableToConvertToVsSimulator "Unable to convert CAlSimulator to CVsSimulator."
+#define Vs_Err_strUnableToConvertToVsSimulator "Unable to convert Simulator to VsSimulator."
 
 #define Vs_Err_lUnableToConvertToVsRigidBody -4001
-#define Vs_Err_strUnableToConvertToVsRigidBody "Unable to convert CAlRigidBody to CVsRigidBody."
+#define Vs_Err_strUnableToConvertToVsRigidBody "Unable to convert RigidBody to VsRigidBody."
 
 #define Vs_Err_lUnableToConvertToVsJoint -4002
-#define Vs_Err_strUnableToConvertToVsJoint "Unable to convert CAlJoint to CVsJoint."
+#define Vs_Err_strUnableToConvertToVsJoint "Unable to convert Joint to VsJoint."
 
 #define Vs_Err_lJointToParentNotHingeType -4003
 #define Vs_Err_strJointToParentNotHingeType "The joint to the parent is not a hinge type."

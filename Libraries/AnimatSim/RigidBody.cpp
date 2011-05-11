@@ -333,6 +333,19 @@ BOOL RigidBody::IsCollisionObject() {return m_bIsCollisionObject;}
 void RigidBody::IsCollisionObject(BOOL bVal) {m_bIsCollisionObject = bVal;}
 
 /**
+\brief	Query if this is the root rigid body of the structure or not.
+
+\author	dcofer
+\date	5/11/2011
+
+\return	true if root, false if not.
+**/
+BOOL RigidBody::IsRoot()
+{
+	return (m_lpStructure->Body() == this);
+}
+
+/**
 \brief	Query if this object is food source. 
 
 \author	dcofer

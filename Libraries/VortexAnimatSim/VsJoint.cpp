@@ -206,7 +206,7 @@ void VsJoint::SetupGraphics()
 		//Create the sphere.
 		CreateJointGraphics();
 
-		VsBody::BuildLocalMatrix();
+		BuildLocalMatrix();
 
 		SetAlpha();
 		SetCulling();
@@ -269,6 +269,11 @@ void VsJoint::Physics_UpdateMatrix()
 
 	//If we are here then we did not have a physics component, just and OSG one.
 	UpdateAbsolutePosition();
+}
+
+void  VsJoint::BuildLocalMatrix()
+{
+	VsBody::BuildLocalMatrix();
 }
 
 void VsJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName)

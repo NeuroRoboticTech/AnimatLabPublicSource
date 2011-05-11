@@ -173,59 +173,61 @@ namespace AnimatSim
 
 			virtual int VisualSelectionType();
 
-			CStdFPoint CenterOfMass();
-			void CenterOfMass(CStdFPoint &oPoint);
+			virtual CStdFPoint CenterOfMass();
+			virtual void CenterOfMass(CStdFPoint &oPoint);
 
-			CStdPtrArray<RigidBody>* ChildParts();
+			virtual CStdPtrArray<RigidBody>* ChildParts();
 
-			Joint *JointToParent();
-			void JointToParent(Joint *lpValue);
+			virtual Joint *JointToParent();
+			virtual void JointToParent(Joint *lpValue);
 
-			ContactSensor *ContactSensor();
+			virtual ContactSensor *ContactSensor();
 
-			float Density();
-			void Density(float fltVal);
+			virtual float Density();
+			virtual void Density(float fltVal);
 
-			float *Cd();
-			void Cd(float *vVal);
+			virtual float *Cd();
+			virtual void Cd(float *vVal);
 
-			float Volume();
-			float XArea();
-			float YArea();
-			float ZArea();
+			virtual float Volume();
+			virtual float XArea();
+			virtual float YArea();
+			virtual float ZArea();
 
-			BOOL Freeze();
-			void Freeze(BOOL bVal);
+			virtual BOOL Freeze();
+			virtual void Freeze(BOOL bVal);
 
-			BOOL IsContactSensor();
-			void IsContactSensor(BOOL bVal);
+			virtual BOOL IsContactSensor();
+			virtual void IsContactSensor(BOOL bVal);
 
-			BOOL IsCollisionObject();
-			void IsCollisionObject(BOOL bVal);
+			virtual BOOL IsCollisionObject();
+			virtual void IsCollisionObject(BOOL bVal);
 
-			BOOL IsFoodSource();
-			void IsFoodSource(BOOL bVal);
+			virtual BOOL IsRoot();
 
-			float FoodQuantity();
-			void FoodQuantity(float fltVal);
+			virtual BOOL IsFoodSource();
+			virtual void IsFoodSource(BOOL bVal);
 
-			float FoodEaten();
-			void FoodEaten(float fltVal);
+			virtual float FoodQuantity();
+			virtual void FoodQuantity(float fltVal);
+
+			virtual float FoodEaten();
+			virtual void FoodEaten(float fltVal);
 			
-			float FoodReplenishRate();
-			void FoodReplenishRate(float fltVal);
+			virtual float FoodReplenishRate();
+			virtual void FoodReplenishRate(float fltVal);
 
-			float FoodEnergyContent();
-			void FoodEnergyContent(float fltVal);
+			virtual float FoodEnergyContent();
+			virtual void FoodEnergyContent(float fltVal);
 
-			float LinearVelocityDamping();
-			void LinearVelocityDamping(float fltVal);
+			virtual float LinearVelocityDamping();
+			virtual void LinearVelocityDamping(float fltVal);
 
-			float AngularVelocityDamping();
-			void AngularVelocityDamping(float fltVal);
+			virtual float AngularVelocityDamping();
+			virtual void AngularVelocityDamping(float fltVal);
 
-			string MaterialID();
-			void MaterialID(string strID);
+			virtual string MaterialID();
+			virtual void MaterialID(string strID);
 
 			virtual float SurfaceContactCount();
 

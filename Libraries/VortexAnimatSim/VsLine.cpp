@@ -111,12 +111,8 @@ void VsLine::DrawLine()
 
 void VsLine::SetupGraphics()
 {
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThisAB->GetSimulator());
-	if(!lpVsSim)
-		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
-
 	//Add it to the root scene graph because the vertices are in global coords.
-	lpVsSim->OSGRoot()->addChild(m_osgNode.get());
+	GetVsSimulator()->OSGRoot()->addChild(m_osgNode.get());
 	SetVisible(m_lpThisMI->IsVisible());
 }
 

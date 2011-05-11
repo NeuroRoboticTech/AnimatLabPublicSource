@@ -68,6 +68,7 @@ namespace VortexAnimatSim
 			VsMovableItem();
 			virtual ~VsMovableItem();
 
+			virtual VsSimulator *GetVsSimulator();
 			virtual osg::Group *ParentOSG() = 0;
 			virtual osg::Group *RootGroup() {return m_osgRoot.get();};
 			virtual osg::Group *NodeGroup() {return m_osgNodeGroup.get();};

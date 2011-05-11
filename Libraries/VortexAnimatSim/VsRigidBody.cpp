@@ -165,26 +165,53 @@ void VsRigidBody::Initialize()
 	GetBaseValues();
 }
 
+/**
+\brief	Builds the local matrix.
+
+\details If this is the root object then use the world coordinates of the structure instead of the
+local coordinates of the rigid body.
+
+\author	dcofer
+\date	5/11/2011
+**/
+void  VsRigidBody::BuildLocalMatrix()
+{
+	//build the local matrix
+	if(m_lpThisRB->IsRoot())
+		VsBody::BuildLocalMatrix(m_lpThisAB->GetStructure()->AbsolutePosition(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
+	else
+		VsBody::BuildLocalMatrix(m_lpThisMI->Position(), m_lpThisMI->Rotation(), m_lpThisAB->Name());
+}
+
+/**
+\brief	Gets the parent osg node.
+
+\details If this is the root object then attach it directly to the OSG root node because we are building its local matrix
+using the structures absolute position. This is so the vortex stuff works correctly, and so that you can move the structure
+by moving the root body. 
+
+\author	dcofer
+\date	5/11/2011
+
+\return	Pointer to the OSG group node of the parent.
+**/
 osg::Group *VsRigidBody::ParentOSG()
 {
 	RigidBody *lpParent = NULL;
 
-	if(m_lpThisRB)
+	lpParent = m_lpThisRB->Parent();
+
+	VsMovableItem *lpItem = NULL;
+
+	if(!m_lpThisRB->IsRoot())
 	{
-		lpParent = m_lpThisRB->Parent();
-
-		VsMovableItem *lpItem = NULL;
-
-		if(lpParent)
-			lpItem = dynamic_cast<VsMovableItem *>(lpParent);
-		else
-			lpItem = dynamic_cast<VsMovableItem *>(m_lpThisRB->GetStructure());
-
-		if(lpItem)
-			return lpItem->GetMatrixTransform();
+		lpItem = dynamic_cast<VsMovableItem *>(lpParent);
+		if(!lpItem)
+			THROW_PARAM_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody, "Name", lpParent->Name());
+		return lpItem->GetMatrixTransform();
 	}
-	
-	return NULL;
+	else
+		return GetVsSimulator()->OSGRoot();
 }
 
 void VsRigidBody::SetupPhysics()
@@ -293,11 +320,7 @@ void VsRigidBody::DeletePhysics()
 {
 	if(m_vxSensor)
 	{
-		VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThisAB->GetSimulator());
-		if(!lpVsSim)
-			THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
-
-		lpVsSim->Universe()->removeEntity(m_vxSensor);
+		GetVsSimulator()->Universe()->removeEntity(m_vxSensor);
 		delete m_vxSensor;
 
 		m_vxSensor = NULL;

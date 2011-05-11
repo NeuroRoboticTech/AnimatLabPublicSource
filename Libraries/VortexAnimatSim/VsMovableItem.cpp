@@ -46,6 +46,14 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of VsMovableItem\r\n", "", -1, FALSE, TRUE);}
 }
 
+VsSimulator *VsMovableItem::GetVsSimulator()
+{
+	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThisAB->GetSimulator());
+	if(!lpVsSim)
+		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
+	return lpVsSim;
+}
+
 void VsMovableItem::SetThisPointers()
 {
 	m_lpThisAB = dynamic_cast<AnimatBase *>(this);
@@ -125,11 +133,7 @@ void VsMovableItem::CreateDragger(string strName)
 
 	if(m_lpThisAB->GetSimulator())
 	{
-		VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThisAB->GetSimulator());
-		if(!lpVsSim)
-			THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
-
-		if(lpVsSim->OsgCmdMgr())
+		if(GetVsSimulator()->OsgCmdMgr())
 		{
 			m_osgDragger = new VsDragger(this, m_lpThisMI->AllowTranslateDragX(), m_lpThisMI->AllowTranslateDragY(), m_lpThisMI->AllowTranslateDragX(),
 										 m_lpThisMI->AllowRotateDragX(), m_lpThisMI->AllowRotateDragY(), m_lpThisMI->AllowRotateDragZ());
@@ -137,7 +141,7 @@ void VsMovableItem::CreateDragger(string strName)
 
 			m_osgDragger->setupDefaultGeometry();
 
-			lpVsSim->OsgCmdMgr()->connect(*m_osgDragger, *m_osgMT);
+			GetVsSimulator()->OsgCmdMgr()->connect(*m_osgDragger, *m_osgMT);
 
 			//Add pointers to this object to the grip so it will no which body part to
 			//call the EndGripDrag method on when the drag is finished.
@@ -1368,17 +1372,6 @@ osg::Matrix SetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot)
 
 	osg::Matrix osgLocalMatrix;
 	VxOSG::copyVxReal44_to_OsgMatrix(osgLocalMatrix, vTrans.m);
-
-	//osgLocalMatrix.makeIdentity();
-	//
-	////convert cstdpoint to osg::Vec3
-	//osg::Vec3 vPos(localPos.x, localPos.y, localPos.z);
-	//
-	//osg::Quat qQuat = EulerToQuaternion(localRot.x, localRot.y, localRot.z);	
-	//
-	////build the matrix
-	//osgLocalMatrix.makeRotate(qQuat);
-	//osgLocalMatrix.setTrans(vPos);
 
 	return osgLocalMatrix;
 }

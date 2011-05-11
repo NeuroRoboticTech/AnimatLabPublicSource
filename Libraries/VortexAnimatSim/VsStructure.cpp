@@ -61,11 +61,7 @@ void VsStructure::SetThisPointers()
 
 osg::Group *VsStructure::ParentOSG()
 {
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
-	if(!lpVsSim)
-		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
-
-	return lpVsSim->OSGRoot();
+	return GetVsSimulator()->OSGRoot();
 }
 
 void VsStructure::Create()

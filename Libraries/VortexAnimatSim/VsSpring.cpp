@@ -48,10 +48,6 @@ void VsSpring::CreateJoints()
 	Spring::CreateJoints();
 	VsLine::CreateParts();
 
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
-	if(!lpVsSim)
-		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
-
 	if(m_aryAttachmentPoints.GetSize() == 2)
 	{
 		m_lpPrimaryAttachment = m_aryAttachmentPoints[0];
@@ -69,7 +65,7 @@ void VsSpring::CreateJoints()
 	    m_vxSpring->setPartAttachmentPosition(1, vSecPos.x, vSecPos.y, vSecPos.z);
 
 		m_vxSpring->enable(m_bEnabled);
-		lpVsSim->Universe()->addConstraint(m_vxSpring);
+		GetVsSimulator()->Universe()->addConstraint(m_vxSpring);
 	}
 	else
 		m_bEnabled = FALSE;

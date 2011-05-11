@@ -48,11 +48,7 @@ void VsBallSocket::DeletePhysics()
 	if(!m_vxSocket)
 		return;
 
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
-	if(!lpVsSim)
-		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
-
-	lpVsSim->Universe()->removeConstraint(m_vxSocket);
+	GetVsSimulator()->Universe()->removeConstraint(m_vxSocket);
 	delete m_vxSocket;
 	m_vxSocket = NULL;
 	m_vxJoint = NULL;
@@ -70,10 +66,6 @@ void VsBallSocket::SetupPhysics()
 
 	if(!m_lpChild)
 		THROW_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined);
-
-	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
-	if(!lpVsSim)
-		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
 
 	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpParent);
 	if(!lpVsParent)
@@ -102,7 +94,7 @@ void VsBallSocket::SetupPhysics()
 	m_vxSocket->setName(m_strID.c_str());
 
 	//lpAssem->addConstraint(m_vxHinge);
-	lpVsSim->Universe()->addConstraint(m_vxSocket);
+	GetVsSimulator()->Universe()->addConstraint(m_vxSocket);
 
 	//Disable collisions between this object and its parent
 	m_lpChild->DisableCollision(m_lpParent);

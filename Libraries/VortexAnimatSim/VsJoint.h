@@ -97,6 +97,7 @@ namespace VortexAnimatSim
 			//Methods not used by joints.
 			virtual void Physics_UpdateMatrix();
 			virtual void Physics_RotationChanged();
+			virtual void BuildLocalMatrix();
 			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName);
 			virtual void Physics_EnableCollision(RigidBody *lpBody) {};
 			virtual void Physics_DisableCollision(RigidBody *lpBody) {};
