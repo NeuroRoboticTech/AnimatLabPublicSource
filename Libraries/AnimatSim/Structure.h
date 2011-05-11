@@ -126,8 +126,19 @@ namespace AnimatSim
 			virtual void Body(RigidBody *lpBody);
 			virtual RigidBody *Body();
 
+			virtual CStdFPoint Position();
+			virtual void Position(CStdFPoint &oPoint, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
+
 			virtual float Size();
 			virtual void Size(float fltVal, BOOL bUseScaling = TRUE);
+
+			virtual BOOL AllowTranslateDragX();
+			virtual BOOL AllowTranslateDragY();
+			virtual BOOL AllowTranslateDragZ();
+
+			virtual BOOL AllowRotateDragX();
+			virtual BOOL AllowRotateDragY();
+			virtual BOOL AllowRotateDragZ();
 
 			virtual CStdPtrArray<CollisionPair> ExclusionList();
 			virtual void AddCollisionPair(string strID1, string strID2);

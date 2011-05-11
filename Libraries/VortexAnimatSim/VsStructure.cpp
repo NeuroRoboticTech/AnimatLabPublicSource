@@ -66,10 +66,10 @@ osg::Group *VsStructure::ParentOSG()
 
 void VsStructure::Create()
 {
-	m_osgGeometry = CreateSphereGeometry(15, 15,  m_lpThisST->Size());
-	osg::Geode *osgGroup = new osg::Geode;
-	osgGroup->addDrawable(m_osgGeometry.get());
-	m_osgNode = osgGroup;
+	//m_osgGeometry = CreateSphereGeometry(15, 15,  m_lpThisST->Size());
+	//osg::Geode *osgGroup = new osg::Geode;
+	//osgGroup->addDrawable(m_osgGeometry.get());
+	//m_osgNode = osgGroup;
 
 	CreateItem();
 

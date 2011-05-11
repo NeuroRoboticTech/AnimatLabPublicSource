@@ -157,7 +157,6 @@ namespace AnimatSim
 			virtual float Alpha();
 			virtual void Alpha(float fltAlpha);
 
-
 			virtual CStdColor *Ambient();
 			virtual void Ambient(CStdColor &aryColor);
 			virtual void Ambient(float *aryColor);

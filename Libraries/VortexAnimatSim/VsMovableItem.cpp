@@ -346,7 +346,7 @@ void VsMovableItem::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, s
 
 	//First create the node group. The reason for this is so that we can add other decorated groups on to this node.
 	//This is used to add the selected overlays.
-	if(!m_osgNodeGroup.valid())
+	if(!m_osgNodeGroup.valid() && m_osgNode.valid())
 	{
 		m_osgNodeGroup = new osg::Group();
 		m_osgNodeGroup->addChild(m_osgNode.get());		
@@ -521,29 +521,33 @@ void VsMovableItem::SetMaterialAlpha(osg::Material *osgMat, osg::StateSet *ss, f
 
 void VsMovableItem::SetColor(CStdColor &vAmbient, CStdColor &vDiffuse, CStdColor &vSpecular, float fltShininess)
 {
-	//create a material to use with this node
-	if(!m_osgMaterial)
-		m_osgMaterial = new osg::Material();		
+	if(m_osgNode.valid())
+	{
 
-	//create a stateset for this node
-	m_osgStateSet = m_osgNode->getOrCreateStateSet();
+		//create a material to use with this node
+		if(!m_osgMaterial)
+			m_osgMaterial = new osg::Material();		
 
-	//set the diffuse property of this node to the color of this body	
-	m_osgMaterial->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(vAmbient[0], vAmbient[1], vAmbient[2], 1));
-	m_osgMaterial->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(vDiffuse[0], vDiffuse[1], vDiffuse[2], vDiffuse[3]));
-	m_osgMaterial->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(vSpecular[0], vSpecular[1], vSpecular[2], 1));
-	m_osgMaterial->setShininess(osg::Material::FRONT_AND_BACK, fltShininess);
-	m_osgStateSet->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
-	SetAlpha();
+		//create a stateset for this node
+		m_osgStateSet = m_osgNode->getOrCreateStateSet();
 
-	//if(vDiffuse[3] < 1)
-	//{
-	//	m_osgStateSet->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
-	//	m_osgStateSet->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);
-	//}
+		//set the diffuse property of this node to the color of this body	
+		m_osgMaterial->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(vAmbient[0], vAmbient[1], vAmbient[2], 1));
+		m_osgMaterial->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(vDiffuse[0], vDiffuse[1], vDiffuse[2], vDiffuse[3]));
+		m_osgMaterial->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(vSpecular[0], vSpecular[1], vSpecular[2], 1));
+		m_osgMaterial->setShininess(osg::Material::FRONT_AND_BACK, fltShininess);
+		m_osgStateSet->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
+		SetAlpha();
 
-	//apply the material
-	m_osgStateSet->setAttribute(m_osgMaterial.get(), osg::StateAttribute::ON);
+		//if(vDiffuse[3] < 1)
+		//{
+		//	m_osgStateSet->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
+		//	m_osgStateSet->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);
+		//}
+
+		//apply the material
+		m_osgStateSet->setAttribute(m_osgMaterial.get(), osg::StateAttribute::ON);
+	}
 }
 
 void VsMovableItem::SetVisible(osg::Node *osgNode, BOOL bVisible)

@@ -109,6 +109,17 @@ void Structure::Body(RigidBody *lpBody) {m_lpBody = lpBody;}
 RigidBody *Structure::Body() 
 {return m_lpBody;}
 
+CStdFPoint Structure::Position() {return MovableItem::Position();}
+
+void Structure::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
+{
+	MovableItem::Position(oPoint, bUseScaling, bFireChangeEvent, bUpdateMatrix);
+
+	///When we change the position of the structure we need to let the rigid body know that.
+	if(m_lpBody && m_lpBody->PhysicsMovableItem())
+		m_lpBody->PhysicsMovableItem()->Physics_PositionChanged();
+}
+
 /**
 \brief	Gets the size of the graphical representation of this joint.
 
@@ -145,6 +156,20 @@ void Structure::Selected(BOOL bValue, BOOL bSelectMultiple)
 	AnimatBase::Selected(bValue, bSelectMultiple);
 	MovableItem::Selected(bValue, bSelectMultiple);
 }
+
+//The structure is not manipulated directly through the editor window. Instead, the root rigid body is moved/rotated.
+BOOL Structure::AllowTranslateDragX() {return FALSE;}
+
+BOOL Structure::AllowTranslateDragY() {return FALSE;}
+
+BOOL Structure::AllowTranslateDragZ() {return FALSE;}
+
+BOOL Structure::AllowRotateDragX() {return FALSE;}
+
+BOOL Structure::AllowRotateDragY() {return FALSE;}
+
+BOOL Structure::AllowRotateDragZ() {return FALSE;}
+
 
 /**
 \brief	Gets the collision exclusion list as an array.
