@@ -172,6 +172,18 @@ Namespace DataObjects.Physical.Bodies
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Length Segments", Me.LengthSegments.GetType(), "LengthSegments", _
                                         "Part Properties", "The number of segments to divide the plane length into.", Me.LengthSegments))
 
+            'Remove all of these columns that are not valid for a plane object.
+            If propTable.Properties.Contains("Density") Then propTable.Properties.Remove("Density")
+            If propTable.Properties.Contains("Cd") Then propTable.Properties.Remove("Cd")
+            If propTable.Properties.Contains("Cdr") Then propTable.Properties.Remove("Cdr")
+            If propTable.Properties.Contains("Ca") Then propTable.Properties.Remove("Ca")
+            If propTable.Properties.Contains("Car") Then propTable.Properties.Remove("Car")
+            If propTable.Properties.Contains("COM") Then propTable.Properties.Remove("COM")
+            If propTable.Properties.Contains("Freeze") Then propTable.Properties.Remove("Freeze")
+            If propTable.Properties.Contains("Car") Then propTable.Properties.Remove("Car")
+            If propTable.Properties.Contains("Odor Sources") Then propTable.Properties.Remove("Odor Sources")
+            If propTable.Properties.Contains("Food Source") Then propTable.Properties.Remove("Food Source")
+
         End Sub
 
 

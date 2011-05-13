@@ -204,6 +204,17 @@ namespace AnimatGUI
 
 			}
 
+			void SimulatorInterface::AddSimWindow(System::String ^sWindowXml, BOOL bInit, HWND hWnd)
+			{
+				if(m_lpSim->WaitForSimulationBlock())
+				{
+					m_lpSim->WindowMgr()->AddSimulationWindow("", "Basic", bInit, hWnd, Util::StringToStd(sWindowXml));
+					m_lpSim->UnblockSimulation();
+				}
+				else
+					throw gcnew System::Exception("Timed out while trying to stop the simulation.");
+			}
+
 			//Returns a bool telling whether it had to start the sim or not.
 			bool SimulatorInterface::AddWindow(IntPtr hParentWnd, System::String ^sWindowXml)
 			{
@@ -215,7 +226,7 @@ namespace AnimatGUI
 					//currently running simulation.
 					if(m_lpSim)
 					{
-						m_lpSim->WindowMgr()->AddSimulationWindow("", "Basic", true, hWnd, Util::StringToStd(sWindowXml));
+						AddSimWindow(sWindowXml, true, hWnd);
 						return false;
 					}
 					else 
@@ -242,6 +253,17 @@ namespace AnimatGUI
 				}
 			}
 
+			void SimulatorInterface::RemoveSimWindow(HWND hWnd)
+			{
+				if(m_lpSim->WaitForSimulationBlock())
+				{
+					m_lpSim->WindowMgr()->RemoveSimulationWindow(hWnd);
+					m_lpSim->UnblockSimulation();
+				}
+				else
+					throw gcnew System::Exception("Timed out while trying to stop the simulation.");
+			}
+
 			void SimulatorInterface::RemoveWindow(IntPtr hParentWnd)
 			{
 				try
@@ -249,7 +271,7 @@ namespace AnimatGUI
 					if(m_lpSim)
 					{
 						HWND hWnd = (HWND) hParentWnd.ToInt32();
-						m_lpSim->WindowMgr()->RemoveSimulationWindow(hWnd);
+						RemoveSimWindow(hWnd);
 					}
 				}
 				catch(CStdErrorInfo oError)

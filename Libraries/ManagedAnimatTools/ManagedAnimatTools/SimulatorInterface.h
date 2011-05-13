@@ -113,6 +113,8 @@ namespace AnimatGUI
 			void RunSimulator();
 
 			void LogMsg(AnimatGUI::Interfaces::Logger::enumLogLevel eLevel, System::String ^sMessage);
+			void AddSimWindow(System::String ^sWindowXml, BOOL bInit, HWND hWnd);
+			void RemoveSimWindow(HWND hWnd);
 
 #pragma endregion
 

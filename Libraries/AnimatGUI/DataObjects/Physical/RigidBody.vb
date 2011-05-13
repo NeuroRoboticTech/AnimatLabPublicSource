@@ -753,7 +753,7 @@ Namespace DataObjects.Physical
                                         GetType(TypeHelpers.OdorTypeEditor), GetType(TypeHelpers.OdorTypeConverter)))
 
             If m_bFoodSource Then
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("FoodSource", m_bFoodSource.GetType(), "FoodSource", _
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Food Source", m_bFoodSource.GetType(), "FoodSource", _
                                             "Food Properties", "Determines whether this rigid body is a food source."))
 
                 pbNumberBag = Me.m_snFoodQuantity.Properties
@@ -776,7 +776,7 @@ Namespace DataObjects.Physical
                                             "Food Properties", "Sets the calorie content for each piece of food.", pbNumberBag, _
                                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
             Else
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("FoodSource", m_bFoodSource.GetType(), "FoodSource", _
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Food Source", m_bFoodSource.GetType(), "FoodSource", _
                                             "Food Properties", "Determines whether this rigid body is a food source."))
             End If
 
