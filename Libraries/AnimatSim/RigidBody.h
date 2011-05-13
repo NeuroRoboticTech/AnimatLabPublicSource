@@ -171,6 +171,8 @@ namespace AnimatSim
 			RigidBody();
 			virtual ~RigidBody();
 
+			virtual void Position(CStdFPoint &oPoint, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
+
 			virtual int VisualSelectionType();
 
 			virtual CStdFPoint CenterOfMass();
@@ -230,10 +232,6 @@ namespace AnimatSim
 			virtual void MaterialID(string strID);
 
 			virtual float SurfaceContactCount();
-
-			virtual BOOL AllowTranslateDragX();
-			virtual BOOL AllowTranslateDragY();
-			virtual BOOL AllowTranslateDragZ();
 
 			virtual void Eat(float fltVal, long lTimeSlice);
 			virtual void AddSurfaceContact(RigidBody *lpContactedSurface);

@@ -94,6 +94,17 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Body\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\details For the RigidBody if it is the root then we are going to set the position of the structure.
+**/
+void RigidBody::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix) 
+{
+	if(IsRoot())
+ 		m_lpStructure->Position(oPoint, bUseScaling, bFireChangeEvent, bUpdateMatrix);
+	else
+		BodyPart::Position(oPoint, bUseScaling, bFireChangeEvent, bUpdateMatrix);
+}
+
 int RigidBody::VisualSelectionType()
 {
 	if(IsCollisionObject())
@@ -545,29 +556,6 @@ void RigidBody::MaterialID(string strID) {m_strMaterialID = strID;}
 **/
 float RigidBody::SurfaceContactCount() {return m_fltSurfaceContactCount;}
 
-BOOL RigidBody::AllowTranslateDragX() 
-{
-	if(m_lpParent)
-		return TRUE;
-	else
-		return FALSE;
-}
-
-BOOL RigidBody::AllowTranslateDragY()
-{
-	if(m_lpParent)
-		return TRUE;
-	else
-		return FALSE;
-}
-
-BOOL RigidBody::AllowTranslateDragZ()
-{
-	if(m_lpParent)
-		return TRUE;
-	else
-		return FALSE;
-}
 
 /**
 \brief	Increments the surface contact count when this part collides with something in the

@@ -1035,13 +1035,13 @@ float *MovableItem::GetDataPointer(string strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(strType == "BODYPOSITIONX" || strType == "POSITIONX"|| strType == "WORLDPOSITIONX")
+	if(strType == "WORLDPOSITIONX")
 		return &m_oReportWorldPosition.x;
 
-	if(strType == "BODYPOSITIONY" || strType == "POSITIONY"|| strType == "WORLDPOSITIONY")
+	if(strType == "WORLDPOSITIONY")
 		return &m_oReportWorldPosition.y;
 
-	if(strType == "BODYPOSITIONZ" || strType == "POSITIONZ"|| strType == "WORLDPOSITIONZ")
+	if(strType == "WORLDPOSITIONZ")
 		return &m_oReportWorldPosition.z;
 
 	if(strType == "POSITIONX")
@@ -1053,13 +1053,13 @@ float *MovableItem::GetDataPointer(string strDataType)
 	if(strType == "POSITIONZ")
 		return &m_oReportPosition.z;
 
-	if(strType == "BODYROTATIONX" || strType == "ROTATIONX")
+	if(strType == "ROTATIONX")
 		return &m_oReportRotation.x;
 
-	if(strType == "BODYROTATIONY" || strType == "ROTATIONY")
+	if(strType == "ROTATIONY")
 		return &m_oReportRotation.y;
 
-	if(strType == "BODYROTATIONZ" || strType == "ROTATIONZ")
+	if(strType == "ROTATIONZ")
 		return &m_oReportRotation.z;
 
 	return 0;
