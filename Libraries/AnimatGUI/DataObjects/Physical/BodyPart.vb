@@ -363,6 +363,16 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
+        <Browsable(False)> _
+        Public Overridable Property Description() As String
+            Get
+                Return m_strDescription
+            End Get
+            Set(ByVal Value As String)
+                m_strDescription = Value
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -385,6 +395,7 @@ Namespace DataObjects.Physical
             AddHandler m_svWorldPosition.ValueChanged, AddressOf Me.OnWorldPositionValueChanged
             AddHandler m_svRotation.ValueChanged, AddressOf Me.OnRotationValueChanged
 
+            SetupInitialTransparencies()
         End Sub
 
         Public Overrides Sub ClearIsDirty()
@@ -420,15 +431,15 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        <Browsable(False)> _
-        Public Overridable Property Description() As String
-            Get
-                Return m_strDescription
-            End Get
-            Set(ByVal Value As String)
-                m_strDescription = Value
-            End Set
-        End Property
+        Public Overridable Sub SetupInitialTransparencies()
+            If Not m_Transparencies Is Nothing Then
+                m_Transparencies.GraphicsTransparency = 0
+                m_Transparencies.CollisionsTransparency = 50
+                m_Transparencies.JointsTransparency = 50
+                m_Transparencies.ReceptiveFieldsTransparency = 50
+                m_Transparencies.SimulationTransparency = 0
+            End If
+        End Sub
 
         Public Overridable Function FindBodyPart(ByVal strID As String) As BodyPart
             Return Nothing

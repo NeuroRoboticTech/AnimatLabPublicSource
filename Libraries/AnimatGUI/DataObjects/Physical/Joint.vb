@@ -141,6 +141,16 @@ Namespace DataObjects.Physical
             Return tnJoint
         End Function
 
+        Public Overrides Sub SetupInitialTransparencies()
+            If Not m_Transparencies Is Nothing Then
+                m_Transparencies.GraphicsTransparency = 50
+                m_Transparencies.CollisionsTransparency = 50
+                m_Transparencies.JointsTransparency = 0
+                m_Transparencies.ReceptiveFieldsTransparency = 50
+                m_Transparencies.SimulationTransparency = 50
+            End If
+        End Sub
+
         Public Overrides Function FindBodyPart(ByVal strID As String) As BodyPart
 
             If Me.ID = strID Then

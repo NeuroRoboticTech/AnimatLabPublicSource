@@ -114,7 +114,7 @@ over the whole plane only once. This property controls the tiling in the x direc
 
 \return	Grid x size.
 **/
-float Plane::GridX() {return (m_ptSize.x/(float) m_iWidthSegments);}
+float Plane::GridX() {return (float) m_iWidthSegments;}
 
 /**
 \brief	Gets the length of a segment for the y dimension of the plane.
@@ -128,7 +128,7 @@ over the whole plane only once. This property controls the tiling in the y direc
 
 \return	Grid y size.
 **/
-float Plane::GridY() {return (m_ptSize.x/(float) m_iWidthSegments);}
+float Plane::GridY() {return (float) m_iLengthSegments;}
 
 /**
 \brief	Gets the size of the visible plane.
@@ -228,7 +228,31 @@ void Plane::LengthSegments(int iVal)
 	Resize();
 }
 
-//BOOL Plane::AllowMouseManipulation() {return FALSE;}
+BOOL Plane::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(RigidBody::SetData(strType, strValue, FALSE))
+		return TRUE;
+
+	if(strType == "LENGTHSEGMENTS")
+	{
+		LengthSegments(atoi(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "WIDTHSEGMENTS")
+	{
+		WidthSegments(atoi(strValue.c_str()));
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
 
 void Plane::Load(CStdXml &oXml)
 {

@@ -133,6 +133,16 @@ Namespace DataObjects.Physical.Bodies
             m_svSize.CopyData(fltVal, fltVal)
         End Sub
 
+        Public Overrides Sub SetupInitialTransparencies()
+            If Not m_Transparencies Is Nothing Then
+                m_Transparencies.GraphicsTransparency = 0
+                m_Transparencies.CollisionsTransparency = 0
+                m_Transparencies.JointsTransparency = 0
+                m_Transparencies.ReceptiveFieldsTransparency = 0
+                m_Transparencies.SimulationTransparency = 0
+            End If
+        End Sub
+
 #Region " Add-Remove to List Methods "
 
         ''' \brief  Before add to list.
@@ -166,11 +176,11 @@ Namespace DataObjects.Physical.Bodies
                                         "Part Properties", "Sets the size of the visible plane.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledVector2.ScaledVector2PropBagConverter)))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Width Segments", Me.WidthSegments.GetType(), "WidthSegments", _
-                                        "Part Properties", "The number of segments to divide the plane width into.", Me.WidthSegments))
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Segments Width", Me.WidthSegments.GetType(), "WidthSegments", _
+                                        "Visibility", "The number of segments to divide the plane width into.", Me.WidthSegments))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Length Segments", Me.LengthSegments.GetType(), "LengthSegments", _
-                                        "Part Properties", "The number of segments to divide the plane length into.", Me.LengthSegments))
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Segments Length", Me.LengthSegments.GetType(), "LengthSegments", _
+                                        "Visibility", "The number of segments to divide the plane length into.", Me.LengthSegments))
 
             'Remove all of these columns that are not valid for a plane object.
             If propTable.Properties.Contains("Density") Then propTable.Properties.Remove("Density")
@@ -178,7 +188,7 @@ Namespace DataObjects.Physical.Bodies
             If propTable.Properties.Contains("Cdr") Then propTable.Properties.Remove("Cdr")
             If propTable.Properties.Contains("Ca") Then propTable.Properties.Remove("Ca")
             If propTable.Properties.Contains("Car") Then propTable.Properties.Remove("Car")
-            If propTable.Properties.Contains("COM") Then propTable.Properties.Remove("COM")
+            If propTable.Properties.Contains("Center of Mass") Then propTable.Properties.Remove("Center of Mass")
             If propTable.Properties.Contains("Freeze") Then propTable.Properties.Remove("Freeze")
             If propTable.Properties.Contains("Car") Then propTable.Properties.Remove("Car")
             If propTable.Properties.Contains("Odor Sources") Then propTable.Properties.Remove("Odor Sources")

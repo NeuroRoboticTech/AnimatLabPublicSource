@@ -556,6 +556,16 @@ Namespace DataObjects.Physical
             Return bpPart
         End Function
 
+        Public Overridable Sub SetupInitialTransparencies()
+            If Not m_Transparencies Is Nothing Then
+                m_Transparencies.GraphicsTransparency = 50
+                m_Transparencies.CollisionsTransparency = 50
+                m_Transparencies.JointsTransparency = 50
+                m_Transparencies.ReceptiveFieldsTransparency = 50
+                m_Transparencies.SimulationTransparency = 100
+            End If
+        End Sub
+
         Public Overridable Function AddRootBody(Optional ByVal rbRootToAdd As AnimatGUI.DataObjects.Physical.RigidBody = Nothing, Optional ByVal bAddDefaultGraphics As Boolean = True) As Boolean
 
             If Not m_dbRoot Is Nothing Then
@@ -593,9 +603,7 @@ Namespace DataObjects.Physical
 
             m_dbRoot.AfterAddToList()
 
-            'Dim vPos As New Vec3d(Nothing, 0.5, 0, 0)
-            'Dim vNorm As New Vec3d(Nothing, 0, 1, 0)
-            'm_dbRoot.AddChildBody(vPos, vNorm)
+            m_dbRoot.SelectItem()
 
             'Me.ManualAddHistory(New AnimatGUI.Framework.UndoSystem.AddBodyPartEvent(Me.BodyEditor, Me, Nothing, m_dbRoot))
             Return True

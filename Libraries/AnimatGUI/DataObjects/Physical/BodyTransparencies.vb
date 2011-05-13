@@ -151,46 +151,6 @@ Namespace DataObjects.Physical
 
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
-
-            SetupInitialTransparencies()
-        End Sub
-
-        Public Overridable Sub SetupInitialTransparencies()
-            If Not m_doParent Is Nothing Then
-                If Util.IsTypeOf(m_doParent.GetType, GetType(RigidBody), False) Then
-                    Dim doPart As RigidBody = DirectCast(m_doParent, RigidBody)
-
-                    If doPart.IsCollisionObject Then
-                        m_fltGraphicsTrans = 50
-                        m_fltCollisionsTrans = 0
-                        m_fltJointsTrans = 50
-                        m_fltRecFieldTrans = 50
-                        m_fltSimTrans = 100
-                    Else
-                        m_fltGraphicsTrans = 0
-                        m_fltCollisionsTrans = 50
-                        m_fltJointsTrans = 50
-                        m_fltRecFieldTrans = 50
-                        m_fltSimTrans = 0
-                    End If
-                ElseIf Util.IsTypeOf(m_doParent.GetType, GetType(Joint), False) Then
-                    Dim doPart As Joint = DirectCast(m_doParent, Joint)
-
-                    m_fltGraphicsTrans = 50
-                    m_fltCollisionsTrans = 50
-                    m_fltJointsTrans = 0
-                    m_fltRecFieldTrans = 50
-                    m_fltSimTrans = 100
-                End If
-            ElseIf Util.IsTypeOf(m_doParent.GetType, GetType(PhysicalStructure), False) Then
-
-                m_fltGraphicsTrans = 50
-                m_fltCollisionsTrans = 50
-                m_fltJointsTrans = 50
-                m_fltRecFieldTrans = 50
-                m_fltSimTrans = 100
-            End If
-
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _

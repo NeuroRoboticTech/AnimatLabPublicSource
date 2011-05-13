@@ -112,7 +112,7 @@ Namespace DataObjects.Physical
             End Get
             Set(ByVal value As Boolean)
                 m_bIsCollisionObject = value
-                m_Transparencies.SetupInitialTransparencies()
+                SetupInitialTransparencies()
             End Set
         End Property
 
@@ -512,6 +512,25 @@ Namespace DataObjects.Physical
             m_aryOdorSources.ClearIsDirty()
         End Sub
 
+        Public Overrides Sub SetupInitialTransparencies()
+            If Not m_Transparencies Is Nothing Then
+
+                If IsCollisionObject Then
+                    m_Transparencies.GraphicsTransparency = 50
+                    m_Transparencies.CollisionsTransparency = 0
+                    m_Transparencies.JointsTransparency = 50
+                    m_Transparencies.ReceptiveFieldsTransparency = 50
+                    m_Transparencies.SimulationTransparency = 100
+                Else
+                    m_Transparencies.GraphicsTransparency = 0
+                    m_Transparencies.CollisionsTransparency = 50
+                    m_Transparencies.JointsTransparency = 50
+                    m_Transparencies.ReceptiveFieldsTransparency = 50
+                    m_Transparencies.SimulationTransparency = 0
+                End If
+            End If
+        End Sub
+
         Public Overrides Function FindBodyPart(ByVal strID As String) As BodyPart
 
             Dim bpPart As BodyPart
@@ -780,8 +799,8 @@ Namespace DataObjects.Physical
                                             "Food Properties", "Determines whether this rigid body is a food source."))
             End If
 
-            'propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Texture", GetType(String), "Texture", _
-            '                            "Visibility", "Sets the bmp texture file to wrap onto this body part.", Me.Texture, GetType(TypeHelpers.ImageFileEditor))) 'GetType(System.Windows.Forms.Design.FileNameEditor)))
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Texture", GetType(String), "Texture", _
+                                        "Visibility", "Sets the bmp texture file to wrap onto this body part.", Me.Texture, GetType(TypeHelpers.ImageFileEditor))) 'GetType(System.Windows.Forms.Design.FileNameEditor)))
 
 
         End Sub
