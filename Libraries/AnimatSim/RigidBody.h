@@ -157,15 +157,17 @@ namespace AnimatSim
 			/// Identifier for the material type this part will use.
 			string m_strMaterialID;
 
-			RigidBody *LoadRigidBody(CStdXml &oXml);
-			Joint *LoadJoint(CStdXml &oXml);
+			virtual RigidBody *LoadRigidBody(CStdXml &oXml);
+			virtual Joint *LoadJoint(CStdXml &oXml);
+
+			virtual void LoadPosition(CStdXml &oXml);
 
 			virtual void AddRigidBody(string strXml);
 			virtual void RemoveRigidBody(string strID, BOOL bThrowError = TRUE);
 			virtual int FindChildListPos(string strID, BOOL bThrowError = TRUE);
 
-			Odor *LoadOdor(CStdXml &oXml);
-			void AddOdor(Odor *lpOdor);
+			virtual Odor *LoadOdor(CStdXml &oXml);
+			virtual void AddOdor(Odor *lpOdor);
 
 		public:
 			RigidBody();

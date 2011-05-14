@@ -96,6 +96,9 @@ namespace AnimatSim
 			/// directly without having to overload a bunch of methods in each box, sphere, etc..
 			IPhysicsMovableItem *m_lpPhysicsMovableItem;
 
+			virtual void LoadPosition(CStdXml &oXml);
+			virtual void LoadRotation(CStdXml &oXml);
+
 		public:
 			MovableItem(void);
 			virtual ~MovableItem(void);

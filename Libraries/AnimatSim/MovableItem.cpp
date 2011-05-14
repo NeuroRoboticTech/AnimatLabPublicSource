@@ -1154,11 +1154,19 @@ BOOL MovableItem::SetData(string strDataType, string strValue, BOOL bThrowError)
 
 #pragma endregion
 
+/**
+\brief	Loads the items position.
 
-void MovableItem::Load(CStdXml &oXml)
+\details I have split this off into its own virtual class because some derived classes may need to override
+this function. For example, RigidBody needs to override it to not set the position if it is the root body.
+
+\author	dcofer
+\date	5/14/2011
+
+\param [in,out]	oXml	The xml.
+**/
+void MovableItem::LoadPosition(CStdXml &oXml)
 {
-	oXml.IntoElem();  //Into Element
-	
 	CStdFPoint vTemp;
 
 	Std_LoadPoint(oXml, "Position", vTemp);
@@ -1168,9 +1176,31 @@ void MovableItem::Load(CStdXml &oXml)
 		AbsolutePosition(m_oPosition);
 	else
 		AbsolutePosition( m_lpParent->AbsolutePosition() + m_oPosition);
+}
 
+/**
+\brief	Loads the items rotation.
+
+\details I have split this off into its own virtual function to make it consistent with the LoadPosition method.
+
+\author	dcofer
+\date	5/14/2011
+
+\param [in,out]	oXml	The xml.
+**/
+void MovableItem::LoadRotation(CStdXml &oXml)
+{
+	CStdFPoint vTemp;
 	Std_LoadPoint(oXml, "Rotation", vTemp);
 	Rotation(vTemp, FALSE, FALSE);	
+}
+
+void MovableItem::Load(CStdXml &oXml)
+{
+	oXml.IntoElem();  //Into Element
+	
+	LoadPosition(oXml);
+	LoadRotation(oXml);
 
 	IsVisible(oXml.GetChildBool("IsVisible", m_bIsVisible));
 	GraphicsAlpha(oXml.GetChildFloat("GraphicsAlpha", m_fltGraphicsAlpha));

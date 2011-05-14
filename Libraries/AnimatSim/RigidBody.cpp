@@ -951,6 +951,20 @@ void RigidBody::UpdatePhysicsPosFromGraphics()
 
 #pragma endregion
 
+void RigidBody::LoadPosition(CStdXml &oXml)
+{
+	CStdFPoint vTemp;
+
+	Std_LoadPoint(oXml, "Position", vTemp);
+
+	if(!IsRoot())
+	{
+		Position(vTemp, TRUE, FALSE, FALSE);	
+		AbsolutePosition(m_lpParent->AbsolutePosition() + m_oPosition);
+	}
+	else
+		AbsolutePosition(m_lpStructure->AbsolutePosition());
+}
 
 void RigidBody::Load(CStdXml &oXml)
 {
