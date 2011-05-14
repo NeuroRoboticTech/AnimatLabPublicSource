@@ -45,6 +45,8 @@ namespace AnimatSim
 Sphere::Sphere()
 {
 	m_fltRadius = 1;
+	m_iLatitudeSegments = 50;
+	m_iLongtitudeSegments = 50;
 }
 
 /**
@@ -71,12 +73,64 @@ void Sphere::Radius(float fltVal, BOOL bUseScaling)
 	Resize();
 }
 
+void Sphere::LatitudeSegments(int iVal) 
+{
+	Std_IsAboveMin((int) 10, iVal, TRUE, "Sphere.LatitudeSegments", TRUE);
+	m_iLatitudeSegments = iVal;
+	Resize();
+}
+
+int Sphere::LatitudeSegments() {return m_iLatitudeSegments;}
+
+void Sphere::LongtitudeSegments(int iVal)
+{
+	Std_IsAboveMin((int) 10, iVal, TRUE, "Sphere.LongtitudeSegments", TRUE);
+	m_iLongtitudeSegments = iVal;
+	Resize();
+}
+
+int Sphere::LongtitudeSegments() {return m_iLongtitudeSegments;}
+
+BOOL Sphere::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(RigidBody::SetData(strType, strValue, FALSE))
+		return TRUE;
+
+	if(strType == "RADIUS")
+	{
+		Radius(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "LATITUDESEGMENTS")
+	{
+		LatitudeSegments(atoi(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "LONGTITUDESEGMENTS")
+	{
+		LongtitudeSegments(atoi(strValue.c_str()));
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
+
 void Sphere::Load(CStdXml &oXml)
 {
 	RigidBody::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
 	Radius(oXml.GetChildFloat("Radius", m_fltRadius));
+	LatitudeSegments(oXml.GetChildInt("LatitudeSegments", m_iLatitudeSegments));
+	LongtitudeSegments(oXml.GetChildInt("LongtitudeSegments", m_iLongtitudeSegments));
 	oXml.OutOfElem(); //OutOf RigidBody Element
 }
 

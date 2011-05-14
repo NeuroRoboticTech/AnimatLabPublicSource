@@ -27,6 +27,12 @@ namespace AnimatSim
 				/// The radius of the sphere
 				float m_fltRadius;
 
+				/// Number of segments along the latitude direction that are used to build the sphere.
+				int m_iLatitudeSegments;
+
+				/// Number of segments along the longtitude direction that are used to build the sphere.
+				int m_iLongtitudeSegments;
+
 			public:
 				Sphere();
 				virtual ~Sphere();
@@ -52,6 +58,13 @@ namespace AnimatSim
 				**/
 				virtual void Radius(float fltVal, BOOL bUseScaling = TRUE);
 
+				virtual void LatitudeSegments(int iVal);
+				virtual int LatitudeSegments();
+				
+				virtual void LongtitudeSegments(int iVal);
+				virtual int LongtitudeSegments();
+
+				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 				virtual void Load(CStdXml &oXml);
 			};
 

@@ -588,7 +588,7 @@ Namespace DataObjects.Physical
             rbRootToAdd.IsRoot = True
             rbRootToAdd.IsCollisionObject = True
             rbRootToAdd.ContactSensor = False
-            rbRootToAdd.Freeze = True
+            rbRootToAdd.Freeze = False
             rbRootToAdd.BeforeAddToList()
 
             m_dbRoot = rbRootToAdd

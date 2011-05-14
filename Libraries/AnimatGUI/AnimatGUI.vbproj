@@ -371,6 +371,7 @@
     </Compile>
     <Compile Include="DataObjects\Physical\Bodies\Cone.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Plane.vb" />
+    <Compile Include="DataObjects\Physical\Bodies\Sphere.vb" />
     <Compile Include="DataObjects\Physical\BodyPart.vb">
       <SubType>Code</SubType>
     </Compile>

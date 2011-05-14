@@ -2599,6 +2599,8 @@ Namespace Forms
 
             UpdateToolstrips()
 
+            Me.ClearIsDirty()
+
             Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Closed current project")
         End Sub
 
