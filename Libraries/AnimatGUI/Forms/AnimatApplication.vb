@@ -2583,8 +2583,7 @@ Namespace Forms
 
             m_strPhysicsAssemblyName = "AnimatGUI.dll"
             m_strPhysicsClassName = "AnimatGUI.DataObjects.Simulation"
-            'm_doSimulation = DirectCast(Util.LoadClass(m_strPhysicsAssemblyName, m_strPhysicsClassName, Me.FormHelper), AnimatGUI.DataObjects.Simulation)
-            m_doSimulation = New DataObjects.Simulation
+            m_doSimulation = New DataObjects.Simulation(Me.FormHelper)
 
             m_ModificationHistory = New AnimatGUI.Framework.UndoSystem.ModificationHistory
 
@@ -2830,7 +2829,7 @@ Namespace Forms
                 Me.Logger.TraceLevel = eLogLevel
             End If
 
-            m_doSimulation = New DataObjects.Simulation
+            m_doSimulation = New DataObjects.Simulation(Me.FormHelper)
             If m_strSimulationFile.Trim.Length > 0 Then
                 Try
                     m_doSimulation.LoadData(oXml)
@@ -3029,7 +3028,7 @@ Namespace Forms
 
         End Sub
 
-        Public Overridable Sub RemoveChildForm(ByRef frmChild As Forms.ExternalFileForm)
+        Public Overridable Sub RemoveChildForm(ByVal frmChild As Forms.ExternalFileForm)
             If Not frmChild.TabPage Is Nothing Then
                 Dim leaf As TabGroupLeaf = Me.AnimatTabbedGroups.FirstLeaf()
 
@@ -3042,6 +3041,18 @@ Namespace Forms
                 End While
 
             End If
+        End Sub
+
+        Public Overridable Sub RemoveBodyEditorForm(ByVal doStruct As DataObjects.Physical.PhysicalStructure)
+            For Each frmAnimat As AnimatForm In Me.ChildForms
+                If Util.IsTypeOf(frmAnimat.GetType, GetType(Forms.BodyPlan.Editor), False) Then
+                    Dim frmEditor As Forms.BodyPlan.Editor = DirectCast(frmAnimat, Forms.BodyPlan.Editor)
+                    If frmEditor.PhysicalStructure Is doStruct Then
+                        RemoveChildForm(frmEditor)
+                    End If
+                End If
+            Next
+
         End Sub
 
         Public Overridable Sub ClearChildForms()
@@ -3523,8 +3534,7 @@ Namespace Forms
 
                 frmNewProject.txtProjectName.Text = "NewProject"
                 If frmNewProject.ShowDialog = DialogResult.OK Then
-                    'm_doSimulation = DirectCast(Util.LoadClass(m_strPhysicsAssemblyName, m_strPhysicsClassName, Me.FormHelper), AnimatGUI.DataObjects.Simulation)
-                    m_doSimulation = New DataObjects.Simulation
+                    m_doSimulation = New DataObjects.Simulation(Me.FormHelper)
                     Util.Application.ProjectPath = frmNewProject.txtLocation.Text & "\" & frmNewProject.txtProjectName.Text
                     Util.Application.ProjectName = frmNewProject.txtProjectName.Text
                     Util.Application.ProjectFile = Util.Application.ProjectName & ".aproj"

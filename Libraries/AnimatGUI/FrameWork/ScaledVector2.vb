@@ -134,6 +134,7 @@ Namespace Framework
                 m_snY.ActualValue = fltY
 
                 If Not bIgnoreEvents AndAlso Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
+                Me.IsDirty = True
 
             Catch ex As Exception
                 Throw ex
@@ -150,6 +151,8 @@ Namespace Framework
                 m_snY.CopyData(svVec2.m_snY)
 
                 If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
+                Me.IsDirty = True
+
             Catch ex As Exception
                 Throw ex
             Finally

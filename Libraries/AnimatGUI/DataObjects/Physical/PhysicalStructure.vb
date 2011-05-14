@@ -1130,7 +1130,8 @@ Namespace DataObjects.Physical
                     m_tnBodyPlanNode = Nothing
                     Me.RemoveFiles()
 
-                    Util.Application.SaveProject(Util.Application.ProjectFile)
+                    Util.Application.RemoveBodyEditorForm(Me)
+
                 End If
 
                 Return Not bDelete

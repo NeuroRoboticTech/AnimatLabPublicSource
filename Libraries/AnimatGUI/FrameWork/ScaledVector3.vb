@@ -159,6 +159,7 @@ Namespace Framework
                 m_snZ.ActualValue = fltZ
 
                 If Not bIgnoreEvents AndAlso Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
+                Me.IsDirty = True
 
             Catch ex As Exception
                 Throw ex
@@ -176,6 +177,8 @@ Namespace Framework
                 m_snZ.CopyData(svVec3.m_snZ)
 
                 If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
+                Me.IsDirty = True
+
             Catch ex As Exception
                 Throw ex
             Finally

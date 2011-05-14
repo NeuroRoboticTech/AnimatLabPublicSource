@@ -54,9 +54,9 @@ Namespace Collections
         Public Sub Remove(ByVal key As [String], Optional ByVal bCallAddMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
             Dim doObj As AnimatGUI.DataObjects.Physical.PhysicalStructure = Me.Item(key)
 
-            If bCallAddMethods Then doObj.BeforeAddToList(bThrowError)
+            If bCallAddMethods Then doObj.BeforeRemoveFromList(bThrowError)
             Dictionary.Remove(key)
-            If bCallAddMethods Then doObj.AfterAddToList(bThrowError)
+            If bCallAddMethods Then doObj.AfterRemoveFromList(bThrowError)
 
             Me.IsDirty = True
         End Sub 'Remove

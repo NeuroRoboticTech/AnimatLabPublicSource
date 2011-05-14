@@ -286,6 +286,7 @@ Namespace DataObjects
             MyBase.New(doParent)
 
             m_strName = "Simulation"
+            m_strID = "Simulator"
             m_snSimEndTime = New AnimatGUI.Framework.ScaledNumber(Me, "SimEndTime", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "seconds", "s")
 
             'These events are called when the simulation is starting or resuming so that we can initialize certain objects like stimuli and data charts.
