@@ -140,6 +140,43 @@ void VsRigidBody::SetDensity(float fltVal)
 		m_vxCollisionGeometry->setRelativeDensity(fltVal);
 }
 
+void VsRigidBody::Physics_Resize()
+{
+	//First lets get rid of the current current geometry and then put new geometry in place.
+	if(m_osgNode.valid())
+	{
+		osg::Geode *osgGroup = dynamic_cast<osg::Geode *>(m_osgNode.get());
+		if(!osgGroup)
+			THROW_TEXT_ERROR(Vs_Err_lNodeNotGeode, Vs_Err_strNodeNotGeode, m_lpThisAB->Name());
+
+		if(osgGroup && osgGroup->containsDrawable(m_osgGeometry.get()))
+			osgGroup->removeDrawable(m_osgGeometry.get());
+
+		m_osgGeometry.release();
+
+		//Create a new box geometry with the new sizes.
+		CreateGraphicsGeometry();
+		m_osgGeometry->setName(m_lpThisAB->Name() + "_Geometry");
+
+		//Add it to the geode.
+		osgGroup->addDrawable(m_osgGeometry.get());
+
+		//Now lets re-adjust the gripper size.
+		if(m_osgDragger.valid())
+			m_osgDragger->SetupMatrix();
+
+		//Reset the user data for the new parts.
+		osg::ref_ptr<VsOsgUserDataVisitor> osgVisitor = new VsOsgUserDataVisitor(this);
+		osgVisitor->traverse(*m_osgNodeGroup);
+	}
+
+	if(m_vxGeometry)
+	{
+		ResizePhysicsGeometry();
+		GetBaseValues();
+	}
+}
+
 void VsRigidBody::GetBaseValues()
 {
 	if(m_vxPart)

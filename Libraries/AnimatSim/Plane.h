@@ -61,6 +61,7 @@ namespace AnimatSim
 
 				virtual CStdFPoint Size();
 				virtual void Size(CStdFPoint ptPoint, BOOL bUseScaling = TRUE);
+				virtual void Size(string strXml, BOOL bUseScaling = TRUE);
 
 				virtual int WidthSegments();
 				virtual void WidthSegments(int iVal);

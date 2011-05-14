@@ -165,6 +165,25 @@ void VsMovableItem::AttachedPartMovedOrRotated(string strID)
 	Physics_ResetGraphicsAndPhysics();
 }
 
+void VsMovableItem::CreateGraphicsGeometry() {}
+
+void VsMovableItem::CreatePhysicsGeometry() {}
+
+void VsMovableItem::ResizePhysicsGeometry() {}
+
+void VsMovableItem::CreateGeometry() 
+{
+	CreateGraphicsGeometry();
+	m_osgGeometry->setName(m_lpThisAB->Name() + "_Geometry");
+
+	osg::Geode *osgGroup = new osg::Geode;
+	osgGroup->addDrawable(m_osgGeometry.get());
+	m_osgNode = osgGroup;
+	m_osgNode->setName(m_lpThisAB->Name() + "_Node");
+
+	CreatePhysicsGeometry();
+}
+
 void VsMovableItem::SetupGraphics()
 {
 	m_osgParent = ParentOSG();

@@ -52,7 +52,6 @@ void VsBody::SetThisPointers()
 		THROW_TEXT_ERROR(Vs_Err_lThisPointerNotDefined, Vs_Err_strThisPointerNotDefined, "m_lpThisBP, " + m_lpThisAB->Name());
 }
 
-
 	}			// Environment
 //}				//VortexAnimatSim
 

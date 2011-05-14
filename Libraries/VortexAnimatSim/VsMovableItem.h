@@ -64,6 +64,11 @@ namespace VortexAnimatSim
 			virtual void UpdatePositionAndRotationFromMatrix();
 			virtual void UpdateAbsolutePosition();
 
+			virtual void CreateGraphicsGeometry();
+			virtual void CreatePhysicsGeometry();
+			virtual void CreateGeometry();
+			virtual void ResizePhysicsGeometry();
+
 		public:
 			VsMovableItem();
 			virtual ~VsMovableItem();

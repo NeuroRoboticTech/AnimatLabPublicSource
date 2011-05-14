@@ -24,6 +24,7 @@ namespace AnimatSim
 			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits) = 0;
 			virtual CStdFPoint Physics_GetVelocityAtPoint(float x, float y, float z) = 0;
 			virtual float Physics_GetMass() = 0;
+			virtual void Physics_Resize() = 0;
 		};
 
 	}

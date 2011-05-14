@@ -166,6 +166,18 @@ void Plane::Size(CStdFPoint ptPoint, BOOL bUseScaling)
 	Resize();
 }
 
+void Plane::Size(string strXml, BOOL bUseScaling)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Size");
+	
+	CStdFPoint vPos;
+	Std_LoadPoint(oXml, "Size", vPos);
+	Size(vPos, bUseScaling);
+}
+
 /**
 \brief	Gets the width segments.
 
@@ -234,6 +246,12 @@ BOOL Plane::SetData(string strDataType, string strValue, BOOL bThrowError)
 
 	if(RigidBody::SetData(strType, strValue, FALSE))
 		return TRUE;
+
+	if(strType == "SIZE")
+	{
+		Size(strValue);
+		return TRUE;
+	}
 
 	if(strType == "LENGTHSEGMENTS")
 	{

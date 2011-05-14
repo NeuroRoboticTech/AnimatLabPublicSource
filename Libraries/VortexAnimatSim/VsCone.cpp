@@ -35,14 +35,13 @@ VsCone::~VsCone()
 
 }
 
-void VsCone::CreateParts()
+void VsCone::CreateGraphicsGeometry()
 {
 	m_osgGeometry = CreateConeGeometry(m_fltHeight, m_fltUpperRadius, m_fltLowerRadius, m_iSides, true, true, true);
-	osg::Geode *osgGroup = new osg::Geode;
-	osgGroup->addDrawable(m_osgGeometry.get());
+}
 
-	m_osgNode = osgGroup;
-
+void VsCone::CreatePhysicsGeometry()
+{
 	if(IsCollisionObject())
 		m_vxGeometry = VxConvexMesh::createFromNode(m_osgNode.get());
 
@@ -51,6 +50,11 @@ void VsCone::CreateParts()
 	m_fltXArea = 2*m_fltLowerRadius*m_fltHeight;
 	m_fltYArea = 2*m_fltLowerRadius*m_fltHeight;
 	m_fltZArea = 2*VX_PI*m_fltLowerRadius*m_fltLowerRadius;
+}
+
+void VsCone::CreateParts()
+{
+	CreateGeometry();
 
 	VsRigidBody::CreateItem();
 	Cone::CreateParts();
@@ -66,36 +70,8 @@ void VsCone::CreateJoints()
 	VsRigidBody::Initialize();
 }
 
-void VsCone::Resize()
+void VsCone::ResizePhysicsGeometry()
 {
-	//First lets get rid of the current current geometry and then put new geometry in place.
-	if(m_osgNode.valid())
-	{
-		osg::Geode *osgGroup = dynamic_cast<osg::Geode *>(m_osgNode.get());
-		if(!osgGroup)
-			THROW_TEXT_ERROR(Vs_Err_lNodeNotGeode, Vs_Err_strNodeNotGeode, m_lpThisAB->Name());
-
-		if(osgGroup && osgGroup->containsDrawable(m_osgGeometry.get()))
-			osgGroup->removeDrawable(m_osgGeometry.get());
-
-		m_osgGeometry.release();
-
-		//Create a new box geometry with the new sizes.
-		m_osgGeometry = CreateConeGeometry(m_fltHeight, m_fltUpperRadius, m_fltLowerRadius, m_iSides, true, true, true);
-		m_osgGeometry->setName(m_lpThisAB->Name() + "_Geometry");
-
-		//Add it to the geode.
-		osgGroup->addDrawable(m_osgGeometry.get());
-
-		//Now lets re-adjust the gripper size.
-		if(m_osgDragger.valid())
-			m_osgDragger->SetupMatrix();
-
-		//Reset the user data for the new parts.
-		osg::ref_ptr<VsOsgUserDataVisitor> osgVisitor = new VsOsgUserDataVisitor(this);
-		osgVisitor->traverse(*m_osgNodeGroup);
-	}
-
 	if(m_vxGeometry && m_vxCollisionGeometry && m_vxSensor)
 	{
 		if(!m_vxSensor->removeCollisionGeometry(m_vxCollisionGeometry))
@@ -107,8 +83,6 @@ void VsCone::Resize()
 		int iMaterialID = m_lpSim->GetMaterialID(MaterialID());
 		m_vxGeometry = VxConvexMesh::createFromNode(m_osgNode.get());
 		Vx::VxCollisionGeometry *vxCollisionGeometry = m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density());
-
-		GetBaseValues();
 	}
 }
 

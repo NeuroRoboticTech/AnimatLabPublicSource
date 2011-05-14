@@ -19,13 +19,16 @@ namespace VortexAnimatSim
 			{
 			protected:
 
+				virtual void CreateGraphicsGeometry();
+				virtual void CreatePhysicsGeometry();
+				virtual void ResizePhysicsGeometry();
+
 			public:
 				VsBox();
 				virtual ~VsBox();
 
 				virtual void CreateParts();
 				virtual void CreateJoints();
-				virtual void Resize();
 			};
 
 		}		//Bodies

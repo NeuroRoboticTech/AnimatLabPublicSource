@@ -19,7 +19,10 @@ namespace VortexAnimatSim
 			class VORTEX_PORT VsSphere : public AnimatSim::Environment::Bodies::Sphere, public VsRigidBody
 			{
 			protected:
-				Vx::VxSphere *m_cgSphere;
+
+				virtual void CreateGraphicsGeometry();
+				virtual void CreatePhysicsGeometry();
+				virtual void ResizePhysicsGeometry();
 
 			public:
 				VsSphere();
@@ -27,7 +30,6 @@ namespace VortexAnimatSim
 
 				virtual void CreateParts();
 				virtual void CreateJoints();
-				virtual void Resize();
 			};
 
 		}		//Bodies

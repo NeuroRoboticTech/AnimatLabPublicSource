@@ -105,7 +105,11 @@ allows that child class to perform any necessary graphics/physics calls for the 
 \author	dcofer
 \date	3/2/2011
 **/
-void BodyPart::Resize() {};
+void BodyPart::Resize() 
+{
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_Resize();
+}
 
 #pragma endregion
 
