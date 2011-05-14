@@ -2096,6 +2096,11 @@ Namespace Forms
                 Me.AddOrganismStripButton.Enabled = True
                 Me.AddStructureToolStripButton.Enabled = True
                 Me.AddToolToolStripButton.Enabled = True
+
+                Me.DeleteToolStripButton.Enabled = True
+                Me.DeleteToolStripMenuItem.Enabled = True
+
+                Me.SnapshotSimToolStripMenuItem.Enabled = True
             Else
                 'If a project is not open then disable a lot of stuff
                 Me.SaveToolStripMenuItem.Enabled = False
@@ -2118,6 +2123,11 @@ Namespace Forms
                 Me.AddOrganismStripButton.Enabled = False
                 Me.AddStructureToolStripButton.Enabled = False
                 Me.AddToolToolStripButton.Enabled = False
+
+                Me.DeleteToolStripButton.Enabled = False
+                Me.DeleteToolStripMenuItem.Enabled = False
+
+                Me.SnapshotSimToolStripMenuItem.Enabled = False
             End If
 
         End Sub
@@ -2561,7 +2571,7 @@ Namespace Forms
             m_bProjectIsOpen = bOpeningProject
 
             If Not m_dockManager Is Nothing Then
-                'm_dockManager.ClearContents()
+                ClearDockingContents()
             End If
 
             ClearChildForms()
@@ -3057,6 +3067,15 @@ Namespace Forms
 
         Public Overridable Sub ClearChildForms()
             Me.AnimatTabbedGroups.RootSequence.Clear()
+            Me.ChildForms.Clear()
+            Me.SortedChildForms.Clear()
+        End Sub
+
+        Public Overridable Sub ClearDockingContents()
+            Dim iCount As Integer = m_dockManager.Contents.Count - 1
+            For iDock As Integer = 0 To iCount
+                m_dockManager.Contents.RemoveAt(0)
+            Next
         End Sub
 
 #End Region
