@@ -30,22 +30,24 @@ VsDragger::VsDragger(VsMovableItem *lpParent, BOOL bAllowTranslateX, BOOL bAllow
 	m_osgGripperMT->setMatrix(osgMT);
 	m_osgGripperMT->addChild(this);
 	
-	_autoTransform = new osg::AutoTransform;
-	_autoTransform->setAutoScaleToScreen(true);
-	addChild(_autoTransform.get());
+	//_autoTransform = new osg::AutoTransform;
+	//_autoTransform->setAutoScaleToScreen(true);
+	//addChild(_autoTransform.get());
 
-	_sizeTransform = new osg::MatrixTransform;
+	//_sizeTransform = new osg::MatrixTransform;
 	 //Screen coordinates because of AutoTransform parent
-	_sizeTransform->setMatrix(osg::Matrix::scale(100, 100, 100));
-	_autoTransform->addChild(_sizeTransform.get());
+	//_sizeTransform->setMatrix(osg::Matrix::scale(100, 100, 100));
+	//_autoTransform->addChild(_sizeTransform.get());
 
 	_tbDragger = new VsTrackballDragger(bAllowRotateX, bAllowRotateY, bAllowRotateZ); 
 	_tbDragger->setName("TrackballDragger");
-	_sizeTransform->addChild(_tbDragger.get());
+	addChild(_tbDragger.get());
+	//_sizeTransform->addChild(_tbDragger.get());
 
 	_transDragger = new VsTranslateAxisDragger(bAllowTranslateX, bAllowTranslateY, bAllowTranslateZ);
 	_transDragger->setName("TranslateAxisDragger");
-	_sizeTransform->addChild(_transDragger.get());
+	addChild(_transDragger.get());
+	//_sizeTransform->addChild(_transDragger.get());
 
 	this->addDragger(_tbDragger.get());
 	this->addDragger(_transDragger.get());
@@ -100,7 +102,7 @@ void VsDragger::SetupMatrix()
 		float fltRadius = fltMaxDim*0.501794454f + 0.639290375f;
 
 		//We are dividing the number by 100 because we are using a _sizeTransform that scales it up by 100.
-		_autoTransform->setMinimumScale( (fltRadius*0.01f) );
+		//_autoTransform->setMinimumScale( (fltRadius*0.01f) );
 
 		//We use the final matrix here instead of local matrix because the joint can have an additional offset that
 		//must be taken into account when setting up the dragger.
@@ -121,7 +123,7 @@ void VsDragger::SetupMatrix()
 		// Scale the translate dragger up a bit, otherwise the axes
 		// will be in the trackball dragger's sphere and we won't be
 		// able to pick them.
-		float axesScale = 1.5;
+		float axesScale = 2;
 		invMT = invMT * osg::Matrix::scale(axesScale,axesScale,axesScale);
 
 		_transDragger->setMatrix(invMT);
