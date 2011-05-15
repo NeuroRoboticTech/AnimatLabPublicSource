@@ -167,9 +167,9 @@ Namespace DataObjects.Physical.Joints
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointActualVelocity", "Velocity", "m/s", "m/s", -5, 5))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("JointDesiredVelocity", "Desired Velocity", "m/s", "m/s", -5, 5))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Enable", "Enable", "", "", 0, 1))
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyPositionX", "Position X Axis", "Meters", "m", -10, 10))
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyPositionY", "Position Y Axis", "Meters", "m", -10, 10))
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyPositionZ", "Position Z Axis", "Meters", "m", -10, 10))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionX", "Position X Axis", "Meters", "m", -10, 10))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionY", "Position Y Axis", "Meters", "m", -10, 10))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionZ", "Position Z Axis", "Meters", "m", -10, 10))
             m_thDataTypes.ID = "JointRotation"
 
         End Sub

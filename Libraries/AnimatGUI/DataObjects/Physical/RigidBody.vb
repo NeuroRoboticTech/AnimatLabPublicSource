@@ -289,12 +289,6 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
-        Public Overridable ReadOnly Property AllowCollisions() As Boolean
-            Get
-                Return True
-            End Get
-        End Property
-
         Public Overridable Property IsRoot() As Boolean
             Get
                 Return m_bIsRoot
@@ -408,13 +402,13 @@ Namespace DataObjects.Physical
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyForceY", "Force Y Axis", "Newtons", "N", -1000, 1000))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyForceZ", "Force Z Axis", "Newtons", "N", -1000, 1000))
 
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyPositionX", "Position X Axis", "Meters", "m", -10, 10))
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyPositionY", "Position Y Axis", "Meters", "m", -10, 10))
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyPositionZ", "Position Z Axis", "Meters", "m", -10, 10))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionX", "Position X Axis", "Meters", "m", -10, 10))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionY", "Position Y Axis", "Meters", "m", -10, 10))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("WorldPositionZ", "Position Z Axis", "Meters", "m", -10, 10))
 
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyRotationX", "Rotation X Axis", "Radians", "rad", -4, 4))
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyRotationY", "Rotation Y Axis", "Radians", "rad", -4, 4))
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyRotationZ", "Rotation Z Axis", "Radians", "rad", -4, 4))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("RotationX", "Rotation X Axis", "Radians", "rad", -4, 4))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("RotationY", "Rotation Y Axis", "Radians", "rad", -4, 4))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("RotationZ", "Rotation Z Axis", "Radians", "rad", -4, 4))
 
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyLinearVelocityX", "Linear Velocity X Axis", "m/s", "m/s", -5, 5))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyLinearVelocityY", "Linear Velocity Y Axis", "m/s", "m/s", -5, 5))

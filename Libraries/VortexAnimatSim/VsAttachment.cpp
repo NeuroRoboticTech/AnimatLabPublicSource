@@ -38,13 +38,20 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of VsAttachment\r\n", "", -1, FALSE, TRUE);}
 }
 
+void VsAttachment::CreateGraphicsGeometry() 
+{
+	m_osgGeometry = CreateSphereGeometry(LatitudeSegments(), LongtitudeSegments(), m_fltRadius);
+}
+
+void VsAttachment::CreatePhysicsGeometry() {}
+
+void VsAttachment::ResizePhysicsGeometry() {}
+
+void VsAttachment::Initialize() {}
+
 void VsAttachment::CreateParts()
 {
-	osg::ref_ptr<osg::ShapeDrawable> osgDrawable = new osg::ShapeDrawable(new osg::Sphere(osg::Vec3(0,0,0), m_fltRadius));
-	osg::Geode *osgGroup = new osg::Geode;
-	osgGroup->addDrawable(osgDrawable.get());
-	m_osgNode = osgGroup;
-	m_vxGeometry = NULL;  //No physics part.
+	CreateGeometry();
 
 	VsRigidBody::CreateItem();
 }

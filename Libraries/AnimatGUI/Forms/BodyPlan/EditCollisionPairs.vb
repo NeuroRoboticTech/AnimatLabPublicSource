@@ -211,7 +211,7 @@ Namespace Forms.BodyPlan
                     For Each doPart As AnimatGUI.Framework.DataObject In m_aryBodyParts
                         doBody = DirectCast(doPart, AnimatGUI.DataObjects.Physical.RigidBody)
 
-                        If doBody.AllowCollisions Then
+                        If doBody.HasDynamics Then
                             cboBodyPart1.Items.Add(doBody)
                             cboBodyPart2.Items.Add(doBody)
                         End If

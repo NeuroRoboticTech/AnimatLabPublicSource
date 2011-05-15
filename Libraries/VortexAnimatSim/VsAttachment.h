@@ -20,15 +20,16 @@ class VORTEX_PORT VsAttachment  : public AnimatSim::Environment::Bodies::Attachm
 {
 protected:
 
+	virtual void CreateGraphicsGeometry();
+	virtual void CreatePhysicsGeometry();
+	virtual void ResizePhysicsGeometry();
+
 public:
 	VsAttachment();
 	virtual ~VsAttachment();
 
-	virtual void Initialize() {};
+	virtual void Initialize();
 	virtual void CreateParts();
-	//virtual void ResetSimulation();
-	//virtual void StepSimulation();
-	//virtual float *GetDataPointer(string strDataType);
 };
 
 		}		//Bodies

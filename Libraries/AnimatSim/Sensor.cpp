@@ -49,6 +49,8 @@ Sensor::Sensor()
 	m_bUsesJoint = FALSE;
 	m_lpJointToParent = NULL;
 	m_fltRadius = 1;
+	m_iLatitudeSegments = 50;
+	m_iLongtitudeSegments = 50;
 }
 
 /**
@@ -75,6 +77,62 @@ void Sensor::Radius(float fltVal, BOOL bUseScaling)
 	Resize();
 }
 
+void Sensor::LatitudeSegments(int iVal) 
+{
+	Std_IsAboveMin((int) 10, iVal, TRUE, "Sensor.LatitudeSegments", TRUE);
+	m_iLatitudeSegments = iVal;
+	Resize();
+}
+
+int Sensor::LatitudeSegments() {return m_iLatitudeSegments;}
+
+void Sensor::LongtitudeSegments(int iVal)
+{
+	Std_IsAboveMin((int) 10, iVal, TRUE, "Sensor.LongtitudeSegments", TRUE);
+	m_iLongtitudeSegments = iVal;
+	Resize();
+}
+
+int Sensor::LongtitudeSegments() {return m_iLongtitudeSegments;}
+
+BOOL Sensor::AllowRotateDragX() {return FALSE;}
+
+BOOL Sensor::AllowRotateDragY() {return FALSE;}
+
+BOOL Sensor::AllowRotateDragZ() {return FALSE;}
+
+BOOL Sensor::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(RigidBody::SetData(strType, strValue, FALSE))
+		return TRUE;
+
+	if(strType == "RADIUS")
+	{
+		Radius(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "LATITUDESEGMENTS")
+	{
+		LatitudeSegments(atoi(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "LONGTITUDESEGMENTS")
+	{
+		LongtitudeSegments(atoi(strValue.c_str()));
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
+
 // There are no parts or joints to create for muscle attachment points.
 void Sensor::CreateParts()
 {}
@@ -88,6 +146,8 @@ void Sensor::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into RigidBody Element
 	Radius(oXml.GetChildFloat("Radius", m_fltRadius));
+	LatitudeSegments(oXml.GetChildInt("LatitudeSegments", m_iLatitudeSegments));
+	LongtitudeSegments(oXml.GetChildInt("LongtitudeSegments", m_iLongtitudeSegments));
 	oXml.OutOfElem(); //OutOf RigidBody Element
 
 	//Reset the rotation to 0 for sensors
