@@ -143,6 +143,7 @@
     <Compile Include="Collections\Assemblies.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Collections\Attachments.vb" />
     <Compile Include="Collections\Axis.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -372,6 +373,8 @@
     <Compile Include="DataObjects\Physical\Bodies\Attachment.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Cone.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Cylinder.vb" />
+    <Compile Include="DataObjects\Physical\Bodies\LinearHillMuscle.vb" />
+    <Compile Include="DataObjects\Physical\Bodies\MuscleBase.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Plane.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Sphere.vb" />
     <Compile Include="DataObjects\Physical\BodyPart.vb">

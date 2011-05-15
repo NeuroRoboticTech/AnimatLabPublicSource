@@ -444,6 +444,8 @@ void VsRigidBody::Physics_CollectData()
 
 	if(m_vxSensor)
 	{
+		UpdateWorldMatrix();
+
 		m_vxSensor->getPosition(vData);
 		m_lpThisMI->AbsolutePosition(vData[0], vData[1], vData[2]);
 

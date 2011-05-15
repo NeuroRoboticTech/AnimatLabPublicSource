@@ -26,6 +26,9 @@ namespace VortexAnimatSim
 		protected:
 			AnimatBase *m_lpThisAB;
 			MovableItem *m_lpThisMI;
+			VsMovableItem *m_lpThisVsMI;
+
+			osg::Matrix m_osgWorldMatrix;
 
 			osg::ref_ptr<osg::Group> m_osgParent;
 			osg::ref_ptr<osgManipulator::Selection> m_osgMT;
@@ -76,21 +79,24 @@ namespace VortexAnimatSim
 			virtual void CreateGeometry();
 			virtual void ResizePhysicsGeometry();
 
+			virtual void UpdateWorldMatrix();
+
 		public:
 			VsMovableItem();
 			virtual ~VsMovableItem();
 
 			virtual VsSimulator *GetVsSimulator();
+			virtual VsMovableItem *VsParent();
 			virtual osg::Group *ParentOSG() = 0;
 			virtual osg::Group *RootGroup() {return m_osgRoot.get();};
 			virtual osg::Group *NodeGroup() {return m_osgNodeGroup.get();};
 			virtual osg::Matrix LocalMatrix() {return m_osgLocalMatrix;};
 			virtual osg::Matrix FinalMatrix() {return m_osgFinalMatrix;};
 
-			virtual CStdFPoint GetOSGWorldCoords(osg::MatrixTransform *osgMT);
+			//virtual CStdFPoint GetOSGWorldCoords(osg::MatrixTransform *osgMT);
 			virtual CStdFPoint GetOSGWorldCoords();
-			virtual osg::Matrix GetOSGWorldMatrix();
-			virtual osg::Matrix GetOSGWorldMatrix(osg::MatrixTransform *osgMT);
+			virtual osg::Matrix GetOSGWorldMatrix(BOOL bUpdate = FALSE);
+			//virtual osg::Matrix GetOSGWorldMatrix(osg::MatrixTransform *osgMT);
 
 			virtual void EndGripDrag();
 
@@ -119,6 +125,9 @@ namespace VortexAnimatSim
 
 			//virtual void Initialize() = 0;
 			virtual void CreateItem();
+
+			virtual osg::Matrix GetWorldMatrix();
+			virtual osg::Matrix GetParentWorldMatrix();
 
 			virtual osg::MatrixTransform* GetMatrixTransform();
 			virtual osg::MatrixTransform* GetCameraMatrixTransform();

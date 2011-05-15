@@ -30,8 +30,11 @@ VsMovableItem::VsMovableItem()
 {
 	m_bCullBackfaces = FALSE; //No backface culling by default.
 	m_eTextureMode = GL_TEXTURE_2D;
-}
 
+	m_lpThisAB = NULL;
+	m_lpThisMI = NULL;
+	m_lpThisVsMI = NULL;
+}
 
 
 VsMovableItem::~VsMovableItem()
@@ -63,6 +66,10 @@ void VsMovableItem::SetThisPointers()
 	m_lpThisMI = dynamic_cast<MovableItem *>(this);
 	if(!m_lpThisMI)
 		THROW_TEXT_ERROR(Vs_Err_lThisPointerNotDefined, Vs_Err_strThisPointerNotDefined, "m_lpThisMI, " + m_lpThisAB->Name());
+
+	m_lpThisVsMI = dynamic_cast<VsMovableItem *>(this);
+	if(!m_lpThisVsMI)
+		THROW_TEXT_ERROR(Vs_Err_lThisPointerNotDefined, Vs_Err_strThisPointerNotDefined, "m_lpThisVsMI, " + m_lpThisAB->Name());
 
 	m_lpThisMI->PhysicsMovableItem(this);
 }
@@ -158,6 +165,7 @@ void VsMovableItem::LocalMatrix(osg::Matrix osgLocalMT)
 {
 	m_osgLocalMatrix = osgLocalMT;
 	m_osgFinalMatrix = osgLocalMT;
+	UpdateWorldMatrix();
 }
 
 void VsMovableItem::GeometryRotationMatrix(osg::Matrix osgGeometryMT)
@@ -246,14 +254,68 @@ void VsMovableItem::DeleteGraphics()
 	if(m_osgNode.valid()) m_osgNode.release();
 	if(m_osgSelectedGroup.valid()) m_osgSelectedGroup.release();
 	if(m_osgNodeGroup.valid()) m_osgNodeGroup.release();
+	if(m_osgGeometryRotationMT.valid()) m_osgGeometryRotationMT.release();
 	if(m_osgMT.valid()) m_osgMT.release();
 	if(m_osgRoot.valid()) m_osgRoot.release();
 	if(m_osgParent.valid()) m_osgParent.release();
 }
 
+VsMovableItem *VsMovableItem::VsParent()
+{
+	return dynamic_cast<VsMovableItem *>(m_lpThisMI->Parent());
+}
+
+osg::Matrix VsMovableItem::GetWorldMatrix()
+{
+	return m_osgWorldMatrix;
+}
+
+osg::Matrix VsMovableItem::GetParentWorldMatrix()
+{
+	if(m_lpThisVsMI && m_lpThisVsMI->VsParent())
+		return m_lpThisVsMI->VsParent()->GetWorldMatrix();
+	
+	osg::Matrix osgMatrix;
+	osgMatrix.makeIdentity();
+	return osgMatrix;
+}
+
+void VsMovableItem::UpdateWorldMatrix()
+{
+	osg::Matrix osgParentMatrix = GetParentWorldMatrix();
+
+	//Multiply the two matrices together to get the new world location.
+	m_osgWorldMatrix = m_osgFinalMatrix * osgParentMatrix;
+}
+
 CStdFPoint VsMovableItem::GetOSGWorldCoords()
 {
-	return GetOSGWorldCoords(GetMatrixTransform());
+	osg::Vec3 vCoord = m_osgWorldMatrix.getTrans();
+	CStdFPoint vPoint(vCoord[0], vCoord[1], vCoord[2]);
+
+	return vPoint;
+}
+
+osg::Matrix VsMovableItem::GetOSGWorldMatrix(BOOL bUpdate)
+{
+	if(bUpdate)
+		UpdateWorldMatrix();
+
+	return m_osgWorldMatrix;
+}
+
+/*
+CStdFPoint VsMovableItem::GetOSGWorldCoords()
+{
+	CStdFPoint vTemp = GetMyOSGWorldCoords();
+
+	CStdFPoint vOld = GetOSGWorldCoords(GetMatrixTransform());
+
+	int iDiff = 0;
+	if(vOld != vTemp)
+		iDiff = 1;
+
+	return vOld;
 }
 
 CStdFPoint VsMovableItem::GetOSGWorldCoords(osg::MatrixTransform *osgMT)
@@ -276,6 +338,7 @@ osg::Matrix VsMovableItem::GetOSGWorldMatrix(osg::MatrixTransform *osgMT)
 	osgMT->accept(ncv);
 	return ncv.MatrixTransform();
 }
+*/
 
 void VsMovableItem::WorldToBodyCoords(VxReal3 vWorld, StdVector3 &vLocalPos)
 {

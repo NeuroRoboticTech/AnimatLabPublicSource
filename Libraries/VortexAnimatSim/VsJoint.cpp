@@ -63,6 +63,7 @@ void VsJoint::UpdatePosition()
 	Vx::VxReal3 vPos;
 	m_vxJoint->getPartAttachmentPosition(0, vPos);
 
+	UpdateWorldMatrix();
 	m_lpThisMI->AbsolutePosition(vPos[0], vPos[0], vPos[0]);
 }
 
@@ -241,6 +242,7 @@ void VsJoint::LocalMatrix(osg::Matrix osgLocalMT)
 {
 	m_osgLocalMatrix = osgLocalMT;
 	m_osgFinalMatrix = m_osgLocalMatrix * m_osgChildOffsetMatrix;
+	UpdateWorldMatrix();
 }
 
 void VsJoint::ChildOffsetMatrix(osg::Matrix osgMT)
