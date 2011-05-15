@@ -33,19 +33,30 @@ VsCylinder::~VsCylinder()
 
 }
 
-void VsCylinder::CreateParts()
+void VsCylinder::CreateGraphicsGeometry()
 {
-	m_osgGeometry = CreateConeGeometry(m_fltHeight, m_fltRadius, m_fltRadius, 50, true, true, true);
-	osg::Geode *osgGroup = new osg::Geode;
-	osgGroup->addDrawable(m_osgGeometry.get());
-	m_osgNode = osgGroup;
-	m_vxGeometry = new VxCylinder(m_fltRadius, m_fltHeight);
+	m_osgGeometry = CreateConeGeometry(m_fltHeight, m_fltRadius, m_fltRadius, m_iSides, true, true, true);
+	
+	//We need to setup a geometry rotation to make the cylinder graphics geometry match the physics geometry.
+	CStdFPoint vPos(0, 0, 0), vRot(-(osg::PI/2), 0, 0);
+	GeometryRotationMatrix(SetupMatrix(vPos, vRot));
+}
+
+void VsCylinder::CreatePhysicsGeometry()
+{
+	if(IsCollisionObject())
+		m_vxGeometry = new VxCylinder(m_fltRadius, m_fltHeight);
 
 	//Lets get the volume and areas
 	m_fltVolume = 2*VX_PI*m_fltRadius*m_fltRadius*m_fltHeight;
 	m_fltXArea = 2*m_fltRadius*m_fltHeight;
 	m_fltYArea = 2*m_fltRadius*m_fltHeight;
 	m_fltZArea = 2*VX_PI*m_fltRadius*m_fltRadius;
+}
+
+void VsCylinder::CreateParts()
+{
+	CreateGeometry();
 
 	VsRigidBody::CreateItem();
 	Cylinder::CreateParts();
@@ -60,6 +71,20 @@ void VsCylinder::CreateJoints()
 	Cylinder::CreateJoints();
 	VsRigidBody::Initialize();
 }
+
+void VsCylinder::ResizePhysicsGeometry()
+{
+	if(m_vxGeometry)
+	{
+		VxCylinder *vxCylinder = dynamic_cast<VxCylinder *>(m_vxGeometry);
+
+		if(!vxCylinder)
+			THROW_TEXT_ERROR(Vs_Err_lGeometryMismatch, Vs_Err_strGeometryMismatch, m_lpThisAB->Name());
+		
+		//vxCylinder->setDimensions(
+	}
+}
+
 		}		//Bodies
 	}			// Environment
 }				//VortexAnimatSim

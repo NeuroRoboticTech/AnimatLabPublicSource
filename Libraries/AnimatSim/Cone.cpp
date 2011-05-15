@@ -106,6 +106,7 @@ void Cone::Height(float fltVal, BOOL bUseScaling)
 
 	Resize();
 }
+
 /**
 \brief	Sets  the number of sides used to draw the cone.
 

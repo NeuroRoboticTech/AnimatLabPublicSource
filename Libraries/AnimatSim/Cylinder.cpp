@@ -46,6 +46,7 @@ Cylinder::Cylinder()
 {
 	m_fltRadius = 1;
 	m_fltHeight = 1;
+	m_iSides = 10;
 }
 
 /**
@@ -85,6 +86,63 @@ void Cylinder::Height(float fltVal, BOOL bUseScaling)
 
 	Resize();
 }
+/**
+\brief	Sets  the number of sides used to draw the cylinder.
+
+\author	dcofer
+\date	4/17/2011
+
+\param	iVal	The new value.
+**/
+void Cylinder::Sides(int iVal)
+{
+	Std_IsAboveMin((int) 10, iVal, TRUE, "Cone.Sides", TRUE);
+	m_iSides = iVal;
+
+	Resize();
+}
+
+/**
+\brief	Gets the number of sides used to draw the cylinder.
+
+\author	dcofer
+\date	4/17/2011
+
+\return	sections.
+**/
+int Cylinder::Sides() {return m_iSides;}
+
+BOOL Cylinder::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(RigidBody::SetData(strType, strValue, FALSE))
+		return TRUE;
+
+	if(strType == "RADIUS")
+	{
+		Radius(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "HEIGHT")
+	{
+		Height(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "SIDES")
+	{
+		Sides(atoi(strValue.c_str()));
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
 
 void Cylinder::Load(CStdXml &oXml)
 {
@@ -93,6 +151,7 @@ void Cylinder::Load(CStdXml &oXml)
 	oXml.IntoElem();  //Into RigidBody Element
 	Radius(oXml.GetChildFloat("Radius", m_fltRadius));
 	Height(oXml.GetChildFloat("Height"), m_fltHeight);
+	Sides(oXml.GetChildInt("Sides", m_iSides));
 	oXml.OutOfElem(); //OutOf RigidBody Element
 }
 

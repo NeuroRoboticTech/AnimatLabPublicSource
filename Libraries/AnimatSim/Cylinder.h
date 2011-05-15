@@ -26,8 +26,12 @@ namespace AnimatSim
 			protected:
 				/// The radius of the cylinder
 				float m_fltRadius;
+
 				/// The height of the cylinder
 				float m_fltHeight;
+
+				/// The number of sides used to draw the cylinder.
+				int m_iSides;
 
 			public:
 				Cylinder();
@@ -75,6 +79,10 @@ namespace AnimatSim
 				**/
 				virtual void Height(float fltVal, BOOL bUseScaling = TRUE);
 
+				virtual void Sides(int iVal);
+				virtual int Sides();
+
+				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 				virtual void Load(CStdXml &oXml);
 			};
 

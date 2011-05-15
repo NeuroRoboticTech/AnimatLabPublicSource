@@ -45,6 +45,12 @@ namespace VortexAnimatSim
 
 			osg::Matrix m_osgLocalMatrix;		
 
+			/// Sometimes it is necessary to rotate the geometry that was generated to match the correct
+			/// orientation of the physics geometry. If this MT is set then this is added 
+			/// BEFORE the local matrix so we can make the graphics and physics geometries match. If
+			/// it is not set then it is not used.
+			osg::ref_ptr< osg::MatrixTransform> m_osgGeometryRotationMT;
+
 			//Some parts, like joints, have an additional offset matrix. This
 			//Final Matrix is the combination of the local and offset matrix. 
 			osg::Matrix m_osgFinalMatrix;		
@@ -53,6 +59,7 @@ namespace VortexAnimatSim
 
 			virtual void SetThisPointers();
 			virtual void LocalMatrix(osg::Matrix osgLocalMT);
+			virtual void GeometryRotationMatrix(osg::Matrix osgGeometryMT);
 
 			virtual void SetupGraphics();
 			virtual void SetupPhysics() = 0;
@@ -114,6 +121,8 @@ namespace VortexAnimatSim
 			virtual void CreateItem();
 
 			virtual osg::MatrixTransform* GetMatrixTransform();
+			virtual osg::MatrixTransform* GetCameraMatrixTransform();
+
 			virtual void BuildLocalMatrix();
 			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName);
 			virtual void WorldToBodyCoords(VxReal3 vWorldPos, StdVector3 &vLocalPos);

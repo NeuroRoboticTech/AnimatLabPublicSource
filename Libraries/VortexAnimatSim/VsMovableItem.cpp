@@ -160,6 +160,16 @@ void VsMovableItem::LocalMatrix(osg::Matrix osgLocalMT)
 	m_osgFinalMatrix = osgLocalMT;
 }
 
+void VsMovableItem::GeometryRotationMatrix(osg::Matrix osgGeometryMT)
+{
+	if(!m_osgGeometryRotationMT.valid())
+	{
+		m_osgGeometryRotationMT = new osg::MatrixTransform;
+		m_osgGeometryRotationMT->setName(m_lpThisAB->Name() + "_GeometryMT");
+	}
+	m_osgGeometryRotationMT->setMatrix(osgGeometryMT);	
+}
+
 void VsMovableItem::AttachedPartMovedOrRotated(string strID)
 {
 	Physics_ResetGraphicsAndPhysics();
@@ -178,8 +188,17 @@ void VsMovableItem::CreateGeometry()
 
 	osg::Geode *osgGroup = new osg::Geode;
 	osgGroup->addDrawable(m_osgGeometry.get());
-	m_osgNode = osgGroup;
-	m_osgNode->setName(m_lpThisAB->Name() + "_Node");
+	osgGroup->setName(m_lpThisAB->Name() + "_Node");
+
+	//If ther is a geometry rotation then apply it first, otherwise
+	//just use the node straight out.
+	if(m_osgGeometryRotationMT.valid())
+	{
+		m_osgGeometryRotationMT->addChild(osgGroup);
+		m_osgNode = m_osgGeometryRotationMT.get();
+	}
+	else
+		m_osgNode = osgGroup;
 
 	CreatePhysicsGeometry();
 }
@@ -234,7 +253,7 @@ void VsMovableItem::DeleteGraphics()
 
 CStdFPoint VsMovableItem::GetOSGWorldCoords()
 {
-	return GetOSGWorldCoords(m_osgMT.get());
+	return GetOSGWorldCoords(GetMatrixTransform());
 }
 
 CStdFPoint VsMovableItem::GetOSGWorldCoords(osg::MatrixTransform *osgMT)
@@ -248,7 +267,7 @@ CStdFPoint VsMovableItem::GetOSGWorldCoords(osg::MatrixTransform *osgMT)
 
 osg::Matrix VsMovableItem::GetOSGWorldMatrix()
 {
-	return GetOSGWorldMatrix(m_osgMT.get());
+	return GetOSGWorldMatrix(GetMatrixTransform());
 }
 
 osg::Matrix VsMovableItem::GetOSGWorldMatrix(osg::MatrixTransform *osgMT)
@@ -279,6 +298,29 @@ void VsMovableItem::WorldToBodyCoords(VxReal3 vWorld, StdVector3 &vLocalPos)
 osg::MatrixTransform* VsMovableItem::GetMatrixTransform()
 {
 	return m_osgMT.get();
+}
+
+/**
+\brief	Gets the matrix transform used by the camera for the mouse spring.
+
+\details Sometimes it is necessary to rotate the geometry that was generated to match the correct
+orientation of the physics geometry. If this MT is set then this is added 
+BEFORE the local matrix so we can make the graphics and physics geometries match. If
+it is not set then it is not used. The mouse spring needs to have the end matrix transform to work 
+correctly, but I do not want to use that for the matrix other parts use because it adds an extra 
+rotation that it should not to other parts then.
+
+\author	dcofer
+\date	5/15/2011
+
+\return	Pointer to the matrix transform used by the camera.
+**/
+osg::MatrixTransform* VsMovableItem::GetCameraMatrixTransform()
+{
+	if(m_osgGeometryRotationMT.valid())
+		return m_osgGeometryRotationMT.get();
+	else
+		return m_osgMT.get();
 }
 
 //DWC: When you do this you are going to have to call UpdateNode on all child objects as well.

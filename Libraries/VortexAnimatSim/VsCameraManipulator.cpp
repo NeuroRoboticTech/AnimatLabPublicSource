@@ -328,7 +328,7 @@ BOOL VsCameraManipulator::DoMouseSpring(const GUIEventAdapter& ea, float x, floa
 	VsMouseSpring::GetInstance()->Visible(TRUE);
 
 	//get the grab position on the body
-	osg::Vec3 vGrabPos = VsMouseSpring::GetInstance()->GetGrabPosition() *osgRBBody->GetMatrixTransform()->getWorldMatrices().at(0);
+	osg::Vec3 vGrabPos = VsMouseSpring::GetInstance()->GetGrabPosition() *osgRBBody->GetCameraMatrixTransform()->getWorldMatrices().at(0);
 	VsMouseSpring::GetInstance()->SetStart(vGrabPos);
 
 	//get the 3D mouse coords

@@ -23,7 +23,7 @@ Namespace DataObjects.Physical.Bodies
         Protected m_snUpperRadius As AnimatGUI.Framework.ScaledNumber
         Protected m_snHeight As AnimatGUI.Framework.ScaledNumber
 
-        Protected m_iSides As Integer = 10
+        Protected m_iSides As Integer = 30
 
 #End Region
 
