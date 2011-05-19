@@ -77,6 +77,8 @@ namespace AnimatSim
 				virtual ~LinearHillStretchReceptor();
 
 				virtual float *GetDataPointer(string strDataType);
+				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+
 				virtual void Load(CStdXml &oXml);
 			};
 

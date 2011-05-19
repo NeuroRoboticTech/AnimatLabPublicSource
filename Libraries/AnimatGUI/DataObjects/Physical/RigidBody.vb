@@ -579,7 +579,7 @@ Namespace DataObjects.Physical
             Return Nothing
         End Function
 
-        Public Overloads Overrides Sub FindChildrenOfType(ByVal tpTemplate As System.Type, ByRef colDataObjects As Collections.DataObjects)
+        Public Overloads Overrides Sub FindChildrenOfType(ByVal tpTemplate As System.Type, ByVal colDataObjects As Collections.DataObjects)
             MyBase.FindChildrenOfType(tpTemplate, colDataObjects)
 
             If Not m_JointToParent Is Nothing Then
@@ -747,14 +747,12 @@ Namespace DataObjects.Physical
                                             "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
 
                 'm_JointToParent Is Nothing
-                If m_bIsRoot Then
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Freeze", m_bFreeze.GetType(), "Freeze", _
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Freeze", m_bFreeze.GetType(), "Freeze", _
                                                 "Part Properties", "If the root body is frozen then it is locked in place in the environment.", m_bFreeze))
-                End If
 
             Else
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Contact Sensor", m_bContactSensor.GetType(), "ContactSensor", _
-                                            "Part Properties", "Sets whether or not this part can detect contacts.", m_bContactSensor))
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Contact Sensor", m_bContactSensor.GetType(), "ContactSensor", _
+                                        "Part Properties", "Sets whether or not this part can detect contacts.", m_bContactSensor))
             End If
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Is Collision Object", m_bIsCollisionObject.GetType(), "IsCollisionObject", _

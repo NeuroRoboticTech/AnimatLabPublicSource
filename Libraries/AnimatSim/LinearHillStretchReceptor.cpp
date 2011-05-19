@@ -96,49 +96,36 @@ void LinearHillStretchReceptor::CalculateTension()
 
 float *LinearHillStretchReceptor::GetDataPointer(string strDataType)
 {
-	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);
 
-	if(strType == "TENSION")
-		lpData = &m_fltTension;
-	else if(strType == "TDOT")
-		lpData = &m_fltTdot;
-	else if(strType == "MUSCLELENGTH")
-		lpData = &m_fltLength;
-	else if(strType == "VMUSCLE")
-		lpData = &m_fltVmuscle;
-	else if(strType == "VSE")
-		lpData = &m_fltVse;
-	else if(strType == "VPE")
-		lpData = &m_fltVpe;
-	else if(strType == "AVGVMUSCLE")
-		lpData = &m_fltAvgMuscleVel;
-	else if(strType == "MEMBRANEVOLTAGE")
-		lpData = &m_fltVm;
-	else if(strType == "DISPLACEMENT")
-		lpData = &m_fltDisplacement;
-	else if(strType == "DISPLACEMENTRATIO")
-		lpData = &m_fltDisplacementRatio;
-	else if(strType == "ACTIVATION")
-		lpData = &m_fltAct;
-	else if(strType == "A")
-		lpData = &m_fltA;
-	else if(strType == "SELENGTH")
-		lpData = &m_fltSeLength;
-	else if(strType == "PELENGTH")
-		lpData = &m_fltPeLength;
-	else if(strType == "IA")
+	float *lpData = LinearHillMuscle::GetDataPointer(strDataType);
+	if(lpData) return lpData;
+
+	if(strType == "IA")
 		lpData = &m_fltIaRate;
 	else if(strType == "IB")
 		lpData = &m_fltIbRate;
 	else if(strType == "II")
 		lpData = &m_fltIIRate;
-	else if(strType == "ENABLE")
-		lpData = &m_fltEnabled;
 	else
 		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "RigidBodyID: " + STR(m_strName) + "  DataType: " + strDataType);
 
 	return lpData;
+}
+
+BOOL LinearHillStretchReceptor::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	if(strDataType == "POSITION")
+	{
+		//Position(strValue);
+		return true;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
 }
 
 void LinearHillStretchReceptor::Load(CStdXml &oXml)

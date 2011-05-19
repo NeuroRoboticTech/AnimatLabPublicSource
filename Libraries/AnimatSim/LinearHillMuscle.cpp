@@ -301,13 +301,10 @@ float *LinearHillMuscle::GetDataPointer(string strDataType)
 	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);
 
-	if(strType == "TENSION")
-		lpData = &m_fltTension;
-	else if(strType == "TDOT")
-		lpData = &m_fltTdot;
-	else if(strType == "MUSCLELENGTH")
-		lpData = &m_fltLength;
-	else if(strType == "VMUSCLE")
+	float *lpVal = MuscleBase::GetDataPointer(strDataType);
+	if(lpVal) return lpVal;
+
+	if(strType == "VMUSCLE")
 		lpData = &m_fltVmuscle;
 	else if(strType == "VSE")
 		lpData = &m_fltVse;
@@ -315,8 +312,6 @@ float *LinearHillMuscle::GetDataPointer(string strDataType)
 		lpData = &m_fltVpe;
 	else if(strType == "AVGVMUSCLE")
 		lpData = &m_fltAvgMuscleVel;
-	else if(strType == "MEMBRANEVOLTAGE")
-		lpData = &m_fltVm;
 	else if(strType == "DISPLACEMENT")
 		lpData = &m_fltDisplacement;
 	else if(strType == "DISPLACEMENTRATIO")
@@ -335,12 +330,25 @@ float *LinearHillMuscle::GetDataPointer(string strDataType)
 		lpData = &m_fltIbRate;
 	else if(strType == "TL")
 		lpData = &m_fltTLPerc;
-	else if(strType == "ENABLE")
-		lpData = &m_fltEnabled;
 	else
 		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "RigidBodyID: " + STR(m_strName) + "  DataType: " + strDataType);
 
 	return lpData;
+}
+
+BOOL LinearHillMuscle::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	if(strDataType == "POSITION")
+	{
+		//Position(strValue);
+		return true;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
 }
 
 void LinearHillMuscle::Load(CStdXml &oXml)

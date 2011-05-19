@@ -49,6 +49,9 @@ namespace AnimatSim
 				CStdArray<Attachment *> *AttachmentPoints();
 				virtual float CalculateLength();
 
+				virtual float *GetDataPointer(string strDataType);
+				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+
 				virtual void CreateParts();
 				virtual void CreateJoints();
 				virtual void Load(CStdXml &oXml);

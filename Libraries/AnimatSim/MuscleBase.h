@@ -1,13 +1,10 @@
-// MuscleBase.h: interface for the MuscleBase class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	MuscleBase.h
 
-#if !defined(AFX_MUSCLE_BASE_H__C0EE52F2_D31B_48CD_B5F7_B18EEE81BE72__INCLUDED_)
-#define AFX_MUSCLE_BASE_H__C0EE52F2_D31B_48CD_B5F7_B18EEE81BE72__INCLUDED_
+\brief	Declares the muscle base class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
@@ -15,6 +12,15 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+
+			/**
+			\brief	Muscle base class.
+
+			\details This is a base class for all muscle part types.
+			
+			\author	dcofer
+			\date	5/19/2011
+			**/
 			class ANIMAT_PORT MuscleBase : public LineBase  
 			{
 			protected:
@@ -74,11 +80,13 @@ namespace AnimatSim
 				**/
 				virtual void CalculateInverseDynamics(float fltLength, float fltVelocity, float fltT, float &fltVm, float &fltA) = 0;
 				virtual void AddExternalNodeInput(float fltInput);
+
+				virtual float *GetDataPointer(string strDataType);
+				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+
 				virtual void Load(CStdXml &oXml);
 			};
 
 		}		//Bodies
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_MUSCLE_BASE_H__C0EE52F2_D31B_48CD_B5F7_B18EEE81BE72__INCLUDED_)

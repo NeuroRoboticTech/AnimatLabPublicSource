@@ -238,6 +238,7 @@ namespace AnimatSim
 
 				virtual void CreateJoints();
 				virtual float *GetDataPointer(string strDataType);
+				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
 				virtual void Load(CStdXml &oXml);
 			};

@@ -69,9 +69,10 @@ Namespace Framework
             Set(ByVal Value As String)
                 m_strID = Value
 
-                If Value.Trim.Length = 0 Then
-                    Throw New System.Exception("The id property can not be blank.")
+                If m_strID.Trim.Length = 0 Then
+                    m_strID = System.Guid.NewGuid().ToString()
                 End If
+
             End Set
         End Property
 
@@ -531,7 +532,7 @@ Namespace Framework
 
         End Sub
 
-        Public Overridable Sub FindChildrenOfType(ByVal tpTemplate As Type, ByRef colDataObjects As Collections.DataObjects)
+        Public Overridable Sub FindChildrenOfType(ByVal tpTemplate As Type, ByVal colDataObjects As Collections.DataObjects)
             If tpTemplate Is Nothing OrElse Util.IsTypeOf(Me.GetType(), tpTemplate, False) Then
                 colDataObjects.Add(Me)
             End If

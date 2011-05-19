@@ -647,18 +647,10 @@ Namespace DataObjects.Physical
         Public Overridable Overloads Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
 
             oXml.IntoElem() 'Into BodyPart Element
-            m_strID = oXml.GetChildString("ID")
-            m_strName = oXml.GetChildString("Name", m_strID)
+            Me.ID = oXml.GetChildString("ID")
+            Me.Name = oXml.GetChildString("Name", m_strID)
 
-            If m_strID.Trim.Length = 0 Then
-                m_strID = System.Guid.NewGuid().ToString()
-            End If
-
-            If m_strName.Trim.Length = 0 Then
-                m_strName = m_strID
-            End If
-
-            m_strDescription = oXml.GetChildString("Description", "")
+            Me.Description = oXml.GetChildString("Description", "")
             m_Transparencies.LoadData(oXml)
             m_bVisible = oXml.GetChildBool("IsVisible", m_bVisible)
 

@@ -138,6 +138,40 @@ float LineBase::CalculateLength()
 }
 
 
+#pragma region DataAccesMethods
+
+float *LineBase::GetDataPointer(string strDataType)
+{
+	string strType = Std_CheckString(strDataType);
+
+	float *lpData = RigidBody::GetDataPointer(strDataType);
+	if(lpData) return lpData;
+
+	if(strType == "MUSCLELENGTH" || strType == "LENGTH")
+		lpData = &m_fltLength;
+	else if(strType == "ENABLE")
+		lpData = &m_fltEnabled;
+
+	return lpData;
+}
+
+BOOL LineBase::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	if(strDataType == "POSITION")
+	{
+		//Position(strValue);
+		return true;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
+
+#pragma endregion
+
 // There are no parts or joints to create for muscle attachment points.
 void LineBase::CreateParts()
 {

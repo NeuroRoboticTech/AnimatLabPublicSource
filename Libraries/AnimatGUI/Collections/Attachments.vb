@@ -96,6 +96,37 @@ Namespace Collections
             Return aryList
         End Function
 
+        Public Overridable ReadOnly Property Properties() As AnimatGuiCtrls.Controls.PropertyBag
+            Get
+                Dim ptTable As New AnimatGuiCtrls.Controls.PropertyTable
+
+                ptTable.Tag = Me
+                AddHandler ptTable.GetValue, AddressOf Me.OnGetPropValue
+
+                Dim iIndex As Integer = 0
+                For Each doAttach As AnimatGUI.DataObjects.Physical.Bodies.Attachment In Me
+                    iIndex = iIndex + 1
+
+                    ptTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Attachment " & iIndex, GetType(String), (iIndex - 1).ToString(), _
+                                           "Muscle Attachments", "One of the muscle attachment points.", doAttach.Name, True))
+                Next
+
+                Return ptTable
+            End Get
+        End Property
+
+        Protected Sub OnGetPropValue(ByVal sender As Object, ByVal e As AnimatGuiCtrls.Controls.PropertySpecEventArgs)
+            Try
+                Dim iIndex As Integer = Integer.Parse(e.Property.PropertyName)
+
+                Dim doAttach As AnimatGUI.DataObjects.Physical.Bodies.Attachment = DirectCast(List(iIndex), AnimatGUI.DataObjects.Physical.Bodies.Attachment)
+                e.Value = doAttach.Name
+
+            Catch ex As System.Exception
+
+            End Try
+        End Sub
+
     End Class 'NodesCollection
 
 

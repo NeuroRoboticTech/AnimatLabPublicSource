@@ -662,7 +662,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub FindChildrenOfType(ByVal tpTemplate As System.Type, ByRef colDataObjects As Collections.DataObjects)
+        Public Overrides Sub FindChildrenOfType(ByVal tpTemplate As System.Type, ByVal colDataObjects As Collections.DataObjects)
             If Not m_dbRoot Is Nothing Then
                 m_dbRoot.FindChildrenOfType(tpTemplate, colDataObjects)
             End If

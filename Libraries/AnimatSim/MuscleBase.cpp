@@ -44,6 +44,7 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+
 /**
 \brief	Default constructor. 
 
@@ -193,6 +194,42 @@ void MuscleBase::AddExternalNodeInput(float fltInput)
 	//to calculate the max isometric tension from the stim-tension curve.
 	m_fltVm=fltInput;
 }
+
+#pragma region DataAccesMethods
+
+float *MuscleBase::GetDataPointer(string strDataType)
+{
+	string strType = Std_CheckString(strDataType);
+
+	float *lpData = LineBase::GetDataPointer(strDataType);
+	if(lpData) return lpData;
+
+	if(strType == "TENSION")
+		lpData = &m_fltTension;
+	else if(strType == "TDOT")
+		lpData = &m_fltTdot;
+	else if(strType == "MEMBRANEVOLTAGE")
+		lpData = &m_fltVm;
+
+	return lpData;
+}
+
+BOOL MuscleBase::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	if(strDataType == "POSITION")
+	{
+		//Position(strValue);
+		return true;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
+
+#pragma endregion
 
 void MuscleBase::Load(CStdXml &oXml)
 {
