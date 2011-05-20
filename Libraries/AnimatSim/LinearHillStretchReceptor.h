@@ -76,6 +76,18 @@ namespace AnimatSim
 				LinearHillStretchReceptor();
 				virtual ~LinearHillStretchReceptor();
 
+				virtual BOOL ApplyTension();
+				virtual void ApplyTension(BOOL bVal);
+
+				virtual float IaDischargeConstant();
+				virtual void IaDischargeConstant(float fltVal);
+
+				virtual float IIDischargeConstant();
+				virtual void IIDischargeConstant(float fltVal);
+
+				virtual float IaRate();
+				virtual float IIRate();
+
 				virtual float *GetDataPointer(string strDataType);
 				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 

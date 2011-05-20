@@ -64,12 +64,6 @@ namespace AnimatSim
 				///Precalculation of (1+(Kpe/Kse))
 				float m_fltKpeByKse;
 
-				///resting length of the muscle.
-				float m_fltMuscleRestingLength;
-
-				///Resting length of the se portion of the muscle. Used to calculate SE and PE lengths.
-				float m_fltSeRestLength;
-
 				///The length of the SE section of the muscle. The resting length is one half the total muscle length
 				float m_fltSeLength;
 
@@ -91,48 +85,6 @@ namespace AnimatSim
 				///The velocity of change of the PE section of the muscle.
 				float m_fltVpe;
 
-				///The percentage of the muscle length that is the Pe portion.
-				float m_fltPeLengthPercentage;
-
-				///The minimum length of the pe portion of the muscle as a percentage of its total length.
-				///The pe length should never be able to go below this value.
-				float m_fltMinPeLengthPercentage;
-
-				///The minimum length of the pe portion of the muscle.
-				///The pe length should never be able to go below this value.
-				float m_fltMinPeLength;
-
-				///First coefficient of the sigmoidal active force curve. This curve is of the form:
-				///A = A1/(1 + exp(-(FiringFreq-A2)/A3)). A1 is the maximum force generated at tetanus.
-				float m_fltA1;
-
-				///Second coefficient of the sigmoidal active force curve. This curve is of the form:
-				///A = A1/(1 + exp(-(FiringFreq-A2)/A3)). A2 is the center of the sigmoidal curve.
-				float m_fltA2;
-
-				///Third coefficient of the sigmoidal active force curve. This curve is of the form:
-				///A = A1/(1 + exp(-(FiringFreq-A2)/A3)). A3 is the how fast the curve slopes up.
-				float m_fltA3;
-
-				///Fourth coefficient of the sigmoidal active force curve. This curve is of the form:
-				///A = A1/(1 + exp(-(FiringFreq-A2)/A3)). A3 is the how fast the curve slopes up.
-				float m_fltA4;
-
-				///Determines if the limits are used when calculating the stimulus tension curve.
-				BOOL m_bUseStimLimits;
-
-				///Lower limit (x) for use in stimulus-tension curve. Only used if m_bUseStimLimits is true.
-				float m_fltStimLowerLimit;
-
-				///uppper limit (x) for use in stimulus-tension curve. Only used if m_bUseStimLimits is true.
-				float m_fltStimUpperLimit;
-
-				///Lower output (y) for use in stimulus-tension curve. Only used if m_bUseStimLimits is true.
-				float m_fltStimLowerOutput;
-
-				///Lower output (y) for use in stimulus-tension curve. Only used if m_bUseStimLimits is true.
-				float m_fltStimUpperOutput;
-
 				///This is the amount of displacement of this muscle from its resting length.
 				float m_fltDisplacement;
 
@@ -144,12 +96,6 @@ namespace AnimatSim
 
 				///The Tl percentage. This is primarily used for reporting purposes. It is m_fltTl*100. It ranges from 0-100 %
 				float m_fltTLPerc;
-
-				///The width of the tension length curve.
-				float m_fltTLwidth;
-
-				///precalculated value used in the determination of the length-tension curve.
-				float m_fltTLc;
 
 				///The active force that is developed from the current stimulus level before the tension-length relation is considered.
 				float m_fltAct;
@@ -196,41 +142,30 @@ namespace AnimatSim
 				LinearHillMuscle();
 				virtual ~LinearHillMuscle();
 
-				float Kse() {return m_fltKse;};
-				float Kpe() {return m_fltKpe;};
-				float B() {return m_fltB;};
-				float RestingLength() {return m_fltMuscleRestingLength;};
-				float SeRestLength() {return m_fltSeRestLength;};
-				float SeLength() {return m_fltSeLength;};
-				float PeLength() {return m_fltPeLength;};
-				float PeLengthPercentage() {return m_fltPeLengthPercentage;};
-				float MinPeLengthPercentage() {return m_fltMinPeLengthPercentage;};
-				float MinPeLength() {return m_fltMinPeLength;};
+				virtual float Kse();
+				virtual void Kse(float fltVal);
 
-				float A1() {return m_fltA1;};
-				float A2() {return m_fltA2;};
-				float A3() {return m_fltA3;};
-				float A4() {return m_fltA4;};
+				virtual float Kpe();
+				virtual void Kpe(float fltVal);
 
-				BOOL UseStimLimits() {return m_bUseStimLimits;};
+				virtual float B();
+				virtual void B(float fltVal);
 
-				float StimLowerLimit() {return m_fltStimLowerLimit;};
-				float StimUpperLimit() {return m_fltStimUpperLimit;};
-				float StimLowerOutput() {return m_fltStimLowerOutput;};
-				float StimUpperOutput() {return m_fltStimUpperOutput;};
+				virtual float RestingLength();
+				virtual void RestingLength(float fltVal);
 
-				float Displacement() {return m_fltDisplacement;};
-				float DisplacementRatio() {return m_fltDisplacementRatio;};
+				virtual float IbDischargeConstant();
+				virtual void IbDischargeConstant(float fltVal);
 
-				float TL() {return m_fltTL;};
-				float TLwidth() {return m_fltTLwidth;};
-				float TLc() {return m_fltTLc;};
-
-				float Act() {return m_fltAct;};
-				float A() {return m_fltA;};
-				float InternalTension() {return m_fltInternalTension;};
-
-				float Vmuscle() {return m_fltVmuscle;};
+				virtual float SeLength();
+				virtual float PeLength();
+				virtual float Displacement();
+				virtual float DisplacementRatio();
+				virtual float TL();
+				virtual float Act();
+				virtual float A();
+				virtual float InternalTension();
+				virtual float Vmuscle();
 
 				virtual void Enabled(BOOL bVal);
 

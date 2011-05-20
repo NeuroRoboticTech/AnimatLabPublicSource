@@ -340,6 +340,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LengthTensionGain.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\LinearHillMuscle.cpp"
 				>
 			</File>
@@ -651,6 +655,10 @@
 			</File>
 			<File
 				RelativePath=".\KeyFrame.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LengthTensionGain.h"
 				>
 			</File>
 			<File

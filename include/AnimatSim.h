@@ -123,6 +123,7 @@ namespace AnimatSim
 		class Gain;
 		class PolynomialGain;
 		class SigmoidGain;
+		class LengthTensionGain;
 	}
 
 	namespace Recording
@@ -154,6 +155,7 @@ using namespace AnimatSim::Recording;
 #include "EquationGain.h"
 #include "PolynomialGain.h"
 #include "SigmoidGain.h"
+#include "LengthTensionGain.h"
 #include "Node.h"
 #include "Link.h"
 #include "IPhysicsMovableItem.h"

@@ -37,6 +37,9 @@ namespace AnimatSim
 				///A pointer to the primary attachment part.
 				CStdArray<Attachment *> m_aryAttachmentPoints;
 
+				virtual void LoadAttachments(CStdXml &oXml);
+				virtual void InitializeAttachments();
+
 			public:
 				LineBase();
 				virtual ~LineBase();
@@ -47,6 +50,8 @@ namespace AnimatSim
 				virtual BOOL AllowMouseManipulation();
 
 				CStdArray<Attachment *> *AttachmentPoints();
+				virtual void AttachmentPoints(string srXml);
+
 				virtual float CalculateLength();
 
 				virtual float *GetDataPointer(string strDataType);

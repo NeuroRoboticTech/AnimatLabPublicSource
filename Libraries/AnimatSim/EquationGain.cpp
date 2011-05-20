@@ -102,6 +102,42 @@ float EquationGain::CalculateGain(float fltInput)
 		return CalculateLimitOutput(fltInput);
 }
 
+BOOL EquationGain::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	if(Gain::SetData(strDataType, strValue, false))
+		return true;
+
+	//if(strDataType == "A")
+	//{
+	//	A(atof(strValue.c_str()));
+	//	return true;
+	//}
+
+	//if(strDataType == "B")
+	//{
+	//	B(atof(strValue.c_str()));
+	//	return true;
+	//}
+
+	//if(strDataType == "C")
+	//{
+	//	C(atof(strValue.c_str()));
+	//	return true;
+	//}
+
+	//if(strDataType == "D")
+	//{
+	//	D(atof(strValue.c_str()));
+	//	return true;
+	//}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
+
 void EquationGain::Load(CStdXml &oXml)
 {
 	Gain::Load(oXml);

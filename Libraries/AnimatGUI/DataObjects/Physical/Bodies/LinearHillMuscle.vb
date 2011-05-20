@@ -267,11 +267,10 @@ Namespace DataObjects.Physical.Bodies
                           "Muscle Properties", "The minimum length, as a percentage of resting length, that the Pe section can go attain.", pbSubBag, _
                           "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            'TODO
-            'pbSubBag = m_aryAttachmentPoints.Properties
-            'propTable.Properties.Add(New PropertySpec("Calculate Stimulus", pbSubBag.GetType(), "", _
-            '       "Muscle Properties", "Used to calculate the stimulus needed to develop a specific tension.", pbSubBag, _
-            '       GetType(AnimatGUI.TypeHelpers.CalcMuscleEditor), GetType(AnimatGuiCtrls.Controls.ExpandablePropBagConverter)))
+            pbSubBag = m_aryAttachmentPoints.Properties
+            propTable.Properties.Add(New PropertySpec("Calculate Stimulus", pbSubBag.GetType(), "", _
+                   "Muscle Properties", "Used to calculate the stimulus needed to develop a specific tension.", pbSubBag, _
+                   GetType(AnimatGUI.TypeHelpers.CalcMuscleStimEditor), GetType(AnimatGuiCtrls.Controls.ExpandablePropBagConverter)))
 
             pbSubBag = m_snIbDischargeConstant.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Ib Discharge Constant", pbSubBag.GetType(), "IbDischargeConstant", _

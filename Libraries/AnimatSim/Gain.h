@@ -123,6 +123,8 @@ namespace AnimatSim
 			\return	The calculated gain. 
 			**/
 			virtual float CalculateGain(float fltInput) = 0;
+
+			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 			virtual void Load(CStdXml &oXml);
 		};
 

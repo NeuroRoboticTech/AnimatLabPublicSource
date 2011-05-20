@@ -36,6 +36,9 @@
 #include "ExternalStimulus.h"
 
 #include "LineBase.h"
+#include "Gain.h"
+#include "SigmoidGain.h"
+#include "LengthTensionGain.h"
 #include "MuscleBase.h"
 
 namespace AnimatSim
@@ -177,8 +180,7 @@ BOOL MuscleBase::Enabled() {return m_bEnabled;};
 **/
 void MuscleBase::Enabled(BOOL bVal)
 {
-	m_bEnabled = bVal;
-	m_fltEnabled = (float) bVal;
+	LineBase::Enabled(bVal);
 
 	if(!bVal)
 	{
@@ -186,6 +188,10 @@ void MuscleBase::Enabled(BOOL bVal)
 		m_fltTension = 0;
 	}
 }
+
+SigmoidGain *MuscleBase::StimTension() {return &m_gainStimTension;}
+
+LengthTensionGain *MuscleBase::LengthTension() {return &m_gainLengthTension;}
 
 void MuscleBase::AddExternalNodeInput(float fltInput)
 {
@@ -216,11 +222,20 @@ float *MuscleBase::GetDataPointer(string strDataType)
 
 BOOL MuscleBase::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
-	if(strDataType == "POSITION")
+	if(LineBase::SetData(strDataType, strValue, FALSE))
+		return true;
+
+	if(strDataType == "MAXTENSION")
 	{
-		//Position(strValue);
+		MaxTension(atof(strValue.c_str()));
 		return true;
 	}
+
+	if(m_gainStimTension.SetData(strDataType, strValue, false))
+		return true;
+
+	if(m_gainLengthTension.SetData(strDataType, strValue, false))
+		return true;
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
@@ -241,7 +256,8 @@ void MuscleBase::Load(CStdXml &oXml)
 	oXml.IntoElem();  //Into RigidBody Element
 
 	m_fltMaxTension = oXml.GetChildFloat("MaximumTension", m_fltMaxTension);
-
+	m_gainStimTension.Load(oXml);
+	m_gainLengthTension.Load(oXml);
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
 }

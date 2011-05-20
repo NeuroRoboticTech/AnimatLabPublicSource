@@ -41,6 +41,12 @@ namespace AnimatSim
 				///Tension of the muscle in the last time slice.
 				float m_fltPrevTension;
 
+				/// The stimulus-tension gain
+				SigmoidGain m_gainStimTension;
+
+				/// The length-tension gain
+				LengthTensionGain m_gainLengthTension;
+
 				/**
 				\brief	Calculates the tension. 
 				
@@ -65,6 +71,9 @@ namespace AnimatSim
 
 				virtual BOOL Enabled();
 				virtual void Enabled(BOOL bVal);
+
+				virtual SigmoidGain *StimTension();
+				virtual LengthTensionGain *LengthTension();
 
 				/**
 				\brief	Calculates the activation needed for a given tension value. 

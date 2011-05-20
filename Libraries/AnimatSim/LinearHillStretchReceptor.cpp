@@ -33,6 +33,9 @@
 #include "ExternalStimulus.h"
 
 #include "LineBase.h"
+#include "Gain.h"
+#include "SigmoidGain.h"
+#include "LengthTensionGain.h"
 #include "MuscleBase.h" 
 #include "LinearHillMuscle.h"
 #include "LinearHillStretchReceptor.h"
@@ -86,6 +89,30 @@ LinearHillStretchReceptor::~LinearHillStretchReceptor()
 {
 }
 
+BOOL LinearHillStretchReceptor::ApplyTension() {return m_bApplyTension;}
+
+void LinearHillStretchReceptor::ApplyTension(BOOL bVal) {m_bApplyTension = bVal;}
+
+float LinearHillStretchReceptor::IaDischargeConstant() {return m_fltIaDischargeConstant;}
+
+void LinearHillStretchReceptor::IaDischargeConstant(float fltVal)
+{
+	Std_InValidRange((float) 0, (float) 1e11, fltVal, TRUE, "IaDischargeConstant");
+	m_fltIaDischargeConstant = fltVal;
+}
+
+float LinearHillStretchReceptor::IIDischargeConstant() {return m_fltIIDischargeConstant;}
+
+void LinearHillStretchReceptor::IIDischargeConstant(float fltVal)
+{
+	Std_InValidRange((float) 0, (float) 1e11, fltVal, TRUE, "IIDischargeConstant");
+	m_fltIIDischargeConstant = fltVal;
+}
+
+float LinearHillStretchReceptor::IaRate() {return m_fltIaRate;}
+
+float LinearHillStretchReceptor::IIRate() {return m_fltIIRate;}
+
 void LinearHillStretchReceptor::CalculateTension()
 {
 	LinearHillMuscle::CalculateTension();
@@ -115,9 +142,24 @@ float *LinearHillStretchReceptor::GetDataPointer(string strDataType)
 
 BOOL LinearHillStretchReceptor::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
-	if(strDataType == "POSITION")
+	if(LinearHillMuscle::SetData(strDataType, strValue, false))
+		return true;
+
+	if(strDataType == "APPLYTENSION")
 	{
-		//Position(strValue);
+		ApplyTension(Std_ToBool(strValue));
+		return true;
+	}
+
+	if(strDataType == "IADISCHARGE")
+	{
+		IaDischargeConstant(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strDataType == "IIDISCHARGE")
+	{
+		IIDischargeConstant(atof(strValue.c_str()));
 		return true;
 	}
 
@@ -134,13 +176,9 @@ void LinearHillStretchReceptor::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into RigidBody Element
 
-	m_bApplyTension = oXml.GetChildBool("ApplyTension", m_bApplyTension);
-
-	m_fltIaDischargeConstant = oXml.GetChildFloat("IaDischarge", m_fltIaDischargeConstant);
-	m_fltIIDischargeConstant = oXml.GetChildFloat("IIDischarge", m_fltIIDischargeConstant);
-
-	Std_InValidRange((float) 0, (float) 1e11, m_fltIaDischargeConstant, TRUE, "IaDischargeConstant");
-	Std_InValidRange((float) 0, (float) 1e11, m_fltIIDischargeConstant, TRUE, "IIDischargeConstant");
+	ApplyTension(oXml.GetChildBool("ApplyTension", m_bApplyTension));
+	IaDischargeConstant(oXml.GetChildFloat("IaDischarge", m_fltIaDischargeConstant));
+	IIDischargeConstant(oXml.GetChildFloat("IIDischarge", m_fltIIDischargeConstant));
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
 }

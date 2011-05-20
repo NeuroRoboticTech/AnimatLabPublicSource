@@ -110,7 +110,11 @@ float Gain::LowerLimit() {return m_fltLowerLimit;}
 
 \param	fltVal	The new value. 
 **/
-void Gain::LowerLimit(float fltVal) {m_fltLowerLimit = fltVal;}
+void Gain::LowerLimit(float fltVal) 
+{
+	Std_IsAboveMin(fltVal, m_fltUpperLimit, TRUE, "LowerLimit");
+	m_fltLowerLimit = fltVal;
+}
 
 /**
 \brief	Gets the upper limit. 
@@ -130,7 +134,11 @@ float Gain::UpperLimit() {return m_fltUpperLimit;}
 
 \param	fltVal	The new value. 
 **/
-void Gain::UpperLimit(float fltVal) {m_fltUpperLimit = fltVal;}
+void Gain::UpperLimit(float fltVal) 
+{
+	Std_IsAboveMin(m_fltLowerLimit, fltVal, TRUE, "UpperLimit");
+	m_fltUpperLimit = fltVal;
+}
 
 /**
 \brief	Gets the lower output. 
@@ -162,6 +170,48 @@ void Gain::LowerOutput(float fltVal) {m_fltLowerOutput = fltVal;}
 **/
 float Gain::UpperOutput() {return m_fltUpperOutput;}
 
+BOOL Gain::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	if(AnimatBase::SetData(strDataType, strValue, false))
+		return true;
+
+	if(strDataType == "USELIMITS")
+	{
+		UseLimits(Std_ToBool(strValue));
+		return true;
+	}
+
+	if(strDataType == "LOWERLIMIT")
+	{
+		LowerLimit(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strDataType == "LOWEROUTPUT")
+	{
+		LowerOutput(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strDataType == "UPPERLIMIT")
+	{
+		UpperLimit(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strDataType == "UPPEROUTPUT")
+	{
+		UpperOutput(atof(strValue.c_str()));
+		return true;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
+
 /**
 \brief	Sets the Upper output. 
 
@@ -186,8 +236,6 @@ void Gain::Load(CStdXml &oXml)
 		LowerOutput(oXml.GetChildFloat("LowerOutput"));
 		UpperLimit(oXml.GetChildFloat("UpperLimit"));
 		UpperOutput(oXml.GetChildFloat("UpperOutput"));
-		
-		Std_IsAboveMin(m_fltLowerLimit, m_fltUpperLimit, TRUE, "UpperLimit");
 	}
 
 	oXml.OutOfElem(); //OutOf Adapter Element

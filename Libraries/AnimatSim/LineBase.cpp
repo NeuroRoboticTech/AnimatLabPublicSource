@@ -110,6 +110,28 @@ BOOL LineBase::AllowMouseManipulation() {return FALSE;}
 CStdArray<Attachment *> *LineBase::AttachmentPoints() {return &m_aryAttachmentPoints;}
 
 /**
+\brief	Sets the attachment points for the line.
+
+\details This loads in the list of attchment points from an xml string and 
+then initializes the list again to find those points for the line.
+
+\author	dcofer
+\date	5/20/2011
+
+\param	strXml		 	The xml to load.
+**/
+void LineBase::AttachmentPoints(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Attachments");
+
+	LoadAttachments(oXml);
+	InitializeAttachments();	
+}
+
+/**
 \brief	Calculates the length of the line. 
 
 \author	dcofer
@@ -137,7 +159,6 @@ float LineBase::CalculateLength()
 	return (fltLength * m_lpSim->DistanceUnits());
 }
 
-
 #pragma region DataAccesMethods
 
 float *LineBase::GetDataPointer(string strDataType)
@@ -157,9 +178,18 @@ float *LineBase::GetDataPointer(string strDataType)
 
 BOOL LineBase::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
-	if(strDataType == "POSITION")
+	if(RigidBody::SetData(strDataType, strValue, FALSE))
+		return true;
+
+	if(strDataType == "ATTACHMENTS")
 	{
-		//Position(strValue);
+		AttachmentPoints(strValue);
+		return true;
+	}
+
+	if(strDataType == "ENABLED")
+	{
+		Enabled(Std_ToBool(strValue));
 		return true;
 	}
 
@@ -172,12 +202,17 @@ BOOL LineBase::SetData(string strDataType, string strValue, BOOL bThrowError)
 
 #pragma endregion
 
-// There are no parts or joints to create for muscle attachment points.
-void LineBase::CreateParts()
-{
-}
+/**
+\brief	Initializes the attachments.
 
-void LineBase::CreateJoints()
+\details This goes through the list of attachment IDs and finds each one and adds it to the list
+of attachment points. If there are less than two points then it sets enabled to false. It also
+recalculates the length of the line.
+
+\author	dcofer
+\date	5/20/2011
+**/
+void LineBase::InitializeAttachments()
 {
 	m_aryAttachmentPoints.Clear();
 
@@ -192,11 +227,21 @@ void LineBase::CreateJoints()
 	}
 
 	if(m_aryAttachmentPoints.GetSize() < 2)
-		m_bEnabled = FALSE;
+		Enabled(FALSE);
 
 	//Get the current length of the muscle.
 	m_fltLength = CalculateLength();
 	m_fltPrevLength = m_fltLength;
+}
+
+// There are no parts or joints to create for muscle attachment points.
+void LineBase::CreateParts()
+{
+}
+
+void LineBase::CreateJoints()
+{
+	InitializeAttachments();
 }
 
 void LineBase::Load(CStdXml &oXml)
@@ -211,6 +256,27 @@ void LineBase::Load(CStdXml &oXml)
 	Enabled(oXml.GetChildBool("Enabled", m_bEnabled));
 	IsVisible(oXml.GetChildBool("IsVisible", m_bIsVisible));
 
+	LoadAttachments(oXml);
+
+	//Load the colors
+	m_vDiffuse.Load(oXml, "Diffuse", false);
+	m_vAmbient.Load(oXml, "Ambient", false);
+	m_vSpecular.Load(oXml, "Specular", false);
+	m_fltShininess = oXml.GetChildFloat("Shininess", m_fltShininess);
+
+	oXml.OutOfElem(); //OutOf RigidBody Element
+}
+
+/**
+\brief	Loads the attachment points list.
+
+\author	dcofer
+\date	5/20/2011
+
+\param [in,out]	oXml	The xml to load in.
+**/
+void LineBase::LoadAttachments(CStdXml &oXml)
+{
 	m_aryAttachmentPointIDs.Clear();
 	if(oXml.FindChildElement("Attachments", FALSE))
 	{
@@ -227,15 +293,7 @@ void LineBase::Load(CStdXml &oXml)
 	}
 
 	if(m_aryAttachmentPointIDs.GetSize() < 2)
-		m_bEnabled = FALSE;
-
-	//Load the colors
-	m_vDiffuse.Load(oXml, "Diffuse", false);
-	m_vAmbient.Load(oXml, "Ambient", false);
-	m_vSpecular.Load(oXml, "Specular", false);
-	m_fltShininess = oXml.GetChildFloat("Shininess", m_fltShininess);
-
-	oXml.OutOfElem(); //OutOf RigidBody Element
+		Enabled(FALSE);
 }
 
 		}		//Bodies

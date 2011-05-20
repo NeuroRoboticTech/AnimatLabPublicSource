@@ -36,6 +36,9 @@
 #include "ExternalStimulus.h"
 
 #include "LineBase.h"
+#include "Gain.h"
+#include "SigmoidGain.h"
+#include "LengthTensionGain.h"
 #include "MuscleBase.h"
 #include "LinearHillMuscle.h"
 
@@ -58,16 +61,6 @@ LinearHillMuscle::LinearHillMuscle()
 	m_fltB = 0;
 	m_fltKseByB = 0;
 	m_fltKpeByKse = 0;
-	m_fltMuscleRestingLength = 0;
-	m_fltA1 = 0;
-	m_fltA2 = 0;
-	m_fltA3 = 0;
-	m_fltA4 = 0;
-	m_bUseStimLimits = FALSE;
-	m_fltStimLowerLimit = -0.1f;
-	m_fltStimUpperLimit = 0;
-	m_fltStimLowerOutput = 0;
-	m_fltStimUpperOutput = 6;
 	m_fltMaxTension = 0;
 	m_fltDisplacement = 0;
 	m_fltDisplacementRatio = 0;
@@ -83,12 +76,6 @@ LinearHillMuscle::LinearHillMuscle()
 	m_fltInternalTension = 0;
 	m_fltLength = 0;
 	m_fltPrevLength = 0;
-	m_fltTLwidth = 0;
-	m_fltTLc = 0;
-	m_fltSeRestLength = 0;
-	m_fltPeLengthPercentage = 90;
-	m_fltMinPeLengthPercentage = 5;
-	m_fltMinPeLength = 0;
 	m_fltIbDischargeConstant = 100;
 	m_fltIbRate = 0;
 	m_fltSeDisplacement = 0;
@@ -122,10 +109,219 @@ LinearHillMuscle::~LinearHillMuscle()
 	{Std_TraceMsg(0, "Caught Error in desctructor of LinearHillMuscle\r\n", "", -1, FALSE, TRUE);}
 }
 
+/**
+\brief	Gets the serial elastic spring constant.
+
+\author	dcofer
+\date	5/20/2011
+
+\return	SE spring constant.
+**/
+float LinearHillMuscle::Kse() {return m_fltKse;}
+
+/**
+\brief	Sets the serial elastic spring constant.
+
+\author	dcofer
+\date	5/20/2011
+
+\param	fltVal	The new value.
+**/
+void LinearHillMuscle::Kse(float fltVal)
+{
+	Std_InValidRange((float) 0.00001, (float) 1e11, fltVal, TRUE, "Kse");
+	m_fltKse = fltVal;
+	m_fltKseByB = m_fltKse/m_fltB;
+	m_fltKpeByKse = (1 + (m_fltKpe/m_fltKse));
+}
+
+/**
+\brief	Gets the parallel elastic spring constant.
+
+\author	dcofer
+\date	5/20/2011
+
+\return	PE spring constant.
+**/
+float LinearHillMuscle::Kpe() {return m_fltKpe;}
+
+/**
+\brief	Sets the parallel elastic spring constant.
+
+\author	dcofer
+\date	5/20/2011
+
+\param	fltVal	The new value.
+**/
+void LinearHillMuscle::Kpe(float fltVal)
+{
+	Std_InValidRange((float) 0, (float) 1e11, fltVal, TRUE, "Kpe");
+	m_fltKpe = fltVal;
+	m_fltKpeByKse = (1 + (m_fltKpe/m_fltKse));
+}
+
+/**
+\brief	Gets the damping value. 
+
+\author	dcofer
+\date	5/20/2011
+
+\return	damping.
+**/
+float LinearHillMuscle::B() {return m_fltB;}
+
+/**
+\brief	Sets the damping value. 
+
+\author	dcofer
+\date	5/20/2011
+
+\param	fltVal	The new value.
+**/
+void LinearHillMuscle::B(float fltVal)
+{
+	Std_InValidRange((float) 0, (float) 1e11, fltVal, TRUE, "B");
+	m_fltB = fltVal;
+	m_fltKseByB = m_fltKse/m_fltB;
+}
+
+/**
+\brief	Gets the resting length.
+
+\author	dcofer
+\date	5/20/2011
+
+\return	length.
+**/
+float LinearHillMuscle::RestingLength() {return m_gainLengthTension.RestingLength();}
+
+/**
+\brief	Sets the resting length.
+
+\author	dcofer
+\date	5/20/2011
+
+\param	fltVal	The new value.
+**/
+void LinearHillMuscle::RestingLength(float fltVal) {m_gainLengthTension.RestingLength(fltVal);}
+
+/**
+\brief	Gets the ib discharge constant.
+
+\author	dcofer
+\date	5/20/2011
+
+\return	discharge constant.
+**/
+float LinearHillMuscle::IbDischargeConstant() {return m_fltIbDischargeConstant;}
+
+/**
+\brief	Sets the ib discharge constant.
+
+\author	dcofer
+\date	5/20/2011
+
+\param	fltVal	The new value.
+**/
+void LinearHillMuscle::IbDischargeConstant(float fltVal)
+{
+	Std_InValidRange((float) 0, (float) 1e11, fltVal, TRUE, "IbDischargeConstant");
+	m_fltIbDischargeConstant = fltVal;
+}
+
+/**
+\brief	Gets the se length.
+
+\author	dcofer
+\date	5/20/2011
+
+\return	length.
+**/
+float LinearHillMuscle::SeLength() {return m_fltSeLength;}
+
+/**
+\brief	Gets the pe length.
+
+\author	dcofer
+\date	5/20/2011
+
+\return	length.
+**/
+float LinearHillMuscle::PeLength() {return m_fltPeLength;}
+
+/**
+\brief	Gets the displacement.
+
+\author	dcofer
+\date	5/20/2011
+
+\return	length.
+**/
+float LinearHillMuscle::Displacement() {return m_fltDisplacement;}
+
+/**
+\brief	Gets the displacement ratio.
+
+\author	dcofer
+\date	5/20/2011
+
+\return	length ratio.
+**/
+float LinearHillMuscle::DisplacementRatio() {return m_fltDisplacementRatio;}
+
+/**
+\brief	Gets the tl.
+
+\author	dcofer
+\date	5/20/2011
+
+\return	.
+**/
+float LinearHillMuscle::TL() {return m_fltTL;}
+
+/**
+\brief	Gets the muscle activation value.
+
+\author	dcofer
+\date	5/20/2011
+
+\return	activation.
+**/
+float LinearHillMuscle::Act() {return m_fltAct;}
+
+/**
+\brief	Gets activation.
+
+\author	dcofer
+\date	5/20/2011
+
+\return	activation.
+**/
+float LinearHillMuscle::A() {return m_fltA;}
+
+/**
+\brief	Gets the internal tension.
+
+\author	dcofer
+\date	5/20/2011
+
+\return	tension.
+**/
+float LinearHillMuscle::InternalTension() {return m_fltInternalTension;}
+
+/**
+\brief	Gets the muscle membrane voltage.
+
+\author	dcofer
+\date	5/20/2011
+
+\return	voltage.
+**/
+float LinearHillMuscle::Vmuscle() {return m_fltVmuscle;}
+
 void LinearHillMuscle::Enabled(BOOL bVal)
 {
-	m_bEnabled = bVal;
-	m_fltEnabled = (float) bVal;
+	MuscleBase::Enabled(bVal);
 
 	if(!bVal)
 	{
@@ -135,28 +331,37 @@ void LinearHillMuscle::Enabled(BOOL bVal)
 	}
 }
 
+/**
+\brief	Calculates the length tension relationship..
+
+\author	dcofer
+\date	5/20/2011
+
+\param	fltL	The length tension ratio.
+
+\return	ratio.
+**/
 inline float LinearHillMuscle::Ftl(float fltL)
 {
-	float fltLceNorm = fltL - m_fltMuscleRestingLength;
-	float fltTl = (-(pow(fltLceNorm, 2)/m_fltTLc)  + 1);
+	float fltLceNorm = fltL - m_gainLengthTension.RestingLength();
+	float fltTl = m_gainLengthTension.CalculateGain(fltLceNorm);
 	if(fltTl<0) fltTl = 0;
 	return fltTl;
-	return 0;
 }
 
+/**
+\brief	Calculates the muscle activation.
+
+\author	dcofer
+\date	5/20/2011
+
+\param	fltStim	The stimulus level.
+
+\return	activation.
+**/
 inline float LinearHillMuscle::Fact(float fltStim)
 {	
-	float fltAct=0;
-
-	if(m_bUseStimLimits && ((fltStim <= m_fltStimLowerLimit) || (fltStim >=m_fltStimUpperLimit)))
-	{
-		if(fltStim<=m_fltStimLowerLimit)
-			fltAct = m_fltStimLowerOutput;
-		else
-			fltAct = m_fltStimUpperOutput;
-	}
-	else
-		fltAct = (m_fltA2/(1 + exp(m_fltA3*(m_fltA1-fltStim)))) + m_fltA4;
+	float fltAct=m_gainStimTension.CalculateGain(fltStim);
 
 	if(fltAct <0)
 		fltAct = 0;
@@ -177,8 +382,8 @@ void LinearHillMuscle::CalculateTension()
 	m_fltLength = CalculateLength();
 
 	//Calculate the displacement of this muscle d = (x-x*)
-	m_fltDisplacement = m_fltLength-m_fltMuscleRestingLength;
-	m_fltDisplacementRatio = m_fltLength/m_fltMuscleRestingLength;
+	m_fltDisplacement = m_fltLength-m_gainLengthTension.RestingLength();
+	m_fltDisplacementRatio = m_fltLength/m_gainLengthTension.RestingLength();
 
 	//Calculate the instantaneous velocity of change of the muscle length.
 	m_fltVmuscle = (m_fltLength-m_fltPrevLength)/m_lpSim->PhysicsTimeStep();
@@ -227,15 +432,15 @@ void LinearHillMuscle::CalculateTension()
 	m_fltSeLPrev = m_fltSeLength;
 	m_fltPeLPrev = m_fltPeLength;
 
-	m_fltSeLength = m_fltSeRestLength + (m_fltTension/m_fltKse);
-	m_fltSeDisplacement = m_fltSeLength - m_fltSeRestLength;
+	m_fltSeLength = m_gainLengthTension.SeRestLength() + (m_fltTension/m_fltKse);
+	m_fltSeDisplacement = m_fltSeLength - m_gainLengthTension.SeRestLength();
 	if(m_fltSeDisplacement < 0) m_fltSeDisplacement = 0;
 
 	m_fltPeLength = m_fltLength - m_fltSeLength;
-	if(m_fltPeLength < m_fltMinPeLength)
+	if(m_fltPeLength < m_gainLengthTension.MinPeLength())
 	{
-		m_fltSeLength = m_fltLength  - m_fltMinPeLength;
-		m_fltPeLength = m_fltMinPeLength;
+		m_fltSeLength = m_fltLength  - m_gainLengthTension.MinPeLength();
+		m_fltPeLength = m_gainLengthTension.MinPeLength();
 	}
 
 	m_fltVse = (m_fltSeLength-m_fltSeLPrev)/m_lpSim->PhysicsTimeStep();
@@ -249,7 +454,7 @@ void LinearHillMuscle::CalculateInverseDynamics(float fltLength, float fltVeloci
 {
 	//Calculate inverse dynamics force needed
 	m_fltPrevA = fltA;
-	fltA = fltT - m_fltKpe*(fltLength-m_fltMuscleRestingLength) - m_fltB*fltVelocity + (m_fltKpe/m_fltKse)*fltT;
+	fltA = fltT - m_fltKpe*(fltLength-m_gainLengthTension.RestingLength()) - m_fltB*fltVelocity + (m_fltKpe/m_fltKse)*fltT;
 
 	if(fltA<0)
 		fltA = m_fltPrevA;
@@ -262,7 +467,7 @@ void LinearHillMuscle::CalculateInverseDynamics(float fltLength, float fltVeloci
 
 	//Use A to calculate voltage required.
 	if(fltA > 0)
-		fltVm = (float) (m_fltA1 - (1/m_fltA3)*log((m_fltA2-fltA)/fltA));
+		fltVm = (float) (m_gainStimTension.A() - (1/m_gainStimTension.C())*log((m_gainStimTension.B()-fltA)/fltA));
 	else
 		fltVm = 0;
 
@@ -274,16 +479,8 @@ void LinearHillMuscle::CreateJoints()
 {
 	MuscleBase::CreateJoints();
 
-	m_fltTLc = pow(m_fltTLwidth, 2);
-
-	m_fltKseByB = m_fltKse/m_fltB;
-	m_fltKpeByKse = (1 + (m_fltKpe/m_fltKse));
-
-	m_fltSeRestLength = m_fltMuscleRestingLength - (m_fltMuscleRestingLength * m_fltPeLengthPercentage);
-	m_fltMinPeLength = m_fltMuscleRestingLength * m_fltMinPeLengthPercentage;
-
-	m_fltSeLength = m_fltSeRestLength;
-	m_fltPeLength = m_fltMuscleRestingLength - m_fltSeRestLength;
+	m_fltSeLength = m_gainLengthTension.SeRestLength();
+	m_fltPeLength = m_gainLengthTension.MinPeLength();
 
 	//Lets create the muscle velocity averaging array.
 	if(m_iMuscleVelAvgCount <= 0)
@@ -338,9 +535,30 @@ float *LinearHillMuscle::GetDataPointer(string strDataType)
 
 BOOL LinearHillMuscle::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
-	if(strDataType == "POSITION")
+	if(MuscleBase::SetData(strDataType, strValue, false))
+		return true;
+
+	if(strDataType == "KSE")
 	{
-		//Position(strValue);
+		Kse(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strDataType == "KPE")
+	{
+		Kpe(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strDataType == "B")
+	{
+		B(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strDataType == "IBDISCHARGE")
+	{
+		IbDischargeConstant(atof(strValue.c_str()));
 		return true;
 	}
 
@@ -357,49 +575,10 @@ void LinearHillMuscle::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into RigidBody Element
 
-	//Load the Stimulus-Tension params.
-	if(oXml.FindChildElement("StimulusTension", FALSE))
-	{
-		oXml.IntoChildElement("StimulusTension");
-		m_fltA1 = oXml.GetChildFloat("A1", m_fltA1);
-		m_fltA2 = oXml.GetChildFloat("A2", m_fltA2);
-		m_fltA3 = oXml.GetChildFloat("A3", m_fltA3);
-		m_fltA4 = oXml.GetChildFloat("A4", m_fltA4);
-		m_bUseStimLimits = oXml.GetChildBool("UseLimits", m_bUseStimLimits);
-		if(m_bUseStimLimits)
-		{
-			m_fltStimLowerLimit = oXml.GetChildFloat("LowerLimitScale", m_fltStimLowerLimit);
-			m_fltStimUpperLimit = oXml.GetChildFloat("UpperLimitScale", m_fltStimUpperLimit);
-			m_fltStimLowerOutput = oXml.GetChildFloat("LowerOutputScale", m_fltStimLowerOutput);
-			m_fltStimUpperOutput = oXml.GetChildFloat("UpperOutputScale", m_fltStimUpperOutput);
-		}
-
-		oXml.OutOfElem();
-	}
-
-	//Load the Length-Tension params.
-	if(oXml.FindChildElement("LengthTension", FALSE))
-	{
-		oXml.IntoChildElement("LengthTension");
-		m_fltMuscleRestingLength = oXml.GetChildFloat("RestingLength", m_fltMuscleRestingLength);
-		m_fltTLwidth = oXml.GetChildFloat("Lwidth", m_fltTLwidth);
-		oXml.OutOfElem();
-	}
-
-	m_fltKse = oXml.GetChildFloat("Kse", m_fltKse);
-	m_fltKpe = oXml.GetChildFloat("Kpe", m_fltKpe);
-	m_fltB = oXml.GetChildFloat("B", m_fltB);
-	m_fltPeLengthPercentage = oXml.GetChildFloat("PeLength", m_fltPeLengthPercentage)/100;
-	m_fltMinPeLengthPercentage = oXml.GetChildFloat("MinPeLength", m_fltMinPeLengthPercentage)/100;
-	m_fltIbDischargeConstant = oXml.GetChildFloat("IbDischarge", m_fltIbDischargeConstant);
-
-	Std_IsAboveMin((float) 0, m_fltMuscleRestingLength, TRUE, "MuscleRestingLength");
-	Std_InValidRange((float) 0, (float) 1e11, m_fltKpe, TRUE, "Kpe");
-	Std_InValidRange((float) 0.00001, (float) 1e11, m_fltKse, TRUE, "Kse");
-	Std_InValidRange((float) 0, (float) 1e11, m_fltB, TRUE, "B");
-	Std_InValidRange((float) 0, (float) 1, m_fltPeLengthPercentage, TRUE, "PeLengthPercentage");
-	Std_InValidRange((float) 0, m_fltPeLengthPercentage, m_fltMinPeLengthPercentage, TRUE, "MinPeLengthPercentage");
-	Std_InValidRange((float) 0, (float) 1e11, m_fltIbDischargeConstant, TRUE, "IbDischargeConstant");
+	Kse(oXml.GetChildFloat("Kse", m_fltKse));
+	Kpe(oXml.GetChildFloat("Kpe", m_fltKpe));
+	B(oXml.GetChildFloat("B", m_fltB));
+	IbDischargeConstant(oXml.GetChildFloat("IbDischarge", m_fltIbDischargeConstant));
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
 }
