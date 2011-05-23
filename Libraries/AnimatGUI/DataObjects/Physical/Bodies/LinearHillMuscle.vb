@@ -111,7 +111,7 @@ Namespace DataObjects.Physical.Bodies
                         Throw New System.Exception("The Ib discharge rate must be greater than or equal to zero.")
                     End If
 
-                    SetSimData("IbDischargeConstant", value.ActualValue.ToString, True)
+                    SetSimData("IbDischarge", value.ActualValue.ToString, True)
                     m_snIbDischargeConstant.CopyData(value)
                 End If
 

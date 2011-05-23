@@ -1,6 +1,8 @@
-// LinearHillStretchReceptor.cpp: implementation of the LinearHillStretchReceptor class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	LinearHillStretchReceptor.cpp
+
+\brief	Implements the linear hill stretch receptor class.
+**/
 
 #include "stdafx.h"
 #include "IMovableItemCallback.h"
@@ -47,25 +49,12 @@ namespace AnimatSim
 		namespace Bodies
 		{
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\brief	Default constructor.
 
-/*! \brief 
-   Constructs a muscle object..
-   		
-   \param lpParent This is a pointer to the parent of this rigid body. 
-	          If this value is null then it is assumed that this is
-						a root object and no joint is loaded to connect this
-						part to the parent.
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a muscle. 
-*/
-
+\author	dcofer
+\date	5/23/2011
+**/
 LinearHillStretchReceptor::LinearHillStretchReceptor()
 {
 	m_bApplyTension = FALSE;
@@ -75,42 +64,102 @@ LinearHillStretchReceptor::LinearHillStretchReceptor()
 	m_fltIIRate = 0;
 }
 
-/*! \brief 
-   Destroys the muscle object..
-   		
-	 \return
-	 No return value.
+/**
+\brief	Destructor.
 
-   \remarks
-   Destroys the muscle object..	 
-*/
-
+\author	dcofer
+\date	5/23/2011
+**/
 LinearHillStretchReceptor::~LinearHillStretchReceptor()
 {
 }
 
+/**
+\brief	Gets wheter tension is applied by the receptor or not.
+
+\author	dcofer
+\date	5/23/2011
+
+\return	true to apply tension, false to not.
+**/
 BOOL LinearHillStretchReceptor::ApplyTension() {return m_bApplyTension;}
 
+/**
+\brief	Sets wheter tension is applied by the receptor or not.
+
+\author	dcofer
+\date	5/23/2011
+
+\param	bVal	true to apply tension.
+**/
 void LinearHillStretchReceptor::ApplyTension(BOOL bVal) {m_bApplyTension = bVal;}
 
+/**
+\brief	Gets the ia discharge constant.
+
+\author	dcofer
+\date	5/23/2011
+
+\return	discharge constant.
+**/
 float LinearHillStretchReceptor::IaDischargeConstant() {return m_fltIaDischargeConstant;}
 
+/**
+\brief	Sets the ia discharge constant.
+
+\author	dcofer
+\date	5/23/2011
+
+\param	fltVal	The new value.
+**/
 void LinearHillStretchReceptor::IaDischargeConstant(float fltVal)
 {
 	Std_InValidRange((float) 0, (float) 1e11, fltVal, TRUE, "IaDischargeConstant");
 	m_fltIaDischargeConstant = fltVal;
 }
 
+/**
+\brief	Gets the ii discharge constant.
+
+\author	dcofer
+\date	5/23/2011
+
+\return	discharge constant.
+**/
 float LinearHillStretchReceptor::IIDischargeConstant() {return m_fltIIDischargeConstant;}
 
+/**
+\brief	Sets the ii discharge constant.
+
+\author	dcofer
+\date	5/23/2011
+
+\param	fltVal	The new value.
+**/
 void LinearHillStretchReceptor::IIDischargeConstant(float fltVal)
 {
 	Std_InValidRange((float) 0, (float) 1e11, fltVal, TRUE, "IIDischargeConstant");
 	m_fltIIDischargeConstant = fltVal;
 }
 
+/**
+\brief	Gets the ia rate.
+
+\author	dcofer
+\date	5/23/2011
+
+\return	rate.
+**/
 float LinearHillStretchReceptor::IaRate() {return m_fltIaRate;}
 
+/**
+\brief	Gets the ii rate.
+
+\author	dcofer
+\date	5/23/2011
+
+\return	rate.
+**/
 float LinearHillStretchReceptor::IIRate() {return m_fltIIRate;}
 
 void LinearHillStretchReceptor::CalculateTension()

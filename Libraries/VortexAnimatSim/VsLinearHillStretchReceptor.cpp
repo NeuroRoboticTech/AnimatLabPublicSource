@@ -26,6 +26,7 @@ namespace VortexAnimatSim
 
 VsLinearHillStretchReceptor::VsLinearHillStretchReceptor()
 {
+	SetThisPointers();
 }
 
 VsLinearHillStretchReceptor::~VsLinearHillStretchReceptor()
@@ -37,7 +38,6 @@ try
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of VsLinearHillStretchReceptor\r\n", "", -1, FALSE, TRUE);}
 }
-
 
 void VsLinearHillStretchReceptor::CreateParts()
 {
@@ -69,11 +69,9 @@ void VsLinearHillStretchReceptor::AfterResetSimulation()
 
 void VsLinearHillStretchReceptor::StepSimulation()
 {
-	if(m_bEnabled)
-	{
-		CalculateTension();
-		VsLine::StepSimulation(m_fltTension); 
-	}
+	CalculateTension();
+
+	VsLine::StepSimulation(m_fltTension); 
 }
 
 		}		//Bodies

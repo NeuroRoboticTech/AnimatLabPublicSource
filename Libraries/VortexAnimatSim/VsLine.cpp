@@ -37,6 +37,15 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of VsLine\r\n", "", -1, FALSE, TRUE);}
 }
 
+void VsLine::SetThisPointers()
+{
+	VsRigidBody::SetThisPointers();
+
+	m_lpLineBase = dynamic_cast<LineBase *>(this);
+	if(!m_lpLineBase)
+		THROW_TEXT_ERROR(Vs_Err_lThisPointerNotDefined, Vs_Err_strThisPointerNotDefined, "m_lpLineBase, " + m_lpThisAB->Name());
+}
+
 osg::Geometry *VsLine::CreateLineGeometry()
 { 
     osg::Geometry* linesGeom = new osg::Geometry();

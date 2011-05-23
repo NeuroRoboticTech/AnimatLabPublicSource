@@ -39,15 +39,6 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of VsLinearHillMuscle\r\n", "", -1, FALSE, TRUE);}
 }
 
-void VsLinearHillMuscle::SetThisPointers()
-{
-	VsRigidBody::SetThisPointers();
-
-	m_lpLineBase = dynamic_cast<LineBase *>(this);
-	if(!m_lpLineBase)
-		THROW_TEXT_ERROR(Vs_Err_lThisPointerNotDefined, Vs_Err_strThisPointerNotDefined, "m_lpLineBase, " + m_lpThisAB->Name());
-}
-
 void VsLinearHillMuscle::CreateParts()
 {
 	//We do nothing in createparts because we cannot build the line until after all parts are created
