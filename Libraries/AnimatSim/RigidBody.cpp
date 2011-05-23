@@ -769,6 +769,10 @@ void RigidBody::StepSimulation()
 			m_fltFoodEaten = 0;
 	}
 
+	//Must update the data before calling step sim on children because they may depend on 
+	//some of the data that is collected, like the world matrix for this object.
+	UpdateData();
+
 	int iCount = m_aryChildParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		m_aryChildParts[iIndex]->StepSimulation();
@@ -776,7 +780,6 @@ void RigidBody::StepSimulation()
 	if(m_lpJointToParent)
 		m_lpJointToParent->StepSimulation();
 
-	UpdateData();
 }
 
 

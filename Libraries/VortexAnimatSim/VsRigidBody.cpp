@@ -166,8 +166,11 @@ void VsRigidBody::Physics_Resize()
 			m_osgDragger->SetupMatrix();
 
 		//Reset the user data for the new parts.
-		osg::ref_ptr<VsOsgUserDataVisitor> osgVisitor = new VsOsgUserDataVisitor(this);
-		osgVisitor->traverse(*m_osgNodeGroup);
+		if(m_osgNodeGroup.valid())
+		{
+			osg::ref_ptr<VsOsgUserDataVisitor> osgVisitor = new VsOsgUserDataVisitor(this);
+			osgVisitor->traverse(*m_osgNodeGroup);
+		}
 	}
 
 	if(m_vxGeometry)
@@ -442,10 +445,17 @@ void VsRigidBody::Physics_CollectData()
 	float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
 	Vx::VxReal3 vData;
 
+
 	if(m_vxSensor)
 	{
 		UpdateWorldMatrix();
 
+		//Update the world matrix for this part
+		Vx::VxReal44 vxMT;
+		m_vxSensor->getTransform(vxMT);
+		VxOSG::copyVxReal44_to_OsgMatrix(m_osgWorldMatrix, vxMT);
+
+		//Then update the absolute position and rotation.
 		m_vxSensor->getPosition(vData);
 		m_lpThisMI->AbsolutePosition(vData[0], vData[1], vData[2]);
 

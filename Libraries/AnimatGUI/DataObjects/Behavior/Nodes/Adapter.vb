@@ -49,11 +49,14 @@ Namespace DataObjects.Behavior.Nodes
                 Return m_gnGain
             End Get
             Set(ByVal Value As AnimatGUI.DataObjects.Gain)
-                If Not m_gnGain Is Nothing Then m_gnGain.ParentData = Nothing
-                m_gnGain = Value
-                If Not m_gnGain Is Nothing Then
-                    m_gnGain.ParentData = Me
-                    m_gnGain.GainPropertyName = "Gain"
+                If Not Value Is Nothing Then
+                    Value.SetAllSimData(m_gnGain.SimInterface)
+                    If Not m_gnGain Is Nothing Then m_gnGain.ParentData = Nothing
+                    m_gnGain = Value
+                    If Not m_gnGain Is Nothing Then
+                        m_gnGain.ParentData = Me
+                        m_gnGain.GainPropertyName = "Gain"
+                    End If
                 End If
             End Set
         End Property

@@ -99,6 +99,9 @@ float LengthTensionGain::PeLengthPercentage() {return m_fltPeLengthPercentage;}
 **/
 void LengthTensionGain::PeLengthPercentage(float fltVal)
 {
+	//We need to scale it because this comes in as 0-100, but we need it in 0-1.
+	fltVal = fltVal/100;
+
 	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "PeLengthPercentage");
 	m_fltPeLengthPercentage = fltVal;
 	m_fltSeRestLength = m_fltRestingLength - (m_fltRestingLength * m_fltPeLengthPercentage);
@@ -124,6 +127,9 @@ float LengthTensionGain::MinPeLengthPercentage() {return m_fltMinPeLengthPercent
 **/
 void LengthTensionGain::MinPeLengthPercentage(float fltVal)
 {
+	//We need to scale it because this comes in as 0-100, but we need it in 0-1.
+	fltVal = fltVal/100;
+
 	Std_InValidRange((float) 0, m_fltPeLengthPercentage, fltVal, TRUE, "MinPeLengthPercentage");
 	m_fltMinPeLengthPercentage = fltVal;
 	m_fltMinPeLength = m_fltRestingLength * m_fltMinPeLengthPercentage;
@@ -160,7 +166,7 @@ BOOL LengthTensionGain::SetData(string strDataType, string strValue, BOOL bThrow
 		return true;
 	}
 
-	if(strDataType == "TLWIDTH")
+	if(strDataType == "LWIDTH")
 	{
 		TLwidth(atof(strValue.c_str()));
 		return true;
@@ -192,9 +198,9 @@ void LengthTensionGain::Load(CStdXml &oXml)
 	oXml.IntoElem();  //Into Adapter Element
 
 	RestingLength(oXml.GetChildFloat("RestingLength"));
-	TLwidth(oXml.GetChildFloat("TLwidth"));
-	PeLengthPercentage(oXml.GetChildFloat("PeLengthPercentage"));
-	MinPeLengthPercentage(oXml.GetChildFloat("MinPeLengthPercentage"));
+	TLwidth(oXml.GetChildFloat("Lwidth"));
+	PeLengthPercentage(oXml.GetChildFloat("PeLength"));
+	MinPeLengthPercentage(oXml.GetChildFloat("MinPeLength"));
 
 	oXml.OutOfElem(); //OutOf Adapter Element
 }

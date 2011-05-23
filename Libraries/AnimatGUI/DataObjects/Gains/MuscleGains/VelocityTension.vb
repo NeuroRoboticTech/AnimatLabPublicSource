@@ -199,8 +199,8 @@ Namespace DataObjects.Gains.MuscleGains
         Public Overrides Function CalculateGain(ByVal dblInput As Double) As Double
 
             If (InLimits(dblInput)) Then
-                If Not m_Muscle Is Nothing AndAlso Not m_Muscle.StimTension Is Nothing Then
-                    Return (m_dblB * m_Muscle.StimTension.Amplitude.ActualValue - dblInput * m_dblA) / (dblInput + m_dblB)
+                If Not m_Muscle Is Nothing AndAlso Not m_Muscle.StimulusTension Is Nothing Then
+                    Return (m_dblB * m_Muscle.StimulusTension.Amplitude.ActualValue - dblInput * m_dblA) / (dblInput + m_dblB)
                 Else
                     Return 0
                 End If
@@ -212,8 +212,8 @@ Namespace DataObjects.Gains.MuscleGains
 
         Public Overrides Sub RecalculuateLimits()
 
-            If Not m_Muscle Is Nothing AndAlso Not m_Muscle.StimTension Is Nothing Then
-                m_dblA = m_snAf.ActualValue * m_Muscle.StimTension.Amplitude.ActualValue
+            If Not m_Muscle Is Nothing AndAlso Not m_Muscle.StimulusTension Is Nothing Then
+                m_dblA = m_snAf.ActualValue * m_Muscle.StimulusTension.Amplitude.ActualValue
             End If
             m_dblB = m_snAf.ActualValue * m_snVmax.ActualValue
 

@@ -14,6 +14,7 @@ namespace AnimatGUI
 
 DataObjectInterface::DataObjectInterface(Interfaces::SimulatorInterface ^SimInt, String ^strID)
 {
+	m_aryDataPointers = NULL;
 	m_Sim = SimInt;
 	m_lpSim = m_Sim->Sim();
 	string strSID = Util::StringToStd(strID);
@@ -36,6 +37,26 @@ DataObjectInterface::DataObjectInterface(Interfaces::SimulatorInterface ^SimInt,
 		lpStruct->Callback(lpCallback);
 		GetPointers();
 	}
+}
+
+DataObjectInterface::!DataObjectInterface()
+{
+	try
+	{
+		if(m_aryDataPointers)
+		{
+			m_aryDataPointers->RemoveAll();
+			delete m_aryDataPointers;
+		}
+	}
+	catch(...)
+	{
+	}
+}
+
+DataObjectInterface::~DataObjectInterface()
+{
+	this->!DataObjectInterface();
 }
 
 void DataObjectInterface::GetPointers()
@@ -116,6 +137,80 @@ void DataObjectInterface::SelectItem(bool bVal, bool bSelectMultiple)
 			m_lpBase->Selected( (BOOL) bVal, (BOOL) bSelectMultiple);
 
 		m_lpSim->UnblockSimulation();
+	}
+}
+
+void DataObjectInterface::GetDataPointer(String ^sData)
+{
+	try
+	{
+		if(m_lpBase) 
+		{
+			string strData = Util::StringToStd(sData);
+			float *lpData = m_lpBase->GetDataPointer(strData);
+
+			if(!lpData) 
+				throw gcnew System::Exception("The data pointer is not defined!");
+
+			if(!m_aryDataPointers)
+				m_aryDataPointers = new CStdMap<string, float *>;
+			
+			m_aryDataPointers->Add(Std_CheckString(strData), lpData);
+		}
+	}
+	catch(CStdErrorInfo oError)
+	{
+		string strError = "An error occurred while attempting to get a data pointer.\nError: " + oError.m_strError;
+		String ^strErrorMessage = gcnew String(strError.c_str());
+		throw gcnew PropertyUpdateException(strErrorMessage);
+	}
+	catch(System::Exception ^ex)
+	{throw ex;}
+	catch(...)
+	{
+		String ^strErrorMessage = "An unknown error occurred while attempting to get a data pointer.";
+		throw gcnew System::Exception(strErrorMessage);
+	}
+}
+
+float DataObjectInterface::GetDataValue(String ^sData)
+{
+	if(!m_lpBase) 
+		throw gcnew System::Exception("The base object has not been defined!");
+
+	if(!m_aryDataPointers) 
+		throw gcnew System::Exception("The data pointers array has not been defined!");
+
+	try
+	{
+		string strData = Util::StringToStd(sData);
+		float *lpData = NULL;
+
+		CStdMap<string, float *>::iterator oPos;
+		oPos = m_aryDataPointers->find(Std_CheckString(strData));
+
+		if(oPos != m_aryDataPointers->end())
+			lpData =  oPos->second;
+		else
+			throw gcnew System::Exception("The data pointer has not been defined: " + sData);
+
+		if(!lpData) 
+			throw gcnew System::Exception("The data pointer is not defined: " + sData);
+
+		return *lpData;
+	}
+	catch(CStdErrorInfo oError)
+	{
+		string strError = "An error occurred while attempting to get a data value.\nError: " + oError.m_strError;
+		String ^strErrorMessage = gcnew String(strError.c_str());
+		throw gcnew PropertyUpdateException(strErrorMessage);
+	}
+	catch(System::Exception ^ex)
+	{throw ex;}
+	catch(...)
+	{
+		String ^strErrorMessage = "An unknown error occurred while attempting to get a data value.";
+		throw gcnew System::Exception(strErrorMessage);
 	}
 }
 

@@ -20,9 +20,9 @@ Namespace DataObjects.Gains.MuscleGains
 
         Protected m_snRestingLength As AnimatGUI.Framework.ScaledNumber
         Protected m_snLwidth As AnimatGUI.Framework.ScaledNumber
-        Protected m_snLcePercentage As AnimatGUI.Framework.ScaledNumber
 
-        Protected m_bShowLcePercentage As Boolean = True
+        Protected m_snPeLengthPercentage As ScaledNumber
+        Protected m_snMinPeLengthPercentage As ScaledNumber
 
 #End Region
 
@@ -58,8 +58,8 @@ Namespace DataObjects.Gains.MuscleGains
             End Get
         End Property
 
-        <Category("Equation Parameters"), _
-         Description("Sets the X offset for the sigmoid for the tension-stimulus curve."), _
+        <Category("Muscle Properties"), _
+         Description("Sets the resting length of the muscle."), _
          TypeConverter(GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter))> _
         Public Overridable Property RestingLength() As AnimatGUI.Framework.ScaledNumber
             Get
@@ -72,8 +72,10 @@ Namespace DataObjects.Gains.MuscleGains
                         Throw New System.Exception("The muscle resting length can not be less than zero.")
                     End If
 
+                    SetSimData("RestingLength", Value.ActualValue.ToString, True)
+
                     Dim snOrig As ScaledNumber = DirectCast(m_snRestingLength.Clone(m_snRestingLength.Parent, False, Nothing), ScaledNumber)
-                    If Not Value Is Nothing Then m_snRestingLength.CopyData(Value)
+                    m_snRestingLength.CopyData(Value)
 
                     Dim snNew As ScaledNumber = DirectCast(m_snRestingLength.Clone(m_snRestingLength.Parent, False, Nothing), ScaledNumber)
                     Me.ManualAddPropertyHistory("RestingLength", snOrig, snNew, True)
@@ -82,36 +84,8 @@ Namespace DataObjects.Gains.MuscleGains
             End Set
         End Property
 
-        '<Category("Equation Parameters"), _
-        ' Description("Sets the height for the sigmoid for the tension-stimulus curve."), _
-        ' TypeConverter(GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter))> _
-        <Browsable(False)> _
-        Public Overridable Property LcePercentage() As AnimatGUI.Framework.ScaledNumber
-            Get
-                Return m_snLcePercentage
-            End Get
-            Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
-
-                If Not Value Is Nothing Then
-                    If Value.ActualValue <= 0 Then
-                        Throw New System.Exception("The percentage of the muscle length for the contractile element can not be less than zero.")
-                    End If
-
-                    If Value.ActualValue > 90 Then
-                        Throw New System.Exception("The percentage of the muscle length for the contractile element can not be greater than 90.")
-                    End If
-
-                    Dim snOrig As ScaledNumber = DirectCast(m_snLcePercentage.Clone(m_snLcePercentage.Parent, False, Nothing), ScaledNumber)
-                    If Not Value Is Nothing Then m_snLcePercentage.CopyData(Value)
-
-                    Dim snNew As ScaledNumber = DirectCast(m_snLcePercentage.Clone(m_snLcePercentage.Parent, False, Nothing), ScaledNumber)
-                    Me.ManualAddPropertyHistory("LcePercentage", snOrig, snNew, True)
-                End If
-            End Set
-        End Property
-
-        <Category("Equation Parameters"), _
-         Description("Sets the how much of the resting muscle length is taken up by the contractile portion."), _
+        <Category("Muscle Properties"), _
+         Description("Sets the width of the inverted parabola used for tension-length curve."), _
          TypeConverter(GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter))> _
         Public Overridable Property Lwidth() As AnimatGUI.Framework.ScaledNumber
             Get
@@ -124,12 +98,71 @@ Namespace DataObjects.Gains.MuscleGains
                         Throw New System.Exception("The width of the tension-length curve can not be less than zero.")
                     End If
 
+                    SetSimData("Lwidth", Value.ActualValue.ToString, True)
+
                     Dim snOrig As ScaledNumber = DirectCast(m_snLwidth.Clone(m_snLwidth.Parent, False, Nothing), ScaledNumber)
-                    If Not Value Is Nothing Then m_snLwidth.CopyData(Value)
+                    m_snLwidth.CopyData(Value)
 
                     Dim snNew As ScaledNumber = DirectCast(m_snLwidth.Clone(m_snLwidth.Parent, False, Nothing), ScaledNumber)
                     Me.ManualAddPropertyHistory("Lwidth", snOrig, snNew, True)
                     'RecalculuateLimits()
+                End If
+            End Set
+        End Property
+
+        <Category("Muscle Properties"), _
+         Description("The percentage of the resting length of the muscle that Pe section takes up."), _
+         TypeConverter(GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter))> _
+        Public Overridable Property PeLengthPercentage() As ScaledNumber
+            Get
+                Return m_snPeLengthPercentage
+            End Get
+            Set(ByVal value As ScaledNumber)
+                If Not value Is Nothing Then
+                    If value.ActualValue <= 0 OrElse value.ActualValue >= 100 Then
+                        Throw New System.Exception("The Pe Length percentage must be between 0 and 100.")
+                    End If
+
+                    If m_snMinPeLengthPercentage.ActualValue > value.ActualValue Then
+                        Throw New System.Exception("The Pe Length percentage can not be made lower than the minimum pe length percentage.")
+                    End If
+
+                    SetSimData("PeLengthPercentage", value.ActualValue.ToString, True)
+
+                    Dim snOrig As ScaledNumber = DirectCast(m_snPeLengthPercentage.Clone(m_snLwidth.Parent, False, Nothing), ScaledNumber)
+                    m_snPeLengthPercentage.CopyData(value)
+
+                    Dim snNew As ScaledNumber = DirectCast(m_snPeLengthPercentage.Clone(m_snLwidth.Parent, False, Nothing), ScaledNumber)
+                    Me.ManualAddPropertyHistory("PeLengthPercentage", snOrig, snNew, True)
+                End If
+            End Set
+        End Property
+
+        <Category("Muscle Properties"), _
+         Description("The minimum length, as a percentage of resting length, that the Pe section can go attain."), _
+         TypeConverter(GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter))> _
+        Public Overridable Property MinPeLengthPercentage() As ScaledNumber
+            Get
+                Return m_snMinPeLengthPercentage
+            End Get
+            Set(ByVal value As ScaledNumber)
+                If Not value Is Nothing Then
+                    If value.ActualValue <= 0 OrElse value.ActualValue >= 100 Then
+                        Throw New System.Exception("The Pe Length percentage must be between 0 and 100.")
+                    End If
+
+                    If m_snPeLengthPercentage.ActualValue < value.ActualValue Then
+                        Throw New System.Exception("The Min Pe Length percentage can not be made greater than the pe length percentage.")
+                    End If
+
+                    SetSimData("MinPeLengthPercentage", value.ActualValue.ToString, True)
+
+                    Dim snOrig As ScaledNumber = DirectCast(m_snMinPeLengthPercentage.Clone(m_snLwidth.Parent, False, Nothing), ScaledNumber)
+                    m_snMinPeLengthPercentage.CopyData(value)
+
+                    Dim snNew As ScaledNumber = DirectCast(m_snMinPeLengthPercentage.Clone(m_snLwidth.Parent, False, Nothing), ScaledNumber)
+                    Me.ManualAddPropertyHistory("MinPeLengthPercentage", snOrig, snNew, True)
+
                 End If
             End Set
         End Property
@@ -162,16 +195,6 @@ Namespace DataObjects.Gains.MuscleGains
             End Get
         End Property
 
-        <Browsable(False)> _
-        Public Overridable Property ShowLcePercentage() As Boolean
-            Get
-                Return m_bShowLcePercentage
-            End Get
-            Set(ByVal Value As Boolean)
-                m_bShowLcePercentage = False
-            End Set
-        End Property
-
 #End Region
 
 #Region " Methods "
@@ -183,7 +206,9 @@ Namespace DataObjects.Gains.MuscleGains
 
             m_snRestingLength = New AnimatGUI.Framework.ScaledNumber(Me, "RestingLength", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Meters", "m")
             m_snLwidth = New AnimatGUI.Framework.ScaledNumber(Me, "Lwidth", 50, AnimatGUI.Framework.ScaledNumber.enumNumericScale.centi, "Meters", "m")
-            m_snLcePercentage = New AnimatGUI.Framework.ScaledNumber(Me, "LcePercentage", 50, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "", "")
+
+            m_snPeLengthPercentage = New AnimatGUI.Framework.ScaledNumber(Me, "PeLengthPercentage", 90, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "%", "%")
+            m_snMinPeLengthPercentage = New AnimatGUI.Framework.ScaledNumber(Me, "MinPeLengthPercentage", 5, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "%", "%")
 
             m_snLowerLimit = New AnimatGUI.Framework.ScaledNumber(Me, "LowerLimit", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Meters", "m")
             m_snUpperLimit = New AnimatGUI.Framework.ScaledNumber(Me, "UpperLimit", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Meters", "m")
@@ -213,7 +238,9 @@ Namespace DataObjects.Gains.MuscleGains
 
             m_snRestingLength = New AnimatGUI.Framework.ScaledNumber(Me, "RestingLength", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Meters", "m")
             m_snLwidth = New AnimatGUI.Framework.ScaledNumber(Me, "Lwidth", 50, AnimatGUI.Framework.ScaledNumber.enumNumericScale.centi, "Meters", "m")
-            m_snLcePercentage = New AnimatGUI.Framework.ScaledNumber(Me, "LcePercentage", 50, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "", "")
+
+            m_snPeLengthPercentage = New AnimatGUI.Framework.ScaledNumber(Me, "PeLengthPercentage", 90, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "%", "%")
+            m_snMinPeLengthPercentage = New AnimatGUI.Framework.ScaledNumber(Me, "MinPeLengthPercentage", 5, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "%", "%")
 
             m_snLowerLimit = New AnimatGUI.Framework.ScaledNumber(Me, "LowerLimit", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Meters", "m")
             m_snUpperLimit = New AnimatGUI.Framework.ScaledNumber(Me, "UpperLimit", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Meters", "m")
@@ -274,9 +301,18 @@ Namespace DataObjects.Gains.MuscleGains
             m_Muscle = gnOrig.Muscle
             m_snRestingLength = DirectCast(gnOrig.m_snRestingLength.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_snLwidth = DirectCast(gnOrig.m_snLwidth.Clone(Me, bCutData, doRoot), ScaledNumber)
-            m_snLcePercentage = DirectCast(gnOrig.m_snLcePercentage.Clone(Me, bCutData, doRoot), ScaledNumber)
-            m_bShowLcePercentage = gnOrig.m_bShowLcePercentage
+            m_snPeLengthPercentage = DirectCast(gnOrig.m_snPeLengthPercentage.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
+            m_snMinPeLengthPercentage = DirectCast(gnOrig.m_snMinPeLengthPercentage.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
 
+        End Sub
+
+        Public Overrides Sub SetAllSimData(ByVal doInterface As Interfaces.DataObjectInterface)
+            MyBase.SetAllSimData(doInterface)
+
+            SetSimData("RestingLength", m_snRestingLength.ActualValue.ToString, True)
+            SetSimData("Lwidth", m_snLwidth.ActualValue.ToString, True)
+            SetSimData("PeLengthPercentage", m_snPeLengthPercentage.ActualValue.ToString, True)
+            SetSimData("MinPeLengthPercentage", m_snMinPeLengthPercentage.ActualValue.ToString, True)
         End Sub
 
         Public Overrides Sub UnitsChanged(ByVal ePrevMass As AnimatGUI.DataObjects.Physical.Environment.enumMassUnits, _
@@ -298,18 +334,12 @@ Namespace DataObjects.Gains.MuscleGains
 
             oXml.IntoElem()
 
-            If oXml.FindChildElement("RestingLength", False) Then
-                m_snRestingLength.LoadData(oXml, "RestingLength")
-                m_snLwidth.LoadData(oXml, "Lwidth")
-            End If
-
-            If oXml.FindChildElement("LcePercentage", False) Then
-                m_snLcePercentage.LoadData(oXml, "LcePercentage")
-            End If
+            m_snRestingLength.LoadData(oXml, "RestingLength")
+            m_snLwidth.LoadData(oXml, "Lwidth")
+            m_snPeLengthPercentage.LoadData(oXml, "PeLength")
+            m_snMinPeLengthPercentage.LoadData(oXml, "MinPeLength")
 
             oXml.OutOfElem()
-
-            'RecalculuateLimits()
 
             m_strIndependentUnits = "Meters"
             m_strDependentUnits = "% Isometric Tension Used"
@@ -323,7 +353,8 @@ Namespace DataObjects.Gains.MuscleGains
 
             m_snRestingLength.SaveData(oXml, "RestingLength")
             m_snLwidth.SaveData(oXml, "Lwidth")
-            m_snLcePercentage.SaveData(oXml, "LcePercentage")
+            m_snPeLengthPercentage.SaveData(oXml, "PeLength")
+            m_snMinPeLengthPercentage.SaveData(oXml, "MinPeLength")
 
             oXml.OutOfElem()
 
@@ -336,7 +367,8 @@ Namespace DataObjects.Gains.MuscleGains
 
             m_snRestingLength.SaveSimulationXml(oXml, Me, "RestingLength")
             m_snLwidth.SaveSimulationXml(oXml, Me, "Lwidth")
-            m_snLcePercentage.SaveSimulationXml(oXml, Me, "LcePercentage")
+            m_snPeLengthPercentage.SaveSimulationXml(oXml, Me, "PeLength")
+            m_snMinPeLengthPercentage.SaveSimulationXml(oXml, Me, "MinPeLength")
 
             oXml.OutOfElem()
 
@@ -353,20 +385,23 @@ Namespace DataObjects.Gains.MuscleGains
 
             Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = m_snRestingLength.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("RestingLength", pbNumberBag.GetType(), "RestingLength", _
-                                        "Equation Parameters", "Sets the resting length of the muscle.", pbNumberBag, _
+                                        "Muscle Properties", "Sets the resting length of the muscle.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snLwidth.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Lwidth", pbNumberBag.GetType(), "Lwidth", _
-                                        "Equation Parameters", "Sets the width of the inverted parabola used for tension-length curve.", pbNumberBag, _
+                                        "Muscle Properties", "Sets the width of the inverted parabola used for tension-length curve.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            If m_bShowLcePercentage Then
-                pbNumberBag = m_snLcePercentage.Properties
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Lce Percentage", pbNumberBag.GetType(), "LcePercentage", _
-                                        "Equation Parameters", "Sets the how much of the resting muscle length is taken up by the contractile portion.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
-            End If
+            pbNumberBag = m_snPeLengthPercentage.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Pe Length Percentage", pbNumberBag.GetType(), "PeLengthPercentage", _
+                          "Muscle Properties", "The percentage of the resting length of the muscle that Pe section takes up.", pbNumberBag, _
+                          "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+            pbNumberBag = m_snMinPeLengthPercentage.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Min Pe Length Percentage", pbNumberBag.GetType(), "MinPeLengthPercentage", _
+                          "Muscle Properties", "The minimum length, as a percentage of resting length, that the Pe section can go attain.", pbNumberBag, _
+                          "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
         End Sub
 
@@ -375,7 +410,8 @@ Namespace DataObjects.Gains.MuscleGains
 
             If Not m_snRestingLength Is Nothing Then m_snRestingLength.ClearIsDirty()
             If Not m_snLwidth Is Nothing Then m_snLwidth.ClearIsDirty()
-            If Not m_snLcePercentage Is Nothing Then m_snLcePercentage.ClearIsDirty()
+            If Not m_snPeLengthPercentage Is Nothing Then m_snPeLengthPercentage.ClearIsDirty()
+            If Not m_snMinPeLengthPercentage Is Nothing Then m_snMinPeLengthPercentage.ClearIsDirty()
         End Sub
 
 #End Region

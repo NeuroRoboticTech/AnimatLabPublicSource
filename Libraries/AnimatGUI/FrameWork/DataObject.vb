@@ -99,7 +99,15 @@ Namespace Framework
                 Return m_bEnabled
             End Get
             Set(ByVal Value As Boolean)
+                SetSimData("Enabled", Value.ToString, True)
                 m_bEnabled = Value
+
+                If Me.Enabled AndAlso Not m_tnWorkspaceNode Is Nothing Then
+                    m_tnWorkspaceNode.BackColor = Color.White
+                Else
+                    m_tnWorkspaceNode.BackColor = Color.Gray
+                End If
+
             End Set
         End Property
 
@@ -253,7 +261,7 @@ Namespace Framework
             End Set
         End Property
 
-        Protected Overridable ReadOnly Property SimInterface() As Interfaces.DataObjectInterface
+        Public Overridable ReadOnly Property SimInterface() As Interfaces.DataObjectInterface
             Get
                 Return m_doInterface
             End Get

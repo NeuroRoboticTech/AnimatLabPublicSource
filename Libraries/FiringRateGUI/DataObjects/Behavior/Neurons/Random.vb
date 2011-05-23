@@ -49,7 +49,7 @@ Namespace DataObjects.Behavior.Neurons
             Set(ByVal Value As AnimatGUI.DataObjects.Gain)
                 If Not m_gnCurrentDistribution Is Nothing Then m_gnCurrentDistribution.ParentData = Nothing
 
-                SetSimData("CurrentDistribution", Value.GetSimulationXml("CurrentGraph"), True)
+                Value.SetAllSimData(m_gnCurrentDistribution.SimInterface)
                 m_gnCurrentDistribution = Value
                 If Not m_gnCurrentDistribution Is Nothing Then
                     m_gnCurrentDistribution.ParentData = Me
@@ -65,7 +65,7 @@ Namespace DataObjects.Behavior.Neurons
             Set(ByVal Value As AnimatGUI.DataObjects.Gain)
                 If Not m_gnBurstLengthDistribution Is Nothing Then m_gnBurstLengthDistribution.ParentData = Nothing
 
-                SetSimData("BurstLengthDistribution", Value.GetSimulationXml("BurstGraph"), True)
+                Value.SetAllSimData(m_gnBurstLengthDistribution.SimInterface)
                 m_gnBurstLengthDistribution = Value
                 If Not m_gnBurstLengthDistribution Is Nothing Then
                     m_gnBurstLengthDistribution.ParentData = Me
@@ -81,7 +81,7 @@ Namespace DataObjects.Behavior.Neurons
             Set(ByVal Value As AnimatGUI.DataObjects.Gain)
                 If Not m_gnInterburstLengthDistribution Is Nothing Then m_gnInterburstLengthDistribution.ParentData = Nothing
 
-                SetSimData("InterburstLengthDistribution", Value.GetSimulationXml("InterBurstGraph"), True)
+                Value.SetAllSimData(m_gnInterburstLengthDistribution.SimInterface)
                 m_gnInterburstLengthDistribution = Value
                 If Not m_gnInterburstLengthDistribution Is Nothing Then
                     m_gnInterburstLengthDistribution.ParentData = Me

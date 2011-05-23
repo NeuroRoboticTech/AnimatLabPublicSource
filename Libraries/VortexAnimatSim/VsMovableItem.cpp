@@ -290,6 +290,7 @@ void VsMovableItem::UpdateWorldMatrix()
 
 CStdFPoint VsMovableItem::GetOSGWorldCoords()
 {
+	UpdateWorldMatrix();
 	osg::Vec3 vCoord = m_osgWorldMatrix.getTrans();
 	CStdFPoint vPoint(vCoord[0], vCoord[1], vCoord[2]);
 

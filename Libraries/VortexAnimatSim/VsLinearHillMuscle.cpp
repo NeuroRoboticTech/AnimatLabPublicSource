@@ -74,11 +74,9 @@ void VsLinearHillMuscle::AfterResetSimulation()
 
 void VsLinearHillMuscle::StepSimulation()
 {
-	if(m_bEnabled)
-	{
-		CalculateTension();
-		VsLine::StepSimulation(m_fltTension); 
-	}
+	CalculateTension();
+
+	VsLine::StepSimulation(m_fltTension); 
 }
 
 		}		//Bodies

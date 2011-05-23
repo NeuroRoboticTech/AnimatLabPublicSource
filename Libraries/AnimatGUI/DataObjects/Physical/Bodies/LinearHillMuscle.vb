@@ -23,9 +23,6 @@ Namespace DataObjects.Physical.Bodies
         Protected m_snKpe As ScaledNumber
         Protected m_snB As ScaledNumber
 
-        Protected m_snPeLengthPercentage As ScaledNumber
-        Protected m_snMinPeLengthPercentage As ScaledNumber
-
         Protected m_snIbDischargeConstant As ScaledNumber
 
 #End Region
@@ -104,46 +101,6 @@ Namespace DataObjects.Physical.Bodies
             End Set
         End Property
 
-        Public Overridable Property PeLengthPercentage() As ScaledNumber
-            Get
-                Return m_snPeLengthPercentage
-            End Get
-            Set(ByVal value As ScaledNumber)
-                If Not value Is Nothing Then
-                    If value.ActualValue <= 0 OrElse value.ActualValue >= 100 Then
-                        Throw New System.Exception("The Pe Length percentage must be between 0 and 100.")
-                    End If
-
-                    If m_snMinPeLengthPercentage.ActualValue > value.ActualValue Then
-                        Throw New System.Exception("The Pe Length percentage can not be made lower than the minimum pe length percentage.")
-                    End If
-
-                    SetSimData("PeLengthPercentage", value.ActualValue.ToString, True)
-                    m_snPeLengthPercentage.CopyData(value)
-                End If
-            End Set
-        End Property
-
-        Public Overridable Property MinPeLengthPercentage() As ScaledNumber
-            Get
-                Return m_snMinPeLengthPercentage
-            End Get
-            Set(ByVal value As ScaledNumber)
-                If Not value Is Nothing Then
-                    If value.ActualValue <= 0 OrElse value.ActualValue >= 100 Then
-                        Throw New System.Exception("The Pe Length percentage must be between 0 and 100.")
-                    End If
-
-                    If m_snPeLengthPercentage.ActualValue < value.ActualValue Then
-                        Throw New System.Exception("The Min Pe Length percentage can not be made greater than the pe length percentage.")
-                    End If
-
-                    SetSimData("MinPeLengthPercentage", value.ActualValue.ToString, True)
-                    m_snMinPeLengthPercentage.CopyData(value)
-                End If
-            End Set
-        End Property
-
         Public Overridable Property IbDischargeConstant() As ScaledNumber
             Get
                 Return m_snIbDischargeConstant
@@ -190,18 +147,11 @@ Namespace DataObjects.Physical.Bodies
 
             m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("MembraneVoltage", "Membrane Voltage", "Volts", "V", -100, 100, ScaledNumber.enumNumericScale.milli, ScaledNumber.enumNumericScale.milli)
 
-            m_StimTension = New AnimatGUI.DataObjects.Gains.MuscleGains.StimulusTension(Me)
-            m_LengthTension = New AnimatGUI.DataObjects.Gains.MuscleGains.LengthTension(Me)
-            m_LengthTension.ShowLcePercentage = False
-
             m_snMaxTension = New AnimatGUI.Framework.ScaledNumber(Me, "MaxTension", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Newtons", "N")
             m_snMuscleLength = New AnimatGUI.Framework.ScaledNumber(Me, "MuscleLength", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Meters", "m")
             m_snKse = New AnimatGUI.Framework.ScaledNumber(Me, "Kse", 10, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Newtons per meter", "N/m")
             m_snKpe = New AnimatGUI.Framework.ScaledNumber(Me, "Kpe", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Newtons per meter", "N/m")
             m_snB = New AnimatGUI.Framework.ScaledNumber(Me, "B", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Newton-seconds per meter", "Ns/m")
-
-            m_snPeLengthPercentage = New AnimatGUI.Framework.ScaledNumber(Me, "PeLengthPercentage", 90, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "%", "%")
-            m_snMinPeLengthPercentage = New AnimatGUI.Framework.ScaledNumber(Me, "MinPeLengthPercentage", 5, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "%", "%")
 
             m_snIbDischargeConstant = New AnimatGUI.Framework.ScaledNumber(Me, "Ib Discharge Constant", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Spikes/sN", "Spikes/sN")
 
@@ -222,27 +172,23 @@ Namespace DataObjects.Physical.Bodies
             m_snKse = DirectCast(doOrigBody.m_snKse.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_snKpe = DirectCast(doOrigBody.m_snKpe.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_snB = DirectCast(doOrigBody.m_snB.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
-            m_snPeLengthPercentage = DirectCast(doOrigBody.m_snPeLengthPercentage.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
-            m_snMinPeLengthPercentage = DirectCast(doOrigBody.m_snMinPeLengthPercentage.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_snIbDischargeConstant = DirectCast(doOrigBody.m_snIbDischargeConstant.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
 
+        End Sub
+
+        Public Overrides Sub ClearIsDirty()
+            MyBase.ClearIsDirty()
+
+            If Not m_snKse Is Nothing Then m_snKse.ClearIsDirty()
+            If Not m_snKpe Is Nothing Then m_snKpe.ClearIsDirty()
+            If Not m_snB Is Nothing Then m_snB.ClearIsDirty()
+            If Not m_snIbDischargeConstant Is Nothing Then m_snIbDischargeConstant.ClearIsDirty()
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 
-
-            Dim pbSubBag As AnimatGuiCtrls.Controls.PropertyBag = m_StimTension.Properties
-            propTable.Properties.Add(New PropertySpec("Stimulus-Tension", pbSubBag.GetType(), _
-                          "StimTension", "Muscle Properties", "Sets the stmilus-tension properties of the muscle.", pbSubBag, _
-                        GetType(AnimatGUI.TypeHelpers.GainTypeEditor), GetType(AnimatGuiCtrls.Controls.ExpandablePropBagConverter)))
-
-            pbSubBag = m_LengthTension.Properties
-            propTable.Properties.Add(New PropertySpec("Length-Tension", pbSubBag.GetType(), _
-                        "LengthTension", "Muscle Properties", "Sets the length-tension properties of the muscle.", pbSubBag, _
-                         GetType(AnimatGUI.TypeHelpers.GainTypeEditor), GetType(AnimatGuiCtrls.Controls.ExpandablePropBagConverter)))
-
-            pbSubBag = m_snKse.Properties
+            Dim pbSubBag As AnimatGuiCtrls.Controls.PropertyBag = m_snKse.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Kse", pbSubBag.GetType(), "Kse", _
                   "Muscle Properties", "Determines the stiffness of the SE spring element. This is the primarily the stiffness of the tendon.", _
                   pbSubBag, "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
@@ -256,16 +202,6 @@ Namespace DataObjects.Physical.Bodies
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("B", pbSubBag.GetType(), "B", _
                    "Muscle Properties", "Determines the linear, viscous damping of this muscle. This model does NOT use a non-linear hill force-velocity curve.", pbSubBag, _
                    "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
-
-            pbSubBag = m_snPeLengthPercentage.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Pe Length Percentage", pbSubBag.GetType(), "PeLengthPercentage", _
-                          "Muscle Properties", "The percentage of the resting length of the muscle that Pe section takes up.", pbSubBag, _
-                          "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
-
-            pbSubBag = m_snMinPeLengthPercentage.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Min Pe Length Percentage", pbSubBag.GetType(), "MinPeLengthPercentage", _
-                          "Muscle Properties", "The minimum length, as a percentage of resting length, that the Pe section can go attain.", pbSubBag, _
-                          "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbSubBag = m_aryAttachmentPoints.Properties
             propTable.Properties.Add(New PropertySpec("Calculate Stimulus", pbSubBag.GetType(), "", _
@@ -283,13 +219,9 @@ Namespace DataObjects.Physical.Bodies
 
             oXml.IntoElem() 'Into RigidBody Element
 
-            m_StimTension.LoadData(oXml, "StimulusTension", "StimTension")
-            m_LengthTension.LoadData(oXml, "LengthTension", "LengthTension")
             m_snKse.LoadData(oXml, "Kse")
             m_snKpe.LoadData(oXml, "Kpe")
             m_snB.LoadData(oXml, "B")
-            m_snPeLengthPercentage.LoadData(oXml, "PeLength")
-            m_snMinPeLengthPercentage.LoadData(oXml, "MinPeLength")
             m_snIbDischargeConstant.LoadData(oXml, "IbDischarge")
 
             oXml.OutOfElem() 'Outof RigidBody Element
@@ -301,13 +233,9 @@ Namespace DataObjects.Physical.Bodies
 
             oXml.IntoElem() 'Into Child Elemement
 
-            m_StimTension.SaveData(oXml, "StimulusTension")
-            m_LengthTension.SaveData(oXml, "LengthTension")
             m_snKse.SaveData(oXml, "Kse")
             m_snKpe.SaveData(oXml, "Kpe")
             m_snB.SaveData(oXml, "B")
-            m_snPeLengthPercentage.SaveData(oXml, "PeLength")
-            m_snMinPeLengthPercentage.SaveData(oXml, "MinPeLength")
             m_snIbDischargeConstant.SaveData(oXml, "IbDischarge")
 
             oXml.OutOfElem() 'Outof BodyPart Element
@@ -319,13 +247,9 @@ Namespace DataObjects.Physical.Bodies
 
             oXml.IntoElem()
 
-            m_StimTension.SaveSimulationXml(oXml, Me, "StimulusTension")
-            m_LengthTension.SaveSimulationXml(oXml, Me, "LengthTension")
             m_snKse.SaveSimulationXml(oXml, Me, "Kse")
             m_snKpe.SaveSimulationXml(oXml, Me, "Kpe")
             m_snB.SaveSimulationXml(oXml, Me, "B")
-            m_snPeLengthPercentage.SaveSimulationXml(oXml, Me, "PeLength")
-            m_snMinPeLengthPercentage.SaveSimulationXml(oXml, Me, "MinPeLength")
             m_snIbDischargeConstant.SaveSimulationXml(oXml, Me, "IbDischarge")
 
             oXml.OutOfElem()

@@ -39,28 +39,9 @@ catch(...)
 
 osg::Geometry *VsLine::CreateLineGeometry()
 { 
-	//Always create the graphics. If it is disabled or made not visible we will turn it off.
-	CStdArray<Attachment *> *aryAttachments = m_lpLineBase->AttachmentPoints();
-	int iCount = aryAttachments->GetSize();
-
-	m_aryLines = new osg::Vec3Array;
-	//Only draw the line if we have more than one point.
-	if(iCount > 1)
-	{
-		CStdFPoint vPos;
-		Attachment *lpAttach=NULL;
-
-		for(int iIndex=0; iIndex<iCount; iIndex++)
-		{
-			lpAttach = aryAttachments->at(iIndex);
-			vPos = lpAttach->AbsolutePosition();
-			m_aryLines->push_back(osg::Vec3(vPos.x, vPos.y, vPos.z));
-		}
-	}
-
     osg::Geometry* linesGeom = new osg::Geometry();
-    linesGeom->setVertexArray(m_aryLines.get());
-    
+    int iCount = BuildLines(linesGeom);
+
     // set the colors as before, plus using the above
 	CStdColor &aryDiffuse = *m_lpThisRB->Diffuse();
     osg::Vec4Array* colors = new osg::Vec4Array;
@@ -78,7 +59,8 @@ osg::Geometry *VsLine::CreateLineGeometry()
 
     // This time we simply use primitive, and hardwire the number of coords to use 
     // since we know up front,
-    linesGeom->addPrimitiveSet(new osg::DrawArrays(osg::PrimitiveSet::LINES, 0, iCount));
+	osg::PrimitiveSet *lpSet = new osg::DrawArrays(osg::PrimitiveSet::LINES, 0, iCount);
+    linesGeom->addPrimitiveSet(lpSet);
 
 	linesGeom->setDataVariance(osg::Object::DYNAMIC);
 	linesGeom->setUseDisplayList(false);
@@ -86,6 +68,43 @@ osg::Geometry *VsLine::CreateLineGeometry()
 	return linesGeom;
 }
 
+int VsLine::BuildLines(osg::Geometry *linesGeom)
+{
+	//Always create the graphics. If it is disabled or made not visible we will turn it off.
+	CStdArray<Attachment *> *aryAttachments = m_lpLineBase->AttachmentPoints();
+	int iCount = aryAttachments->GetSize();
+
+	//If we already have a lines array then delete it and rebuild.
+	if(m_aryLines.valid())
+		m_aryLines.release();
+
+	m_aryLines = new osg::Vec3Array;
+
+	//Only draw the line if we have more than one point.
+	if(iCount > 1)
+	{
+		CStdFPoint vPos;
+		Attachment *lpPrevAttach=NULL;
+		Attachment *lpAttach=NULL;
+
+		for(int iIndex=1; iIndex<iCount; iIndex++)
+		{
+			lpPrevAttach = aryAttachments->at(iIndex-1);
+			lpAttach = aryAttachments->at(iIndex);
+
+			vPos = lpPrevAttach->AbsolutePosition();
+			m_aryLines->push_back(osg::Vec3(vPos.x, vPos.y, vPos.z));
+
+			vPos = lpAttach->AbsolutePosition();
+			m_aryLines->push_back(osg::Vec3(vPos.x, vPos.y, vPos.z));
+		}
+	}
+
+    linesGeom->setVertexArray(m_aryLines.get());
+	linesGeom->dirtyBound();
+
+	return m_aryLines->getNumElements();
+}
 
 void VsLine::DrawLine()
 {
@@ -96,13 +115,22 @@ void VsLine::DrawLine()
 	if(iCount > 1)
 	{
 		CStdFPoint vPos;
+		Attachment *lpPrevAttach=NULL;
 		Attachment *lpAttach=NULL;
+		int iLineIdx = 0;
 
-		for(int iIndex=0; iIndex<iCount; iIndex++)
+		for(int iIndex=1; iIndex<iCount; iIndex++)
 		{
+			lpPrevAttach = aryAttachments->at(iIndex-1);
 			lpAttach = aryAttachments->at(iIndex);
+
+			vPos = lpPrevAttach->AbsolutePosition();
+			(*m_aryLines)[iLineIdx].set(vPos.x, vPos.y, vPos.z);
+
 			vPos = lpAttach->AbsolutePosition();
-	        (*m_aryLines)[iIndex].set(vPos.x, vPos.y, vPos.z);
+			(*m_aryLines)[iLineIdx+1].set(vPos.x, vPos.y, vPos.z);
+
+			iLineIdx+=2;
 		}
 
 		m_osgGeometry->dirtyBound();
@@ -116,20 +144,24 @@ void VsLine::SetupGraphics()
 	SetVisible(m_lpThisMI->IsVisible());
 }
 
-
-void VsLine::CreateParts()
+void VsLine::CreateGraphicsGeometry()
 {
 	fltA = 0;
 	m_osgGeometry = CreateLineGeometry();
-	osg::Geode *osgGroup = new osg::Geode;
-	osgGroup->addDrawable(m_osgGeometry.get());
-	m_osgNode = osgGroup;
+}
+
+void VsLine::CreatePhysicsGeometry()
+{
 	m_vxGeometry = NULL;
+}
+
+void VsLine::CreateParts()
+{
+	CreateGeometry();
 
 	VsRigidBody::CreateItem();
 	VsRigidBody::SetBody();
 }
-
 
 void VsLine::CalculateForceVector(Attachment *lpPrim, Attachment *lpSec, float fltTension, CStdFPoint &oPrimPos, CStdFPoint &oSecPos, CStdFPoint &oPrimForce)
 {
@@ -140,7 +172,6 @@ void VsLine::CalculateForceVector(Attachment *lpPrim, Attachment *lpSec, float f
 	oPrimForce.Normalize();
 	oPrimForce *= fltTension;
 }
-
 
 void VsLine::StepSimulation(float fltTension)
 {
@@ -188,6 +219,7 @@ void VsLine::AfterResetSimulation()
 {
 	DrawLine();
 }
+
 
 	}			// Visualization
 }				//VortexAnimatSim

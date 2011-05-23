@@ -201,7 +201,22 @@ void MuscleBase::AddExternalNodeInput(float fltInput)
 	m_fltVm=fltInput;
 }
 
+
 #pragma region DataAccesMethods
+
+void MuscleBase::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+{
+	m_gainStimTension.SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
+	m_gainLengthTension.SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
+	LineBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
+}
+
+void MuscleBase::VerifySystemPointers()
+{
+	LineBase::VerifySystemPointers();
+	m_gainStimTension.VerifySystemPointers();
+	m_gainLengthTension.VerifySystemPointers();
+}
 
 float *MuscleBase::GetDataPointer(string strDataType)
 {
@@ -231,12 +246,6 @@ BOOL MuscleBase::SetData(string strDataType, string strValue, BOOL bThrowError)
 		return true;
 	}
 
-	if(m_gainStimTension.SetData(strDataType, strValue, false))
-		return true;
-
-	if(m_gainLengthTension.SetData(strDataType, strValue, false))
-		return true;
-
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -256,8 +265,12 @@ void MuscleBase::Load(CStdXml &oXml)
 	oXml.IntoElem();  //Into RigidBody Element
 
 	m_fltMaxTension = oXml.GetChildFloat("MaximumTension", m_fltMaxTension);
-	m_gainStimTension.Load(oXml);
-	m_gainLengthTension.Load(oXml);
+
+	if(oXml.FindChildElement("StimulusTension"))
+		m_gainStimTension.Load(oXml);
+
+	if(oXml.FindChildElement("LengthTension"))
+		m_gainLengthTension.Load(oXml);
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
 }

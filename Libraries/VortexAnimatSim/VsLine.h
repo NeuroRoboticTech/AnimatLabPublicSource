@@ -13,7 +13,6 @@ namespace VortexAnimatSim
 		protected:
 			LineBase *m_lpLineBase;
 			osg::ref_ptr<osg::Vec3Array> m_aryLines;
-			osg::ref_ptr<osg::Geometry> m_osgGeometry; 
 			float fltA;
 
 			osg::Geometry *CreateLineGeometry();
@@ -23,6 +22,9 @@ namespace VortexAnimatSim
 			//Remove the texture and culling options for the line.
 			virtual void SetTexture(string strTexture) {};
 			virtual void SetCulling() {};
+			virtual void CreateGraphicsGeometry();
+			virtual void CreatePhysicsGeometry();
+			virtual int BuildLines(osg::Geometry *linesGeom);
 
 		public:
 			VsLine();

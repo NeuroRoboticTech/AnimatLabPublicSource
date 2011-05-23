@@ -8,6 +8,7 @@ Imports System.IO
 Imports System.Xml
 Imports AnimatGuiCtrls.Controls
 Imports AnimatGUI.DataObjects
+Imports AnimatGUI.Framework
 
 Namespace Collections
 
@@ -126,6 +127,62 @@ Namespace Collections
 
             End Try
         End Sub
+
+        Public Overridable Sub LoadData(ByRef oXml As Interfaces.StdXml, ByVal aryIDs As ArrayList)
+            aryIDs.Clear()
+            If oXml.FindChildElement("Attachments", False) Then
+                oXml.IntoElem()
+
+                Dim strID As String
+                Dim iCount As Integer = oXml.NumberOfChildren()
+                For iIndex As Integer = 0 To iCount - 1
+                    oXml.FindChildByIndex(iIndex)
+                    strID = oXml.GetChildString()
+                    aryIDs.Add(strID)
+                Next
+
+                oXml.OutOfElem()
+            End If
+        End Sub
+
+        Public Overridable Sub SaveData(ByRef oXml As Interfaces.StdXml, ByVal doStruct As AnimatGUI.DataObjects.Physical.PhysicalStructure)
+
+            oXml.AddChildElement("Attachments")
+            oXml.IntoElem()  'Into MuscleAttachments
+
+            For Each doAttach As AnimatGUI.DataObjects.Physical.Bodies.Attachment In Me
+                'If it is a copy/cut in progress then it may be trying to save parts that are not on the main structure yet.
+                If Not doStruct.FindBodyPart(doAttach.ID, False) Is Nothing OrElse Util.CopyInProgress OrElse Util.CutInProgress Then
+                    oXml.AddChildElement("AttachID", doAttach.ID)
+                End If
+            Next
+
+            oXml.OutOfElem()  'Outof MuscleAttachments
+
+        End Sub
+
+        Public Overridable Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, ByVal doStruct As AnimatGUI.DataObjects.Physical.PhysicalStructure, Optional ByVal strName As String = "")
+            oXml.AddChildElement("Attachments")
+            oXml.IntoElem()  'Into MuscleAttachments
+
+            For Each doAttach As AnimatGUI.DataObjects.Physical.Bodies.Attachment In Me
+                'If it is a copy/cut in progress then it may be trying to save parts that are not on the main structure yet.
+                If Not doStruct.FindBodyPart(doAttach.ID, False) Is Nothing OrElse Util.CopyInProgress OrElse Util.CutInProgress Then
+                    oXml.AddChildElement("AttachID", doAttach.ID)
+                End If
+            Next
+
+            oXml.OutOfElem()  'Outof MuscleAttachments
+        End Sub
+
+        Public Overridable Function GetSimulationXml(ByVal strName As String, ByVal doStruct As AnimatGUI.DataObjects.Physical.PhysicalStructure) As String
+
+            Dim oXml As New AnimatGUI.Interfaces.StdXml
+            oXml.AddElement("Root")
+            SaveSimulationXml(oXml, doStruct, strName)
+
+            Return oXml.Serialize()
+        End Function
 
     End Class 'NodesCollection
 

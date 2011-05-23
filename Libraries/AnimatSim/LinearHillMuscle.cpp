@@ -447,6 +447,12 @@ void LinearHillMuscle::CalculateTension()
 	m_fltVpe = (m_fltPeLength-m_fltPeLPrev)/m_lpSim->PhysicsTimeStep();
 
 	m_fltIbRate = m_fltIbDischargeConstant*m_fltTension;
+
+	if(!m_bEnabled)
+	{
+		m_fltTension = 0;
+		m_fltInternalTension = 0;
+	}
 }
 
 //Calculates the membrane voltage needed for the inverse dynamics of the muscle.

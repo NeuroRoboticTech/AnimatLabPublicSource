@@ -13,9 +13,9 @@ Namespace DataObjects.Physical
 
     Public Interface IMuscle
 
-        Property StimTension() As DataObjects.Gains.MuscleGains.StimulusTension
+        Property StimulusTension() As DataObjects.Gains.MuscleGains.StimulusTension
         Property LengthTension() As DataObjects.Gains.MuscleGains.LengthTension
-        Property VelocityTension() As DataObjects.Gains.MuscleGains.VelocityTension
+        'Property VelocityTension() As DataObjects.Gains.MuscleGains.VelocityTension
 
     End Interface
 

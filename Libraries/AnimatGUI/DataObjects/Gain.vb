@@ -61,6 +61,11 @@ Namespace DataObjects
                 Return m_bUseLimits
             End Get
             Set(ByVal Value As Boolean)
+                SetSimData("UseLimits", Value.ToString, True)
+
+                'If we are activating this we may need to set the rest of the limit values. So call this here.
+                SetAllSimData(m_doInterface)
+
                 Me.ManualAddPropertyHistory("UseLimits", m_bUseLimits, Value, True)
 
                 m_bUseLimits = Value
@@ -102,11 +107,15 @@ Namespace DataObjects
                 Return m_snLowerLimit
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
-                Dim snOrig As ScaledNumber = DirectCast(m_snLowerLimit.Clone(m_snLowerLimit.Parent, False, Nothing), ScaledNumber)
-                If Not Value Is Nothing Then m_snLowerLimit.CopyData(Value)
+                If Not Value Is Nothing Then
+                    SetSimData("LowerLimit", Value.ActualValue.ToString, True)
 
-                Dim snNew As ScaledNumber = DirectCast(m_snLowerLimit.Clone(m_snLowerLimit.Parent, False, Nothing), ScaledNumber)
-                Me.ManualAddPropertyHistory("LowerLimit", snOrig, snNew, True)
+                    Dim snOrig As ScaledNumber = DirectCast(m_snLowerLimit.Clone(m_snLowerLimit.Parent, False, Nothing), ScaledNumber)
+                    If Not Value Is Nothing Then m_snLowerLimit.CopyData(Value)
+
+                    Dim snNew As ScaledNumber = DirectCast(m_snLowerLimit.Clone(m_snLowerLimit.Parent, False, Nothing), ScaledNumber)
+                    Me.ManualAddPropertyHistory("LowerLimit", snOrig, snNew, True)
+                End If
             End Set
         End Property
 
@@ -119,11 +128,15 @@ Namespace DataObjects
                 Return m_snUpperLimit
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
-                Dim snOrig As ScaledNumber = DirectCast(m_snUpperLimit.Clone(m_snUpperLimit.Parent, False, Nothing), ScaledNumber)
-                If Not Value Is Nothing Then m_snUpperLimit.CopyData(Value)
+                If Not Value Is Nothing Then
+                    SetSimData("UpperLimit", Value.ActualValue.ToString, True)
 
-                Dim snNew As ScaledNumber = DirectCast(m_snUpperLimit.Clone(m_snUpperLimit.Parent, False, Nothing), ScaledNumber)
-                Me.ManualAddPropertyHistory("UpperLimit", snOrig, snNew, True)
+                    Dim snOrig As ScaledNumber = DirectCast(m_snUpperLimit.Clone(m_snUpperLimit.Parent, False, Nothing), ScaledNumber)
+                    If Not Value Is Nothing Then m_snUpperLimit.CopyData(Value)
+
+                    Dim snNew As ScaledNumber = DirectCast(m_snUpperLimit.Clone(m_snUpperLimit.Parent, False, Nothing), ScaledNumber)
+                    Me.ManualAddPropertyHistory("UpperLimit", snOrig, snNew, True)
+                End If
             End Set
         End Property
 
@@ -136,11 +149,15 @@ Namespace DataObjects
                 Return m_snLowerOutput
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
-                Dim snOrig As ScaledNumber = DirectCast(m_snLowerOutput.Clone(m_snLowerOutput.Parent, False, Nothing), ScaledNumber)
-                If Not Value Is Nothing Then m_snLowerOutput.CopyData(Value)
+                If Not Value Is Nothing Then
+                    SetSimData("LowerOutput", Value.ActualValue.ToString, True)
 
-                Dim snNew As ScaledNumber = DirectCast(m_snLowerOutput.Clone(m_snLowerOutput.Parent, False, Nothing), ScaledNumber)
-                Me.ManualAddPropertyHistory("LowerOutput", snOrig, snNew, True)
+                    Dim snOrig As ScaledNumber = DirectCast(m_snLowerOutput.Clone(m_snLowerOutput.Parent, False, Nothing), ScaledNumber)
+                    If Not Value Is Nothing Then m_snLowerOutput.CopyData(Value)
+
+                    Dim snNew As ScaledNumber = DirectCast(m_snLowerOutput.Clone(m_snLowerOutput.Parent, False, Nothing), ScaledNumber)
+                    Me.ManualAddPropertyHistory("LowerOutput", snOrig, snNew, True)
+                End If
             End Set
         End Property
 
@@ -153,11 +170,15 @@ Namespace DataObjects
                 Return m_snUpperOutput
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
-                Dim snOrig As ScaledNumber = DirectCast(m_snUpperOutput.Clone(m_snUpperOutput.Parent, False, Nothing), ScaledNumber)
-                If Not Value Is Nothing Then m_snUpperOutput.CopyData(Value)
+                If Not Value Is Nothing Then
+                    SetSimData("UpperOutput", Value.ActualValue.ToString, True)
 
-                Dim snNew As ScaledNumber = DirectCast(m_snUpperOutput.Clone(m_snUpperOutput.Parent, False, Nothing), ScaledNumber)
-                Me.ManualAddPropertyHistory("UpperOutput", snOrig, snNew, True)
+                    Dim snOrig As ScaledNumber = DirectCast(m_snUpperOutput.Clone(m_snUpperOutput.Parent, False, Nothing), ScaledNumber)
+                    If Not Value Is Nothing Then m_snUpperOutput.CopyData(Value)
+
+                    Dim snNew As ScaledNumber = DirectCast(m_snUpperOutput.Clone(m_snUpperOutput.Parent, False, Nothing), ScaledNumber)
+                    Me.ManualAddPropertyHistory("UpperOutput", snOrig, snNew, True)
+                End If
             End Set
         End Property
 
@@ -293,6 +314,15 @@ Namespace DataObjects
         Public MustOverride Function CalculateGain(ByVal dblInput As Double) As Double
 
         Public Overridable Sub RecalculuateLimits()
+        End Sub
+
+        Public Overridable Sub SetAllSimData(ByVal doInterface As Interfaces.DataObjectInterface)
+            m_doInterface = doInterface
+            SetSimData("UseLimits", m_bUseLimits.ToString, True)
+            SetSimData("LowerLimit", m_snLowerLimit.ActualValue.ToString, True)
+            SetSimData("UpperLimit", m_snUpperLimit.ActualValue.ToString, True)
+            SetSimData("LowerOutput", m_snLowerOutput.ActualValue.ToString, True)
+            SetSimData("UpperOutput", m_snUpperOutput.ActualValue.ToString, True)
         End Sub
 
         Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _

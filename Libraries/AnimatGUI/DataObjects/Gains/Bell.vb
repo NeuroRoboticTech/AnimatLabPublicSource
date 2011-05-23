@@ -53,11 +53,15 @@ Namespace DataObjects.Gains
                 Return m_snA
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
-                Dim snOrig As ScaledNumber = DirectCast(m_snA.Clone(m_snA.Parent, False, Nothing), ScaledNumber)
-                If Not Value Is Nothing Then m_snA.CopyData(Value)
+                If Not Value Is Nothing Then
+                    SetSimData("A", Value.ActualValue.ToString, True)
 
-                Dim snNew As ScaledNumber = DirectCast(m_snA.Clone(m_snA.Parent, False, Nothing), ScaledNumber)
-                Me.ManualAddPropertyHistory("A", snOrig, snNew, True)
+                    Dim snOrig As ScaledNumber = DirectCast(m_snA.Clone(m_snA.Parent, False, Nothing), ScaledNumber)
+                    m_snA.CopyData(Value)
+
+                    Dim snNew As ScaledNumber = DirectCast(m_snA.Clone(m_snA.Parent, False, Nothing), ScaledNumber)
+                    Me.ManualAddPropertyHistory("A", snOrig, snNew, True)
+                End If
                 'RecalculuateLimits()
             End Set
         End Property
@@ -70,11 +74,15 @@ Namespace DataObjects.Gains
                 Return m_snB
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
-                Dim snOrig As ScaledNumber = DirectCast(m_snB.Clone(m_snB.Parent, False, Nothing), ScaledNumber)
-                If Not Value Is Nothing Then m_snB.CopyData(Value)
+                If Not Value Is Nothing Then
+                    SetSimData("B", Value.ActualValue.ToString, True)
 
-                Dim snNew As ScaledNumber = DirectCast(m_snB.Clone(m_snB.Parent, False, Nothing), ScaledNumber)
-                Me.ManualAddPropertyHistory("B", snOrig, snNew, True)
+                    Dim snOrig As ScaledNumber = DirectCast(m_snB.Clone(m_snB.Parent, False, Nothing), ScaledNumber)
+                    m_snB.CopyData(Value)
+
+                    Dim snNew As ScaledNumber = DirectCast(m_snB.Clone(m_snB.Parent, False, Nothing), ScaledNumber)
+                    Me.ManualAddPropertyHistory("B", snOrig, snNew, True)
+                End If
                 'RecalculuateLimits()
             End Set
         End Property
@@ -87,11 +95,15 @@ Namespace DataObjects.Gains
                 Return m_snC
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
-                Dim snOrig As ScaledNumber = DirectCast(m_snC.Clone(m_snC.Parent, False, Nothing), ScaledNumber)
-                If Not Value Is Nothing Then m_snC.CopyData(Value)
+                If Not Value Is Nothing Then
+                    SetSimData("C", Value.ActualValue.ToString, True)
 
-                Dim snNew As ScaledNumber = DirectCast(m_snC.Clone(m_snC.Parent, False, Nothing), ScaledNumber)
-                Me.ManualAddPropertyHistory("C", snOrig, snNew, True)
+                    Dim snOrig As ScaledNumber = DirectCast(m_snC.Clone(m_snC.Parent, False, Nothing), ScaledNumber)
+                    m_snC.CopyData(Value)
+
+                    Dim snNew As ScaledNumber = DirectCast(m_snC.Clone(m_snC.Parent, False, Nothing), ScaledNumber)
+                    Me.ManualAddPropertyHistory("C", snOrig, snNew, True)
+                End If
                 'RecalculuateLimits()
             End Set
         End Property
@@ -104,11 +116,15 @@ Namespace DataObjects.Gains
                 Return m_snD
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
-                Dim snOrig As ScaledNumber = DirectCast(m_snD.Clone(m_snD.Parent, False, Nothing), ScaledNumber)
-                If Not Value Is Nothing Then m_snD.CopyData(Value)
+                If Not Value Is Nothing Then
+                    SetSimData("D", Value.ActualValue.ToString, True)
 
-                Dim snNew As ScaledNumber = DirectCast(m_snD.Clone(m_snD.Parent, False, Nothing), ScaledNumber)
-                Me.ManualAddPropertyHistory("D", snOrig, snNew, True)
+                    Dim snOrig As ScaledNumber = DirectCast(m_snD.Clone(m_snD.Parent, False, Nothing), ScaledNumber)
+                    m_snD.CopyData(Value)
+
+                    Dim snNew As ScaledNumber = DirectCast(m_snD.Clone(m_snD.Parent, False, Nothing), ScaledNumber)
+                    Me.ManualAddPropertyHistory("D", snOrig, snNew, True)
+                End If
                 'RecalculuateLimits()
             End Set
         End Property
@@ -192,6 +208,15 @@ Namespace DataObjects.Gains
             m_snC = DirectCast(gnOrig.m_snC.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_snD = DirectCast(gnOrig.m_snD.Clone(Me, bCutData, doRoot), ScaledNumber)
 
+        End Sub
+
+        Public Overrides Sub SetAllSimData(ByVal doInterface As Interfaces.DataObjectInterface)
+            MyBase.SetAllSimData(doInterface)
+
+            SetSimData("A", m_snA.ActualValue.ToString, True)
+            SetSimData("B", m_snB.ActualValue.ToString, True)
+            SetSimData("C", m_snC.ActualValue.ToString, True)
+            SetSimData("D", m_snD.ActualValue.ToString, True)
         End Sub
 
         Public Overloads Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String, ByVal strGainPropertyName As String)

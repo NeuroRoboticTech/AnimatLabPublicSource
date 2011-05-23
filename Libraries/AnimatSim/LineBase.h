@@ -39,6 +39,7 @@ namespace AnimatSim
 
 				virtual void LoadAttachments(CStdXml &oXml);
 				virtual void InitializeAttachments();
+				virtual void AttachedPartMovedOrRotated(string strID);
 
 			public:
 				LineBase();
@@ -52,6 +53,7 @@ namespace AnimatSim
 				CStdArray<Attachment *> *AttachmentPoints();
 				virtual void AttachmentPoints(string srXml);
 
+				virtual void Resize();
 				virtual float CalculateLength();
 
 				virtual float *GetDataPointer(string strDataType);

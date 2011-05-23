@@ -202,6 +202,7 @@ Namespace DataObjects.Behavior.Neurons
                 Return m_gnMinf
             End Get
             Set(ByVal Value As AnimatGUI.DataObjects.Gain)
+                Value.SetAllSimData(m_gnMinf.SimInterface)
                 m_gnMinf = Value
             End Set
         End Property
@@ -212,6 +213,7 @@ Namespace DataObjects.Behavior.Neurons
                 Return m_gnTm
             End Get
             Set(ByVal Value As AnimatGUI.DataObjects.Gain)
+                Value.SetAllSimData(m_gnTm.SimInterface)
                 m_gnTm = Value
             End Set
         End Property
@@ -248,6 +250,7 @@ Namespace DataObjects.Behavior.Neurons
                 Return m_gnHinf
             End Get
             Set(ByVal Value As AnimatGUI.DataObjects.Gain)
+                Value.SetAllSimData(m_gnHinf.SimInterface)
                 m_gnHinf = Value
             End Set
         End Property
@@ -258,6 +261,7 @@ Namespace DataObjects.Behavior.Neurons
                 Return m_gnTh
             End Get
             Set(ByVal Value As AnimatGUI.DataObjects.Gain)
+                Value.SetAllSimData(m_gnTh.SimInterface)
                 m_gnTh = Value
             End Set
         End Property

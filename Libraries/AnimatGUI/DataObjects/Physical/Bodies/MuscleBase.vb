@@ -16,6 +16,7 @@ Namespace DataObjects.Physical.Bodies
 
     Public MustInherit Class MuscleBase
         Inherits Physical.RigidBody
+        Implements IMuscle
 
 #Region " Attributes "
 
@@ -27,7 +28,6 @@ Namespace DataObjects.Physical.Bodies
 
         Protected m_StimTension As DataObjects.Gains.MuscleGains.StimulusTension
         Protected m_LengthTension As DataObjects.Gains.MuscleGains.LengthTension
-        Protected m_VelocityTension As DataObjects.Gains.MuscleGains.VelocityTension
 
 #End Region
 
@@ -102,13 +102,36 @@ Namespace DataObjects.Physical.Bodies
             End Get
             Set(ByVal value As Collections.Attachments)
                 If Not value Is Nothing Then
+                    SetSimData("AttachmentPoints", value.GetSimulationXml("Attachments", Me.ParentStructure), True)
+
+                    'Remove the event handlers for attached part moved or rotated for the current attachments.
+                    RemoveMoveHandlers(m_aryAttachmentPoints)
+
                     m_aryAttachmentPoints = value
+
+                    'add back the event handlers for attached part moved or rotated for the new attachments.
+                    AddMoveHandlers(m_aryAttachmentPoints)
+
+                    Util.ProjectWorkspace.RefreshProperties()
                 End If
+            End Set
+        End Property
+
+        Public Overridable Property AttachmentPointsProps() As PropertyBag
+            Get
+                Return m_aryAttachmentPoints.Properties
+            End Get
+            Set(ByVal value As PropertyBag)
+
             End Set
         End Property
 
         Public Overridable ReadOnly Property MuscleLength() As ScaledNumber
             Get
+                If Not m_doInterface Is Nothing Then
+                    Dim fltLength As Single = m_doInterface.GetDataValue("Length")
+                    m_snMuscleLength.SetFromValue(fltLength)
+                End If
                 Return m_snMuscleLength
             End Get
         End Property
@@ -130,7 +153,7 @@ Namespace DataObjects.Physical.Bodies
         End Property
 
         <Category("Stimulus-Tension"), Description("Sets the stmilus-tension properties of the muscle.")> _
-        Public Overridable Property StimulusTension() As Gains.MuscleGains.StimulusTension
+        Public Overridable Property StimulusTension() As Gains.MuscleGains.StimulusTension Implements IMuscle.StimulusTension
             Get
                 If m_StimTension Is Nothing Then
                     m_StimTension = New Gains.MuscleGains.StimulusTension(Me)
@@ -140,12 +163,13 @@ Namespace DataObjects.Physical.Bodies
             End Get
             Set(ByVal value As Gains.MuscleGains.StimulusTension)
                 If Not value Is Nothing Then
+                    value.SetAllSimData(m_StimTension.SimInterface)
                     m_StimTension = value
                 End If
             End Set
         End Property
 
-        Public Overridable Property LengthTension() As Gains.MuscleGains.LengthTension
+        Public Property LengthTension() As Gains.MuscleGains.LengthTension Implements IMuscle.LengthTension
             Get
                 If m_LengthTension Is Nothing Then
                     m_LengthTension = New Gains.MuscleGains.LengthTension(Me)
@@ -155,27 +179,15 @@ Namespace DataObjects.Physical.Bodies
             End Get
             Set(ByVal value As Gains.MuscleGains.LengthTension)
                 If Not value Is Nothing Then
+                    value.SetAllSimData(m_LengthTension.SimInterface)
                     m_LengthTension = value
                 End If
             End Set
         End Property
 
-        Public Overridable Property VelocityTension() As Gains.MuscleGains.VelocityTension
-            Get
-                If m_VelocityTension Is Nothing Then
-                    m_VelocityTension = New Gains.MuscleGains.VelocityTension(Me)
-                End If
-
-                Return m_VelocityTension
-            End Get
-            Set(ByVal value As Gains.MuscleGains.VelocityTension)
-                If Not value Is Nothing Then
-                    m_VelocityTension = value
-                End If
-            End Set
-        End Property
-
 #End Region
+
+#Region " Methods "
 
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
@@ -185,6 +197,9 @@ Namespace DataObjects.Physical.Bodies
             m_snMaxTension = New ScaledNumber(Me, "MaxTension", 100, ScaledNumber.enumNumericScale.None, "Newtons", "N")
             m_snMuscleLength = New ScaledNumber(Me, "MuscleLength", 0, ScaledNumber.enumNumericScale.None, "Meters", "m")
 
+            m_StimTension = New AnimatGUI.DataObjects.Gains.MuscleGains.StimulusTension(Me)
+            m_LengthTension = New AnimatGUI.DataObjects.Gains.MuscleGains.LengthTension(Me)
+
             m_aryAttachmentPoints = New Collections.Attachments(Me)
             m_aryAttachmentPointIDs = New ArrayList()
 
@@ -192,6 +207,18 @@ Namespace DataObjects.Physical.Bodies
 
         Public Overrides Sub InitAfterAppStart()
             AddCompatibleStimulusType("EnablerInput")
+        End Sub
+
+        Public Overrides Sub InitializeSimulationReferences()
+            MyBase.InitializeSimulationReferences()
+
+            m_StimTension.InitializeSimulationReferences()
+            m_LengthTension.InitializeSimulationReferences()
+
+            'Lets get a data pointer for the muscle length so we can use that to update our length variable.
+            If Not m_doInterface Is Nothing Then
+                m_doInterface.GetDataPointer("Length")
+            End If
         End Sub
 
         Public Overrides Function AddChildBody(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d) As Boolean
@@ -295,7 +322,6 @@ Namespace DataObjects.Physical.Bodies
                 m_snMuscleLength = msOrig.m_snMuscleLength
                 m_StimTension = msOrig.m_StimTension
                 m_LengthTension = msOrig.m_LengthTension
-                m_VelocityTension = msOrig.m_VelocityTension
                 'TODO
                 '			else if(Util.IsTypeOf(doOriginal.GetType(), typeof(VortexAnimatTools.DataObjects.Physical.RigidBodies.Spring), false))
                 '			{
@@ -311,13 +337,31 @@ Namespace DataObjects.Physical.Bodies
             End If
         End Sub
 
+        Protected Sub AddMoveHandlers(ByVal aryAttachments As Collections.Attachments)
+
+            For Each doAttach As Attachment In aryAttachments
+                AddHandler doAttach.Moved, AddressOf Me.OnAttachmentMoved
+                AddHandler doAttach.Rotated, AddressOf Me.OnAttachmentRotated
+            Next
+
+        End Sub
+
+        Protected Sub RemoveMoveHandlers(ByVal aryAttachments As Collections.Attachments)
+
+            For Each doAttach As Attachment In aryAttachments
+                RemoveHandler doAttach.Moved, AddressOf Me.OnAttachmentMoved
+                RemoveHandler doAttach.Rotated, AddressOf Me.OnAttachmentRotated
+            Next
+
+        End Sub
+
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Name", m_strName.GetType(), "Name", _
                                         "Muscle Properties", "The name of this item.", m_strName))
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("ID", Me.ID.GetType(), "ID", _
-                                        "Muscle Properties", "ID.", Me.ID))
+                                        "Muscle Properties", "ID.", Me.ID, True))
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Visible", m_bVisible.GetType(), "Visible", _
                                         "Visibility", "Sets whether or not this part is visible in the simulation.", m_bVisible))
@@ -339,15 +383,33 @@ Namespace DataObjects.Physical.Bodies
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snMuscleLength.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Muscle Length", pbNumberBag.GetType(), "MuscleLength", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Length", pbNumberBag.GetType(), "MuscleLength", _
                                         "Muscle Properties", "The current length of the muscle between the two attachment points.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), True))
 
             pbNumberBag = m_aryAttachmentPoints.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Muscle Attachments", pbNumberBag.GetType(), "AttachmentPointsProps", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Attachments", pbNumberBag.GetType(), "AttachmentPointsProps", _
                                         "Muscle Properties", "The list of muscle attachment points.", pbNumberBag, _
                                         GetType(AnimatGUI.TypeHelpers.AttachmentsTypeEditor), GetType(AnimatGuiCtrls.Controls.ExpandablePropBagConverter)))
 
+            pbNumberBag = m_StimTension.Properties
+            propTable.Properties.Add(New PropertySpec("Stimulus-Tension", pbNumberBag.GetType(), _
+                          "StimulusTension", "Muscle Properties", "Sets the stmilus-tension properties of the muscle.", pbNumberBag, _
+                        GetType(AnimatGUI.TypeHelpers.GainTypeEditor), GetType(AnimatGuiCtrls.Controls.ExpandablePropBagConverter)))
+
+            pbNumberBag = m_LengthTension.Properties
+            propTable.Properties.Add(New PropertySpec("Length-Tension", pbNumberBag.GetType(), _
+                        "LengthTension", "Muscle Properties", "Sets the length-tension properties of the muscle.", pbNumberBag, _
+                         GetType(AnimatGUI.TypeHelpers.GainTypeEditor), GetType(AnimatGuiCtrls.Controls.ExpandablePropBagConverter)))
+
+        End Sub
+
+        Public Overrides Sub ClearIsDirty()
+            MyBase.ClearIsDirty()
+
+            If Not m_snMaxTension Is Nothing Then m_snMaxTension.ClearIsDirty()
+            If Not m_StimTension Is Nothing Then m_StimTension.ClearIsDirty()
+            If Not m_LengthTension Is Nothing Then m_LengthTension.ClearIsDirty()
         End Sub
 
         Public Overloads Overrides Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
@@ -365,20 +427,10 @@ Namespace DataObjects.Physical.Bodies
             m_clAmbient = Util.LoadColor(oXml, "Ambient", m_clAmbient)
             m_clDiffuse = Util.LoadColor(oXml, "Diffuse", m_clDiffuse)
 
-            m_aryAttachmentPointIDs.Clear()
-            If oXml.FindChildElement("MuscleAttachments", False) Then
-                oXml.IntoElem()
+            m_aryAttachmentPoints.LoadData(oXml, m_aryAttachmentPointIDs)
 
-                Dim strID As String
-                Dim iCount As Integer = oXml.NumberOfChildren()
-                For iIndex As Integer = 0 To iCount - 1
-                    oXml.FindChildByIndex(iIndex)
-                    strID = oXml.GetChildString()
-                    m_aryAttachmentPointIDs.Add(strID)
-                Next
-
-                oXml.OutOfElem()
-            End If
+            m_StimTension.LoadData(oXml, "StimulusTension", "StimulusTension")
+            m_LengthTension.LoadData(oXml, "LengthTension", "LengthTension")
 
             m_snMaxTension.LoadData(oXml, "MaximumTension")
 
@@ -394,6 +446,8 @@ Namespace DataObjects.Physical.Bodies
                 doAttach = DirectCast(Me.ParentStructure.FindBodyPart(strID, True), DataObjects.Physical.Bodies.Attachment)
                 m_aryAttachmentPoints.Add(doAttach)
             Next
+
+            AddMoveHandlers(m_aryAttachmentPoints)
 
         End Sub
 
@@ -419,17 +473,11 @@ Namespace DataObjects.Physical.Bodies
                 oXml.AddChildElement("ModuleName", Me.ModuleName)
             End If
 
-            oXml.AddChildElement("MuscleAttachments")
-            oXml.IntoElem()  'Into MuscleAttachments
+            m_aryAttachmentPoints.SaveData(oXml, Me.ParentStructure)
 
-            For Each doAttach As DataObjects.Physical.Bodies.Attachment In m_aryAttachmentPoints
-                'If it is a copy/cut in progress then it may be trying to save parts that are not on the main structure yet.
-                If Not Me.ParentStructure.FindBodyPart(doAttach.ID, False) Is Nothing OrElse Util.CopyInProgress OrElse Util.CutInProgress Then
-                    oXml.AddChildElement("AttachID", doAttach.ID)
-                End If
-            Next
+            m_StimTension.SaveData(oXml, "StimulusTension")
+            m_LengthTension.SaveData(oXml, "LengthTension")
 
-            oXml.OutOfElem()  'Outof MuscleAttachments
             m_snMaxTension.SaveData(oXml, "MaximumTension")
 
             oXml.OutOfElem() 'Outof BodyPart Element
@@ -447,7 +495,7 @@ Namespace DataObjects.Physical.Bodies
             oXml.AddChildElement("PartType", Me.PartType.ToString())
             oXml.AddChildElement("Description", m_strDescription)
 
-            m_Transparencies.SaveSimulationXml(oXml, me)
+            m_Transparencies.SaveSimulationXml(oXml, Me)
             oXml.AddChildElement("IsVisible", m_bVisible)
             oXml.AddChildElement("Enabled", m_bEnabled)
 
@@ -458,22 +506,38 @@ Namespace DataObjects.Physical.Bodies
                 oXml.AddChildElement("ModuleName", Me.ModuleName)
             End If
 
-            oXml.AddChildElement("MuscleAttachments")
-            oXml.IntoElem()  'Into MuscleAttachments
+            m_aryAttachmentPoints.SaveSimulationXml(oXml, Me.ParentStructure)
 
-            For Each doAttach As DataObjects.Physical.Bodies.Attachment In m_aryAttachmentPoints
-                'If it is a copy/cut in progress then it may be trying to save parts that are not on the main structure yet.
-                If Not Me.ParentStructure.FindBodyPart(doAttach.ID, False) Is Nothing OrElse Util.CopyInProgress OrElse Util.CutInProgress Then
-                    oXml.AddChildElement("AttachID", doAttach.ID)
-                End If
-            Next
+            m_StimTension.SaveSimulationXml(oXml, Me, "StimulusTension")
+            m_LengthTension.SaveSimulationXml(oXml, Me, "LengthTension")
 
-            oXml.OutOfElem()  'Outof MuscleAttachments
             m_snMaxTension.SaveSimulationXml(oXml, Me, "MaximumTension")
 
             oXml.OutOfElem() 'Outof BodyPart Element
 
         End Sub
+
+#End Region
+
+#Region " Events "
+
+        Protected Sub OnAttachmentMoved(ByRef bpPart As AnimatGUI.DataObjects.Physical.BodyPart)
+            Try
+                Me.SetSimData("AttachedPartMovedOrRotated", bpPart.ID, True)
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Sub OnAttachmentRotated(ByRef bpPart As AnimatGUI.DataObjects.Physical.BodyPart)
+            Try
+                Me.SetSimData("AttachedPartMovedOrRotated", bpPart.ID, True)
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+#End Region
 
     End Class
 

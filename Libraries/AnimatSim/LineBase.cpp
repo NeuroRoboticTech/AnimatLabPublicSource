@@ -129,6 +129,9 @@ void LineBase::AttachmentPoints(string strXml)
 
 	LoadAttachments(oXml);
 	InitializeAttachments();	
+
+	//Redraw the line.
+	Resize();
 }
 
 /**
@@ -159,6 +162,21 @@ float LineBase::CalculateLength()
 	return (fltLength * m_lpSim->DistanceUnits());
 }
 
+void LineBase::AttachedPartMovedOrRotated(string strID)
+{
+	//Redraw the line.
+	Resize();
+}
+
+void LineBase::Resize() 
+{
+	RigidBody::Resize();
+
+	//Get the current length of the muscle.
+	m_fltLength = CalculateLength();
+	m_fltPrevLength = m_fltLength;
+}
+
 #pragma region DataAccesMethods
 
 float *LineBase::GetDataPointer(string strDataType)
@@ -181,7 +199,7 @@ BOOL LineBase::SetData(string strDataType, string strValue, BOOL bThrowError)
 	if(RigidBody::SetData(strDataType, strValue, FALSE))
 		return true;
 
-	if(strDataType == "ATTACHMENTS")
+	if(strDataType == "ATTACHMENTPOINTS")
 	{
 		AttachmentPoints(strValue);
 		return true;
@@ -190,6 +208,12 @@ BOOL LineBase::SetData(string strDataType, string strValue, BOOL bThrowError)
 	if(strDataType == "ENABLED")
 	{
 		Enabled(Std_ToBool(strValue));
+		return true;
+	}
+
+	if(strDataType == "ATTACHEDPARTMOVEDORROTATED")
+	{
+		AttachedPartMovedOrRotated(strValue);
 		return true;
 	}
 

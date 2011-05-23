@@ -79,6 +79,8 @@ Namespace DataObjects.Gains.MuscleGains
                         Throw New System.Exception("The Stiffness can not be less than or equal to zero.")
                     End If
 
+                    SetSimData("Stiffness", Value.ActualValue.ToString, True)
+
                     Dim snOrig As ScaledNumber = DirectCast(m_snStiffness.Clone(m_snStiffness.Parent, False, Nothing), ScaledNumber)
                     If Not Value Is Nothing Then m_snStiffness.CopyData(Value)
 
@@ -102,6 +104,8 @@ Namespace DataObjects.Gains.MuscleGains
                     If Value.ActualValue <= 0 Then
                         Throw New System.Exception("The quadratic limit can not be less than zero.")
                     End If
+
+                    SetSimData("QuadraticLimit", Value.ActualValue.ToString, True)
 
                     Dim snOrig As ScaledNumber = DirectCast(m_snQuadraticLimit.Clone(m_snQuadraticLimit.Parent, False, Nothing), ScaledNumber)
                     If Not Value Is Nothing Then m_snQuadraticLimit.CopyData(Value)
@@ -296,6 +300,13 @@ Namespace DataObjects.Gains.MuscleGains
             m_strImageName = gnOrig.m_strImageName
 
             'RecalculuateLimits()
+        End Sub
+
+        Public Overrides Sub SetAllSimData(ByVal doInterface As Interfaces.DataObjectInterface)
+            MyBase.SetAllSimData(doInterface)
+
+            SetSimData("Stiffness", m_snStiffness.ActualValue.ToString, True)
+            SetSimData("QuadraticLimit", m_snQuadraticLimit.ActualValue.ToString, True)
         End Sub
 
         Public Overrides Sub UnitsChanged(ByVal ePrevMass As AnimatGUI.DataObjects.Physical.Environment.enumMassUnits, _

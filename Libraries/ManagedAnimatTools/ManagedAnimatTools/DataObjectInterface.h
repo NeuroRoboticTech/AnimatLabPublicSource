@@ -35,10 +35,15 @@ protected:
 	float *m_lpRotationY;
 	float *m_lpRotationZ;
 
+	/// The array of odor sources of this type within the environment.
+	CStdMap<string, float *> *m_aryDataPointers;
+
 	void GetPointers();
 
 public:
 	DataObjectInterface(Interfaces::SimulatorInterface ^SimInt, String ^strID);
+	!DataObjectInterface();
+	~DataObjectInterface();
 
 #pragma region Properties
 
@@ -102,6 +107,9 @@ public:
 
 	System::Boolean SetData(String ^sDataType, String ^sValue, System::Boolean bThrowError);
 	void SelectItem(bool bVal, bool bSelectMultiple);
+
+	void GetDataPointer(String ^sData);
+	float GetDataValue(String ^sData);
 
 #pragma endregion
 
