@@ -28,12 +28,6 @@ namespace AnimatSim
 				///Keeps track of the initial state of the enabled flag.
 				BOOL m_bInitEnabled;
 
-				///A pointer to the primary attachment part.
-				Attachment *m_lpPrimaryAttachment;
-
-				///A pointer to the secondary attachment part.
-				Attachment *m_lpSecondaryAttachment;
-
 				/// The natural length of the spring. 
 				float m_fltNaturalLength;
 
@@ -55,12 +49,6 @@ namespace AnimatSim
 			public:
 				Spring();
 				virtual ~Spring();
-
-				Attachment *PrimaryAttachment() {return m_lpPrimaryAttachment;};
-				void PrimaryAttachment(Attachment *lpVal) {m_lpPrimaryAttachment = lpVal;};
-
-				Attachment *SecondaryAttachment() {return m_lpSecondaryAttachment;};
-				void SecondaryAttachment(Attachment *lpVal) {m_lpSecondaryAttachment = lpVal;};
 
 				virtual BOOL InitEnabled();
 
@@ -132,6 +120,8 @@ namespace AnimatSim
 				virtual float Energy();
 
 				virtual void CreateParts();
+				virtual float *GetDataPointer(string strDataType);
+				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 				virtual void AddExternalNodeInput(float fltInput);
 				virtual void Load(CStdXml &oXml);
 			};

@@ -148,7 +148,6 @@ Namespace DataObjects.Physical.Bodies
             m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("MembraneVoltage", "Membrane Voltage", "Volts", "V", -100, 100, ScaledNumber.enumNumericScale.milli, ScaledNumber.enumNumericScale.milli)
 
             m_snMaxTension = New AnimatGUI.Framework.ScaledNumber(Me, "MaxTension", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Newtons", "N")
-            m_snMuscleLength = New AnimatGUI.Framework.ScaledNumber(Me, "MuscleLength", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Meters", "m")
             m_snKse = New AnimatGUI.Framework.ScaledNumber(Me, "Kse", 10, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Newtons per meter", "N/m")
             m_snKpe = New AnimatGUI.Framework.ScaledNumber(Me, "Kpe", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Newtons per meter", "N/m")
             m_snB = New AnimatGUI.Framework.ScaledNumber(Me, "B", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Newton-seconds per meter", "Ns/m")
@@ -188,29 +187,31 @@ Namespace DataObjects.Physical.Bodies
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 
+            Dim strType As String = Replace(Me.Type, "LinearHill", "")
+
             Dim pbSubBag As AnimatGuiCtrls.Controls.PropertyBag = m_snKse.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Kse", pbSubBag.GetType(), "Kse", _
-                  "Muscle Properties", "Determines the stiffness of the SE spring element. This is the primarily the stiffness of the tendon.", _
+                  strType & " Properties", "Determines the stiffness of the SE spring element. This is the primarily the stiffness of the tendon.", _
                   pbSubBag, "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbSubBag = m_snKpe.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Kpe", pbSubBag.GetType(), "Kpe", _
-                          "Muscle Properties", "Determines the stiffness of the PE spring element. This controls force developed from passive stretch of the muscle.", pbSubBag, _
+                          strType & " Properties", "Determines the stiffness of the PE spring element. This controls force developed from passive stretch of the muscle.", pbSubBag, _
                           "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbSubBag = m_snB.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("B", pbSubBag.GetType(), "B", _
-                   "Muscle Properties", "Determines the linear, viscous damping of this muscle. This model does NOT use a non-linear hill force-velocity curve.", pbSubBag, _
+                   strType & " Properties", "Determines the linear, viscous damping of this muscle. This model does NOT use a non-linear hill force-velocity curve.", pbSubBag, _
                    "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbSubBag = m_aryAttachmentPoints.Properties
             propTable.Properties.Add(New PropertySpec("Calculate Stimulus", pbSubBag.GetType(), "", _
-                   "Muscle Properties", "Used to calculate the stimulus needed to develop a specific tension.", pbSubBag, _
+                   strType & " Properties", "Used to calculate the stimulus needed to develop a specific tension.", pbSubBag, _
                    GetType(AnimatGUI.TypeHelpers.CalcMuscleStimEditor), GetType(AnimatGuiCtrls.Controls.ExpandablePropBagConverter)))
 
             pbSubBag = m_snIbDischargeConstant.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Ib Discharge Constant", pbSubBag.GetType(), "IbDischargeConstant", _
-                   "Muscle Properties", "Relates the muscle tension to the discharge rate of the type Ib fibers.", pbSubBag, _
+                   strType & " Properties", "Relates the muscle tension to the discharge rate of the type Ib fibers.", pbSubBag, _
                    "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
         End Sub
 

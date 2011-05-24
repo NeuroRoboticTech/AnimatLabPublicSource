@@ -22,6 +22,7 @@ Namespace Forms.BodyPlan
         Protected m_aryAttachments As Collections.Attachments
         Protected m_doStructure As DataObjects.Physical.PhysicalStructure
         Protected m_bIsDirty As Boolean = False
+        Protected m_iMaxAttachmentsAllowed As Integer = -1
 
 #End Region
 
@@ -42,6 +43,15 @@ Namespace Forms.BodyPlan
             End Get
             Set(ByVal value As DataObjects.Physical.PhysicalStructure)
                 m_doStructure = value
+            End Set
+        End Property
+
+        Public Property MaxAttachmentsAllowed() As Integer
+            Get
+                Return m_iMaxAttachmentsAllowed
+            End Get
+            Set(ByVal value As Integer)
+                m_iMaxAttachmentsAllowed = value
             End Set
         End Property
 
@@ -230,6 +240,12 @@ Namespace Forms.BodyPlan
         Private Sub btnOk_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnOk.Click
             Try
                 If m_bIsDirty Then
+                    'Verify that the number of attachments that were selected is not more than the number allowed
+                    If m_iMaxAttachmentsAllowed > 0 AndAlso lvMuscleAttachments.Items.Count > m_iMaxAttachmentsAllowed Then
+                        Throw New System.Exception("Only " & m_iMaxAttachmentsAllowed & " are allowed for this part type. " & _
+                                                   "Please reduce the number of attachments to this number.")
+                    End If
+
                     m_aryAttachments.Clear()
 
                     For Each liItem As ListViewItem In lvMuscleAttachments.Items

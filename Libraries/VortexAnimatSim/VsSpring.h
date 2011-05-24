@@ -21,7 +21,6 @@ namespace VortexAnimatSim
 			protected:
 				Vx::VxSpring *m_vxSpring;
 
-
 			public:
 				VsSpring();
 				virtual ~VsSpring();
@@ -32,7 +31,6 @@ namespace VortexAnimatSim
 
 				virtual void CreateParts();
 				virtual void CreateJoints();
-				virtual float *GetDataPointer(string strDataType);
 				virtual void ResetSimulation();
 				virtual void AfterResetSimulation();
 				virtual void StepSimulation();

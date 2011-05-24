@@ -47,8 +47,6 @@ namespace AnimatSim
 Spring::Spring()
 {
 	m_bInitEnabled = FALSE;
-	m_lpPrimaryAttachment = NULL;
-	m_lpSecondaryAttachment = NULL;
 	m_fltNaturalLength = 1;
 	m_fltStiffness = 5000;
 	m_fltDamping = 1000;
@@ -65,14 +63,6 @@ Spring::Spring()
 **/
 Spring::~Spring()
 {
-	try
-	{
-		//Don't delete these. They are only references
-		m_lpPrimaryAttachment = NULL;
-		m_lpSecondaryAttachment = NULL;
-	}
-	catch(...)
-	{Std_TraceMsg(0, "Caught Error in desctructor of Spring\r\n", "", -1, FALSE, TRUE);}
 }
 
 /**
@@ -158,7 +148,7 @@ void Spring::CreateParts()
 
 void Spring::AddExternalNodeInput(float fltInput)
 {
-	if(m_lpPrimaryAttachment && m_lpSecondaryAttachment)
+	if(m_aryAttachmentPoints.GetSize() == 2)
 	{
 		if(fltInput > 0 && m_bEnabled != !m_bInitEnabled)
 			Enabled(!m_bInitEnabled);
@@ -168,6 +158,65 @@ void Spring::AddExternalNodeInput(float fltInput)
 	}
 	else
 		m_bEnabled = FALSE;
+}
+
+
+float *Spring::GetDataPointer(string strDataType)
+{
+	string strType = Std_CheckString(strDataType);
+	float *lpData = NULL;
+
+	float *lpVal = LineBase::GetDataPointer(strDataType);
+	if(lpVal) return lpVal;
+
+	if(strType == "SPRINGLENGTH")
+		return &m_fltLength;
+
+	if(strType == "DISPLACEMENT")
+		return &m_fltDisplacement;
+
+	if(strType == "TENSION")
+		return &m_fltTension;
+
+	if(strType == "ENERGY")
+		return &m_fltEnergy;
+
+	if(strType == "ENABLE")
+		return &m_fltEnabled;
+
+	THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "RigidBodyID: " + STR(m_strName) + "  DataType: " + strDataType);
+
+	return NULL;
+}
+
+BOOL Spring::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	if(LineBase::SetData(strDataType, strValue, false))
+		return true;
+
+	if(strDataType == "NATURALLENGTH")
+	{
+		NaturalLength(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strDataType == "STIFFNESS")
+	{
+		Stiffness(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strDataType == "DAMPING")
+	{
+		Damping(atof(strValue.c_str()));
+		return true;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
 }
 
 void Spring::Load(CStdXml &oXml)

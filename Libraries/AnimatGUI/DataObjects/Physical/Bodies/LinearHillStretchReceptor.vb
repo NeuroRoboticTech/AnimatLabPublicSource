@@ -135,17 +135,19 @@ Namespace DataObjects.Physical.Bodies
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 
+            Dim strType As String = Replace(Me.Type, "LinearHill", "")
+
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Apply Tension", m_bApplyTension.GetType(), "ApplyTension", _
-                                     "Muscle Properties", "Determines whether the stretch receptor actually applies tension.", m_bApplyTension))
+                                     strType & " Properties", "Determines whether the stretch receptor actually applies tension.", m_bApplyTension))
 
             Dim pbSubBag As AnimatGuiCtrls.Controls.PropertyBag = m_snIaDischargeConstant.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Ia Discharge Constant", pbSubBag.GetType(), "IaDischargeConstant", _
-            "Muscle Properties", "Relates the length of segments of the stretch receptor to the discharge rate of the type Ia fibers.", pbSubBag, _
+            strType & " Properties", "Relates the length of segments of the stretch receptor to the discharge rate of the type Ia fibers.", pbSubBag, _
             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbSubBag = m_snIIDischargeConstant.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("II Discharge Constant", pbSubBag.GetType(), "IIDischargeConstant", _
-             "Muscle Properties", "Relates the length of segments of the stretch receptor to the discharge rate of the type II fibers.", pbSubBag, _
+             strType & " Properties", "Relates the length of segments of the stretch receptor to the discharge rate of the type II fibers.", pbSubBag, _
              "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
         End Sub
