@@ -48,7 +48,9 @@ Spring::Spring()
 {
 	m_bInitEnabled = FALSE;
 	m_fltNaturalLength = 1;
+	m_fltNaturalLengthNotScaled = m_fltNaturalLength;
 	m_fltStiffness = 5000;
+	m_fltStiffnessNotScaled = m_fltStiffness;
 	m_fltDamping = 1000;
 	m_fltDisplacement = 0;
 	m_fltTension = 0;
@@ -81,6 +83,7 @@ void Spring::NaturalLength(float fltVal, BOOL bUseScaling)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "Spring.NaturalLength");
 
+	m_fltNaturalLengthNotScaled = fltVal;
 	if(bUseScaling)
 		m_fltNaturalLength = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -93,6 +96,7 @@ void Spring::Stiffness(float fltVal, BOOL bUseScaling)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "Spring.Stiffness");
 
+	m_fltStiffnessNotScaled = fltVal;
 	if(bUseScaling)
 		m_fltStiffness = fltVal * m_lpSim->InverseMassUnits();
 	else

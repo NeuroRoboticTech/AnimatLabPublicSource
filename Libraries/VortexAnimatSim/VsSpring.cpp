@@ -35,25 +35,73 @@ VsSpring::~VsSpring()
 	m_vxSpring = NULL;
 }
 
-
-void VsSpring::CreateParts()
+void VsSpring::NaturalLength(float fltVal, BOOL bUseScaling)
 {
-	//We do nothing in createparts because we cannot build the line until after all parts are created
-	//so we can get a handle to the attachment points.
+	Spring::NaturalLength(fltVal, bUseScaling);
+	if(m_vxSpring)
+		m_vxSpring->setNaturalLength(m_fltNaturalLength);
 }
 
-void VsSpring::CreateJoints()
+void VsSpring::Stiffness(float fltVal, BOOL bUseScaling)
 {
-	Spring::CreateJoints();
-	VsLine::CreateParts();
+	Spring::Stiffness(fltVal, bUseScaling);
+	if(m_vxSpring)
+		m_vxSpring->setStiffness(m_fltStiffness);
+}
+
+void VsSpring::Damping(float fltVal, BOOL bUseScaling)
+{
+	Spring::Damping(fltVal, bUseScaling);
+	if(m_vxSpring)
+		m_vxSpring->setDamping(m_fltDamping);
+}
+
+void VsSpring::InitializeAttachments()
+{
+	Spring::InitializeAttachments();
+	SetupPhysics();
+}
+
+void VsSpring::Physics_Resize()
+{
+	 VsRigidBody::Physics_Resize();
+	 SetupPhysics();
+}
+
+void VsSpring::DeletePhysics()
+{
+	if(!m_vxSpring)
+		return;
+
+	GetVsSimulator()->Universe()->removeConstraint(m_vxSpring);
+	delete m_vxSpring;
+	m_vxSpring = NULL;
+}
+
+void VsSpring::SetupPhysics()
+{
+	if(m_vxSpring)
+		DeletePhysics();
 
 	if(m_aryAttachmentPoints.GetSize() == 2)
 	{
 		Attachment *lpPrimaryAttachment = m_aryAttachmentPoints[0];
 		Attachment *lpSecondaryAttachment = m_aryAttachmentPoints[1];
 
+		if(!lpPrimaryAttachment && !lpSecondaryAttachment)
+		{
+			Enabled(FALSE);
+			return;
+		}
+
 		VsRigidBody *lpVsPrimary = dynamic_cast<VsRigidBody *>(lpPrimaryAttachment->Parent());
 		VsRigidBody *lpVsSecondary = dynamic_cast<VsRigidBody *>(lpSecondaryAttachment->Parent());
+
+		if(!lpVsPrimary && !lpVsSecondary)
+		{
+			Enabled(FALSE);
+			return;
+		}
 
 		m_vxSpring = new VxSpring(lpVsPrimary->Part(), lpVsSecondary->Part(), m_fltNaturalLength, m_fltStiffness, m_fltDamping); // attached to the reference frame.
 
@@ -67,8 +115,15 @@ void VsSpring::CreateJoints()
 		GetVsSimulator()->Universe()->addConstraint(m_vxSpring);
 	}
 	else
-		m_bEnabled = FALSE;
+		Enabled(FALSE);
+}
 
+void VsSpring::CreateJoints()
+{
+	Spring::CreateJoints();
+	VsLine::CreateParts();
+
+	SetupPhysics();
 }
 
 void VsSpring::Enabled(BOOL bVal)
@@ -84,14 +139,10 @@ void VsSpring::Physics_CollectData()
 	if(m_vxSpring)
 	{
 		m_fltLength = CalculateLength();
-		m_fltDisplacement = (m_fltLength - m_fltNaturalLength) * m_lpSim->DistanceUnits();
-		m_fltLength *= m_lpSim->DistanceUnits();
-
-		m_fltEnergy = 0.5f*m_fltStiffness*m_fltDisplacement*m_fltDisplacement;
-
-		Vx::VxReal3 vForce;
-		m_vxSpring->getPartForce(0, vForce);
-		m_fltTension = V3_MAG(vForce) * m_lpSim->MassUnits() * m_lpSim->DistanceUnits();
+		m_fltDisplacement = (m_fltLength - m_fltNaturalLengthNotScaled);
+		
+		m_fltTension = m_fltStiffnessNotScaled * m_fltDisplacement;
+		m_fltEnergy = 0.5f*m_fltStiffnessNotScaled*m_fltDisplacement*m_fltDisplacement;
 	}
 }
 

@@ -123,9 +123,9 @@ Namespace DataObjects.Physical.Bodies
 
             m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("Enabled", "Enabled", "", "", 0, 1, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)
 
-            m_snNaturalLength = New AnimatGUI.Framework.ScaledNumber(Me, "NaturalLength", "meters", "m")
-            m_snStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "Stiffness", 50, AnimatGUI.Framework.ScaledNumber.enumNumericScale.Kilo, "N/m", "N/m")
-            m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.Kilo, "g/s", "g/s")
+            m_snNaturalLength = New AnimatGUI.Framework.ScaledNumber(Me, "NaturalLength", 1, ScaledNumber.enumNumericScale.None, "meters", "m")
+            m_snStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "Stiffness", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "N/m", "N/m")
+            m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 100, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "g/s", "g/s")
 
         End Sub
 
@@ -145,6 +145,10 @@ Namespace DataObjects.Physical.Bodies
             m_snStiffness = DirectCast(doOrigBody.m_snStiffness.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_snDamping = DirectCast(doOrigBody.m_snDamping.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
 
+        End Sub
+
+        Public Overrides Sub SetDefaultSizes()
+            m_snNaturalLength.ActualValue = 1 * Util.Environment.DistanceUnitValue
         End Sub
 
         Public Overrides Sub SwapBodyPartCopy(ByVal doOriginal As BodyPart)

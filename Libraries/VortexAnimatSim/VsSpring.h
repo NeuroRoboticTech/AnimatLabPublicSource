@@ -21,15 +21,22 @@ namespace VortexAnimatSim
 			protected:
 				Vx::VxSpring *m_vxSpring;
 
+				virtual void SetupPhysics();
+				virtual void DeletePhysics();
+				virtual void InitializeAttachments();
+
 			public:
 				VsSpring();
 				virtual ~VsSpring();
 
 				virtual void Enabled(BOOL bVal);
+				virtual void NaturalLength(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void Stiffness(float fltVal, BOOL bUseScaling = TRUE);
+				virtual void Damping(float fltVal, BOOL bUseScaling = TRUE);
 
 				virtual void Physics_CollectData();
+				virtual void Physics_Resize();
 
-				virtual void CreateParts();
 				virtual void CreateJoints();
 				virtual void ResetSimulation();
 				virtual void AfterResetSimulation();

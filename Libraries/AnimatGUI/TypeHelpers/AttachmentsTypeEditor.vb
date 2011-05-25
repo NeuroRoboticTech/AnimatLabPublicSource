@@ -17,6 +17,7 @@ Namespace TypeHelpers
 
             frmAttachments.Attachments = aryAttachments
             frmAttachments.ParentStructure = doMuscle.ParentStructure
+            frmAttachments.MaxAttachmentsAllowed = doMuscle.MaxAttachmentsAllowed
 
             If frmAttachments.ShowDialog() = DialogResult.OK Then
                 Dim aryOldPoints As Collections.Attachments = DirectCast(doMuscle.AttachmentPoints.Clone(doMuscle.AttachmentPoints.Parent, False, Nothing), Collections.Attachments)
@@ -70,6 +71,7 @@ Namespace TypeHelpers
 
             frmAttachments.Attachments = aryAttachments
             frmAttachments.ParentStructure = doSpring.ParentStructure
+            frmAttachments.MaxAttachmentsAllowed = doSpring.MaxAttachmentsAllowed
 
             If frmAttachments.ShowDialog() = DialogResult.OK Then
                 Dim aryOldPoints As Collections.Attachments = DirectCast(doSpring.AttachmentPoints.Clone(doSpring.AttachmentPoints.Parent, False, Nothing), Collections.Attachments)
@@ -91,9 +93,7 @@ Namespace TypeHelpers
                     doSpring.NaturalLength.ManualAddPropertyHistory("NaturalLength", snOldLength, snNewLength, True)
                     Util.ModificationHistory.CommitHistoryGroup()
 
-                    If doSpring.Enabled = False Then
-                        doSpring.Enabled = True
-                    End If
+                    doSpring.Enabled = True
                 Else
                     doSpring.ManualAddPropertyHistory("AttachmentPoints", aryOldPoints, aryNewPoints, True)
                 End If

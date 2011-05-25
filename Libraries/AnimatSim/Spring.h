@@ -31,8 +31,14 @@ namespace AnimatSim
 				/// The natural length of the spring. 
 				float m_fltNaturalLength;
 
+				/// The unscaled natural length. This is used to calcuate the tension and displacement
+				float m_fltNaturalLengthNotScaled;
+
 				/// The stiffness of the spring
 				float m_fltStiffness;
+
+				/// The unscaled stiffness. This is used to calcuate the energy
+				float m_fltStiffnessNotScaled;
 
 				/// The damping of the spring
 				float m_fltDamping;
