@@ -376,6 +376,7 @@
     <Compile Include="DataObjects\Physical\Bodies\Line.vb" />
     <Compile Include="DataObjects\Physical\Bodies\LinearHillMuscle.vb" />
     <Compile Include="DataObjects\Physical\Bodies\LinearHillStretchReceptor.vb" />
+    <Compile Include="DataObjects\Physical\Bodies\Mesh.vb" />
     <Compile Include="DataObjects\Physical\Bodies\MuscleBase.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Plane.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Sphere.vb" />
