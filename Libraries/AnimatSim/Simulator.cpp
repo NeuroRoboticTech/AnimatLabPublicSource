@@ -108,10 +108,6 @@ Simulator::Simulator()
 	m_bEnableSimRecording = FALSE;
 	m_lSnapshotByteSize = 0;
 
-	m_bHasConvexMesh = FALSE;
-	m_bHasTriangleMesh = FALSE;
-	m_bHasHeightField = FALSE;
-
 	m_bAutoGenerateRandomSeed = TRUE;
 	m_iManualRandomSeed = 12345;
 
@@ -1196,66 +1192,6 @@ void Simulator::FluidDensity(float fltVal, BOOL bUseScaling)
 }
 
 /**
-\brief	Query if this simulation has convex mesh.
-
-\author	dcofer
-\date	3/28/2011
-
-\return	true if convex mesh, false if not.
-**/
-BOOL Simulator::HasConvexMesh() {return m_bHasConvexMesh;}
-
-/**
-\brief	Sets if this simulation has convex mesh.
-
-\author	dcofer
-\date	3/28/2011
-
-\param	bVal	true if has convex mesh. 
-**/
-void Simulator::HasConvexMesh(BOOL bVal) {m_bHasConvexMesh = bVal;}
-
-/**
-\brief	Query if this simulation has triangle mesh.
-
-\author	dcofer
-\date	3/28/2011
-
-\return	true if triangle mesh, false if not.
-**/
-BOOL Simulator::HasTriangleMesh() {return m_bHasTriangleMesh;}
-
-/**
-\brief	Sets if this simulation has triangle mesh.
-
-\author	dcofer
-\date	3/28/2011
-
-\param	bVal	true if has triangle mesh. 
-**/
-void Simulator::HasTriangleMesh(BOOL bVal) {m_bHasTriangleMesh = bVal;}
-
-/**
-\brief	Query if this simulation has a height field.
-
-\author	dcofer
-\date	3/28/2011
-
-\return	true if height field, false if not.
-**/
-BOOL Simulator::HasHeightField() {return m_bHasHeightField;}
-
-/**
-\brief	Sets if this simulation has a height field.
-
-\author	dcofer
-\date	3/28/2011
-
-\param	bVal	true if has a height field. 
-**/
-void Simulator::HasHeightField(BOOL bVal) {m_bHasHeightField = bVal;}
-
-/**
 \brief	Gets a material identifier from the physics engine for the specified unique ID.
 
 \details This method must be implemented within the derived class for the physics engine.
@@ -1716,10 +1652,6 @@ void Simulator::Reset()
 	m_lpVideoPlayback = NULL; //Do not delete this object. It is in the list of Keyframes.
 	m_bEnableSimRecording = FALSE;
 	m_lSnapshotByteSize = 0;
-
-	m_bHasConvexMesh = FALSE;
-	m_bHasTriangleMesh = FALSE;
-	m_bHasHeightField = FALSE;
 
 	m_bPaused = TRUE;
 	m_bInitialized = FALSE;

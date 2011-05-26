@@ -109,15 +109,6 @@ namespace AnimatSim
 
 			/// true to confirm that a simulation block is in place.
 			BOOL m_bSimBlockConfirm;
-			
-			/// Set to tru if the simulation has a convex mesh object.
-			BOOL m_bHasConvexMesh;
-
-			/// Set to true if the simulation has a triangle mesh object.
-			BOOL m_bHasTriangleMesh;
-
-			/// Set to true if the simulation has height field object.
-			BOOL m_bHasHeightField;
 
 			/// Pointer to a simulation callback class. This is only set if we are using the GUI. This is set by the managed wrapper to 
 			/// allow us to post callback notifications to the GUI.
@@ -587,15 +578,6 @@ namespace AnimatSim
 
 			virtual float FluidDensity();
 			virtual void FluidDensity(float fltVal, BOOL bUseScaling = TRUE);
-
-			virtual BOOL HasConvexMesh();
-			virtual void HasConvexMesh(BOOL bVal);
-
-			virtual BOOL HasTriangleMesh();
-			virtual void HasTriangleMesh(BOOL bVal);
-
-			virtual BOOL HasHeightField();
-			virtual void HasHeightField(BOOL bVal);
 
 			virtual int GetMaterialID(string strID);
 

@@ -1,3 +1,9 @@
+/**
+\file	Mesh.cpp
+
+\brief	Implements the mesh class.
+**/
+
 #include "stdafx.h"
 #include "IMovableItemCallback.h"
 #include "ISimGUICallback.h"
@@ -32,12 +38,110 @@ namespace AnimatSim
 		namespace Bodies
 		{
 
+/**
+\brief	Default constructor.
+
+\author	dcofer
+\date	5/26/2011
+**/
 Mesh::Mesh()
 {
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	5/26/2011
+**/
 Mesh::~Mesh()
 {
+}
+
+/**
+\brief	Gets the mesh filename.
+
+\details If this filename is blank, or is not found then it will display a default box.
+
+\author	dcofer
+\date	5/26/2011
+
+\return	mesh filename.
+**/
+string Mesh::MeshFile() {return m_strMeshFile;}
+
+/**
+\brief	Sets the mesh filename.
+
+\details If this filename is blank, or is not found then it will display a default box.
+\author	dcofer
+\date	5/26/2011
+
+\param	strFile	The filename.
+**/
+void Mesh::MeshFile(string strFile) 
+{
+	m_strMeshFile = strFile;
+	Resize();
+}
+
+/**
+\brief	Gets the collision mesh type.
+
+\details This is only used if this is a collision object. It can be either convex or triangular (regular).
+
+\author	dcofer
+\date	5/26/2011
+
+\return	collision mesh type.
+**/
+string Mesh::CollisionMeshType() {return m_strMeshFile;}
+
+/**
+\brief	Sets the collision mesh type.
+
+\details This is only used if this is a collision object. It can be either convex or triangular (regular).
+
+\author	dcofer
+\date	5/26/2011
+
+\param	strType	Type of the mesh.
+**/
+void Mesh::CollisionMeshType(string strType)
+{
+	string strUpType = Std_CheckString(strType);
+	if(strUpType != "REGULAR" && strUpType != "CONVEX")
+		THROW_TEXT_ERROR(Al_Err_lInvalidCollisionMeshType, Al_Err_strInvalidCollisionMeshType, "Body: " + m_strName + "  MeshType: " + m_strCollisionMeshType);
+
+	m_strCollisionMeshType = strUpType;
+	Resize();
+}
+
+
+BOOL Mesh::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(RigidBody::SetData(strType, strValue, FALSE))
+		return TRUE;
+
+	if(strType == "MESHFILE")
+	{
+		MeshFile(strValue);
+		return TRUE;
+	}
+
+	if(strType == "MESHTYPE")
+	{
+		CollisionMeshType(strValue);
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
 }
 
 void Mesh::Load(CStdXml &oXml)
@@ -45,39 +149,12 @@ void Mesh::Load(CStdXml &oXml)
 	RigidBody::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
-	Std_LoadPoint(oXml, "CollisionBoxSize", m_oCollisionBoxSize);
-	Std_LoadPoint(oXml, "GraphicsBoxSize", m_oGraphicsBoxSize);
-	m_strGraphicsMesh = oXml.GetChildString("MeshFile");
-	m_strCollisionMesh = oXml.GetChildString("CollisionMeshFile", "");
-	m_strCollisionMeshType = oXml.GetChildString("CollisionMeshType");
-	m_strReceptiveFieldMesh = oXml.GetChildString("ReceptiveFieldMeshFile", "");
+
+	MeshFile(oXml.GetChildString("MeshFile"));
+	CollisionMeshType(oXml.GetChildString("CollisionMeshType"));
+
 	oXml.OutOfElem(); //OutOf RigidBody Element
 
-	Std_IsAboveMin((float) 0, m_oCollisionBoxSize.x, TRUE, "CollisionBoxSize.x");
-	Std_IsAboveMin((float) 0, m_oCollisionBoxSize.y, TRUE, "CollisionBoxSize.y");
-	Std_IsAboveMin((float) 0, m_oCollisionBoxSize.z, TRUE, "CollisionBoxSize.z");
-	
-	Std_IsAboveMin((float) 0, m_oGraphicsBoxSize.x, TRUE, "GraphicsBoxSize.x");
-	Std_IsAboveMin((float) 0, m_oGraphicsBoxSize.y, TRUE, "GraphicsBoxSize.y");
-	Std_IsAboveMin((float) 0, m_oGraphicsBoxSize.z, TRUE, "GraphicsBoxSize.z");
-
-	if(Std_IsBlank(m_strGraphicsMesh))
-		THROW_PARAM_ERROR(Al_Err_lGraphicsMeshNotDefined, Al_Err_strGraphicsMeshNotDefined, "Body", m_strName);
-
-	if(Std_IsBlank(m_strCollisionMesh))
-	{
-		m_strCollisionMesh = m_strGraphicsMesh;
-		m_strCollisionMeshType = "Regular";
-	}
-
-	m_strCollisionMeshType = Std_CheckString(m_strCollisionMeshType);
-	if(m_strCollisionMeshType != "REGULAR" && m_strCollisionMeshType != "CONVEX")
-		THROW_TEXT_ERROR(Al_Err_lInvalidCollisionMeshType, Al_Err_strInvalidCollisionMeshType, "Body: " + m_strName + "  MeshType: " + m_strCollisionMeshType);
-
-	if(m_strCollisionMeshType == "REGULAR")
-		m_lpSim->HasTriangleMesh(TRUE);
-	else
-		m_lpSim->HasConvexMesh(TRUE);
 }
 
 		}		//Bodies

@@ -11,22 +11,21 @@ namespace AnimatSim
 			class ANIMAT_PORT Mesh : public RigidBody
 			{
 			protected:
-				CStdFPoint m_oCollisionBoxSize;
-				CStdFPoint m_oGraphicsBoxSize;
-
-				string m_strGraphicsMesh;
-				string m_strCollisionMesh;
-				string m_strReceptiveFieldMesh;
+				string m_strMeshFile;
 				string m_strCollisionMeshType;
 
 			public:
 				//This is a test comment.
 				Mesh();
 				virtual ~Mesh();
+				
+				virtual string MeshFile();
+				virtual void MeshFile(string strFile);
 
-				CStdFPoint CollisionBoxSize() {return m_oCollisionBoxSize;};
-				CStdFPoint GraphicsBoxSize() {return m_oGraphicsBoxSize;};
+				virtual string CollisionMeshType();
+				virtual void CollisionMeshType(string strType);
 
+				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 				virtual void Load(CStdXml &oXml);
 			};
 
