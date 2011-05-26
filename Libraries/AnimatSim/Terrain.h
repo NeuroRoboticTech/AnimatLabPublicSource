@@ -22,10 +22,9 @@ namespace AnimatSim
 			\author	dcofer
 			\date	3/10/2011
 			**/
-			class ANIMAT_PORT Terrain : public RigidBody 
+			class ANIMAT_PORT Terrain : public Mesh
 			{
 			protected:
-				string m_strTerrainFile;
 				CStdIPoint m_ptGrid;
 
 			public:

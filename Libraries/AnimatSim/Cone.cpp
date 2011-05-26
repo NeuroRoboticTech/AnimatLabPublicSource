@@ -183,8 +183,6 @@ void Cone::Load(CStdXml &oXml)
 	Sides(oXml.GetChildInt("Sides", m_iSides));
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
-
-	m_lpSim->HasConvexMesh(TRUE);
 }
 
 

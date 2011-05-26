@@ -5,7 +5,7 @@ namespace VortexAnimatSim
 	namespace Visualization
 	{
 
-		class VsOsgUserData : public osg::Referenced
+		class VORTEX_PORT VsOsgUserData : public osg::Referenced
 		{
 			protected:
 				VsMovableItem *m_lpItem;

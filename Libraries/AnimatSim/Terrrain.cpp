@@ -18,6 +18,7 @@
 #include "ReceptiveField.h"
 #include "ContactSensor.h"
 #include "RigidBody.h"
+#include "Mesh.h"
 #include "Terrain.h"
 #include "Structure.h"
 #include "Organism.h"
@@ -63,7 +64,6 @@ Terrain::~Terrain()
 
 }
 
-
 void Terrain::Grid(CStdIPoint ptPoint)
 {
 	if(ptPoint.x <= 0) ptPoint.x = 1;
@@ -79,13 +79,9 @@ void Terrain::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into RigidBody Element
 
-	m_strTerrainFile = oXml.GetChildString("TerrainFile", "");
-	if(Std_IsBlank(m_strTerrainFile))
-		THROW_PARAM_ERROR(Al_Err_lTerrainFileNotDefined, Al_Err_strTerrainFileNotDefined, "Body", m_strName);
-
 	CStdIPoint ptGrid;
 	Std_LoadPoint(oXml, "Grid", ptGrid);
-	this->Grid(ptGrid);
+	Grid(ptGrid);
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
 
