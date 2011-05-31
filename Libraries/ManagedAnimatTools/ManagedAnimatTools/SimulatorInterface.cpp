@@ -92,6 +92,10 @@ namespace AnimatGUI
 
 #pragma region SimulationControl
 
+			void SimulatorInterface::SetProjectPath(System::String ^strPath)
+			{
+				m_strProjectPath = strPath;
+			}
 
 			void SimulatorInterface::CreateAndRunSimulation(System::Boolean bPaused)
 			{
@@ -136,6 +140,8 @@ namespace AnimatGUI
 					m_lpSim = AnimatSim::Simulator::CreateSimulator(oXml);					
 
 					LogMsg(Logger->enumLogLevel::Debug, "About to load the simulation.");
+					string strProjectPath = Util::StringToStd(m_strProjectPath);
+					m_lpSim->ProjectPath(strProjectPath);
 					m_lpSim->Load(oXml);
 					m_lpSim->Paused(true);
 					m_bIsLoaded = true;

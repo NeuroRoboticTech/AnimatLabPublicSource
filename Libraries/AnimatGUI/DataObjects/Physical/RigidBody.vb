@@ -1338,12 +1338,13 @@ Namespace DataObjects.Physical
             End Try
         End Function
 
-
         Public Overridable Overloads Sub AddChildBody(ByVal rbChildBody As AnimatGUI.DataObjects.Physical.RigidBody, ByVal bAddDefaultGraphics As Boolean)
 
             rbChildBody.IsRoot = False
 
             If Not Me.ChildBodies.Contains(rbChildBody.ID) Then
+                rbChildBody.BeforeAddBody()
+
                 Me.ChildBodies.Add(rbChildBody.ID, rbChildBody)
 
                 'If this is  a collision objectthen we need to add a default graphics object for this item.
@@ -1361,6 +1362,8 @@ Namespace DataObjects.Physical
             If Not Me.ParentStructure Is Nothing AndAlso Not Me.ParentStructure.BodyEditor Is Nothing Then
                 Me.ParentStructure.BodyEditor.AddPartToolStripButton.Checked = False
             End If
+
+            rbChildBody.AfterAddBody()
 
             'Me.ManualAddHistory(New AnimatGUI.Framework.UndoSystem.AddBodyPartEvent(doStruct.BodyEditor, doStruct, Me, rbChildBody))
         End Sub

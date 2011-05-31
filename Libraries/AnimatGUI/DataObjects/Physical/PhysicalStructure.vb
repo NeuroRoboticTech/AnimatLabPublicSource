@@ -589,6 +589,7 @@ Namespace DataObjects.Physical
             rbRootToAdd.IsCollisionObject = True
             rbRootToAdd.ContactSensor = False
             rbRootToAdd.Freeze = False
+            rbRootToAdd.BeforeAddBody()
             rbRootToAdd.BeforeAddToList()
 
             m_dbRoot = rbRootToAdd
@@ -602,6 +603,7 @@ Namespace DataObjects.Physical
             End If
 
             m_dbRoot.AfterAddToList()
+            rbRootToAdd.AfterAddBody()
 
             m_dbRoot.SelectItem()
 

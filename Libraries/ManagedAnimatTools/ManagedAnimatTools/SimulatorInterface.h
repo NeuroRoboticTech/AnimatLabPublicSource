@@ -44,6 +44,7 @@ namespace AnimatGUI
 			bool Paused();
 			System::Boolean Loaded();
 			System::Boolean SimOpen();
+			void SetProjectPath(System::String ^strPath); 
 
 #pragma endregion
 
@@ -103,6 +104,7 @@ namespace AnimatGUI
 			//This tells if the simulation window has been started or not. It is always true when the window is open, even if the sim is paused.
 			System::Boolean m_bSimOpen; 
 			System::String ^m_strProjectFile;
+			System::String ^m_strProjectPath;
 			System::Threading::Thread ^m_newThread;
 			System::String ^m_strErrorMessage;
 			AnimatGUI::Interfaces::Logger ^m_lpLogger;

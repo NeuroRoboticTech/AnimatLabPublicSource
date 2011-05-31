@@ -1057,6 +1057,7 @@ Namespace Forms
             End Get
             Set(ByVal Value As String)
                 m_strProjectPath = Value
+                Me.SimulationInterface.SetProjectPath(m_strProjectPath)
             End Set
         End Property
 
@@ -2683,7 +2684,11 @@ Namespace Forms
 
                 Dim oXml As New AnimatGUI.Interfaces.StdXml
 
-                Util.SplitPathAndFile(strFilename, m_strProjectPath, m_strProjectFile)
+                Dim strProjPath As String
+                Dim strProjFile As String
+                Util.SplitPathAndFile(strFilename, strProjPath, strProjFile)
+                Me.ProjectPath = strProjPath
+                Me.ProjectFile = strProjFile
 
                 Directory.SetCurrentDirectory(m_strProjectPath)
 

@@ -51,6 +51,8 @@ namespace VortexAnimatSim
 		void InitializeVortexViewer(int argc, const char **argv);
 		void CreateLights();
 
+		virtual void TestFunction();
+
 	public:
 		VsSimulator();
 		virtual ~VsSimulator();
@@ -60,6 +62,8 @@ namespace VortexAnimatSim
 		VsRigidBody *TrackBody();
 		osg::Group *OSGRoot() {return m_grpScene.get();};
 		osgManipulator::CommandManager *OsgCmdMgr() {return m_osgCmdMgr.get();};
+
+		virtual Vx::VxGeometry *CreateGeometryFromOsg(osg::Node *osgNode, string strType);
 
 #pragma region MutatorOverrides
 

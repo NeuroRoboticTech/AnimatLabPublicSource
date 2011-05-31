@@ -891,13 +891,14 @@ try
 catch(CStdErrorInfo oError)
 {
 	if(m_lpBody) delete m_lpBody;
-	Body(NULL);
+	m_lpBody = NULL;
 	RELAY_ERROR(oError);
 	return NULL;
 }
 catch(...)
 {
 	if(m_lpBody) delete m_lpBody;
+	m_lpBody = NULL;
 	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
 	return NULL;
 }

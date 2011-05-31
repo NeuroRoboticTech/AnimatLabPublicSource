@@ -314,17 +314,16 @@ Namespace Framework
             Return strPath
         End Function
 
-        Public Shared Function IsFileInProjectDirectory(ByRef strFilename As String) As Boolean
+        Public Shared Function IsFileInProjectDirectory(ByVal strFilename As String, Optional ByRef strFile As String = "") As Boolean
 
             If strFilename.Trim.Length = 0 Then
                 Return False
             End If
 
-            If Not Application.ProjectPath.Trim.Length > 0 AndAlso IsFullPath(strFilename) Then
-                Dim strPath As String, strFile As String
+            If Application.ProjectPath.Trim.Length > 0 AndAlso IsFullPath(strFilename) Then
+                Dim strPath As String
                 SplitPathAndFile(strFilename, strPath, strFile)
                 If strPath.Trim.ToUpper.Substring(0, Application.ProjectPath.Length) = Application.ProjectPath.Trim.ToUpper Then
-                    strFilename = strFile
                     Return True
                 Else
                     Return False

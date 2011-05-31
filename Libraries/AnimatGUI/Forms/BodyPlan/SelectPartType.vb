@@ -15,7 +15,7 @@ Imports AnimatGUI.DataObjects
 Namespace Forms.BodyPlan
 
     Public Class SelectPartType
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits System.Windows.Forms.Form
 
 #Region " Windows Form Designer generated code "
 

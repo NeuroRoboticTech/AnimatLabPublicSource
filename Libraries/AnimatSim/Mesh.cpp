@@ -95,7 +95,7 @@ void Mesh::MeshFile(string strFile)
 
 \return	collision mesh type.
 **/
-string Mesh::CollisionMeshType() {return m_strMeshFile;}
+string Mesh::CollisionMeshType() {return m_strCollisionMeshType;}
 
 /**
 \brief	Sets the collision mesh type.
@@ -110,7 +110,7 @@ string Mesh::CollisionMeshType() {return m_strMeshFile;}
 void Mesh::CollisionMeshType(string strType)
 {
 	string strUpType = Std_CheckString(strType);
-	if(strUpType != "REGULAR" && strUpType != "CONVEX")
+	if(strUpType != "TRIANGULAR" && strUpType != "CONVEX")
 		THROW_TEXT_ERROR(Al_Err_lInvalidCollisionMeshType, Al_Err_strInvalidCollisionMeshType, "Body: " + m_strName + "  MeshType: " + m_strCollisionMeshType);
 
 	m_strCollisionMeshType = strUpType;
@@ -151,7 +151,7 @@ void Mesh::Load(CStdXml &oXml)
 	oXml.IntoElem();  //Into RigidBody Element
 
 	MeshFile(oXml.GetChildString("MeshFile"));
-	CollisionMeshType(oXml.GetChildString("CollisionMeshType"));
+	CollisionMeshType(oXml.GetChildString("MeshType"));
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
 
