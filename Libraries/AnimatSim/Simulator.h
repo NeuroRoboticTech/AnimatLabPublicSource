@@ -351,8 +351,6 @@ namespace AnimatSim
 
 			static void LoadAnimatModuleName(string strFile, string &strAnimatModule);
 			static void LoadAnimatModuleName(CStdXml &oXml, string &strAnimatModule);
-			
-			virtual void TestFunction() {};
 
 #pragma endregion
 

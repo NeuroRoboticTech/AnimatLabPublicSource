@@ -285,11 +285,6 @@ void VsSimulator::InitializeVortex(int argc, const char **argv)
     m_uUniverse->addIntersectSubscriber(VxUniverse::kResponsePart, VxUniverse::kResponseSensor, VxUniverse::kEventDisjoint, &m_vsIntersect, 0);
 }
 
-void VsSimulator::TestFunction()
-{
-
-}
-
 Vx::VxGeometry *VsSimulator::CreateGeometryFromOsg(osg::Node *osgNode, string strType)
 {
 	Vx::VxGeometry *vxGeometry = NULL;

@@ -51,8 +51,6 @@ namespace VortexAnimatSim
 		void InitializeVortexViewer(int argc, const char **argv);
 		void CreateLights();
 
-		virtual void TestFunction();
-
 	public:
 		VsSimulator();
 		virtual ~VsSimulator();
