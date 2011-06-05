@@ -290,6 +290,8 @@ Vx::VxGeometry *VsSimulator::CreateGeometryFromOsg(osg::Node *osgNode, string st
 	Vx::VxGeometry *vxGeometry = NULL;
 	if(strType == "CONVEX")
 		vxGeometry = VxConvexMesh::createFromNode(osgNode); 
+	else if(strType == "TERRAIN")
+		vxGeometry = VxOSG::createTerrainFromOSGNode(osgNode, 1, 5, 1000, 1000, NULL);
 	else
 		vxGeometry = VxTriangleMesh::createFromNode(osgNode);
 

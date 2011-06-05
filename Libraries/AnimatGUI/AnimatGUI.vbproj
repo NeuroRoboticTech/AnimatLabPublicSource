@@ -381,6 +381,7 @@
     <Compile Include="DataObjects\Physical\Bodies\Plane.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Sphere.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Spring.vb" />
+    <Compile Include="DataObjects\Physical\Bodies\Terrain.vb" />
     <Compile Include="DataObjects\Physical\BodyPart.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -506,7 +507,19 @@
     <Compile Include="Forms\BodyPlan\SelectByType.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\BodyPlan\SelectMesh.Designer.vb">
+      <DependentUpon>SelectMesh.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\BodyPlan\SelectMesh.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\BodyPlan\SelectPartType.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BodyPlan\SelectTerrain.Designer.vb">
+      <DependentUpon>SelectTerrain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\BodyPlan\SelectTerrain.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\BodyPlan\SwapParts.vb">
@@ -1188,6 +1201,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\BodyPlan\EditAttachments.resx">
       <DependentUpon>EditAttachments.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BodyPlan\SelectMesh.resx">
+      <DependentUpon>SelectMesh.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BodyPlan\SelectTerrain.resx">
+      <DependentUpon>SelectTerrain.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Graphics\Blank.gif" />
   </ItemGroup>

@@ -217,7 +217,7 @@ Namespace DataObjects.Physical.Bodies
             Dim aryList As Collections.BodyParts = New Collections.BodyParts(Nothing)
 
             For Each doPart As RigidBody In Util.Application.RigidBodyTypes
-                If Util.IsTypeOf(doPart.GetType, GetType(MuscleBase), False) Then
+                If Util.IsTypeOf(doPart.GetType, GetType(Line), False) Then
                     aryList.Add(doPart)
                 End If
             Next

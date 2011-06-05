@@ -50,7 +50,7 @@ Terrain::Terrain()
 {
 	m_fltDensity = 0;
 	m_bFreeze = TRUE;
-	m_ptGrid.Set(5, 5, 0);
+	m_strCollisionMeshType = "TERRAIN";
 }
 
 /**
@@ -64,32 +64,23 @@ Terrain::~Terrain()
 
 }
 
-void Terrain::Grid(CStdIPoint ptPoint)
+void Terrain::CollisionMeshType(string strType)
 {
-	if(ptPoint.x <= 0) ptPoint.x = 1;
-	if(ptPoint.y <= 0) ptPoint.y = 1;
-	m_ptGrid = ptPoint;
+	//The collision mesh type is always terrain for this object.
+	m_strCollisionMeshType = "TERRAIN";
 }
-
-BOOL Terrain::AllowMouseManipulation() {return FALSE;}
 
 void Terrain::Load(CStdXml &oXml)
 {
-	RigidBody::Load(oXml);
+	Mesh::Load(oXml);
 
-	oXml.IntoElem();  //Into RigidBody Element
+	//oXml.IntoElem();  //Into RigidBody Element
 
-	CStdIPoint ptGrid;
-	Std_LoadPoint(oXml, "Grid", ptGrid);
-	Grid(ptGrid);
-
-	oXml.OutOfElem(); //OutOf RigidBody Element
-
-	//Reset the rotation to 0
-	m_oRotation.Set(0, 0, 0);
+	//oXml.OutOfElem(); //OutOf RigidBody Element
 
 	//Density is always zero
 	m_fltDensity = 0;
+	//Rotation(-1.5707963f, 0, 0);
 
 	//This part type is always frozen
 	m_bFreeze = TRUE;

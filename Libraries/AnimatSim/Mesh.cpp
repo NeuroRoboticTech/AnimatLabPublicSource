@@ -110,7 +110,7 @@ string Mesh::CollisionMeshType() {return m_strCollisionMeshType;}
 void Mesh::CollisionMeshType(string strType)
 {
 	string strUpType = Std_CheckString(strType);
-	if(strUpType != "TRIANGULAR" && strUpType != "CONVEX")
+	if(strUpType != "TRIANGULAR" && strUpType != "CONVEX" && strUpType != "TERRAIN")
 		THROW_TEXT_ERROR(Al_Err_lInvalidCollisionMeshType, Al_Err_strInvalidCollisionMeshType, "Body: " + m_strName + "  MeshType: " + m_strCollisionMeshType);
 
 	m_strCollisionMeshType = strUpType;

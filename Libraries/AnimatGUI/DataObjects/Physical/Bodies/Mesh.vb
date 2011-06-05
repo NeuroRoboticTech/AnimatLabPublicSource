@@ -22,6 +22,7 @@ Namespace DataObjects.Physical.Bodies
         Public Enum enumMeshType
             Convex
             Triangular
+            Terrain
         End Enum
 
 #End Region
@@ -82,6 +83,10 @@ Namespace DataObjects.Physical.Bodies
                 Return m_eMeshType
             End Get
             Set(ByVal value As enumMeshType)
+                If value = enumMeshType.Terrain Then
+                    Throw New System.Exception("A mesh cannot use a terrain type.")
+                End If
+
                 SetSimData("MeshType", m_eMeshType.ToString, True)
                 m_eMeshType = value
             End Set
@@ -145,41 +150,15 @@ Namespace DataObjects.Physical.Bodies
 
         Public Overrides Sub BeforeAddBody()
             Try
-                Util.Application.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                Dim frmMesh As New Forms.BodyPlan.SelectMesh
 
-                'Office Files|*.doc;*.xls;*.ppt
-                Dim openFileDialog As New OpenFileDialog
-                Dim strFilter As String = "All files|*.3dc;*.asc;*.3ds;*.ac;*.bsp;*.dw;*.dxf;*.gem;*.geo;*.iv;*.wrl;*.ive;*.logo;*.lwo;*.lw;*.md2;*.obj;*.osg;*.shp;*.stl;*.sta*.x|" & _
-                                           "3DC point cloud reader (*.3dc, *.asc)|*.3dc;*.asc|" & _
-                                           "3D Studio (*.3ds)|*.3ds|" & _
-                                           "AC3D modeler (*.ac)|*.ac|" & _
-                                           "Quake3 BSP  (*.bsp)|*.bsp|" & _
-                                           "Design Workshop Database (*.dw)|*.dw|" & _
-                                           "Autodesk DXF Reader (*.dxf)|*.dxf|" & _
-                                           "Geo (*.gem, *.geo)|*.gem;*.geo|" & _
-                                           "Open Inventor format (*.iv, *.wrl)|*.iv;*.wrl|" & _
-                                           "Native osg binary (*.ive)|*.ive|" & _
-                                           "Logo database (*.logo)|*.logo|" & _
-                                           "Lightwave Object (*.lwo, *.lw)|*.lwo;*.lw|" & _
-                                           "Quake MD2 (*.md2)|*.md2|" & _
-                                           "Alias Wavefront  (*.obj)|*.obj|" & _
-                                           "Native osg ascii (*.osg)|*.osg|" & _
-                                           "ESRI Shapefile (*.shp)|*.shp|" & _
-                                           "Stereolithography file (*.stl, *.sta)|*.stl;*.sta|" & _
-                                           "DirectX 3D model (*.x)|*.x"
-
-                openFileDialog.Title = "Select a mesh file - hit cancel to select file later."
-                openFileDialog.Filter = strFilter
-                openFileDialog.InitialDirectory = Util.Application.ProjectPath
-
-                If openFileDialog.ShowDialog() = DialogResult.OK Then
-                    Me.MeshFile = openFileDialog.FileName
+                If frmMesh.ShowDialog() = DialogResult.OK Then
+                    Me.MeshType = DirectCast([Enum].Parse(GetType(enumMeshType), frmMesh.cboMeshType.Text, True), enumMeshType)
+                    Me.MeshFile = frmMesh.txtMeshFile.Text
                 End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
-            Finally
-                Util.Application.Cursor = System.Windows.Forms.Cursors.Arrow
             End Try
         End Sub
 

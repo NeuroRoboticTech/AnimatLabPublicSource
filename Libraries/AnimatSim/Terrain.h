@@ -25,16 +25,12 @@ namespace AnimatSim
 			class ANIMAT_PORT Terrain : public Mesh
 			{
 			protected:
-				CStdIPoint m_ptGrid;
 
 			public:
 				Terrain();
 				virtual ~Terrain();
 
-				CStdIPoint Grid() {return m_ptGrid;};
-				void Grid(CStdIPoint ptPoint);
-
-				virtual BOOL AllowMouseManipulation();
+				virtual void CollisionMeshType(string strType);
 
 				virtual void Load(CStdXml &oXml);
 			};
