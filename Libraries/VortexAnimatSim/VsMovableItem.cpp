@@ -1721,7 +1721,130 @@ osg::Geometry *CreateTorusGeometry(float innerRadius,
     return torusGeom;
 }
 
+osg::Node VORTEX_PORT *CreateHeightField(std::string heightFile, std::string texFile, float fltSegWidth, float fltSegLength, float fltMaxHeight) 
+{
+    osg::Image* heightMap = osgDB::readImageFile(heightFile);
+     
+    osg::HeightField* heightField = new osg::HeightField();
+    heightField->allocate(heightMap->s(), heightMap->t());
+    heightField->setOrigin(osg::Vec3(-(heightMap->s()*fltSegWidth) / 2, -(heightMap->t()*fltSegLength) / 2, 0));
+    heightField->setXInterval(fltSegWidth);
+    heightField->setYInterval(fltSegLength);
+    heightField->setSkirtHeight(1.0f);
+     
+    for (int r = 0; r < heightField->getNumRows(); r++) 
+	{
+		for (int c = 0; c < heightField->getNumColumns(); c++) 
+			heightField->setHeight(c, r, ((*heightMap->data(c, r)) / 255.0f) * fltMaxHeight);
+    }
+     
+    osg::Geode* geode = new osg::Geode();
+    geode->addDrawable(new osg::ShapeDrawable(heightField));
+     
+    osg::Texture2D* tex = new osg::Texture2D(osgDB::readImageFile(texFile));
+    tex->setFilter(osg::Texture2D::MIN_FILTER,osg::Texture2D::LINEAR_MIPMAP_LINEAR);
+    tex->setFilter(osg::Texture2D::MAG_FILTER,osg::Texture2D::LINEAR);
+    tex->setWrap(osg::Texture::WRAP_S, osg::Texture::REPEAT);
+    tex->setWrap(osg::Texture::WRAP_T, osg::Texture::REPEAT);
+    geode->getOrCreateStateSet()->setTextureAttributeAndModes(0, tex);
+     
+    return geode;
+}
 
+/*
+osg::Geometry *CreateHeightFieldGeometry(string strFilename,  float fltLeftCorner, float fltUpperCorner, 
+										 float fltSegmentWidth, float fltSegmentLength, 
+										 float fltMinElevation, float fltMaxElevation)
+{
+	string strHeightMap = "C:\\Projects\\AnimatLabSDK\\Experiments\\MeshTest2\\TerrainTest\\TerrainTest_HeightMap.jpg"
+	string strNormalsMap = "C:\\Projects\\AnimatLabSDK\\Experiments\\MeshTest2\\TerrainTest\\TerrainTest_NormalsMap.jpg"
+	string strTextureMap = "C:\\Projects\\AnimatLabSDK\\Experiments\\MeshTest2\\TerrainTest\\TerrainTest_TextureMap.jpg"
+
+	//load the images.
+	osg::Image *imgHeight = osgDB::readImageFile(strHeightMap.c_str());
+	if(!imgHeight)
+		THROW_TEXT_ERROR(Vs_Err_lHeightFieldImageNotDefined, Vs_Err_strHeightFieldImageNotDefined, " Height Map: " + strHeightMap);
+
+	osg::Image *imgNormals = osgDB::readImageFile(strNormalsMap.c_str());
+	if(!imgNormals)
+		THROW_TEXT_ERROR(Vs_Err_lHeightFieldImageNotDefined, Vs_Err_strHeightFieldImageNotDefined, " Normals Map: " + strNormalsMap);
+
+	//Verify that the images have the same width/height/ and depth.
+	if( (imgHeight->s() != imgNormals->s()) )
+		THROW_TEXT_ERROR(Vs_Err_lHeightFieldImageMismatch, Vs_Err_strHeightFieldImageMismatch, " Height map: " + strHeightMap);
+
+	if( (imgHeight->t() != imgNormals->t())) )
+		THROW_TEXT_ERROR(Vs_Err_lHeightFieldImageMismatch, Vs_Err_strHeightFieldImageMismatch, " Height map: " + strHeightMap);
+
+	if( (imgHeight->r() != imgNormals->r()) )
+		THROW_TEXT_ERROR(Vs_Err_lHeightFieldImageMismatch, Vs_Err_strHeightFieldImageMismatch, " Height map: " + strHeightMap);
+
+	int iWidth = imgHeight->s();
+	int iLength = imgHeight->t();
+
+	float fltWidthSize = iWidth*fltSegmentWidth;
+	float fltLengthSize = iLength*fltSegmentLength;
+
+	int iWidthSteps = (int) (fltWidthSize/fltSegmentWidth);
+	int iLengthSteps = (int) (fltWidthSize/fltSegmentWidth);
+
+	//osg::Geometry* boxGeom = new osg::Geometry();
+	osg::ref_ptr<osg::Vec3Array> verts = new osg::Vec3Array(); 
+	osg::ref_ptr<osg::Vec3Array> norms = new osg::Vec3Array(); 
+	osg::ref_ptr<osg::Vec2Array> texts = new osg::Vec2Array(); 
+	int iLen = 0;
+	int iPos = 0;
+
+	float fltX1 = fltLeftCorner;
+	float fltX2 = fltX1 + fltSegmentWidth;
+	fltZ1 = fltUpperCorner;
+	fltZ2 = fltZ1 + fltSegmentLength;
+	for(int ix=0; ix<(int) steps.x(); ix++)
+	{
+		for(int iz=0; iz<(int) steps.z(); iz++)
+		{
+			osg::Vec4 vHeight = imgHeight->getColor(ix, iz);
+			osg::Vec4 vNorm = imgNormals->getColor(ix, iz);
+
+			verts->push_back(osg::Vec3(fltX1, sizeMin.y(), fltZ1)); // 0
+			verts->push_back(osg::Vec3(fltX2, sizeMin.y(), fltZ1)); // 3
+			verts->push_back(osg::Vec3(fltX2, sizeMin.y(), fltZ2)); // 5
+			verts->push_back(osg::Vec3(fltX1, sizeMin.y(), fltZ2)); // 1
+
+			norms->push_back(osg::Vec3( 0, -1,  0));
+			norms->push_back(osg::Vec3( 0, -1,  0));
+			norms->push_back(osg::Vec3( 0, -1,  0));
+			norms->push_back(osg::Vec3( 0, -1,  0));
+
+			texts->push_back(osg::Vec2( 0.f, 0.f)); // 0
+			texts->push_back(osg::Vec2( 1.f, 0.f)); // 3
+			texts->push_back(osg::Vec2( 1.f, 1.f)); // 5
+			texts->push_back(osg::Vec2( 0.f, 1.f)); // 1
+			
+			fltZ1+=fltSegmentLength; fltZ2+=fltSegmentLength;
+		}
+
+		fltX1+=fltSegmentWidth; fltX2+=fltSegmentWidth;
+		fltZ1 = fltUpperCorner; fltZ2 = fltZ1 + fltSegmentLength;
+	}
+
+    // create the geometry
+     boxGeom->setVertexArray(verts.get());
+     boxGeom->addPrimitiveSet(new osg::DrawArrays(GL_QUADS, 0, verts->size()));
+
+	 boxGeom->setNormalArray(norms.get());
+     boxGeom->setNormalBinding(osg::Geometry::BIND_PER_VERTEX);
+
+     boxGeom->setTexCoordArray( 0, texts.get() );
+
+     osg::Vec4Array* colors = new osg::Vec4Array;
+     colors->push_back(osg::Vec4(1,1,1,1));
+     boxGeom->setColorArray(colors);
+     boxGeom->setColorBinding(osg::Geometry::BIND_OVERALL);
+
+    return boxGeom;
+}
+*/
 
 #pragma endregion
 

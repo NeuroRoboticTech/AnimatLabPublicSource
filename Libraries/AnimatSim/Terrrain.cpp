@@ -80,7 +80,7 @@ void Terrain::Load(CStdXml &oXml)
 
 	//Density is always zero
 	m_fltDensity = 0;
-	//Rotation(-1.5707963f, 0, 0);
+	Rotation(-1.5707963f, 0, 0);
 
 	//This part type is always frozen
 	m_bFreeze = TRUE;

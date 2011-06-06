@@ -99,5 +99,8 @@
 #define Vs_Err_lThisPointerNotDefined -4033
 #define Vs_Err_strThisPointerNotDefined "A This pointer was not defined."
 
+#define Vs_Err_lHeightFieldImageNotDefined -4033
+#define Vs_Err_strHeightFieldImageNotDefined "An image that is required to load a height field was not loaded."
+
 #endif // __VS_ERROR_CONSTANTS_H__
 
