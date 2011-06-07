@@ -1721,12 +1721,13 @@ osg::Geometry *CreateTorusGeometry(float innerRadius,
     return torusGeom;
 }
 
-osg::Node VORTEX_PORT *CreateHeightField(std::string heightFile, std::string texFile, float fltSegWidth, float fltSegLength, float fltMaxHeight) 
+osg::Node VORTEX_PORT *CreateHeightField(std::string heightFile, std::string texFile, float fltSegWidth, float fltSegLength, float fltMaxHeight, osg::HeightField **osgMap) 
 {
     osg::Image* heightMap = osgDB::readImageFile(heightFile);
      
     osg::HeightField* heightField = new osg::HeightField();
-    heightField->allocate(heightMap->s(), heightMap->t());
+	*osgMap = heightField;
+	heightField->allocate(heightMap->s(), heightMap->t());
     heightField->setOrigin(osg::Vec3(-(heightMap->s()*fltSegWidth) / 2, -(heightMap->t()*fltSegLength) / 2, 0));
     heightField->setXInterval(fltSegWidth);
     heightField->setYInterval(fltSegLength);

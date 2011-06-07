@@ -19,7 +19,7 @@ namespace VortexAnimatSim
 		osg::Geode VORTEX_PORT *CreateCircle( int plane, int approx, float radius, float width );
 		osg::Vec3Array VORTEX_PORT *CreateCircleVerts( int plane, int approx, float radius );
 		osg::Geometry VORTEX_PORT *CreateTorusGeometry(float innerRadius, float outerRadius, int sides, int rings);
-		osg::Node VORTEX_PORT *CreateHeightField(std::string heightFile, std::string texFile, float fltSegWidth, float fltSegLength, float fltMaxHeight);
+		osg::Node VORTEX_PORT *CreateHeightField(std::string heightFile, std::string texFile, float fltSegWidth, float fltSegLength, float fltMaxHeight, osg::HeightField **osgMap);
 
 
 		class VORTEX_PORT VsMovableItem : public AnimatSim::Environment::IPhysicsMovableItem

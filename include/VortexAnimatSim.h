@@ -28,6 +28,7 @@
 #include "Vx/VxTriangleMesh.h"
 #include "Vx/VxConvexMesh.h"
 #include "Vx/VxCollisionGeometry.h"
+#include "Vx/VxHeightField.h"
 
 #include "Vx/VxConstraint.h"
 #include "Vx/VxHinge.h"
