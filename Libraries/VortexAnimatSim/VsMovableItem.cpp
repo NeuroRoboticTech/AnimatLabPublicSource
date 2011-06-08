@@ -1721,7 +1721,7 @@ osg::Geometry *CreateTorusGeometry(float innerRadius,
     return torusGeom;
 }
 
-osg::Node VORTEX_PORT *CreateHeightField(std::string heightFile, std::string texFile, float fltSegWidth, float fltSegLength, float fltMaxHeight, osg::HeightField **osgMap) 
+osg::Node VORTEX_PORT *CreateHeightField(std::string heightFile, float fltSegWidth, float fltSegLength, float fltMaxHeight, osg::HeightField **osgMap) 
 {
     osg::Image* heightMap = osgDB::readImageFile(heightFile);
      
@@ -1742,12 +1742,12 @@ osg::Node VORTEX_PORT *CreateHeightField(std::string heightFile, std::string tex
     osg::Geode* geode = new osg::Geode();
     geode->addDrawable(new osg::ShapeDrawable(heightField));
      
-    osg::Texture2D* tex = new osg::Texture2D(osgDB::readImageFile(texFile));
-    tex->setFilter(osg::Texture2D::MIN_FILTER,osg::Texture2D::LINEAR_MIPMAP_LINEAR);
-    tex->setFilter(osg::Texture2D::MAG_FILTER,osg::Texture2D::LINEAR);
-    tex->setWrap(osg::Texture::WRAP_S, osg::Texture::REPEAT);
-    tex->setWrap(osg::Texture::WRAP_T, osg::Texture::REPEAT);
-    geode->getOrCreateStateSet()->setTextureAttributeAndModes(0, tex);
+    //osg::Texture2D* tex = new osg::Texture2D(osgDB::readImageFile(texFile));
+    //tex->setFilter(osg::Texture2D::MIN_FILTER,osg::Texture2D::LINEAR_MIPMAP_LINEAR);
+    //tex->setFilter(osg::Texture2D::MAG_FILTER,osg::Texture2D::LINEAR);
+    //tex->setWrap(osg::Texture::WRAP_S, osg::Texture::REPEAT);
+    //tex->setWrap(osg::Texture::WRAP_T, osg::Texture::REPEAT);
+    //geode->getOrCreateStateSet()->setTextureAttributeAndModes(0, tex);
      
     return geode;
 }

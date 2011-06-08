@@ -22,7 +22,6 @@ Namespace DataObjects.Physical.Bodies
         Public Enum enumMeshType
             Convex
             Triangular
-            Terrain
         End Enum
 
 #End Region
@@ -83,10 +82,6 @@ Namespace DataObjects.Physical.Bodies
                 Return m_eMeshType
             End Get
             Set(ByVal value As enumMeshType)
-                If value = enumMeshType.Terrain Then
-                    Throw New System.Exception("A mesh cannot use a terrain type.")
-                End If
-
                 SetSimData("MeshType", m_eMeshType.ToString, True)
                 m_eMeshType = value
             End Set

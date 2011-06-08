@@ -51,6 +51,9 @@ Terrain::Terrain()
 	m_fltDensity = 0;
 	m_bFreeze = TRUE;
 	m_strCollisionMeshType = "TERRAIN";
+	m_fltSegmentWidth = 1;
+	m_fltSegmentLength = 1;
+	m_fltMaxHeight = 5;
 }
 
 /**
@@ -64,23 +67,92 @@ Terrain::~Terrain()
 
 }
 
-void Terrain::CollisionMeshType(string strType)
+float Terrain::SegmentWidth() {return m_fltSegmentWidth;}
+
+void Terrain::SegmentWidth(float fltVal, BOOL bUseScaling)
 {
-	//The collision mesh type is always terrain for this object.
-	m_strCollisionMeshType = "TERRAIN";
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Terrain.SegmentWidth");
+	if(bUseScaling)
+		m_fltSegmentWidth = fltVal * m_lpSim->InverseDistanceUnits();
+	else
+		m_fltSegmentWidth = fltVal;
+
+	Resize();
+}
+
+float Terrain::SegmentLength() {return m_fltSegmentLength;}
+
+void Terrain::SegmentLength(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Terrain.SegmentLength");
+	if(bUseScaling)
+		m_fltSegmentLength = fltVal * m_lpSim->InverseDistanceUnits();
+	else
+		m_fltSegmentLength = fltVal;
+
+	Resize();
+}
+
+float Terrain::MaxHeight() {return m_fltMaxHeight;}
+
+void Terrain::MaxHeight(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Terrain.MaxHeight");
+	if(bUseScaling)
+		m_fltMaxHeight = fltVal * m_lpSim->InverseDistanceUnits();
+	else
+		m_fltMaxHeight = fltVal;
+
+	Resize();
+}
+
+BOOL Terrain::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(Mesh::SetData(strType, strValue, FALSE))
+		return TRUE;
+
+	if(strType == "SEGMENTWIDTH")
+	{
+		SegmentWidth(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "SEGMENTLENGTH")
+	{
+		SegmentLength(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "MAXHEIGHT")
+	{
+		MaxHeight(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
 }
 
 void Terrain::Load(CStdXml &oXml)
 {
 	Mesh::Load(oXml);
 
-	//oXml.IntoElem();  //Into RigidBody Element
+	oXml.IntoElem();  //Into RigidBody Element
 
-	//oXml.OutOfElem(); //OutOf RigidBody Element
+	SegmentWidth(oXml.GetChildFloat("SegmentWidth", m_fltSegmentWidth));
+	SegmentLength(oXml.GetChildFloat("SegmentLength", m_fltSegmentLength));
+	MaxHeight(oXml.GetChildFloat("MaxHeight", m_fltMaxHeight));
+
+	oXml.OutOfElem(); //OutOf RigidBody Element
 
 	//Density is always zero
 	m_fltDensity = 0;
-	Rotation(-1.5707963f, 0, 0);
+	Rotation(-1.5707963f, 0, 0);  //Need to change this.
 
 	//This part type is always frozen
 	m_bFreeze = TRUE;

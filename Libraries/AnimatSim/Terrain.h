@@ -25,13 +25,24 @@ namespace AnimatSim
 			class ANIMAT_PORT Terrain : public Mesh
 			{
 			protected:
+				float m_fltSegmentWidth;
+				float m_fltSegmentLength;
+				float m_fltMaxHeight;
 
 			public:
 				Terrain();
 				virtual ~Terrain();
 
-				virtual void CollisionMeshType(string strType);
+				virtual float SegmentWidth();							
+				virtual void SegmentWidth(float fltVal, BOOL bUseScaling = TRUE);
 
+				virtual float SegmentLength();							
+				virtual void SegmentLength(float fltVal, BOOL bUseScaling = TRUE);
+
+				virtual float MaxHeight();							
+				virtual void MaxHeight(float fltVal, BOOL bUseScaling = TRUE);
+
+				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 				virtual void Load(CStdXml &oXml);
 			};
 
