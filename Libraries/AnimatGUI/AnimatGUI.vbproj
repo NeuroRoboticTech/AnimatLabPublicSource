@@ -511,6 +511,7 @@
       <DependentUpon>SelectMesh.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\BodyPlan\SelectMesh.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\BodyPlan\SelectPartType.vb">
       <SubType>Form</SubType>
@@ -519,6 +520,7 @@
       <DependentUpon>SelectTerrain.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\BodyPlan\SelectTerrain.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\BodyPlan\SwapParts.vb">
       <SubType>Form</SubType>

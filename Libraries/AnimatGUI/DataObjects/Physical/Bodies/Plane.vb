@@ -158,7 +158,7 @@ Namespace DataObjects.Physical.Bodies
         ''' that here before it is added to the list. If this is not a valid case the throw an exception.
         Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
             If Not ((Me.IsRoot AndAlso Util.IsTypeOf(Me.Parent.GetType(), GetType(PhysicalStructure), False)) OrElse _
-               (Util.IsTypeOf(Me.Parent.GetType(), GetType(Plane), False))) Then
+               (Util.IsTypeOf(Me.Parent.GetType(), GetType(Plane), False)) OrElse (Util.IsTypeOf(Me.Parent.GetType(), GetType(Terrain), False))) Then
                 Throw New System.Exception("You can only add a plane as the root body of a structure, or to another plane or terrain object.")
             End If
 
@@ -183,16 +183,20 @@ Namespace DataObjects.Physical.Bodies
                                         "Visibility", "The number of segments to divide the plane length into.", Me.LengthSegments))
 
             'Remove all of these columns that are not valid for a plane object.
-            If propTable.Properties.Contains("Density") Then propTable.Properties.Remove("Density")
             If propTable.Properties.Contains("Cd") Then propTable.Properties.Remove("Cd")
             If propTable.Properties.Contains("Cdr") Then propTable.Properties.Remove("Cdr")
             If propTable.Properties.Contains("Ca") Then propTable.Properties.Remove("Ca")
             If propTable.Properties.Contains("Car") Then propTable.Properties.Remove("Car")
+            If propTable.Properties.Contains("Density") Then propTable.Properties.Remove("Density")
             If propTable.Properties.Contains("Center of Mass") Then propTable.Properties.Remove("Center of Mass")
+            If propTable.Properties.Contains("Contact Sensor") Then propTable.Properties.Remove("Contact Sensor")
             If propTable.Properties.Contains("Freeze") Then propTable.Properties.Remove("Freeze")
-            If propTable.Properties.Contains("Car") Then propTable.Properties.Remove("Car")
             If propTable.Properties.Contains("Odor Sources") Then propTable.Properties.Remove("Odor Sources")
             If propTable.Properties.Contains("Food Source") Then propTable.Properties.Remove("Food Source")
+            If propTable.Properties.Contains("Food Quantity") Then propTable.Properties.Remove("Food Quantity")
+            If propTable.Properties.Contains("Max Food Quantity") Then propTable.Properties.Remove("Max Food Quantity")
+            If propTable.Properties.Contains("Food Replenish Rate") Then propTable.Properties.Remove("Food Replenish Rate")
+            If propTable.Properties.Contains("Food Energy Content") Then propTable.Properties.Remove("Food Energy Content")
 
         End Sub
 

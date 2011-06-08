@@ -1752,6 +1752,26 @@ osg::Node VORTEX_PORT *CreateHeightField(std::string heightFile, std::string tex
     return geode;
 }
 
+Vx::VxHeightField VORTEX_PORT *CreateVxHeightField(osg::HeightField *osgHeightField, float fltSegWidth, float fltSegLength)
+{
+	Vx::VxHeightField *vxHeightField = new Vx::VxHeightField();
+
+	VxArray<VxReal> vHeights;
+
+	//Lets create the height array.
+	int iCols = osgHeightField->getNumColumns();
+	int iRows = osgHeightField->getNumRows();
+	for(int iRow=0; iRow<iRows; iRow++)
+		for(int iCol=0; iCol<iCols; iCol++)
+			vHeights.push_back(osgHeightField->getHeight(iCol, iRow));
+
+	int iSize = vHeights.size();
+	osg::Vec3 vOrigin = osgHeightField->getOrigin();
+	vxHeightField->build((iCols-1), (iRows-1), fltSegWidth, fltSegLength, vOrigin.x(), vOrigin.y(), vHeights);
+
+	return vxHeightField;
+}
+
 /*
 osg::Geometry *CreateHeightFieldGeometry(string strFilename,  float fltLeftCorner, float fltUpperCorner, 
 										 float fltSegmentWidth, float fltSegmentLength, 
