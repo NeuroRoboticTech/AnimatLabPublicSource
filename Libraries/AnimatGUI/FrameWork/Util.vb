@@ -314,25 +314,28 @@ Namespace Framework
             Return strPath
         End Function
 
-        Public Shared Function IsFileInProjectDirectory(ByVal strFilename As String, Optional ByRef strFile As String = "") As Boolean
+        'Public Shared Function IsFileInProjectDirectory(ByVal strFilename As String, Optional ByRef strFile As String = "") As Boolean
 
-            If strFilename.Trim.Length = 0 Then
-                Return False
-            End If
+        '    If strFilename.Trim.Length = 0 Then
+        '        Return False
+        '    End If
 
-            If Application.ProjectPath.Trim.Length > 0 AndAlso IsFullPath(strFilename) Then
-                Dim strPath As String
-                SplitPathAndFile(strFilename, strPath, strFile)
-                If strPath.Trim.ToUpper.Substring(0, Application.ProjectPath.Length) = Application.ProjectPath.Trim.ToUpper Then
-                    Return True
-                Else
-                    Return False
-                End If
-            Else
-                Return True
-            End If
+        '    If Application.ProjectPath.Trim.Length > 0 AndAlso IsFullPath(strFilename) Then
+        '        Dim strPath As String
+        '        Dim strTempFile As String
+        '        SplitPathAndFile(strFilename, strPath, strTempFile)
+        '        If strPath.Trim.ToUpper.Substring(0, Application.ProjectPath.Length) = Application.ProjectPath.Trim.ToUpper Then
+        '            'We now need to remove the path from the full filename to get the actual relative path to the file.
+        '            strFile = strFilename.Substring(Application.ProjectPath.Length)
+        '            Return True
+        '        Else
+        '            Return False
+        '        End If
+        '    Else
+        '        Return True
+        '    End If
 
-        End Function
+        'End Function
 
         Public Shared Function DetermineFilePath(ByVal strFilename As String, ByRef strPath As String, ByRef strFile As String) As Boolean
 
@@ -1170,6 +1173,56 @@ Namespace Framework
             End If
 
         End Sub
+
+        Public Shared Function GetValidationBoundsString(ByVal bCheckLowBound As Boolean, ByVal dblLowBound As Double, _
+                                             ByVal bCheckUpperBound As Boolean, ByVal dblUpperBound As Double, ByVal bInclusiveLimit As Boolean) As String
+            If Not bInclusiveLimit Then
+                If bCheckLowBound AndAlso bCheckUpperBound Then
+                    Return "greater than " & dblLowBound & " and less than " & dblUpperBound & "."
+                ElseIf bCheckLowBound AndAlso Not bCheckUpperBound Then
+                    Return "greater than " & dblLowBound & "."
+                ElseIf Not bCheckLowBound AndAlso bCheckUpperBound Then
+                    Return "less than " & dblUpperBound & "."
+                Else
+                    Return "."
+                End If
+            Else
+                If bCheckLowBound AndAlso bCheckUpperBound Then
+                    Return "between " & dblLowBound & " and " & dblUpperBound & "."
+                ElseIf bCheckLowBound AndAlso Not bCheckUpperBound Then
+                    Return "greater than or equal to " & dblLowBound & "."
+                ElseIf Not bCheckLowBound AndAlso bCheckUpperBound Then
+                    Return "less than or equal to " & dblUpperBound & "."
+                Else
+                    Return "."
+                End If
+            End If
+        End Function
+
+        Public Shared Function ValidateNumericTextBox(ByVal strText As String, ByVal bCheckLowBound As Boolean, ByVal dblLowBound As Double, _
+                                             ByVal bCheckUpperBound As Boolean, ByVal dblUpperBound As Double, ByVal bInclusiveLimit As Boolean, _
+                                             ByVal strTextBoxName As String) As Double
+            'Check if blank
+            If strText.Trim.Length <= 0 Then
+                Throw New System.Exception("The " & strTextBoxName & " cannot be blank.")
+            End If
+
+            Dim dblResult As Double
+            If Not Double.TryParse(strText, dblResult) Then
+                Throw New System.Exception("The " & strTextBoxName & " must be a number " & GetValidationBoundsString(bCheckLowBound, dblLowBound, bCheckUpperBound, dblUpperBound, bInclusiveLimit))
+            End If
+
+            If bCheckLowBound AndAlso ((bInclusiveLimit AndAlso dblResult <= dblLowBound) OrElse (Not bInclusiveLimit AndAlso dblResult < dblLowBound)) Then
+                Throw New System.Exception("The " & strTextBoxName & " must be a number " & GetValidationBoundsString(bCheckLowBound, dblLowBound, bCheckUpperBound, dblUpperBound, bInclusiveLimit))
+            End If
+
+            If bCheckUpperBound AndAlso ((bInclusiveLimit AndAlso dblResult >= dblUpperBound) OrElse (Not bInclusiveLimit AndAlso dblResult > dblUpperBound)) Then
+                Throw New System.Exception("The " & strTextBoxName & " must be a number " & GetValidationBoundsString(bCheckLowBound, dblLowBound, bCheckUpperBound, dblUpperBound, bInclusiveLimit))
+            End If
+
+            Return dblResult
+        End Function
+
 
         '    Public Function IntersectLineRectangle(ByVal a1 As Point, ByVal a2 As Point, ByVal topRight As Point, ByVal bottomLeft As Point) As Boolean
 

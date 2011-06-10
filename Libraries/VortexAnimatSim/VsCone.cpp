@@ -43,7 +43,14 @@ void VsCone::CreateGraphicsGeometry()
 void VsCone::CreatePhysicsGeometry()
 {
 	if(IsCollisionObject())
-		m_vxGeometry = VxConvexMesh::createFromNode(m_osgNode.get());
+	{
+		//For the moment build a test node to generate the mesh from.
+		osg::ref_ptr<osg::Geometry> osgGeometry = CreateConeGeometry(m_fltHeight, m_fltUpperRadius, m_fltLowerRadius, m_iSides, true, true, true);
+		osg::ref_ptr<osg::Geode> osgNode = new osg::Geode;
+		osgNode->addDrawable(m_osgGeometry.get());
+
+		m_vxGeometry = VxConvexMesh::createFromNode(osgNode.get());
+	}
 
 	//Lets get the volume and areas
 	m_fltVolume = 2*VX_PI*m_fltLowerRadius*m_fltLowerRadius*m_fltHeight;
@@ -80,9 +87,9 @@ void VsCone::ResizePhysicsGeometry()
 		delete m_vxCollisionGeometry;
 		m_vxCollisionGeometry = NULL;
 
+		CreatePhysicsGeometry();
 		int iMaterialID = m_lpSim->GetMaterialID(MaterialID());
-		m_vxGeometry = VxConvexMesh::createFromNode(m_osgNode.get());
-		Vx::VxCollisionGeometry *vxCollisionGeometry = m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density());
+		m_vxCollisionGeometry = m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density());
 	}
 }
 

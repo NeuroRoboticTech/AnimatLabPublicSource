@@ -3098,7 +3098,7 @@ unsigned long STD_UTILS_PORT Std_GetTick()
 /**
 \brief	determines if this is a full path name.
 
-\details It does this by checking to see if the \ is present in the string.
+\details It does this by checking to see if the : is present in the string.
 
 \author	dcofer
 \date	5/4/2011
@@ -3110,7 +3110,7 @@ unsigned long STD_UTILS_PORT Std_GetTick()
 bool STD_UTILS_PORT Std_IsFullPath(string strPath)
 {
 	CStdArray<string> aryParts;
-	int iCount = Std_Split(strPath, "\\", aryParts);
+	int iCount = Std_Split(strPath, ":", aryParts);
 	if(iCount>1)
 		return true;
 	else

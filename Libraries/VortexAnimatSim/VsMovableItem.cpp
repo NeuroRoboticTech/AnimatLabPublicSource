@@ -1725,6 +1725,9 @@ osg::Node VORTEX_PORT *CreateHeightField(std::string heightFile, float fltSegWid
 {
     osg::Image* heightMap = osgDB::readImageFile(heightFile);
      
+	if(!heightMap)
+		THROW_PARAM_ERROR(Vs_Err_lHeightFieldImageNotDefined, Vs_Err_strHeightFieldImageNotDefined, "Filename", heightFile);
+
     osg::HeightField* heightField = new osg::HeightField();
 	*osgMap = heightField;
 	heightField->allocate(heightMap->s(), heightMap->t());
@@ -1770,6 +1773,45 @@ Vx::VxHeightField VORTEX_PORT *CreateVxHeightField(osg::HeightField *osgHeightFi
 	vxHeightField->build((iCols-1), (iRows-1), fltSegWidth, fltSegLength, vOrigin.x(), vOrigin.y(), vHeights);
 
 	return vxHeightField;
+}
+
+
+osg::Geometry VORTEX_PORT *CreateOsgFromVxConvexMesh(Vx::VxConvexMesh *vxGeometry)
+{
+    // calc the vertices
+	osg::ref_ptr<osg::Vec3Array> verts = new osg::Vec3Array(); 
+    osg::Geometry* osgGeom = new osg::Geometry();
+
+	Vx::VxReal3 vVertex;
+	int iCurVertex=0;
+	int iPolyCount = vxGeometry->getPolygonCount();
+	for(int iPoly=0; iPoly<iPolyCount; iPoly++)
+	{
+		int iVertexCount = vxGeometry->getPolygonVertexCount(iPoly);
+
+		osg::ref_ptr<osg::DrawElementsUInt> osgPolygon = new osg::DrawElementsUInt(osg::PrimitiveSet::POLYGON, 0);
+
+		for(int iVertex=0; iVertex<iVertexCount; iVertex++)
+		{
+			vxGeometry->getPolygonVertex(iPoly, iVertex, vVertex);
+			verts->push_back( osg::Vec3( vVertex[0], vVertex[1], vVertex[2]) ); 
+
+			osgPolygon->push_back(iCurVertex);
+			iCurVertex++;
+		}
+
+	   osgGeom->addPrimitiveSet(osgPolygon.get()); 
+	}
+ 
+    // create the geometry
+     osgGeom->setVertexArray(verts.get());
+
+     osg::Vec4Array* colors = new osg::Vec4Array;
+     colors->push_back(osg::Vec4(1,1,1,1));
+     osgGeom->setColorArray(colors);
+     osgGeom->setColorBinding(osg::Geometry::BIND_OVERALL);
+
+    return osgGeom;
 }
 
 /*

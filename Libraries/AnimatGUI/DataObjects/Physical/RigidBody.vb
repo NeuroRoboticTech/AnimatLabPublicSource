@@ -372,18 +372,18 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
-        'If this a rigid body then we do not want to allow the user to be able to change the position or orientation
-        'of the body. They need to do this using the structure/organism.
-        <Browsable(False)> _
-        Public Overrides ReadOnly Property AllowGuiCoordinateChange() As Boolean
-            Get
-                If Me.IsRoot Then
-                    Return False
-                Else
-                    Return True
-                End If
-            End Get
-        End Property
+        ''If this a rigid body then we do not want to allow the user to be able to change the position or orientation
+        ''of the body. They need to do this using the structure/organism.
+        '<Browsable(False)> _
+        'Public Overrides ReadOnly Property AllowGuiCoordinateChange() As Boolean
+        '    Get
+        '        If Me.IsRoot Then
+        '            Return False
+        '        Else
+        '            Return True
+        '        End If
+        '    End Get
+        'End Property
 
 #End Region
 

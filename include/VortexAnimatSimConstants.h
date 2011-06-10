@@ -102,5 +102,8 @@
 #define Vs_Err_lHeightFieldImageNotDefined -4033
 #define Vs_Err_strHeightFieldImageNotDefined "An image that is required to load a height field was not loaded."
 
+#define Vs_Err_lMeshOsgNodeGroupNotDefined -4034
+#define Vs_Err_strMeshOsgNodeGroupNotDefined "The osg mesh node group was not defined."
+
 #endif // __VS_ERROR_CONSTANTS_H__
 

@@ -14,33 +14,26 @@ Namespace Forms.BodyPlan
 
 	Public Class SelectTerrain
 
+        Public m_dblSegmentWidth As Double
+        Public m_dblSegmentLength As Double
+        Public m_dblMaxHeight As Double
+
         Private Sub btnMeshFileDlg_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnMeshFileDlg.Click
             Try
                 Util.Application.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
                 'Office Files|*.doc;*.xls;*.ppt
                 Dim openFileDialog As New OpenFileDialog
-                Dim strFilter As String = "All files|*.3dc;*.asc;*.3ds;*.ac;*.bsp;*.dw;*.dxf;*.gem;*.geo;*.iv;*.wrl;*.ive;*.logo;*.lwo;*.lw;*.md2;*.obj;*.osg;*.shp;*.stl;*.sta*.x;*.flt;|" & _
-                                           "3DC point cloud reader (*.3dc, *.asc)|*.3dc;*.asc|" & _
-                                           "3D Studio (*.3ds)|*.3ds|" & _
-                                           "AC3D modeler (*.ac)|*.ac|" & _
-                                           "Quake3 BSP  (*.bsp)|*.bsp|" & _
-                                           "Design Workshop Database (*.dw)|*.dw|" & _
-                                           "Autodesk DXF Reader (*.dxf)|*.dxf|" & _
-                                           "Geo (*.gem, *.geo)|*.gem;*.geo|" & _
-                                           "Open Inventor format (*.iv, *.wrl)|*.iv;*.wrl|" & _
-                                           "OpenFlight (*.flt)|*.flt|" & _
-                                           "Native osg binary (*.ive)|*.ive|" & _
-                                           "Logo database (*.logo)|*.logo|" & _
-                                           "Lightwave Object (*.lwo, *.lw)|*.lwo;*.lw|" & _
-                                           "Quake MD2 (*.md2)|*.md2|" & _
-                                           "Alias Wavefront  (*.obj)|*.obj|" & _
-                                           "Native osg ascii (*.osg)|*.osg|" & _
-                                           "ESRI Shapefile (*.shp)|*.shp|" & _
-                                           "Stereolithography file (*.stl, *.sta)|*.stl;*.sta|" & _
-                                           "DirectX 3D model (*.x)|*.x"
+                Dim strFilter As String = "All files|*.bmp;*.gif;*.exif;*.jpg;*.jpeg;*.png;*.tiff;|" & _
+                                          "bmp files (*.bmp)|*.bmp|" & _
+                                          "gif files (*.gif)|*.gif|" & _
+                                          "exif files (*.exif)|*.exif|" & _
+                                          "jpg files (*.jpg)|*.jpg|" & _
+                                          "jpeg files (*.jpeg)|*.jpeg|" & _
+                                          "png files (*.png)|*.png|" & _
+                                          "tiff files (*.tiff)|*.tiff"
 
-                openFileDialog.Title = "Select a mesh file - hit cancel to select file later."
+                openFileDialog.Title = "Select a terrain height image file - hit cancel to select file later."
                 openFileDialog.Filter = strFilter
                 openFileDialog.InitialDirectory = Util.Application.ProjectPath
 
@@ -52,6 +45,50 @@ Namespace Forms.BodyPlan
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
                 Util.Application.Cursor = System.Windows.Forms.Cursors.Arrow
+            End Try
+        End Sub
+
+        Private Sub btnTextureFileDlg_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnTextureFileDlg.Click
+            Try
+                Util.Application.Cursor = System.Windows.Forms.Cursors.WaitCursor
+
+                'Office Files|*.doc;*.xls;*.ppt
+                Dim openFileDialog As New OpenFileDialog
+                Dim strFilter As String = "All files|*.bmp;*.gif;*.exif;*.jpg;*.jpeg;*.png;*.tiff;|" & _
+                                          "bmp files (*.bmp)|*.bmp|" & _
+                                          "gif files (*.gif)|*.gif|" & _
+                                          "exif files (*.exif)|*.exif|" & _
+                                          "jpg files (*.jpg)|*.jpg|" & _
+                                          "jpeg files (*.jpeg)|*.jpeg|" & _
+                                          "png files (*.png)|*.png|" & _
+                                          "tiff files (*.tiff)|*.tiff"
+
+                openFileDialog.Title = "Select a terrain texture image file - hit cancel to select file later."
+                openFileDialog.Filter = strFilter
+                openFileDialog.InitialDirectory = Util.Application.ProjectPath
+
+                If openFileDialog.ShowDialog() = DialogResult.OK Then
+                    txtTextureFile.Text = openFileDialog.FileName
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Util.Application.Cursor = System.Windows.Forms.Cursors.Arrow
+            End Try
+        End Sub
+
+        Private Sub btnOk_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnOk.Click
+            Try
+                m_dblSegmentWidth = Util.ValidateNumericTextBox(txtSegmentWidth.Text, True, 0, False, 0, False, "segment width")
+                m_dblSegmentLength = Util.ValidateNumericTextBox(txtSegmentLength.Text, True, 0, False, 0, False, "segment length")
+                m_dblMaxHeight = Util.ValidateNumericTextBox(txtMaxHeight.Text, True, 0, False, 0, False, "max height")
+
+                DialogResult = Windows.Forms.DialogResult.OK
+                Me.Close()
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
         End Sub
 

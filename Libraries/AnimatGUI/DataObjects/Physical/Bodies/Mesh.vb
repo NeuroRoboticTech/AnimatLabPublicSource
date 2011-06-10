@@ -67,8 +67,8 @@ Namespace DataObjects.Physical.Bodies
 
                 'If the file is specified and it is a full path, then check to see if it is in the project directory. If it is then
                 'just use the file path
-                Dim strFile As String
-                If Not value Is Nothing AndAlso Util.IsFileInProjectDirectory(value, strFile) Then
+                Dim strPath As String, strFile As String
+                If Not value Is Nothing AndAlso Util.DetermineFilePath(value, strPath, strFile) Then
                     value = strFile
                 End If
 
