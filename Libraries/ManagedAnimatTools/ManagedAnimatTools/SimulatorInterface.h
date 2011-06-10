@@ -84,8 +84,14 @@ namespace AnimatGUI
 
 #pragma endregion
 
+#pragma region HelperMethods
+
 			void ReInitializeSimulation();
 			System::Int32 RetrieveChartData(String ^sChartKey, cli::array<System::Single, 2> ^%aryTimeData, cli::array<System::Single, 2> ^%aryData);
+			void GenerateCollisionMeshFile(String ^sOriginalMeshFile, String ^sCollisionMeshFile);
+
+#pragma endregion
+
 
 #pragma region DataAccess
 

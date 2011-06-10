@@ -783,6 +783,7 @@ namespace AnimatSim
 			static Simulator *CreateSimulator(string strSimulationFile);
 			static Simulator *CreateSimulator(CStdXml &oXml);
 			static Simulator *CreateSimulator(int argc, const char **argv);
+			virtual void GenerateCollisionMeshFile(string strOriginalMeshFile, string strCollisionMeshFile) = 0;
 
 #pragma endregion
 		 

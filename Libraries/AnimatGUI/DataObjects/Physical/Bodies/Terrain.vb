@@ -51,6 +51,32 @@ Namespace DataObjects.Physical.Bodies
             End Get
         End Property
 
+        Public Overrides Property MeshFile() As String
+            Get
+                Return m_strMeshFile
+            End Get
+            Set(ByVal value As String)
+                'If the file is specified and it is a full path, then check to see if it is in the project directory. If it is then
+                'just use the file path
+                Dim strPath As String, strFile As String
+                If Not value Is Nothing AndAlso Util.DetermineFilePath(value, strPath, strFile) Then
+                    value = strFile
+                End If
+
+                SetSimData("MeshFile", value, True)
+                m_strMeshFile = value
+            End Set
+        End Property
+
+        Public Overrides Property MeshType() As Mesh.enumMeshType
+            Get
+                Return m_eMeshType
+            End Get
+            Set(ByVal value As Mesh.enumMeshType)
+                'We cannot set mesh type in the terrain.
+            End Set
+        End Property
+
         Public Overridable Property SegmentWidth() As AnimatGUI.Framework.ScaledNumber
             Get
                 Return m_snSegmentWidth
@@ -192,6 +218,7 @@ Namespace DataObjects.Physical.Bodies
             If propTable.Properties.Contains("Food Energy Content") Then propTable.Properties.Remove("Food Energy Content")
             If propTable.Properties.Contains("Mesh File") Then propTable.Properties.Remove("Mesh File")
             If propTable.Properties.Contains("Mesh Type") Then propTable.Properties.Remove("Mesh Type")
+            If propTable.Properties.Contains("Convex Mesh File") Then propTable.Properties.Remove("Convex Mesh File")
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Terrain File", m_strMeshFile.GetType(), "MeshFile", _
                           "Part Properties", "Sets the terrain file to use for this body part.", _

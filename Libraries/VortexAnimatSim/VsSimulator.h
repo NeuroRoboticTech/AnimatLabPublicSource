@@ -61,7 +61,12 @@ namespace VortexAnimatSim
 		osg::Group *OSGRoot() {return m_grpScene.get();};
 		osgManipulator::CommandManager *OsgCmdMgr() {return m_osgCmdMgr.get();};
 
+#pragma region CreateMethods
+
 		virtual Vx::VxGeometry *CreateGeometryFromOsg(osg::Node *osgNode, string strType);
+		virtual void GenerateCollisionMeshFile(string strOriginalMeshFile, string strCollisionMeshFile);
+
+#pragma endregion
 
 #pragma region MutatorOverrides
 

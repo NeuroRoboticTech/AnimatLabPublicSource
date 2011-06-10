@@ -298,6 +298,46 @@ Vx::VxGeometry *VsSimulator::CreateGeometryFromOsg(osg::Node *osgNode, string st
 	return vxGeometry;
 }
 
+/**
+\brief	Generates a collision mesh file.
+
+\details When we want to use a collision mesh then we need to create a new .osg file using the 
+mesh created by the physics engine instead of the graphics one. The UI will call this method
+when the user sets a new mesh file or type so we can create the new file. It will load the graphics
+file, convert it usign the physics engine, and then save it back out. When loading the convex mesh
+we will use this new file instead of the original one.
+
+\author	dcofer
+\date	6/10/2011
+
+\param	strOriginalMeshFile 	The original mesh file. 
+\param	strCollisionMeshFile	The new collision mesh file. 
+**/
+void VsSimulator::GenerateCollisionMeshFile(string strOriginalMeshFile, string strCollisionMeshFile)
+{
+	//First load the original mesh in.
+	string strPath = this->ProjectPath();
+	string strOrigFile = AnimatSim::GetFilePath(strPath, strOriginalMeshFile);
+	string strNewFile = AnimatSim::GetFilePath(strPath, strCollisionMeshFile);
+
+	osg::ref_ptr<osg::Node> osgNode = osgDB::readNodeFile(strOrigFile.c_str());
+
+	//Make sure the mesh loaded is valid.
+	if(!osgNode.valid())
+		THROW_PARAM_ERROR(Vs_Err_lErrorLoadingMesh, Vs_Err_strErrorLoadingMesh, "Original Mesh file", strOriginalMeshFile);
+
+	//Now create a convex mesh with the physics engine using the loaded mesh.
+	Vx::VxConvexMesh *vxMesh = VxConvexMesh::createFromNode(osgNode.get()); 
+
+	//Now use that convexmesh geometry to create a new osg node.
+	osg::ref_ptr<osg::Geometry> osgGeom = CreateOsgFromVxConvexMesh(vxMesh);
+	osg::ref_ptr<osg::Geode> osgNewNode = new osg::Geode;
+	osgNewNode->addDrawable(osgGeom.get());
+
+	//Now save out the new collision mesh.
+	osgDB::writeNodeFile(*osgNewNode, strNewFile.c_str());
+}
+
 void VsSimulator::Initialize(int argc, const char **argv)
 {
 	InitializeVortex(argc, argv);

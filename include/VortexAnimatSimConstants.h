@@ -105,5 +105,8 @@
 #define Vs_Err_lMeshOsgNodeGroupNotDefined -4034
 #define Vs_Err_strMeshOsgNodeGroupNotDefined "The osg mesh node group was not defined."
 
+#define Vs_Err_lErrorLoadingMesh -4035
+#define Vs_Err_strErrorLoadingMesh "An error occured while loading the mesh node."
+
 #endif // __VS_ERROR_CONSTANTS_H__
 

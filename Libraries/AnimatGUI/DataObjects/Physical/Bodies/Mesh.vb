@@ -29,6 +29,7 @@ Namespace DataObjects.Physical.Bodies
 #Region " Attributes "
 
         Protected m_strMeshFile As String = ""
+        Protected m_strConvexMeshFile As String = ""
         Protected m_eMeshType As enumMeshType = enumMeshType.Convex
 
 #End Region
@@ -64,17 +65,35 @@ Namespace DataObjects.Physical.Bodies
                 Return m_strMeshFile
             End Get
             Set(ByVal value As String)
+                Try
+                    'If the file is specified and it is a full path, then check to see if it is in the project directory. If it is then
+                    'just use the file path
+                    Dim strPath As String, strFile As String
+                    If Not value Is Nothing AndAlso Util.DetermineFilePath(value, strPath, strFile) Then
+                        value = strFile
+                    End If
 
-                'If the file is specified and it is a full path, then check to see if it is in the project directory. If it is then
-                'just use the file path
-                Dim strPath As String, strFile As String
-                If Not value Is Nothing AndAlso Util.DetermineFilePath(value, strPath, strFile) Then
-                    value = strFile
-                End If
+                    'If this is a convex mesh then we need to create the convex mesh within the project
+                    CreateConvexMeshFile(value, m_eMeshType)
 
-                SetSimData("MeshFile", value, True)
-                m_strMeshFile = value
+                    SetSimData("MeshFile", CreateMeshFileXml(value, m_eMeshType, m_strConvexMeshFile), True)
+                    m_strMeshFile = value
+                Catch ex As Exception
+                    Try
+                        'If there is a problem with setting this property then 
+                        'try and reset things back on the convex mesh file
+                        CreateConvexMeshFile(m_strMeshFile, m_eMeshType)
+                    Catch ex2 As Exception
+
+                    End Try
+                End Try
             End Set
+        End Property
+
+        Public Overridable ReadOnly Property ConvexMeshFile() As String
+            Get
+                Return m_strConvexMeshFile
+            End Get
         End Property
 
         Public Overridable Property MeshType() As enumMeshType
@@ -82,8 +101,21 @@ Namespace DataObjects.Physical.Bodies
                 Return m_eMeshType
             End Get
             Set(ByVal value As enumMeshType)
-                SetSimData("MeshType", m_eMeshType.ToString, True)
-                m_eMeshType = value
+                Try
+                    'If this is a convex mesh then we need to create the convex mesh within the project
+                    CreateConvexMeshFile(m_strMeshFile, value)
+
+                    SetSimData("MeshFile", CreateMeshFileXml(m_strMeshFile, value, m_strConvexMeshFile), True)
+                    m_eMeshType = value
+                Catch ex As Exception
+                    Try
+                        'If there is a problem with setting this property then 
+                        'try and reset things back on the convex mesh file
+                        CreateConvexMeshFile(m_strMeshFile, m_eMeshType)
+                    Catch ex2 As Exception
+
+                    End Try
+                End Try
             End Set
         End Property
 
@@ -139,6 +171,11 @@ Namespace DataObjects.Physical.Bodies
             If Me.IsCollisionObject Then
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Mesh Type", m_eMeshType.GetType(), "MeshType", _
                                             "Part Properties", "Sets the type of mesh to use for the collision geometry. Convex is signficantly faster than triangle, but to triangle can be used for non-convex objects", m_eMeshType))
+
+                If m_eMeshType = enumMeshType.Convex Then
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Convex Mesh File", m_strConvexMeshFile.GetType(), "ConvexMeshFile", _
+                                                "Part Properties", "The filename of the convex mesh file.", m_strConvexMeshFile))
+                End If
             End If
 
         End Sub
@@ -148,7 +185,7 @@ Namespace DataObjects.Physical.Bodies
                 Dim frmMesh As New Forms.BodyPlan.SelectMesh
 
                 If frmMesh.ShowDialog() = DialogResult.OK Then
-                    Me.MeshType = DirectCast([Enum].Parse(GetType(enumMeshType), frmMesh.cboMeshType.Text, True), enumMeshType)
+                    m_eMeshType = DirectCast([Enum].Parse(GetType(enumMeshType), frmMesh.cboMeshType.Text, True), enumMeshType)
                     Me.MeshFile = frmMesh.txtMeshFile.Text
                 End If
 
@@ -165,6 +202,10 @@ Namespace DataObjects.Physical.Bodies
             m_strMeshFile = oXml.GetChildString("MeshFile", m_strMeshFile)
             m_eMeshType = DirectCast([Enum].Parse(GetType(enumMeshType), oXml.GetChildString("MeshType"), True), enumMeshType)
 
+            If Me.IsCollisionObject Then
+                m_strConvexMeshFile = oXml.GetChildString("ConvexMeshFile")
+            End If
+
             oXml.OutOfElem() 'Outof RigidBody Element
 
         End Sub
@@ -176,6 +217,10 @@ Namespace DataObjects.Physical.Bodies
 
             oXml.AddChildElement("MeshFile", m_strMeshFile)
             oXml.AddChildElement("MeshType", m_eMeshType.ToString)
+
+            If Me.IsCollisionObject Then
+                oXml.AddChildElement("ConvexMeshFile", m_strConvexMeshFile)
+            End If
 
             oXml.OutOfElem() 'Outof BodyPart Element
 
@@ -189,9 +234,39 @@ Namespace DataObjects.Physical.Bodies
             oXml.AddChildElement("MeshFile", m_strMeshFile)
             oXml.AddChildElement("MeshType", m_eMeshType.ToString)
 
+
+            If Me.IsCollisionObject Then
+                oXml.AddChildElement("ConvexMeshFile", m_strConvexMeshFile)
+            End If
+
             oXml.OutOfElem()
 
         End Sub
+
+        Protected Overridable Sub CreateConvexMeshFile(ByVal strFile As String, ByVal eMeshType As enumMeshType)
+
+            If eMeshType = enumMeshType.Convex Then
+                Dim strExt As String = Util.GetFileExtension(strFile)
+                m_strConvexMeshFile = strFile.Replace(strExt, "_Convex.osg")
+                Util.Application.SimulationInterface.GenerateCollisionMeshFile(strFile, m_strConvexMeshFile)
+            Else
+                'If we are switching to a triangle mesh file then delete the old convex mesh file if it exists.
+                If File.Exists(m_strConvexMeshFile) Then
+                    File.Delete(m_strConvexMeshFile)
+                End If
+
+                m_strConvexMeshFile = ""
+            End If
+
+        End Sub
+
+        Protected Overridable Function CreateMeshFileXml(ByVal strMeshFile As String, ByVal eMeshType As enumMeshType, ByVal strCollisionMeshFile As String) As String
+            Dim oXml As New AnimatGUI.Interfaces.StdXml
+            oXml.AddElement("Root")
+            SaveSimulationXml(oXml, Nothing)
+
+            Return oXml.Serialize()
+        End Function
 
     End Class
 

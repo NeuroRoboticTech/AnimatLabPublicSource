@@ -731,6 +731,8 @@ namespace AnimatGUI
 
 #pragma endregion
 
+#pragma region HelperMethods
+
 			void SimulatorInterface::ReInitializeSimulation()
 			{
 				try
@@ -839,6 +841,34 @@ namespace AnimatGUI
 				}
 			}
 
+			void SimulatorInterface::GenerateCollisionMeshFile(String ^sOriginalMeshFile, String ^sCollisionMeshFile)
+			{
+				try
+				{
+					if(m_lpSim) 
+					{
+						string strOriginalMeshFile = Util::StringToStd(sOriginalMeshFile);
+						string strCollisionMeshFile = Util::StringToStd(sCollisionMeshFile);
+
+						m_lpSim->GenerateCollisionMeshFile(strOriginalMeshFile, strCollisionMeshFile);
+					}
+				}
+				catch(CStdErrorInfo oError)
+				{
+					string strError = "An error occurred while attempting to generate a collision mesh file.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew String(strError.c_str());
+					throw gcnew System::Exception(m_strErrorMessage);
+				}
+				catch(System::Exception ^ex)
+				{throw ex;}
+				catch(...)
+				{
+					m_strErrorMessage = "An unknown error occurred while attempting to generate a collision mesh file.";
+					throw gcnew System::Exception(m_strErrorMessage);
+				}
+			}
+
+#pragma endregion
 
 #pragma region DataAccess
 

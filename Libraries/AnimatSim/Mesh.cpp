@@ -118,6 +118,46 @@ void Mesh::CollisionMeshType(string strType)
 }
 
 
+/**
+\brief	Gets the convex mesh filename.
+
+\details If this filename is blank, or is not found then it will display a default box.
+
+\author	dcofer
+\date	5/26/2011
+
+\return	mesh filename.
+**/
+string Mesh::ConvexMeshFile() {return m_strConvexMeshFile;}
+
+/**
+\brief	Sets the convex mesh filename.
+
+\details If this filename is blank, or is not found then it will display a default box.
+\author	dcofer
+\date	5/26/2011
+
+\param	strFile	The filename.
+**/
+void Mesh::ConvexMeshFile(string strFile) 
+{
+	m_strConvexMeshFile = strFile;
+	Resize();
+}
+
+
+void Mesh::SetMeshFile(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("MeshFile");
+
+	m_strMeshFile = oXml.GetChildString("MeshFile");
+	m_strConvexMeshFile = oXml.GetChildString("ConvexMeshFile", "");
+	CollisionMeshType(oXml.GetChildString("MeshType"));
+}
+
 BOOL Mesh::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
@@ -134,6 +174,18 @@ BOOL Mesh::SetData(string strDataType, string strValue, BOOL bThrowError)
 	if(strType == "MESHTYPE")
 	{
 		CollisionMeshType(strValue);
+		return TRUE;
+	}
+
+	if(strType == "CONVEXMESHFILE")
+	{
+		ConvexMeshFile(strValue);
+		return TRUE;
+	}
+
+	if(strType == "SETMESHFILE")
+	{
+		SetMeshFile(strValue);
 		return TRUE;
 	}
 
