@@ -1282,6 +1282,11 @@ Namespace DataObjects.Physical
 
         End Sub
 
+        Public Overrides Sub SetDefaultSizes()
+            MyBase.SetDefaultSizes()
+            m_snDensity.ActualValue = 1 * Util.Environment.MassUnitValue
+        End Sub
+
         Public Overridable Overloads Function AddChildBody(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d) As Boolean
             Dim rbNew As RigidBody
 

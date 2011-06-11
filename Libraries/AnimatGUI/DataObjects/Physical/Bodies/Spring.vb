@@ -148,6 +148,7 @@ Namespace DataObjects.Physical.Bodies
         End Sub
 
         Public Overrides Sub SetDefaultSizes()
+            MyBase.SetDefaultSizes()
             m_snNaturalLength.ActualValue = 1 * Util.Environment.DistanceUnitValue
         End Sub
 

@@ -59,11 +59,14 @@ Namespace Forms.BodyPlan
 
         Private Sub SelectMesh_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
             Try
-                cboMeshType.SelectedIndex = 0
 
                 If Not m_bIsCollisionType Then
                     cboMeshType.Enabled = False
                     cboMeshType.Visible = False
+                    lblMeshType.Visible = False
+                    cboMeshType.SelectedIndex = 1
+                Else
+                    cboMeshType.SelectedIndex = 0
                 End If
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

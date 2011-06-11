@@ -204,6 +204,7 @@ Namespace DataObjects.Physical.Joints
         End Sub
 
         Public Overrides Sub SetDefaultSizes()
+            MyBase.SetDefaultSizes()
             m_snSize.ActualValue = 0.02 * Util.Environment.DistanceUnitValue
             m_doLowerLimit.LimitPos.ActualValue = -1 * Util.Environment.DistanceUnitValue
             m_doUpperLimit.LimitPos.ActualValue = 1 * Util.Environment.DistanceUnitValue

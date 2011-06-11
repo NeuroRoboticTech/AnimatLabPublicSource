@@ -116,6 +116,12 @@ Namespace DataObjects.Physical.Bodies
             End Set
         End Property
 
+        Public Overrides ReadOnly Property DefaultAddGraphics() As Boolean
+            Get
+                Return False
+            End Get
+        End Property
+
 #End Region
 
         Public Sub New(ByVal doParent As Framework.DataObject)
@@ -144,6 +150,7 @@ Namespace DataObjects.Physical.Bodies
         End Sub
 
         Public Overrides Sub SetDefaultSizes()
+            MyBase.SetDefaultSizes()
             m_snSegmentWidth.ActualValue = 1 * Util.Environment.DistanceUnitValue
             m_snSegmentLength.ActualValue = 1 * Util.Environment.DistanceUnitValue
             m_snMaxHeight.ActualValue = 5 * Util.Environment.DistanceUnitValue

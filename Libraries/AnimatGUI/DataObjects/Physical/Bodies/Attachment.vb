@@ -99,6 +99,7 @@ Namespace DataObjects.Physical.Bodies
         End Function
 
         Public Overrides Sub SetDefaultSizes()
+            MyBase.SetDefaultSizes()
             m_snRadius.ActualValue = 0.1 * Util.Environment.DistanceUnitValue
         End Sub
 

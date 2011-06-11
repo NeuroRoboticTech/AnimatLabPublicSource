@@ -78,6 +78,7 @@ Namespace DataObjects.Physical.Joints
         End Sub
 
         Public Overrides Sub SetDefaultSizes()
+            MyBase.SetDefaultSizes()
             m_snSize.ActualValue = 0.05 * Util.Environment.DistanceUnitValue
         End Sub
 

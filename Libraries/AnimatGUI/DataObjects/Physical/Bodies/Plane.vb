@@ -129,6 +129,7 @@ Namespace DataObjects.Physical.Bodies
         End Sub
 
         Public Overrides Sub SetDefaultSizes()
+            MyBase.SetDefaultSizes()
             Dim fltVal As Single = 100 * Util.Environment.DistanceUnitValue
             m_svSize.CopyData(fltVal, fltVal)
         End Sub

@@ -187,10 +187,10 @@ Namespace DataObjects.Physical.Bodies
         End Sub
 
         Public Overrides Sub SetDefaultSizes()
+            MyBase.SetDefaultSizes()
             m_snWidth.ActualValue = 1 * Util.Environment.DistanceUnitValue
             m_snHeight.ActualValue = 1 * Util.Environment.DistanceUnitValue
             m_snLength.ActualValue = 1 * Util.Environment.DistanceUnitValue
-            m_snDensity.ActualValue = 1 * Util.Environment.MassUnitValue
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)

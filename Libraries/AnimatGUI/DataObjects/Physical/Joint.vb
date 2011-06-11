@@ -162,6 +162,7 @@ Namespace DataObjects.Physical
         End Function
 
         Public Overrides Sub SetDefaultSizes()
+            MyBase.SetDefaultSizes()
             m_snSize.ActualValue = 0.2 * Util.Environment.DistanceUnitValue
         End Sub
 

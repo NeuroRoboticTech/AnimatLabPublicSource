@@ -119,12 +119,6 @@ Namespace DataObjects.Physical.Bodies
             End Set
         End Property
 
-        Public Overrides ReadOnly Property DefaultAddGraphics() As Boolean
-            Get
-                Return False
-            End Get
-        End Property
-
         <Browsable(False)> _
         Public Overrides ReadOnly Property ModuleName() As String
             Get
@@ -184,6 +178,7 @@ Namespace DataObjects.Physical.Bodies
             Try
                 Dim frmMesh As New Forms.BodyPlan.SelectMesh
 
+                frmMesh.txtMeshFile.Text = Me.MeshFile
                 frmMesh.m_bIsCollisionType = Me.IsCollisionObject
                 If frmMesh.ShowDialog() = DialogResult.OK Then
                     m_eMeshType = DirectCast([Enum].Parse(GetType(enumMeshType), frmMesh.cboMeshType.Text, True), enumMeshType)
@@ -193,6 +188,28 @@ Namespace DataObjects.Physical.Bodies
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+        End Sub
+
+        Public Overrides Sub CreateDefaultGraphicsObject()
+
+            Dim doGraphics As Mesh = DirectCast(Me.Clone(Me, False, Me), Mesh)
+            doGraphics.SetDefaultSizes()
+            doGraphics.m_JointToParent = Nothing
+            doGraphics.IsCollisionObject = False
+            doGraphics.ContactSensor = False
+            doGraphics.IsRoot = False
+            doGraphics.Name = doGraphics.Name & "_Graphics"
+            doGraphics.MeshType = enumMeshType.Triangular
+            doGraphics.MeshFile = Me.MeshFile
+
+            'The graphics object is always created direclty atop the collision object
+            doGraphics.LocalPosition.CopyData(0, 0, 0)
+            doGraphics.Rotation.CopyData(0, 0, 0)
+
+            doGraphics.Diffuse = Drawing.Color.White
+
+            Me.AddChildBody(doGraphics, False)
+
         End Sub
 
         Public Overloads Overrides Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
@@ -245,17 +262,19 @@ Namespace DataObjects.Physical.Bodies
 
         Protected Overridable Sub CreateConvexMeshFile(ByVal strFile As String, ByVal eMeshType As enumMeshType)
 
-            If eMeshType = enumMeshType.Convex Then
-                Dim strExt As String = Util.GetFileExtension(strFile)
-                m_strConvexMeshFile = strFile.Replace("." & strExt, "_Convex.osg")
-                Util.Application.SimulationInterface.GenerateCollisionMeshFile(strFile, m_strConvexMeshFile)
-            Else
-                'If we are switching to a triangle mesh file then delete the old convex mesh file if it exists.
-                If File.Exists(m_strConvexMeshFile) Then
-                    File.Delete(m_strConvexMeshFile)
-                End If
+            If Me.IsCollisionObject Then
+                If eMeshType = enumMeshType.Convex Then
+                    Dim strExt As String = Util.GetFileExtension(strFile)
+                    m_strConvexMeshFile = strFile.Replace("." & strExt, "_Convex.osg")
+                    Util.Application.SimulationInterface.GenerateCollisionMeshFile(strFile, m_strConvexMeshFile)
+                Else
+                    'If we are switching to a triangle mesh file then delete the old convex mesh file if it exists.
+                    If m_strConvexMeshFile.Trim.Length > 0 AndAlso File.Exists(m_strConvexMeshFile) Then
+                        File.Delete(m_strConvexMeshFile)
+                    End If
 
-                m_strConvexMeshFile = ""
+                    m_strConvexMeshFile = ""
+                End If
             End If
 
         End Sub

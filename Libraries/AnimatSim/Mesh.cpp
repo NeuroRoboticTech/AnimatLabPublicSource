@@ -208,7 +208,7 @@ void Mesh::Load(CStdXml &oXml)
 
 	MeshFile(oXml.GetChildString("MeshFile"));
 	CollisionMeshType(oXml.GetChildString("MeshType"));
-	ConvexMeshFile(oXml.GetChildString("ConvexMeshFile"));
+	ConvexMeshFile(oXml.GetChildString("ConvexMeshFile", ""));
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
 
