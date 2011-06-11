@@ -153,9 +153,13 @@ void Mesh::SetMeshFile(string strXml)
 	oXml.FindElement("Root");
 	oXml.FindChildElement("MeshFile");
 
+	//oXml.IntoElem();
+
 	m_strMeshFile = oXml.GetChildString("MeshFile");
 	m_strConvexMeshFile = oXml.GetChildString("ConvexMeshFile", "");
 	CollisionMeshType(oXml.GetChildString("MeshType"));
+
+	//oXml.OutOfElem();
 }
 
 BOOL Mesh::SetData(string strDataType, string strValue, BOOL bThrowError)
@@ -204,6 +208,7 @@ void Mesh::Load(CStdXml &oXml)
 
 	MeshFile(oXml.GetChildString("MeshFile"));
 	CollisionMeshType(oXml.GetChildString("MeshType"));
+	ConvexMeshFile(oXml.GetChildString("ConvexMeshFile"));
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
 

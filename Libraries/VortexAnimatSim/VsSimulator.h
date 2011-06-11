@@ -63,7 +63,8 @@ namespace VortexAnimatSim
 
 #pragma region CreateMethods
 
-		virtual Vx::VxGeometry *CreateGeometryFromOsg(osg::Node *osgNode, string strType);
+		virtual Vx::VxTriangleMesh *CreatTriangleMeshFromOsg(osg::Node *osgNode);
+		virtual Vx::VxConvexMesh *CreateConvexMeshFromOsg(osg::Node *osgNode);
 		virtual void GenerateCollisionMeshFile(string strOriginalMeshFile, string strCollisionMeshFile);
 
 #pragma endregion

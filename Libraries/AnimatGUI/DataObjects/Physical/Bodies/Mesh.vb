@@ -76,7 +76,7 @@ Namespace DataObjects.Physical.Bodies
                     'If this is a convex mesh then we need to create the convex mesh within the project
                     CreateConvexMeshFile(value, m_eMeshType)
 
-                    SetSimData("MeshFile", CreateMeshFileXml(value, m_eMeshType, m_strConvexMeshFile), True)
+                    SetSimData("SetMeshFile", CreateMeshFileXml(value, m_eMeshType, m_strConvexMeshFile), True)
                     m_strMeshFile = value
                 Catch ex As Exception
                     Try
@@ -105,7 +105,7 @@ Namespace DataObjects.Physical.Bodies
                     'If this is a convex mesh then we need to create the convex mesh within the project
                     CreateConvexMeshFile(m_strMeshFile, value)
 
-                    SetSimData("MeshFile", CreateMeshFileXml(m_strMeshFile, value, m_strConvexMeshFile), True)
+                    SetSimData("SetMeshFile", CreateMeshFileXml(m_strMeshFile, value, m_strConvexMeshFile), True)
                     m_eMeshType = value
                 Catch ex As Exception
                     Try
@@ -184,6 +184,7 @@ Namespace DataObjects.Physical.Bodies
             Try
                 Dim frmMesh As New Forms.BodyPlan.SelectMesh
 
+                frmMesh.m_bIsCollisionType = Me.IsCollisionObject
                 If frmMesh.ShowDialog() = DialogResult.OK Then
                     m_eMeshType = DirectCast([Enum].Parse(GetType(enumMeshType), frmMesh.cboMeshType.Text, True), enumMeshType)
                     Me.MeshFile = frmMesh.txtMeshFile.Text
@@ -234,7 +235,6 @@ Namespace DataObjects.Physical.Bodies
             oXml.AddChildElement("MeshFile", m_strMeshFile)
             oXml.AddChildElement("MeshType", m_eMeshType.ToString)
 
-
             If Me.IsCollisionObject Then
                 oXml.AddChildElement("ConvexMeshFile", m_strConvexMeshFile)
             End If
@@ -247,7 +247,7 @@ Namespace DataObjects.Physical.Bodies
 
             If eMeshType = enumMeshType.Convex Then
                 Dim strExt As String = Util.GetFileExtension(strFile)
-                m_strConvexMeshFile = strFile.Replace(strExt, "_Convex.osg")
+                m_strConvexMeshFile = strFile.Replace("." & strExt, "_Convex.osg")
                 Util.Application.SimulationInterface.GenerateCollisionMeshFile(strFile, m_strConvexMeshFile)
             Else
                 'If we are switching to a triangle mesh file then delete the old convex mesh file if it exists.
@@ -263,7 +263,10 @@ Namespace DataObjects.Physical.Bodies
         Protected Overridable Function CreateMeshFileXml(ByVal strMeshFile As String, ByVal eMeshType As enumMeshType, ByVal strCollisionMeshFile As String) As String
             Dim oXml As New AnimatGUI.Interfaces.StdXml
             oXml.AddElement("Root")
-            SaveSimulationXml(oXml, Nothing)
+
+            oXml.AddChildElement("MeshFile", strMeshFile)
+            oXml.AddChildElement("MeshType", eMeshType.ToString)
+            oXml.AddChildElement("ConvexMeshFile", strCollisionMeshFile)
 
             Return oXml.Serialize()
         End Function

@@ -212,13 +212,34 @@ namespace AnimatGUI
 
 			void SimulatorInterface::AddSimWindow(System::String ^sWindowXml, BOOL bInit, HWND hWnd)
 			{
-				if(m_lpSim->WaitForSimulationBlock())
+				try
 				{
-					m_lpSim->WindowMgr()->AddSimulationWindow("", "Basic", bInit, hWnd, Util::StringToStd(sWindowXml));
-					m_lpSim->UnblockSimulation();
+					if(m_lpSim->WaitForSimulationBlock())
+					{
+						m_lpSim->WindowMgr()->AddSimulationWindow("", "Basic", bInit, hWnd, Util::StringToStd(sWindowXml));
+						m_lpSim->UnblockSimulation();
+					}
+					else
+						throw gcnew System::Exception("Timed out while trying to stop the simulation.");
 				}
-				else
-					throw gcnew System::Exception("Timed out while trying to stop the simulation.");
+				catch(CStdErrorInfo oError)
+				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
+					string strError = "An error occurred while attempting to add a simulation window.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew String(strError.c_str());
+					throw gcnew System::Exception(m_strErrorMessage);
+				}
+				catch(System::Exception ^ex)
+				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
+					throw ex;
+				}
+				catch(...)
+				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
+					m_strErrorMessage = "An unknown error occurred while attempting to add a simulation window.";
+					throw gcnew System::Exception(m_strErrorMessage);
+				}
 			}
 
 			//Returns a bool telling whether it had to start the sim or not.
@@ -261,13 +282,34 @@ namespace AnimatGUI
 
 			void SimulatorInterface::RemoveSimWindow(HWND hWnd)
 			{
-				if(m_lpSim->WaitForSimulationBlock())
+				try
 				{
-					m_lpSim->WindowMgr()->RemoveSimulationWindow(hWnd);
-					m_lpSim->UnblockSimulation();
+					if(m_lpSim->WaitForSimulationBlock())
+					{
+						m_lpSim->WindowMgr()->RemoveSimulationWindow(hWnd);
+						m_lpSim->UnblockSimulation();
+					}
+					else
+						throw gcnew System::Exception("Timed out while trying to stop the simulation.");
 				}
-				else
-					throw gcnew System::Exception("Timed out while trying to stop the simulation.");
+				catch(CStdErrorInfo oError)
+				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
+					string strError = "An error occurred while attempting to remove a simulation window.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew String(strError.c_str());
+					throw gcnew System::Exception(m_strErrorMessage);
+				}
+				catch(System::Exception ^ex)
+				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
+					throw ex;
+				}
+				catch(...)
+				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
+					m_strErrorMessage = "An unknown error occurred while attempting to remove a simulation window.";
+					throw gcnew System::Exception(m_strErrorMessage);
+				}
 			}
 
 			void SimulatorInterface::RemoveWindow(IntPtr hParentWnd)
@@ -405,14 +447,19 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
 					string strError = "An error occurred while attempting to pause the simulation.\nError: " + oError.m_strError;
 					m_strErrorMessage = gcnew String(strError.c_str());
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
-				{throw ex;}
+				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
+					throw ex;
+				}
 				catch(...)
 				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
 					m_strErrorMessage = "An unknown error occurred while attempting to pause the simulation.";
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
@@ -910,14 +957,19 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
 					string strError = "An error occurred while attempting to add a data item.\nError: " + oError.m_strError;
 					m_strErrorMessage = gcnew String(strError.c_str());
 					throw gcnew PropertyUpdateException(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
-				{throw ex;}
+				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
+					throw ex;
+				}
 				catch(...)
 				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
 					m_strErrorMessage = "An unknown error occurred while attempting to add a data item.";
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
@@ -962,14 +1014,19 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
 					string strError = "An error occurred while attempting to remove a data item.\nError: " + oError.m_strError;
 					m_strErrorMessage = gcnew String(strError.c_str());
 					throw gcnew PropertyUpdateException(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
-				{throw ex;}
+				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
+					throw ex;
+				}
 				catch(...)
 				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
 					m_strErrorMessage = "An unknown error occurred while attempting to remove a data item.";
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
@@ -1011,14 +1068,19 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
 					string strError = "An error occurred while attempting to set a data value.\nError: " + oError.m_strError;
 					m_strErrorMessage = gcnew String(strError.c_str());
 					throw gcnew PropertyUpdateException(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
-				{throw ex;}
+				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
+					throw ex;
+				}
 				catch(...)
 				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
 					m_strErrorMessage = "An unknown error occurred while attempting to set a data value.";
 					throw gcnew System::Exception(m_strErrorMessage);
 				}

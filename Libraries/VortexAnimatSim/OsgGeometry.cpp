@@ -1099,6 +1099,7 @@ osg::Geometry VORTEX_PORT *CreateOsgFromVxConvexMesh(Vx::VxConvexMesh *vxGeometr
 {
     // calc the vertices
 	osg::ref_ptr<osg::Vec3Array> verts = new osg::Vec3Array(); 
+	osg::ref_ptr<osg::Vec3Array> norms = new osg::Vec3Array(); 
     osg::Geometry* osgGeom = new osg::Geometry();
 
 	Vx::VxReal3 vVertex;
@@ -1119,11 +1120,18 @@ osg::Geometry VORTEX_PORT *CreateOsgFromVxConvexMesh(Vx::VxConvexMesh *vxGeometr
 			iCurVertex++;
 		}
 
-	   osgGeom->addPrimitiveSet(osgPolygon.get()); 
+		osgGeom->addPrimitiveSet(osgPolygon.get()); 
+
+		//Get the normal for this polygon.
+		vxGeometry->getPolygonNormal(iPoly, vVertex);
+		norms->push_back( osg::Vec3( vVertex[0], vVertex[1], vVertex[2]) ); 
 	}
  
     // create the geometry
      osgGeom->setVertexArray(verts.get());
+
+	 osgGeom->setNormalArray(norms.get());
+     osgGeom->setNormalBinding(osg::Geometry::BIND_PER_PRIMITIVE_SET);
 
      osg::Vec4Array* colors = new osg::Vec4Array;
      colors->push_back(osg::Vec4(1,1,1,1));

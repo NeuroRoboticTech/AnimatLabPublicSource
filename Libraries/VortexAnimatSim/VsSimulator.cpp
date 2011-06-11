@@ -285,17 +285,21 @@ void VsSimulator::InitializeVortex(int argc, const char **argv)
     m_uUniverse->addIntersectSubscriber(VxUniverse::kResponsePart, VxUniverse::kResponseSensor, VxUniverse::kEventDisjoint, &m_vsIntersect, 0);
 }
 
-Vx::VxGeometry *VsSimulator::CreateGeometryFromOsg(osg::Node *osgNode, string strType)
+Vx::VxTriangleMesh *VsSimulator::CreatTriangleMeshFromOsg(osg::Node *osgNode)
 {
-	Vx::VxGeometry *vxGeometry = NULL;
-	if(strType == "CONVEX")
-		vxGeometry = VxConvexMesh::createFromNode(osgNode); 
-	else if(strType == "TERRAIN")
-		vxGeometry = VxOSG::createTerrainFromOSGNode(osgNode, 1, 5, 1000, 1000, NULL);
-	else
-		vxGeometry = VxTriangleMesh::createFromNode(osgNode);
+	Vx::VxTriangleMesh *vxMesh = NULL;
+	vxMesh = VxTriangleMesh::createFromNode(osgNode);
 
-	return vxGeometry;
+	return vxMesh;
+}
+
+
+Vx::VxConvexMesh *VsSimulator::CreateConvexMeshFromOsg(osg::Node *osgNode)
+{
+	Vx::VxConvexMesh *vxMesh = NULL;
+	vxMesh = VxConvexMesh::createFromNode(osgNode); 
+
+	return vxMesh;
 }
 
 /**

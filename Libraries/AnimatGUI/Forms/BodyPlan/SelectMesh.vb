@@ -14,6 +14,8 @@ Namespace Forms.BodyPlan
 
 	Public Class SelectMesh
 
+        Public m_bIsCollisionType As Boolean = True
+
         Private Sub btnMeshFileDlg_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnMeshFileDlg.Click
             Try
                 Util.Application.Cursor = System.Windows.Forms.Cursors.WaitCursor
@@ -58,6 +60,11 @@ Namespace Forms.BodyPlan
         Private Sub SelectMesh_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
             Try
                 cboMeshType.SelectedIndex = 0
+
+                If Not m_bIsCollisionType Then
+                    cboMeshType.Enabled = False
+                    cboMeshType.Visible = False
+                End If
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

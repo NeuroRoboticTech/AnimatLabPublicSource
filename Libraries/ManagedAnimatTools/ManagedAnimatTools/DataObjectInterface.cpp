@@ -115,6 +115,7 @@ System::Boolean DataObjectInterface::SetData(String ^sDataType, String ^sValue, 
 	}
 	catch(CStdErrorInfo oError)
 	{
+		if(m_lpSim) m_lpSim->UnblockSimulation();
 		string strError = "An error occurred while attempting to set a data value.\nError: " + oError.m_strError;
 		String ^strErrorMessage = gcnew String(strError.c_str());
 		throw gcnew PropertyUpdateException(strErrorMessage);
@@ -123,6 +124,7 @@ System::Boolean DataObjectInterface::SetData(String ^sDataType, String ^sValue, 
 	{throw ex;}
 	catch(...)
 	{
+		if(m_lpSim) m_lpSim->UnblockSimulation();
 		String ^strErrorMessage = "An unknown error occurred while attempting to set a data value.";
 		throw gcnew System::Exception(strErrorMessage);
 	}
@@ -131,12 +133,30 @@ System::Boolean DataObjectInterface::SetData(String ^sDataType, String ^sValue, 
 
 void DataObjectInterface::SelectItem(bool bVal, bool bSelectMultiple)
 {
-	if(m_lpSim->WaitForSimulationBlock())
+	try
 	{
-		if(m_lpBase && ((BOOL) bVal) != m_lpBase->Selected())
-			m_lpBase->Selected( (BOOL) bVal, (BOOL) bSelectMultiple);
+		if(m_lpSim->WaitForSimulationBlock())
+		{
+			if(m_lpBase && ((BOOL) bVal) != m_lpBase->Selected())
+				m_lpBase->Selected( (BOOL) bVal, (BOOL) bSelectMultiple);
 
-		m_lpSim->UnblockSimulation();
+			m_lpSim->UnblockSimulation();
+		}
+	}
+	catch(CStdErrorInfo oError)
+	{
+		if(m_lpSim) m_lpSim->UnblockSimulation();
+		string strError = "An error occurred while attempting to select an item.\nError: " + oError.m_strError;
+		String ^strErrorMessage = gcnew String(strError.c_str());
+		throw gcnew PropertyUpdateException(strErrorMessage);
+	}
+	catch(System::Exception ^ex)
+	{throw ex;}
+	catch(...)
+	{
+		if(m_lpSim) m_lpSim->UnblockSimulation();
+		String ^strErrorMessage = "An unknown error occurred while attempting to select an item.";
+		throw gcnew System::Exception(strErrorMessage);
 	}
 }
 
