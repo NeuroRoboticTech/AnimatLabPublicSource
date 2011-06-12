@@ -1,5 +1,5 @@
 /**
-\file	C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatSim\Mouth.h
+\file	Mouth.h
 
 \brief	Declares the mouth class. 
 **/
@@ -28,6 +28,9 @@ namespace AnimatSim
 				/// The pointer to stomach for this organism
 				Stomach *m_lpStomach;
 
+				/// Identifier for the stomach
+				string m_strStomachID;
+
 				/// The eating rate. This is determined by neural input to this object. A neuron is connected to
 				/// this item through an adapter. The input value that comes in from the adapter via AddExternalNodeInput
 				/// controls the eating rate. 
@@ -35,6 +38,8 @@ namespace AnimatSim
 
 				/// Any food source that is further away than this minimum radius will not be available for eating.
 				float m_fltMinFoodRadius;
+
+				virtual void SetStomachPointer(string strID);
 
 			public:
 				Mouth();
@@ -63,8 +68,13 @@ namespace AnimatSim
 				**/
 				virtual void MinFoodRadius(float fltVal, BOOL bUseScaling = TRUE);
 
+				virtual void StomachID(string strID);
+				virtual string StomachID();
+
 				//Node Overrides
+				virtual void Initialize();
 				virtual void AddExternalNodeInput(float fltInput);
+				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 				virtual float *GetDataPointer(string strDataType);
 				virtual void StepSimulation();
 				virtual void Load(CStdXml &oXml);

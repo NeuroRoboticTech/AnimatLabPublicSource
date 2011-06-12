@@ -28,7 +28,6 @@ public:
 	VsAttachment();
 	virtual ~VsAttachment();
 
-	virtual void Initialize();
 	virtual void CreateParts();
 };
 

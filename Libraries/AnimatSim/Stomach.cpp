@@ -45,8 +45,6 @@ namespace AnimatSim
 **/
 Stomach::Stomach()
 {
-	m_strID = "STOMACH";
-	m_strName = "Stomach";
 	m_bKilled = FALSE;
 	m_fltMaxEnergyLevel = 100000;
 	m_fltEnergyLevel = 2000;
@@ -228,6 +226,44 @@ void Stomach::StepSimulation()
 	}
 }
 
+BOOL Stomach::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(RigidBody::SetData(strType, strValue, FALSE))
+		return TRUE;
+
+	if(strType == "KILLORGANISM")
+	{
+		KillOrganism(Std_ToBool(strValue));
+		return TRUE;
+	}
+
+	if(strType == "ENERGYLEVEL")
+	{
+		EnergyLevel(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "MAXENERGYLEVEL")
+	{
+		MaxEnergyLevel(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "BASECONSUMPTIONRATE")
+	{
+		BaseConsumptionRate(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
+
 float *Stomach::GetDataPointer(string strDataType)
 {
 	string strType = Std_CheckString(strDataType);
@@ -262,12 +298,9 @@ void Stomach::AddExternalNodeInput(float fltInput)
 
 void Stomach::Load(CStdXml &oXml)
 {
-	oXml.IntoElem();  //Into RigidBody Element
+	RigidBody::Load(oXml);
 
-	//There can only be one stomach per organism and its ID is hardcoded.
-	ID("STOMACH");
-	Name("Stomach");
-	Type(oXml.GetChildString("Type", m_strType));
+	oXml.IntoElem();  //Into RigidBody Element
 
 	MaxEnergyLevel(oXml.GetChildFloat("MaxEnergyLevel", m_fltMaxEnergyLevel));
 	EnergyLevel(oXml.GetChildFloat("EnergyLevel", m_fltEnergyLevel));
@@ -275,9 +308,6 @@ void Stomach::Load(CStdXml &oXml)
 	KillOrganism(oXml.GetChildBool("KillOrganism", TRUE));
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
-
-	//This will add this object to the object list of the simulation.
-	m_lpSim->AddToObjectList(this);
 }
 
 		}		//Joints

@@ -47,8 +47,6 @@ void VsAttachment::CreatePhysicsGeometry() {}
 
 void VsAttachment::ResizePhysicsGeometry() {}
 
-void VsAttachment::Initialize() {}
-
 void VsAttachment::CreateParts()
 {
 	CreateGeometry();

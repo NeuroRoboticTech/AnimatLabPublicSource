@@ -373,6 +373,9 @@
 #define Al_Err_lInvalidLinearType -4047
 #define Al_Err_strInvalidLinearType "An invlaid linear joint type was specified."
 
+#define Al_Err_lPartTypeNotStomach -4048
+#define Al_Err_strPartTypeNotStomach "Specified part was not a stomach type."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 #define PI 3.14159

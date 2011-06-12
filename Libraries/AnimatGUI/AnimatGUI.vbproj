@@ -378,10 +378,13 @@
     <Compile Include="DataObjects\Physical\Bodies\LinearHillMuscle.vb" />
     <Compile Include="DataObjects\Physical\Bodies\LinearHillStretchReceptor.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Mesh.vb" />
+    <Compile Include="DataObjects\Physical\Bodies\Mouth.vb" />
     <Compile Include="DataObjects\Physical\Bodies\MuscleBase.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Plane.vb" />
+    <Compile Include="DataObjects\Physical\Bodies\Sensor.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Sphere.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Spring.vb" />
+    <Compile Include="DataObjects\Physical\Bodies\Stomach.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Terrain.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Torus.vb" />
     <Compile Include="DataObjects\Physical\BodyPart.vb">

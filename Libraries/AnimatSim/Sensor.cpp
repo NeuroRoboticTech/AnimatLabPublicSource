@@ -133,6 +133,9 @@ BOOL Sensor::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Sensor::Initialize() 
+{}
+
 // There are no parts or joints to create for muscle attachment points.
 void Sensor::CreateParts()
 {}

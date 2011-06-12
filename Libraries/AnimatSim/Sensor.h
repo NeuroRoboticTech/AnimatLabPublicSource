@@ -72,6 +72,7 @@ namespace AnimatSim
 					virtual void CreateParts();
 					virtual void CreateJoints();
 
+					virtual void Initialize();
 					virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 					virtual void Load(CStdXml &oXml);
 				};

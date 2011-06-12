@@ -47,8 +47,6 @@ namespace AnimatSim
 **/
 Mouth::Mouth()
 {
-	m_strID = "MOUTH";
-	m_strName = "Mouth";
 	m_lpStomach = NULL;
 	m_fltEatingRate = 0;
 	m_fltMinFoodRadius = 10;
@@ -80,15 +78,65 @@ Mouth::~Mouth()
 **/
 float Mouth::EatingRate() {return m_fltEatingRate;}
 
-float Mouth::MinFoodRadius() {return m_fltRadius;}
+float Mouth::MinFoodRadius() {return m_fltMinFoodRadius;}
 
 void Mouth::MinFoodRadius(float fltVal, BOOL bUseScaling)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "Mouth.MinFoodRadius", TRUE);
 	if(bUseScaling)
-		m_fltRadius = fltVal * m_lpSim->InverseDistanceUnits();
+		m_fltMinFoodRadius = fltVal * m_lpSim->InverseDistanceUnits();
 	else
-		m_fltRadius = fltVal;
+		m_fltMinFoodRadius = fltVal;
+}
+
+/**
+\brief	Sets the Stomach identifier.
+
+\author	dcofer
+\date	6/12/2011
+
+\param	strID	Identifier for the stomach.
+**/
+void Mouth::StomachID(string strID)
+{
+	SetStomachPointer(strID);
+	m_strStomachID = strID;
+}
+
+/**
+\brief	Gets the stomach identifier.
+
+\author	dcofer
+\date	6/12/2011
+
+\return	ID.
+**/
+string Mouth::StomachID() {return m_strStomachID;}
+
+/**
+\brief	Sets the stomach pointer.
+
+\author	dcofer
+\date	6/12/2011
+
+\param	strID	Identifier for the stomach.
+**/
+void Mouth::SetStomachPointer(string strID)
+{
+	if(Std_IsBlank(strID))
+		m_lpStomach = NULL;
+	else
+	{
+		m_lpStomach = dynamic_cast<Stomach *>(m_lpSim->FindByID(strID));
+		if(!m_lpStomach)
+			THROW_PARAM_ERROR(Al_Err_lPartTypeNotStomach, Al_Err_strPartTypeNotStomach, "ID", strID);
+	}
+}
+
+void Mouth::Initialize()
+{
+	Sensor::Initialize();
+	SetStomachPointer(m_strStomachID);
 }
 
 /**
@@ -137,6 +185,32 @@ void Mouth::StepSimulation()
 	}
 }
 
+BOOL Mouth::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(RigidBody::SetData(strType, strValue, FALSE))
+		return TRUE;
+
+	if(strType == "STOMACHID")
+	{
+		StomachID(strValue);
+		return TRUE;
+	}
+
+	if(strType == "MINIMUMFOODRADIUS")
+	{
+		MinFoodRadius(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
+
 float *Mouth::GetDataPointer(string strDataType)
 {
 	string strType = Std_CheckString(strDataType);
@@ -162,11 +236,6 @@ void Mouth::Load(CStdXml &oXml)
 	Sensor::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
-
-	//Override the ID values.
-	//There can only be one mouth per organism and its ID is hardcoded.
-	m_strID = "MOUTH";
-	m_strName = "Mouth";
 
 	MinFoodRadius(oXml.GetChildFloat("MinimumFoodRadius", m_fltMinFoodRadius));
 
