@@ -66,7 +66,7 @@ float Cone::LowerRadius() {return m_fltLowerRadius;}
 void Cone::LowerRadius(float fltVal, BOOL bUseScaling)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "Cone.LowerRadius", TRUE);
-	if(m_fltLowerRadius == 0 && m_fltUpperRadius == 0)
+	if(fltVal == 0 && m_fltUpperRadius == 0)
 		THROW_PARAM_ERROR(Al_Err_lInvalidConeRadius, Al_Err_strInvalidConeRadius, "Body", m_strName);
 
 	if(bUseScaling)
@@ -82,7 +82,7 @@ float Cone::UpperRadius() {return m_fltUpperRadius;}
 void Cone::UpperRadius(float fltVal, BOOL bUseScaling)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "Cone.UpperRadius", TRUE);
-	if(m_fltLowerRadius == 0 && m_fltUpperRadius == 0)
+	if(m_fltLowerRadius == 0 && fltVal == 0)
 		THROW_PARAM_ERROR(Al_Err_lInvalidConeRadius, Al_Err_strInvalidConeRadius, "Body", m_strName);
 
 	if(bUseScaling)

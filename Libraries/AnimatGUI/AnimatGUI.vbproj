@@ -373,6 +373,7 @@
     <Compile Include="DataObjects\Physical\Bodies\Attachment.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Cone.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Cylinder.vb" />
+    <Compile Include="DataObjects\Physical\Bodies\Ellipsoid.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Line.vb" />
     <Compile Include="DataObjects\Physical\Bodies\LinearHillMuscle.vb" />
     <Compile Include="DataObjects\Physical\Bodies\LinearHillStretchReceptor.vb" />
@@ -382,6 +383,7 @@
     <Compile Include="DataObjects\Physical\Bodies\Sphere.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Spring.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Terrain.vb" />
+    <Compile Include="DataObjects\Physical\Bodies\Torus.vb" />
     <Compile Include="DataObjects\Physical\BodyPart.vb">
       <SubType>Code</SubType>
     </Compile>

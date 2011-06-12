@@ -115,17 +115,6 @@ Namespace DataObjects.Physical.Bodies
             m_snHeight = New AnimatGUI.Framework.ScaledNumber(Me, "Height", "meters", "m")
             m_snLowerRadius = New AnimatGUI.Framework.ScaledNumber(Me, "LowerRadius", "meters", "m")
 
-            'Set the default size of the part.
-            If Not Util.Environment Is Nothing Then
-                m_snUpperRadius.ActualValue = 1 * Util.Environment.DistanceUnitValue
-                m_snHeight.ActualValue = 1 * Util.Environment.DistanceUnitValue
-                m_snLowerRadius.ActualValue = 1 * Util.Environment.DistanceUnitValue
-            Else
-                m_snUpperRadius.ActualValue = 1
-                m_snHeight.ActualValue = 1
-                m_snLowerRadius.ActualValue = 1
-            End If
-
         End Sub
 
         Public Overrides Sub ClearIsDirty()

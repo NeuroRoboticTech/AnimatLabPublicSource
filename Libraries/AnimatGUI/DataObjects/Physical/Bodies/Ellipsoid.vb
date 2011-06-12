@@ -14,15 +14,15 @@ Imports AnimatGUI.Framework
 
 Namespace DataObjects.Physical.Bodies
 
-    Public Class Sphere
+    Public Class Ellipsoid
         Inherits Physical.RigidBody
 
 #Region " Attributes "
 
-        Protected m_snRadius As AnimatGUI.Framework.ScaledNumber
-
-        Protected m_iLatitudeSegments As Integer = 50
-        Protected m_iLongtitudeSegments As Integer = 50
+        Protected m_snMajorAxisRadius As AnimatGUI.Framework.ScaledNumber
+        Protected m_snMinorAxisRadius As AnimatGUI.Framework.ScaledNumber
+        Protected m_iLatitudeSegments As Integer
+        Protected m_iLongtitudeSegments As Integer
 
 #End Region
 
@@ -30,38 +30,51 @@ Namespace DataObjects.Physical.Bodies
 
         Public Overrides ReadOnly Property WorkspaceImageName() As String
             Get
-                Return "AnimatGUI.Sphere_Treeview.gif"
+                Return "AnimatGUI.Cone_Treeview.gif"
             End Get
         End Property
 
         Public Overrides ReadOnly Property ButtonImageName() As String
             Get
-                Return "AnimatGUI.Sphere_Button.gif"
+                Return "AnimatGUI.Cone_Button.gif"
             End Get
         End Property
 
         Public Overrides ReadOnly Property Type() As String
             Get
-                Return "Sphere"
+                Return "Ellipsoid"
             End Get
         End Property
 
         Public Overrides ReadOnly Property PartType() As System.Type
             Get
-                Return GetType(AnimatGUI.DataObjects.Physical.Bodies.Sphere)
+                Return GetType(AnimatGUI.DataObjects.Physical.Bodies.Ellipsoid)
             End Get
         End Property
 
-        Public Overridable Property Radius() As AnimatGUI.Framework.ScaledNumber
+        Public Overridable Property MajorAxisRadius() As AnimatGUI.Framework.ScaledNumber
             Get
-                Return m_snRadius
+                Return m_snMajorAxisRadius
             End Get
             Set(ByVal value As AnimatGUI.Framework.ScaledNumber)
                 If value.ActualValue <= 0 Then
-                    Throw New System.Exception("The Radius of the Sphere cannot be less than or equal to zero.")
+                    Throw New System.Exception("The major axis radius of the ellipsoid cannot be less than or equal to zero.")
                 End If
-                SetSimData("Radius", value.ActualValue.ToString, True)
-                m_snRadius.CopyData(value)
+                SetSimData("MajorRadius", value.ActualValue.ToString, True)
+                m_snMajorAxisRadius.CopyData(value)
+            End Set
+        End Property
+
+        Public Overridable Property MinorAxisRadius() As AnimatGUI.Framework.ScaledNumber
+            Get
+                Return m_snMinorAxisRadius
+            End Get
+            Set(ByVal value As AnimatGUI.Framework.ScaledNumber)
+                If value.ActualValue <= 0 Then
+                    Throw New System.Exception("The minor axis radius of the ellipsoid cannot be less than or equal to zero.")
+                End If
+                SetSimData("MinorRadius", value.ActualValue.ToString, True)
+                m_snMinorAxisRadius.CopyData(value)
             End Set
         End Property
 
@@ -71,7 +84,7 @@ Namespace DataObjects.Physical.Bodies
             End Get
             Set(ByVal value As Integer)
                 If value < 10 Then
-                    Throw New System.Exception("The number of latitude segments for the sphere cannot be less than ten.")
+                    Throw New System.Exception("The number of latitude segments for the ellipsoid cannot be less than ten.")
                 End If
                 SetSimData("LatitudeSegments", value.ToString, True)
                 m_iLatitudeSegments = value
@@ -84,11 +97,22 @@ Namespace DataObjects.Physical.Bodies
             End Get
             Set(ByVal value As Integer)
                 If value < 10 Then
-                    Throw New System.Exception("The number of longtitude segments for the sphere cannot be less than ten.")
+                    Throw New System.Exception("The number of Longtitude segments for the ellipsoid cannot be less than ten.")
                 End If
                 SetSimData("LongtitudeSegments", value.ToString, True)
                 m_iLongtitudeSegments = value
             End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property ModuleName() As String
+            Get
+#If Not Debug Then
+                Return "VortexAnimatPrivateSim_VC9.dll"
+#Else
+                Return "VortexAnimatPrivateSim_VC9D.dll"
+#End If
+            End Get
         End Property
 
 #End Region
@@ -96,18 +120,23 @@ Namespace DataObjects.Physical.Bodies
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
             m_strDescription = ""
+            Me.Diffuse = Drawing.Color.Green
 
-            m_snRadius = New AnimatGUI.Framework.ScaledNumber(Me, "Radius", "meters", "m")
+            m_snMajorAxisRadius = New AnimatGUI.Framework.ScaledNumber(Me, "MajorAxisRadius", "meters", "m")
+            m_snMinorAxisRadius = New AnimatGUI.Framework.ScaledNumber(Me, "MinorAxisRadius", "meters", "m")
+            m_iLatitudeSegments = 20
+            m_iLongtitudeSegments = 20
 
         End Sub
 
         Public Overrides Sub ClearIsDirty()
             MyBase.ClearIsDirty()
-            If Not m_snRadius Is Nothing Then m_snRadius.ClearIsDirty()
+            If Not m_snMajorAxisRadius Is Nothing Then m_snMajorAxisRadius.ClearIsDirty()
+            If Not m_snMinorAxisRadius Is Nothing Then m_snMinorAxisRadius.ClearIsDirty()
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As Framework.DataObject, ByVal bCutData As Boolean, ByVal doRoot As Framework.DataObject) As Framework.DataObject
-            Dim oNewNode As New Bodies.Sphere(doParent)
+            Dim oNewNode As New Bodies.Ellipsoid(doParent)
             oNewNode.CloneInternal(Me, bCutData, doRoot)
             If Not doRoot Is Nothing AndAlso doRoot Is Me Then oNewNode.AfterClone(Me, bCutData, doRoot, oNewNode)
             Return oNewNode
@@ -117,10 +146,10 @@ Namespace DataObjects.Physical.Bodies
                                             ByVal doRoot As AnimatGUI.Framework.DataObject)
             MyBase.CloneInternal(doOriginal, bCutData, doRoot)
 
-            Dim doOrig As Bodies.Sphere = DirectCast(doOriginal, Bodies.Sphere)
+            Dim doOrig As Bodies.Ellipsoid = DirectCast(doOriginal, Bodies.Ellipsoid)
 
-            m_snRadius = DirectCast(doOrig.m_snRadius.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
-
+            m_snMajorAxisRadius = DirectCast(doOrig.m_snMajorAxisRadius.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
+            m_snMinorAxisRadius = DirectCast(doOrig.m_snMinorAxisRadius.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_iLatitudeSegments = doOrig.m_iLatitudeSegments
             m_iLongtitudeSegments = doOrig.m_iLongtitudeSegments
 
@@ -128,23 +157,29 @@ Namespace DataObjects.Physical.Bodies
 
         Public Overrides Sub SetDefaultSizes()
             MyBase.SetDefaultSizes()
-            m_snRadius.ActualValue = 1 * Util.Environment.DistanceUnitValue
+            m_snMajorAxisRadius.ActualValue = 0.3 * Util.Environment.DistanceUnitValue
+            m_snMinorAxisRadius.ActualValue = 0.1 * Util.Environment.DistanceUnitValue
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 
             Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag
-            pbNumberBag = m_snRadius.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Lower Radius", pbNumberBag.GetType(), "Radius", _
-                                        "Size", "Sets the radius of the sphere.", pbNumberBag, _
+            pbNumberBag = m_snMajorAxisRadius.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Major Axis Radius", pbNumberBag.GetType(), "MajorAxisRadius", _
+                                        "Size", "Sets the radius of the major axis of the ellipsoid.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+            pbNumberBag = m_snMinorAxisRadius.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Minor Axis Radius", pbNumberBag.GetType(), "MinorAxisRadius", _
+                                        "Size", "Sets the radius of the minor axis of the ellipsoid.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Latitude Segments", Me.LatitudeSegments.GetType(), "LatitudeSegments", _
-                                        "Size", "The number of segments along the latitude direction used to draw the sphere.", Me.LatitudeSegments))
+                                        "Size", "The number of segments used to draw the ellipsoid in the latitude direction.", Me.LatitudeSegments))
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Longtitude Segments", Me.LongtitudeSegments.GetType(), "LongtitudeSegments", _
-                                        "Size", "The number of segments along the longtitude direction used to draw the sphere.", Me.LongtitudeSegments))
+                                        "Size", "The number of segments used to draw the ellipsoid in the longtitude direction.", Me.LongtitudeSegments))
 
         End Sub
 
@@ -154,7 +189,8 @@ Namespace DataObjects.Physical.Bodies
 
             oXml.IntoElem() 'Into RigidBody Element
 
-            m_snRadius.LoadData(oXml, "Radius")
+            m_snMajorAxisRadius.LoadData(oXml, "MajorRadius")
+            m_snMinorAxisRadius.LoadData(oXml, "MinorRadius")
 
             m_iLatitudeSegments = oXml.GetChildInt("LatitudeSegments", m_iLatitudeSegments)
             m_iLongtitudeSegments = oXml.GetChildInt("LongtitudeSegments", m_iLongtitudeSegments)
@@ -168,7 +204,8 @@ Namespace DataObjects.Physical.Bodies
 
             oXml.IntoElem() 'Into Child Elemement
 
-            m_snRadius.SaveData(oXml, "Radius")
+            m_snMajorAxisRadius.SaveData(oXml, "MajorRadius")
+            m_snMinorAxisRadius.SaveData(oXml, "MinorRadius")
 
             oXml.AddChildElement("LatitudeSegments", m_iLatitudeSegments)
             oXml.AddChildElement("LongtitudeSegments", m_iLongtitudeSegments)
@@ -182,7 +219,8 @@ Namespace DataObjects.Physical.Bodies
 
             oXml.IntoElem()
 
-            m_snRadius.SaveSimulationXml(oXml, Me, "Radius")
+            m_snMajorAxisRadius.SaveSimulationXml(oXml, Me, "MajorRadius")
+            m_snMinorAxisRadius.SaveSimulationXml(oXml, Me, "MinorRadius")
 
             oXml.AddChildElement("LatitudeSegments", m_iLatitudeSegments)
             oXml.AddChildElement("LongtitudeSegments", m_iLongtitudeSegments)

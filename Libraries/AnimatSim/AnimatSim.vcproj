@@ -280,6 +280,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Ellipsoid.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\EnablerStimulus.cpp"
 				>
 			</File>
@@ -496,6 +500,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Torus.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\VoltageClamp.cpp"
 				>
 			</File>
@@ -595,6 +603,10 @@
 			</File>
 			<File
 				RelativePath=".\DelayLine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Ellipsoid.h"
 				>
 			</File>
 			<File
@@ -811,6 +823,10 @@
 			</File>
 			<File
 				RelativePath=".\Terrain.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Torus.h"
 				>
 			</File>
 			<File

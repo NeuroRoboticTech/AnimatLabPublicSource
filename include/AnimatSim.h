@@ -95,6 +95,8 @@ namespace AnimatSim
 			class Spring;
 			class Stomach;
 			class Mouth;
+			class Ellipsoid;
+			class Torus;
 		}
 
 		namespace Joints
@@ -180,6 +182,8 @@ using namespace AnimatSim::Recording;
 #include "Plane.h"
 #include "Cylinder.h"
 #include "Cone.h"
+#include "Ellipsoid.h"
+#include "Torus.h"
 #include "Box.h"
 #include "Mesh.h"
 #include "Terrain.h"
