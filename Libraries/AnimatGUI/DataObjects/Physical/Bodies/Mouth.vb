@@ -51,6 +51,7 @@ Namespace DataObjects.Physical.Bodies
                 Return GetType(AnimatGUI.DataObjects.Physical.Bodies.Mouth)
             End Get
         End Property
+
         <Browsable(False)> _
         Public Overridable Property Stomach() As AnimatGUI.TypeHelpers.LinkedBodyPart
             Get

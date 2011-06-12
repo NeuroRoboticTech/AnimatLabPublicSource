@@ -376,6 +376,9 @@
 #define Al_Err_lPartTypeNotStomach -4048
 #define Al_Err_strPartTypeNotStomach "Specified part was not a stomach type."
 
+#define Al_Err_lPartTypeNotOdorType -4049
+#define Al_Err_strPartTypeNotOdorType "Specified part was not an OdorType part."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 #define PI 3.14159

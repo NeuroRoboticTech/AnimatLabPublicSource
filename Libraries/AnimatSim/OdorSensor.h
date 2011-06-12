@@ -30,11 +30,21 @@ namespace AnimatSim
 				/// Pointer to the type odor to detect
 				OdorType *m_lpOdorType;
 
+				/// Identifier for the odor type
+				string m_strOdorTypeID;
+
+				virtual void SetOdorTypePointer(string strID);
+
 			public:
 				OdorSensor();
 				virtual ~OdorSensor();
 
+				virtual void OdorTypeID(string strID);
+				virtual string OdorTypeID();
+
+				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 				virtual float *GetDataPointer(string strDataType);
+				virtual void StepSimulation();
 				virtual void Load(CStdXml &oXml);
 			};
 

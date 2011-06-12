@@ -380,6 +380,7 @@
     <Compile Include="DataObjects\Physical\Bodies\Mesh.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Mouth.vb" />
     <Compile Include="DataObjects\Physical\Bodies\MuscleBase.vb" />
+    <Compile Include="DataObjects\Physical\Bodies\OdorSensor.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Plane.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Sensor.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Sphere.vb" />
