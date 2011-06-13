@@ -48,7 +48,7 @@ Namespace Forms.BodyPlan
             Me.CopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.PasteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.toolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator
-            Me.SelectAllToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+            Me.SelectByTypeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.RelabelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.RelabelSelectedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.CompareItemsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
@@ -60,6 +60,7 @@ Namespace Forms.BodyPlan
             Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator
             Me.AddPartToolStripButton = New System.Windows.Forms.ToolStripButton
             Me.AddJointToolStripButton = New System.Windows.Forms.ToolStripButton
+            Me.CompareItemsToolStripButton = New System.Windows.Forms.ToolStripButton
             Me.EditorMenuStrip.SuspendLayout()
             Me.EditorToolStrip.SuspendLayout()
             Me.SuspendLayout()
@@ -114,7 +115,7 @@ Namespace Forms.BodyPlan
             '
             'EditToolStripMenuItem
             '
-            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddStimulusToolStripMenuItem, Me.toolStripSeparator3, Me.CutToolStripMenuItem, Me.CopyToolStripMenuItem, Me.PasteToolStripMenuItem, Me.toolStripSeparator4, Me.SelectAllToolStripMenuItem, Me.RelabelToolStripMenuItem, Me.RelabelSelectedToolStripMenuItem, Me.CompareItemsToolStripMenuItem})
+            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddStimulusToolStripMenuItem, Me.toolStripSeparator3, Me.CutToolStripMenuItem, Me.CopyToolStripMenuItem, Me.PasteToolStripMenuItem, Me.toolStripSeparator4, Me.SelectByTypeToolStripMenuItem, Me.RelabelToolStripMenuItem, Me.RelabelSelectedToolStripMenuItem, Me.CompareItemsToolStripMenuItem})
             Me.EditToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.MatchOnly
             Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
             Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
@@ -176,12 +177,12 @@ Namespace Forms.BodyPlan
             Me.toolStripSeparator4.Name = "toolStripSeparator4"
             Me.toolStripSeparator4.Size = New System.Drawing.Size(156, 6)
             '
-            'SelectAllToolStripMenuItem
+            'SelectByTypeToolStripMenuItem
             '
-            Me.SelectAllToolStripMenuItem.Image = Global.AnimatGUI.ModuleInformation.SelectByType
-            Me.SelectAllToolStripMenuItem.Name = "SelectAllToolStripMenuItem"
-            Me.SelectAllToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
-            Me.SelectAllToolStripMenuItem.Text = "Select By Type"
+            Me.SelectByTypeToolStripMenuItem.Image = Global.AnimatGUI.ModuleInformation.SelectByType
+            Me.SelectByTypeToolStripMenuItem.Name = "SelectByTypeToolStripMenuItem"
+            Me.SelectByTypeToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
+            Me.SelectByTypeToolStripMenuItem.Text = "Select By Type"
             '
             'RelabelToolStripMenuItem
             '
@@ -206,7 +207,7 @@ Namespace Forms.BodyPlan
             '
             'EditorToolStrip
             '
-            Me.EditorToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddStimulusToolStripButton, Me.SelectByTypeToolStripButton, Me.RelabelToolStripButton, Me.RelabelSelectedToolStripButton, Me.ToolStripSeparator1, Me.AddPartToolStripButton, Me.AddJointToolStripButton})
+            Me.EditorToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddStimulusToolStripButton, Me.SelectByTypeToolStripButton, Me.RelabelToolStripButton, Me.RelabelSelectedToolStripButton, Me.CompareItemsToolStripButton, Me.ToolStripSeparator1, Me.AddPartToolStripButton, Me.AddJointToolStripButton})
             Me.EditorToolStrip.Location = New System.Drawing.Point(0, 0)
             Me.EditorToolStrip.Name = "EditorToolStrip"
             Me.EditorToolStrip.SecurityMgr = Nothing
@@ -282,6 +283,15 @@ Namespace Forms.BodyPlan
             Me.AddJointToolStripButton.Text = "Add Joint "
             Me.AddJointToolStripButton.ToolTipText = "Adds a new joint between two manually selected parts"
             '
+            'CompareItemsToolStripButton
+            '
+            Me.CompareItemsToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.CompareItemsToolStripButton.Image = Util.Application.ToolStripImages.GetImage("AnimatGUI.Equals.gif")
+            Me.CompareItemsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.CompareItemsToolStripButton.Name = "CompareItemsToolStripButton"
+            Me.CompareItemsToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.CompareItemsToolStripButton.Text = "Compare Items "
+            '
             'Editor_ToolStrips
             '
             Me.ClientSize = New System.Drawing.Size(387, 262)
@@ -307,7 +317,7 @@ Namespace Forms.BodyPlan
         Friend WithEvents CopyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents PasteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents toolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
-        Friend WithEvents SelectAllToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents SelectByTypeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents toolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
         Friend WithEvents AddStimulusToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents RelabelToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -321,6 +331,7 @@ Namespace Forms.BodyPlan
         Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
         Friend WithEvents AddPartToolStripButton As System.Windows.Forms.ToolStripButton
         Friend WithEvents AddJointToolStripButton As System.Windows.Forms.ToolStripButton
+        Friend WithEvents CompareItemsToolStripButton As System.Windows.Forms.ToolStripButton
 
 #End Region
 
@@ -500,6 +511,128 @@ Namespace Forms.BodyPlan
 
         End Sub
 
+        Public Overridable Sub AddStimulus()
+            Try
+                If Util.ProjectWorkspace.TreeView.SelectedNodes.Count > 1 OrElse Util.ProjectWorkspace.TreeView.SelectedNodes.Count <= 0 Then
+                    Throw New System.Exception("Please select 1 body part to which you want to add a stimulus.")
+                Else
+                    If Util.ProjectWorkspace.TreeView.SelectedNode.Tag Is Nothing Then
+                        Throw New System.Exception("Please select a body part to which you want to add a stimulus.")
+                    End If
+
+                    If Util.IsTypeOf(Util.ProjectWorkspace.TreeView.SelectedNode.Tag.GetType, GetType(AnimatGUI.DataObjects.Physical.BodyPart), False) Then
+                        Dim doPart As Physical.BodyPart = DirectCast(Util.ProjectWorkspace.TreeView.SelectedNode.Tag, AnimatGUI.DataObjects.Physical.BodyPart)
+                        doPart.SelectStimulusType()
+                    Else
+                        Throw New System.Exception("Please select a body part to which you want to add a stimulus.")
+                    End If
+
+                End If
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Public Overridable Sub SelectByType()
+            Try
+                Dim frmType As New AnimatGUI.Forms.BodyPlan.SelectByType
+
+                frmType.PhysicalStructure = Me.PhysicalStructure
+                If frmType.ShowDialog = DialogResult.OK Then
+
+                    Dim colObjects As New AnimatGUI.Collections.DataObjects(Nothing)
+                    m_doStructure.FindChildrenOfType(frmType.SelectedType, colObjects)
+
+                    Util.ProjectWorkspace.TreeView.ClearSelection()
+
+                    Dim doPart As AnimatGUI.DataObjects.Physical.BodyPart
+                    For Each doData As Framework.DataObject In colObjects
+                        If TypeOf doData Is AnimatGUI.DataObjects.Physical.BodyPart Then
+                            doPart = DirectCast(doData, AnimatGUI.DataObjects.Physical.BodyPart)
+                            doPart.SelectItem(True)
+                        End If
+                    Next
+
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Sub
+
+        Public Overridable Sub Relabel()
+            Try
+                Dim frmRelabel As New AnimatGUI.Forms.BodyPlan.Relabel
+
+                frmRelabel.PhysicalStructure = Me.PhysicalStructure
+                If frmRelabel.ShowDialog = DialogResult.OK Then
+                    Util.Relable(frmRelabel.Items, frmRelabel.txtMatch.Text, frmRelabel.txtReplace.Text)
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Sub
+
+        Public Overridable Sub RelabelSelected()
+            Try
+                Dim frmRelabel As New Forms.RelabelSelected
+
+                If Util.ProjectWorkspace.TreeView.SelectedNodes.Count > 0 Then
+                    If frmRelabel.ShowDialog() = DialogResult.OK Then
+
+                        Dim aryList As New ArrayList
+                        Dim doPart As Physical.BodyPart
+                        For Each tvItem As Crownwood.DotNetMagic.Controls.Node In Util.ProjectWorkspace.TreeView.SelectedNodes
+                            If Not tvItem.Tag Is Nothing Then
+                                If Util.IsTypeOf(tvItem.Tag.GetType, GetType(AnimatGUI.DataObjects.Physical.BodyPart), False) Then
+                                    doPart = DirectCast(tvItem.Tag, AnimatGUI.DataObjects.Physical.BodyPart)
+                                    aryList.Add(doPart)
+                                End If
+                            End If
+                        Next
+
+                        Util.RelableSelected(aryList, frmRelabel.txtNewLabel.Text, frmRelabel.StartWith, frmRelabel.IncrementBy)
+                    End If
+
+                    Me.IsDirty = True
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Sub
+
+        Public Overridable Sub CompareItems()
+
+            Try
+                Dim frmCompare As New AnimatGUI.Forms.Tools.CompareItems
+                frmCompare.PhysicalStructure = Me.PhysicalStructure
+
+                If Util.ProjectWorkspace.TreeView.SelectedNodes.Count < 2 Then
+                    Throw New System.Exception("You must select at least two objects in order to do a comparison.")
+                End If
+
+                frmCompare.SelectedItems().Clear()
+                Dim doPart As Physical.BodyPart
+                For Each tvItem As Crownwood.DotNetMagic.Controls.Node In Util.ProjectWorkspace.TreeView.SelectedNodes
+                    If Not tvItem.Tag Is Nothing Then
+                        If Util.IsTypeOf(tvItem.Tag.GetType, GetType(AnimatGUI.DataObjects.Physical.BodyPart), False) Then
+                            doPart = DirectCast(tvItem.Tag, AnimatGUI.DataObjects.Physical.BodyPart)
+                            frmCompare.SelectedItems.Add(doPart)
+                        End If
+                    End If
+                Next
+                frmCompare.ShowDialog()
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
 #End Region
 
 #Region " Events "
@@ -516,6 +649,46 @@ Namespace Forms.BodyPlan
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+        End Sub
+
+        Private Sub AddStimulusToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddStimulusToolStripMenuItem.Click
+            AddStimulus()
+        End Sub
+
+        Private Sub SelectByTypeToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SelectByTypeToolStripButton.Click
+            SelectByType()
+        End Sub
+
+        Private Sub RelabelToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RelabelToolStripButton.Click
+            Relabel()
+        End Sub
+
+        Private Sub RelabelSelectedToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RelabelSelectedToolStripButton.Click
+            RelabelSelected()
+        End Sub
+
+        Private Sub AddStimulusToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddStimulusToolStripButton.Click
+            AddStimulus()
+        End Sub
+
+        Private Sub CompareItemsToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CompareItemsToolStripButton.Click
+            CompareItems()
+        End Sub
+
+        Private Sub SelectByTypeToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SelectByTypeToolStripMenuItem.Click
+            SelectByType()
+        End Sub
+
+        Private Sub RelabelToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RelabelToolStripMenuItem.Click
+            Relabel()
+        End Sub
+
+        Private Sub RelabelSelectedToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RelabelSelectedToolStripMenuItem.Click
+            RelabelSelected()
+        End Sub
+
+        Private Sub CompareItemsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CompareItemsToolStripMenuItem.Click
+            CompareItems()
         End Sub
 
         Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)

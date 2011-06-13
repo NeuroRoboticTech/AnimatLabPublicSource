@@ -8,9 +8,9 @@ Imports Crownwood.Magic.Common
 Imports AnimatGuiCtrls.Controls
 Imports Crownwood.Magic.Docking
 Imports Crownwood.Magic.Menus
-Imports AnimatTools
-Imports AnimatTools.Framework
-Imports AnimatTools.DataObjects
+Imports AnimatGUI
+Imports AnimatGUI.Framework
+Imports AnimatGUI.DataObjects
 Imports System.Drawing.Printing
 Imports System.Drawing.Imaging
 
@@ -43,7 +43,7 @@ Namespace Forms.BodyPlan
             Me.CopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.PasteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.toolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator
-            Me.SelectAllToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+            Me.SelectByTypeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.RelabelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.RelabelSelectedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.CompareItemsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
@@ -55,6 +55,7 @@ Namespace Forms.BodyPlan
             Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator
             Me.AddPartToolStripButton = New System.Windows.Forms.ToolStripButton
             Me.AddJointToolStripButton = New System.Windows.Forms.ToolStripButton
+            Me.CompareItemsToolStripButton = New System.Windows.Forms.ToolStripButton
             Me.EditorMenuStrip.SuspendLayout()
             Me.EditorToolStrip.SuspendLayout()
             Me.SuspendLayout()
@@ -87,7 +88,7 @@ Namespace Forms.BodyPlan
             Me.PrintToolStripMenuItem.MergeIndex = 6
             Me.PrintToolStripMenuItem.Name = "PrintToolStripMenuItem"
             Me.PrintToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
-            Me.PrintToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
+            Me.PrintToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
             Me.PrintToolStripMenuItem.Text = "&Print"
             '
             'PrintPreviewToolStripMenuItem
@@ -97,7 +98,7 @@ Namespace Forms.BodyPlan
             Me.PrintPreviewToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
             Me.PrintPreviewToolStripMenuItem.MergeIndex = 7
             Me.PrintPreviewToolStripMenuItem.Name = "PrintPreviewToolStripMenuItem"
-            Me.PrintPreviewToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
+            Me.PrintPreviewToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
             Me.PrintPreviewToolStripMenuItem.Text = "Print Pre&view"
             '
             'toolStripSeparator2
@@ -105,11 +106,11 @@ Namespace Forms.BodyPlan
             Me.toolStripSeparator2.MergeAction = System.Windows.Forms.MergeAction.Insert
             Me.toolStripSeparator2.MergeIndex = 8
             Me.toolStripSeparator2.Name = "toolStripSeparator2"
-            Me.toolStripSeparator2.Size = New System.Drawing.Size(140, 6)
+            Me.toolStripSeparator2.Size = New System.Drawing.Size(149, 6)
             '
             'EditToolStripMenuItem
             '
-            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddStimulusToolStripMenuItem, Me.toolStripSeparator3, Me.CutToolStripMenuItem, Me.CopyToolStripMenuItem, Me.PasteToolStripMenuItem, Me.toolStripSeparator4, Me.SelectAllToolStripMenuItem, Me.RelabelToolStripMenuItem, Me.RelabelSelectedToolStripMenuItem, Me.CompareItemsToolStripMenuItem})
+            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddStimulusToolStripMenuItem, Me.toolStripSeparator3, Me.CutToolStripMenuItem, Me.CopyToolStripMenuItem, Me.PasteToolStripMenuItem, Me.toolStripSeparator4, Me.SelectByTypeToolStripMenuItem, Me.RelabelToolStripMenuItem, Me.RelabelSelectedToolStripMenuItem, Me.CompareItemsToolStripMenuItem})
             Me.EditToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.MatchOnly
             Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
             Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
@@ -117,7 +118,6 @@ Namespace Forms.BodyPlan
             '
             'AddStimulusToolStripMenuItem
             '
-            Me.AddStimulusToolStripMenuItem.Image = Global.AnimatTools.ModuleInformation.AddStimulus
             Me.AddStimulusToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
             Me.AddStimulusToolStripMenuItem.MergeIndex = 7
             Me.AddStimulusToolStripMenuItem.Name = "AddStimulusToolStripMenuItem"
@@ -171,37 +171,33 @@ Namespace Forms.BodyPlan
             Me.toolStripSeparator4.Name = "toolStripSeparator4"
             Me.toolStripSeparator4.Size = New System.Drawing.Size(156, 6)
             '
-            'SelectAllToolStripMenuItem
+            'SelectByTypeToolStripMenuItem
             '
-            Me.SelectAllToolStripMenuItem.Image = Global.AnimatTools.ModuleInformation.SelectByType
-            Me.SelectAllToolStripMenuItem.Name = "SelectAllToolStripMenuItem"
-            Me.SelectAllToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
-            Me.SelectAllToolStripMenuItem.Text = "Select By Type"
+            Me.SelectByTypeToolStripMenuItem.Name = "SelectByTypeToolStripMenuItem"
+            Me.SelectByTypeToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
+            Me.SelectByTypeToolStripMenuItem.Text = "Select By Type"
             '
             'RelabelToolStripMenuItem
             '
-            Me.RelabelToolStripMenuItem.Image = Global.AnimatTools.ModuleInformation.Relabel
             Me.RelabelToolStripMenuItem.Name = "RelabelToolStripMenuItem"
             Me.RelabelToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
             Me.RelabelToolStripMenuItem.Text = "Relabel"
             '
             'RelabelSelectedToolStripMenuItem
             '
-            Me.RelabelSelectedToolStripMenuItem.Image = Global.AnimatTools.ModuleInformation.RelabelSelected
             Me.RelabelSelectedToolStripMenuItem.Name = "RelabelSelectedToolStripMenuItem"
             Me.RelabelSelectedToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
             Me.RelabelSelectedToolStripMenuItem.Text = "Relabel Selected"
             '
             'CompareItemsToolStripMenuItem
             '
-            Me.CompareItemsToolStripMenuItem.Image = Global.AnimatTools.ModuleInformation.Equals
             Me.CompareItemsToolStripMenuItem.Name = "CompareItemsToolStripMenuItem"
             Me.CompareItemsToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
             Me.CompareItemsToolStripMenuItem.Text = "Compare Items"
             '
             'EditorToolStrip
             '
-            Me.EditorToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddStimulusToolStripButton, Me.SelectByTypeToolStripButton, Me.RelabelToolStripButton, Me.RelabelSelectedToolStripButton, Me.ToolStripSeparator1, Me.AddPartToolStripButton, Me.AddJointToolStripButton})
+            Me.EditorToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddStimulusToolStripButton, Me.SelectByTypeToolStripButton, Me.RelabelToolStripButton, Me.RelabelSelectedToolStripButton, Me.ToolStripSeparator1, Me.AddPartToolStripButton, Me.AddJointToolStripButton, Me.CompareItemsToolStripButton})
             Me.EditorToolStrip.Location = New System.Drawing.Point(0, 0)
             Me.EditorToolStrip.Name = "EditorToolStrip"
             Me.EditorToolStrip.SecurityMgr = Nothing
@@ -214,7 +210,6 @@ Namespace Forms.BodyPlan
             'AddStimulusToolStripButton
             '
             Me.AddStimulusToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.AddStimulusToolStripButton.Image = Global.AnimatTools.ModuleInformation.AddStimulus
             Me.AddStimulusToolStripButton.ImageTransparentColor = System.Drawing.Color.Cyan
             Me.AddStimulusToolStripButton.Name = "AddStimulusToolStripButton"
             Me.AddStimulusToolStripButton.Size = New System.Drawing.Size(23, 22)
@@ -224,7 +219,6 @@ Namespace Forms.BodyPlan
             'SelectByTypeToolStripButton
             '
             Me.SelectByTypeToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.SelectByTypeToolStripButton.Image = Global.AnimatTools.ModuleInformation.SelectByType
             Me.SelectByTypeToolStripButton.ImageTransparentColor = System.Drawing.Color.Cyan
             Me.SelectByTypeToolStripButton.Name = "SelectByTypeToolStripButton"
             Me.SelectByTypeToolStripButton.Size = New System.Drawing.Size(23, 22)
@@ -234,7 +228,6 @@ Namespace Forms.BodyPlan
             'RelabelToolStripButton
             '
             Me.RelabelToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.RelabelToolStripButton.Image = Global.AnimatTools.ModuleInformation.Relabel
             Me.RelabelToolStripButton.ImageTransparentColor = System.Drawing.Color.Cyan
             Me.RelabelToolStripButton.Name = "RelabelToolStripButton"
             Me.RelabelToolStripButton.Size = New System.Drawing.Size(23, 22)
@@ -244,7 +237,6 @@ Namespace Forms.BodyPlan
             'RelabelSelectedToolStripButton
             '
             Me.RelabelSelectedToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.RelabelSelectedToolStripButton.Image = Global.AnimatTools.ModuleInformation.RelabelSelected
             Me.RelabelSelectedToolStripButton.ImageTransparentColor = System.Drawing.Color.Cyan
             Me.RelabelSelectedToolStripButton.Name = "RelabelSelectedToolStripButton"
             Me.RelabelSelectedToolStripButton.Size = New System.Drawing.Size(23, 22)
@@ -276,6 +268,15 @@ Namespace Forms.BodyPlan
             Me.AddJointToolStripButton.Text = "Add Joint "
             Me.AddJointToolStripButton.ToolTipText = "Adds a new joint between two manually selected parts"
             '
+            'CompareItemsToolStripButton
+            '
+            Me.CompareItemsToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.CompareItemsToolStripButton.Image = CType(resources.GetObject("CompareItemsToolStripButton.Image"), System.Drawing.Image)
+            Me.CompareItemsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.CompareItemsToolStripButton.Name = "CompareItemsToolStripButton"
+            Me.CompareItemsToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.CompareItemsToolStripButton.Text = "Compare Items "
+            '
             'Editor_ToolStrips
             '
             Me.ClientSize = New System.Drawing.Size(387, 262)
@@ -301,7 +302,7 @@ Namespace Forms.BodyPlan
         Friend WithEvents CopyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents PasteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents toolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
-        Friend WithEvents SelectAllToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents SelectByTypeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents toolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
         Friend WithEvents AddStimulusToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents RelabelToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -319,6 +320,51 @@ Namespace Forms.BodyPlan
 #End Region
 
         Private Sub AddPartToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddPartToolStripButton.Click
+
+        End Sub
+
+
+        Private Sub AddStimulusToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddStimulusToolStripButton.Click
+
+        End Sub
+
+        Private Sub SelectByTypeToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SelectByTypeToolStripButton.Click
+
+        End Sub
+
+        Private Sub RelabelToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RelabelToolStripButton.Click
+
+        End Sub
+
+        Private Sub RelabelSelectedToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RelabelSelectedToolStripButton.Click
+
+        End Sub
+
+
+
+        Private Sub RelabelToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RelabelToolStripMenuItem.Click
+
+        End Sub
+
+        Private Sub RelabelSelectedToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RelabelSelectedToolStripMenuItem.Click
+
+        End Sub
+
+        Private Sub CompareItemsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CompareItemsToolStripMenuItem.Click
+
+        End Sub
+
+
+        Private Sub SelectByTypeToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SelectByTypeToolStripMenuItem.Click
+
+        End Sub
+
+        Private Sub AddStimulusToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddStimulusToolStripMenuItem.Click
+
+        End Sub
+        Friend WithEvents CompareItemsToolStripButton As System.Windows.Forms.ToolStripButton
+
+        Private Sub CompareItemsToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CompareItemsToolStripButton.Click
 
         End Sub
     End Class

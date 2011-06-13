@@ -799,6 +799,8 @@ float *RigidBody::GetDataPointer(string strDataType)
 		return &m_fltFoodEaten;
 	if(strType == "ENABLE")
 		return &m_fltEnabled;
+	if(strType == "CONTACTCOUNT")
+		return &m_fltSurfaceContactCount;
 
 	if(m_lpPhysicsMovableItem)
 	{

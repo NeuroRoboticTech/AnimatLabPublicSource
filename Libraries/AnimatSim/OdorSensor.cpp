@@ -109,7 +109,7 @@ BOOL OdorSensor::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(RigidBody::SetData(strType, strValue, FALSE))
+	if(Sensor::SetData(strType, strValue, FALSE))
 		return TRUE;
 
 	if(strType == "ODORTYPEID")

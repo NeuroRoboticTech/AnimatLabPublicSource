@@ -450,6 +450,8 @@ Namespace DataObjects.Physical
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Mass", "Mass", "Kilograms", "Kg", -5000, 5000))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Volume", "Volume", "Cubic Meters", "m^3", -100, 100))
 
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ContactCount", "Contact Count", "", "", 0, 1))
+
             m_thDataTypes.ID = "BodyForceX"
 
             m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("BodyForceX", "Body Force X", "Newtons", "N", -100, 100, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)
