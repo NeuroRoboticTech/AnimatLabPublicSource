@@ -104,16 +104,20 @@ BOOL DataChart::operator<(ActivatedItem *lpItem)
 
 string DataChart::Type() {return "DataChart";}
 
-void DataChart::StartTime(float fltVal) 
+void DataChart::StartTime(float fltVal, BOOL bReInit) 
 {
-	ActivatedItem::StartTime(fltVal);
-	ReInitialize();
+	ActivatedItem::StartTime(fltVal, bReInit);
+	
+	if(bReInit)
+		ReInitialize();
 }
 
-void DataChart::EndTime(float fltVal) 
+void DataChart::EndTime(float fltVal, BOOL bReInit) 
 {
-	ActivatedItem::EndTime(fltVal);
-	ReInitialize();
+	ActivatedItem::EndTime(fltVal, bReInit);
+
+	if(bReInit)
+		ReInitialize();
 }
 
 /**

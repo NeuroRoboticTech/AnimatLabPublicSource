@@ -126,8 +126,11 @@ namespace VortexAnimatSim
 			virtual void Physics_CollectData();
 			virtual float *Physics_GetDataPointer(string strDataType);
 			virtual void Physics_UpdateMatrix();
-			virtual void SetFreeze(BOOL bVal);
-			virtual void SetDensity(float fltVal);
+			virtual void Physics_SetFreeze(BOOL bVal);
+			virtual void Physics_SetDensity(float fltVal);
+			virtual void Physics_SetMaterialID(string strID);
+			virtual void Physics_SetVelocityDamping(float fltLinear, float fltAngular);
+			virtual void Physics_SetCenterOfMass(float fltTx, float fltTy, float fltTz);
 			virtual void Physics_SetColor();
 			virtual void Physics_TextureChanged();
 			virtual void Physics_UpdateNode();

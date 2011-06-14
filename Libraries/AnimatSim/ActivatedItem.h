@@ -77,16 +77,16 @@ namespace AnimatSim
 		virtual void LoadedTime(BOOL bVal);
 
 		virtual long StartSlice();
-		virtual void StartSlice(long lVal);
+		virtual void StartSlice(long lVal, BOOL bReInit = TRUE);
 
 		virtual long EndSlice();
-		virtual void EndSlice(long lVal);
+		virtual void EndSlice(long lVal, BOOL bReInit = TRUE);
 
 		virtual float StartTime();
-		virtual void StartTime(float fltVal);
+		virtual void StartTime(float fltVal, BOOL bReInit = TRUE);
 
 		virtual float EndTime();
-		virtual void EndTime(float fltVal);
+		virtual void EndTime(float fltVal, BOOL bReInit = TRUE);
 
 		virtual int StepInterval();
 		virtual void StepInterval(int iVal);

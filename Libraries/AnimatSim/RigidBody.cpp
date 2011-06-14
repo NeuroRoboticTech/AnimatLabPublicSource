@@ -124,17 +124,65 @@ only used if the user sets it to something.
 
 \return	COM point. 
 **/
-CStdFPoint RigidBody::CenterOfMass() {return m_oCenterOfMass;}
+CStdFPoint RigidBody::CenterOfMass() {return m_vCenterOfMass;}
 
 /**
-\brief	Sets the user specified center of mass for this part. 
+\brief	Sets the user specified center of mass for this part. (m_vCenterOfMass). If COM is (0,0,0) then it is not used.   
 
 \author	dcofer
 \date	3/2/2011
 
 \param [in,out]	oPoint	The point. 
 **/
-void RigidBody::CenterOfMass(CStdFPoint &oPoint) {m_oCenterOfMass = oPoint;}
+void RigidBody::CenterOfMass(CStdFPoint &vPoint, BOOL bUseScaling)
+{
+	if(bUseScaling)
+		m_vCenterOfMass = vPoint * m_lpMovableSim->InverseDistanceUnits();
+	else
+		m_vCenterOfMass = vPoint;
+}
+
+/**
+\brief	Sets the center of mass position. (m_vCenterOfMass). If COM is (0,0,0) then it is not used.  
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltX				The x coordinate. 
+\param	fltY				The y coordinate. 
+\param	fltZ				The z coordinate. 
+\param	bUseScaling			If true then the position values that are passed in will be scaled by
+							the unit scaling values. 
+**/
+void RigidBody::CenterOfMass(float fltX, float fltY, float fltZ, BOOL bUseScaling)
+{
+	CStdFPoint vPos(fltX, fltY, fltZ);
+	CenterOfMass(vPos, bUseScaling);
+}
+
+/**
+\brief	Sets the center of mass position for the body. (m_vCenterOfMass). This method is primarily used by the GUI to
+reset the local position using an xml data packet. If COM is (0,0,0) then it is not used. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml				The xml string with the data to load in the position. 
+\param	bUseScaling			If true then the position values that are passed in will be scaled by
+							the unit scaling values. 
+**/
+void RigidBody::CenterOfMass(string strXml, BOOL bUseScaling)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("COM");
+	
+	CStdFPoint vPos;
+	Std_LoadPoint(oXml, "COM", vPos);
+	CenterOfMass(vPos, bUseScaling);
+}
+
 
 /**
 \brief	Gets the array of child parts. 
@@ -195,16 +243,19 @@ float RigidBody::Density() {return m_fltDensity;}
 \param	fltVal	The new density value. 
 \exception Density must be greater than zero.
 **/
-void RigidBody::Density(float fltVal) 
+void RigidBody::Density(float fltVal, BOOL bUseScaling) 
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "Density");
 
 	m_fltDensity = fltVal;
-	m_fltDensity /= m_lpSim->DensityMassUnits();	//Scale the mass units down to one. If we are using Kg then the editor will save it out as 1000. We need this to be 1 Kg though.
-	m_fltDensity *=  pow(m_lpSim->DenominatorDistanceUnits(), 3); //Perform a conversion if necessary because we may be using different units in the denominator.
+	if(bUseScaling)
+	{
+		m_fltDensity /= m_lpSim->DensityMassUnits();	//Scale the mass units down to one. If we are using Kg then the editor will save it out as 1000. We need this to be 1 Kg though.
+		m_fltDensity *=  pow(m_lpSim->DenominatorDistanceUnits(), 3); //Perform a conversion if necessary because we may be using different units in the denominator.
+	}
 
 	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->SetDensity(m_fltDensity);
+		m_lpPhysicsBody->Physics_SetDensity(m_fltDensity);
 };
 
 /**
@@ -226,7 +277,28 @@ float *RigidBody::Cd() {return m_vCd;}
 \param [in,out]	vVal Pointer to a dimension 3 array of drag coefficients.
 **/
 void RigidBody::Cd(float *vVal) 
-{m_vCd[0] = vVal[0]; m_vCd[1] = vVal[1]; m_vCd[2] = vVal[2];}
+{
+	Std_IsAboveMin((float) 0, m_vCd[0], TRUE, "Cd x", true);
+	Std_IsAboveMin((float) 0, m_vCd[1], TRUE, "Cd y", true);
+	Std_IsAboveMin((float) 0, m_vCd[2], TRUE, "Cd z", true);
+
+	m_vCd[0] = vVal[0]; m_vCd[1] = vVal[1]; m_vCd[2] = vVal[2];
+}
+
+/**
+\brief	Sets the drag coefficients for each dimension using the same value.
+
+\author	dcofer
+\date	6/14/2011
+
+\param	fltVal	The new value.
+**/
+void RigidBody::Cd(float fltVal)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Cd x", true);
+
+	m_vCd[0] = m_vCd[1] = m_vCd[2] = fltVal;
+}
 
 /**
 \brief	Gets the volume of this part. 
@@ -300,7 +372,7 @@ void RigidBody::Freeze(BOOL bVal)
 	m_bFreeze = bVal;
 
 	if(m_lpPhysicsBody)
-		m_lpPhysicsBody->SetFreeze(bVal);
+		m_lpPhysicsBody->Physics_SetFreeze(bVal);
 }
 
 /**
@@ -397,7 +469,7 @@ float RigidBody::FoodQuantity() {return m_fltFoodQuantity;}
 **/
 void RigidBody::FoodQuantity(float fltVal) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "FoodQuantity", TRUE);
+	Std_InValidRange((float) 0, (float) 100000, fltVal, TRUE, "FoodQuantity");
 	m_fltFoodQuantity = fltVal;
 }
 
@@ -439,7 +511,11 @@ float RigidBody::FoodReplenishRate() {return m_fltFoodReplenishRate;}
 
 \param	fltVal	The new replenish rate. 
 **/
-void RigidBody::FoodReplenishRate(float fltVal) {m_fltFoodReplenishRate = fltVal;}
+void RigidBody::FoodReplenishRate(float fltVal) 
+{
+	Std_InValidRange((float) 0, (float) 100000, fltVal, TRUE, "FoodReplenishRate");
+	m_fltFoodReplenishRate = fltVal;
+}
 
 /**
 \brief	Gets the food energy content. 
@@ -462,8 +538,32 @@ float RigidBody::FoodEnergyContent() {return m_fltFoodEnergyContent;}
 **/
 void RigidBody::FoodEnergyContent(float fltVal) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "FoodEnergyContent", TRUE);
+	Std_InValidRange((float) 0, (float) 100000, fltVal, TRUE, "FoodEnergyContent");
 	m_fltFoodEnergyContent = fltVal;
+}
+/**
+\brief	Gets the maximum food quantity. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Food Quantity. 
+**/
+float RigidBody::MaxFoodQuantity() {return m_fltMaxFoodQuantity;}
+
+/**
+\brief	Sets the maximum Food quantity. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltVal	The new food quantity value. 
+\exception Food Quantity must be zero or greater.
+**/
+void RigidBody::MaxFoodQuantity(float fltVal) 
+{
+	Std_InValidRange((float) 0, (float) 100000, fltVal, TRUE, "MaxFoodQuantity");
+	m_fltMaxFoodQuantity = fltVal;
 }
 
 /**
@@ -485,10 +585,16 @@ float RigidBody::LinearVelocityDamping() {return m_fltLinearVelocityDamping;}
 \param	fltVal	The new value. 
 \exception Value must be zero or greater.
 **/
-void RigidBody::LinearVelocityDamping(float fltVal) 
+void RigidBody::LinearVelocityDamping(float fltVal, BOOL bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "LinearVelocityDamping", TRUE);
+	Std_InValidRange((float) 0, (float) 1000, fltVal, TRUE, "RigidBody::LinearVelocityDamping");
+
+	if(bUseScaling)
+		fltVal = fltVal/m_lpSim->DensityMassUnits();
 	m_fltLinearVelocityDamping = fltVal;
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_SetVelocityDamping(m_fltLinearVelocityDamping, m_fltAngularVelocityDamping);
 }
 
 /**
@@ -510,10 +616,16 @@ float RigidBody::AngularVelocityDamping() {return m_fltAngularVelocityDamping;}
 \param	fltVal	The new value. 
 \exception Value must be zero or greater.
 **/
-void RigidBody::AngularVelocityDamping(float fltVal) 
+void RigidBody::AngularVelocityDamping(float fltVal, BOOL bUseScaling) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "AngularVelocityDamping", TRUE);
+	Std_InValidRange((float) 0, (float) 1000, fltVal, TRUE, "RigidBody::AngularVelocityDamping");
+
+	if(bUseScaling)
+		fltVal = fltVal/m_lpSim->DensityMassUnits();
 	m_fltAngularVelocityDamping = fltVal;
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_SetVelocityDamping(m_fltLinearVelocityDamping, m_fltAngularVelocityDamping);
 }
 
 /**
@@ -544,7 +656,13 @@ is defined in the GUI and this is a unique ID string that specifies which one to
 
 \param	strID	ID of the material to use. 
 **/
-void RigidBody::MaterialID(string strID) {m_strMaterialID = strID;}
+void RigidBody::MaterialID(string strID) 
+{
+	m_strMaterialID = Std_ToUpper(strID);
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_SetMaterialID(m_strMaterialID);
+}
 
 /**
 \brief	Gets the surface contact count. 
@@ -832,6 +950,42 @@ BOOL RigidBody::SetData(string strDataType, string strValue, BOOL bThrowError)
 		return TRUE;
 	}
 
+	if(strType == "COM")
+	{
+		CenterOfMass(strValue);
+		return TRUE;
+	}
+
+	if(strType == "FOODSOURCE")
+	{
+		IsFoodSource(Std_ToBool(strValue));
+		return TRUE;
+	}
+	
+	if(strType == "FOODQUANTITY")
+	{
+		FoodQuantity(atof(strValue.c_str()));
+		return TRUE;
+	}
+	
+	if(strType == "MAXFOODQUANTITY")
+	{
+		MaxFoodQuantity(atof(strValue.c_str()));
+		return TRUE;
+	}
+	
+	if(strType == "FOODREPLINISHRATE")
+	{
+		FoodReplenishRate(atof(strValue.c_str()));
+		return TRUE;
+	}
+	
+	if(strType == "FOODENERGYCONTENT")
+	{
+		FoodEnergyContent(atof(strValue.c_str()));
+		return TRUE;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -973,7 +1127,7 @@ void RigidBody::LoadPosition(CStdXml &oXml)
 
 void RigidBody::Load(CStdXml &oXml)
 {
-	m_fltDensity = 0;
+
 	if(m_lpJointToParent) {delete m_lpJointToParent; m_lpJointToParent=NULL;}
 	m_aryChildParts.RemoveAll();
 
@@ -982,45 +1136,30 @@ void RigidBody::Load(CStdXml &oXml)
 	oXml.IntoElem();  //Into RigidBody Element
 
 	if(oXml.FindChildElement("COM", FALSE))
-		Std_LoadPoint(oXml, "COM", m_oCenterOfMass);
+	{
+		CStdFPoint vCOM;
+		Std_LoadPoint(oXml, "COM", vCOM);
+		CenterOfMass(vCOM, TRUE);
+	}
 	else
-		m_oCenterOfMass.Set(0, 0, 0);
-
-	m_oCenterOfMass *= m_lpSim->InverseDistanceUnits();
+		CenterOfMass(0, 0, 0, TRUE);
 
 	Density(oXml.GetChildFloat("Density", m_fltDensity));
 
-	m_vCd[0] = m_vCd[1] = m_vCd[2] = oXml.GetChildFloat("Cd", 0);
+	Cd(oXml.GetChildFloat("Cd", 0));
+	MaterialID(oXml.GetChildString("MaterialID", m_strMaterialID));
+	Freeze(oXml.GetChildBool("Freeze", m_bFreeze));
+	IsContactSensor(oXml.GetChildBool("IsContactSensor", m_bIsContactSensor));
+	IsCollisionObject(oXml.GetChildBool("IsCollisionObject", m_bIsCollisionObject));
 
-	if(m_lpSim->SimulateHydrodynamics())
-	{
-		Std_IsAboveMin((float) 0, m_vCd[0], TRUE, "Cd x", true);
-		Std_IsAboveMin((float) 0, m_vCd[1], TRUE, "Cd y", true);
-		Std_IsAboveMin((float) 0, m_vCd[2], TRUE, "Cd z", true);
-	}
+	IsFoodSource(oXml.GetChildBool("FoodSource", m_bFoodSource));
+	FoodQuantity(oXml.GetChildFloat("FoodQuantity", m_fltFoodQuantity));
+	MaxFoodQuantity(oXml.GetChildFloat("MaxFoodQuantity", m_fltMaxFoodQuantity));
+	FoodReplenishRate(oXml.GetChildFloat("FoodReplenishRate", m_fltFoodReplenishRate));
+	FoodEnergyContent(oXml.GetChildFloat("FoodEnergyContent", m_fltFoodEnergyContent));
 
-	m_strMaterialID = Std_ToUpper(oXml.GetChildString("MaterialID", m_strMaterialID));
-
-	m_bFreeze = oXml.GetChildBool("Freeze", m_bFreeze);
-	m_bIsContactSensor = oXml.GetChildBool("IsContactSensor", m_bIsContactSensor);
-	m_bIsCollisionObject = oXml.GetChildBool("IsCollisionObject", m_bIsCollisionObject);
-
-	m_bFoodSource = oXml.GetChildBool("FoodSource", m_bFoodSource);
-	m_fltFoodQuantity = oXml.GetChildFloat("FoodQuantity", m_fltFoodQuantity);
-	m_fltMaxFoodQuantity = oXml.GetChildFloat("MaxFoodQuantity", m_fltMaxFoodQuantity);
-	m_fltFoodReplenishRate = oXml.GetChildFloat("FoodReplenishRate", m_fltFoodReplenishRate);
-	m_fltFoodEnergyContent = oXml.GetChildFloat("FoodEnergyContent", m_fltFoodEnergyContent);
-
-	Std_InValidRange((float) 0, (float) 100000, m_fltFoodQuantity, TRUE, "FoodQuantity");
-	Std_InValidRange((float) 0, (float) 100000, m_fltFoodQuantity, TRUE, "MaxFoodQuantity");
-	Std_InValidRange((float) 0, (float) 100000, m_fltFoodReplenishRate, TRUE, "FoodReplenishRate");
-	Std_InValidRange((float) 0, (float) 100000, m_fltFoodEnergyContent, TRUE, "FoodEnergyContent");
-
-	m_fltLinearVelocityDamping = oXml.GetChildFloat("LinearVelocityDamping", m_fltLinearVelocityDamping);
-	m_fltAngularVelocityDamping = oXml.GetChildFloat("AngularVelocityDamping", m_fltAngularVelocityDamping);
-
-	Std_InValidRange((float) 0, (float) 1000, m_fltLinearVelocityDamping, TRUE, "LinearVelocityDamping");
-	Std_InValidRange((float) 0, (float) 1000, m_fltAngularVelocityDamping, TRUE, "AngularVelocityDamping");
+	LinearVelocityDamping(oXml.GetChildFloat("LinearVelocityDamping", m_fltLinearVelocityDamping));
+	AngularVelocityDamping(oXml.GetChildFloat("AngularVelocityDamping", m_fltAngularVelocityDamping));
 
 	//Only load the joint if there is a parent object and this body uses joints.
 	if(m_lpParent && m_bUsesJoint)

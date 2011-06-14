@@ -14,8 +14,11 @@ namespace AnimatSim
 			IPhysicsBody(void);
 			virtual ~IPhysicsBody(void);
 
-			virtual void SetFreeze(BOOL bVal) = 0;
-			virtual void SetDensity(float fltVal) = 0;
+			virtual void Physics_SetFreeze(BOOL bVal) = 0;
+			virtual void Physics_SetDensity(float fltVal) = 0;
+			virtual void Physics_SetMaterialID(string strID) = 0;
+			virtual void Physics_SetVelocityDamping(float fltLinear, float fltAngular) = 0;
+			virtual void Physics_SetCenterOfMass(float fltTx, float fltTy, float fltTz) = 0;
 
 			virtual void Physics_UpdateNode() = 0;
 			virtual void Physics_EnableCollision(RigidBody *lpBody) = 0;
@@ -25,6 +28,7 @@ namespace AnimatSim
 			virtual CStdFPoint Physics_GetVelocityAtPoint(float x, float y, float z) = 0;
 			virtual float Physics_GetMass() = 0;
 			virtual void Physics_Resize() = 0;
+
 		};
 
 	}

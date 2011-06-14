@@ -128,16 +128,45 @@ void VsRigidBody::Physics_TextureChanged()
 	SetTexture(m_lpThisRB->Texture());
 }
 
-void VsRigidBody::SetFreeze(BOOL bVal)
+void VsRigidBody::Physics_SetFreeze(BOOL bVal)
 {
 	if(m_vxSensor)
 		m_vxSensor->freeze(bVal);
 }
 
-void VsRigidBody::SetDensity(float fltVal)
+void VsRigidBody::Physics_SetDensity(float fltVal)
 {
 	if(m_vxSensor)
 		m_vxCollisionGeometry->setRelativeDensity(fltVal);
+}
+
+void VsRigidBody::Physics_SetMaterialID(string strID)
+{
+	if(m_vxCollisionGeometry)
+	{
+		int iMaterialID = m_lpThisAB->GetSimulator()->GetMaterialID(strID);
+	
+		if(iMaterialID >= 0)
+			m_vxCollisionGeometry->setMaterialID(iMaterialID);
+	}
+}
+
+void VsRigidBody::Physics_SetVelocityDamping(float fltLinear, float fltAngular)
+{
+	if(m_vxPart && fltLinear > 0)
+		m_vxPart->setLinearVelocityDamping(fltLinear);
+
+	if(m_vxPart && fltAngular > 0)
+		m_vxPart->setAngularVelocityDamping(fltAngular);
+}
+
+void VsRigidBody::Physics_SetCenterOfMass(float fltTx, float fltTy, float fltTz)
+{
+	if(m_vxPart)
+	{
+		if(fltTx != 0 || fltTy != 0 || fltTz != 0)
+			m_vxPart->setCOMOffset(fltTx, fltTy, fltTz);
+	}
 }
 
 void VsRigidBody::Physics_Resize()

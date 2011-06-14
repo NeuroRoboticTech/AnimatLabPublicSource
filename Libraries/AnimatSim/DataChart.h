@@ -84,8 +84,8 @@ namespace AnimatSim
 
 			virtual string Type();
 
-			virtual void StartTime(float fltVal);
-			virtual void EndTime(float fltVal);
+			virtual void StartTime(float fltVal, BOOL bReInit = TRUE);
+			virtual void EndTime(float fltVal, BOOL bReInit = TRUE);
 
 			virtual BOOL SetStartEndTime();
 			virtual void SetStartEndTime(BOOL bVal);

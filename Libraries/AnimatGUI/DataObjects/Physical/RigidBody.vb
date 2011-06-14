@@ -143,6 +143,7 @@ Namespace DataObjects.Physical
                 Return m_svCOM
             End Get
             Set(ByVal value As Framework.ScaledVector3)
+                Me.SetSimData("COM", value.GetSimulationXml("COM"), True)
                 m_svCOM.CopyData(value)
             End Set
         End Property
@@ -314,6 +315,7 @@ Namespace DataObjects.Physical
                 Return m_bFoodSource
             End Get
             Set(ByVal Value As Boolean)
+                Me.SetSimData("FoodSource", Value.ToString, True)
                 m_bFoodSource = Value
 
                 Util.ProjectProperties.RefreshProperties()
@@ -328,6 +330,7 @@ Namespace DataObjects.Physical
                 If Value.ActualValue < 0 Then
                     Throw New System.Exception("The food quantity can not be less than zero.")
                 End If
+                Me.SetSimData("FoodQuantity", Value.ToString, True)
 
                 m_snFoodQuantity.CopyData(Value)
             End Set
@@ -341,6 +344,7 @@ Namespace DataObjects.Physical
                 If Value.ActualValue < 0 Then
                     Throw New System.Exception("The max food quantity can not be less than zero.")
                 End If
+                Me.SetSimData("MaxFoodQuantity", Value.ToString, True)
 
                 m_snMaxFoodQuantity.CopyData(Value)
             End Set
@@ -354,6 +358,7 @@ Namespace DataObjects.Physical
                 If Value.ActualValue < 0 Then
                     Throw New System.Exception("The food replenish rate can not be less than zero.")
                 End If
+                Me.SetSimData("FoodReplenishRate", Value.ToString, True)
 
                 m_snFoodReplenishRate.CopyData(Value)
             End Set
@@ -367,6 +372,7 @@ Namespace DataObjects.Physical
                 If Value.ActualValue < 0 Then
                     Throw New System.Exception("The food Eenergy content can not be less than zero.")
                 End If
+                Me.SetSimData("FoodEnergyContent", Value.ToString, True)
 
                 m_snFoodEnergyContent.CopyData(Value)
             End Set

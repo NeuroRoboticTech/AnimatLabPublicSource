@@ -68,7 +68,7 @@ namespace AnimatSim
 		protected:
 			///The center of mass of this body relative to the center of the object. If this
 			///is (0, 0, 0) then the default COM is used.
-			CStdFPoint m_oCenterOfMass;
+			CStdFPoint m_vCenterOfMass;
 
 			///Specifies if the part should frozen in place to the world. If a rigid body 
 			///is frozen then it is as if it is nailed in place and can not move. Gravity and 
@@ -178,7 +178,9 @@ namespace AnimatSim
 			virtual int VisualSelectionType();
 
 			virtual CStdFPoint CenterOfMass();
-			virtual void CenterOfMass(CStdFPoint &oPoint);
+			virtual void CenterOfMass(CStdFPoint &vPoint, BOOL bUseScaling = TRUE);
+			virtual void CenterOfMass(float fltX, float fltY, float fltZ, BOOL bUseScaling = TRUE);
+			virtual void CenterOfMass(string strXml, BOOL bUseScaling = TRUE);
 
 			virtual CStdPtrArray<RigidBody>* ChildParts();
 
@@ -188,10 +190,11 @@ namespace AnimatSim
 			virtual ContactSensor *ContactSensor();
 
 			virtual float Density();
-			virtual void Density(float fltVal);
+			virtual void Density(float fltVal, BOOL bUseScaling = TRUE);
 
 			virtual float *Cd();
 			virtual void Cd(float *vVal);
+			virtual void Cd(float fltVal);
 
 			virtual float Volume();
 			virtual float XArea();
@@ -224,11 +227,14 @@ namespace AnimatSim
 			virtual float FoodEnergyContent();
 			virtual void FoodEnergyContent(float fltVal);
 
+			virtual float MaxFoodQuantity();
+			virtual void MaxFoodQuantity(float fltVal);
+
 			virtual float LinearVelocityDamping();
-			virtual void LinearVelocityDamping(float fltVal);
+			virtual void LinearVelocityDamping(float fltVal, BOOL bUseScaling = TRUE);
 
 			virtual float AngularVelocityDamping();
-			virtual void AngularVelocityDamping(float fltVal);
+			virtual void AngularVelocityDamping(float fltVal, BOOL bUseScaling = TRUE);
 
 			virtual string MaterialID();
 			virtual void MaterialID(string strID);

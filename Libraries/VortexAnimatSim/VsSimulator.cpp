@@ -117,8 +117,16 @@ void VsSimulator::Gravity(float fltVal, BOOL bUseScaling)
 
 int VsSimulator::GetMaterialID(string strID)
 {
-	VxMaterialTable *lpMat = m_vxFrame->getMaterialTable();
-	return lpMat->getMaterialID(strID.c_str());
+	if(m_vxFrame)
+	{
+		VxMaterialTable *lpMat = m_vxFrame->getMaterialTable();
+		
+		if(lpMat)
+			return lpMat->getMaterialID(strID.c_str());
+		return -1;
+	}
+
+	return -1;
 }
 
 #pragma endregion

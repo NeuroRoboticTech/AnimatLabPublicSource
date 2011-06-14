@@ -143,9 +143,15 @@ long ActivatedItem::StartSlice()
 \date	3/1/2011
 
 \param	lVal	The start time slice for activation. 
+\param bReInit Used by other types of activated items like charts to tell if they need to reinitialize or not.
 **/
-void ActivatedItem::StartSlice(long lVal) 
-{m_lStartSlice = lVal;}
+void ActivatedItem::StartSlice(long lVal, BOOL bReInit) 
+{
+	Std_IsAboveMin((long) -1, lVal, TRUE, "StartSlice");
+	Std_IsBelowMax(m_lEndSlice, lVal, TRUE, "StartSlice");
+
+	m_lStartSlice = lVal;
+}
 
 /**
 \fn	long ActivatedItem::EndSlice()
@@ -169,9 +175,15 @@ long ActivatedItem::EndSlice()
 \date	3/1/2011
 
 \param	lVal	The ends time slice for deactivation. 
+\param bReInit Used by other types of activated items like charts to tell if they need to reinitialize or not.
 **/
-void ActivatedItem::EndSlice(long lVal) 
-{m_lEndSlice = lVal;}
+void ActivatedItem::EndSlice(long lVal, BOOL bReInit) 
+{
+	Std_IsAboveMin((long) -1, lVal, TRUE, "EndSlice");
+	Std_IsAboveMin(m_lStartSlice, lVal, TRUE, "EndSlice");
+
+	m_lEndSlice = lVal;
+}
 
 /**
 \fn	float ActivatedItem::StartTime()
@@ -195,9 +207,13 @@ float ActivatedItem::StartTime()
 \date	3/1/2011
 
 \param	fltVal	The simulation time for activation. 
+\param bReInit Used by other types of activated items like charts to tell if they need to reinitialize or not.
 **/
-void ActivatedItem::StartTime(float fltVal) 
+void ActivatedItem::StartTime(float fltVal, BOOL bReInit) 
 {
+	Std_IsAboveMin((float) -1, fltVal, TRUE, "StartTime");
+	Std_IsBelowMax(m_fltEndTime, fltVal, TRUE, "StartTime");
+
 	m_fltStartTime = fltVal;
 	m_lStartSlice = (long) (m_fltStartTime / m_lpSim->TimeStep() + 0.5);
 }
@@ -224,9 +240,13 @@ float ActivatedItem::EndTime()
 \date	3/1/2011
 
 \param	fltVal	The ends simulation time for deactivation. 
+\param bReInit Used by other types of activated items like charts to tell if they need to reinitialize or not.
 **/
-void ActivatedItem::EndTime(float fltVal) 
+void ActivatedItem::EndTime(float fltVal, BOOL bReInit) 
 {
+	Std_IsAboveMin((float) -1, fltVal, TRUE, "EndTime");
+	Std_IsAboveMin(m_fltStartTime, fltVal, TRUE, "EndTime");
+
 	m_fltEndTime = fltVal;
 	m_lEndSlice = (long) (m_fltEndTime / m_lpSim->TimeStep() + 0.5);
 }
@@ -255,7 +275,11 @@ int ActivatedItem::StepInterval()
 \param	iVal The step interval value. 
 **/
 void ActivatedItem::StepInterval(int iVal) 
-{m_iStepInterval = iVal;}
+{
+	Std_IsAboveMin((int) 0, iVal, TRUE, "StepInterval");	
+
+	m_iStepInterval = iVal;
+}
 
 /**
 \fn	int ActivatedItem::StepIntervalCount()
@@ -535,34 +559,23 @@ void ActivatedItem::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Item Element
 
-	m_bEnabled = oXml.GetChildBool("Enabled", m_bEnabled);
+	Enabled(oXml.GetChildBool("Enabled", m_bEnabled));
 
 	if(oXml.FindChildElement("StartTime", FALSE))
 	{
 		m_bLoadedTime = TRUE;
-		m_fltStartTime = oXml.GetChildFloat("StartTime");
-		m_fltEndTime = oXml.GetChildFloat("EndTime");
-
-		m_lStartSlice = (long) (m_fltStartTime / m_lpSim->TimeStep() + 0.5);
-		m_lEndSlice = (long) (m_fltEndTime / m_lpSim->TimeStep() + 0.5);
-
-		Std_IsAboveMin((float) -1, m_fltStartTime, TRUE, "StartTime");
-		Std_IsAboveMin(m_fltStartTime, m_fltEndTime, TRUE, "EndTime");
+		EndTime(oXml.GetChildFloat("EndTime"), FALSE);
+		StartTime(oXml.GetChildFloat("StartTime"), FALSE);
 	}
 	else
 	{
 		m_bLoadedTime = FALSE;
-		m_lStartSlice = oXml.GetChildLong("StartSlice");
-		m_lEndSlice = oXml.GetChildLong("EndSlice");
-
-		Std_IsAboveMin((long) -1, m_lStartSlice, TRUE, "StartSlice");
-		Std_IsAboveMin(m_lStartSlice, m_lEndSlice, TRUE, "EndSlice");
+		EndSlice(oXml.GetChildLong("EndSlice"), FALSE);
+		StartSlice(oXml.GetChildLong("StartSlice"), FALSE);
 	}
 
-	m_iStepInterval = oXml.GetChildInt("StepInterval", m_iStepInterval);
-	Std_IsAboveMin((int) 0, m_iStepInterval, TRUE, "StepInterval");	
-
-	m_bAlwaysActive = oXml.GetChildBool("AlwaysActive", m_bAlwaysActive);
+	StepInterval(oXml.GetChildInt("StepInterval", m_iStepInterval));
+	AlwaysActive(oXml.GetChildBool("AlwaysActive", m_bAlwaysActive));
 
 	oXml.OutOfElem(); //OutOf Item Element
 }
