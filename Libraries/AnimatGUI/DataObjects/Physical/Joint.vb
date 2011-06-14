@@ -198,10 +198,6 @@ Namespace DataObjects.Physical
             End Try
         End Sub
 
-        Public Overrides Sub ClearSelectedBodyParts()
-            m_bSelected = False
-        End Sub
-
         Public Overrides Function SwapBodyPartList() As AnimatGUI.Collections.BodyParts
 
             'Go through the list and only use body parts that allow dynamics

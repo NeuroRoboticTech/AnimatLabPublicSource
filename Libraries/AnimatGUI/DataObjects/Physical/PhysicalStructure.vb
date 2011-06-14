@@ -618,6 +618,11 @@ Namespace DataObjects.Physical
 
         Public Overridable Sub DeleteBodyPart(ByVal bpPart As AnimatGUI.DataObjects.Physical.BodyPart)
 
+            'Deselect it before continuing with the delete.
+            If bpPart.Selected Then
+                bpPart.DeselectItem()
+            End If
+
             'If the object to delete is a joint, then switch to deleting the parent rigid body it is connected to.
             'You can never just delete a joint by itself. You must always delete the underlying body part to get rid of the joint.
             If TypeOf bpPart Is AnimatGUI.DataObjects.Physical.Joint Then

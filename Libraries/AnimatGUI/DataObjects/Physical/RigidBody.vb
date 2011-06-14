@@ -881,8 +881,7 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overrides Sub ClearSelectedBodyParts()
-
-            m_bSelected = False
+            MyBase.ClearSelectedBodyParts()
 
             If Not m_JointToParent Is Nothing Then
                 m_JointToParent.ClearSelectedBodyParts()

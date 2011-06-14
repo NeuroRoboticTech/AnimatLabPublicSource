@@ -28,7 +28,6 @@ Namespace Framework
         Protected m_Properties As PropertyTable
         Protected m_bIsDirty As Boolean = False
         Protected m_bEnabled As Boolean = True
-        Protected m_bSelected As Boolean = False
 
         Protected m_bUndoRedoInProgress As Boolean = False
         Protected m_bSetValueInProgress As Boolean = False
@@ -114,7 +113,8 @@ Namespace Framework
         <Browsable(False)> _
         Public Overridable ReadOnly Property Selected() As Boolean
             Get
-                Return m_bSelected
+                'Go through the treeview in the project workspace to see if this item is currently selected
+                Return Util.ProjectWorkspace.TreeView.SelectedNodes.Contains(Me.WorkspaceNode)
             End Get
         End Property
 

@@ -589,7 +589,10 @@ Namespace DataObjects.Physical
         End Sub
 
         Public MustOverride Sub RenameBodyParts(ByVal doStructure As AnimatGUI.DataObjects.Physical.PhysicalStructure)
-        Public MustOverride Sub ClearSelectedBodyParts()
+
+        Public Overridable Sub ClearSelectedBodyParts()
+            Me.DeselectItem()
+        End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
