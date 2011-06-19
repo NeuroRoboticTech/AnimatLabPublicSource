@@ -188,6 +188,7 @@ namespace AnimatSim
 			virtual void PhysicsMovableItem(IPhysicsMovableItem *lpBase);
 
 			virtual float GetBoundingRadius();
+			virtual BoundingBox GetBoundingBox();
 
 			virtual BOOL AllowTranslateDragX();
 			virtual BOOL AllowTranslateDragY();
@@ -209,6 +210,7 @@ namespace AnimatSim
 			virtual void AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ);
 			virtual void Selected(BOOL bValue, BOOL bSelectMultiple); 
 			virtual void VisualSelectionModeChanged(int iNewMode);
+			virtual void OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm);
 
 			virtual void Load(CStdXml &oXml);
 		};

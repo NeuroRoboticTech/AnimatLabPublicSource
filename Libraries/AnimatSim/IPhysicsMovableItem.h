@@ -30,6 +30,7 @@ namespace AnimatSim
 			virtual BoundingBox Physics_GetBoundingBox() = 0;
 			virtual void Physics_SetColor() = 0;
 			virtual void Physics_TextureChanged() = 0;
+			virtual void Physics_OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm) = 0;
 		};
 
 	}

@@ -12,6 +12,7 @@
 #include "Node.h"
 #include "IPhysicsMovableItem.h"
 #include "IPhysicsBody.h"
+#include "BoundingBox.h"
 #include "MovableItem.h"
 #include "BodyPart.h"
 #include "Joint.h"
@@ -916,6 +917,24 @@ float MovableItem::GetBoundingRadius()
 }
 
 /**
+\brief	Gets the bounding box for this part.
+
+\author	dcofer
+\date	6/18/2011
+
+\return	The bounding box.
+**/
+BoundingBox MovableItem::GetBoundingBox()
+{
+	BoundingBox bb;
+
+	if(m_lpPhysicsMovableItem)
+		return m_lpPhysicsMovableItem->Physics_GetBoundingBox();
+	else
+		return bb;
+}
+
+/**
 \brief	Gets whether this body part can be translated along the x-axis by the user with the drag handlers.
 
 \author	dcofer
@@ -1027,6 +1046,25 @@ void MovableItem::AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, fl
 {
 	//Do nothing here in the base. This could be a strucutre, and we do not want to do anything for that class.
 	//You need to implmenent this in the derived bodypart class.
+}
+
+/**
+\brief	Orients a new part based on where the parent was clicked and the normal of the surface face.
+
+\author	dcofer
+\date	6/18/2011
+
+\param	fltXPos 	The click x position.
+\param	fltYPos 	The click y position.
+\param	fltZPos 	The click z position.
+\param	fltXNorm	The face normal x coordinate.
+\param	fltYNorm	Th face normale y coordinat.
+\param	fltZNorm	The face normal z coordinate.
+**/
+void MovableItem::OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm)
+{
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->Physics_OrientNewPart(fltXPos, fltYPos, fltZPos, fltXNorm, fltYNorm, fltZNorm);
 }
 
 #pragma region DataAccesMethods

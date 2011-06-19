@@ -162,6 +162,7 @@ using namespace AnimatSim::Recording;
 #include "Link.h"
 #include "IPhysicsMovableItem.h"
 #include "IPhysicsBody.h"
+#include "BoundingBox.h"
 #include "MovableItem.h"
 #include "BodyPart.h"
 #include "ReceptiveField.h"
@@ -223,7 +224,6 @@ using namespace AnimatSim::Recording;
 #include "SimulationWindow.h"
 #include "SimulationWindowMgr.h"
 #include "Simulator.h"
-#include "BoundingBox.h"
 
 #include "AnimatUtils.h"
 

@@ -7,6 +7,7 @@
 #include "Node.h"
 #include "IPhysicsMovableItem.h"
 #include "IPhysicsBody.h"
+#include "BoundingBox.h"
 #include "MovableItem.h"
 #include "BodyPart.h"
 #include "Joint.h"

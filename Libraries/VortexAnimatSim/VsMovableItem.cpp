@@ -387,10 +387,14 @@ osg::MatrixTransform* VsMovableItem::GetCameraMatrixTransform()
 		return m_osgMT.get();
 }
 
-//DWC: When you do this you are going to have to call UpdateNode on all child objects as well.
 void VsMovableItem::UpdatePositionAndRotationFromMatrix()
 {
-	LocalMatrix(m_osgMT->getMatrix());
+	UpdatePositionAndRotationFromMatrix(m_osgMT->getMatrix());
+}
+
+void VsMovableItem::UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT)
+{
+	LocalMatrix(osgMT);
 
 	//Lets get the current world coordinates for this body part and then recalculate the 
 	//new local position for the part and then finally reset its new local position.
@@ -511,8 +515,15 @@ BoundingBox VsMovableItem::Physics_GetBoundingBox()
 		bb = osgGroup->getBoundingBox();
 		abb.Set(bb.xMin(), bb.yMin(), bb.zMin(), bb.xMax(), bb.yMax(), bb.zMax());
 	}
+	else if(m_osgNode.valid())
+	{
+		osg::BoundingSphere osgBound =	m_osgNode->getBound();
+		abb.Set(-osgBound.radius(), -osgBound.radius(), -osgBound.radius(), osgBound.radius(), osgBound.radius(), osgBound.radius()); 
+	}
 	else
+	{
 		abb.Set(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5); 
+	}
 
 	return abb;
 }
@@ -521,6 +532,14 @@ float VsMovableItem::Physics_GetBoundingRadius()
 {
 	BoundingBox bb = Physics_GetBoundingBox();
 	return bb.MaxDimension();
+
+	//if(m_osgNode.valid())
+	//{
+	//	osg::BoundingSphere osgBound =	m_osgNode->getBound();
+	//	return osgBound.radius();
+	//}
+
+	//return 0.5f;
 }
 
 void VsMovableItem::SetTexture(string strTexture)
@@ -701,6 +720,103 @@ void VsMovableItem::CreateItem()
 void VsMovableItem::EndGripDrag()
 {
 	this->UpdatePositionAndRotationFromMatrix();
+}
+//
+//osg::Vec3 VsMovableItem::FindPointOnSurface(osg::Vec3 vDirection)
+//{
+//	//If the parent object is not set then we cannot do orientation.
+//	if(!m_lpThisMI)
+//		return osg::Vec3(0, 0, 0);
+//
+//	CStdFPoint vAbsPos = m_lpThisMI->AbsolutePosition();
+//	osg::Vec3 vPos(vAbsPos.x, vAbsPos.y, vAbsPos.z);
+//	
+//	osg::Vec3 vStart = vPos - (vDirection*10);
+//	osg::Vec3 vEnd = vPos + (vDirection*10);
+//
+//	osg::LineSegment* osgLine = new osg::LineSegment();
+//	osgLine->set(vStart, vEnd);
+//
+//	osgUtil::IntersectVisitor findIntersectVisitor;
+//	findIntersectVisitor.addLineSegment(osgLine);
+//	findIntersectVisitor.apply(*m_osgNodeGroup.get()); //
+//
+//	osgUtil::IntersectVisitor::HitList tankIntersectHits;
+//	tankIntersectHits = findIntersectVisitor.getHitList(osgLine);
+//	osgUtil::Hit heightTestResults;
+//	if ( tankIntersectHits.empty() )
+//		return osg::Vec3(0, 0, 0);
+//
+//	heightTestResults = tankIntersectHits.front();
+//	osg::Vec3d vIntersect = heightTestResults.getLocalIntersectPoint();;
+//
+//	return vIntersect;
+//}
+//
+//void VsMovableItem::Physics_OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm)
+//{
+//	//If the parent object is not set then we cannot do orientation.
+//	if(!m_lpThisMI || !m_lpThisMI->Parent())
+//		return;
+//
+//	osg::Vec3 vClickPos(fltXPos, fltYPos, fltZPos), vClickNormal(fltXNorm, fltYNorm, fltZNorm);
+//	osg::Vec3 vPointOnSurf = FindPointOnSurface(vClickNormal);
+//	
+//	osg::Vec3 vWorldPos = vClickPos + vPointOnSurf;
+//
+//	CStdFPoint vParentPos = m_lpThisMI->Parent()->AbsolutePosition();
+//	osg::Vec3 vParent(vParentPos.x, vParentPos.y, vParentPos.z);
+//
+//	osg::Vec3 vLocalPos = vWorldPos - vParent;
+//
+//
+//	osg::Vec3 vInitDir(0, 0, 1);
+//	float fltDot = vInitDir * vClickNormal;
+//	float fltAngle = acos(fltDot);
+//	osg::Vec3 vAxis = vInitDir ^ vClickNormal;
+//
+//	//Setup the new local matrix.
+//	osg::Matrix osgM;
+//	osgM.makeIdentity();
+//	osgM.makeRotate(fltAngle, vAxis);
+//	osgM.makeTranslate(vLocalPos);
+//
+//	UpdatePositionAndRotationFromMatrix(osgM);
+//
+//	//rbNewPart.DxLocation = v + rbNewPart.FindPointOnSurface(new Vector3(), -rbParent.FaceNormal);
+//
+//	//Vector3 v3InitDir = new Vector3(0,0,1);
+//	//
+//	//float fltAngle = (float)Math.Acos(Vector3.Dot(v3InitDir,Direction));
+//
+//	//Vector3 v3Axis = Vector3.Cross(v3InitDir, Direction);
+//
+//	//m_mtxOrientation.RotateAxis(v3Axis,fltAngle);
+//}
+
+
+void VsMovableItem::Physics_OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm)
+{
+	//If the parent object is not set then we cannot do orientation.
+	if(!m_lpThisMI || !m_lpThisMI->Parent())
+		return;
+
+	CStdFPoint vParentPos = m_lpThisMI->Parent()->AbsolutePosition();
+	osg::Vec3 vParent(vParentPos.x, vParentPos.y, vParentPos.z);
+
+	osg::Vec3 vClickPos(fltXPos, fltYPos, fltZPos), vClickNormal(fltXNorm, fltYNorm, fltZNorm);
+
+	//Lets get the bounding radius for this part
+	float fltRadius = Physics_GetBoundingRadius();
+
+	//Now add the part at the specified position, but a radius away.
+	osg::Vec3 vWorldPos = vClickPos + (vClickNormal*fltRadius);
+
+	//Calculate the local position relative to the parent.
+	osg::Vec3 vLocalPos = vWorldPos - vParent;
+
+	//Now reset our position
+	m_lpThisMI->Position(vLocalPos[0], vLocalPos[1], vLocalPos[2], FALSE, TRUE, TRUE);
 }
 
 	}			// Environment

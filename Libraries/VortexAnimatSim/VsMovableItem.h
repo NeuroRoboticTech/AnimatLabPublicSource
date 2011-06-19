@@ -59,6 +59,7 @@ namespace VortexAnimatSim
 			virtual void CreateDragger(string strName);
 			virtual void AttachedPartMovedOrRotated(string strID);
 			virtual void UpdatePositionAndRotationFromMatrix();
+			virtual void UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT);
 			virtual void UpdateAbsolutePosition();
 
 			virtual void CreateGraphicsGeometry();
@@ -101,6 +102,7 @@ namespace VortexAnimatSim
 			virtual void Physics_ResetSimulation();
 			virtual void Physics_AfterResetSimulation() {};
 			virtual float *Physics_GetDataPointer(string strDataType);
+			virtual void Physics_OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm);
 
 			virtual void SetTexture(string strTexture);
 			virtual void SetCulling();
@@ -109,6 +111,7 @@ namespace VortexAnimatSim
 			virtual void SetMaterialAlpha(osg::Material *osgMat, osg::StateSet *ss, float fltAlpha);
 			virtual void SetVisible(BOOL bVisible);
 			virtual void SetVisible(osg::Node *osgNode, BOOL bVisible);
+			//virtual osg::Vec3 FindPointOnSurface(osg::Vec3 vDirection);
 
 			//virtual void Initialize() = 0;
 			virtual void CreateItem();

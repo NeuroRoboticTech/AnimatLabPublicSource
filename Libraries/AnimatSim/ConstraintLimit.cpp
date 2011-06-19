@@ -11,6 +11,7 @@
 #include "IPhysicsMovableItem.h"
 #include "IPhysicsBody.h"
 #include "ISimGUICallback.h"
+#include "BoundingBox.h"
 #include "MovableItem.h"
 #include "BodyPart.h"
 #include "Joint.h"

@@ -1326,14 +1326,12 @@ Namespace DataObjects.Physical
                 rbNew.Name = "Body_" & Me.ParentStructure.NewBodyIndex
                 rbNew.IsRoot = False
 
-                rbNew.LocalPosition.IgnoreChangeValueEvents = True
-                'rbNew.LocalPosition.X.ActualValue = vPos.X - Me.WorldPosition.X.ActualValue
-                'rbNew.LocalPosition.Y.ActualValue = vPos.Y - Me.WorldPosition.Y.ActualValue
-                'rbNew.LocalPosition.Z.ActualValue = vPos.Z - Me.WorldPosition.Z.ActualValue
-                rbNew.LocalPosition.X.ActualValue = 0.2
-                rbNew.LocalPosition.Y.ActualValue = 0
-                rbNew.LocalPosition.Z.ActualValue = 0
-                rbNew.LocalPosition.IgnoreChangeValueEvents = False
+                'rbNew.Ori()
+                'rbNew.LocalPosition.IgnoreChangeValueEvents = True
+                'rbNew.LocalPosition.X.ActualValue = 0
+                'rbNew.LocalPosition.Y.ActualValue = 0
+                'rbNew.LocalPosition.Z.ActualValue = 0
+                'rbNew.LocalPosition.IgnoreChangeValueEvents = False
 
                 'Now, if it needs a joint then select the joint type to use
                 If rbNew.UsesAJoint Then
@@ -1344,6 +1342,8 @@ Namespace DataObjects.Physical
 
                 'Now add the new part to the parent
                 AddChildBody(rbNew, bAddDefaultGraphics)
+
+                rbNew.m_doInterface.OrientNewPart(vPos.X, vPos.Y, vPos.Z, vNorm.X, vNorm.Y, vNorm.Z)
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

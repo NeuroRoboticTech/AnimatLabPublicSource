@@ -22,6 +22,7 @@ protected:
 	Interfaces::SimulatorInterface ^m_Sim;
 	Simulator *m_lpSim;
 	AnimatBase *m_lpBase;
+	MovableItem *m_lpMovable;
 
 	float *m_lpWorldPositionX;
 	float *m_lpWorldPositionY;
@@ -110,6 +111,9 @@ public:
 
 	void GetDataPointer(String ^sData);
 	float GetDataValue(String ^sData);
+
+	float GetBoundingBoxValue(int iIndex);
+	void OrientNewPart(double dblXPos, double dblYPos, double dblZPos, double dblXNorm, double dblYNorm, double dblZNorm);
 
 #pragma endregion
 

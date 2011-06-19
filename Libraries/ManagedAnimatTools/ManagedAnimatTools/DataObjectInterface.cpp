@@ -19,6 +19,7 @@ DataObjectInterface::DataObjectInterface(Interfaces::SimulatorInterface ^SimInt,
 	m_lpSim = m_Sim->Sim();
 	string strSID = Util::StringToStd(strID);
 	m_lpBase = m_lpSim->FindByID(strSID);
+	m_lpMovable = dynamic_cast<MovableItem *>(m_lpBase);
 
 	//If this is a bodypart or struture type then lets add the callbacks to it so those
 	//classes can fire managed events back up to the gui.
@@ -234,6 +235,31 @@ float DataObjectInterface::GetDataValue(String ^sData)
 	}
 }
 
+
+float DataObjectInterface::GetBoundingBoxValue(int iIndex)
+{
+	if(m_lpMovable)
+	{
+		BoundingBox bb = m_lpMovable->GetBoundingBox();
+
+		if(iIndex == 0 && m_lpRotationX)
+			return bb.Length();
+		else if(iIndex == 1 && m_lpRotationY)
+			return bb.Height();
+		else if(iIndex == 2 && m_lpRotationZ)
+			return bb.Width();
+		else
+			return 0;
+	}
+	else
+		return 0;
+}
+
+void DataObjectInterface::OrientNewPart(double dblXPos, double dblYPos, double dblZPos, double dblXNorm, double dblYNorm, double dblZNorm)
+{
+	if(m_lpMovable)
+		m_lpMovable->OrientNewPart(dblXPos, dblYPos, dblZPos, dblXNorm, dblYNorm, dblZNorm); 
+}
 
 	}
 }
