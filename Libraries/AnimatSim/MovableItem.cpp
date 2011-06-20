@@ -60,6 +60,8 @@ MovableItem::MovableItem(void)
 	m_vDiffuse.Set(1, 0, 0, 1);
 	m_vSpecular.Set(0.25f, 0.25f, 0.25f, 1);
 	m_fltShininess = 64;
+
+	m_fltMinVertexDistance = -1;
 }
 
 /**
@@ -855,6 +857,26 @@ void MovableItem::Texture(string strValue)
 }
 
 /**
+\brief	Gets the minimum vertex distance for this part.
+
+\author	dcofer
+\date	6/20/2011
+
+\return	distance.
+**/
+float MovableItem::MinVertexDistance() {return m_fltMinVertexDistance;}
+
+/**
+\brief	Sets the minimum vertex distance for this part.
+
+\author	dcofer
+\date	6/20/2011
+
+\param	fltValue	The new value.
+**/
+void MovableItem::MinVertexDistance(float fltValue) {m_fltMinVertexDistance = fltValue;}
+
+/**
 \brief	Gets the callback interface pointer. This is an interface pointer to a callback class
 that allows us to notify the GUI of events that occur within the simulation. 
 
@@ -1253,6 +1275,8 @@ void MovableItem::Load(CStdXml &oXml)
 	m_fltShininess = oXml.GetChildFloat("Shininess", m_fltShininess);
 
 	m_strTexture = oXml.GetChildString("Texture", "");
+
+	m_fltMinVertexDistance = oXml.GetChildFloat("MinVertexDistance", m_fltMinVertexDistance);
 
 	oXml.OutOfElem(); //OutOf Element
 }

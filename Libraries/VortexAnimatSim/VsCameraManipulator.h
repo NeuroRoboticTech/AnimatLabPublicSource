@@ -20,6 +20,7 @@ namespace VortexAnimatSim
 				osg::Vec3 m_vPickPoint;
 				osg::Vec3 m_vPickNormal;
 				MovableItem *m_lpPicked;
+				int m_iSelectedVertex;
 
 				osg::Quat m_quatRotation;
 				osg::Vec3 m_v3Eye;

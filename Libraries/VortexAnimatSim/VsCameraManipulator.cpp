@@ -22,6 +22,7 @@ VsCameraManipulator::VsCameraManipulator(Simulator *lpSim, osgViewer::Viewer *os
 	m_osgViewer = osgViewer;
 	m_osgViewport = osgViewport;
 	m_lpPicked = NULL;
+	m_iSelectedVertex = -1;
 
 	m_bShiftDown = false;
 	m_bControlDown = false;
@@ -230,6 +231,13 @@ void VsCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapte
 
 					m_vPickPoint = hitr->getWorldIntersectPoint();
 					m_vPickNormal = hitr->getWorldIntersectNormal();
+
+					//Get the selected vertex.
+					const osgUtil::LineSegmentIntersector::Intersection::IndexList& vil = hitr->indexList;
+					if(vil.size() > 0)
+						m_iSelectedVertex = vil[0];
+					else
+						m_iSelectedVertex = -1;
 
 					switch (m_lpSim->VisualSelectionMode())
 					{
