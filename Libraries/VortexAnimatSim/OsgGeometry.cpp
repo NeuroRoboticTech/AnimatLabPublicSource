@@ -36,7 +36,7 @@ osg::Geometry *CreateBoxGeometry(float xsize, float ysize, float zsize, float fl
 
     osg::Vec3 sizeMin(-xsize/2.0f,  -ysize/2.0f,  -zsize/2.0f);
     osg::Vec3 sizeMax(xsize/2.0f,  ysize/2.0f,  zsize/2.0f);
-	osg::Vec3 steps( (int) (xsize/fltXSegWidth), (int) (ysize/fltYSegWidth), (int) (zsize/fltZSegWidth) );
+	osg::Vec3 steps( (int) ((xsize/fltXSegWidth)+0.5f), (int) ((ysize/fltYSegWidth)+0.5f), (int) ((zsize/fltZSegWidth)+0.5f) );
 	osg::Vec3 SegWidths(fltXSegWidth, fltYSegWidth, fltZSegWidth);	
 
 	osg::Geometry* boxGeom = new osg::Geometry();
