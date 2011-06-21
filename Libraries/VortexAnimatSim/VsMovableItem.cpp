@@ -245,6 +245,9 @@ void VsMovableItem::DeleteGraphics()
 			m_osgParent->removeChild(m_osgRoot.get());
 	}
 
+	if(m_osgSelVertexNode.valid()) m_osgSelVertexNode.release();
+	if(m_osgSelVertexMT.valid()) m_osgSelVertexMT.release();
+
 	if(m_osgCull.valid()) m_osgCull.release();
 	if(m_osgTexture.valid()) m_osgTexture.release();
 	if(m_osgStateSet.valid()) m_osgStateSet.release();
@@ -620,32 +623,46 @@ void VsMovableItem::SetCulling()
 	}
 }
 
+void VsMovableItem::ShowSelectedVertex()
+{
+}
+
+void VsMovableItem::HideSelectedVertex()
+{
+}
+
 void VsMovableItem::SetAlpha()
 {
 	switch (m_lpThisAB->GetSimulator()->VisualSelectionMode())
 	{
 		case GRAPHICS_SELECTION_MODE:
 			m_lpThisMI->Alpha(m_lpThisMI->GraphicsAlpha());			
+			HideSelectedVertex();
 			break;
 
 		case COLLISION_SELECTION_MODE:
 			m_lpThisMI->Alpha(m_lpThisMI->CollisionsAlpha());				
+			HideSelectedVertex();
 			break;
 
 		case JOINT_SELECTION_MODE:
 			m_lpThisMI->Alpha(m_lpThisMI->JointsAlpha());					
+			HideSelectedVertex();
 			break;
 
 		case RECEPTIVE_FIELD_SELECTION_MODE:
-			m_lpThisMI->Alpha(m_lpThisMI->ReceptiveFieldsAlpha());					
+			m_lpThisMI->Alpha(m_lpThisMI->ReceptiveFieldsAlpha());
+			ShowSelectedVertex();
 			break;
 
 		case SIMULATION_SELECTION_MODE:
 			m_lpThisMI->Alpha(m_lpThisMI->SimulationAlpha());					
+			HideSelectedVertex();
 			break;
 
 		default:
 			m_lpThisMI->Alpha(m_lpThisMI->GraphicsAlpha());					
+			HideSelectedVertex();
 			break;
 	}
 

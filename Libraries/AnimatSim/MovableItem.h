@@ -92,6 +92,9 @@ namespace AnimatSim
 			/// uses 1/4 this distance as the radius of the sphere.
 			float m_fltMinVertexDistance;
 
+			/// The relative position of the selected vertex
+			CStdFPoint m_vSelectedVertex;
+
 			/// This is an interface pointer to a callback class that allows us to notify the gui
 			/// of events that occur within the simulation.
 			IMovableItemCallback *m_lpCallback;
@@ -188,6 +191,10 @@ namespace AnimatSim
 
 			virtual float MinVertexDistance();
 			virtual void MinVertexDistance(float fltValue);
+	
+			virtual CStdFPoint SelectedVertex();
+			virtual void SelectedVertex(CStdFPoint &vPoint, BOOL bFireChangeEvent = FALSE, BOOL bUpdatePhysics = TRUE);
+			virtual void SelectedVertex(float fltX, float fltY, float fltZ, BOOL bFireChangeEvent = FALSE, BOOL bUpdatePhysics = TRUE);
 
 			virtual IMovableItemCallback *Callback();
 			virtual void Callback(IMovableItemCallback *lpCallback);

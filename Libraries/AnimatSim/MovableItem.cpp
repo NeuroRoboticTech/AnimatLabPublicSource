@@ -877,6 +877,59 @@ float MovableItem::MinVertexDistance() {return m_fltMinVertexDistance;}
 void MovableItem::MinVertexDistance(float fltValue) {m_fltMinVertexDistance = fltValue;}
 
 /**
+\brief	Gets the relative position of the selected vertex. (m_vSelectedVertex) 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	returns m_vSelectedVertex. 
+**/
+CStdFPoint MovableItem::SelectedVertex() {return m_vSelectedVertex;}
+
+/**
+\brief	Sets the relative position of the selected vertex. (m_vSelectedVertex) 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	vPoint		The new point to use to set the local position. 
+\param	bFireChangeEvent	If true then this will call the IMovableItemCallback->SelectedVertexChanged
+							callback method to inform the GUI that the selected vertex has changed. If false
+							then this callback will be skipped. 
+\param bUpdatePhysics		If true then the physcis object is also updated.
+**/
+void MovableItem::SelectedVertex(CStdFPoint &vPoint, BOOL bFireChangeEvent, BOOL bUpdatePhysics) 
+{
+	m_vSelectedVertex = vPoint;
+	
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->Physics_SelectedVertex(vPoint.x, vPoint.y, vPoint.z);
+
+	if(m_lpCallback && bFireChangeEvent)
+		m_lpCallback->SelectedVertexChanged(vPoint.x, vPoint.y, vPoint.z);
+}
+
+/**
+\brief	Sets the relative position of the selected vertex. (m_vSelectedVertex) 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltX				The x coordinate. 
+\param	fltY				The y coordinate. 
+\param	fltZ				The z coordinate. 
+\param	bFireChangeEvent	If true then this will call the IMovableItemCallback->SelectedVertexChanged
+							callback method to inform the GUI that the selected vertex has changed. If false
+							then this callback will be skipped. 
+\param bUpdatePhysics		If true then the physcis object is also updated.
+**/
+void MovableItem::SelectedVertex(float fltX, float fltY, float fltZ, BOOL bFireChangeEvent, BOOL bUpdatePhysics) 
+{
+	CStdFPoint vPos(fltX, fltY, fltZ);
+	SelectedVertex(vPos, bFireChangeEvent, bUpdatePhysics);
+}
+
+/**
 \brief	Gets the callback interface pointer. This is an interface pointer to a callback class
 that allows us to notify the GUI of events that occur within the simulation. 
 

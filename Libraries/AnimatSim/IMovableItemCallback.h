@@ -72,5 +72,18 @@ namespace AnimatSim
 		\param	fltNormZ	The z normal of the location clicked. 
 		**/
 		virtual void AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ) = 0;
+
+		/**
+		\brief	Called to signal when the selected vertex has changed.
+		
+		\author	dcofer
+		\date	6/21/2011
+		
+		\param	fltPosX	The position x coordinate.
+		\param	fltPosY	The position y coordinate.
+		\param	fltPosZ	The position z coordinate.
+		**/
+		virtual void SelectedVertexChanged(float fltPosX, float fltPosY, float fltPosZ) = 0;
+
 	};
 }

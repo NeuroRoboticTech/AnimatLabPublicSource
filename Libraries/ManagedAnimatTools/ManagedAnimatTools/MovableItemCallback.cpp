@@ -41,5 +41,11 @@ void MovableItemCallback::AddBodyClicked(float fltPosX, float fltPosY, float flt
 	m_doObj->FireAddBodyClickedEvent(fltPosX, fltPosY, fltPosZ, fltNormX, fltNormY, fltNormZ);
 }
 
+void MovableItemCallback::SelectedVertexChanged(float fltPosX, float fltPosY, float fltPosZ)
+{
+	m_doObj->FireSelectedVertexChangedEvent(fltPosX, fltPosY, fltPosZ);
+
+}
+
 	}
 }

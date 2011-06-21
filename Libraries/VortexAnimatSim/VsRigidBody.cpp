@@ -209,6 +209,10 @@ void VsRigidBody::Physics_Resize()
 	}
 }
 
+void VsRigidBody::Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos)
+{
+}
+
 void VsRigidBody::GetBaseValues()
 {
 	if(m_vxPart)

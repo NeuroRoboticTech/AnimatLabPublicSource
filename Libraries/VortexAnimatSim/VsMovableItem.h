@@ -47,6 +47,9 @@ namespace VortexAnimatSim
 			BOOL m_bCullBackfaces;
 			osg::StateAttribute::GLMode m_eTextureMode;
 
+			osg::ref_ptr<osg::MatrixTransform> m_osgSelVertexMT;
+			osg::ref_ptr<osg::Node> m_osgSelVertexNode;
+
 			virtual void SetThisPointers();
 			virtual void LocalMatrix(osg::Matrix osgLocalMT);
 			virtual void GeometryRotationMatrix(osg::Matrix osgGeometryMT);
@@ -68,6 +71,9 @@ namespace VortexAnimatSim
 			virtual void ResizePhysicsGeometry();
 
 			virtual void UpdateWorldMatrix();
+
+			virtual void ShowSelectedVertex();
+			virtual void HideSelectedVertex();
 
 		public:
 			VsMovableItem();
@@ -103,6 +109,7 @@ namespace VortexAnimatSim
 			virtual void Physics_AfterResetSimulation() {};
 			virtual float *Physics_GetDataPointer(string strDataType);
 			virtual void Physics_OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm);
+			virtual void Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos) {};
 
 			virtual void SetTexture(string strTexture);
 			virtual void SetCulling();

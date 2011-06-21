@@ -15,6 +15,7 @@ namespace AnimatGUI
 		public delegate void RotationChangedHandler();
 		public delegate void SelectionChangedHandler(System::Boolean bSelected, System::Boolean bSelectMultiple);
 		public delegate void AddBodyClickedHandler(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ);
+		public delegate void SelectedVertexChangedHandler(float fltPosX, float fltPosY, float fltPosZ);
 
 public ref class DataObjectInterface
 {
@@ -125,6 +126,7 @@ public:
 			event RotationChangedHandler^ OnRotationChanged;
 			event SelectionChangedHandler^ OnSelectionChanged;
 			event AddBodyClickedHandler^ OnAddBodyClicked;
+			event SelectedVertexChangedHandler^ OnSelectedVertexChanged;
 
 			void FirePositionChangedEvent()    
 			{
@@ -167,6 +169,18 @@ public:
 				try
 				{
 					OnAddBodyClicked(fltPosX, fltPosY, fltPosZ, fltNormX, fltNormY, fltNormZ);
+				}
+				catch(...)
+				{
+					//If we get an error here just eat it.
+				}
+			}
+
+			void FireSelectedVertexChangedEvent(float fltPosX, float fltPosY, float fltPosZ)    
+			{
+				try
+				{
+					OnSelectedVertexChanged(fltPosX, fltPosY, fltPosZ);
 				}
 				catch(...)
 				{
