@@ -254,6 +254,11 @@ namespace AnimatSim
 			/// The background color to use when drawing the environment.
 			CStdColor m_vBackgroundColor;
 
+			/// The radius of the sphere shown for a receptive field. This is used in the selection code
+			/// so we can show the selected vertex. It adds a sphere to the part at that vertex coordinate and
+			/// uses this radius when drawing the sphere.
+			float m_fltRecFieldSelRadius;
+
 #pragma endregion
 
 #pragma region RecordingVariables
@@ -585,6 +590,9 @@ namespace AnimatSim
 			
 			virtual CStdColor *BackgroundColor();
 			virtual void BackgroundColor(float *vColor);
+
+			virtual float RecFieldSelRadius();
+			virtual void RecFieldSelRadius(float fltValue, BOOL bUseScaling = TRUE, BOOL bUpdateAllBodies = TRUE);
 
 #pragma endregion
 

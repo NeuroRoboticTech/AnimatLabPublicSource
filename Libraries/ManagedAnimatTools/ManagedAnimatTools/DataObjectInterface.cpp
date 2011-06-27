@@ -255,14 +255,6 @@ float DataObjectInterface::GetBoundingBoxValue(int iIndex)
 		return 0;
 }
 
-float DataObjectInterface::GetMinVertexDistance()
-{
-	if(m_lpMovable)
-		return m_lpMovable->MinVertexDistance();
-	else
-		return 0.01f;
-}
-
 void DataObjectInterface::OrientNewPart(double dblXPos, double dblYPos, double dblZPos, double dblXNorm, double dblYNorm, double dblZNorm)
 {
 	if(m_lpMovable)

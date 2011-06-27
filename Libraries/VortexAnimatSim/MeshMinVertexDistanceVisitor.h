@@ -12,22 +12,32 @@ namespace VortexAnimatSim
 // the node it started from.  The world coordinates are found by concatenating all 
 // the matrix transforms found on the path from the start node to the root node.
 
-class VORTEX_PORT WorldCoordinateNodeVisitor : public osg::NodeVisitor 
+class VORTEX_PORT MeshMinVertexDistanceVisitor : public osg::NodeVisitor 
 {
 public:
-   WorldCoordinateNodeVisitor():
-      osg::NodeVisitor(NodeVisitor::TRAVERSE_PARENTS), done(false)
+   MeshMinVertexDistanceVisitor():
+      osg::NodeVisitor(NodeVisitor::TRAVERSE_ALL_CHILDREN)
       {
+			m_fltMinVertDist = -1;
+			m_iP = -1;
+			m_iQ = -1;
+			m_lpGeom = NULL;
       }
       virtual void apply(osg::Node &node);
 
-      osg::Matrixd MatrixTransform() 
+      float MinVertexDistance() 
       {
-         return wcMatrix;
+         return m_fltMinVertDist;
       }
-private:
-   bool done;
-   osg::Matrixd wcMatrix;
+protected:
+	void FindMinVertex(osg::Geometry *osgGeom, osg::Vec3Array *aryVert);
+
+	float m_fltMinVertDist;
+	osg::Vec3 m_vP;
+	osg::Vec3 m_vQ;
+	int m_iP;
+	int m_iQ;
+	osg::Geometry *m_lpGeom;
 };
 
 	}// end Visualization

@@ -18,6 +18,7 @@
 #include "VsMouseSpring.h"
 #include "VsCameraManipulator.h"
 #include "VsDragger.h"
+#include "MeshMinVertexDistanceVisitor.h"
 
 namespace VortexAnimatSim
 {
@@ -349,6 +350,13 @@ void VsSimulator::GenerateCollisionMeshFile(string strOriginalMeshFile, string s
 	//Now save out the new collision mesh.
 	osgDB::writeNodeFile(*osgNewNode, strNewFile.c_str());
 }
+//
+//float VsSimulator::FindMinMeshVertexDistance(osg::Node *osgNode)
+//{
+//	MeshMinVertexDistanceVisitor ncv;
+//	osgNode->accept(ncv);
+//	return ncv.MinVertexDistance();
+//}
 
 void VsSimulator::Initialize(int argc, const char **argv)
 {

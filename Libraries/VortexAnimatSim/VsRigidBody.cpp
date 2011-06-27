@@ -211,6 +211,39 @@ void VsRigidBody::Physics_Resize()
 
 void VsRigidBody::Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos)
 {
+	if(m_lpThisRB->IsCollisionObject() && m_osgSelVertexMT.valid())
+	{
+		osg::Matrix osgMT;
+		osgMT.makeIdentity();
+		osgMT = osgMT.translate(fltXPos, fltYPos, fltZPos);
+
+		m_osgSelVertexMT->setMatrix(osgMT);
+	}
+}
+
+
+void VsRigidBody::ShowSelectedVertex()
+{
+	if(m_lpThisRB->IsCollisionObject() && m_lpThisAB->Selected() && m_osgMT.valid() && m_osgSelVertexMT.valid())
+	{
+		if(!m_osgMT->containsNode(m_osgSelVertexMT.get()))
+			m_osgMT->addChild(m_osgSelVertexMT.get());
+	}
+}
+
+void VsRigidBody::HideSelectedVertex()
+{
+	if(m_lpThisRB->IsCollisionObject() && m_osgMT.valid() && m_osgSelVertexMT.valid())
+	{
+		if(m_osgMT->containsNode(m_osgSelVertexMT.get()))
+			m_osgMT->removeChild(m_osgSelVertexMT.get());
+	}
+}
+
+void VsRigidBody::Physics_ResizeSelectedReceptiveFieldVertex()
+{
+	DeleteSelectedVertex();
+	CreateSelectedVertex(m_lpThisAB->Name());
 }
 
 void VsRigidBody::GetBaseValues()

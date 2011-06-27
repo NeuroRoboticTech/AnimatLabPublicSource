@@ -246,12 +246,14 @@ Namespace DataObjects
                 If value <> m_eVisualSelectionMode Then
                     Me.SetSimData("VisualSelectionMode", CType(value, Integer).ToString, True)
 
+                    Dim ePrevMode As enumVisualSelectionMode = m_eVisualSelectionMode
+
                     m_eVisualSelectionMode = value
                     SetVisualSelectionMode()
 
                     'If we are switching modes then anything selected must be in the previous mode, and 
                     'thus it should not be selected now in the current mode. So lets clear out any selected items.
-                    DeselectBodyPartSelections()
+                    DeselectBodyPartSelections(ePrevMode)
                 End If
             End Set
         End Property
@@ -483,7 +485,7 @@ Namespace DataObjects
         End Function
 
         'This will deselect all body part items. This is used when switching between visual selection modes.
-        Protected Sub DeselectBodyPartSelections()
+        Protected Sub DeselectBodyPartSelections(ByVal ePrevMode As enumVisualSelectionMode)
 
             If Not Util.ProjectWorkspace Is Nothing AndAlso Not Util.ProjectWorkspace.TreeView Is Nothing AndAlso Not Util.ProjectWorkspace.TreeView.SelectedNodes Is Nothing Then
                 Dim doPart As AnimatGUI.DataObjects.Physical.BodyPart
@@ -494,7 +496,7 @@ Namespace DataObjects
                             doPart = DirectCast(tvItem.Tag, AnimatGUI.DataObjects.Physical.BodyPart)
 
                             'If the selection mode does not match the current mode then deselect it.
-                            If doPart.DefaultVisualSelectionMode <> Me.VisualSelectionMode Then
+                            If doPart.DefaultVisualSelectionMode <> Me.VisualSelectionMode OrElse ePrevMode = enumVisualSelectionMode.SelectReceptiveFields Then
                                 aryItems.Add(doPart)
                             End If
                         End If

@@ -20,7 +20,7 @@ namespace VortexAnimatSim
 				osg::Vec3 m_vPickPoint;
 				osg::Vec3 m_vPickNormal;
 				MovableItem *m_lpPicked;
-				int m_iSelectedVertex;
+				osg::Vec3 m_vSelectedVertex;
 
 				osg::Quat m_quatRotation;
 				osg::Vec3 m_v3Eye;
@@ -30,6 +30,8 @@ namespace VortexAnimatSim
 
 				virtual const osg::Camera *GetCamera(float x, float y, float &local_x, float &local_y);
 				virtual const osg::Camera *GetCamera(float x, float y);
+
+				virtual osg::Vec3 FindSelectedVertex(osgUtil::LineSegmentIntersector::Intersections::iterator &hitr);
 
 			protected:
 				BOOL CanDoMouseSpring();

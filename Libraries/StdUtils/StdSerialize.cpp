@@ -148,7 +148,7 @@ ostream STD_UTILS_PORT &operator<<(ostream& oOs, CStdDPoint oPoint)
 \param	strName		  	Name of the xml packet. 
 \param [in,out]	oPoint	The point to save. 
 
-\return	.
+\return	True if point saved.
 **/
 void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdIPoint &oPoint)
 {
@@ -170,7 +170,7 @@ void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdIPoint &oPo
 \param	strName		  	Name of the xml packet. 
 \param [in,out]	oPoint	The point to save. 
 
-\return	.
+\return	True if point saved.
 **/
 void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdLPoint &oPoint)
 {
@@ -192,7 +192,7 @@ void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdLPoint &oPo
 \param	strName		  	Name of the xml packet. 
 \param [in,out]	oPoint	The point to save. 
 
-\return	.
+\return	True if point saved.
 **/
 void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdFPoint &oPoint)
 {
@@ -214,7 +214,7 @@ void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdFPoint &oPo
 \param	strName		  	Name of the xml packet. 
 \param [in,out]	oPoint	The point to save. 
 
-\return	.
+\return	True if point saved.
 **/
 void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdDPoint &oPoint)
 {
@@ -240,7 +240,7 @@ void STD_UTILS_PORT Std_SavePoint(CStdXml &oXml, string strName, CStdDPoint &oPo
 \param [in,out]	oPoint	The point to load. 
 \param	bThrowError   	true to throw error if there is a problem. 
 
-\return	.
+\return	True if point loaded.
 **/
 bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdIPoint &oPoint, bool bThrowError)
 {
@@ -270,7 +270,7 @@ bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdIPoint &oPo
 \param [in,out]	oPoint	The point to load. 
 \param	bThrowError   	true to throw error if there is a problem. 
 
-\return	.
+\return	True if point loaded.
 **/
 bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdLPoint &oPoint, bool bThrowError)
 {
@@ -300,7 +300,7 @@ bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdLPoint &oPo
 \param [in,out]	oPoint	The point to load. 
 \param	bThrowError   	true to throw error if there is a problem. 
 
-\return	.
+\return	True if point loaded.
 **/
 bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdFPoint &oPoint, bool bThrowError)
 {
@@ -330,7 +330,7 @@ bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdFPoint &oPo
 \param [in,out]	oPoint	The point to load. 
 \param	bThrowError   	true to throw error if there is a problem. 
 
-\return	.
+\return	True if point loaded.
 **/
 bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdDPoint &oPoint, bool bThrowError)
 {
@@ -357,7 +357,6 @@ bool STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, string strName, CStdDPoint &oPo
 \param	iIndex		  	Zero-based index of the child element to load. 
 \param [in,out]	oPoint	The point to load. 
 
-\return	.
 **/
 void STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, int iIndex, CStdIPoint &oPoint)
 {
@@ -379,7 +378,6 @@ void STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, int iIndex, CStdIPoint &oPoint)
 \param	iIndex		  	Zero-based index of the child element to load. 
 \param [in,out]	oPoint	The point to load. 
 
-\return	.
 **/
 void STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, int iIndex, CStdLPoint &oPoint)
 {
@@ -401,7 +399,6 @@ void STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, int iIndex, CStdLPoint &oPoint)
 \param	iIndex		  	Zero-based index of the child element to load. 
 \param [in,out]	oPoint	The point to load. 
 
-\return	.
 **/
 void STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, int iIndex, CStdFPoint &oPoint)
 {
@@ -422,8 +419,6 @@ void STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, int iIndex, CStdFPoint &oPoint)
 \param [in,out]	oXml  	The xml to load. 
 \param	iIndex		  	Zero-based index of the child element to load. 
 \param [in,out]	oPoint	The point to load. 
-
-\return	.
 **/
 void STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, int iIndex, CStdDPoint &oPoint)
 {
@@ -444,7 +439,7 @@ void STD_UTILS_PORT Std_LoadPoint(CStdXml &oXml, int iIndex, CStdDPoint &oPoint)
 \param [in,out]	ptA	The point a. 
 \param [in,out]	ptB	The point b. 
 
-\return	.
+\return	distance.
 **/
 double STD_UTILS_PORT Std_CalculateDistance(CStdIPoint &ptA, CStdIPoint &ptB)
 {
@@ -460,7 +455,7 @@ double STD_UTILS_PORT Std_CalculateDistance(CStdIPoint &ptA, CStdIPoint &ptB)
 \param [in,out]	ptA	The point a. 
 \param [in,out]	ptB	The point b. 
 
-\return	.
+\return	distance.
 **/
 double STD_UTILS_PORT Std_CalculateDistance(CStdLPoint &ptA, CStdLPoint &ptB)
 {
@@ -476,7 +471,7 @@ double STD_UTILS_PORT Std_CalculateDistance(CStdLPoint &ptA, CStdLPoint &ptB)
 \param [in,out]	ptA	The point a. 
 \param [in,out]	ptB	The point b. 
 
-\return	.
+\return	distance.
 **/
 double STD_UTILS_PORT Std_CalculateDistance(CStdFPoint &ptA, CStdFPoint &ptB)
 {
@@ -492,11 +487,17 @@ double STD_UTILS_PORT Std_CalculateDistance(CStdFPoint &ptA, CStdFPoint &ptB)
 \param [in,out]	ptA	The point a. 
 \param [in,out]	ptB	The point b. 
 
-\return	.
+\return	distance.
 **/
 double STD_UTILS_PORT Std_CalculateDistance(CStdDPoint &ptA, CStdDPoint &ptB)
 {
 	return sqrt( pow((ptA.x-ptB.x), 2) + pow((ptA.y-ptB.y), 2) + pow((ptA.z-ptB.z), 2) );
+}
+
+
+double STD_UTILS_PORT Std_CalculateDistance(float fltX1, float fltY1, float fltZ1, float fltX2, float fltY2, float fltZ2)
+{
+	return (double) sqrt( (double) (pow((double)(fltX1-fltX2), 2) + pow((double)(fltY1-fltY2), 2) + pow((double)(fltZ1-fltZ2), 2)) );
 }
 
 }				//StdUtils

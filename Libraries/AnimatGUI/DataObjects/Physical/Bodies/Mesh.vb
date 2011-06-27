@@ -261,7 +261,7 @@ Namespace DataObjects.Physical.Bodies
 
         End Sub
 
-        Protected Overridable Sub CreateConvexMeshFile(ByVal strFile As String, ByVal eMeshType As enumMeshType)
+        Protected Overridable Function CreateConvexMeshFile(ByVal strFile As String, ByVal eMeshType As enumMeshType) As Single
 
             If Me.IsCollisionObject Then
                 If eMeshType = enumMeshType.Convex Then
@@ -278,7 +278,7 @@ Namespace DataObjects.Physical.Bodies
                 End If
             End If
 
-        End Sub
+        End Function
 
         Protected Overridable Function CreateMeshFileXml(ByVal strMeshFile As String, ByVal eMeshType As enumMeshType, ByVal strCollisionMeshFile As String) As String
             Dim oXml As New AnimatGUI.Interfaces.StdXml

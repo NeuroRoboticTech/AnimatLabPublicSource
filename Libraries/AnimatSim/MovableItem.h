@@ -87,11 +87,6 @@ namespace AnimatSim
 			///An optional texture to apply to the rigid body.
 			string m_strTexture;
 
-			/// The minimum distance between any vertices in the node. This is used in the selection code
-			/// so we can show the selected vertex. It adds a sphere to the part at that vertex coordinate and
-			/// uses 1/4 this distance as the radius of the sphere.
-			float m_fltMinVertexDistance;
-
 			/// The relative position of the selected vertex
 			CStdFPoint m_vSelectedVertex;
 
@@ -188,9 +183,6 @@ namespace AnimatSim
 
 			virtual string Texture();
 			virtual void Texture(string strValue);
-
-			virtual float MinVertexDistance();
-			virtual void MinVertexDistance(float fltValue);
 	
 			virtual CStdFPoint SelectedVertex();
 			virtual void SelectedVertex(CStdFPoint &vPoint, BOOL bFireChangeEvent = FALSE, BOOL bUpdatePhysics = TRUE);

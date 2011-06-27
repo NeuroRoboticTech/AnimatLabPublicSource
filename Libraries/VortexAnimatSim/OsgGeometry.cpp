@@ -25,7 +25,7 @@ namespace VortexAnimatSim
 #pragma region CreateGeometry_Code
 
 
-osg::Geometry *CreateBoxGeometry(float xsize, float ysize, float zsize, float fltXSegWidth, float fltYSegWidth, float fltZSegWidth)
+osg::Geometry VORTEX_PORT *CreateBoxGeometry(float xsize, float ysize, float zsize, float fltXSegWidth, float fltYSegWidth, float fltZSegWidth)
 {
     //if(! hor || ! vert || ! depth)
     //{
@@ -276,7 +276,7 @@ osg::Geometry *CreateBoxGeometry(float xsize, float ysize, float zsize, float fl
 
     \ingroup GrpSystemDrawablesGeometrySimpleGeometry
  */
-osg::Geometry *CreateConeGeometry(float height,
+osg::Geometry VORTEX_PORT *CreateConeGeometry(float height,
                                   float topradius,
                                   float botradius,
                                   int sides,
@@ -439,7 +439,7 @@ osg::Geometry *CreateConeGeometry(float height,
 //
 //    \ingroup GrpSystemDrawablesGeometrySimpleGeometry
 // */
-osg::Geometry *CreateSphereGeometry(int latres, 
+osg::Geometry VORTEX_PORT *CreateSphereGeometry(int latres, 
                           int longres,
                           float radius)
 {
@@ -548,7 +548,7 @@ osg::Geometry *CreateSphereGeometry(int latres,
 
     \ingroup GrpSystemDrawablesGeometrySimpleGeometry
  */
-osg::Geometry *CreateEllipsoidGeometry(int latres, 
+osg::Geometry VORTEX_PORT *CreateEllipsoidGeometry(int latres, 
                              int longres,
                              float rSemiMajorAxis,
                              float rSemiMinorAxis)
@@ -657,7 +657,7 @@ osg::Geometry *CreateEllipsoidGeometry(int latres,
     return sphereGeom;
 }
 
-osg::Geometry *CreatePlaneGeometry(float fltCornerX, float fltCornerY, float fltXSize, float fltYSize, float fltXGrid, float fltYGrid)
+osg::Geometry VORTEX_PORT *CreatePlaneGeometry(float fltCornerX, float fltCornerY, float fltXSize, float fltYSize, float fltXGrid, float fltYGrid)
 {
 	float A = fltCornerX;
 	float B = fltCornerY;
@@ -695,7 +695,7 @@ osg::Geometry *CreatePlaneGeometry(float fltCornerX, float fltCornerY, float flt
 	return geom;
 }
 
-BOOL OsgMatricesEqual(osg::Matrix v1, osg::Matrix v2)
+BOOL VORTEX_PORT OsgMatricesEqual(osg::Matrix v1, osg::Matrix v2)
 {
 	for(int iRow=0; iRow<4; iRow++)
 		for(int iCol=0; iCol<4; iCol++)
@@ -705,7 +705,7 @@ BOOL OsgMatricesEqual(osg::Matrix v1, osg::Matrix v2)
 	return TRUE;
 }
 
-osg::Quat EulerToQuaternion(float fX, float fY, float fZ)
+osg::Quat VORTEX_PORT EulerToQuaternion(float fX, float fY, float fZ)
 {
 	//Vx::VxTransform vTrans;
 	//vTrans.createFromTranslationAndEulerAngles(vTrans, vEuler);
@@ -734,7 +734,7 @@ osg::Quat EulerToQuaternion(float fX, float fY, float fZ)
 	return osg::Quat(x, y, z, w);
 }
 
-CStdFPoint QuaterionToEuler(osg::Quat vQ)
+CStdFPoint VORTEX_PORT QuaterionToEuler(osg::Quat vQ)
 {
 	Vx::VxQuaternion vxQuat(vQ.w(), vQ.x(), vQ.y(), vQ.z());
 	Vx::VxVector3 vEuler;
@@ -812,7 +812,7 @@ CStdFPoint QuaterionToEuler(osg::Quat q1)
 }
 */
 
-osg::Matrix SetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot)
+osg::Matrix VORTEX_PORT SetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot)
 {
 	Vx::VxReal3 vLoc = {localPos.x, localPos.y, localPos.z};
 	Vx::VxReal3 vRot = {localRot.x, localRot.y, localRot.z};
@@ -824,7 +824,7 @@ osg::Matrix SetupMatrix(CStdFPoint &localPos, CStdFPoint &localRot)
 	return osgLocalMatrix;
 }
 
-osg::Matrix SetupMatrix(CStdFPoint &localPos, osg::Quat qRot)
+osg::Matrix VORTEX_PORT SetupMatrix(CStdFPoint &localPos, osg::Quat qRot)
 {
 	osg::Matrix osgLocalMatrix;
 	osgLocalMatrix.makeIdentity();
@@ -838,7 +838,7 @@ osg::Matrix SetupMatrix(CStdFPoint &localPos, osg::Quat qRot)
 
 	return osgLocalMatrix;
 }
-osg::MatrixTransform *CreateLinearAxis(float fltGripScale, CStdFPoint vRotAxis)
+osg::MatrixTransform VORTEX_PORT *CreateLinearAxis(float fltGripScale, CStdFPoint vRotAxis)
 {
 	CStdFPoint vPos(0, 0, 0), vRot(0, 0, 0); 
 	float fltCylinderRadius = fltGripScale * 0.01f;
@@ -870,7 +870,7 @@ osg::MatrixTransform *CreateLinearAxis(float fltGripScale, CStdFPoint vRotAxis)
 	return osgAxis;
 }
 
-osg::Vec3Array *CreateCircleVerts( int plane, int segments, float radius )
+osg::Vec3Array VORTEX_PORT *CreateCircleVerts( int plane, int segments, float radius )
 {
     const double angle( osg::PI * 2. / (double) segments );
     osg::Vec3Array* v = new osg::Vec3Array;
@@ -922,7 +922,7 @@ osg::Vec3Array *CreateCircleVerts( int plane, int segments, float radius )
     return v;
 }
 
-osg::Geode *CreateCircle( int plane, int segments, float radius, float width )
+osg::Geode VORTEX_PORT *CreateCircle( int plane, int segments, float radius, float width )
 {
     osg::Geode* geode = new osg::Geode;
     osg::LineWidth* lw = new osg::LineWidth( width );
@@ -943,7 +943,7 @@ osg::Geode *CreateCircle( int plane, int segments, float radius, float width )
     return geode;
 }
 
-osg::Geometry *CreateTorusGeometry(float innerRadius, 
+osg::Geometry VORTEX_PORT *CreateTorusGeometry(float innerRadius, 
                                 float outerRadius, 
                                 int sides,
                                 int rings)

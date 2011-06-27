@@ -22,7 +22,6 @@ VsCameraManipulator::VsCameraManipulator(Simulator *lpSim, osgViewer::Viewer *os
 	m_osgViewer = osgViewer;
 	m_osgViewport = osgViewport;
 	m_lpPicked = NULL;
-	m_iSelectedVertex = -1;
 
 	m_bShiftDown = false;
 	m_bControlDown = false;
@@ -66,6 +65,9 @@ bool VsCameraManipulator::handle(const GUIEventAdapter& ea, GUIActionAdapter& aa
 				{
 					if(m_lpPicked)
 					{
+						//Change the selected vertex of the selected part.
+						m_lpPicked->SelectedVertex(m_vSelectedVertex.x(), m_vSelectedVertex.y(), m_vSelectedVertex.z(), TRUE, TRUE);
+
 						if(m_lpSim->AddBodiesMode())
 							m_lpPicked->AddBodyClicked(m_vPickPoint.x(), m_vPickPoint.y(), m_vPickPoint.z(), 
 													   m_vPickNormal.x(), m_vPickNormal.y(), m_vPickNormal.z());
@@ -231,13 +233,7 @@ void VsCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapte
 
 					m_vPickPoint = hitr->getWorldIntersectPoint();
 					m_vPickNormal = hitr->getWorldIntersectNormal();
-
-					//Get the selected vertex.
-					const osgUtil::LineSegmentIntersector::Intersection::IndexList& vil = hitr->indexList;
-					if(vil.size() > 0)
-						m_iSelectedVertex = vil[0];
-					else
-						m_iSelectedVertex = -1;
+					m_vSelectedVertex = FindSelectedVertex(hitr);
 
 					switch (m_lpSim->VisualSelectionMode())
 					{
@@ -264,6 +260,11 @@ void VsCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapte
 							break;
 
 						case RECEPTIVE_FIELD_SELECTION_MODE:
+							if(lpBody && lpBody->AllowMouseManipulation() && lpBody->IsVisible() && (lpBody->VisualSelectionType() == COLLISION_SELECTION_MODE) )
+							{
+								m_lpPicked = lpBody;
+								return;
+							}
 							break;
 
 						case SIMULATION_SELECTION_MODE:
@@ -289,6 +290,49 @@ void VsCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapte
 	//If nothing was picked then set the mouse spring body to null
 	VsMouseSpring::GetInstance()->SetRigidBody(NULL);
 	m_lpPicked = NULL;
+}
+
+osg::Vec3 VsCameraManipulator::FindSelectedVertex(osgUtil::LineSegmentIntersector::Intersections::iterator &hitr)
+{
+	//Get the selected vertex.
+	const osgUtil::LineSegmentIntersector::Intersection::IndexList& vil = hitr->indexList;
+	const osgUtil::LineSegmentIntersector::Intersection::RatioList& ral = hitr->ratioList;
+	osg::Geometry *osgGeom = dynamic_cast<osg::Geometry *>(hitr->drawable.get());
+	if(vil.size() > 0 && osgGeom)
+	{
+		//First get the vertex array.
+		osg::ref_ptr<osg::Vec3Array> aryVert = dynamic_cast<osg::Vec3Array*>(osgGeom->getVertexArray());
+
+		//Then we need to find the vertex that was closest to the hit. We do this by first interpolating the 
+		//hit position using the barycentric coords. Then find the vertex that is closest to that point.
+		if(vil.size() != ral.size())
+			THROW_ERROR(Vs_Err_lHitArrayMismatch, Vs_Err_strHitArrayMismatch);
+
+		int iSize = vil.size();
+		osg::Vec3 osgHit(0, 0, 0);
+		for(int iIdx=0; iIdx<iSize; iIdx++)
+		{
+			osgHit += ((*aryVert)[vil[iIdx]])*ral[iIdx];
+		}
+
+		double dblMin = 10000, dblDist = 0;
+		osg::Vec3 vSelVert;
+		for(int iIdx=0; iIdx<iSize; iIdx++)
+		{
+			osg::Vec3 osgVert = (*aryVert)[vil[iIdx]];
+			dblDist = Std_CalculateDistance(osgHit.x(), osgHit.y(), osgHit.z(), osgVert.x(), osgVert.y(), osgVert.z());
+			if(dblDist < dblMin)
+			{
+				dblMin =  dblDist;
+				vSelVert = osgVert;
+			}
+		}
+		
+		return vSelVert;
+	}
+	else
+		return osg::Vec3(0, 0, 0);
+
 }
 
 /*

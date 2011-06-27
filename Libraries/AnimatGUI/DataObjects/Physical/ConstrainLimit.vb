@@ -137,8 +137,8 @@ Namespace DataObjects.Physical
                 Return m_snStiffness
             End Get
             Set(ByVal Value As ScaledNumber)
-                If Value.ActualValue < 0 Then
-                    Throw New System.Exception("The stiffness can not be less than zero.")
+                If Value.ActualValue <= 0 Then
+                    Throw New System.Exception("The stiffness can not be less than or equal to zero.")
                 End If
 
                 SetSimData("Stiffness", m_snStiffness.ActualValue.ToString, True)

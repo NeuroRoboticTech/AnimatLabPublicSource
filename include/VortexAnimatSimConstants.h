@@ -108,5 +108,9 @@
 #define Vs_Err_lErrorLoadingMesh -4035
 #define Vs_Err_strErrorLoadingMesh "An error occured while loading the mesh node."
 
+#define Vs_Err_lHitArrayMismatch -4036
+#define Vs_Err_strHitArrayMismatch "A mismatch was found in the size of the ratio and index list returned for a vertex pick operation."
+
+
 #endif // __VS_ERROR_CONSTANTS_H__
 

@@ -116,9 +116,6 @@ void Box::LengthSections(int iVal)
 	Std_IsAboveMin((int) 0, iVal, TRUE, "BoxSize.LengthSections");
 	m_iLengthSections = iVal;
 
-	if(m_fltMinVertexDistance == -1 || LengthSegmentSize() < m_fltMinVertexDistance)
-		m_fltMinVertexDistance = LengthSegmentSize();
-
 	Resize();
 }
 
@@ -145,9 +142,6 @@ void Box::WidthSections(int iVal)
 	Std_IsAboveMin((int) 0, iVal, TRUE, "BoxSize.WidthSections");
 	m_iWidthSections = iVal;
 
-	if(m_fltMinVertexDistance == -1 || WidthSegmentSize() < m_fltMinVertexDistance)
-		m_fltMinVertexDistance = WidthSegmentSize();
-
 	Resize();
 }
 
@@ -173,9 +167,6 @@ void Box::HeightSections(int iVal)
 {
 	Std_IsAboveMin((int) 0, iVal, TRUE, "BoxSize.HeightSections");
 	m_iHeightSections = iVal;
-
-	if(m_fltMinVertexDistance == -1 || HeightSegmentSize() < m_fltMinVertexDistance)
-		m_fltMinVertexDistance = HeightSegmentSize();
 
 	Resize();
 }

@@ -94,6 +94,7 @@ Simulator::Simulator()
 	m_bForceFastMoving = TRUE;
 	m_iSelectionMode = GRAPHICS_SELECTION_MODE;
 	m_bAddBodiesMode = FALSE;
+	m_fltRecFieldSelRadius = 0.05f;
 
 	m_bPaused = TRUE;
 	m_bInitialized = FALSE;
@@ -1242,6 +1243,31 @@ CStdColor *Simulator::BackgroundColor() {return  &m_vBackgroundColor;}
 **/
 void Simulator::BackgroundColor(float *vColor) {m_vBackgroundColor.Set(vColor[0], vColor[1], vColor[2], vColor[3]);}
 
+
+float Simulator::RecFieldSelRadius() {return m_fltRecFieldSelRadius;}
+
+void Simulator::RecFieldSelRadius(float fltValue, BOOL bUseScaling, BOOL bUpdateAllBodies)
+{
+	if(bUseScaling)
+		m_fltRecFieldSelRadius = fltValue * this->InverseDistanceUnits();
+	else
+		m_fltRecFieldSelRadius = fltValue;
+
+	if(bUpdateAllBodies)
+	{
+		CStdMap<string, AnimatBase *>::iterator oPos;
+		AnimatBase *lpBase = NULL;
+		for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
+		{
+			lpBase = oPos->second;
+			IPhysicsBody *lpBody = dynamic_cast<IPhysicsBody *>(lpBase);
+			if(lpBody && lpBase != this)
+				lpBody->Physics_ResizeSelectedReceptiveFieldVertex();
+		}
+	}
+}
+
+
 #pragma endregion
 
 #pragma region UnitScalingVariables
@@ -2163,7 +2189,7 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 	AngularDamping(oXml.GetChildFloat("AngularDamping", m_fltAngularDamping));
 	LinearKineticLoss(oXml.GetChildFloat("LinearKineticLoss", m_fltLinearKineticLoss));
 	AngularKineticLoss(oXml.GetChildFloat("AngularKineticLoss", m_fltAngularKineticLoss));
-
+	RecFieldSelRadius(oXml.GetChildFloat("RecFieldSelRadius", m_fltRecFieldSelRadius));
 
 	if(oXml.FindChildElement("OdorTypes", FALSE))
 	{
@@ -3347,6 +3373,11 @@ BOOL Simulator::SetData(string strDataType, string strValue, BOOL bThrowError)
 	else if(strType == "ENDSIMTIME")
 	{
 		EndSimTime(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "RECFIELDSELRADIUS")
+	{
+		RecFieldSelRadius(atof(strValue.c_str()));
 		return TRUE;
 	}
 

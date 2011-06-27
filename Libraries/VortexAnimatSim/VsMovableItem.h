@@ -48,7 +48,7 @@ namespace VortexAnimatSim
 			osg::StateAttribute::GLMode m_eTextureMode;
 
 			osg::ref_ptr<osg::MatrixTransform> m_osgSelVertexMT;
-			osg::ref_ptr<osg::Node> m_osgSelVertexNode;
+			osg::ref_ptr<osg::Geode> m_osgSelVertexNode;
 
 			virtual void SetThisPointers();
 			virtual void LocalMatrix(osg::Matrix osgLocalMT);
@@ -60,6 +60,8 @@ namespace VortexAnimatSim
 			virtual void DeletePhysics() {};
 			virtual void CreateSelectedGraphics(string strName);
 			virtual void CreateDragger(string strName);
+			virtual void CreateSelectedVertex(string strName);
+			virtual void DeleteSelectedVertex();
 			virtual void AttachedPartMovedOrRotated(string strID);
 			virtual void UpdatePositionAndRotationFromMatrix();
 			virtual void UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT);

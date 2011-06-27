@@ -54,5 +54,6 @@ double STD_UTILS_PORT Std_CalculateDistance(CStdIPoint &ptA, CStdIPoint &ptB);
 double STD_UTILS_PORT Std_CalculateDistance(CStdLPoint &ptA, CStdLPoint &ptB);
 double STD_UTILS_PORT Std_CalculateDistance(CStdFPoint &ptA, CStdFPoint &ptB);
 double STD_UTILS_PORT Std_CalculateDistance(CStdDPoint &ptA, CStdDPoint &ptB);
+double STD_UTILS_PORT Std_CalculateDistance(float fltX1, float fltY1, float fltZ1, float fltX2, float fltY2, float fltZ2);
 
 }				//StdUtils

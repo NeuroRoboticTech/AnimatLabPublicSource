@@ -65,6 +65,8 @@ Namespace DataObjects.Physical
         Protected m_eMassUnits As enumMassUnits = enumMassUnits.Grams
         Protected m_bSimulateHydrodynamics As Boolean = False
 
+        Protected m_snRecFieldSelRadius As ScaledNumber
+
         Protected m_iNewOrganismCount As Integer
         Protected m_iNewStructureCount As Integer
 
@@ -297,16 +299,17 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
-        Public Property MaxHydroForce() As ScaledNumber
+        Public Property RecFieldSelRadius() As ScaledNumber
             Get
-                Return m_snMaxHydroForce
+                Return m_snRecFieldSelRadius
             End Get
             Set(ByVal Value As ScaledNumber)
                 If Value.ActualValue < 0 Then
-                    Throw New System.Exception("You can not set the maximum hyrdrodynamic force to be less than  zero!")
+                    Throw New System.Exception("You can not set the receptive field selected radius to be less than zero!")
                 End If
 
-                m_snMaxHydroForce.CopyData(Value)
+                Me.SetSimData("RecFieldSelRadius", Value.ActualValue.ToString, True)
+                m_snRecFieldSelRadius.CopyData(Value)
             End Set
         End Property
 
@@ -320,6 +323,19 @@ Namespace DataObjects.Physical
                 End If
 
                 m_snMaxHydroTorque.CopyData(Value)
+            End Set
+        End Property
+
+        Public Property MaxHydroForce() As ScaledNumber
+            Get
+                Return m_snMaxHydroForce
+            End Get
+            Set(ByVal Value As ScaledNumber)
+                If Value.ActualValue < 0 Then
+                    Throw New System.Exception("You can not set the maximum hyrdrodynamic force to be less than  zero!")
+                End If
+
+                m_snMaxHydroForce.CopyData(Value)
             End Set
         End Property
 
@@ -556,6 +572,8 @@ Namespace DataObjects.Physical
 
             m_snMaxHydroForce = New ScaledNumber(Me, "MaxHydroForce", 100, ScaledNumber.enumNumericScale.None, "Newtons", "N")
             m_snMaxHydroTorque = New ScaledNumber(Me, "MaxHydroTorque", 100, ScaledNumber.enumNumericScale.None, "Newton-Meters", "Nm")
+
+            m_snRecFieldSelRadius = New ScaledNumber(Me, "RecFieldSelRadius", 5, ScaledNumber.enumNumericScale.milli, "Meters", "m")
 
         End Sub
 
@@ -837,6 +855,11 @@ Namespace DataObjects.Physical
                                         "Units", "Determines the mass unit measurements used within the configuration files.", _
                                         m_eMassUnits, GetType(AnimatGUI.TypeHelpers.UnitsTypeEditor), GetType(AnimatGUI.TypeHelpers.UnitsTypeConverter)))
 
+            pbNumberBag = m_snRecFieldSelRadius.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Selected Vertex Radius", pbNumberBag.GetType(), "RecFieldSelRadius", _
+                                        "Units", "The radius of the sphere used to show the selecte vertex in receptive field mode.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
             pbNumberBag = m_snMouseSpringStiffness.Properties
             propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Mouse Spring Stiffness", pbNumberBag.GetType(), "MouseSpringStiffness", _
                                         "Mouse Spring Settings", "Sets the stiffness of the spring used when applying forces using the mouse during a simulation.", pbNumberBag, _
@@ -900,6 +923,7 @@ Namespace DataObjects.Physical
             If Not m_snAngularKineticLoss Is Nothing Then m_snAngularKineticLoss.ClearIsDirty()
             If Not m_snMaxHydroForce Is Nothing Then m_snMaxHydroForce.ClearIsDirty()
             If Not m_snMaxHydroTorque Is Nothing Then m_snMaxHydroTorque.ClearIsDirty()
+            If Not m_snRecFieldSelRadius Is Nothing Then m_snRecFieldSelRadius.ClearIsDirty()
 
         End Sub
 
@@ -925,6 +949,8 @@ Namespace DataObjects.Physical
 
             m_snMaxHydroForce = DirectCast(doOrig.m_snMaxHydroForce.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_snMaxHydroTorque = DirectCast(doOrig.m_snMaxHydroTorque.Clone(Me, bCutData, doRoot), ScaledNumber)
+
+            m_snRecFieldSelRadius = DirectCast(doOrig.m_snRecFieldSelRadius.Clone(Me, bCutData, doRoot), ScaledNumber)
 
             m_eDistanceUnits = doOrig.m_eDistanceUnits
             m_eMassUnits = doOrig.m_eMassUnits
@@ -1025,6 +1051,8 @@ Namespace DataObjects.Physical
             m_eMassUnits = DirectCast([Enum].Parse(GetType(enumMassUnits), oXml.GetChildString("MassUnits"), True), enumMassUnits)
             m_eDistanceUnits = DirectCast([Enum].Parse(GetType(enumDistanceUnits), oXml.GetChildString("DistanceUnits"), True), enumDistanceUnits)
 
+            'm_snRecFieldSelRadius.LoadData(oXml, "RecFieldSelRadius")
+
             'Odor types must be loaded before structures
             Dim iCount As Integer
             If oXml.FindChildElement("OdorTypes", False) Then
@@ -1097,6 +1125,8 @@ Namespace DataObjects.Physical
             m_snMaxHydroForce.SaveData(oXml, "MaxHydroForce")
             m_snMaxHydroTorque.SaveData(oXml, "MaxHydroTorque")
 
+            m_snRecFieldSelRadius.SaveData(oXml, "RecFieldSelRadius")
+
             oXml.AddChildElement("SimulateHydrodynamics", m_bSimulateHydrodynamics)
 
             oXml.AddChildElement("MassUnits", m_eMassUnits.ToString())
@@ -1161,6 +1191,8 @@ Namespace DataObjects.Physical
 
             oXml.AddChildElement("MaxHydroForce", m_snMaxHydroForce.ActualValue)
             oXml.AddChildElement("MaxHydroTorque", m_snMaxHydroTorque.ActualValue)
+
+            m_snRecFieldSelRadius.SaveSimulationXml(oXml, Nothing, "RecFieldSelRadius")
 
             oXml.AddChildElement("SimulateHydrodynamics", m_bSimulateHydrodynamics)
 

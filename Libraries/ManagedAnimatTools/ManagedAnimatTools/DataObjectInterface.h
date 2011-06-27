@@ -114,7 +114,6 @@ public:
 	float GetDataValue(String ^sData);
 
 	float GetBoundingBoxValue(int iIndex);
-	float GetMinVertexDistance();
 	void OrientNewPart(double dblXPos, double dblYPos, double dblZPos, double dblXNorm, double dblYNorm, double dblZNorm);
 
 #pragma endregion

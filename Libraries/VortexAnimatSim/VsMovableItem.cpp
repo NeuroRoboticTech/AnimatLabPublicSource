@@ -88,18 +88,24 @@ void VsMovableItem::Physics_Selected(BOOL bValue, BOOL bSelectMultiple)
 {
 	if(m_osgNodeGroup.valid() && m_osgDragger.valid() && m_osgSelectedGroup.valid())
 	{
+		BOOL bIsReceptiveFieldMode = (m_lpThisAB->GetSimulator()->VisualSelectionMode() & RECEPTIVE_FIELD_SELECTION_MODE);
+
 		//If selecting and not already selected then select it
-		bool bNodeFound = m_osgNodeGroup->containsNode(m_osgSelectedGroup.get());
+		BOOL bNodeFound = m_osgNodeGroup->containsNode(m_osgSelectedGroup.get());
 		if(bValue && !bNodeFound)
 		{
 			m_osgNodeGroup->addChild(m_osgSelectedGroup.get());
-			m_osgDragger->AddToScene();
+			if(!bIsReceptiveFieldMode)
+				m_osgDragger->AddToScene();
+			else
+				ShowSelectedVertex();
 		}
 		//if de-selecting and selected then de-select the node
 		else if(!bValue && bNodeFound)
 		{
 			m_osgNodeGroup->removeChild(m_osgSelectedGroup.get());
 			m_osgDragger->RemoveFromScene();
+			HideSelectedVertex();
 		}
 	}
 }
@@ -132,6 +138,7 @@ void VsMovableItem::CreateSelectedGraphics(string strName)
     m_osgSelectedGroup->setStateSet(stateset);
 
 	CreateDragger(strName);
+	CreateSelectedVertex(strName);
 }
 
 void VsMovableItem::CreateDragger(string strName)
@@ -155,6 +162,39 @@ void VsMovableItem::CreateDragger(string strName)
 			m_osgDragger->setUserData(new VsOsgUserData(this));
 		}
 	}
+}
+
+void VsMovableItem::CreateSelectedVertex(string strName)
+{
+	if(!m_osgSelVertexNode.valid())
+	{
+		m_osgSelVertexNode = new osg::Geode();
+		m_osgSelVertexNode->setName(strName + "SelVertex");
+		float fltRadius = m_lpThisAB->GetSimulator()->RecFieldSelRadius();
+		osg::ShapeDrawable *osgDraw = new osg::ShapeDrawable(new osg::Sphere(osg::Vec3(0, 0, 0), fltRadius));
+		osgDraw->setColor(osg::Vec4(0, 1, 0, 0));
+		m_osgSelVertexNode->addDrawable(osgDraw);
+	}
+
+	if(!m_osgSelVertexMT.valid())
+	{
+		m_osgSelVertexMT = new osg::MatrixTransform();
+
+		//Initially have it at the center. It will get moved as vertices are picked.
+		osg::Matrix osgMT;
+		osgMT.makeIdentity();
+		m_osgSelVertexMT->setMatrix(osgMT);
+
+		m_osgSelVertexMT->addChild(m_osgSelVertexNode.get());
+	}
+}
+
+void VsMovableItem::DeleteSelectedVertex()
+{
+	HideSelectedVertex();
+
+	if(m_osgSelVertexNode.valid()) m_osgSelVertexNode.release();
+	if(m_osgSelVertexMT.valid()) m_osgSelVertexMT.release();
 }
 
 #pragma endregion
@@ -623,13 +663,9 @@ void VsMovableItem::SetCulling()
 	}
 }
 
-void VsMovableItem::ShowSelectedVertex()
-{
-}
+void VsMovableItem::ShowSelectedVertex() {}
 
-void VsMovableItem::HideSelectedVertex()
-{
-}
+void VsMovableItem::HideSelectedVertex() {}
 
 void VsMovableItem::SetAlpha()
 {
