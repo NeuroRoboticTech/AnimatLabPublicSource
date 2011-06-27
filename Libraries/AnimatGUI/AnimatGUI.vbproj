@@ -567,6 +567,15 @@
     <Compile Include="Forms\ProjectWorkspace.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\ReceptiveFieldCurrent.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ReceptiveFieldGain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ReceptiveFieldPairs.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\RelabelSelected.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -1213,6 +1222,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\BodyPlan\SelectTerrain.resx">
       <DependentUpon>SelectTerrain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ReceptiveFieldCurrent.resx">
+      <DependentUpon>ReceptiveFieldCurrent.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ReceptiveFieldGain.resx">
+      <DependentUpon>ReceptiveFieldGain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ReceptiveFieldPairs.resx">
+      <DependentUpon>ReceptiveFieldPairs.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Graphics\Blank.gif" />
   </ItemGroup>

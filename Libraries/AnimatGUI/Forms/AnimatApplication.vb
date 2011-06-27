@@ -869,11 +869,17 @@ Namespace Forms
         Protected m_wcPropertiesContent As Crownwood.DotNetMagic.Docking.WindowContent
         Protected m_wcToolboxContent As Crownwood.DotNetMagic.Docking.WindowContent
         Protected m_wcSimControllerContent As Crownwood.DotNetMagic.Docking.WindowContent
+        Protected m_wcRecFieldPairsContent As Crownwood.DotNetMagic.Docking.WindowContent
+        Protected m_wcRecFieldGainContent As Crownwood.DotNetMagic.Docking.WindowContent
+        Protected m_wcRecFieldCurrentContent As Crownwood.DotNetMagic.Docking.WindowContent
 
         Protected m_frmWorkspace As Forms.ProjectWorkspace
         Protected m_frmProperties As Forms.projectProperties
         Protected m_frmToolbox As Forms.Toolbox
         Protected m_frmSimulationController As Forms.SimulationController
+        Protected m_frmReceptiveFieldPairs As Forms.ReceptiveFieldPairs
+        Protected m_frmReceptiveFieldGain As Forms.ReceptiveFieldGain
+        Protected m_frmReceptiveFieldCurrent As Forms.ReceptiveFieldCurrent
 
         'Protected m_ipToolPanel As New IconPanel
 
@@ -1022,6 +1028,24 @@ Namespace Forms
         Public Overridable ReadOnly Property SimulationController() As Forms.SimulationController
             Get
                 Return m_frmSimulationController
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property ReceptiveFieldPairs() As Forms.ReceptiveFieldPairs
+            Get
+                Return m_frmReceptiveFieldPairs
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property ReceptiveFieldGain() As Forms.ReceptiveFieldGain
+            Get
+                Return m_frmReceptiveFieldGain
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property ReceptiveFieldCurrent() As Forms.ReceptiveFieldCurrent
+            Get
+                Return m_frmReceptiveFieldCurrent
             End Get
         End Property
 
@@ -2023,6 +2047,7 @@ Namespace Forms
             m_mgrToolStripImages.AddImage(myAssembly, "AnimatGUI.ProjectProperties.gif")
             m_mgrToolStripImages.AddImage(myAssembly, "AnimatGUI.Simulate.gif")
             m_mgrToolStripImages.AddImage(myAssembly, "AnimatGUI.SimulationController.gif")
+            m_mgrToolStripImages.AddImage(myAssembly, "AnimatGUI.ReceptiveField.gif")
             m_mgrToolStripImages.AddImage(myAssembly, "AnimatGUI.Undo.gif")
             m_mgrToolStripImages.AddImage(myAssembly, "AnimatGUI.UndoGrey.gif")
             m_mgrToolStripImages.AddImage(myAssembly, "AnimatGUI.Redo.gif")
@@ -2505,6 +2530,26 @@ Namespace Forms
                                 True, State.DockBottom, m_wcSimControllerContent, , , , , 100)
                 m_frmSimulationController = DirectCast(afForm, Forms.SimulationController)
 
+                afForm = CreateDockingForm(m_dockManager, "AnimatGUI.dll", _
+                                "AnimatGUI.Forms.ReceptiveFieldPairs", _
+                                "Receptive Field Pairs", "Field Pairs", _
+                                True, State.DockRight, m_wcRecFieldPairsContent, , , , 200, )
+                m_frmReceptiveFieldPairs = DirectCast(afForm, Forms.ReceptiveFieldPairs)
+
+                afForm = CreateDockingForm(m_dockManager, "AnimatGUI.dll", _
+                                "AnimatGUI.Forms.ReceptiveFieldGain", _
+                                "Receptive Field Gain", "Field Gain", _
+                                True, State.DockRight, m_wcRecFieldGainContent, m_wcRecFieldPairsContent, , , 200, )
+                m_frmReceptiveFieldGain = DirectCast(afForm, Forms.ReceptiveFieldGain)
+
+                afForm = CreateDockingForm(m_dockManager, "AnimatGUI.dll", _
+                                "AnimatGUI.Forms.ReceptiveFieldCurrent", _
+                                "Receptive Field Current", "Field Current", _
+                                True, State.DockRight, m_wcRecFieldCurrentContent, m_wcRecFieldPairsContent, , , 200, )
+                m_frmReceptiveFieldCurrent = DirectCast(afForm, Forms.ReceptiveFieldCurrent)
+
+                m_dockManager.ToggleContentAutoHide(m_frmReceptiveFieldPairs.Content)
+
                 m_frmWorkspace.CreateWorkspaceTreeView()
                 PopulateToolbox()
 
@@ -2560,6 +2605,36 @@ Namespace Forms
                                   True, State.DockBottom, , , , , , 150)
                 m_frmSimulationController = DirectCast(afForm, Forms.SimulationController)
             End If
+
+            ctDock = m_dockManager.Contents("Receptive Field Pairs")
+            If ctDock Is Nothing Then
+                afForm = CreateDockingForm(m_dockManager, "AnimatGUI.dll", _
+                                "AnimatGUI.Forms.ReceptiveFieldPairs", _
+                                "Receptive Field Pairs", "Field Pairs", _
+                                True, State.DockRight, m_wcRecFieldPairsContent, , , , 200, )
+                m_frmReceptiveFieldPairs = DirectCast(afForm, Forms.ReceptiveFieldPairs)
+                'm_dockManager.ToggleContentAutoHide(afForm.Content)
+            End If
+
+            ctDock = m_dockManager.Contents("Receptive Field Gain")
+            If ctDock Is Nothing Then
+                afForm = CreateDockingForm(m_dockManager, "AnimatGUI.dll", _
+                                "AnimatGUI.Forms.ReceptiveFieldGain", _
+                                "Receptive Field Gain", "Field Gain", _
+                                True, State.DockRight, m_wcRecFieldGainContent, m_wcRecFieldPairsContent, , , 200, )
+                m_frmReceptiveFieldGain = DirectCast(afForm, Forms.ReceptiveFieldGain)
+            End If
+
+            ctDock = m_dockManager.Contents("Receptive Field Current")
+            If ctDock Is Nothing Then
+                afForm = CreateDockingForm(m_dockManager, "AnimatGUI.dll", _
+                                "AnimatGUI.Forms.ReceptiveFieldCurrent", _
+                                "Receptive Field Current", "Field Current", _
+                                True, State.DockRight, m_wcRecFieldCurrentContent, m_wcRecFieldPairsContent, , , 200, )
+                m_frmReceptiveFieldCurrent = DirectCast(afForm, Forms.ReceptiveFieldCurrent)
+            End If
+
+            m_dockManager.ToggleContentAutoHide(m_frmReceptiveFieldPairs.Content)
 
             PopulateToolbox()
         End Sub
@@ -2932,6 +3007,12 @@ Namespace Forms
                     m_frmToolbox = DirectCast(frmDock, Forms.Toolbox)
                 ElseIf strClass = "AnimatGUI.Forms.SimulationController" Then
                     m_frmSimulationController = DirectCast(frmDock, Forms.SimulationController)
+                ElseIf strClass = "AnimatGUI.Forms.ReceptiveFieldPairs" Then
+                    m_frmReceptiveFieldPairs = DirectCast(frmDock, Forms.ReceptiveFieldPairs)
+                ElseIf strClass = "AnimatGUI.Forms.ReceptiveFieldGain" Then
+                    m_frmReceptiveFieldGain = DirectCast(frmDock, Forms.ReceptiveFieldGain)
+                ElseIf strClass = "AnimatGUI.Forms.ReceptiveFieldCurrent" Then
+                    m_frmReceptiveFieldCurrent = DirectCast(frmDock, Forms.ReceptiveFieldCurrent)
                 End If
 
                 frmDock.LoadData(oXml)

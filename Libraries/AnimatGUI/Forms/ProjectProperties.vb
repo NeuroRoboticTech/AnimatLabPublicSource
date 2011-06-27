@@ -69,14 +69,6 @@ Namespace Forms
 
         End Sub
 
-
-        'Temporary test code
-        Private Sub bag1_GetValue(ByVal sender As Object, ByVal e As PropertySpecEventArgs)
-        End Sub
-
-        Private Sub bag1_SetValue(ByVal sender As Object, ByVal e As PropertySpecEventArgs)
-        End Sub
-
 #End Region
 
 #Region " Attributes "
