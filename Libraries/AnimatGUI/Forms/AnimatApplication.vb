@@ -2606,8 +2606,8 @@ Namespace Forms
                 m_frmSimulationController = DirectCast(afForm, Forms.SimulationController)
             End If
 
-            ctDock = m_dockManager.Contents("Receptive Field Pairs")
-            If ctDock Is Nothing Then
+            Dim ctRecFieldDock As Content = m_dockManager.Contents("Receptive Field Pairs")
+            If ctRecFieldDock Is Nothing Then
                 afForm = CreateDockingForm(m_dockManager, "AnimatGUI.dll", _
                                 "AnimatGUI.Forms.ReceptiveFieldPairs", _
                                 "Receptive Field Pairs", "Field Pairs", _
@@ -2634,7 +2634,9 @@ Namespace Forms
                 m_frmReceptiveFieldCurrent = DirectCast(afForm, Forms.ReceptiveFieldCurrent)
             End If
 
-            m_dockManager.ToggleContentAutoHide(m_frmReceptiveFieldPairs.Content)
+            If ctRecFieldDock Is Nothing Then
+                m_dockManager.ToggleContentAutoHide(m_frmReceptiveFieldPairs.Content)
+            End If
 
             PopulateToolbox()
         End Sub
@@ -3160,8 +3162,17 @@ Namespace Forms
         End Sub
 
         Public Overridable Sub ClearDockingContents()
+ 
             Dim iCount As Integer = m_dockManager.Contents.Count - 1
             For iDock As Integer = 0 To iCount
+                'We need to explicitly close the toolbar forms before removing from the docking manager.
+                'This ensures that the proper Form.Closing/Form.Closed events are fired.
+                Dim ctDock As Content = m_dockManager.Contents(0)
+                If Not ctDock.Control Is Nothing AndAlso Util.IsTypeOf(ctDock.Control.GetType, GetType(Forms.AnimatForm)) Then
+                    Dim afForm As AnimatForm = DirectCast(ctDock.Control, AnimatForm)
+                    afForm.Close()
+                End If
+
                 m_dockManager.Contents.RemoveAt(0)
             Next
         End Sub
@@ -4110,6 +4121,11 @@ Namespace Forms
                 For Each oChild As Form In Me.ChildForms
                     oChild.Close()
                 Next
+
+                'We also need to explicitly close the docking toolbars.
+                If Not m_dockManager Is Nothing Then
+                    ClearDockingContents()
+                End If
 
                 m_mdiClient = Nothing
                 m_doSimulation = Nothing

@@ -37,15 +37,8 @@ Namespace Forms
             End If
             MyBase.Dispose(disposing)
         End Sub
-        Friend WithEvents lvFieldPairs As System.Windows.Forms.ListView
-        Friend WithEvents btnAdd As System.Windows.Forms.Button
-        Friend WithEvents btnRemove As System.Windows.Forms.Button
-        Friend WithEvents btnClear As System.Windows.Forms.Button
-        Friend WithEvents cboNeurons As System.Windows.Forms.ComboBox
-        Friend WithEvents txtSelVertex As System.Windows.Forms.TextBox
-        Friend WithEvents lblReceptivePairs As System.Windows.Forms.Label
-        Friend WithEvents lblSelectedVertex As System.Windows.Forms.Label
-        Friend WithEvents lblNeurons As System.Windows.Forms.Label
+        Friend WithEvents grdGainProps As System.Windows.Forms.PropertyGrid
+        'Friend WithEvents chartCurrentGain As System.Windows.Forms.Panel
 
         'Required by the Windows Form Designer
         Private components As System.ComponentModel.IContainer
@@ -54,117 +47,46 @@ Namespace Forms
         'It can be modified using the Windows Form Designer.  
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-            Me.lvFieldPairs = New System.Windows.Forms.ListView
-            Me.btnAdd = New System.Windows.Forms.Button
-            Me.btnRemove = New System.Windows.Forms.Button
-            Me.btnClear = New System.Windows.Forms.Button
-            Me.cboNeurons = New System.Windows.Forms.ComboBox
-            Me.txtSelVertex = New System.Windows.Forms.TextBox
-            Me.lblReceptivePairs = New System.Windows.Forms.Label
-            Me.lblSelectedVertex = New System.Windows.Forms.Label
-            Me.lblNeurons = New System.Windows.Forms.Label
+            Me.grdGainProps = New System.Windows.Forms.PropertyGrid
+            'Me.chartCurrentGain = New System.Windows.Forms.Panel
             Me.SuspendLayout()
             '
-            'lvFieldPairs
+            'grdGainProps
             '
-            Me.lvFieldPairs.Location = New System.Drawing.Point(12, 150)
-            Me.lvFieldPairs.Name = "lvFieldPairs"
-            Me.lvFieldPairs.Size = New System.Drawing.Size(268, 164)
-            Me.lvFieldPairs.TabIndex = 0
-            Me.lvFieldPairs.UseCompatibleStateImageBehavior = False
+            Me.grdGainProps.HelpVisible = False
+            Me.grdGainProps.LargeButtons = True
+            Me.grdGainProps.LineColor = System.Drawing.SystemColors.ScrollBar
+            Me.grdGainProps.Location = New System.Drawing.Point(13, 13)
+            Me.grdGainProps.Name = "grdGainProps"
+            Me.grdGainProps.Size = New System.Drawing.Size(267, 162)
+            Me.grdGainProps.TabIndex = 0
+            Me.grdGainProps.ToolbarVisible = False
             '
-            'btnAdd
+            'chartCurrentGain
             '
-            Me.btnAdd.Location = New System.Drawing.Point(12, 13)
-            Me.btnAdd.Name = "btnAdd"
-            Me.btnAdd.Size = New System.Drawing.Size(55, 25)
-            Me.btnAdd.TabIndex = 2
-            Me.btnAdd.Text = "Add"
-            Me.btnAdd.UseVisualStyleBackColor = True
+            'Me.chartCurrentGain.Anchor = System.Windows.Forms.AnchorStyles.Left
+            'Me.chartCurrentGain.Location = New System.Drawing.Point(13, 182)
+            'Me.chartCurrentGain.Name = "chartCurrentGain"
+            'Me.chartCurrentGain.Size = New System.Drawing.Size(267, 160)
+            'Me.chartCurrentGain.TabIndex = 1
+            'Me.chartCurrentGain.BackColor = Color.Black
             '
-            'btnRemove
-            '
-            Me.btnRemove.Location = New System.Drawing.Point(73, 12)
-            Me.btnRemove.Name = "btnRemove"
-            Me.btnRemove.Size = New System.Drawing.Size(55, 25)
-            Me.btnRemove.TabIndex = 3
-            Me.btnRemove.Text = "Remove"
-            Me.btnRemove.UseVisualStyleBackColor = True
-            '
-            'btnClear
-            '
-            Me.btnClear.Location = New System.Drawing.Point(134, 12)
-            Me.btnClear.Name = "btnClear"
-            Me.btnClear.Size = New System.Drawing.Size(55, 25)
-            Me.btnClear.TabIndex = 4
-            Me.btnClear.Text = "Clear"
-            Me.btnClear.UseVisualStyleBackColor = True
-            '
-            'cboNeurons
-            '
-            Me.cboNeurons.FormattingEnabled = True
-            Me.cboNeurons.Location = New System.Drawing.Point(12, 57)
-            Me.cboNeurons.Name = "cboNeurons"
-            Me.cboNeurons.Size = New System.Drawing.Size(268, 21)
-            Me.cboNeurons.TabIndex = 9
-            '
-            'txtSelVertex
-            '
-            Me.txtSelVertex.Location = New System.Drawing.Point(12, 99)
-            Me.txtSelVertex.Name = "txtSelVertex"
-            Me.txtSelVertex.ReadOnly = True
-            Me.txtSelVertex.Size = New System.Drawing.Size(268, 20)
-            Me.txtSelVertex.TabIndex = 10
-            '
-            'lblReceptivePairs
-            '
-            Me.lblReceptivePairs.Location = New System.Drawing.Point(12, 134)
-            Me.lblReceptivePairs.Name = "lblReceptivePairs"
-            Me.lblReceptivePairs.Size = New System.Drawing.Size(268, 13)
-            Me.lblReceptivePairs.TabIndex = 11
-            Me.lblReceptivePairs.Text = "Neuron\Vertex Receptive Field Pairs"
-            Me.lblReceptivePairs.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-            '
-            'lblSelectedVertex
-            '
-            Me.lblSelectedVertex.Location = New System.Drawing.Point(12, 81)
-            Me.lblSelectedVertex.Name = "lblSelectedVertex"
-            Me.lblSelectedVertex.Size = New System.Drawing.Size(268, 13)
-            Me.lblSelectedVertex.TabIndex = 12
-            Me.lblSelectedVertex.Text = "Selected Vertex"
-            Me.lblSelectedVertex.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-            '
-            'lblNeurons
-            '
-            Me.lblNeurons.Location = New System.Drawing.Point(12, 41)
-            Me.lblNeurons.Name = "lblNeurons"
-            Me.lblNeurons.Size = New System.Drawing.Size(268, 13)
-            Me.lblNeurons.TabIndex = 13
-            Me.lblNeurons.Text = "Neurons"
-            Me.lblNeurons.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-            '
-            'ReceptiveFieldPairs
+            'ReceptiveFieldGain
             '
             Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-            Me.ClientSize = New System.Drawing.Size(292, 326)
-            Me.Controls.Add(Me.lblNeurons)
-            Me.Controls.Add(Me.lblSelectedVertex)
-            Me.Controls.Add(Me.lblReceptivePairs)
-            Me.Controls.Add(Me.txtSelVertex)
-            Me.Controls.Add(Me.cboNeurons)
-            Me.Controls.Add(Me.btnClear)
-            Me.Controls.Add(Me.btnRemove)
-            Me.Controls.Add(Me.btnAdd)
-            Me.Controls.Add(Me.lvFieldPairs)
-            Me.Name = "ReceptiveFieldPairs"
+            Me.ClientSize = New System.Drawing.Size(292, 354)
+            'Me.Controls.Add(Me.chartCurrentGain)
+            Me.Controls.Add(Me.grdGainProps)
+            Me.Name = "ReceptiveFieldCurrent"
             Me.ResumeLayout(False)
-            Me.PerformLayout()
 
         End Sub
 
 #End Region
 
 #Region " Attributes "
+
+        Protected chartCurrentGain As AnimatGUI.Forms.Gain.GainControl
 
 #End Region
 
@@ -185,6 +107,16 @@ Namespace Forms
             Try
                 MyBase.Initialize(frmParent)
 
+                Dim oAssembly As System.Reflection.Assembly = System.Reflection.Assembly.LoadFrom(Util.GetFilePath(Util.Application.ApplicationDirectory, "LicensedAnimatGUI.dll"))
+                chartCurrentGain = DirectCast(oAssembly.CreateInstance("LicensedAnimatGUI.Forms.Charts.GainControl"), AnimatGUI.Forms.Gain.GainControl)
+
+                Me.Controls.Add(Me.chartCurrentGain)
+                Me.chartCurrentGain.Anchor = System.Windows.Forms.AnchorStyles.Left
+                Me.chartCurrentGain.Location = New System.Drawing.Point(13, 182)
+                Me.chartCurrentGain.Name = "chartCurrentGain"
+                Me.chartCurrentGain.Size = New System.Drawing.Size(267, 160)
+                Me.chartCurrentGain.TabIndex = 1
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -198,17 +130,27 @@ Namespace Forms
         Private Sub ReceptiveFieldPairs_Resize(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Resize
 
             Try
-                lblNeurons.Width = Me.Width - 30
-                lblReceptivePairs.Width = Me.Width - 30
-                lblSelectedVertex.Width = Me.Width - 30
-                cboNeurons.Width = Me.Width - 30
-                txtSelVertex.Width = Me.Width - 30
-                lvFieldPairs.Width = Me.Width - 30
-                lvFieldPairs.Height = Me.Height - lvFieldPairs.Location.Y - 30
+                grdGainProps.Width = Me.Width - 30
+                grdGainProps.Height = CInt(CSng(Me.Height) / 2.0) - 30
+
+                If Not chartCurrentGain Is Nothing Then
+                    chartCurrentGain.Width = Me.Width - 30
+                    chartCurrentGain.Top = grdGainProps.Top + grdGainProps.Height + 15
+                    chartCurrentGain.Height = Me.Height - chartCurrentGain.Top - 15
+                End If
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
 
+        End Sub
+
+        Private Sub grdGainProps_PropertyValueChanged(ByVal s As System.Object, ByVal e As System.Windows.Forms.PropertyValueChangedEventArgs) Handles grdGainProps.PropertyValueChanged
+
+        End Sub
+
+        Protected Overrides Sub AnimatForm_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+            chartCurrentGain = Nothing
         End Sub
 
 #End Region
