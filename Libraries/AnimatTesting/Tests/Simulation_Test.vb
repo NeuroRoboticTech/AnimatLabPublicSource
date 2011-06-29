@@ -10,27 +10,31 @@ Imports AnimatGUI
 Imports AnimatGUI.Framework
 Imports NUnit.Extensions.Forms
 
-''' \namespace AnimatTesting::Tests 
+''' <summary> Contains unit test classes. </summary>
 '''
-''' \brief  Contains unit test classes. 
+''' <remarks> dcofer, 6/28/2011.</remarks>
 Namespace Tests
 
-    ''' \brief  Simulation Unit tests. 
+    ''' <summary> Simulation test. </summary>
     '''
-    ''' \author dcofer
-    ''' \date   3/16/2011
+    ''' <remarks> dcofer, 6/28/2011.</remarks>
     <TestFixture()> _
     Public Class Simulation_Test
         Inherits Framework.AnimatTest
 
-
-         <Test()> _
-        Public Sub MySimTest()
+        ''' <summary> Tests my simulation.</summary>
+        '''
+        ''' <remarks> dcofer, 6/28/2011.</remarks>
+        <Test()> _
+       Public Sub MySimTest()
 
             RunSimulation("C:\Projects\AnimatLabSDK\Experiments\NewProject\NewProject.aproj")
 
         End Sub
 
+        ''' <summary> Tests compare.</summary>
+        '''
+        ''' <remarks> dcofer, 6/28/2011.</remarks>
         <Test()> _
        Public Sub CompareTest()
 
@@ -38,6 +42,17 @@ Namespace Tests
 
         End Sub
 
+        ''' <summary> Tests form.</summary>
+        '''
+        ''' <remarks> dcofer, 6/28/2011.</remarks>
+        <Test()> _
+       Public Sub FormTest()
+
+            'm_doApp.LoadProject("C:\Projects\AnimatLabSDK\Experiments\nUnitTest\nUnitTest.aproj")
+            Dim button As ButtonTester = New ButtonTester("OpenToolStripButton")
+            button.FireEvent("Click")
+
+        End Sub
 
     End Class
 
