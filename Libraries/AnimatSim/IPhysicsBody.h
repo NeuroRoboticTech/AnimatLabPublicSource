@@ -29,6 +29,7 @@ namespace AnimatSim
 			virtual float Physics_GetMass() = 0;
 			virtual void Physics_Resize() = 0;
 			virtual void Physics_ResizeSelectedReceptiveFieldVertex() = 0;
+			virtual void Physics_FluidDataChanged() = 0;
 		};
 
 	}

@@ -44,12 +44,6 @@ void VsBox::CreatePhysicsGeometry()
 {
 	if(IsCollisionObject())
 		m_vxGeometry = new VxBox(m_fltLength, m_fltHeight, m_fltWidth);
-
-	//Lets get the volume and areas
-	m_fltVolume = m_fltLength * m_fltHeight * m_fltWidth;
-	m_fltXArea = m_fltHeight * m_fltWidth;
-	m_fltYArea = m_fltLength * m_fltWidth;
-	m_fltZArea = m_fltHeight * m_fltLength;
 }
 
 void VsBox::CreateParts()

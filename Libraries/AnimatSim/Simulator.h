@@ -190,10 +190,6 @@ namespace AnimatSim
 			///simulation down slightly.
 			BOOL m_bSimulateHydrodynamics;
 
-			///Density of the fluid for hydrodynamic simulations. This is not
-			///used if m_bSimulateHydrodynamics is FALSE.
-			float m_fltFluidDensity;
-
 			///This is the minimum integration time step taken for all neural modules and the physics engine.
 			float m_fltTimeStep;
 
@@ -580,9 +576,6 @@ namespace AnimatSim
 
 			virtual BOOL SimulateHydrodynamics();
 			virtual void SimulateHydrodynamics(BOOL bVal);
-
-			virtual float FluidDensity();
-			virtual void FluidDensity(float fltVal, BOOL bUseScaling = TRUE);
 
 			virtual int GetMaterialID(string strID);
 

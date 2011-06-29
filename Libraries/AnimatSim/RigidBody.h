@@ -78,24 +78,6 @@ namespace AnimatSim
 			///Uniform density for the rigid body.
 			float m_fltDensity;
 
-			///Drag Coefficient
-			float m_vCd[3];   
-
-			///Total volume for the rigid body. This is used in calculating the buoyancy
-			float m_fltVolume;
-
-			///The area of this rigid body in the x direction. This is used to calculate the
-			///drag force in this direction.
-			float m_fltXArea;
-
-			///The area of this rigid body in the y direction. This is used to calculate the
-			///drag force in this direction.
-			float m_fltYArea;
-
-			///The area of this rigid body in the z direction. This is used to calculate the
-			///drag force in this direction.
-			float m_fltZArea;
-
 			///A list of child parts that are connected to this part through
 			///different joints. 
 			CStdPtrArray<RigidBody> m_aryChildParts;
@@ -157,6 +139,24 @@ namespace AnimatSim
 			/// Identifier for the material type this part will use.
 			string m_strMaterialID;
 
+			//Hyrdrodynamic properties
+			///This is the relative position to the center of the buoyancy in the body.
+			CStdFPoint m_vBuoyancyCenter;
+
+			///This is a scale used to calculate the buoyancy value. It is a scale factor
+			///applied to the buoyancy force which accounts for the fact that a given volume might actually have holes
+			///or concavity in it which would affect the buoyancy force on the object.
+			float m_fltBuoyancyScale;
+
+			///This is the drag coefficients for the three axises for the body.
+			CStdFPoint m_vDrag;
+
+			///The Magnus coefficient for the body. This is defaulted to zero because it almost always negligble for most body parts.
+			float m_fltMagnus;
+			
+			/// true to enable fluid interactions.
+			BOOL m_bEnableFluids;
+
 			virtual RigidBody *LoadRigidBody(CStdXml &oXml);
 			virtual Joint *LoadJoint(CStdXml &oXml);
 
@@ -172,6 +172,8 @@ namespace AnimatSim
 		public:
 			RigidBody();
 			virtual ~RigidBody();
+
+#pragma region AccessorMutators
 
 			virtual void Position(CStdFPoint &oPoint, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
 
@@ -191,15 +193,6 @@ namespace AnimatSim
 
 			virtual float Density();
 			virtual void Density(float fltVal, BOOL bUseScaling = TRUE);
-
-			virtual float *Cd();
-			virtual void Cd(float *vVal);
-			virtual void Cd(float fltVal);
-
-			virtual float Volume();
-			virtual float XArea();
-			virtual float YArea();
-			virtual float ZArea();
 
 			virtual BOOL Freeze();
 			virtual void Freeze(BOOL bVal);
@@ -239,6 +232,27 @@ namespace AnimatSim
 			virtual string MaterialID();
 			virtual void MaterialID(string strID);
 
+			virtual CStdFPoint BuoyancyCenter();
+			virtual void BuoyancyCenter(CStdFPoint &oPoint, BOOL bUseScaling = TRUE);
+			virtual void BuoyancyCenter(float fltX, float fltY, float fltZ, BOOL bUseScaling = TRUE);
+			virtual void BuoyancyCenter(string strXml, BOOL bUseScaling = TRUE);
+
+			virtual float BuoyancyScale();
+			virtual void BuoyancyScale(float fltVal);
+
+			virtual CStdFPoint Drag();
+			virtual void Drag(CStdFPoint &oPoint);
+			virtual void Drag(float fltX, float fltY, float fltZ);
+			virtual void Drag(string strXml);
+
+			virtual float Magnus();
+			virtual void Magnus(float fltVal);
+
+			virtual BOOL EnableFluids();
+			virtual void EnableFluids(BOOL bVal);
+
+#pragma endregion
+
 			virtual float SurfaceContactCount();
 
 			virtual void Eat(float fltVal, long lTimeSlice);
@@ -248,6 +262,7 @@ namespace AnimatSim
 			virtual void AddTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits);
 			virtual CStdFPoint GetVelocityAtPoint(float x, float y, float z);
 			virtual float GetMass();
+			virtual float GetVolume();
 			virtual void UpdatePhysicsPosFromGraphics();
 
 			virtual void EnableCollision(RigidBody *lpBody);

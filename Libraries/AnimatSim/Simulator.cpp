@@ -75,7 +75,7 @@ Simulator::Simulator()
 	m_iVideoLoops = 0;
 	m_lpAnimatClassFactory = NULL;
 	m_bSimulateHydrodynamics = FALSE;
-	m_fltFluidDensity = 1.0;
+
 	m_fltGravity = (float) -9.81;
 	m_fltDistanceUnits = (float) 0.01;  //use centimeters
 	m_fltInverseDistanceUnits = 1/m_fltDistanceUnits;
@@ -1165,35 +1165,6 @@ void Simulator::SimulateHydrodynamics(BOOL bVal)
 }
 
 /**
-\brief	Gets the density of the fluid medium.
-
-\author	dcofer
-\date	3/28/2011
-
-\return	fluid density.
-**/
-float Simulator::FluidDensity() {return m_fltFluidDensity;}
-
-/**
-\brief	Sets the density of the fluid medium.
-
-\author	dcofer
-\date	3/28/2011
-
-\param	fltVal	   	The new value. 
-\param	bUseScaling	true to use unit scaling. 
-**/
-void Simulator::FluidDensity(float fltVal, BOOL bUseScaling)
-{
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "FluidDensity");
-
-	if(bUseScaling)
-		fltVal *= pow(m_fltDenominatorDistanceUnits, 3);  //Perform a conversion if necessary because we may be using different units in the denominator.
-
-	m_fltFluidDensity = fltVal;
-}
-
-/**
 \brief	Gets a material identifier from the physics engine for the specified unique ID.
 
 \details This method must be implemented within the derived class for the physics engine.
@@ -1653,7 +1624,6 @@ void Simulator::Reset()
 	m_lVideoSliceCount = 0;
 	m_iVideoLoops = 0;
 	m_bSimulateHydrodynamics = FALSE;
-	m_fltFluidDensity = 1.0;
 	m_fltGravity = (float) -9.8;
 	m_fltDistanceUnits = (float) 0.01;  //use centimeters
 	m_fltInverseDistanceUnits = 1/m_fltDistanceUnits;
@@ -2171,8 +2141,6 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 	PhysicsTimeStep(oXml.GetChildFloat("PhysicsTimeStep", m_fltPhysicsTimeStep));
 
 	SimulateHydrodynamics(oXml.GetChildBool("SimulateHydrodynamics", m_bSimulateHydrodynamics));
-	if(m_bSimulateHydrodynamics)
-		FluidDensity(oXml.GetChildFloat("FluidDensity", m_fltFluidDensity));
 
 	AutoGenerateRandomSeed(oXml.GetChildBool("AutoGenerateRandomSeed", m_bAutoGenerateRandomSeed));
 	ManualRandomSeed(oXml.GetChildInt("ManualRandomSeed", m_iManualRandomSeed));
@@ -3298,11 +3266,6 @@ BOOL Simulator::SetData(string strDataType, string strValue, BOOL bThrowError)
 	else if(strType == "SIMULATEHYDRODYNAMICS")
 	{
 		SimulateHydrodynamics(Std_ToBool(strValue));
-		return TRUE;
-	}
-	else if(strType == "FLUIDDENSITY")
-	{
-		FluidDensity(atof(strValue.c_str()));
 		return TRUE;
 	}
 	else if(strType == "AUTOGENERATERANDOMSEED")

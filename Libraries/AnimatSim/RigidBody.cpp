@@ -48,12 +48,6 @@ RigidBody::RigidBody()
 	m_lpParent = NULL;
 	m_lpStructure = NULL;
 	m_fltDensity = 1.0;
-	m_fltVolume = 0;
-	m_fltXArea = 0;
-	m_fltYArea = 0;
-	m_fltZArea = 0;
-
-	m_vCd[0] = m_vCd[1] = m_vCd[2] = 0;
 
 	m_lpJointToParent = NULL;
 	m_bFreeze = FALSE;
@@ -70,6 +64,10 @@ RigidBody::RigidBody()
 	m_fltMaxFoodQuantity = 10000;
 	m_fltFoodReplenishRate = 0;
 	m_fltFoodEnergyContent = 0;
+
+	m_fltBuoyancyScale = 1;
+	m_fltMagnus = 0;
+	m_bEnableFluids = FALSE;
 
 	m_strMaterialID = "DEFAULT";
 }
@@ -258,89 +256,6 @@ void RigidBody::Density(float fltVal, BOOL bUseScaling)
 	if(m_lpPhysicsBody)
 		m_lpPhysicsBody->Physics_SetDensity(m_fltDensity);
 };
-
-/**
-\brief	Gets the coefficient of drag array. 
-
-\author	dcofer
-\date	3/2/2011
-
-\return	pointer to an array of drag coefficients for each dimension. 
-**/
-float *RigidBody::Cd() {return m_vCd;}
-
-/**
-\brief	Sets the drag coefficients for each dimension.
-
-\author	dcofer
-\date	3/2/2011
-
-\param [in,out]	vVal Pointer to a dimension 3 array of drag coefficients.
-**/
-void RigidBody::Cd(float *vVal) 
-{
-	Std_IsAboveMin((float) 0, m_vCd[0], TRUE, "Cd x", true);
-	Std_IsAboveMin((float) 0, m_vCd[1], TRUE, "Cd y", true);
-	Std_IsAboveMin((float) 0, m_vCd[2], TRUE, "Cd z", true);
-
-	m_vCd[0] = vVal[0]; m_vCd[1] = vVal[1]; m_vCd[2] = vVal[2];
-}
-
-/**
-\brief	Sets the drag coefficients for each dimension using the same value.
-
-\author	dcofer
-\date	6/14/2011
-
-\param	fltVal	The new value.
-**/
-void RigidBody::Cd(float fltVal)
-{
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Cd x", true);
-
-	m_vCd[0] = m_vCd[1] = m_vCd[2] = fltVal;
-}
-
-/**
-\brief	Gets the volume of this part. 
-
-\author	dcofer
-\date	3/2/2011
-
-\return	Volume. 
-**/
-float RigidBody::Volume() {return m_fltVolume;}
-
-/**
-\brief	Gets the area of this part in the x dimension. 
-
-\author	dcofer
-\date	3/2/2011
-
-\return	Area in x dimesion. 
-**/
-
-float RigidBody::XArea() {return m_fltXArea;}
-
-/**
-\brief	Gets the area of this part in the y dimension. 
-
-\author	dcofer
-\date	3/2/2011
-
-\return	Area in y dimesion.
-**/
-float RigidBody::YArea() {return m_fltYArea;}
-
-/**
-\brief	Gets the area of this part in the z dimension. 
-
-\author	dcofer
-\date	3/2/2011
-
-\return	Area in z dimesion.
-**/
-float RigidBody::ZArea() {return m_fltZArea;}
 
 /**
 \brief	Tells if this part is frozen or not
@@ -666,6 +581,225 @@ void RigidBody::MaterialID(string strID)
 }
 
 /**
+\brief	Gets the relative position to the center of the buoyancy in the body.
+
+\author	dcofer
+\date	3/2/2011
+
+\return	returns m_vBuoyancyCenter. 
+**/
+CStdFPoint RigidBody::BuoyancyCenter() {return m_vBuoyancyCenter;}
+
+/**
+\brief	Sets the relative position to the center of the buoyancy in the body.
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	oPoint	The new point to use to set the local position.
+\param	bUseScaling   	If true then the position values that are passed in will be scaled by the
+						unit scaling values.
+**/
+void RigidBody::BuoyancyCenter(CStdFPoint &oPoint, BOOL bUseScaling) 
+{
+	if(bUseScaling)
+		m_vBuoyancyCenter = oPoint * m_lpMovableSim->InverseDistanceUnits();
+	else
+		m_vBuoyancyCenter = oPoint;
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_FluidDataChanged();
+}
+
+/**
+\brief	Sets the relative position to the center of the buoyancy in the body.
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltX				The x coordinate. 
+\param	fltY				The y coordinate. 
+\param	fltZ				The z coordinate. 
+\param	bUseScaling			If true then the position values that are passed in will be scaled by
+							the unit scaling values. 
+**/
+void RigidBody::BuoyancyCenter(float fltX, float fltY, float fltZ, BOOL bUseScaling) 
+{
+	CStdFPoint vPos(fltX, fltY, fltZ);
+	BuoyancyCenter(vPos, bUseScaling);
+}
+
+/**
+\brief	Sets tthe relative position to the center of the buoyancy in the body. This method is primarily used by the GUI to
+reset the local position using an xml data packet. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml				The xml string with the data to load in the position. 
+\param	bUseScaling			If true then the position values that are passed in will be scaled by
+							the unit scaling values. 
+**/
+void RigidBody::BuoyancyCenter(string strXml, BOOL bUseScaling)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("BuoyancyCenter");
+	
+	CStdFPoint vPos;
+	Std_LoadPoint(oXml, "BuoyancyCenter", vPos);
+	BuoyancyCenter(vPos, bUseScaling);
+}
+
+/**
+\brief	Gets the scale used to calculate the buoyancy value.
+
+\author	dcofer
+\date	3/2/2011
+
+\return	scale value. 
+**/
+float RigidBody::BuoyancyScale() {return m_fltBuoyancyScale;}
+
+/**
+\brief	Sets the scale used to calculate the buoyancy value.
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltVal	The new scale value greater than or equal to 0. 
+\exception	If	value not greater than or equal to 0. 
+**/
+void RigidBody::BuoyancyScale(float fltVal) 
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "BuoyancyScale", TRUE);
+
+	m_fltBuoyancyScale = fltVal;
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_FluidDataChanged();
+}
+
+/**
+\brief	Gets the drag coefficients for the three axises for the body.
+
+\author	dcofer
+\date	3/2/2011
+
+\return	returns m_vDrag. 
+**/
+CStdFPoint RigidBody::Drag() {return m_vDrag;}
+
+/**
+\brief	Sets the drag coefficients for the three axises for the body.
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	oPoint	The new point to use to set the drag.
+**/
+void RigidBody::Drag(CStdFPoint &oPoint) 
+{
+	m_vDrag = oPoint;
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_FluidDataChanged();
+}
+
+/**
+\brief	Sets the drag coefficients for the three axises for the body.
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltX				The x coordinate. 
+\param	fltY				The y coordinate. 
+\param	fltZ				The z coordinate. 
+**/
+void RigidBody::Drag(float fltX, float fltY, float fltZ) 
+{
+	CStdFPoint vPos(fltX, fltY, fltZ);
+	Drag(vPos);
+}
+
+/**
+\brief	Sets the drag coefficients for the three axises for the body. This method is primarily used by the GUI to
+reset the local position using an xml data packet. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml				The xml string with the data to load in the position. 
+**/
+void RigidBody::Drag(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Drag");
+	
+	CStdFPoint vPos;
+	Std_LoadPoint(oXml, "Drag", vPos);
+	Drag(vPos);
+}
+
+/**
+\brief	Gets the Magnus coefficient for the body.
+
+\author	dcofer
+\date	3/2/2011
+
+\return	Magnus value. 
+**/
+float RigidBody::Magnus() {return m_fltMagnus;}
+
+/**
+\brief	Sets the Magnus coefficient for the body.
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltVal	The new Magnus value greater than or equal to 0. 
+\exception	If	value not greater than or equal to 0. 
+**/
+void RigidBody::Magnus(float fltVal) 
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Magnus", TRUE);
+
+	m_fltMagnus = fltVal;
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_FluidDataChanged();
+}
+
+/**
+\brief	Query if this object has fluid interactions turned on. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	true if on, false if not. 
+**/
+BOOL RigidBody::EnableFluids() {return m_bEnableFluids;}
+
+/**
+\brief	Sets whether this object has fluid interactions turned on. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	bVal	true to turn on, false to turn off. 
+**/
+void RigidBody::EnableFluids(BOOL bVal) 
+{
+	m_bEnableFluids = bVal;
+
+	if(m_lpPhysicsBody)
+		m_lpPhysicsBody->Physics_FluidDataChanged();
+}
+
+/**
 \brief	Gets the surface contact count. 
 
 \author	dcofer
@@ -987,6 +1121,36 @@ BOOL RigidBody::SetData(string strDataType, string strValue, BOOL bThrowError)
 		return TRUE;
 	}
 
+	if(strDataType == "BUOYANCYCENTER")
+	{
+		BuoyancyCenter(strValue);
+		return true;
+	}
+
+	if(strType == "BUOYANCYSCALE")
+	{
+		BuoyancyScale(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strDataType == "DRAG")
+	{
+		Drag(strValue);
+		return true;
+	}
+
+	if(strType == "MAGNUS")
+	{
+		Magnus(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strDataType == "ENABLEFLUIDS")
+	{
+		EnableFluids(Std_ToBool(strValue));
+		return true;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -1128,6 +1292,7 @@ void RigidBody::LoadPosition(CStdXml &oXml)
 
 void RigidBody::Load(CStdXml &oXml)
 {
+	CStdFPoint vPoint;
 
 	if(m_lpJointToParent) {delete m_lpJointToParent; m_lpJointToParent=NULL;}
 	m_aryChildParts.RemoveAll();
@@ -1138,16 +1303,14 @@ void RigidBody::Load(CStdXml &oXml)
 
 	if(oXml.FindChildElement("COM", FALSE))
 	{
-		CStdFPoint vCOM;
-		Std_LoadPoint(oXml, "COM", vCOM);
-		CenterOfMass(vCOM, TRUE);
+		Std_LoadPoint(oXml, "COM", vPoint);
+		CenterOfMass(vPoint, TRUE);
 	}
 	else
 		CenterOfMass(0, 0, 0, TRUE);
 
 	Density(oXml.GetChildFloat("Density", m_fltDensity));
 
-	Cd(oXml.GetChildFloat("Cd", 0));
 	MaterialID(oXml.GetChildString("MaterialID", m_strMaterialID));
 	Freeze(oXml.GetChildBool("Freeze", m_bFreeze));
 	IsContactSensor(oXml.GetChildBool("IsContactSensor", m_bIsContactSensor));
@@ -1161,6 +1324,19 @@ void RigidBody::Load(CStdXml &oXml)
 
 	LinearVelocityDamping(oXml.GetChildFloat("LinearVelocityDamping", m_fltLinearVelocityDamping));
 	AngularVelocityDamping(oXml.GetChildFloat("AngularVelocityDamping", m_fltAngularVelocityDamping));
+
+	vPoint.Set(0, 0, 0);
+	Std_LoadPoint(oXml, "BuoyancyCenter", vPoint, FALSE);
+	BuoyancyCenter(vPoint);
+
+	vPoint.Set(0, 0, 0);
+	Std_LoadPoint(oXml, "Drag", vPoint, FALSE);
+	Drag(vPoint);
+
+	BuoyancyScale(oXml.GetChildFloat("BuoyancyScale", m_fltBuoyancyScale));
+	Magnus(oXml.GetChildFloat("Magnus", m_fltMagnus));
+	EnableFluids(oXml.GetChildBool("EnableFluids", m_bEnableFluids));
+
 
 	//Only load the joint if there is a parent object and this body uses joints.
 	if(m_lpParent && m_bUsesJoint)
@@ -1454,6 +1630,24 @@ float RigidBody::GetMass()
 		fltMass = m_lpPhysicsBody->Physics_GetMass();
 
 	return fltMass;
+}
+
+/**
+\brief	Gets the volume of this part. 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	The volume. 
+**/
+float RigidBody::GetVolume()
+{
+	float fltMass = 0;
+
+	if(m_lpPhysicsBody)
+		fltMass = m_lpPhysicsBody->Physics_GetMass();
+
+	return fltMass/m_fltDensity;
 }
 
 	}			//Environment

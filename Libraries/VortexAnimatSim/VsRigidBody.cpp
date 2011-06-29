@@ -30,8 +30,8 @@ VsRigidBody::VsRigidBody()
 	m_vxGeometry = NULL;
 	m_vxCollisionGeometry = NULL;
 
-	m_fltBuoyancy = 0;
-	m_fltReportBuoyancy = 0;
+	//m_fltBuoyancy = 0;
+	//m_fltReportBuoyancy = 0;
 	m_fltMass = 0;
 	m_fltReportMass = 0;
 	m_fltReportVolume = 0;
@@ -87,6 +87,12 @@ Vx::VxNode VsRigidBody::GraphicsNode()
 Vx::VxCollisionGeometry *VsRigidBody::CollisionGeometry()
 {
 	return m_vxCollisionGeometry;
+}
+
+void VsRigidBody::CollisionGeometry(Vx::VxCollisionGeometry *vxGeometry)
+{
+	m_vxCollisionGeometry = vxGeometry;
+	Physics_FluidDataChanged();
 }
 
 CStdFPoint VsRigidBody::Physics_GetCurrentPosition()
@@ -246,6 +252,29 @@ void VsRigidBody::Physics_ResizeSelectedReceptiveFieldVertex()
 	CreateSelectedVertex(m_lpThisAB->Name());
 }
 
+void  VsRigidBody::Physics_FluidDataChanged()
+{
+	if(m_vxCollisionGeometry)
+	{
+		CStdFPoint vpCenter = m_lpThisRB->BuoyancyCenter();
+		Vx::VxReal3 vCenter = {vpCenter.x, vpCenter.y, vpCenter.z};
+
+		CStdFPoint vpDrag = m_lpThisRB->Drag();
+		Vx::VxReal3 vDrag = {vpDrag.x, vpDrag.y, vpDrag.z};
+
+		float fltScale = m_lpThisRB->BuoyancyScale();
+		float fltMagnus = m_lpThisRB->Magnus();
+		BOOL bEnabled = m_lpThisRB->EnableFluids();
+
+		m_vxCollisionGeometry->setFluidInteractionData(vCenter, vDrag, fltScale, fltMagnus);
+
+		if(bEnabled)
+			m_vxCollisionGeometry->setDefaultFluidInteractionForceFn();
+		else
+			m_vxCollisionGeometry->setFluidInteractionForceFn(NULL);
+	}
+}
+
 void VsRigidBody::GetBaseValues()
 {
 	if(m_vxPart)
@@ -261,8 +290,8 @@ void VsRigidBody::GetBaseValues()
 		//We need to convert the mass to grams and the volume to cubic meters for reporting purposes.
 		m_fltReportMass = m_fltMass*m_lpThisAB->GetSimulator()->MassUnits();
 		m_fltReportVolume = fltVolume*(pow(m_lpThisAB->GetSimulator()->DistanceUnits(), 3));
-		m_fltBuoyancy = -(m_lpThisAB->GetSimulator()->FluidDensity() * fltVolume * m_lpThisAB->GetSimulator()->Gravity());
-		m_fltReportBuoyancy = m_fltBuoyancy * m_lpThisAB->GetSimulator()->MassUnits() * m_lpThisAB->GetSimulator()->DistanceUnits();
+		//m_fltBuoyancy = -(m_lpThisAB->GetSimulator()->FluidDensity() * fltVolume * m_lpThisAB->GetSimulator()->Gravity());
+		//m_fltReportBuoyancy = m_fltBuoyancy * m_lpThisAB->GetSimulator()->MassUnits() * m_lpThisAB->GetSimulator()->DistanceUnits();
 	}
 }
 
@@ -334,8 +363,6 @@ void VsRigidBody::SetupPhysics()
 			CreateStaticPart();
 		else
 			CreateDynamicPart();
-
-		SetFluidInteractions();
 	}
 }
 
@@ -348,7 +375,7 @@ void VsRigidBody::CreateSensorPart()
 	m_vxSensor->setUserData((void*) m_lpThisRB);
 
 	m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
-    m_vxCollisionGeometry = m_vxSensor->addGeometry(m_vxGeometry, 0);
+    CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, 0));
 	string strName = m_lpThisAB->ID() + "_CollisionGeometry";
 	m_vxCollisionGeometry->setName(strName.c_str());
 
@@ -381,7 +408,7 @@ void VsRigidBody::CreateDynamicPart()
 
 	m_vxSensor->setName(m_lpThisAB->ID().c_str());               // Give it a name.
     m_vxSensor->setControl(m_eControlType);  // Set it to dynamic.
-    m_vxCollisionGeometry = m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density());
+    CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
 
 	string strName = m_lpThisAB->ID() + "_CollisionGeometry";
 	m_vxCollisionGeometry->setName(strName.c_str());
@@ -416,7 +443,7 @@ void VsRigidBody::CreateStaticPart()
 	Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
 	if(vxSensor)
 	{
-	    m_vxCollisionGeometry = vxSensor->addGeometry(m_vxGeometry, iMaterialID, vOffset, m_lpThisRB->Density());
+	    CollisionGeometry(vxSensor->addGeometry(m_vxGeometry, iMaterialID, vOffset, m_lpThisRB->Density()));
 		string strName = m_lpThisAB->ID() + "_CollisionGeometry";
 		m_vxCollisionGeometry->setName(strName.c_str());
 	}
@@ -447,20 +474,6 @@ void VsRigidBody::SetBody()
 		// Add the part to the universe.
 		lpVsSim->Universe()->addEntity(m_vxSensor);
 		//lpAssem->addEntity(m_vxSensor);
-	}
-}
-
-void VsRigidBody::SetFluidInteractions()
-{
-	if(m_lpThisAB->GetSimulator()->SimulateHydrodynamics() && m_vxCollisionGeometry && m_lpThisRB->Density() > 0)
-	{
-		m_vxCollisionGeometry->setDefaultFluidInteractionForceFn();
-		VxCollisionGeometry::FluidInteractionData data;
-		//data.mMagnusCoefficient = 0;
-		//data.mBuoyancyCenter = VxVector3(0, 0, 0);
-		//data.mBuoyancyForceScale = 1;
-		data.mDragCoefficient = VxVector3(m_lpThisRB->Cd());
-		m_vxCollisionGeometry->setFluidInteractionData(data);
 	}
 }
 
@@ -683,8 +696,8 @@ float *VsRigidBody::Physics_GetDataPointer(string strDataType)
 	if(strType == "BODYANGULARVELOCITYZ")
 		{m_bCollectExtraData = TRUE; return (&m_vAngularVelocity[2]);}
 
-	if(strType == "BODYBUOYANCY")
-		{m_bCollectExtraData = TRUE; return (&m_fltReportBuoyancy);}
+	//if(strType == "BODYBUOYANCY")
+	//	{m_bCollectExtraData = TRUE; return (&m_fltReportBuoyancy);}
 
 	if(strType == "BODYLINEARACCELERATIONX")
 		{m_bCollectExtraData = TRUE; return (&m_vLinearAcceleration[0]);}

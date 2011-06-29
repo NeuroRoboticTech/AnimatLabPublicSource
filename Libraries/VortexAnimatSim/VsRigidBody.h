@@ -66,8 +66,8 @@ namespace VortexAnimatSim
 
 			//Keeps track of the bouyancy force applied to this rigid body at each time step.
 			//We need the report variable because it must be rescaled back for display.
-			float m_fltBuoyancy;
-			float m_fltReportBuoyancy; 
+			//float m_fltBuoyancy;
+			//float m_fltReportBuoyancy; 
 
 			//We need these arrays to store body data that could potentially be charted.
 			//this may be scaled so we need to store it in here instead of just using the
@@ -98,7 +98,6 @@ namespace VortexAnimatSim
 			virtual void CreateDynamicPart();
 
 			CStdFPoint Physics_GetCurrentPosition();
-			virtual void SetFluidInteractions();
 			virtual void GetBaseValues();
 			virtual void UpdatePositionAndRotationFromMatrix();
 
@@ -113,6 +112,7 @@ namespace VortexAnimatSim
 			Vx::VxPart* Part();	
 			Vx::VxNode GraphicsNode();
 			Vx::VxCollisionGeometry *CollisionGeometry();
+			virtual void CollisionGeometry(Vx::VxCollisionGeometry *vxGeometry);
 
 			virtual int GetPartIndex(VxPart *vxP0, VxPart *vxP1);
 
@@ -140,6 +140,7 @@ namespace VortexAnimatSim
 			virtual void Physics_Resize();
 			virtual void Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos);
 			virtual void Physics_ResizeSelectedReceptiveFieldVertex();
+			virtual void Physics_FluidDataChanged();
 
 			virtual void Physics_AddBodyForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits);
 			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits);

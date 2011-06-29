@@ -51,12 +51,6 @@ void VsCone::CreatePhysicsGeometry()
 
 		m_vxGeometry = VxConvexMesh::createFromNode(osgNode.get());
 	}
-
-	//Lets get the volume and areas
-	m_fltVolume = 2*VX_PI*m_fltLowerRadius*m_fltLowerRadius*m_fltHeight;
-	m_fltXArea = 2*m_fltLowerRadius*m_fltHeight;
-	m_fltYArea = 2*m_fltLowerRadius*m_fltHeight;
-	m_fltZArea = 2*VX_PI*m_fltLowerRadius*m_fltLowerRadius;
 }
 
 void VsCone::CreateParts()
@@ -89,7 +83,7 @@ void VsCone::ResizePhysicsGeometry()
 
 		CreatePhysicsGeometry();
 		int iMaterialID = m_lpSim->GetMaterialID(MaterialID());
-		m_vxCollisionGeometry = m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density());
+		CollisionGeometry(m_vxSensor->addGeometry(m_vxGeometry, iMaterialID, 0, m_lpThisRB->Density()));
 	}
 }
 

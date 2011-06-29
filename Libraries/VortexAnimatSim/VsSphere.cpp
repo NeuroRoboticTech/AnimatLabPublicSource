@@ -45,12 +45,6 @@ void VsSphere::CreatePhysicsGeometry()
 {
 	if(IsCollisionObject())
 		m_vxGeometry = new VxSphere(m_fltRadius);
-
-	//Lets get the volume and areas
-	m_fltVolume = 1.33333*VX_PI*m_fltRadius*m_fltRadius*m_fltRadius;
-	m_fltXArea = 2*VX_PI*m_fltRadius*m_fltRadius;
-	m_fltYArea = m_fltXArea;
-	m_fltZArea = m_fltXArea;
 }
 
 void VsSphere::CreateParts()

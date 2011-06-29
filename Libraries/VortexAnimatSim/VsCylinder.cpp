@@ -46,12 +46,6 @@ void VsCylinder::CreatePhysicsGeometry()
 {
 	if(IsCollisionObject())
 		m_vxGeometry = new VxCylinder(m_fltRadius, m_fltHeight);
-
-	//Lets get the volume and areas
-	m_fltVolume = 2*VX_PI*m_fltRadius*m_fltRadius*m_fltHeight;
-	m_fltXArea = 2*m_fltRadius*m_fltHeight;
-	m_fltYArea = 2*m_fltRadius*m_fltHeight;
-	m_fltZArea = 2*VX_PI*m_fltRadius*m_fltRadius;
 }
 
 void VsCylinder::CreateParts()
