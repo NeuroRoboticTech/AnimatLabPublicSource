@@ -79,6 +79,8 @@ Namespace Forms.BodyPlan
             Me.ctrlPartTypes.Size = New System.Drawing.Size(418, 166)
             Me.ctrlPartTypes.TabIndex = 9
             Me.ctrlPartTypes.UseCompatibleStateImageBehavior = False
+            Me.ctrlPartTypes.Sorting = SortOrder.Ascending
+            Me.ctrlPartTypes.View = View.LargeIcon
             '
             'chStimulusType
             '
@@ -133,6 +135,7 @@ Namespace Forms.BodyPlan
             '
             'rdCollision
             '
+            Me.rdCollision.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
             Me.rdCollision.AutoSize = True
             Me.rdCollision.Location = New System.Drawing.Point(8, 179)
             Me.rdCollision.Name = "rdCollision"
@@ -143,6 +146,7 @@ Namespace Forms.BodyPlan
             '
             'rdGraphics
             '
+            Me.rdGraphics.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
             Me.rdGraphics.AutoSize = True
             Me.rdGraphics.Location = New System.Drawing.Point(142, 179)
             Me.rdGraphics.Name = "rdGraphics"
@@ -239,6 +243,7 @@ Namespace Forms.BodyPlan
 
                 Dim iMaxWidth As Integer = imgDefault.Width
                 Dim iMaxHeight As Integer = imgDefault.Height
+                Dim aryList As New ArrayList
                 For Each doPart As Physical.BodyPart In Util.Application.BodyPartTypes
                     If Util.IsTypeOf(doPart.GetType(), m_tpPartType, False) AndAlso Not doPart.GetType().IsAbstract Then
                         If Not m_bIsRigidBody OrElse (m_bIsRigidBody AndAlso Not m_bIsRoot) OrElse (m_bIsRigidBody AndAlso m_bIsRoot AndAlso doPart.HasDynamics) Then
@@ -259,14 +264,23 @@ Namespace Forms.BodyPlan
                             End If
 
                             liItem.Tag = doPart
-                            ctrlPartTypes.Items.Add(liItem)
+                            aryList.Add(liItem)
 
                         End If
                     End If
                 Next
 
+                'I have to sort the list like this because when I set the large imag list next it resorts it badly. So I 
+                'to reset the ListViewItemSorter to nothing before adding the list items.
+                aryList.Sort(New ListViewItemComparer)
+
                 m_mgrIconImages.ImageList.ImageSize = New Size(iMaxWidth, iMaxHeight)
                 ctrlPartTypes.LargeImageList = m_mgrIconImages.ImageList
+
+                ctrlPartTypes.ListViewItemSorter = Nothing
+                For Each liItem As ListViewItem In aryList
+                    ctrlPartTypes.Items.Add(liItem)
+                Next
 
                 SetOptions(True)
 
@@ -392,6 +406,19 @@ Namespace Forms.BodyPlan
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
         End Sub
+
+#End Region
+
+#Region " Comparers "
+
+        Class ListViewItemComparer
+            Implements IComparer
+
+            Public Function Compare(ByVal x As Object, ByVal y As Object) As Integer Implements IComparer.Compare
+                Dim iRetVal As Integer = [String].Compare(CType(x, ListViewItem).Text, CType(y, ListViewItem).Text)
+                Return iRetVal
+            End Function
+        End Class
 
 #End Region
 
