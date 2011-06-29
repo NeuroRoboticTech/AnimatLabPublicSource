@@ -559,7 +559,7 @@ Namespace DataObjects.Physical
             End If
 
             m_snMouseSpringStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "MouseSpringStiffness", 1, ScaledNumber.enumNumericScale.None, "N/m", "N/m")
-            m_snMouseSpringDamping = New AnimatGUI.Framework.ScaledNumber(Me, "MouseSpringDamping", 100, ScaledNumber.enumNumericScale.Kilo, "g/s", "g/s")
+            m_snMouseSpringDamping = New AnimatGUI.Framework.ScaledNumber(Me, "MouseSpringDamping", 100, ScaledNumber.enumNumericScale.None, "g/s", "g/s")
 
             m_snLinearCompliance = New ScaledNumber(Me, "LinearCompliance", 0.1, ScaledNumber.enumNumericScale.micro, "m/N", "m/N")
             m_snLinearDamping = New ScaledNumber(Me, "LinearDamping", 200, ScaledNumber.enumNumericScale.Kilo, "g/s", "g/s")
