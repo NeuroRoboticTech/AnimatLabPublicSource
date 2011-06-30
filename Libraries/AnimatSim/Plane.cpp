@@ -1,6 +1,8 @@
-// Plane.cpp: implementation of the Plane class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Plane.cpp
+
+\brief	Implements the plane class.
+**/
 
 #include "stdafx.h"
 #include "IMovableItemCallback.h"
@@ -36,26 +38,12 @@ namespace AnimatSim
 	{
 		namespace Bodies
 		{
+/**
+\brief	Default constructor.
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-/*! \brief 
-   Constructs a plane object..
-   		
-   \param lpParent This is a pointer to the parent of this rigid body. 
-	          If this value is null then it is assumed that this is
-						a root object and no joint is loaded to connect this
-						part to the parent.
-
-	 \return
-	 No return value.
-
-   \remarks
-	 The constructor for a plane. 
-*/
-
+\author	dcofer
+\date	6/30/2011
+**/
 Plane::Plane()
 {
 	m_fltDensity = 0;
@@ -64,16 +52,12 @@ Plane::Plane()
 	m_ptSize.Set(200, 200, 0);
 }
 
-/*! \brief 
-   Destroys the plane object..
-   		
-	 \return
-	 No return value.
+/**
+\brief	Destructor.
 
-   \remarks
-   Destroys the plane object..	 
-*/
-
+\author	dcofer
+\date	6/30/2011
+**/
 Plane::~Plane()
 {
 
@@ -292,8 +276,6 @@ void Plane::Load(CStdXml &oXml)
 
 	//Rotation is always (1.57, 0, 0). This rotates it so that the Y axis is up.
 	m_oRotation.Set(-1.57f, 0, 0);
-	//Density is always zero, because it is always frozen.
-	m_fltDensity = 0;
 	m_bFreeze = TRUE;
 }
 

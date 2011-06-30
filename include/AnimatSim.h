@@ -89,6 +89,7 @@ namespace AnimatSim
 			class LinearHillStretchReceptor;
 			class OdorSensor;
 			class Plane;
+			class FluidPlane;
 			class Terrain;
 			class Sensor;
 			class Sphere;
@@ -181,6 +182,7 @@ using namespace AnimatSim::Recording;
 #include "OdorType.h"
 #include "RigidBody.h"
 #include "Plane.h"
+#include "FluidPlane.h"
 #include "Cylinder.h"
 #include "Cone.h"
 #include "Ellipsoid.h"

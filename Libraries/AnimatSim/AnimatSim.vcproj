@@ -308,6 +308,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FluidPlane.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Gain.cpp"
 				>
 			</File>
@@ -631,6 +635,10 @@
 			</File>
 			<File
 				RelativePath=".\FileChart.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FluidPlane.h"
 				>
 			</File>
 			<File

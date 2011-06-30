@@ -81,6 +81,12 @@ Namespace DataObjects.Physical.Bodies
             End Set
         End Property
 
+        Public Overrides ReadOnly Property UsesAJoint() As Boolean
+            Get
+                Return False
+            End Get
+        End Property
+
         Public Overrides ReadOnly Property DefaultAddGraphics() As Boolean
             Get
                 Return False
@@ -184,10 +190,11 @@ Namespace DataObjects.Physical.Bodies
                                         "Visibility", "The number of segments to divide the plane length into.", Me.LengthSegments))
 
             'Remove all of these columns that are not valid for a plane object.
-            If propTable.Properties.Contains("Cd") Then propTable.Properties.Remove("Cd")
-            If propTable.Properties.Contains("Cdr") Then propTable.Properties.Remove("Cdr")
-            If propTable.Properties.Contains("Ca") Then propTable.Properties.Remove("Ca")
-            If propTable.Properties.Contains("Car") Then propTable.Properties.Remove("Car")
+            If propTable.Properties.Contains("Buoyancy Center") Then propTable.Properties.Remove("Buoyancy Center")
+            If propTable.Properties.Contains("Buoyancy Scale") Then propTable.Properties.Remove("Buoyancy Scale")
+            If propTable.Properties.Contains("Drag") Then propTable.Properties.Remove("Drag")
+            If propTable.Properties.Contains("Magnus") Then propTable.Properties.Remove("Magnus")
+            If propTable.Properties.Contains("Enable Fluids") Then propTable.Properties.Remove("Enable Fluids")
             If propTable.Properties.Contains("Density") Then propTable.Properties.Remove("Density")
             If propTable.Properties.Contains("Center of Mass") Then propTable.Properties.Remove("Center of Mass")
             If propTable.Properties.Contains("Contact Sensor") Then propTable.Properties.Remove("Contact Sensor")

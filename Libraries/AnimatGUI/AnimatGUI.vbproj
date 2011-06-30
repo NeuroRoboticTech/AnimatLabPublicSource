@@ -374,6 +374,7 @@
     <Compile Include="DataObjects\Physical\Bodies\Cone.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Cylinder.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Ellipsoid.vb" />
+    <Compile Include="DataObjects\Physical\Bodies\FluidPlane.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Line.vb" />
     <Compile Include="DataObjects\Physical\Bodies\LinearHillMuscle.vb" />
     <Compile Include="DataObjects\Physical\Bodies\LinearHillStretchReceptor.vb" />

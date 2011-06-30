@@ -1,13 +1,10 @@
-// Plane.h: interface for the Plane class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	Plane.h
 
-#if !defined(AFX_ALPLANE_H__8AABAE57_5434_4AEE_9C0B_B494E10A7AAC__INCLUDED_)
-#define AFX_ALPLANE_H__8AABAE57_5434_4AEE_9C0B_B494E10A7AAC__INCLUDED_
+\brief	Declares the plane class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
 
 namespace AnimatSim
 {
@@ -78,5 +75,3 @@ namespace AnimatSim
 		}		//Bodies
 	}			// Environment
 }				//AnimatSim
-
-#endif // !defined(AFX_ALPLANE_H__8AABAE57_5434_4AEE_9C0B_B494E10A7AAC__INCLUDED_)
