@@ -29,17 +29,18 @@ Namespace DataObjects.Physical
         Protected m_JointToParent As DataObjects.Physical.Joint
         Protected m_aryChildBodies As New Collections.SortedRigidBodies(Me)
 
-        Protected m_bFreeze As Boolean
-        Protected m_bContactSensor As Boolean
+        Protected m_bFreeze As Boolean = False
+        Protected m_bContactSensor As Boolean = False
         Protected m_bIsCollisionObject As Boolean = False
         Protected m_snDensity As ScaledNumber
 
         Protected m_svCOM As ScaledVector3
 
-        Protected m_fltCd As Single = 1
-        Protected m_fltCdr As Single = 0.5
-        Protected m_fltCa As Single = 1
-        Protected m_fltCar As Single = 1
+        Protected m_svBuoyancyCenter As ScaledVector3
+        Protected m_fltBuoyancyScale As Single = 1
+        Protected m_svDrag As ScaledVector3
+        Protected m_fltMagnus As Single = 0
+        Protected m_bEnableFluids As Boolean = False
 
         Protected m_snReceptiveFieldDistance As ScaledNumber
         Protected m_gnReceptiveFieldGain As Gain
@@ -162,55 +163,62 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
-        Public Overridable Property Cd() As Single
+        Public Overridable Property BuoyancyCenter() As Framework.ScaledVector3
             Get
-                Return m_fltCd
+                Return m_svBuoyancyCenter
             End Get
-            Set(ByVal Value As Single)
-                If Value < 0 Then
-                    Throw New System.Exception("The translational drag coefficient (Cd) can not be less than to zero.")
-                End If
-
-                m_fltCd = Value
+            Set(ByVal value As Framework.ScaledVector3)
+                Me.SetSimData("BuoyancyCenter", value.GetSimulationXml("BuoyancyCenter"), True)
+                m_svBuoyancyCenter.CopyData(value)
             End Set
         End Property
 
-        Public Overridable Property Cdr() As Single
+        Public Overridable Property BuoyancyScale() As Single
             Get
-                Return m_fltCdr
+                Return m_fltBuoyancyScale
             End Get
             Set(ByVal Value As Single)
                 If Value < 0 Then
-                    Throw New System.Exception("The angular drag coefficient (Cdr) can not be less than to zero.")
+                    Throw New System.Exception("The buoyancy scale can not be less than to zero.")
                 End If
+                SetSimData("BuoyancyScale", Value.ToString, True)
 
-                m_fltCdr = Value
+                m_fltBuoyancyScale = Value
             End Set
         End Property
 
-        Public Overridable Property Ca() As Single
+        Public Overridable Property Drag() As Framework.ScaledVector3
             Get
-                Return m_fltCa
+                Return m_svDrag
             End Get
-            Set(ByVal Value As Single)
-                If Value < 0 Then
-                    Throw New System.Exception("The translational added mass coefficient (Ca) can not be less than to zero.")
-                End If
-
-                m_fltCa = Value
+            Set(ByVal value As Framework.ScaledVector3)
+                Me.SetSimData("Drag", value.GetSimulationXml("Drag"), True)
+                m_svDrag.CopyData(value)
             End Set
         End Property
 
-        Public Overridable Property Car() As Single
+
+        Public Overridable Property Magnus() As Single
             Get
-                Return m_fltCar
+                Return m_fltMagnus
             End Get
             Set(ByVal Value As Single)
                 If Value < 0 Then
-                    Throw New System.Exception("The angular added mass coefficient (Car) can not be less than to zero.")
+                    Throw New System.Exception("The magnus coefficient can not be less than to zero.")
                 End If
+                SetSimData("Magnus", Value.ToString, True)
 
-                m_fltCar = Value
+                m_fltMagnus = Value
+            End Set
+        End Property
+
+        Public Overridable Property EnableFluids() As Boolean
+            Get
+                Return m_bEnableFluids
+            End Get
+            Set(ByVal Value As Boolean)
+                SetSimData("EnableFluids", Value.ToString, True)
+                m_bEnableFluids = Value
             End Set
         End Property
 
@@ -448,7 +456,7 @@ Namespace DataObjects.Physical
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyAddedMassTorqueY", "Added Mass Torque Y Axis", "Newton-Meters", "Nm", -100, 100))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyAddedMassTorqueZ", "Added Mass Torque Z Axis", "Newton-Meters", "Nm", -100, 100))
 
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyBuoyancy", "Buoyancy", "Newtons", "N", 0, 100))
+            'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("BodyBuoyancy", "Buoyancy", "Newtons", "N", 0, 100))
 
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("FoodQuantity", "Food Quantity", "", "", 0, 1000))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("FoodEaten", "Food Eaten", "", "", 0, 1000))
@@ -465,6 +473,13 @@ Namespace DataObjects.Physical
             m_snReceptiveFieldDistance = New ScaledNumber(Me, "RecptiveFieldDistance", 25, ScaledNumber.enumNumericScale.centi, "Meters", "m")
 
             m_svCOM = New ScaledVector3(Me, "COM", "Location of the COM relative to the (0,0,0) point of this part.", "Meters", "m")
+            m_svBuoyancyCenter = New ScaledVector3(Me, "BuoyancyCenter", "Location of the center of buoyancy relative to the (0,0,0) point of this part.", "Meters", "m")
+            m_svDrag = New ScaledVector3(Me, "Drag", "Drag coefficients of this part.", "", "")
+            m_svDrag.CopyData(1, 1, 1, True)
+
+            AddHandler m_svCOM.ValueChanged, AddressOf Me.OnCOMValueChanged
+            AddHandler m_svBuoyancyCenter.ValueChanged, AddressOf Me.OnBuoyancyCenterValueChanged
+            AddHandler m_svDrag.ValueChanged, AddressOf Me.OnDragValueChanged
 
             If Not Util.Environment Is Nothing Then
                 m_snDensity = Util.Environment.DefaultDensity
@@ -512,6 +527,18 @@ Namespace DataObjects.Physical
             If Not m_JointToParent Is Nothing Then m_JointToParent.ClearIsDirty()
             m_aryChildBodies.ClearIsDirty()
             m_aryOdorSources.ClearIsDirty()
+            m_svBuoyancyCenter.ClearIsDirty()
+            m_svDrag.ClearIsDirty()
+            m_svCOM.ClearIsDirty()
+            m_snReceptiveFieldDistance.ClearIsDirty()
+            m_vSelectedReceptiveField.ClearIsDirty()
+            m_snDensity.ClearIsDirty()
+            m_snFoodQuantity.ClearIsDirty()
+            m_snMaxFoodQuantity.ClearIsDirty()
+            m_snFoodReplenishRate.ClearIsDirty()
+            m_snFoodEnergyContent.ClearIsDirty()
+            m_gnReceptiveFieldGain.ClearIsDirty()
+            m_gnReceptiveCurrentGain.ClearIsDirty()
         End Sub
 
         Public Overrides Sub SetupInitialTransparencies()
@@ -730,17 +757,26 @@ Namespace DataObjects.Physical
             Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag
             If Me.IsCollisionObject Then
                 If Util.Simulation.Environment.SimulateHydrodynamics Then
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Cd", m_fltCd.GetType(), "Cd", _
-                                                "Hydrodynamics", "The translational drag coefficient of this body.", m_fltCd))
+                    pbNumberBag = m_svBuoyancyCenter.Properties
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Buoyancy Center", pbNumberBag.GetType(), "BuoyancyCenter", _
+                                                "Hydrodynamics", "This is the relative position to the center of the buoyancy in the body.", pbNumberBag, _
+                                                "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
 
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Cdr", m_fltCdr.GetType(), "Cdr", _
-                                     "Hydrodynamics", "The angular drag coefficient of this body.", m_fltCdr))
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Buoyancy Scale", m_fltBuoyancyScale.GetType(), "BuoyancyScale", _
+                                       "Hydrodynamics", "This is a scale used to calculate the buoyancy value. It is a scale factor " & _
+                                       "applied to the buoyancy force which accounts for the fact that a given volume might actually have holes " & _
+                                       "or concavity in it which would affect the buoyancy force on the object.", m_fltBuoyancyScale))
 
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Ca", m_fltCa.GetType(), "Ca", _
-                                     "Hydrodynamics", "The translational added mass coefficient of this body.", m_fltCa))
+                    pbNumberBag = m_svDrag.Properties
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Drag", pbNumberBag.GetType(), "Drag", _
+                                                "Hydrodynamics", "This is the drag coefficients for the three axis for the body.", pbNumberBag, _
+                                                "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
 
-                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Car", m_fltCar.GetType(), "Car", _
-                                     "Hydrodynamics", "The angular added mass coefficient of this body.", m_fltCar))
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Magnus", m_fltMagnus.GetType(), "Magnus", _
+                                     "Hydrodynamics", "The Magnus coefficient for the body.", m_fltMagnus))
+
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Enable Fluids", m_bEnableFluids.GetType(), "EnableFluids", _
+                                     "Hydrodynamics", "Enables fluid interactions for this specific body.", m_bEnableFluids))
                 End If
 
                 pbNumberBag = m_snDensity.Properties
@@ -838,10 +874,13 @@ Namespace DataObjects.Physical
             m_bIsCollisionObject = doOrigPart.m_bIsCollisionObject
             m_snDensity = DirectCast(doOrigPart.m_snDensity, ScaledNumber)
             m_snReceptiveFieldDistance = DirectCast(doOrigPart.m_snReceptiveFieldDistance, ScaledNumber)
-            m_fltCd = doOrigPart.m_fltCd
-            m_fltCdr = doOrigPart.m_fltCdr
-            m_fltCa = doOrigPart.m_fltCa
-            m_fltCar = doOrigPart.m_fltCar
+
+            m_svBuoyancyCenter = DirectCast(doOrigPart.m_svBuoyancyCenter.Clone(Me, bCutData, doRoot), ScaledVector3)
+            m_fltBuoyancyScale = doOrigPart.m_fltBuoyancyScale
+            m_svDrag = DirectCast(doOrigPart.m_svDrag.Clone(Me, bCutData, doRoot), ScaledVector3)
+            m_fltMagnus = doOrigPart.m_fltMagnus
+            m_bEnableFluids = doOrigPart.m_bEnableFluids
+
             m_bIsRoot = doOrigPart.m_bIsRoot
             m_bFoodSource = doOrigPart.m_bFoodSource
             m_snFoodQuantity = DirectCast(doOrigPart.m_snFoodQuantity, ScaledNumber)
@@ -925,10 +964,11 @@ Namespace DataObjects.Physical
             Me.Diffuse = doExisting.Diffuse
             Me.Specular = doExisting.Specular
             Me.Shininess = doExisting.Shininess
-            Me.Ca = doExisting.Ca
-            Me.Car = doExisting.Car
-            Me.Cd = doExisting.Cd
-            Me.Cdr = doExisting.Cdr
+            Me.m_svBuoyancyCenter = doExisting.m_svBuoyancyCenter
+            Me.m_fltBuoyancyScale = doExisting.m_fltBuoyancyScale
+            Me.m_svDrag = doExisting.m_svDrag
+            Me.m_fltMagnus = doExisting.m_fltMagnus
+            Me.m_bEnableFluids = doExisting.m_bEnableFluids
             Me.Description = doExisting.Description
             Me.FoodEnergyContent = doExisting.FoodEnergyContent
             Me.FoodQuantity = doExisting.FoodQuantity
@@ -1001,26 +1041,16 @@ Namespace DataObjects.Physical
 
             m_bContactSensor = oXml.GetChildBool("IsContactSensor", m_bContactSensor)
             m_bIsCollisionObject = oXml.GetChildBool("IsCollisionObject", m_bIsCollisionObject)
+            m_bFreeze = oXml.GetChildBool("Freeze", m_bFreeze)
 
-            If oXml.FindChildElement("DragCoefficient", False) Then
-                m_fltCd = oXml.GetChildFloat("DragCoefficient", m_fltCd)
-                m_fltCdr = m_fltCd
-            Else
-                m_fltCd = oXml.GetChildFloat("Cd", m_fltCd)
-                m_fltCdr = oXml.GetChildFloat("Cdr", m_fltCdr)
-                m_fltCa = oXml.GetChildFloat("Ca", m_fltCa)
-                m_fltCar = oXml.GetChildFloat("Car", m_fltCar)
-            End If
+            m_snDensity.LoadData(oXml, "Density")
+            m_svCOM.LoadData(oXml, "COM", False)
 
-            If ScaledNumber.IsValidXml(oXml, "Density") Then
-                m_snDensity.LoadData(oXml, "Density")
-            Else
-                m_snDensity.ActualValue = oXml.GetChildFloat("Density", CSng(m_snDensity.ActualValue))
-            End If
-
-            If oXml.FindChildElement("COM", False) Then
-                m_svCOM.LoadData(oXml, "COM")
-            End If
+            m_svBuoyancyCenter.LoadData(oXml, "BuoyancyCenter", False)
+            m_fltBuoyancyScale = oXml.GetChildFloat("BuoyancyScale", m_fltBuoyancyScale)
+            m_svDrag.LoadData(oXml, "Drag", False)
+            m_fltMagnus = oXml.GetChildFloat("Magnus", m_fltMagnus)
+            m_bEnableFluids = oXml.GetChildBool("EnableFluids", m_bEnableFluids)
 
             If oXml.FindChildElement("ReceptiveFields", False) Then
                 oXml.IntoElem()
@@ -1054,9 +1084,6 @@ Namespace DataObjects.Physical
                         m_JointToParent.LoadData(doStructure, oXml)
                     End If
                 End If
-            Else
-                'If it is the root body then see if we are going to freeze it.
-                m_bFreeze = oXml.GetChildBool("Freeze", m_bFreeze)
             End If
 
             If oXml.FindChildElement("ChildBodies", False) Then
@@ -1113,10 +1140,11 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("IsContactSensor", m_bContactSensor)
             oXml.AddChildElement("IsCollisionObject", m_bIsCollisionObject)
 
-            oXml.AddChildElement("Cd", m_fltCd)
-            oXml.AddChildElement("Cdr", m_fltCdr)
-            oXml.AddChildElement("Ca", m_fltCa)
-            oXml.AddChildElement("Car", m_fltCar)
+            m_svBuoyancyCenter.SaveData(oXml, "BuoyancyCenter")
+            oXml.AddChildElement("BuoyancyScale", m_fltBuoyancyScale)
+            m_svDrag.SaveData(oXml, "Drag")
+            oXml.AddChildElement("Magnus", m_fltMagnus)
+            oXml.AddChildElement("EnableFluids", m_bEnableFluids)
 
             m_snDensity.SaveData(oXml, "Density")
             m_svCOM.SaveData(oXml, "COM")
@@ -1205,10 +1233,11 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("IsContactSensor", m_bContactSensor)
             oXml.AddChildElement("IsCollisionObject", m_bIsCollisionObject)
 
-            oXml.AddChildElement("Cd", m_fltCd)
-            oXml.AddChildElement("Cdr", m_fltCdr)
-            oXml.AddChildElement("Ca", m_fltCa)
-            oXml.AddChildElement("Car", m_fltCar)
+            m_svBuoyancyCenter.SaveSimulationXml(oXml, Me, "BuoyancyCenter")
+            oXml.AddChildElement("BuoyancyScale", m_fltBuoyancyScale)
+            m_svDrag.SaveSimulationXml(oXml, Me, "Drag")
+            oXml.AddChildElement("Magnus", m_fltMagnus)
+            oXml.AddChildElement("EnableFluids", m_bEnableFluids)
 
             m_snDensity.SaveSimulationXml(oXml, Me, "Density")
             m_svCOM.SaveSimulationXml(oXml, Me, "COM")
@@ -1625,6 +1654,16 @@ Namespace DataObjects.Physical
 
         End Sub
 
+        Public Overridable Sub ResetEnableFluidsForRigidBodies()
+            Me.EnableFluids = Util.Environment.SimulateHydrodynamics
+
+            Dim doChild As RigidBody
+            For Each deEntry As DictionaryEntry In m_aryChildBodies
+                doChild = DirectCast(deEntry.Value, RigidBody)
+                doChild.ResetEnableFluidsForRigidBodies()
+            Next
+        End Sub
+
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
@@ -1642,6 +1681,34 @@ Namespace DataObjects.Physical
 #End Region
 
 #Region " Events "
+
+        'These three events handlers are called whenever a user manually changes the value of the COM, Buoyancycenter or drag.
+        Protected Overridable Sub OnCOMValueChanged()
+            Try
+                Me.SetSimData("COM", m_svCOM.GetSimulationXml("COM"), True)
+                Util.ProjectProperties.RefreshProperties()
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overridable Sub OnBuoyancyCenterValueChanged()
+            Try
+                Me.SetSimData("BuoyancyCenter", m_svBuoyancyCenter.GetSimulationXml("BuoyancyCenter"), True)
+                Util.ProjectProperties.RefreshProperties()
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overridable Sub OnDragValueChanged()
+            Try
+                Me.SetSimData("Drag", m_svDrag.GetSimulationXml("Drag"), True)
+                Util.ProjectProperties.RefreshProperties()
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
 
 #Region " DataObjectInterface Events "
 

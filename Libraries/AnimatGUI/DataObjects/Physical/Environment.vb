@@ -45,8 +45,6 @@ Namespace DataObjects.Physical
 
         Protected m_snPhysicsTimeStep As ScaledNumber
         Protected m_snGravity As ScaledNumber
-        Protected m_snMaxSurfaceFriction As ScaledNumber
-        Protected m_snFluidDensity As ScaledNumber
 
         Protected m_snMouseSpringStiffness As ScaledNumber
         Protected m_snMouseSpringDamping As ScaledNumber
@@ -57,9 +55,6 @@ Namespace DataObjects.Physical
         Protected m_snAngularDamping As ScaledNumber
         Protected m_snLinearKineticLoss As ScaledNumber
         Protected m_snAngularKineticLoss As ScaledNumber
-
-        Protected m_snMaxHydroForce As ScaledNumber
-        Protected m_snMaxHydroTorque As ScaledNumber
 
         Protected m_eDistanceUnits As enumDistanceUnits = enumDistanceUnits.Decimeters
         Protected m_eMassUnits As enumMassUnits = enumMassUnits.Grams
@@ -150,18 +145,6 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
-        Public Property MaxSurfaceFriction() As ScaledNumber
-            Get
-                Return m_snMaxSurfaceFriction
-            End Get
-            Set(ByVal Value As ScaledNumber)
-                If Value.ActualValue < 0 Then
-                    Throw New System.Exception("The surface friction must be greater than or equal to 0.")
-                End If
-
-                m_snMaxSurfaceFriction.CopyData(Value)
-            End Set
-        End Property
 
         Public Property SimulateHydrodynamics() As Boolean
             Get
@@ -170,22 +153,23 @@ Namespace DataObjects.Physical
             Set(ByVal Value As Boolean)
                 Me.SetSimData("SimulateHydrodynamics", Value.ToString, True)
                 m_bSimulateHydrodynamics = Value
+                ResetEnableFluidsForRigidBodies()
             End Set
         End Property
 
-        Public Property FluidDensity() As ScaledNumber
-            Get
-                Return m_snFluidDensity
-            End Get
-            Set(ByVal Value As ScaledNumber)
-                If Value.ActualValue < 0 Then
-                    Throw New System.Exception("You can not set the fluid density value to be less than zero!")
-                End If
+        'Public Property FluidDensity() As ScaledNumber
+        '    Get
+        '        Return m_snFluidDensity
+        '    End Get
+        '    Set(ByVal Value As ScaledNumber)
+        '        If Value.ActualValue < 0 Then
+        '            Throw New System.Exception("You can not set the fluid density value to be less than zero!")
+        '        End If
 
-                Me.SetSimData("FluidDensity", Value.ActualValue.ToString, True)
-                m_snFluidDensity.CopyData(Value)
-            End Set
-        End Property
+        '        Me.SetSimData("FluidDensity", Value.ActualValue.ToString, True)
+        '        m_snFluidDensity.CopyData(Value)
+        '    End Set
+        'End Property
 
         Public Property MouseSpringStiffness() As ScaledNumber
             Get
@@ -310,32 +294,6 @@ Namespace DataObjects.Physical
 
                 Me.SetSimData("RecFieldSelRadius", Value.ActualValue.ToString, True)
                 m_snRecFieldSelRadius.CopyData(Value)
-            End Set
-        End Property
-
-        Public Property MaxHydroTorque() As ScaledNumber
-            Get
-                Return m_snMaxHydroTorque
-            End Get
-            Set(ByVal Value As ScaledNumber)
-                If Value.ActualValue < 0 Then
-                    Throw New System.Exception("You can not set the maximum hyrdrodynamic torque to be less than  zero!")
-                End If
-
-                m_snMaxHydroTorque.CopyData(Value)
-            End Set
-        End Property
-
-        Public Property MaxHydroForce() As ScaledNumber
-            Get
-                Return m_snMaxHydroForce
-            End Get
-            Set(ByVal Value As ScaledNumber)
-                If Value.ActualValue < 0 Then
-                    Throw New System.Exception("You can not set the maximum hyrdrodynamic force to be less than  zero!")
-                End If
-
-                m_snMaxHydroForce.CopyData(Value)
             End Set
         End Property
 
@@ -550,13 +508,12 @@ Namespace DataObjects.Physical
             m_strName = "Environment"
             m_snPhysicsTimeStep = New AnimatGUI.Framework.ScaledNumber(Me, "PhysicsTimeStep", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
             m_snGravity = New AnimatGUI.Framework.ScaledNumber(Me, "Gravity", -9.81, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "m/s^2", "m/s^2")
-            m_snMaxSurfaceFriction = New AnimatGUI.Framework.ScaledNumber(Me, "MaxSurfaceFriction", 15, AnimatGUI.Framework.ScaledNumber.enumNumericScale.Kilo, "Newtons", "N")
 
-            If Not Util.Environment Is Nothing Then
-                m_snFluidDensity = Util.Environment.DefaultDensity
-            Else
-                m_snFluidDensity = New ScaledNumber(Me, "FluidDensity", 1000, ScaledNumber.enumNumericScale.Kilo, "g/m^2", "g/m^2")
-            End If
+            'If Not Util.Environment Is Nothing Then
+            '    m_snFluidDensity = Util.Environment.DefaultDensity
+            'Else
+            '    m_snFluidDensity = New ScaledNumber(Me, "FluidDensity", 1000, ScaledNumber.enumNumericScale.Kilo, "g/m^2", "g/m^2")
+            'End If
 
             m_snMouseSpringStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "MouseSpringStiffness", 1, ScaledNumber.enumNumericScale.None, "N/m", "N/m")
             m_snMouseSpringDamping = New AnimatGUI.Framework.ScaledNumber(Me, "MouseSpringDamping", 100, ScaledNumber.enumNumericScale.None, "g/s", "g/s")
@@ -569,9 +526,6 @@ Namespace DataObjects.Physical
 
             m_snLinearKineticLoss = New ScaledNumber(Me, "LinearKineticLoss", 1, ScaledNumber.enumNumericScale.micro, "g/s", "g/s")
             m_snAngularKineticLoss = New ScaledNumber(Me, "AngularKineticLoss", 1, ScaledNumber.enumNumericScale.micro, "g/s", "g/s")
-
-            m_snMaxHydroForce = New ScaledNumber(Me, "MaxHydroForce", 100, ScaledNumber.enumNumericScale.None, "Newtons", "N")
-            m_snMaxHydroTorque = New ScaledNumber(Me, "MaxHydroTorque", 100, ScaledNumber.enumNumericScale.None, "Newton-Meters", "Nm")
 
             m_snRecFieldSelRadius = New ScaledNumber(Me, "RecFieldSelRadius", 5, ScaledNumber.enumNumericScale.milli, "Meters", "m")
 
@@ -814,11 +768,6 @@ Namespace DataObjects.Physical
             propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("ID", Me.ID.GetType(), "ID", _
                                         "Settings", "ID", Me.ID, True))
 
-            pbNumberBag = m_snMaxSurfaceFriction.Properties
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Max Surface Friction", pbNumberBag.GetType(), "MaxSurfaceFriction", _
-                                        "Settings", "Sets the surface friction for the simulation.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
-
             propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("AutoGenerate Random Seed", m_bAutoGenerateRandomSeed.GetType(), "AutoGenerateRandomSeed", _
                                         "Settings", "If this is true then the random number generator is automatically seeded at the beginning of a simulation to ensure " & _
                                         "different numbers are generated each run. If it is false then the seed specified in the Manual Random Seed property is used.", m_bAutoGenerateRandomSeed))
@@ -828,24 +777,14 @@ Namespace DataObjects.Physical
                                             "Settings", "Allows the user to manual set the random number seed to use for the random number generator.", m_iManualRandomSeed))
             End If
 
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("SimulateHydrodynamics", m_bSimulateHydrodynamics.GetType(), "SimulateHydrodynamics", _
-                                        "Hydrodynamics", "Determines whether hydrodynamic effects such as buoyancy and drag act upon the bodies in the simulation. " & _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("SimulateHydrodynamics", m_bSimulateHydrodynamics.GetType(), "SimulateHydrodynamics", _
+                                        "Settings", "Determines whether hydrodynamic effects such as buoyancy and drag act upon the bodies in the simulation. " & _
                                         "If this is turned off then the simulation will run slightly faster.", m_bSimulateHydrodynamics))
 
-            pbNumberBag = m_snFluidDensity.Properties
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Fluid Density", pbNumberBag.GetType(), "FluidDensity", _
-                                        "Hydrodynamics", "The density of the fluid medium. This is only used if hydrodynamics are being simulated.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
-
-            pbNumberBag = m_snMaxHydroForce.Properties
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Max Hydro Force", pbNumberBag.GetType(), "MaxHydroForce", _
-                                        "Hydrodynamics", "The maximum hydrodynamic force that can be exerted.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
-
-            pbNumberBag = m_snMaxHydroTorque.Properties
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Max Hydro Torque", pbNumberBag.GetType(), "MaxHydroTorque", _
-                                        "Hydrodynamics", "The maximum hydrodynamic torque that can be exerted.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            'pbNumberBag = m_snFluidDensity.Properties
+            'propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Fluid Density", pbNumberBag.GetType(), "FluidDensity", _
+            '                            "Hydrodynamics", "The density of the fluid medium. This is only used if hydrodynamics are being simulated.", pbNumberBag, _
+            '                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("DistanceUnits", GetType(String), "DistanceUnits", _
                                         "Units", "Determines the distance unit measurements used within the configuration files.", _
@@ -910,8 +849,6 @@ Namespace DataObjects.Physical
 
             If Not m_snPhysicsTimeStep Is Nothing Then m_snPhysicsTimeStep.ClearIsDirty()
             If Not m_snGravity Is Nothing Then m_snGravity.ClearIsDirty()
-            If Not m_snMaxSurfaceFriction Is Nothing Then m_snMaxSurfaceFriction.ClearIsDirty()
-            If Not m_snFluidDensity Is Nothing Then m_snFluidDensity.ClearIsDirty()
             If Not m_snMouseSpringStiffness Is Nothing Then m_snMouseSpringStiffness.ClearIsDirty()
             If Not m_snMouseSpringDamping Is Nothing Then m_snMouseSpringDamping.ClearIsDirty()
 
@@ -921,8 +858,6 @@ Namespace DataObjects.Physical
             If Not m_snAngularDamping Is Nothing Then m_snAngularDamping.ClearIsDirty()
             If Not m_snLinearKineticLoss Is Nothing Then m_snLinearKineticLoss.ClearIsDirty()
             If Not m_snAngularKineticLoss Is Nothing Then m_snAngularKineticLoss.ClearIsDirty()
-            If Not m_snMaxHydroForce Is Nothing Then m_snMaxHydroForce.ClearIsDirty()
-            If Not m_snMaxHydroTorque Is Nothing Then m_snMaxHydroTorque.ClearIsDirty()
             If Not m_snRecFieldSelRadius Is Nothing Then m_snRecFieldSelRadius.ClearIsDirty()
 
         End Sub
@@ -935,8 +870,6 @@ Namespace DataObjects.Physical
 
             m_snPhysicsTimeStep = DirectCast(doOrig.m_snPhysicsTimeStep.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_snGravity = DirectCast(doOrig.m_snGravity.Clone(Me, bCutData, doRoot), ScaledNumber)
-            m_snMaxSurfaceFriction = DirectCast(doOrig.m_snMaxSurfaceFriction.Clone(Me, bCutData, doRoot), ScaledNumber)
-            m_snFluidDensity = DirectCast(doOrig.m_snFluidDensity.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_snMouseSpringStiffness = DirectCast(doOrig.m_snMouseSpringStiffness.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_snMouseSpringDamping = DirectCast(doOrig.m_snMouseSpringDamping.Clone(Me, bCutData, doRoot), ScaledNumber)
 
@@ -946,9 +879,6 @@ Namespace DataObjects.Physical
             m_snAngularDamping = DirectCast(doOrig.m_snAngularDamping.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_snLinearKineticLoss = DirectCast(doOrig.m_snLinearKineticLoss.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_snAngularKineticLoss = DirectCast(doOrig.m_snAngularKineticLoss.Clone(Me, bCutData, doRoot), ScaledNumber)
-
-            m_snMaxHydroForce = DirectCast(doOrig.m_snMaxHydroForce.Clone(Me, bCutData, doRoot), ScaledNumber)
-            m_snMaxHydroTorque = DirectCast(doOrig.m_snMaxHydroTorque.Clone(Me, bCutData, doRoot), ScaledNumber)
 
             m_snRecFieldSelRadius = DirectCast(doOrig.m_snRecFieldSelRadius.Clone(Me, bCutData, doRoot), ScaledNumber)
 
@@ -979,11 +909,6 @@ Namespace DataObjects.Physical
             Dim iDistDiff As Integer = CInt(Me.DisplayDistanceUnits) - CInt(Util.Environment.DisplayDistanceUnits(ePrevDistance))
             Dim fltDensityDistChange As Single = CSng(10 ^ iDistDiff)
 
-            Dim fltValue As Double = (m_snFluidDensity.ActualValue / Math.Pow(10, CInt(ePrevMass))) * (Math.Pow(fltDensityDistChange, 3) / fltMassChange)
-            Dim eSCale As ScaledNumber.enumNumericScale = CType(Util.Environment.MassUnits, ScaledNumber.enumNumericScale)
-            Dim strUnits As String = "g/" & Util.Environment.DistanceUnitAbbreviation(Me.DisplayDistanceUnits) & "^3"
-            m_snFluidDensity = New ScaledNumber(Me, "FluidDensity", fltValue, eSCale, strUnits, strUnits)
-
             m_snMouseSpringStiffness.ActualValue = m_snMouseSpringStiffness.ActualValue / fltDistanceChange
             m_snMouseSpringDamping.ActualValue = m_snMouseSpringStiffness.ActualValue / fltMassChange
 
@@ -1006,46 +931,43 @@ Namespace DataObjects.Physical
 
         End Sub
 
+        'Called whenever SimulateHydrodynamics is toggled. This resets the EnableFluid property of all rigid bodies.
+        Protected Overridable Sub ResetEnableFluidsForRigidBodies()
+
+            'Go through the organisms and structures and have them reset their enable fluids value.
+            Dim doOrganism As DataObjects.Physical.Organism
+            For Each deEntry As DictionaryEntry In m_aryOrganisms
+                doOrganism = DirectCast(deEntry.Value, DataObjects.Physical.Organism)
+                doOrganism.ResetEnableFluidsForRigidBodies()
+            Next
+
+            Dim doStructure As DataObjects.Physical.PhysicalStructure
+            For Each deEntry As DictionaryEntry In m_aryStructures
+                doStructure = DirectCast(deEntry.Value, DataObjects.Physical.PhysicalStructure)
+                doStructure.ResetEnableFluidsForRigidBodies()
+            Next
+        End Sub
+
         Public Overridable Overloads Sub LoadData(ByRef oXml As Interfaces.StdXml)
 
             oXml.IntoChildElement("Environment") 'Into Environment Element
 
-            If ScaledNumber.IsValidXml(oXml, "PhysicsTimeStep") Then
-                m_snPhysicsTimeStep.LoadData(oXml, "PhysicsTimeStep")
-                m_snFluidDensity.LoadData(oXml, "FluidDensity")
-                m_snMaxSurfaceFriction.LoadData(oXml, "MaxSurfaceFriction")
-                m_snGravity.LoadData(oXml, "Gravity")
-            Else
-                m_snPhysicsTimeStep.ActualValue = oXml.GetChildDouble("PhysicsTimeStep", m_snPhysicsTimeStep.ActualValue)
-                m_snFluidDensity.ActualValue = oXml.GetChildDouble("FluidDensity", m_snFluidDensity.ActualValue)
-                m_snMaxSurfaceFriction.ActualValue = oXml.GetChildDouble("SurfaceFriction", m_snMaxSurfaceFriction.ActualValue)
-                m_snGravity.ActualValue = oXml.GetChildDouble("Gravity", m_snGravity.ActualValue)
-            End If
-
-            If oXml.FindChildElement("MouseSpringStiffness", False) Then
-                m_snMouseSpringStiffness.LoadData(oXml, "MouseSpringStiffness")
-                m_snMouseSpringDamping.LoadData(oXml, "MouseSpringDamping")
-            End If
-
-            If oXml.FindChildElement("LinearCompliance", False) Then
-                m_snLinearCompliance.LoadData(oXml, "LinearCompliance")
-                m_snLinearDamping.LoadData(oXml, "LinearDamping")
-                m_snAngularCompliance.LoadData(oXml, "AngularCompliance")
-                m_snAngularDamping.LoadData(oXml, "AngularDamping")
-                m_snLinearKineticLoss.LoadData(oXml, "LinearKineticLoss")
-                m_snAngularKineticLoss.LoadData(oXml, "AngularKineticLoss")
-            End If
+            m_snPhysicsTimeStep.LoadData(oXml, "PhysicsTimeStep")
+            m_snGravity.LoadData(oXml, "Gravity")
+            m_snMouseSpringStiffness.LoadData(oXml, "MouseSpringStiffness")
+            m_snMouseSpringDamping.LoadData(oXml, "MouseSpringDamping")
+            m_snLinearCompliance.LoadData(oXml, "LinearCompliance")
+            m_snLinearDamping.LoadData(oXml, "LinearDamping")
+            m_snAngularCompliance.LoadData(oXml, "AngularCompliance")
+            m_snAngularDamping.LoadData(oXml, "AngularDamping")
+            m_snLinearKineticLoss.LoadData(oXml, "LinearKineticLoss")
+            m_snAngularKineticLoss.LoadData(oXml, "AngularKineticLoss")
 
             Me.SimulateHydrodynamics = oXml.GetChildBool("SimulateHydrodynamics", m_bSimulateHydrodynamics)
 
             If oXml.FindChildElement("AutoGenerateRandomSeed", False) Then
                 m_bAutoGenerateRandomSeed = oXml.GetChildBool("AutoGenerateRandomSeed")
                 m_iManualRandomSeed = oXml.GetChildInt("ManualRandomSeed")
-            End If
-
-            If oXml.FindChildElement("MaxHydroForce", False) Then
-                m_snMaxHydroForce.LoadData(oXml, "MaxHydroForce")
-                m_snMaxHydroTorque.LoadData(oXml, "MaxHydroTorque")
             End If
 
             m_eMassUnits = DirectCast([Enum].Parse(GetType(enumMassUnits), oXml.GetChildString("MassUnits"), True), enumMassUnits)
@@ -1109,8 +1031,6 @@ Namespace DataObjects.Physical
             oXml.IntoElem()
 
             m_snPhysicsTimeStep.SaveData(oXml, "PhysicsTimeStep")
-            m_snFluidDensity.SaveData(oXml, "FluidDensity")
-            m_snMaxSurfaceFriction.SaveData(oXml, "MaxSurfaceFriction")
             m_snGravity.SaveData(oXml, "Gravity")
             m_snMouseSpringStiffness.SaveData(oXml, "MouseSpringStiffness")
             m_snMouseSpringDamping.SaveData(oXml, "MouseSpringDamping")
@@ -1121,9 +1041,6 @@ Namespace DataObjects.Physical
             m_snAngularDamping.SaveData(oXml, "AngularDamping")
             m_snLinearKineticLoss.SaveData(oXml, "LinearKineticLoss")
             m_snAngularKineticLoss.SaveData(oXml, "AngularKineticLoss")
-
-            m_snMaxHydroForce.SaveData(oXml, "MaxHydroForce")
-            m_snMaxHydroTorque.SaveData(oXml, "MaxHydroTorque")
 
             m_snRecFieldSelRadius.SaveData(oXml, "RecFieldSelRadius")
 
@@ -1176,8 +1093,6 @@ Namespace DataObjects.Physical
             oXml.IntoElem()
 
             oXml.AddChildElement("PhysicsTimeStep", m_snPhysicsTimeStep.ActualValue)
-            oXml.AddChildElement("FluidDensity", m_snFluidDensity.ActualValue)
-            oXml.AddChildElement("MaxSurfaceFriction", m_snMaxSurfaceFriction.ActualValue)
             oXml.AddChildElement("Gravity", m_snGravity.ActualValue)
             oXml.AddChildElement("MouseSpringStiffness", m_snMouseSpringStiffness.ActualValue)
             oXml.AddChildElement("MouseSpringDamping", m_snMouseSpringDamping.ActualValue)
@@ -1188,9 +1103,6 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("AngularDamping", m_snAngularDamping.ActualValue)
             oXml.AddChildElement("LinearKineticLoss", m_snLinearKineticLoss.ActualValue)
             oXml.AddChildElement("AngularKineticLoss", m_snAngularKineticLoss.ActualValue)
-
-            oXml.AddChildElement("MaxHydroForce", m_snMaxHydroForce.ActualValue)
-            oXml.AddChildElement("MaxHydroTorque", m_snMaxHydroTorque.ActualValue)
 
             m_snRecFieldSelRadius.SaveSimulationXml(oXml, Nothing, "RecFieldSelRadius")
 

@@ -190,14 +190,18 @@ Namespace Framework
             Return "(" & m_snX.Text() & ", " & m_snY.Text() & ", " & m_snZ.Text() & ")"
         End Function
 
-        Public Overloads Sub LoadData(ByRef oXml As Interfaces.StdXml, ByVal strName As String)
-            oXml.IntoChildElement(strName)
+        Public Overloads Sub LoadData(ByRef oXml As Interfaces.StdXml, ByVal strName As String, Optional ByVal bThrowError As Boolean = True)
+            If oXml.FindChildElement(strName, False) Then
+                oXml.IntoChildElement(strName)
 
-            m_snX.LoadData(oXml, "X")
-            m_snY.LoadData(oXml, "Y")
-            m_snZ.LoadData(oXml, "Z")
+                m_snX.LoadData(oXml, "X")
+                m_snY.LoadData(oXml, "Y")
+                m_snZ.LoadData(oXml, "Z")
 
-            oXml.OutOfElem()
+                oXml.OutOfElem()
+            ElseIf bThrowError Then
+                Throw New System.Exception("No xml tag with the name '" & strName & "' was found.")
+            End If
         End Sub
 
         Public Overloads Sub SaveData(ByRef oXml As Interfaces.StdXml, ByVal strName As String)

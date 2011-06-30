@@ -74,6 +74,9 @@ void VsPlane::ResizePhysicsGeometry()
 	if(m_vxGeometry)
 		m_vxGeometry = new VxPlane();
 }
+//Planes can never have fluid interactions/dynamics.
+void VsPlane::Physics_FluidDataChanged()
+{}
 
 		}		//Bodies
 	}			// Environment

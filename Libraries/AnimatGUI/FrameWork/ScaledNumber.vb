@@ -468,21 +468,25 @@ Namespace Framework
             Return oNew
         End Function
 
-        Public Overloads Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String)
-            oXml.IntoChildElement(strName)
-            m_fltValue = oXml.GetAttribFloat("Value")
-            m_strPropertyName = strName
+        Public Overloads Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String, Optional ByVal bThrowError As Boolean = True)
+            If oXml.FindChildElement(strName, False) Then
+                oXml.IntoChildElement(strName)
+                m_fltValue = oXml.GetAttribFloat("Value")
+                m_strPropertyName = strName
 
-            Dim strScale As String = oXml.GetAttribString("Scale")
+                Dim strScale As String = oXml.GetAttribString("Scale")
 
-            If [Enum].IsDefined(GetType(enumNumericScale), strScale) Then
-                m_eScale = DirectCast([Enum].Parse(GetType(enumNumericScale), strScale, True), enumNumericScale)
-            Else
-                Dim fltVal As Double = oXml.GetAttribDouble("Actual", False, m_fltValue)
-                Me.ActualValue = fltVal
+                If [Enum].IsDefined(GetType(enumNumericScale), strScale) Then
+                    m_eScale = DirectCast([Enum].Parse(GetType(enumNumericScale), strScale, True), enumNumericScale)
+                Else
+                    Dim fltVal As Double = oXml.GetAttribDouble("Actual", False, m_fltValue)
+                    Me.ActualValue = fltVal
+                End If
+
+                oXml.OutOfElem()
+            ElseIf bThrowError Then
+                Throw New System.Exception("No xml tag with the name '" & strName & "' was found.")
             End If
-
-            oXml.OutOfElem()
         End Sub
 
         Public Overloads Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String)

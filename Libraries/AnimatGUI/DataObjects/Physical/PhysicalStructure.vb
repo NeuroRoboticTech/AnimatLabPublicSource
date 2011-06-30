@@ -748,6 +748,12 @@ Namespace DataObjects.Physical
             Return tnOrganism
         End Function
 
+        Public Overridable Sub ResetEnableFluidsForRigidBodies()
+            If Not m_dbRoot Is Nothing Then
+                m_dbRoot.ResetEnableFluidsForRigidBodies()
+            End If
+        End Sub
+
 #Region " Workspace TreeView "
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node)

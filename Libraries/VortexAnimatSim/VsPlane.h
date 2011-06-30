@@ -25,6 +25,7 @@ namespace VortexAnimatSim
 				virtual ~VsPlane();
 
 				virtual void CreateParts();
+				virtual void Physics_FluidDataChanged();
 			};
 
 		}		//Bodies
