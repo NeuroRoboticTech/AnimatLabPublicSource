@@ -31,11 +31,13 @@ VsAttachment::VsAttachment()
 VsAttachment::~VsAttachment()
 {
 
-try
-{
-}
-catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of VsAttachment\r\n", "", -1, FALSE, TRUE);}
+	try
+	{
+		DeleteGraphics();
+		DeletePhysics();
+	}
+	catch(...)
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsAttachment\r\n", "", -1, FALSE, TRUE);}
 }
 
 void VsAttachment::CreateGraphicsGeometry() 

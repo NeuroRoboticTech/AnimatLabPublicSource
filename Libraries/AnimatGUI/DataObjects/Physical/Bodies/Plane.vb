@@ -150,29 +150,29 @@ Namespace DataObjects.Physical.Bodies
             End If
         End Sub
 
-#Region " Add-Remove to List Methods "
+        Public Overrides Sub SetupPartTypesExclusions()
+            'A plane can only be added to a terrain or plane type.
+            For Each bpBody As BodyPart In Util.Application.BodyPartTypes
+                If Not (TypeOf bpBody Is Terrain OrElse TypeOf bpBody Is Plane) Then
+                    Util.Application.AddPartTypeExclusion(bpBody.GetType, Me.GetType)
 
-        ''' \brief  Before add to list.
-        '''
-        ''' \author dcofer
-        ''' \date   4/18/2011
-        '''
-        ''' \exception  Exception   If not adding as root body of a structure or to another plane or terrain.
-        '''
-        ''' \param  bThrowError (optional) Throw exception if there is a problem.
-        '''
-        ''' \details A plane can only be added as the root body of a structure or to another plane. We must check
-        ''' that here before it is added to the list. If this is not a valid case the throw an exception.
-        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            If Not ((Me.IsRoot AndAlso Util.IsTypeOf(Me.Parent.GetType(), GetType(PhysicalStructure), False)) OrElse _
-               (Util.IsTypeOf(Me.Parent.GetType(), GetType(Plane), False)) OrElse (Util.IsTypeOf(Me.Parent.GetType(), GetType(Terrain), False))) Then
-                Throw New System.Exception("You can only add a plane as the root body of a structure, or to another plane or terrain object.")
-            End If
-
-            MyBase.BeforeAddToList(bThrowError)
+                    'Cant add anything to a plane.
+                    Util.Application.AddPartTypeExclusion(Me.GetType, bpBody.GetType)
+                End If
+            Next
         End Sub
 
-#End Region
+        Protected Overrides Sub OrientNewPart(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d)
+            'Don't orient plane parts. They are setup already.
+        End Sub
+
+        Public Overrides Sub BeforeAddBody()
+            MyBase.BeforeAddBody()
+
+            If Me.IsRoot Then
+                Me.Rotation.X.ActualValue = -90
+            End If
+        End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
@@ -207,7 +207,6 @@ Namespace DataObjects.Physical.Bodies
             If propTable.Properties.Contains("Food Energy Content") Then propTable.Properties.Remove("Food Energy Content")
 
         End Sub
-
 
         Public Overloads Overrides Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
             MyBase.LoadData(doStructure, oXml)

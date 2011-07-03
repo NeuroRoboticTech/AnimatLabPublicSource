@@ -59,6 +59,17 @@ Namespace DataObjects.Physical.Bodies
             End Set
         End Property
 
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property ModuleName() As String
+            Get
+#If Not Debug Then
+                Return "VortexAnimatPrivateSim_VC9.dll"
+#Else
+                Return "VortexAnimatPrivateSim_VC9D.dll"
+#End If
+            End Get
+        End Property
+
 #End Region
 
         Public Sub New(ByVal doParent As Framework.DataObject)
@@ -66,8 +77,8 @@ Namespace DataObjects.Physical.Bodies
             m_strDescription = ""
 
             'Start out white, and ambiently lit.
-            m_clAmbient = Color.FromArgb(255, 255, 255, 255)
-            m_clDiffuse = Color.FromArgb(255, 255, 255, 255)
+            m_clAmbient = Color.FromArgb(255, 0, 0, 255)
+            m_clDiffuse = Color.FromArgb(255, 0, 0, 255)
             m_clSpecular = Color.FromArgb(255, 64, 64, 64)
             m_fltShininess = 64
 
@@ -75,6 +86,9 @@ Namespace DataObjects.Physical.Bodies
 
             AddHandler m_svVelocity.ValueChanged, AddressOf Me.OnVelocityValueChanged
 
+            If Not Util.Environment Is Nothing Then
+                AddHandler Util.Environment.AfterPropertyChanged, AddressOf Me.OnEnvironmentPropChanged
+            End If
         End Sub
 
         Public Overrides Sub ClearIsDirty()
@@ -102,6 +116,26 @@ Namespace DataObjects.Physical.Bodies
             Dim fltVal As Single = 100 * Util.Environment.DistanceUnitValue
         End Sub
 
+        Public Overrides Sub BeforeAddBody()
+            MyBase.BeforeAddBody()
+
+            If Me.IsRoot Then
+                Me.Rotation.X.ActualValue = -90
+            End If
+        End Sub
+
+        Public Overrides Sub SetupPartTypesExclusions()
+            'A fluid plane can only be added to a terrain or plane type.
+            For Each bpBody As BodyPart In Util.Application.BodyPartTypes
+                If Not (TypeOf bpBody Is Terrain OrElse TypeOf bpBody Is Plane) Then
+                    Util.Application.AddPartTypeExclusion(bpBody.GetType, Me.GetType)
+                End If
+
+                'Cant add anything to a fluid plane.
+                Util.Application.AddPartTypeExclusion(Me.GetType, bpBody.GetType)
+            Next
+        End Sub
+
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 
@@ -109,6 +143,12 @@ Namespace DataObjects.Physical.Bodies
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Velocity", pbNumberBag.GetType(), "Velocity", _
                                         "Coordinates", "Sets the velocity of the fluid medium.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter), Not AllowGuiCoordinateChange()))
+
+            'Add density back in.
+            pbNumberBag = m_snDensity.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Density", pbNumberBag.GetType(), "Density", _
+                                        "Part Properties", "Sets the density of this body part.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
         End Sub
 
@@ -151,6 +191,16 @@ Namespace DataObjects.Physical.Bodies
             Try
                 Me.SetSimData("Velocity", m_svVelocity.GetSimulationXml("Velocity"), True)
                 Util.ProjectProperties.RefreshProperties()
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Public Overridable Sub OnEnvironmentPropChanged(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
+            Try
+                If propInfo.Name = "Gravity" Then
+                    Me.SetSimData("Gravity", Util.Environment.Gravity.ToString, True)
+                End If
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

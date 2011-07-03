@@ -21,6 +21,7 @@ namespace AnimatSim
 			virtual void Physics_ResetGraphicsAndPhysics() = 0;
 			virtual void Physics_PositionChanged() = 0;
 			virtual void Physics_RotationChanged() = 0;
+			virtual void Physics_UpdateAbsolutePosition() = 0;
 			virtual void Physics_CollectData() = 0;
 			virtual void Physics_ResetSimulation() = 0;
 			virtual void Physics_AfterResetSimulation() = 0;
@@ -32,6 +33,7 @@ namespace AnimatSim
 			virtual void Physics_TextureChanged() = 0;
 			virtual void Physics_OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm) = 0;
 			virtual void Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos) = 0;
+			virtual CStdFPoint Physics_CalculateLocalMTForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ) = 0;
 		};
 
 	}

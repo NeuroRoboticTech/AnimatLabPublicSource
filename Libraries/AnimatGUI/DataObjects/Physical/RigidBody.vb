@@ -754,6 +754,10 @@ Namespace DataObjects.Physical
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 
+            If Me.IsRoot Then
+                If propTable.Properties.Contains("Local Position") Then propTable.Properties.Remove("Local Position")
+            End If
+
             Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag
             If Me.IsCollisionObject Then
                 If Util.Simulation.Environment.SimulateHydrodynamics Then
@@ -1323,6 +1327,10 @@ Namespace DataObjects.Physical
             m_snDensity.ActualValue = 1 * Util.Environment.MassUnitValue
         End Sub
 
+        Protected Overridable Sub OrientNewPart(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d)
+            m_doInterface.OrientNewPart(vPos.X, vPos.Y, vPos.Z, vNorm.X, vNorm.Y, vNorm.Z)
+        End Sub
+
         Public Overridable Overloads Function AddChildBody(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d) As Boolean
             Dim rbNew As RigidBody
 
@@ -1332,6 +1340,7 @@ Namespace DataObjects.Physical
                 Dim frmSelectParts As New Forms.BodyPlan.SelectPartType()
                 frmSelectParts.PartType = GetType(Physical.RigidBody)
                 frmSelectParts.IsRoot = False
+                frmSelectParts.ParentBody = Me
 
                 If frmSelectParts.ShowDialog() <> DialogResult.OK Then Return False
 
@@ -1355,13 +1364,6 @@ Namespace DataObjects.Physical
                 rbNew.Name = "Body_" & Me.ParentStructure.NewBodyIndex
                 rbNew.IsRoot = False
 
-                'rbNew.Ori()
-                'rbNew.LocalPosition.IgnoreChangeValueEvents = True
-                'rbNew.LocalPosition.X.ActualValue = 0
-                'rbNew.LocalPosition.Y.ActualValue = 0
-                'rbNew.LocalPosition.Z.ActualValue = 0
-                'rbNew.LocalPosition.IgnoreChangeValueEvents = False
-
                 'Now, if it needs a joint then select the joint type to use
                 If rbNew.UsesAJoint Then
                     If Not rbNew.SelectJointType(vPos, vNorm) Then
@@ -1369,10 +1371,12 @@ Namespace DataObjects.Physical
                     End If
                 End If
 
+                'rbNew.LocalPosition.CopyData(0, 0, 0.1, True)
+
                 'Now add the new part to the parent
                 AddChildBody(rbNew, bAddDefaultGraphics)
 
-                rbNew.m_doInterface.OrientNewPart(vPos.X, vPos.Y, vPos.Z, vNorm.X, vNorm.Y, vNorm.Z)
+                rbNew.OrientNewPart(vPos, vNorm)
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -1415,6 +1419,7 @@ Namespace DataObjects.Physical
             Dim frmSelectParts As New Forms.BodyPlan.SelectPartType()
             frmSelectParts.PartType = GetType(Physical.Joint)
             frmSelectParts.IsRoot = False
+            frmSelectParts.ParentBody = Me
 
             If frmSelectParts.ShowDialog() <> DialogResult.OK Then Return False
 
@@ -1667,6 +1672,18 @@ Namespace DataObjects.Physical
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
+            'Verify that this part can be added to the parent 
+            If Not Me.IsRoot Then
+                If Not Me.Parent Is Nothing AndAlso Util.IsTypeOf(Me.Parent.GetType(), GetType(RigidBody)) Then
+                    Dim doParent As RigidBody = DirectCast(Me.Parent, RigidBody)
+                    If Not Util.Application.CanAddPartAsChild(doParent.GetType, Me.GetType) Then
+                        Throw New System.Exception("You attempted to add a part to a type that does not support it as a child object.")
+                    End If
+                Else
+                    Throw New System.Exception("Could not convert parent part to rigid body")
+                End If
+            End If
+
             Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "RigidBody", Me.GetSimulationXml("RigidBody"), bThrowError)
             InitializeSimulationReferences()
         End Sub

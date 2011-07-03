@@ -57,7 +57,7 @@ namespace VortexAnimatSim
 			virtual void SetupGraphics();
 			virtual void SetupPhysics() = 0;
 			virtual void DeleteGraphics();
-			virtual void DeletePhysics() {};
+			virtual void DeletePhysics() = 0;
 			virtual void CreateSelectedGraphics(string strName);
 			virtual void CreateDragger(string strName);
 			virtual void CreateSelectedVertex(string strName);
@@ -65,7 +65,6 @@ namespace VortexAnimatSim
 			virtual void AttachedPartMovedOrRotated(string strID);
 			virtual void UpdatePositionAndRotationFromMatrix();
 			virtual void UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT);
-			virtual void UpdateAbsolutePosition();
 
 			virtual void CreateGraphicsGeometry();
 			virtual void CreatePhysicsGeometry();
@@ -101,6 +100,7 @@ namespace VortexAnimatSim
 			virtual void Physics_ResetGraphicsAndPhysics();
 			virtual void Physics_PositionChanged();
 			virtual void Physics_RotationChanged();
+			virtual void Physics_UpdateAbsolutePosition();
 			virtual void Physics_Selected(BOOL bValue, BOOL bSelectMultiple); 
 			virtual float Physics_GetBoundingRadius();
 			virtual BoundingBox Physics_GetBoundingBox();
@@ -112,6 +112,7 @@ namespace VortexAnimatSim
 			virtual float *Physics_GetDataPointer(string strDataType);
 			virtual void Physics_OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm);
 			virtual void Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos) {};
+			virtual CStdFPoint Physics_CalculateLocalMTForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ);
 
 			virtual void SetTexture(string strTexture);
 			virtual void SetCulling();

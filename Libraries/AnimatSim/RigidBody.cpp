@@ -93,6 +93,14 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Body\r\n", "", -1, FALSE, TRUE);}
 }
 
+CStdFPoint RigidBody::Position()
+{
+	if(IsRoot())
+ 		return m_lpStructure->Position();
+	else
+		return BodyPart::Position();
+}
+
 /**
 \details For the RigidBody if it is the root then we are going to set the position of the structure.
 **/
@@ -342,6 +350,21 @@ void RigidBody::IsCollisionObject(BOOL bVal) {m_bIsCollisionObject = bVal;}
 BOOL RigidBody::IsRoot()
 {
 	return (m_lpStructure->Body() == this);
+}
+
+/**
+\brief	Query if this object has a static joint.
+
+\author	dcofer
+\date	7/2/2011
+
+\return	true if has static joint, false if not.
+**/
+BOOL RigidBody::HasStaticJoint()
+{
+	if(!IsRoot() && !JointToParent())
+		return TRUE;
+	return FALSE;
 }
 
 /**
@@ -1284,10 +1307,11 @@ void RigidBody::LoadPosition(CStdXml &oXml)
 	if(!IsRoot())
 	{
 		Position(vTemp, TRUE, FALSE, FALSE);	
-		AbsolutePosition(m_lpParent->AbsolutePosition() + m_oPosition);
+		//AbsolutePosition(m_lpParent->AbsolutePosition() + m_oPosition);
 	}
 	else
-		AbsolutePosition(m_lpStructure->AbsolutePosition());
+		BodyPart::Position(m_lpStructure->Position(), FALSE, FALSE, FALSE);
+		//AbsolutePosition(m_lpStructure->AbsolutePosition());
 }
 
 void RigidBody::Load(CStdXml &oXml)

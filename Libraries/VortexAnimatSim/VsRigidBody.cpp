@@ -121,7 +121,10 @@ void VsRigidBody::Physics_UpdateNode()
 {
 	if(m_vxSensor)
 		m_vxSensor->updateFromNode();
-	UpdateAbsolutePosition();
+	else if(m_lpThisRB->HasStaticJoint())
+		ResetStaticCollisionGeom(); //If this body uses a static joint then we need to reset the offest matrix for its collision geometry.
+
+	Physics_UpdateAbsolutePosition();
 }
 
 void VsRigidBody::Physics_SetColor()
@@ -359,7 +362,7 @@ void VsRigidBody::SetupPhysics()
 		//its parent. So we do not create a physics part, we just get a link to its parents part.
 		if(m_lpThisRB->IsContactSensor())
 			CreateSensorPart();
-		else if(m_lpThisRB->Parent() && !m_lpThisRB->JointToParent())
+		else if(m_lpThisRB->HasStaticJoint())
 			CreateStaticPart();
 		else
 			CreateDynamicPart();
@@ -447,6 +450,18 @@ void VsRigidBody::CreateStaticPart()
 		string strName = m_lpThisAB->ID() + "_CollisionGeometry";
 		m_vxCollisionGeometry->setName(strName.c_str());
 	}
+}
+
+void VsRigidBody::ResetStaticCollisionGeom()
+{
+	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisRB->Parent());
+
+	Vx::VxReal44 vOffset;
+	VxOSG::copyOsgMatrix_to_VxReal44(m_osgMT->getMatrix(), vOffset);
+
+	Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
+	if(vxSensor && m_vxCollisionGeometry)
+		m_vxCollisionGeometry->setRelativeTransform(vOffset);
 }
 
 void VsRigidBody::DeletePhysics()
@@ -544,7 +559,7 @@ void VsRigidBody::Physics_CollectData()
 	else
 	{
 		//If we are here then we did not have a physics component, just and OSG one.
-		UpdateAbsolutePosition();
+		Physics_UpdateAbsolutePosition();
 
 		//TODO: Get Rotation
 		//m_lpThis->ReportRotation(QuaterionToEuler(m_osgLocalMatrix.getRotate());

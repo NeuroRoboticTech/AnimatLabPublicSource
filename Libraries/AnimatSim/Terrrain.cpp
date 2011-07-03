@@ -107,6 +107,12 @@ void Terrain::MaxHeight(float fltVal, BOOL bUseScaling)
 	Resize();
 }
 
+BOOL Terrain::AllowRotateDragX() {return FALSE;}
+
+BOOL Terrain::AllowRotateDragY() {return FALSE;}
+
+BOOL Terrain::AllowRotateDragZ() {return FALSE;}
+
 BOOL Terrain::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
@@ -153,7 +159,6 @@ void Terrain::Load(CStdXml &oXml)
 
 	//Density is always zero
 	m_fltDensity = 0;
-	Rotation(-1.5707963f, 0, 0);  //Need to change this.
 
 	//This part type is always frozen
 	m_bFreeze = TRUE;

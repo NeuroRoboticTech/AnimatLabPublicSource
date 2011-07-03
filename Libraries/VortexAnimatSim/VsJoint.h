@@ -69,7 +69,6 @@ namespace VortexAnimatSim
 			virtual void CreateJointGraphics();
 			virtual void SetupGraphics();
 			virtual void SetupPhysics();
-			virtual void DeletePhysics() {};
 			virtual VxVector3 NormalizeAxis(CStdFPoint vLocalRot);
 			virtual void UpdatePositionAndRotationFromMatrix();
 

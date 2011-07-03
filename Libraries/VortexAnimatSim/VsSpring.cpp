@@ -32,7 +32,13 @@ VsSpring::VsSpring()
 
 VsSpring::~VsSpring()
 {
-	m_vxSpring = NULL;
+	try
+	{
+		DeleteGraphics();
+		DeletePhysics();
+	}
+	catch(...)
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsSpring/\r\n", "", -1, FALSE, TRUE);}
 }
 
 void VsSpring::NaturalLength(float fltVal, BOOL bUseScaling)

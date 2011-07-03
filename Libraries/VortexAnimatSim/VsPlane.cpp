@@ -44,11 +44,18 @@ VsPlane::VsPlane()
 **/
 VsPlane::~VsPlane()
 {
+	try
+	{
+		DeleteGraphics();
+		DeletePhysics();
+	}
+	catch(...)
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsPlane/\r\n", "", -1, FALSE, TRUE);}
 }
 
 void VsPlane::CreateGraphicsGeometry()
 {
-	m_osgGeometry = CreatePlaneGeometry(CornerX(), CornerY(), m_ptSize.x, m_ptSize.y, GridX(), GridY());
+	m_osgGeometry = CreatePlaneGeometry(CornerX(), CornerY(), m_ptSize.x, m_ptSize.y, GridX(), GridY(), FALSE);
 }
 
 void VsPlane::CreatePhysicsGeometry()

@@ -327,12 +327,6 @@ Namespace DataObjects.Physical
                 Return m_strTexture
             End Get
             Set(ByVal Value As String)
-                If Not Value Is Nothing Then
-                    Dim strPath As String, strFile As String
-                    If Util.DetermineFilePath(Value, strPath, strFile) Then
-                        Value = strFile
-                    End If
-                End If
 
                 'Check to see if the file exists.
                 If Value.Trim.Length > 0 Then
@@ -346,6 +340,13 @@ Namespace DataObjects.Physical
                     Catch ex As System.Exception
                         Throw New System.Exception("Unable to load the texture file. This does not appear to be a vaild image file.")
                     End Try
+
+                    If Not Value Is Nothing Then
+                        Dim strPath As String, strFile As String
+                        If Util.DetermineFilePath(Value, strPath, strFile) Then
+                            Value = strFile
+                        End If
+                    End If
                 End If
 
                 SetSimData("Texture", Value, True)
@@ -439,6 +440,19 @@ Namespace DataObjects.Physical
                 m_Transparencies.ReceptiveFieldsTransparency = 50
                 m_Transparencies.SimulationTransparency = 0
             End If
+        End Sub
+
+        'This method is called for each part type during the catalog of the modules. It sets up the 
+        'list of part types that cannot be added to one another in the simulation object.
+        Public Overridable Sub SetupPartTypesExclusions()
+            Util.Application.AddPartTypeExclusion(GetType(Bodies.FluidPlane), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(Bodies.Attachment), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(Bodies.LinearHillMuscle), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(Bodies.LinearHillStretchReceptor), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(Bodies.Mouth), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(Bodies.OdorSensor), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(Bodies.Stomach), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(Bodies.Spring), Me.GetType)
         End Sub
 
         Public Overridable Function FindBodyPart(ByVal strID As String) As BodyPart
@@ -541,7 +555,7 @@ Namespace DataObjects.Physical
 
                 Dim mcCut As New System.Windows.Forms.ToolStripMenuItem("Cut", Util.Application.ToolStripImages.GetImage("AnimatGUI.Cut.gif"), New EventHandler(AddressOf Me.OnCutBodyPart))
                 Dim mcCopy As New System.Windows.Forms.ToolStripMenuItem("Copy", Util.Application.ToolStripImages.GetImage("AnimatGUI.Copy.gif"), New EventHandler(AddressOf Me.OnCopyBodyPart))
-                Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete Chart", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
+                Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete Part", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
                 popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcCut, mcCopy, mcDelete})
 
                 If Not Me.ParentStructure Is Nothing AndAlso Not Me.ParentStructure.BodyEditor Is Nothing Then
@@ -850,6 +864,7 @@ Namespace DataObjects.Physical
                 If Not m_doParent Is Nothing AndAlso Util.IsTypeOf(m_doParent.GetType, GetType(DataObjects.Physical.BodyPart)) Then
                     Dim bpParent As DataObjects.Physical.BodyPart = DirectCast(m_doParent, DataObjects.Physical.BodyPart)
 
+                    'This code is incorrect and needs to be changed.
                     m_svLocalPosition.IgnoreChangeValueEvents = True
                     m_svLocalPosition.X.ActualValue = m_svWorldPosition.X.ActualValue - bpParent.WorldPosition.X.ActualValue
                     m_svLocalPosition.Y.ActualValue = m_svWorldPosition.Y.ActualValue - bpParent.WorldPosition.Y.ActualValue
@@ -859,6 +874,10 @@ Namespace DataObjects.Physical
                     Me.SetSimData("Position", m_svLocalPosition.GetSimulationXml("Position"), True)
                     Util.ProjectProperties.RefreshProperties()
                     RaiseEvent Moved(Me)
+                ElseIf Not m_doParent Is Nothing AndAlso Util.IsTypeOf(m_doParent.GetType, GetType(DataObjects.Physical.PhysicalStructure), False) Then
+                    Dim stParent As DataObjects.Physical.PhysicalStructure = DirectCast(m_doParent, DataObjects.Physical.PhysicalStructure)
+
+                    stParent.Position.CopyData(m_svWorldPosition.X.ActualValue, m_svWorldPosition.Y.ActualValue, m_svWorldPosition.Z.ActualValue, False)
                 End If
 
             Catch ex As System.Exception

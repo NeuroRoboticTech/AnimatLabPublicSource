@@ -32,11 +32,13 @@ VsLinearHillMuscle::VsLinearHillMuscle()
 VsLinearHillMuscle::~VsLinearHillMuscle()
 {
 
-try
-{
-}
-catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of VsLinearHillMuscle\r\n", "", -1, FALSE, TRUE);}
+	try
+	{
+		DeleteGraphics();
+		DeletePhysics();
+	}
+	catch(...)
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsLinearHillMuscle\r\n", "", -1, FALSE, TRUE);}
 }
 
 void VsLinearHillMuscle::CreateParts()

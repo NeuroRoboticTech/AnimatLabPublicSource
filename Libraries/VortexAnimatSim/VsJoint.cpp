@@ -217,7 +217,7 @@ void VsJoint::SetupGraphics()
 		m_osgParent->addChild(m_osgRoot.get());
 
 		//Set the position with the world coordinates.
-		UpdateAbsolutePosition();
+		Physics_UpdateAbsolutePosition();
 
 		//We need to set the UserData on the OSG side so we can do picking.
 		//We need to use a node visitor to set the user data for all drawable nodes in all geodes for the group.
@@ -270,7 +270,7 @@ void VsJoint::Physics_UpdateMatrix()
 		ChildOffsetMatrix(lpVsChild->LocalMatrix());
 
 	//If we are here then we did not have a physics component, just and OSG one.
-	UpdateAbsolutePosition();
+	Physics_UpdateAbsolutePosition();
 }
 
 void  VsJoint::BuildLocalMatrix()

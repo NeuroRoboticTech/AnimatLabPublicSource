@@ -33,6 +33,13 @@ VsBox::VsBox()
 
 VsBox::~VsBox()
 {
+	try
+	{
+		DeleteGraphics();
+		DeletePhysics();
+	}
+	catch(...)
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsBox\r\n", "", -1, FALSE, TRUE);}
 }
 
 void VsBox::CreateGraphicsGeometry()

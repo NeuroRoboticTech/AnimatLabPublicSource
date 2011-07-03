@@ -175,6 +175,7 @@ namespace AnimatSim
 
 #pragma region AccessorMutators
 
+			virtual CStdFPoint Position();
 			virtual void Position(CStdFPoint &oPoint, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
 
 			virtual int VisualSelectionType();
@@ -202,8 +203,9 @@ namespace AnimatSim
 
 			virtual BOOL IsCollisionObject();
 			virtual void IsCollisionObject(BOOL bVal);
-
+			
 			virtual BOOL IsRoot();
+			virtual BOOL HasStaticJoint();
 
 			virtual BOOL IsFoodSource();
 			virtual void IsFoodSource(BOOL bVal);

@@ -187,6 +187,7 @@ Namespace Forms.BodyPlan
         Protected m_bIsRigidBody As Boolean = False
         Protected m_bHasDynamics As Boolean = True
         Protected m_bDefaultAddGraphics As Boolean = True
+        Protected m_rbParentBody As DataObjects.Physical.RigidBody
 
 #End Region
 
@@ -219,6 +220,15 @@ Namespace Forms.BodyPlan
             End Set
         End Property
 
+        Public Property ParentBody() As DataObjects.Physical.RigidBody
+            Get
+                Return m_rbParentBody
+            End Get
+            Set(ByVal value As DataObjects.Physical.RigidBody)
+                m_rbParentBody = value
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -247,25 +257,25 @@ Namespace Forms.BodyPlan
                 For Each doPart As Physical.BodyPart In Util.Application.BodyPartTypes
                     If Util.IsTypeOf(doPart.GetType(), m_tpPartType, False) AndAlso Not doPart.GetType().IsAbstract Then
                         If Not m_bIsRigidBody OrElse (m_bIsRigidBody AndAlso Not m_bIsRoot) OrElse (m_bIsRigidBody AndAlso m_bIsRoot AndAlso doPart.HasDynamics) Then
+                            If m_rbParentBody Is Nothing OrElse Util.Application.CanAddPartAsChild(m_rbParentBody.GetType, doPart.GetType) Then
+                                If Not doPart.WorkspaceImage Is Nothing Then
+                                    m_mgrIconImages.AddImage(doPart.WorkspaceImageName, doPart.WorkspaceImage)
+                                    If doPart.WorkspaceImage.Width > iMaxWidth Then iMaxWidth = doPart.WorkspaceImage.Width
+                                    If doPart.WorkspaceImage.Height > iMaxHeight Then iMaxHeight = doPart.WorkspaceImage.Height
+                                End If
 
-                            If Not doPart.WorkspaceImage Is Nothing Then
-                                m_mgrIconImages.AddImage(doPart.WorkspaceImageName, doPart.WorkspaceImage)
-                                If doPart.WorkspaceImage.Width > iMaxWidth Then iMaxWidth = doPart.WorkspaceImage.Width
-                                If doPart.WorkspaceImage.Height > iMaxHeight Then iMaxHeight = doPart.WorkspaceImage.Height
+                                Dim liItem As New ListViewItem
+                                liItem.Text = doPart.BodyPartName
+
+                                If Not doPart.WorkspaceImage Is Nothing Then
+                                    liItem.ImageIndex = m_mgrIconImages.GetImageIndex(doPart.WorkspaceImageName)
+                                Else
+                                    liItem.ImageIndex = m_mgrIconImages.GetImageIndex("Default")
+                                End If
+
+                                liItem.Tag = doPart
+                                aryList.Add(liItem)
                             End If
-
-                            Dim liItem As New ListViewItem
-                            liItem.Text = doPart.BodyPartName
-
-                            If Not doPart.WorkspaceImage Is Nothing Then
-                                liItem.ImageIndex = m_mgrIconImages.GetImageIndex(doPart.WorkspaceImageName)
-                            Else
-                                liItem.ImageIndex = m_mgrIconImages.GetImageIndex("Default")
-                            End If
-
-                            liItem.Tag = doPart
-                            aryList.Add(liItem)
-
                         End If
                     End If
                 Next

@@ -33,6 +33,10 @@ namespace AnimatSim
 				Terrain();
 				virtual ~Terrain();
 
+				virtual BOOL AllowRotateDragX();
+				virtual BOOL AllowRotateDragY();
+				virtual BOOL AllowRotateDragZ();
+
 				virtual float SegmentWidth();							
 				virtual void SegmentWidth(float fltVal, BOOL bUseScaling = TRUE);
 

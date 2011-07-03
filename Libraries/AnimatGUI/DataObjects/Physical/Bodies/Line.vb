@@ -159,6 +159,18 @@ Namespace DataObjects.Physical.Bodies
             End If
         End Sub
 
+        Public Overrides Sub SetupPartTypesExclusions()
+            Util.Application.AddPartTypeExclusion(GetType(Terrain), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(Plane), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(FluidPlane), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(LinearHillMuscle), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(LinearHillStretchReceptor), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(Mouth), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(OdorSensor), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(Stomach), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(Spring), Me.GetType)
+        End Sub
+
         Public Overrides Function AddChildBody(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d) As Boolean
             'If you try and add a body to a muscle attachment then you really need to add it to the attachment parent.
             If Not Me.Parent Is Nothing AndAlso Util.IsTypeOf(Me.Parent.GetType, GetType(RigidBody), True) Then

@@ -100,6 +100,7 @@ namespace VortexAnimatSim
 			CStdFPoint Physics_GetCurrentPosition();
 			virtual void GetBaseValues();
 			virtual void UpdatePositionAndRotationFromMatrix();
+			virtual void ResetStaticCollisionGeom();
 
 			virtual void ShowSelectedVertex();
 			virtual void HideSelectedVertex();

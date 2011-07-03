@@ -66,8 +66,6 @@ namespace AnimatSim
 				virtual int LengthSegments();
 				virtual void LengthSegments(int iVal);
 
-				virtual BOOL AllowMouseManipulation();
-
 				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 				virtual void Load(CStdXml &oXml);
 			};

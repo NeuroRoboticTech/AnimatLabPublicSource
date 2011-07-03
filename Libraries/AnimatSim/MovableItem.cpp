@@ -161,6 +161,9 @@ void MovableItem::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChang
 
 	if(m_lpCallback && bFireChangeEvent)
 		m_lpCallback->PositionChanged();
+
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->Physics_UpdateAbsolutePosition();
 }
 
 /**
@@ -224,7 +227,13 @@ void MovableItem::Position(string strXml, BOOL bUseScaling, BOOL bFireChangeEven
 
 \return	return m_oAbsPosition. 
 **/
-CStdFPoint MovableItem::AbsolutePosition() {return m_oAbsPosition;}
+CStdFPoint MovableItem::AbsolutePosition() 
+{
+	if(!m_lpPhysicsMovableItem)
+		THROW_ERROR(Al_Err_lAttempedToReadAbsPosBeforeDefined, Al_Err_strAttempedToReadAbsPosBeforeDefined);
+
+	return m_oAbsPosition;
+}
 
 /**
 \brief	Sets the absolute position of this body part. (m_oAbsPosition) 
@@ -265,6 +274,16 @@ void MovableItem::AbsolutePosition(float fltX, float fltY, float fltZ)
 \return	The current position. 
 **/
 CStdFPoint MovableItem::GetCurrentPosition() {return m_oAbsPosition;}
+
+CStdFPoint  MovableItem::UpdateAbsolutePosition()
+{
+	if(!m_lpPhysicsMovableItem)
+		THROW_ERROR(Al_Err_lAttempedToReadAbsPosBeforeDefined, Al_Err_strAttempedToReadAbsPosBeforeDefined);
+
+	m_lpPhysicsMovableItem->Physics_UpdateAbsolutePosition();
+
+	return AbsolutePosition();
+}
 
 /**
 \brief	Gets the reported local position. (m_oReportPosition). 
@@ -1120,6 +1139,26 @@ void MovableItem::OrientNewPart(float fltXPos, float fltYPos, float fltZPos, flo
 		m_lpPhysicsMovableItem->Physics_OrientNewPart(fltXPos, fltYPos, fltZPos, fltXNorm, fltYNorm, fltZNorm);
 }
 
+/**
+\brief	Calculates the local position values for matrix transform for the part to be in a specific world position.
+
+\author	dcofer
+\date	7/3/2011
+
+\param	fltWorldX	The world x coordinate we want.
+\param	fltWorldY	The world y coordinate we want.
+\param	fltWorldZ	The world z coordinate we want.
+
+\return	The calculated local position for world position.
+**/
+CStdFPoint MovableItem::CalculateLocalMTForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ)
+{
+	CStdFPoint vPos;
+	if(m_lpPhysicsMovableItem)
+		vPos = m_lpPhysicsMovableItem->Physics_CalculateLocalMTForWorldPos(fltWorldX, fltWorldY, fltWorldZ);
+	return vPos;
+}
+
 #pragma region DataAccesMethods
 
 float *MovableItem::GetDataPointer(string strDataType)
@@ -1263,10 +1302,10 @@ void MovableItem::LoadPosition(CStdXml &oXml)
 	Std_LoadPoint(oXml, "Position", vTemp);
 	Position(vTemp, TRUE, FALSE, FALSE);	
 
-	if(!m_lpParent)
-		AbsolutePosition(m_oPosition);
-	else
-		AbsolutePosition( m_lpParent->AbsolutePosition() + m_oPosition);
+	//if(!m_lpParent)
+	//	AbsolutePosition(m_oPosition);
+	//else
+	//	AbsolutePosition( m_lpParent->AbsolutePosition() + m_oPosition);
 }
 
 /**

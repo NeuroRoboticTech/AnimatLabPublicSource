@@ -657,7 +657,7 @@ osg::Geometry VORTEX_PORT *CreateEllipsoidGeometry(int latres,
     return sphereGeom;
 }
 
-osg::Geometry VORTEX_PORT *CreatePlaneGeometry(float fltCornerX, float fltCornerY, float fltXSize, float fltYSize, float fltXGrid, float fltYGrid)
+osg::Geometry VORTEX_PORT *CreatePlaneGeometry(float fltCornerX, float fltCornerY, float fltXSize, float fltYSize, float fltXGrid, float fltYGrid, BOOL bBothSides)
 {
 	float A = fltCornerX;
 	float B = fltCornerY;
@@ -674,6 +674,14 @@ osg::Geometry VORTEX_PORT *CreatePlaneGeometry(float fltCornerX, float fltCorner
 	v->push_back( osg::Vec3( C, D, 0 ) );
 	v->push_back( osg::Vec3( A, D, 0 ) );	
 
+	if(bBothSides)
+	{
+		v->push_back( osg::Vec3( C, B, 0 ) );
+		v->push_back( osg::Vec3( A, B, 0 ) );
+		v->push_back( osg::Vec3( A, D, 0 ) );
+		v->push_back( osg::Vec3( C, D, 0 ) );	
+	}
+
 	// Create a Vec2Array of texture coordinates for texture unit 0
 	// and attach it to the geom.
 	osg::ref_ptr<osg::Vec2Array> tc = new osg::Vec2Array;
@@ -682,6 +690,14 @@ osg::Geometry VORTEX_PORT *CreatePlaneGeometry(float fltCornerX, float fltCorner
 	tc->push_back( osg::Vec2( fltXGrid, 0.f ) );
 	tc->push_back( osg::Vec2( fltXGrid, fltYGrid ) );
 	tc->push_back( osg::Vec2( 0.f, fltYGrid ) );
+
+	if(bBothSides)
+	{
+		tc->push_back( osg::Vec2( 0.f, 0.f ) );
+		tc->push_back( osg::Vec2( fltXGrid, 0.f ) );
+		tc->push_back( osg::Vec2( fltXGrid, fltYGrid ) );
+		tc->push_back( osg::Vec2( 0.f, fltYGrid ) );
+	}
 
 	// Create an array for the single normal.
 	osg::ref_ptr<osg::Vec3Array> n = new osg::Vec3Array;
@@ -1074,7 +1090,7 @@ osg::Node VORTEX_PORT *CreateHeightField(std::string heightFile, float fltSegWid
     return geode;
 }
 
-Vx::VxHeightField VORTEX_PORT *CreateVxHeightField(osg::HeightField *osgHeightField, float fltSegWidth, float fltSegLength)
+Vx::VxHeightField VORTEX_PORT *CreateVxHeightField(osg::HeightField *osgHeightField, float fltSegWidth, float fltSegLength, float fltBaseHeight, float fltXCenter, float fltYCenter)
 {
 	Vx::VxHeightField *vxHeightField = new Vx::VxHeightField();
 
@@ -1085,10 +1101,13 @@ Vx::VxHeightField VORTEX_PORT *CreateVxHeightField(osg::HeightField *osgHeightFi
 	int iRows = osgHeightField->getNumRows();
 	for(int iRow=0; iRow<iRows; iRow++)
 		for(int iCol=0; iCol<iCols; iCol++)
-			vHeights.push_back(osgHeightField->getHeight(iCol, iRow));
+			vHeights.push_back(osgHeightField->getHeight(iCol, iRow) + fltBaseHeight);
 
 	int iSize = vHeights.size();
+	osg::Vec3 vCenter(fltXCenter, fltYCenter, 0);
 	osg::Vec3 vOrigin = osgHeightField->getOrigin();
+	vOrigin += vCenter;
+
 	vxHeightField->build((iCols-1), (iRows-1), fltSegWidth, fltSegLength, vOrigin.x(), vOrigin.y(), vHeights);
 
 	return vxHeightField;

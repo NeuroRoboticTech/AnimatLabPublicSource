@@ -61,6 +61,17 @@ Namespace DataObjects.Physical.Bodies
             Return oNewNode
         End Function
 
+        Public Overrides Sub SetupPartTypesExclusions()
+            Util.Application.AddPartTypeExclusion(GetType(Terrain), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(Plane), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(FluidPlane), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(LinearHillMuscle), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(LinearHillStretchReceptor), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(Mouth), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(OdorSensor), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(Stomach), Me.GetType)
+        End Sub
+
     End Class
 
 

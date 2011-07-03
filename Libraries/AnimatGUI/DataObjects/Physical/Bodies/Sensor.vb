@@ -71,6 +71,18 @@ Namespace DataObjects.Physical.Bodies
             m_snRadius.ActualValue = 0.1 * Util.Environment.DistanceUnitValue
         End Sub
 
+        Public Overrides Sub SetupPartTypesExclusions()
+            Util.Application.AddPartTypeExclusion(GetType(Terrain), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(Plane), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(FluidPlane), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(LinearHillMuscle), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(LinearHillStretchReceptor), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(Mouth), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(OdorSensor), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(Stomach), Me.GetType)
+            Util.Application.AddPartTypeExclusion(GetType(Spring), Me.GetType)
+        End Sub
+
         Public Overrides Function SwapBodyPartList() As Collections.BodyParts
 
             Dim aryList As Collections.BodyParts = New Collections.BodyParts(Nothing)

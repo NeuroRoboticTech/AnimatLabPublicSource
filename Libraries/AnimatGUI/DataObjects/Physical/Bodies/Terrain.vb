@@ -233,6 +233,7 @@ Namespace DataObjects.Physical.Bodies
             If propTable.Properties.Contains("Mesh File") Then propTable.Properties.Remove("Mesh File")
             If propTable.Properties.Contains("Mesh Type") Then propTable.Properties.Remove("Mesh Type")
             If propTable.Properties.Contains("Convex Mesh File") Then propTable.Properties.Remove("Convex Mesh File")
+            If propTable.Properties.Contains("Rotation") Then propTable.Properties.Remove("Rotation")
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Terrain File", m_strMeshFile.GetType(), "MeshFile", _
                           "Part Properties", "Sets the terrain file to use for this body part.", _
@@ -255,8 +256,28 @@ Namespace DataObjects.Physical.Bodies
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
         End Sub
 
+        Public Overrides Sub SetupPartTypesExclusions()
+            'A terrain can only be added to a terrain or plane type.
+            For Each bpBody As BodyPart In Util.Application.BodyPartTypes
+                If Not (TypeOf bpBody Is Terrain OrElse TypeOf bpBody Is Plane) Then
+                    Util.Application.AddPartTypeExclusion(bpBody.GetType, Me.GetType)
+                End If
+            Next
+
+            Util.Application.AddPartTypeExclusion(Me.GetType, Me.GetType)
+            Util.Application.AddPartTypeExclusion(Me.GetType, GetType(Plane))
+        End Sub
+
+        Protected Overrides Sub OrientNewPart(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d)
+            'Don't orient plane parts. They are setup already.
+        End Sub
+
         Public Overrides Sub BeforeAddBody()
             Try
+                If Me.IsRoot Then
+                    Me.Rotation.X.ActualValue = -90
+                End If
+
                 Dim frmTerrain As New Forms.BodyPlan.SelectTerrain
 
                 frmTerrain.txtSegmentWidth.Text = Me.SegmentWidth.ActualValue.ToString

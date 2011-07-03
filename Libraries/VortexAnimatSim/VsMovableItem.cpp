@@ -39,14 +39,14 @@ VsMovableItem::VsMovableItem()
 
 VsMovableItem::~VsMovableItem()
 {
-
-try
-{
-	DeleteGraphics();
-	DeletePhysics();
-}
-catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of VsMovableItem\r\n", "", -1, FALSE, TRUE);}
+//
+//try
+//{
+//	DeleteGraphics();
+//	DeletePhysics();
+//}
+//catch(...)
+//{Std_TraceMsg(0, "Caught Error in desctructor of VsMovableItem\r\n", "", -1, FALSE, TRUE);}
 }
 
 VsSimulator *VsMovableItem::GetVsSimulator()
@@ -268,7 +268,7 @@ void VsMovableItem::SetupGraphics()
 		m_osgParent->addChild(m_osgRoot.get());
 
 		//Set the position with the world coordinates.
-		UpdateAbsolutePosition();
+		Physics_UpdateAbsolutePosition();
 
 		//We need to set the UserData on the OSG side so we can do picking.
 		//We need to use a node visitor to set the user data for all drawable nodes in all geodes for the group.
@@ -346,6 +346,12 @@ osg::Matrix VsMovableItem::GetOSGWorldMatrix(BOOL bUpdate)
 		UpdateWorldMatrix();
 
 	return m_osgWorldMatrix;
+}
+
+CStdFPoint VsMovableItem::Physics_CalculateLocalMTForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ)
+{
+	CStdFPoint vPos;
+	return vPos;
 }
 
 /*
@@ -445,9 +451,7 @@ void VsMovableItem::UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT)
 	CStdFPoint vLocal(vL.x(), vL.y(), vL.z());
 	vLocal.ClearNearZero();
 	m_lpThisMI->Position(vLocal, FALSE, TRUE, FALSE);
-	
-	UpdateAbsolutePosition();
-	
+		
 	//Now lets get the euler angle rotation
 	Vx::VxReal44 vxTM;
 	VxOSG::copyOsgMatrix_to_VxReal44(m_osgLocalMatrix, vxTM);
@@ -476,11 +480,11 @@ void VsMovableItem::Physics_UpdateMatrix()
 		if(m_osgDragger.valid())
 			m_osgDragger->SetupMatrix();
 
-		UpdateAbsolutePosition();
+		Physics_UpdateAbsolutePosition();
 	}
 }
 
-void VsMovableItem::UpdateAbsolutePosition()
+void VsMovableItem::Physics_UpdateAbsolutePosition()
 {
 	//If we are here then we did not have a physics component, just and OSG one.
 	CStdFPoint vPos = VsMovableItem::GetOSGWorldCoords();
@@ -622,7 +626,7 @@ void VsMovableItem::SetTexture(string strTexture)
 void VsMovableItem::Physics_CollectData()
 {
 	//If we are here then we did not have a physics component, just and OSG one.
-	UpdateAbsolutePosition();
+	Physics_UpdateAbsolutePosition();
 
 	//TODO: Get Rotation
 	//m_lpThis->ReportRotation(QuaterionToEuler(m_osgLocalMatrix.getRotate());
@@ -635,7 +639,7 @@ void VsMovableItem::Physics_ResetSimulation()
 		BuildLocalMatrix();
 
 		//Set the position with the world coordinates.
-		UpdateAbsolutePosition();
+		Physics_UpdateAbsolutePosition();
 		m_lpThisMI->ReportRotation(m_lpThisMI->Rotation());
 	}
 }

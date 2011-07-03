@@ -131,6 +131,7 @@ namespace AnimatSim
 			virtual void ReportWorldPosition(CStdFPoint &oPoint);
 			virtual void ReportWorldPosition(float fltX, float fltY, float fltZ);
 
+			virtual CStdFPoint UpdateAbsolutePosition();
 			virtual CStdFPoint GetCurrentPosition();
 
 			virtual CStdFPoint Rotation();
@@ -218,6 +219,7 @@ namespace AnimatSim
 			virtual void Selected(BOOL bValue, BOOL bSelectMultiple); 
 			virtual void VisualSelectionModeChanged(int iNewMode);
 			virtual void OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm);
+			virtual CStdFPoint CalculateLocalMTForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ);
 
 			virtual void Load(CStdXml &oXml);
 		};

@@ -43,8 +43,6 @@ namespace AnimatSim
 				virtual BOOL AllowRotateDragY();
 				virtual BOOL AllowRotateDragZ();
 
-				virtual void Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
-
 				virtual CStdFPoint Velocity();
 				virtual void Velocity(CStdFPoint &oPoint, BOOL bUseScaling = TRUE);
 				virtual void Velocity(float fltX, float fltY, float fltZ, BOOL bUseScaling = TRUE);

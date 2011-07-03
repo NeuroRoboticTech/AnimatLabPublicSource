@@ -326,7 +326,7 @@ void Joint::Load(CStdXml &oXml)
 		THROW_PARAM_ERROR(Al_Err_lChildNotDefined, Al_Err_strChildNotDefined, "JointID", m_strName);
 
 	//Reset the absolute position differently for a joint. It is derived from the child object, not the parent.
-	AbsolutePosition(m_lpChild->AbsolutePosition() + m_oPosition);
+	//AbsolutePosition(m_lpChild->AbsolutePosition() + m_oPosition);
 
 	EnableLimits(oXml.GetChildBool("EnableLimits", m_bEnableLimits));
 

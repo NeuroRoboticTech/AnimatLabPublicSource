@@ -881,6 +881,11 @@ Namespace Forms
         Protected m_frmReceptiveFieldGain As Forms.ReceptiveFieldGain
         Protected m_frmReceptiveFieldCurrent As Forms.ReceptiveFieldCurrent
 
+        'This keeps track of which part type pairs are exculded from being added to each other.
+        'The key is the ParentType_ChildType. If an entry is found in the hashtable for that pair
+        ' then that child cannot be added to that parent type.
+        Protected m_aryPartTypeExclusions As New ArrayList
+
         'Protected m_ipToolPanel As New IconPanel
 
         'Protected m_ptSimWindowLocation As System.Drawing.Point
@@ -1755,6 +1760,8 @@ Namespace Forms
 
                 CreateBehavioralPanels()
 
+                SetupPartsExclusionsList()
+
                 Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Finished cataloging plugin modules")
 
             Catch ex As System.Exception
@@ -1796,6 +1803,13 @@ Namespace Forms
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+        End Sub
+
+        Protected Overridable Sub SetupPartsExclusionsList()
+
+            For Each doPart As DataObjects.Physical.BodyPart In m_aryBodyPartTypes
+                doPart.SetupPartTypesExclusions()
+            Next
         End Sub
 
         Protected Overridable Function CreateNode(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.Behavior.Node
@@ -2028,6 +2042,29 @@ Namespace Forms
             End Try
 
         End Sub
+
+        'This adds a parent/child body part relationship that is excluded from being able to happen.
+        Public Overridable Sub AddPartTypeExclusion(ByVal tpParent As System.Type, ByVal tpChild As System.Type)
+            Dim strKey As String = tpParent.ToString & "_" & tpChild.ToString
+
+            If Not m_aryPartTypeExclusions.Contains(strKey) Then
+                m_aryPartTypeExclusions.Add(strKey)
+            End If
+        End Sub
+
+        Public Overridable Sub RemovePartTypeExclusion(ByVal tpParent As System.Type, ByVal tpChild As System.Type)
+            Dim strKey As String = tpParent.ToString & "_" & tpChild.ToString
+
+            If m_aryPartTypeExclusions.Contains(strKey) Then
+                m_aryPartTypeExclusions.Remove(strKey)
+            End If
+        End Sub
+
+        'This checks if a parent/child body part relationship is possible or not.
+        Public Overridable Overloads Function CanAddPartAsChild(ByVal tpParent As System.Type, ByVal tpChild As System.Type) As Boolean
+            Dim strKey As String = tpParent.ToString & "_" & tpChild.ToString
+            Return Not m_aryPartTypeExclusions.Contains(strKey)
+        End Function
 
 #End Region
 
@@ -3653,7 +3690,7 @@ Namespace Forms
                 frmNewProject.txtProjectName.Text = "NewProject"
                 If frmNewProject.ShowDialog = DialogResult.OK Then
                     m_doSimulation = New DataObjects.Simulation(Me.FormHelper)
-                    Util.Application.ProjectPath = frmNewProject.txtLocation.Text & "\" & frmNewProject.txtProjectName.Text
+                    Util.Application.ProjectPath = frmNewProject.txtLocation.Text & "\" & frmNewProject.txtProjectName.Text & "\"
                     Util.Application.ProjectName = frmNewProject.txtProjectName.Text
                     Util.Application.ProjectFile = Util.Application.ProjectName & ".aproj"
                     Util.Application.SimulationFile = Util.Application.ProjectName & ".asim"

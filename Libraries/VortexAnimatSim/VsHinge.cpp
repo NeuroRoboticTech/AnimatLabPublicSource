@@ -64,6 +64,13 @@ VsHinge::VsHinge()
 VsHinge::~VsHinge()
 {
 	//ConstraintLimits are deleted in the base objects.
+	try
+	{
+		DeleteGraphics();
+		DeletePhysics();
+	}
+	catch(...)
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsHinge\r\n", "", -1, FALSE, TRUE);}
 }
 
 void VsHinge::EnableLimits(BOOL bVal)
@@ -180,7 +187,7 @@ void VsHinge::SetupGraphics()
 		m_osgParent->addChild(m_osgRoot.get());
 
 		//Set the position with the world coordinates.
-		UpdateAbsolutePosition();
+		Physics_UpdateAbsolutePosition();
 
 		//We need to set the UserData on the OSG side so we can do picking.
 		//We need to use a node visitor to set the user data for all drawable nodes in all geodes for the group.

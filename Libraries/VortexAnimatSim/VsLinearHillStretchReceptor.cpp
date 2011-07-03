@@ -32,11 +32,13 @@ VsLinearHillStretchReceptor::VsLinearHillStretchReceptor()
 VsLinearHillStretchReceptor::~VsLinearHillStretchReceptor()
 {
 
-try
-{
-}
-catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of VsLinearHillStretchReceptor\r\n", "", -1, FALSE, TRUE);}
+	try
+	{
+		DeleteGraphics();
+		DeletePhysics();
+	}
+	catch(...)
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsLinearHillStretchReceptor\r\n", "", -1, FALSE, TRUE);}
 }
 
 void VsLinearHillStretchReceptor::CreateParts()

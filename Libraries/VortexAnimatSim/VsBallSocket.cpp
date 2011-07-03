@@ -41,6 +41,14 @@ VsBallSocket::VsBallSocket()
 **/
 VsBallSocket::~VsBallSocket()
 {
+
+	try
+	{
+		DeleteGraphics();
+		DeletePhysics();
+	}
+	catch(...)
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsBallSocket\r\n", "", -1, FALSE, TRUE);}
 }
 
 void VsBallSocket::DeletePhysics()

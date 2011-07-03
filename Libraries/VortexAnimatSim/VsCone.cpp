@@ -32,7 +32,13 @@ VsCone::VsCone()
 
 VsCone::~VsCone()
 {
-
+	try
+	{
+		DeleteGraphics();
+		DeletePhysics();
+	}
+	catch(...)
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsCone\r\n", "", -1, FALSE, TRUE);}
 }
 
 void VsCone::CreateGraphicsGeometry()

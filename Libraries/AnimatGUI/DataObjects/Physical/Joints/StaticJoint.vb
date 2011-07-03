@@ -43,7 +43,7 @@ Namespace DataObjects.Physical.Joints
 
         Public Overrides ReadOnly Property PartType() As System.Type
             Get
-                Return GetType(AnimatGUI.DataObjects.Physical.Joints.BallSocket)
+                Return GetType(AnimatGUI.DataObjects.Physical.Joints.StaticJoint)
             End Get
         End Property
 

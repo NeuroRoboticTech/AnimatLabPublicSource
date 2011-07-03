@@ -31,6 +31,7 @@ namespace VortexAnimatSim
 
 			virtual void SetThisPointers();
 			virtual void SetupPhysics();
+			virtual void DeletePhysics() {};
 			virtual void UpdatePositionAndRotationFromMatrix();
 
 		public:

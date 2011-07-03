@@ -225,8 +225,6 @@ void Plane::LengthSegments(int iVal)
 	Resize();
 }
 
-BOOL Plane::AllowMouseManipulation() {return FALSE;}
-
 BOOL Plane::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
@@ -273,10 +271,6 @@ void Plane::Load(CStdXml &oXml)
 	LengthSegments(oXml.GetChildInt("LengthSegments", m_iLengthSegments));
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
-
-	//Rotation is always (1.57, 0, 0). This rotates it so that the Y axis is up.
-	m_oRotation.Set(-1.57f, 0, 0);
-	m_bFreeze = TRUE;
 }
 
 		}		//Bodies

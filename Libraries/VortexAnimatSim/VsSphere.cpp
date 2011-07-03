@@ -33,7 +33,13 @@ VsSphere::VsSphere()
 
 VsSphere::~VsSphere()
 {
-
+	try
+	{
+		DeleteGraphics();
+		DeletePhysics();
+	}
+	catch(...)
+	{Std_TraceMsg(0, "Caught Error in desctructor of VsSphere/\r\n", "", -1, FALSE, TRUE);}
 }
 
 void VsSphere::CreateGraphicsGeometry()

@@ -379,6 +379,9 @@
 #define Al_Err_lPartTypeNotOdorType -4049
 #define Al_Err_strPartTypeNotOdorType "Specified part was not an OdorType part."
 
+#define Al_Err_lAttempedToReadAbsPosBeforeDefined -4050
+#define Al_Err_strAttempedToReadAbsPosBeforeDefined "An attempt was made to read the absolute position before the simulation object was defined."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 #define PI 3.14159

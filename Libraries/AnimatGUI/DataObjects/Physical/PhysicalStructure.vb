@@ -412,12 +412,6 @@ Namespace DataObjects.Physical
                                         "Coordinates", "Sets the position of this structure.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
 
-            pbNumberBag = Me.Rotation.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Rotation", pbNumberBag.GetType(), "Rotation", _
-                                        "Coordinates", "Sets the rotation of this body part.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
-
-
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Visible", m_bVisible.GetType(), "Visible", _
                                         "Visibility", "Sets whether or not this part is visible in the simulation.", m_bVisible))
 

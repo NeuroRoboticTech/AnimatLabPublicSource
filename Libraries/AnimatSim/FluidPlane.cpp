@@ -147,22 +147,6 @@ BOOL FluidPlane::AllowRotateDragY() {return FALSE;}
 
 BOOL FluidPlane::AllowRotateDragZ() {return FALSE;}
 
-/**
-\brief	Sets the rotation of the rigid body.
-
-\details We do not allow a fluid plane to be rotated.
-
-\author	dcofer
-\date	6/30/2011
-
-\param [in,out]	oPoint  	The point.
-\param	bFireChangeEvent	true to fire change event.
-\param	bUpdateMatrix   	true to update matrix.
-**/
-void FluidPlane::Rotation(CStdFPoint &oPoint, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
-{
-}
-
 BOOL FluidPlane::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
