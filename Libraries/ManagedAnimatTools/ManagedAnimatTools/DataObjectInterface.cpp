@@ -261,5 +261,24 @@ void DataObjectInterface::OrientNewPart(double dblXPos, double dblYPos, double d
 		m_lpMovable->OrientNewPart(dblXPos, dblYPos, dblZPos, dblXNorm, dblYNorm, dblZNorm); 
 }
 
+System::Boolean DataObjectInterface::CalculateLocalPosForWorldPos(double dblXWorldX, double dblWorldY, double dblWorldZ, System::Collections::ArrayList ^aryLocalPos)
+{
+	if(m_lpMovable)
+	{
+		CStdFPoint vPos;
+		
+		if(m_lpMovable->CalculateLocalPosForWorldPos(dblXWorldX, dblWorldY, dblWorldZ, vPos))
+		{
+			aryLocalPos->Clear();
+			aryLocalPos->Add(vPos.x);
+			aryLocalPos->Add(vPos.y);
+			aryLocalPos->Add(vPos.z);
+			return true;
+		}
+	}
+
+	return false;
+}
+
 	}
 }

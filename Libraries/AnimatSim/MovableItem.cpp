@@ -1151,12 +1151,11 @@ void MovableItem::OrientNewPart(float fltXPos, float fltYPos, float fltZPos, flo
 
 \return	The calculated local position for world position.
 **/
-CStdFPoint MovableItem::CalculateLocalMTForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ)
+BOOL MovableItem::CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
 {
-	CStdFPoint vPos;
 	if(m_lpPhysicsMovableItem)
-		vPos = m_lpPhysicsMovableItem->Physics_CalculateLocalMTForWorldPos(fltWorldX, fltWorldY, fltWorldZ);
-	return vPos;
+		return m_lpPhysicsMovableItem->Physics_CalculateLocalPosForWorldPos(fltWorldX, fltWorldY, fltWorldZ, vLocalPos);
+	return FALSE;
 }
 
 #pragma region DataAccesMethods

@@ -219,7 +219,7 @@ namespace AnimatSim
 			virtual void Selected(BOOL bValue, BOOL bSelectMultiple); 
 			virtual void VisualSelectionModeChanged(int iNewMode);
 			virtual void OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm);
-			virtual CStdFPoint CalculateLocalMTForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ);
+			virtual BOOL CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);
 
 			virtual void Load(CStdXml &oXml);
 		};

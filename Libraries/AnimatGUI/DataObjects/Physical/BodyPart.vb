@@ -864,16 +864,18 @@ Namespace DataObjects.Physical
                 If Not m_doParent Is Nothing AndAlso Util.IsTypeOf(m_doParent.GetType, GetType(DataObjects.Physical.BodyPart)) Then
                     Dim bpParent As DataObjects.Physical.BodyPart = DirectCast(m_doParent, DataObjects.Physical.BodyPart)
 
-                    'This code is incorrect and needs to be changed.
-                    m_svLocalPosition.IgnoreChangeValueEvents = True
-                    m_svLocalPosition.X.ActualValue = m_svWorldPosition.X.ActualValue - bpParent.WorldPosition.X.ActualValue
-                    m_svLocalPosition.Y.ActualValue = m_svWorldPosition.Y.ActualValue - bpParent.WorldPosition.Y.ActualValue
-                    m_svLocalPosition.Z.ActualValue = m_svWorldPosition.Z.ActualValue - bpParent.WorldPosition.Z.ActualValue
-                    m_svLocalPosition.IgnoreChangeValueEvents = False
+                    Dim aryLocalPos As New ArrayList
 
-                    Me.SetSimData("Position", m_svLocalPosition.GetSimulationXml("Position"), True)
-                    Util.ProjectProperties.RefreshProperties()
-                    RaiseEvent Moved(Me)
+                    If m_doInterface.CalculateLocalPosForWorldPos(m_svWorldPosition.X.ActualValue, m_svWorldPosition.Y.ActualValue, m_svWorldPosition.Z.ActualValue, aryLocalPos) Then
+                        m_svLocalPosition.CopyData(CDbl(aryLocalPos(0)), CDbl(aryLocalPos(1)), CDbl(aryLocalPos(2)), True)
+                        Me.SetSimData("Position", m_svLocalPosition.GetSimulationXml("Position"), True)
+                        Util.ProjectProperties.RefreshProperties()
+                        RaiseEvent Moved(Me)
+                    Else
+                        Util.ProjectProperties.RefreshProperties()
+                        Throw New System.Exception("An error occured while attempting to set the local position using the specified world coordinates.")
+                    End If
+
                 ElseIf Not m_doParent Is Nothing AndAlso Util.IsTypeOf(m_doParent.GetType, GetType(DataObjects.Physical.PhysicalStructure), False) Then
                     Dim stParent As DataObjects.Physical.PhysicalStructure = DirectCast(m_doParent, DataObjects.Physical.PhysicalStructure)
 

@@ -112,7 +112,7 @@ namespace VortexAnimatSim
 			virtual float *Physics_GetDataPointer(string strDataType);
 			virtual void Physics_OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm);
 			virtual void Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos) {};
-			virtual CStdFPoint Physics_CalculateLocalMTForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ);
+			virtual BOOL Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);
 
 			virtual void SetTexture(string strTexture);
 			virtual void SetCulling();

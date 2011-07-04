@@ -1,10 +1,12 @@
 #pragma once
 
+#using <mscorlib.dll>
 using namespace System;
 using namespace System::ComponentModel;
 using namespace System::Collections;
 using namespace System::Diagnostics;
 using namespace System::Runtime::InteropServices;
+using namespace System::Collections;
 
 namespace AnimatGUI
 {
@@ -115,6 +117,7 @@ public:
 
 	float GetBoundingBoxValue(int iIndex);
 	void OrientNewPart(double dblXPos, double dblYPos, double dblZPos, double dblXNorm, double dblYNorm, double dblZNorm);
+	System::Boolean CalculateLocalPosForWorldPos(double dblXWorldX, double dblWorldY, double dblWorldZ, System::Collections::ArrayList ^aryLocalPos);
 
 #pragma endregion
 
