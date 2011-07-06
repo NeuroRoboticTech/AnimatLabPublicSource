@@ -468,8 +468,11 @@ void VsRigidBody::DeletePhysics()
 {
 	if(m_vxSensor)
 	{
-		GetVsSimulator()->Universe()->removeEntity(m_vxSensor);
-		delete m_vxSensor;
+		if(GetVsSimulator() && GetVsSimulator()->Universe())
+		{
+			GetVsSimulator()->Universe()->removeEntity(m_vxSensor);
+			delete m_vxSensor;
+		}
 
 		m_vxSensor = NULL;
 		m_vxPart = NULL;

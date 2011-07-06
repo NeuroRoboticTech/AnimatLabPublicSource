@@ -1641,6 +1641,10 @@ void Simulator::Reset()
 	m_fltAngularKineticLoss = 1e6f;
 	m_bForceFastMoving = TRUE;
 
+
+	if(m_lpWinMgr)
+		m_lpWinMgr->Close();
+
 	if(m_lpAnimatClassFactory) {delete m_lpAnimatClassFactory; m_lpAnimatClassFactory = NULL;}
 	m_aryOrganisms.RemoveAll();
 	m_aryStructures.RemoveAll();
@@ -1698,9 +1702,6 @@ void Simulator::Reset()
 		delete m_lpAvi;
 		m_lpAvi = NULL;
 	}
-
-	if(m_lpWinMgr)
-		m_lpWinMgr->Close();
 
 	if(m_lpSimCallback)
 	{
@@ -1828,25 +1829,6 @@ void Simulator::Step()
 	m_fltTime += m_fltTimeStep;
 }
 
-/*! \brief 
-   Steps the entire simulation forward by one time slice.
-      
-	 \return
-	 No return value.
-
-	 \remarks
-	 This method steps the entire simulation forward by one time slice. It goes through
-	 and calls StepSimulation for every structure/organism object, which in turn calls
-	 StepSimulation for each rigid body and joint of each of those objects. So you need 
-	 to be VERY careful to keep all code within the StepSimulation methods short, sweet, 
-	 and very fast. They are in the main processing loop and even a small increase in the
-	 amount of processing time that occurrs within this loop will lead to major impacts on
-	 the ultimate performance of the system.
-
-	 \sa
-	 Structure::StepSimulation, Body::StepSimulation, Joint::StepSimulation
-*/
-
 /**
 \brief	Steps the entire simulation forward by one physics integration time step.
 
@@ -1867,6 +1849,71 @@ void Simulator::StepSimulation()
 {
 	for(m_iPhysicsStepCount=1; m_iPhysicsStepCount<=m_iPhysicsStepInterval; m_iPhysicsStepCount++)
 		Step();
+}
+
+/**
+\brief	Called at the beginning of the Simulate method.
+
+\author	dcofer
+\date	7/5/2011
+**/
+void Simulator::SimulateBegin()
+{
+}
+
+/**
+\brief	Called at the end of the Simulate method.
+
+\author	dcofer
+\date	7/5/2011
+**/
+void Simulator::SimulateEnd()
+{
+}
+
+/**
+\brief	Process the an entire step of the simulation. This includes the simulation portion, video and calculating timing.
+
+\author	dcofer
+\date	7/5/2011
+**/
+void Simulator::ProcessSimulationStep()
+{
+	try
+	{
+		//If we are blocking the simulation stepping code for multi-threaded access then don't do this code..
+		if(!CheckSimulationBlock())
+		{
+			StepSimulation();
+			StepVideoFrame();
+ 
+			CheckEndSimulationTime();
+		}
+	}
+	catch(CStdErrorInfo oError)
+	{
+		//A critical simulation error has occurred if we catch an exception here. We need to shut the app down.
+		string strError = "An error occurred while stepping the simulation.\nError: " + oError.m_strError;
+		HandleNonCriticalError(strError);
+	}
+	catch(...)
+	{
+		//A critical simulation error has occurred if we catch an exception here. We need to shut the app down.
+		HandleCriticalError(Al_Err_strCriticalSimError);
+	}
+}
+
+void Simulator::Simulate()
+{
+	SimulateBegin();
+
+	do 
+    {
+		ProcessSimulationStep();
+	} 
+    while (!m_bStopSimulation && !m_bForceSimulationStop);
+
+	SimulateEnd();
 }
 
 /**
@@ -1946,6 +1993,21 @@ void Simulator::SimStopping()
 		if(lpBase != this)
 			lpBase->SimStopping();
 	}
+}
+
+void Simulator::HandleCriticalError(string strError)
+{
+	this->ShutdownSimulation();
+	if(m_lpSimCallback)
+		m_lpSimCallback->HandleCriticalError(Al_Err_strCriticalSimError);
+
+}
+
+void Simulator::HandleNonCriticalError(string strError)
+{
+	this->ResetSimulation();
+	if(m_lpSimCallback)
+		m_lpSimCallback->HandleCriticalError(strError);
 }
 
 /**

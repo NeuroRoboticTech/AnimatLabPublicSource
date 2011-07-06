@@ -13,6 +13,7 @@ namespace AnimatGUI
 	{
  
 		public delegate void VoidHandler();
+		public delegate void ErrorHandler(System::String ^strError);
 		public delegate void CreateSimHandler(System::String ^%strXml);
 
 		/// <summary> 
@@ -30,8 +31,12 @@ namespace AnimatGUI
 			event CreateSimHandler^ OnSimulationCreate;
 			event VoidHandler^ SimulationRunning;
 			event VoidHandler^ NeedToStopSimulation;
+			event ErrorHandler^ HandleNonCriticalError;
+			event ErrorHandler^ HandleCriticalError;
 
 			void FireNeedToStopSimulationEvent();
+			void FireHandleNonCriticalErrorEvent(System::String ^strError);
+			void FireHandleCriticalErrorEvent(System::String ^strError);
 
 #pragma endregion
 

@@ -49,6 +49,17 @@ public:
 	\return	string error message.
 	**/
 	virtual const char* what() const throw() {return m_strError.c_str();};
+
+	/**
+	\brief	Gets the stack trace.
+	
+	\author	dcofer
+	\date	7/5/2011
+	
+	\return	stack trace string of the error.
+	**/
+	virtual string StackTrace();
+
 };
 
 }				//StdUtils

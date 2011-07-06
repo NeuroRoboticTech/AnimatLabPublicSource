@@ -79,8 +79,12 @@ void VsSpring::DeletePhysics()
 	if(!m_vxSpring)
 		return;
 
-	GetVsSimulator()->Universe()->removeConstraint(m_vxSpring);
-	delete m_vxSpring;
+	if(GetVsSimulator() && GetVsSimulator()->Universe())
+	{
+		GetVsSimulator()->Universe()->removeConstraint(m_vxSpring);
+		delete m_vxSpring;
+	}
+
 	m_vxSpring = NULL;
 }
 

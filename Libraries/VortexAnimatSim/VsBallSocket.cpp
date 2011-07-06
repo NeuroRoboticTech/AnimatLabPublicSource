@@ -56,12 +56,17 @@ void VsBallSocket::DeletePhysics()
 	if(!m_vxSocket)
 		return;
 
-	GetVsSimulator()->Universe()->removeConstraint(m_vxSocket);
-	delete m_vxSocket;
+	if(GetVsSimulator() && GetVsSimulator()->Universe())
+	{
+		GetVsSimulator()->Universe()->removeConstraint(m_vxSocket);
+		delete m_vxSocket;
+
+		if(m_lpChild && m_lpParent)
+			m_lpChild->EnableCollision(m_lpParent);
+	}
+
 	m_vxSocket = NULL;
 	m_vxJoint = NULL;
-
-	m_lpChild->EnableCollision(m_lpParent);
 }
 
 void VsBallSocket::SetupPhysics()

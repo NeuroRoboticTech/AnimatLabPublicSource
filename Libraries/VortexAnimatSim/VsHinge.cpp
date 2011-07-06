@@ -201,12 +201,17 @@ void VsHinge::DeletePhysics()
 	if(!m_vxHinge)
 		return;
 
-	GetVsSimulator()->Universe()->removeConstraint(m_vxHinge);
-	delete m_vxHinge;
+	if(GetVsSimulator() && GetVsSimulator()->Universe())
+	{
+		GetVsSimulator()->Universe()->removeConstraint(m_vxHinge);
+		delete m_vxHinge;
+		
+		if(m_lpChild && m_lpParent)
+			m_lpChild->EnableCollision(m_lpParent);
+	}
+
 	m_vxHinge = NULL;
 	m_vxJoint = NULL;
-
-	m_lpChild->EnableCollision(m_lpParent);
 }
 
 void VsHinge::SetupPhysics()

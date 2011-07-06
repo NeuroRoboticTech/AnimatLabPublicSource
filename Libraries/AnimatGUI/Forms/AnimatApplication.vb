@@ -893,6 +893,7 @@ Namespace Forms
 
         Protected m_bProjectIsOpen As Boolean = False
 
+        Protected m_timerShutdown As System.Timers.Timer
 
 #Region " Preferences "
 
@@ -1330,6 +1331,8 @@ Namespace Forms
                 AddHandler m_doSimInterface.OnSimulationCreate, AddressOf Me.OnCreateSimulation
                 AddHandler m_doSimInterface.SimulationRunning, AddressOf Me.OnSimulationRunning
                 AddHandler m_doSimInterface.NeedToStopSimulation, AddressOf Me.OnNeedToStopSimulation
+                AddHandler m_doSimInterface.HandleCriticalError, AddressOf Me.OnHandleCriticalError
+                AddHandler m_doSimInterface.HandleNonCriticalError, AddressOf Me.OnHandleNonCriticalError
 
                 AddHandler Me.SimulationStarting, AddressOf Me.OnSimulationStarting
                 AddHandler Me.SimulationResuming, AddressOf Me.OnSimulationResuming
@@ -3859,6 +3862,95 @@ Namespace Forms
             Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+        End Sub
+
+        Private Delegate Sub OnHandleErrorHandler(ByVal strError As String)
+
+        ''' <summary> Executes the handle critical error action.</summary>
+        '''
+        ''' <remarks> If a critical error occurs then it first shows the exception to the user and starts a force shutoff timer.
+        ''' 		  When the timer is up it then closes the app. I had to add a timer here because of the way the mutli-threading
+        ''' 		  is working. If I attempted to close the app within this method call it locked everything up because it was the
+        ''' 		  sim that was making this call, and the app needs the sim to not be blocked in order to shut down.</remarks>
+        '''
+        ''' <param name="strError"> The string error.</param>
+        '''
+        Protected Overridable Sub OnHandleCriticalError(ByVal strError As String)
+            Try
+                If Me.InvokeRequired Then
+                    Me.Invoke(New OnHandleErrorHandler(AddressOf OnHandleCriticalError), New Object() {strError})
+                    Return
+                End If
+
+                Dim exInfo As New System.Exception(strError)
+                Util.DisplayError(exInfo)
+
+                m_timerShutdown = New System.Timers.Timer
+                m_timerShutdown.Interval = 1000
+                m_timerShutdown.Enabled = True
+                AddHandler m_timerShutdown.Elapsed, AddressOf Me.OnShutDownTimer
+
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Delegate Sub OnHandleShutdown()
+
+        ''' <summary> Executes the shut down timer action.</summary>
+        '''
+        ''' <remarks> This is only called from the shutdown timer from the OnHandleCriticalError event method. It shuts the app down.</remarks>
+        '''
+        ''' <param name="sender"> Source of the event.</param>
+        ''' <param name="eProps"> Event information to send to registered event handlers.</param>
+        Protected Overridable Sub OnShutDownTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+            Try
+                m_timerShutdown.Enabled = False
+
+                If Me.InvokeRequired Then
+                    Me.Invoke(New OnHandleShutdown(AddressOf HandleForceShutdown), Nothing)
+                    Return
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        ''' <summary> Forces the app to shutdown. Called from the OnShutDownTimer event.</summary>
+        '''
+        ''' <remarks> dcofer, 7/6/2011.</remarks>
+        Protected Overridable Sub HandleForceShutdown()
+            Try
+                m_timerShutdown.Enabled = False
+                Me.Close()
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        ''' <summary> Executes the handle non critical error action.</summary>
+        '''
+        ''' <remarks> This displays the error to the user and raises the SimulationStopped event to notify the other
+        ''' 		  components in the app that the sim has stopped running.</remarks>
+        '''
+        ''' <param name="strError"> The string error.</param>
+        Protected Overridable Sub OnHandleNonCriticalError(ByVal strError As String)
+            Try
+                If Me.InvokeRequired Then
+                    Me.Invoke(New OnHandleErrorHandler(AddressOf OnHandleNonCriticalError), New Object() {strError})
+                    Return
+                End If
+
+                Dim exInfo As New System.Exception(strError)
+                Util.DisplayError(exInfo)
+
+                RaiseEvent SimulationStopped()
+
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
         End Sub
 
         ''' \brief  Called when the simulation starting event is called.

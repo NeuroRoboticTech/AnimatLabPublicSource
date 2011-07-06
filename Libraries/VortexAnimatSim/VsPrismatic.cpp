@@ -161,12 +161,17 @@ void VsPrismatic::DeletePhysics()
 	if(!m_vxPrismatic)
 		return;
 
-	GetVsSimulator()->Universe()->removeConstraint(m_vxPrismatic);
-	delete m_vxPrismatic;
+	if(GetVsSimulator() && GetVsSimulator()->Universe())
+	{
+		GetVsSimulator()->Universe()->removeConstraint(m_vxPrismatic);
+		delete m_vxPrismatic;
+
+		if(m_lpChild && m_lpParent)
+			m_lpChild->EnableCollision(m_lpParent);
+	}
+
 	m_vxPrismatic = NULL;
 	m_vxJoint = NULL;
-
-	m_lpChild->EnableCollision(m_lpParent);
 }
 
 void VsPrismatic::SetupPhysics()

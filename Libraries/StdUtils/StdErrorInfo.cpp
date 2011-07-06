@@ -84,4 +84,14 @@ string CStdErrorInfo::Log()
 	return strText;
 }
 
+string CStdErrorInfo::StackTrace()
+{
+	string strOut = "Source file: " + m_strSourceFile + "\r\nSource Line: " + STR(m_lSourceLine) + "\r\nStack Trace: \r\n";
+	int iCount = m_aryCallChain.GetSize();
+	for(int iIdx=0; iIdx<iCount; iIdx++)
+		strOut += m_aryCallChain[iIdx];
+
+	return strOut;
+}
+
 }				//StdUtils

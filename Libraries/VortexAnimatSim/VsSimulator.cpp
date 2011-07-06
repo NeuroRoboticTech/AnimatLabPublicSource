@@ -32,7 +32,6 @@ VsSimulator::VsSimulator()
 {
 	m_uUniverse = NULL;
 	m_grpScene = NULL;	
-	m_lTimer = 0;
 	m_vsWinMgr = NULL;
 	m_iLastFrame = osg::Timer::instance()->tick();
 	m_iCurrentFrame = osg::Timer::instance()->tick();
@@ -50,6 +49,10 @@ VsSimulator::~VsSimulator()
 
 try
 {
+	//Set this to NULL so all of the DeletePhysics calls will not try and remove
+	//entities from the universe when shutting down.
+	m_uUniverse = NULL;
+
 	Reset();
 }
 catch(...)
@@ -387,17 +390,26 @@ void VsSimulator::Initialize(int argc, const char **argv)
 
 void VsSimulator::StepSimulation()
 {
-	//If we are blocking the simulation stepping code for multi-threaded access then exit here.
-	if(CheckSimulationBlock())
-		return;
-
-	//step the frame and update the windows
-	if (!m_bPaused)	
+	try
 	{
-		Simulator::StepSimulation();
-		m_vxFrame->step();
-	}
+		//step the frame and update the windows
+		if (!m_bPaused)	
+		{
+			Simulator::StepSimulation();
+			m_vxFrame->step();
+		}
 
+	}
+	catch(CStdErrorInfo oError)
+	{
+		string strError = "An error occurred while step the simulation.\nError: " + oError.m_strError;
+		HandleNonCriticalError(strError);
+	}
+	//Dont catch other errors here. Let them bubble up as critical errors in the ProcessStepSimulation method.
+}
+
+void VsSimulator::StepVideoFrame()
+{
 	//Get the current frame time
 	//To control the frame rate we need to only update the graphics after a given period of time.
 	//until that time we need to be free to run physics/neural simulation as fast as possible between frames.
@@ -414,20 +426,10 @@ void VsSimulator::StepSimulation()
 		float fltRemains = m_fltFrameStep - m_fltFrameDt;
 		OpenThreads::Thread::microSleep((unsigned long)(fltRemains*1000000.0));
 	}
-
-	CheckEndSimulationTime();
 }
 
-void VsSimulator::Simulate()
+void VsSimulator::SimulateEnd()
 {
-	m_lTimer = Std_GetTick();
-
-	do 
-    {
-        StepSimulation();
-    } 
-    while (!m_bStopSimulation && !m_bForceSimulationStop);
-	
 	m_vxFrame->release();
 	m_vxFrame = NULL;
 }

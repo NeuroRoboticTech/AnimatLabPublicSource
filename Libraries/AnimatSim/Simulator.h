@@ -416,12 +416,21 @@ namespace AnimatSim
 			virtual void StepPhysicsEngine();
 			virtual void Step();
 
+			virtual void ProcessSimulationStep();
+			virtual void StepSimulation();
+			virtual void StepVideoFrame() = 0;
+			virtual void SimulateBegin();
+			virtual void SimulateEnd();
+
 			//These functions are called internally when the simulation is about to start up or pause.
 			virtual void SimStarting();
 			virtual void SimPausing();
 			virtual void SimStopping();
 			
 			virtual void GenerateAutoSeed();
+
+			virtual void HandleCriticalError(string strError);
+			virtual void HandleNonCriticalError(string strError);
 
 #pragma endregion
 
@@ -689,18 +698,6 @@ namespace AnimatSim
 			virtual void Initialize(int argc, const char **argv) = 0;
 
 			/**
-			\brief	Step the simulation one complete physics time step.
-
-			\details This will step the simulation by one physics time step, but this may end up 
-			stepping the neural engines multiple times because they typically have smaller integration
-			time steps than the physics engine.
-			
-			\author	dcofer
-			\date	3/28/2011
-			**/
-			virtual void StepSimulation();
-
-			/**
 			\brief	Simulates the system.
 
 			\details This starts the simulation running. This method does not return until the simulation 
@@ -709,7 +706,7 @@ namespace AnimatSim
 			\author	dcofer
 			\date	3/28/2011
 			**/
-			virtual void Simulate() = 0;
+			virtual void Simulate();
 
 			/**
 			\brief	Shuts down the simulation.

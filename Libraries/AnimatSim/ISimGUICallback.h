@@ -27,5 +27,28 @@ namespace AnimatSim
 		\date	3/25/2011
 		**/
 		virtual void NeedToStopSimulation() = 0;
+
+		/**
+		\brief	Handle a non-critical error in the GUI. Non-critical errors are simply reported 
+		and the simulation stopped if it is running.
+		
+		\author	dcofer
+		\date	7/5/2011
+		
+		\param	strError	The error.
+		**/
+		virtual void HandleNonCriticalError(string strError) = 0;
+
+		/**
+		\brief	Handle critical-errors in the GUI. A critical error will report the error and then shut the
+		entire application down.
+		
+		\author	dcofer
+		\date	7/5/2011
+		
+		\param	strError	The error.
+		**/
+		virtual void HandleCriticalError(string strError) = 0;
+
 	};
 }

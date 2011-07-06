@@ -382,6 +382,9 @@
 #define Al_Err_lAttempedToReadAbsPosBeforeDefined -4050
 #define Al_Err_strAttempedToReadAbsPosBeforeDefined "An attempt was made to read the absolute position before the simulation object was defined."
 
+#define Al_Err_lCriticalSimError -4051
+#define Al_Err_strCriticalSimError "A critical simulation error has occurred. The application is being shut down."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 #define PI 3.14159

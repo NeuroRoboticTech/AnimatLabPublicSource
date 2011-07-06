@@ -25,6 +25,19 @@ void SimGUICallback::NeedToStopSimulation()
 	m_doSim->FireNeedToStopSimulationEvent();
 }
 
+void SimGUICallback::HandleNonCriticalError(string strError)
+{
+	System::String ^sError = gcnew String(strError.c_str());
+
+	m_doSim->FireHandleNonCriticalErrorEvent(sError);
+}
+
+void SimGUICallback::HandleCriticalError(string strError)
+{
+	System::String ^sError = gcnew String(strError.c_str());
+
+	m_doSim->FireHandleCriticalErrorEvent(sError);
+}
 
 	}
 }

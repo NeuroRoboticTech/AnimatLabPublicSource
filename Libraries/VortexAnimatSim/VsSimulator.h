@@ -41,8 +41,6 @@ namespace VortexAnimatSim
 		
 		VsIntersectionEvent m_vsIntersect;
 
-		long m_lTimer;
-
 		virtual AnimatSim::Recording::SimulationRecorder *CreateSimulationRecorder();
 		virtual void SnapshotStopFrame();
 
@@ -50,6 +48,10 @@ namespace VortexAnimatSim
 		void InitializeVortex(int argc, const char **argv);
 		void InitializeVortexViewer(int argc, const char **argv);
 		void CreateLights();
+
+		virtual void StepSimulation();
+		virtual void StepVideoFrame();
+		virtual void SimulateEnd();
 
 	public:
 		VsSimulator();
@@ -89,8 +91,6 @@ namespace VortexAnimatSim
 		virtual void ResetSimulation(); //Resets the current simulation back to time 0.0
 
 		virtual void Initialize(int argc, const char **argv);
-		virtual void StepSimulation();
-		virtual void Simulate();
 		virtual void ShutdownSimulation();
 		virtual void ToggleSimulation();
 		virtual void StopSimulation();

@@ -33,7 +33,12 @@ namespace AnimatGUI
 		SimulatorInterface::~SimulatorInterface()
 		{
 			//if(m_iInstanceID>-1) m_arySimulators->RemoveAt(m_iInstanceID);
-			if(m_lpSim) delete m_lpSim;
+			if(m_lpSim) 
+			{
+				delete m_lpSim;
+				m_lpSim = NULL;
+			}
+
 			if (components)
 			{
 				delete components;
@@ -48,6 +53,30 @@ namespace AnimatGUI
 				try
 				{
 					NeedToStopSimulation();
+				}
+				catch(...)
+				{
+					//If we get an error here just eat it.
+				}
+			}
+
+			void SimulatorInterface::FireHandleNonCriticalErrorEvent(System::String ^strError)    
+			{
+				try
+				{
+					HandleNonCriticalError(strError);
+				}
+				catch(...)
+				{
+					//If we get an error here just eat it.
+				}
+			}
+
+			void SimulatorInterface::FireHandleCriticalErrorEvent(System::String ^strError)    
+			{
+				try
+				{
+					HandleCriticalError(strError);
 				}
 				catch(...)
 				{
@@ -1196,11 +1225,11 @@ namespace AnimatGUI
 						//GCHandle::op_Explicit(iHandle).Free(); 
 						iHandle = NULL;
 					}
-					if(m_lpSim) 
-					{
-						delete m_lpSim; 
-						m_lpSim = NULL;
-					}
+					//if(m_lpSim) 
+					//{
+					//	delete m_lpSim; 
+					//	m_lpSim = NULL;
+					//}
 
 					LogMsg(Logger->enumLogLevel::Info, "Finished RunSimulator");
 
@@ -1210,9 +1239,9 @@ namespace AnimatGUI
 				{
 					try
 					{
-						string strError = "An error occurred while attempting to start the simulation.\nError: " + oError.m_strError;
+						string strError = "A critical error occured while running the simulator. The application is shutting down.\nError: " + oError.m_strError;
 						m_strErrorMessage = gcnew String(strError.c_str());
-						//FireSimulationErrorEvent();
+						this->FireHandleCriticalErrorEvent(m_strErrorMessage);
 						if(iHandle)
 						{
 							IntPtr iptr(iHandle);
@@ -1234,11 +1263,7 @@ namespace AnimatGUI
 				{
 					try
 					{
-						//int iError = GetLastError()
-						//m_strErrorMessage = "An unknown error occurred while attempting to start the simulation.";
-						//FireSimulationErrorEvent();
-						//if(iHandle) GCHandle::op_Explicit(iHandle).Free();
-						//if(m_lpSim) delete m_lpSim;
+						this->FireHandleCriticalErrorEvent("A critical error occured while running the simulator. The application is shutting down.");
 						m_lpSim = NULL;
 						m_bSimOpen = false;
 					}
