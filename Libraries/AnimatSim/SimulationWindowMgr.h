@@ -40,12 +40,12 @@ public:
 	virtual BOOL HasContainedWindow();
 
 	/**
-	\brief	Gets the windows.
+	\brief	Gets the windows array.
 	
 	\author	dcofer
 	\date	3/25/2011
 	
-	\return	null if it fails, else.
+	\return	pointer to the array.
 	**/
 	virtual CStdPtrArray<SimulationWindow> *Windows() {return &m_aryWindows;};
 

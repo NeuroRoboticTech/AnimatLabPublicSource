@@ -1,7 +1,7 @@
 /**
-\file	BodyPart.cpp
+\file	Light.cpp
 
-\brief	Implements the body part class. 
+\brief	Implements a light object. 
 **/
 
 #include "stdafx.h"
@@ -14,6 +14,7 @@
 #include "IPhysicsBody.h"
 #include "BoundingBox.h"
 #include "MovableItem.h"
+#include "Light.h"
 #include "BodyPart.h"
 #include "Joint.h"
 #include "ReceptiveField.h"
@@ -41,9 +42,8 @@ namespace AnimatSim
 \author	dcofer
 \date	3/2/2011
 **/
-BodyPart::BodyPart(void)
+Light::Light(void)
 {
-	m_lpPhysicsBody = NULL;
 }
 
 /**
@@ -52,7 +52,7 @@ BodyPart::BodyPart(void)
 \author	dcofer
 \date	3/2/2011
 **/
-BodyPart::~BodyPart(void)
+Light::~Light(void)
 {
 }
 
@@ -64,37 +64,10 @@ BodyPart::~BodyPart(void)
 \author	dcofer
 \date	3/2/2011
 **/
-void BodyPart::UpdateData()
+void Light::UpdateData()
 {
 	if(m_lpPhysicsMovableItem)
 		m_lpPhysicsMovableItem->Physics_CollectData();
-}
-
-/**
-\brief	Gets the physics body interface pointer. This is an interface reference to the Vs version
-of this object. It will allow us to call methods directly in the Vs (OSG) version of the object
-directly without having to overload a bunch of methods in each box, sphere, etc.. 
-
-\author	dcofer
-\date	3/2/2011
-
-\return	Pointer to Vs interface, NULL else. 
-**/
-IPhysicsBody *BodyPart::PhysicsBody() {return m_lpPhysicsBody;}
-
-/**
-\brief	Sets the physics body interface pointer. This is an interface reference to the Vs version
-of this object. It will allow us to call methods directly in the Vs (OSG) version of the object
-directly without having to overload a bunch of methods in each box, sphere, etc.. 
-
-\author	dcofer
-\date	3/2/2011
-
-\param [in,out]	lpBody	The pointer to the phsyics body interface. 
-**/
-void BodyPart::PhysicsBody(IPhysicsBody *lpBody) 
-{
-	m_lpPhysicsBody = lpBody;
 }
 
 /**
@@ -106,7 +79,7 @@ allows that child class to perform any necessary graphics/physics calls for the 
 \author	dcofer
 \date	3/2/2011
 **/
-void BodyPart::Resize() 
+void Light::Resize() 
 {
 	if(m_lpPhysicsMovableItem)
 		m_lpPhysicsMovableItem->Physics_Resize();
@@ -114,9 +87,8 @@ void BodyPart::Resize()
 
 #pragma endregion
 
-void BodyPart::Selected(BOOL bValue, BOOL bSelectMultiple)
+void Light::Selected(BOOL bValue, BOOL bSelectMultiple)
 {
-	Node::Selected(bValue, bSelectMultiple);
 	MovableItem::Selected(bValue, bSelectMultiple);
 }
 
@@ -132,34 +104,28 @@ change the current Alpha value of the objects so the display is correct.
 
 \param	iNewMode	The new VisualSelectionMode. 
 **/
-void BodyPart::VisualSelectionModeChanged(int iNewMode)
+void Light::VisualSelectionModeChanged(int iNewMode)
 {
-	Node::VisualSelectionModeChanged(iNewMode);
 	MovableItem::VisualSelectionModeChanged(iNewMode);
 }
 
-void BodyPart::AddBodyClicked(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ)
-{
-	if(m_lpCallback)
-		m_lpCallback->AddBodyClicked(fltPosX, fltPosY, fltPosZ, fltNormX, fltNormY, fltNormZ);
-}
 
 #pragma region DataAccesMethods
 
-void BodyPart::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+void Light::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
 {
-	Node::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, bVerify);
 	m_lpMovableSim = lpSim;
 }
 
-float *BodyPart::GetDataPointer(string strDataType)
+float *Light::GetDataPointer(string strDataType)
 {
 	return MovableItem::GetDataPointer(strDataType);
 }
 
-BOOL BodyPart::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Light::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
-	if(Node::SetData(strDataType, strValue, FALSE))
+	if(AnimatBase::SetData(strDataType, strValue, FALSE))
 		return true;
 
 	if(MovableItem::SetData(strDataType, strValue, FALSE))
@@ -174,23 +140,13 @@ BOOL BodyPart::SetData(string strDataType, string strValue, BOOL bThrowError)
 
 #pragma endregion
 
-/**
-\brief	Updates the physics position from graphics.
-
-\details This updates the position of the physcis node directly
-from the scenegraph position of the graphics node for this item, and then
-does the same for all child items.
-
-\author	dcofer
-\date	3/26/2011
-**/
-void BodyPart::UpdatePhysicsPosFromGraphics()
+void Light::Create()
 {
 }
 
-void BodyPart::Load(CStdXml &oXml)
+void Light::Load(CStdXml &oXml)
 {
-	Node::Load(oXml);
+	AnimatBase::Load(oXml);
 	MovableItem::Load(oXml);
 }
 

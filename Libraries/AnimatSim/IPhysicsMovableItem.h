@@ -34,6 +34,7 @@ namespace AnimatSim
 			virtual void Physics_OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm) = 0;
 			virtual void Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos) = 0;
 			virtual BOOL Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos) = 0;
+			virtual void Physics_Resize() = 0;		
 		};
 
 	}

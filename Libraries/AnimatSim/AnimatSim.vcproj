@@ -352,6 +352,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Light.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\LightManager.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\LinearHillMuscle.cpp"
 				>
 			</File>
@@ -679,6 +687,14 @@
 			</File>
 			<File
 				RelativePath=".\LengthTensionGain.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Light.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LightManager.h"
 				>
 			</File>
 			<File

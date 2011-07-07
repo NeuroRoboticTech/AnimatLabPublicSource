@@ -38,8 +38,6 @@ namespace VortexAnimatSim
 			virtual void SetBody() = 0;
 
 			virtual void Physics_UpdateNode() {};
-			virtual void Physics_Resize() {};
-
 		};
 
 	}			// Environment

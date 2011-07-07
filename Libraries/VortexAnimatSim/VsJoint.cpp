@@ -136,6 +136,11 @@ void VsJoint::Physics_RotationChanged()
 	Physics_ResetGraphicsAndPhysics();
 }
 
+// TODO !!!! This method needs to be implemented.
+void VsJoint::Physics_Resize()
+{
+}
+
 /**
 \brief	Creates the default ball graphics.
 

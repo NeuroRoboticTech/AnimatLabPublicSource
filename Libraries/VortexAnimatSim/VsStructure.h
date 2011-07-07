@@ -44,6 +44,7 @@ namespace VortexAnimatSim
 			virtual osg::Group *ParentOSG();
 			virtual void Create();
 			virtual void ResetSimulation();
+			virtual void Physics_Resize() {};
 		};
 
 	}			// Environment

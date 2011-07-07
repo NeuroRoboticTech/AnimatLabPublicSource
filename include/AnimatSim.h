@@ -75,6 +75,8 @@ namespace AnimatSim
 		class OdorType;
 		class Materials;
 		class Material;
+		class Light;
+		class LightManager;
 
 		namespace Bodies
 		{
@@ -205,6 +207,8 @@ using namespace AnimatSim::Recording;
 #include "NervousSystem.h"
 #include "NeuralModule.h"
 #include "Organism.h"
+#include "Light.h"
+#include "LightManager.h"
 #include "ActivatedItem.h"
 #include "ActivatedItemMgr.h"
 #include "DataColumn.h"

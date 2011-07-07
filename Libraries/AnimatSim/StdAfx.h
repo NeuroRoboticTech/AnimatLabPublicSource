@@ -68,11 +68,14 @@ namespace AnimatSim
 
 	namespace Environment
 	{
+		class IPhysicsMovableItem;
 		class IPhysicsBody;
+		class IMotorizedJoint;
 		class BodyPart;
 		class ConstraintLimit;
 		class RigidBody;
 		class Joint;
+		class MotorizedJoint;
 		class Structure;
 		class Organism;
 		class ContactSensor;
@@ -82,6 +85,8 @@ namespace AnimatSim
 		class OdorType;
 		class Materials;
 		class Material;
+		class Light;
+		class LightManager;
 
 		namespace Bodies
 		{
@@ -96,12 +101,15 @@ namespace AnimatSim
 			class LinearHillStretchReceptor;
 			class OdorSensor;
 			class Plane;
+			class FluidPlane;
 			class Terrain;
 			class Sensor;
 			class Sphere;
 			class Spring;
 			class Stomach;
 			class Mouth;
+			class Ellipsoid;
+			class Torus;
 		}
 
 		namespace Joints

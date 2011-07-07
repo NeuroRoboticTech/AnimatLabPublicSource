@@ -285,6 +285,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\VsLight.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\VsLine.cpp"
 				>
 			</File>
@@ -472,6 +476,10 @@
 			</File>
 			<File
 				RelativePath=".\VsJoint.h"
+				>
+			</File>
+			<File
+				RelativePath=".\VsLight.h"
 				>
 			</File>
 			<File
