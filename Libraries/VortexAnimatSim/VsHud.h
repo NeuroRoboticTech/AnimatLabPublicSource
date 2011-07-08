@@ -1,6 +1,9 @@
-// VsHud.h: interface for the VsHud class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	VsHud.h
+
+\brief	Declares the vortex heads-up display class.
+**/
+
 #pragma once
 
 namespace VortexAnimatSim
@@ -8,24 +11,18 @@ namespace VortexAnimatSim
 	namespace Visualization
 	{
 
-		class VORTEX_PORT VsHud : public AnimatSim::AnimatBase 
+		class VORTEX_PORT VsHud : public AnimatSim::Hud 
 		{
 		protected:
-			CStdPtrArray<VsHudItem> m_aryHudItems;
 			osg::ref_ptr<osg::Projection> m_osgProjection;
 			osg::ref_ptr<osg::MatrixTransform> m_osgMT;
-
-			virtual VsHudItem *LoadHudItem(CStdXml &oXml);
 
 		public:
 			VsHud();
 			virtual ~VsHud();
 
-			virtual void Reset();
 			virtual void Initialize();
 			virtual void Update();
-
-			virtual void Load(CStdXml &oXml);
 		};
 
 	}			// Visualization

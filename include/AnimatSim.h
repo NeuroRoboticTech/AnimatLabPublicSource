@@ -29,6 +29,9 @@ namespace AnimatSim
 	class SimulationWindow;
 	class SimulationWindowMgr;
 	class BoundingBox;
+	class Hud;
+	class HudItem;
+	class HudText;
 
 	namespace Adapters
 	{
@@ -227,7 +230,12 @@ using namespace AnimatSim::Recording;
 #include "SimulationRecorder.h"
 #include "MaterialPair.h"
 #include "Materials.h"
+#include "HudItem.h"
+#include "HudText.h"
+#include "Hud.h"
 #include "SimulationWindow.h"
+#include "HudItem.h"
+#include "Hud.h"
 #include "SimulationWindowMgr.h"
 #include "Simulator.h"
 

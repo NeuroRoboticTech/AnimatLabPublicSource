@@ -41,6 +41,7 @@
 #include "VsInverseMuscleCurrent.h"
 
 #include "VsHudText.h"
+#include "VsHud.h"
 #include "VsSimulationWindow.h"
 #include "VsDragger.h"
 
@@ -519,9 +520,9 @@ catch(...)
 
 // ************* Hud Item Type Conversion functions ******************************
 
-VsHudItem *VsClassFactory::CreateHudItem(string strType, BOOL bThrowError)
+HudItem *VsClassFactory::CreateHudItem(string strType, BOOL bThrowError)
 {
-	VsHudItem *lpItem=NULL;
+	HudItem *lpItem=NULL;
 
 try
 {
@@ -554,6 +555,43 @@ catch(...)
 
 // ************* Hud Item Type Conversion functions ******************************
 
+// ************* Hud Type Conversion functions ******************************
+
+Hud *VsClassFactory::CreateHud(string strType, BOOL bThrowError)
+{
+	Hud *lpHud=NULL;
+
+try
+{
+	strType = Std_ToUpper(Std_Trim(strType));
+
+	if(strType == "HUD")
+		lpHud = new VsHud;
+	else
+	{
+		lpHud = NULL;
+		if(bThrowError)
+			THROW_PARAM_ERROR(Vs_Err_lInvalidHudItemType, Vs_Err_strInvalidHudItemType, "Hud", strType);
+	}
+
+	return lpHud;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpHud) delete lpHud;
+	RELAY_ERROR(oError); 
+	return NULL;
+}
+catch(...)
+{
+	if(lpHud) delete lpHud;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+// ************* Hud Item Type Conversion functions ******************************
+// 
 // ************* Material Type Conversion functions ******************************
 
 MaterialPair *VsClassFactory::CreateMaterialItem(string strType, BOOL bThrowError)
@@ -660,6 +698,8 @@ CStdSerialize *VsClassFactory::CreateObject(string strClassType, string strObjec
 		lpObject = CreateGain(strObjectType, bThrowError);
 	else if(strClassType == "HUDITEM")
 		lpObject = CreateHudItem(strObjectType, bThrowError);
+	else if(strClassType == "HUD")
+		lpObject = CreateHud(strObjectType, bThrowError);
 	else if(strClassType == "MATERIAL")
 		lpObject = CreateMaterialItem(strObjectType, bThrowError);
 	else if(strClassType == "SIMULATIONWINDOW")

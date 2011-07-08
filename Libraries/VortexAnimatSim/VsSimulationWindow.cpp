@@ -48,7 +48,6 @@ void VsSimulationWindow::Update()
 	if(m_lpTrackBody)
 		TrackCamera();
 
-	m_vsHud.Update();
 	m_osgViewer->frame(); 
 }
 
@@ -235,8 +234,6 @@ void VsSimulationWindow::Initialize()
 	else
 		InitStandalone(m_lpSim, lpVsSim);
 
-	m_vsHud.Initialize();
-
 	SetupTrackCamera();
 }
 
@@ -248,19 +245,6 @@ void VsSimulationWindow::Close()
 	m_osgViewer->stopThreading();
 
 	m_lpTrackBody = NULL;  //Do not delete this item.
-	m_vsHud.Reset();
-}
-
-void VsSimulationWindow::Load(CStdXml &oXml)
-{
-	SimulationWindow::Load(oXml);
-
-	oXml.IntoElem(); //Into Window Element
-
-	m_vsHud.SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE); 
-	m_vsHud.Load(oXml);
-
-	oXml.OutOfElem(); //OutOf Window Element
 }
 
 	}// end Visualization

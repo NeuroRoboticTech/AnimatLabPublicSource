@@ -9,6 +9,8 @@
 #include "MaterialPair.h"
 #include "Materials.h"
 #include "SimulationWindow.h"
+#include "HudItem.h"
+#include "Hud.h"
 #include "SimulationWindowMgr.h"
 
 namespace AnimatSim

@@ -265,7 +265,6 @@ using namespace Vx;
 #include "VsTranslateAxisDragger.h"
 #include "WorldCoordinateNodeVisitor.h"
 
-#include "VsHudItem.h"
 #include "VsHudText.h"
 #include "VsHud.h"
 #include "VsOsgUserData.h"

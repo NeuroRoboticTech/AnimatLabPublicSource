@@ -46,6 +46,7 @@ Namespace DataObjects
 
         Protected m_tnToolViewers As Crownwood.DotNetMagic.Controls.Node
         Protected m_tnExternalStimuli As Crownwood.DotNetMagic.Controls.Node
+        Protected m_aryHudItems As New Collections.SortedHudItems(Me)
 
         Protected m_strFilePath As String = ""
         Protected m_strFileName As String = ""
@@ -659,6 +660,7 @@ Namespace DataObjects
             m_doEnvironment.ClearIsDirty()
             m_aryToolHolders.ClearIsDirty()
             m_aryProjectStimuli.ClearIsDirty()
+            m_aryHudItems.ClearIsDirty()
         End Sub
 
         Public Overrides Sub UnitsChanged(ByVal ePrevMass As AnimatGUI.DataObjects.Physical.Environment.enumMassUnits, _
@@ -697,6 +699,7 @@ Namespace DataObjects
 
             LoadToolHolders(oXml)
             LoadStimuli(oXml)
+            LoadHudItems(oXml)
 
             oXml.OutOfElem()
 
@@ -769,6 +772,39 @@ Namespace DataObjects
 
         End Sub
 
+        Protected Overridable Sub LoadHudItems(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+
+            Try
+
+                'Dim iCount As Integer
+                'If oXml.FindChildElement("HudItems", False) Then
+                '    oXml.IntoChildElement("HudItems")
+
+                '    iCount = oXml.NumberOfChildren() - 1
+                '    For iIndex As Integer = 0 To iCount
+                '        oXml.FindChildByIndex(iIndex)
+                '        doTool = New DataObjects.ToolHolder(Me)
+                '        doTool.LoadData(oXml)
+                '        m_aryToolHolders.Add(doTool.ID, doTool)
+                '    Next
+
+                '    oXml.OutOfElem()
+                'Else
+                'Add any initialization after the InitializeComponent() call
+                'Add a new hud item to display the time and the axis by default
+                'TODO: We need a Hud manager code in the GUI. For now just hard code it to have a Hud Text Item.
+                m_aryHudItems.Clear()
+                Dim doHudItem As New DataObjects.Visualization.HudItem(Me, "HudText", Color.White, New System.Drawing.Point(10, 10), 30, "Time: %3.3f", "Simulator", "Time")
+                m_aryHudItems.Add(doHudItem.ID, doHudItem)
+                'End If
+
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Sub
+
         Public Overridable Overloads Sub SaveData(ByRef oXml As Interfaces.StdXml)
 
             oXml.AddChildElement("Simulation")
@@ -812,6 +848,16 @@ Namespace DataObjects
             Next
 
             oXml.OutOfElem()   'Outof Stimuli element
+
+            oXml.AddChildElement("HudItems")
+            oXml.IntoElem()   'Into Hud Items element
+
+            For Each hudItem As DataObjects.Visualization.HudItem In m_aryHudItems
+                hudItem.SaveData(oXml)
+            Next
+
+            oXml.OutOfElem()    'Outof Hud Items element
+
 
             oXml.OutOfElem() ' OutOfElem Simulation
 
@@ -877,6 +923,26 @@ Namespace DataObjects
                 End If
             Next
             oXml.OutOfElem()
+
+            oXml.AddChildElement("WindowMgr")
+            oXml.IntoElem()   'Into WindowMgr element
+
+            oXml.AddChildElement("Hud")
+            oXml.IntoElem()   'Into Hud element
+
+            oXml.AddChildElement("Type", "Hud")
+
+            oXml.AddChildElement("HudItems")
+            oXml.IntoElem()   'Into Hud Items element
+
+            For Each deItem As DictionaryEntry In m_aryHudItems
+                Dim hudItem As DataObjects.Visualization.HudItem = DirectCast(deItem.Value, DataObjects.Visualization.HudItem)
+                hudItem.SaveSimulationXml(oXml)
+            Next
+
+            oXml.OutOfElem()    'Outof Hud Items element
+            oXml.OutOfElem()    'Outof Hud element
+            oXml.OutOfElem()    'Outof WindowMgr element
 
             oXml.OutOfElem()
         End Sub

@@ -36,6 +36,8 @@
 #include "OdorType.h"
 #include "Odor.h"
 #include "SimulationWindow.h"
+#include "HudItem.h"
+#include "Hud.h"
 #include "SimulationWindowMgr.h"
 #include "Simulator.h"
 
@@ -51,6 +53,7 @@ namespace AnimatSim
 **/
 SimulationWindowMgr::SimulationWindowMgr(void)
 {
+	m_lpHudMgr = NULL;
 }
 
 /**
@@ -64,10 +67,17 @@ SimulationWindowMgr::~SimulationWindowMgr(void)
 
 try
 {
-	CloseAllWindows();
+	Close();
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of SimulationWindowMgr\r\n", "", -1, FALSE, TRUE);}
+}
+
+void SimulationWindowMgr::Initialize()
+{
+	AnimatBase::Initialize();
+
+	m_lpHudMgr->Initialize();
 }
 
 /**
@@ -181,6 +191,9 @@ void SimulationWindowMgr::RemoveSimulationWindow(HWND win)
 **/
 BOOL SimulationWindowMgr::Update()
 {
+	//First update the hud item data.
+	m_lpHudMgr->Update();
+
 	int iCount = m_aryWindows.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		m_aryWindows[iIndex]->Update();
@@ -196,6 +209,13 @@ BOOL SimulationWindowMgr::Update()
 **/
 void SimulationWindowMgr::Close()
 {
+	if(m_lpHudMgr)
+	{
+		m_lpHudMgr->Reset();
+		delete m_lpHudMgr;
+		m_lpHudMgr = NULL;
+	}
+
 	CloseAllWindows();
 }
 
@@ -249,7 +269,7 @@ void SimulationWindowMgr::Load(CStdXml &oXml)
 {
 	VerifySystemPointers();
 
-	m_aryWindows.RemoveAll();
+	Close();
 
 	if(oXml.FindChildElement("WindowMgr", false))
 	{
@@ -257,24 +277,47 @@ void SimulationWindowMgr::Load(CStdXml &oXml)
 	
 		oXml.IntoElem(); //Into WindowMgr Element
 
-		Std_LoadPoint(oXml, "Position", m_ptPosition);
-		Std_LoadPoint(oXml, "Size", m_ptSize);
-		if(m_ptPosition.x < 0 || m_ptPosition.y < 0)
-			THROW_TEXT_ERROR(Al_Err_lSimWinPosInvalid, Al_Err_strSimWinPosInvalid, "POS: (" + STR(m_ptPosition.x) + ", " + STR(m_ptPosition.y) + ")");
-		if(m_ptSize.x < 0 || m_ptSize.y < 0)
-			THROW_TEXT_ERROR(Al_Err_lSimWinSizeInvalid, Al_Err_strSimWinSizeInvalid, "Size: (" + STR(m_ptSize.x) + ", " + STR(m_ptSize.y) + ")");
-
-		oXml.IntoChildElement("Windows"); //There must be a windows section if we get here.
-		int iCount = oXml.NumberOfChildren();
-		SimulationWindow *lpItem = NULL;
-		for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(oXml.FindChildElement("Position", FALSE))
 		{
-			oXml.FindChildByIndex(iIndex);
-			lpItem = LoadSimulationWindow(oXml);
-			m_aryWindows.Add(lpItem);
+			Std_LoadPoint(oXml, "Position", m_ptPosition);
+			if(m_ptPosition.x < 0 || m_ptPosition.y < 0)
+				THROW_TEXT_ERROR(Al_Err_lSimWinPosInvalid, Al_Err_strSimWinPosInvalid, "POS: (" + STR(m_ptPosition.x) + ", " + STR(m_ptPosition.y) + ")");
 		}
-		oXml.OutOfElem(); //OutOf Windows Element
 
+		if(oXml.FindChildElement("Size", FALSE))
+		{
+			Std_LoadPoint(oXml, "Size", m_ptSize);
+			if(m_ptSize.x < 0 || m_ptSize.y < 0)
+				THROW_TEXT_ERROR(Al_Err_lSimWinSizeInvalid, Al_Err_strSimWinSizeInvalid, "Size: (" + STR(m_ptSize.x) + ", " + STR(m_ptSize.y) + ")");
+		}
+
+		if(oXml.FindChildElement("Windows", FALSE))
+		{
+			oXml.IntoChildElement("Windows"); //There must be a windows section if we get here.
+			int iCount = oXml.NumberOfChildren();
+			SimulationWindow *lpItem = NULL;
+			for(int iIndex=0; iIndex<iCount; iIndex++)
+			{
+				oXml.FindChildByIndex(iIndex);
+				lpItem = LoadSimulationWindow(oXml);
+				m_aryWindows.Add(lpItem);
+			}
+			oXml.OutOfElem(); //OutOf Windows Element
+		}
+
+		if(oXml.FindChildElement("Hud", false))
+		{
+			//Create and load the HUD manager
+			oXml.IntoElem();
+			string strModuleName = oXml.GetChildString("ModuleName", "");
+			string strType = oXml.GetChildString("Type");
+			oXml.OutOfElem();
+
+			m_lpHudMgr = dynamic_cast<Hud *>(m_lpSim->CreateObject(strModuleName, "Hud", strType));
+
+			m_lpHudMgr->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE); 
+			m_lpHudMgr->Load(oXml);
+		}
 
 		oXml.OutOfElem(); //OutOf WindowMgr Element
 	}

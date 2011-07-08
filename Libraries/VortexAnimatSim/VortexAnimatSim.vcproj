@@ -265,10 +265,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\VsHudItem.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\VsHudText.cpp"
 				>
 			</File>
@@ -456,10 +452,6 @@
 			</File>
 			<File
 				RelativePath=".\VsHud.h"
-				>
-			</File>
-			<File
-				RelativePath=".\VsHudItem.h"
 				>
 			</File>
 			<File

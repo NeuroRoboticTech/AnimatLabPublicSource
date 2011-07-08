@@ -320,6 +320,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Hud.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\HudItem.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\HudText.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\IMotorizedJoint.cpp"
 				>
 			</File>
@@ -655,6 +667,18 @@
 			</File>
 			<File
 				RelativePath=".\Hinge.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Hud.h"
+				>
+			</File>
+			<File
+				RelativePath=".\HudItem.h"
+				>
+			</File>
+			<File
+				RelativePath=".\HudText.h"
 				>
 			</File>
 			<File

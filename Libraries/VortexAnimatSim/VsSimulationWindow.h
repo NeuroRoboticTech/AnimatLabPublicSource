@@ -11,7 +11,6 @@ class VORTEX_PORT VsSimulationWindow : public AnimatSim::SimulationWindow, osgGA
 		VsSimulationWindowMgr *m_lpWinMgr;
 
 		osg::ref_ptr<osgViewer::Viewer> m_osgViewer;
-		VsHud m_vsHud;
 
 		osg::ref_ptr<osgGA::TrackballManipulator> m_osgManip;
 
@@ -36,8 +35,6 @@ class VORTEX_PORT VsSimulationWindow : public AnimatSim::SimulationWindow, osgGA
 		virtual void Initialize();
 		virtual void Update();
 		virtual void Close();
-		virtual void Load(CStdXml &oXml);
-
 };
 
 	}// end Visualization

@@ -111,6 +111,8 @@
 #define Vs_Err_lHitArrayMismatch -4036
 #define Vs_Err_strHitArrayMismatch "A mismatch was found in the size of the ratio and index list returned for a vertex pick operation."
 
+#define Vs_Err_lHudProjectionNotDefined -4037
+#define Vs_Err_strHudProjectionNotDefined "The heads-up display projection variable was not defined."
 
 #endif // __VS_ERROR_CONSTANTS_H__
 

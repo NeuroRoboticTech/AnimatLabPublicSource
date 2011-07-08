@@ -28,7 +28,8 @@ namespace VortexAnimatSim
 		virtual Adapter *CreateAdapter(string strType, BOOL bThrowError = TRUE);
 		virtual Gain *CreateGain(string strType, BOOL bThrowError = TRUE);
 		virtual ExternalStimulus *CreateExternalStimulus(string strType, BOOL bThrowError = TRUE);
-		virtual VsHudItem *CreateHudItem(string strType, BOOL bThrowError = TRUE);
+		virtual HudItem *CreateHudItem(string strType, BOOL bThrowError = TRUE);
+		virtual Hud *CreateHud(string strType, BOOL bThrowError = TRUE);
 		virtual MaterialPair *CreateMaterialItem(string strType, BOOL bThrowError = TRUE);
 		virtual SimulationWindow *CreateWindowItem(string strType, BOOL bThrowError = TRUE);
 

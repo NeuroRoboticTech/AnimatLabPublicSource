@@ -181,6 +181,7 @@
     <Compile Include="Collections\HistoryEvents.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Collections\HudItems.vb" />
     <Compile Include="Collections\Joints.vb">
       <SubType>Code</SubType>
     </Compile>

@@ -1,6 +1,8 @@
-// VsHudText.cpp: implementation of the VsHudText class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	VsHudText.cpp
+
+\brief	Implements the vortex heads-up display text class.
+**/
 
 #include "StdAfx.h"
 #include "VsSimulator.h"
@@ -11,10 +13,12 @@ namespace VortexAnimatSim
 	namespace Visualization
 	{
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+/**
+\brief	Default constructor.
 
+\author	dcofer
+\date	7/7/2011
+**/
 VsHudText::VsHudText()
 {
 	//Default color is white
@@ -26,6 +30,20 @@ VsHudText::VsHudText()
 	m_lpData = NULL;
 }
 
+/**
+\brief	Constructor.
+
+\author	dcofer
+\date	7/7/2011
+
+\param [in,out]	aryColor  	If non-null, the ary color.
+\param [in,out]	ptPosition	The point position.
+\param	strFont			  	The string font.
+\param	iCharSize		  	Size of the character.
+\param	strText			  	The string text.
+\param	strTargetID		  	Identifier for the string target.
+\param	strDataType		  	Type of the string data.
+**/
 VsHudText::VsHudText(float *aryColor, CStdFPoint &ptPosition, string strFont, int iCharSize, string strText, string strTargetID, string strDataType)
 {
 	m_aryColor.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
@@ -37,16 +55,23 @@ VsHudText::VsHudText(float *aryColor, CStdFPoint &ptPosition, string strFont, in
 	m_strDataType = strDataType;
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	7/7/2011
+**/
 VsHudText::~VsHudText()
 {
 }
 
-void VsHudText::Initialize(osg::Projection *lpProjection)
+void VsHudText::Initialize(void *lpVoidProjection)
 {
-	AnimatBase::Initialize();
+	HudText::Initialize(lpVoidProjection);
 
-	AnimatBase *lpBase = m_lpSim->FindByID(m_strTargetID);
-	m_lpData = lpBase->GetDataPointer(m_strDataType);
+	osg::Projection *lpProjection = (osg::Projection *) (lpVoidProjection);
+	if(!lpProjection)
+		THROW_PARAM_ERROR(Vs_Err_lHudProjectionNotDefined, Vs_Err_strHudProjectionNotDefined, "ID", m_strID);
 
 	m_osgText = new osgText::Text;
 	m_osgText->setDataVariance(osg::Object::DYNAMIC);
@@ -70,23 +95,6 @@ void VsHudText::Update()
 		sprintf(str, m_strText.c_str(), *m_lpData);
 		m_osgText->setText(str);
 	}
-}
-
-void VsHudText::Load(CStdXml &oXml)
-{
-	VsHudItem::Load(oXml);
-
-	oXml.IntoElem();
-
-	m_aryColor.Load(oXml, "Color", FALSE);
-	Std_LoadPoint(oXml, "Position", m_ptPosition, FALSE);
-	m_strFont = oXml.GetChildString("Font", m_strFont);
-	m_iCharSize = oXml.GetChildInt("CharSize", m_iCharSize);
-	m_strText = oXml.GetChildString("Text", m_strText);
-	m_strTargetID = oXml.GetChildString("TargetID");
-	m_strDataType = oXml.GetChildString("DataType");
-
-	oXml.OutOfElem();
 }
 
 	}			// Visualization

@@ -1,6 +1,8 @@
-// VsHud.cpp: implementation of the VsHud class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	VsHud.cpp
+
+\brief	Implements the vortex heads-up display class.
+**/
 
 #include "StdAfx.h"
 #include "VsSimulator.h"
@@ -9,29 +11,30 @@ namespace VortexAnimatSim
 {
 	namespace Visualization
 	{
+/**
+\brief	Default constructor.
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
+\author	dcofer
+\date	7/7/2011
+**/
 VsHud::VsHud()
 {
 }
 
+/**
+\brief	Destructor.
+
+\author	dcofer
+\date	7/7/2011
+**/
 VsHud::~VsHud()
 {
 
 try
 {
-	m_aryHudItems.RemoveAll();
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of VsHud\r\n", "", -1, FALSE, TRUE);}
-}
-
-void VsHud::Reset()
-{
-	m_aryHudItems.RemoveAll();
 }
 
 void VsHud::Initialize()
@@ -41,7 +44,7 @@ void VsHud::Initialize()
 	m_osgProjection = new osg::Projection;
     m_osgProjection->setMatrix(osg::Matrix::ortho2D(0, 800, 0, 600));
 
-	VsHudItem *lpItem = NULL;
+	HudItem *lpItem = NULL;
 	int iCount = m_aryHudItems.GetSize();
 	for(int iIndex = 0; iIndex < iCount; iIndex++)
 	{
@@ -64,73 +67,13 @@ void VsHud::Initialize()
 
 void VsHud::Update()
 {
-	VsHudItem *lpItem = NULL;
+	HudItem *lpItem = NULL;
 	int iCount = m_aryHudItems.GetSize();
 	for(int iIndex = 0; iIndex < iCount; iIndex++)
 	{
 		lpItem = m_aryHudItems[iIndex];
 		lpItem->Update();
 	}
-}
-
-void VsHud::Load(CStdXml &oXml)
-{
-	AnimatBase::Load(oXml);
-
-	m_aryHudItems.RemoveAll();
-
-	if(oXml.FindChildElement("HudItems", false))
-	{
-		//*** Begin Loading HudItems. *****
-		oXml.IntoChildElement("HudItems");
-
-		int iCount = oXml.NumberOfChildren();
-		VsHudItem *lpItem = NULL;
-		for(int iIndex=0; iIndex<iCount; iIndex++)
-		{
-			oXml.FindChildByIndex(iIndex);
-			lpItem = LoadHudItem(oXml);
-			m_aryHudItems.Add(lpItem);
-		}
-
-		oXml.OutOfElem();
-		//*** End Loading HudItems. *****
-	}
-}
-
-VsHudItem *VsHud::LoadHudItem(CStdXml &oXml)
-{
-	VsHudItem *lpItem=NULL;
-	string strModuleName, strType;
-
-try
-{
-	oXml.IntoElem();  //Into Column Element
-	strModuleName = oXml.GetChildString("ModuleName", "");
-	strType = oXml.GetChildString("Type");
-	oXml.OutOfElem();  //OutOf Column Element
-
-	lpItem = dynamic_cast<VsHudItem *>(m_lpSim->CreateObject(strModuleName, "HudItem", strType));
-	if(!lpItem)
-		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "HudItem");
-
-	lpItem->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
-	lpItem->Load(oXml);
-
-	return lpItem;
-}
-catch(CStdErrorInfo oError)
-{
-	if(lpItem) delete lpItem;
-	RELAY_ERROR(oError);
-	return NULL;
-}
-catch(...)
-{
-	if(lpItem) delete lpItem;
-	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
-	return NULL;
-}
 }
 
 

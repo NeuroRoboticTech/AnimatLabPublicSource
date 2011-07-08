@@ -28,7 +28,10 @@ protected:
 
 	/// Array of SimulationWindow objects.
 	CStdPtrArray<SimulationWindow> m_aryWindows;
-	
+
+	/// Manager for heads-up display items.
+	Hud *m_lpHudMgr;
+
 	SimulationWindow *LoadSimulationWindow(CStdXml &oXml);
 
 	virtual void SetupCameras();
@@ -59,6 +62,7 @@ public:
 	**/
 	virtual void Realize() = 0;
 	virtual void Close();
+	virtual void Initialize();
 
 	virtual SimulationWindow *FindSimulationWindow(HWND win, int &iIndex, BOOL bThrowError = TRUE);
 

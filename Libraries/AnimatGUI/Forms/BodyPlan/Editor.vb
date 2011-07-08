@@ -27,11 +27,6 @@ Namespace Forms.BodyPlan
             'This call is required by the Windows Form Designer.
             InitializeComponent()
 
-            'Add any initialization after the InitializeComponent() call
-            'Add a new hud item to display the time and the axis by default
-            m_aryHudItems.Clear()
-            m_aryHudItems.Add(New DataObjects.Visualization.HudItem(Nothing))
-
         End Sub
 
         Private Sub InitializeComponent()
@@ -341,7 +336,6 @@ Namespace Forms.BodyPlan
         Protected m_strStructureID As String = ""
 
         Protected m_clBackColor As Color = Color.Black
-        Protected m_aryHudItems As New ArrayList
         Protected m_bTrackCamera As Boolean = True
 
 #End Region
@@ -477,15 +471,6 @@ Namespace Forms.BodyPlan
                 oXml.AddChildElement("LookAtStructureID", "")
                 oXml.AddChildElement("LookAtBodyID", "")
             End If
-
-            oXml.AddChildElement("HudItems")
-            oXml.IntoElem()
-
-            For Each hudItem As DataObjects.Visualization.HudItem In m_aryHudItems
-                hudItem.SaveData(oXml)
-            Next
-
-            oXml.OutOfElem()
 
             oXml.OutOfElem()
 

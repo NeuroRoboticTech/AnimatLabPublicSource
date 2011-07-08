@@ -28,13 +28,29 @@ Namespace DataObjects.Visualization
 
 #Region " Properties "
 
+        Public Overridable ReadOnly Property Type() As String
+            Get
+                Return "HudText"
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
 
-        Public Sub New(ByVal doParent As Framework.DataObject)
+        Public Sub New(ByVal doParent As Framework.DataObject, ByVal strHudType As String, ByVal clColor As System.Drawing.Color, _
+                       ByVal ptPosition As System.Drawing.Point, ByVal iCharSize As Integer, ByVal strText As String, ByVal strTargetID As String, ByVal strDataType As String)
             MyBase.New(doParent)
+
             m_strName = m_strID
+
+            m_strHudType = strHudType
+            m_clColor = clColor
+            m_ptPosition = ptPosition
+            m_iCharSize = iCharSize
+            m_strText = strText
+            m_strTargetID = strTargetID
+            m_strDataType = strDataType
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
@@ -44,6 +60,21 @@ Namespace DataObjects.Visualization
         Public Overrides Function Clone(ByVal doParent As Framework.DataObject, ByVal bCutData As Boolean, ByVal doRoot As Framework.DataObject) As Framework.DataObject
 
         End Function
+
+
+#Region " Add-Remove to List Methods "
+
+        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
+            Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "HudItem", Me.GetSimulationXml("HudItem"), bThrowError)
+            InitializeSimulationReferences()
+        End Sub
+
+        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+            Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, "HudItem", Me.ID, bThrowError)
+            m_doInterface = Nothing
+        End Sub
+
+#End Region
 
         Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
             MyBase.LoadData(oXml)
@@ -85,6 +116,8 @@ Namespace DataObjects.Visualization
             oXml.AddChildElement("HudItem")
             oXml.IntoElem()
 
+            oXml.AddChildElement("ModuleName", Me.ModuleName)
+            oXml.AddChildElement("Type", Me.Type)
             oXml.AddChildElement("Name", m_strName)
             oXml.AddChildElement("ID", m_strID)
             oXml.AddChildElement("Type", m_strHudType)

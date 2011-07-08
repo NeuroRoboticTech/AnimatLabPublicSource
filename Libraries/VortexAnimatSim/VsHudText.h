@@ -1,6 +1,9 @@
-// VsHudText.h: interface for the VsHudText class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	VsHudText.h
+
+\brief	Declares the vortex heads-up display text class.
+**/
+
 #pragma once
 
 namespace VortexAnimatSim
@@ -8,19 +11,9 @@ namespace VortexAnimatSim
 	namespace Visualization
 	{
 
-		class VORTEX_PORT VsHudText : public VsHudItem 
+		class VORTEX_PORT VsHudText : public AnimatSim::HudText  
 		{
 		protected:
-			string m_strTargetID;
-			string m_strDataType;
-
-			CStdColor m_aryColor;
-			CStdFPoint m_ptPosition;
-			string m_strFont;
-			int m_iCharSize;
-			string m_strText;
-			float *m_lpData;
-
 			osg::ref_ptr<osgText::Text> m_osgText;
 			osg::ref_ptr<osg::Geode> m_osgGeode;
 
@@ -32,9 +25,8 @@ namespace VortexAnimatSim
 			osgText::Text *OsgText() {return m_osgText.get();};
 			osg::Geode *Geode() {return m_osgGeode.get();};
 
-			virtual void Initialize(osg::Projection *lpProjection);
+			virtual void Initialize(void *lpVoidProjection);
 			virtual void Update();
-			virtual void Load(CStdXml &oXml);
 		};
 
 	}			// Visualization

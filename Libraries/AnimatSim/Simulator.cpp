@@ -3431,6 +3431,12 @@ BOOL Simulator::AddItem(string strItemType, string strXml, BOOL bThrowError)
 		AddOrganism(strXml);
 		return TRUE;
 	}
+	else if(strType == "HUDITEM")
+	{
+		if(m_lpWinMgr)
+			return m_lpWinMgr->AddItem(strType, strXml, TRUE);
+		return FALSE;
+	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
