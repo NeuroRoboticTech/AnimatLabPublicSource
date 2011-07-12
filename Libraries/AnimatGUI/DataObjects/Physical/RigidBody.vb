@@ -399,6 +399,12 @@ Namespace DataObjects.Physical
         '    End Get
         'End Property
 
+        Public Overrides ReadOnly Property TypeName() As String
+            Get
+                Return "Rigid Body"
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "

@@ -34,6 +34,8 @@
 #include "SimulationRecorder.h"
 #include "OdorType.h"
 #include "Odor.h"
+#include "Light.h"
+#include "LightManager.h"
 #include "Simulator.h"
 
 

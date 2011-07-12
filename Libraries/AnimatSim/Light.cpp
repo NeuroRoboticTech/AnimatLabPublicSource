@@ -30,6 +30,8 @@
 #include "SimulationRecorder.h"
 #include "OdorType.h"
 #include "Odor.h"
+#include "Light.h"
+#include "LightManager.h"
 #include "Simulator.h"
 
 namespace AnimatSim
@@ -44,6 +46,10 @@ namespace AnimatSim
 **/
 Light::Light(void)
 {
+	m_fltRadius = 1;
+	m_iLatitudeSegments = 50;
+	m_iLongtitudeSegments = 50;
+	m_iLightNum = 0;
 }
 
 /**
@@ -85,12 +91,100 @@ void Light::Resize()
 		m_lpPhysicsMovableItem->Physics_Resize();
 }
 
+float Light::Radius() {return m_fltRadius;}
+
+void Light::Radius(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Light.Radius");
+	if(bUseScaling)
+		m_fltRadius = fltVal * m_lpSim->InverseDistanceUnits();
+	else
+		m_fltRadius = fltVal;
+
+	Resize();
+}
+
+/**
+\brief	Latitude segments.
+
+\author	dcofer
+\date	7/11/2011
+
+\param	iVal	The new value.
+**/
+void Light::LatitudeSegments(int iVal) 
+{
+	Std_IsAboveMin((int) 10, iVal, TRUE, "Light.LatitudeSegments", TRUE);
+	m_iLatitudeSegments = iVal;
+	Resize();
+}
+
+/**
+\brief	Gets the latitude segments.
+
+\author	dcofer
+\date	7/11/2011
+
+\return	segments.
+**/
+int Light::LatitudeSegments() {return m_iLatitudeSegments;}
+
+/**
+\brief	Longtitude segments.
+
+\author	dcofer
+\date	7/11/2011
+
+\param	iVal	The new value.
+**/
+void Light::LongtitudeSegments(int iVal)
+{
+	Std_IsAboveMin((int) 10, iVal, TRUE, "Light.LongtitudeSegments", TRUE);
+	m_iLongtitudeSegments = iVal;
+	Resize();
+}
+
+/**
+\brief	Gets the longtitude segments.
+
+\author	dcofer
+\date	7/11/2011
+
+\return	segments.
+**/
+int Light::LongtitudeSegments() {return m_iLongtitudeSegments;}
+
 #pragma endregion
 
 void Light::Selected(BOOL bValue, BOOL bSelectMultiple)
 {
+	AnimatBase::Selected(bValue, bSelectMultiple);
 	MovableItem::Selected(bValue, bSelectMultiple);
 }
+
+/**
+\brief	Sets the light number.
+
+\author	dcofer
+\date	7/11/2011
+
+\param	iVal	The new value.
+**/
+void Light::LightNumber(int iVal)
+{
+	Std_IsAboveMin((int) 0, iVal, TRUE, "Light.LightNumber", TRUE);
+	m_iLightNum = iVal;
+}
+
+/**
+\brief	Gets the light number.
+
+\author	dcofer
+\date	7/11/2011
+
+\return	number.
+**/
+int Light::LightNumber() {return m_iLightNum;}
 
 /**
 \brief	Called when the visual selection mode changed in GUI.
@@ -125,11 +219,31 @@ float *Light::GetDataPointer(string strDataType)
 
 BOOL Light::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
-	if(AnimatBase::SetData(strDataType, strValue, FALSE))
+	string strType = Std_CheckString(strDataType);
+
+	if(AnimatBase::SetData(strType, strValue, FALSE))
 		return true;
 
-	if(MovableItem::SetData(strDataType, strValue, FALSE))
+	if(MovableItem::SetData(strType, strValue, FALSE))
 		return true;
+
+	if(strType == "RADIUS")
+	{
+		Radius(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "LATITUDESEGMENTS")
+	{
+		LatitudeSegments(atoi(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "LONGTITUDESEGMENTS")
+	{
+		LongtitudeSegments(atoi(strValue.c_str()));
+		return TRUE;
+	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
@@ -148,6 +262,12 @@ void Light::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
 	MovableItem::Load(oXml);
+
+	oXml.IntoElem();  //Into RigidBody Element
+	Radius(oXml.GetChildFloat("Radius", m_fltRadius));
+	LatitudeSegments(oXml.GetChildInt("LatitudeSegments", m_iLatitudeSegments));
+	LongtitudeSegments(oXml.GetChildInt("LongtitudeSegments", m_iLongtitudeSegments));
+	oXml.OutOfElem(); //OutOf RigidBody Element
 }
 
 	}			//Environment

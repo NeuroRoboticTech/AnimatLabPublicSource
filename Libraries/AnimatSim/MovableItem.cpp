@@ -29,6 +29,8 @@
 #include "SimulationRecorder.h"
 #include "OdorType.h"
 #include "Odor.h"
+#include "Light.h"
+#include "LightManager.h"
 #include "Simulator.h"
 
 namespace AnimatSim
@@ -700,8 +702,8 @@ void MovableItem::Ambient(CStdColor &aryColor)
 **/
 void MovableItem::Ambient(float *aryColor)
 {
-	m_vAmbient.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
-	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_SetColor();
+	CStdColor vColor(aryColor[0], aryColor[1], aryColor[2], aryColor[3], 1);
+	Ambient(vColor);
 }
 
 /**
@@ -715,8 +717,9 @@ void MovableItem::Ambient(float *aryColor)
 
 void MovableItem::Ambient(string strXml)
 {
-	m_vAmbient.Load(strXml, "Ambient");
-	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_SetColor();
+	CStdColor vColor(1);
+	vColor.Load(strXml, "Color");
+	Ambient(vColor);
 }
 
 /**
@@ -753,8 +756,8 @@ void MovableItem::Diffuse(CStdColor &aryColor)
 **/
 void MovableItem::Diffuse(float *aryColor)
 {
-	m_vDiffuse.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
-	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_SetColor();
+	CStdColor vColor(aryColor[0], aryColor[1], aryColor[2], aryColor[3], 1);
+	Diffuse(vColor);
 }
 
 /**
@@ -767,8 +770,9 @@ void MovableItem::Diffuse(float *aryColor)
 **/
 void MovableItem::Diffuse(string strXml)
 {
-	m_vDiffuse.Load(strXml, "Diffuse");
-	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_SetColor();
+	CStdColor vColor(1);
+	vColor.Load(strXml, "Color");
+	Diffuse(vColor);
 }
 
 /**
@@ -805,8 +809,8 @@ void MovableItem::Specular(CStdColor &aryColor)
 **/
 void MovableItem::Specular(float *aryColor)
 {
-	m_vSpecular.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
-	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_SetColor();
+	CStdColor vColor(aryColor[0], aryColor[1], aryColor[2], aryColor[3], 1);
+	Specular(vColor);
 }
 
 /**
@@ -819,8 +823,9 @@ void MovableItem::Specular(float *aryColor)
 **/
 void MovableItem::Specular(string strXml)
 {
-	m_vSpecular.Load(strXml, "Specular");
-	if(m_lpPhysicsMovableItem) m_lpPhysicsMovableItem->Physics_SetColor();
+	CStdColor vColor(1);
+	vColor.Load(strXml, "Color");
+	Specular(vColor);
 }
 
 /**

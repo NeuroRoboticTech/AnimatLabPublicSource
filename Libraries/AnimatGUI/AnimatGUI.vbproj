@@ -185,6 +185,7 @@
     <Compile Include="Collections\Joints.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Collections\Lights.vb" />
     <Compile Include="Collections\Links.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -421,6 +422,7 @@
     <Compile Include="DataObjects\Physical\Light.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataObjects\Physical\MovableItem.vb" />
     <Compile Include="DataObjects\Physical\Odor.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -1238,6 +1240,10 @@
       <DependentUpon>ReceptiveFieldPairs.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Graphics\Blank.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\Lamp.gif" />
+    <EmbeddedResource Include="Graphics\Lightbulb_Small.gif" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataObjects\ProgramModules\" />

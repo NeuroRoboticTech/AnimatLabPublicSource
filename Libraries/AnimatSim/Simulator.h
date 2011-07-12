@@ -100,6 +100,9 @@ namespace AnimatSim
 			/// Manager for SimulationWindows
 			SimulationWindowMgr *m_lpWinMgr;
 
+			/// Manager for the light objects.
+			LightManager m_oLightMgr;
+
 			///This is the currect visual selection mode used within the GUI.
 			int m_iSelectionMode;
 
@@ -494,7 +497,8 @@ namespace AnimatSim
 			virtual SimulationRecorder *SimulationRecorder();
 			virtual Materials *MaterialMgr();
 			virtual SimulationWindowMgr *WindowMgr();
-			
+			virtual LightManager *LightMgr();
+
 			virtual int VisualSelectionMode();
 			virtual void VisualSelectionMode(int iVal);
 

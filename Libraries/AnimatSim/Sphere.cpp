@@ -29,6 +29,8 @@
 #include "SimulationRecorder.h"
 #include "OdorType.h"
 #include "Odor.h"
+#include "Light.h"
+#include "LightManager.h"
 #include "Simulator.h"
 
 namespace AnimatSim
@@ -74,6 +76,14 @@ void Sphere::Radius(float fltVal, BOOL bUseScaling)
 	Resize();
 }
 
+/**
+\brief	Latitude segments.
+
+\author	dcofer
+\date	7/11/2011
+
+\param	iVal	The new value.
+**/
 void Sphere::LatitudeSegments(int iVal) 
 {
 	Std_IsAboveMin((int) 10, iVal, TRUE, "Sphere.LatitudeSegments", TRUE);
@@ -81,8 +91,24 @@ void Sphere::LatitudeSegments(int iVal)
 	Resize();
 }
 
+/**
+\brief	Gets the latitude segments.
+
+\author	dcofer
+\date	7/11/2011
+
+\return	segments.
+**/
 int Sphere::LatitudeSegments() {return m_iLatitudeSegments;}
 
+/**
+\brief	Longtitude segments.
+
+\author	dcofer
+\date	7/11/2011
+
+\param	iVal	The new value.
+**/
 void Sphere::LongtitudeSegments(int iVal)
 {
 	Std_IsAboveMin((int) 10, iVal, TRUE, "Sphere.LongtitudeSegments", TRUE);
@@ -90,6 +116,14 @@ void Sphere::LongtitudeSegments(int iVal)
 	Resize();
 }
 
+/**
+\brief	Gets the longtitude segments.
+
+\author	dcofer
+\date	7/11/2011
+
+\return	segments.
+**/
 int Sphere::LongtitudeSegments() {return m_iLongtitudeSegments;}
 
 BOOL Sphere::SetData(string strDataType, string strValue, BOOL bThrowError)

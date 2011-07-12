@@ -14,6 +14,7 @@
 
 //#include "VsSimulationRecorder.h"
 #include "VsMouseSpring.h"
+#include "VsLight.h"
 #include "VsCameraManipulator.h"
 #include "VsDragger.h"
 
@@ -52,8 +53,8 @@ VsMovableItem::~VsMovableItem()
 VsSimulator *VsMovableItem::GetVsSimulator()
 {
 	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpThisAB->GetSimulator());
-	if(!lpVsSim)
-		THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
+	//if(!lpVsSim)
+	//	THROW_ERROR(Vs_Err_lUnableToConvertToVsSimulator, Vs_Err_strUnableToConvertToVsSimulator);
 	return lpVsSim;
 }
 

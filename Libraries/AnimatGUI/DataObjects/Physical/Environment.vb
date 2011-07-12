@@ -64,13 +64,16 @@ Namespace DataObjects.Physical
 
         Protected m_iNewOrganismCount As Integer
         Protected m_iNewStructureCount As Integer
+        Protected m_iNewLightCount As Integer
 
         Protected m_aryOrganisms As New Collections.SortedStructures(Me)
         Protected m_aryStructures As New Collections.SortedStructures(Me)
         Protected m_aryOdorTypes As New Collections.SortedOdorTypes(Me)
+        Protected m_aryLights As New Collections.SortedLights(Me)
 
         Protected m_tnOrganisms As Crownwood.DotNetMagic.Controls.Node
         Protected m_tnStructures As Crownwood.DotNetMagic.Controls.Node
+        Protected m_tnLights As Crownwood.DotNetMagic.Controls.Node
 
         Protected m_bAutoGenerateRandomSeed As Boolean = True
         Protected m_iManualRandomSeed As Integer = 12345
@@ -156,20 +159,6 @@ Namespace DataObjects.Physical
                 ResetEnableFluidsForRigidBodies()
             End Set
         End Property
-
-        'Public Property FluidDensity() As ScaledNumber
-        '    Get
-        '        Return m_snFluidDensity
-        '    End Get
-        '    Set(ByVal Value As ScaledNumber)
-        '        If Value.ActualValue < 0 Then
-        '            Throw New System.Exception("You can not set the fluid density value to be less than zero!")
-        '        End If
-
-        '        Me.SetSimData("FluidDensity", Value.ActualValue.ToString, True)
-        '        m_snFluidDensity.CopyData(Value)
-        '    End Set
-        'End Property
 
         Public Property MouseSpringStiffness() As ScaledNumber
             Get
@@ -443,6 +432,12 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
+        Public Overridable ReadOnly Property Lights() As Collections.SortedLights
+            Get
+                Return m_aryLights
+            End Get
+        End Property
+
         Public Overridable ReadOnly Property OrganismsTreeNode() As Crownwood.DotNetMagic.Controls.Node
             Get
                 Return m_tnOrganisms
@@ -452,6 +447,12 @@ Namespace DataObjects.Physical
         Public Overridable ReadOnly Property StructuresTreeNode() As Crownwood.DotNetMagic.Controls.Node
             Get
                 Return m_tnStructures
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property LightsTreeNode() As Crownwood.DotNetMagic.Controls.Node
+            Get
+                Return m_tnLights
             End Get
         End Property
 
@@ -470,6 +471,15 @@ Namespace DataObjects.Physical
             End Get
             Set(ByVal Value As Integer)
                 m_iNewStructureCount = Value
+            End Set
+        End Property
+
+        Public Overridable Property NewLightCount() As Integer
+            Get
+                Return m_iNewLightCount
+            End Get
+            Set(ByVal Value As Integer)
+                m_iNewLightCount = Value
             End Set
         End Property
 
@@ -509,12 +519,6 @@ Namespace DataObjects.Physical
             m_snPhysicsTimeStep = New AnimatGUI.Framework.ScaledNumber(Me, "PhysicsTimeStep", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
             m_snGravity = New AnimatGUI.Framework.ScaledNumber(Me, "Gravity", -9.81, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "m/s^2", "m/s^2")
 
-            'If Not Util.Environment Is Nothing Then
-            '    m_snFluidDensity = Util.Environment.DefaultDensity
-            'Else
-            '    m_snFluidDensity = New ScaledNumber(Me, "FluidDensity", 1000, ScaledNumber.enumNumericScale.Kilo, "g/m^2", "g/m^2")
-            'End If
-
             m_snMouseSpringStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "MouseSpringStiffness", 1, ScaledNumber.enumNumericScale.None, "N/m", "N/m")
             m_snMouseSpringDamping = New AnimatGUI.Framework.ScaledNumber(Me, "MouseSpringDamping", 100, ScaledNumber.enumNumericScale.None, "g/s", "g/s")
 
@@ -528,6 +532,11 @@ Namespace DataObjects.Physical
             m_snAngularKineticLoss = New ScaledNumber(Me, "AngularKineticLoss", 1, ScaledNumber.enumNumericScale.micro, "g/s", "g/s")
 
             m_snRecFieldSelRadius = New ScaledNumber(Me, "RecFieldSelRadius", 5, ScaledNumber.enumNumericScale.milli, "Meters", "m")
+
+            'Add one light object by default.
+            Dim newLight As New DataObjects.Physical.Light(Me)
+            newLight.Name = "Light_1"
+            m_aryLights.Add(newLight.ID, newLight)
 
         End Sub
 
@@ -548,6 +557,7 @@ Namespace DataObjects.Physical
 
             m_tnOrganisms = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Organisms", "AnimatGUI.Organisms.gif")
             m_tnStructures = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Structures", "AnimatGUI.Structures.gif")
+            m_tnLights = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Lights", "AnimatGUI.Lamp.gif")
 
             Dim doOrganism As DataObjects.Physical.Organism
             For Each deEntry As DictionaryEntry In m_aryOrganisms
@@ -561,8 +571,15 @@ Namespace DataObjects.Physical
                 doStructure.CreateWorkspaceTreeView(Me, m_tnStructures)
             Next
 
+            Dim doLight As DataObjects.Physical.Light
+            For Each deEntry As DictionaryEntry In m_aryLights
+                doLight = DirectCast(deEntry.Value, DataObjects.Physical.Light)
+                doLight.CreateWorkspaceTreeView(Me, m_tnLights)
+            Next
+
             m_iNewOrganismCount = Util.ExtractIDCount("Organism", m_aryOrganisms)
             m_iNewStructureCount = Util.ExtractIDCount("Structure", m_aryStructures)
+            m_iNewLightCount = Util.ExtractIDCount("Light", m_aryLights)
 
         End Sub
 
@@ -578,6 +595,11 @@ Namespace DataObjects.Physical
                 Return True
             End If
 
+            If tnSelectedNode Is m_tnLights Then
+                PopupLightsMenu(tnSelectedNode, ptPoint)
+                Return True
+            End If
+
             Dim doOrganism As DataObjects.Physical.Organism
             For Each deEntry As DictionaryEntry In m_aryOrganisms
                 doOrganism = DirectCast(deEntry.Value, DataObjects.Physical.Organism)
@@ -588,6 +610,12 @@ Namespace DataObjects.Physical
             For Each deEntry As DictionaryEntry In m_aryStructures
                 doStructure = DirectCast(deEntry.Value, DataObjects.Physical.PhysicalStructure)
                 If doStructure.WorkspaceTreeviewPopupMenu(tnSelectedNode, ptPoint) Then Return True
+            Next
+
+            Dim doLight As DataObjects.Physical.Light
+            For Each deEntry As DictionaryEntry In m_aryLights
+                doLight = DirectCast(deEntry.Value, DataObjects.Physical.Light)
+                If doLight.WorkspaceTreeviewPopupMenu(tnSelectedNode, ptPoint) Then Return True
             Next
 
             If tnSelectedNode Is m_tnWorkspaceNode Then
@@ -625,6 +653,29 @@ Namespace DataObjects.Physical
             ' Create the popup menu object
             Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Physical.Environment.PopupStructureMenu", Util.SecurityMgr)
             popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcInsert, mcSepExpand, mcExpandAll, mcCollapseAll})
+
+            Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
+        End Sub
+
+        Protected Overridable Sub PopupLightsMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As Point)
+
+            Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Physical.Environment.PopupStructureMenu", Util.SecurityMgr)
+            Dim mcInsert As System.Windows.Forms.ToolStripMenuItem
+
+            If m_aryLights.Count < m_aryLights.MaxLights Then
+                mcInsert = New System.Windows.Forms.ToolStripMenuItem("New Light", Util.Application.ToolStripImages.GetImage("AnimatGUI.Lamp.gif"), New EventHandler(AddressOf Me.OnNewLight))
+                Dim mcSepExpand As New ToolStripSeparator()
+                popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcInsert, mcSepExpand})
+            End If
+
+            Dim mcExpandAll As New System.Windows.Forms.ToolStripMenuItem("Expand All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Expand.gif"), New EventHandler(AddressOf Me.OnExpandAll))
+            Dim mcCollapseAll As New System.Windows.Forms.ToolStripMenuItem("Collapse All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Collapse.gif"), New EventHandler(AddressOf Me.OnCollapseAll))
+
+            mcExpandAll.Tag = tnSelectedNode
+            mcCollapseAll.Tag = tnSelectedNode
+
+            ' Create the popup menu object
+            popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcExpandAll, mcCollapseAll})
 
             Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
         End Sub
@@ -752,28 +803,28 @@ Namespace DataObjects.Physical
 
 #Region " DataObject Methods "
 
-        Public Overrides Sub BuildProperties(ByRef propTable As AnimatGUICtrls.Controls.PropertyTable)
+        Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
 
-            Dim pbNumberBag As AnimatGUICtrls.Controls.PropertyBag = m_snPhysicsTimeStep.Properties
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Physics Time Step", pbNumberBag.GetType(), "PhysicsTimeStep", _
+            Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = m_snPhysicsTimeStep.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Physics Time Step", pbNumberBag.GetType(), "PhysicsTimeStep", _
                                         "Settings", "This is the increment that is taken between each time step of the physics simulator. ", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snGravity.Properties
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Gravity", pbNumberBag.GetType(), "Gravity", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Gravity", pbNumberBag.GetType(), "Gravity", _
                                         "Settings", "Sets the gravity for the simulation. This is applied along the y axis. Gravity is always specified in " & _
                                         "meters per second squared. regardless of the distance units specified.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("ID", Me.ID.GetType(), "ID", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("ID", Me.ID.GetType(), "ID", _
                                         "Settings", "ID", Me.ID, True))
 
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("AutoGenerate Random Seed", m_bAutoGenerateRandomSeed.GetType(), "AutoGenerateRandomSeed", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("AutoGenerate Random Seed", m_bAutoGenerateRandomSeed.GetType(), "AutoGenerateRandomSeed", _
                                         "Settings", "If this is true then the random number generator is automatically seeded at the beginning of a simulation to ensure " & _
                                         "different numbers are generated each run. If it is false then the seed specified in the Manual Random Seed property is used.", m_bAutoGenerateRandomSeed))
 
             If Not m_bAutoGenerateRandomSeed Then
-                propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Manual Random Seed", m_iManualRandomSeed.GetType(), "ManualRandomSeed", _
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Manual Random Seed", m_iManualRandomSeed.GetType(), "ManualRandomSeed", _
                                             "Settings", "Allows the user to manual set the random number seed to use for the random number generator.", m_iManualRandomSeed))
             End If
 
@@ -781,16 +832,11 @@ Namespace DataObjects.Physical
                                         "Settings", "Determines whether hydrodynamic effects such as buoyancy and drag act upon the bodies in the simulation. " & _
                                         "If this is turned off then the simulation will run slightly faster.", m_bSimulateHydrodynamics))
 
-            'pbNumberBag = m_snFluidDensity.Properties
-            'propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Fluid Density", pbNumberBag.GetType(), "FluidDensity", _
-            '                            "Hydrodynamics", "The density of the fluid medium. This is only used if hydrodynamics are being simulated.", pbNumberBag, _
-            '                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
-
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("DistanceUnits", GetType(String), "DistanceUnits", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("DistanceUnits", GetType(String), "DistanceUnits", _
                                         "Units", "Determines the distance unit measurements used within the configuration files.", _
                                         m_eDistanceUnits, GetType(AnimatGUI.TypeHelpers.UnitsTypeEditor), GetType(AnimatGUI.TypeHelpers.UnitsTypeConverter)))
 
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("MassUnits", GetType(String), "MassUnits", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("MassUnits", GetType(String), "MassUnits", _
                                         "Units", "Determines the mass unit measurements used within the configuration files.", _
                                         m_eMassUnits, GetType(AnimatGUI.TypeHelpers.UnitsTypeEditor), GetType(AnimatGUI.TypeHelpers.UnitsTypeConverter)))
 
@@ -800,42 +846,42 @@ Namespace DataObjects.Physical
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snMouseSpringStiffness.Properties
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Mouse Spring Stiffness", pbNumberBag.GetType(), "MouseSpringStiffness", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Mouse Spring Stiffness", pbNumberBag.GetType(), "MouseSpringStiffness", _
                                         "Mouse Spring Settings", "Sets the stiffness of the spring used when applying forces using the mouse during a simulation.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snMouseSpringDamping.Properties
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Mouse Spring Damping", pbNumberBag.GetType(), "MouseSpringDamping", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Mouse Spring Damping", pbNumberBag.GetType(), "MouseSpringDamping", _
                                         "Mouse Spring Settings", "Sets the damping of the spring used when applying forces using the mouse during a simulation.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snLinearCompliance.Properties
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Linear Compliance", pbNumberBag.GetType(), "LinearCompliance", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Linear Compliance", pbNumberBag.GetType(), "LinearCompliance", _
                                         "World Stability", "The compliance value of the spring used in linear collisions within the simulator.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snLinearDamping.Properties
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Linear Damping", pbNumberBag.GetType(), "LinearDamping", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Linear Damping", pbNumberBag.GetType(), "LinearDamping", _
                                         "World Stability", "The damping value of the spring used in linear collisions within the simulator.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snAngularCompliance.Properties
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Angular Compliance", pbNumberBag.GetType(), "AngularCompliance", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Angular Compliance", pbNumberBag.GetType(), "AngularCompliance", _
                                         "World Stability", "The compliance value of the spring used in angular collisions within the simulator.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snAngularDamping.Properties
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Angular Damping", pbNumberBag.GetType(), "AngularDamping", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Angular Damping", pbNumberBag.GetType(), "AngularDamping", _
                                         "World Stability", "The damping value of the spring used in angular collisions within the simulator.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snLinearKineticLoss.Properties
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Linear Kinetic Loss", pbNumberBag.GetType(), "LinearKineticLoss", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Linear Kinetic Loss", pbNumberBag.GetType(), "LinearKineticLoss", _
                                         "World Stability", "The amount of kinetic loss for linear collisions within the simulator.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snAngularKineticLoss.Properties
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Angular Kinetic Loss", pbNumberBag.GetType(), "AngularKineticLoss", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Angular Kinetic Loss", pbNumberBag.GetType(), "AngularKineticLoss", _
                                         "World Stability", "The amount of kinetic loss for angular collisions within the simulator.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
@@ -846,6 +892,7 @@ Namespace DataObjects.Physical
             m_aryOrganisms.ClearIsDirty()
             m_aryStructures.ClearIsDirty()
             m_aryOdorTypes.ClearIsDirty()
+            m_aryLights.ClearIsDirty()
 
             If Not m_snPhysicsTimeStep Is Nothing Then m_snPhysicsTimeStep.ClearIsDirty()
             If Not m_snGravity Is Nothing Then m_snGravity.ClearIsDirty()
@@ -888,6 +935,7 @@ Namespace DataObjects.Physical
 
             m_iNewOrganismCount = doOrig.m_iNewOrganismCount
             m_iNewStructureCount = doOrig.m_iNewStructureCount
+            m_iNewLightCount = doOrig.m_iNewLightCount
 
         End Sub
 
@@ -928,6 +976,13 @@ Namespace DataObjects.Physical
                 doStruct = DirectCast(deEntry.Value, PhysicalStructure)
                 doStruct.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
             Next
+
+            Dim doLight As DataObjects.Physical.Light
+            For Each deEntry As DictionaryEntry In m_aryLights
+                doLight = DirectCast(deEntry.Value, DataObjects.Physical.Light)
+                doLight.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
+            Next
+
 
         End Sub
 
@@ -975,6 +1030,11 @@ Namespace DataObjects.Physical
 
             'm_snRecFieldSelRadius.LoadData(oXml, "RecFieldSelRadius")
 
+            m_aryOdorTypes.Clear()
+            m_aryOrganisms.Clear()
+            m_aryStructures.Clear()
+            m_aryLights.Clear()
+
             'Odor types must be loaded before structures
             Dim iCount As Integer
             If oXml.FindChildElement("OdorTypes", False) Then
@@ -1020,6 +1080,26 @@ Namespace DataObjects.Physical
                 m_aryStructures.Add(newStructure.ID, newStructure)
             Next
             oXml.OutOfElem() 'Outof Structures Element
+
+            Dim newLight As DataObjects.Physical.Light
+            If oXml.FindChildElement("Lights", False) Then
+                oXml.IntoChildElement("Lights") 'Into Lights Element
+                iCount = oXml.NumberOfChildren() - 1
+
+                For iIndex As Integer = 0 To iCount
+                    oXml.FindChildByIndex(iIndex)
+
+                    newLight = New DataObjects.Physical.Light(Me)
+                    newLight.LoadData(oXml)
+
+                    m_aryLights.Add(newLight.ID, newLight)
+                Next
+                oXml.OutOfElem() 'Outof Lights Element
+            Else
+                newLight = New DataObjects.Physical.Light(Me)
+                newLight.Name = "Light_1"
+                m_aryLights.Add(newLight.ID, newLight)
+            End If
 
             oXml.OutOfElem() 'Outof Environment Element
 
@@ -1080,6 +1160,15 @@ Namespace DataObjects.Physical
             For Each deEntry As DictionaryEntry In m_aryStructures
                 doStructure = DirectCast(deEntry.Value, DataObjects.Physical.PhysicalStructure)
                 doStructure.SaveData(oXml)
+            Next
+            oXml.OutOfElem() 'Outof Structures Element
+
+            oXml.AddChildElement("Lights")
+            oXml.IntoElem()
+            Dim doLight As DataObjects.Physical.Light
+            For Each deEntry As DictionaryEntry In m_aryLights
+                doLight = DirectCast(deEntry.Value, DataObjects.Physical.Light)
+                doLight.SaveData(oXml)
             Next
             oXml.OutOfElem() 'Outof Structures Element
 
@@ -1145,6 +1234,15 @@ Namespace DataObjects.Physical
             Next
             oXml.OutOfElem() 'Outof Structures Element
 
+            oXml.AddChildElement("Lights")
+            oXml.IntoElem()
+            Dim doLight As DataObjects.Physical.Light
+            For Each deEntry As DictionaryEntry In m_aryLights
+                doLight = DirectCast(deEntry.Value, DataObjects.Physical.Light)
+                doLight.SaveSimulationXml(oXml, Me)
+            Next
+            oXml.OutOfElem() 'Outof Structures Element
+
             oXml.OutOfElem() 'Outof Environment Element
 
         End Sub
@@ -1163,6 +1261,12 @@ Namespace DataObjects.Physical
                 newStructure.InitializeAfterLoad()
             Next
 
+            Dim doLight As DataObjects.Physical.Light
+            For Each deEntry As DictionaryEntry In m_aryLights
+                doLight = DirectCast(deEntry.Value, Light)
+                doLight.InitializeAfterLoad()
+            Next
+
         End Sub
 
         Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject
@@ -1171,6 +1275,7 @@ Namespace DataObjects.Physical
             If doObject Is Nothing AndAlso Not m_aryOrganisms Is Nothing Then doObject = m_aryOrganisms.FindObjectByID(strID)
             If doObject Is Nothing AndAlso Not m_aryStructures Is Nothing Then doObject = m_aryStructures.FindObjectByID(strID)
             If doObject Is Nothing AndAlso Not m_aryOdorTypes Is Nothing Then doObject = m_aryOdorTypes.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_aryLights Is Nothing Then doObject = m_aryLights.FindObjectByID(strID)
             Return doObject
 
         End Function
@@ -1193,6 +1298,11 @@ Namespace DataObjects.Physical
             Next
 
             For Each deEntry As DictionaryEntry In m_aryStructures
+                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                doObject.InitializeSimulationReferences()
+            Next
+
+            For Each deEntry As DictionaryEntry In m_aryLights
                 doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
                 doObject.InitializeSimulationReferences()
             Next
@@ -1246,57 +1356,23 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Protected Sub OnAddGround(ByVal sender As Object, ByVal e As System.EventArgs)
+        Protected Sub OnNewLight(ByVal sender As Object, ByVal e As System.EventArgs)
 
             Try
-                'If Not Util.Environment.GroundSurface Is Nothing Then
-                '    Throw New System.Exception("You can only add one ground surface")
-                'End If
+                Dim doLight As New DataObjects.Physical.Light(Me)
 
-                'm_doGround = New DataObjects.Physical.GroundSurface(Me)
-                'm_doGround.ID = "Ground"
-                'm_doGround.Name = "Ground"
+                m_iNewLightCount = m_iNewLightCount + 1
+                doLight.Name = "Light_" & m_iNewLightCount
+                Me.Lights.Add(doLight.ID, doLight)
 
-                'm_doGround.CreateWorkspaceTreeView(Util.Simulation, Util.ProjectWorkspace)
-                'Util.ProjectWorkspace.TreeView.SelectedNode = m_doGround.WorkspaceStructureNode
-
-                'Util.Application.EnableDefaultMenuItem("Edit", "Add Ground", False)
-                'Util.Application.EnableDefaultToolbarItem("Add Ground", False)
-
-                'Util.Application.SaveProject(Util.Application.ProjectFile)
+                doLight.CreateWorkspaceTreeView(Me, m_tnStructures)
+                doLight.SelectItem()
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
 
         End Sub
-
-        Protected Sub OnAddWater(ByVal sender As Object, ByVal e As System.EventArgs)
-
-            Try
-                'If Not Util.Environment.WaterSurface Is Nothing Then
-                '    Throw New System.Exception("You can only add one water surface")
-                'End If
-
-                'm_doWater = New DataObjects.Physical.WaterSurface(Me)
-                'm_doWater.ID = "Water"
-                'm_doWater.Name = "Water"
-
-                'm_doWater.CreateWorkspaceTreeView(Util.Simulation, Util.ProjectWorkspace)
-                'Util.ProjectWorkspace.TreeView.SelectedNode = m_doWater.WorkspaceStructureNode
-                'm_bSimulateHydrodynamics = True
-
-                'Util.Application.EnableDefaultMenuItem("Edit", "Add Water", False)
-                'Util.Application.EnableDefaultToolbarItem("Add Water", False)
-
-                'Util.Application.SaveProject(Util.Application.ProjectFile)
-
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            End Try
-
-        End Sub
-
 #End Region
 
     End Class

@@ -15,35 +15,15 @@ Imports AnimatGUI.Framework
 Namespace DataObjects.Physical
 
     Public Class PhysicalStructure
-        Inherits DataObjects.DragObject
+        Inherits MovableItem
 
 #Region " Delegates "
-
-        Delegate Sub PositionChangedDelegate()
-        Delegate Sub RotationChangedDelegate()
-        Delegate Sub SelectionChangedDelegate(ByVal bSelected As Boolean, ByVal bSelectMultiple As Boolean)
 
 #End Region
 
 #Region " Attributes "
 
-        Protected m_strStructureType As String = "Basic"
-
-        Protected m_strDescription As String = ""
-
-        Protected m_svPosition As ScaledVector3
-        Protected m_svRotation As ScaledVector3
         Protected m_snSize As AnimatGUI.Framework.ScaledNumber
-
-        Protected m_bVisible As Boolean = True
-        Protected m_Transparencies As BodyTransparencies
-
-        Protected m_clAmbient As System.Drawing.Color
-        Protected m_clDiffuse As System.Drawing.Color
-        Protected m_clSpecular As System.Drawing.Color
-        Protected m_fltShininess As Single = 64
-
-        Protected m_strTexture As String = ""
 
         Protected m_dbRoot As DataObjects.Physical.RigidBody
 
@@ -71,12 +51,12 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
-        <Browsable(False)> _
-        Protected Overridable ReadOnly Property Structures(ByVal dsSim As AnimatGUI.DataObjects.Simulation) As Collections.SortedStructures
-            Get
-                Return dsSim.Environment.Structures
-            End Get
-        End Property
+        '<Browsable(False)> _
+        'Protected Overridable ReadOnly Property Structures(ByVal dsSim As AnimatGUI.DataObjects.Simulation) As Collections.SortedStructures
+        '    Get
+        '        Return dsSim.Environment.Structures
+        '    End Get
+        'End Property
 
         <Browsable(False)> _
         Protected Overridable ReadOnly Property ParentTreeNode(ByVal dsSim As AnimatGUI.DataObjects.Simulation) As Crownwood.DotNetMagic.Controls.Node
@@ -106,213 +86,23 @@ Namespace DataObjects.Physical
         End Property
 
         <Browsable(False)> _
-        Public Overrides Property Name() As String
-            Get
-                Return m_strName
-            End Get
-            Set(ByVal Value As String)
-                If Value.Trim.Length = 0 Then
-                    Throw New System.Exception("You can not set the name for the organism to blank.")
-                End If
-
-                CheckForUniqueneName(Value)
-
-                Dim strOldName As String = m_strName
-
-                m_strName = Value.Trim
-
-                If Not m_tnWorkspaceNode Is Nothing Then
-                    Dim bExpanded As Boolean = m_tnWorkspaceNode.IsExpanded
-                    m_tnWorkspaceNode.Remove()
-                    If Not m_doParent Is Nothing Then CreateWorkspaceTreeView(m_doParent, m_doParent.WorkspaceNode)
-                    Util.ProjectWorkspace.ctrlTreeView.SelectedNode = m_tnWorkspaceNode
-                    If bExpanded Then m_tnWorkspaceNode.Expand()
-                End If
-
-                RenameFiles(strOldName)
-
-                RenameWindowTitles()
-
-            End Set
-        End Property
-
-        <Browsable(False)> _
-        Public Overridable Property Description() As String
-            Get
-                Return m_strDescription
-            End Get
-            Set(ByVal Value As String)
-                m_strDescription = Value
-            End Set
-        End Property
-
-        <Browsable(False)> _
-        Public Overrides Property ItemName() As String
-            Get
-                Return Me.Name
-            End Get
-            Set(ByVal Value As String)
-                Me.Name = Value
-            End Set
-        End Property
-
-        <Browsable(False)> _
         Public Overrides ReadOnly Property WorkspaceImageName() As String
             Get
                 Return "AnimatGUI.Structure.gif"
             End Get
         End Property
 
-#Region " Location Properties "
-
-        Public Overridable Property Position() As Framework.ScaledVector3
-            Get
-                Return m_svPosition
-            End Get
-            Set(ByVal value As Framework.ScaledVector3)
-                Me.SetSimData("Position", value.GetSimulationXml("Position"), True)
-                m_svPosition.CopyData(value)
-                RaiseMovedEvent()
-            End Set
-        End Property
-
-        Public Overridable Property Rotation() As Framework.ScaledVector3
-            Get
-                Return m_svRotation
-            End Get
-            Set(ByVal value As Framework.ScaledVector3)
-                Me.SetSimData("Rotation", value.GetSimulationXml("Rotation"), True)
-                m_svRotation.CopyData(value)
-                RaiseRotatedEvent()
-            End Set
-        End Property
-
-        Public Overridable ReadOnly Property RadianRotation() As Framework.ScaledVector3
-            Get
-                Dim svRotation As New Framework.ScaledVector3(Me, "Rotation", "Radian Rotations", "rad", "rad")
-                svRotation.IgnoreChangeValueEvents = True
-                svRotation.X.ActualValue = Util.DegreesToRadians(CSng(m_svRotation.X.ActualValue))
-                svRotation.Y.ActualValue = Util.DegreesToRadians(CSng(m_svRotation.Y.ActualValue))
-                svRotation.Z.ActualValue = Util.DegreesToRadians(CSng(m_svRotation.Z.ActualValue))
-                svRotation.IgnoreChangeValueEvents = False
-                Return svRotation
-            End Get
-        End Property
-
-#End Region
-
-#Region " Color Properties "
-
-        Public Overridable Property Visible() As Boolean
-            Get
-                Return m_bVisible
-            End Get
-            Set(ByVal Value As Boolean)
-                SetSimData("Visible", Value.ToString(), True)
-                m_bVisible = Value
-            End Set
-        End Property
-
-        Public Overridable Property Transparencies() As BodyTransparencies
-            Get
-                Return m_Transparencies
-            End Get
-            Set(ByVal value As BodyTransparencies)
-                m_Transparencies = value
-            End Set
-        End Property
-
-        Public Overridable Property Ambient() As System.Drawing.Color
-            Get
-                Return m_clAmbient
-            End Get
-            Set(ByVal value As System.Drawing.Color)
-                SetSimData("Ambient", Util.SaveColorXml("Ambient", value), True)
-                m_clAmbient = value
-            End Set
-        End Property
-
-        Public Overridable Property Diffuse() As System.Drawing.Color
-            Get
-                Return m_clDiffuse
-            End Get
-            Set(ByVal value As System.Drawing.Color)
-                SetSimData("Diffuse", Util.SaveColorXml("Diffuse", value), True)
-                m_clDiffuse = value
-            End Set
-        End Property
-
-        Public Overridable Property Specular() As System.Drawing.Color
-            Get
-                Return m_clSpecular
-            End Get
-            Set(ByVal value As System.Drawing.Color)
-                SetSimData("Specular", Util.SaveColorXml("Specular", value), True)
-                m_clSpecular = value
-            End Set
-        End Property
-
-        Public Overridable Property Shininess() As Single
-            Get
-                Return m_fltShininess
-            End Get
-            Set(ByVal value As Single)
-                If (value < 0) Then
-                    Throw New System.Exception("Shininess must be greater than or equal to zero.")
-                End If
-                If (value > 128) Then
-                    Throw New System.Exception("Shininess must be less than 128.")
-                End If
-                SetSimData("Shininess", value.ToString(), True)
-                m_fltShininess = value
-            End Set
-        End Property
-
-        Public Overridable Property Texture() As String
-            Get
-                Return m_strTexture
-            End Get
-            Set(ByVal Value As String)
-                If Not Value Is Nothing Then
-                    Dim strPath As String, strFile As String
-                    If Util.DetermineFilePath(Value, strPath, strFile) Then
-                        Value = strFile
-                    End If
-                End If
-
-                'Check to see if the file exists.
-                If Value.Trim.Length > 0 Then
-                    If Not File.Exists(Value) Then
-                        Throw New System.Exception("The specified file does not exist: " & Value)
-                    End If
-
-                    'Attempt to load the file first to make sure it is a valid image file.
-                    Try
-                        Dim bm As New Bitmap(Value)
-                    Catch ex As System.Exception
-                        Throw New System.Exception("Unable to load the texture file. This does not appear to be a vaild image file.")
-                    End Try
-                End If
-
-                SetSimData("Texture", Value, True)
-                m_strTexture = Value
-
-            End Set
-        End Property
-
-#End Region
-
         <Browsable(False)> _
-        Public Overridable ReadOnly Property BodyPlanFile() As String
+        Public Overrides ReadOnly Property TypeName() As String
             Get
-                Return Me.Name & ".astl"
+                Return "Structure"
             End Get
         End Property
 
         <Browsable(False)> _
-        Public Overridable ReadOnly Property BodyPlanEditorFile() As String
+        Public Overrides ReadOnly Property DefaultVisualSelectionMode() As Simulation.enumVisualSelectionMode
             Get
-                Return Me.Name & ".abpe"
+                Return Simulation.enumVisualSelectionMode.SelectCollisions
             End Get
         End Property
 
@@ -381,60 +171,19 @@ Namespace DataObjects.Physical
 
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
-            m_strDescription = ""
 
-            m_clAmbient = Color.FromArgb(255, 25, 25, 25)
-            m_clDiffuse = Color.FromArgb(255, 255, 255, 255)
-            m_clSpecular = Color.FromArgb(255, 64, 64, 64)
-            m_fltShininess = 64
-            m_Transparencies = New BodyTransparencies(Me)
-
-            m_svPosition = New ScaledVector3(Me, "Position", "Location of the structure relative to the center of the world.", "Meters", "m")
-            m_svRotation = New ScaledVector3(Me, "Rotation", "Rotation of the object.", "Degrees", "Deg")
-
-            AddHandler m_svPosition.ValueChanged, AddressOf Me.OnPositionValueChanged
-            AddHandler m_svRotation.ValueChanged, AddressOf Me.OnRotationValueChanged
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Name", m_strName.GetType(), "Name", _
-                                        "Structure Properties", "The name for this structure. ", m_strName))
+            If propTable.Properties.Contains("Local Position") Then propTable.Properties.Remove("Local Position")
+            If propTable.Properties.Contains("World Position") Then propTable.Properties.Remove("World Position")
+            If propTable.Properties.Contains("Rotation") Then propTable.Properties.Remove("Rotation")
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("ID", Me.ID.GetType(), "ID", _
-                                        "Structure Properties", "ID", Me.ID, True))
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Body Plan", Me.BodyPlanFile.GetType(), "BodyPlanFile", _
-                                        "Structure Properties", "Sets the body plan file.", Me.BodyPlanFile, True))
-
-            Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = Me.Position.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Position", pbNumberBag.GetType(), "Position", _
+            Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = Me.LocalPosition.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Position", pbNumberBag.GetType(), "LocalPosition", _
                                         "Coordinates", "Sets the position of this structure.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Visible", m_bVisible.GetType(), "Visible", _
-                                        "Visibility", "Sets whether or not this part is visible in the simulation.", m_bVisible))
-
-            pbNumberBag = Me.Transparencies.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Transparencies", pbNumberBag.GetType(), "Transparencies", _
-                                        "Visibility", "Sets the transparencies for this part in the various selection modes.", pbNumberBag, _
-                                        "", GetType(BodyTransparencies.BodyTransparencyPropBagConverter)))
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Description", m_strDescription.GetType(), "Description", _
-                                        "Part Properties", "Sets the description for this body part.", m_strDescription, _
-                                        GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Ambient", m_clAmbient.GetType(), "Ambient", _
-                                        "Visibility", "Sets the ambient color for this item.", m_clAmbient))
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Diffuse", m_clDiffuse.GetType(), "Diffuse", _
-                                        "Visibility", "Sets the diffuse color for this item.", m_clDiffuse))
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Specular", m_clSpecular.GetType(), "Specular", _
-                                        "Visibility", "Sets the specular color for this item.", m_clSpecular))
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Shininess", m_fltShininess.GetType(), "Shininess", _
-                                        "Visibility", "Sets the shininess for this item.", m_fltShininess))
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Collision Exclusions", m_aryCollisionExclusionPairs.GetType(), "CollisionExclusionPairs", _
                                         "Structure Properties", "Pairs of body parts that should be excluded from collision detection between each other.", m_aryCollisionExclusionPairs, _
@@ -444,11 +193,8 @@ Namespace DataObjects.Physical
 
         Public Overrides Sub ClearIsDirty()
             MyBase.ClearIsDirty()
-            If Not m_svPosition Is Nothing Then m_svPosition.ClearIsDirty()
-            If Not m_svRotation Is Nothing Then m_svRotation.ClearIsDirty()
             If Not m_dbRoot Is Nothing Then m_dbRoot.ClearIsDirty()
             If Not m_aryCollisionExclusionPairs Is Nothing Then m_aryCollisionExclusionPairs.ClearIsDirty()
-            If Not m_Transparencies Is Nothing Then m_Transparencies.ClearIsDirty()
         End Sub
 
         Public Overrides Sub AfterClone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -466,26 +212,11 @@ Namespace DataObjects.Physical
 
             Dim doOrig As AnimatGUI.DataObjects.Physical.PhysicalStructure = DirectCast(doOriginal, PhysicalStructure)
 
-            m_strName = doOrig.m_strName
-            m_strDescription = doOrig.m_strDescription
-            m_strStructureType = doOrig.m_strStructureType
             If Not doOrig.WorkspaceImage Is Nothing Then m_WorkspaceImage = DirectCast(doOrig.WorkspaceImage.Clone(), Image)
             If Not doOrig.m_DragImage Is Nothing Then m_DragImage = DirectCast(doOrig.m_DragImage.Clone(), Image)
             If Not doOrig.RootBody Is Nothing Then m_dbRoot = DirectCast(doOrig.RootBody.Clone(Me, bCutData, doRoot), RigidBody)
 
-            m_svPosition = DirectCast(doOrig.m_svPosition.Clone(Me, bCutData, doRoot), Framework.ScaledVector3)
-            m_svRotation = DirectCast(doOrig.m_svRotation.Clone(Me, bCutData, doRoot), Framework.ScaledVector3)
-
-            m_Transparencies = DirectCast(doOrig.m_Transparencies.Clone(Me, bCutData, doRoot), BodyTransparencies)
-            m_bVisible = doOrig.m_bVisible
-
-            m_clAmbient = doOrig.m_clAmbient
-            m_clDiffuse = doOrig.m_clDiffuse
-            m_clSpecular = doOrig.m_clSpecular
-            m_fltShininess = doOrig.m_fltShininess
-            m_strTexture = doOrig.m_strTexture
-
-            m_frmBodyEditor = doOrig.m_frmBodyEditor
+            'm_frmBodyEditor = doOrig.m_frmBodyEditor
             m_iNewBodyIndex = doOrig.m_iNewBodyIndex
             m_iNewJointIndex = doOrig.m_iNewJointIndex
 
@@ -500,9 +231,6 @@ Namespace DataObjects.Physical
                 doFoundBody = Me.FindBodyPartByName(doOrigPair.Part2.Name)
                 m_aryCollisionExclusionPairs.Add(New CollisionPair(Me, DirectCast(doOrigBody, RigidBody), DirectCast(doFoundBody, RigidBody)))
             Next
-
-            AddHandler m_svPosition.ValueChanged, AddressOf Me.OnPositionValueChanged
-            AddHandler m_svRotation.ValueChanged, AddressOf Me.OnRotationValueChanged
 
         End Sub
 
@@ -550,7 +278,7 @@ Namespace DataObjects.Physical
             Return bpPart
         End Function
 
-        Public Overridable Sub SetupInitialTransparencies()
+        Public Overrides Sub SetupInitialTransparencies()
             If Not m_Transparencies Is Nothing Then
                 m_Transparencies.GraphicsTransparency = 50
                 m_Transparencies.CollisionsTransparency = 50
@@ -631,9 +359,9 @@ Namespace DataObjects.Physical
 
             DeleteBodyPartInternal(bpPart)
 
-            If Not Me.BodyEditor Is Nothing Then
-                'Me.ManualAddHistory(New AnimatGUI.Framework.UndoSystem.DeleteBodyPartEvent(Me.BodyEditor, Me, bpParentPart, bpDeletedPart))
-            End If
+            'If Not Me.BodyEditor Is Nothing Then
+            '    'Me.ManualAddHistory(New AnimatGUI.Framework.UndoSystem.DeleteBodyPartEvent(Me.BodyEditor, Me, bpParentPart, bpDeletedPart))
+            'End If
         End Sub
 
         Protected Overridable Sub DeleteBodyPartInternal(ByVal bpPart As AnimatGUI.DataObjects.Physical.BodyPart)
@@ -832,13 +560,7 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
-
-            If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
-                m_doInterface = New Interfaces.DataObjectInterface(Util.Application.SimulationInterface, Me.ID)
-                AddHandler m_doInterface.OnPositionChanged, AddressOf Me.OnPositionChanged
-                AddHandler m_doInterface.OnRotationChanged, AddressOf Me.OnRotationChanged
-                AddHandler m_doInterface.OnSelectionChanged, AddressOf Me.OnSelectionChanged
-            End If
+            MyBase.InitializeSimulationReferences()
 
             If Not m_dbRoot Is Nothing Then
                 m_dbRoot.InitializeSimulationReferences()
@@ -846,28 +568,12 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overridable Overloads Sub LoadData(ByRef oXml As Interfaces.StdXml)
+            MyBase.LoadData(oXml)
 
             Try
                 oXml.IntoElem()
 
-                m_strName = oXml.GetChildString("Name")
-                m_strID = oXml.GetChildString("ID", System.Guid.NewGuid().ToString())
-                m_strStructureType = oXml.GetChildString("Type", m_strStructureType)
-
-                m_strDescription = oXml.GetChildString("Description", "")
-                m_Transparencies.LoadData(oXml)
-                m_bVisible = oXml.GetChildBool("IsVisible", m_bVisible)
-
-                m_svPosition.LoadData(oXml, "Position")
-                m_svRotation.LoadData(oXml, "Rotation")
-
-                m_clAmbient = Util.LoadColor(oXml, "Ambient", m_clAmbient)
-                m_clDiffuse = Util.LoadColor(oXml, "Diffuse", m_clDiffuse)
-                m_clSpecular = Util.LoadColor(oXml, "Specular", m_clSpecular)
-                m_fltShininess = oXml.GetChildFloat("Shininess", m_fltShininess)
-
-                m_strTexture = oXml.GetChildString("Texture", m_strTexture)
-                m_strTexture = Util.VerifyFilePath(m_strTexture)
+                'm_strStructureType = oXml.GetChildString("Type", m_strStructureType)
 
                 If oXml.FindChildElement("RigidBody", False) Then
                     m_dbRoot = DirectCast(Util.Simulation.CreateObject(oXml, "RigidBody", Me), DataObjects.Physical.RigidBody)
@@ -912,27 +618,13 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overridable Overloads Sub SaveData(ByRef oXml As Interfaces.StdXml)
+            MyBase.SaveData(oXml, "Structure")
 
             Try
-                oXml.AddChildElement("Structure")
+
                 oXml.IntoElem()
 
-                oXml.AddChildElement("ID", m_strID)
-                oXml.AddChildElement("Name", m_strName)
-                oXml.AddChildElement("Type", m_strStructureType)
-
-                oXml.AddChildElement("Description", m_strDescription)
-                m_Transparencies.SaveData(oXml)
-                oXml.AddChildElement("IsVisible", m_bVisible)
-
-                Util.SaveColor(oXml, "Ambient", m_clAmbient)
-                Util.SaveColor(oXml, "Diffuse", m_clDiffuse)
-                Util.SaveColor(oXml, "Specular", m_clSpecular)
-                oXml.AddChildElement("Shininess", m_fltShininess)
-                oXml.AddChildElement("Texture", m_strTexture)
-
-                m_svPosition.SaveData(oXml, "Position")
-                m_svRotation.SaveData(oXml, "Rotation")
+                oXml.AddChildElement("Type", "Basic")
 
                 If Not m_dbRoot Is Nothing Then
                     m_dbRoot.SaveData(Me, oXml)
@@ -955,27 +647,12 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+            MyBase.SaveSimulationXml(oXml, nmParentControl, "Structure")
 
             Try
-                oXml.AddChildElement("Structure")
                 oXml.IntoElem()
 
-                oXml.AddChildElement("ID", m_strID)
-                oXml.AddChildElement("Name", m_strName)
-                oXml.AddChildElement("Type", m_strStructureType)
-
-                oXml.AddChildElement("Description", m_strDescription)
-                m_Transparencies.SaveSimulationXml(oXml, Me)
-                oXml.AddChildElement("IsVisible", m_bVisible)
-
-                Util.SaveColor(oXml, "Ambient", m_clAmbient)
-                Util.SaveColor(oXml, "Diffuse", m_clDiffuse)
-                Util.SaveColor(oXml, "Specular", m_clSpecular)
-                oXml.AddChildElement("Shininess", m_fltShininess)
-                oXml.AddChildElement("Texture", m_strTexture)
-
-                m_svPosition.SaveSimulationXml(oXml, Me, "Position")
-                m_svRotation.SaveSimulationXml(oXml, Me, "Rotation")
+                oXml.AddChildElement("Type", "Basic")
 
                 If Not m_dbRoot Is Nothing Then
                     m_dbRoot.SaveSimulationXml(oXml, Me)
@@ -1014,72 +691,7 @@ Namespace DataObjects.Physical
 
         'End Sub
 
-        Public Overridable Sub RenameFiles(ByVal strOriginalName As String)
-            Dim strExtension As String, strNewFile As String
-
-            If Util.Application.ProjectPath.Trim.Length > 0 AndAlso strOriginalName.Trim.Length > 0 Then
-                Dim di As DirectoryInfo = New DirectoryInfo(Util.Application.ProjectPath)
-                Dim fiFiles As FileInfo() = di.GetFiles(strOriginalName & ".*")
-
-                For Each fiFile As FileInfo In fiFiles
-                    strExtension = Util.GetFileExtension(fiFile.Name)
-                    strNewFile = Util.GetFilePath(Util.Application.ProjectPath, (Me.Name & "." & strExtension))
-
-                    fiFile.MoveTo(strNewFile)
-                Next
-            End If
-
-        End Sub
-
-        Public Overridable Sub RemoveFiles()
-
-            If Util.Application.ProjectPath.Trim.Length > 0 Then
-                Dim di As DirectoryInfo = New DirectoryInfo(Util.Application.ProjectPath)
-                Dim fiFiles As FileInfo() = di.GetFiles(Me.Name & ".*")
-
-                For Each fiFile As FileInfo In fiFiles
-                    fiFile.Delete()
-                Next
-            End If
-
-        End Sub
-
 #End Region
-
-        Protected Overridable Sub CheckForUniqueneName(ByVal strName As String)
-
-            Dim doOrganism As DataObjects.Physical.PhysicalStructure
-            If Not Me.Structures(Util.Application.Simulation) Is Nothing Then
-                For Each deEntry As DictionaryEntry In Me.Structures(Util.Application.Simulation)
-                    doOrganism = DirectCast(deEntry.Value, DataObjects.Physical.PhysicalStructure)
-
-                    If Not doOrganism Is Me Then
-                        If doOrganism.Name.Trim.ToUpper = strName.Trim.ToUpper Then
-                            Throw New System.Exception("The name '" & doOrganism.Name & "' is already being used. Please choose a different name.")
-                        End If
-                    End If
-                Next
-            End If
-
-        End Sub
-
-        Protected Overridable Sub RenameWindowTitles()
-
-            Try
-
-                If Not Me.BodyEditor Is Nothing Then
-                    Me.BodyEditor.Title = "Edit " & Me.Name
-
-                    'If Not Me.BodyPlanStructureNode Is Nothing Then
-                    '    Me.BodyPlanStructureNode.Text = Me.Name
-                    'End If
-                End If
-
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            End Try
-
-        End Sub
 
         Public Overridable Sub ClearSelectedBodyParts()
             If Not m_dbRoot Is Nothing Then
@@ -1129,13 +741,12 @@ Namespace DataObjects.Physical
                     Next
 
 
-                    If Not Me.Structures(Util.Application.Simulation) Is Nothing Then
-                        Me.Structures(Util.Application.Simulation).Remove(Me.ID)
+                    If Not Util.Environment.Structures Is Nothing Then
+                        Util.Environment.Structures.Remove(Me.ID)
                     End If
                     Me.RemoveWorksapceTreeView()
                     m_tnWorkspaceNode = Nothing
                     m_tnBodyPlanNode = Nothing
-                    Me.RemoveFiles()
 
                     Util.Application.RemoveBodyEditorForm(Me)
 
@@ -1175,10 +786,6 @@ Namespace DataObjects.Physical
 
 #Region " Events "
 
-        Public Event Moved(ByRef bpPart As AnimatGUI.DataObjects.Physical.BodyPart)
-        Public Event Rotated(ByRef bpPart As AnimatGUI.DataObjects.Physical.BodyPart)
-        Public Event Sized(ByRef doStruct As AnimatGUI.DataObjects.Physical.PhysicalStructure)
-
         Protected Overridable Sub OnCloneStructure(ByVal sender As Object, ByVal e As System.EventArgs)
 
             Try
@@ -1209,137 +816,6 @@ Namespace DataObjects.Physical
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
 
-        End Sub
-
-
-        'All events coming up from the DataObjectInterface are actually coming from a different thread.
-        'The one for the simulation. This means that we have to use BeginInvoke to recall a different 
-        'method on the GUI thread or it will cause big problems. So all of these methods do that.
-
-        Protected Overridable Sub PositionChangedHandler()
-            Try
-                If Not m_doInterface Is Nothing Then
-
-                    m_svPosition.CopyData(m_doInterface.Position(0), m_doInterface.Position(1), m_doInterface.Position(2))
-                    'm_svWorldPosition.CopyData(m_doInterface.WorldPosition(0), m_doInterface.WorldPosition(1), m_doInterface.WorldPosition(2))
-
-                    RaiseMovedEvent()
-
-                    Util.Application.ProjectProperties.RefreshProperties()
-                End If
-
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            End Try
-        End Sub
-
-        Protected Overridable Sub OnPositionChanged()
-
-            Try
-                Util.Application.BeginInvoke(New PositionChangedDelegate(AddressOf Me.PositionChangedHandler), Nothing)
-
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            End Try
-
-        End Sub
-
-        Protected Overridable Sub RotationChangedHandler()
-            Try
-                If Not m_doInterface Is Nothing Then
-
-                    m_svRotation.IgnoreChangeValueEvents = True
-                    m_svRotation.X.ActualValue = Util.RadiansToDegrees(CSng(m_doInterface.Rotation(0)))
-                    m_svRotation.Y.ActualValue = Util.RadiansToDegrees(CSng(m_doInterface.Rotation(1)))
-                    m_svRotation.Z.ActualValue = Util.RadiansToDegrees(CSng(m_doInterface.Rotation(2)))
-                    m_svRotation.IgnoreChangeValueEvents = False
-
-                    RaiseRotatedEvent()
-
-                    Util.Application.ProjectProperties.RefreshProperties()
-                End If
-
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            End Try
-        End Sub
-
-        Protected Overridable Sub OnRotationChanged()
-
-            Try
-                Util.Application.BeginInvoke(New RotationChangedDelegate(AddressOf Me.RotationChangedHandler), Nothing)
-
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            End Try
-        End Sub
-
-        Protected Overridable Sub SelectionChangedHandler(ByVal bSelected As Boolean, ByVal bSelectMultiple As Boolean)
-            Try
-                If bSelected Then
-                    Me.SelectItem(bSelectMultiple)
-                Else
-                    Me.DeselectItem()
-                End If
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            End Try
-        End Sub
-
-        Protected Overridable Sub OnSelectionChanged(ByVal bSelected As Boolean, ByVal bSelectMultiple As Boolean)
-            Try
-                Dim aryObjs(1) As Object
-                aryObjs(0) = bSelected
-                aryObjs(1) = bSelectMultiple
-                Util.Application.BeginInvoke(New SelectionChangedDelegate(AddressOf Me.SelectionChangedHandler), aryObjs)
-
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            End Try
-        End Sub
-
-        ''' \brief  Raises the moved event.
-        '''
-        ''' \author dcofer
-        ''' \date   5/9/2011
-        Protected Sub RaiseMovedEvent()
-            'If Not Me.RootBody Is Nothing Then
-            '    Dim bpPart As BodyPart = DirectCast(Me.RootBody, BodyPart)
-            '    RaiseEvent Moved(bpPart)
-            'End If
-        End Sub
-
-        ''' \brief  Raises the rotated event.
-        '''
-        ''' \author dcofer
-        ''' \date   5/9/2011
-        Protected Sub RaiseRotatedEvent()
-            'If Not Me.RootBody Is Nothing Then
-            '    Dim bpPart As BodyPart = DirectCast(Me.RootBody, BodyPart)
-            '    RaiseEvent Rotated(bpPart)
-            'End If
-        End Sub
-
-        'These three events handlers are called whenever a user manually changes the value of the position or rotation.
-        'This is different from the OnPositionChanged event. Those events come up from the simulation.
-        Protected Overridable Sub OnPositionValueChanged()
-            Try
-                Me.SetSimData("Position", m_svPosition.GetSimulationXml("Position"), True)
-                Util.ProjectProperties.RefreshProperties()
-                RaiseMovedEvent()
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            End Try
-        End Sub
-
-        Protected Overridable Sub OnRotationValueChanged()
-            Try
-                Me.SetSimData("Rotation", Me.RadianRotation.GetSimulationXml("Rotation"), True)
-                Util.ProjectProperties.RefreshProperties()
-                RaiseRotatedEvent()
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            End Try
         End Sub
 
 #End Region

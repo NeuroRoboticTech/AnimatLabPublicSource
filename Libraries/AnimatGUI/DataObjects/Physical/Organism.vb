@@ -38,12 +38,6 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
-        Protected Overrides ReadOnly Property Structures(ByVal dsSim As AnimatGUI.DataObjects.Simulation) As Collections.SortedStructures
-            Get
-                Return dsSim.Environment.Organisms
-            End Get
-        End Property
-
         Protected Overrides ReadOnly Property ParentTreeNode(ByVal dsSim As AnimatGUI.DataObjects.Simulation) As Crownwood.DotNetMagic.Controls.Node
             Get
                 Return dsSim.Environment.OrganismsTreeNode
@@ -92,19 +86,18 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
-        <Browsable(False)> _
-        Public Overrides ReadOnly Property RootForm() As System.Windows.Forms.Form
-            Get
-                If Not m_frmBehaviorEditor Is Nothing AndAlso Util.Application.ActiveMdiChild Is m_frmBehaviorEditor Then
-                    Return m_frmBehaviorEditor
-                ElseIf Not m_frmBodyEditor Is Nothing AndAlso Util.Application.ActiveMdiChild Is m_frmBodyEditor Then
-                    Return m_frmBodyEditor
-                Else
-                    Return Util.Application
-                End If
-            End Get
-        End Property
-
+        '<Browsable(False)> _
+        'Public Overrides ReadOnly Property RootForm() As System.Windows.Forms.Form
+        '    Get
+        '        If Not m_frmBehaviorEditor Is Nothing AndAlso Util.Application.ActiveMdiChild Is m_frmBehaviorEditor Then
+        '            Return m_frmBehaviorEditor
+        '        ElseIf Not m_frmBodyEditor Is Nothing AndAlso Util.Application.ActiveMdiChild Is m_frmBodyEditor Then
+        '            Return m_frmBodyEditor
+        '        Else
+        '            Return Util.Application
+        '        End If
+        '    End Get
+        'End Property
 
 #End Region
 
@@ -133,8 +126,8 @@ Namespace DataObjects.Physical
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("ID", Me.ID.GetType(), "ID", _
                                         "Organism Properties", "ID", Me.ID, True))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Body Plan", Me.BodyPlanFile.GetType(), "BodyPlanFile", _
-                                        "Organism Properties", "Specifies the body plan file.", Me.BodyPlanFile, True))
+            'propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Body Plan", Me.BodyPlanFile.GetType(), "BodyPlanFile", _
+            '                            "Organism Properties", "Specifies the body plan file.", Me.BodyPlanFile, True))
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Behavioral System", Me.BehavioralSystemFile.GetType(), "BehavioralSystemFile", _
                                         "Organism Properties", "Specifies the behavioral system file.", Me.BehavioralSystemFile, True))
@@ -142,7 +135,7 @@ Namespace DataObjects.Physical
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Behavioral Editor", Me.BehavioralEditorFile.GetType(), "BehavioralEditorFile", _
                                         "Organism Properties", "Specifies the behavioral editor file.", Me.BehavioralEditorFile, True))
 
-            Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = Me.Position.Properties
+            Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = Me.LocalPosition.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Position", pbNumberBag.GetType(), "Position", _
                                         "Structure Properties", "Sets the position of this structure.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
@@ -661,21 +654,6 @@ Namespace DataObjects.Physical
             End If
         End Sub
 
-        Protected Overrides Sub RenameWindowTitles()
-
-            Try
-
-                MyBase.RenameWindowTitles()
-
-                If Not Me.BehaviorEditor Is Nothing Then
-                    Me.BehaviorEditor.Title = "Edit " & Me.Name
-                End If
-
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            End Try
-
-        End Sub
 
         Public Overrides Sub InitializeAfterLoad()
             MyBase.InitializeAfterLoad()

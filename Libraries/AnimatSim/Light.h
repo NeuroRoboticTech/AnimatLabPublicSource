@@ -23,6 +23,17 @@ namespace AnimatSim
 		class ANIMAT_PORT Light : public AnimatBase, public MovableItem
 		{
 		protected:
+			/// The radius of the sphere
+			float m_fltRadius;
+
+			/// Number of segments along the latitude direction that are used to build the sphere.
+			int m_iLatitudeSegments;
+
+			/// Number of segments along the longtitude direction that are used to build the sphere.
+			int m_iLongtitudeSegments;
+
+			/// Zero-based index of the light number. OSG only allows 8 lights.
+			int m_iLightNum;
 
 			virtual void UpdateData();
 
@@ -33,6 +44,36 @@ namespace AnimatSim
 #pragma region AccessorMutators
 
 			virtual void Resize();
+
+			/**
+			\brief	Gets the radius. 
+
+			\author	dcofer
+			\date	3/4/2011
+
+			\return	the radius. 
+			**/
+			virtual float Radius();
+
+			/**
+			\brief	Sets the radius. 
+
+			\author	dcofer
+			\date	3/4/2011
+
+			\param	fltVal		The new value. 
+			\param	bUseScaling	true to use unit scaling on entered value. 
+			**/
+			virtual void Radius(float fltVal, BOOL bUseScaling = TRUE);
+
+			virtual void LatitudeSegments(int iVal);
+			virtual int LatitudeSegments();
+			
+			virtual void LongtitudeSegments(int iVal);
+			virtual int LongtitudeSegments();
+
+			virtual void LightNumber(int iVal);
+			virtual int LightNumber();
 
 #pragma endregion
 

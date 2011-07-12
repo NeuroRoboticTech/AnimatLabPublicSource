@@ -6,6 +6,7 @@
 #include "VsJoint.h"
 #include "VsRigidBody.h"
 #include "VsStructure.h"
+#include "VsLight.h"
 #include "VsSimulator.h"
 #include "VsOsgUserData.h"
 #include "VsSimulationWindow.h"

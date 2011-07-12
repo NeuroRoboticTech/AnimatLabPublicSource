@@ -32,6 +32,7 @@ namespace VortexAnimatSim
 		virtual Hud *CreateHud(string strType, BOOL bThrowError = TRUE);
 		virtual MaterialPair *CreateMaterialItem(string strType, BOOL bThrowError = TRUE);
 		virtual SimulationWindow *CreateWindowItem(string strType, BOOL bThrowError = TRUE);
+		virtual Light *CreateLight(string strType, BOOL bThrowError = TRUE);
 
 		virtual CStdSerialize *CreateObject(string strClassType, string strObjectType, BOOL bThrowError = TRUE);
 	};

@@ -27,6 +27,9 @@ namespace VortexAnimatSim
 
 				VsStructure *GetVsStucture() {return dynamic_cast<VsStructure *>(m_lpItem);};
 				Structure *GetStructure() {return dynamic_cast<Structure *>(m_lpItem);};
+
+				//VsLight *GetVsLight() {return dynamic_cast<VsLight *>(m_lpItem);};
+				Light *GetLight() {return dynamic_cast<Light *>(m_lpItem);};
 		};
 
 	}// end Visualization

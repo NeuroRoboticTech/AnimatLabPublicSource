@@ -16,6 +16,7 @@
 
 //#include "VsSimulationRecorder.h"
 #include "VsMouseSpring.h"
+#include "VsLight.h"
 #include "VsCameraManipulator.h"
 #include "VsDragger.h"
 #include "MeshMinVertexDistanceVisitor.h"
@@ -238,7 +239,6 @@ void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
 	//to the root of the simulation
 	m_grpScene = new osg::Group;	
     m_grpScene->setName("World");
-    CreateLights();
 
 	//Add the mouse spring lines to the scene
 	m_grpScene->addChild(VsMouseSpring::GetInstance()->GetNode());
@@ -249,6 +249,17 @@ void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
 	//Create the command manager if needed.
 	if(!m_osgCmdMgr.valid())
 	    m_osgCmdMgr = new osgManipulator::CommandManager;
+
+	m_osgLightGroup = new osg::Group;
+	m_grpScene->addChild(m_osgLightGroup.get());
+
+    osg::StateSet* rootStateSet = m_grpScene->getOrCreateStateSet();
+	rootStateSet->setMode( GL_LIGHTING, osg::StateAttribute::ON );
+	rootStateSet->setMode( GL_LIGHT0, osg::StateAttribute::ON );
+	rootStateSet->setMode( GL_LIGHT1, osg::StateAttribute::ON );
+
+	m_oLightMgr.Initialize();
+    //CreateLights();
 }
 
 	//TODO Add to sim
@@ -500,7 +511,8 @@ VsSimulator *VsSimulator::ConvertSimulator(Simulator *lpSim)
 void VsSimulator::Save(string strFile) 
 {
 	//Temp code. Lets save it out and make sure the collision stuff is actually correct.
-	VxPersistence::saveFrame(strFile.c_str(), VxPersistence::kAutoGenerateGraphics);
+	//VxPersistence::saveFrame(strFile.c_str(), VxPersistence::kAutoGenerateGraphics);
+	osgDB::writeNodeFile(*OSGRoot(), strFile.c_str());
 }
 
 

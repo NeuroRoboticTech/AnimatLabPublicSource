@@ -114,5 +114,8 @@
 #define Vs_Err_lHudProjectionNotDefined -4037
 #define Vs_Err_strHudProjectionNotDefined "The heads-up display projection variable was not defined."
 
+#define Vs_Err_lInvalidLightType -4038
+#define Vs_Err_strInvalidLightType "Invalid light type."
+
 #endif // __VS_ERROR_CONSTANTS_H__
 

@@ -45,6 +45,8 @@
 #include "VsSimulationWindow.h"
 #include "VsDragger.h"
 
+#include "VsLight.h"
+
 namespace VortexAnimatSim
 {
 
@@ -666,6 +668,43 @@ catch(...)
 
 // ************* Material Type Conversion functions ******************************
 
+// ************* Light Conversion functions ******************************
+
+Light *VsClassFactory::CreateLight(string strType, BOOL bThrowError)
+{
+	Light *lpItem=NULL;
+
+try
+{
+	strType = Std_ToUpper(Std_Trim(strType));
+
+	if(strType == "LIGHT")
+		lpItem = new VsLight;
+	else
+	{
+		lpItem = NULL;
+		if(bThrowError)
+			THROW_PARAM_ERROR(Vs_Err_lInvalidLightType, Vs_Err_strInvalidLightType, "Light Type", strType);
+	}
+
+	return lpItem;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpItem) delete lpItem;
+	RELAY_ERROR(oError); 
+	return NULL;
+}
+catch(...)
+{
+	if(lpItem) delete lpItem;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+// ************* Light Conversion functions ******************************
+
 // ************* IStdClassFactory functions ******************************
 
 CStdSerialize *VsClassFactory::CreateObject(string strClassType, string strObjectType, BOOL bThrowError)
@@ -704,6 +743,8 @@ CStdSerialize *VsClassFactory::CreateObject(string strClassType, string strObjec
 		lpObject = CreateMaterialItem(strObjectType, bThrowError);
 	else if(strClassType == "SIMULATIONWINDOW")
 		lpObject = CreateWindowItem(strObjectType, bThrowError);
+	else if(strClassType == "LIGHT")
+		lpObject = CreateLight(strObjectType, bThrowError);
 	else
 	{
 		lpObject = NULL;

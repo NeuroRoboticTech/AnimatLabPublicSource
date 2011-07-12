@@ -422,17 +422,17 @@ Namespace DataObjects.Physical.Bodies
 
 #Region " Events "
 
-        Protected Sub OnAttachmentMoved(ByRef bpPart As AnimatGUI.DataObjects.Physical.BodyPart)
+        Protected Sub OnAttachmentMoved(ByRef miPart As AnimatGUI.DataObjects.Physical.MovableItem)
             Try
-                Me.SetSimData("AttachedPartMovedOrRotated", bpPart.ID, True)
+                Me.SetSimData("AttachedPartMovedOrRotated", miPart.ID, True)
             Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
         End Sub
 
-        Protected Sub OnAttachmentRotated(ByRef bpPart As AnimatGUI.DataObjects.Physical.BodyPart)
+        Protected Sub OnAttachmentRotated(ByRef miPart As AnimatGUI.DataObjects.Physical.MovableItem)
             Try
-                Me.SetSimData("AttachedPartMovedOrRotated", bpPart.ID, True)
+                Me.SetSimData("AttachedPartMovedOrRotated", miPart.ID, True)
             Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

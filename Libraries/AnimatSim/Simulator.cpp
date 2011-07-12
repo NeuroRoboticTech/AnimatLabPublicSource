@@ -35,6 +35,8 @@
 #include "SimulationRecorder.h"
 #include "OdorType.h"
 #include "Odor.h"
+#include "Light.h"
+#include "LightManager.h"
 #include "Simulator.h"
 
 namespace AnimatSim
@@ -145,6 +147,7 @@ Simulator::Simulator()
 	m_oDataChartMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
 	m_oExternalStimuliMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
 	m_oMaterialMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
+	m_oLightMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
 }
 
 /**
@@ -354,6 +357,16 @@ ExternalStimuliMgr *Simulator::ExternalStimuliMgr() {return &m_oExternalStimuliM
 \return	Pointer to SimulationRecorder.
 **/
 SimulationRecorder *Simulator::SimulationRecorder() {return m_lpSimRecorder;}
+
+/**
+\brief	Gets the light manager.
+
+\author	dcofer
+\date	7/9/2011
+
+\return	Pointer to the light manager.
+**/
+LightManager *Simulator::LightMgr() {return &m_oLightMgr;}
 
 /**
 \brief	Gets the material manager.
@@ -1685,6 +1698,7 @@ void Simulator::Reset()
 	m_oDataChartMgr.Reset();
 	m_oExternalStimuliMgr.Reset();
 	m_oMaterialMgr.Reset();
+	m_oLightMgr.Reset();
 	if(m_lpSimRecorder)
 	{
 		delete m_lpSimRecorder;
@@ -1757,6 +1771,7 @@ void Simulator::ResetSimulation()
 
 	m_oDataChartMgr.ResetSimulation();
 	m_oExternalStimuliMgr.ResetSimulation();
+	m_oLightMgr.ResetSimulation();
 	
 	if(m_lpSimRecorder)
 		m_lpSimRecorder->ResetSimulation();
@@ -2129,6 +2144,7 @@ void Simulator::Load(CStdXml &oXml)
 	LoadEnvironment(oXml);
 	m_oDataChartMgr.Load(oXml);
 	m_oMaterialMgr.Load(oXml);
+
 	if(m_lpWinMgr) 
 		m_lpWinMgr->Load(oXml);
 
@@ -2260,6 +2276,8 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 		oXml.OutOfElem(); //OutOf Structures Element
 
 	}
+
+	m_oLightMgr.Load(oXml);
 
 	oXml.OutOfElem(); //OutOf Environment Element
 
@@ -3421,6 +3439,8 @@ BOOL Simulator::AddItem(string strItemType, string strXml, BOOL bThrowError)
 		return m_oExternalStimuliMgr.AddStimulus(strXml);
 	else if(strType == "DATACHART")
 		return m_oDataChartMgr.AddDataChart(strXml);
+	else if(strType == "LIGHT")
+		return m_oLightMgr.AddItem(strItemType, strXml, bThrowError);
 	else if(strType == "STRUCTURE")
 	{
 		AddStructure(strXml);
@@ -3453,6 +3473,8 @@ BOOL Simulator::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 		return m_oExternalStimuliMgr.RemoveStimulus(strID);
 	else if(strType == "DATACHART")
 		return m_oDataChartMgr.RemoveDataChart(strID);
+	else if(strType == "LIGHT")
+		return m_oLightMgr.RemoveItem(strItemType, strID, bThrowError);
 	else if(strType == "STRUCTURE")
 	{
 		RemoveStructure(strID);

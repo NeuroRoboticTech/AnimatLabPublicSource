@@ -23,21 +23,35 @@ DataObjectInterface::DataObjectInterface(Interfaces::SimulatorInterface ^SimInt,
 
 	//If this is a bodypart or struture type then lets add the callbacks to it so those
 	//classes can fire managed events back up to the gui.
-	MovableItemCallback *lpCallback = NULL;
-	BodyPart *lpPart = dynamic_cast<BodyPart *>(m_lpBase);
-	Structure *lpStruct = dynamic_cast<Structure *>(m_lpBase);
-	if(lpPart)
+	if(m_lpMovable)
 	{
+		MovableItemCallback *lpCallback = NULL;
 		lpCallback = new MovableItemCallback(this);
-		lpPart->Callback(lpCallback);
+		m_lpMovable->Callback(lpCallback);
 		GetPointers();
 	}
-	else if(lpStruct)
-	{
-		lpCallback = new MovableItemCallback(this);
-		lpStruct->Callback(lpCallback);
-		GetPointers();
-	}
+
+	//BodyPart *lpPart = dynamic_cast<BodyPart *>(m_lpBase);
+	//Structure *lpStruct = dynamic_cast<Structure *>(m_lpBase);
+	//Light *lpLight = dynamic_cast<Light *>(m_lpBase);
+	//if(lpPart || lpStruct || lpLight)
+	//{
+	//	lpCallback = new MovableItemCallback(this);
+	//	lpPart->Callback(lpCallback);
+	//	GetPointers();
+	//}
+	//else if(lpStruct)
+	//{
+	//	lpCallback = new MovableItemCallback(this);
+	//	lpStruct->Callback(lpCallback);
+	//	GetPointers();
+	//}
+	//else if(lpLight)
+	//{
+	//	lpCallback = new MovableItemCallback(this);
+	//	lpStruct->Callback(lpCallback);
+	//	GetPointers();
+	//}
 }
 
 DataObjectInterface::!DataObjectInterface()

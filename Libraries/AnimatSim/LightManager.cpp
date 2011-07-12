@@ -31,6 +31,8 @@
 #include "SimulationRecorder.h"
 #include "OdorType.h"
 #include "Odor.h"
+#include "Light.h"
+#include "LightManager.h"
 #include "Simulator.h"
 
 namespace AnimatSim
@@ -69,13 +71,50 @@ LightManager::~LightManager(void)
 void LightManager::SetupLights()
 {}
 
+
+/**
+\brief	Creates and adds a light. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml	The xml data packet for loading the light. 
+**/
+void LightManager::AddLight(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Light");
+
+	Light *lpLight = LoadLight(oXml);
+
+	lpLight->Create();
+}
+
+/**
+\brief	Removes the light with the specified ID. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strID	ID of the light to remove
+\param	bThrowError	If true and ID is not found then it will throw an error.
+\exception If bThrowError is true and ID is not found.
+**/
+void LightManager::RemoveLight(string strID, BOOL bThrowError)
+{
+	int iPos = FindChildListPos(strID, bThrowError);
+	m_aryLights.RemoveAt(iPos);
+}
+
 BOOL LightManager::AddItem(string strItemType, string strXml, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 
-	if(strType == "RIGIDBODY")
+	if(strType == "LIGHT")
 	{
-		//AddRigidBody(strXml);
+		AddLight(strXml);
 		return TRUE;
 	}
 
@@ -90,9 +129,9 @@ BOOL LightManager::RemoveItem(string strItemType, string strID, BOOL bThrowError
 {
 	string strType = Std_CheckString(strItemType);
 
-	if(strType == "RIGIDBODY")
+	if(strType == "LIGHT")
 	{
-		//RemoveRigidBody(strID);
+		RemoveLight(strID);
 		return TRUE;
 	}
 
@@ -103,9 +142,59 @@ BOOL LightManager::RemoveItem(string strItemType, string strID, BOOL bThrowError
 	return FALSE;
 }
 
+/**
+\brief	Finds the array index for the light with the specified ID
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strID ID of light to find
+\param	bThrowError	If true and ID is not found then it will throw an error, else return NULL
+\exception If bThrowError is true and ID is not found.
+
+\return	If bThrowError is false and ID is not found returns NULL, 
+else returns the pointer to the found part.
+**/
+int LightManager::FindChildListPos(string strID, BOOL bThrowError)
+{
+	string sID = Std_ToUpper(Std_Trim(strID));
+
+	int iCount = m_aryLights.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(m_aryLights[iIndex]->ID() == sID)
+			return iIndex;
+
+	if(bThrowError)
+		THROW_TEXT_ERROR(Al_Err_lBodyOrJointIDNotFound, Al_Err_strBodyOrJointIDNotFound, "ID");
+
+	return -1;
+}
+
+void LightManager::Initialize()
+{
+	int iCount = m_aryLights.GetSize();
+	for(int iLight=0; iLight<iCount; iLight++)
+		m_aryLights[iLight]->Create();
+}
+
 void LightManager::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
+
+	if(oXml.FindChildElement("Lights", false))
+	{
+		oXml.IntoElem(); //Into Lights Element
+
+		Light *lpLight = NULL;
+		int iCount = oXml.NumberOfChildren();
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+		{
+			oXml.FindChildByIndex(iIndex);
+			lpLight = LoadLight(oXml);
+		}
+
+		oXml.OutOfElem();  //Outof Lights Element
+	}
 }
 
 
@@ -137,6 +226,9 @@ try
 
 	lpLight->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
 	lpLight->Load(oXml);
+
+	m_aryLights.Add(lpLight);
+    lpLight->LightNumber(m_aryLights.GetSize()-1);
 
 	return lpLight;
 }

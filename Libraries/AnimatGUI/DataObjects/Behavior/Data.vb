@@ -237,9 +237,6 @@ Namespace DataObjects.Behavior
         Public MustOverride ReadOnly Property NeuralModuleType() As System.Type
 
         <Browsable(False)> _
-        Public MustOverride ReadOnly Property TypeName() As String
-
-        <Browsable(False)> _
         Public MustOverride Property Text() As String
 
         '<Browsable(False)> _

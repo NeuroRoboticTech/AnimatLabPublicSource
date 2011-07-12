@@ -7,6 +7,7 @@
 #include "VsJoint.h"
 #include "VsRigidBody.h"
 #include "VsStructure.h"
+#include "VsLight.h"
 #include "VsSimulator.h"
 #include "VsOsgUserData.h"
 #include "VsDragger.h"
@@ -210,6 +211,7 @@ void VsCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapte
 	RigidBody *lpBody = NULL;
 	Joint *lpJoint = NULL;
 	Structure *lpStruct = NULL;
+	Light *lpLight = NULL;
     if (m_osgViewer->computeIntersections(x,y,intersections))
     {
 
@@ -230,6 +232,7 @@ void VsCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapte
 					lpBody = osgData->GetBody();
 					lpJoint = osgData->GetJoint();
 					lpStruct = osgData->GetStructure();
+					lpLight = osgData->GetLight();
 
 					m_vPickPoint = hitr->getWorldIntersectPoint();
 					m_vPickNormal = hitr->getWorldIntersectNormal();
@@ -247,6 +250,11 @@ void VsCameraManipulator::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapte
 							if(lpStruct && lpStruct->IsVisible() )
 							{
 								m_lpPicked = lpStruct;
+								return;
+							}
+							if(lpLight && lpLight->IsVisible() )
+							{
+								m_lpPicked = lpLight;
 								return;
 							}
 							break;

@@ -852,7 +852,9 @@ Namespace DataObjects
             oXml.AddChildElement("HudItems")
             oXml.IntoElem()   'Into Hud Items element
 
-            For Each hudItem As DataObjects.Visualization.HudItem In m_aryHudItems
+            Dim hudItem As DataObjects.Visualization.HudItem
+            For Each deItem As DictionaryEntry In m_aryHudItems
+                hudItem = DirectCast(deItem.Value, DataObjects.Visualization.HudItem)
                 hudItem.SaveData(oXml)
             Next
 

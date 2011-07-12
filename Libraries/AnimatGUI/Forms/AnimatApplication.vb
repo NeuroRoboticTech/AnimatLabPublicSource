@@ -4532,7 +4532,8 @@ Namespace Forms
 
         Private Sub SnapshotSimToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SnapshotSimToolStripMenuItem.Click
             Try
-                Me.SimulationInterface.SaveSimulationFile(Me.ProjectPath & "Snapshot.vxf")
+                'Me.SimulationInterface.SaveSimulationFile(Me.ProjectPath & "Snapshot.vxf")
+                Me.SimulationInterface.SaveSimulationFile(Me.ProjectPath & "Snapshot.osg")
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

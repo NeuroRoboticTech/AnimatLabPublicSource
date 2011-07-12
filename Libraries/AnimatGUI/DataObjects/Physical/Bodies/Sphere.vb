@@ -136,7 +136,7 @@ Namespace DataObjects.Physical.Bodies
 
             Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag
             pbNumberBag = m_snRadius.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Lower Radius", pbNumberBag.GetType(), "Radius", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Radius", pbNumberBag.GetType(), "Radius", _
                                         "Size", "Sets the radius of the sphere.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 

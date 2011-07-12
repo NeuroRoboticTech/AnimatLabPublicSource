@@ -31,6 +31,8 @@
 #include "ExternalStimuliMgr.h"
 #include "KeyFrame.h"
 #include "SimulationRecorder.h"
+#include "Light.h"
+#include "LightManager.h"
 #include "Simulator.h"
 
 namespace AnimatSim

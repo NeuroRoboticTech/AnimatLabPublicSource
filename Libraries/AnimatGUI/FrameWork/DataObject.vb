@@ -198,6 +198,18 @@ Namespace Framework
             End Get
         End Property
 
+        '<Browsable(False)> _
+        'Public MustOverride ReadOnly Property Type() As String
+
+        <Browsable(False)> _
+        Public Overridable ReadOnly Property TypeName() As String
+            Get
+                'By default just return the class name.
+                Dim aryType() As String = Split(Me.GetType().ToString(), ".")
+                Return aryType(aryType.Length - 1)
+            End Get
+        End Property
+
         Public Overridable ReadOnly Property WorkspaceImageName() As String
             Get
                 Return "AnimatGUI.DefaultObject.gif"

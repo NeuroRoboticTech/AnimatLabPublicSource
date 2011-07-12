@@ -39,6 +39,8 @@
 #include "HudItem.h"
 #include "Hud.h"
 #include "SimulationWindowMgr.h"
+#include "Light.h"
+#include "LightManager.h"
 #include "Simulator.h"
 
 

@@ -81,6 +81,12 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
+        Public Overrides ReadOnly Property TypeName() As String
+            Get
+                Return "Joint"
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -105,8 +111,9 @@ Namespace DataObjects.Physical
                     AddHandler bpParent.Rotated, AddressOf Me.OnAttachedPartRotated
 
                     If bpParent.IsRoot Then
-                        AddHandler Me.ParentStructure.Moved, AddressOf Me.OnAttachedPartMoved
-                        AddHandler Me.ParentStructure.Rotated, AddressOf Me.OnAttachedPartRotated
+                        'TODO: Have to add this back!
+                        'AddHandler Me.ParentStructure.Moved, AddressOf Me.OnAttachedPartMoved
+                        'AddHandler Me.ParentStructure.Rotated, AddressOf Me.OnAttachedPartRotated
                     End If
                 End If
             End If
@@ -284,17 +291,17 @@ Namespace DataObjects.Physical
 
 #Region " Events "
 
-        Protected Sub OnAttachedPartMoved(ByRef bpPart As AnimatGUI.DataObjects.Physical.BodyPart)
+        Protected Sub OnAttachedPartMoved(ByRef miPart As AnimatGUI.DataObjects.Physical.MovableItem)
             Try
-                Me.SetSimData("AttachedPartMovedOrRotated", bpPart.ID, True)
+                Me.SetSimData("AttachedPartMovedOrRotated", miPart.ID, True)
             Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
         End Sub
 
-        Protected Sub OnAttachedPartRotated(ByRef bpPart As AnimatGUI.DataObjects.Physical.BodyPart)
+        Protected Sub OnAttachedPartRotated(ByRef miPart As AnimatGUI.DataObjects.Physical.MovableItem)
             Try
-                Me.SetSimData("AttachedPartMovedOrRotated", bpPart.ID, True)
+                Me.SetSimData("AttachedPartMovedOrRotated", miPart.ID, True)
             Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

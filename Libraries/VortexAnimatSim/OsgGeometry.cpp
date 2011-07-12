@@ -14,6 +14,7 @@
 
 //#include "VsSimulationRecorder.h"
 #include "VsMouseSpring.h"
+#include "VsLight.h"
 #include "VsCameraManipulator.h"
 #include "VsDragger.h"
 
