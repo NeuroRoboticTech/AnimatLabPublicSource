@@ -38,6 +38,8 @@ namespace VortexAnimatSim
 			virtual void DeletePhysics() {};
 
 			virtual void SetupLighting();
+			virtual void SetAttenuation();
+			virtual int GetGlLight();
 
 		public:
 			VsLight();

@@ -62,7 +62,7 @@ void VsLight::SetThisPointers()
 
 osg::Group *VsLight::ParentOSG()
 {
-	return GetVsSimulator()->OSGLightGroup();
+	return GetVsSimulator()->OSGRoot();
 }
 
 void VsLight::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
@@ -115,6 +115,55 @@ void VsLight::Specular(CStdColor &aryColor)
 	}
 }
 
+void VsLight::SetAttenuation()
+{
+	if(m_osgLight.valid())
+	{
+		m_osgLight->setConstantAttenuation(m_fltConstantAttenRatio);
+		
+		if(m_fltLinearAttenDistance > 0)
+		{
+			float fltAtten = 1/m_fltLinearAttenDistance;
+			m_osgLight->setLinearAttenuation(fltAtten);
+		}
+		else
+			m_osgLight->setLinearAttenuation(0);
+
+		if(m_fltQuadraticAttenDistance > 0)
+		{
+			float fltAtten = 1/m_fltQuadraticAttenDistance;
+			m_osgLight->setQuadraticAttenuation(fltAtten);
+		}
+		else
+			m_osgLight->setQuadraticAttenuation(0);
+	}
+}
+
+int VsLight::GetGlLight()
+{
+	switch (m_iLightNum)
+	{
+	case 0:
+		return GL_LIGHT0;
+	case 1:
+		return GL_LIGHT1;
+	case 2:
+		return GL_LIGHT2;
+	case 3:
+		return GL_LIGHT3;
+	case 4:
+		return GL_LIGHT4;
+	case 5:
+		return GL_LIGHT5;
+	case 6:
+		return GL_LIGHT6;
+	case 7:
+		return GL_LIGHT7;
+	default:
+		return GL_LIGHT0;
+	}
+}
+
 void VsLight::SetupLighting()
 {
     // Set up lighting.
@@ -132,18 +181,17 @@ void VsLight::SetupLighting()
 	m_osgLight->setDiffuse(diffuse);
     m_osgLight->setSpecular(specular);
     m_osgLight->setPosition(position);
-    //m_osgLight->setConstantAttenuation(0.05);
-    m_osgLight->setQuadraticAttenuation(0.002);
-	//m_osgLight->setLightNum(m_iLightNum);
-    //light->setDirection(direction);
+	SetAttenuation();
 
     m_osgLightSource = new osg::LightSource;
     m_osgLightSource->setLight(m_osgLight.get());
-	GetVsSimulator()->OSGLightGroup()->addChild(m_osgLightSource.get());
+	GetVsSimulator()->OSGRoot()->addChild(m_osgLightSource.get());
 
-	osg::StateSet *groupStateSet = GetVsSimulator()->OSGLightGroup()->getOrCreateStateSet();
-	m_osgLightSource->setLocalStateSetModes(osg::StateAttribute::ON); 
-	m_osgLightSource->setStateSetModes(*groupStateSet, osg::StateAttribute::ON); 
+	osg::StateSet *rootStateSet = GetVsSimulator()->OSGRoot()->getOrCreateStateSet();
+	rootStateSet->setMode( GetGlLight(), osg::StateAttribute::ON );
+
+	//m_osgLightSource->setLocalStateSetModes(osg::StateAttribute::ON); 
+	//m_osgLightSource->setStateSetModes(*groupStateSet, osg::StateAttribute::ON); 
 }
 
 
@@ -163,8 +211,14 @@ void VsLight::DeleteGraphics()
 {
 	VsMovableItem::DeleteGraphics();
 
-	if(m_osgLightSource.valid() && GetVsSimulator() && GetVsSimulator()->OSGLightGroup() && GetVsSimulator()->OSGLightGroup()->containsNode(m_osgLightSource.get()))
-		GetVsSimulator()->OSGLightGroup()->removeChild(m_osgLightSource.get());
+	if(m_osgLightSource.valid() && GetVsSimulator() && GetVsSimulator()->OSGRoot())
+	{
+		if(GetVsSimulator()->OSGRoot()->containsNode(m_osgLightSource.get()))
+			GetVsSimulator()->OSGRoot()->removeChild(m_osgLightSource.get());
+		
+		osg::StateSet *rootStateSet = GetVsSimulator()->OSGRoot()->getOrCreateStateSet();
+		rootStateSet->setMode( GetGlLight(), osg::StateAttribute::OFF );
+	}
 
 	m_osgLight.release();
 	m_osgLightSource.release();
@@ -218,6 +272,7 @@ void VsLight::Physics_Resize()
 		}
 	}
 
+	SetAttenuation();
 }
 
 void VsLight::Physics_SetColor()

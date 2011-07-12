@@ -50,6 +50,9 @@ Light::Light(void)
 	m_iLatitudeSegments = 50;
 	m_iLongtitudeSegments = 50;
 	m_iLightNum = 0;
+	m_fltConstantAttenRatio = 0;
+	m_fltLinearAttenDistance = 0;
+	m_fltQuadraticAttenDistance = 0;
 }
 
 /**
@@ -186,6 +189,41 @@ void Light::LightNumber(int iVal)
 **/
 int Light::LightNumber() {return m_iLightNum;}
 
+void Light::ConstantAttenRatio(float fltVal)
+{
+	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "Receptive Field Index");
+	m_fltConstantAttenRatio = fltVal;
+	Resize();
+}
+
+float Light::ConstantAttenRatio() {return m_fltConstantAttenRatio;}
+
+void Light::LinearAttenDistance(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Light.LinearAttenDistance");
+	if(bUseScaling)
+		m_fltLinearAttenDistance = fltVal * m_lpSim->InverseDistanceUnits();
+	else
+		m_fltLinearAttenDistance = fltVal;
+
+	Resize();
+}
+
+float Light::LinearAttenDistance() {return m_fltLinearAttenDistance;}
+
+void Light::QuadraticAttenDistance(float fltVal, BOOL bUseScaling)
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Light.QuadraticAttenDistance");
+	if(bUseScaling)
+		m_fltQuadraticAttenDistance = fltVal * m_lpSim->InverseDistanceUnits();
+	else
+		m_fltQuadraticAttenDistance = fltVal;
+
+	Resize();
+}
+
+float Light::QuadraticAttenDistance() {return m_fltQuadraticAttenDistance;}
+
 /**
 \brief	Called when the visual selection mode changed in GUI.
 
@@ -245,6 +283,24 @@ BOOL Light::SetData(string strDataType, string strValue, BOOL bThrowError)
 		return TRUE;
 	}
 
+	if(strType == "CONSTANTATTENUATION")
+	{
+		ConstantAttenRatio(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "LINEARATTENUATIONDISTANCE")
+	{
+		LinearAttenDistance(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "QUADRATICATTENUATIONDISTANCE")
+	{
+		QuadraticAttenDistance(atof(strValue.c_str()));
+		return TRUE;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -267,6 +323,9 @@ void Light::Load(CStdXml &oXml)
 	Radius(oXml.GetChildFloat("Radius", m_fltRadius));
 	LatitudeSegments(oXml.GetChildInt("LatitudeSegments", m_iLatitudeSegments));
 	LongtitudeSegments(oXml.GetChildInt("LongtitudeSegments", m_iLongtitudeSegments));
+	ConstantAttenRatio(oXml.GetChildFloat("ConstantAttenuation", m_fltConstantAttenRatio));
+	LinearAttenDistance(oXml.GetChildFloat("LinearAttenuationDistance", m_fltLinearAttenDistance));
+	QuadraticAttenDistance(oXml.GetChildFloat("QuadraticAttenuationDistance", m_fltQuadraticAttenDistance));
 	oXml.OutOfElem(); //OutOf RigidBody Element
 }
 

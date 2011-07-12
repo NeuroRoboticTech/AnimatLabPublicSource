@@ -17,6 +17,7 @@ Namespace DataObjects.Physical
     Public Class Light
         Inherits MovableItem
 
+
 #Region " Delegates "
 
 #End Region
@@ -24,6 +25,10 @@ Namespace DataObjects.Physical
 #Region " Attributes "
 
         Protected m_snRadius As AnimatGUI.Framework.ScaledNumber
+
+        Protected m_fltConstantAttenuation As Single = 0
+        Protected m_snLinearAttenuationDistance As AnimatGUI.Framework.ScaledNumber
+        Protected m_snQuadraticAttenuationDistance As AnimatGUI.Framework.ScaledNumber
 
         Protected m_iLatitudeSegments As Integer = 10
         Protected m_iLongtitudeSegments As Integer = 10
@@ -92,6 +97,45 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
+        Public Overridable Property ConstantAttenuation() As Single
+            Get
+                Return m_fltConstantAttenuation
+            End Get
+            Set(ByVal value As Single)
+                If value < 0 OrElse value > 1 Then
+                    Throw New System.Exception("The constant attenuation ratio must be between 0 and 1.")
+                End If
+                SetSimData("ConstantAttenuation", value.ToString, True)
+                m_fltConstantAttenuation = value
+            End Set
+        End Property
+
+        Public Overridable Property LinearAttenuationDistance() As AnimatGUI.Framework.ScaledNumber
+            Get
+                Return m_snLinearAttenuationDistance
+            End Get
+            Set(ByVal value As AnimatGUI.Framework.ScaledNumber)
+                If value.ActualValue < 0 Then
+                    Throw New System.Exception("The linear attenuation distance cannot be less than zero.")
+                End If
+                SetSimData("LinearAttenuationDistance", value.ActualValue.ToString, True)
+                m_snLinearAttenuationDistance.CopyData(value)
+            End Set
+        End Property
+
+        Public Overridable Property QuadraticAttenuationDistance() As AnimatGUI.Framework.ScaledNumber
+            Get
+                Return m_snQuadraticAttenuationDistance
+            End Get
+            Set(ByVal value As AnimatGUI.Framework.ScaledNumber)
+                If value.ActualValue <= 0 Then
+                    Throw New System.Exception("The quadratic attenuation distance cannot be less than zero.")
+                End If
+                SetSimData("QuadraticAttenuationDistance", value.ActualValue.ToString, True)
+                m_snQuadraticAttenuationDistance.CopyData(value)
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -105,9 +149,13 @@ Namespace DataObjects.Physical
             m_clSpecular = Color.FromArgb(255, 255, 255, 255)
 
             m_snRadius = New AnimatGUI.Framework.ScaledNumber(Me, "Radius", "meters", "m")
+            m_snLinearAttenuationDistance = New AnimatGUI.Framework.ScaledNumber(Me, "LinearAttenuationDistance", "meters", "m")
+            m_snQuadraticAttenuationDistance = New AnimatGUI.Framework.ScaledNumber(Me, "QuadraticAttenuationDistance", "meters", "m")
 
             If Not Util.Environment Is Nothing Then
                 m_snRadius.ActualValue = 0.5 * Util.Environment.DistanceUnitValue
+                m_snLinearAttenuationDistance.ActualValue = 0.5 * Util.Environment.DistanceUnitValue
+                m_snQuadraticAttenuationDistance.ActualValue = 0.5 * Util.Environment.DistanceUnitValue
             End If
 
         End Sub
@@ -127,11 +175,24 @@ Namespace DataObjects.Physical
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Longtitude Segments", Me.LongtitudeSegments.GetType(), "LongtitudeSegments", _
                                         "Size", "The number of segments along the longtitude direction used to draw the light sphere.", Me.LongtitudeSegments))
 
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Linear Distance", pbNumberBag.GetType(), "LinearAttenuationDistance", _
+                                        "Attenuation", "This is the distance at which the light intensity is halved using a linear equation. Set to zero to disable this attenuation.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Quadratic Distance", pbNumberBag.GetType(), "QuadradicAttenuationDistance", _
+                                        "Attenuation", "This is the distance at which the light intensity is halved using a quadratic equation. Set to zero to disable this attenuation.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Constant Ratio", Me.LongtitudeSegments.GetType(), "ConstantAttenuation", _
+                                        "Attenuation", "A ratio for constant attenuation. This must be between 0 and 1.", Me.ConstantAttenuation))
+
         End Sub
 
         Public Overrides Sub ClearIsDirty()
             MyBase.ClearIsDirty()
             If Not m_snRadius Is Nothing Then m_snRadius.ClearIsDirty()
+            If Not m_snLinearAttenuationDistance Is Nothing Then m_snLinearAttenuationDistance.ClearIsDirty()
+            If Not m_snQuadraticAttenuationDistance Is Nothing Then m_snQuadraticAttenuationDistance.ClearIsDirty()
         End Sub
 
         Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -140,6 +201,10 @@ Namespace DataObjects.Physical
 
             Dim doOrig As AnimatGUI.DataObjects.Physical.Light = DirectCast(doOriginal, Light)
             m_snRadius = DirectCast(doOrig.m_snRadius.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
+
+            m_fltConstantAttenuation = doOrig.m_fltConstantAttenuation
+            m_snLinearAttenuationDistance = DirectCast(doOrig.m_snLinearAttenuationDistance.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
+            m_snQuadraticAttenuationDistance = DirectCast(doOrig.m_snQuadraticAttenuationDistance.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
 
             m_iLatitudeSegments = doOrig.m_iLatitudeSegments
             m_iLongtitudeSegments = doOrig.m_iLongtitudeSegments
@@ -173,6 +238,10 @@ Namespace DataObjects.Physical
                 oXml.IntoElem()
 
                 m_snRadius.LoadData(oXml, "Radius")
+                
+                m_fltConstantAttenuation = oXml.GetChildFloat("ConstantAttenuation", m_fltConstantAttenuation)
+                m_snLinearAttenuationDistance.LoadData(oXml, "LinearAttenuationDistance", False)
+                m_snQuadraticAttenuationDistance.LoadData(oXml, "QuadraticAttenuationDistance", False)
 
                 m_iLatitudeSegments = oXml.GetChildInt("LatitudeSegments", m_iLatitudeSegments)
                 m_iLongtitudeSegments = oXml.GetChildInt("LongtitudeSegments", m_iLongtitudeSegments)
@@ -193,6 +262,10 @@ Namespace DataObjects.Physical
 
                 m_snRadius.SaveData(oXml, "Radius")
 
+                oXml.AddChildElement("ConstantAttenuation", m_fltConstantAttenuation)
+                m_snLinearAttenuationDistance.SaveData(oXml, "LinearAttenuationDistance")
+                m_snQuadraticAttenuationDistance.SaveData(oXml, "QuadraticAttenuationDistance")
+
                 oXml.AddChildElement("LatitudeSegments", m_iLatitudeSegments)
                 oXml.AddChildElement("LongtitudeSegments", m_iLongtitudeSegments)
 
@@ -212,6 +285,10 @@ Namespace DataObjects.Physical
 
                 oXml.AddChildElement("Type", "Light")
                 m_snRadius.SaveSimulationXml(oXml, Me, "Radius")
+
+                oXml.AddChildElement("ConstantAttenuation", m_fltConstantAttenuation)
+                m_snLinearAttenuationDistance.SaveSimulationXml(oXml, Me, "LinearAttenuationDistance")
+                m_snQuadraticAttenuationDistance.SaveSimulationXml(oXml, Me, "QuadraticAttenuationDistance")
 
                 oXml.AddChildElement("LatitudeSegments", m_iLatitudeSegments)
                 oXml.AddChildElement("LongtitudeSegments", m_iLongtitudeSegments)

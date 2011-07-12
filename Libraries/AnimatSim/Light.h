@@ -35,6 +35,15 @@ namespace AnimatSim
 			/// Zero-based index of the light number. OSG only allows 8 lights.
 			int m_iLightNum;
 
+			/// The constant attenuation ratio
+			float m_fltConstantAttenRatio;
+
+			/// The linear attenuation distance
+			float m_fltLinearAttenDistance;
+
+			/// The quadratic attenuation distance
+			float m_fltQuadraticAttenDistance;
+
 			virtual void UpdateData();
 
 		public:
@@ -74,6 +83,15 @@ namespace AnimatSim
 
 			virtual void LightNumber(int iVal);
 			virtual int LightNumber();
+
+			virtual void ConstantAttenRatio(float fltVal);
+			virtual float ConstantAttenRatio();
+
+			virtual void LinearAttenDistance(float fltVal, BOOL bUseScaling = TRUE);
+			virtual float LinearAttenDistance();
+
+			virtual void QuadraticAttenDistance(float fltVal, BOOL bUseScaling = TRUE);
+			virtual float QuadraticAttenDistance();
 
 #pragma endregion
 

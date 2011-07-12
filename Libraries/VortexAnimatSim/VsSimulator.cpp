@@ -186,38 +186,38 @@ void VsSimulator::StopSimulation()
 		ToggleSimulation();
 	m_bSimRunning = FALSE;
 }
-
-void VsSimulator::CreateLights()
-{
-    osg::StateSet* rootStateSet = m_grpScene->getOrCreateStateSet();
-	//rootStateSet->setMode( GL_LIGHTING, osg::StateAttribute::ON );
-
-// create sun light
-	osg::ref_ptr<osg::Group> osgLightGroup = new osg::Group;
-
-    // Set up lighting.
-    osg::Vec4 ambient(1.0, 1.0, 1.0, 1.0);
-    osg::Vec4 diffuse(1.0, 1.0, 1.0, 1.0);
-    osg::Vec4 specular(1.0, 1.0, 1.0, 1.0);
-    osg::Vec4 position(10, 30, 0, 1);
-    //osg::Vec3 direction(0, -1, 0);
-    //direction.normalize();
-
-    osg::ref_ptr<osg::Light> light = new osg::Light;
-    light->setAmbient(ambient);
-    light->setDiffuse(diffuse);
-    light->setSpecular(specular);
-    light->setPosition(position);
-    //light->setDirection(direction);
-
-    osg::ref_ptr<osg::LightSource> lightSource = new osg::LightSource;
-    lightSource->setLight(light.get());
-	osgLightGroup->addChild(lightSource.get());
-    osg::StateSet *groupStateSet = osgLightGroup->getOrCreateStateSet();
-	lightSource->setStateSetModes(*groupStateSet, osg::StateAttribute::ON); 
-
-	m_grpScene->addChild(osgLightGroup.get());
-}
+//
+//void VsSimulator::CreateLights()
+//{
+//    osg::StateSet* rootStateSet = m_grpScene->getOrCreateStateSet();
+//	//rootStateSet->setMode( GL_LIGHTING, osg::StateAttribute::ON );
+//
+//// create sun light
+//	osg::ref_ptr<osg::Group> osgLightGroup = new osg::Group;
+//
+//    // Set up lighting.
+//    osg::Vec4 ambient(1.0, 1.0, 1.0, 1.0);
+//    osg::Vec4 diffuse(1.0, 1.0, 1.0, 1.0);
+//    osg::Vec4 specular(1.0, 1.0, 1.0, 1.0);
+//    osg::Vec4 position(10, 30, 0, 1);
+//    //osg::Vec3 direction(0, -1, 0);
+//    //direction.normalize();
+//
+//    osg::ref_ptr<osg::Light> light = new osg::Light;
+//    light->setAmbient(ambient);
+//    light->setDiffuse(diffuse);
+//    light->setSpecular(specular);
+//    light->setPosition(position);
+//    //light->setDirection(direction);
+//
+//    osg::ref_ptr<osg::LightSource> lightSource = new osg::LightSource;
+//    lightSource->setLight(light.get());
+//	osgLightGroup->addChild(lightSource.get());
+//    osg::StateSet *groupStateSet = osgLightGroup->getOrCreateStateSet();
+//	lightSource->setStateSetModes(*groupStateSet, osg::StateAttribute::ON); 
+//
+//	m_grpScene->addChild(osgLightGroup.get());
+//}
 
 
 void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
@@ -250,13 +250,10 @@ void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
 	if(!m_osgCmdMgr.valid())
 	    m_osgCmdMgr = new osgManipulator::CommandManager;
 
-	m_osgLightGroup = new osg::Group;
-	m_grpScene->addChild(m_osgLightGroup.get());
-
     osg::StateSet* rootStateSet = m_grpScene->getOrCreateStateSet();
 	rootStateSet->setMode( GL_LIGHTING, osg::StateAttribute::ON );
 	rootStateSet->setMode( GL_LIGHT0, osg::StateAttribute::ON );
-	rootStateSet->setMode( GL_LIGHT1, osg::StateAttribute::ON );
+	//rootStateSet->setMode( GL_LIGHT1, osg::StateAttribute::ON );
 
 	m_oLightMgr.Initialize();
     //CreateLights();

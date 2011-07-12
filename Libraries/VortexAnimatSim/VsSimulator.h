@@ -29,9 +29,6 @@ namespace VortexAnimatSim
 		//osg group node for the main scene
 		osg::ref_ptr<osg::Group> m_grpScene;
 
-		/// osg Lighting group node.
-		osg::ref_ptr<osg::Group> m_osgLightGroup;
-
 		//Command manager for gripper manipulators in the scene.
 		osg::ref_ptr<osgManipulator::CommandManager> m_osgCmdMgr;
 
@@ -49,7 +46,6 @@ namespace VortexAnimatSim
 		//helper functions
 		void InitializeVortex(int argc, const char **argv);
 		void InitializeVortexViewer(int argc, const char **argv);
-		void CreateLights();
 
 		virtual void StepSimulation();
 		virtual void StepVideoFrame();
@@ -63,7 +59,6 @@ namespace VortexAnimatSim
 		Vx::VxFrame* Frame();
 		VsRigidBody *TrackBody();
 		osg::Group *OSGRoot() {return m_grpScene.get();};
-		osg::Group *OSGLightGroup() {return m_grpScene.get();};
 		osgManipulator::CommandManager *OsgCmdMgr() {return m_osgCmdMgr.get();};
 
 #pragma region CreateMethods
