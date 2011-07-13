@@ -181,6 +181,7 @@ void VsLight::SetupLighting()
 	m_osgLight->setDiffuse(diffuse);
     m_osgLight->setSpecular(specular);
     m_osgLight->setPosition(position);
+	//m_osgLight->setQuadraticAttenuation(0.002);
 	SetAttenuation();
 
     m_osgLightSource = new osg::LightSource;

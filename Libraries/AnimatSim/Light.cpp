@@ -200,7 +200,7 @@ float Light::ConstantAttenRatio() {return m_fltConstantAttenRatio;}
 
 void Light::LinearAttenDistance(float fltVal, BOOL bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Light.LinearAttenDistance");
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Light.LinearAttenDistance", TRUE);
 	if(bUseScaling)
 		m_fltLinearAttenDistance = fltVal * m_lpSim->InverseDistanceUnits();
 	else
@@ -213,7 +213,7 @@ float Light::LinearAttenDistance() {return m_fltLinearAttenDistance;}
 
 void Light::QuadraticAttenDistance(float fltVal, BOOL bUseScaling)
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "Light.QuadraticAttenDistance");
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "Light.QuadraticAttenDistance", TRUE);
 	if(bUseScaling)
 		m_fltQuadraticAttenDistance = fltVal * m_lpSim->InverseDistanceUnits();
 	else

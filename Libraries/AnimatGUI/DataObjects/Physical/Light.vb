@@ -128,7 +128,7 @@ Namespace DataObjects.Physical
                 Return m_snQuadraticAttenuationDistance
             End Get
             Set(ByVal value As AnimatGUI.Framework.ScaledNumber)
-                If value.ActualValue <= 0 Then
+                If value.ActualValue < 0 Then
                     Throw New System.Exception("The quadratic attenuation distance cannot be less than zero.")
                 End If
                 SetSimData("QuadraticAttenuationDistance", value.ActualValue.ToString, True)
@@ -143,7 +143,7 @@ Namespace DataObjects.Physical
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
 
-            m_svLocalPosition.CopyData(1, 3, 0, True)
+            m_svLocalPosition.CopyData(1, 10, 0, True)
             m_clAmbient = Color.FromArgb(255, 255, 255, 255)
             m_clDiffuse = Color.FromArgb(255, 255, 255, 255)
             m_clSpecular = Color.FromArgb(255, 255, 255, 255)
@@ -154,8 +154,8 @@ Namespace DataObjects.Physical
 
             If Not Util.Environment Is Nothing Then
                 m_snRadius.ActualValue = 0.5 * Util.Environment.DistanceUnitValue
-                m_snLinearAttenuationDistance.ActualValue = 0.5 * Util.Environment.DistanceUnitValue
-                m_snQuadraticAttenuationDistance.ActualValue = 0.5 * Util.Environment.DistanceUnitValue
+                m_snLinearAttenuationDistance.ActualValue = 0
+                m_snQuadraticAttenuationDistance.ActualValue = 10000 * Util.Environment.DistanceUnitValue
             End If
 
         End Sub
@@ -179,11 +179,11 @@ Namespace DataObjects.Physical
                                         "Attenuation", "This is the distance at which the light intensity is halved using a linear equation. Set to zero to disable this attenuation.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Quadratic Distance", pbNumberBag.GetType(), "QuadradicAttenuationDistance", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Quadratic Distance", pbNumberBag.GetType(), "QuadraticAttenuationDistance", _
                                         "Attenuation", "This is the distance at which the light intensity is halved using a quadratic equation. Set to zero to disable this attenuation.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Constant Ratio", Me.LongtitudeSegments.GetType(), "ConstantAttenuation", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Constant Ratio", Me.ConstantAttenuation.GetType(), "ConstantAttenuation", _
                                         "Attenuation", "A ratio for constant attenuation. This must be between 0 and 1.", Me.ConstantAttenuation))
 
         End Sub
@@ -228,6 +228,46 @@ Namespace DataObjects.Physical
                 m_Transparencies.SimulationTransparency = 100
             End If
         End Sub
+
+        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node)
+
+            m_tnWorkspaceNode = Util.ProjectWorkspace.AddTreeNode(Util.Environment.LightsTreeNode, Me.Name, Me.WorkspaceImageName)
+            m_tnWorkspaceNode.Tag = Me
+
+            If Me.Enabled Then
+                m_tnWorkspaceNode.BackColor = Color.White
+            Else
+                m_tnWorkspaceNode.BackColor = Color.Gray
+            End If
+        End Sub
+
+        Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As Point) As Boolean
+
+            If tnSelectedNode Is m_tnWorkspaceNode Then
+                Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete Light", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
+
+                ' Create the popup menu object
+                Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Charting.DataColumn.WorkspaceTreeviewPopupMenu", Util.SecurityMgr)
+                popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcDelete})
+
+                Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
+
+                Return True
+            End If
+
+            Return False
+        End Function
+
+        Public Overrides Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
+            If Not bAskToDelete OrElse (bAskToDelete AndAlso MessageBox.Show("Are you certain that you want to permanently delete this " & _
+                                "light?", "Delete Light", MessageBoxButtons.YesNo) = DialogResult.Yes) Then
+                Util.Environment.Lights.Remove(Me.ID)
+                Me.RemoveWorksapceTreeView()
+                Return False
+            End If
+
+            Return True
+        End Function
 
 #Region " Load/Save Methods "
 
