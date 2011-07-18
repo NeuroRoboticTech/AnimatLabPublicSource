@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AnimatGUI", "Libraries\AnimatGUI\AnimatGUI.vbproj", "{45227561-EC56-46E0-9395-E1D86A7F3464}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8B8F6222-8001-4BC5-B047-C6A5772B2755} = {8B8F6222-8001-4BC5-B047-C6A5772B2755}
@@ -9,45 +9,23 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AnimatGUI", "Libraries\Anim
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimatGUICtrls", "Libraries\AnimatGUICtrls\AnimatGUICtrls.csproj", "{1EABD935-A166-4B06-A4CA-96D5D9D7CB86}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ManagedAnimatTools", "Libraries\ManagedAnimatTools\ManagedAnimatTools\ManagedAnimatTools.vcproj", "{C4F78ED0-5777-47E1-8D4C-2FDD548FCE79}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8B8F6222-8001-4BC5-B047-C6A5772B2755} = {8B8F6222-8001-4BC5-B047-C6A5772B2755}
-		{D1B49952-2999-4336-AE54-525373AA6251} = {D1B49952-2999-4336-AE54-525373AA6251}
-		{C57E9FAC-C948-4386-A585-54FB1876FBCE} = {C57E9FAC-C948-4386-A585-54FB1876FBCE}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ManagedAnimatTools", "Libraries\ManagedAnimatTools\ManagedAnimatTools\ManagedAnimatTools.vcxproj", "{C4F78ED0-5777-47E1-8D4C-2FDD548FCE79}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatSim", "Libraries\AnimatSim\AnimatSim.vcproj", "{8B8F6222-8001-4BC5-B047-C6A5772B2755}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D1B49952-2999-4336-AE54-525373AA6251} = {D1B49952-2999-4336-AE54-525373AA6251}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatSim", "Libraries\AnimatSim\AnimatSim.vcxproj", "{8B8F6222-8001-4BC5-B047-C6A5772B2755}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtils", "Libraries\StdUtils\StdUtils.vcproj", "{D1B49952-2999-4336-AE54-525373AA6251}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtils", "Libraries\StdUtils\StdUtils.vcxproj", "{D1B49952-2999-4336-AE54-525373AA6251}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FiringRateSim", "Libraries\FiringRateSim\FiringRateSim.vcproj", "{A3C7B1DB-E0BC-4B31-A7AD-DEE5D59E0C70}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8B8F6222-8001-4BC5-B047-C6A5772B2755} = {8B8F6222-8001-4BC5-B047-C6A5772B2755}
-		{D1B49952-2999-4336-AE54-525373AA6251} = {D1B49952-2999-4336-AE54-525373AA6251}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FiringRateSim", "Libraries\FiringRateSim\FiringRateSim.vcxproj", "{A3C7B1DB-E0BC-4B31-A7AD-DEE5D59E0C70}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntegrateFireSim", "Libraries\IntegrateFireSim\IntegrateFireSim.vcproj", "{49F8BE86-8187-4BC7-ABD5-B1A66A12F2ED}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8B8F6222-8001-4BC5-B047-C6A5772B2755} = {8B8F6222-8001-4BC5-B047-C6A5772B2755}
-		{D1B49952-2999-4336-AE54-525373AA6251} = {D1B49952-2999-4336-AE54-525373AA6251}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntegrateFireSim", "Libraries\IntegrateFireSim\IntegrateFireSim.vcxproj", "{49F8BE86-8187-4BC7-ABD5-B1A66A12F2ED}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VortexAnimatSim", "Libraries\VortexAnimatSim\VortexAnimatSim.vcproj", "{C57E9FAC-C948-4386-A585-54FB1876FBCE}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8B8F6222-8001-4BC5-B047-C6A5772B2755} = {8B8F6222-8001-4BC5-B047-C6A5772B2755}
-		{D1B49952-2999-4336-AE54-525373AA6251} = {D1B49952-2999-4336-AE54-525373AA6251}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VortexAnimatSim", "Libraries\VortexAnimatSim\VortexAnimatSim.vcxproj", "{C57E9FAC-C948-4386-A585-54FB1876FBCE}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FiringRateGUI", "Libraries\FiringRateGUI\FiringRateGUI.vbproj", "{CE6F1806-6605-4C11-A70E-38130C9DB3E7}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "IntegrateFireGUI", "Libraries\IntegrateFireGUI\IntegrateFireGUI.vbproj", "{CA9FC172-4481-43DC-8F8F-1506643B65EB}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "LicensedAnimatGUI", "Libraries\LicensedAnimatGUI\LicensedAnimatGUI.vbproj", "{058DF82A-3C95-41B6-BF81-F30EE747515C}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AnimatTesting", "Libraries\AnimatTesting\AnimatTesting.vbproj", "{70CE6F9D-2908-41C1-9173-80E459C94A7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -169,16 +147,6 @@ Global
 		{058DF82A-3C95-41B6-BF81-F30EE747515C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{058DF82A-3C95-41B6-BF81-F30EE747515C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{058DF82A-3C95-41B6-BF81-F30EE747515C}.Release|Win32.ActiveCfg = Release|Any CPU
-		{70CE6F9D-2908-41C1-9173-80E459C94A7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70CE6F9D-2908-41C1-9173-80E459C94A7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70CE6F9D-2908-41C1-9173-80E459C94A7A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{70CE6F9D-2908-41C1-9173-80E459C94A7A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{70CE6F9D-2908-41C1-9173-80E459C94A7A}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{70CE6F9D-2908-41C1-9173-80E459C94A7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70CE6F9D-2908-41C1-9173-80E459C94A7A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{70CE6F9D-2908-41C1-9173-80E459C94A7A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{70CE6F9D-2908-41C1-9173-80E459C94A7A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{70CE6F9D-2908-41C1-9173-80E459C94A7A}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

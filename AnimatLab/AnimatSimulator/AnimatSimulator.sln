@@ -1,13 +1,10 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatSimulator", "AnimatSimulator.vcproj", "{C8DC2272-CA3F-4427-8C33-F0F0AB79A93F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A79592E1-88E3-44CE-8FBC-7B7CE7180E4A} = {A79592E1-88E3-44CE-8FBC-7B7CE7180E4A}
-	EndProjectSection
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatSimulator", "AnimatSimulator.vcxproj", "{C8DC2272-CA3F-4427-8C33-F0F0AB79A93F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BootstrapLoader", "..\..\Libraries\BootstrapLoader\BootstrapLoader.vcproj", "{A79592E1-88E3-44CE-8FBC-7B7CE7180E4A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BootstrapLoader", "..\..\Libraries\BootstrapLoader\BootstrapLoader.vcxproj", "{A79592E1-88E3-44CE-8FBC-7B7CE7180E4A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtils", "..\..\Libraries\StdUtils\StdUtils.vcproj", "{D1B49952-2999-4336-AE54-525373AA6251}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtils", "..\..\Libraries\StdUtils\StdUtils.vcxproj", "{D1B49952-2999-4336-AE54-525373AA6251}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

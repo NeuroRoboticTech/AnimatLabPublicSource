@@ -63,10 +63,12 @@ namespace AnimatGUI
 				void set(System::String ^sLogFile)
 				{
 					try
-					{
-						
-						string strLogFile = Util::StringToStd(sLogFile);
-						Std_SetLogFilePrefix(strLogFile);
+					{ 
+						//string strLogFile = Util::StringToStd(sLogFile);
+	 
+						//Std_TraceMsg(0, ("LogFile: " + strLogFile), __FILE__, __LINE__, STD_TRACE_TO_FILE, true);
+						// 
+						//Std_SetLogFilePrefix("test.txt"); //strLogFile);
 					}
 					catch(CStdErrorInfo oError)
 					{
@@ -115,8 +117,8 @@ namespace AnimatGUI
 			{
 				try
 				{
-					string strMessage = Util::StringToStd(sMessage);
-					Std_LogMsg((int)eLevel, strMessage, "", -1, FALSE);
+					//string strMessage = Util::StringToStd(sMessage);
+					//Std_LogMsg((int)eLevel, strMessage, "", -1, FALSE);
 				}
 				catch(CStdErrorInfo oError)
 				{

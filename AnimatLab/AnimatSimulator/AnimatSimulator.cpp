@@ -5,7 +5,7 @@ int main(int argc, const char **argv)
 {
 
 try
-{
+{ 
 	return BootStrap_RunLibrary(argc, argv);
 }
 catch(char *str)

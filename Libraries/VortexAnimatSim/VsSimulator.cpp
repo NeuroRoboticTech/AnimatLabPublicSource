@@ -287,7 +287,9 @@ void VsSimulator::InitializeVortex(int argc, const char **argv)
 	m_vxFrame->setTimeStep(m_fltPhysicsTimeStep);		
 
 	VxFrameRegisterAllInteractions(m_vxFrame);
-	VxOSG::VxSceneGraphInterfaceRegister(m_vxFrame);
+
+	//TODO: Do I still need this method call?
+	//VxOSG::VxSceneGraphInterfaceRegister(m_vxFrame);
 
     //VxContactProperties *pM;
     //pM = materialTable->getContactProperties("groundMaterial", "boxMaterial");

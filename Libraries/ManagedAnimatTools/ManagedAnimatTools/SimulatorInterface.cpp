@@ -1241,7 +1241,7 @@ namespace AnimatGUI
 					{
 						string strError = "A critical error occured while running the simulator. The application is shutting down.\nError: " + oError.m_strError;
 						m_strErrorMessage = gcnew String(strError.c_str());
-						this->FireHandleCriticalErrorEvent(m_strErrorMessage);
+						//this->FireHandleCriticalErrorEvent(m_strErrorMessage);
 						if(iHandle)
 						{
 							IntPtr iptr(iHandle);

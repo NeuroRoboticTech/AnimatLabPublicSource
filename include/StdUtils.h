@@ -11,7 +11,7 @@
 
 #define STD_UTILS_PORT __declspec( dllimport )
 
-#pragma warning(disable: 4018 4244 4290 4786 4251 4275 4267 4311 4312 4800 4003 4482)
+#pragma warning(disable: 4018 4244 4290 4786 4251 4275 4267 4311 4312 4800 4003 4482 4996)
 
 #ifndef _WIN32_WCE
 	#include <conio.h>

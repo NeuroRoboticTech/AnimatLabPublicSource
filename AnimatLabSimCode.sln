@@ -1,32 +1,17 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatSim", "Libraries\AnimatSim\AnimatSim.vcproj", "{8B8F6222-8001-4BC5-B047-C6A5772B2755}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D1B49952-2999-4336-AE54-525373AA6251} = {D1B49952-2999-4336-AE54-525373AA6251}
-	EndProjectSection
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimatSim", "Libraries\AnimatSim\AnimatSim.vcxproj", "{8B8F6222-8001-4BC5-B047-C6A5772B2755}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtils", "Libraries\StdUtils\StdUtils.vcproj", "{D1B49952-2999-4336-AE54-525373AA6251}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StdUtils", "Libraries\StdUtils\StdUtils.vcxproj", "{D1B49952-2999-4336-AE54-525373AA6251}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FiringRateSim", "Libraries\FiringRateSim\FiringRateSim.vcproj", "{A3C7B1DB-E0BC-4B31-A7AD-DEE5D59E0C70}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8B8F6222-8001-4BC5-B047-C6A5772B2755} = {8B8F6222-8001-4BC5-B047-C6A5772B2755}
-		{D1B49952-2999-4336-AE54-525373AA6251} = {D1B49952-2999-4336-AE54-525373AA6251}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FiringRateSim", "Libraries\FiringRateSim\FiringRateSim.vcxproj", "{A3C7B1DB-E0BC-4B31-A7AD-DEE5D59E0C70}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntegrateFireSim", "Libraries\IntegrateFireSim\IntegrateFireSim.vcproj", "{49F8BE86-8187-4BC7-ABD5-B1A66A12F2ED}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8B8F6222-8001-4BC5-B047-C6A5772B2755} = {8B8F6222-8001-4BC5-B047-C6A5772B2755}
-		{D1B49952-2999-4336-AE54-525373AA6251} = {D1B49952-2999-4336-AE54-525373AA6251}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntegrateFireSim", "Libraries\IntegrateFireSim\IntegrateFireSim.vcxproj", "{49F8BE86-8187-4BC7-ABD5-B1A66A12F2ED}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VortexAnimatSim", "Libraries\VortexAnimatSim\VortexAnimatSim.vcproj", "{C57E9FAC-C948-4386-A585-54FB1876FBCE}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8B8F6222-8001-4BC5-B047-C6A5772B2755} = {8B8F6222-8001-4BC5-B047-C6A5772B2755}
-		{D1B49952-2999-4336-AE54-525373AA6251} = {D1B49952-2999-4336-AE54-525373AA6251}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VortexAnimatSim", "Libraries\VortexAnimatSim\VortexAnimatSim.vcxproj", "{C57E9FAC-C948-4386-A585-54FB1876FBCE}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BootstrapLoader", "Libraries\BootstrapLoader\BootstrapLoader.vcproj", "{A79592E1-88E3-44CE-8FBC-7B7CE7180E4A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BootstrapLoader", "Libraries\BootstrapLoader\BootstrapLoader.vcxproj", "{A79592E1-88E3-44CE-8FBC-7B7CE7180E4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

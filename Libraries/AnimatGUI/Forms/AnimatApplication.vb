@@ -1437,6 +1437,10 @@ Namespace Forms
 
         Protected Overridable Sub InitLogging()
             Try
+                If Me.Logger Is Nothing Then
+                    Throw New System.Exception("Logger is null")
+                End If
+
                 If Directory.Exists(Me.ApplicationDirectory & "Logs") Then
                     Me.LogDirectory = Me.ApplicationDirectory & "Logs\"
                 Else
@@ -1446,7 +1450,7 @@ Namespace Forms
                 Me.Logger.TraceLevel = Interfaces.Logger.enumLogLevel.Error
                 Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Initialized Logging")
 
-                'Dim frame As New StackFrame(True)
+                ''Dim frame As New StackFrame(True)
                 'Dim iVal As Integer
                 'Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "File: " & frame.GetFileName & " Line: " & frame.GetFileLineNumber)
                 'iVal = frame.GetFileLineNumber()

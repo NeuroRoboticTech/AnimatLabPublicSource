@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C57E9FAC-C948-4386-A585-54FB1876FBCE}</ProjectGuid>
+    <RootNamespace>VortexAnimatSim</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">VortexAnimatSim_vc10D</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">VortexAnimatSim_vc10</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\include;..\Vortex_5\include;..\OpenSceneGraph-2.8.3\include;..\OpenSceneGraph-2.8.3\OsgBuild\include;..\Vortex_5\3rdparty\sdl-1.2.14\include;..\StdUtils;..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;VORTEXANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libVx5d.lib;libVxController5d.lib;libVxControllerPersistence5d.lib;libVxGraphics5d.lib;libVxPersistence5d.lib;libVxPs5d.lib;libVxPsExtraOSG5d.lib;libVxVehicle5d.lib;libVxVehiclePersistence5d.lib;libVxExtra5d.lib;libVxExtraOSG5d.lib;libVxVehicleExtra5d.lib;libVxVehicleExtraOSG5d.lib;libVxOSG5d-2.8.3.lib;libboostVx_filesystem-vc100-mt-gd.lib;libboostVx_regex-vc100-mt-gd.lib;libboostVx_serialization-vc100-mt-gd.lib;libboostVx_system-vc100-mt-gd.lib;OpenThreadsd.lib;osgAnimationd.lib;osgd.lib;osgDBd.lib;osgFXd.lib;osgGAd.lib;osgManipulatord.lib;osgParticled.lib;osgShadowd.lib;osgSimd.lib;osgTerraind.lib;osgTextd.lib;osgUtild.lib;osgViewerd.lib;osgVolumed.lib;osgWidgetd.lib;SDL.lib;opengl32.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)VortexAnimatSim_vc10D.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\lib;$(OutDir);..\OpenSceneGraph-2.8.3\OsgBuild\lib;..\Vortex_5\lib;..\Vortex_5\3rdparty\boost-1.45.0\lib;..\Vortex_5\3rdparty\sdl-1.2.14\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;LIBC;LIBCD;LIBCMT;LIBCMTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>..\..\bin\VortexAnimatSim.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>$(OutDir)VortexAnimatSim_vc10D.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>Copy "$(OutDir)VortexAnimatSim_vc10D.lib" ..\..\lib\VortexAnimatSim_vc10D.lib
+Copy "$(TargetPath)" ..\..\bin</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\include;..\Vortex_5\include;..\OpenSceneGraph-2.8.3\include;..\OpenSceneGraph-2.8.3\OsgBuild\include;..\Vortex_5\3rdparty\sdl-1.2.14\include;..\StdUtils;..\AnimatSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VORTEXANIMATLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libVx5.lib;libVxController5.lib;libVxControllerPersistence5.lib;libVxGraphics5.lib;libVxPersistence5.lib;libVxPs5.lib;libVxPsExtraOSG5.lib;libVxVehicle5.lib;libVxVehiclePersistence5.lib;libVxExtra5.lib;libVxExtraOSG5.lib;libVxVehicleExtra5.lib;libVxVehicleExtraOSG5.lib;libVxOSG5-2.8.3.lib;libboostVx_filesystem-vc100-mt.lib;libboostVx_regex-vc100-mt.lib;libboostVx_serialization-vc100-mt.lib;libboostVx_system-vc100-mt.lib;OpenThreads.lib;osgAnimation.lib;osg.lib;osgDB.lib;osgFX.lib;osgGA.lib;osgManipulator.lib;osgParticle.lib;osgShadow.lib;osgSim.lib;osgTerrain.lib;osgText.lib;osgUtil.lib;osgViewer.lib;osgVolume.lib;osgWidget.lib;SDL.lib;opengl32.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)VortexAnimatSim_vc10.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\lib;$(OutDir);..\OpenSceneGraph-2.8.3\OsgBuild\lib;..\Vortex_5\lib;..\Vortex_5\3rdparty\boost-1.45.0\lib;..\Vortex_5\3rdparty\sdl-1.2.14\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>$(OutDir)VortexAnimatSim_vc10.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>Copy "$(OutDir)VortexAnimatSim_vc10.lib" ..\..\lib\VortexAnimatSim_vc10.lib
+Copy "$(TargetPath)" ..\..\bin</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="MeshMinVertexDistanceVisitor.cpp" />
+    <ClCompile Include="OsgGeometry.cpp" />
+    <ClCompile Include="StdAfx.cpp" />
+    <ClCompile Include="VortexAnimatSim.cpp" />
+    <ClCompile Include="VsAttachment.cpp" />
+    <ClCompile Include="VsBallSocket.cpp" />
+    <ClCompile Include="VsBody.cpp" />
+    <ClCompile Include="VsBox.cpp" />
+    <ClCompile Include="VsCameraManipulator.cpp" />
+    <ClCompile Include="VsClassFactory.cpp" />
+    <ClCompile Include="VsCone.cpp" />
+    <ClCompile Include="VsCylinder.cpp" />
+    <ClCompile Include="VsDragger.cpp" />
+    <ClCompile Include="VsDraggerHandler.cpp" />
+    <ClCompile Include="VsForceStimulus.cpp" />
+    <ClCompile Include="VsHinge.cpp" />
+    <ClCompile Include="VsHingeLimit.cpp" />
+    <ClCompile Include="VsHud.cpp" />
+    <ClCompile Include="VsHudText.cpp" />
+    <ClCompile Include="VsIntersectionEvent.cpp" />
+    <ClCompile Include="VsInverseMuscleCurrent.cpp" />
+    <ClCompile Include="VsJoint.cpp" />
+    <ClCompile Include="VsLight.cpp" />
+    <ClCompile Include="VsLine.cpp" />
+    <ClCompile Include="VsLinearHillMuscle.cpp" />
+    <ClCompile Include="VsLinearHillStretchReceptor.cpp" />
+    <ClCompile Include="VsMaterialPair.cpp" />
+    <ClCompile Include="VsMotorizedJoint.cpp" />
+    <ClCompile Include="VsMotorVelocityStimulus.cpp" />
+    <ClCompile Include="VsMouseSpring.cpp" />
+    <ClCompile Include="VsMovableItem.cpp" />
+    <ClCompile Include="VsOrganism.cpp" />
+    <ClCompile Include="VsOsgUserData.cpp" />
+    <ClCompile Include="VsOsgUserDataVisitor.cpp" />
+    <ClCompile Include="VsPlane.cpp" />
+    <ClCompile Include="VsPrismatic.cpp" />
+    <ClCompile Include="VsPrismaticLimit.cpp" />
+    <ClCompile Include="VsRigidBody.cpp" />
+    <ClCompile Include="VsSimulationWindow.cpp" />
+    <ClCompile Include="VsSimulationWindowMgr.cpp" />
+    <ClCompile Include="VsSimulator.cpp" />
+    <ClCompile Include="VsSphere.cpp" />
+    <ClCompile Include="VsSpring.cpp" />
+    <ClCompile Include="VsStructure.cpp" />
+    <ClCompile Include="VsTrackballDragger.cpp" />
+    <ClCompile Include="VsTranslateAxisDragger.cpp" />
+    <ClCompile Include="WorldCoordinateNodeVisitor.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MeshMinVertexDistanceVisitor.h" />
+    <ClInclude Include="OsgGeometry.h" />
+    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="VsAttachment.h" />
+    <ClInclude Include="VsBallSocket.h" />
+    <ClInclude Include="VsBody.h" />
+    <ClInclude Include="VsBox.h" />
+    <ClInclude Include="VsCameraManipulator.h" />
+    <ClInclude Include="VsClassFactory.h" />
+    <ClInclude Include="VsCone.h" />
+    <ClInclude Include="VsCylinder.h" />
+    <ClInclude Include="VsDragger.h" />
+    <ClInclude Include="VsDraggerHandler.h" />
+    <ClInclude Include="VsForceStimulus.h" />
+    <ClInclude Include="VsHinge.h" />
+    <ClInclude Include="VsHingeLimit.h" />
+    <ClInclude Include="VsHud.h" />
+    <ClInclude Include="VsHudText.h" />
+    <ClInclude Include="VsIntersectionEvent.h" />
+    <ClInclude Include="VsInverseMuscleCurrent.h" />
+    <ClInclude Include="VsJoint.h" />
+    <ClInclude Include="VsLight.h" />
+    <ClInclude Include="VsLine.h" />
+    <ClInclude Include="VsLinearHillMuscle.h" />
+    <ClInclude Include="VsLinearHillStretchReceptor.h" />
+    <ClInclude Include="VsMaterialPair.h" />
+    <ClInclude Include="VsMotorizedJoint.h" />
+    <ClInclude Include="VsMotorVelocityStimulus.h" />
+    <ClInclude Include="VsMouseSpring.h" />
+    <ClInclude Include="VsMovableItem.h" />
+    <ClInclude Include="VsOrganism.h" />
+    <ClInclude Include="VsOsgUserData.h" />
+    <ClInclude Include="VsOsgUserDataVisitor.h" />
+    <ClInclude Include="VsPlane.h" />
+    <ClInclude Include="VsPrismatic.h" />
+    <ClInclude Include="VsPrismaticLimit.h" />
+    <ClInclude Include="VsRigidBody.h" />
+    <ClInclude Include="VsSimulationWindow.h" />
+    <ClInclude Include="VsSimulationWindowMgr.h" />
+    <ClInclude Include="VsSimulator.h" />
+    <ClInclude Include="VsSphere.h" />
+    <ClInclude Include="VsSpring.h" />
+    <ClInclude Include="VsStructure.h" />
+    <ClInclude Include="VsTrackballDragger.h" />
+    <ClInclude Include="VsTranslateAxisDragger.h" />
+    <ClInclude Include="WorldCoordinateNodeVisitor.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AnimatSim\AnimatSim.vcxproj">
+      <Project>{8b8f6222-8001-4bc5-b047-c6a5772b2755}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\StdUtils\StdUtils.vcxproj">
+      <Project>{d1b49952-2999-4336-ae54-525373aa6251}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

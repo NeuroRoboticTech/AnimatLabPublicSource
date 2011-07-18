@@ -71,9 +71,9 @@ Namespace DataObjects
         Public ReadOnly Property AnimatModule() As String
             Get
 #If Not Debug Then
-                Return "VortexAnimatSim_vc9.dll"
+                Return "VortexAnimatSim_VC10.dll"
 #Else
-                Return "VortexAnimatSim_vc9D.dll"
+                Return "VortexAnimatSim_VC10D.dll"
 #End If
             End Get
         End Property

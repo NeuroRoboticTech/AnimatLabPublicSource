@@ -225,9 +225,9 @@ Namespace DataObjects.Behavior
         Public Overrides ReadOnly Property ModuleFilename() As String
             Get
 #If Not Debug Then
-                Return "RealisticNeuralNet_vc9.dll"
+                Return "RealisticNeuralNet_VC10.dll"
 #Else
-                Return "RealisticNeuralNet_vc9D.dll"
+                Return "RealisticNeuralNet_VC10D.dll"
 #End If
             End Get
         End Property

@@ -108,9 +108,9 @@ Namespace DataObjects.Physical.Bodies
         Public Overrides ReadOnly Property ModuleName() As String
             Get
 #If Not Debug Then
-                Return "VortexAnimatPrivateSim_VC9.dll"
+                Return "VortexAnimatPrivateSim_VC10.dll"
 #Else
-                Return "VortexAnimatPrivateSim_VC9D.dll"
+                Return "VortexAnimatPrivateSim_VC10D.dll"
 #End If
             End Get
         End Property

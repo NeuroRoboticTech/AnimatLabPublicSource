@@ -20,9 +20,9 @@ string Nl_NeuralModuleName()
 {
 	return "FiringRateSim";
 	//#ifdef _DEBUG
-	//	return "FastNeuralNet_vc9D.dll";
+	//	return "FastNeuralNet_VC10D.dll";
 	//#else
-	//	return "FastNeuralNet_vc9.dll";
+	//	return "FastNeuralNet_VC10.dll";
 	//#endif
 }
 
