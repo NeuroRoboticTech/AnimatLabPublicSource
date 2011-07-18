@@ -113,7 +113,7 @@ Namespace DataObjects.Physical
             Get
                 If Not m_doInterface Is Nothing Then
                     'We need to get the actual world location from the simulation interface before returning it.
-                    m_svWorldPosition.CopyData(m_doInterface.WorldPosition(0), m_doInterface.WorldPosition(1), m_doInterface.WorldPosition(2))
+                    m_svWorldPosition.CopyData(m_doInterface.WorldPosition(0), m_doInterface.WorldPosition(1), m_doInterface.WorldPosition(2), , False)
                 End If
                 Return m_svWorldPosition
             End Get

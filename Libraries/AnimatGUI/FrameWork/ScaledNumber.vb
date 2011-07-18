@@ -440,18 +440,22 @@ Namespace Framework
 
         End Function
 
-        Public Sub CopyData(ByRef snValue As ScaledNumber)
+        Public Sub CopyData(ByRef snValue As ScaledNumber, Optional ByVal bIgnoreEvents As Boolean = False, Optional ByVal bSetIsDirty As Boolean = True)
             Me.m_fltValue = snValue.m_fltValue
             Me.m_eScale = snValue.m_eScale
-            Me.IsDirty = True
-            If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
+            If bSetIsDirty Then
+                Me.IsDirty = True
+            End If
+            If Not bIgnoreEvents AndAlso Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
         End Sub
 
-        Public Sub CopyData(ByVal fltValue As Single, ByVal eScale As AnimatGUI.Framework.ScaledNumber.enumNumericScale)
+        Public Sub CopyData(ByVal fltValue As Single, ByVal eScale As AnimatGUI.Framework.ScaledNumber.enumNumericScale, Optional ByVal bIgnoreEvents As Boolean = False, Optional ByVal bSetIsDirty As Boolean = True)
             Me.m_fltValue = fltValue
             Me.m_eScale = eScale
-            Me.IsDirty = True
-            If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
+            If bSetIsDirty Then
+                Me.IsDirty = True
+            End If
+            If Not bIgnoreEvents AndAlso Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _

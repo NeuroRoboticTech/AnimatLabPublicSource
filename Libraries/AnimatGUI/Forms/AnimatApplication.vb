@@ -1304,6 +1304,7 @@ Namespace Forms
         Public Overrides Sub Initialize(Optional ByVal frmParent As AnimatForm = Nothing)
 
             Try
+                Util.DisableDirtyFlags = True
                 Util.Application = Me
                 m_doSimInterface.Logger = Util.Logger
 
@@ -1343,6 +1344,8 @@ Namespace Forms
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Util.DisableDirtyFlags = False
             End Try
         End Sub
 
@@ -1634,6 +1637,8 @@ Namespace Forms
                 m_aryProgramModules.Clear()
                 m_aryExternalStimuli.Clear()
 
+                Util.DisableDirtyFlags = True
+
                 'First find a list of all possible assemblies. It may be one or it may be a standard win32 dll. We will have to see later.
                 Util.FindAssemblies(Me.ApplicationDirectory(), aryFileNames)
 
@@ -1780,6 +1785,8 @@ Namespace Forms
 
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
+                Util.DisableDirtyFlags = False
+
                 If iFailedLoad > 0 Then
                     Dim strMessage As String = "One or more of the vb.net plug-in modules for this application failed to load correctly. " & _
                                  "This could signal an error for a specific type of module, but more often this type of error means " & _
@@ -3694,6 +3701,8 @@ Namespace Forms
 
                 Dim frmNewProject As New Forms.NewProject
 
+                Util.DisableDirtyFlags = True
+
                 frmNewProject.txtProjectName.Text = "NewProject"
                 If frmNewProject.ShowDialog = DialogResult.OK Then
                     m_doSimulation = New DataObjects.Simulation(Me.FormHelper)
@@ -3710,9 +3719,7 @@ Namespace Forms
                     'Create the project directory
                     System.IO.Directory.CreateDirectory(Util.Application.ProjectPath)
 
-                    Util.DisableDirtyFlags = True
                     ResetProject(True)
-                    Util.DisableDirtyFlags = False
 
                     SaveProject(Util.Application.ProjectFile)
 

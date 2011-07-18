@@ -150,11 +150,11 @@ Namespace Framework
             m_snZ.ClearIsDirty()
         End Sub
 
-        Public Overridable Overloads Sub CopyData(ByVal dblX As Double, ByVal dblY As Double, ByVal dblZ As Double, Optional ByVal bIgnoreEvents As Boolean = True)
-            CopyData(CSng(dblX), CSng(dblY), CSng(dblZ), bIgnoreEvents)
+        Public Overridable Overloads Sub CopyData(ByVal dblX As Double, ByVal dblY As Double, ByVal dblZ As Double, Optional ByVal bIgnoreEvents As Boolean = True, Optional ByVal bSetIsDirty As Boolean = True)
+            CopyData(CSng(dblX), CSng(dblY), CSng(dblZ), bIgnoreEvents, bSetIsDirty)
         End Sub
 
-        Public Overridable Overloads Sub CopyData(ByVal fltX As Single, ByVal fltY As Single, ByVal fltZ As Single, Optional ByVal bIgnoreEvents As Boolean = True)
+        Public Overridable Overloads Sub CopyData(ByVal fltX As Single, ByVal fltY As Single, ByVal fltZ As Single, Optional ByVal bIgnoreEvents As Boolean = True, Optional ByVal bSetIsDirty As Boolean = True)
             Try
                 m_bInsideCopyData = True
 
@@ -163,7 +163,9 @@ Namespace Framework
                 m_snZ.ActualValue = fltZ
 
                 If Not bIgnoreEvents AndAlso Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
-                Me.IsDirty = True
+                If bSetIsDirty Then
+                    Me.IsDirty = True
+                End If
 
             Catch ex As Exception
                 Throw ex
@@ -172,7 +174,7 @@ Namespace Framework
             End Try
         End Sub
 
-        Public Overridable Overloads Sub CopyData(ByRef svVec3 As ScaledVector3)
+        Public Overridable Overloads Sub CopyData(ByRef svVec3 As ScaledVector3, Optional ByVal bIgnoreEvents As Boolean = False, Optional ByVal bSetIsDirty As Boolean = True)
             Try
                 m_bInsideCopyData = True
 
@@ -180,8 +182,10 @@ Namespace Framework
                 m_snY.CopyData(svVec3.m_snY)
                 m_snZ.CopyData(svVec3.m_snZ)
 
-                If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
-                Me.IsDirty = True
+                If Not bIgnoreEvents AndAlso Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
+                If bSetIsDirty Then
+                    Me.IsDirty = True
+                End If
 
             Catch ex As Exception
                 Throw ex
