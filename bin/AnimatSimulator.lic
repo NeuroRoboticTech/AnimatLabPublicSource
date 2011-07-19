@@ -1,30 +1,63 @@
-FEATURE mcd mathngin 4.0 permanent uncounted \
-	HOSTID=CMLMD=35213AA1101F84A32EC5E93F260435A6 ISSUER="CMLabs \
-	Simulations Inc." ISSUED=09-Apr-2011 NOTICE="Licensed to \
-	Georgia State University for use in AnimatLab - A 3D Graphics \
-	Simulator for Biological and Robotic Control Systems. For \
-	non-commercial use only." SN=RL013-016 TS_OK SIGN="0009 92A4 \
-	957B 939E 9194 024D 5D23 96B2 E632 D521 D201 2079 1B04 75D0 \
-	F8B5 7E21 3195 A176 9E48 A55D E11C" SIGN2="02F4 4A56 CC4E 5B33 \
-	0CB5 BADA 790C B71B 17C3 FABC 3B02 2131 A4AB CBA4 81F8 87AB \
-	5A4C 693E 4AD7 7DFB FB72"
-FEATURE mdt mathngin 4.0 permanent uncounted \
-	HOSTID=CMLMD=35213AA1101F84A32EC5E93F260435A6 ISSUER="CMLabs \
-	Simulations Inc." ISSUED=09-Apr-2011 NOTICE="Licensed to \
-	Georgia State University for use in AnimatLab - A 3D Graphics \
-	Simulator for Biological and Robotic Control Systems. For \
-	non-commercial use only." SN=RL013-016 TS_OK SIGN="030D 3764 \
-	C717 CB99 FC16 8C4D 00EC CBFD C4B4 9F9D 0E00 96A3 20D2 4395 \
-	C465 B8E4 D094 1318 71EA 37C8 E8DB" SIGN2="0277 5D8D 5DA2 6FBD \
-	1C55 C3CF 3979 AA69 BF93 C069 7C01 4162 1BB1 8889 80A5 E462 \
-	3CB8 D33B 7C71 BD8F A262"
-FEATURE vxps mathngin 4.0 permanent uncounted \
-	HOSTID=CMLMD=35213AA1101F84A32EC5E93F260435A6 ISSUER="CMLabs \
-	Simulations Inc." ISSUED=09-Apr-2011 NOTICE="Licensed to \
-	Georgia State University for use in AnimatLab - A 3D Graphics \
-	Simulator for Biological and Robotic Control Systems. For \
-	non-commercial use only." SN=RL013-016 TS_OK SIGN="0248 ED85 \
-	AFF1 6FBF F150 9A76 4926 2B49 7170 75B2 5800 8CF6 5E0D 5061 \
-	DE35 CB60 0213 97AD DC1A B4DE 3A4F" SIGN2="0178 00A9 6D7F 56BD \
-	C7ED 8958 8CCC B3D2 CFFD 4776 CD02 BC0D BCF2 9FC9 2935 00DD \
-	8006 220D 480C 42B6 CA6F"
+#
+# CMLabs Vortex Evaluation License
+#
+# How to Install this License
+#
+# - Save this information to a file with the extension ".lic" or ".dat".
+#   If you use the default directory (C:\flexlm in Windows, /etc/flexlm
+#   in Unix) this is all you need to do.
+#
+# - If you are not using the default directory, set the environment
+#   variable MATHNGIN_LICENSE_FILE to the name of the directory you have
+#   chosen.
+#
+#########################################################################
+
+FEATURE mcd mathngin 5.0 31-jul-2011 uncounted HOSTID=DEMO \
+	ISSUER="CMLabs Simulations, Inc." ISSUED=13-jun-2011 \
+	SIGN="027C 51E2 70C0 3959 102A E7C3 C9EC CA7C F4FD 75DF E602 \
+	A244 8AB0 9483 0D8F F527 B47B 2C69 5835 984A D020" SIGN2="02E7 \
+	B4E2 C4F1 A272 D00A 0418 3320 1E94 8CBF F481 0F01 F1B0 B80E \
+	F10F A56B BAF9 DCE5 478C 2634 9519 A5A4"
+FEATURE mdt mathngin 5.0 31-jul-2011 uncounted HOSTID=DEMO \
+	ISSUER="CMLabs Simulations, Inc." ISSUED=13-jun-2011 \
+	SIGN="0083 363B 0345 3258 0319 2642 4387 1888 9C16 6E4F 1F01 \
+	183A AAD9 536C CF1A 4501 1FFC B795 E689 9DC5 C165" SIGN2="014C \
+	4628 9124 8BDE 96EE 55C8 A405 D72E 159E EA24 B602 DF62 9FC2 \
+	3249 F99B 48A8 67CC BA82 0AA6 0117 73AA"
+FEATURE vxvehicle mathngin 5.0 31-jul-2011 uncounted HOSTID=DEMO \
+	ISSUER="CMLabs Simulations, Inc." ISSUED=13-jun-2011 \
+	SIGN="0211 B2C6 137E 57E5 2956 0BE1 4C2E 9F77 0227 F8D7 9B03 \
+	AC7E 213F DF7F 544C 7BF6 1925 5C71 595D 5493 B1CD" SIGN2="0356 \
+	516B A93A AE4F 09D8 C93C 1970 DE42 6EF9 302D C102 8640 2FBD \
+	03C4 4C45 0B89 8EA7 F8F7 F9CF F4A2 6D7D"
+FEATURE vxadvcon mathngin 5.0 31-jul-2011 uncounted HOSTID=DEMO \
+	ISSUER="CMLabs Simulations, Inc." ISSUED=13-jun-2011 \
+	SIGN="028F 9CAB 790E 7268 73C8 8813 CC58 FB24 DCB1 1578 A703 \
+	B12D 3B54 CD19 B327 2DA1 876F 176C 19F5 2944 DA13" SIGN2="0239 \
+	86F3 7EEE AC70 8973 7FA4 6389 EF33 7D14 4DF8 2903 2045 3B3A \
+	7960 BBDA 34AB 0887 F716 7CF4 3931 9A13"
+FEATURE vxcable mathngin 5.0 31-jul-2011 uncounted HOSTID=DEMO \
+	ISSUER="CMLabs Simulations, Inc." ISSUED=13-jun-2011 \
+	SIGN="03A5 2FB0 6727 0242 9434 4CFB 4A3D 2B6B B953 D8F1 F200 \
+	4B34 8B61 5407 1974 65F1 0315 2E16 6EF7 E772 B09B" SIGN2="0270 \
+	58BF 04E2 6C49 5C8E A556 3387 62D3 86FB A616 D803 F654 E10D \
+	346D F0AD D4C5 4118 ACDB CD45 898D 0043"
+FEATURE vxps mathngin 5.0 31-jul-2011 uncounted HOSTID=DEMO \
+	ISSUER="CMLabs Simulations, Inc." ISSUED=13-jun-2011 \
+	SIGN="02A9 EA5D 2C51 9D8D 5B97 4616 B694 855F 041D 8C24 B601 \
+	0F70 AAC5 BC85 2253 7BF6 34FC 6DE6 7BEB 82F2 0D32" SIGN2="016C \
+	3602 A3EF 49F4 8B6D E35F 6B91 C4E8 FFC3 4D16 8702 FBF8 D693 \
+	B34D C141 A015 0BC1 CFB8 87D0 1C04 327B"
+FEATURE vxsensorrc mathngin 5.0 31-jul-2011 uncounted HOSTID=DEMO \
+	ISSUER="CMLabs Simulations, Inc." ISSUED=13-jun-2011 \
+	SIGN="0384 9A78 0F76 1CEE 6A1B 8872 3798 DCED C9DE D707 BE02 \
+	679E 6441 EE17 CA8D 40A9 E8B1 F042 2D9C 0F02 6E43" SIGN2="0176 \
+	628E 7963 4FF4 EC2F 98E3 2158 7339 9D35 30DD 8802 F480 BF7E \
+	D434 1793 273C C309 C4F3 4C6F 25CA 1672"
+#########################################################################
+#
+# The software provided is secured using FLEXlm.
+#
+# For more information, please contact licensing@cm-labs.com
+#
