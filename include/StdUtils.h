@@ -3,9 +3,9 @@
 
 #ifndef _STD_UTILS_DLL_NOFORCELIBS
 	#ifdef _DEBUG
-		#pragma comment(lib, "StdUtils_vc9D.lib")
+		#pragma comment(lib, "StdUtils_vc10D.lib")
 	#else
-		#pragma comment(lib, "StdUtils_vc9.lib")
+		#pragma comment(lib, "StdUtils_vc10.lib")
 	#endif          
 #endif          // _STD_UTILS_DLL_NOFORCELIBS
 

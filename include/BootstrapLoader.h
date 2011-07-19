@@ -3,9 +3,9 @@
 
 #ifndef _BOOTSTRAP_LOADER_DLL_NOFORCELIBS
 	#ifdef _DEBUG
-		#pragma comment(lib, "BootStrapLoader_vc9D.lib")
+		#pragma comment(lib, "BootStrapLoader_vc10D.lib")
 	#else
-		#pragma comment(lib, "BootStrapLoader_vc9.lib")
+		#pragma comment(lib, "BootStrapLoader_vc10.lib")
 	#endif          
 #endif          // _BOOTSTRAP_LOADER_DLL_NOFORCELIBS
 

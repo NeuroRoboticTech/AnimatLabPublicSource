@@ -3,9 +3,9 @@
 
 #ifndef _ANIMAT_LIB_DLL_NOFORCELIBS
 	#ifdef _DEBUG
-		#pragma comment(lib, "AnimatSim_vc9D.lib")
+		#pragma comment(lib, "AnimatSim_vc10D.lib")
 	#else
-		#pragma comment(lib, "AnimatSim_vc9.lib")
+		#pragma comment(lib, "AnimatSim_vc10.lib")
 	#endif
 #endif          // _ANIMAT_LIB_DLL_NOFORCELIBS
 

@@ -3,9 +3,9 @@
 
 #ifndef _REALISTIC_NEURAL_NET_LIB_DLL_NOFORCELIBS
 	#ifdef _DEBUG
-		#pragma comment(lib, "RealisticNeuralNet_vc9D.lib")
+		#pragma comment(lib, "RealisticNeuralNet_vc10D.lib")
 	#else
-		#pragma comment(lib, "RealisticNeuralNet_vc9.lib")
+		#pragma comment(lib, "RealisticNeuralNet_vc10.lib")
 	#endif
 #endif          // _REALISTIC_NEURAL_NET_DLL_NOFORCELIBS
 

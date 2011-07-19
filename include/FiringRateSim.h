@@ -3,9 +3,9 @@
 
 #ifndef _FAST_NEURAL_NET_LIB_DLL_NOFORCELIBS
 	#ifdef _DEBUG
-		#pragma comment(lib, "FiringRateSim_vc9D.lib")
+		#pragma comment(lib, "FiringRateSim_vc10D.lib")
 	#else
-		#pragma comment(lib, "FiringRateSim_vc9.lib")
+		#pragma comment(lib, "FiringRateSim_vc10.lib")
 	#endif
 #endif          // _FAST_NEURAL_NET_LIB_DLL_NOFORCELIBS
 

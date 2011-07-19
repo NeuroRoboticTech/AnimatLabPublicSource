@@ -2,9 +2,9 @@
 #define __VORTEX_ANIMAT_LIB_DLL_H__
 
 #ifdef _DEBUG
-	#pragma comment(lib, "VortexAnimatSim_vc9D.lib")
+	#pragma comment(lib, "VortexAnimatSim_vc10D.lib")
 #else
-	#pragma comment(lib, "VortexAnimatSim_vc9.lib")
+	#pragma comment(lib, "VortexAnimatSim_vc10.lib")
 #endif
 
 #define VORTEX_PORT __declspec( dllimport )
