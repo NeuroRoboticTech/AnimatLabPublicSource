@@ -15,10 +15,12 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyCopyright("Copyright © Microsoft 2011")> 
 <Assembly: AssemblyTrademark("")> 
 
+<Assembly: CLSCompliant(True)> 
+
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("8e4b2491-a3ef-44c7-8850-341a66c8900f")> 
+<Assembly: Guid("6fe704c1-75fc-4442-b7b6-89aac89c7597")> 
 
 ' Version information for an assembly consists of the following four values:
 '
