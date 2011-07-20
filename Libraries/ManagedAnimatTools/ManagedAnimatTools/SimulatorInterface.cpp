@@ -106,6 +106,14 @@ namespace AnimatGUI
 					return true;
 			}
 
+			bool SimulatorInterface::SimRunning()
+			{
+				if(m_lpSim)
+					return m_lpSim->SimRunning();
+				else
+					return false;
+			}
+
 			System::Boolean SimulatorInterface::Loaded()
 			{
 				return m_bIsLoaded;

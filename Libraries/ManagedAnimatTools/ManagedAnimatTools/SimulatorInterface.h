@@ -47,6 +47,7 @@ namespace AnimatGUI
 			Simulator *Sim();
 			long CurrentMillisecond();
 			bool Paused();
+			bool SimRunning();
 			System::Boolean Loaded();
 			System::Boolean SimOpen();
 			void SetProjectPath(System::String ^strPath); 

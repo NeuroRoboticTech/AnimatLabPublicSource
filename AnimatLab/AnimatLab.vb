@@ -5,19 +5,33 @@ Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports System.Diagnostics
 Imports System.Reflection
+Imports System.Runtime.Remoting
 
 Module AnimatLab
 
+    Private m_strCmdLineProject As String = ""
+    Private m_iCmdLinePort As Integer = -1
+    Private m_oApplication As Object
+    Private m_oServer As AnimatServer.Server
+
     Sub Main()
         Try
+            ProcessArguments()
+
             Dim strAssemblyPath As String = "", strClassName As String = ""
             LoadConfigInfo(strAssemblyPath, strClassName)
 
             Dim oAssembly As System.Reflection.Assembly = System.Reflection.Assembly.LoadFrom(strAssemblyPath)
-            Dim oApplication As Object = oAssembly.CreateInstance(strClassName)
+            m_oApplication = oAssembly.CreateInstance(strClassName)
+            Dim oStartApp As MethodInfo = m_oApplication.GetType().GetMethod("StartApplication")
 
-            Dim oStartApp As MethodInfo = oApplication.GetType().GetMethod("StartApplication")
-            oStartApp.Invoke(oApplication, New Object() {True})
+            If m_iCmdLinePort > 0 Then
+                m_oServer = New AnimatServer.Server()
+                m_oServer.Initialize(m_oApplication, m_iCmdLinePort)
+            End If
+
+            'Start the app and block.
+            oStartApp.Invoke(m_oApplication, New Object() {True})
 
         Catch ex As Exception
             If Not ex.InnerException Is Nothing Then
@@ -133,4 +147,26 @@ Module AnimatLab
 
     End Function
 
+    Private Sub ProcessArguments()
+        Dim args() As String = System.Environment.GetCommandLineArgs()
+
+        Dim iCount As Integer = args.Length
+        For iIdx As Integer = 0 To iCount - 1
+            If args(iIdx).Trim.ToUpper = "-PROJECT" AndAlso iIdx < (iCount - 1) Then
+                m_strCmdLineProject = args(iIdx + 1)
+            End If
+
+            If args(iIdx).Trim.ToUpper = "-PORT" AndAlso iIdx < (iCount - 1) Then
+                Dim strPort As String = args(iIdx + 1)
+                If IsNumeric(strPort) Then
+                    Dim iPort As Integer = CInt(strPort)
+                    If iPort > 0 Then
+                        m_iCmdLinePort = iPort
+                    End If
+                End If
+            End If
+        Next
+
+
+    End Sub
 End Module

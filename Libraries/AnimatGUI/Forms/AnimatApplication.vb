@@ -14,6 +14,7 @@ Imports Crownwood.DotNetMagic.Controls
 Imports Crownwood.DotNetMagic.Common
 Imports Crownwood.DotNetMagic.Docking
 Imports AnimatGUI.Framework
+Imports System.Reflection
 
 Namespace Forms
 
@@ -894,6 +895,7 @@ Namespace Forms
         Protected m_bProjectIsOpen As Boolean = False
 
         Protected m_timerShutdown As System.Timers.Timer
+        Protected m_strCmdLineProject As String = ""
 
 #Region " Preferences "
 
@@ -910,8 +912,6 @@ Namespace Forms
         Protected m_SecurityMgr As New AnimatGuiCtrls.Security.SecurityManager
 
 #End Region
-
-        Protected m_strCommandLineParam As String = ""
 
 #End Region
 
@@ -1274,6 +1274,12 @@ Namespace Forms
             End Get
         End Property
 
+        Public Overridable ReadOnly Property SimIsRunning() As Boolean
+            Get
+                Return Me.SimulationInterface.SimRunning()
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -1283,11 +1289,7 @@ Namespace Forms
         Public Overridable Sub StartApplication(ByVal bModal As Boolean)
 
             Try
-                Dim args() As String = System.Environment.GetCommandLineArgs()
-
-                If args.Length > 1 Then
-                    m_strCommandLineParam = args(1)
-                End If
+                ProcessArguments()
 
                 If bModal Then
                     Me.ShowDialog()
@@ -1298,6 +1300,18 @@ Namespace Forms
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+
+        End Sub
+
+        Protected Overridable Sub ProcessArguments()
+            Dim args() As String = System.Environment.GetCommandLineArgs()
+
+            Dim iCount As Integer = args.Length
+            For iIdx As Integer = 0 To iCount - 1
+                If args(iIdx).Trim.ToUpper = "-PROJECT" AndAlso iIdx < (iCount - 1) Then
+                    m_strCmdLineProject = args(iIdx + 1)
+                End If
+            Next
 
         End Sub
 
@@ -3664,6 +3678,17 @@ Namespace Forms
             End Try
         End Sub
 
+        Private Delegate Sub ExecuteMethodDelegate(ByVal strMethodName As String, ByVal aryParams() As Object)
+
+        Public Function ExecuteMethod(ByVal strMethodName As String, ByVal aryParams() As Object) As Object
+            If Me.InvokeRequired Then
+                Return Me.Invoke(New ExecuteMethodDelegate(AddressOf ExecuteMethod), New Object() {strMethodName, aryParams})
+            End If
+
+            Dim oMethod As MethodInfo = Me.GetType().GetMethod(strMethodName)
+            Return oMethod.Invoke(Me, aryParams)
+
+        End Function
 
 #End Region
 
@@ -4300,8 +4325,8 @@ Namespace Forms
             Try
                 CloseSplashScreen()
 
-                If m_strCommandLineParam.Length > 0 Then
-                    Me.LoadProject(m_strCommandLineParam)
+                If m_strCmdLineProject.Length > 0 Then
+                    Me.LoadProject(m_strCmdLineProject)
                 End If
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
