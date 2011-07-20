@@ -85,7 +85,7 @@ void VsTrackballDragger::setupDefaultGeometry()
         cylinder->setHeight(0.15f);
         osg::ShapeDrawable* cylinderDrawable = new osg::ShapeDrawable(cylinder,hints);
         geode->addDrawable(cylinderDrawable);
-		osgManipulator::setDrawableToAlwaysCull(*cylinderDrawable);
+		//osgManipulator::setDrawableToAlwaysCull(*cylinderDrawable);
         geode->addDrawable(createCircleGeometry(1.0f, 100));
     }
 

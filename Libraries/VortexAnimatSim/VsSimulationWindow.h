@@ -35,6 +35,9 @@ class VORTEX_PORT VsSimulationWindow : public AnimatSim::SimulationWindow, osgGA
 		virtual void Initialize();
 		virtual void Update();
 		virtual void Close();
+
+		virtual void OnGetFocus();
+		virtual void OnLoseFocus();
 };
 
 	}// end Visualization

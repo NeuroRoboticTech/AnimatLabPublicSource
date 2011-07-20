@@ -827,6 +827,7 @@ Namespace Forms
         Protected m_mgrLargeImages As AnimatGUI.Framework.ImageManager
         Protected m_mgrWorkspaceImages As AnimatGUI.Framework.ImageManager
         Protected m_mgrTabPagesImages As AnimatGUI.Framework.ImageManager
+        Protected m_selTabPage As Crownwood.DotNetMagic.Controls.TabPage
 
         Protected m_selChildMenuStrip As AnimatMenuStrip
         Protected m_selChildToolStrip As AnimatToolStrip
@@ -3678,6 +3679,10 @@ Namespace Forms
             End Try
         End Sub
 
+#End Region
+
+#Region " Test Automation Control "
+
         Private Delegate Sub ExecuteMethodDelegate(ByVal strMethodName As String, ByVal aryParams() As Object)
 
         Public Function ExecuteMethod(ByVal strMethodName As String, ByVal aryParams() As Object) As Object
@@ -3686,9 +3691,23 @@ Namespace Forms
             End If
 
             Dim oMethod As MethodInfo = Me.GetType().GetMethod(strMethodName)
+
+            If oMethod Is Nothing Then
+                Throw New System.Exception("Method name '" & strMethodName & "' not found.")
+            End If
             Return oMethod.Invoke(Me, aryParams)
 
         End Function
+
+        Public Sub SelectWorkspaceItem(ByVal strPath As String)
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = Util.ProjectWorkspace.FindTreeNodeByPath(strPath)
+            tnNode.Select()
+        End Sub
+
+        Public Sub DblClickWorkspaceItem(ByVal strPath As String)
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = Util.ProjectWorkspace.FindTreeNodeByPath(strPath)
+            Util.Application.Simulation.WorkspaceTreeviewDoubleClick(tnNode)
+        End Sub
 
 #End Region
 
@@ -4428,6 +4447,10 @@ Namespace Forms
         Private Sub AnimatTabbedGroups_PageChanged(ByVal tg As Crownwood.DotNetMagic.Controls.TabbedGroups, ByVal tp As Crownwood.DotNetMagic.Controls.TabPage) Handles AnimatTabbedGroups.PageChanged
 
             Try
+                If Not m_selTabPage Is Nothing AndAlso Not m_selTabPage.Control Is Nothing AndAlso Util.IsTypeOf(m_selTabPage.Control.GetType, GetType(Forms.AnimatForm), False) Then
+                    Dim frmChild As Forms.AnimatForm = DirectCast(m_selTabPage.Control, Forms.AnimatForm)
+                    frmChild.OnLoseFocus()
+                End If
 
                 If Not m_selChildMenuStrip Is Nothing Then
                     ToolStripManager.RevertMerge(Me.AnimatMenuStrip)
@@ -4450,7 +4473,10 @@ Namespace Forms
                         ToolStripManager.Merge(m_selChildToolStrip, Me.AnimatToolStrip)
                     End If
 
+                    frmChild.OnGetFocus()
                 End If
+
+                m_selTabPage = tp
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

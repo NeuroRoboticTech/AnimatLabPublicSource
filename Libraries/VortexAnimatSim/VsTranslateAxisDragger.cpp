@@ -51,6 +51,8 @@ void VsTranslateAxisDragger::setupDefaultGeometry()
 	if(!_xDragger.valid() && !_xDragger.valid() && !_xDragger.valid())
 		return;
 
+	float fltLength = 1.5f;
+
     // Create a line.
     osg::Geode* lineGeode = new osg::Geode;
     {
@@ -58,7 +60,7 @@ void VsTranslateAxisDragger::setupDefaultGeometry()
         
         osg::Vec3Array* vertices = new osg::Vec3Array(2);
         (*vertices)[0] = osg::Vec3(0.0f,0.0f,0.0f);
-        (*vertices)[1] = osg::Vec3(0.0f,0.0f,1.0f);
+        (*vertices)[1] = osg::Vec3(0.0f,0.0f,fltLength);
 
         geometry->setVertexArray(vertices);
         geometry->addPrimitiveSet(new osg::DrawArrays(osg::PrimitiveSet::LINES,0,2));
@@ -69,7 +71,7 @@ void VsTranslateAxisDragger::setupDefaultGeometry()
     // Turn of lighting for line and set line width.
     {
         osg::LineWidth* linewidth = new osg::LineWidth();
-        linewidth->setWidth(5.0f);
+        linewidth->setWidth(7.0f);
         lineGeode->getOrCreateStateSet()->setAttributeAndModes(linewidth, osg::StateAttribute::ON);
         lineGeode->getOrCreateStateSet()->setMode(GL_LIGHTING,osg::StateAttribute::OFF);
     }
@@ -79,15 +81,15 @@ void VsTranslateAxisDragger::setupDefaultGeometry()
     
     // Create a cone.
     {
-        osg::Cone* cone = new osg::Cone (osg::Vec3(0.0f, 0.0f, 1.0f), 0.025f, 0.10f);
+        osg::Cone* cone = new osg::Cone (osg::Vec3(0.0f, 0.0f, 1.0f), 0.06f, 0.30f);
         geode->addDrawable(new osg::ShapeDrawable(cone));
     }
 
     // Create an invisible cylinder for picking the line.
     {
-        osg::Cylinder* cylinder = new osg::Cylinder (osg::Vec3(0.0f,0.0f,0.5f), 0.015f, 1.0f);
+        osg::Cylinder* cylinder = new osg::Cylinder (osg::Vec3(0.0f,0.0f,0.5f), 0.03f, fltLength);
         osg::Drawable* geometry = new osg::ShapeDrawable(cylinder);
-        osgManipulator::setDrawableToAlwaysCull(*geometry);
+        //osgManipulator::setDrawableToAlwaysCull(*geometry);
         geode->addDrawable(geometry);
     }
 

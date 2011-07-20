@@ -248,5 +248,13 @@ void VsSimulationWindow::Close()
 	m_lpTrackBody = NULL;  //Do not delete this item.
 }
 
+void VsSimulationWindow::OnGetFocus()
+{
+}
+
+void VsSimulationWindow::OnLoseFocus()
+{
+}
+
 	}// end Visualization
 }// end VortexAnimatSim

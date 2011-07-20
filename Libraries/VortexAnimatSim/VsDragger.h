@@ -1,5 +1,7 @@
 #pragma once
 
+#include "VsAutoTransform.h"
+
 namespace VortexAnimatSim
 {
 	namespace Visualization

@@ -156,6 +156,9 @@
     <ClCompile Include="WorldCoordinateNodeVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VsAutoTransform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MeshMinVertexDistanceVisitor.h">
@@ -294,6 +297,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WorldCoordinateNodeVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VsAutoTransform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

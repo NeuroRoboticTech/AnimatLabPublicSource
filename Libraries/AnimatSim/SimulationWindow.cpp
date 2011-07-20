@@ -243,6 +243,12 @@ void SimulationWindow::SetupTrackCamera(BOOL bTrackCamera, string strLookAtStruc
 **/
 void SimulationWindow::SetCameraLookAt(CStdFPoint oTarget) {}
 
+void SimulationWindow::OnGetFocus()
+{}
+
+void SimulationWindow::OnLoseFocus()
+{}
+
 void SimulationWindow::Load(string strXml)
 {
 	//If it is blank then skip the loading.

@@ -29,13 +29,13 @@ VsDragger::VsDragger(VsMovableItem *lpParent, BOOL bAllowTranslateX, BOOL bAllow
 	osg::Matrix osgMT; osgMT.makeIdentity();
 	m_osgGripperMT->setMatrix(osgMT);
 	m_osgGripperMT->addChild(this);
-	
+
 	_autoTransform = new osg::AutoTransform;
 	_autoTransform->setAutoScaleToScreen(true);
 	addChild(_autoTransform.get());
 
 	_sizeTransform = new osg::MatrixTransform;
-	// Screen coordinates because of AutoTransform parent
+	//Screen coordinates because of AutoTransform parent
 	_sizeTransform->setMatrix(osg::Matrix::scale(100, 100, 100));
 	_autoTransform->addChild(_sizeTransform.get());
 
@@ -123,7 +123,7 @@ void VsDragger::SetupMatrix()
 		// Scale the translate dragger up a bit, otherwise the axes
 		// will be in the trackball dragger's sphere and we won't be
 		// able to pick them.
-		float axesScale = 1.5;
+		float axesScale = 1;
 		invMT = invMT * osg::Matrix::scale(axesScale,axesScale,axesScale);
 
 		_transDragger->setMatrix(invMT);

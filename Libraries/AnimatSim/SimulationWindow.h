@@ -120,6 +120,22 @@ namespace AnimatSim
 		\param	strXml	The xml string to load. 
 		**/
 		virtual void Load(string strXml);
+
+		/**
+		\brief	Called by the GUI when this window gets the focus.
+		
+		\author	dcofer
+		\date	7/19/2011
+		**/
+		virtual void OnGetFocus();
+
+		/**
+		\brief	Called by the GUI when this window loses the focus.
+		
+		\author	dcofer
+		\date	7/19/2011
+		**/
+		virtual void OnLoseFocus();
 	};
 
 }//end namespace AnimatSim

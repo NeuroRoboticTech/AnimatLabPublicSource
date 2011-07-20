@@ -58,6 +58,8 @@ namespace AnimatGUI
 
 			bool AddWindow(IntPtr hParentWnd, System::String ^sWindowXml);
 			void RemoveWindow(IntPtr hParentWnd);
+			void OnWindowGetFocus(System::String ^sID);
+			void OnWindowLoseFocus(System::String ^sID);
 
 			void CreateAndRunSimulation(System::Boolean bPaused);
 			void CreateSimulation();

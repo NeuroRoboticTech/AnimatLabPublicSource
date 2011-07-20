@@ -122,6 +122,8 @@ void VsDraggerHandler::pick(const osgGA::GUIEventAdapter& ea, GUIActionAdapter& 
 	osgUtil::LineSegmentIntersector::CoordinateFrame cf = camera->getViewport() ? osgUtil::Intersector::WINDOW : osgUtil::Intersector::PROJECTION;
     osg::ref_ptr< osgUtil::LineSegmentIntersector > picker = new osgUtil::LineSegmentIntersector(cf, x, y);
 
+	m_osgManipInfo.reset();
+
 	RigidBody *lpBody = NULL;
 	Joint *lpJoint = NULL;
     if (m_osgViewer->computeIntersections(x,y,intersections))

@@ -374,6 +374,94 @@ namespace AnimatGUI
 				}
 			}
 
+			void SimulatorInterface::OnWindowGetFocus(System::String ^sID)
+			{
+				try
+				{
+					if(m_lpSim) 
+					{
+						string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
+
+						SimulationWindow *lpWin = dynamic_cast<SimulationWindow *>(m_lpSim->FindByID(strID, FALSE));
+						if(lpWin)
+						{
+							if(m_lpSim->WaitForSimulationBlock())
+							{
+								lpWin->OnGetFocus();
+
+								m_lpSim->UnblockSimulation();
+							}
+							else
+								throw gcnew System::Exception("Unable to block simulation.");
+						}
+						else
+							throw gcnew System::Exception("Unable to find the item with ID: " + sID);
+					}
+				}
+				catch(CStdErrorInfo oError)
+				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
+					string strError = "An error occurred while attempting to set the window focus.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew String(strError.c_str());
+					throw gcnew System::Exception(m_strErrorMessage);
+				}
+				catch(System::Exception ^ex)
+				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
+					throw ex;
+				}
+				catch(...)
+				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
+					m_strErrorMessage = "An unknown error occurred while attempting to add a data item.";
+					throw gcnew System::Exception(m_strErrorMessage);
+				}
+			}
+
+			void SimulatorInterface::OnWindowLoseFocus(System::String ^sID)
+			{
+				try
+				{
+					if(m_lpSim) 
+					{
+						string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
+
+						SimulationWindow *lpWin = dynamic_cast<SimulationWindow *>(m_lpSim->FindByID(strID, FALSE));
+						if(lpWin)
+						{
+							if(m_lpSim->WaitForSimulationBlock())
+							{
+								lpWin->OnLoseFocus();
+
+								m_lpSim->UnblockSimulation();
+							}
+							else
+								throw gcnew System::Exception("Unable to block simulation.");
+						}
+						else
+							throw gcnew System::Exception("Unable to find the item with ID: " + sID);
+					}
+				}
+				catch(CStdErrorInfo oError)
+				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
+					string strError = "An error occurred while attempting to set the window focus.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew String(strError.c_str());
+					throw gcnew System::Exception(m_strErrorMessage);
+				}
+				catch(System::Exception ^ex)
+				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
+					throw ex;
+				}
+				catch(...)
+				{
+					if(m_lpSim) m_lpSim->UnblockSimulation();
+					m_strErrorMessage = "An unknown error occurred while attempting to add a data item.";
+					throw gcnew System::Exception(m_strErrorMessage);
+				}
+			}
+
 			void SimulatorInterface::ShutdownSimulation()
 			{
 				try

@@ -124,6 +124,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClCompile Include="StdAfx.cpp" />
     <ClCompile Include="VortexAnimatSim.cpp" />
     <ClCompile Include="VsAttachment.cpp" />
+    <ClCompile Include="VsAutoTransform.cpp" />
     <ClCompile Include="VsBallSocket.cpp" />
     <ClCompile Include="VsBody.cpp" />
     <ClCompile Include="VsBox.cpp" />
@@ -172,6 +173,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClInclude Include="OsgGeometry.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="VsAttachment.h" />
+    <ClInclude Include="VsAutoTransform.h" />
     <ClInclude Include="VsBallSocket.h" />
     <ClInclude Include="VsBody.h" />
     <ClInclude Include="VsBox.h" />

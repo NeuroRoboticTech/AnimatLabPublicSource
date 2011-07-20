@@ -404,6 +404,12 @@ Namespace Forms
         Public Overridable Sub OnMdiParentShowing()
         End Sub
 
+        Public Overridable Sub OnGetFocus()
+        End Sub
+
+        Public Overridable Sub OnLoseFocus()
+        End Sub
+
         Protected Overridable Sub CreateProperties()
 
             m_Properties = New PropertyTable

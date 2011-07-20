@@ -213,6 +213,42 @@ Namespace Forms
 
         End Sub
 
+        Public Function FindTreeNodeByName(ByVal strName As String, ByVal aryNodes As Crownwood.DotNetMagic.Controls.NodeCollection, Optional ByVal bRecursive As Boolean = True) As Crownwood.DotNetMagic.Controls.Node
+            Dim tnFound As Crownwood.DotNetMagic.Controls.Node
+
+            For Each tnNode As Crownwood.DotNetMagic.Controls.Node In aryNodes
+                If tnNode.Text = strName Then
+                    Return tnNode
+                End If
+
+                If bRecursive Then
+                    tnFound = FindTreeNodeByName(strName, tnNode.Nodes)
+                    If Not tnFound Is Nothing Then
+                        Return tnFound
+                    End If
+                End If
+            Next
+
+            Return Nothing
+        End Function
+
+        Public Function FindTreeNodeByPath(ByVal strPath As String) As Crownwood.DotNetMagic.Controls.Node
+
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node
+            Dim aryNodes As Crownwood.DotNetMagic.Controls.NodeCollection = Util.ProjectWorkspace.TreeView.Nodes
+            Dim aryPath() As String = Split(strPath, "\")
+
+            For Each strName As String In aryPath
+                tnNode = FindTreeNodeByName(strName, aryNodes, False)
+                If tnNode Is Nothing Then
+                    Throw New System.Exception("The node '" & strName & "' was not found in the path: '" & strPath & "' of the treeview.")
+                End If
+                aryNodes = tnNode.Nodes
+            Next
+
+            Return tnNode
+        End Function
+
 #End Region
 
 #Region " Events "

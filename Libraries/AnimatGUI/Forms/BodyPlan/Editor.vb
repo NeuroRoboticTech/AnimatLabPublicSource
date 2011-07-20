@@ -709,6 +709,27 @@ Namespace Forms.BodyPlan
 
         End Sub
 
+        Public Overrides Sub OnGetFocus()
+            MyBase.OnGetFocus()
+
+            Try
+                Util.Application.SimulationInterface.OnWindowGetFocus(Me.ID)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Public Overrides Sub OnLoseFocus()
+            MyBase.OnLoseFocus()
+
+            Try
+                If Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
+                    Util.Application.SimulationInterface.OnWindowLoseFocus(Me.ID)
+                End If
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
 
         Protected Sub Application_UnitsChanged(ByVal ePrevMass As AnimatGUI.DataObjects.Physical.Environment.enumMassUnits, _
                                   ByVal eNewMass As AnimatGUI.DataObjects.Physical.Environment.enumMassUnits, _
