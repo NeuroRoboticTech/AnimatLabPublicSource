@@ -111,7 +111,10 @@ try
 	//initialize the window
 	lpWin->WindowID(win);
 	if(bInit)
+	{
 		lpWin->Initialize();
+		lpWin->OnGetFocus();
+	}
 
 	//add the window to the list of windows
 	m_aryWindows.Add(lpWin);

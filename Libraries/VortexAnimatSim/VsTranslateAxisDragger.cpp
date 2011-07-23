@@ -51,7 +51,7 @@ void VsTranslateAxisDragger::setupDefaultGeometry()
 	if(!_xDragger.valid() && !_xDragger.valid() && !_xDragger.valid())
 		return;
 
-	float fltLength = 1.5f;
+	float fltLength = 1.0f;
 
     // Create a line.
     osg::Geode* lineGeode = new osg::Geode;
@@ -89,7 +89,7 @@ void VsTranslateAxisDragger::setupDefaultGeometry()
     {
         osg::Cylinder* cylinder = new osg::Cylinder (osg::Vec3(0.0f,0.0f,0.5f), 0.03f, fltLength);
         osg::Drawable* geometry = new osg::ShapeDrawable(cylinder);
-        //osgManipulator::setDrawableToAlwaysCull(*geometry);
+        osgManipulator::setDrawableToAlwaysCull(*geometry);
         geode->addDrawable(geometry);
     }
 

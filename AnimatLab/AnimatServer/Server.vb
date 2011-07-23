@@ -32,16 +32,31 @@ Public Class Server
 
     Public Function GetProperty(ByVal strPropertyName As String) As Object
         Dim oProp As PropertyInfo = m_doApp.GetType().GetProperty(strPropertyName)
+
+        If oProp Is Nothing Then
+            Throw New System.Exception("Property name '" & strPropertyName & "' not found.")
+        End If
+
         Return oProp.GetValue(m_doApp, Nothing)
     End Function
 
     Public Sub SetProperty(ByVal strPropertyName As String, ByVal oData As Object)
         Dim oProp As PropertyInfo = m_doApp.GetType().GetProperty(strPropertyName)
+
+        If oProp Is Nothing Then
+            Throw New System.Exception("Property name '" & strPropertyName & "' not found.")
+        End If
+
         oProp.SetValue(m_doApp, oData, Nothing)
     End Sub
 
     Public Function ExecuteMethod(ByVal strMethodName As String, ByVal aryParams() As Object) As Object
         Dim oMethod As MethodInfo = m_doApp.GetType().GetMethod("ExecuteMethod")
+
+        If oMethod Is Nothing Then
+            Throw New System.Exception("Method name '" & strMethodName & "' not found.")
+        End If
+
         Return oMethod.Invoke(m_doApp, New Object() {strMethodName, aryParams})
     End Function
 

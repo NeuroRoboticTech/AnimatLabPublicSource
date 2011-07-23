@@ -898,6 +898,12 @@ Namespace Forms
         Protected m_timerShutdown As System.Timers.Timer
         Protected m_strCmdLineProject As String = ""
 
+        Protected m_timerAutomation As System.Timers.Timer
+        Protected m_aryToolClicks() As System.Windows.Forms.ToolStripItem
+        Protected m_tnAutomationTreeNode As Crownwood.DotNetMagic.Controls.Node
+        Protected m_piAutomationPropInfo As PropertyInfo
+        Protected m_oAutomationPropertyValue As Object
+
 #Region " Preferences "
 
         Protected m_strDefaultNewFolder As String = ""
@@ -3700,13 +3706,178 @@ Namespace Forms
         End Function
 
         Public Sub SelectWorkspaceItem(ByVal strPath As String)
-            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = Util.ProjectWorkspace.FindTreeNodeByPath(strPath)
-            tnNode.Select()
+            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
+                Throw New System.Exception("No project is currently loaded.")
+            End If
+
+            m_tnAutomationTreeNode = Util.ProjectWorkspace.FindTreeNodeByPath(strPath)
+
+            m_timerAutomation = New System.Timers.Timer(10)
+            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnSelectWorkspaceItemTimer
+            m_timerAutomation.Enabled = True
+        End Sub
+
+        Private Delegate Sub OnSelectWorkspaceItemTimerDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        Protected Overridable Sub OnSelectWorkspaceItemTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+            m_timerAutomation.Enabled = False
+
+            If Me.InvokeRequired Then
+                Me.Invoke(New OnSelectWorkspaceItemTimerDelegate(AddressOf OnSelectWorkspaceItemTimer), New Object() {sender, eProps})
+                Return
+            End If
+
+            Try
+                RemoveHandler m_timerAutomation.Elapsed, AddressOf OnSelectWorkspaceItemTimer
+                m_timerAutomation = Nothing
+
+                Util.ProjectWorkspace.TreeView.SelectNode(m_tnAutomationTreeNode, False, False)
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
         End Sub
 
         Public Sub DblClickWorkspaceItem(ByVal strPath As String)
-            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = Util.ProjectWorkspace.FindTreeNodeByPath(strPath)
-            Util.Application.Simulation.WorkspaceTreeviewDoubleClick(tnNode)
+            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
+                Throw New System.Exception("No project is currently loaded.")
+            End If
+
+            m_tnAutomationTreeNode = Util.ProjectWorkspace.FindTreeNodeByPath(strPath)
+
+            m_timerAutomation = New System.Timers.Timer(10)
+            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnDblClickWorkspaceItemTimer
+            m_timerAutomation.Enabled = True
+        End Sub
+
+        Private Delegate Sub OnDblClickWorkspaceItemTimerDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        Protected Overridable Sub OnDblClickWorkspaceItemTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+            m_timerAutomation.Enabled = False
+
+            If Me.InvokeRequired Then
+                Me.Invoke(New OnDblClickWorkspaceItemTimerDelegate(AddressOf OnDblClickWorkspaceItemTimer), New Object() {sender, eProps})
+                Return
+            End If
+
+            Try
+                RemoveHandler m_timerAutomation.Elapsed, AddressOf OnDblClickWorkspaceItemTimer
+                m_timerAutomation = Nothing
+
+                Util.Application.Simulation.WorkspaceTreeviewDoubleClick(m_tnAutomationTreeNode)
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Public Sub ClickToolbarItem(ByVal strToolName As String)
+
+            m_aryToolClicks = Me.AnimatToolStrip.Items.Find(strToolName, True)
+            If m_aryToolClicks Is Nothing OrElse m_aryToolClicks.Length = 0 Then
+                Throw New System.Exception("No tool item was found with that name.")
+            End If
+
+            m_timerAutomation = New System.Timers.Timer(10)
+            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnToolClickTimer
+            m_timerAutomation.Enabled = True
+
+        End Sub
+
+        Public Sub ClickMenuItem(ByVal strToolName As String)
+
+            m_aryToolClicks = Me.AnimatMenuStrip.Items.Find(strToolName, True)
+            If m_aryToolClicks Is Nothing OrElse m_aryToolClicks.Length = 0 Then
+                Throw New System.Exception("No menu item was found with that name.")
+            End If
+
+            m_timerAutomation = New System.Timers.Timer(10)
+            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnToolClickTimer
+            m_timerAutomation.Enabled = True
+
+        End Sub
+
+        Private Delegate Sub OnToolClickTimerDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        Protected Overridable Sub OnToolClickTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+            m_timerAutomation.Enabled = False
+
+            If Me.InvokeRequired Then
+                Me.Invoke(New OnToolClickTimerDelegate(AddressOf OnToolClickTimer), New Object() {sender, eProps})
+                Return
+            End If
+
+            Try
+                RemoveHandler m_timerAutomation.Elapsed, AddressOf OnToolClickTimer
+                m_timerAutomation = Nothing
+
+                For Each oTool As System.Windows.Forms.ToolStripItem In m_aryToolClicks
+                    oTool.PerformClick()
+                Next
+
+                m_aryToolClicks = Nothing
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Public Sub SetObjectProperty(ByVal strPath As String, ByVal strPropertyName As String, ByVal strValue As String)
+            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
+                Throw New System.Exception("No project is currently loaded.")
+            End If
+
+            m_tnAutomationTreeNode = Util.ProjectWorkspace.FindTreeNodeByPath(strPath)
+
+            If m_tnAutomationTreeNode.Tag Is Nothing OrElse Not Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(Framework.DataObject)) Then
+                Throw New System.Exception("No data object was found in the tree node path '" & strPath & "'.")
+            End If
+
+            Dim aryPropPath() As String = Split(strPropertyName, ".")
+            Dim iIdx As Integer = 0
+            Dim oObj As Object = m_tnAutomationTreeNode.Tag
+            For Each strPropName As String In aryPropPath
+                m_piAutomationPropInfo = oObj.GetType().GetProperty(strPropName)
+
+                If m_piAutomationPropInfo Is Nothing Then
+                    Throw New System.Exception("Property name '" & strPropName & "' not found in Path '" & strPropertyName & "'.")
+                End If
+
+                iIdx = iIdx + 1
+                'Dont get the obj on the last one.
+                If iIdx < aryPropPath.Length Then
+                    oObj = m_piAutomationPropInfo.GetValue(oObj, Nothing)
+                End If
+            Next
+ 
+            m_oAutomationPropertyValue = TypeDescriptor.GetConverter(m_piAutomationPropInfo.PropertyType).ConvertFromString(strValue)
+            m_piAutomationPropInfo.SetValue(oObj, m_oAutomationPropertyValue, Nothing)
+            Util.ProjectWorkspace.RefreshProperties()
+        End Sub
+
+        Private Delegate Sub OnSetObjectPropertyDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        Protected Overridable Sub OnSetObjectPropertyTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+            m_timerAutomation.Enabled = False
+
+            If Me.InvokeRequired Then
+                Me.Invoke(New OnSetObjectPropertyDelegate(AddressOf OnSetObjectPropertyTimer), New Object() {sender, eProps})
+                Return
+            End If
+
+            Try
+                RemoveHandler m_timerAutomation.Elapsed, AddressOf OnSelectWorkspaceItemTimer
+                m_timerAutomation = Nothing
+
+
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
         End Sub
 
 #End Region

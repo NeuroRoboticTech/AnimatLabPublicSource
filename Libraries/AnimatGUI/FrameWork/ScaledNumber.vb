@@ -8,6 +8,7 @@ Imports System.IO
 
 Namespace Framework
 
+    <TypeConverter(GetType(ScaledNumber.ScaledNumericPropBagConverter))> _
     Public Class ScaledNumber
         Inherits DataObject
 
@@ -748,10 +749,12 @@ Namespace Framework
                                 If UBound(aryParts) >= 1 Then
                                     Dim strScale As String = aryParts(1)
 
-                                    If TypeOf context.Instance Is AnimatGuiCtrls.Controls.PropertyTable Then
-                                        strOrigUnits = GetUnitsFromPropTable(context)
-                                    ElseIf TypeOf context.Instance Is DataObject Then
-                                        strOrigUnits = GetUnitsFromDataObject(context)
+                                    If Not context Is Nothing AndAlso Not context.Instance Is Nothing Then
+                                        If TypeOf context.Instance Is AnimatGuiCtrls.Controls.PropertyTable Then
+                                            strOrigUnits = GetUnitsFromPropTable(context)
+                                        ElseIf TypeOf context.Instance Is DataObject Then
+                                            strOrigUnits = GetUnitsFromDataObject(context)
+                                        End If
                                     End If
 
                                     If Right(strScale, strOrigUnits.Length).ToUpper() = strOrigUnits.ToUpper() Then
@@ -768,20 +771,24 @@ Namespace Framework
                                 Else
                                     Dim eScale As ScaledNumber.enumNumericScale
 
-                                    If TypeOf context.Instance Is AnimatGuiCtrls.Controls.PropertyTable Then
-                                        eScale = GetScaleFromPropTable(context, context.Instance)
-                                    ElseIf TypeOf context.Instance Is DataObject Then
-                                        eScale = GetScaleFromDataObject(context, context.Instance)
-                                    ElseIf TypeOf context.Instance Is System.Array Then
-                                        Dim aryData As System.Array = DirectCast(context.Instance, System.Array)
-                                        If aryData.Length > 0 Then
-                                            Dim oVal As Object = aryData.GetValue(0)
-                                            If TypeOf oVal Is AnimatGuiCtrls.Controls.PropertyTable Then
-                                                eScale = GetScaleFromPropTable(context, oVal)
-                                            ElseIf TypeOf oVal Is DataObject Then
-                                                eScale = GetScaleFromDataObject(context, oVal)
+                                    If Not context Is Nothing AndAlso Not context.Instance Is Nothing Then
+                                        If TypeOf context.Instance Is AnimatGuiCtrls.Controls.PropertyTable Then
+                                            eScale = GetScaleFromPropTable(context, context.Instance)
+                                        ElseIf TypeOf context.Instance Is DataObject Then
+                                            eScale = GetScaleFromDataObject(context, context.Instance)
+                                        ElseIf TypeOf context.Instance Is System.Array Then
+                                            Dim aryData As System.Array = DirectCast(context.Instance, System.Array)
+                                            If aryData.Length > 0 Then
+                                                Dim oVal As Object = aryData.GetValue(0)
+                                                If TypeOf oVal Is AnimatGuiCtrls.Controls.PropertyTable Then
+                                                    eScale = GetScaleFromPropTable(context, oVal)
+                                                ElseIf TypeOf oVal Is DataObject Then
+                                                    eScale = GetScaleFromDataObject(context, oVal)
+                                                End If
                                             End If
                                         End If
+                                    Else
+                                        eScale = enumNumericScale.None
                                     End If
 
                                     snValue = New ScaledNumber(Nothing, "", Convert.ToDouble(aryParts(0)), eScale)

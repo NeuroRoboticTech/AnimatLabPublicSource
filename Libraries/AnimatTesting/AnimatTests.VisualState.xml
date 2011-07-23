@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
+  <TopNode>[0-1000]C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\AnimatTests.nunit</TopNode>
+  <SelectedNode>[0-1002]AnimatTesting.Tests.Simulation_Test.MySimTest</SelectedNode>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1000]C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\AnimatTests.nunit" Expanded="true" />
+    <Node UniqueName="[0-1003]C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\..\..\bin\AnimatTesting.dll" Expanded="true" />
+    <Node UniqueName="[0-1004]AnimatTesting" Expanded="true" />
+    <Node UniqueName="[0-1005]AnimatTesting.Tests" Expanded="true" />
+    <Node UniqueName="[0-1001]AnimatTesting.Tests.Simulation_Test" Expanded="true" />
+  </Nodes>
+</VisualState>

@@ -338,6 +338,8 @@ Namespace Forms.BodyPlan
         Protected m_clBackColor As Color = Color.Black
         Protected m_bTrackCamera As Boolean = True
 
+        Protected m_timerStartSimWindow As New System.Timers.Timer
+
 #End Region
 
 #Region " Properties "
@@ -429,6 +431,9 @@ Namespace Forms.BodyPlan
                 AddHandler Util.Application.UnitsChanged, AddressOf Me.Application_UnitsChanged
                 AddHandler AddPartToolStripButton.CheckStateChanged, AddressOf Util.Application.AddPartToolStripButton_CheckChanged
                 AddHandler Util.Simulation.VisualSelectionModeChanged, AddressOf Me.OnVisualSelectionModeChanged
+
+                m_timerStartSimWindow.Enabled = False
+                m_timerStartSimWindow.Interval = 100
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -548,6 +553,9 @@ Namespace Forms.BodyPlan
 
         Public Overridable Sub Relabel()
             Try
+                Util.Application.ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root", "Freeze", "True"})
+                Util.Application.ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1", "LocalPosition.X", "1"})
+
                 Dim frmRelabel As New AnimatGUI.Forms.BodyPlan.Relabel
 
                 frmRelabel.PhysicalStructure = Me.PhysicalStructure
@@ -680,13 +688,34 @@ Namespace Forms.BodyPlan
             MyBase.OnLoad(e)
 
             Try
-                Dim strWinXml As String = GenerateSimWindowXml()
-                Util.Application.SimulationInterface.AddWindow(Me.Handle, strWinXml)
-                InitializeSimulationReferences()
+                AddHandler m_timerStartSimWindow.Elapsed, AddressOf Me.OnStartSimWindow
+                m_timerStartSimWindow.Enabled = True
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
 
+        End Sub
+
+        Private Delegate Sub OnStartSimWindowDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        Protected Overridable Sub OnStartSimWindow(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+            m_timerStartSimWindow.Enabled = False
+
+            If Me.InvokeRequired Then
+                Me.Invoke(New OnStartSimWindowDelegate(AddressOf OnStartSimWindow), New Object() {sender, eProps})
+                Return
+            End If
+
+            Try
+                Dim strWinXml As String = GenerateSimWindowXml()
+                Util.Application.SimulationInterface.AddWindow(Me.Handle, strWinXml)
+                InitializeSimulationReferences()
+ 
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
         End Sub
 
         Protected Overrides Sub OnFormClosing(ByVal e As System.Windows.Forms.FormClosingEventArgs)
@@ -713,7 +742,9 @@ Namespace Forms.BodyPlan
             MyBase.OnGetFocus()
 
             Try
-                Util.Application.SimulationInterface.OnWindowGetFocus(Me.ID)
+                If Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
+                    Util.Application.SimulationInterface.OnWindowGetFocus(Me.ID)
+                End If
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
