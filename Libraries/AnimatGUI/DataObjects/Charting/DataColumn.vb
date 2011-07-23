@@ -215,6 +215,28 @@ Namespace DataObjects.Charting
         End Property
 
         <Browsable(False)> _
+        Public Overridable Property DataTypeID() As String
+            Get
+                If Not m_thDataType Is Nothing Then
+                    Return m_thDataType.ID
+                End If
+
+                Return ""
+            End Get
+            Set(ByVal Value As String)
+                'DataType is used in a number of sitations. For instance, it is used to create the list of possible selections
+                'for the user dialog box, not just for data columns in the simulation. Therefore, in this instance we need to check
+                'first whether this item already exists in the simulation. If it does then set the data type. If it does not then we
+                'assume this data column object is being used for some other purpose in the editor and ignore this in the simulation.
+                If Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
+                    SetSimData("DataType", Value, True)
+                End If
+
+                m_thDataType.ID = Value
+            End Set
+        End Property
+
+        <Browsable(False)> _
         Public Overridable Property ParentAxis() As AnimatGUI.DataObjects.Charting.Axis
             Get
                 Return m_frmParentAxis

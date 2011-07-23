@@ -82,6 +82,58 @@ Namespace AnimatTesting
             Mouse.Click(uIOKButton, New Point(45, 12))
         End Sub
         
+        '''<summary>
+        '''AddLineChart - Use 'AddLineChartParams' to pass parameters into this method.
+        '''</summary>
+        Public Sub AddLineChart()
+            Dim uICtrlToolTypesList As WinList = Me.UISelectDataToolTypeWindow.UICtrlToolTypesWindow.UICtrlToolTypesList
+            Dim uIOKButton As WinButton = Me.UISelectDataToolTypeWindow.UIOKWindow.UIOKButton
+
+            'Select 'Line Chart' in 'ctrlToolTypes' list box
+            uICtrlToolTypesList.SelectedItemsAsString = Me.AddLineChartParams.UICtrlToolTypesListSelectedItemsAsString
+
+            'Click 'Ok' button
+            Mouse.Click(uIOKButton, New Point(36, 14))
+        End Sub
+        
+        '''<summary>
+        '''AddRootPartToChart
+        '''</summary>
+        Public Sub AddRootPartToChart()
+            Dim uITvStructuresClient As WinClient = Me.UISelectDataItemWindow.UITvStructuresWindow.UITvStructuresClient
+            Dim uIOKButton As WinButton = Me.UISelectDataItemWindow.UIOKWindow.UIOKButton
+
+            'Click 'tvStructures' client
+            Mouse.Click(uITvStructuresClient, New Point(56, 26))
+
+            'Click 'Ok' button
+            Mouse.Click(uIOKButton, New Point(22, 8))
+        End Sub
+        
+        '''<summary>
+        '''AssertNewProjectAlreadyExists - Use 'AssertNewProjectAlreadyExistsExpectedValues' to pass parameters into this method.
+        '''</summary>
+        Public Sub AssertNewProjectAlreadyExists()
+            Dim uITxtErrorMsgEdit As WinEdit = Me.UIErrorWindow.UIThedirectoryCProjectWindow.UITxtErrorMsgEdit
+
+            'Verify that 'txtErrorMsg' text box's property 'Text' ends with '' already exists. Please choose a different name or location for the project.'
+            StringAssert.EndsWith(uITxtErrorMsgEdit.Text, Me.AssertNewProjectAlreadyExistsExpectedValues.UITxtErrorMsgEditText)
+        End Sub
+        
+        '''<summary>
+        '''CloseNewProjectErrorWindow
+        '''</summary>
+        Public Sub CloseNewProjectErrorWindow()
+            Dim uIOKButton As WinButton = Me.UIErrorWindow.UIOKWindow.UIOKButton
+            Dim uICancelButton As WinButton = Me.UINewProjectWindow.UICancelWindow.UICancelButton
+
+            'Click 'Ok' button
+            Mouse.Click(uIOKButton, New Point(40, 11))
+
+            'Click 'Cancel' button
+            Mouse.Click(uICancelButton, New Point(38, 14))
+        End Sub
+        
         #Region "Properties"
         Public Overridable ReadOnly Property NewProjectDlg_EnterNameAndPathParams() As NewProjectDlg_EnterNameAndPathParams
             Get
@@ -110,6 +162,24 @@ Namespace AnimatTesting
             End Get
         End Property
         
+        Public Overridable ReadOnly Property AddLineChartParams() As AddLineChartParams
+            Get
+                If (Me.mAddLineChartParams Is Nothing) Then
+                    Me.mAddLineChartParams = New AddLineChartParams()
+                End If
+                Return Me.mAddLineChartParams
+            End Get
+        End Property
+        
+        Public Overridable ReadOnly Property AssertNewProjectAlreadyExistsExpectedValues() As AssertNewProjectAlreadyExistsExpectedValues
+            Get
+                If (Me.mAssertNewProjectAlreadyExistsExpectedValues Is Nothing) Then
+                    Me.mAssertNewProjectAlreadyExistsExpectedValues = New AssertNewProjectAlreadyExistsExpectedValues()
+                End If
+                Return Me.mAssertNewProjectAlreadyExistsExpectedValues
+            End Get
+        End Property
+        
         Public ReadOnly Property UINewProjectWindow() As UINewProjectWindow
             Get
                 If (Me.mUINewProjectWindow Is Nothing) Then
@@ -127,6 +197,33 @@ Namespace AnimatTesting
                 Return Me.mUISelectPartTypeWindow
             End Get
         End Property
+        
+        Public ReadOnly Property UISelectDataToolTypeWindow() As UISelectDataToolTypeWindow
+            Get
+                If (Me.mUISelectDataToolTypeWindow Is Nothing) Then
+                    Me.mUISelectDataToolTypeWindow = New UISelectDataToolTypeWindow()
+                End If
+                Return Me.mUISelectDataToolTypeWindow
+            End Get
+        End Property
+        
+        Public ReadOnly Property UISelectDataItemWindow() As UISelectDataItemWindow
+            Get
+                If (Me.mUISelectDataItemWindow Is Nothing) Then
+                    Me.mUISelectDataItemWindow = New UISelectDataItemWindow()
+                End If
+                Return Me.mUISelectDataItemWindow
+            End Get
+        End Property
+        
+        Public ReadOnly Property UIErrorWindow() As UIErrorWindow
+            Get
+                If (Me.mUIErrorWindow Is Nothing) Then
+                    Me.mUIErrorWindow = New UIErrorWindow()
+                End If
+                Return Me.mUIErrorWindow
+            End Get
+        End Property
         #End Region
         
         #Region "Fields"
@@ -136,9 +233,19 @@ Namespace AnimatTesting
         
         Private mAddChildPartTypeWithJointParams As AddChildPartTypeWithJointParams
         
+        Private mAddLineChartParams As AddLineChartParams
+        
+        Private mAssertNewProjectAlreadyExistsExpectedValues As AssertNewProjectAlreadyExistsExpectedValues
+        
         Private mUINewProjectWindow As UINewProjectWindow
         
         Private mUISelectPartTypeWindow As UISelectPartTypeWindow
+        
+        Private mUISelectDataToolTypeWindow As UISelectDataToolTypeWindow
+        
+        Private mUISelectDataItemWindow As UISelectDataItemWindow
+        
+        Private mUIErrorWindow As UIErrorWindow
         #End Region
     End Class
     
@@ -199,6 +306,34 @@ Namespace AnimatTesting
         #End Region
     End Class
     
+    '''<summary>
+    '''Parameters to be passed into 'AddLineChart'
+    '''</summary>
+    <GeneratedCode("Coded UITest Builder", "10.0.30319.1")>  _
+    Public Class AddLineChartParams
+        
+        #Region "Fields"
+        '''<summary>
+        '''Select 'Line Chart' in 'ctrlToolTypes' list box
+        '''</summary>
+        Public UICtrlToolTypesListSelectedItemsAsString As String = "Line Chart"
+        #End Region
+    End Class
+    
+    '''<summary>
+    '''Parameters to be passed into 'AssertNewProjectAlreadyExists'
+    '''</summary>
+    <GeneratedCode("Coded UITest Builder", "10.0.30319.1")>  _
+    Public Class AssertNewProjectAlreadyExistsExpectedValues
+        
+        #Region "Fields"
+        '''<summary>
+        '''Verify that 'txtErrorMsg' text box's property 'Text' ends with '' already exists. Please choose a different name or location for the project.'
+        '''</summary>
+        Public UITxtErrorMsgEditText As String = "' already exists. Please choose a different name or location for the project."
+        #End Region
+    End Class
+    
     <GeneratedCode("Coded UITest Builder", "10.0.30319.1")>  _
     Public Class UINewProjectWindow
         Inherits WinWindow
@@ -237,6 +372,15 @@ Namespace AnimatTesting
                 Return Me.mUIOKWindow
             End Get
         End Property
+        
+        Public ReadOnly Property UICancelWindow() As UICancelWindow
+            Get
+                If (Me.mUICancelWindow Is Nothing) Then
+                    Me.mUICancelWindow = New UICancelWindow(Me)
+                End If
+                Return Me.mUICancelWindow
+            End Get
+        End Property
         #End Region
         
         #Region "Fields"
@@ -245,6 +389,8 @@ Namespace AnimatTesting
         Private mUITxtLocationWindow As UITxtLocationWindow
         
         Private mUIOKWindow As UIOKWindow
+        
+        Private mUICancelWindow As UICancelWindow
         #End Region
     End Class
     
@@ -332,6 +478,34 @@ Namespace AnimatTesting
     End Class
     
     <GeneratedCode("Coded UITest Builder", "10.0.30319.1")>  _
+    Public Class UICancelWindow
+        Inherits WinWindow
+        
+        Public Sub New(ByVal searchLimitContainer As UITestControl)
+            MyBase.New(searchLimitContainer)
+            Me.SearchProperties(WinWindow.PropertyNames.ControlName) = "btnCancel"
+            Me.WindowTitles.Add("New Project")
+        End Sub
+        
+        #Region "Properties"
+        Public ReadOnly Property UICancelButton() As WinButton
+            Get
+                If (Me.mUICancelButton Is Nothing) Then
+                    Me.mUICancelButton = New WinButton(Me)
+                    Me.mUICancelButton.SearchProperties(WinButton.PropertyNames.Name) = "Cancel"
+                    Me.mUICancelButton.WindowTitles.Add("New Project")
+                End If
+                Return Me.mUICancelButton
+            End Get
+        End Property
+        #End Region
+        
+        #Region "Fields"
+        Private mUICancelButton As WinButton
+        #End Region
+    End Class
+    
+    <GeneratedCode("Coded UITest Builder", "10.0.30319.1")>  _
     Public Class UISelectPartTypeWindow
         Inherits WinWindow
         
@@ -413,6 +587,285 @@ Namespace AnimatTesting
                     Me.mUIOKButton = New WinButton(Me)
                     Me.mUIOKButton.SearchProperties(WinButton.PropertyNames.Name) = "Ok"
                     Me.mUIOKButton.WindowTitles.Add("Select Part Type")
+                End If
+                Return Me.mUIOKButton
+            End Get
+        End Property
+        #End Region
+        
+        #Region "Fields"
+        Private mUIOKButton As WinButton
+        #End Region
+    End Class
+    
+    <GeneratedCode("Coded UITest Builder", "10.0.30319.1")>  _
+    Public Class UISelectDataToolTypeWindow
+        Inherits WinWindow
+        
+        Public Sub New()
+            MyBase.New
+            Me.SearchProperties(WinWindow.PropertyNames.Name) = "Select Data Tool Type"
+            Me.SearchProperties.Add(New PropertyExpression(WinWindow.PropertyNames.ClassName, "WindowsForms10.Window", PropertyExpressionOperator.Contains))
+            Me.WindowTitles.Add("Select Data Tool Type")
+        End Sub
+        
+        #Region "Properties"
+        Public ReadOnly Property UICtrlToolTypesWindow() As UICtrlToolTypesWindow
+            Get
+                If (Me.mUICtrlToolTypesWindow Is Nothing) Then
+                    Me.mUICtrlToolTypesWindow = New UICtrlToolTypesWindow(Me)
+                End If
+                Return Me.mUICtrlToolTypesWindow
+            End Get
+        End Property
+        
+        Public ReadOnly Property UIOKWindow() As UIOKWindow2
+            Get
+                If (Me.mUIOKWindow Is Nothing) Then
+                    Me.mUIOKWindow = New UIOKWindow2(Me)
+                End If
+                Return Me.mUIOKWindow
+            End Get
+        End Property
+        #End Region
+        
+        #Region "Fields"
+        Private mUICtrlToolTypesWindow As UICtrlToolTypesWindow
+        
+        Private mUIOKWindow As UIOKWindow2
+        #End Region
+    End Class
+    
+    <GeneratedCode("Coded UITest Builder", "10.0.30319.1")>  _
+    Public Class UICtrlToolTypesWindow
+        Inherits WinWindow
+        
+        Public Sub New(ByVal searchLimitContainer As UITestControl)
+            MyBase.New(searchLimitContainer)
+            Me.SearchProperties(WinWindow.PropertyNames.ControlName) = "ctrlToolTypes"
+            Me.WindowTitles.Add("Select Data Tool Type")
+        End Sub
+        
+        #Region "Properties"
+        Public ReadOnly Property UICtrlToolTypesList() As WinList
+            Get
+                If (Me.mUICtrlToolTypesList Is Nothing) Then
+                    Me.mUICtrlToolTypesList = New WinList(Me)
+                    Me.mUICtrlToolTypesList.WindowTitles.Add("Select Data Tool Type")
+                End If
+                Return Me.mUICtrlToolTypesList
+            End Get
+        End Property
+        #End Region
+        
+        #Region "Fields"
+        Private mUICtrlToolTypesList As WinList
+        #End Region
+    End Class
+    
+    <GeneratedCode("Coded UITest Builder", "10.0.30319.1")>  _
+    Public Class UIOKWindow2
+        Inherits WinWindow
+        
+        Public Sub New(ByVal searchLimitContainer As UITestControl)
+            MyBase.New(searchLimitContainer)
+            Me.SearchProperties(WinWindow.PropertyNames.ControlName) = "btnOk"
+            Me.WindowTitles.Add("Select Data Tool Type")
+        End Sub
+        
+        #Region "Properties"
+        Public ReadOnly Property UIOKButton() As WinButton
+            Get
+                If (Me.mUIOKButton Is Nothing) Then
+                    Me.mUIOKButton = New WinButton(Me)
+                    Me.mUIOKButton.SearchProperties(WinButton.PropertyNames.Name) = "Ok"
+                    Me.mUIOKButton.WindowTitles.Add("Select Data Tool Type")
+                End If
+                Return Me.mUIOKButton
+            End Get
+        End Property
+        #End Region
+        
+        #Region "Fields"
+        Private mUIOKButton As WinButton
+        #End Region
+    End Class
+    
+    <GeneratedCode("Coded UITest Builder", "10.0.30319.1")>  _
+    Public Class UISelectDataItemWindow
+        Inherits WinWindow
+        
+        Public Sub New()
+            MyBase.New
+            Me.SearchProperties(WinWindow.PropertyNames.Name) = "Select Data Item"
+            Me.SearchProperties.Add(New PropertyExpression(WinWindow.PropertyNames.ClassName, "WindowsForms10.Window", PropertyExpressionOperator.Contains))
+            Me.WindowTitles.Add("Select Data Item")
+        End Sub
+        
+        #Region "Properties"
+        Public ReadOnly Property UITvStructuresWindow() As UITvStructuresWindow
+            Get
+                If (Me.mUITvStructuresWindow Is Nothing) Then
+                    Me.mUITvStructuresWindow = New UITvStructuresWindow(Me)
+                End If
+                Return Me.mUITvStructuresWindow
+            End Get
+        End Property
+        
+        Public ReadOnly Property UIOKWindow() As UIOKWindow3
+            Get
+                If (Me.mUIOKWindow Is Nothing) Then
+                    Me.mUIOKWindow = New UIOKWindow3(Me)
+                End If
+                Return Me.mUIOKWindow
+            End Get
+        End Property
+        #End Region
+        
+        #Region "Fields"
+        Private mUITvStructuresWindow As UITvStructuresWindow
+        
+        Private mUIOKWindow As UIOKWindow3
+        #End Region
+    End Class
+    
+    <GeneratedCode("Coded UITest Builder", "10.0.30319.1")>  _
+    Public Class UITvStructuresWindow
+        Inherits WinWindow
+        
+        Public Sub New(ByVal searchLimitContainer As UITestControl)
+            MyBase.New(searchLimitContainer)
+            Me.SearchProperties(WinWindow.PropertyNames.ControlName) = "tvStructures"
+            Me.WindowTitles.Add("Select Data Item")
+        End Sub
+        
+        #Region "Properties"
+        Public ReadOnly Property UITvStructuresClient() As WinClient
+            Get
+                If (Me.mUITvStructuresClient Is Nothing) Then
+                    Me.mUITvStructuresClient = New WinClient(Me)
+                    Me.mUITvStructuresClient.WindowTitles.Add("Select Data Item")
+                End If
+                Return Me.mUITvStructuresClient
+            End Get
+        End Property
+        #End Region
+        
+        #Region "Fields"
+        Private mUITvStructuresClient As WinClient
+        #End Region
+    End Class
+    
+    <GeneratedCode("Coded UITest Builder", "10.0.30319.1")>  _
+    Public Class UIOKWindow3
+        Inherits WinWindow
+        
+        Public Sub New(ByVal searchLimitContainer As UITestControl)
+            MyBase.New(searchLimitContainer)
+            Me.SearchProperties(WinWindow.PropertyNames.ControlName) = "btnOk"
+            Me.WindowTitles.Add("Select Data Item")
+        End Sub
+        
+        #Region "Properties"
+        Public ReadOnly Property UIOKButton() As WinButton
+            Get
+                If (Me.mUIOKButton Is Nothing) Then
+                    Me.mUIOKButton = New WinButton(Me)
+                    Me.mUIOKButton.SearchProperties(WinButton.PropertyNames.Name) = "Ok"
+                    Me.mUIOKButton.WindowTitles.Add("Select Data Item")
+                End If
+                Return Me.mUIOKButton
+            End Get
+        End Property
+        #End Region
+        
+        #Region "Fields"
+        Private mUIOKButton As WinButton
+        #End Region
+    End Class
+    
+    <GeneratedCode("Coded UITest Builder", "10.0.30319.1")>  _
+    Public Class UIErrorWindow
+        Inherits WinWindow
+        
+        Public Sub New()
+            MyBase.New
+            Me.SearchProperties(WinWindow.PropertyNames.Name) = "Error"
+            Me.SearchProperties.Add(New PropertyExpression(WinWindow.PropertyNames.ClassName, "WindowsForms10.Window", PropertyExpressionOperator.Contains))
+            Me.WindowTitles.Add("Error")
+        End Sub
+        
+        #Region "Properties"
+        Public ReadOnly Property UIThedirectoryCProjectWindow() As UIThedirectoryCProjectWindow
+            Get
+                If (Me.mUIThedirectoryCProjectWindow Is Nothing) Then
+                    Me.mUIThedirectoryCProjectWindow = New UIThedirectoryCProjectWindow(Me)
+                End If
+                Return Me.mUIThedirectoryCProjectWindow
+            End Get
+        End Property
+        
+        Public ReadOnly Property UIOKWindow() As UIOKWindow4
+            Get
+                If (Me.mUIOKWindow Is Nothing) Then
+                    Me.mUIOKWindow = New UIOKWindow4(Me)
+                End If
+                Return Me.mUIOKWindow
+            End Get
+        End Property
+        #End Region
+        
+        #Region "Fields"
+        Private mUIThedirectoryCProjectWindow As UIThedirectoryCProjectWindow
+        
+        Private mUIOKWindow As UIOKWindow4
+        #End Region
+    End Class
+    
+    <GeneratedCode("Coded UITest Builder", "10.0.30319.1")>  _
+    Public Class UIThedirectoryCProjectWindow
+        Inherits WinWindow
+        
+        Public Sub New(ByVal searchLimitContainer As UITestControl)
+            MyBase.New(searchLimitContainer)
+            Me.SearchProperties(WinWindow.PropertyNames.ControlName) = "txtErrorMsg"
+            Me.WindowTitles.Add("Error")
+        End Sub
+        
+        #Region "Properties"
+        Public ReadOnly Property UITxtErrorMsgEdit() As WinEdit
+            Get
+                If (Me.mUITxtErrorMsgEdit Is Nothing) Then
+                    Me.mUITxtErrorMsgEdit = New WinEdit(Me)
+                    Me.mUITxtErrorMsgEdit.WindowTitles.Add("Error")
+                End If
+                Return Me.mUITxtErrorMsgEdit
+            End Get
+        End Property
+        #End Region
+        
+        #Region "Fields"
+        Private mUITxtErrorMsgEdit As WinEdit
+        #End Region
+    End Class
+    
+    <GeneratedCode("Coded UITest Builder", "10.0.30319.1")>  _
+    Public Class UIOKWindow4
+        Inherits WinWindow
+        
+        Public Sub New(ByVal searchLimitContainer As UITestControl)
+            MyBase.New(searchLimitContainer)
+            Me.SearchProperties(WinWindow.PropertyNames.ControlName) = "btnOk"
+            Me.WindowTitles.Add("Error")
+        End Sub
+        
+        #Region "Properties"
+        Public ReadOnly Property UIOKButton() As WinButton
+            Get
+                If (Me.mUIOKButton Is Nothing) Then
+                    Me.mUIOKButton = New WinButton(Me)
+                    Me.mUIOKButton.SearchProperties(WinButton.PropertyNames.Name) = "Ok"
+                    Me.mUIOKButton.WindowTitles.Add("Error")
                 End If
                 Return Me.mUIOKButton
             End Get

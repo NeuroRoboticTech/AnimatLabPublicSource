@@ -457,15 +457,31 @@ Namespace Forms.Tools
             Return dblTimeStep
         End Function
 
-        Public Overridable Function ExportDataFilename(Optional ByVal strPrefix As String = "") As String
-            Return Util.Application.ProjectPath & strPrefix & Me.Title & ".txt"
+        Public Overridable Function ExportDataFilename(Optional ByVal strPrefix As String = "", Optional ByVal strPath As String = "") As String
+            If strPath.Trim.Length > 0 Then
+                Return strPath & strPrefix & Me.Title & ".txt"
+            Else
+                Return Util.Application.ProjectPath & strPrefix & Me.Title & ".txt"
+            End If
         End Function
 
         Public Overridable Sub ExportChartData(Optional ByVal strFile As String = "", Optional ByVal strPrefix As String = "")
 
         End Sub
 
-        Public Overridable Sub CompareExportedData(ByVal strPrefix As String, ByVal dblMaxError As Double)
+        Public Overridable Sub CopyChartData(Optional ByVal strPath As String = "", Optional ByVal strPrefix As String = "")
+            'If the file already exists then delete it.
+            If System.IO.File.Exists(Me.ExportDataFilename(strPrefix, strPath)) Then
+                System.IO.File.Delete(Me.ExportDataFilename(strPrefix, strPath))
+            End If
+
+            'Now copy the other file over.
+            Dim strFrom As String = Me.ExportDataFilename(strPrefix)
+            Dim strTo As String = Me.ExportDataFilename(strPrefix, strPath)
+            System.IO.File.Copy(strFrom, strTo, True)
+        End Sub
+
+        Public Overridable Sub CompareExportedData(ByVal strPrefix As String, ByVal strTemplatePath As String, ByVal dblMaxError As Double)
 
             'Lets try and load the original file and then the new test file.
             Dim aryTemplateColumns() As String
@@ -474,10 +490,10 @@ Namespace Forms.Tools
             Dim aryTestData(,) As Double
 
             'Load the template file data.
-            Util.ReadCSVFileToArray(Me.ExportDataFilename, aryTemplateColumns, aryTemplateData)
+            Util.ReadCSVFileToArray(Me.ExportDataFilename(strPrefix, strTemplatePath), aryTemplateColumns, aryTemplateData)
 
             'Load the test file data.
-            Util.ReadCSVFileToArray(Me.ExportDataFilename(strPrefix), aryTestColumns, aryTestData)
+            Util.ReadCSVFileToArray(Me.ExportDataFilename(), aryTestColumns, aryTestData)
 
             'Now lets compare the column names. We need to have the same number and they should match identically.
             CompareExportDataColumns(aryTemplateColumns, aryTestColumns)

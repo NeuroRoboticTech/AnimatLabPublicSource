@@ -553,8 +553,13 @@ Namespace Forms.BodyPlan
 
         Public Overridable Sub Relabel()
             Try
-                Util.Application.ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root", "Freeze", "True"})
-                Util.Application.ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1", "LocalPosition.X", "1"})
+                'Util.Application.ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root", "Freeze", "True"})
+                'Util.Application.ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1", "LocalPosition.X", "1"})
+                'Util.Application.ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1"})
+                'Set the name of the data chart item to root_x.
+                'Util.Application.ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root", "Name", "Root_Y"})
+                'Util.Application.ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root_Y", "DataTypeID", "WorldPositionY"})
+                Util.Application.ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectEndTime", "45"})
 
                 Dim frmRelabel As New AnimatGUI.Forms.BodyPlan.Relabel
 

@@ -2951,27 +2951,39 @@ Namespace Forms
 
         End Sub
 
-        Public Overridable Sub ExportDataCharts(Optional ByVal strPrefix As String = "")
+        Public Overridable Sub ExportDataCharts(Optional ByVal strFileName As String = "", Optional ByVal strPrefix As String = "")
 
             Dim frmChart As Tools.DataChart
             For Each frmAnimat As AnimatForm In Me.ChildForms
 
                 If Util.IsTypeOf(frmAnimat.GetType(), GetType(Tools.DataChart), False) Then
                     frmChart = DirectCast(frmAnimat, Tools.DataChart)
-                    frmChart.ExportChartData(, strPrefix)
+                    frmChart.ExportChartData(strFileName, strPrefix)
                 End If
             Next
 
         End Sub
 
-        Public Overridable Sub CompareExportedDataCharts(ByVal strPrefix As String, ByVal dblMaxError As Double)
+        Public Overridable Sub CopyChartData(Optional ByVal strPath As String = "", Optional ByVal strPrefix As String = "")
 
             Dim frmChart As Tools.DataChart
             For Each frmAnimat As AnimatForm In Me.ChildForms
 
                 If Util.IsTypeOf(frmAnimat.GetType(), GetType(Tools.DataChart), False) Then
                     frmChart = DirectCast(frmAnimat, Tools.DataChart)
-                    frmChart.CompareExportedData(strPrefix, dblMaxError)
+                    frmChart.CopyChartData(strPath, strPrefix)
+                End If
+            Next
+        End Sub
+
+        Public Overridable Sub CompareExportedDataCharts(ByVal strPrefix As String, ByVal strTemplatePath As String, ByVal dblMaxError As Double)
+
+            Dim frmChart As Tools.DataChart
+            For Each frmAnimat As AnimatForm In Me.ChildForms
+
+                If Util.IsTypeOf(frmAnimat.GetType(), GetType(Tools.DataChart), False) Then
+                    frmChart = DirectCast(frmAnimat, Tools.DataChart)
+                    frmChart.CompareExportedData(strPrefix, strTemplatePath, dblMaxError)
                 End If
             Next
 
@@ -3733,6 +3745,7 @@ Namespace Forms
                 m_timerAutomation = Nothing
 
                 Util.ProjectWorkspace.TreeView.SelectNode(m_tnAutomationTreeNode, False, False)
+                Util.ProjectWorkspace.TreeView.EnsureDisplayed(m_tnAutomationTreeNode)
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -3832,8 +3845,8 @@ Namespace Forms
 
             m_tnAutomationTreeNode = Util.ProjectWorkspace.FindTreeNodeByPath(strPath)
 
-            If m_tnAutomationTreeNode.Tag Is Nothing OrElse Not Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(Framework.DataObject)) Then
-                Throw New System.Exception("No data object was found in the tree node path '" & strPath & "'.")
+            If m_tnAutomationTreeNode.Tag Is Nothing Then
+                Throw New System.Exception("No object was found in the tree node path '" & strPath & "'.")
             End If
 
             Dim aryPropPath() As String = Split(strPropertyName, ".")
@@ -4481,6 +4494,18 @@ Namespace Forms
                 If Not m_dockManager Is Nothing Then
                     ClearDockingContents()
                 End If
+
+                'If there is an error showing then close it as well.
+                If Not Util.ErrorForm Is Nothing Then
+                    Util.ErrorForm.Close()
+                End If
+
+                'close down any modal forms that are not me.
+                For Each frmModal As Form In Application.OpenForms
+                    If frmModal.Modal AndAlso Not frmModal Is Me Then
+                        frmModal.Close()
+                    End If
+                Next
 
                 m_mdiClient = Nothing
                 m_doSimulation = Nothing

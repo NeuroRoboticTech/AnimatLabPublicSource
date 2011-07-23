@@ -64,6 +64,7 @@ Namespace Framework
 
         ''' List of errors that have occured in the application.
         Protected Shared m_aryErrors As New ArrayList
+        Protected Shared m_frmError As AnimatGUI.Forms.ErrorDisplay
 
         Public Shared Property Application() As Forms.AnimatApplication
             Get
@@ -210,6 +211,12 @@ Namespace Framework
         Public Shared ReadOnly Property Errors() As ArrayList
             Get
                 Return m_aryErrors
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property ErrorForm() As AnimatGUI.Forms.ErrorDisplay
+            Get
+                Return m_frmError
             End Get
         End Property
 
@@ -372,18 +379,18 @@ Namespace Framework
             Try
                 If Not m_bDisplayingError Then
                     m_bDisplayingError = True
-                    Dim frmError As New AnimatGUI.Forms.ErrorDisplay
-                    frmError.DisplayErrorDetails = m_bDisplayErrorDetails
-                    frmError.Size = m_szErrorFormSize
-                    frmError.Exception = exError
-                    frmError.ShowDialog()
+                    m_frmError = New AnimatGUI.Forms.ErrorDisplay
+                    m_frmError.DisplayErrorDetails = m_bDisplayErrorDetails
+                    m_frmError.Size = m_szErrorFormSize
+                    m_frmError.Exception = exError
+                    m_frmError.ShowDialog()
 
-                    m_bDisplayErrorDetails = frmError.DisplayErrorDetails
-                    m_szErrorFormSize = frmError.Size
+                    m_bDisplayErrorDetails = m_frmError.DisplayErrorDetails
+                    m_szErrorFormSize = m_frmError.Size
 
                     m_bDisplayingError = False
                 End If
- 
+
                 m_aryErrors.Add(exError)
 
             Catch ex As System.Exception
@@ -394,6 +401,8 @@ Namespace Framework
                 Catch ex1 As System.Exception
                     m_bDisplayingError = False
                 End Try
+            Finally
+                m_frmError = Nothing
             End Try
         End Sub
 
