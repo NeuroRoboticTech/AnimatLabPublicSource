@@ -52,6 +52,8 @@ Namespace Framework
         Protected Shared m_frmApplication As Forms.AnimatApplication
         Protected Shared m_bCopyInProgress As Boolean = False
         Protected Shared m_bCutInProgress As Boolean = False
+        Protected Shared m_bLoadInProgress As Boolean = False
+        Protected Shared m_bSaveInProgress As Boolean = False
         Protected Shared m_bDisableDirtyFlags As Boolean = False
         Protected Shared m_iDisableDirtyCount As Integer = 0
         Protected Shared m_szErrorFormSize As New Size(500, 250)
@@ -148,6 +150,24 @@ Namespace Framework
             End Get
             Set(ByVal Value As Boolean)
                 m_bCutInProgress = Value
+            End Set
+        End Property
+
+        Public Shared Property LoadInProgress() As Boolean
+            Get
+                Return m_bLoadInProgress
+            End Get
+            Set(ByVal Value As Boolean)
+                m_bLoadInProgress = Value
+            End Set
+        End Property
+
+        Public Shared Property SaveInProgress() As Boolean
+            Get
+                Return m_bSaveInProgress
+            End Get
+            Set(ByVal Value As Boolean)
+                m_bSaveInProgress = Value
             End Set
         End Property
 

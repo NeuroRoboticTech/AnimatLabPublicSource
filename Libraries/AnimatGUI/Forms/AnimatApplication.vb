@@ -2997,44 +2997,53 @@ Namespace Forms
 
             CloseProject(True)
 
-            Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+            Try
+                Util.LoadInProgress = True
+                Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-            m_strProjectName = oXml.GetChildString("ProjectName")
-            m_strSimulationFile = oXml.GetChildString("SimulationFile", "")
-            Dim eLogLevel As AnimatGUI.Interfaces.Logger.enumLogLevel = DirectCast([Enum].Parse(GetType(AnimatGUI.Interfaces.Logger.enumLogLevel), oXml.GetChildString("LogLevel", "None"), True), AnimatGUI.Interfaces.Logger.enumLogLevel)
+                m_strProjectName = oXml.GetChildString("ProjectName")
+                m_strSimulationFile = oXml.GetChildString("SimulationFile", "")
+                Dim eLogLevel As AnimatGUI.Interfaces.Logger.enumLogLevel = DirectCast([Enum].Parse(GetType(AnimatGUI.Interfaces.Logger.enumLogLevel), oXml.GetChildString("LogLevel", "None"), True), AnimatGUI.Interfaces.Logger.enumLogLevel)
 
-            If eLogLevel <> Me.Logger.TraceLevel Then
-                Me.Logger.TraceLevel = eLogLevel
-            End If
+                If eLogLevel <> Me.Logger.TraceLevel Then
+                    Me.Logger.TraceLevel = eLogLevel
+                End If
 
-            m_doSimulation = New DataObjects.Simulation(Me.FormHelper)
-            If m_strSimulationFile.Trim.Length > 0 Then
-                Try
-                    m_doSimulation.LoadData(oXml)
+                m_doSimulation = New DataObjects.Simulation(Me.FormHelper)
+                If m_strSimulationFile.Trim.Length > 0 Then
+                    Try
+                        m_doSimulation.LoadData(oXml)
 
-                    'Now initialize after load
-                    m_doSimulation.InitializeAfterLoad()
+                        'Now initialize after load
+                        m_doSimulation.InitializeAfterLoad()
 
-                Catch ex As System.Exception
-                    AnimatGUI.Framework.Util.DisplayError(ex)
-                End Try
-            End If
+                    Catch ex As System.Exception
+                        AnimatGUI.Framework.Util.DisplayError(ex)
+                    End Try
+                End If
 
-            'Start the simulation running
-            Me.CreateSimulation(True)
+                'Start the simulation running
+                Me.CreateSimulation(True)
 
-            'Then create the forms. They will create their own sim references as they are loaded
-            oXml.IntoChildElement("DockingForms") 'Into DockingForms Element
-            Dim iCount As Integer = oXml.NumberOfChildren() - 1
-            For iIndex As Integer = 0 To iCount
-                oXml.FindChildByIndex(iIndex)
-                LoadDockingForm(m_dockManager, oXml)
-            Next
-            oXml.OutOfElem()   'Outof DockingForms Element
+                'Then create the forms. They will create their own sim references as they are loaded
+                oXml.IntoChildElement("DockingForms") 'Into DockingForms Element
+                Dim iCount As Integer = oXml.NumberOfChildren() - 1
+                For iIndex As Integer = 0 To iCount
+                    oXml.FindChildByIndex(iIndex)
+                    LoadDockingForm(m_dockManager, oXml)
+                Next
+                oXml.OutOfElem()   'Outof DockingForms Element
 
-            LoadDockingConfig(m_dockManager, oXml)
+                LoadDockingConfig(m_dockManager, oXml)
 
-            Util.Simulation.NewToolHolderIndex = Util.ExtractIDCount("DataTool", Util.Simulation.ToolHolders)
+                Util.Simulation.NewToolHolderIndex = Util.ExtractIDCount("DataTool", Util.Simulation.ToolHolders)
+
+            Catch ex As System.Exception
+                Throw ex
+            Finally
+                Util.LoadInProgress = False
+            End Try
+
         End Sub
 
         Public Overridable Sub LoadDockingConfig(ByRef dockManager As Crownwood.DotNetMagic.Docking.DockingManager, _
@@ -3113,43 +3122,51 @@ Namespace Forms
 
         Public Overloads Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
 
-            oXml.AddElement("Project")
+            Try
+                Util.SaveInProgress = True
 
-            If Me.SimulationFile.Trim.Length = 0 Then
-                Me.SimulationFile = m_strProjectName & ".asim"
-            End If
+                oXml.AddElement("Project")
 
-            oXml.AddChildElement("ProjectName", m_strProjectName)
-            oXml.AddChildElement("SimulationFile", Me.SimulationFile)
-            oXml.AddChildElement("LogLevel", Me.Logger.TraceLevel.ToString)
+                If Me.SimulationFile.Trim.Length = 0 Then
+                    Me.SimulationFile = m_strProjectName & ".asim"
+                End If
 
-            m_doSimulation.SaveData(oXml)
+                oXml.AddChildElement("ProjectName", m_strProjectName)
+                oXml.AddChildElement("SimulationFile", Me.SimulationFile)
+                oXml.AddChildElement("LogLevel", Me.Logger.TraceLevel.ToString)
 
-            oXml.AddChildElement("DockingForms")
-            oXml.IntoElem()   'Into DockingForms Element
+                m_doSimulation.SaveData(oXml)
 
-            'First lets save all Docking Forms associated with this application.
-            Dim frmAnimat As AnimatForm
-            For Each conWindow As Content In m_dockManager.Contents
-                frmAnimat = DirectCast(conWindow.Control, AnimatForm)
-                frmAnimat.SaveData(oXml)
-            Next
-            oXml.OutOfElem()   'Outof DockingForms Element
+                oXml.AddChildElement("DockingForms")
+                oXml.IntoElem()   'Into DockingForms Element
 
-            'oXml.AddChildElement("ChildForms")
-            'oXml.IntoElem()   'Into ChildForms Element
+                'First lets save all Docking Forms associated with this application.
+                Dim frmAnimat As AnimatForm
+                For Each conWindow As Content In m_dockManager.Contents
+                    frmAnimat = DirectCast(conWindow.Control, AnimatForm)
+                    frmAnimat.SaveData(oXml)
+                Next
+                oXml.OutOfElem()   'Outof DockingForms Element
 
-            'For Each frmChild As AnimatForm In Me.ChildForms
-            '    frmChild.SaveData(oXml)
-            'Next
-            'oXml.OutOfElem()   'Outof ChildForms Element
+                'oXml.AddChildElement("ChildForms")
+                'oXml.IntoElem()   'Into ChildForms Element
 
-            oXml.OutOfElem()   'Outof Stimuli element
+                'For Each frmChild As AnimatForm In Me.ChildForms
+                '    frmChild.SaveData(oXml)
+                'Next
+                'oXml.OutOfElem()   'Outof ChildForms Element
 
-            oXml.OutOfElem()   'Outof Project Element
+                oXml.OutOfElem()   'Outof Stimuli element
 
-            SaveDockingConfig(m_dockManager, oXml)
+                oXml.OutOfElem()   'Outof Project Element
 
+                SaveDockingConfig(m_dockManager, oXml)
+
+            Catch ex As System.Exception
+                Throw ex
+            Finally
+                Util.SaveInProgress = False
+            End Try
         End Sub
 
         Public Overridable Sub SaveDockingConfig(ByRef dockManager As DockingManager, _

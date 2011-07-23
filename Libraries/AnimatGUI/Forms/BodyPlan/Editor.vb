@@ -559,7 +559,7 @@ Namespace Forms.BodyPlan
                 'Set the name of the data chart item to root_x.
                 'Util.Application.ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root", "Name", "Root_Y"})
                 'Util.Application.ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root_Y", "DataTypeID", "WorldPositionY"})
-                Util.Application.ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectEndTime", "45"})
+                'Util.Application.ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectEndTime", "45"})
 
                 Dim frmRelabel As New AnimatGUI.Forms.BodyPlan.Relabel
 
@@ -705,6 +705,11 @@ Namespace Forms.BodyPlan
         Private Delegate Sub OnStartSimWindowDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
 
         Protected Overridable Sub OnStartSimWindow(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+            'Do not attempt to start the window until the load process is completed.
+            If Util.LoadInProgress Then
+                Return
+            End If
 
             m_timerStartSimWindow.Enabled = False
 
