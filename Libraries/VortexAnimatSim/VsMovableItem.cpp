@@ -471,14 +471,14 @@ void VsMovableItem::UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT)
 
 	//Lets get the current world coordinates for this body part and then recalculate the 
 	//new local position for the part and then finally reset its new local position.
-	osg::Vec3 vL = m_osgLocalMatrix.getTrans();
+	osg::Vec3 vL = osgMT.getTrans();
 	CStdFPoint vLocal(vL.x(), vL.y(), vL.z());
 	vLocal.ClearNearZero();
 	m_lpThisMI->Position(vLocal, FALSE, TRUE, FALSE);
 		
 	//Now lets get the euler angle rotation
 	Vx::VxReal44 vxTM;
-	VxOSG::copyOsgMatrix_to_VxReal44(m_osgLocalMatrix, vxTM);
+	VxOSG::copyOsgMatrix_to_VxReal44(osgMT, vxTM);
 	Vx::VxTransform vTrans(vxTM);
 	Vx::VxReal3 vEuler;
 	vTrans.getRotationEulerAngles(vEuler);
