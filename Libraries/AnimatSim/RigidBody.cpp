@@ -87,7 +87,15 @@ try
 {
 	m_lpParent = NULL;
 
-	if(m_lpJointToParent) delete m_lpJointToParent;
+	if(m_lpJointToParent) 
+	{
+		//Set the reference to this object within the joint to NULL.
+		//This ensures that the joint does not attempt to make any calls back to this
+		//object which is already being deleted.
+		m_lpJointToParent->Child(NULL);
+		delete m_lpJointToParent;
+	}
+
 	if(m_lpContactSensor) delete m_lpContactSensor;
 	m_aryChildParts.RemoveAll();
 }
