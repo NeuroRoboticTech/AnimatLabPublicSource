@@ -96,10 +96,10 @@ void VsMovableItem::Physics_Selected(BOOL bValue, BOOL bSelectMultiple)
 		if(bValue && !bNodeFound)
 		{
 			m_osgNodeGroup->addChild(m_osgSelectedGroup.get());
-			//if(!bIsReceptiveFieldMode)
-			//	m_osgDragger->AddToScene();
-			//else
-			//	ShowSelectedVertex();
+			if(!bIsReceptiveFieldMode)
+				m_osgDragger->AddToScene();
+			else
+				ShowSelectedVertex();
 		}
 		//if de-selecting and selected then de-select the node
 		else if(!bValue && bNodeFound)
