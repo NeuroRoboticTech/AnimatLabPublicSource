@@ -115,7 +115,7 @@ Namespace Forms
 #Region " Attributes "
 
         Protected m_doStructure As DataObjects.Physical.PhysicalStructure
-        Protected m_strStructureID As String
+        Protected m_strStructureID As String = ""
 
         Protected m_doBodyPart As Physical.BodyPart
         Protected m_strBodyPartID As String = ""

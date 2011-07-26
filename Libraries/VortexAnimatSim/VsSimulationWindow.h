@@ -31,6 +31,8 @@ class VORTEX_PORT VsSimulationWindow : public AnimatSim::SimulationWindow, osgGA
 
 		virtual void SetupTrackCamera();
 		virtual void SetCameraLookAt(CStdFPoint oTarget);
+		
+		virtual void UpdateBackgroundColor();
 
 		virtual void Initialize();
 		virtual void Update();

@@ -62,6 +62,8 @@ Namespace DataObjects.Physical
 
         Protected m_snRecFieldSelRadius As ScaledNumber
 
+        Protected m_clBackgroundcolor As System.Drawing.Color
+
         Protected m_iNewOrganismCount As Integer
         Protected m_iNewStructureCount As Integer
         Protected m_iNewLightCount As Integer
@@ -283,6 +285,16 @@ Namespace DataObjects.Physical
 
                 Me.SetSimData("RecFieldSelRadius", Value.ActualValue.ToString, True)
                 m_snRecFieldSelRadius.CopyData(Value)
+            End Set
+        End Property
+
+        Public Overridable Property BackgroundColor() As System.Drawing.Color
+            Get
+                Return m_clBackgroundcolor
+            End Get
+            Set(ByVal value As System.Drawing.Color)
+                Me.SetSimData("BackgroundColor", Util.SaveColorXml("Color", value), True)
+                m_clBackgroundcolor = value
             End Set
         End Property
 
@@ -537,6 +549,8 @@ Namespace DataObjects.Physical
             Dim newLight As New DataObjects.Physical.Light(Me)
             newLight.Name = "Light_1"
             m_aryLights.Add(newLight.ID, newLight)
+
+            m_clBackgroundcolor = Color.FromArgb(255, 51, 51, 153)
 
         End Sub
 
@@ -832,6 +846,9 @@ Namespace DataObjects.Physical
                                         "Settings", "Determines whether hydrodynamic effects such as buoyancy and drag act upon the bodies in the simulation. " & _
                                         "If this is turned off then the simulation will run slightly faster.", m_bSimulateHydrodynamics))
 
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Background Color", m_clBackgroundcolor.GetType(), "BackgroundColor", _
+                                        "Settings", "Sets the background color for the simulation.", m_clBackgroundcolor))
+
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("DistanceUnits", GetType(String), "DistanceUnits", _
                                         "Units", "Determines the distance unit measurements used within the configuration files.", _
                                         m_eDistanceUnits, GetType(AnimatGUI.TypeHelpers.UnitsTypeEditor), GetType(AnimatGUI.TypeHelpers.UnitsTypeConverter)))
@@ -928,6 +945,7 @@ Namespace DataObjects.Physical
             m_snAngularKineticLoss = DirectCast(doOrig.m_snAngularKineticLoss.Clone(Me, bCutData, doRoot), ScaledNumber)
 
             m_snRecFieldSelRadius = DirectCast(doOrig.m_snRecFieldSelRadius.Clone(Me, bCutData, doRoot), ScaledNumber)
+            m_clBackgroundcolor = doOrig.m_clBackgroundcolor
 
             m_eDistanceUnits = doOrig.m_eDistanceUnits
             m_eMassUnits = doOrig.m_eMassUnits
@@ -1029,6 +1047,7 @@ Namespace DataObjects.Physical
             m_eDistanceUnits = DirectCast([Enum].Parse(GetType(enumDistanceUnits), oXml.GetChildString("DistanceUnits"), True), enumDistanceUnits)
 
             'm_snRecFieldSelRadius.LoadData(oXml, "RecFieldSelRadius")
+            m_clBackgroundcolor = Util.LoadColor(oXml, "BackgroundColor", m_clBackgroundcolor)
 
             m_aryOdorTypes.Clear()
             m_aryOrganisms.Clear()
@@ -1123,6 +1142,7 @@ Namespace DataObjects.Physical
             m_snAngularKineticLoss.SaveData(oXml, "AngularKineticLoss")
 
             m_snRecFieldSelRadius.SaveData(oXml, "RecFieldSelRadius")
+            Util.SaveColor(oXml, "BackgroundColor", m_clBackgroundcolor)
 
             oXml.AddChildElement("SimulateHydrodynamics", m_bSimulateHydrodynamics)
 
@@ -1194,6 +1214,7 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("AngularKineticLoss", m_snAngularKineticLoss.ActualValue)
 
             m_snRecFieldSelRadius.SaveSimulationXml(oXml, Nothing, "RecFieldSelRadius")
+            Util.SaveColor(oXml, "BackgroundColor", m_clBackgroundcolor)
 
             oXml.AddChildElement("SimulateHydrodynamics", m_bSimulateHydrodynamics)
 

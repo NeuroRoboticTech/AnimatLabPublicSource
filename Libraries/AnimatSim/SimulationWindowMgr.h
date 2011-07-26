@@ -64,6 +64,8 @@ public:
 	virtual void Close();
 	virtual void Initialize();
 
+	virtual void UpdateBackgroundColor();
+
 	virtual SimulationWindow *FindSimulationWindow(HWND win, int &iIndex, BOOL bThrowError = TRUE);
 
 	virtual SimulationWindow *AddSimulationWindow(string strModule, string strType, BOOL bInit, HWND win, string strHudXml);

@@ -108,6 +108,13 @@ void VsSimulationWindow::TrackCamera()
 	m_osgManip->setCenter(v);
 }
 
+void VsSimulationWindow::UpdateBackgroundColor() 
+{
+	CStdColor *vColor = m_lpSim->BackgroundColor();
+	if(m_osgViewer.valid())
+		m_osgViewer->getCamera()->setClearColor(osg::Vec4(vColor->r(), vColor->g(), vColor->b(), vColor->a()));
+}
+
 void VsSimulationWindow::InitEmbedded(Simulator *lpSim, VsSimulator *lpVsSim)
 {
     m_osgViewer = new osgViewer::Viewer;

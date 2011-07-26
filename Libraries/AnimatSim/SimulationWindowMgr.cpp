@@ -136,6 +136,19 @@ catch(...)
 }
 
 /**
+\brief	Updates the background color for all simulation windows.
+
+\author	dcofer
+\date	7/26/2011
+**/
+void SimulationWindowMgr::UpdateBackgroundColor()
+{
+	int iCount = m_aryWindows.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		m_aryWindows[iIndex]->UpdateBackgroundColor();
+}
+
+/**
 \brief	Searches for simulation window with the specified HWND.
 
 \author	dcofer

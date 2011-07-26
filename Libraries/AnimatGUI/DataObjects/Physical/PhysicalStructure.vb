@@ -173,6 +173,12 @@ Namespace DataObjects.Physical
             If propTable.Properties.Contains("Local Position") Then propTable.Properties.Remove("Local Position")
             If propTable.Properties.Contains("World Position") Then propTable.Properties.Remove("World Position")
             If propTable.Properties.Contains("Rotation") Then propTable.Properties.Remove("Rotation")
+            If propTable.Properties.Contains("Visible") Then propTable.Properties.Remove("Visible")
+            If propTable.Properties.Contains("Transparencies") Then propTable.Properties.Remove("Transparencies")
+            If propTable.Properties.Contains("Ambient") Then propTable.Properties.Remove("Ambient")
+            If propTable.Properties.Contains("Diffuse") Then propTable.Properties.Remove("Diffuse")
+            If propTable.Properties.Contains("Specular") Then propTable.Properties.Remove("Specular")
+            If propTable.Properties.Contains("Shininess") Then propTable.Properties.Remove("Shininess")
 
             Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = Me.LocalPosition.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Position", pbNumberBag.GetType(), "LocalPosition", _

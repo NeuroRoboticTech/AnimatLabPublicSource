@@ -597,7 +597,9 @@ namespace AnimatSim
 			virtual BOOL IsPhysicsBeingUpdated();	
 			
 			virtual CStdColor *BackgroundColor();
-			virtual void BackgroundColor(float *vColor);
+			virtual void BackgroundColor(CStdColor &aryColor);
+			virtual void BackgroundColor(float *aryColor);
+			virtual void BackgroundColor(string strXml);
 
 			virtual float RecFieldSelRadius();
 			virtual void RecFieldSelRadius(float fltValue, BOOL bUseScaling = TRUE, BOOL bUpdateAllBodies = TRUE);

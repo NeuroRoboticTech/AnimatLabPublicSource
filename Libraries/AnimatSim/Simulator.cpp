@@ -1218,6 +1218,20 @@ BOOL Simulator::IsPhysicsBeingUpdated()
 CStdColor *Simulator::BackgroundColor() {return  &m_vBackgroundColor;}
 
 /**
+\brief	Sets the background color. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	aryColor	The color data. 
+**/
+void Simulator::BackgroundColor(CStdColor &aryColor)
+{
+	m_vBackgroundColor = aryColor;
+	if(m_lpWinMgr) m_lpWinMgr->UpdateBackgroundColor();
+}
+
+/**
 \brief	Sets the background color.
 
 \author	dcofer
@@ -1225,8 +1239,27 @@ CStdColor *Simulator::BackgroundColor() {return  &m_vBackgroundColor;}
 
 \param [in,out]	vColor	Pointer to the color. 
 **/
-void Simulator::BackgroundColor(float *vColor) {m_vBackgroundColor.Set(vColor[0], vColor[1], vColor[2], vColor[3]);}
+void Simulator::BackgroundColor(float *aryColor) 
+{
+	CStdColor vColor(aryColor[0], aryColor[1], aryColor[2], aryColor[3], 1);
+	BackgroundColor(vColor);
+}
 
+/**
+\brief	Loads the background color from an XML data packet. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml	The color data in an xml data packet
+**/
+
+void Simulator::BackgroundColor(string strXml)
+{
+	CStdColor vColor(1);
+	vColor.Load(strXml, "Color");
+	BackgroundColor(vColor);
+}
 
 float Simulator::RecFieldSelRadius() {return m_fltRecFieldSelRadius;}
 
@@ -2236,6 +2269,8 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 	LinearKineticLoss(oXml.GetChildFloat("LinearKineticLoss", m_fltLinearKineticLoss));
 	AngularKineticLoss(oXml.GetChildFloat("AngularKineticLoss", m_fltAngularKineticLoss));
 	RecFieldSelRadius(oXml.GetChildFloat("RecFieldSelRadius", m_fltRecFieldSelRadius));
+	
+	m_vBackgroundColor.Load(oXml, "BackgroundColor", false);
 
 	if(oXml.FindChildElement("OdorTypes", FALSE))
 	{
@@ -3421,6 +3456,11 @@ BOOL Simulator::SetData(string strDataType, string strValue, BOOL bThrowError)
 	else if(strType == "RECFIELDSELRADIUS")
 	{
 		RecFieldSelRadius(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strDataType == "BACKGROUNDCOLOR")
+	{
+		BackgroundColor(strValue);
 		return TRUE;
 	}
 

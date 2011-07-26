@@ -243,6 +243,8 @@ void SimulationWindow::SetupTrackCamera(BOOL bTrackCamera, string strLookAtStruc
 **/
 void SimulationWindow::SetCameraLookAt(CStdFPoint oTarget) {}
 
+void SimulationWindow::UpdateBackgroundColor() {}
+
 void SimulationWindow::OnGetFocus()
 {}
 
