@@ -139,7 +139,7 @@ Namespace Forms.BodyPlan
 #Region " Attributes "
 
         Protected m_aryItems As New ArrayList
-        Protected m_doStructure As AnimatGUI.DataObjects.Physical.PhysicalStructure
+        Protected m_doSelectedItem As AnimatGUI.Framework.DataObject
         Protected m_doRootNode As AnimatGUI.DataObjects.Physical.BodyPart
 
 #End Region
@@ -152,12 +152,12 @@ Namespace Forms.BodyPlan
             End Get
         End Property
 
-        Public Overridable Property PhysicalStructure() As AnimatGUI.DataObjects.Physical.PhysicalStructure
+        Public Overridable Property SelectedItem() As AnimatGUI.Framework.DataObject
             Get
-                Return m_doStructure
+                Return m_doSelectedItem
             End Get
-            Set(ByVal Value As AnimatGUI.DataObjects.Physical.PhysicalStructure)
-                m_doStructure = Value
+            Set(ByVal Value As AnimatGUI.Framework.DataObject)
+                m_doSelectedItem = Value
             End Set
         End Property
 
@@ -181,8 +181,8 @@ Namespace Forms.BodyPlan
         Private Sub btnReplace_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnReplace.Click
 
             Try
-                If m_doStructure Is Nothing Then
-                    Throw New System.Exception("No structure was selected")
+                If m_doSelectedItem Is Nothing Then
+                    Throw New System.Exception("No item was selected")
                 End If
 
                 If Me.txtMatch.Text.Trim().Length = 0 Then
@@ -195,7 +195,7 @@ Namespace Forms.BodyPlan
 
                 Dim aryColObjs As New Collections.DataObjects(Nothing)
                 If m_doRootNode Is Nothing Then
-                    m_doStructure.FindChildrenOfType(GetType(AnimatGUI.DataObjects.Physical.BodyPart), aryColObjs)
+                    m_doSelectedItem.FindChildrenOfType(GetType(AnimatGUI.DataObjects.Physical.BodyPart), aryColObjs)
                 Else
 
                     'If this is a joint then you really want to move from its parent down.

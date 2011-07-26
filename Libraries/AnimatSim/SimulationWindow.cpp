@@ -198,7 +198,7 @@ BOOL SimulationWindow::SetData(string strDataType, string strValue, BOOL bThrowE
 		return TRUE;
 	}
 
-	if(strType == "USINGTRACKCAMERA")
+	if(strType == "TRACKCAMERA")
 	{
 		UsingTrackCamera(Std_ToBool(strValue));
 		return TRUE;

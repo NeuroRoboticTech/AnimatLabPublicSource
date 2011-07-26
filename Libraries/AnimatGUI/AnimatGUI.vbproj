@@ -510,12 +510,6 @@
     <Compile Include="Forms\BodyPlan\EditCollisionPairs.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\BodyPlan\Editor.Designer.vb">
-      <DependentUpon>Editor.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\BodyPlan\Editor.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Forms\BodyPlan\Odor.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -595,6 +589,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\SimulationController.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SimulationWindow.Designer.vb">
+      <DependentUpon>SimulationWindow.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SimulationWindow.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Toolbox.vb">
@@ -808,6 +808,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SimulationController.resx">
       <DependentUpon>SimulationController.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SimulationWindow.resx">
+      <DependentUpon>SimulationWindow.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Toolbox.resx">
       <DependentUpon>Toolbox.vb</DependentUpon>
@@ -1038,6 +1041,7 @@
     <EmbeddedResource Include="ModuleInformation.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ModuleInformation.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -1110,9 +1114,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\BodyPlan\EditCollisionPairs.resx">
       <DependentUpon>EditCollisionPairs.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\BodyPlan\Editor.resx">
-      <DependentUpon>Editor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\BodyPlan\Odor.resx">
       <DependentUpon>Odor.vb</DependentUpon>
@@ -1254,6 +1255,26 @@
     <Folder Include="DataObjects\ProgramModules\" />
     <Folder Include="Forms\ProgramModules\" />
     <Folder Include="My Project\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\AddPart.gif" />
+    <EmbeddedResource Include="Graphics\CollisionSelectionMode_Small.gif" />
+    <EmbeddedResource Include="Graphics\GraphicsSelectionMode_Small.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\AddJoint.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\JointSelectionMode_Small.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\ReceptiveFieldMode_Small.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\SimulationSelectionMode_Small.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\CopyClipboard.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

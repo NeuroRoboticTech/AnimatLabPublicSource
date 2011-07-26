@@ -687,11 +687,13 @@ Namespace DataObjects.Physical
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.BeforeAddToList(bThrowError)
             Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "Organism", Me.GetSimulationXml("Organism"), bThrowError)
             InitializeSimulationReferences()
         End Sub
 
         Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.BeforeRemoveFromList(bThrowError)
             Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, "Organism", Me.ID, bThrowError)
             m_doInterface = Nothing
         End Sub

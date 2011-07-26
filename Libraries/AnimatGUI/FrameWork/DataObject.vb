@@ -802,17 +802,19 @@ Namespace Framework
 #Region " Add-Remove to List Methods "
 
         Public Overridable Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
+            Me.SignalBeforeAddItem(Me)
         End Sub
 
         Public Overridable Sub AfterAddToList(Optional ByVal bThrowError As Boolean = True)
-            Me.SignalItemAdded(Me)
+            Me.SignalAfterAddItem(Me)
         End Sub
 
         Public Overridable Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+            Me.SignalBeforeRemoveItem(Me)
         End Sub
 
         Public Overridable Sub AfterRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            Me.SignalItemRemoved(Me)
+            Me.SignalAfterRemoveItem(Me)
         End Sub
 
 #End Region
@@ -860,8 +862,11 @@ Namespace Framework
         Public Event BeforePropertyChanged(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
         Public Event AfterPropertyChanged(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
 
-        Public Event ItemAdded(ByRef doObject As AnimatGUI.Framework.DataObject)
-        Public Event ItemRemoved(ByRef doObject As AnimatGUI.Framework.DataObject)
+        Public Event BeforeAddItem(ByRef doObject As AnimatGUI.Framework.DataObject)
+        Public Event AfterAddItem(ByRef doObject As AnimatGUI.Framework.DataObject)
+
+        Public Event BeforeRemoveItem(ByRef doObject As AnimatGUI.Framework.DataObject)
+        Public Event AfterRemoveItem(ByRef doObject As AnimatGUI.Framework.DataObject)
 
         Protected Sub SignalBeforePropertyChanged(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
             RaiseEvent BeforePropertyChanged(doObject, propInfo)
@@ -871,12 +876,20 @@ Namespace Framework
             RaiseEvent AfterPropertyChanged(doObject, propInfo)
         End Sub
 
-        Protected Sub SignalItemAdded(ByRef doObject As AnimatGUI.Framework.DataObject)
-            RaiseEvent ItemAdded(doObject)
+        Protected Sub SignalBeforeAddItem(ByRef doObject As AnimatGUI.Framework.DataObject)
+            RaiseEvent BeforeAddItem(doObject)
         End Sub
 
-        Protected Sub SignalItemRemoved(ByRef doObject As AnimatGUI.Framework.DataObject)
-            RaiseEvent ItemRemoved(doObject)
+        Protected Sub SignalAfterAddItem(ByRef doObject As AnimatGUI.Framework.DataObject)
+            RaiseEvent AfterAddItem(doObject)
+        End Sub
+
+        Protected Sub SignalBeforeRemoveItem(ByRef doObject As AnimatGUI.Framework.DataObject)
+            RaiseEvent BeforeRemoveItem(doObject)
+        End Sub
+
+        Protected Sub SignalAfterRemoveItem(ByRef doObject As AnimatGUI.Framework.DataObject)
+            RaiseEvent AfterRemoveItem(doObject)
         End Sub
 
         Protected Sub OnApplicationExiting()

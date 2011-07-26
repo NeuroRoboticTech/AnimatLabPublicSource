@@ -114,7 +114,7 @@ Namespace Forms.BodyPlan
 
 #Region " Attributes "
 
-        Protected m_doStructure As AnimatGUI.DataObjects.Physical.PhysicalStructure
+        Protected m_doSelectedItem As AnimatGUI.Framework.DataObject
         Protected m_aryInitialTypeList As New SortedList
         Protected m_aryTypeList As New SortedList
 
@@ -124,12 +124,12 @@ Namespace Forms.BodyPlan
 
 #Region " Properties "
 
-        Public Overridable Property PhysicalStructure() As AnimatGUI.DataObjects.Physical.PhysicalStructure
+        Public Overridable Property SelectedItem() As AnimatGUI.Framework.DataObject
             Get
-                Return m_doStructure
+                Return m_doSelectedItem
             End Get
-            Set(ByVal Value As AnimatGUI.DataObjects.Physical.PhysicalStructure)
-                m_doStructure = Value
+            Set(ByVal Value As AnimatGUI.Framework.DataObject)
+                m_doSelectedItem = Value
             End Set
         End Property
 
@@ -152,12 +152,12 @@ Namespace Forms.BodyPlan
 
         Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
             Try
-                If m_doStructure Is Nothing Then
-                    Throw New System.Exception("No structure was selected")
+                If m_doSelectedItem Is Nothing Then
+                    Throw New System.Exception("No item was selected")
                 End If
 
                 Dim colObjects As New AnimatGUI.Collections.DataObjects(Nothing)
-                m_doStructure.FindChildrenOfType(GetType(AnimatGUI.DataObjects.Physical.BodyPart), colObjects)
+                m_doSelectedItem.FindChildrenOfType(GetType(AnimatGUI.DataObjects.Physical.BodyPart), colObjects)
 
                 'First lets put together a list of all unique object types on this diagram
                 Dim doData As Framework.DataObject

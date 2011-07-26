@@ -27,7 +27,7 @@ Namespace DataObjects.Physical
 
         Protected m_dbRoot As DataObjects.Physical.RigidBody
 
-        Protected m_frmBodyEditor As Forms.BodyPlan.Editor
+        Protected m_frmBodyEditor As Forms.SimulationWindow
 
         Protected m_tnBodyPlanNode As Crownwood.DotNetMagic.Controls.Node
 
@@ -50,13 +50,6 @@ Namespace DataObjects.Physical
                 End If
             End Get
         End Property
-
-        '<Browsable(False)> _
-        'Protected Overridable ReadOnly Property Structures(ByVal dsSim As AnimatGUI.DataObjects.Simulation) As Collections.SortedStructures
-        '    Get
-        '        Return dsSim.Environment.Structures
-        '    End Get
-        'End Property
 
         <Browsable(False)> _
         Protected Overridable ReadOnly Property ParentTreeNode(ByVal dsSim As AnimatGUI.DataObjects.Simulation) As Crownwood.DotNetMagic.Controls.Node
@@ -138,11 +131,11 @@ Namespace DataObjects.Physical
         End Property
 
         <Browsable(False)> _
-        Public Overridable Property BodyEditor() As Forms.BodyPlan.Editor
+        Public Overridable Property BodyEditor() As Forms.SimulationWindow
             Get
                 Return m_frmBodyEditor
             End Get
-            Set(ByVal Value As Forms.BodyPlan.Editor)
+            Set(ByVal Value As Forms.SimulationWindow)
                 m_frmBodyEditor = Value
             End Set
         End Property
@@ -175,6 +168,7 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
+            MyBase.BuildProperties(propTable)
 
             If propTable.Properties.Contains("Local Position") Then propTable.Properties.Remove("Local Position")
             If propTable.Properties.Contains("World Position") Then propTable.Properties.Remove("World Position")
@@ -721,24 +715,27 @@ Namespace DataObjects.Physical
                 End If
 
                 If bDelete Then
-                    'Lets see if there are any open windows for this organism/Structure
-                    Dim frmBehavioral As Forms.Behavior.Editor
-                    Dim frmBodyPlan As Forms.BodyPlan.Editor
-                    For Each oChild As Form In Util.Application.ChildForms
-                        If TypeOf oChild Is Forms.Behavior.Editor Then
-                            frmBehavioral = DirectCast(oChild, Forms.Behavior.Editor)
-                            If frmBehavioral.Organism Is Me Then
-                                frmBehavioral.Close()
-                            End If
-                        End If
+                    ''TODO: Need to replace this with an event structure that all windows can hook into.
+                    '' When a structure is deleted then the window is informed and it closes down or switches to free movement.
+                    '' 
+                    ''Lets see if there are any open windows for this organism/Structure
+                    'Dim frmBehavioral As Forms.Behavior.Editor
+                    'Dim frmBodyPlan As Forms.SimulationWindow
+                    'For Each oChild As Form In Util.Application.ChildForms
+                    '    If TypeOf oChild Is Forms.Behavior.Editor Then
+                    '        frmBehavioral = DirectCast(oChild, Forms.Behavior.Editor)
+                    '        If frmBehavioral.Organism Is Me Then
+                    '            frmBehavioral.Close()
+                    '        End If
+                    '    End If
 
-                        If TypeOf oChild Is Forms.BodyPlan.Editor Then
-                            frmBodyPlan = DirectCast(oChild, Forms.BodyPlan.Editor)
-                            If frmBodyPlan.PhysicalStructure Is Me Then
-                                frmBodyPlan.Close()
-                            End If
-                        End If
-                    Next
+                    '    If TypeOf oChild Is Forms.SimulationWindow Then
+                    '        frmBodyPlan = DirectCast(oChild, Forms.SimulationWindow)
+                    '        If frmBodyPlan.PhysicalStructure Is Me Then
+                    '            frmBodyPlan.Close()
+                    '        End If
+                    '    End If
+                    'Next
 
 
                     If Not Util.Environment.Structures Is Nothing Then
@@ -748,7 +745,7 @@ Namespace DataObjects.Physical
                     m_tnWorkspaceNode = Nothing
                     m_tnBodyPlanNode = Nothing
 
-                    Util.Application.RemoveBodyEditorForm(Me)
+                    ' Util.Application.RemoveBodyEditorForm(Me)
 
                 End If
 
@@ -771,11 +768,13 @@ Namespace DataObjects.Physical
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.BeforeAddToList(bThrowError)
             Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "Structure", Me.GetSimulationXml("Structure"), bThrowError)
             InitializeSimulationReferences()
         End Sub
 
         Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.BeforeRemoveFromList(bThrowError)
             Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, "Structure", Me.ID, bThrowError)
             m_doInterface = Nothing
         End Sub

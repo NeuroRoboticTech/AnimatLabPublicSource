@@ -580,6 +580,10 @@ Namespace DataObjects
 
             End If
 
+            If Util.Application.AddPartToolStripButton.Checked AndAlso Util.Simulation.VisualSelectionMode <> Simulation.enumVisualSelectionMode.SelectCollisions Then
+                Util.Application.AddPartToolStripButton.Checked = False
+            End If
+
             RaiseEvent VisualSelectionModeChanged()
         End Sub
 

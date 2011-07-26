@@ -501,6 +501,9 @@ BOOL Structure::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
+	if(AnimatBase::SetData(strDataType, strValue, FALSE))
+		return TRUE;
+
 	if(MovableItem::SetData(strDataType, strValue, FALSE))
 		return TRUE;
 

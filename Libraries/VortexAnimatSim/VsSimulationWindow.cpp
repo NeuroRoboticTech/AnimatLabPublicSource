@@ -62,12 +62,12 @@ void VsSimulationWindow::SetupTrackCamera()
 		{
 			Structure *lpStructure = m_lpSim->FindStructureFromAll(m_strLookAtStructureID);
 
-			VsRigidBody *lpVsBody = NULL;
-			RigidBody *lpBody=NULL;
+			VsBody *lpVsBody = NULL;
+			BodyPart *lpBody=NULL;
 			if(Std_IsBlank(m_strLookAtBodyID))
 				lpBody = lpStructure->Body();
 			else
-				lpBody = lpStructure->FindRigidBody(m_strLookAtBodyID);
+				lpBody = dynamic_cast<BodyPart *>(lpStructure->FindNode(m_strLookAtBodyID));
 
 			if(lpBody)
 				SetCameraLookAt(lpBody->GetCurrentPosition());

@@ -1410,9 +1410,9 @@ Namespace DataObjects.Physical
                 rbChildBody.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
             End If
 
-            If Not Me.ParentStructure Is Nothing AndAlso Not Me.ParentStructure.BodyEditor Is Nothing Then
-                Me.ParentStructure.BodyEditor.AddPartToolStripButton.Checked = False
-            End If
+            'If Not Me.ParentStructure Is Nothing AndAlso Not Me.ParentStructure.BodyEditor Is Nothing Then
+            '    Util.Application.AddPartToolStripButton.Checked = False
+            'End If
 
             rbChildBody.AfterAddBody()
 
@@ -1690,11 +1690,13 @@ Namespace DataObjects.Physical
                 End If
             End If
 
+            MyBase.BeforeAddToList(bThrowError)
             Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "RigidBody", Me.GetSimulationXml("RigidBody"), bThrowError)
             InitializeSimulationReferences()
         End Sub
 
         Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.BeforeRemoveFromList(bThrowError)
             Util.Application.SimulationInterface.RemoveItem(Me.Parent.ID(), "RigidBody", Me.ID, bThrowError)
             m_doInterface = Nothing
         End Sub

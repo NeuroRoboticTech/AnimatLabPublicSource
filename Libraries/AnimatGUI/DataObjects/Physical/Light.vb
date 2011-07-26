@@ -347,12 +347,14 @@ Namespace DataObjects.Physical
 
         Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
             If Not Util.Simulation Is Nothing Then
+                MyBase.BeforeAddToList(bThrowError)
                 Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "Light", Me.GetSimulationXml("Light"), bThrowError)
                 InitializeSimulationReferences()
             End If
         End Sub
 
         Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.BeforeRemoveFromList(bThrowError)
             Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, "Light", Me.ID, bThrowError)
             m_doInterface = Nothing
         End Sub

@@ -380,7 +380,7 @@ Namespace DataObjects.Physical
             Try
                 Dim frmRelabel As New AnimatGUI.Forms.BodyPlan.Relabel
 
-                frmRelabel.PhysicalStructure = Me.ParentStructure
+                frmRelabel.SelectedItem = Me
                 frmRelabel.RootNode = Me
                 If frmRelabel.ShowDialog = DialogResult.OK Then
                     Util.Relable(frmRelabel.Items, frmRelabel.txtMatch.Text, frmRelabel.txtReplace.Text)
