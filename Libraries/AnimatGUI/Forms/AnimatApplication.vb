@@ -840,6 +840,7 @@ Namespace Forms
             Me.AddPartToolStripButton.Size = New System.Drawing.Size(23, 22)
             Me.AddPartToolStripButton.Text = "AddPartToolStripButton"
             Me.AddPartToolStripButton.ToolTipText = "Starts 'Add Body' mode so you can click on a parent to add a child part."
+            Me.AddPartToolStripButton.CheckOnClick = True
             '
             'AddJointToolStripButton
             '
@@ -851,6 +852,7 @@ Namespace Forms
             Me.AddJointToolStripButton.Size = New System.Drawing.Size(23, 22)
             Me.AddJointToolStripButton.Text = "AddJointToolStripButton"
             Me.AddJointToolStripButton.ToolTipText = "Adds a new joint between two manually selected parts."
+            Me.AddJointToolStripButton.CheckOnClick = True
             '
             'AddStimulusToolStripButton
             '
