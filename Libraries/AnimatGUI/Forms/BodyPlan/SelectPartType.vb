@@ -255,20 +255,20 @@ Namespace Forms.BodyPlan
                 Dim iMaxHeight As Integer = imgDefault.Height
                 Dim aryList As New ArrayList
                 For Each doPart As Physical.BodyPart In Util.Application.BodyPartTypes
-                    If Util.IsTypeOf(doPart.GetType(), m_tpPartType, False) AndAlso Not doPart.GetType().IsAbstract Then
+                    If Util.IsTypeOf(doPart.GetType(), m_tpPartType, False) AndAlso Not doPart.GetType().IsAbstract AndAlso doPart.AllowUserAdd Then
                         If Not m_bIsRigidBody OrElse (m_bIsRigidBody AndAlso Not m_bIsRoot) OrElse (m_bIsRigidBody AndAlso m_bIsRoot AndAlso doPart.HasDynamics) Then
                             If m_rbParentBody Is Nothing OrElse Util.Application.CanAddPartAsChild(m_rbParentBody.GetType, doPart.GetType) Then
-                                If Not doPart.WorkspaceImage Is Nothing Then
-                                    m_mgrIconImages.AddImage(doPart.WorkspaceImageName, doPart.WorkspaceImage)
-                                    If doPart.WorkspaceImage.Width > iMaxWidth Then iMaxWidth = doPart.WorkspaceImage.Width
-                                    If doPart.WorkspaceImage.Height > iMaxHeight Then iMaxHeight = doPart.WorkspaceImage.Height
+                                If Not doPart.ButtonImage Is Nothing Then
+                                    m_mgrIconImages.AddImage(doPart.ButtonImageName, doPart.ButtonImage)
+                                    If doPart.ButtonImage.Width > iMaxWidth Then iMaxWidth = doPart.ButtonImage.Width
+                                    If doPart.ButtonImage.Height > iMaxHeight Then iMaxHeight = doPart.ButtonImage.Height
                                 End If
 
                                 Dim liItem As New ListViewItem
                                 liItem.Text = doPart.BodyPartName
 
-                                If Not doPart.WorkspaceImage Is Nothing Then
-                                    liItem.ImageIndex = m_mgrIconImages.GetImageIndex(doPart.WorkspaceImageName)
+                                If Not doPart.ButtonImage Is Nothing Then
+                                    liItem.ImageIndex = m_mgrIconImages.GetImageIndex(doPart.ButtonImageName)
                                 Else
                                     liItem.ImageIndex = m_mgrIconImages.GetImageIndex("Default")
                                 End If

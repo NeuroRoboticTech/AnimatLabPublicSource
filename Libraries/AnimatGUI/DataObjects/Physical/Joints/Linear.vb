@@ -79,6 +79,13 @@ Namespace DataObjects.Physical.Joints
             End Get
         End Property
 
+        Public Overrides ReadOnly Property AllowUserAdd As Boolean
+            Get
+                'TODO: This part does not work yet so I am disabling the ability for users to add it.
+                Return False
+            End Get
+        End Property
+
 #End Region
 
         Public Sub New(ByVal doParent As Framework.DataObject)

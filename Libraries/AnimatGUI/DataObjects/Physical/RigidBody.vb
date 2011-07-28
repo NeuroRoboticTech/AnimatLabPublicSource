@@ -1410,9 +1410,7 @@ Namespace DataObjects.Physical
                 rbChildBody.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
             End If
 
-            'If Not Me.ParentStructure Is Nothing AndAlso Not Me.ParentStructure.BodyEditor Is Nothing Then
-            '    Util.Application.AddPartToolStripButton.Checked = False
-            'End If
+            Util.Application.AddPartToolStripButton.Checked = False
 
             rbChildBody.AfterAddBody()
 
@@ -1691,14 +1689,36 @@ Namespace DataObjects.Physical
             End If
 
             MyBase.BeforeAddToList(bThrowError)
+            If Not m_JointToParent Is Nothing Then
+                m_JointToParent.BeforeAddToList(bThrowError)
+            End If
+
             Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "RigidBody", Me.GetSimulationXml("RigidBody"), bThrowError)
             InitializeSimulationReferences()
         End Sub
 
+        Public Overrides Sub AfterAddToList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.AfterAddToList(bThrowError)
+            If Not m_JointToParent Is Nothing Then
+                m_JointToParent.AfterAddToList(bThrowError)
+            End If
+        End Sub
+
         Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
             MyBase.BeforeRemoveFromList(bThrowError)
+            If Not m_JointToParent Is Nothing Then
+                m_JointToParent.BeforeRemoveFromList(bThrowError)
+            End If
+
             Util.Application.SimulationInterface.RemoveItem(Me.Parent.ID(), "RigidBody", Me.ID, bThrowError)
             m_doInterface = Nothing
+        End Sub
+
+        Public Overrides Sub AfterRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.AfterRemoveFromList(bThrowError)
+            If Not m_JointToParent Is Nothing Then
+                m_JointToParent.AfterRemoveFromList(bThrowError)
+            End If
         End Sub
 
 #End Region

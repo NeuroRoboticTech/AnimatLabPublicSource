@@ -183,7 +183,12 @@ void VsRigidBody::Physics_Resize()
 	//First lets get rid of the current current geometry and then put new geometry in place.
 	if(m_osgNode.valid())
 	{
-		osg::Geode *osgGroup = dynamic_cast<osg::Geode *>(m_osgNode.get());
+		osg::Geode *osgGroup = NULL;
+		if(m_osgGeometryRotationMT.valid())
+			osgGroup = dynamic_cast<osg::Geode *>(m_osgGeometryRotationMT->getChild(0));
+		else
+			osgGroup = dynamic_cast<osg::Geode *>(m_osgNode.get());
+
 		if(!osgGroup)
 			THROW_TEXT_ERROR(Vs_Err_lNodeNotGeode, Vs_Err_strNodeNotGeode, m_lpThisAB->Name());
 

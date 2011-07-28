@@ -36,7 +36,7 @@ Namespace DataObjects.Physical.Bodies
 
         Public Overrides ReadOnly Property ButtonImageName() As String
             Get
-                Return "AnimatGUI.Cylinder_Button.gif"
+                Return "AnimatGUI.Cylinder_SelectType.gif"
             End Get
         End Property
 
@@ -139,8 +139,8 @@ Namespace DataObjects.Physical.Bodies
 
             Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag
             pbNumberBag = m_snRadius.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Lower Radius", pbNumberBag.GetType(), "Radius", _
-                                        "Size", "Sets the lower radius of the Cylinder.", pbNumberBag, _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Radius", pbNumberBag.GetType(), "Radius", _
+                                        "Size", "Sets the radius of the Cylinder.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snHeight.Properties

@@ -31,7 +31,7 @@ Namespace DataObjects.Physical.Joints
 
         Public Overrides ReadOnly Property ButtonImageName() As String
             Get
-                Return "AnimatGUI.BallAndSocket_Button.gif"
+                Return "AnimatGUI.Distance_SelectType.gif"
             End Get
         End Property
 

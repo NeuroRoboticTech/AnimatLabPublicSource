@@ -1276,6 +1276,35 @@
   <ItemGroup>
     <EmbeddedResource Include="Graphics\CopyClipboard.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\BodyPlan\BallSocket_SelectType.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Box_SelectType.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Cone_SelectType.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Cylinder_SelectType.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Distance_SelectType.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Ellipsoid_SelectType.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\FluidPlane_SelectType.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Hinge_SelectType.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Mesh_SelectType.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Plane_SelectType.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Prismatic_SelectType.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Sphere_SelectType.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Terrain_SelectType.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Torus_SelectType.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Universal_SelectType.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\BodyPlan\Mouth_SelectType.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\MuscleSpindle_SelectType.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Muscle_SelectType.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Stomach_SelectType.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\BodyPlan\Attachment_SelectType.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\BodyPlan\Spring_SelectType.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PreBuildEvent />

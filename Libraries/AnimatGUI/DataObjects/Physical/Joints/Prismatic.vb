@@ -39,7 +39,7 @@ Namespace DataObjects.Physical.Joints
 
         Public Overrides ReadOnly Property ButtonImageName() As String
             Get
-                Return "AnimatGUI.Prismatic_Button.gif"
+                Return "AnimatGUI.Prismatic_SelectType.gif"
             End Get
         End Property
 

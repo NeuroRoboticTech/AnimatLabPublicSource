@@ -81,7 +81,8 @@ void VsCylinder::ResizePhysicsGeometry()
 		if(!vxCylinder)
 			THROW_TEXT_ERROR(Vs_Err_lGeometryMismatch, Vs_Err_strGeometryMismatch, m_lpThisAB->Name());
 		
-		//vxCylinder->setDimensions(
+		vxCylinder->setRadius(m_fltRadius);
+		vxCylinder->setHeight(m_fltHeight);
 	}
 }
 
