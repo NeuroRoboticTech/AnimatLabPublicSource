@@ -553,8 +553,11 @@ Namespace DataObjects.Physical
                         Util.ProjectProperties.RefreshProperties()
                         Throw New System.Exception("An error occured while attempting to set the local position using the specified world coordinates.")
                     End If
+                ElseIf Not m_doParent Is Nothing AndAlso Util.IsTypeOf(m_doParent.GetType, GetType(DataObjects.Physical.PhysicalStructure), False) Then
+                    Dim doStruct As DataObjects.Physical.PhysicalStructure = DirectCast(m_doParent, DataObjects.Physical.PhysicalStructure)
+                    doStruct.LocalPosition = DirectCast(m_svWorldPosition.Clone(Me, False, Nothing), ScaledVector3)
                 Else
-                    Me.LocalPosition.CopyData(m_svWorldPosition.X.ActualValue, m_svWorldPosition.Y.ActualValue, m_svWorldPosition.Z.ActualValue, False)
+                    Me.LocalPosition = DirectCast(m_svWorldPosition.Clone(Me, False, Nothing), ScaledVector3)
                 End If
 
             Catch ex As System.Exception

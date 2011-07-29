@@ -85,6 +85,7 @@ namespace AnimatSim
 			virtual void JointForce(float fltForce);
 
 			virtual void CreateJoint();
+			virtual void UpdatePhysicsPosFromGraphics();
 
 			virtual float *GetDataPointer(string strDataType);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);

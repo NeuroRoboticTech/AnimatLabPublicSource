@@ -321,6 +321,11 @@ void Joint::AfterResetSimulation()
 		m_lpPhysicsMovableItem->Physics_AfterResetSimulation();
 }
 
+void Joint::UpdatePhysicsPosFromGraphics()
+{
+	UpdateAbsolutePosition();
+}
+
 void Joint::Load(CStdXml &oXml)
 {
 	BodyPart::Load(oXml);

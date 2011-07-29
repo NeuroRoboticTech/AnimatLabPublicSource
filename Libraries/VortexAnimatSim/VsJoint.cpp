@@ -330,6 +330,39 @@ void VsJoint::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string 
 	}
 }
 
+BOOL VsJoint::Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos)
+{
+	VsMovableItem *lpParent = m_lpThisVsMI->VsParent();
+
+	if(lpParent)
+	{
+		fltWorldX *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();
+		fltWorldY *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();
+		fltWorldZ *= m_lpThisAB->GetSimulator()->InverseDistanceUnits();
+
+		CStdFPoint vPos(fltWorldX, fltWorldY, fltWorldZ), vRot(0, 0, 0);
+		osg::Matrix osgWorldPos = SetupMatrix(vPos, vRot);
+
+		osg::Matrix osgChildOffsetInverse = osg::Matrix::inverse(m_osgChildOffsetMatrix);
+
+		osgWorldPos = osgWorldPos * osgChildOffsetInverse;
+
+		//Get the parent object.
+		osg::Matrix osgInverse = osg::Matrix::inverse(lpParent->GetWorldMatrix());
+
+		osg::Matrix osgCalc = osgWorldPos * osgInverse;
+
+		osg::Vec3 vCoord = osgCalc.getTrans();
+		vLocalPos.Set(vCoord[0] * m_lpThisAB->GetSimulator()->DistanceUnits(), 
+				      vCoord[1] * m_lpThisAB->GetSimulator()->DistanceUnits(), 
+				      vCoord[2] * m_lpThisAB->GetSimulator()->DistanceUnits());
+		
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
 void VsJoint::Physics_ResetSimulation()
 {
 	if(m_vxJoint)
