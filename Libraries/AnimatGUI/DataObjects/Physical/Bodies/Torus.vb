@@ -30,7 +30,7 @@ Namespace DataObjects.Physical.Bodies
 
         Public Overrides ReadOnly Property WorkspaceImageName() As String
             Get
-                Return "AnimatGUI.Cone_Treeview.gif"
+                Return "AnimatGUI.Torus_Treeview.gif"
             End Get
         End Property
 

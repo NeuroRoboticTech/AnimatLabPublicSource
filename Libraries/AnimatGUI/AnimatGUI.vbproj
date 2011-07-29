@@ -1305,6 +1305,13 @@
   <ItemGroup>
     <EmbeddedResource Include="Graphics\BodyPlan\Spring_SelectType.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\BodyPlan\Ellipsoid_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\FluidPlane_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Mesh_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Terrain_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\Torus_Treeview.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PreBuildEvent />

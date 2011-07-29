@@ -459,14 +459,17 @@ void VsRigidBody::CreateStaticPart()
 
 void VsRigidBody::ResetStaticCollisionGeom()
 {
-	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisRB->Parent());
+	if(m_osgMT.valid())
+	{
+		VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisRB->Parent());
 
-	Vx::VxReal44 vOffset;
-	VxOSG::copyOsgMatrix_to_VxReal44(m_osgMT->getMatrix(), vOffset);
+		Vx::VxReal44 vOffset;
+		VxOSG::copyOsgMatrix_to_VxReal44(m_osgMT->getMatrix(), vOffset);
 
-	Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
-	if(vxSensor && m_vxCollisionGeometry)
-		m_vxCollisionGeometry->setRelativeTransform(vOffset);
+		Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
+		if(vxSensor && m_vxCollisionGeometry)
+			m_vxCollisionGeometry->setRelativeTransform(vOffset);
+	}
 }
 
 void VsRigidBody::DeletePhysics()

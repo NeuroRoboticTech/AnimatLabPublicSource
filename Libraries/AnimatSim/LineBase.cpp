@@ -102,6 +102,18 @@ float LineBase::PrevLength() {return m_fltPrevLength;}
 
 BOOL LineBase::AllowMouseManipulation() {return FALSE;}
 
+//Cannot set the position for anything derived from line base. Position and length are determined by the location of the attachments.
+void  LineBase::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
+{}
+
+//Cannot set the position for anything derived from line base. Position and length are determined by the location of the attachments.
+void  LineBase::AbsolutePosition(CStdFPoint &oPoint)
+{}
+
+//Cannot orient anything derived from line base. Position and length are determined by the location of the attachments.
+void  LineBase::OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm)
+{}
+
 /**
 \brief	Gets the attachment points. 
 

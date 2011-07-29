@@ -49,6 +49,9 @@ namespace AnimatSim
 				virtual float PrevLength();
 
 				virtual BOOL AllowMouseManipulation();
+				virtual void Position(CStdFPoint &oPoint, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
+				virtual void AbsolutePosition(CStdFPoint &oPoint);
+				virtual void OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm);
 
 				CStdArray<Attachment *> *AttachmentPoints();
 				virtual void AttachmentPoints(string srXml);
@@ -58,10 +61,11 @@ namespace AnimatSim
 
 				virtual float *GetDataPointer(string strDataType);
 				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
-
+				
 				virtual void CreateParts();
 				virtual void CreateJoints();
 				virtual void Load(CStdXml &oXml);
+
 			};
 
 		}		//Bodies
