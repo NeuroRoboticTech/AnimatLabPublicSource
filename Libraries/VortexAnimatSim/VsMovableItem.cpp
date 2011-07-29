@@ -40,14 +40,6 @@ VsMovableItem::VsMovableItem()
 
 VsMovableItem::~VsMovableItem()
 {
-//
-//try
-//{
-//	DeleteGraphics();
-//	DeletePhysics();
-//}
-//catch(...)
-//{Std_TraceMsg(0, "Caught Error in desctructor of VsMovableItem\r\n", "", -1, FALSE, TRUE);}
 }
 
 VsSimulator *VsMovableItem::GetVsSimulator()
@@ -96,10 +88,10 @@ void VsMovableItem::Physics_Selected(BOOL bValue, BOOL bSelectMultiple)
 		if(bValue && !bNodeFound)
 		{
 			m_osgNodeGroup->addChild(m_osgSelectedGroup.get());
-			//if(!bIsReceptiveFieldMode)
-			//	m_osgDragger->AddToScene();
-			//else
-			//	ShowSelectedVertex();
+			if(!bIsReceptiveFieldMode)
+				m_osgDragger->AddToScene();
+			else
+				ShowSelectedVertex();
 		}
 		//if de-selecting and selected then de-select the node
 		else if(!bValue && bNodeFound)
