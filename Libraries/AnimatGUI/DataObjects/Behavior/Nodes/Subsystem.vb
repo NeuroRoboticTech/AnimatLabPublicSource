@@ -18,6 +18,12 @@ Namespace DataObjects.Behavior.Nodes
 
         Protected m_bdSubsystem As Forms.Behavior.Diagram
 
+        '''This is a list of all nodes within this subsystem. It is sorted by ID
+        Protected m_aryBehavioralNodes As New Collections.AnimatSortedList(Me)
+
+        '''This is a list of all links within this subsystem. It is sorted by ID
+        Protected m_aryBehavioralLinks As New Collections.AnimatSortedList(Me)
+
         'Only used during loading
         Protected m_strSubsystemID As String
 
@@ -38,6 +44,18 @@ Namespace DataObjects.Behavior.Nodes
             Set(ByVal Value As Forms.Behavior.Diagram)
                 m_bdSubsystem = Value
             End Set
+        End Property
+
+        Public Overridable ReadOnly Property BehavioralNodes() As Collections.AnimatSortedList
+            Get
+                Return m_aryBehavioralNodes
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property BehavioralLinks() As Collections.AnimatSortedList
+            Get
+                Return m_aryBehavioralLinks
+            End Get
         End Property
 
         Public Overrides Property Text() As String
@@ -201,18 +219,128 @@ Namespace DataObjects.Behavior.Nodes
 
         End Sub
 
+        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode)
+
+            Dim tnNodes As Crownwood.DotNetMagic.Controls.Node = Util.ProjectWorkspace.AddTreeNode(doParentNode, "Nodes", "AnimatGUI.DefaultObject.gif")
+            Dim tnLinks As Crownwood.DotNetMagic.Controls.Node = Util.ProjectWorkspace.AddTreeNode(doParentNode, "Links", "AnimatGUI.DefaultLink.gif")
+
+            Dim doData As DataObjects.Behavior.Data
+            For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
+                doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
+                doData.CreateWorkspaceTreeView(Me, tnNodes)
+            Next
+
+            For Each deEntry As DictionaryEntry In m_aryBehavioralLinks
+                doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
+                doData.CreateWorkspaceTreeView(Me, tnLinks)
+            Next
+
+        End Sub
+
         Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, ByVal tpTemplatePartType As Type) As Crownwood.DotNetMagic.Controls.Node
+            MyBase.CreateDataItemTreeView(frmDataItem, tnParent, tpTemplatePartType)
+
+            Dim tnNodes As Crownwood.DotNetMagic.Controls.Node = Util.ProjectWorkspace.AddTreeNode(tnParent, "Nodes", "AnimatGUI.DefaultObject.gif")
+            Dim tnLinks As Crownwood.DotNetMagic.Controls.Node = Util.ProjectWorkspace.AddTreeNode(tnParent, "Links", "AnimatGUI.DefaultLink.gif")
+
+            Dim doData As DataObjects.Behavior.Data
+            For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
+                doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
+                If doData.CanBeCharted Then
+                    doData.CreateDataItemTreeView(frmDataItem, tnNodes, tpTemplatePartType)
+                End If
+            Next
+
+            For Each deEntry As DictionaryEntry In m_aryBehavioralLinks
+                doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
+                If doData.CanBeCharted Then
+                    doData.CreateDataItemTreeView(frmDataItem, tnLinks, tpTemplatePartType)
+                End If
+            Next
+
+        End Function
+
+        Public Overrides Sub FindChildrenOfType(ByVal tpTemplate As System.Type, ByVal colDataObjects As Collections.DataObjects)
+            MyBase.FindChildrenOfType(tpTemplate, colDataObjects)
+
+            If (tpTemplate Is Nothing OrElse Util.IsTypeOf(tpTemplate, GetType(AnimatGUI.DataObjects.Behavior.Data), False)) Then
+                Dim doData As AnimatGUI.DataObjects.Behavior.Data
+                For Each deEntry As DictionaryEntry In Me.BehavioralNodes
+                    doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                    doData.FindChildrenOfType(tpTemplate, colDataObjects)
+                Next
+
+                For Each deEntry As DictionaryEntry In Me.BehavioralLinks
+                    doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                    doData.FindChildrenOfType(tpTemplate, colDataObjects)
+                Next
+            End If
+
+        End Sub
+
+        Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject
+
+            Dim doObject As AnimatGUI.Framework.DataObject = MyBase.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_aryBehavioralNodes Is Nothing Then doObject = m_aryBehavioralNodes.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_aryBehavioralLinks Is Nothing Then doObject = m_aryBehavioralLinks.FindObjectByID(strID)
+            Return doObject
+
         End Function
 
 #Region " DataObject Methods "
 
-
         Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
             MyBase.LoadData(oXml)
 
-            oXml.IntoElem()
-            m_strSubsystemID = Util.LoadID(oXml, "Subsystem", True, "")
-            oXml.OutOfElem()
+            Try
+
+                Dim strAssemblyFile As String
+                Dim strClassName As String
+
+                oXml.IntoElem()
+
+                m_strSubsystemID = Util.LoadID(oXml, "Subsystem", True, "")
+
+                oXml.IntoChildElement("Nodes")
+                Dim iCount As Integer = oXml.NumberOfChildren() - 1
+                Dim bnNode As AnimatGUI.DataObjects.Behavior.Node
+                For iIndex As Integer = 0 To iCount
+                    oXml.FindChildByIndex(iIndex)
+                    oXml.IntoElem() 'Into Node element
+                    strAssemblyFile = oXml.GetChildString("AssemblyFile")
+                    strClassName = oXml.GetChildString("ClassName")
+                    oXml.OutOfElem() 'Outof Node element
+
+                    bnNode = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me), AnimatGUI.DataObjects.Behavior.Node)
+                    bnNode.Organism = Me.Organism
+                    bnNode.LoadData(oXml)
+                    Me.BehavioralNodes.Add(bnNode.ID, bnNode)
+                Next
+                oXml.OutOfElem() 'Outof Nodes Element
+
+                oXml.IntoChildElement("Links")
+                iCount = oXml.NumberOfChildren() - 1
+                Dim blLink As AnimatGUI.DataObjects.Behavior.Link
+                For iIndex As Integer = 0 To iCount
+                    oXml.FindChildByIndex(iIndex)
+                    oXml.IntoElem() 'Into Node element
+                    strAssemblyFile = oXml.GetChildString("AssemblyFile")
+                    strClassName = oXml.GetChildString("ClassName")
+                    oXml.OutOfElem() 'Outof Node element
+
+                    blLink = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me), AnimatGUI.DataObjects.Behavior.Link)
+                    blLink.Organism = Me.Organism
+                    blLink.LoadData(oXml)
+                    Me.BehavioralLinks.Add(blLink.ID, blLink)
+                Next
+                oXml.OutOfElem() 'Outof Links Element
+
+                oXml.OutOfElem()  'Outof Subsystem Element
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
 
         End Sub
 
@@ -220,6 +348,17 @@ Namespace DataObjects.Behavior.Nodes
 
             Try
                 MyBase.InitializeAfterLoad()
+
+                Dim doData As AnimatGUI.DataObjects.Behavior.Data
+                For Each deEntry As DictionaryEntry In Me.BehavioralNodes
+                    doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                    doData.InitializeAfterLoad()
+                Next
+
+                For Each deEntry As DictionaryEntry In Me.BehavioralLinks
+                    doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                    doData.InitializeAfterLoad()
+                Next
 
                 If m_bInitialized AndAlso Not m_ParentEditor Is Nothing Then
                     If m_strSubsystemID.Trim.Length > 0 Then

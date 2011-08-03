@@ -25,10 +25,6 @@ namespace AnimatGuiCtrls.Network
 			///
 			container.Add(this);
 			InitializeComponent();
-
-			//
-			// TODO: Add any constructor code after InitializeComponent call
-			//
 		}
 
 		public Ping()
@@ -37,10 +33,6 @@ namespace AnimatGuiCtrls.Network
 			/// Required for Windows.Forms Class Composition Designer support
 			///
 			InitializeComponent();
-
-			//
-			// TODO: Add any constructor code after InitializeComponent call
-			//
 		}
 
 		/// <summary> 

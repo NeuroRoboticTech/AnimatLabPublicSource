@@ -1521,7 +1521,7 @@ Namespace DataObjects.Physical
                     doPair = DirectCast(deEntry.Value, ReceptiveFieldPair)
 
                     If nmNeuralModule.GetType Is doPair.Neuron.NeuralModuleType Then
-                        If doOrganism.BehavioralNodes.Contains(doPair.Neuron.ID) Then
+                        If Not doOrganism.FindObjectByID(doPair.Neuron.ID) Is Nothing Then
                             Return True
                         End If
                     End If
@@ -1554,7 +1554,7 @@ Namespace DataObjects.Physical
                 For Each deRFEntry As DictionaryEntry In m_aryReceptiveFieldPairs
                     doPair = DirectCast(deRFEntry.Value, ReceptiveFieldPair)
 
-                    If doOrganism.BehavioralNodes.Contains(doPair.Neuron.ID) Then
+                    If Not doOrganism.FindObjectByID(doPair.Neuron.ID) Is Nothing Then
                         For Each doAdapter In aryAdapters
                             If doAdapter.TargetNeuralModule.GetType() Is doPair.Neuron.NeuralModuleType Then
                                 doAdapter.ReceptiveFieldPairs.Add(doPair)

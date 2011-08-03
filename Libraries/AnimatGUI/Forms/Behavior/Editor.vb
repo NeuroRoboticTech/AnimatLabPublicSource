@@ -1515,7 +1515,7 @@ Namespace Forms.Behavior
 
             oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
             oXml.AddChildElement("ClassName", Me.ClassName)
-            oXml.AddChildElement("EditorFile", Me.Organism.BehavioralEditorFile)
+            'oXml.AddChildElement("EditorFile", Me.Organism.BehavioralEditorFile)
 
             oXml.AddChildElement("Form")
             oXml.IntoElem() 'Into Form Element
@@ -1526,7 +1526,7 @@ Namespace Forms.Behavior
 
             oXml.OutOfElem()  'Outof Form Element
 
-            SaveEditorFile(Me.Organism.BehavioralEditorFile)
+            'SaveEditorFile(Me.Organism.BehavioralEditorFile)
 
             oXml.OutOfElem()  'Outof Child Element
         End Sub

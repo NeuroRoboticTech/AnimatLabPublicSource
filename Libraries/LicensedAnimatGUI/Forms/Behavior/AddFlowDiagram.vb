@@ -684,41 +684,45 @@ Namespace Forms.Behavior
 
         Protected Overridable Overloads Sub AddToOrganism(ByVal blLink As AnimatGUI.DataObjects.Behavior.Link)
 
-            If Not m_beEditor.Organism Is Nothing Then
-                If Not m_beEditor.Organism.BehavioralNodes.Contains(blLink.ID) Then
-                    m_beEditor.Organism.BehavioralLinks.Add(blLink.ID, blLink)
-                End If
-            End If
+            'TODO: Must redo this.
+            'If Not m_beEditor.Organism Is Nothing Then
+            '    If Not m_beEditor.Organism.BehavioralNodes.Contains(blLink.ID) Then
+            '        m_beEditor.Organism.BehavioralLinks.Add(blLink.ID, blLink)
+            '    End If
+            'End If
 
         End Sub
 
         Protected Overridable Overloads Sub RemoveFromOrganism(ByVal blLink As AnimatGUI.DataObjects.Behavior.Link)
 
-            If Not m_beEditor.Organism Is Nothing Then
-                If m_beEditor.Organism.BehavioralLinks.Contains(blLink.ID) Then
-                    m_beEditor.Organism.BehavioralLinks.Remove(blLink.ID)
-                End If
-            End If
+            'TODO: Must redo this.
+            'If Not m_beEditor.Organism Is Nothing Then
+            '    If m_beEditor.Organism.BehavioralLinks.Contains(blLink.ID) Then
+            '        m_beEditor.Organism.BehavioralLinks.Remove(blLink.ID)
+            '    End If
+            'End If
 
         End Sub
 
         Protected Overridable Overloads Sub AddToOrganism(ByVal bnNode As AnimatGUI.DataObjects.Behavior.Node)
 
-            If Not m_beEditor.Organism Is Nothing Then
-                If Not m_beEditor.Organism.BehavioralNodes.Contains(bnNode.ID) Then
-                    m_beEditor.Organism.BehavioralNodes.Add(bnNode.ID, bnNode)
-                End If
-            End If
+            'TODO: Must redo this.
+            'If Not m_beEditor.Organism Is Nothing Then
+            '    If Not m_beEditor.Organism.BehavioralNodes.Contains(bnNode.ID) Then
+            '        m_beEditor.Organism.BehavioralNodes.Add(bnNode.ID, bnNode)
+            '    End If
+            'End If
 
         End Sub
 
         Protected Overridable Overloads Sub RemoveFromOrganism(ByVal bnNode As AnimatGUI.DataObjects.Behavior.Node)
 
-            If Not m_beEditor.Organism Is Nothing Then
-                If m_beEditor.Organism.BehavioralNodes.Contains(bnNode.ID) Then
-                    m_beEditor.Organism.BehavioralNodes.Remove(bnNode.ID)
-                End If
-            End If
+            'TODO: Must redo this.
+            'If Not m_beEditor.Organism Is Nothing Then
+            '    If m_beEditor.Organism.BehavioralNodes.Contains(bnNode.ID) Then
+            '        m_beEditor.Organism.BehavioralNodes.Remove(bnNode.ID)
+            '    End If
+            'End If
 
         End Sub
 

@@ -321,14 +321,12 @@ Namespace DataObjects.Behavior.Neurons
 
             If Not doOrganism Is Nothing Then
 
-                Dim doNeuron As DataObjects.Behavior.Neurons.Spiking
-                For Each deEntry As DictionaryEntry In doOrganism.BehavioralNodes
-                    If TypeOf deEntry.Value Is DataObjects.Behavior.Neurons.Spiking Then
-                        doNeuron = DirectCast(deEntry.Value, DataObjects.Behavior.Neurons.Spiking)
+                Dim aryNodes As AnimatGUI.Collections.DataObjects = New AnimatGUI.Collections.DataObjects(Nothing)
+                doOrganism.RootSubSystem.FindChildrenOfType(GetType(DataObjects.Behavior.Neurons.Spiking), aryNodes)
 
-                        If doNeuron.IonChannels.Contains(strDataItemID) Then
-                            Return doNeuron.IonChannels(strDataItemID)
-                        End If
+                For Each doNeuron As DataObjects.Behavior.Neurons.Spiking In aryNodes
+                    If doNeuron.IonChannels.Contains(strDataItemID) Then
+                        Return doNeuron.IonChannels(strDataItemID)
                     End If
                 Next
 

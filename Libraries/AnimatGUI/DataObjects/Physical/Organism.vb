@@ -21,9 +21,12 @@ Namespace DataObjects.Physical
 
         Protected m_frmBehaviorEditor As Forms.Behavior.Editor
         Protected m_tnBehavioralSystem As Crownwood.DotNetMagic.Controls.Node
-        Protected m_aryBehavioralNodes As New Collections.AnimatSortedList(Me)
-        Protected m_aryBehavioralLinks As New Collections.AnimatSortedList(Me)
+
+        ''' This is a list of all neural modules used by this organism.
         Protected m_aryNeuralModules As New Collections.SortedNeuralModules(Me)
+
+        ''' This is the root subsystem for the organism. All nodes and other subsystems are derived from it.
+        Protected m_bnRootSubSystem As New DataObjects.Behavior.Nodes.Subsystem(Me)
 
 #End Region
 
@@ -44,33 +47,15 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
-        Public Overridable ReadOnly Property BehavioralSystemFile() As String
+        Public Overridable ReadOnly Property RootSubSystem() As DataObjects.Behavior.Nodes.Subsystem
             Get
-                Return Me.Name & ".absys"
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property BehavioralEditorFile() As String
-            Get
-                Return Me.Name & ".abef"
+                Return m_bnRootSubSystem
             End Get
         End Property
 
         Public Overridable ReadOnly Property BehavioralSystemTreeNode() As Crownwood.DotNetMagic.Controls.Node
             Get
                 Return m_tnBehavioralSystem
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property BehavioralNodes() As Collections.AnimatSortedList
-            Get
-                Return m_aryBehavioralNodes
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property BehavioralLinks() As Collections.AnimatSortedList
-            Get
-                Return m_aryBehavioralLinks
             End Get
         End Property
 
@@ -85,19 +70,6 @@ Namespace DataObjects.Physical
                 Return "AnimatGUI.Organism.gif"
             End Get
         End Property
-
-        '<Browsable(False)> _
-        'Public Overrides ReadOnly Property RootForm() As System.Windows.Forms.Form
-        '    Get
-        '        If Not m_frmBehaviorEditor Is Nothing AndAlso Util.Application.ActiveMdiChild Is m_frmBehaviorEditor Then
-        '            Return m_frmBehaviorEditor
-        '        ElseIf Not m_frmBodyEditor Is Nothing AndAlso Util.Application.ActiveMdiChild Is m_frmBodyEditor Then
-        '            Return m_frmBodyEditor
-        '        Else
-        '            Return Util.Application
-        '        End If
-        '    End Get
-        'End Property
 
 #End Region
 
@@ -119,35 +91,7 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Name", m_strName.GetType(), "Name", _
-                                        "Organism Properties", "The name for this organism. ", m_strName))
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("ID", Me.ID.GetType(), "ID", _
-                                        "Organism Properties", "ID", Me.ID, True))
-
-            'propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Body Plan", Me.BodyPlanFile.GetType(), "BodyPlanFile", _
-            '                            "Organism Properties", "Specifies the body plan file.", Me.BodyPlanFile, True))
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Behavioral System", Me.BehavioralSystemFile.GetType(), "BehavioralSystemFile", _
-                                        "Organism Properties", "Specifies the behavioral system file.", Me.BehavioralSystemFile, True))
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Behavioral Editor", Me.BehavioralEditorFile.GetType(), "BehavioralEditorFile", _
-                                        "Organism Properties", "Specifies the behavioral editor file.", Me.BehavioralEditorFile, True))
-
-            Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = Me.LocalPosition.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Position", pbNumberBag.GetType(), "Position", _
-                                        "Structure Properties", "Sets the position of this structure.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
-
-            pbNumberBag = Me.Rotation.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Rotation", pbNumberBag.GetType(), "Rotation", _
-                                        "Structure Properties", "Sets the rotation of this structure.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter)))
-
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Collision Exclusions", m_aryCollisionExclusionPairs.GetType(), "CollisionExclusionPairs", _
-                                        "Organism Properties", "Pairs of body parts that should be excluded from collision detection between each other.", m_aryCollisionExclusionPairs, _
-                                        GetType(TypeHelpers.CollisionPairsTypeEditor), GetType(TypeHelpers.CollisionPairsTypeConverter)))
+            MyBase.BuildProperties(propTable)
 
         End Sub
 
@@ -157,6 +101,8 @@ Namespace DataObjects.Physical
             MyBase.CreateWorkspaceTreeView(doParent, doParentNode)
 
             m_tnBehavioralSystem = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Behavioral System", "AnimatGUI.Neuron.gif")
+
+            m_bnRootSubSystem.CreateWorkspaceTreeView(Me, m_tnBehavioralSystem)
 
         End Sub
 
@@ -235,30 +181,9 @@ Namespace DataObjects.Physical
             tnBehavioralNode.ImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.Neuron.gif")
             tnBehavioralNode.SelectedImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.Neuron.gif")
 
-            Dim tnNodes As New Crownwood.DotNetMagic.Controls.Node("Nodes")
-            tnNodes = tnBehavioralNode.Nodes.Add(tnNodes)
-            tnNodes.ImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.DefaultObject.gif")
-            tnNodes.SelectedImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.DefaultObject.gif")
-
-            Dim tnLinks As New Crownwood.DotNetMagic.Controls.Node("Links")
-            tnLinks = tnBehavioralNode.Nodes.Add(tnLinks)
-            tnLinks.ImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.DefaultLink.gif")
-            tnLinks.SelectedImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.DefaultLink.gif")
-
-            Dim doData As DataObjects.Behavior.Data
-            For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
-                doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
-                If doData.CanBeCharted Then
-                    doData.CreateDataItemTreeView(frmDataItem, tnNodes, tpTemplatePartType)
-                End If
-            Next
-
-            For Each deEntry As DictionaryEntry In m_aryBehavioralLinks
-                doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
-                If doData.CanBeCharted Then
-                    doData.CreateDataItemTreeView(frmDataItem, tnLinks, tpTemplatePartType)
-                End If
-            Next
+            If Not m_bnRootSubSystem Is Nothing Then
+                m_bnRootSubSystem.CreateDataItemTreeView(frmDataItem, tnBehavioralNode, tpTemplatePartType)
+            End If
 
         End Function
 
@@ -267,7 +192,7 @@ Namespace DataObjects.Physical
 #Region " Find Methods "
 
         Public Overridable Function FindBehavioralNode(ByVal strID As String, Optional ByVal bThrowError As Boolean = True) As AnimatGUI.DataObjects.Behavior.Node
-            Dim oNode As Object = m_aryBehavioralNodes(strID)
+            Dim oNode As Object = m_bnRootSubSystem.FindObjectByID(strID)
             If oNode Is Nothing Then
                 If bThrowError Then Throw New System.Exception("No node was found with the following id. ID: " & strID)
             Else
@@ -276,17 +201,16 @@ Namespace DataObjects.Physical
         End Function
 
         Public Overridable Function FindBehavioralNodeByName(ByVal strName As String, Optional ByVal bThrowError As Boolean = True) As AnimatGUI.DataObjects.Behavior.Node
+            Dim aryNodes As Collections.DataObjects = New Collections.DataObjects(Nothing)
+            m_bnRootSubSystem.FindChildrenOfType(GetType(Behavior.Node), aryNodes)
 
-            Dim doNode As DataObjects.Behavior.Node
-            For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
-                doNode = DirectCast(deEntry.Value, DataObjects.Behavior.Node)
-
+            For Each doNode As Framework.DataObject In aryNodes
                 If doNode.Name = strName Then
-                    Return doNode
+                    Return DirectCast(doNode, Behavior.Node)
                 End If
             Next
 
-            If doNode Is Nothing AndAlso bThrowError Then
+            If bThrowError Then
                 If bThrowError Then Throw New System.Exception("No node was found with the following name: " & strName)
             Else
                 Return Nothing
@@ -294,7 +218,7 @@ Namespace DataObjects.Physical
         End Function
 
         Public Overridable Function FindBehavioralLink(ByVal strID As String, Optional ByVal bThrowError As Boolean = True) As AnimatGUI.DataObjects.Behavior.Link
-            Dim oLink As Object = m_aryBehavioralLinks(strID)
+            Dim oLink As Object = m_bnRootSubSystem.FindObjectByID(strID)
             If oLink Is Nothing Then
                 If bThrowError Then Throw New System.Exception("No link was found with the following id. ID: " & strID)
             Else
@@ -307,17 +231,8 @@ Namespace DataObjects.Physical
                 m_dbRoot.FindChildrenOfType(tpTemplate, colDataObjects)
             End If
 
-            If tpTemplate Is Nothing OrElse Util.IsTypeOf(tpTemplate, GetType(AnimatGUI.DataObjects.Behavior.Data), False) Then
-                Dim doData As AnimatGUI.DataObjects.Behavior.Data
-                For Each deEntry As DictionaryEntry In Me.BehavioralNodes
-                    doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
-                    doData.FindChildrenOfType(tpTemplate, colDataObjects)
-                Next
-
-                For Each deEntry As DictionaryEntry In Me.BehavioralLinks
-                    doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
-                    doData.FindChildrenOfType(tpTemplate, colDataObjects)
-                Next
+            If Not m_bnRootSubSystem Is Nothing AndAlso (tpTemplate Is Nothing OrElse Util.IsTypeOf(tpTemplate, GetType(AnimatGUI.DataObjects.Behavior.Data), False)) Then
+                m_bnRootSubSystem.FindChildrenOfType(tpTemplate, colDataObjects)
             End If
 
         End Sub
@@ -325,8 +240,7 @@ Namespace DataObjects.Physical
         Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject
 
             Dim doObject As AnimatGUI.Framework.DataObject = MyBase.FindObjectByID(strID)
-            If doObject Is Nothing AndAlso Not m_aryBehavioralNodes Is Nothing Then doObject = m_aryBehavioralNodes.FindObjectByID(strID)
-            If doObject Is Nothing AndAlso Not m_aryBehavioralLinks Is Nothing Then doObject = m_aryBehavioralLinks.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_bnRootSubSystem Is Nothing Then doObject = m_bnRootSubSystem.FindObjectByID(strID)
             If doObject Is Nothing AndAlso Not m_aryNeuralModules Is Nothing Then doObject = m_aryNeuralModules.FindObjectByID(strID)
             Return doObject
 
@@ -355,90 +269,12 @@ Namespace DataObjects.Physical
         Protected Overridable Sub LoadBehavioralSystem()
             Dim oXml As New AnimatGUI.Interfaces.StdXml
 
-            m_aryBehavioralNodes.Clear()
-            m_aryBehavioralLinks.Clear()
+            m_bnRootSubSystem = New DataObjects.Behavior.Nodes.Subsystem(Me)
 
-            If System.IO.File.Exists(Util.GetFilePath(Util.Application.ProjectPath, Me.BehavioralEditorFile)) Then
-                oXml.Load(Util.GetFilePath(Util.Application.ProjectPath, Me.BehavioralEditorFile))
+            LoadNeuralModules(oXml)
 
-                oXml.FindElement("Editor")
-
-                LoadNeuralModules(oXml)
-
-                oXml.IntoChildElement("Diagrams")
-                Dim iCount As Integer = oXml.NumberOfChildren() - 1
-                For iIndex As Integer = 0 To iCount
-                    oXml.FindChildByIndex(iIndex)
-                    LoadDiagram(oXml)
-                Next
-                oXml.OutOfElem()  'Outof Diagrams Element
-
-            End If
-
-            '********************************************************************8
-            '******** This must be changed later. Is not valid to do it this way now.
-            AnimatGUI.Forms.Behavior.Diagram.InitializeDataAfterLoad(m_aryBehavioralNodes)
-            AnimatGUI.Forms.Behavior.Diagram.InitializeDataAfterLoad(m_aryBehavioralLinks)
-
-        End Sub
-
-        Protected Overridable Sub LoadDiagram(ByRef oXml As AnimatGUI.Interfaces.StdXml)
-
-            Try
-
-                Dim strAssemblyFile As String
-                Dim strClassName As String
-
-                oXml.IntoElem()
-
-                oXml.IntoChildElement("Nodes")
-                Dim iCount As Integer = oXml.NumberOfChildren() - 1
-                Dim bnNode As AnimatGUI.DataObjects.Behavior.Node
-                For iIndex As Integer = 0 To iCount
-                    oXml.FindChildByIndex(iIndex)
-                    oXml.IntoElem() 'Into Node element
-                    strAssemblyFile = oXml.GetChildString("AssemblyFile")
-                    strClassName = oXml.GetChildString("ClassName")
-                    'strNodeName = oXml.GetChildString("Text")
-                    oXml.OutOfElem() 'Outof Node element
-
-                    bnNode = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me), AnimatGUI.DataObjects.Behavior.Node)
-                    bnNode.Organism = Me
-                    bnNode.LoadData(oXml)
-                    Me.BehavioralNodes.Add(bnNode.ID, bnNode)
-                Next
-                oXml.OutOfElem() 'Outof Nodes Element
-
-                oXml.IntoChildElement("Links")
-                iCount = oXml.NumberOfChildren() - 1
-                Dim blLink As AnimatGUI.DataObjects.Behavior.Link
-                For iIndex As Integer = 0 To iCount
-                    oXml.FindChildByIndex(iIndex)
-                    oXml.IntoElem() 'Into Node element
-                    strAssemblyFile = oXml.GetChildString("AssemblyFile")
-                    strClassName = oXml.GetChildString("ClassName")
-                    oXml.OutOfElem() 'Outof Node element
-
-                    blLink = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me), AnimatGUI.DataObjects.Behavior.Link)
-                    blLink.Organism = Me
-                    blLink.LoadData(oXml)
-                    Me.BehavioralLinks.Add(blLink.ID, blLink)
-                Next
-                oXml.OutOfElem() 'Outof Links Element
-
-                oXml.IntoChildElement("Diagrams")
-                iCount = oXml.NumberOfChildren() - 1
-                For iIndex As Integer = 0 To iCount
-                    oXml.FindChildByIndex(iIndex)
-                    LoadDiagram(oXml)
-                Next
-                oXml.OutOfElem() ' OutOf the Diagrams Element
-
-                oXml.OutOfElem()  'Outof Diagram Element
-
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            End Try
+            m_bnRootSubSystem.LoadData(oXml)
+            m_bnRootSubSystem.InitializeAfterLoad()
 
         End Sub
 
@@ -495,6 +331,7 @@ Namespace DataObjects.Physical
         Public Overridable Overloads Sub LoadData(ByRef oXml As Interfaces.StdXml)
 
             Try
+                'Load the structure data
                 MyBase.LoadData(oXml)
 
                 LoadBehavioralSystem()
@@ -535,6 +372,10 @@ Namespace DataObjects.Physical
                 nmPhysicsModule.SaveData(oXml)
             End If
 
+            If Not m_bnRootSubSystem Is Nothing Then
+                m_bnRootSubSystem.SaveData(oXml)
+            End If
+
             oXml.OutOfElem() 'Outof Nervous System
             oXml.OutOfElem() 'Outof Organism 
 
@@ -572,6 +413,10 @@ Namespace DataObjects.Physical
                     nmPhysicsModule.SaveSimulationXml(oXml)
                 End If
 
+                If Not m_bnRootSubSystem Is Nothing Then
+                    m_bnRootSubSystem.SaveSimulationXml(oXml)
+                End If
+
                 oXml.OutOfElem() 'Outof Nervous System
                 oXml.OutOfElem() 'Outof Organism 
 
@@ -579,31 +424,6 @@ Namespace DataObjects.Physical
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
         End Sub
-
-        'Public Overrides Sub CreateFiles()
-
-        '    'Save the nervous system file
-        '    Dim oXml As New Interfaces.StdXml
-
-        '    If Util.Application.ProjectPath.Length > 0 Then
-        '        If Not System.IO.File.Exists(Util.GetFilePath(Util.Application.ProjectPath, Me.BehavioralSystemFile)) Then
-        '            oXml.AddElement("NervousSystem")
-        '            oXml.AddChildElement("NeuralModules")
-        '            oXml.AddChildElement("Adapters")
-
-        '            oXml.Save(Util.GetFilePath(Util.Application.ProjectPath, Me.BehavioralSystemFile))
-        '        End If
-
-        '        If Not System.IO.File.Exists(Util.GetFilePath(Util.Application.ProjectPath, Me.BodyPlanFile)) Then
-        '            'Save the body plan file
-        '            oXml = New Interfaces.StdXml
-        '            oXml.AddElement("Structure")
-        '            oXml.Save(Util.GetFilePath(Util.Application.ProjectPath, Me.BodyPlanFile))
-        '        End If
-        '    End If
-
-        'End Sub
-
 #End Region
 
         Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -613,8 +433,8 @@ Namespace DataObjects.Physical
             Dim doOrganism As Organism = DirectCast(doOriginal, Organism)
 
             m_frmBehaviorEditor = doOrganism.m_frmBehaviorEditor
-            m_aryBehavioralNodes = DirectCast(doOrganism.m_aryBehavioralNodes.Clone(), AnimatGUI.Collections.AnimatSortedList)
-            m_aryBehavioralLinks = DirectCast(doOrganism.m_aryBehavioralLinks.Clone(), AnimatGUI.Collections.AnimatSortedList)
+            'm_aryBehavioralNodes = DirectCast(doOrganism.m_aryBehavioralNodes.Clone(), AnimatGUI.Collections.AnimatSortedList)
+            'm_aryBehavioralLinks = DirectCast(doOrganism.m_aryBehavioralLinks.Clone(), AnimatGUI.Collections.AnimatSortedList)
             m_aryNeuralModules = DirectCast(doOrganism.m_aryNeuralModules.Clone(Me, bCutData, doRoot), AnimatGUI.Collections.SortedNeuralModules)
 
         End Sub
@@ -635,16 +455,19 @@ Namespace DataObjects.Physical
                                           ByVal fltDistanceChange As Single)
             MyBase.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
 
-            Dim doData As Behavior.Data
-            For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
-                doData = DirectCast(deEntry.Value, Behavior.Data)
-                doData.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
-            Next
+            If Not m_bnRootSubSystem Is Nothing Then
+                m_bnRootSubSystem.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
+            End If
+            'Dim doData As Behavior.Data
+            'For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
+            '    doData = DirectCast(deEntry.Value, Behavior.Data)
+            '    doData.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
+            'Next
 
-            For Each deEntry As DictionaryEntry In m_aryBehavioralLinks
-                doData = DirectCast(deEntry.Value, Behavior.Data)
-                doData.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
-            Next
+            'For Each deEntry As DictionaryEntry In m_aryBehavioralLinks
+            '    doData = DirectCast(deEntry.Value, Behavior.Data)
+            '    doData.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
+            'Next
 
         End Sub
 
@@ -658,7 +481,9 @@ Namespace DataObjects.Physical
         Public Overrides Sub InitializeAfterLoad()
             MyBase.InitializeAfterLoad()
 
-            'Need to loop through here and init all nodes and links.
+            If Not m_bnRootSubSystem Is Nothing Then
+                m_bnRootSubSystem.InitializeAfterLoad()
+            End If
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
@@ -670,16 +495,20 @@ Namespace DataObjects.Physical
                 nmModule.InitializeSimulationReferences()
             Next
 
-            Dim doData As DataObjects.Behavior.Data
-            For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
-                doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
-                doData.InitializeSimulationReferences()
-            Next
+            If Not m_bnRootSubSystem Is Nothing Then
+                m_bnRootSubSystem.InitializeSimulationReferences()
+            End If
 
-            For Each deEntry As DictionaryEntry In m_aryBehavioralLinks
-                doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
-                doData.InitializeSimulationReferences()
-            Next
+            'Dim doData As DataObjects.Behavior.Data
+            'For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
+            '    doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
+            '    doData.InitializeSimulationReferences()
+            'Next
+
+            'For Each deEntry As DictionaryEntry In m_aryBehavioralLinks
+            '    doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
+            '    doData.InitializeSimulationReferences()
+            'Next
 
         End Sub
 

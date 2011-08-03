@@ -4914,6 +4914,17 @@ Namespace Forms
             CompareItems()
         End Sub
 
+        Public Sub OnCopyFromWorkspace(ByVal sender As Object, ByVal e As system.EventArgs) Handles CopyToolStripButton.Click, CopyToolStripMenuItem.Click
+
+        End Sub
+
+        Public Sub OnCutFromWorkspace(ByVal sender As Object, ByVal e As system.EventArgs) Handles CutToolStripButton.Click, CutToolStripMenuItem.Click
+
+        End Sub
+
+        Public Sub OnPasteFromWorkspace(ByVal sender As Object, ByVal e As system.EventArgs) Handles PasteToolStripButton.Click, PasteToolStripMenuItem.Click
+
+        End Sub
 
         'This is the general event that is called when someone tries to delete something in the 
         'project workspace

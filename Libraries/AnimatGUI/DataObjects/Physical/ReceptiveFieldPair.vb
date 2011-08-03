@@ -124,8 +124,9 @@ Namespace DataObjects.Physical
             If TypeOf doStructure Is AnimatGUI.DataObjects.Physical.Organism Then
                 Dim doOrganism As AnimatGUI.DataObjects.Physical.Organism = DirectCast(doStructure, AnimatGUI.DataObjects.Physical.Organism)
 
-                If doOrganism.BehavioralNodes.Contains(m_doNeuron.ID) Then
-                    Dim doNeuron As AnimatGUI.DataObjects.Behavior.Node = DirectCast(doOrganism.BehavioralNodes.Item(m_doNeuron.ID), AnimatGUI.DataObjects.Behavior.Node)
+                Dim doNode As Framework.DataObject = doOrganism.FindObjectByID(m_doNeuron.ID)
+                If Not doNode Is Nothing Then
+                    Dim doNeuron As AnimatGUI.DataObjects.Behavior.Node = DirectCast(doNode, AnimatGUI.DataObjects.Behavior.Node)
 
                     oXml.AddChildElement("Pair")
                     oXml.IntoElem()
@@ -148,8 +149,9 @@ Namespace DataObjects.Physical
                 'project is first loaded we load in a list of the neurons. But if the user opens the behavioral editor then we need to reload that list because
                 'we have to seperate out the neurons further by subsystem. So the second time they are loaded they would be a different object. Items like the 
                 'ID should not be different, but changes to the node index would be different.
-                If doOrganism.BehavioralNodes.Contains(m_doNeuron.ID) Then
-                    Dim doNeuron As AnimatGUI.DataObjects.Behavior.Node = DirectCast(doOrganism.BehavioralNodes.Item(m_doNeuron.ID), AnimatGUI.DataObjects.Behavior.Node)
+                Dim doNode As Framework.DataObject = doOrganism.FindObjectByID(m_doNeuron.ID)
+                If Not doNode Is Nothing Then
+                    Dim doNeuron As AnimatGUI.DataObjects.Behavior.Node = DirectCast(doNode, AnimatGUI.DataObjects.Behavior.Node)
 
                     oXml.AddChildElement("Pair")
                     oXml.IntoElem()

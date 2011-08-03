@@ -449,6 +449,7 @@ Namespace Forms
             Try
                 RemoveHandler Util.Application.UnitsChanged, AddressOf Me.Application_UnitsChanged
                 Util.Application.SimulationInterface.RemoveWindow(Me.Handle)
+                m_doInterface = Nothing
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

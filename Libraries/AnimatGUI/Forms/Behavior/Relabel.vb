@@ -231,20 +231,21 @@ Namespace Forms.Behavior
                     Throw New System.Exception("The replace expression string cannot be blank.")
                 End If
 
-                m_aryItems = New ArrayList
-                If rbThisDiagram.Checked Then
-                    m_doDiagram.RetrieveChildren(True, m_aryItems)
-                ElseIf rbThisSubsystem.Checked Then
-                    m_doDiagram.RetrieveChildren(False, m_aryItems)
-                Else
-                    For Each deEntry As DictionaryEntry In m_doDiagram.Editor.Organism.BehavioralNodes
-                        m_aryItems.Add(deEntry.Value)
-                    Next
+                'TODO: Must redo this.
+                'm_aryItems = New ArrayList
+                'If rbThisDiagram.Checked Then
+                '    m_doDiagram.RetrieveChildren(True, m_aryItems)
+                'ElseIf rbThisSubsystem.Checked Then
+                '    m_doDiagram.RetrieveChildren(False, m_aryItems)
+                'Else
+                '    For Each deEntry As DictionaryEntry In m_doDiagram.Editor.Organism.BehavioralNodes
+                '        m_aryItems.Add(deEntry.Value)
+                '    Next
 
-                    For Each deEntry As DictionaryEntry In m_doDiagram.Editor.Organism.BehavioralLinks
-                        m_aryItems.Add(deEntry.Value)
-                    Next
-                End If
+                '    For Each deEntry As DictionaryEntry In m_doDiagram.Editor.Organism.BehavioralLinks
+                '        m_aryItems.Add(deEntry.Value)
+                '    Next
+                'End If
 
                 Dim frmConfirm As New Forms.ConfirmRelabel
                 frmConfirm.Items = m_aryItems

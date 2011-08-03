@@ -721,38 +721,12 @@ Namespace DataObjects.Physical
                 End If
 
                 If bDelete Then
-                    ''TODO: Need to replace this with an event structure that all windows can hook into.
-                    '' When a structure is deleted then the window is informed and it closes down or switches to free movement.
-                    '' 
-                    ''Lets see if there are any open windows for this organism/Structure
-                    'Dim frmBehavioral As Forms.Behavior.Editor
-                    'Dim frmBodyPlan As Forms.SimulationWindow
-                    'For Each oChild As Form In Util.Application.ChildForms
-                    '    If TypeOf oChild Is Forms.Behavior.Editor Then
-                    '        frmBehavioral = DirectCast(oChild, Forms.Behavior.Editor)
-                    '        If frmBehavioral.Organism Is Me Then
-                    '            frmBehavioral.Close()
-                    '        End If
-                    '    End If
-
-                    '    If TypeOf oChild Is Forms.SimulationWindow Then
-                    '        frmBodyPlan = DirectCast(oChild, Forms.SimulationWindow)
-                    '        If frmBodyPlan.PhysicalStructure Is Me Then
-                    '            frmBodyPlan.Close()
-                    '        End If
-                    '    End If
-                    'Next
-
-
                     If Not Util.Environment.Structures Is Nothing Then
                         Util.Environment.Structures.Remove(Me.ID)
                     End If
                     Me.RemoveWorksapceTreeView()
                     m_tnWorkspaceNode = Nothing
                     m_tnBodyPlanNode = Nothing
-
-                    ' Util.Application.RemoveBodyEditorForm(Me)
-
                 End If
 
                 Return Not bDelete

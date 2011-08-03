@@ -256,8 +256,10 @@ Namespace Forms.Behavior
         Public Overridable Function FindNodeInOrganism(ByVal strID As String, Optional ByVal bThrowError As Boolean = True) As DataObjects.Behavior.Node
 
             If Not Me.Editor Is Nothing AndAlso Not Me.Editor.Organism Is Nothing Then
-                If Me.Editor.Organism.BehavioralNodes.Contains(strID) Then
-                    Return DirectCast(Me.Editor.Organism.BehavioralNodes(strID), DataObjects.Behavior.Node)
+
+                Dim doNode As Framework.DataObject = Me.Editor.Organism.FindObjectByID(strID)
+                If Not doNode Is Nothing Then
+                    Return DirectCast(doNode, DataObjects.Behavior.Node)
                 ElseIf bThrowError Then
                     Throw New System.Exception("Node not found in organism. ID: " & strID)
                 End If
@@ -267,8 +269,9 @@ Namespace Forms.Behavior
         Public Overridable Function FindLinkInOrganism(ByVal strID As String, Optional ByVal bThrowError As Boolean = True) As DataObjects.Behavior.Link
 
             If Not Me.Editor Is Nothing AndAlso Not Me.Editor.Organism Is Nothing Then
-                If Me.Editor.Organism.BehavioralLinks.Contains(strID) Then
-                    Return DirectCast(Me.Editor.Organism.BehavioralLinks(strID), DataObjects.Behavior.Link)
+                Dim doNode As Framework.DataObject = Me.Editor.Organism.FindObjectByID(strID)
+                If Not doNode Is Nothing Then
+                    Return DirectCast(doNode, DataObjects.Behavior.Link)
                 ElseIf bThrowError Then
                     Throw New System.Exception("Link not found in organism. ID: " & strID)
                 End If

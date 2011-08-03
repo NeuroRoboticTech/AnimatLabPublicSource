@@ -859,7 +859,7 @@ Namespace DataObjects.Behavior
             Dim doLink As AnimatGUI.DataObjects.Behavior.Link = Nothing
 
             If Not doOrganism Is Nothing Then
-                If doOrganism.BehavioralLinks.Contains(strDataItemID) Then
+                If Not doOrganism.FindBehavioralLink(strDataItemID) Is Nothing Then
                     doLink = doOrganism.FindBehavioralLink(strDataItemID, False)
                 Else
                     If bThrowError Then
@@ -1062,7 +1062,8 @@ Namespace DataObjects.Behavior
                 If Not Me.ParentDiagram Is Nothing Then
                     Me.ParentDiagram.RemoveLink(Me)
                 ElseIf Not Me.Organism Is Nothing Then
-                    Me.Organism.BehavioralLinks.Remove(Me.ID)
+                    'TODO: Must redo this.
+                    'Me.Organism.BehavioralLinks.Remove(Me.ID)
                 End If
 
             Catch ex As System.Exception

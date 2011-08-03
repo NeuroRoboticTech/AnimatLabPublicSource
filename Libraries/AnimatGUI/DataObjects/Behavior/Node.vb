@@ -1012,13 +1012,7 @@ Namespace DataObjects.Behavior
             Dim doNode As AnimatGUI.DataObjects.Behavior.Node = Nothing
 
             If Not doOrganism Is Nothing Then
-                If doOrganism.BehavioralNodes.Contains(strDataItemID) Then
-                    doNode = doOrganism.FindBehavioralNode(strDataItemID, False)
-                Else
-                    If bThrowError Then
-                        Throw New System.Exception("The drag object with id '" & strDataItemID & "' was not found.")
-                    End If
-                End If
+                doNode = doOrganism.FindBehavioralNode(strDataItemID)
             End If
 
             Return doNode

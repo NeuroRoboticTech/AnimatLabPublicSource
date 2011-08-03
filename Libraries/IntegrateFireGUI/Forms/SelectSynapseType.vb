@@ -418,17 +418,14 @@ Namespace Forms
                     'First lets go through and replace any synapses that are using this type. 
                     If Not Me.NeuralModule.Organism Is Nothing Then
 
-                        Dim doSynapse As IntegrateFireGUI.DataObjects.Behavior.Synapse
-                        For Each deEntry As DictionaryEntry In Me.NeuralModule.Organism.BehavioralLinks
-                            If TypeOf deEntry.Value Is IntegrateFireGUI.DataObjects.Behavior.Synapse Then
-                                doSynapse = DirectCast(deEntry.Value, IntegrateFireGUI.DataObjects.Behavior.Synapse)
+                        Dim aryLinks As AnimatGUI.Collections.DataObjects = New AnimatGUI.Collections.DataObjects(Nothing)
+                        Me.NeuralModule.Organism.RootSubSystem.FindChildrenOfType(GetType(IntegrateFireGUI.DataObjects.Behavior.Synapse), aryLinks)
 
-                                If doSynapse.SynapseType Is stType Then
-                                    doSynapse.SynapseType = frmDelete.m_doTypeToReplace
-                                End If
+                        For Each doSynapse As IntegrateFireGUI.DataObjects.Behavior.Synapse In aryLinks
+                            If doSynapse.SynapseType Is stType Then
+                                doSynapse.SynapseType = frmDelete.m_doTypeToReplace
                             End If
                         Next
-
                     End If
 
                     stType.TreeNode.Remove()
