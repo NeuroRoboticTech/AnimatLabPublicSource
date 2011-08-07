@@ -462,7 +462,19 @@
     <Compile Include="Forms\AnimatApplication.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\AnimatDialog.Designer.vb">
+      <DependentUpon>AnimatDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AnimatDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\AnimatForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AnimatMessageBox.Designer.vb">
+      <DependentUpon>AnimatMessageBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AnimatMessageBox.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Behavior\Connections.vb">
@@ -772,6 +784,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AnimatForm.resx">
       <DependentUpon>AnimatForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AnimatMessageBox.resx">
+      <DependentUpon>AnimatMessageBox.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConfirmRelabel.resx">
       <DependentUpon>ConfirmRelabel.vb</DependentUpon>

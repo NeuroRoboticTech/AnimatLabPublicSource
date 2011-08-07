@@ -15,7 +15,7 @@ Imports AnimatGUI.DataObjects
 Namespace Forms
 
     Public Class NewProject
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -231,13 +231,23 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Sub NewProject_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
+
             Try
+                m_btnOk = Me.btnOk
+                m_btnCancel = Me.btnCancel
+
                 txtLocation.Text = Util.Application.DefaultNewFolder
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+        End Sub
+
+        Public Overridable Sub SetProjectParams(ByVal strName As String, ByVal strPath As String)
+            Me.txtProjectName.Text = strName
+            Me.txtLocation.Text = strPath
         End Sub
 
 #End Region

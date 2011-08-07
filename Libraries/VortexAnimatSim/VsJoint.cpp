@@ -64,7 +64,7 @@ void VsJoint::UpdatePosition()
 	m_vxJoint->getPartAttachmentPosition(0, vPos);
 
 	UpdateWorldMatrix();
-	m_lpThisMI->AbsolutePosition(vPos[0], vPos[0], vPos[0]);
+	m_lpThisMI->AbsolutePosition(vPos[0], vPos[1], vPos[2]);
 }
 
 void VsJoint::Physics_CollectData()

@@ -15,7 +15,7 @@ Imports AnimatGUI.DataObjects
 Namespace Forms.Gain
 
     Public Class EditGain
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -197,9 +197,13 @@ Namespace Forms.Gain
 
 #End Region
 
-        Private Sub EditGain_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
 
             Try
+                m_btnOk = Me.btnOk
+                m_btnCancel = Me.btnCancel
+
                 Dim oAssembly As System.Reflection.Assembly = System.Reflection.Assembly.LoadFrom(Util.GetFilePath(Util.Application.ApplicationDirectory, "LicensedAnimatGUI.dll"))
                 m_ctrlGainChart = DirectCast(oAssembly.CreateInstance("LicensedAnimatGUI.Forms.Charts.GainControl"), AnimatGUI.Forms.Gain.GainControl)
 
@@ -233,6 +237,7 @@ Namespace Forms.Gain
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+
         End Sub
 
         Protected Overridable Sub LoadGains()

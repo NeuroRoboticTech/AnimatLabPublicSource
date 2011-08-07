@@ -16,7 +16,7 @@ Imports System.Drawing.Imaging
 Namespace Forms.BodyPlan
 
     Public Class SwapParts
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits AnimatGUI.Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -143,7 +143,12 @@ Namespace Forms.BodyPlan
         End Property
 
         Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
+
             Try
+                m_btnOk = Me.btnOk
+                m_btnCancel = Me.btnCancel
+
                 'Load up the combo box with the available part types
                 If Not m_aryPartList Is Nothing AndAlso m_aryPartList.Count > 0 Then
 

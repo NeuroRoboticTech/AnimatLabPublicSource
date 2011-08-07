@@ -15,7 +15,7 @@ Imports AnimatGUI.DataObjects
 Namespace Forms.Tools
 
     Public Class SelectToolType
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -157,6 +157,9 @@ Namespace Forms.Tools
             MyBase.OnLoad(e)
 
             Try
+                m_btnOk = Me.btnOk
+                m_btnCancel = Me.btnCancel
+                Me.m_lvItems = Me.ctrlToolTypes
 
                 Dim myAssembly As System.Reflection.Assembly
                 myAssembly = System.Reflection.Assembly.Load("AnimatGUI")

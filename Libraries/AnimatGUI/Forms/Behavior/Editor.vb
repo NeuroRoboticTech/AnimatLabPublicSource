@@ -1801,7 +1801,7 @@ Namespace Forms.Behavior
         Protected Sub OnCut(ByVal sender As Object, ByVal e As System.EventArgs)
 
             Try
-                If MessageBox.Show("Are you sure you want to cut the selected items?", "Cut Selected", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+                If Util.ShowMessage("Are you sure you want to cut the selected items?", "Cut Selected", MessageBoxButtons.YesNo) = DialogResult.Yes Then
                     If Not m_tabFiller.SelectedTab Is Nothing Then
                         Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
                         dgDiagram.CutSelected()
@@ -1860,7 +1860,7 @@ Namespace Forms.Behavior
         Protected Sub OnDelete(ByVal sender As Object, ByVal e As System.EventArgs)
 
             Try
-                If MessageBox.Show("Are you sure you want to delete the selected items?", "Delete Selected", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+                If Util.ShowMessage("Are you sure you want to delete the selected items?", "Delete Selected", MessageBoxButtons.YesNo) = DialogResult.Yes Then
                     If Not m_tabFiller.SelectedTab Is Nothing Then
                         Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
                         dgDiagram.DeleteSelected()

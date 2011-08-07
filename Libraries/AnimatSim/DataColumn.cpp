@@ -267,7 +267,7 @@ BOOL DataColumn::SetData(string strDataType, string strValue, BOOL bThrowError)
 
 	if(strType == "COLUMNINDEX")
 	{
-		//ColumnIndex(atoi(strValue.c_str()));
+		ColumnIndex(atoi(strValue.c_str()));
 		return TRUE;
 	}
 

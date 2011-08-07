@@ -4,7 +4,7 @@ Imports System.Windows.Forms
 Namespace Forms
 
     Public Class MultiLineStringEditor
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits AnimatGUI.Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -112,6 +112,16 @@ Namespace Forms
             End Set
         End Property
 
+        Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
+
+            Try
+                m_btnOk = Me.btnOk
+                m_btnCancel = Me.btnCancel
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
 
         Protected Overrides Sub OnResize(ByVal e As System.EventArgs)
             MyBase.OnResize(e)

@@ -198,7 +198,7 @@ Namespace DataObjects.Physical
         Public Overrides Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
 
             If bAskToDelete Then
-                If MessageBox.Show("Are you certain that you want to permanently delete this " & _
+                If Util.ShowMessage("Are you certain that you want to permanently delete this " & _
                                     "body part and all its children?", "Delete Body Part", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
                     Return True
                 End If

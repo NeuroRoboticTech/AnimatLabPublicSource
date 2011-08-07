@@ -17,7 +17,7 @@ Imports AnimatGUI.Framework
 Namespace Forms
 
     Public Class SelectProgramModule
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits AnimatGUI.Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -128,7 +128,11 @@ Namespace Forms
         End Property
 
         Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
+
             Try
+                m_btnOk = Me.btnOk
+                m_btnCancel = Me.btnCancel
 
                 For Each doModule As DataObjects.ProgramModule In Util.Application.ProgramModules
                     Dim liItem As New ListViewItem(doModule.Name)

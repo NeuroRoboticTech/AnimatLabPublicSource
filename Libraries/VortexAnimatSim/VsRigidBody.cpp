@@ -677,8 +677,12 @@ void VsRigidBody::Physics_DisableCollision(RigidBody *lpBody)
 		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
 
 	//If collisions between the two objects is enabled then disable it.
-	if(lpVsSim->Universe()->getPairIntersectEnabled(m_vxCollisionGeometry, lpVsBody->CollisionGeometry()) == true)
-		lpVsSim->Universe()->disablePairIntersect(m_vxPart, lpVsBody->Sensor());
+	Vx::VxUniverse *lpUniv = lpVsSim->Universe();
+	if(!m_vxCollisionGeometry || !lpVsBody->CollisionGeometry())
+		THROW_PARAM_ERROR(Vs_Err_lCollisionGeomNotDefined, Vs_Err_strCollisionGeomNotDefined, "ID", m_lpThisAB->ID());
+
+	if(lpUniv->getPairIntersectEnabled(m_vxCollisionGeometry, lpVsBody->CollisionGeometry()) == true)
+		lpUniv->disablePairIntersect(m_vxPart, lpVsBody->Sensor());
 }
 
 float *VsRigidBody::Physics_GetDataPointer(string strDataType)

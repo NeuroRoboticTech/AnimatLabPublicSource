@@ -14,7 +14,7 @@ Imports System.Text.RegularExpressions
 Namespace Forms
 
     Public Class ConfirmRelabel
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits AnimatGUI.Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -186,8 +186,11 @@ Namespace Forms
 #Region " Events "
 
         Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
 
             Try
+                m_btnOk = Me.btnConfirm
+                m_btnCancel = Me.btnCancel
 
                 Dim bFound As Boolean = False
 
@@ -212,7 +215,7 @@ Namespace Forms
                 End If
 
                 If Not bFound Then
-                    MessageBox.Show("No matches were found.")
+                    Util.ShowMessage("No matches were found.")
                     Me.DialogResult = DialogResult.Cancel
                     Me.Close()
                 End If

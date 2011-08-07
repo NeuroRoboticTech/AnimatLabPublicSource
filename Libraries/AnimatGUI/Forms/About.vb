@@ -2,7 +2,7 @@
 Namespace Forms
 
     Public Class About
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits AnimatGUI.Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 

@@ -15,7 +15,7 @@ Imports AnimatGUI.DataObjects
 Namespace Forms.ExternalStimuli
 
     Public Class SelectStimulusType
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -166,6 +166,9 @@ Namespace Forms.ExternalStimuli
             MyBase.OnLoad(e)
 
             Try
+                m_btnOk = Me.btnOk
+                m_btnCancel = Me.btnCancel
+
                 If m_aryCompatibleStimuli Is Nothing Then
                     Throw New System.Exception("The list of compatible stimulus is not defined.")
                 End If

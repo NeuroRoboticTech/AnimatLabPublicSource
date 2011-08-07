@@ -64,9 +64,13 @@ Namespace Framework
         Protected Shared m_bExportChartsInStandAloneSim As Boolean = False
         Protected Shared m_bExportChartsToFile As Boolean = False 'Determines if data charts are saved to a file or kept in memory for sim.
 
+        Protected Shared m_aryActiveDialogs As New ArrayList
+
         ''' List of errors that have occured in the application.
         Protected Shared m_aryErrors As New ArrayList
         Protected Shared m_frmError As AnimatGUI.Forms.ErrorDisplay
+
+        Protected Shared m_frmMessage As AnimatGUI.Forms.AnimatMessageBox
 
         Public Shared Property Application() As Forms.AnimatApplication
             Get
@@ -94,6 +98,12 @@ Namespace Framework
                 Else
                     Return Nothing
                 End If
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property ActiveDialogs() As ArrayList
+            Get
+                Return m_aryActiveDialogs
             End Get
         End Property
 
@@ -424,6 +434,35 @@ Namespace Framework
             Finally
                 m_frmError = Nothing
             End Try
+        End Sub
+
+        Public Shared Function ShowMessage(ByVal strMessage As String, Optional ByVal strCaption As String = "Message", _
+                                           Optional ByVal eButtons As System.Windows.Forms.MessageBoxButtons = MessageBoxButtons.OK) As System.Windows.Forms.DialogResult
+            m_frmMessage = New Forms.AnimatMessageBox
+            m_frmMessage.Text = strCaption
+            m_frmMessage.SetMessage(strMessage, eButtons)
+            m_frmMessage.StartPosition = FormStartPosition.CenterScreen
+
+            Return m_frmMessage.ShowDialog()
+        End Function
+
+        Public Shared Sub AddActiveDialog(ByVal frmDialog As System.Windows.Forms.Form)
+            If Not m_aryActiveDialogs.Contains(frmDialog) Then
+                m_aryActiveDialogs.Add(frmDialog)
+            End If
+        End Sub
+
+        Public Shared Sub RemoveActiveDialog(ByVal frmDialog As System.Windows.Forms.Form)
+            If m_aryActiveDialogs.Contains(frmDialog) Then
+                m_aryActiveDialogs.Remove(frmDialog)
+            End If
+        End Sub
+
+        Public Shared Sub ClearActiveDialogs(Optional ByVal bClose As Boolean = True)
+            For Each frmDialog As System.Windows.Forms.Form In m_aryActiveDialogs
+                frmDialog.Close()
+            Next
+            m_aryActiveDialogs.Clear()
         End Sub
 
         Public Shared Function GetErrorDetails(ByVal strParentDetails As String, ByVal ex As System.Exception) As String
@@ -1235,6 +1274,41 @@ Namespace Framework
             Return dblResult
         End Function
 
+
+        Public Shared Function FindTreeNodeByName(ByVal strName As String, ByVal aryNodes As Crownwood.DotNetMagic.Controls.NodeCollection, Optional ByVal bRecursive As Boolean = True) As Crownwood.DotNetMagic.Controls.Node
+            Dim tnFound As Crownwood.DotNetMagic.Controls.Node
+
+            For Each tnNode As Crownwood.DotNetMagic.Controls.Node In aryNodes
+                If tnNode.Text = strName Then
+                    Return tnNode
+                End If
+
+                If bRecursive Then
+                    tnFound = FindTreeNodeByName(strName, tnNode.Nodes)
+                    If Not tnFound Is Nothing Then
+                        Return tnFound
+                    End If
+                End If
+            Next
+
+            Return Nothing
+        End Function
+
+        Public Shared Function FindTreeNodeByPath(ByVal strPath As String, ByVal aryNodes As Crownwood.DotNetMagic.Controls.NodeCollection) As Crownwood.DotNetMagic.Controls.Node
+
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node
+            Dim aryPath() As String = Split(strPath, "\")
+
+            For Each strName As String In aryPath
+                tnNode = FindTreeNodeByName(strName, aryNodes, False)
+                If tnNode Is Nothing Then
+                    Throw New System.Exception("The node '" & strName & "' was not found in the path: '" & strPath & "' of the treeview.")
+                End If
+                aryNodes = tnNode.Nodes
+            Next
+
+            Return tnNode
+        End Function
 
         '    Public Function IntersectLineRectangle(ByVal a1 As Point, ByVal a2 As Point, ByVal topRight As Point, ByVal bottomLeft As Point) As Boolean
 

@@ -231,7 +231,7 @@ Namespace DataObjects.Charting
         Public Overrides Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
 
             Try
-                If bAskToDelete AndAlso MessageBox.Show("Are you certain that you want to delete this " & _
+                If bAskToDelete AndAlso Util.ShowMessage("Are you certain that you want to delete this " & _
                                     "axis and all data columns?", "Delete Axis", MessageBoxButtons.YesNo) = DialogResult.Yes Then
                     DeleteAxis(True)
                     Return False
@@ -439,7 +439,7 @@ Namespace DataObjects.Charting
                 If doColumn.IsValidColumn() Then
                     doColumn.SaveData(oXml)
                 Else
-                    'MessageBox.Show("About to remove a column that is showing as invalid. Column: " & doColumn.Name)
+                    'Util.ShowMessage("About to remove a column that is showing as invalid. Column: " & doColumn.Name)
                     aryRemove.Add(doColumn)
                 End If
             Next

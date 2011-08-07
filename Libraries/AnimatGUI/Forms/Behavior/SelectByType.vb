@@ -13,7 +13,7 @@ Imports AnimatGUI.Framework
 Namespace Forms.Behavior
 
     Public Class SelectByType
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits AnimatGUI.Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -151,7 +151,12 @@ Namespace Forms.Behavior
 #Region " Events "
 
         Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
+
             Try
+                m_btnOk = Me.btnOk
+                m_btnCancel = Me.btnCancel
+
                 If m_doDiagram Is Nothing Then
                     Throw New System.Exception("No diagram was selected")
                 End If

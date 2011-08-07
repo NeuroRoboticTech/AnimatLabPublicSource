@@ -337,7 +337,7 @@ Namespace DataObjects.ExternalStimuli
 
         Public Overrides Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
 
-            If Not bAskToDelete OrElse (bAskToDelete AndAlso MessageBox.Show("Are you certain that you want to permanently delete this " & _
+            If Not bAskToDelete OrElse (bAskToDelete AndAlso Util.ShowMessage("Are you certain that you want to permanently delete this " & _
                                 "stimulus?", "Delete Stimulus", MessageBoxButtons.YesNo) = DialogResult.Yes) Then
                 Me.RemoveWorksapceTreeView()
                 Util.Simulation.ProjectStimuli.Remove(Me.ID)

@@ -13,6 +13,7 @@ Imports AnimatGUI.Framework
 Namespace Forms.BodyPlan
 
 	Public Class SelectTerrain
+        Inherits AnimatGUI.Forms.AnimatDialog
 
         Public m_dblSegmentWidth As Double
         Public m_dblSegmentLength As Double
@@ -87,6 +88,17 @@ Namespace Forms.BodyPlan
                 DialogResult = Windows.Forms.DialogResult.OK
                 Me.Close()
 
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
+
+            Try
+                m_btnOk = Me.btnOk
+                m_btnCancel = Me.btnCancel
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

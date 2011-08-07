@@ -13,7 +13,7 @@ Imports AnimatGUI.Framework
 Namespace Forms.Behavior
 
     Public Class Relabel
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits AnimatGUI.Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -215,6 +215,17 @@ Namespace Forms.Behavior
 #End Region
 
 #Region " Events "
+
+        Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
+
+            Try
+                m_btnOk = Me.btnReplace
+                m_btnCancel = Me.btnCancel
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
 
         Private Sub btnReplace_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnReplace.Click
 

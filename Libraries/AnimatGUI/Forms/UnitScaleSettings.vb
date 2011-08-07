@@ -14,7 +14,7 @@ Imports AnimatGUI.DataObjects.Physical
 Namespace Forms
 
     Public Class UnitScaleSettings
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits AnimatGUI.Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -167,7 +167,11 @@ Namespace Forms
 #Region " Methods "
 
         Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
+
             Try
+                m_btnOk = Me.btnOk
+                m_btnCancel = Me.btnCancel
 
                 SelectItem(cboDistanceUnits, m_eDistanceUnits.ToString())
                 SelectItem(cboMassUnits, m_eMassUnits.ToString())

@@ -16,6 +16,7 @@ Imports System.Drawing.Imaging
 Namespace Forms.BodyPlan
 
     Public Class EditAttachments
+        Inherits AnimatGUI.Forms.AnimatDialog
 
 #Region " Attributes "
 
@@ -77,8 +78,14 @@ Namespace Forms.BodyPlan
 
 #Region " Events "
 
-        Private Sub EditAttachments_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+        Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
+
             Try
+                m_btnOk = Me.btnOk
+                m_btnCancel = Me.btnCancel
+
                 If m_aryAttachments Is Nothing Then
                     Throw New System.Exception("The attachments array is not defined.")
                 End If

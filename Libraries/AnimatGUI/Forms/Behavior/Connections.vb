@@ -17,7 +17,7 @@ Imports System.Data
 Namespace Forms.Behavior
 
     Public Class Connections
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits AnimatGUI.Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -244,6 +244,7 @@ Namespace Forms.Behavior
 #Region " Events "
 
         Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
 
             Try
                 If m_doNode Is Nothing Then

@@ -259,7 +259,7 @@ Namespace DataObjects.Physical
         End Function
 
         Public Overrides Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
-            If Not bAskToDelete OrElse (bAskToDelete AndAlso MessageBox.Show("Are you certain that you want to permanently delete this " & _
+            If Not bAskToDelete OrElse (bAskToDelete AndAlso Util.ShowMessage("Are you certain that you want to permanently delete this " & _
                                 "light?", "Delete Light", MessageBoxButtons.YesNo) = DialogResult.Yes) Then
                 Util.Environment.Lights.Remove(Me.ID)
                 Me.RemoveWorksapceTreeView()

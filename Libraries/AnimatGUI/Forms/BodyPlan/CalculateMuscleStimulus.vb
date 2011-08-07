@@ -17,6 +17,7 @@ Imports AnimatGUI.DataObjects.Physical.Bodies
 Namespace Forms.BodyPlan
 
     Public Class CalculateMuscleStimulus
+        Inherits AnimatGUI.Forms.AnimatDialog
 
         Protected m_doMuscle As LinearHillMuscle
 
@@ -81,6 +82,17 @@ Namespace Forms.BodyPlan
 
             Catch ex As System.Exception
                 Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
+
+            Try
+                m_btnOk = Me.btnClose
+                'm_btnCancel = Me.btnCancel
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
         End Sub
 

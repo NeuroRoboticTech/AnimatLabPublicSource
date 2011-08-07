@@ -1383,6 +1383,7 @@ Namespace DataObjects.Physical
                 AddChildBody(rbNew, bAddDefaultGraphics)
 
                 rbNew.OrientNewPart(vPos, vNorm)
+                rbNew.SelectItem(False)
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

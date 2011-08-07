@@ -730,19 +730,19 @@ void DataChart::StepSimulation()
 **/
 void DataChart::AddData(int iColumn, int iRow, float fltVal)
 {
-	if(iColumn == -1 && iRow == -1)
-	{
-		if( (m_lCurrentCol>=m_lColumnCount) )
-			THROW_PARAM_ERROR(Std_Err_lAboveMaxValue, Std_Err_strAboveMaxValue, "Current Col Count", m_lCurrentCol);
+	if(iColumn < 0)
+		iColumn = m_lCurrentCol;
+	if(iRow < 0)
+		iRow = m_lCurrentRow;
 
-		if( (m_lCurrentRow>=m_lRowCount) )
-			THROW_PARAM_ERROR(Std_Err_lAboveMaxValue, Std_Err_strAboveMaxValue, "Current Row Count", m_lCurrentRow);
+	if( (iColumn>=m_lColumnCount) )
+		THROW_PARAM_ERROR(Std_Err_lAboveMaxValue, Std_Err_strAboveMaxValue, "Current Col Count", iColumn);
 
-		m_aryDataBuffer[(m_lCurrentRow*m_lColumnCount) + m_lCurrentCol] = fltVal;
-		m_lCurrentCol++;
-	}
-	else
-		m_aryDataBuffer[(iRow*m_lColumnCount) + iColumn] = fltVal;
+	if( (iRow>=m_lRowCount) )
+		THROW_PARAM_ERROR(Std_Err_lAboveMaxValue, Std_Err_strAboveMaxValue, "Current Row Count", iRow);
+
+	m_aryDataBuffer[(iRow*m_lColumnCount) + iColumn] = fltVal;
+	m_lCurrentCol++;
 }
 
 /**

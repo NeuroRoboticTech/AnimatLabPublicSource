@@ -38,6 +38,7 @@ Namespace DataObjects.Charting
         Protected m_strColumnClassType As String
         Protected m_bUseIncomingDataType As Boolean = False
         Protected m_strSelectedDataTypeID As String = ""
+        Protected m_iColumnIndex As Integer = 0
 
         Protected m_frmParentAxis As AnimatGUI.DataObjects.Charting.Axis
 
@@ -255,6 +256,7 @@ Namespace DataObjects.Charting
                 If Value < 0 Then
                     Throw New System.Exception("The data subset value must not be less than zero.")
                 End If
+                SetSimData("ColumnIndex", Value.ToString, True)
 
                 m_iPrevDataSubset = m_iDataSubSet
                 m_iDataSubSet = Value
@@ -346,7 +348,6 @@ Namespace DataObjects.Charting
             End Get
         End Property
 
-
 #End Region
 
 #Region " Methods "
@@ -436,6 +437,7 @@ Namespace DataObjects.Charting
             oXml.AddChildElement("ID", m_strID)
             oXml.AddChildElement("ColumnName", m_strName)
             oXml.AddChildElement("DataType", m_thDataType.ID.ToString())
+            'oXml.AddChildElement("Column", m_iColumnIndex)
             oXml.OutOfElem()
 
             doItem.SaveDataColumnToXml(oXml)
@@ -556,7 +558,7 @@ Namespace DataObjects.Charting
 
             Try
                 Dim bDelete As Boolean = True
-                If bAskToDelete AndAlso MessageBox.Show("Are you certain that you want to delete this " & _
+                If bAskToDelete AndAlso Util.ShowMessage("Are you certain that you want to delete this " & _
                                     "data column?", "Delete Axis", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
                     bDelete = False
                 End If

@@ -1611,13 +1611,46 @@ Namespace Forms.Charts
 
         End Sub
 
+        Protected Overridable Function FindInsertPosition(ByVal strName As String, ByVal aryNames As ArrayList) As Integer
+            Dim iIdx As Integer = 0
+            Dim strN As String = ""
+
+            If aryNames.Count = 0 Then
+                Return 0
+            End If
+
+            strN = DirectCast(aryNames.Item(0), String)
+            While strName > strN AndAlso iIdx < aryNames.Count
+                iIdx = iIdx + 1
+                If iIdx < aryNames.Count Then
+                    strN = DirectCast(aryNames.Item(iIdx), String)
+                Else
+                    strN = ""
+                End If
+            End While
+
+            Return iIdx
+        End Function
+
         Protected Overridable Sub PackageChartDataIntoArrays(ByRef aryNames() As String, ByRef aryData(,) As Single)
 
             ReDim aryNames(Me.ctrlGraph.PeData.Subsets)
 
-            aryNames(0) = "Time"
+            'Need to sort the names into alphabetical list, and keep subset index matching
+            Dim aryNameIndex As New ArrayList
+            Dim aryNameList As New ArrayList
+            Dim iIdx As Integer = 0
             For iSubSet As Integer = 1 To Me.ctrlGraph.PeData.Subsets
-                aryNames(iSubSet) = Me.ctrlGraph.PeString.SubsetLabels(iSubSet - 1)
+                iIdx = FindInsertPosition(Me.ctrlGraph.PeString.SubsetLabels(iSubSet - 1), aryNameList)
+                aryNameList.Insert(iIdx, Me.ctrlGraph.PeString.SubsetLabels(iSubSet - 1))
+                aryNameIndex.Insert(iIdx, iSubSet)
+            Next
+
+            iIdx = 0
+            aryNames(iIdx) = "Time"
+            For Each strName As String In aryNameList
+                iIdx = iIdx + 1
+                aryNames(iIdx) = strName
             Next
 
             'Lets first go through and see where the first valid piece of data is in the points array.
@@ -1638,8 +1671,10 @@ Namespace Forms.Charts
             For iP As Integer = iPoint To Me.ctrlGraph.PeData.Points - 1
                 aryData(iD, 0) = Me.ctrlGraph.PeData.X(0, iP)
 
-                For iSubset As Integer = 0 To Me.ctrlGraph.PeData.Subsets - 1
-                    aryData(iD, iSubset + 1) = Me.ctrlGraph.PeData.Y(iSubset, iP)
+                iIdx = 1
+                For Each iNameIdx As Integer In aryNameIndex
+                    aryData(iD, iIdx) = Me.ctrlGraph.PeData.Y(iNameIdx - 1, iP)
+                    iIdx = iIdx + 1
                 Next
 
                 iD = iD + 1
@@ -2337,10 +2372,10 @@ Namespace Forms.Charts
                         If Me.AxisList.Count = 1 Then
                             doSelAxis = DirectCast(Me.AxisList.GetItem(0), AnimatGUI.DataObjects.Charting.Axis)
                         Else
-                            MessageBox.Show("Please add an axis to the chart.")
+                            Util.ShowMessage("Please add an axis to the chart.")
                         End If
                     Else
-                        MessageBox.Show("You must select an axis to add an item.")
+                        Util.ShowMessage("You must select an axis to add an item.")
                     End If
                 End If
 
@@ -2437,6 +2472,7 @@ Namespace Forms.Charts
         Protected Sub OnSimulationPaused()
 
             Try
+                UpdateChartData()
                 ConfigChartForPausedSimulation()
 
                 m_Timer.Enabled = False
@@ -2451,6 +2487,7 @@ Namespace Forms.Charts
         Protected Sub OnSimulationStopped()
 
             Try
+                UpdateChartData()
                 ConfigChartForPausedSimulation()
 
                 m_Timer.Enabled = False

@@ -16,7 +16,7 @@ Imports System.Drawing.Imaging
 Namespace Forms.BodyPlan
 
     Public Class EditCollisionPairs
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits AnimatGUI.Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -194,8 +194,11 @@ Namespace Forms.BodyPlan
 #Region " Methods "
 
         Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
 
             Try
+                m_btnOk = Me.btnOk
+                m_btnCancel = Me.btnCancel
 
                 If m_aryCollisionPairs Is Nothing Then
                     Throw New System.Exception("The collision pairs array is empty!")

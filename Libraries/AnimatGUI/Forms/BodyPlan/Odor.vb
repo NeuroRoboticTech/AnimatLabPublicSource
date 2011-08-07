@@ -16,7 +16,7 @@ Imports System.Drawing.Imaging
 Namespace Forms.BodyPlan
 
     Public Class Odor
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits AnimatGUI.Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -226,8 +226,12 @@ Namespace Forms.BodyPlan
 #Region " Methods "
 
         Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
 
             Try
+                m_btnOk = Me.btnOk
+                'm_btnCancel = Me.btnCancel
+
                 lvOdorTypes.HideSelection = False
                 lvOdorTypes.MultiSelect = False
                 lvOdorTypes.FullRowSelect = True

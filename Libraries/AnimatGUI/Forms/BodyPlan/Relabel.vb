@@ -13,7 +13,7 @@ Imports AnimatGUI.Framework
 Namespace Forms.BodyPlan
 
     Public Class Relabel
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits AnimatGUI.Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -229,6 +229,17 @@ Namespace Forms.BodyPlan
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
 
+        End Sub
+
+        Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
+
+            Try
+                m_btnOk = Me.btnReplace
+                m_btnCancel = Me.btnCancel
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
         End Sub
 
 #End Region

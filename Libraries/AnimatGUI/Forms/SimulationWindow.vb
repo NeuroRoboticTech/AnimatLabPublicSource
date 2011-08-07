@@ -499,7 +499,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Protected Overridable Sub GenerateStructureDropDown()
+        Public Overridable Sub GenerateStructureDropDown()
             m_bDrawingStructureCombo = True
             Me.cboStructure.Items.Clear()
 
@@ -538,7 +538,7 @@ Namespace Forms
             Next
         End Sub
 
-        Protected Overridable Sub GenerateBodyPartDropDown()
+        Public Overridable Sub GenerateBodyPartDropDown()
             Try
                 m_bDrawingBodyPartCombo = True
 
@@ -575,6 +575,8 @@ Namespace Forms
                         Me.PhysicalStructure = Nothing
                     End If
                 End If
+
+                GenerateBodyPartDropDown()
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -632,7 +634,11 @@ Namespace Forms
             Try
                 'If we are deleting the body part this window is looking at then switch to the root body or null
                 If Not m_doStructure Is Nothing Then
-                    Me.BodyPart = m_doStructure.RootBody
+                    If Not m_doStructure Is Nothing AndAlso Not m_doStructure.RootBody Is Nothing AndAlso Not Me.BodyPart Is m_doStructure.RootBody Then
+                        Me.BodyPart = m_doStructure.RootBody
+                    Else
+                        Me.BodyPart = Nothing
+                    End If
                 Else
                     Me.BodyPart = Nothing
                 End If

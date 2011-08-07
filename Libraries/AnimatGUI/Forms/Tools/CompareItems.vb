@@ -13,7 +13,7 @@ Imports AnimatGUI.Framework
 Namespace Forms.Tools
 
     Public Class CompareItems
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -144,8 +144,10 @@ Namespace Forms.Tools
 #Region " Events "
 
         Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
 
             Try
+
                 Dim iX As Integer = 0
                 For Each doItem As AnimatGUI.Framework.DataObject In m_arySelectedItems
                     Dim ctrlGrid As New PropertyGrid
@@ -172,8 +174,6 @@ Namespace Forms.Tools
         End Sub
 
 #End Region
-
-
 
     End Class
 

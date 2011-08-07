@@ -64,9 +64,7 @@ void VsSimulationWindow::SetupTrackCamera()
 
 			VsBody *lpVsBody = NULL;
 			BodyPart *lpBody=NULL;
-			if(Std_IsBlank(m_strLookAtBodyID))
-				lpBody = lpStructure->Body();
-			else
+			if(!Std_IsBlank(m_strLookAtBodyID))
 				lpBody = dynamic_cast<BodyPart *>(lpStructure->FindNode(m_strLookAtBodyID));
 
 			if(lpBody)

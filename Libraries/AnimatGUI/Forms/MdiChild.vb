@@ -495,7 +495,7 @@ Namespace Forms
             Try
                 'First check to see if the application is dirty. If it is then ask to save the project
                 If Me.IsDirty Then
-                    Dim eResult As System.Windows.Forms.DialogResult = MessageBox.Show("There are unsaved changes for this window. " & _
+                    Dim eResult As System.Windows.Forms.DialogResult = Util.ShowMessage("There are unsaved changes for this window. " & _
                                                                                         "Do you want to save them before you close it?", _
                                                                                         "Save Changes", MessageBoxButtons.YesNoCancel)
                     If eResult = DialogResult.Cancel Then

@@ -1,6 +1,27 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <TestLists xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestList name="BodyEditorTests" id="22d96bb1-acd0-4143-964e-f54bf523be1d" parentListId="8c43106b-9dc1-4907-a29f-aa66a61bf5b6">
+    <Description>These tests are all related to testing of the simulation window/body editor.</Description>
+  </TestList>
+  <TestList name="RigidBodyTests" id="28e6892e-c53d-4441-9d7f-dde536d70587" parentListId="6b93228c-ec9c-4561-8aa4-b6f1e75312b8">
+    <Description>These tests are all related to testing rigid body parts.</Description>
+    <TestLinks>
+      <TestLink id="0f1c9696-cf1a-7028-9ee9-4c4c9a6d3076" name="TestBox" storage="bin\debug\animattesting.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    </TestLinks>
+  </TestList>
+  <TestList name="CreateTests" id="4448703c-6525-4606-8510-fa38b05f3934" parentListId="8c43106b-9dc1-4907-a29f-aa66a61bf5b6">
+    <Description>These tests are all related to testing creation/saving of projects.</Description>
+    <TestLinks>
+      <TestLink id="f1733bf9-65fe-850e-4056-2eab8bc2a90b" name="TestCreateNewProject" storage="bin\debug\animattesting.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    </TestLinks>
+  </TestList>
+  <TestList name="BodyPartTests" id="6b93228c-ec9c-4561-8aa4-b6f1e75312b8" parentListId="22d96bb1-acd0-4143-964e-f54bf523be1d">
+    <Description>These tests are all related to testing of body parts (rigid bodies and joints)</Description>
+  </TestList>
   <TestList name="Lists of Tests" id="8c43106b-9dc1-4907-a29f-aa66a61bf5b6">
     <RunConfiguration id="0408b17a-c9c6-4577-a8bf-cfab5e1a47d9" name="Local" storage="local.testsettings" type="Microsoft.VisualStudio.TestTools.Common.TestRunConfiguration, Microsoft.VisualStudio.QualityTools.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestList>
+  <TestList name="JointTests" id="a4d2f0fa-b21f-4cb2-bcce-51d883ab50fa" parentListId="6b93228c-ec9c-4561-8aa4-b6f1e75312b8">
+    <Description>These tests are all related to testing joint parts.</Description>
   </TestList>
 </TestLists>

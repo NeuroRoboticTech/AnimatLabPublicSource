@@ -15,7 +15,7 @@ Imports AnimatGUI.DataObjects
 Namespace Forms.BodyPlan
 
     Public Class SelectPartType
-        Inherits System.Windows.Forms.Form
+        Inherits Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -241,6 +241,10 @@ Namespace Forms.BodyPlan
             MyBase.OnLoad(e)
 
             Try
+                m_btnOk = Me.btnOk
+                m_btnCancel = Me.btnCancel
+                Me.m_lvItems = Me.ctrlPartTypes
+
                 Dim myAssembly As System.Reflection.Assembly
                 myAssembly = System.Reflection.Assembly.Load("AnimatGUI")
 

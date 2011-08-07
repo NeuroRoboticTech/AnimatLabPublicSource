@@ -13,6 +13,7 @@ Imports AnimatGUI.Framework
 Namespace Forms.BodyPlan
 
 	Public Class SelectMesh
+        Inherits AnimatGUI.Forms.AnimatDialog
 
         Public m_bIsCollisionType As Boolean = True
 
@@ -57,8 +58,12 @@ Namespace Forms.BodyPlan
             End Try
         End Sub
 
-        Private Sub SelectMesh_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
+
             Try
+                m_btnOk = Me.btnOk
+                m_btnCancel = Me.btnCancel
 
                 If Not m_bIsCollisionType Then
                     cboMeshType.Enabled = False

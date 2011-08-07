@@ -320,7 +320,7 @@ Namespace DataObjects
 
             Try
                 Dim bDelete As Boolean = True
-                If bAskToDelete AndAlso MessageBox.Show("Are you certain that you want to permanently delete this " & _
+                If bAskToDelete AndAlso Util.ShowMessage("Are you certain that you want to permanently delete this " & _
                                     "tool viewer?", "Delete Viewer", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
                     bDelete = False
                 End If

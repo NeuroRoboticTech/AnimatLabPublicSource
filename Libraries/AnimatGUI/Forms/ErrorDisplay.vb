@@ -10,7 +10,7 @@ Imports AnimatGUI.Framework
 Namespace Forms
 
 	Public Class ErrorDisplay
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits System.Windows.Forms.Form
 
 #Region " Windows Form Designer generated code "
 
@@ -220,7 +220,7 @@ Namespace Forms
             Try
                 ToggleDetailExpansion()
             Catch ex As System.Exception
-                MessageBox.Show(ex.Message)
+                Util.ShowMessage(ex.Message)
             End Try
         End Sub
 
@@ -266,16 +266,31 @@ Namespace Forms
             Try
                 ResizeForm()
             Catch ex As System.Exception
-                MessageBox.Show(ex.Message)
+                Util.ShowMessage(ex.Message)
             End Try
         End Sub
 
         Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
+
             Try
+                Util.AddActiveDialog(Me)
+
                 ResizeForm()
             Catch ex As System.Exception
-                MessageBox.Show(ex.Message)
+                Util.ShowMessage(ex.Message)
             End Try
+        End Sub
+
+        Protected Overridable Sub AnimatDialog_Closing(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles MyBase.Closing
+            Util.RemoveActiveDialog(Me)
+        End Sub
+
+        Public Overridable Sub ClickOkButton()
+            If Me.btnOk Is Nothing Then
+                Throw New System.Exception("Ok Button is not defined.")
+            End If
+            Me.btnOk.PerformClick()
         End Sub
 
     End Class

@@ -459,7 +459,7 @@ Namespace Forms.Tools
 
         Public Overridable Function ExportDataFilename(Optional ByVal strPrefix As String = "", Optional ByVal strPath As String = "") As String
             If strPath.Trim.Length > 0 Then
-                Return strPath & strPrefix & Me.Title & ".txt"
+                Return strPath & "\" & strPrefix & Me.Title & ".txt"
             Else
                 Return Util.Application.ProjectPath & strPrefix & Me.Title & ".txt"
             End If
@@ -476,7 +476,7 @@ Namespace Forms.Tools
             End If
 
             'Now copy the other file over.
-            Dim strFrom As String = Me.ExportDataFilename(strPrefix)
+            Dim strFrom As String = Me.ExportDataFilename("")
             Dim strTo As String = Me.ExportDataFilename(strPrefix, strPath)
             System.IO.File.Copy(strFrom, strTo, True)
         End Sub
@@ -536,7 +536,7 @@ Namespace Forms.Tools
                 For iRow As Integer = 0 To iRows
                     If Math.Abs(aryTemplateData(iCol, iRow) - aryTestData(iCol, iRow)) > dblMaxError Then
                         Throw New System.Exception("Data mismatch for file: '" & Me.ExportDataFilename & _
-                                                   "', Column: '" & aryTemplateColumns(iCol) & "', Template Value: '" & _
+                                                   "', Column: '" & aryTemplateColumns(iCol) & "', row: " & iRow & ", Template Value: '" & _
                                                    aryTemplateData(iCol, iRow) & "', Test Data: '" & aryTestData(iCol, iRow) & "'")
                     End If
 

@@ -134,6 +134,23 @@ Namespace AnimatTesting
             Mouse.Click(uICancelButton, New Point(38, 14))
         End Sub
         
+        '''<summary>
+        '''ZoomInOnRootPart
+        '''</summary>
+        Public Sub ZoomInOnRootPart()
+            Dim uIStructure_1BodyClient As WinClient = Me.UIBoxTestProjectWindow.UIStructure_1BodyWindow.UIStructure_1BodyClient
+            Dim uISimulationControllerClient As WinClient = Me.UIBoxTestProjectWindow.UIItemWindow.UIToolStripContainer1Client.UISimulationControllerClient
+
+            'Move using Right button 'Structure_1 Body' client from (877, 353) to 'Simulation Controller' client (873, 12)
+            uISimulationControllerClient.EnsureClickable(New Point(873, 12))
+            Mouse.StartDragging(uIStructure_1BodyClient, New Point(877, 353), MouseButtons.Right, ModifierKeys.None)
+            Mouse.StopDragging(uISimulationControllerClient, New Point(873, 12))
+
+            'Move using Right button 'Structure_1 Body' client from (921, 203) to (922, 359)
+            Mouse.StartDragging(uIStructure_1BodyClient, New Point(921, 203), MouseButtons.Right, ModifierKeys.None)
+            Mouse.StopDragging(uIStructure_1BodyClient, 1, 156)
+        End Sub
+        
         #Region "Properties"
         Public Overridable ReadOnly Property NewProjectDlg_EnterNameAndPathParams() As NewProjectDlg_EnterNameAndPathParams
             Get
@@ -224,6 +241,15 @@ Namespace AnimatTesting
                 Return Me.mUIErrorWindow
             End Get
         End Property
+        
+        Public ReadOnly Property UIBoxTestProjectWindow() As UIBoxTestProjectWindow
+            Get
+                If (Me.mUIBoxTestProjectWindow Is Nothing) Then
+                    Me.mUIBoxTestProjectWindow = New UIBoxTestProjectWindow()
+                End If
+                Return Me.mUIBoxTestProjectWindow
+            End Get
+        End Property
         #End Region
         
         #Region "Fields"
@@ -246,6 +272,8 @@ Namespace AnimatTesting
         Private mUISelectDataItemWindow As UISelectDataItemWindow
         
         Private mUIErrorWindow As UIErrorWindow
+        
+        Private mUIBoxTestProjectWindow As UIBoxTestProjectWindow
         #End Region
     End Class
     
@@ -874,6 +902,126 @@ Namespace AnimatTesting
         
         #Region "Fields"
         Private mUIOKButton As WinButton
+        #End Region
+    End Class
+    
+    <GeneratedCode("Coded UITest Builder", "10.0.30319.1")>  _
+    Public Class UIBoxTestProjectWindow
+        Inherits WinWindow
+        
+        Public Sub New()
+            MyBase.New
+            Me.SearchProperties(WinWindow.PropertyNames.Name) = "BoxTest Project *"
+            Me.SearchProperties.Add(New PropertyExpression(WinWindow.PropertyNames.ClassName, "WindowsForms10.Window", PropertyExpressionOperator.Contains))
+            Me.WindowTitles.Add("BoxTest Project *")
+        End Sub
+        
+        #Region "Properties"
+        Public ReadOnly Property UIStructure_1BodyWindow() As UIStructure_1BodyWindow
+            Get
+                If (Me.mUIStructure_1BodyWindow Is Nothing) Then
+                    Me.mUIStructure_1BodyWindow = New UIStructure_1BodyWindow(Me)
+                End If
+                Return Me.mUIStructure_1BodyWindow
+            End Get
+        End Property
+        
+        Public ReadOnly Property UIItemWindow() As UIItemWindow
+            Get
+                If (Me.mUIItemWindow Is Nothing) Then
+                    Me.mUIItemWindow = New UIItemWindow(Me)
+                End If
+                Return Me.mUIItemWindow
+            End Get
+        End Property
+        #End Region
+        
+        #Region "Fields"
+        Private mUIStructure_1BodyWindow As UIStructure_1BodyWindow
+        
+        Private mUIItemWindow As UIItemWindow
+        #End Region
+    End Class
+    
+    <GeneratedCode("Coded UITest Builder", "10.0.30319.1")>  _
+    Public Class UIStructure_1BodyWindow
+        Inherits WinWindow
+        
+        Public Sub New(ByVal searchLimitContainer As UITestControl)
+            MyBase.New(searchLimitContainer)
+            Me.SearchProperties(WinWindow.PropertyNames.ControlName) = "SimulationWindow_Toolstrips"
+            Me.WindowTitles.Add("BoxTest Project *")
+        End Sub
+        
+        #Region "Properties"
+        Public ReadOnly Property UIStructure_1BodyClient() As WinClient
+            Get
+                If (Me.mUIStructure_1BodyClient Is Nothing) Then
+                    Me.mUIStructure_1BodyClient = New WinClient(Me)
+                    Me.mUIStructure_1BodyClient.SearchProperties(WinControl.PropertyNames.Name) = "Structure_1 Body"
+                    Me.mUIStructure_1BodyClient.WindowTitles.Add("BoxTest Project *")
+                End If
+                Return Me.mUIStructure_1BodyClient
+            End Get
+        End Property
+        #End Region
+        
+        #Region "Fields"
+        Private mUIStructure_1BodyClient As WinClient
+        #End Region
+    End Class
+    
+    <GeneratedCode("Coded UITest Builder", "10.0.30319.1")>  _
+    Public Class UIItemWindow
+        Inherits WinWindow
+        
+        Public Sub New(ByVal searchLimitContainer As UITestControl)
+            MyBase.New(searchLimitContainer)
+            Me.SearchProperties.Add(New PropertyExpression(WinWindow.PropertyNames.ClassName, "WindowsForms10.Window", PropertyExpressionOperator.Contains))
+            Me.SearchProperties(WinWindow.PropertyNames.Instance) = "10"
+            Me.WindowTitles.Add("BoxTest Project *")
+        End Sub
+        
+        #Region "Properties"
+        Public ReadOnly Property UIToolStripContainer1Client() As UIToolStripContainer1Client
+            Get
+                If (Me.mUIToolStripContainer1Client Is Nothing) Then
+                    Me.mUIToolStripContainer1Client = New UIToolStripContainer1Client(Me)
+                End If
+                Return Me.mUIToolStripContainer1Client
+            End Get
+        End Property
+        #End Region
+        
+        #Region "Fields"
+        Private mUIToolStripContainer1Client As UIToolStripContainer1Client
+        #End Region
+    End Class
+    
+    <GeneratedCode("Coded UITest Builder", "10.0.30319.1")>  _
+    Public Class UIToolStripContainer1Client
+        Inherits WinClient
+        
+        Public Sub New(ByVal searchLimitContainer As UITestControl)
+            MyBase.New(searchLimitContainer)
+            Me.WindowTitles.Add("BoxTest Project *")
+        End Sub
+        
+        #Region "Properties"
+        Public ReadOnly Property UISimulationControllerClient() As WinClient
+            Get
+                If (Me.mUISimulationControllerClient Is Nothing) Then
+                    Me.mUISimulationControllerClient = New WinClient(Me)
+                    Me.mUISimulationControllerClient.SearchProperties(WinControl.PropertyNames.Name) = "Simulation Controller"
+                    Me.mUISimulationControllerClient.WindowTitles.Add("BoxTest Project *")
+                End If
+                Return Me.mUISimulationControllerClient
+            End Get
+        End Property
+        #End Region
+        
+        #Region "Fields"
+        Private mUISimulationControllerClient As WinClient
         #End Region
     End Class
 End Namespace

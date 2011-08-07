@@ -15,18 +15,15 @@ Namespace CreationTests
         <TestMethod()>
         Public Sub TestCreateNewProject()
 
-            'This should only be true if you want it to generate the template files for simulation comparisons 
-            'instead of doing the comparisons.
-            m_bGenerateTempates = False
-
             'Start the application.
             StartApplication("", 8080)
 
             'Click the New Project button.
             ExecuteMethod("ClickToolbarItem", New Object() {"NewToolStripButton"})
 
-            'Enter text and hit ok on new project dialog.
-            NewProjectDlg_EnterNameAndPath("TestProject", m_strRootFolder & "\Libraries\AnimatTesting\TestProjects\CreationTests")
+            'Set params and hit ok button
+            ExecuteActiveDialogMethod("SetProjectParams", New Object() {"TestProject", m_strRootFolder & "\Libraries\AnimatTesting\TestProjects\CreationTests"})
+            ExecuteActiveDialogMethod("ClickOkButton", Nothing)
 
             'Click the add structure button.
             ExecuteMethod("ClickToolbarItem", New Object() {"AddStructureToolStripButton"})
@@ -40,14 +37,8 @@ Namespace CreationTests
             'Set simulation end time.
             ExecuteMethod("SetObjectProperty", New Object() {"Simulation", "SimulationEndTime", "50"})
 
-            'Click 'Add Part' button
-            ExecuteMethod("ClickToolbarItem", New Object() {"AddPartToolStripButton"})
-
             'Add a root cylinder part.
             AddRootPartType("Box")
-
-            'Click 'Add DataTool' button
-            ExecuteMethod("ClickToolbarItem", New Object() {"AddToolToolStripButton"})
 
             'Select the LineChart to add.
             AddChart("Line Chart")
@@ -55,10 +46,8 @@ Namespace CreationTests
             'Select the Chart axis
             ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1"})
 
-            'Click 'Add Chart Item' button
-            ExecuteMethod("ClickToolbarItem", New Object() {"AddDataItemToolStripButton"})
-
-            AddRootPartToChart()
+            'Add root to chart
+            AddItemToChart("Structure_1\Root")
 
             'Set the name of the data chart item to root_y.
             ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root", "Name", "Root_Y"})
@@ -83,7 +72,8 @@ Namespace CreationTests
             ExecuteMethod("ClickToolbarItem", New Object() {"NewToolStripButton"})
 
             'Enter text and verify error. Verify the error.
-            NewProjectDlg_EnterNameAndPath_Error("TestProject", m_strRootFolder & "\Libraries\AnimatTesting\TestProjects\CreationTests")
+            ExecuteActiveDialogMethod("SetProjectParams", New Object() {"TestProject", m_strRootFolder & "\Libraries\AnimatTesting\TestProjects\CreationTests"})
+            ExecuteActiveDialogMethod("ClickOkButton", Nothing)
 
         End Sub
 

@@ -13,7 +13,7 @@ Imports AnimatGUI.Framework
 Namespace Forms.Tools
 
     Public Class Preference
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits AnimatGUI.Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -246,6 +246,8 @@ Namespace Forms.Tools
         End Sub
 
         Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
+
             Try
                 cbUpdateInterval.SelectedIndex = Util.Application.AutoUpdateInterval
             Catch ex As System.Exception

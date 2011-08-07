@@ -117,5 +117,8 @@
 #define Vs_Err_lInvalidLightType -4038
 #define Vs_Err_strInvalidLightType "Invalid light type."
 
+#define Vs_Err_lCollisionGeomNotDefined -4039
+#define Vs_Err_strCollisionGeomNotDefined "Collision geometry not defined."
+
 #endif // __VS_ERROR_CONSTANTS_H__
 

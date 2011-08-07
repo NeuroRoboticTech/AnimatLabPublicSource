@@ -13,7 +13,7 @@ Imports AnimatGUI.Framework
 Namespace Forms.Tools
 
     Public Class SelectDataItem
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -366,6 +366,18 @@ Namespace Forms.Tools
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
 
+        End Sub
+
+        Public Overridable Sub SelectItem(ByVal strPath As String)
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = Util.FindTreeNodeByPath(strPath, tvStructures.Nodes)
+            tvStructures.SelectedNode = tnNode
+        End Sub
+
+        Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
+
+            m_btnOk = Me.btnOk
+            m_btnCancel = Me.btnCancel
         End Sub
 
 #End Region

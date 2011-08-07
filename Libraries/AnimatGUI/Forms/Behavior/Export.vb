@@ -13,7 +13,7 @@ Imports AnimatGUI.Framework
 Namespace Forms.Behavior
 
     Public Class Export
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits AnimatGUI.Forms.AnimatDialog
 
         Protected m_beEditor As Forms.Behavior.Editor
 

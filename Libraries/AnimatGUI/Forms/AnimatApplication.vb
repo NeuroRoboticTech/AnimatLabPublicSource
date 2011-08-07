@@ -1145,6 +1145,8 @@ Namespace Forms
         Protected m_tnAutomationTreeNode As Crownwood.DotNetMagic.Controls.Node
         Protected m_piAutomationPropInfo As PropertyInfo
         Protected m_oAutomationPropertyValue As Object
+        Protected m_doAutomationStructure As DataObjects.Physical.PhysicalStructure
+        Protected m_doAutomationBodyPart As DataObjects.Physical.BodyPart
 
 #Region " Preferences "
 
@@ -1669,7 +1671,7 @@ Namespace Forms
                 Me.LastAutoUpdateTime = Now
                 Util.UpdateConfigFile()
             ElseIf m_bAnnouceUpdates = True Then
-                MessageBox.Show("Unable to ping host!")
+                Util.ShowMessage("Unable to ping host!")
             End If
 
         End Sub
@@ -1745,29 +1747,29 @@ Namespace Forms
 
             Try
 
-                'MessageBox.Show("I am about to open the 'software' registry subkey for read-only access!")
+                'Util.ShowMessage("I am about to open the 'software' registry subkey for read-only access!")
 
                 Dim rkSoftware As Microsoft.Win32.RegistryKey
                 Try
                     rkSoftware = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software", False)
                 Catch ex As System.Exception
-                    'MessageBox.Show("Error opening 'software' for read-only access: " & ex.Message)
+                    'Util.ShowMessage("Error opening 'software' for read-only access: " & ex.Message)
                     'If we get an error here then assume that we can not open the registry and jump out.
                     Return
                 End Try
 
-                'MessageBox.Show("I am about to open the 'FLEXlm License Manager' registry subkey for read-only access!")
+                'Util.ShowMessage("I am about to open the 'FLEXlm License Manager' registry subkey for read-only access!")
 
                 Dim rkKey As Microsoft.Win32.RegistryKey = rkSoftware.OpenSubKey("FLEXlm License Manager", False)
 
                 If rkKey Is Nothing Then
 
-                    'MessageBox.Show("'FLEXlm License Manager' subkey was not found. I am opening it for write access")
+                    'Util.ShowMessage("'FLEXlm License Manager' subkey was not found. I am opening it for write access")
 
                     Try
                         rkSoftware = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software", True)
                     Catch ex As System.Exception
-                        'MessageBox.Show("Error opening 'software' for write access: " & ex.Message)
+                        'Util.ShowMessage("Error opening 'software' for write access: " & ex.Message)
                         'If we get an error here then assume that we can not open the registry for writing and jump out.
                         Return
                     End Try
@@ -1775,20 +1777,20 @@ Namespace Forms
                     rkKey = rkSoftware.CreateSubKey("FLEXlm License Manager")
                 End If
 
-                'MessageBox.Show("I am attempting to get the item names under 'FLEXlm License Manager'")
+                'Util.ShowMessage("I am attempting to get the item names under 'FLEXlm License Manager'")
 
                 Dim aryNames As String() = rkKey.GetValueNames()
 
                 For Each strName As String In aryNames
                     If strName.Trim.ToUpper() = "MATHNGIN_LICENSE_FILE" Then
-                        'MessageBox.Show("'MATHNGIN_LICENSE_FILE' was found. I am exiting")
+                        'Util.ShowMessage("'MATHNGIN_LICENSE_FILE' was found. I am exiting")
                         Return
                     End If
                 Next
 
                 'We may have gotten here by only opening the system to read, now lets try and open it for writing
                 Try
-                    'MessageBox.Show("I am about to open the 'FLEXlm License Manager' registry subkey for write access!")
+                    'Util.ShowMessage("I am about to open the 'FLEXlm License Manager' registry subkey for write access!")
 
                     rkKey = rkSoftware.OpenSubKey("FLEXlm License Manager", True)
                 Catch ex As System.Exception
@@ -1796,14 +1798,14 @@ Namespace Forms
                     Return
                 End Try
 
-                'MessageBox.Show("I am about to write the 'MATHNGIN_LICENSE_FILE' item")
+                'Util.ShowMessage("I am about to write the 'MATHNGIN_LICENSE_FILE' item")
 
                 'If we get here then the license file registry entry does not exist so lets add it.
                 Dim strDir As String = Util.Application.ApplicationDirectory
                 strDir = strDir.Substring(0, strDir.Length - 1)
                 rkKey.SetValue("MATHNGIN_LICENSE_FILE", strDir)
 
-                'MessageBox.Show("I am finished messing with the registry")
+                'Util.ShowMessage("I am finished messing with the registry")
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -1973,7 +1975,7 @@ Namespace Forms
                                                 bAddModule = True
                                             End If
                                         Catch ex As System.Exception
-                                            MessageBox.Show("Error loading rigid body part")
+                                            Util.ShowMessage("Error loading rigid body part")
                                         End Try
                                     ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Physical.Joint)) Then
                                         Try
@@ -1986,7 +1988,7 @@ Namespace Forms
                                                 bAddModule = True
                                             End If
                                         Catch ex As System.Exception
-                                            MessageBox.Show("Error loading joint part")
+                                            Util.ShowMessage("Error loading joint part")
                                         End Try
                                     ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Gain)) Then
                                         Dim doGain As DataObjects.Gain = CreateGain(assemModule, tpClass, Nothing)
@@ -2065,7 +2067,7 @@ Namespace Forms
                                      "to fix this error." & vbCrLf & strFailedLoad
                     End If
 
-                    MessageBox.Show(strMessage)
+                    Util.ShowMessage(strMessage)
                 End If
             End Try
 
@@ -2099,7 +2101,7 @@ Namespace Forms
                 End If
             Catch ex As System.Exception
                 If ex.Message <> "Cannot create an abstract class." Then
-                    MessageBox.Show("CreateNode: " & tpClass.FullName)
+                    Util.ShowMessage("CreateNode: " & tpClass.FullName)
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End If
             End Try
@@ -2115,7 +2117,7 @@ Namespace Forms
                 End If
             Catch ex As System.Exception
                 If ex.Message <> "Cannot create an abstract class." Then
-                    MessageBox.Show("CreateLink: " & tpClass.FullName)
+                    Util.ShowMessage("CreateLink: " & tpClass.FullName)
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End If
             End Try
@@ -2131,7 +2133,7 @@ Namespace Forms
                 End If
             Catch ex As System.Exception
                 If ex.Message <> "Cannot create an abstract class." Then
-                    MessageBox.Show("CreateNeuralModule: " & tpClass.FullName)
+                    Util.ShowMessage("CreateNeuralModule: " & tpClass.FullName)
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End If
             End Try
@@ -2147,7 +2149,7 @@ Namespace Forms
                 End If
             Catch ex As System.Exception
                 If ex.Message <> "Cannot create an abstract class." Then
-                    MessageBox.Show("CreateToolForm: " & tpClass.FullName)
+                    Util.ShowMessage("CreateToolForm: " & tpClass.FullName)
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End If
             End Try
@@ -2163,7 +2165,7 @@ Namespace Forms
                 End If
             Catch ex As System.Exception
                 If ex.Message <> "Cannot create an abstract class." Then
-                    MessageBox.Show("CreateRigidBody: " & tpClass.FullName)
+                    Util.ShowMessage("CreateRigidBody: " & tpClass.FullName)
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End If
             End Try
@@ -2179,7 +2181,7 @@ Namespace Forms
                 End If
             Catch ex As System.Exception
                 If ex.Message <> "Cannot create an abstract class." Then
-                    MessageBox.Show("CreateJoint: " & tpClass.FullName)
+                    Util.ShowMessage("CreateJoint: " & tpClass.FullName)
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End If
             End Try
@@ -2195,7 +2197,7 @@ Namespace Forms
                 End If
             Catch ex As System.Exception
                 If ex.Message <> "Cannot create an abstract class." Then
-                    MessageBox.Show("CreateGain: " & tpClass.FullName)
+                    Util.ShowMessage("CreateGain: " & tpClass.FullName)
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End If
             End Try
@@ -2211,7 +2213,7 @@ Namespace Forms
                 End If
             Catch ex As System.Exception
                 If ex.Message <> "Cannot create an abstract class." Then
-                    MessageBox.Show("CreateProgramModule: " & tpClass.FullName)
+                    Util.ShowMessage("CreateProgramModule: " & tpClass.FullName)
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End If
             End Try
@@ -2227,7 +2229,7 @@ Namespace Forms
                 End If
             Catch ex As System.Exception
                 If ex.Message <> "Cannot create an abstract class." Then
-                    MessageBox.Show("CreateExternalStimuli: " & tpClass.FullName)
+                    Util.ShowMessage("CreateExternalStimuli: " & tpClass.FullName)
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End If
             End Try
@@ -3212,7 +3214,7 @@ Namespace Forms
 
                 Util.DisableDirtyFlags = False
 
-                MessageBox.Show("Standalone Control Files Created")
+                Util.ShowMessage("Standalone Control Files Created")
 
                 Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Finished successful save of standalone config file")
 
@@ -3253,7 +3255,7 @@ Namespace Forms
 
                 Util.DisableDirtyFlags = False
 
-                'MessageBox.Show("Standalone Control Files Created")
+                'Util.ShowMessage("Standalone Control Files Created")
 
                 Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Finished successful save of standalone config file")
 
@@ -3508,7 +3510,7 @@ Namespace Forms
 
             'First check to see if the application is dirty. If it is then ask to save the project
             If Me.IsDirty Then
-                eResult = MessageBox.Show("There are unsaved changes in the project. " & _
+                eResult = Util.ShowMessage("There are unsaved changes in the project. " & _
                                                                                     "Do you want to save them before you exit?", _
                                                                                     "Save Changes", MessageBoxButtons.YesNoCancel)
                 If eResult = DialogResult.Cancel Then
@@ -4012,8 +4014,9 @@ Namespace Forms
             Try
                 Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-                Me.SimulationInterface.StopSimulation()
+                Me.SimulationInterface.PauseSimulation()
                 RaiseEvent SimulationStopped()
+                Me.SimulationInterface.StopSimulation()
 
                 Util.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Simulation was stopped.")
 
@@ -4044,6 +4047,10 @@ Namespace Forms
                 Return Me.Invoke(New ExecuteMethodDelegate(AddressOf ExecuteMethod), New Object() {strMethodName, aryParams})
             End If
 
+            If Util.ActiveDialogs.Count > 0 Then
+                Throw New System.Exception("You attempted to execute an application method while there was an active dialog.")
+            End If
+
             Dim oMethod As MethodInfo = Me.GetType().GetMethod(strMethodName)
 
             If oMethod Is Nothing Then
@@ -4058,7 +4065,7 @@ Namespace Forms
                 Throw New System.Exception("No project is currently loaded.")
             End If
 
-            m_tnAutomationTreeNode = Util.ProjectWorkspace.FindTreeNodeByPath(strPath)
+            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
 
             m_timerAutomation = New System.Timers.Timer(10)
             AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnSelectWorkspaceItemTimer
@@ -4093,7 +4100,7 @@ Namespace Forms
                 Throw New System.Exception("No project is currently loaded.")
             End If
 
-            m_tnAutomationTreeNode = Util.ProjectWorkspace.FindTreeNodeByPath(strPath)
+            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
 
             m_timerAutomation = New System.Timers.Timer(10)
             AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnDblClickWorkspaceItemTimer
@@ -4179,7 +4186,7 @@ Namespace Forms
                 Throw New System.Exception("No project is currently loaded.")
             End If
 
-            m_tnAutomationTreeNode = Util.ProjectWorkspace.FindTreeNodeByPath(strPath)
+            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
 
             If m_tnAutomationTreeNode.Tag Is Nothing Then
                 Throw New System.Exception("No object was found in the tree node path '" & strPath & "'.")
@@ -4207,26 +4214,204 @@ Namespace Forms
             Util.ProjectWorkspace.RefreshProperties()
         End Sub
 
-        Private Delegate Sub OnSetObjectPropertyDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+        Public Function GetObjectProperty(ByVal strPath As String, ByVal strPropertyName As String) As Object
+            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
+                Throw New System.Exception("No project is currently loaded.")
+            End If
 
-        Protected Overridable Sub OnSetObjectPropertyTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
+
+            If m_tnAutomationTreeNode.Tag Is Nothing Then
+                Throw New System.Exception("No object was found in the tree node path '" & strPath & "'.")
+            End If
+
+            Dim aryPropPath() As String = Split(strPropertyName, ".")
+            Dim iIdx As Integer = 0
+            Dim oObj As Object = m_tnAutomationTreeNode.Tag
+            For Each strPropName As String In aryPropPath
+                m_piAutomationPropInfo = oObj.GetType().GetProperty(strPropName)
+
+                If m_piAutomationPropInfo Is Nothing Then
+                    Throw New System.Exception("Property name '" & strPropName & "' not found in Path '" & strPropertyName & "'.")
+                End If
+
+                iIdx = iIdx + 1
+                'Dont get the obj on the last one.
+                If iIdx < aryPropPath.Length Then
+                    oObj = m_piAutomationPropInfo.GetValue(oObj, Nothing)
+                End If
+            Next
+
+            Dim obj As Object = m_piAutomationPropInfo.GetValue(oObj, Nothing)
+            Return obj
+        End Function
+
+        'Private Delegate Sub OnSetObjectPropertyDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        'Protected Overridable Sub OnSetObjectPropertyTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        '    m_timerAutomation.Enabled = False
+
+        '    If Me.InvokeRequired Then
+        '        Me.Invoke(New OnSetObjectPropertyDelegate(AddressOf OnSetObjectPropertyTimer), New Object() {sender, eProps})
+        '        Return
+        '    End If
+
+        '    Try
+        '        RemoveHandler m_timerAutomation.Elapsed, AddressOf OnSelectWorkspaceItemTimer
+        '        m_timerAutomation = Nothing
+
+        '    Catch ex As System.Exception
+        '        AnimatGUI.Framework.Util.DisplayError(ex)
+        '    End Try
+        'End Sub
+
+        Public Sub SelectWorkspaceTabPage(ByVal strPath As String)
+            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
+                Throw New System.Exception("No project is currently loaded.")
+            End If
+
+            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
+
+            m_timerAutomation = New System.Timers.Timer(10)
+            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnSelectTabPageTimer
+            m_timerAutomation.Enabled = True
+
+        End Sub
+
+        Private Delegate Sub OnSelectTabPageTimerDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        Protected Overridable Sub OnSelectTabPageTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
 
             m_timerAutomation.Enabled = False
 
             If Me.InvokeRequired Then
-                Me.Invoke(New OnSetObjectPropertyDelegate(AddressOf OnSetObjectPropertyTimer), New Object() {sender, eProps})
+                Me.Invoke(New OnSelectTabPageTimerDelegate(AddressOf OnSelectTabPageTimer), New Object() {sender, eProps})
                 Return
             End If
 
             Try
-                RemoveHandler m_timerAutomation.Elapsed, AddressOf OnSelectWorkspaceItemTimer
+                RemoveHandler m_timerAutomation.Elapsed, AddressOf OnSelectTabPageTimer
                 m_timerAutomation = Nothing
 
+                Dim oTab As Crownwood.DotNetMagic.Controls.TabPage
+                If Not m_tnAutomationTreeNode.Tag Is Nothing AndAlso Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(AnimatForm)) Then
+                    Dim frmPage As AnimatForm = DirectCast(m_tnAutomationTreeNode.Tag, AnimatForm)
+                    oTab = frmPage.TabPage
+                ElseIf Not m_tnAutomationTreeNode.Tag Is Nothing AndAlso Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(DataObjects.Physical.PhysicalStructure), False) Then
+                    Dim doStruct As DataObjects.Physical.PhysicalStructure = DirectCast(m_tnAutomationTreeNode.Tag, DataObjects.Physical.PhysicalStructure)
+                    If Not doStruct.BodyEditor Is Nothing Then
+                        oTab = doStruct.BodyEditor.TabPage
+                    End If
+                End If
 
+                If Not oTab Is Nothing Then
+                    oTab.Selected = True
+                End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+        End Sub
+
+        Public Sub SelectTrackItems(ByVal strPath As String, ByVal strStructure As String, ByVal strPart As String)
+            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
+                Throw New System.Exception("No project is currently loaded.")
+            End If
+
+            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
+
+            If strStructure = "No Tracking" Then
+                m_doAutomationStructure = Nothing
+                m_doAutomationBodyPart = Nothing
+            Else
+                m_doAutomationStructure = DirectCast(Util.Environment.Structures.FindDataObjectByName(strStructure), DataObjects.Physical.PhysicalStructure)
+                m_doAutomationBodyPart = m_doAutomationStructure.FindBodyPartByName(strPart, False)
+            End If
+
+            m_timerAutomation = New System.Timers.Timer(10)
+            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnSelectTrackItemsTimer
+            m_timerAutomation.Enabled = True
+
+        End Sub
+
+        Private Delegate Sub OnSelectTrackItemsTimerDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        Protected Overridable Sub OnSelectTrackItemsTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+            m_timerAutomation.Enabled = False
+
+            If Me.InvokeRequired Then
+                Me.Invoke(New OnSelectTrackItemsTimerDelegate(AddressOf OnSelectTrackItemsTimer), New Object() {sender, eProps})
+                Return
+            End If
+
+            Try
+                RemoveHandler m_timerAutomation.Elapsed, AddressOf OnSelectTrackItemsTimer
+                m_timerAutomation = Nothing
+
+                Dim frmPage As SimulationWindow
+                If Not m_tnAutomationTreeNode.Tag Is Nothing AndAlso Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(SimulationWindow)) Then
+                    frmPage = DirectCast(m_tnAutomationTreeNode.Tag, SimulationWindow)
+                ElseIf Not m_tnAutomationTreeNode.Tag Is Nothing AndAlso Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(DataObjects.Physical.PhysicalStructure), False) Then
+                    Dim doStruct As DataObjects.Physical.PhysicalStructure = DirectCast(m_tnAutomationTreeNode.Tag, DataObjects.Physical.PhysicalStructure)
+                    frmPage = doStruct.BodyEditor
+                End If
+
+                If Not frmPage Is Nothing Then
+                    If m_doAutomationStructure Is Nothing Then
+                        frmPage.cboStructure.SelectedIndex = 0
+                        frmPage.cboBodyPart.SelectedItem = Nothing
+                    Else
+                        frmPage.cboStructure.SelectedItem = m_doAutomationStructure
+                        frmPage.GenerateBodyPartDropDown()
+                        frmPage.cboBodyPart.SelectedItem = m_doAutomationBodyPart
+                    End If
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Delegate Sub ExecuteActiveDialogMethodDelegate(ByVal strMethodName As String, ByVal aryParams() As Object)
+
+        Public Overridable Function ExecuteActiveDialogMethod(ByVal strMethodName As String, ByVal aryParams() As Object) As Object
+            If Me.InvokeRequired Then
+                Return Me.Invoke(New ExecuteActiveDialogMethodDelegate(AddressOf ExecuteActiveDialogMethod), New Object() {strMethodName, aryParams})
+            End If
+
+            If Util.ActiveDialogs.Count = 0 Then
+                Throw New System.Exception("No dialog is currently active.")
+            End If
+
+            Dim oMethod As MethodInfo = Util.ActiveDialogs(0).GetType().GetMethod(strMethodName)
+
+            If oMethod Is Nothing Then
+                Throw New System.Exception("Method name '" & strMethodName & "' not found.")
+            End If
+            Return oMethod.Invoke(Util.ActiveDialogs(0), aryParams)
+
+        End Function
+
+        Public Overridable Function ActiveDialogName() As String
+            If Util.ActiveDialogs.Count > 0 Then
+                Dim frmDlg As System.Windows.Forms.Form = DirectCast(Util.ActiveDialogs(0), System.Windows.Forms.Form)
+                Return frmDlg.Name
+            End If
+
+            Return "<No Dialog>"
+        End Function
+
+        Private Delegate Sub CloseActiveDialogsDelegate()
+
+        Public Overridable Sub CloseActiveDialogs()
+            If Me.InvokeRequired Then
+                Me.Invoke(New CloseActiveDialogsDelegate(AddressOf CloseActiveDialogs), Nothing)
+                Return
+            End If
+
+            Util.ClearActiveDialogs(True)
         End Sub
 
 #End Region
@@ -4869,6 +5054,9 @@ Namespace Forms
                         AddPartToolStripButton.Checked = False
                     End If
                 End If
+
+                Util.Simulation.VisualSelectionMode = Simulation.enumVisualSelectionMode.SelectCollisions
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -4914,15 +5102,15 @@ Namespace Forms
             CompareItems()
         End Sub
 
-        Public Sub OnCopyFromWorkspace(ByVal sender As Object, ByVal e As system.EventArgs) Handles CopyToolStripButton.Click, CopyToolStripMenuItem.Click
+        Public Sub OnCopyFromWorkspace(ByVal sender As Object, ByVal e As System.EventArgs) Handles CopyToolStripButton.Click, CopyToolStripMenuItem.Click
 
         End Sub
 
-        Public Sub OnCutFromWorkspace(ByVal sender As Object, ByVal e As system.EventArgs) Handles CutToolStripButton.Click, CutToolStripMenuItem.Click
+        Public Sub OnCutFromWorkspace(ByVal sender As Object, ByVal e As System.EventArgs) Handles CutToolStripButton.Click, CutToolStripMenuItem.Click
 
         End Sub
 
-        Public Sub OnPasteFromWorkspace(ByVal sender As Object, ByVal e As system.EventArgs) Handles PasteToolStripButton.Click, PasteToolStripMenuItem.Click
+        Public Sub OnPasteFromWorkspace(ByVal sender As Object, ByVal e As System.EventArgs) Handles PasteToolStripButton.Click, PasteToolStripMenuItem.Click
 
         End Sub
 
@@ -5096,7 +5284,7 @@ Namespace Forms
 
                     If frmAnimat.IsDirty Then
                         Dim eResult As System.Windows.Forms.DialogResult = DialogResult.OK
-                        eResult = MessageBox.Show("There are unsaved changes in this form. " & _
+                        eResult = Util.ShowMessage("There are unsaved changes in this form. " & _
                                                                                             "Do you want to save them before you exit?", _
                                                                                             "Save Changes", MessageBoxButtons.YesNoCancel)
                         If eResult = DialogResult.Cancel Then

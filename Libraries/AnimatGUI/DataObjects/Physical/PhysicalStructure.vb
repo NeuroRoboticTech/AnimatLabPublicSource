@@ -151,7 +151,7 @@ Namespace DataObjects.Physical
                 End If
 
                 'If Me.Name = "Crayfish" AndAlso Not Value.Count = 20 Then
-                '    MessageBox.Show("Collision pairs messed up!!!")
+                '    Util.ShowMessage("Collision pairs messed up!!!")
                 'End If
 
                 m_aryCollisionExclusionPairs = Value
@@ -328,6 +328,12 @@ Namespace DataObjects.Physical
             rbRootToAdd.AfterAddBody()
 
             m_dbRoot.SelectItem()
+
+            If Not Me.BodyEditor Is Nothing Then
+                If Me.BodyEditor.cboBodyPart.SelectedItem Is Nothing Then
+                    Me.BodyEditor.cboBodyPart.SelectedItem = m_dbRoot
+                End If
+            End If
 
             'Me.ManualAddHistory(New AnimatGUI.Framework.UndoSystem.AddBodyPartEvent(Me.BodyEditor, Me, Nothing, m_dbRoot))
             Return True
@@ -714,7 +720,7 @@ Namespace DataObjects.Physical
 
             Try
                 Dim bDelete As Boolean = True
-                If bAskToDelete AndAlso MessageBox.Show("Are you certain that you want to permanently delete this " & _
+                If bAskToDelete AndAlso Util.ShowMessage("Are you certain that you want to permanently delete this " & _
                                     "structure\organism and all of its related files?", _
                                     "Delete Structure", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
                     bDelete = False

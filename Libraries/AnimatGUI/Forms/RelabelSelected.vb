@@ -13,7 +13,7 @@ Imports AnimatGUI.Framework
 Namespace Forms
 
     Public Class RelabelSelected
-        Inherits Crownwood.DotNetMagic.Forms.DotNetMagicForm
+        Inherits AnimatGUI.Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -150,7 +150,6 @@ Namespace Forms
 
 #End Region
 
-
 #Region " Attributes "
 
         Protected m_strNewLabel As String = ""
@@ -199,7 +198,12 @@ Namespace Forms
 #End Region
 
         Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
+
             Try
+                m_btnOk = Me.btnOk
+                m_btnCancel = Me.btnCancel
+
                 Me.txtNewLabel.Text = m_strNewLabel
                 Me.txtStartWith.Text = m_iStartWith.ToString()
                 Me.txtIncrementBy.Text = m_iIncrementBy.ToString()
