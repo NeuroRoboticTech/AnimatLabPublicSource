@@ -58,7 +58,7 @@ Namespace DataObjects.Physical.Bodies
             End Get
             Set(ByVal value As AnimatGUI.Framework.ScaledNumber)
                 If value.ActualValue <= 0 Then
-                    Throw New System.Exception("The Radius of the Sphere cannot be less than or equal to zero.")
+                    Throw New System.Exception("The radius of the sphere cannot be less than or equal to zero.")
                 End If
                 SetSimData("Radius", value.ActualValue.ToString, True)
                 m_snRadius.CopyData(value)

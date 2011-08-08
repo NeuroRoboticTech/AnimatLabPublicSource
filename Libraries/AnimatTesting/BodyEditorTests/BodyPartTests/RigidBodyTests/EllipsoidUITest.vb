@@ -96,9 +96,6 @@ Namespace BodyEditorTests
                     m_iSecondaryZoomDist1 = 340
                     m_iSecondaryZoomDist2 = 340
 
-                    'm_iSecondaryZoomDist1 = 340
-                    'm_iInitialZoomDist2 = 340
-
                     m_ptClickToAddChild = New Point(735, 387)
 
                     m_ptChildTranslateYAxisStart = New Point(712, 207)
