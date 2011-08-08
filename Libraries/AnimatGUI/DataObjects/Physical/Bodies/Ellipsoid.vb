@@ -97,7 +97,7 @@ Namespace DataObjects.Physical.Bodies
             End Get
             Set(ByVal value As Integer)
                 If value < 10 Then
-                    Throw New System.Exception("The number of Longtitude segments for the ellipsoid cannot be less than ten.")
+                    Throw New System.Exception("The number of longtitude segments for the ellipsoid cannot be less than ten.")
                 End If
                 SetSimData("LongtitudeSegments", value.ToString, True)
                 m_iLongtitudeSegments = value

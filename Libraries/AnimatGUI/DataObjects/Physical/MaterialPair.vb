@@ -1,4 +1,14 @@
-﻿Imports AnimatGUI.DataObjects.Physical
+﻿Imports System
+Imports System.Drawing
+Imports System.Collections
+Imports System.ComponentModel
+Imports System.Windows.Forms
+Imports System.Diagnostics
+Imports System.IO
+Imports System.Xml
+Imports AnimatGuiCtrls.Controls
+Imports AnimatGUI.DataObjects
+Imports AnimatGUI.DataObjects.Physical
 Imports AnimatGUI.Framework
 
 Namespace DataObjects.Physical
