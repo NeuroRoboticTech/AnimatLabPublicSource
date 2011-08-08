@@ -1242,7 +1242,7 @@ Namespace DataObjects.Physical
             Dim doOrganism As DataObjects.Physical.Organism
             For Each deEntry As DictionaryEntry In m_aryOrganisms
                 doOrganism = DirectCast(deEntry.Value, DataObjects.Physical.Organism)
-                doOrganism.SaveSimulationXml(oXml, Me)
+                doOrganism.SaveSimulationXml(oXml, Me, "Organism")
             Next
             oXml.OutOfElem() 'Outof Organisms Element
 
@@ -1251,7 +1251,7 @@ Namespace DataObjects.Physical
             Dim doStructure As DataObjects.Physical.PhysicalStructure
             For Each deEntry As DictionaryEntry In m_aryStructures
                 doStructure = DirectCast(deEntry.Value, DataObjects.Physical.PhysicalStructure)
-                doStructure.SaveSimulationXml(oXml, Me)
+                doStructure.SaveSimulationXml(oXml, Me, "Structure")
             Next
             oXml.OutOfElem() 'Outof Structures Element
 

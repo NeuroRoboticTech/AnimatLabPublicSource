@@ -222,8 +222,8 @@ Namespace DataObjects.Behavior.Nodes
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node)
             MyBase.CreateWorkspaceTreeView(doParent, doParentNode)
 
-            Dim tnNodes As Crownwood.DotNetMagic.Controls.Node = Util.ProjectWorkspace.AddTreeNode(doParentNode, "Nodes", "AnimatGUI.DefaultObject.gif")
-            Dim tnLinks As Crownwood.DotNetMagic.Controls.Node = Util.ProjectWorkspace.AddTreeNode(doParentNode, "Links", "AnimatGUI.DefaultLink.gif")
+            Dim tnNodes As Crownwood.DotNetMagic.Controls.Node = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Nodes", "AnimatGUI.DefaultObject.gif")
+            Dim tnLinks As Crownwood.DotNetMagic.Controls.Node = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Links", "AnimatGUI.DefaultLink.gif")
 
             Dim doData As DataObjects.Behavior.Data
             For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
@@ -287,6 +287,24 @@ Namespace DataObjects.Behavior.Nodes
             Return doObject
 
         End Function
+
+        Public Overrides Sub InitializeSimulationReferences()
+            'Do not call base class Initialize method here. The subsystem is not a node that is within the 
+            'simulator. It is a GUI editor object only. It is merely a place holder for other objects in the 
+            ' nervous system.
+            ' 
+            Dim doData As DataObjects.Behavior.Data
+            For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
+                doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
+                doData.InitializeSimulationReferences()
+            Next
+
+            For Each deEntry As DictionaryEntry In m_aryBehavioralLinks
+                doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
+                doData.InitializeSimulationReferences()
+            Next
+
+        End Sub
 
 #Region " DataObject Methods "
 

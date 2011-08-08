@@ -71,6 +71,13 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property TypeName() As String
+            Get
+                Return "Organism"
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -492,7 +499,13 @@ Namespace DataObjects.Physical
             Dim nmModule As DataObjects.Behavior.NeuralModule
             For Each deEntry As DictionaryEntry In m_aryNeuralModules
                 nmModule = DirectCast(deEntry.Value, DataObjects.Behavior.NeuralModule)
-                nmModule.InitializeSimulationReferences()
+
+                'Only attempt to initialize the neural module if it exists in the simulation.
+                'The problem is that a neural module is not created in the simulation unless it 
+                ' has neurons. 
+                If nmModule.SimObjectExists Then
+                    nmModule.InitializeSimulationReferences()
+                End If
             Next
 
             If Not m_bnRootSubSystem Is Nothing Then
@@ -511,23 +524,6 @@ Namespace DataObjects.Physical
             'Next
 
         End Sub
-
-
-#Region " Add-Remove to List Methods "
-
-        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeAddToList(bThrowError)
-            Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "Organism", Me.GetSimulationXml("Organism"), bThrowError)
-            InitializeSimulationReferences()
-        End Sub
-
-        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeRemoveFromList(bThrowError)
-            Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, "Organism", Me.ID, bThrowError)
-            m_doInterface = Nothing
-        End Sub
-
-#End Region
 
 #End Region
 

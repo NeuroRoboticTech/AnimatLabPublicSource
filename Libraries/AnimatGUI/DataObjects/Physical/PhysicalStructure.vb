@@ -653,7 +653,7 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
-            MyBase.SaveSimulationXml(oXml, nmParentControl, "Structure")
+            MyBase.SaveSimulationXml(oXml, nmParentControl, strName)
 
             Try
                 oXml.IntoElem()
@@ -755,13 +755,13 @@ Namespace DataObjects.Physical
 
         Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
             MyBase.BeforeAddToList(bThrowError)
-            Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "Structure", Me.GetSimulationXml("Structure"), bThrowError)
+            Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, Me.TypeName, Me.GetSimulationXml(Me.TypeName), bThrowError)
             InitializeSimulationReferences()
         End Sub
 
         Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
             MyBase.BeforeRemoveFromList(bThrowError)
-            Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, "Structure", Me.ID, bThrowError)
+            Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, Me.TypeName, Me.ID, bThrowError)
             m_doInterface = Nothing
         End Sub
 

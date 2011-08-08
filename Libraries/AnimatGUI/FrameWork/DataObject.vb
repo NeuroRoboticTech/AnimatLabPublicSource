@@ -654,6 +654,15 @@ Namespace Framework
             End If
         End Sub
 
+        'Check to see if a simulation object exists that matches this object.
+        Public Overridable Function SimObjectExists() As Boolean
+            If Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
+                Return Util.Application.SimulationInterface.FindItem(Me.ID, False)
+            End If
+
+            Return False
+        End Function
+
         Public Overridable Function SetSimData(ByVal sDataType As String, ByVal sValue As String, ByVal bThrowError As Boolean) As Boolean
             If Not m_doInterface Is Nothing Then
                 Return m_doInterface.SetData(sDataType, sValue, bThrowError)
