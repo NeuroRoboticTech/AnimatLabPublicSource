@@ -1,5 +1,15 @@
-﻿Namespace DataObjects.Physical
+﻿Imports System
+Imports System.Drawing
+Imports System.Collections
+Imports System.ComponentModel
+Imports System.Windows.Forms
+Imports System.Diagnostics
+Imports System.IO
+Imports System.Xml
+Imports AnimatGuiCtrls.Controls
+Imports AnimatGUI.DataObjects
 
+Namespace DataObjects.Physical
 
     ' This is what each rigid body will have as a property. It can have a name like "concrete" for example. '
     Public Class MaterialType
@@ -12,7 +22,6 @@
 #Region " Properties "
 
 #End Region
-
 
 #Region " Methods "
 
@@ -36,20 +45,25 @@
             Return doItem
         End Function
 
-        Public Overridable Sub AfterAddToList(Optional ByVal bThrowError As Boolean = True)
+        Public Overrides Sub AfterAddToList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.AfterAddToList(bThrowError)
             'stub for now
             'When a new materialType is added to the collection we need to create new materialpair objects for all the various combinations
             ' (you will need to make sure that you only do one combination pair
             'add the needed materialpair combinations. 
         End Sub
 
-        Public Overridable Sub AfterRemoveFromList(ByVal replaceMaterial As MaterialType, Optional ByVal bThrowError As Boolean = True)
+        'This is the new event that rigid bodies will subscribe to when they set the material type for themselves.
+        'When this is fired they will replace this material type with the new one that is passed in. Within the 
+        ' material editor window they will be able to delete a material type. When they do we will first open a new
+        ' dialog to allow them to pick the new material. If they hit ok then we will then call ReplaceMaterial to signla
+        ' this event to all subscribing objects.
+        Public Event MaterialReplaced(ByVal doNewMaterial As MaterialType)
 
+        'This method is called after the users have picked the new material to switch to using.
+        Public Sub ReplaceMatierial(ByVal doNewMaterial As MaterialType)
+            RaiseEvent MaterialReplaced(doNewMaterial)
         End Sub
-
-        'Public Overridable Sub CopyData(ByVal mtMaterial As MaterialType)
-        '    'copy attributes from argument into Me
-        'End Sub
 
 #End Region
 
