@@ -105,6 +105,7 @@
     <Compile Include="AnimatUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\BodyPartUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\BoxUITest.vb" />
+    <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\ConeUITest.vb" />
     <Compile Include="CreationTests\NewProjectUITest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="UIMap.Designer.vb">
@@ -115,7 +116,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="UIMap.uitest" />
   </ItemGroup>
   <ItemGroup>

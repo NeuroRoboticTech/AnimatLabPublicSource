@@ -58,8 +58,11 @@ Namespace DataObjects.Physical.Bodies
                 Return m_snLowerRadius
             End Get
             Set(ByVal value As AnimatGUI.Framework.ScaledNumber)
-                If value.ActualValue <= 0 Then
-                    Throw New System.Exception("The LowerRadius of the cone cannot be less than or equal to zero.")
+                If value.ActualValue < 0 Then
+                    Throw New System.Exception("The lower radius of the cone cannot be less than zero.")
+                End If
+                If value.ActualValue = 0 AndAlso m_snUpperRadius.ActualValue = 0 Then
+                    Throw New System.Exception("Both the upper and lower radius cannot be zero.")
                 End If
                 SetSimData("LowerRadius", value.ActualValue.ToString, True)
                 m_snLowerRadius.CopyData(value)
@@ -71,8 +74,11 @@ Namespace DataObjects.Physical.Bodies
                 Return m_snUpperRadius
             End Get
             Set(ByVal value As AnimatGUI.Framework.ScaledNumber)
-                If value.ActualValue <= 0 Then
-                    Throw New System.Exception("The UpperRadius of the cone cannot be less than or equal to zero.")
+                If value.ActualValue < 0 Then
+                    Throw New System.Exception("The upper radius of the cone cannot be less than zero.")
+                End If
+                If value.ActualValue = 0 AndAlso m_snLowerRadius.ActualValue = 0 Then
+                    Throw New System.Exception("Both the upper and lower radius cannot be zero.")
                 End If
                 SetSimData("UpperRadius", value.ActualValue.ToString, True)
                 m_snUpperRadius.CopyData(value)
