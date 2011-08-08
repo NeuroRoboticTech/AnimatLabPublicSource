@@ -427,6 +427,8 @@
     <Compile Include="DataObjects\Physical\Light.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataObjects\Physical\MaterialPair.vb" />
+    <Compile Include="DataObjects\Physical\MaterialType .vb" />
     <Compile Include="DataObjects\Physical\MovableItem.vb" />
     <Compile Include="DataObjects\Physical\Odor.vb">
       <SubType>Code</SubType>
