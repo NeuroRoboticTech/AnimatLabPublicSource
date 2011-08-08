@@ -58,7 +58,7 @@ Namespace DataObjects.Physical.Bodies
             End Get
             Set(ByVal value As AnimatGUI.Framework.ScaledNumber)
                 If value.ActualValue <= 0 Then
-                    Throw New System.Exception("The Radius of the Cylinder cannot be less than or equal to zero.")
+                    Throw New System.Exception("The radius of the cylinder cannot be less than or equal to zero.")
                 End If
                 SetSimData("Radius", value.ActualValue.ToString, True)
                 m_snRadius.CopyData(value)
@@ -71,7 +71,7 @@ Namespace DataObjects.Physical.Bodies
             End Get
             Set(ByVal value As AnimatGUI.Framework.ScaledNumber)
                 If value.ActualValue <= 0 Then
-                    Throw New System.Exception("The height of the Cylinder cannot be less than or equal to zero.")
+                    Throw New System.Exception("The height of the cylinder cannot be less than or equal to zero.")
                 End If
                 SetSimData("Height", value.ActualValue.ToString, True)
                 m_snHeight.CopyData(value)
@@ -84,7 +84,7 @@ Namespace DataObjects.Physical.Bodies
             End Get
             Set(ByVal value As Integer)
                 If value < 10 Then
-                    Throw New System.Exception("The number of sides for the Cylinder cannot be less than ten.")
+                    Throw New System.Exception("The number of sides for the cylinder cannot be less than ten.")
                 End If
                 SetSimData("Sides", value.ToString, True)
                 m_iSides = value
