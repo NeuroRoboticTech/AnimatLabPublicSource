@@ -490,10 +490,20 @@ Namespace Forms.Tools
             Dim aryTestData(,) As Double
 
             'Load the template file data.
-            Util.ReadCSVFileToArray(Me.ExportDataFilename(strPrefix, strTemplatePath), aryTemplateColumns, aryTemplateData)
+            Dim strTempFile As String = Me.ExportDataFilename(strPrefix, strTemplatePath)
+            Util.ReadCSVFileToArray(strTempFile, aryTemplateColumns, aryTemplateData)
+
+            If aryTemplateColumns Is Nothing OrElse aryTemplateData Is Nothing Then
+                Throw New System.Exception("Could not read the template file. ('" & strTempFile & "')")
+            End If
 
             'Load the test file data.
-            Util.ReadCSVFileToArray(Me.ExportDataFilename(), aryTestColumns, aryTestData)
+            Dim strTestfile As String = Me.ExportDataFilename()
+            Util.ReadCSVFileToArray(strTestfile, aryTestColumns, aryTestData)
+
+            If aryTemplateColumns Is Nothing OrElse aryTemplateData Is Nothing Then
+                Throw New System.Exception("Could not read the test file. ('" & strTestfile & "')")
+            End If
 
             'Now lets compare the column names. We need to have the same number and they should match identically.
             CompareExportDataColumns(aryTemplateColumns, aryTestColumns)

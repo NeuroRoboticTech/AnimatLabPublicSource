@@ -546,57 +546,10 @@ Public MustInherit Class AnimatUITest
     End Sub
 
 #Region "GenerateCode"
-    ' '''<summary>
-    ' '''NewProjectDlg_EnterNameAndPath - Use 'NewProjectDlg_EnterNameAndPathParams' to pass parameters into this method.
-    ' '''</summary>
-    'Protected Overridable Sub NewProjectDlg_EnterNameAndPath(ByVal strProjectName As String, ByVal strPath As String)
-    '    Dim uITxtProjectNameEdit As WinEdit = Me.UIMap.UINewProjectWindow.UINewProjectWindow1.UITxtProjectNameEdit
-    '    Dim uITxtLocationEdit As WinEdit = Me.UIMap.UINewProjectWindow.UITxtLocationWindow.UITxtLocationEdit
-    '    Dim uIOKButton As WinButton = Me.UIMap.UINewProjectWindow.UIOKWindow.UIOKButton
 
-    '    'Type 'TestProject' in 'txtProjectName' text box
-    '    uITxtProjectNameEdit.Text = strProjectName
+    Protected Overridable Sub ProcessExtraAddRootMethods(ByVal strPartType As String)
 
-    '    'Type '{Tab}' in 'txtProjectName' text box
-    '    Keyboard.SendKeys(uITxtProjectNameEdit, Me.UIMap.NewProjectDlg_EnterNameAndPathParams.UITxtProjectNameEditSendKeys, ModifierKeys.None)
-
-    '    'Type 'C:\Projects\AnimatLabSDK\Experiments' in 'txtLocation' text box
-    '    uITxtLocationEdit.Text = strPath
-
-    '    'Click 'Ok' button
-    '    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
-    '    'Mouse.Click(uIOKButton, New Point(34, 15))
-
-    '    Threading.Thread.Sleep(1000)
-    'End Sub
-
-     'Protected Overridable Sub NewProjectDlg_EnterNameAndPath_Error(ByVal strProjectName As String, ByVal strPath As String)
-    '    Dim uITxtProjectNameEdit As WinEdit = Me.UIMap.UINewProjectWindow.UINewProjectWindow1.UITxtProjectNameEdit
-    '    Dim uITxtLocationEdit As WinEdit = Me.UIMap.UINewProjectWindow.UITxtLocationWindow.UITxtLocationEdit
-    '    Dim uIOKButton As WinButton = Me.UIMap.UINewProjectWindow.UIOKWindow.UIOKButton
-
-    '    'Type 'TestProject' in 'txtProjectName' text box
-    '    uITxtProjectNameEdit.Text = strProjectName
-
-    '    'Type '{Tab}' in 'txtProjectName' text box
-    '    Keyboard.SendKeys(uITxtProjectNameEdit, Me.UIMap.NewProjectDlg_EnterNameAndPathParams.UITxtProjectNameEditSendKeys, ModifierKeys.None)
-
-    '    'Type 'C:\Projects\AnimatLabSDK\Experiments' in 'txtLocation' text box
-    '    uITxtLocationEdit.Text = strPath
-
-    '    'Click 'Ok' button
-    '    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
-
-    '    Threading.Thread.Sleep(100)
-
-    '    'Assert that the error box showed up with the correct ending text.
-    '    Me.UIMap.AssertNewProjectAlreadyExists()
-
-    '    'Close the error box and new project window.
-    '    Me.UIMap.CloseNewProjectErrorWindow()
-
-    '    Threading.Thread.Sleep(1000)
-    'End Sub
+    End Sub
 
     '''<summary>
     '''AddRootPartType - Use 'AddRootPartTypeParams' to pass parameters into this method.
@@ -609,6 +562,8 @@ Public MustInherit Class AnimatUITest
 
         'Click 'Ok' button
         ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+
+        ProcessExtraAddRootMethods(strPartType)
 
         Threading.Thread.Sleep(2000)
     End Sub
@@ -641,6 +596,13 @@ Public MustInherit Class AnimatUITest
         End While
     End Sub
 
+    Protected Overridable Sub ProcessExtraChildMethods(ByVal strPartType As String, ByVal strJointType As String)
+
+    End Sub
+
+    Protected Overridable Sub ProcessExtraChildJointMethods(ByVal strPartType As String, ByVal strJointType As String)
+
+    End Sub
 
     '''<summary>
     '''AddChildPartTypeWithJoint - Use 'AddChildPartTypeWithJointParams' to pass parameters into this method.
@@ -657,12 +619,16 @@ Public MustInherit Class AnimatUITest
         'Click 'Ok' button
         ExecuteActiveDialogMethod("ClickOkButton", Nothing)
 
+        ProcessExtraChildMethods(strPartType, strJointType)
+
         OpenDialogAndWait("SelectPartType", Nothing, Nothing)
 
         ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strJointType})
 
         'Click 'Ok' button
         ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+
+        ProcessExtraChildJointMethods(strPartType, strJointType)
 
         Threading.Thread.Sleep(1000)
     End Sub

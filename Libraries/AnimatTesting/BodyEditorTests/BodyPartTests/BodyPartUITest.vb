@@ -26,6 +26,7 @@ Public MustInherit Class BodyPartUITest
 #Region "Attributes"
 
     Protected m_strPartType As String = "Box"
+    Protected m_bTestTexture As Boolean = True
 
     Protected m_ptInitialZoomStart As Point = New Point(877, 100)
     Protected m_iInitialZoomDist1 As Integer = 320
@@ -476,16 +477,18 @@ Public MustInherit Class BodyPartUITest
         'Set the shininess to an valid value.
         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Shininess", "129"}, "Shininess must be less than 128.")
 
-        'Set the texture to an valid value.
-        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Texture", _
-                                                                    (m_strRootFolder & "\bin\Resources\Bricks.bmp")})
-        'Set the texture to an invalid value.
-        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Texture", _
-                                                                    (m_strRootFolder & "\bin\Resources\Bricks.bmp")}, "The specified file does not exist: ", enumErrorTextType.BeginsWith)
+        If m_bTestTexture Then
+            'Set the texture to an valid value.
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Texture", _
+                                                                        (m_strRootFolder & "\bin\Resources\Bricks.bmp")})
+            'Set the texture to an invalid value.
+            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Texture", _
+                                                                        (m_strRootFolder & "\bin\Resources\Bricks.bmp")}, "The specified file does not exist: ", enumErrorTextType.BeginsWith)
 
-        'Set the texture to an invalid value.
-        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Texture", _
-                                                                    (m_strRootFolder & "\bin\Resources\Test.txt")}, "Unable to load the texture file. This does not appear to be a vaild image file.", enumErrorTextType.BeginsWith)
+            'Set the texture to an invalid value.
+            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Texture", _
+                                                                        (m_strRootFolder & "\bin\Resources\Test.txt")}, "Unable to load the texture file. This does not appear to be a vaild image file.", enumErrorTextType.BeginsWith)
+        End If
 
         'Set the visible to a valid value.
         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Visible", "False"})

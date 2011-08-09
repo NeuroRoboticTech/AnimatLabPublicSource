@@ -16,7 +16,8 @@ Namespace TypeHelpers
             Try
                 Dim openFileDialog1 As New OpenFileDialog()
 
-                Dim strFilter As String = "bmp files (*.bmp)|*.bmp|" & _
+                Dim strFilter As String = "All files|*.bmp;*.gif;*.exif;*.jpg;*.jpeg;*.png;*.tiff;|" & _
+                                          "bmp files (*.bmp)|*.bmp|" & _
                                           "gif files (*.gif)|*.gif|" & _
                                           "exif files (*.exif)|*.exif|" & _
                                           "jpg files (*.jpg)|*.jpg|" & _

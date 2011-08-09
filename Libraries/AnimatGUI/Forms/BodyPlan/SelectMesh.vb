@@ -78,6 +78,11 @@ Namespace Forms.BodyPlan
             End Try
         End Sub
 
+        Public Overridable Sub SetMeshParameters(ByVal strMeshFile As String, ByVal strMeshType As String)
+            txtMeshFile.Text = strMeshFile
+            cboMeshType.SelectedItem = strMeshType
+        End Sub
+
     End Class
 
 End Namespace
