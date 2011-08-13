@@ -105,6 +105,7 @@
     <Compile Include="AnimatUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\BodyPartUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\BoxUITest.vb" />
+    <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\TerrainUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\PlaneUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\TorusUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\MeshUITest.vb" />

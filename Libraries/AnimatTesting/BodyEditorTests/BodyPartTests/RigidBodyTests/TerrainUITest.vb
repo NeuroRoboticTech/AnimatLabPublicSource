@@ -11,7 +11,7 @@ Namespace BodyEditorTests
         Namespace RigidBodyTests
 
             <CodedUITest()>
-            Public Class PlaneUITest
+            Public Class TerrainUITest
                 Inherits BodyPartUITest
 
 #Region "Properties"
@@ -22,64 +22,83 @@ Namespace BodyEditorTests
                     End Get
                 End Property
 
+                Protected Overrides ReadOnly Property AllowRootRotations() As Boolean
+                    Get
+                        Return False
+                    End Get
+                End Property
+
 #End Region
 
 #Region "Methods"
 
                 <TestMethod()>
-                Public Sub TestPlane()
+                Public Sub TestTerrain()
                     TestPart()
                 End Sub
 
                 Protected Overrides Sub TestMovableRigidBodyProperties(ByVal strStructure As String, ByVal strPart As String)
                     MyBase.TestMovableRigidBodyProperties(strStructure, strPart)
 
-                    'Set the Size.X to a valid value.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Size.X", "15"})
+                    ''Set the Size.X to a valid value.
+                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Size.X", "15"})
 
-                    'Set the Size.X to zero
-                    ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Size.X", "0"}, "The size of the plane cannot be less than or equal to zero.")
+                    ''Set the Size.X to zero
+                    'ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Size.X", "0"}, "The size of the plane cannot be less than or equal to zero.")
 
-                    'Set the Size.X to a negative value
-                    ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Size.X", "-0.2"}, "The size of the plane cannot be less than or equal to zero.")
+                    ''Set the Size.X to a negative value
+                    'ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Size.X", "-0.2"}, "The size of the plane cannot be less than or equal to zero.")
 
-                    'Set the Size.X to a valid value.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Size.X", "10"})
-
-
-                    'Set the Size.Y to a valid value.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Size.Y", "15"})
-
-                    'Set the Size.Y to zero
-                    ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Size.Y", "0"}, "The size of the plane cannot be less than or equal to zero.")
-
-                    'Set the Size.Y to a negative value
-                    ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Size.Y", "-0.2"}, "The size of the plane cannot be less than or equal to zero.")
-
-                    'Set the Size.Y to a valid value.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Size.Y", "10"})
+                    ''Set the Size.X to a valid value.
+                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Size.X", "10"})
 
 
-                    'Set the WidthSegments to a valid value.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WidthSegments", "4"})
+                    ''Set the Size.Y to a valid value.
+                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Size.Y", "15"})
 
-                    'Set the WidthSegments to zero
-                    ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WidthSegments", "0"}, "The width segments cannot be less than or equal to zero.")
+                    ''Set the Size.Y to zero
+                    'ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Size.Y", "0"}, "The size of the plane cannot be less than or equal to zero.")
 
-                    'Set the WidthSegments to a negative value
-                    ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WidthSegments", "-2"}, "The width segments cannot be less than or equal to zero.")
+                    ''Set the Size.Y to a negative value
+                    'ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Size.Y", "-0.2"}, "The size of the plane cannot be less than or equal to zero.")
+
+                    ''Set the Size.Y to a valid value.
+                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Size.Y", "10"})
+
+
+                    ''Set the WidthSegments to a valid value.
+                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WidthSegments", "4"})
+
+                    ''Set the WidthSegments to zero
+                    'ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WidthSegments", "0"}, "The width segments cannot be less than or equal to zero.")
+
+                    ''Set the WidthSegments to a negative value
+                    'ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WidthSegments", "-2"}, "The width segments cannot be less than or equal to zero.")
 
 
 
-                    'Set the LengthSegments to a valid value.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LengthSegments", "4"})
+                    ''Set the LengthSegments to a valid value.
+                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LengthSegments", "4"})
 
-                    'Set the LengthSegments to zero
-                    ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LengthSegments", "0"}, "The length segments cannot be less than or equal to zero.")
+                    ''Set the LengthSegments to zero
+                    'ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LengthSegments", "0"}, "The length segments cannot be less than or equal to zero.")
 
-                    'Set the LengthSegments to a negative value
-                    ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LengthSegments", "-2"}, "The length segments cannot be less than or equal to zero.")
+                    ''Set the LengthSegments to a negative value
+                    'ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LengthSegments", "-2"}, "The length segments cannot be less than or equal to zero.")
 
+                    'For the terrain part we need to do an additional rotation so we can see the axis.
+                    DragMouse(m_ptTerrainAxisViewStart, m_ptTerrainAxisViewEnd, MouseButtons.Left, ModifierKeys.None, True)
+
+                End Sub
+
+                Protected Overrides Sub ProcessExtraAddRootMethods(ByVal strPartType As String)
+
+                    If strPartType = m_strPartType Then
+                        'Wait for the collision mesh dialog to show, fill it in and hit ok
+                        OpenDialogAndWait("SelectTerrain", Nothing, Nothing)
+                        ExecuteActiveDialogMethod("SetTerrainParameters", New Object() {(m_strRootFolder & "\bin\Resources\TerrainTest_HeightMap.jpg"), (m_strRootFolder & "\bin\Resources\TerrainTest_TextureMap.jpg"), 0.1, 0.1, 0.5})
+                        ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    End If
 
                 End Sub
 
@@ -116,35 +135,25 @@ Namespace BodyEditorTests
                 <TestInitialize()> Public Overrides Sub MyTestInitialize()
                     MyBase.MyTestInitialize()
 
-                    m_strPartType = "Plane"
-                    m_strProjectName = "PlaneTest"
+                    m_strPartType = "Terrain"
+                    m_strProjectName = "TerrainTest"
                     m_strSecondaryPartType = "Box"
                     m_strChildJoint = "Hinge"
                     m_strStruct2RootPart = "Sphere"
- 
+
+                    m_bTestTexture = False
+                    m_bTestDensity = False
+
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\BodyEditorTests\BodyPartTests\RigidBodyTests"
                     m_strTestDataPath = "\Libraries\AnimatTesting\TestData\BodyEditorTests\BodyPartTests\RigidBodyTests\" & m_strProjectName
 
                     m_strAmbient = "#AAAAAA"
-                    m_bTestDensity = False
 
-                    m_iInitialZoomDist1 = 160
+                    m_iInitialZoomDist1 = 150
                     m_iInitialZoomDist2 = 0
 
-                    m_ptRotatePartForTranslateStart = New Point(254, 311)
-                    m_ptRotatePartForTranslateEnd = New Point(1011, 435)
-
-                    m_ptTranslateXAxisStart = New Point(841, 476)
-                    m_ptTranslateXAxisEnd = New Point(1024, 618)
-
-                    m_ptRotateXAxisStart = New Point(633, 388)
-                    m_ptRotateXAxisEnd = New Point(620, 480)
-
-                    m_ptRotateYAxisStart = New Point(809, 345)
-                    m_ptRotateYAxisEnd = New Point(808, 415)
-
-                    m_ptRotateZAxisStart = New Point(716, 450)
-                    m_ptRotateZAxisEnd = New Point(787, 446)
+                    m_ptTranslateXAxisStart = New Point(866, 396)
+                    m_ptTranslateXAxisEnd = New Point(1065, 399)
 
                     m_ptChildTranslateZAxisStart = New Point(905, 395)
                     m_ptChildTranslateZAxisEnd = New Point(645, 398)

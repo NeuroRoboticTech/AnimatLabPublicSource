@@ -379,6 +379,8 @@ Public MustInherit Class AnimatUITest
         'Move axis
         DragMouse(ptAxisStart, ptAxisEnd, MouseButtons.Left)
 
+        Threading.Thread.Sleep(200)
+
         'Get the part and structure x position after movement
         Dim dblAfterPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis & ".ActualValue"), Double)
         Dim dblAfterStructPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure, "LocalPosition." & strWorldAxis & ".ActualValue"), Double)
@@ -400,6 +402,8 @@ Public MustInherit Class AnimatUITest
         'Move axis
         DragMouse(ptAxisStart, ptAxisEnd, MouseButtons.Left)
 
+        Threading.Thread.Sleep(200)
+
         'Get the part and structure x position before movement
         Dim dblAfterPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis & ".ActualValue"), Double)
 
@@ -420,6 +424,8 @@ Public MustInherit Class AnimatUITest
         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure, "LocalPosition.X", dblPosX.ToString})
         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure, "LocalPosition.Y", dblPosY.ToString})
         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure, "LocalPosition.Z", dblPosZ.ToString})
+
+        Threading.Thread.Sleep(50)
 
         'Verify that the structure position is correct now.
         Dim dblStructPosX As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure, "LocalPosition.X.ActualValue"), Double)
@@ -472,6 +478,8 @@ Public MustInherit Class AnimatUITest
         Dim dblPosWorld As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis & ".ActualValue"), Double)
         Dim dblPosLocal As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis & ".ActualValue"), Double)
 
+        Threading.Thread.Sleep(50)
+
         If Math.Abs(dblPosWorld - dblWorldTest) > dblMaxError Then
             Throw New System.Exception("Body part position does not match the world target value: " & dblPosWorld & ", recorded value: " & dblWorldTest)
         End If
@@ -507,6 +515,8 @@ Public MustInherit Class AnimatUITest
 
         'Move the root part along the axis using world coordinates.
         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis, dblRotation.ToString})
+
+        Threading.Thread.Sleep(50)
 
         'Now get the world position and verify it.
         Dim dblRealRot As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis & ".ActualValue"), Double)
@@ -703,10 +713,11 @@ Public MustInherit Class AnimatUITest
     Public Sub ZoomInOnPart(ByVal ptStart As Point, ByVal iAmount1 As Integer, Optional ByVal iAmount2 As Integer = 0)
         Dim uIStructure_1BodyClient As WinClient = Me.UIProjectWindow(m_strProjectName).UIStructure_1BodyWindow.UIStructure_1BodyClient
 
-        'Move using Right button 'Structure_1 Body' client
-        Mouse.StartDragging(uIStructure_1BodyClient, ptStart, MouseButtons.Right, ModifierKeys.None)
-        Mouse.StopDragging(uIStructure_1BodyClient, 0, iAmount1)
-        'Mouse.StopDragging(uISimulationControllerClient, New Point(873, 12))
+        If iAmount1 > 0 Then
+            'Move using Right button 'Structure_1 Body' client
+            Mouse.StartDragging(uIStructure_1BodyClient, ptStart, MouseButtons.Right, ModifierKeys.None)
+            Mouse.StopDragging(uIStructure_1BodyClient, 0, iAmount1)
+        End If
 
         'Move using Right button 'Structure_1 Body' client 
         If iAmount2 > 0 Then
@@ -714,7 +725,9 @@ Public MustInherit Class AnimatUITest
             Mouse.StopDragging(uIStructure_1BodyClient, 0, iAmount2)
         End If
 
-        Mouse.Click(uIStructure_1BodyClient, MouseButtons.Right, ModifierKeys.None, ptStart)
+        If iAmount1 > 0 OrElse iAmount2 > 0 Then
+            Mouse.Click(uIStructure_1BodyClient, MouseButtons.Right, ModifierKeys.None, ptStart)
+        End If
 
     End Sub
 

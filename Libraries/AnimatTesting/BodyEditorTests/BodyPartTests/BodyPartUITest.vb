@@ -31,6 +31,7 @@ Public MustInherit Class BodyPartUITest
     Protected m_strStruct2RootPart As String = "Plane"
 
     Protected m_bTestTexture As Boolean = True
+    Protected m_bTestDensity As Boolean = True
 
     Protected m_ptInitialZoomStart As Point = New Point(877, 100)
     Protected m_iInitialZoomDist1 As Integer = 320
@@ -59,6 +60,9 @@ Public MustInherit Class BodyPartUITest
 
     Protected m_ptRotateZAxisStart As Point = New Point(779, 281)
     Protected m_ptRotateZAxisEnd As Point = New Point(693, 136)
+
+    Protected m_ptTerrainAxisViewStart As Point = New Point(518, 632)
+    Protected m_ptTerrainAxisViewEnd As Point = New Point(604, 564)
 
     Protected m_dblMinTranRootWorldX As Double = 0.05
     Protected m_dblMaxTranRootWorldX As Double = 2
@@ -255,6 +259,18 @@ Public MustInherit Class BodyPartUITest
         End Get
     End Property
 
+    Protected Overridable ReadOnly Property AllowRootRotations() As Boolean
+        Get
+            Return True
+        End Get
+    End Property
+
+    Protected Overridable ReadOnly Property AllowChildRotations() As Boolean
+        Get
+            Return True
+        End Get
+    End Property
+
 #End Region
 
 #Region "Methods"
@@ -375,6 +391,9 @@ Public MustInherit Class BodyPartUITest
         m_ptChildRotateZAxisEnd.X = CInt(m_ptChildRotateZAxisEnd.X * m_dblResScaleWidth)
         m_ptChildRotateZAxisEnd.Y = CInt(m_ptChildRotateZAxisEnd.Y * m_dblResScaleHeight)
 
+        m_ptTerrainAxisViewStart.X = CInt(m_ptTerrainAxisViewStart.X * m_dblResScaleWidth)
+        m_ptTerrainAxisViewEnd.Y = CInt(m_ptTerrainAxisViewEnd.Y * m_dblResScaleHeight)
+
     End Sub
 
 
@@ -453,14 +472,16 @@ Public MustInherit Class BodyPartUITest
     End Sub
 
     Protected Overridable Sub MouseRotateRoot()
-        'Rotate the x axis
-        RotatePartAxis("Structure_1", "Root", "X", m_ptRotateXAxisStart, m_ptRotateXAxisEnd, m_dblMinRotRootX, m_dblMaxRotRootX, True)
+        If Me.AllowRootRotations Then
+            'Rotate the x axis
+            RotatePartAxis("Structure_1", "Root", "X", m_ptRotateXAxisStart, m_ptRotateXAxisEnd, m_dblMinRotRootX, m_dblMaxRotRootX, True)
 
-        'Rotate the y axis
-        RotatePartAxis("Structure_1", "Root", "Y", m_ptRotateYAxisStart, m_ptRotateYAxisEnd, m_dblMinRotRootY, m_dblMaxRotRootY, True)
+            'Rotate the y axis
+            RotatePartAxis("Structure_1", "Root", "Y", m_ptRotateYAxisStart, m_ptRotateYAxisEnd, m_dblMinRotRootY, m_dblMaxRotRootY, True)
 
-        'Rotate the z axis
-        RotatePartAxis("Structure_1", "Root", "Z", m_ptRotateZAxisStart, m_ptRotateZAxisEnd, m_dblMinRotRootZ, m_dblMaxRotRootZ, True)
+            'Rotate the z axis
+            RotatePartAxis("Structure_1", "Root", "Z", m_ptRotateZAxisStart, m_ptRotateZAxisEnd, m_dblMinRotRootZ, m_dblMaxRotRootZ, True)
+        End If
     End Sub
 
     Protected Overridable Sub ManualMoveRoot()
@@ -481,9 +502,11 @@ Public MustInherit Class BodyPartUITest
     End Sub
 
     Protected Overridable Sub ManualRotateRoot()
-        ManualRotatePartAxis("Structure_1", "Root", "X", m_dblManXRot, True, 0.001)
-        ManualRotatePartAxis("Structure_1", "Root", "Y", m_dblManYRot, True, 0.001)
-        ManualRotatePartAxis("Structure_1", "Root", "Z", m_dblManZRot, True, 0.001)
+        If Me.AllowRootRotations Then
+            ManualRotatePartAxis("Structure_1", "Root", "X", m_dblManXRot, True, 0.001)
+            ManualRotatePartAxis("Structure_1", "Root", "Y", m_dblManYRot, True, 0.001)
+            ManualRotatePartAxis("Structure_1", "Root", "Z", m_dblManZRot, True, 0.001)
+        End If
     End Sub
 
     Protected Overridable Sub CreateAndTestChild()
@@ -550,15 +573,16 @@ Public MustInherit Class BodyPartUITest
     End Sub
 
     Protected Overridable Sub MouseRotateChild()
-        'Rotate the x axis
-        RotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "X", m_ptChildRotateXAxisStart, m_ptChildRotateXAxisEnd, m_dblMinRotChildX, m_dblMaxRotChildX, True)
+        If Me.AllowChildRotations Then
+            'Rotate the x axis
+            RotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "X", m_ptChildRotateXAxisStart, m_ptChildRotateXAxisEnd, m_dblMinRotChildX, m_dblMaxRotChildX, True)
 
-        'Rotate the y axis
-        RotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "Y", m_ptChildRotateYAxisStart, m_ptChildRotateYAxisEnd, m_dblMinRotChildY, m_dblMaxRotChildY, True)
+            'Rotate the y axis
+            RotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "Y", m_ptChildRotateYAxisStart, m_ptChildRotateYAxisEnd, m_dblMinRotChildY, m_dblMaxRotChildY, True)
 
-        'Rotate the z axis
-        RotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "Z", m_ptChildRotateZAxisStart, m_ptChildRotateZAxisEnd, m_dblMinRotChildZ, m_dblMaxRotChildZ, True)
-
+            'Rotate the z axis
+            RotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "Z", m_ptChildRotateZAxisStart, m_ptChildRotateZAxisEnd, m_dblMinRotChildZ, m_dblMaxRotChildZ, True)
+        End If
     End Sub
 
     Protected Overridable Sub ManualMoveChild()
@@ -580,23 +604,29 @@ Public MustInherit Class BodyPartUITest
     End Sub
 
     Protected Overridable Sub ManualRotateChild()
-        ManualRotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "X", m_dblManXRot, True, 0.001)
-        ManualRotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "Y", m_dblManYRot, True, 0.001)
-        ManualRotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "Z", m_dblManZRot, True, 0.001)
+        If Me.AllowChildRotations Then
+            ManualRotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "X", m_dblManXRot, True, 0.001)
+            ManualRotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "Y", m_dblManYRot, True, 0.001)
+            ManualRotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "Z", m_dblManZRot, True, 0.001)
+        End If
     End Sub
 
     Protected Overridable Sub VerifyChildPositionAfterRotateStructure()
-        'Verify the child part position after rotating the structure.
-        VerifyChildPosAfterRotate("Structure_1", "X", "Root\Joint_1\Body_1", m_dblRootChildRotation, m_dblStructChildRotateTestXX, m_dblStructChildRotateTestXY, m_dblStructChildRotateTestXZ)
-        VerifyChildPosAfterRotate("Structure_1", "Y", "Root\Joint_1\Body_1", m_dblRootChildRotation, m_dblStructChildRotateTestYX, m_dblStructChildRotateTestYY, m_dblStructChildRotateTestYZ)
-        VerifyChildPosAfterRotate("Structure_1", "Z", "Root\Joint_1\Body_1", m_dblRootChildRotation, m_dblStructChildRotateTestZX, m_dblStructChildRotateTestZY, m_dblStructChildRotateTestZZ)
+        If Me.AllowRootRotations Then
+            'Verify the child part position after rotating the structure.
+            VerifyChildPosAfterRotate("Structure_1", "X", "Root\Joint_1\Body_1", m_dblRootChildRotation, m_dblStructChildRotateTestXX, m_dblStructChildRotateTestXY, m_dblStructChildRotateTestXZ)
+            VerifyChildPosAfterRotate("Structure_1", "Y", "Root\Joint_1\Body_1", m_dblRootChildRotation, m_dblStructChildRotateTestYX, m_dblStructChildRotateTestYY, m_dblStructChildRotateTestYZ)
+            VerifyChildPosAfterRotate("Structure_1", "Z", "Root\Joint_1\Body_1", m_dblRootChildRotation, m_dblStructChildRotateTestZX, m_dblStructChildRotateTestZY, m_dblStructChildRotateTestZZ)
+        End If
     End Sub
 
     Protected Overridable Sub VerifyJointPositionAfterRotateStructure()
-        'Verify the joint position after rotating the structure.
-        VerifyChildPosAfterRotate("Structure_1", "X", "Root\Joint_1", m_dblRootChildRotation, m_dblStructJointRotateTestXX, m_dblStructJointRotateTestXY, m_dblStructJointRotateTestXZ)
-        VerifyChildPosAfterRotate("Structure_1", "Y", "Root\Joint_1", m_dblRootChildRotation, m_dblStructJointRotateTestYX, m_dblStructJointRotateTestYY, m_dblStructJointRotateTestYZ)
-        VerifyChildPosAfterRotate("Structure_1", "Z", "Root\Joint_1", m_dblRootChildRotation, m_dblStructJointRotateTestZX, m_dblStructJointRotateTestZY, m_dblStructJointRotateTestZZ)
+        If Me.AllowRootRotations Then
+            'Verify the joint position after rotating the structure.
+            VerifyChildPosAfterRotate("Structure_1", "X", "Root\Joint_1", m_dblRootChildRotation, m_dblStructJointRotateTestXX, m_dblStructJointRotateTestXY, m_dblStructJointRotateTestXZ)
+            VerifyChildPosAfterRotate("Structure_1", "Y", "Root\Joint_1", m_dblRootChildRotation, m_dblStructJointRotateTestYX, m_dblStructJointRotateTestYY, m_dblStructJointRotateTestYZ)
+            VerifyChildPosAfterRotate("Structure_1", "Z", "Root\Joint_1", m_dblRootChildRotation, m_dblStructJointRotateTestZX, m_dblStructJointRotateTestZY, m_dblStructJointRotateTestZZ)
+        End If
     End Sub
 
     Protected Overridable Sub RepositionStruct1BeforeSim()
@@ -694,20 +724,22 @@ Public MustInherit Class BodyPartUITest
     Protected Overridable Sub TestMovableRigidBodyProperties(ByVal strStructure As String, ByVal strPart As String)
         TestMovableItemProperties(strStructure, strPart)
 
-        'Set the density to a valid value.
-        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Density", m_dblTestDensity.ToString})
+        If m_bTestDensity Then
+            'Set the density to a valid value.
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Density", m_dblTestDensity.ToString})
 
-        Dim dblTest As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Density.ActualValue"), Double)
+            Dim dblTest As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Density.ActualValue"), Double)
 
-        If dblTest <> m_dblTestDensity Then
-            Throw New System.Exception("Body part density does not match the target value: " & m_dblTestDensity & ", recorded value: " & dblTest)
+            If dblTest <> m_dblTestDensity Then
+                Throw New System.Exception("Body part density does not match the target value: " & m_dblTestDensity & ", recorded value: " & dblTest)
+            End If
+
+            'Check for error when density is zero.
+            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Density", "0"}, "The density can not be less than or equal to zero.")
+
+            'Check for error when density is less than zero.
+            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Density", "-1"}, "The density can not be less than or equal to zero.")
         End If
-
-        'Check for error when density is zero.
-        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Density", "0"}, "The density can not be less than or equal to zero.")
-
-        'Check for error when density is less than zero.
-        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Density", "-1"}, "The density can not be less than or equal to zero.")
 
     End Sub
 

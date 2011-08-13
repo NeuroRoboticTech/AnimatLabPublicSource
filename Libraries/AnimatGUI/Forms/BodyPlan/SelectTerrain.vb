@@ -81,6 +81,10 @@ Namespace Forms.BodyPlan
 
         Private Sub btnOk_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnOk.Click
             Try
+                If txtMeshFile.Text.Length = 0 Then
+                    Throw New System.Exception("You must specify a height map file.")
+                End If
+
                 m_dblSegmentWidth = Util.ValidateNumericTextBox(txtSegmentWidth.Text, True, 0, False, 0, False, "segment width")
                 m_dblSegmentLength = Util.ValidateNumericTextBox(txtSegmentLength.Text, True, 0, False, 0, False, "segment length")
                 m_dblMaxHeight = Util.ValidateNumericTextBox(txtMaxHeight.Text, True, 0, False, 0, False, "max height")
@@ -102,6 +106,15 @@ Namespace Forms.BodyPlan
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+        End Sub
+
+        Public Overridable Sub SetTerrainParameters(ByVal strMeshFile As String, ByVal strTextureFile As String, _
+                                                    ByVal dblSegmLength As Double, ByVal dblSegHeight As Double, ByVal dblMaxHeight As Double)
+            txtMeshFile.Text = strMeshFile
+            txtTextureFile.Text = strTextureFile
+            txtSegmentLength.Text = dblSegmLength.ToString
+            txtSegmentWidth.Text = dblSegHeight.ToString
+            txtMaxHeight.Text = dblMaxHeight.ToString
         End Sub
 
     End Class
