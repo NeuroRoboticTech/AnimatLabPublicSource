@@ -24,43 +24,63 @@ Namespace BodyEditorTests
                 Protected Overrides Sub TestMovableRigidBodyProperties(ByVal strStructure As String, ByVal strPart As String)
                     MyBase.TestMovableRigidBodyProperties(strStructure, strPart)
 
-                    ''Set the radius to a valid value.
-                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Radius", "0.2"})
+                    'Set the InnerRadius to a valid value.
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "InnerRadius", "0.02"})
 
-                    ''Set the radius to zero
-                    'ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Radius", "0"}, "The radius of the sphere cannot be less than or equal to zero.")
+                    'Set the InnerRadius to zero
+                    ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "InnerRadius", "0"}, "The inner radius of the torus cannot be less than or equal to zero.")
 
-                    ''Set the radius to a negative value
-                    'ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Radius", "-0.2"}, "The radius of the sphere cannot be less than or equal to zero.")
+                    'Set the InnerRadius to a negative value
+                    ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "InnerRadius", "-0.2"}, "The inner radius of the torus cannot be less than or equal to zero.")
 
-                    ''Set the radius to a valid value.
-                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Radius", "0.1"})
+                    'Set the InnerRadius to a negative value
+                    ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "InnerRadius", "0.2"}, "The inner radius of the torus cannot be larger or equal to the outer raidus.")
 
-
-                    ''Set the LatitudeSegments to a valid value.
-                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LatitudeSegments", "30"})
-
-                    ''Set the LatitudeSegments to zero
-                    'ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LatitudeSegments", "5"}, "The number of latitude segments for the sphere cannot be less than ten.")
-
-                    ''Set the LatitudeSegments to a negative value
-                    'ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LatitudeSegments", "-2"}, "The number of latitude segments for the sphere cannot be less than ten.")
-
-                    ''Set the LatitudeSegments to original value
-                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LatitudeSegments", "20"})
+                    'Set the InnerRadius to a valid value.
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "InnerRadius", "0.01"})
 
 
-                    ''Set the LongtitudeSegments to a valid value.
-                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LongtitudeSegments", "30"})
+                    'Set the OuterRadius to a valid value.
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "OuterRadius", "0.04"})
 
-                    ''Set the LongtitudeSegments to zero
-                    'ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LongtitudeSegments", "5"}, "The number of longtitude segments for the sphere cannot be less than ten.")
+                    'Set the OuterRadius to zero
+                    ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "OuterRadius", "0"}, "The outer radius of the torus cannot be less than or equal to zero.")
 
-                    ''Set the LongtitudeSegments to a negative value
-                    'ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LongtitudeSegments", "-2"}, "The number of longtitude segments for the sphere cannot be less than ten.")
+                    'Set the OuterRadius to a negative value
+                    ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "OuterRadius", "-0.2"}, "The outer radius of the torus cannot be less than or equal to zero.")
 
-                    ''Set the LongtitudeSegments to original value
-                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LongtitudeSegments", "20"})
+                    'Set the OuterRadius to a negative value
+                    ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "OuterRadius", "0.005"}, "The outer radius of the torus cannot be less than or equal to the inner raidus.")
+
+                    'Set the OuterRadius to a valid value.
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "OuterRadius", "0.05"})
+
+
+                    'Set the Rings to a valid value.
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Rings", "25"})
+
+                    'Set the Rings to zero
+                    ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Rings", "5"}, "The number of rings for the torus cannot be less than ten.")
+
+                    'Set the Rings to a negative value
+                    ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Rings", "-2"}, "The number of rings for the torus cannot be less than ten.")
+
+                    'Set the Rings to original value
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Rings", "20"})
+
+
+
+                    'Set the Sides to a valid value.
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Sides", "25"})
+
+                    'Set the Sides to zero
+                    ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Sides", "5"}, "The number of sides for the torus cannot be less than ten.")
+
+                    'Set the Sides to a negative value
+                    ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Sides", "-2"}, "The number of sides for the torus cannot be less than ten.")
+
+                    'Set the Sides to original value
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Sides", "20"})
 
 
                 End Sub

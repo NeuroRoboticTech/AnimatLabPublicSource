@@ -35,8 +35,9 @@ Public MustInherit Class AnimatUITest
 
 #Region "Attributes"
 
-    Protected m_iPort As Integer = -1
+    Protected m_iPort As Integer = 8080
     Protected m_oServer As AnimatServer.Server
+    Protected m_tcpChannel As TcpChannel
     Protected m_strRootFolder As String
     Protected m_bGenerateTempates As Boolean = False
     Protected m_strProjectName As String = ""
@@ -109,6 +110,9 @@ Public MustInherit Class AnimatUITest
             'Close the project
             ExecuteMethod("Close", Nothing)
 
+            'Detach from the server.
+            DetachServer()
+
             'Delete the project directory
             CleanupProjectDirectory()
         Catch ex As Exception
@@ -149,12 +153,14 @@ Public MustInherit Class AnimatUITest
 
     Protected Overridable Sub AttachServer(ByVal iPort As Integer)
 
-        Dim tcpChannel As New TcpChannel
-        System.Runtime.Remoting.Channels.ChannelServices.RegisterChannel(tcpChannel, True)
+        Dim props As IDictionary = New Hashtable()
+        props("name") = "AnimatLab:" & m_iPort
 
+        m_tcpChannel = New TcpChannel(props, Nothing, Nothing)
+        System.Runtime.Remoting.Channels.ChannelServices.RegisterChannel(m_tcpChannel, True)
         For iTry As Integer = 0 To 3
             Try
-                m_oServer = DirectCast(Activator.GetObject(GetType(AnimatServer.Server), "tcp://localhost:8080/AnimatLab"), AnimatServer.Server)
+                m_oServer = DirectCast(Activator.GetObject(GetType(AnimatServer.Server), "tcp://localhost:" & iPort & "/AnimatLab"), AnimatServer.Server)
             Catch ex As Exception
                 Threading.Thread.Sleep(3000)
             End Try
@@ -166,9 +172,15 @@ Public MustInherit Class AnimatUITest
 
         'Try one last time.
         If m_oServer Is Nothing Then
-            m_oServer = DirectCast(Activator.GetObject(GetType(AnimatServer.Server), "tcp://localhost:8080/AnimatLab"), AnimatServer.Server)
+            m_oServer = DirectCast(Activator.GetObject(GetType(AnimatServer.Server), "tcp://localhost:" & iPort & "/AnimatLab"), AnimatServer.Server)
         End If
 
+    End Sub
+
+    Protected Sub DetachServer()
+        If Not m_tcpChannel Is Nothing Then
+            System.Runtime.Remoting.Channels.ChannelServices.UnregisterChannel(m_tcpChannel)
+        End If
     End Sub
 
     Protected Sub CleanupProjectDirectory()
@@ -352,27 +364,29 @@ Public MustInherit Class AnimatUITest
     End Sub
 
 
-    Protected Overridable Sub MovePartAxis(ByVal strStructure As String, ByVal strPart As String, ByVal strAxis As String, ByVal ptAxisStart As Point, ByVal ptAxisEnd As Point, _
+    Protected Overridable Sub MovePartAxis(ByVal strStructure As String, ByVal strPart As String, _
+                                           ByVal strWorldAxis As String, ByVal strLocalAxis As String, _
+                                           ByVal ptAxisStart As Point, ByVal ptAxisEnd As Point, _
                                            ByVal dblMinPartRange As Double, ByVal dblMaxPartRange As Double, _
                                            ByVal dblMinStructRange As Double, ByVal dblMaxStructRange As Double, _
                                            ByVal dblMinLocalRange As Double, ByVal dblMaxLocalRange As Double)
 
         'Get the part and structure x position before movement
-        Dim dblBeforePartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strAxis & ".ActualValue"), Double)
-        Dim dblBeforeStructPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure, "LocalPosition." & strAxis & ".ActualValue"), Double)
-        Dim dblBeforeLocalPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strAxis & ".ActualValue"), Double)
+        Dim dblBeforePartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis & ".ActualValue"), Double)
+        Dim dblBeforeStructPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure, "LocalPosition." & strWorldAxis & ".ActualValue"), Double)
+        Dim dblBeforeLocalPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis & ".ActualValue"), Double)
 
         'Move axis
         DragMouse(ptAxisStart, ptAxisEnd, MouseButtons.Left)
 
         'Get the part and structure x position after movement
-        Dim dblAfterPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strAxis & ".ActualValue"), Double)
-        Dim dblAfterStructPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure, "LocalPosition." & strAxis & ".ActualValue"), Double)
-        Dim dblAfterLocalPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strAxis & ".ActualValue"), Double)
+        Dim dblAfterPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis & ".ActualValue"), Double)
+        Dim dblAfterStructPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure, "LocalPosition." & strWorldAxis & ".ActualValue"), Double)
+        Dim dblAfterLocalPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis & ".ActualValue"), Double)
 
-        AssertInRange("Part", strAxis, "position", (dblAfterPartPos - dblBeforePartPos), dblMinPartRange, dblMaxPartRange)
-        AssertInRange("Structure", strAxis, "position", (dblAfterStructPos - dblBeforeStructPos), dblMinStructRange, dblMaxStructRange)
-        AssertInRange("Part Local", strAxis, "position", (dblAfterLocalPartPos - dblBeforeLocalPartPos), dblMinLocalRange, dblMaxLocalRange)
+        AssertInRange("Part", strWorldAxis, "position", (dblAfterPartPos - dblBeforePartPos), dblMinPartRange, dblMaxPartRange)
+        AssertInRange("Structure", strWorldAxis, "position", (dblAfterStructPos - dblBeforeStructPos), dblMinStructRange, dblMaxStructRange)
+        AssertInRange("Part Local", strLocalAxis, "position", (dblAfterLocalPartPos - dblBeforeLocalPartPos), dblMinLocalRange, dblMaxLocalRange)
 
     End Sub
 
@@ -445,17 +459,18 @@ Public MustInherit Class AnimatUITest
 
     End Sub
 
-    Protected Overridable Sub ManualMovePartAxis(ByVal strStructure As String, ByVal strPart As String, ByVal strAxis As String, _
+    Protected Overridable Sub ManualMovePartAxis(ByVal strStructure As String, ByVal strPart As String, _
+                                                 ByVal strWorldAxis As String, ByVal strLocalAxis As String, _
                                                  ByVal dblWorldPos As Double, ByVal dblWorldTest As Double, _
                                                  ByVal dblWorldLocalTest As Double, ByVal bTestLocal As Boolean, ByVal dblLocalPos As Double, _
                                                  ByVal dblLocalTest As Double, ByVal dblLocalWorldTest As Double, Optional ByVal dblMaxError As Double = 0.001)
 
         'Move the root part along the axis using world coordinates.
-        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strAxis, dblWorldPos.ToString})
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis, dblWorldPos.ToString})
 
         'Now get the world position and verify it.
-        Dim dblPosWorld As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strAxis & ".ActualValue"), Double)
-        Dim dblPosLocal As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strAxis & ".ActualValue"), Double)
+        Dim dblPosWorld As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis & ".ActualValue"), Double)
+        Dim dblPosLocal As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis & ".ActualValue"), Double)
 
         If Math.Abs(dblPosWorld - dblWorldTest) > dblMaxError Then
             Throw New System.Exception("Body part position does not match the world target value: " & dblPosWorld & ", recorded value: " & dblWorldTest)
@@ -467,11 +482,11 @@ Public MustInherit Class AnimatUITest
 
         'Move the root part along the axis using local coordinates.
         If bTestLocal Then
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strAxis, dblLocalPos.ToString})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis, dblLocalPos.ToString})
 
             'Now get the world position and verify it.
-            dblPosWorld = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strAxis & ".ActualValue"), Double)
-            dblPosLocal = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strAxis & ".ActualValue"), Double)
+            dblPosWorld = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis & ".ActualValue"), Double)
+            dblPosLocal = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis & ".ActualValue"), Double)
 
             If Math.Abs(dblPosLocal - dblLocalTest) > dblMaxError Then
                 Throw New System.Exception("Body part position does not match the local target value: " & dblPosLocal & ", recorded value: " & dblLocalTest)
@@ -484,8 +499,8 @@ Public MustInherit Class AnimatUITest
 
     End Sub
 
-    Protected Overridable Sub ManualRotatePartAxis(ByVal strStructure As String, ByVal strPart As String, ByVal strAxis As String, _
-                                                   ByVal dblRotation As Double, Optional ByVal bReset As Boolean = True, Optional ByVal dblMaxError As Double = 0.001)
+    Protected Overridable Function ManualRotatePartAxis(ByVal strStructure As String, ByVal strPart As String, ByVal strAxis As String, _
+                                                   ByVal dblRotation As Double, Optional ByVal bReset As Boolean = True, Optional ByVal dblMaxError As Double = 0.001) As Double
 
         'Now beginning rotation
         Dim dblOrigRot As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis & ".ActualValue"), Double)
@@ -505,7 +520,8 @@ Public MustInherit Class AnimatUITest
             ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis, dblOrigRot.ToString})
         End If
 
-    End Sub
+        Return dblOrigRot
+    End Function
 
     Protected Overridable Sub RecalculatePositionsUsingResolution()
         Dim uIStructure_1BodyClient As WinClient = Me.UIProjectWindow(m_strProjectName).UIStructure_1BodyWindow.UIStructure_1BodyClient
@@ -521,8 +537,9 @@ Public MustInherit Class AnimatUITest
                                                         ByVal dblRotation As Double, ByVal dblWorldXTest As Double, _
                                                         ByVal dblWorldYTest As Double, ByVal dblWorldZTest As Double, _
                                                         Optional ByVal dblMaxError As Double = 0.001)
+
         'rotate the root and verify the child position.
-        ManualRotatePartAxis(strStructure, "Root", strAxis, dblRotation, False)
+        Dim dblOrigRot As Double = ManualRotatePartAxis(strStructure, "Root", strAxis, dblRotation, False)
 
         Dim dblWorldX As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition.X.ActualValue"), Double)
         Dim dblWorldY As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition.Y.ActualValue"), Double)
@@ -541,7 +558,7 @@ Public MustInherit Class AnimatUITest
         End If
 
         'Reset the rotation.
-        ManualRotatePartAxis(strStructure, "Root", strAxis, 0, False)
+        ManualRotatePartAxis(strStructure, "Root", strAxis, dblOrigRot, False)
 
     End Sub
 
@@ -683,7 +700,7 @@ Public MustInherit Class AnimatUITest
     '''<summary>
     '''ZoomInOnRootPart
     '''</summary>
-    Public Sub ZoomInOnRootPart(ByVal ptStart As Point, ByVal iAmount1 As Integer, Optional ByVal iAmount2 As Integer = 0)
+    Public Sub ZoomInOnPart(ByVal ptStart As Point, ByVal iAmount1 As Integer, Optional ByVal iAmount2 As Integer = 0)
         Dim uIStructure_1BodyClient As WinClient = Me.UIProjectWindow(m_strProjectName).UIStructure_1BodyWindow.UIStructure_1BodyClient
 
         'Move using Right button 'Structure_1 Body' client

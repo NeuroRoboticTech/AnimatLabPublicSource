@@ -4303,6 +4303,11 @@ Namespace Forms
                     If Not doStruct.BodyEditor Is Nothing Then
                         oTab = doStruct.BodyEditor.TabPage
                     End If
+                ElseIf Not m_tnAutomationTreeNode.Tag Is Nothing AndAlso Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(DataObjects.ToolHolder), False) Then
+                    Dim doToolHolder As DataObjects.ToolHolder = DirectCast(m_tnAutomationTreeNode.Tag, DataObjects.ToolHolder)
+                    If Not doToolHolder.ToolForm Is Nothing AndAlso Not doToolHolder.ToolForm.TabPage Is Nothing Then
+                        oTab = doToolHolder.ToolForm.TabPage
+                    End If
                 End If
 
                 If Not oTab Is Nothing Then

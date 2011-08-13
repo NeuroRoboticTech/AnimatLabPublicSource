@@ -83,6 +83,9 @@ Namespace Framework
 
             AddHandler m_snX.ValueChanged, AddressOf Me.OnValueChanged
             AddHandler m_snY.ValueChanged, AddressOf Me.OnValueChanged
+
+            AddHandler m_snX.ValueChanging, AddressOf Me.OnXValueChanging
+            AddHandler m_snY.ValueChanging, AddressOf Me.OnYValueChanging
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
@@ -117,6 +120,9 @@ Namespace Framework
 
             AddHandler m_snX.ValueChanged, AddressOf Me.OnValueChanged
             AddHandler m_snY.ValueChanged, AddressOf Me.OnValueChanged
+
+            AddHandler m_snX.ValueChanging, AddressOf Me.OnXValueChanging
+            AddHandler m_snY.ValueChanging, AddressOf Me.OnYValueChanging
 
         End Sub
 
@@ -201,6 +207,7 @@ Namespace Framework
 
 #Region " Events "
 
+        Public Event ValueChanging(ByVal snParam As ScaledNumber, ByVal dblNewVal As Double, ByVal eNewScale As ScaledNumber.enumNumericScale)
         Public Event ValueChanged()
 
         'If one of the scaled numbers value changed then raise our value changed event unless we 
@@ -217,6 +224,14 @@ Namespace Framework
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+        End Sub
+
+        Protected Overridable Sub OnXValueChanging(ByVal dblNewVal As Double, ByVal eNewScale As ScaledNumber.enumNumericScale)
+            If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanging(m_snX, dblNewVal, eNewScale)
+        End Sub
+
+        Protected Overridable Sub OnYValueChanging(ByVal dblNewVal As Double, ByVal eNewScale As ScaledNumber.enumNumericScale)
+            If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanging(m_snY, dblNewVal, eNewScale)
         End Sub
 
 #End Region

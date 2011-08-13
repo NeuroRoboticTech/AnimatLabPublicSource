@@ -73,6 +73,7 @@ Namespace Framework
             End Get
             Set(ByVal Value As Double)
 
+                If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanging(Value, m_eScale)
                 m_fltValue = Value
                 If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
             End Set
@@ -98,6 +99,7 @@ Namespace Framework
                 '    m_fltValue = Value
                 'End If
 
+                If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanging(Value, m_eScale)
                 m_fltValue = Value
                 If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
 
@@ -270,8 +272,11 @@ Namespace Framework
                     dblNewVal = Math.Abs(dblActualValue / (10 ^ iUnit))
 
                     If Math.Log10(dblNewVal) >= 0 And Math.Log10(dblNewVal) < 2 Then
-                        m_fltValue = Math.Round(dblActualValue / (10 ^ iUnit), 3)
-                        m_eScale = CType(iUnit, enumNumericScale)
+                        Dim fltValue As Double = Math.Round(dblActualValue / (10 ^ iUnit), 3)
+                        Dim eScale As enumNumericScale = CType(iUnit, enumNumericScale)
+                        If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanging(fltValue, eScale)
+                        m_fltValue = fltValue
+                        m_eScale = eScale
                         If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
                         Return
                     End If
@@ -284,6 +289,7 @@ Namespace Framework
 
                 SetFromValue(dblActualValue, iMinUnit)
             Else
+                If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanging(0, enumNumericScale.None)
                 m_fltValue = 0
                 m_eScale = enumNumericScale.None
                 If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
@@ -342,19 +348,20 @@ Namespace Framework
 
         Public Sub SetFromValue(ByVal dblActualValue As Double, ByVal eUsingScale As ScaledNumber.enumNumericScale)
 
-            Dim dblNewVal As Double
-
             If dblActualValue <> 0 Then
                 Dim iUnit As Integer = FindClosestUnit(CInt(eUsingScale))
-
-                dblNewVal = Math.Abs(dblActualValue / (10 ^ iUnit))
-                m_fltValue = Math.Round(dblActualValue / (10 ^ iUnit), 3)
-                m_eScale = CType(iUnit, enumNumericScale)
+                Dim fltValue As Double = Math.Round(dblActualValue / (10 ^ iUnit), 3)
+                Dim eScale As enumNumericScale = CType(iUnit, enumNumericScale)
+                If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanging(fltValue, eScale)
+                m_fltValue = fltValue
+                m_eScale = eScale
                 If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
                 Return
             Else
+                Dim eScale As enumNumericScale = FindClosestUnit(CInt(eUsingScale))
+                If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanging(0, eScale)
                 m_fltValue = 0
-                m_eScale = FindClosestUnit(CInt(eUsingScale))
+                m_eScale = eScale
                 If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
             End If
 
@@ -442,6 +449,7 @@ Namespace Framework
         End Function
 
         Public Sub CopyData(ByRef snValue As ScaledNumber, Optional ByVal bIgnoreEvents As Boolean = False, Optional ByVal bSetIsDirty As Boolean = True)
+            If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanging(snValue.m_fltValue, snValue.m_eScale)
             Me.m_fltValue = snValue.m_fltValue
             Me.m_eScale = snValue.m_eScale
             If bSetIsDirty Then
@@ -451,6 +459,7 @@ Namespace Framework
         End Sub
 
         Public Sub CopyData(ByVal fltValue As Single, ByVal eScale As AnimatGUI.Framework.ScaledNumber.enumNumericScale, Optional ByVal bIgnoreEvents As Boolean = False, Optional ByVal bSetIsDirty As Boolean = True)
+            If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanging(fltValue, eScale)
             Me.m_fltValue = fltValue
             Me.m_eScale = eScale
             If bSetIsDirty Then
@@ -615,6 +624,7 @@ Namespace Framework
 
 #Region " Events "
 
+        Public Event ValueChanging(ByVal dblNewVal As Double, ByVal eNewScale As enumNumericScale)
         Public Event ValueChanged()
 
 #End Region

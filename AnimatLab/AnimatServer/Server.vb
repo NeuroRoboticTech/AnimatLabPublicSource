@@ -24,7 +24,11 @@ Public Class Server
         m_doApp = oApp
         m_iPort = iPort
 
-        m_tcpChannel = New TcpChannel(m_iPort)
+        Dim props As IDictionary = New Hashtable()
+        props("port") = iPort.ToString ' port
+        props("name") = "AnimatLab:" & m_iPort
+
+        m_tcpChannel = New TcpChannel(props, Nothing, Nothing)
         System.Runtime.Remoting.Channels.ChannelServices.RegisterChannel(m_tcpChannel, True)
         RemotingConfiguration.RegisterWellKnownServiceType(GetType(AnimatServer.Server), "AnimatLab", WellKnownObjectMode.Singleton)
 

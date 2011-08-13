@@ -16,7 +16,7 @@ Namespace CreationTests
         Public Sub TestCreateNewProject()
 
             'Start the application.
-            StartApplication("", 8080)
+            StartApplication("", m_iPort)
 
             'Click the New Project button.
             ExecuteMethod("ClickToolbarItem", New Object() {"NewToolStripButton"})

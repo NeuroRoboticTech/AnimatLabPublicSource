@@ -66,6 +66,9 @@ Namespace DataObjects.Physical.Bodies
                 Return m_iWidthSegments
             End Get
             Set(ByVal value As Integer)
+                If value <= 0 Then
+                    Throw New System.Exception("The width segments cannot be less than or equal to zero.")
+                End If
                 Me.SetSimData("WidthSegments", value.ToString, True)
                 m_iWidthSegments = value
             End Set
@@ -76,6 +79,9 @@ Namespace DataObjects.Physical.Bodies
                 Return m_iLengthSegments
             End Get
             Set(ByVal value As Integer)
+                If value <= 0 Then
+                    Throw New System.Exception("The length segments cannot be less than or equal to zero.")
+                End If
                 Me.SetSimData("LengthSegments", value.ToString, True)
                 m_iLengthSegments = value
             End Set
@@ -108,6 +114,7 @@ Namespace DataObjects.Physical.Bodies
             m_svSize = New ScaledVector2(Me, "Size", "Size of the visible plane.", "Meters", "m")
 
             AddHandler m_svSize.ValueChanged, AddressOf Me.OnSizeChanged
+            AddHandler m_svSize.ValueChanging, AddressOf Me.OnSizeChanging
 
         End Sub
 
@@ -132,6 +139,10 @@ Namespace DataObjects.Physical.Bodies
             m_svSize = DirectCast(doOrig.m_svSize.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledVector2)
             m_iWidthSegments = doOrig.m_iWidthSegments
             m_iLengthSegments = doOrig.m_iLengthSegments
+
+            AddHandler m_svSize.ValueChanged, AddressOf Me.OnSizeChanged
+            AddHandler m_svSize.ValueChanging, AddressOf Me.OnSizeChanging
+
         End Sub
 
         Public Overrides Sub SetDefaultSizes()
@@ -151,15 +162,25 @@ Namespace DataObjects.Physical.Bodies
         End Sub
 
         Public Overrides Sub SetupPartTypesExclusions()
-            'A plane can only be added to a terrain or plane type.
+            'A terrain can only be added to a terrain or plane type.
             For Each bpBody As BodyPart In Util.Application.BodyPartTypes
                 If Not (TypeOf bpBody Is Terrain OrElse TypeOf bpBody Is Plane) Then
                     Util.Application.AddPartTypeExclusion(bpBody.GetType, Me.GetType)
-
-                    'Cant add anything to a plane.
-                    Util.Application.AddPartTypeExclusion(Me.GetType, bpBody.GetType)
                 End If
             Next
+
+            Util.Application.AddPartTypeExclusion(Me.GetType, Me.GetType)
+            Util.Application.AddPartTypeExclusion(Me.GetType, GetType(Plane))
+
+            ''A plane can only be added to a terrain or plane type.
+            'For Each bpBody As BodyPart In Util.Application.BodyPartTypes
+            '    If Not (TypeOf bpBody Is Terrain OrElse TypeOf bpBody Is Plane) Then
+            '        Util.Application.AddPartTypeExclusion(bpBody.GetType, Me.GetType)
+
+            '        'Cant add anything to a plane.
+            '        Util.Application.AddPartTypeExclusion(Me.GetType, bpBody.GetType)
+            '    End If
+            'Next
         End Sub
 
         Protected Overrides Sub OrientNewPart(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d)
@@ -258,6 +279,11 @@ Namespace DataObjects.Physical.Bodies
             End Try
         End Sub
 
+        Protected Overridable Sub OnSizeChanging(ByVal snParam As ScaledNumber, ByVal dblNewVal As Double, ByVal eNewScale As ScaledNumber.enumNumericScale)
+            If dblNewVal <= 0 Then
+                Throw New System.Exception("The size of the plane cannot be less than or equal to zero.")
+            End If
+        End Sub
 #End Region
 
     End Class

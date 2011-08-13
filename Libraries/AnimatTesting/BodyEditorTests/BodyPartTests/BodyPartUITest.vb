@@ -26,6 +26,10 @@ Public MustInherit Class BodyPartUITest
 #Region "Attributes"
 
     Protected m_strPartType As String = "Box"
+    Protected m_strSecondaryPartType As String = ""
+    Protected m_strChildJoint As String = "Hinge"
+    Protected m_strStruct2RootPart As String = "Plane"
+
     Protected m_bTestTexture As Boolean = True
 
     Protected m_ptInitialZoomStart As Point = New Point(877, 100)
@@ -56,11 +60,78 @@ Public MustInherit Class BodyPartUITest
     Protected m_ptRotateZAxisStart As Point = New Point(779, 281)
     Protected m_ptRotateZAxisEnd As Point = New Point(693, 136)
 
-    Protected m_dblMinTranslateAxisRange As Double = 0.05
-    Protected m_dblMaxTranslateAxisRange As Double = 1
+    Protected m_dblMinTranRootWorldX As Double = 0.05
+    Protected m_dblMaxTranRootWorldX As Double = 2
 
-    Protected m_dblMinRotateAxisRange As Double = 10
-    Protected m_dblMaxRotateAxisRange As Double = 90
+    Protected m_dblMinTranRootWorldY As Double = 0.05
+    Protected m_dblMaxTranRootWorldY As Double = 2
+
+    Protected m_dblMinTranRootWorldZ As Double = 0.05
+    Protected m_dblMaxTranRootWorldZ As Double = 2
+
+    Protected m_dblMinTranRootStructX As Double = 0.05
+    Protected m_dblMaxTranRootStructX As Double = 2
+
+    Protected m_dblMinTranRootStructY As Double = 0.05
+    Protected m_dblMaxTranRootStructY As Double = 2
+
+    Protected m_dblMinTranRootStructZ As Double = 0.05
+    Protected m_dblMaxTranRootStructZ As Double = 2
+
+    Protected m_dblMinTranRootLocalX As Double = 0
+    Protected m_dblMaxTranRootLocalX As Double = 0
+
+    Protected m_dblMinTranRootLocalY As Double = 0
+    Protected m_dblMaxTranRootLocalY As Double = 0
+
+    Protected m_dblMinTranRootLocalZ As Double = 0
+    Protected m_dblMaxTranRootLocalZ As Double = 0
+
+    Protected m_dblMinTranChildWorldX As Double = 0.05
+    Protected m_dblMaxTranChildWorldX As Double = 2
+
+    Protected m_dblMinTranChildWorldY As Double = 0.05
+    Protected m_dblMaxTranChildWorldY As Double = 2
+
+    Protected m_dblMinTranChildWorldZ As Double = 0.05
+    Protected m_dblMaxTranChildWorldZ As Double = 2
+
+    Protected m_dblMinTranChildStructX As Double = 0
+    Protected m_dblMaxTranChildStructX As Double = 0
+
+    Protected m_dblMinTranChildStructY As Double = 0
+    Protected m_dblMaxTranChildStructY As Double = 0
+
+    Protected m_dblMinTranChildStructZ As Double = 0
+    Protected m_dblMaxTranChildStructZ As Double = 0
+
+    Protected m_dblMinTranChildLocalX As Double = 0.05
+    Protected m_dblMaxTranChildLocalX As Double = 2
+
+    Protected m_dblMinTranChildLocalY As Double = 0.05
+    Protected m_dblMaxTranChildLocalY As Double = 2
+
+    Protected m_dblMinTranChildLocalZ As Double = 0.05
+    Protected m_dblMaxTranChildLocalZ As Double = 2
+
+    Protected m_dblMinRotRootX As Double = 10
+    Protected m_dblMaxRotRootX As Double = 90
+
+    Protected m_dblMinRotRootY As Double = 10
+    Protected m_dblMaxRotRootY As Double = 90
+
+    Protected m_dblMinRotRootZ As Double = 10
+    Protected m_dblMaxRotRootZ As Double = 90
+
+    Protected m_dblMinRotChildX As Double = 10
+    Protected m_dblMaxRotChildX As Double = 90
+
+    Protected m_dblMinRotChildY As Double = 10
+    Protected m_dblMaxRotChildY As Double = 90
+
+    Protected m_dblMinRotChildZ As Double = 10
+    Protected m_dblMaxRotChildZ As Double = 90
+
 
     Protected m_dblResetStructXPos As Double = 0
     Protected m_dblResetStructYPos As Double = 0
@@ -125,9 +196,17 @@ Public MustInherit Class BodyPartUITest
 
     Protected m_dblRootChildRotation As Double = 45
 
-    Protected m_dblStructChildRotateTestX As Double = 2.0
-    Protected m_dblStructChildRotateTestY As Double = -0.000005119
-    Protected m_dblStructChildRotateTestZ As Double = 2.828
+    Protected m_dblStructChildRotateTestXX As Double = 2.0
+    Protected m_dblStructChildRotateTestXY As Double = -0.000005119
+    Protected m_dblStructChildRotateTestXZ As Double = 2.828
+
+    Protected m_dblStructChildRotateTestYX As Double = 2.828
+    Protected m_dblStructChildRotateTestYY As Double = 2.0
+    Protected m_dblStructChildRotateTestYZ As Double = -0.000005119
+
+    Protected m_dblStructChildRotateTestZX As Double = -0.000005119
+    Protected m_dblStructChildRotateTestZY As Double = 2.828
+    Protected m_dblStructChildRotateTestZZ As Double = 2.0
 
     Protected m_dblStructJointRotateTestXX As Double = 2.0
     Protected m_dblStructJointRotateTestXY As Double = 0.070705
@@ -143,9 +222,38 @@ Public MustInherit Class BodyPartUITest
 
     Protected m_dblTestDensity As Double = 1.5
 
+    Protected m_strAmbient As String = "#1E1E1E"
+    Protected m_strDiffuse As String = "#FFFFFF"
+    Protected m_strSpecular As String = "#1E1E1E"
+    Protected m_iShininess As Integer = 70
+
+    Protected m_strMoveRootWorldXAxis As String = "X"
+    Protected m_strMoveRootLocalXAxis As String = "X"
+
+    Protected m_strMoveRootWorldYAxis As String = "Y"
+    Protected m_strMoveRootLocalYAxis As String = "Y"
+
+    Protected m_strMoveRootWorldZAxis As String = "Z"
+    Protected m_strMoveRootLocalZAxis As String = "Z"
+
+    Protected m_strMoveChildWorldXAxis As String = "X"
+    Protected m_strMoveChildLocalXAxis As String = "X"
+
+    Protected m_strMoveChildWorldYAxis As String = "Y"
+    Protected m_strMoveChildLocalYAxis As String = "Y"
+
+    Protected m_strMoveChildWorldZAxis As String = "Z"
+    Protected m_strMoveChildLocalZAxis As String = "Z"
+
 #End Region
 
 #Region "Properties"
+
+    Protected Overridable ReadOnly Property HasRootGraphic() As Boolean
+        Get
+            Return True
+        End Get
+    End Property
 
 #End Region
 
@@ -160,6 +268,16 @@ Public MustInherit Class BodyPartUITest
     '    ' For more information on generated code, see http://go.microsoft.com/fwlink/?LinkId=179463
     '    '
     'End Sub
+
+
+    Protected Overridable Sub TestPart()
+
+        CreateAndTestRoot()
+        CreateAndTestChild()
+        CreateChartAndAddBodies(10)
+        SimulateAndDeleteParts()
+
+    End Sub
 
     Protected Overrides Sub RecalculatePositionsUsingResolution()
         MyBase.RecalculatePositionsUsingResolution()
@@ -259,9 +377,13 @@ Public MustInherit Class BodyPartUITest
 
     End Sub
 
-    Protected Overridable Sub TestPart()
+
+    Protected Overridable Sub CreateAndTestRoot()
+        'Get a new port number each time we spin up a new independent test.
+        m_iPort = Util.GetNewPort()
+
         'Start the application.
-        StartApplication("", 8080, False)
+        StartApplication("", m_iPort, False)
 
         CreateNewProject(m_strProjectName, m_strProjectPath, 15)
 
@@ -284,107 +406,244 @@ Public MustInherit Class BodyPartUITest
         RecalculatePositionsUsingResolution()
 
         'Zoom in on the part so we can try and move it with the mouse.
-        ZoomInOnRootPart(m_ptInitialZoomStart, m_iInitialZoomDist1, m_iInitialZoomDist2)
+        ZoomInOnPart(m_ptInitialZoomStart, m_iInitialZoomDist1, m_iInitialZoomDist2)
+
+        MouseMoveRoot()
+
+        MouseRotateRoot()
+
+        ResetStructurePosition("Structure_1", "Root", m_dblResetStructXPos, m_dblResetStructYPos, m_dblResetStructZPos, True, 0.001)
+
+        ManualMoveRoot()
+
+        ManualRotateRoot()
+
+        ResetStructurePosition("Structure_1", "Root", m_dblResetStructXPos, m_dblResetStructYPos, m_dblResetStructZPos, True, 0.001)
+    End Sub
+
+
+    Protected Overridable Sub MouseMoveRoot()
+        'Move the z axis and verify position.
+        MovePartAxis("Structure_1", "Root", _
+                     m_strMoveRootWorldZAxis, m_strMoveRootLocalZAxis, _
+                     m_ptTranslateZAxisStart, m_ptTranslateZAxisEnd, _
+                     m_dblMinTranRootWorldZ, m_dblMaxTranRootWorldZ, _
+                     m_dblMinTranRootStructZ, m_dblMaxTranRootStructZ, _
+                     m_dblMinTranRootLocalZ, m_dblMaxTranRootLocalZ)
 
         'Move the z axis and verify position.
-        MovePartAxis("Structure_1", "Root", "Z", m_ptTranslateZAxisStart, m_ptTranslateZAxisEnd, _
-                     m_dblMinTranslateAxisRange, m_dblMaxTranslateAxisRange, _
-                     m_dblMinTranslateAxisRange, m_dblMaxTranslateAxisRange, 0, 0)
-
-        'Move the z axis and verify position.
-        MovePartAxis("Structure_1", "Root", "Y", m_ptTranslateYAxisStart, m_ptTranslateYAxisEnd, _
-                     m_dblMinTranslateAxisRange, m_dblMaxTranslateAxisRange, _
-                     m_dblMinTranslateAxisRange, m_dblMaxTranslateAxisRange, 0, 0)
+        MovePartAxis("Structure_1", "Root", _
+                     m_strMoveRootWorldYAxis, m_strMoveRootLocalYAxis, _
+                     m_ptTranslateYAxisStart, m_ptTranslateYAxisEnd, _
+                     m_dblMinTranRootWorldY, m_dblMaxTranRootWorldY, _
+                     m_dblMinTranRootStructY, m_dblMaxTranRootStructY, _
+                     m_dblMinTranRootLocalY, m_dblMaxTranRootLocalY)
 
         'Move view around to see z axis.
         DragMouse(m_ptRotatePartForTranslateStart, m_ptRotatePartForTranslateEnd, MouseButtons.Left, ModifierKeys.None, True)
 
         'Move the x axis and verify position.
-        MovePartAxis("Structure_1", "Root", "X", m_ptTranslateXAxisStart, m_ptTranslateXAxisEnd, _
-                     m_dblMinTranslateAxisRange, m_dblMaxTranslateAxisRange, _
-                     m_dblMinTranslateAxisRange, m_dblMaxTranslateAxisRange, 0, 0)
+        MovePartAxis("Structure_1", "Root", _
+                     m_strMoveRootWorldXAxis, m_strMoveRootLocalXAxis, _
+                     m_ptTranslateXAxisStart, m_ptTranslateXAxisEnd, _
+                     m_dblMinTranRootWorldX, m_dblMaxTranRootWorldX, _
+                     m_dblMinTranRootStructX, m_dblMaxTranRootStructX, _
+                     m_dblMinTranRootLocalX, m_dblMaxTranRootLocalX)
 
+    End Sub
+
+    Protected Overridable Sub MouseRotateRoot()
         'Rotate the x axis
-        RotatePartAxis("Structure_1", "Root", "X", m_ptRotateXAxisStart, m_ptRotateXAxisEnd, m_dblMinRotateAxisRange, m_dblMaxRotateAxisRange, True)
+        RotatePartAxis("Structure_1", "Root", "X", m_ptRotateXAxisStart, m_ptRotateXAxisEnd, m_dblMinRotRootX, m_dblMaxRotRootX, True)
 
         'Rotate the y axis
-        RotatePartAxis("Structure_1", "Root", "Y", m_ptRotateYAxisStart, m_ptRotateYAxisEnd, m_dblMinRotateAxisRange, m_dblMaxRotateAxisRange, True)
+        RotatePartAxis("Structure_1", "Root", "Y", m_ptRotateYAxisStart, m_ptRotateYAxisEnd, m_dblMinRotRootY, m_dblMaxRotRootY, True)
 
         'Rotate the z axis
-        RotatePartAxis("Structure_1", "Root", "Z", m_ptRotateZAxisStart, m_ptRotateZAxisEnd, m_dblMinRotateAxisRange, m_dblMaxRotateAxisRange, True)
+        RotatePartAxis("Structure_1", "Root", "Z", m_ptRotateZAxisStart, m_ptRotateZAxisEnd, m_dblMinRotRootZ, m_dblMaxRotRootZ, True)
+    End Sub
 
-        ResetStructurePosition("Structure_1", "Root", m_dblResetStructXPos, m_dblResetStructYPos, m_dblResetStructZPos, True, 0.001)
+    Protected Overridable Sub ManualMoveRoot()
+        ManualMovePartAxis("Structure_1", "Root", _
+                           m_strMoveRootWorldXAxis, m_strMoveRootLocalXAxis, _
+                           m_dblManWorldXPos, m_dblManWorldXTest, m_dblManWorldLocalXTest, _
+                           False, m_dblManLocalXPos, m_dblManLocalXTest, m_dblManLocalWorldXTest, 0.01)
 
-        ManualMovePartAxis("Structure_1", "Root", "X", m_dblManWorldXPos, m_dblManWorldXTest, m_dblManWorldLocalXTest, False, m_dblManLocalXPos, m_dblManLocalXTest, m_dblManLocalWorldXTest, 0.01)
-        ManualMovePartAxis("Structure_1", "Root", "Y", m_dblManWorldYPos, m_dblManWorldYTest, m_dblManWorldLocalYTest, False, m_dblManLocalYPos, m_dblManLocalYTest, m_dblManLocalWorldYTest, 0.01)
-        ManualMovePartAxis("Structure_1", "Root", "Z", m_dblManWorldZPos, m_dblManWorldZTest, m_dblManWorldLocalZTest, False, m_dblManLocalZPos, m_dblManLocalZTest, m_dblManLocalWorldZTest, 0.01)
+        ManualMovePartAxis("Structure_1", "Root", _
+                           m_strMoveRootWorldYAxis, m_strMoveRootLocalYAxis, _
+                           m_dblManWorldYPos, m_dblManWorldYTest, m_dblManWorldLocalYTest, _
+                           False, m_dblManLocalYPos, m_dblManLocalYTest, m_dblManLocalWorldYTest, 0.01)
 
+        ManualMovePartAxis("Structure_1", "Root", _
+                           m_strMoveRootWorldZAxis, m_strMoveRootLocalZAxis, _
+                           m_dblManWorldZPos, m_dblManWorldZTest, m_dblManWorldLocalZTest, _
+                           False, m_dblManLocalZPos, m_dblManLocalZTest, m_dblManLocalWorldZTest, 0.01)
+    End Sub
+
+    Protected Overridable Sub ManualRotateRoot()
         ManualRotatePartAxis("Structure_1", "Root", "X", m_dblManXRot, True, 0.001)
         ManualRotatePartAxis("Structure_1", "Root", "Y", m_dblManYRot, True, 0.001)
         ManualRotatePartAxis("Structure_1", "Root", "Z", m_dblManZRot, True, 0.001)
+    End Sub
 
-        ResetStructurePosition("Structure_1", "Root", m_dblResetStructXPos, m_dblResetStructYPos, m_dblResetStructZPos, True, 0.001)
+    Protected Overridable Sub CreateAndTestChild()
+
+        If m_strSecondaryPartType.Trim.Length = 0 Then
+            m_strSecondaryPartType = m_strPartType
+        End If
 
         'We have tested moving/rotating the root part, now test doing it on a child part.
-        AddChildPartTypeWithJoint(m_strPartType, "Hinge", m_ptClickToAddChild)
+        AddChildPartTypeWithJoint(m_strSecondaryPartType, m_strChildJoint, m_ptClickToAddChild)
+
+        RepositionChildPart()
 
         'Select the simulation window tab so it is visible.
         ExecuteMethod("SelectTrackItems", New Object() {"Simulation\Environment\Structures\Structure_1", "Structure_1", "Body_1"})
 
         'Zoom in on the part so we can try and move it with the mouse.
-        ZoomInOnRootPart(m_ptInitialZoomStart, m_iSecondaryZoomDist1, m_iSecondaryZoomDist2)
+        ZoomInOnPart(m_ptInitialZoomStart, m_iSecondaryZoomDist1, m_iSecondaryZoomDist2)
+
+        MouseMoveChild()
+
+        MouseRotateChild()
+
+        ManualMoveChild()
+
+        ManualRotateChild()
+
+        VerifyChildPositionAfterRotateStructure()
+
+        VerifyJointPositionAfterRotateStructure()
+
+        Threading.Thread.Sleep(1000)
+
+    End Sub
+
+    Protected Overridable Sub MouseMoveChild()
+        'Move the z axis and verify position.
+        MovePartAxis("Structure_1", "Root\Joint_1\Body_1", _
+                     m_strMoveChildWorldZAxis, m_strMoveChildLocalZAxis, _
+                     m_ptChildTranslateZAxisStart, m_ptChildTranslateZAxisEnd, _
+                     m_dblMinTranChildWorldZ, m_dblMaxTranChildWorldZ, _
+                     m_dblMinTranChildStructZ, m_dblMaxTranChildStructZ, _
+                     m_dblMinTranChildLocalZ, m_dblMaxTranChildLocalZ)
 
         'Move the z axis and verify position.
-        MovePartAxis("Structure_1", "Root\Joint_1\Body_1", "Z", m_ptChildTranslateZAxisStart, m_ptChildTranslateZAxisEnd, _
-                     m_dblMinTranslateAxisRange, m_dblMaxTranslateAxisRange, 0, 0, _
-                     m_dblMinTranslateAxisRange, m_dblMaxTranslateAxisRange)
-
-        'Move the z axis and verify position.
-        MovePartAxis("Structure_1", "Root\Joint_1\Body_1", "Y", m_ptChildTranslateYAxisStart, m_ptChildTranslateYAxisEnd, _
-                     m_dblMinTranslateAxisRange, m_dblMaxTranslateAxisRange, 0, 0, _
-                     m_dblMinTranslateAxisRange, m_dblMaxTranslateAxisRange)
+        MovePartAxis("Structure_1", "Root\Joint_1\Body_1", _
+                     m_strMoveChildWorldYAxis, m_strMoveChildLocalYAxis, _
+                     m_ptChildTranslateYAxisStart, m_ptChildTranslateYAxisEnd, _
+                     m_dblMinTranChildWorldY, m_dblMaxTranChildWorldY, _
+                     m_dblMinTranChildStructY, m_dblMaxTranChildStructY, _
+                     m_dblMinTranChildLocalY, m_dblMaxTranChildLocalY)
 
         'Move view around to see z axis.
         DragMouse(m_ptChildRotatePartForTranslateStart, m_ptChildRotatePartForTranslateEnd, MouseButtons.Left, ModifierKeys.None, True)
 
         'Move the x axis and verify position.
-        MovePartAxis("Structure_1", "Root\Joint_1\Body_1", "X", m_ptChildTranslateXAxisStart, m_ptChildTranslateXAxisEnd, _
-                     m_dblMinTranslateAxisRange, m_dblMaxTranslateAxisRange, 0, 0, _
-                     m_dblMinTranslateAxisRange, m_dblMaxTranslateAxisRange)
+        MovePartAxis("Structure_1", "Root\Joint_1\Body_1", _
+                     m_strMoveChildWorldXAxis, m_strMoveChildLocalXAxis, _
+                     m_ptChildTranslateXAxisStart, m_ptChildTranslateXAxisEnd, _
+                     m_dblMinTranChildWorldX, m_dblMaxTranChildWorldX, _
+                     m_dblMinTranChildStructX, m_dblMaxTranChildStructX, _
+                     m_dblMinTranChildLocalX, m_dblMaxTranChildLocalX)
 
+    End Sub
+
+    Protected Overridable Sub MouseRotateChild()
         'Rotate the x axis
-        RotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "X", m_ptChildRotateXAxisStart, m_ptChildRotateXAxisEnd, m_dblMinRotateAxisRange, m_dblMaxRotateAxisRange, True)
+        RotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "X", m_ptChildRotateXAxisStart, m_ptChildRotateXAxisEnd, m_dblMinRotChildX, m_dblMaxRotChildX, True)
 
         'Rotate the y axis
-        RotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "Y", m_ptChildRotateYAxisStart, m_ptChildRotateYAxisEnd, m_dblMinRotateAxisRange, m_dblMaxRotateAxisRange, True)
+        RotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "Y", m_ptChildRotateYAxisStart, m_ptChildRotateYAxisEnd, m_dblMinRotChildY, m_dblMaxRotChildY, True)
 
         'Rotate the z axis
-        RotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "Z", m_ptChildRotateZAxisStart, m_ptChildRotateZAxisEnd, m_dblMinRotateAxisRange, m_dblMaxRotateAxisRange, True)
+        RotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "Z", m_ptChildRotateZAxisStart, m_ptChildRotateZAxisEnd, m_dblMinRotChildZ, m_dblMaxRotChildZ, True)
 
-        ManualMovePartAxis("Structure_1", "Root\Joint_1\Body_1", "X", m_dblManWorldXPos, m_dblManWorldXTest, m_dblManChildWorldLocalXTest, True, m_dblManLocalXPos, m_dblManLocalXTest, m_dblManChildLocalWorldXTest, 0.01)
-        ManualMovePartAxis("Structure_1", "Root\Joint_1\Body_1", "Y", m_dblManWorldYPos, m_dblManWorldYTest, m_dblManChildWorldLocalYTest, True, m_dblManLocalYPos, m_dblManLocalYTest, m_dblManChildLocalWorldYTest, 0.01)
-        ManualMovePartAxis("Structure_1", "Root\Joint_1\Body_1", "Z", m_dblManWorldZPos, m_dblManWorldZTest, m_dblManChildWorldLocalZTest, True, m_dblManLocalZPos, m_dblManLocalZTest, m_dblManChildLocalWorldZTest, 0.01)
+    End Sub
 
+    Protected Overridable Sub ManualMoveChild()
+        ManualMovePartAxis("Structure_1", "Root\Joint_1\Body_1", _
+                           m_strMoveChildWorldXAxis, m_strMoveChildLocalXAxis, _
+                           m_dblManWorldXPos, m_dblManWorldXTest, m_dblManChildWorldLocalXTest, _
+                           True, m_dblManLocalXPos, m_dblManLocalXTest, m_dblManChildLocalWorldXTest, 0.01)
+
+        ManualMovePartAxis("Structure_1", "Root\Joint_1\Body_1", _
+                           m_strMoveChildWorldYAxis, m_strMoveChildLocalYAxis, _
+                           m_dblManWorldYPos, m_dblManWorldYTest, m_dblManChildWorldLocalYTest, _
+                           True, m_dblManLocalYPos, m_dblManLocalYTest, m_dblManChildLocalWorldYTest, 0.01)
+
+        ManualMovePartAxis("Structure_1", "Root\Joint_1\Body_1", _
+                           m_strMoveChildWorldZAxis, m_strMoveChildLocalZAxis, _
+                           m_dblManWorldZPos, m_dblManWorldZTest, m_dblManChildWorldLocalZTest, _
+                           True, m_dblManLocalZPos, m_dblManLocalZTest, m_dblManChildLocalWorldZTest, 0.01)
+
+    End Sub
+
+    Protected Overridable Sub ManualRotateChild()
         ManualRotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "X", m_dblManXRot, True, 0.001)
         ManualRotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "Y", m_dblManYRot, True, 0.001)
         ManualRotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "Z", m_dblManZRot, True, 0.001)
+    End Sub
 
+    Protected Overridable Sub VerifyChildPositionAfterRotateStructure()
         'Verify the child part position after rotating the structure.
-        VerifyChildPosAfterRotate("Structure_1", "X", "Root\Joint_1\Body_1", m_dblRootChildRotation, m_dblStructChildRotateTestX, m_dblStructChildRotateTestY, m_dblStructChildRotateTestZ)
-        VerifyChildPosAfterRotate("Structure_1", "Y", "Root\Joint_1\Body_1", m_dblRootChildRotation, m_dblStructChildRotateTestZ, m_dblStructChildRotateTestX, m_dblStructChildRotateTestY)
-        VerifyChildPosAfterRotate("Structure_1", "Z", "Root\Joint_1\Body_1", m_dblRootChildRotation, m_dblStructChildRotateTestY, m_dblStructChildRotateTestZ, m_dblStructChildRotateTestX)
+        VerifyChildPosAfterRotate("Structure_1", "X", "Root\Joint_1\Body_1", m_dblRootChildRotation, m_dblStructChildRotateTestXX, m_dblStructChildRotateTestXY, m_dblStructChildRotateTestXZ)
+        VerifyChildPosAfterRotate("Structure_1", "Y", "Root\Joint_1\Body_1", m_dblRootChildRotation, m_dblStructChildRotateTestYX, m_dblStructChildRotateTestYY, m_dblStructChildRotateTestYZ)
+        VerifyChildPosAfterRotate("Structure_1", "Z", "Root\Joint_1\Body_1", m_dblRootChildRotation, m_dblStructChildRotateTestZX, m_dblStructChildRotateTestZY, m_dblStructChildRotateTestZZ)
+    End Sub
 
+    Protected Overridable Sub VerifyJointPositionAfterRotateStructure()
         'Verify the joint position after rotating the structure.
         VerifyChildPosAfterRotate("Structure_1", "X", "Root\Joint_1", m_dblRootChildRotation, m_dblStructJointRotateTestXX, m_dblStructJointRotateTestXY, m_dblStructJointRotateTestXZ)
         VerifyChildPosAfterRotate("Structure_1", "Y", "Root\Joint_1", m_dblRootChildRotation, m_dblStructJointRotateTestYX, m_dblStructJointRotateTestYY, m_dblStructJointRotateTestYZ)
         VerifyChildPosAfterRotate("Structure_1", "Z", "Root\Joint_1", m_dblRootChildRotation, m_dblStructJointRotateTestZX, m_dblStructJointRotateTestZY, m_dblStructJointRotateTestZZ)
+    End Sub
 
-        Threading.Thread.Sleep(1000)
-
-        CreateChartAndAddBodies(10)
-
+    Protected Overridable Sub RepositionStruct1BeforeSim()
         'Move the structure up.
         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1", "WorldPosition.Y", "1"})
+    End Sub
+
+    Protected Overridable Sub RepositionChildPart()
+
+    End Sub
+
+    Protected Overridable Sub RepositionStruct2BeforeSim()
+
+    End Sub
+
+    Protected Overridable Sub CreateStruct2AndRoot()
+
+        'Create a new structure
+        CreateStructure("Structure_2", "Structure_2")
+
+        'Add a plane part.
+        AddRootPartType(m_strStruct2RootPart)
+
+        RepositionStruct2BeforeSim()
+
+        'Select the chart tab page.
+        ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Tool Viewers\DataTool_1"}, 1000)
+
+        'Now add the new part to the chart.
+        'Now add items to the chart to plot the y position of the root of structure 2
+        AddItemToChart("Structure_2\Root")
+
+        'Set the name of the data chart item to root_y.
+        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root", "Name", "Root2_Y"})
+
+        'Change the data type to track the world Y position.
+        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root2_Y", "DataTypeID", "WorldPositionY"})
+
+        'Select the simulation window tab so it is visible now.
+        ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Simulation\Environment\Structures\Structure_2"}, 1000)
+    End Sub
+
+    Protected Overridable Sub SimulateAndDeleteParts()
+
+        'Reposition the structure and child part before the simulation
+        RepositionStruct1BeforeSim()
+        RepositionChildPart()
 
         'Run the simulation and wait for it to end.
         RunSimulationWaitToEnd()
@@ -392,11 +651,7 @@ Public MustInherit Class BodyPartUITest
         'Compare chart data to verify simulation results.
         CompareSimulation(m_strRootFolder & m_strTestDataPath, "BeforeStruct_")
 
-        'Create a new structure
-        CreateStructure("Structure_2", "Structure_2")
-
-        'Add a plane part.
-        AddRootPartType("Plane")
+        CreateStruct2AndRoot()
 
         'Run the simulation and wait for it to end.
         RunSimulationWaitToEnd()
@@ -456,26 +711,27 @@ Public MustInherit Class BodyPartUITest
 
     End Sub
 
-    Protected Overridable Sub TestMovableItemProperties(ByVal strStructure As String, ByVal strPart As String)
-
-
+    Protected Overridable Sub TestSettingBodyColors(ByVal strStructure As String, ByVal strPart As String)
         'Set the ambient to a valid value.
-        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Ambient", "#1E1E1E"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Ambient", m_strAmbient})
 
         'Set the diffuse to a valid value.
-        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Diffuse", "#FFFFFF"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Diffuse", m_strDiffuse})
 
         'Set the specular to a valid value.
-        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Specular", "#1E1E1E"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Specular", m_strSpecular})
 
         'Set the shininess to a valid value.
-        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Shininess", "70"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Shininess", m_iShininess.ToString})
 
         'Set the shininess to an valid value.
         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Shininess", "-1"}, "Shininess must be greater than or equal to zero.")
 
         'Set the shininess to an valid value.
         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Shininess", "129"}, "Shininess must be less than 128.")
+    End Sub
+
+    Protected Overridable Sub TestSettingBodyTexture(ByVal strStructure As String, ByVal strPart As String)
 
         If m_bTestTexture Then
             'Set the texture to an valid value.
@@ -490,72 +746,56 @@ Public MustInherit Class BodyPartUITest
                                                                         (m_strRootFolder & "\bin\Resources\Test.txt")}, "Unable to load the texture file. This does not appear to be a vaild image file.", enumErrorTextType.BeginsWith)
         End If
 
+    End Sub
+
+    Protected Overridable Sub TestSettingBodyVisibility(ByVal strStructure As String, ByVal strPart As String)
+
         'Set the visible to a valid value.
         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Visible", "False"})
 
         'Turn visible back on.
         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Visible", "True"})
 
-        'Set the Transparencies.GraphicsTransparency to a valid value.
-        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.GraphicsTransparency", "50"})
-
-        'Set the Transparencies.GraphicsTransparency to high.
-        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.GraphicsTransparency", "150"}, "Transparency values cannot be greater than 100%.")
-
-        'Set the Transparencies.GraphicsTransparency too low
-        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.GraphicsTransparency", "-50"}, "Transparency values cannont be less than 0%.")
-
-
-        'Set the Transparencies.CollisionsTransparency to a valid value.
-        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.CollisionsTransparency", "50"})
-
-        'Set the Transparencies.CollisionsTransparency to high.
-        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.CollisionsTransparency", "150"}, "Transparency values cannot be greater than 100%.")
-
-        'Set the Transparencies.CollisionsTransparency too low
-        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.CollisionsTransparency", "-50"}, "Transparency values cannont be less than 0%.")
-
-
-        'Set the Transparencies.JointsTransparency to a valid value.
-        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.JointsTransparency", "50"})
-
-        'Set the Transparencies.JointsTransparency to high.
-        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.JointsTransparency", "150"}, "Transparency values cannot be greater than 100%.")
-
-        'Set the Transparencies.JointsTransparency too low
-        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.JointsTransparency", "-50"}, "Transparency values cannont be less than 0%.")
-
-
-        'Set the Transparencies.ReceptiveFieldsTransparency to a valid value.
-        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.ReceptiveFieldsTransparency", "50"})
-
-        'Set the Transparencies.ReceptiveFieldsTransparency to high.
-        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.ReceptiveFieldsTransparency", "150"}, "Transparency values cannot be greater than 100%.")
-
-        'Set the Transparencies.ReceptiveFieldsTransparency too low
-        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.ReceptiveFieldsTransparency", "-50"}, "Transparency values cannont be less than 0%.")
-
-
-        'Set the Transparencies.SimulationTransparency to a valid value.
-        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.SimulationTransparency", "50"})
-
-        'Set the Transparencies.SimulationTransparency to high.
-        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.SimulationTransparency", "150"}, "Transparency values cannot be greater than 100%.")
-
-        'Set the Transparencies.SimulationTransparency too low
-        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.SimulationTransparency", "-50"}, "Transparency values cannont be less than 0%.")
-
-        'Reset the Transparencies to their original values.
-        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.GraphicsTransparency", "50"})
-        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.CollisionsTransparency", "0"})
-        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.JointsTransparency", "50"})
-        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.ReceptiveFieldsTransparency", "50"})
-        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Transparencies.SimulationTransparency", "100"})
+        TestSettingTransparency(strStructure, strPart, "Transparencies.GraphicsTransparency")
+        TestSettingTransparency(strStructure, strPart, "Transparencies.CollisionsTransparency")
+        TestSettingTransparency(strStructure, strPart, "Transparencies.JointsTransparency")
+        TestSettingTransparency(strStructure, strPart, "Transparencies.ReceptiveFieldsTransparency")
+        TestSettingTransparency(strStructure, strPart, "Transparencies.SimulationTransparency")
 
         'If this is the root part then set its child graphics object to be clear for the rest of the tests so it does not look funky.
-        If strPart = "Root" Then
+        If strPart = "Root" AndAlso HasRootGraphic() Then
             ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart & "\Root_Graphics", "Transparencies.CollisionsTransparency", "100"})
         End If
+    End Sub
+
+    Protected Overridable Sub TestSettingTransparency(ByVal strStructure As String, ByVal strPart As String, ByVal strTransparency As String)
+
+        'Get original value
+        Dim fltOrigRot As Single = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, strTransparency), Single)
+
+        'Set the Transparencies.GraphicsTransparency to a valid value.
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, strTransparency, "50"})
+
+        'Set the Transparencies.GraphicsTransparency to high.
+        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, strTransparency, "150"}, "Transparency values cannot be greater than 100%.")
+
+        'Set the Transparencies.GraphicsTransparency too low
+        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, strTransparency, "-50"}, "Transparency values cannont be less than 0%.")
+
+        'reset original value
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, strTransparency, fltOrigRot.ToString})
+
+    End Sub
+
+
+
+    Protected Overridable Sub TestMovableItemProperties(ByVal strStructure As String, ByVal strPart As String)
+
+        TestSettingBodyColors(strStructure, strPart)
+
+        TestSettingBodyTexture(strStructure, strPart)
+
+        TestSettingBodyVisibility(strStructure, strPart)
 
         'Set the Description to a valid value.
         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Description", "Test"})
@@ -571,9 +811,77 @@ Public MustInherit Class BodyPartUITest
 
     End Sub
 
+
+    'Protected Overridable Sub TestLandscape()
+
+    '    CreateAndTestRoot()
+    '    CreateAndTestChild()
+
+    '    'Reposition the structure
+    '    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1", "WorldPosition.X", "0"})
+    '    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1", "WorldPosition.Y", "0"})
+    '    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1", "WorldPosition.Z", "0"})
+
+    '    'Reposition the Child
+    '    RepositionChildPart()
+
+    '    CreateChartAndAddBodies(10)
+
+    '    'Run the simulation and wait for it to end.
+    '    RunSimulationWaitToEnd()
+
+    '    'Compare chart data to verify simulation results.
+    '    CompareSimulation(m_strRootFolder & m_strTestDataPath, "BeforeStruct_")
+
+
+    '    'Create a new structure
+    '    CreateStructure("Structure_2", "Structure_2")
+
+    '    'Add a plane part.
+    '    AddRootPartType("Plane")
+
+
+    '    'Run the simulation and wait for it to end.
+    '    RunSimulationWaitToEnd()
+
+    '    'Compare chart data to verify simulation results.
+    '    CompareSimulation(m_strRootFolder & m_strTestDataPath, "AfterStruct_")
+
+    '    ''Now lets remove the child body of the falling part.
+    '    'DeletePart("Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_1")
+
+    '    ''Run the simulation and wait for it to end.
+    '    'RunSimulationWaitToEnd()
+
+    '    ''Compare chart data to verify simulation results.
+    '    'CompareSimulation(m_strRootFolder & m_strTestDataPath, "AfterS1Child_")
+
+    '    ''Now lets remove the plane part of the second structure, and that structure.
+    '    'DeletePart("Simulation\Environment\Structures\Structure_2\Body Plan\Root")
+
+    '    ''Remove the structure
+    '    'DeletePart("Simulation\Environment\Structures\Structure_2")
+
+    '    ''Run the simulation and wait for it to end.
+    '    'RunSimulationWaitToEnd()
+
+    '    ''Compare chart data to verify simulation results.
+    '    'CompareSimulation(m_strRootFolder & m_strTestDataPath, "AfterS2_")
+
+    '    ''Now lets remove the root of the structure 1, and that structure.
+    '    'DeletePart("Simulation\Environment\Structures\Structure_1\Body Plan\Root")
+
+    '    ''Now lets remove structure 1, and that structure.
+    '    'DeletePart("Simulation\Environment\Structures\Structure_1")
+
+    '    ''Make sure simulation can still run.
+    '    'RunSimulationWaitToEnd()
+
+    'End Sub
+
 #Region "GenerateCode"
 
- 
+
 
 #End Region
 
