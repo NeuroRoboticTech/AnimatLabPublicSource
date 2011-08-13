@@ -414,70 +414,75 @@ Namespace DataObjects.Physical
 
         Public Overloads Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strPropName As String)
             MyBase.LoadData(oXml)
+            oXml.IntoElem()
 
-            'If oXml.FindChildElement(strPropName, False) Then
-            '    oXml.IntoElem() 'Into Constraint Element
+            m_mtMaterial1.LoadData(oXml)
+            m_mtMaterial2.LoadData(oXml)
 
-            '    m_strID = oXml.GetChildString("ID")
-            '    m_strName = oXml.GetChildString("Name", m_strID)
+            m_snFrictionPrimary.LoadData(oXml, "PrimaryFrictionCoefficient")
+            m_snFrictionSecondary.LoadData(oXml, "SecondaryFrictionCoefficient")
+            m_snMaxFrictionPrimary.LoadData(oXml, "PrimaryMaximumFriction")
+            m_snMaxFrictionSecondary.LoadData(oXml, "SecondaryMaximumFriction")
+            m_snCompliance.LoadData(oXml, "Compliance")
+            m_snDamping.LoadData(oXml, "Damping")
+            m_snRestitution.LoadData(oXml, "Restitution")
+            m_snSlipPrimary.LoadData(oXml, "PrimarySlip")
+            m_snSlipSecondary.LoadData(oXml, "SecondarySlip")
+            m_snSlidePrimary.LoadData(oXml, "PrimarySlide")
+            m_snSlideSecondary.LoadData(oXml, "SecondarySlide")
+            m_snMaxAdhesion.LoadData(oXml, "MaximumAdhesion")
 
-            '    If m_strID.Trim.Length = 0 Then
-            '        m_strID = System.Guid.NewGuid().ToString()
-            '    End If
-
-            '    If m_strName.Trim.Length = 0 Then
-            '        m_strName = m_strID
-            '    End If
-
-            '    m_snFrictionCoefficient.LoadData(oXml, "COF")
-            '    'm_mtMaterial1 = Nothing
-            '    'Dim doMaterial As DataObjects.Physical.MaterialType
-            '    'Dim strID As String = oXml.GetChildString("Material1ID", "")
-            '    'If strID.Trim.Length > 0 AndAlso Not m_doStructure Is Nothing Then
-            '    '    doPart = m_doStructure.FindBodyPart(strID, False)
-            '    '    If Not doPart Is Nothing Then
-            '    '        m_doPart1 = DirectCast(doPart, AnimatGUI.DataObjects.Physical.RigidBody)
-            '    '    End If
-            '    'End If
-
-
-            '    'm_mtMaterial1.LoadData(oXml, "Material2")
-            '    oXml.OutOfElem() 'Outof Constraint Element
-            'End If
+            oXml.OutOfElem()
 
         End Sub
 
         Public Overloads Sub SaveData(ByRef oXml As Interfaces.StdXml, ByVal strPropName As String)
             MyBase.SaveData(oXml)
-            'If Not m_mtMaterial1 Is Nothing AndAlso Not m_mtMaterial2 Is Nothing Then
-            '    oXml.AddChildElement(strPropName)
-            '    oXml.IntoElem() 'Into Child Elemement
+            If Not m_mtMaterial1 Is Nothing AndAlso Not m_mtMaterial2 Is Nothing Then
+                oXml.AddChildElement("MaterialPair")
+                oXml.IntoElem()
 
-            '    oXml.AddChildElement("Name", m_strName)
-            '    oXml.AddChildElement("ID", m_strID)
-            '    m_snFrictionCoefficient.SaveData(oXml, "COF")
+                m_mtMaterial1.SaveData(oXml)
+                m_mtMaterial2.SaveData(oXml)
 
-            '    oXml.AddChildElement("Material1ID", m_mtMaterial1.ID)
-            '    oXml.AddChildElement("Material2ID", m_mtMaterial2.ID)
+                m_snFrictionPrimary.SaveData(oXml, "PrimaryFrictionCoefficient")
+                m_snFrictionSecondary.SaveData(oXml, "SecondaryFrictionCoefficient")
+                m_snMaxFrictionPrimary.SaveData(oXml, "PrimaryMaximumFriction")
+                m_snMaxFrictionSecondary.SaveData(oXml, "SecondaryMaximumFriction")
+                m_snCompliance.SaveData(oXml, "Compliance")
+                m_snDamping.SaveData(oXml, "Damping")
+                m_snRestitution.SaveData(oXml, "Restitution")
+                m_snSlipPrimary.SaveData(oXml, "PrimarySlip")
+                m_snSlipSecondary.SaveData(oXml, "SecondarySlip")
+                m_snSlidePrimary.SaveData(oXml, "PrimarySlide")
+                m_snSlideSecondary.SaveData(oXml, "SecondarySlide")
+                m_snMaxAdhesion.SaveData(oXml, "MaximumAdhesion")
 
-            '    oXml.OutOfElem() 'Outof BodyPart Element
-            'End If
+                oXml.OutOfElem()
+            End If
         End Sub
 
         Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
-            'If Not m_mtMaterial1 Is Nothing AndAlso Not m_mtMaterial2 Is Nothing Then
-            '    oXml.AddChildElement(strName)
-            '    oXml.IntoElem() 'Into Child Elemement
+            MyBase.SaveSimulationXml(oXml, nmParentControl, strName)
+            oXml.IntoElem()
 
-            '    oXml.AddChildElement("Name", m_strName)
-            '    oXml.AddChildElement("ID", m_strID)
+            m_mtMaterial1.SaveSimulationXml(oXml)
+            m_mtMaterial2.SaveSimulationXml(oXml)
 
-            '    'm_snFrictionCoefficient.SaveSimulationXml(oXml, Me, "COF")
-            '    m_mtMaterial1.SaveSimulationXml(oXml, Me, "Material1")
-            '    m_mtMaterial2.SaveSimulationXml(oXml, Me, "Material2")
+            m_snFrictionPrimary.SaveSimulationXml(oXml, Me, "PrimaryFrictionCoefficient")
+            m_snFrictionSecondary.SaveSimulationXml(oXml, Me, "SecondaryFrictionCoefficient")
+            m_snMaxFrictionPrimary.SaveSimulationXml(oXml, Me, "PrimaryMaximumFriction")
+            m_snMaxFrictionSecondary.SaveSimulationXml(oXml, Me, "SecondaryMaximumFriction")
+            m_snCompliance.SaveSimulationXml(oXml, Me, "Compliance")
+            m_snDamping.SaveSimulationXml(oXml, Me, "Damping")
+            m_snRestitution.SaveSimulationXml(oXml, Me, "Restitution")
+            m_snSlipPrimary.SaveSimulationXml(oXml, Me, "PrimarySlip")
+            m_snSlipSecondary.SaveSimulationXml(oXml, Me, "SecondarySlip")
+            m_snSlidePrimary.SaveSimulationXml(oXml, Me, "PrimarySlide")
+            m_snSlideSecondary.SaveSimulationXml(oXml, Me, "SecondarySlide")
+            m_snMaxAdhesion.SaveSimulationXml(oXml, Me, "MaximumAdhesion")
 
-            '    oXml.OutOfElem() 'Outof BodyPart Element
-            'End If
+            oXml.OutOfElem()
         End Sub
 
         Public Overrides Function ToString() As String
