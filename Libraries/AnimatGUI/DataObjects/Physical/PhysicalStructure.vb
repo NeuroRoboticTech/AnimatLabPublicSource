@@ -331,7 +331,7 @@ Namespace DataObjects.Physical
 
             If Not Me.BodyEditor Is Nothing Then
                 If Me.BodyEditor.cboBodyPart.SelectedItem Is Nothing Then
-                    Me.BodyEditor.cboBodyPart.SelectedItem = m_dbRoot
+                    Me.BodyEditor.BodyPart = m_dbRoot
                 End If
             End If
 

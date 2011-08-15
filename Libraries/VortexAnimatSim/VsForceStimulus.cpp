@@ -299,6 +299,9 @@ BOOL VsForceStimulus::SetData(string strDataType, string strValue, BOOL bThrowEr
 {
 	string strType = Std_CheckString(strDataType);
 
+	if(ExternalStimulus::SetData(strDataType, strValue, FALSE))
+		return true;
+
 	if(strType == "POSITIONX")
 	{
 		RelativePositionX(atof(strValue.c_str()));

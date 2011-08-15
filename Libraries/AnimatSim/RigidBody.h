@@ -177,7 +177,7 @@ namespace AnimatSim
 
 			virtual CStdFPoint Position();
 			virtual void Position(CStdFPoint &oPoint, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
-
+			
 			virtual int VisualSelectionType();
 
 			virtual CStdFPoint CenterOfMass();

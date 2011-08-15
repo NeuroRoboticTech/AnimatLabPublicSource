@@ -29,6 +29,8 @@ Public MustInherit Class BodyPartUITest
     Protected m_strSecondaryPartType As String = ""
     Protected m_strChildJoint As String = "Hinge"
     Protected m_strStruct2RootPart As String = "Plane"
+    Protected m_strTextureFile As String = "Bricks.bmp"
+    Protected m_strMeshFile As String = "TestMesh.osg"
 
     Protected m_bTestTexture As Boolean = True
     Protected m_bTestDensity As Boolean = True
@@ -290,7 +292,7 @@ Public MustInherit Class BodyPartUITest
 
         CreateAndTestRoot()
         CreateAndTestChild()
-        CreateChartAndAddBodies(10)
+        CreateChartAndAddBodies()
         SimulateAndDeleteParts()
 
     End Sub
@@ -404,7 +406,7 @@ Public MustInherit Class BodyPartUITest
         'Start the application.
         StartApplication("", m_iPort, False)
 
-        CreateNewProject(m_strProjectName, m_strProjectPath, 15)
+        CreateNewProject(m_strProjectName, m_strProjectPath, m_dblSimEndTime)
 
         'Add a root part.
         AddRootPartType(m_strPartType)
@@ -667,6 +669,9 @@ Public MustInherit Class BodyPartUITest
 
         'Select the simulation window tab so it is visible now.
         ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Simulation\Environment\Structures\Structure_2"}, 1000)
+
+        'Set it to track the root of structure 2.
+        ExecuteMethod("SelectTrackItems", New Object() {"Simulation\Environment\Structures\Structure_2", "Structure_2", "Root"})
     End Sub
 
     Protected Overridable Sub SimulateAndDeleteParts()
@@ -768,15 +773,30 @@ Public MustInherit Class BodyPartUITest
         If m_bTestTexture Then
             'Set the texture to an valid value.
             ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Texture", _
-                                                                        (m_strRootFolder & "\bin\Resources\Bricks.bmp")})
+                                                                        (m_strRootFolder & "\bin\Resources\" & m_strTextureFile)})
             'Set the texture to an invalid value.
             ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Texture", _
-                                                                        (m_strRootFolder & "\bin\Resources\Bricks.bmp")}, "The specified file does not exist: ", enumErrorTextType.BeginsWith)
+                                                                        (m_strRootFolder & "\bin\Resources\Bricks.gif")}, "The specified file does not exist: ", enumErrorTextType.BeginsWith)
 
             'Set the texture to an invalid value.
             ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Texture", _
                                                                         (m_strRootFolder & "\bin\Resources\Test.txt")}, "Unable to load the texture file. This does not appear to be a vaild image file.", enumErrorTextType.BeginsWith)
         End If
+
+    End Sub
+
+    Protected Overridable Sub TestSettingHeightMap(ByVal strStructure As String, ByVal strPart As String)
+
+        'Set the texture to an valid value.
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "MeshFile", _
+                                                                    (m_strRootFolder & "\bin\Resources\" & m_strMeshFile)})
+        'Set the texture to an invalid value.
+        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "MeshFile", _
+                                                                    (m_strRootFolder & "\bin\Resources\Bricks.gif")}, "The specified file does not exist: ", enumErrorTextType.BeginsWith)
+
+        'Set the texture to an invalid value.
+        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "MeshFile", _
+                                                                    (m_strRootFolder & "\bin\Resources\Test.txt")}, "Unable to load the height map file. This does not appear to be a vaild image file.", enumErrorTextType.BeginsWith)
 
     End Sub
 

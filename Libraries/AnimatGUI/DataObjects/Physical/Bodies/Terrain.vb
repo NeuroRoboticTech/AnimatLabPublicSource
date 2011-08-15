@@ -56,11 +56,26 @@ Namespace DataObjects.Physical.Bodies
                 Return m_strMeshFile
             End Get
             Set(ByVal value As String)
-                'If the file is specified and it is a full path, then check to see if it is in the project directory. If it is then
-                'just use the file path
-                Dim strPath As String, strFile As String
-                If Not value Is Nothing AndAlso Util.DetermineFilePath(value, strPath, strFile) Then
-                    value = strFile
+
+                'Check to see if the file exists.
+                If value.Trim.Length > 0 Then
+                    If Not File.Exists(value) Then
+                        Throw New System.Exception("The specified file does not exist: " & value)
+                    End If
+
+                    'Attempt to load the file first to make sure it is a valid image file.
+                    Try
+                        Dim bm As New Bitmap(value)
+                    Catch ex As System.Exception
+                        Throw New System.Exception("Unable to load the height map file. This does not appear to be a vaild image file.")
+                    End Try
+
+                    If Not value Is Nothing Then
+                        Dim strPath As String, strFile As String
+                        If Util.DetermineFilePath(value, strPath, strFile) Then
+                            value = strFile
+                        End If
+                    End If
                 End If
 
                 SetSimData("MeshFile", value, True)

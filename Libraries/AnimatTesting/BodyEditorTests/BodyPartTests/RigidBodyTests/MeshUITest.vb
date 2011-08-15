@@ -27,7 +27,7 @@ Namespace BodyEditorTests
                     If strPartType = m_strPartType Then
                         'Wait for the collision mesh dialog to show, fill it in and hit ok
                         OpenDialogAndWait("SelectMesh", Nothing, Nothing)
-                        ExecuteActiveDialogMethod("SetMeshParameters", New Object() {(m_strRootFolder & "\bin\Resources\TestMesh.osg"), "Convex"})
+                        ExecuteActiveDialogMethod("SetMeshParameters", New Object() {(m_strRootFolder & "\bin\Resources\" & m_strMeshFile), "Convex"})
                         ExecuteActiveDialogMethod("ClickOkButton", Nothing)
 
                         'Wait for the graphics mesh to show and hit ok.
@@ -41,7 +41,7 @@ Namespace BodyEditorTests
 
                     'Wait for the collision mesh dialog to show, fill it in and hit ok
                     OpenDialogAndWait("SelectMesh", Nothing, Nothing)
-                    ExecuteActiveDialogMethod("SetMeshParameters", New Object() {(m_strRootFolder & "\bin\Resources\TestMesh.osg"), "Triangular"})
+                    ExecuteActiveDialogMethod("SetMeshParameters", New Object() {(m_strRootFolder & "\bin\Resources\" & m_strMeshFile), "Triangular"})
                     ExecuteActiveDialogMethod("ClickOkButton", Nothing)
 
                     'Wait for the graphics mesh to show and hit ok.

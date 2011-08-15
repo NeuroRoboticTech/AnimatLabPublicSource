@@ -168,6 +168,7 @@ Namespace Forms.ExternalStimuli
             Try
                 m_btnOk = Me.btnOk
                 m_btnCancel = Me.btnCancel
+                m_lvItems = ctrlStimulusTypes
 
                 If m_aryCompatibleStimuli Is Nothing Then
                     Throw New System.Exception("The list of compatible stimulus is not defined.")

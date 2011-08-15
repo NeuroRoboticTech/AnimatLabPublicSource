@@ -113,6 +113,7 @@ Namespace DataObjects.ExternalStimuli
             End Get
             Set(ByVal Value As ScaledNumber)
                 If Not Value Is Nothing Then
+                    SetSimData("PositionX", Value.ActualValue.ToString, True)
                     m_snPositionX.SetFromValue(Value.ActualValue, Util.Environment.DistanceUnits)
                 End If
             End Set
@@ -124,6 +125,7 @@ Namespace DataObjects.ExternalStimuli
             End Get
             Set(ByVal Value As ScaledNumber)
                 If Not Value Is Nothing Then
+                    SetSimData("PositionY", Value.ActualValue.ToString, True)
                     m_snPositionY.SetFromValue(Value.ActualValue, Util.Environment.DistanceUnits)
                 End If
             End Set
@@ -135,6 +137,7 @@ Namespace DataObjects.ExternalStimuli
             End Get
             Set(ByVal Value As ScaledNumber)
                 If Not Value Is Nothing Then
+                    SetSimData("PositionZ", Value.ActualValue.ToString, True)
                     m_snPositionZ.SetFromValue(Value.ActualValue, Util.Environment.DistanceUnits)
                 End If
             End Set

@@ -1331,6 +1331,7 @@ Namespace DataObjects.Physical
         Public Overrides Sub SetDefaultSizes()
             MyBase.SetDefaultSizes()
             m_snDensity.ActualValue = 1 * Util.Environment.MassUnitValue
+            Me.EnableFluids = Util.Environment.SimulateHydrodynamics
         End Sub
 
         Protected Overridable Sub OrientNewPart(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d)

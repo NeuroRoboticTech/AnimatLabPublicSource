@@ -221,6 +221,7 @@ Namespace Forms
 
                 'Reset the value showing in the combo box.
                 m_bDrawingBodyPartCombo = True
+                GenerateBodyPartDropDown()
                 Me.cboBodyPart.SelectedItem = m_doBodyPart
                 m_bDrawingBodyPartCombo = False
 
@@ -424,6 +425,7 @@ Namespace Forms
                 If m_doInterface Is Nothing Then
                     If m_strStructureID.Trim.Length > 0 AndAlso Me.PhysicalStructure Is Nothing Then
                         Me.PhysicalStructure = DirectCast(Util.Simulation.FindObjectByID(m_strStructureID), DataObjects.Physical.PhysicalStructure)
+                        Me.PhysicalStructure.BodyEditor = Me
 
                         If m_strBodyPartID.Trim.Length > 0 AndAlso Me.BodyPart Is Nothing Then
                             Me.BodyPart = DirectCast(Util.Simulation.FindObjectByID(m_strBodyPartID), DataObjects.Physical.BodyPart)

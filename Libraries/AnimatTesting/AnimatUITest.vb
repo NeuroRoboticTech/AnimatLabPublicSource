@@ -43,6 +43,8 @@ Public MustInherit Class AnimatUITest
     Protected m_strProjectName As String = ""
     Protected m_strProjectPath As String = ""
     Protected m_strTestDataPath As String = ""
+    Protected m_dblSimEndTime As Double = 15
+    Protected m_dblChartEndTime As Double = 8
 
     Protected m_UIBoxTestProjectWindow As UIProjectWindow
     Protected m_szOriginalResoution As New Size(1424, 791)
@@ -54,12 +56,18 @@ Public MustInherit Class AnimatUITest
 
 #Region "Properties"
 
-    Public ReadOnly Property UIProjectWindow(ByVal strProjectName As String) As UIProjectWindow
+    Public Overridable ReadOnly Property UIProjectWindow(ByVal strProjectName As String) As UIProjectWindow
         Get
             If (Me.m_UIBoxTestProjectWindow Is Nothing) Then
                 Me.m_UIBoxTestProjectWindow = New UIProjectWindow(strProjectName)
             End If
             Return Me.m_UIBoxTestProjectWindow
+        End Get
+    End Property
+
+    Public Overridable ReadOnly Property HasChildPart() As Boolean
+        Get
+            Return True
         End Get
     End Property
 
@@ -200,7 +208,7 @@ Public MustInherit Class AnimatUITest
 
         Try
             Dim oRet As Object = m_oServer.ExecuteMethod(strMethodName, aryParams)
-            Threading.Thread.Sleep(iWaitMilliseconds)
+            Throw New System.Exception("Expected exception from call to '" & strMethodName & "' and did not get it.")
         Catch ex As System.Exception
             If Not ex.InnerException Is Nothing Then
                 If eErrorTextType = enumErrorTextType.Contains AndAlso ex.InnerException.Message.Contains(strErrorText) Then
@@ -311,7 +319,7 @@ Public MustInherit Class AnimatUITest
 
     End Sub
 
-    Protected Overridable Sub CreateChartAndAddBodies(ByVal dblChartEndTime As Double)
+    Protected Overridable Sub CreateChartAndAddBodies()
 
         'Select the LineChart to add.
         AddChart("Line Chart")
@@ -320,7 +328,7 @@ Public MustInherit Class AnimatUITest
         ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1"})
 
         'Change the end time of the data chart to 45 seconds.
-        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectEndTime", dblChartEndTime.ToString})
+        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectEndTime", m_dblChartEndTime.ToString})
 
         'Now add items to the chart to plot the y position of the root, child part, and joint.
         'Add root part.
@@ -332,23 +340,25 @@ Public MustInherit Class AnimatUITest
         'Change the data type to track the world Y position.
         ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root_Y", "DataTypeID", "WorldPositionY"})
 
-        'Add child body part
-        AddItemToChart("Structure_1\Root\Joint_1\Body_1")
+        If Me.HasChildPart Then
+            'Add child body part
+            AddItemToChart("Structure_1\Root\Joint_1\Body_1")
 
-        'Set the name of the data chart item to root_y.
-        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Body_1", "Name", "Child_Y"})
+            'Set the name of the data chart item to root_y.
+            ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Body_1", "Name", "Child_Y"})
 
-        'Change the data type to track the world Y position.
-        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Child_Y", "DataTypeID", "WorldPositionY"})
+            'Change the data type to track the world Y position.
+            ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Child_Y", "DataTypeID", "WorldPositionY"})
 
-        'Add joint body part
-        AddItemToChart("Structure_1\Root\Joint_1")
+            'Add joint body part
+            AddItemToChart("Structure_1\Root\Joint_1")
 
-        'Set the name of the data chart item to root_y.
-        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Joint_1", "Name", "Joint_Y"})
+            'Set the name of the data chart item to root_y.
+            ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Joint_1", "Name", "Joint_Y"})
 
-        'Change the data type to track the world Y position.
-        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Joint_Y", "DataTypeID", "WorldPositionY"})
+            'Change the data type to track the world Y position.
+            ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Joint_Y", "DataTypeID", "WorldPositionY"})
+        End If
 
         'Select the simulation window tab so it is visible now.
         ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Simulation\Environment\Structures\Structure_1"}, 1000)
@@ -698,6 +708,59 @@ Public MustInherit Class AnimatUITest
         ExecuteActiveDialogMethod("ClickOkButton", Nothing)
 
         Threading.Thread.Sleep(2000)
+    End Sub
+
+    '''<summary>
+    '''AddLineChart - Use 'AddLineChartParams' to pass parameters into this method.
+    '''</summary>
+    Protected Overridable Sub AddStimulus(ByVal strStimulusType As String, ByVal strStructure As String, ByVal strPart As String)
+
+        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart})
+
+        OpenDialogAndWait("SelectStimulusType", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddStimulusToolStripButton"})
+
+        ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strStimulusType})
+
+        'Click 'Ok' button
+        ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+
+        Threading.Thread.Sleep(1000)
+    End Sub
+
+    Protected Overridable Sub AddForceStimulus(ByVal strStructure As String, ByVal strPart As String, ByVal strStimName As String)
+        AddStimulus("Force", strStructure, strPart)
+
+        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_1", "Name", strStimName})
+
+    End Sub
+
+    Protected Overridable Sub SetForceStimulus(ByVal strStimName As String, ByVal bAlwaysActive As Boolean, ByVal bEnabled As Boolean, _
+                                               ByVal dblStartTime As Double, ByVal dblEndTime As Double, _
+                                               ByVal dblPosX As Double, ByVal dblPosY As Double, ByVal dblPosZ As Double, _
+                                               ByVal dblForceX As Double, ByVal dblForceY As Double, ByVal dblForceZ As Double, _
+                                               ByVal dblTorqueX As Double, ByVal dblTorqueY As Double, ByVal dblTorqueZ As Double)
+
+        'Set the stim properties
+        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "AlwaysActive", bAlwaysActive.ToString})
+        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "Enabled", bEnabled.ToString})
+        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "StartTime", dblStartTime.ToString})
+        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "EndTime", dblEndTime.ToString})
+
+        'Set the force position.
+        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "PositionX", dblPosX.ToString})
+        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "PositionY", dblPosY.ToString})
+        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "PositionZ", dblPosZ.ToString})
+
+        'Set the force vector.
+        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "ForceX", dblForceX.ToString})
+        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "ForceY", dblForceY.ToString})
+        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "ForceZ", dblForceZ.ToString})
+
+        'Set the force vector.
+        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "TorqueX", dblTorqueX.ToString})
+        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "TorqueY", dblTorqueY.ToString})
+        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "TorqueZ", dblTorqueZ.ToString})
+
     End Sub
 
     Protected Overridable Sub DeletePart(ByVal strPath As String)

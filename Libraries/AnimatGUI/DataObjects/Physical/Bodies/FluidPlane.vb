@@ -124,6 +124,12 @@ Namespace DataObjects.Physical.Bodies
             End If
         End Sub
 
+        Public Overrides Sub AfterAddBody()
+            MyBase.AfterAddBody()
+
+            Util.Environment.SimulateHydrodynamics = True
+        End Sub
+
         Public Overrides Sub SetupPartTypesExclusions()
             'A fluid plane can only be added to a terrain or plane type.
             For Each bpBody As BodyPart In Util.Application.BodyPartTypes
