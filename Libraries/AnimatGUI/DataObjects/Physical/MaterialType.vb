@@ -11,7 +11,6 @@ Imports AnimatGUI.DataObjects
 
 Namespace DataObjects.Physical
 
-    ' This is what each rigid body will have as a property. It can have a name like "concrete" for example. '
     Public Class MaterialType
         Inherits Framework.DataObject
 
@@ -47,7 +46,17 @@ Namespace DataObjects.Physical
 
         Public Overrides Sub AfterAddToList(Optional ByVal bThrowError As Boolean = True)
             MyBase.AfterAddToList(bThrowError)
-            'stub for now
+            'temporary code
+            Dim colPairs As MaterialPairs
+            'colPairs = get collection of materialpairs 
+            Dim colTypes As Collection
+            'colTypes = get collection of materialtypes
+            Dim doParent As Framework.DataObject
+            For Each aMatType As MaterialType In colTypes
+                Dim newMatPair As New MaterialPair(doParent, aMatType, Me)
+                colPairs.Add(newMatPair)
+            Next
+
             'When a new materialType is added to the collection we need to create new materialpair objects for all the various combinations
             ' (you will need to make sure that you only do one combination pair
             'add the needed materialpair combinations. 
@@ -61,7 +70,7 @@ Namespace DataObjects.Physical
         Public Event MaterialReplaced(ByVal doNewMaterial As MaterialType)
 
         'This method is called after the users have picked the new material to switch to using.
-        Public Sub ReplaceMatierial(ByVal doNewMaterial As MaterialType)
+        Public Sub ReplaceMaterial(ByVal doNewMaterial As MaterialType)
             RaiseEvent MaterialReplaced(doNewMaterial)
         End Sub
 
@@ -70,8 +79,3 @@ Namespace DataObjects.Physical
     End Class
 
 End Namespace
-
-
-
-'Each Rigidbody will have a material type associated with it. 
-'It will hook into the add/remove events and when a material type is removed it will switch its material type to the replace material.
