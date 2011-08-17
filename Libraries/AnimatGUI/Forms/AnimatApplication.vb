@@ -1132,6 +1132,7 @@ Namespace Forms
         Protected m_wcWorkspaceContent As Crownwood.DotNetMagic.Docking.WindowContent
         Protected m_wcPropertiesContent As Crownwood.DotNetMagic.Docking.WindowContent
         Protected m_wcToolboxContent As Crownwood.DotNetMagic.Docking.WindowContent
+        Protected m_wcErrorsContent As Crownwood.DotNetMagic.Docking.WindowContent
         Protected m_wcSimControllerContent As Crownwood.DotNetMagic.Docking.WindowContent
         Protected m_wcRecFieldPairsContent As Crownwood.DotNetMagic.Docking.WindowContent
         Protected m_wcRecFieldGainContent As Crownwood.DotNetMagic.Docking.WindowContent
@@ -1140,6 +1141,7 @@ Namespace Forms
         Protected m_frmWorkspace As Forms.ProjectWorkspace
         Protected m_frmProperties As Forms.projectProperties
         Protected m_frmToolbox As Forms.Toolbox
+        Protected m_frmErrors As Forms.Errors
         Protected m_frmSimulationController As Forms.SimulationController
         Protected m_frmReceptiveFieldPairs As Forms.ReceptiveFieldPairs
         Protected m_frmReceptiveFieldGain As Forms.ReceptiveFieldGain
@@ -1299,6 +1301,12 @@ Namespace Forms
         Public Overridable ReadOnly Property ProjectToolbox() As Forms.Toolbox
             Get
                 Return m_frmToolbox
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property ProjectErrors() As Forms.Errors
+            Get
+                Return m_frmErrors
             End Get
         End Property
 
@@ -2931,12 +2939,6 @@ Namespace Forms
                                   , m_wcPropertiesContent, , , , 200)
                 m_frmProperties = DirectCast(afForm, Forms.ProjectProperties)
 
-                'afForm = CreateDockingForm(m_dockManager, "AnimatGUI.dll", _
-                '                "AnimatGUI.Forms.Toolbox", _
-                '                "Toolbox", "Toolbox", True, , _
-                '                Nothing, m_wcPropertiesContent)
-                'm_frmToolbox = DirectCast(afForm, Forms.Toolbox)
-
                 afForm = CreateDockingForm(m_dockManager, "AnimatGUI.dll", _
                                   "AnimatGUI.Forms.ProjectWorkspace", _
                                   "Workspace", "Workspace", True, _
@@ -2946,8 +2948,14 @@ Namespace Forms
                 afForm = CreateDockingForm(m_dockManager, "AnimatGUI.dll", _
                                 "AnimatGUI.Forms.SimulationController", _
                                 "Simulation Controller", "SimulationController", _
-                                True, State.DockBottom, m_wcSimControllerContent, , , , , 100)
+                                True, State.DockBottom, m_wcSimControllerContent, , , , , 125)
                 m_frmSimulationController = DirectCast(afForm, Forms.SimulationController)
+
+                afForm = CreateDockingForm(m_dockManager, "AnimatGUI.dll", _
+                                           "AnimatGUI.Forms.Errors", _
+                                           "Errors", "Errors", _
+                                           True, State.DockBottom, m_wcErrorsContent, m_wcSimControllerContent, , , , 125)
+                m_frmErrors = DirectCast(afForm, Forms.Errors)
 
                 afForm = CreateDockingForm(m_dockManager, "AnimatGUI.dll", _
                                 "AnimatGUI.Forms.ReceptiveFieldPairs", _
@@ -3021,8 +3029,17 @@ Namespace Forms
                 afForm = CreateDockingForm(m_dockManager, "AnimatGUI.dll", _
                                   "AnimatGUI.Forms.SimulationController", _
                                   "Simulation Controller", "SimulationController", _
-                                  True, State.DockBottom, , , , , , 150)
+                                  True, State.DockBottom, m_wcSimControllerContent, , , , , 125)
                 m_frmSimulationController = DirectCast(afForm, Forms.SimulationController)
+            End If
+
+            ctDock = m_dockManager.Contents("Errors")
+            If ctDock Is Nothing Then
+                afForm = CreateDockingForm(m_dockManager, "AnimatGUI.dll", _
+                                  "AnimatGUI.Forms.Errors", _
+                                  "Errors", "Errors", _
+                                  True, State.DockBottom, m_wcErrorsContent, m_wcSimControllerContent, , , , 125)
+                m_frmErrors = DirectCast(afForm, Forms.Errors)
             End If
 
             Dim ctRecFieldDock As Content = m_dockManager.Contents("Receptive Field Pairs")
@@ -3086,6 +3103,7 @@ Namespace Forms
 
             m_frmWorkspace = Nothing
             m_frmToolbox = Nothing
+            m_frmErrors = Nothing
             m_frmSimulationController = Nothing
 
             m_strPhysicsAssemblyName = "AnimatGUI.dll"
@@ -3447,6 +3465,8 @@ Namespace Forms
                     m_frmProperties = DirectCast(frmDock, Forms.ProjectProperties)
                 ElseIf strClass = "AnimatGUI.Forms.Toolbox" Then
                     m_frmToolbox = DirectCast(frmDock, Forms.Toolbox)
+                ElseIf strClass = "AnimatGUI.Forms.Errors" Then
+                    m_frmErrors = DirectCast(frmDock, Forms.Errors)
                 ElseIf strClass = "AnimatGUI.Forms.SimulationController" Then
                     m_frmSimulationController = DirectCast(frmDock, Forms.SimulationController)
                 ElseIf strClass = "AnimatGUI.Forms.ReceptiveFieldPairs" Then
@@ -5273,6 +5293,7 @@ Namespace Forms
                 m_wcWorkspaceContent = Nothing
                 m_frmWorkspace = Nothing
                 m_frmToolbox = Nothing
+                m_frmErrors = Nothing
                 m_frmSimulationController = Nothing
 
                 m_aryNeuralModules.Clear()

@@ -10,7 +10,7 @@ Imports Crownwood.Magic.Docking
 Imports Crownwood.Magic.Menus
 Imports AnimatGUI.Framework
 
-Namespace Forms.Behavior
+Namespace Forms
 
     Public Class Errors
         Inherits AnimatForm

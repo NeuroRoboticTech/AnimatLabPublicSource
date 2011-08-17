@@ -73,7 +73,7 @@ Namespace Forms.Behavior
         Protected m_HierarchyContent As Content
         Protected m_mcHierarchyBar As MenuCommand
 
-        Protected m_ErrorsBar As Forms.Behavior.Errors
+        Protected m_ErrorsBar As Forms.Errors
         Protected m_ErrorsContent As Content
         Protected m_mcErrorsBar As MenuCommand
 
@@ -173,7 +173,7 @@ Namespace Forms.Behavior
             End Get
         End Property
 
-        Public Overridable ReadOnly Property ErrorsBar() As Forms.Behavior.Errors
+        Public Overridable ReadOnly Property ErrorsBar() As Forms.Errors
             Get
                 Return m_ErrorsBar
             End Get

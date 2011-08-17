@@ -14,13 +14,13 @@ Namespace Collections
     Public Class DiagramErrors
         Inherits AnimatDictionaryBase
 
-        Protected m_frmParent As Forms.Behavior.Errors
+        Protected m_frmParent As Forms.Errors
 
-        Public Property ParentForm() As Forms.Behavior.Errors
+        Public Property ParentForm() As Forms.Errors
             Get
                 Return m_frmParent
             End Get
-            Set(ByVal Value As Forms.Behavior.Errors)
+            Set(ByVal Value As Forms.Errors)
                 If Value Is Nothing Then
                     Throw New System.Exception("You can not set the parent form to null.")
                 End If
@@ -50,7 +50,7 @@ Namespace Collections
             End Get
         End Property
 
-        Public Sub New(ByVal doParent As Framework.DataObject, ByVal frmParent As Forms.Behavior.Errors)
+        Public Sub New(ByVal doParent As Framework.DataObject, ByVal frmParent As Forms.Errors)
             MyBase.New(doParent)
 
             If frmParent Is Nothing Then

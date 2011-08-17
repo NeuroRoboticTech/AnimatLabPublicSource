@@ -495,9 +495,6 @@
     <Compile Include="Forms\Behavior\Editor.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Behavior\Errors.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Forms\Behavior\Export.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -562,6 +559,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\ErrorDisplay.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Errors.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\ExternalFileForm.vb">
@@ -802,6 +802,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ErrorDisplay.resx">
       <DependentUpon>ErrorDisplay.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Errors.resx">
+      <DependentUpon>Errors.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ExternalStimuli\SelectStimulusType.resx">
       <DependentUpon>SelectStimulusType.vb</DependentUpon>
@@ -1114,9 +1117,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Behavior\Editor.resx">
       <DependentUpon>Editor.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Behavior\Errors.resx">
-      <DependentUpon>Errors.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Behavior\Export.resx">
       <DependentUpon>Export.vb</DependentUpon>

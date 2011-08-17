@@ -95,7 +95,7 @@ Namespace DataObjects.Behavior
 
         End Sub
 
-        Public Function ImageIndex(ByVal frmErrors As Forms.Behavior.Errors) As Integer
+        Public Function ImageIndex(ByVal frmErrors As Forms.Errors) As Integer
             If m_eLevel = enumErrorLevel.Error Then
                 Return frmErrors.ToolStripImages.GetImageIndex("AnimatGUI.ErrorSmall.gif")
             Else
