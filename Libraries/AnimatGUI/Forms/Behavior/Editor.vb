@@ -218,7 +218,7 @@ Namespace Forms.Behavior
                 'Dim afDiagram As AnimatForm = Util.Application.CreateForm("LicensedAnimatGUI.dll", _
                 '                                                        "LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram", _
                 '                                                        "Page 1", Me)
-                'Dim bdDiagram As Forms.Behavior.Diagram = DirectCast(afDiagram, Forms.Behavior.Diagram)
+                'Dim bdDiagram As Forms.Behavior.DiagramOld = DirectCast(afDiagram, Forms.Behavior.DiagramOld)
                 'm_aryDiagrams.Add(bdDiagram.ID, bdDiagram)
 
                 'CreateImageManager()
@@ -894,10 +894,10 @@ Namespace Forms.Behavior
         End Function
 
         Public Overridable Function CreateDiagram(ByVal strAssemblyName As String, ByVal strClassName As String, _
-                                                  ByVal bdParent As Behavior.Diagram, Optional ByVal strPageName As String = "") As Behavior.Diagram
-            Dim bdDiagram As Forms.Behavior.Diagram = DirectCast(Util.Application.CreateForm(strAssemblyName, _
+                                                  ByVal bdParent As Behavior.DiagramOld, Optional ByVal strPageName As String = "") As Behavior.DiagramOld
+            Dim bdDiagram As Forms.Behavior.DiagramOld = DirectCast(Util.Application.CreateForm(strAssemblyName, _
                                                                  strClassName, "Page", False),  _
-                                                                 Forms.Behavior.Diagram)
+                                                                 Forms.Behavior.DiagramOld)
             Dim afDiagram As AnimatForm = DirectCast(bdParent, AnimatForm)
             bdDiagram.Initialize(afDiagram)
 
@@ -926,7 +926,7 @@ Namespace Forms.Behavior
             Return bdDiagram
         End Function
 
-        Public Overridable Sub RestoreDiagram(ByVal bdDiagram As Forms.Behavior.Diagram)
+        Public Overridable Sub RestoreDiagram(ByVal bdDiagram As Forms.Behavior.DiagramOld)
             Dim oTabPage As Crownwood.Magic.Controls.TabPage = New Crownwood.Magic.Controls.TabPage(bdDiagram.TabPageName, bdDiagram)
             m_tabFiller.TabPages.Add(oTabPage)
             m_tabFiller.SelectedTab = oTabPage
@@ -942,9 +942,9 @@ Namespace Forms.Behavior
         End Sub
 
         Public Overridable Function AddDiagram(ByVal strAssemblyName As String, ByVal strClassName As String, _
-                                               ByVal bdParent As Behavior.Diagram, Optional ByVal strPageName As String = "", _
-                                               Optional ByVal strID As String = "") As Behavior.Diagram
-            Dim bdDiagram As Forms.Behavior.Diagram = CreateDiagram(strAssemblyName, strClassName, bdParent, strPageName)
+                                               ByVal bdParent As Behavior.DiagramOld, Optional ByVal strPageName As String = "", _
+                                               Optional ByVal strID As String = "") As Behavior.DiagramOld
+            Dim bdDiagram As Forms.Behavior.DiagramOld = CreateDiagram(strAssemblyName, strClassName, bdParent, strPageName)
 
             If strID.Trim.Length > 0 Then
                 bdDiagram.ID = strID
@@ -956,7 +956,7 @@ Namespace Forms.Behavior
             Return bdDiagram
         End Function
 
-        Public Overridable Sub RemoveDiagram(ByVal bdDiagram As Behavior.Diagram)
+        Public Overridable Sub RemoveDiagram(ByVal bdDiagram As Behavior.DiagramOld)
 
             If m_aryDiagrams.Contains(bdDiagram.ID) Then
                 bdDiagram.RemovingDiagram()
@@ -971,7 +971,7 @@ Namespace Forms.Behavior
             m_HierarchyBar.RemoveDiagram(bdDiagram)
         End Sub
 
-        Public Overridable Sub SelectedDiagram(ByVal bdDiagram As Behavior.Diagram)
+        Public Overridable Sub SelectedDiagram(ByVal bdDiagram As Behavior.DiagramOld)
 
             Try
                 'If the tab we are selecting is the currently selected tab then lets get out of here.
@@ -1001,7 +1001,7 @@ Namespace Forms.Behavior
                 aryIDs.Add(deEntry.Key)
             Next
 
-            Dim bdDiagram As Diagram
+            Dim bdDiagram As Behavior.DiagramOld
             For Each strID As String In aryIDs
                 bdDiagram = m_aryDiagrams(strID)
                 RemoveDiagram(bdDiagram)
@@ -1009,7 +1009,7 @@ Namespace Forms.Behavior
 
         End Sub
 
-        Public Overridable Sub ChangeDiagramName(ByVal bdDiagram As Behavior.Diagram, ByVal strNewName As String)
+        Public Overridable Sub ChangeDiagramName(ByVal bdDiagram As Behavior.DiagramOld, ByVal strNewName As String)
 
             If strNewName.Trim.Length > 0 Then
                 Dim tabPage As Crownwood.Magic.Controls.TabPage = m_tabFiller.TabPages(bdDiagram.TabPageName)
@@ -1042,13 +1042,13 @@ Namespace Forms.Behavior
 
         End Function
 
-        Public Overridable Sub SwapDiagramIndex(ByVal bdDiagram As Diagram, ByVal iNewIndex As Integer)
+        Public Overridable Sub SwapDiagramIndex(ByVal bdDiagram As Behavior.DiagramOld, ByVal iNewIndex As Integer)
 
             If iNewIndex <= 0 OrElse iNewIndex > m_tabFiller.TabPages.Count Then
                 Throw New System.Exception("The diagram index must be between 1 and " & m_tabFiller.TabPages.Count.ToString & ".")
             End If
 
-            Dim bdSwap As Forms.Behavior.Diagram = DirectCast(m_tabFiller.TabPages(iNewIndex - 1).Control, Forms.Behavior.Diagram)
+            Dim bdSwap As Forms.Behavior.DiagramOld = DirectCast(m_tabFiller.TabPages(iNewIndex - 1).Control, Forms.Behavior.DiagramOld)
 
             bdSwap.DiagramIndex = bdDiagram.DiagramIndex
             bdDiagram.DiagramIndex = iNewIndex
@@ -1063,9 +1063,9 @@ Namespace Forms.Behavior
             Dim aryPages As Crownwood.Magic.Controls.TabPage()
             ReDim aryPages(m_tabFiller.TabPages.Count - 1)
 
-            Dim bdDiagram As Forms.Behavior.Diagram
+            Dim bdDiagram As Forms.Behavior.DiagramOld
             For Each tpPage As Crownwood.Magic.Controls.TabPage In m_tabFiller.TabPages
-                bdDiagram = DirectCast(tpPage.Control, Diagram)
+                bdDiagram = DirectCast(tpPage.Control, Behavior.DiagramOld)
 
                 If bdDiagram.DiagramIndex <= aryPages.Length Then
                     aryPages(bdDiagram.DiagramIndex - 1) = tpPage
@@ -1087,7 +1087,7 @@ Namespace Forms.Behavior
             'we need to fix them
             If bFoundBlank Then
                 For Each tpPage As Crownwood.Magic.Controls.TabPage In m_tabFiller.TabPages
-                    bdDiagram = DirectCast(tpPage.Control, Diagram)
+                    bdDiagram = DirectCast(tpPage.Control, Behavior.DiagramOld)
                     bdDiagram.DiagramIndex = FindDiagramTabIndex(bdDiagram)
                     aryPages(bdDiagram.DiagramIndex - 1) = tpPage
                 Next
@@ -1103,7 +1103,7 @@ Namespace Forms.Behavior
 
         End Sub
 
-        Public Overridable Function FindDiagramTabIndex(ByVal bdDiagram As Diagram, Optional ByVal bThrowError As Boolean = True) As Integer
+        Public Overridable Function FindDiagramTabIndex(ByVal bdDiagram As Behavior.DiagramOld, Optional ByVal bThrowError As Boolean = True) As Integer
             Dim iIndex As Integer = 1
             For Each tpPage As Crownwood.Magic.Controls.TabPage In m_tabFiller.TabPages
                 If tpPage.Control Is bdDiagram Then
@@ -1119,9 +1119,9 @@ Namespace Forms.Behavior
         End Function
 
         Public Overridable Sub ResetDiagramTabIndexes()
-            Dim bdDiagram As Forms.Behavior.Diagram
+            Dim bdDiagram As Forms.Behavior.DiagramOld
             For Each tpPage As Crownwood.Magic.Controls.TabPage In m_tabFiller.TabPages
-                bdDiagram = DirectCast(tpPage.Control, Diagram)
+                bdDiagram = DirectCast(tpPage.Control, Behavior.DiagramOld)
                 bdDiagram.DiagramIndex = FindDiagramTabIndex(bdDiagram)
             Next
         End Sub
@@ -1133,9 +1133,9 @@ Namespace Forms.Behavior
                 Dim tnNode As New Crownwood.DotNetMagic.Controls.Node("Behavioral Network")
                 tvTree.Nodes.Add(tnNode)
 
-                Dim bdDiagram As Forms.Behavior.Diagram
+                Dim bdDiagram As Forms.Behavior.DiagramOld
                 For Each deEntry As DictionaryEntry In m_aryDiagrams
-                    bdDiagram = DirectCast(deEntry.Value, Forms.Behavior.Diagram)
+                    bdDiagram = DirectCast(deEntry.Value, Forms.Behavior.DiagramOld)
                     bdDiagram.CreateDiagramDropDownTree(tvTree, tnNode)
                 Next
 
@@ -1145,12 +1145,12 @@ Namespace Forms.Behavior
 
         End Sub
 
-        Public Overridable Function FindDiagram(ByVal strID As String, Optional ByVal bThrowError As Boolean = True) As Forms.Behavior.Diagram
+        Public Overridable Function FindDiagram(ByVal strID As String, Optional ByVal bThrowError As Boolean = True) As Forms.Behavior.DiagramOld
 
-            Dim bdDiagram As Forms.Behavior.Diagram
-            Dim bdFound As Forms.Behavior.Diagram
+            Dim bdDiagram As Forms.Behavior.DiagramOld
+            Dim bdFound As Forms.Behavior.DiagramOld
             For Each deEntry As DictionaryEntry In m_aryDiagrams
-                bdDiagram = DirectCast(deEntry.Value, Forms.Behavior.Diagram)
+                bdDiagram = DirectCast(deEntry.Value, Forms.Behavior.DiagramOld)
 
                 bdFound = bdDiagram.FindDiagram(strID)
                 If Not bdFound Is Nothing Then
@@ -1160,12 +1160,12 @@ Namespace Forms.Behavior
 
         End Function
 
-        Public Overridable Function FindDiagramByName(ByVal strName As String, Optional ByVal bThrowError As Boolean = True) As Forms.Behavior.Diagram
+        Public Overridable Function FindDiagramByName(ByVal strName As String, Optional ByVal bThrowError As Boolean = True) As Forms.Behavior.DiagramOld
 
-            Dim bdDiagram As Forms.Behavior.Diagram
-            Dim bdFound As Forms.Behavior.Diagram
+            Dim bdDiagram As Forms.Behavior.DiagramOld
+            Dim bdFound As Forms.Behavior.DiagramOld
             For Each deEntry As DictionaryEntry In m_aryDiagrams
-                bdDiagram = DirectCast(deEntry.Value, Forms.Behavior.Diagram)
+                bdDiagram = DirectCast(deEntry.Value, Forms.Behavior.DiagramOld)
 
                 bdFound = bdDiagram.FindDiagramByName(strName)
                 If Not bdFound Is Nothing Then
@@ -1203,9 +1203,9 @@ Namespace Forms.Behavior
 
         '    Me.DiagramImages.Add(diImage.ID, diImage)
 
-        '    Dim doDiagram As AnimatGUI.Forms.Behavior.Diagram
+        '    Dim doDiagram As AnimatGUI.Forms.Behavior.DiagramOld
         '    For Each deEntry As DictionaryEntry In Me.Diagrams
-        '        doDiagram = DirectCast(deEntry.Value, AnimatGUI.Forms.Behavior.Diagram)
+        '        doDiagram = DirectCast(deEntry.Value, AnimatGUI.Forms.Behavior.DiagramOld)
         '        doDiagram.AddImage(diImage)
         '    Next
 
@@ -1214,9 +1214,9 @@ Namespace Forms.Behavior
         Public Overridable Function ImageUseCount(ByVal diImage As DataObjects.Behavior.DiagramImage) As Integer
 
             Dim iCount As Integer = 0
-            Dim bdDiagram As Diagram
+            Dim bdDiagram As Behavior.DiagramOld
             For Each deEntry As DictionaryEntry In m_aryDiagrams
-                bdDiagram = DirectCast(deEntry.Value, Diagram)
+                bdDiagram = DirectCast(deEntry.Value, Behavior.DiagramOld)
                 iCount = iCount + bdDiagram.ImageUseCount(diImage)
             Next
 
@@ -1227,7 +1227,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.ZoomBy(fltDelta)
                 End If
 
@@ -1241,7 +1241,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.ZoomTo(fltZoom)
                 End If
 
@@ -1253,9 +1253,9 @@ Namespace Forms.Behavior
 
         Public Overridable Sub GenerateTempSelectedIDs(ByVal bCopy As Boolean)
 
-            Dim bdDiagram As AnimatGUI.Forms.Behavior.Diagram
+            Dim bdDiagram As AnimatGUI.Forms.Behavior.DiagramOld
             For Each deEntry As DictionaryEntry In m_aryDiagrams
-                bdDiagram = DirectCast(deEntry.Value, AnimatGUI.Forms.Behavior.Diagram)
+                bdDiagram = DirectCast(deEntry.Value, AnimatGUI.Forms.Behavior.DiagramOld)
                 bdDiagram.GenerateTempSelectedIDs(bCopy)
             Next
 
@@ -1263,9 +1263,9 @@ Namespace Forms.Behavior
 
         Public Overridable Sub ClearTempSelectedIDs()
 
-            Dim bdDiagram As AnimatGUI.Forms.Behavior.Diagram
+            Dim bdDiagram As AnimatGUI.Forms.Behavior.DiagramOld
             For Each deEntry As DictionaryEntry In m_aryDiagrams
-                bdDiagram = DirectCast(deEntry.Value, AnimatGUI.Forms.Behavior.Diagram)
+                bdDiagram = DirectCast(deEntry.Value, AnimatGUI.Forms.Behavior.DiagramOld)
                 bdDiagram.ClearTempSelectedIDs()
             Next
 
@@ -1341,9 +1341,9 @@ Namespace Forms.Behavior
 
         Public Overridable Sub DumpNodeLinkInfo()
 
-            Dim bdDiagram As Forms.Behavior.Diagram
+            Dim bdDiagram As Forms.Behavior.DiagramOld
             For Each deEntry As DictionaryEntry In m_aryDiagrams
-                bdDiagram = DirectCast(deEntry.Value, Forms.Behavior.Diagram)
+                bdDiagram = DirectCast(deEntry.Value, Forms.Behavior.DiagramOld)
                 bdDiagram.DumpNodeLinkInfo()
             Next
 
@@ -1404,15 +1404,15 @@ Namespace Forms.Behavior
                 LoadDiagramImages(oXml)
 
                 'We need to go through and initialize all the diagrams after loading.
-                Dim bdDiagram As Forms.Behavior.Diagram
+                Dim bdDiagram As Forms.Behavior.DiagramOld
                 For Each deEntry As DictionaryEntry In m_aryDiagrams
-                    bdDiagram = DirectCast(deEntry.Value, AnimatGUI.Forms.Behavior.Diagram)
+                    bdDiagram = DirectCast(deEntry.Value, AnimatGUI.Forms.Behavior.DiagramOld)
                     bdDiagram.InitializeAfterLoad()
                 Next
 
                 'Now go back though and verify that the data is valid. There are no missing links or floating graphical items, etc.
                 For Each deEntry As DictionaryEntry In m_aryDiagrams
-                    bdDiagram = DirectCast(deEntry.Value, AnimatGUI.Forms.Behavior.Diagram)
+                    bdDiagram = DirectCast(deEntry.Value, AnimatGUI.Forms.Behavior.DiagramOld)
                     bdDiagram.VerifyData()
                 Next
 
@@ -1435,7 +1435,7 @@ Namespace Forms.Behavior
             Try
 
                 oXml.IntoChildElement("Diagrams")
-                Dim bdDiagram As Forms.Behavior.Diagram
+                Dim bdDiagram As Forms.Behavior.DiagramOld
                 Dim iCount As Integer = oXml.NumberOfChildren() - 1
                 For iIndex As Integer = 0 To iCount
                     oXml.FindChildByIndex(iIndex)
@@ -1595,9 +1595,9 @@ Namespace Forms.Behavior
                 'Now lets go through and save each of the diagrams.
                 oXml.AddChildElement("Diagrams")
                 oXml.IntoElem()
-                Dim bdDiagram As Forms.Behavior.Diagram
+                Dim bdDiagram As Forms.Behavior.DiagramOld
                 For Each deEntry As DictionaryEntry In m_aryDiagrams
-                    bdDiagram = DirectCast(deEntry.Value, Forms.Behavior.Diagram)
+                    bdDiagram = DirectCast(deEntry.Value, Forms.Behavior.DiagramOld)
                     bdDiagram.SaveData(oXml)
                 Next
                 oXml.OutOfElem()
@@ -1636,7 +1636,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.OnEditPopupStart(mc)
                 End If
 
@@ -1650,7 +1650,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.OnEditPopupEnd(mc)
                 End If
 
@@ -1664,7 +1664,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.OnShapePopupStart(mc)
                 End If
 
@@ -1678,7 +1678,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.OnShapePopupEnd(mc)
                 End If
 
@@ -1722,7 +1722,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.AddStimulusToSelected()
                 End If
 
@@ -1736,7 +1736,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.SelectByType()
                 End If
             Catch ex As System.Exception
@@ -1749,7 +1749,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.Relabel()
                 End If
             Catch ex As System.Exception
@@ -1762,7 +1762,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.RelabelSelected()
                 End If
             Catch ex As System.Exception
@@ -1775,7 +1775,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.OnShowConnections(sender, e)
                 End If
             Catch ex As System.Exception
@@ -1788,7 +1788,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.OnCompareItems(sender, e)
                 End If
             Catch ex As System.Exception
@@ -1803,7 +1803,7 @@ Namespace Forms.Behavior
             Try
                 If Util.ShowMessage("Are you sure you want to cut the selected items?", "Cut Selected", MessageBoxButtons.YesNo) = DialogResult.Yes Then
                     If Not m_tabFiller.SelectedTab Is Nothing Then
-                        Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                        Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                         dgDiagram.CutSelected()
                     End If
                 End If
@@ -1818,7 +1818,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.CopySelected()
                 End If
 
@@ -1832,7 +1832,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.PasteSelected(False)
                     ResetDiagramTabIndexes()
                 End If
@@ -1847,7 +1847,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.PasteSelected(True)
                 End If
 
@@ -1862,7 +1862,7 @@ Namespace Forms.Behavior
             Try
                 If Util.ShowMessage("Are you sure you want to delete the selected items?", "Delete Selected", MessageBoxButtons.YesNo) = DialogResult.Yes Then
                     If Not m_tabFiller.SelectedTab Is Nothing Then
-                        Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                        Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                         dgDiagram.DeleteSelected()
                         dgDiagram.RefreshDiagram()
                     End If
@@ -1878,7 +1878,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.OnUndo()
                 End If
 
@@ -1892,7 +1892,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.OnRedo()
                 End If
 
@@ -1979,7 +1979,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.FitToPage()
                 End If
 
@@ -2085,7 +2085,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.OnAlignTop(sender, e)
                 End If
 
@@ -2099,7 +2099,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.OnAlignVerticalCenter(sender, e)
                 End If
 
@@ -2113,7 +2113,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.OnAlignBottom(sender, e)
                 End If
 
@@ -2127,7 +2127,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.OnAlignLeft(sender, e)
                 End If
 
@@ -2141,7 +2141,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.OnAlignHorizontalCenter(sender, e)
                 End If
 
@@ -2155,7 +2155,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.OnAlignRight(sender, e)
                 End If
 
@@ -2169,7 +2169,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.OnDistributeVertical(sender, e)
                 End If
 
@@ -2183,7 +2183,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.OnDistributeHorizontal(sender, e)
                 End If
 
@@ -2197,7 +2197,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.OnSizeBoth(sender, e)
                 End If
 
@@ -2211,7 +2211,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.OnSizeWidth(sender, e)
                 End If
 
@@ -2225,7 +2225,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                    Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                     dgDiagram.OnSizeHeight(sender, e)
                 End If
 
@@ -2244,18 +2244,18 @@ Namespace Forms.Behavior
 
                 If frmExport.ShowDialog(Me) = DialogResult.OK Then
                     Dim strPath As String = frmExport.FileLocation
-                    Dim bdDiagram As Forms.Behavior.Diagram
+                    Dim bdDiagram As Forms.Behavior.DiagramOld
                     Dim eFormat As System.Drawing.Imaging.ImageFormat = frmExport.Format
                     Dim strExtension As String = frmExport.Extension
 
                     If frmExport.AllDiagrams Then
                         For Each deEntry As DictionaryEntry In m_aryDiagrams
-                            bdDiagram = DirectCast(deEntry.Value, Forms.Behavior.Diagram)
+                            bdDiagram = DirectCast(deEntry.Value, Forms.Behavior.DiagramOld)
                             bdDiagram.SaveDiagrams(strPath, eFormat, strExtension)
                         Next
                     Else
                         If Not m_tabFiller.SelectedTab Is Nothing Then
-                            Dim dgDiagram As Behavior.Diagram = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.Diagram)
+                            Dim dgDiagram As Behavior.DiagramOld = DirectCast(m_tabFiller.SelectedTab.Control, Behavior.DiagramOld)
                             dgDiagram.SaveDiagram(strPath, eFormat)
                         End If
                     End If
@@ -2286,11 +2286,11 @@ Namespace Forms.Behavior
             Try
 
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim bdDiagram As Behavior.Diagram
+                    Dim bdDiagram As Behavior.DiagramOld
                     Dim aryMetaDocs As New Collections.MetaDocuments(Nothing)
 
                     For Each deEntry As DictionaryEntry In m_aryDiagrams
-                        bdDiagram = DirectCast(deEntry.Value, Behavior.Diagram)
+                        bdDiagram = DirectCast(deEntry.Value, Behavior.DiagramOld)
                         bdDiagram.GenerateMetafiles(aryMetaDocs)
                     Next
 
@@ -2308,11 +2308,11 @@ Namespace Forms.Behavior
             Try
 
                 If Not m_tabFiller.SelectedTab Is Nothing Then
-                    Dim bdDiagram As Behavior.Diagram
+                    Dim bdDiagram As Behavior.DiagramOld
                     Dim aryMetaDocs As New Collections.MetaDocuments(Nothing)
 
                     For Each deEntry As DictionaryEntry In m_aryDiagrams
-                        bdDiagram = DirectCast(deEntry.Value, Behavior.Diagram)
+                        bdDiagram = DirectCast(deEntry.Value, Behavior.DiagramOld)
                         bdDiagram.GenerateMetafiles(aryMetaDocs)
                     Next
 
@@ -2332,7 +2332,7 @@ Namespace Forms.Behavior
             Dim tabPage As Crownwood.Magic.Controls.TabPage = tabControl.SelectedTab
 
             If Not tabPage Is Nothing Then
-                Dim afDiagram As Behavior.Diagram = DirectCast(tabPage.Control, Behavior.Diagram)
+                Dim afDiagram As Behavior.DiagramOld = DirectCast(tabPage.Control, Behavior.DiagramOld)
                 afDiagram.TabDeselected()
             End If
         End Sub
@@ -2342,7 +2342,7 @@ Namespace Forms.Behavior
             Dim tabPage As Crownwood.Magic.Controls.TabPage = tabControl.SelectedTab
 
             If Not tabPage Is Nothing Then
-                Dim bdDiagram As Behavior.Diagram = DirectCast(tabPage.Control, Behavior.Diagram)
+                Dim bdDiagram As Behavior.DiagramOld = DirectCast(tabPage.Control, Behavior.DiagramOld)
                 bdDiagram.TabSelected()
                 m_HierarchyBar.DiagramSelected(bdDiagram)
 

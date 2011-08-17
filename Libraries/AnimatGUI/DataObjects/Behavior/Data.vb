@@ -28,7 +28,7 @@ Namespace DataObjects.Behavior
 
         Protected m_strDescription As String = ""
         Protected m_ParentEditor As Forms.Behavior.Editor
-        Protected m_ParentDiagram As Forms.Behavior.Diagram
+        Protected m_ParentDiagram As Forms.Behavior.DiagramOld
         Protected m_doOrganism As DataObjects.Physical.Organism
         Protected m_bUpdateBatch As Boolean
         Protected m_bFound As Boolean
@@ -101,11 +101,11 @@ Namespace DataObjects.Behavior
         End Property
 
         <Browsable(False)> _
-        Public Overridable Property ParentDiagram() As Forms.Behavior.Diagram
+        Public Overridable Property ParentDiagram() As Forms.Behavior.DiagramOld
             Get
                 Return m_ParentDiagram
             End Get
-            Set(ByVal Value As Forms.Behavior.Diagram)
+            Set(ByVal Value As Forms.Behavior.DiagramOld)
                 m_ParentDiagram = Value
             End Set
         End Property

@@ -77,9 +77,9 @@ Namespace Collections
 
             Dim diImage As AnimatGUI.DataObjects.Behavior.DiagramImage = DirectCast(value, AnimatGUI.DataObjects.Behavior.DiagramImage)
 
-            Dim bdDiagram As Forms.Behavior.Diagram
+            Dim bdDiagram As Forms.Behavior.DiagramOld
             For Each deEntry As DictionaryEntry In m_beEditor.Diagrams
-                bdDiagram = DirectCast(deEntry.Value, Forms.Behavior.Diagram)
+                bdDiagram = DirectCast(deEntry.Value, Forms.Behavior.DiagramOld)
                 bdDiagram.AddImage(diImage)
             Next
 
@@ -97,9 +97,9 @@ Namespace Collections
 
         Protected Sub RemoveImage(ByVal diImage As AnimatGUI.DataObjects.Behavior.DiagramImage)
 
-            Dim bdDiagram As Forms.Behavior.Diagram
+            Dim bdDiagram As Forms.Behavior.DiagramOld
             For Each deEntry As DictionaryEntry In m_beEditor.Diagrams
-                bdDiagram = DirectCast(deEntry.Value, Forms.Behavior.Diagram)
+                bdDiagram = DirectCast(deEntry.Value, Forms.Behavior.DiagramOld)
                 bdDiagram.RemoveImage(diImage)
             Next
 

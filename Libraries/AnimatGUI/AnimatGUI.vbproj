@@ -483,7 +483,13 @@
     <Compile Include="Forms\Behavior\Connections.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\Behavior\Diagram.Designer.vb">
+      <DependentUpon>Diagram.vb</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Behavior\Diagram.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Behavior\DiagramOld.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Behavior\Editor.vb">
@@ -1103,8 +1109,8 @@
     <EmbeddedResource Include="Forms\Behavior\Connections.resx">
       <DependentUpon>Connections.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Behavior\Diagram.resx">
-      <DependentUpon>Diagram.vb</DependentUpon>
+    <EmbeddedResource Include="Forms\Behavior\DiagramOld.resx">
+      <DependentUpon>DiagramOld.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Behavior\Editor.resx">
       <DependentUpon>Editor.vb</DependentUpon>

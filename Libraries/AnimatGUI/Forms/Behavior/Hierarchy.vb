@@ -179,7 +179,7 @@ Namespace Forms.Behavior
 
         End Sub
 
-        Public Overridable Function AddDiagram(ByVal tnParentNode As TreeNode, ByVal bdDiagram As Behavior.Diagram) As TreeNode
+        Public Overridable Function AddDiagram(ByVal tnParentNode As TreeNode, ByVal bdDiagram As Behavior.DiagramOld) As TreeNode
 
             Dim tnNode As TreeNode
 
@@ -209,14 +209,14 @@ Namespace Forms.Behavior
             Return tnNode
         End Function
 
-        Public Overridable Sub RemoveDiagram(ByVal bdDiagram As Behavior.Diagram)
+        Public Overridable Sub RemoveDiagram(ByVal bdDiagram As Behavior.DiagramOld)
             If Not bdDiagram.DiagramTreeNode Is Nothing AndAlso bdDiagram.DiagramTreeNode.Parent.Nodes.Contains(bdDiagram.DiagramTreeNode) Then
                 bdDiagram.DiagramTreeNode.Parent.Nodes.Remove(bdDiagram.DiagramTreeNode)
                 bdDiagram.DiagramTreeNode = Nothing
             End If
         End Sub
 
-        Public Overridable Sub DiagramSelected(ByVal bdDiagram As Behavior.Diagram)
+        Public Overridable Sub DiagramSelected(ByVal bdDiagram As Behavior.DiagramOld)
             m_bManualSelect = True
             ctrlTreeView.SelectedNode = bdDiagram.DiagramTreeNode
             m_bManualSelect = False
@@ -246,8 +246,8 @@ Namespace Forms.Behavior
                 End If
 
                 If Not e.Node Is Nothing AndAlso Not e.Node.Tag Is Nothing Then
-                    If TypeOf e.Node.Tag Is AnimatGUI.Forms.Behavior.Diagram Then
-                        Dim bdDiagram As Behavior.Diagram = DirectCast(e.Node.Tag, Behavior.Diagram)
+                    If TypeOf e.Node.Tag Is AnimatGUI.Forms.Behavior.DiagramOld Then
+                        Dim bdDiagram As Behavior.DiagramOld = DirectCast(e.Node.Tag, Behavior.DiagramOld)
                         m_beEditor.SelectedDiagram(bdDiagram)
                     ElseIf TypeOf e.Node.Tag Is AnimatGUI.DataObjects.Behavior.Data Then
                         Dim doData As AnimatGUI.DataObjects.Behavior.Data = DirectCast(e.Node.Tag, AnimatGUI.DataObjects.Behavior.Data)
@@ -281,7 +281,7 @@ Namespace Forms.Behavior
                     Dim popup As New PopupMenu
 
                     ' Create the menu items
-                    If Not tnSelected.Tag Is Nothing AndAlso (TypeOf tnSelected.Tag Is AnimatGUI.Forms.Behavior.Editor OrElse TypeOf tnSelected.Tag Is AnimatGUI.Forms.Behavior.Diagram) Then
+                    If Not tnSelected.Tag Is Nothing AndAlso (TypeOf tnSelected.Tag Is AnimatGUI.Forms.Behavior.Editor OrElse TypeOf tnSelected.Tag Is AnimatGUI.Forms.Behavior.DiagramOld) Then
                         Dim mcInsert As New MenuCommand("Insert Diagram", "InsertPage", _
                                                           New EventHandler(AddressOf Me.OnInsertDiagram))
                         popup.MenuCommands.Add(mcInsert)
@@ -385,8 +385,8 @@ Namespace Forms.Behavior
             Try
                 If Not e.Node.Tag Is Nothing AndAlso Not e.Label Is Nothing Then
                     If e.Label.Trim.Length > 0 Then
-                        If TypeOf (e.Node.Tag) Is Behavior.Diagram Then
-                            Dim bdDiagram As Behavior.Diagram = DirectCast(e.Node.Tag, Behavior.Diagram)
+                        If TypeOf (e.Node.Tag) Is Behavior.DiagramOld Then
+                            Dim bdDiagram As Behavior.DiagramOld = DirectCast(e.Node.Tag, Behavior.DiagramOld)
                             m_beEditor.ChangeDiagramName(bdDiagram, e.Label)
                         ElseIf TypeOf (e.Node.Tag) Is DataObjects.Behavior.Data Then
                             Dim doData As DataObjects.Behavior.Data = DirectCast(e.Node.Tag, DataObjects.Behavior.Data)
@@ -409,8 +409,8 @@ Namespace Forms.Behavior
                     tnSelected = m_tnRoot
                 End If
 
-                If Not tnSelected.Tag Is Nothing AndAlso TypeOf (tnSelected.Tag) Is Behavior.Diagram Then
-                    Dim bdDiagram As Behavior.Diagram = DirectCast(tnSelected.Tag, Behavior.Diagram)
+                If Not tnSelected.Tag Is Nothing AndAlso TypeOf (tnSelected.Tag) Is Behavior.DiagramOld Then
+                    Dim bdDiagram As Behavior.DiagramOld = DirectCast(tnSelected.Tag, Behavior.DiagramOld)
                     bdDiagram.AddDiagram("LicensedAnimatGUI.dll", "LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram")
                 ElseIf tnSelected Is m_tnRoot Then
                     m_beEditor.AddDiagram("LicensedAnimatGUI.dll", "LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram", Nothing)
@@ -430,8 +430,8 @@ Namespace Forms.Behavior
                     tnSelected = m_tnRoot
                 End If
 
-                If Not tnSelected.Tag Is Nothing AndAlso TypeOf (tnSelected.Tag) Is Behavior.Diagram Then
-                    Dim bdDiagram As Behavior.Diagram = DirectCast(tnSelected.Tag, Behavior.Diagram)
+                If Not tnSelected.Tag Is Nothing AndAlso TypeOf (tnSelected.Tag) Is Behavior.DiagramOld Then
+                    Dim bdDiagram As Behavior.DiagramOld = DirectCast(tnSelected.Tag, Behavior.DiagramOld)
 
                     If Not bdDiagram.ParentDiagram Is Nothing Then
                         bdDiagram.ParentDiagram.RemoveDiagram(bdDiagram)

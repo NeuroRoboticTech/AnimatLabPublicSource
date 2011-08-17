@@ -187,7 +187,7 @@ Namespace Forms.Behavior
 #Region " Attributes "
 
         Protected m_aryItems As New ArrayList
-        Protected m_doDiagram As AnimatGUI.Forms.Behavior.Diagram
+        Protected m_doDiagram As AnimatGUI.Forms.Behavior.DiagramOld
 
 #End Region
 
@@ -199,11 +199,11 @@ Namespace Forms.Behavior
             End Get
         End Property
 
-        Public Overridable Property Diagram() As AnimatGUI.Forms.Behavior.Diagram
+        Public Overridable Property Diagram() As AnimatGUI.Forms.Behavior.DiagramOld
             Get
                 Return m_doDiagram
             End Get
-            Set(ByVal Value As AnimatGUI.Forms.Behavior.Diagram)
+            Set(ByVal Value As AnimatGUI.Forms.Behavior.DiagramOld)
                 m_doDiagram = Value
             End Set
         End Property

@@ -16,7 +16,7 @@ Namespace DataObjects.Behavior.Nodes
 
 #Region " Attributes "
 
-        Protected m_bdSubsystem As Forms.Behavior.Diagram
+        Protected m_bdSubsystem As Forms.Behavior.DiagramOld
 
         '''This is a list of all nodes within this subsystem. It is sorted by ID
         Protected m_aryBehavioralNodes As New Collections.AnimatSortedList(Me)
@@ -37,11 +37,11 @@ Namespace DataObjects.Behavior.Nodes
             End Get
         End Property
 
-        Public Overridable Property Subsystem() As Forms.Behavior.Diagram
+        Public Overridable Property Subsystem() As Forms.Behavior.DiagramOld
             Get
                 Return m_bdSubsystem
             End Get
-            Set(ByVal Value As Forms.Behavior.Diagram)
+            Set(ByVal Value As Forms.Behavior.DiagramOld)
                 m_bdSubsystem = Value
             End Set
         End Property
@@ -324,11 +324,7 @@ Namespace DataObjects.Behavior.Nodes
                 Dim iCount As Integer = oXml.NumberOfChildren() - 1
                 Dim bnNode As AnimatGUI.DataObjects.Behavior.Node
                 For iIndex As Integer = 0 To iCount
-                    oXml.FindChildByIndex(iIndex)
-                    oXml.IntoElem() 'Into Node element
-                    strAssemblyFile = oXml.GetChildString("AssemblyFile")
-                    strClassName = oXml.GetChildString("ClassName")
-                    oXml.OutOfElem() 'Outof Node element
+                    Util.LoadClassModuleName(oXml, iIndex, strAssemblyFile, strClassName)
 
                     bnNode = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me), AnimatGUI.DataObjects.Behavior.Node)
                     bnNode.Organism = Me.Organism
@@ -341,11 +337,7 @@ Namespace DataObjects.Behavior.Nodes
                 iCount = oXml.NumberOfChildren() - 1
                 Dim blLink As AnimatGUI.DataObjects.Behavior.Link
                 For iIndex As Integer = 0 To iCount
-                    oXml.FindChildByIndex(iIndex)
-                    oXml.IntoElem() 'Into Node element
-                    strAssemblyFile = oXml.GetChildString("AssemblyFile")
-                    strClassName = oXml.GetChildString("ClassName")
-                    oXml.OutOfElem() 'Outof Node element
+                    Util.LoadClassModuleName(oXml, iIndex, strAssemblyFile, strClassName)
 
                     blLink = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me), AnimatGUI.DataObjects.Behavior.Link)
                     blLink.Organism = Me.Organism
@@ -400,12 +392,50 @@ Namespace DataObjects.Behavior.Nodes
 
             oXml.IntoElem() 'Into Node Element
 
-            If Not m_bdSubsystem Is Nothing Then
-                oXml.AddChildElement("SubsystemID", m_bdSubsystem.SelectedID)
-            End If
+            oXml.AddChildElement("Nodes")
+            oXml.IntoElem()
+            Dim doData As AnimatGUI.DataObjects.Behavior.Data
+            For Each deEntry As DictionaryEntry In Me.BehavioralNodes
+                doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                doData.SaveData(oXml)
+            Next
+            oXml.OutOfElem() ' Outof Node Element
+
+            oXml.AddChildElement("Links")
+            oXml.IntoElem()
+            For Each deEntry As DictionaryEntry In Me.BehavioralLinks
+                doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                doData.SaveData(oXml)
+            Next
+            oXml.OutOfElem() ' Outof Node Element
 
             oXml.OutOfElem() ' Outof Node Element
 
+        End Sub
+
+        Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+            MyBase.SaveSimulationXml(oXml, nmParentControl, strName)
+
+            oXml.IntoElem() 'Into Node Element
+
+            oXml.AddChildElement("Nodes")
+            oXml.IntoElem()
+            Dim doData As AnimatGUI.DataObjects.Behavior.Data
+            For Each deEntry As DictionaryEntry In Me.BehavioralNodes
+                doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                doData.SaveSimulationXml(oXml, Me)
+            Next
+            oXml.OutOfElem() ' Outof Node Element
+
+            oXml.AddChildElement("Links")
+            oXml.IntoElem()
+            For Each deEntry As DictionaryEntry In Me.BehavioralLinks
+                doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                doData.SaveSimulationXml(oXml, Me)
+            Next
+            oXml.OutOfElem() ' Outof Node Element
+
+            oXml.OutOfElem() ' Outof Node Element
         End Sub
 
 #End Region

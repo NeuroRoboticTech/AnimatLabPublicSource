@@ -445,7 +445,7 @@ Namespace Forms.ProgramModules
                 End If
             End If
 
-            Dim doDiagram As AnimatGUI.Forms.Behavior.Diagram = doOrganism.BehaviorEditor.AddDiagram("LicensedAnimatGUI.dll", "LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram", Nothing, txtDiagramName.Text)
+            Dim doDiagram As AnimatGUI.Forms.Behavior.DiagramOld = doOrganism.BehaviorEditor.AddDiagram("LicensedAnimatGUI.dll", "LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram", Nothing, txtDiagramName.Text)
 
             Dim fltThetaDiff As Single = CSng((2 * Math.PI) / m_iNumNeurons)
             Dim fltTheta As Single = 0
@@ -535,7 +535,7 @@ Namespace Forms.ProgramModules
                 End If
             End If
 
-            Dim doDiagram As AnimatGUI.Forms.Behavior.Diagram = doOrganism.BehaviorEditor.FindDiagramByName(txtDiagramName.Text)
+            Dim doDiagram As AnimatGUI.Forms.Behavior.DiagramOld = doOrganism.BehaviorEditor.FindDiagramByName(txtDiagramName.Text)
 
             Dim doGain As New AnimatGUI.DataObjects.Gains.Bell(Nothing)
             doGain.XOffset.ActualValue = m_fltA

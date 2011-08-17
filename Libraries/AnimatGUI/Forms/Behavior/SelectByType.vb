@@ -114,7 +114,7 @@ Namespace Forms.Behavior
 
 #Region " Attributes "
 
-        Protected m_doDiagram As AnimatGUI.Forms.Behavior.Diagram
+        Protected m_doDiagram As AnimatGUI.Forms.Behavior.DiagramOld
         Protected m_aryInitialTypeList As New SortedList
         Protected m_aryTypeList As New SortedList
 
@@ -124,11 +124,11 @@ Namespace Forms.Behavior
 
 #Region " Properties "
 
-        Public Overridable Property Diagram() As AnimatGUI.Forms.Behavior.Diagram
+        Public Overridable Property Diagram() As AnimatGUI.Forms.Behavior.DiagramOld
             Get
                 Return m_doDiagram
             End Get
-            Set(ByVal Value As AnimatGUI.Forms.Behavior.Diagram)
+            Set(ByVal Value As AnimatGUI.Forms.Behavior.DiagramOld)
                 m_doDiagram = Value
             End Set
         End Property

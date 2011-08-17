@@ -1310,6 +1310,15 @@ Namespace Framework
             Return tnNode
         End Function
 
+        Public Shared Sub LoadClassModuleName(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal iIndex As Integer, _
+                                              ByRef strAssemblyFile As String, ByRef strClassName As String)
+            oXml.FindChildByIndex(iIndex)
+            oXml.IntoElem() 'Into Node element
+            strAssemblyFile = oXml.GetChildString("AssemblyFile")
+            strClassName = oXml.GetChildString("ClassName")
+            oXml.OutOfElem() 'Outof Node element
+        End Sub
+
         '    Public Function IntersectLineRectangle(ByVal a1 As Point, ByVal a2 As Point, ByVal topRight As Point, ByVal bottomLeft As Point) As Boolean
 
         '        if(IntersectLineLine(min, topRight, a1, a2);
