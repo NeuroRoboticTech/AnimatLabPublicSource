@@ -655,23 +655,24 @@ Namespace DataObjects.Behavior
                 Return m_diImage
             End Get
             Set(ByVal Value As DataObjects.Behavior.DiagramImage)
-                m_diImage = Value
+                'TODO
+                'm_diImage = Value
 
-                If m_diImage Is Nothing Then
-                    Me.DiagramImageName = ""
-                Else
-                    'If it is already in the list then use that one. If it is not in the list then add a new one.
-                    If m_ParentEditor.DiagramImages.Contains(m_diImage.ID) Then
-                        m_diImage = m_ParentEditor.DiagramImages(m_diImage.ID)
-                        Me.DiagramImageName = m_diImage.ID
-                    Else
-                        m_ParentEditor.DiagramImages.Add(m_diImage.ID, m_diImage)
-                        'Me.ParentDiagram.AddImage(m_diImage)
-                        Me.DiagramImageName = m_diImage.ID
-                    End If
-                End If
+                'If m_diImage Is Nothing Then
+                '    Me.DiagramImageName = ""
+                'Else
+                '    'If it is already in the list then use that one. If it is not in the list then add a new one.
+                '    If m_ParentEditor.DiagramImages.Contains(m_diImage.ID) Then
+                '        m_diImage = m_ParentEditor.DiagramImages(m_diImage.ID)
+                '        Me.DiagramImageName = m_diImage.ID
+                '    Else
+                '        m_ParentEditor.DiagramImages.Add(m_diImage.ID, m_diImage)
+                '        'Me.ParentDiagram.AddImage(m_diImage)
+                '        Me.DiagramImageName = m_diImage.ID
+                '    End If
+                'End If
 
-                UpdateChart()
+                'UpdateChart()
             End Set
         End Property
 
@@ -783,20 +784,21 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overrides Sub AddToHierarchyBar()
-            'Add this icon to the heirarchy bar
-            If Not m_ParentDiagram Is Nothing Then
-                m_tnTreeNode = m_ParentDiagram.NodesTreeNode.Nodes.Add(Me.Text)
-                m_tnTreeNode.ImageIndex = m_ParentEditor.HierarchyBar.ImageManager.GetImageIndex(Me.WorkspaceImageName)
-                m_tnTreeNode.SelectedImageIndex = m_ParentEditor.HierarchyBar.ImageManager.GetImageIndex(Me.WorkspaceImageName)
-                m_tnTreeNode.Tag = Me
+            'TODO
+            ''Add this icon to the heirarchy bar
+            'If Not m_ParentDiagram Is Nothing Then
+            '    m_tnTreeNode = m_ParentDiagram.NodesTreeNode.Nodes.Add(Me.Text)
+            '    m_tnTreeNode.ImageIndex = m_ParentEditor.HierarchyBar.ImageManager.GetImageIndex(Me.WorkspaceImageName)
+            '    m_tnTreeNode.SelectedImageIndex = m_ParentEditor.HierarchyBar.ImageManager.GetImageIndex(Me.WorkspaceImageName)
+            '    m_tnTreeNode.Tag = Me
 
-                If Me.Enabled Then
-                    m_tnTreeNode.BackColor = Color.White
-                Else
-                    m_tnTreeNode.BackColor = Color.Gray
-                End If
+            '    If Me.Enabled Then
+            '        m_tnTreeNode.BackColor = Color.White
+            '    Else
+            '        m_tnTreeNode.BackColor = Color.Gray
+            '    End If
 
-            End If
+            'End If
         End Sub
 
         Public Overridable Sub BeforeAddNode()
@@ -903,7 +905,8 @@ Namespace DataObjects.Behavior
         Protected Overridable Function FindDiagramImageIndex(ByVal strID As String) As Integer
 
             Try
-                Return m_ParentEditor.DiagramImages.FindIndexByID(strID)
+                'TODO
+                Return -1 'm_ParentEditor.DiagramImages.FindIndexByID(strID)
             Catch ex As System.Exception
                 Return -1
             End Try
@@ -913,7 +916,7 @@ Namespace DataObjects.Behavior
         Public Overridable Sub CreateDiagramDropDownTree(ByVal tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node)
             Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(Me.Text)
             tnParent.Nodes.Add(tnNode)
-            tnNode.Tag = New TypeHelpers.LinkedNode(m_ParentEditor, Me)
+            tnNode.Tag = New TypeHelpers.LinkedNode(Me.Organism, Me)
         End Sub
 
         Public Overridable Function SelectLinkType(ByRef bnOrigin As DataObjects.Behavior.Node, _
@@ -925,7 +928,7 @@ Namespace DataObjects.Behavior
             frmLinkType.Destination = bnDestination
             frmLinkType.CompatibleLinks = aryCompatibleLinks
 
-            If frmLinkType.ShowDialog(m_ParentEditor) = DialogResult.OK Then
+            If frmLinkType.ShowDialog() = DialogResult.OK Then
                 blLink = frmLinkType.SelectedLink
                 Return True
             Else
@@ -959,9 +962,9 @@ Namespace DataObjects.Behavior
             Dim frmStimulusType As New Forms.ExternalStimuli.SelectStimulusType
             frmStimulusType.CompatibleStimuli = Me.CompatibleStimuli
 
-            If frmStimulusType.ShowDialog(m_ParentEditor) = DialogResult.OK Then
+            If frmStimulusType.ShowDialog() = DialogResult.OK Then
                 Dim doStimulus As DataObjects.ExternalStimuli.NodeStimulus = DirectCast(frmStimulusType.SelectedStimulus.Clone(frmStimulusType.SelectedStimulus.Parent, False, Nothing), DataObjects.ExternalStimuli.NodeStimulus)
-                doStimulus.Organism = Me.ParentEditor.Organism
+                doStimulus.Organism = Me.Organism
                 doStimulus.Node = Me
 
                 Util.Simulation.NewStimuliIndex = Util.Simulation.NewStimuliIndex + 1
@@ -975,31 +978,32 @@ Namespace DataObjects.Behavior
         Public Overrides Sub CheckForErrors()
             MyBase.CheckForErrors()
 
-            If m_ParentEditor Is Nothing OrElse m_ParentEditor.ErrorsBar Is Nothing Then Return
+            'TODO
+            'If m_ParentEditor Is Nothing OrElse m_ParentEditor.ErrorsBar Is Nothing Then Return
 
-            If Me.Links.Count = 0 Then
-                If Not m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.IsolatedNode)) Then
-                    Dim deError As New DiagramErrors.DataError(Me, DiagramError.enumErrorLevel.Warning, DiagramError.enumErrorTypes.IsolatedNode, _
-                                                               "The node '" & Me.Text & "' has no incoming or outgoing links. " & _
-                                                               "It does not participate in the network.")
-                    m_ParentEditor.ErrorsBar.Errors.Add(deError.ID, deError)
-                End If
-            Else
-                If m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.IsolatedNode)) Then
-                    m_ParentEditor.ErrorsBar.Errors.Remove(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.IsolatedNode))
-                End If
-            End If
+            'If Me.Links.Count = 0 Then
+            '    If Not m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.IsolatedNode)) Then
+            '        Dim deError As New DiagramErrors.DataError(Me, DiagramError.enumErrorLevel.Warning, DiagramError.enumErrorTypes.IsolatedNode, _
+            '                                                   "The node '" & Me.Text & "' has no incoming or outgoing links. " & _
+            '                                                   "It does not participate in the network.")
+            '        m_ParentEditor.ErrorsBar.Errors.Add(deError.ID, deError)
+            '    End If
+            'Else
+            '    If m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.IsolatedNode)) Then
+            '        m_ParentEditor.ErrorsBar.Errors.Remove(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.IsolatedNode))
+            '    End If
+            'End If
 
-            If Me.Text Is Nothing OrElse Me.Text.Trim.Length = 0 Then
-                If Not m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.EmptyName)) Then
-                    Dim deError As New DiagramErrors.DataError(Me, DiagramError.enumErrorLevel.Warning, DiagramError.enumErrorTypes.EmptyName, "A node has no name.")
-                    m_ParentEditor.ErrorsBar.Errors.Add(deError.ID, deError)
-                End If
-            Else
-                If m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.EmptyName)) Then
-                    m_ParentEditor.ErrorsBar.Errors.Remove(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.EmptyName))
-                End If
-            End If
+            'If Me.Text Is Nothing OrElse Me.Text.Trim.Length = 0 Then
+            '    If Not m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.EmptyName)) Then
+            '        Dim deError As New DiagramErrors.DataError(Me, DiagramError.enumErrorLevel.Warning, DiagramError.enumErrorTypes.EmptyName, "A node has no name.")
+            '        m_ParentEditor.ErrorsBar.Errors.Add(deError.ID, deError)
+            '    End If
+            'Else
+            '    If m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.EmptyName)) Then
+            '        m_ParentEditor.ErrorsBar.Errors.Remove(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.EmptyName))
+            '    End If
+            'End If
 
         End Sub
 
@@ -1246,11 +1250,12 @@ Namespace DataObjects.Behavior
                 Next
 
                 If m_strImageID.Trim.Length > 0 Then
-                    If Not m_ParentEditor Is Nothing Then
-                        If m_ParentEditor.DiagramImages.Contains(m_strImageID) Then
-                            m_diImage = m_ParentEditor.DiagramImages(m_strImageID)
-                        End If
-                    End If
+                    'TODO
+                    'If Not m_ParentEditor Is Nothing Then
+                    '    If m_ParentEditor.DiagramImages.Contains(m_strImageID) Then
+                    '        m_diImage = m_ParentEditor.DiagramImages(m_strImageID)
+                    '    End If
+                    'End If
                 End If
 
                 m_aryLoadingInLinkIDs.Clear()

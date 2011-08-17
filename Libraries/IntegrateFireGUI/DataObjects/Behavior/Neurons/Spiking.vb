@@ -394,7 +394,7 @@ Namespace DataObjects.Behavior.Neurons
             frmSynapseType.CompatibleLinks = aryCompatibleLinks
             frmSynapseType.NeuralModule = DirectCast(Me.Organism.NeuralModules(Me.NeuralModuleType.FullName), DataObjects.Behavior.NeuralModule)
 
-            If frmSynapseType.ShowDialog(m_ParentEditor) = DialogResult.OK Then
+            If frmSynapseType.ShowDialog() = DialogResult.OK Then
                 blLink = frmSynapseType.SelectedLink
                 Return True
             Else

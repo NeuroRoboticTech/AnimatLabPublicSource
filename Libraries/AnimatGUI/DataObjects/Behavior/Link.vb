@@ -786,24 +786,25 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overrides Sub AddToHierarchyBar()
-            'Add this icon to the heirarchy bar
-            If Not m_ParentDiagram Is Nothing Then
-                Dim strName As String = Me.TreeViewName
+            'TODO
+            ''Add this icon to the heirarchy bar
+            'If Not m_ParentDiagram Is Nothing Then
+            '    Dim strName As String = Me.TreeViewName
 
-                m_tnTreeNode = m_ParentDiagram.LinksTreeNode.Nodes.Add(strName)
-                If Me.WorkspaceImageName.Trim.Length > 0 Then
-                    m_tnTreeNode.ImageIndex = m_ParentEditor.HierarchyBar.ImageManager.GetImageIndex(Me.WorkspaceImageName)
-                    m_tnTreeNode.SelectedImageIndex = m_ParentEditor.HierarchyBar.ImageManager.GetImageIndex(Me.WorkspaceImageName)
-                End If
+            '    m_tnTreeNode = m_ParentDiagram.LinksTreeNode.Nodes.Add(strName)
+            '    If Me.WorkspaceImageName.Trim.Length > 0 Then
+            '        m_tnTreeNode.ImageIndex = m_ParentEditor.HierarchyBar.ImageManager.GetImageIndex(Me.WorkspaceImageName)
+            '        m_tnTreeNode.SelectedImageIndex = m_ParentEditor.HierarchyBar.ImageManager.GetImageIndex(Me.WorkspaceImageName)
+            '    End If
 
-                If Me.Enabled Then
-                    m_tnTreeNode.BackColor = Color.White
-                Else
-                    m_tnTreeNode.BackColor = Color.Gray
-                End If
+            '    If Me.Enabled Then
+            '        m_tnTreeNode.BackColor = Color.White
+            '    Else
+            '        m_tnTreeNode.BackColor = Color.Gray
+            '    End If
 
-                m_tnTreeNode.Tag = Me
-            End If
+            '    m_tnTreeNode.Tag = Me
+            'End If
         End Sub
 
         Public Overrides Sub UpdateTreeNode()
@@ -838,12 +839,12 @@ Namespace DataObjects.Behavior
         Public Overrides Function CanCopy() As Boolean
 
             'We should only attempt to copy a synapse if both its origin and destination nodes are also being copied.
-            If Me.ParentEditor Is Nothing OrElse m_bnOrigin Is Nothing OrElse m_bnDestination Is Nothing Then
+            If m_bnOrigin Is Nothing OrElse m_bnDestination Is Nothing Then
                 Return False
             End If
 
-            If (Me.ParentEditor.SelectedObjects.Contains(Me.ActualOrigin) OrElse Me.ParentEditor.SelectedObjects.Contains(Me.Origin)) _
-               AndAlso (Me.ParentEditor.SelectedObjects.Contains(Me.ActualDestination) OrElse Me.ParentEditor.SelectedObjects.Contains(Me.Destination)) Then
+            If (Util.ProjectWorkspace.SelectedObjectsContains(Me.ActualOrigin) OrElse Util.ProjectWorkspace.SelectedObjectsContains(Me.Origin)) _
+               AndAlso (Util.ProjectWorkspace.SelectedObjectsContains(Me.ActualDestination) OrElse Util.ProjectWorkspace.SelectedObjectsContains(Me.Destination)) Then
                 Return True
             End If
 
@@ -883,7 +884,7 @@ Namespace DataObjects.Behavior
             frmProperties.MaximizeBox = False
             frmProperties.Width = 400
             frmProperties.Height = 800
-            frmProperties.ShowDialog(Me.m_ParentEditor)
+            frmProperties.ShowDialog()
 
         End Sub
 

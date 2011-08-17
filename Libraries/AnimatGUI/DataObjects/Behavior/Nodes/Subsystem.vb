@@ -144,7 +144,9 @@ Namespace DataObjects.Behavior.Nodes
             m_bdSubsystem = m_ParentDiagram.AddDiagram("LicensedAnimatGUI.dll", "LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram")
             m_bdSubsystem.Subsystem = Me
             Me.Text = m_bdSubsystem.TabPageName
-            m_ParentEditor.SelectedDiagram(m_ParentDiagram)
+
+            'TODO
+            'm_ParentEditor.SelectedDiagram(m_ParentDiagram)
         End Sub
 
         Public Overrides Sub BeforeRemoveNode()
@@ -165,7 +167,8 @@ Namespace DataObjects.Behavior.Nodes
 
             If Not m_bdSubsystem Is Nothing Then
                 m_ParentDiagram.RestoreDiagram(m_bdSubsystem)
-                m_ParentEditor.SelectedDiagram(m_ParentDiagram)
+                'TODO
+                'm_ParentEditor.SelectedDiagram(m_ParentDiagram)
                 m_ParentDiagram.SelectDataItem(Me)
             End If
 
@@ -190,12 +193,14 @@ Namespace DataObjects.Behavior.Nodes
         End Function
 
         Public Overrides Sub AfterEdit()
-            m_ParentEditor.ChangeDiagramName(m_bdSubsystem, Me.Text)
+            'TODO
+            'm_ParentEditor.ChangeDiagramName(m_bdSubsystem, Me.Text)
         End Sub
 
         Public Overrides Sub DoubleClicked()
             If Not m_bdSubsystem Is Nothing Then
-                m_ParentEditor.SelectedDiagram(m_bdSubsystem)
+                'TODO
+                'm_ParentEditor.SelectedDiagram(m_bdSubsystem)
             End If
         End Sub
 
@@ -204,18 +209,19 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides Sub CheckForErrors()
 
-            If m_ParentEditor Is Nothing OrElse m_ParentEditor.ErrorsBar Is Nothing Then Return
+            'TODO
+            'If m_ParentEditor Is Nothing OrElse m_ParentEditor.ErrorsBar Is Nothing Then Return
 
-            If Me.Text Is Nothing OrElse Me.Text.Trim.Length = 0 Then
-                If Not m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.EmptyName)) Then
-                    Dim deError As New DiagramErrors.DataError(Me, DiagramError.enumErrorLevel.Warning, DiagramError.enumErrorTypes.EmptyName, "A node has no name.")
-                    m_ParentEditor.ErrorsBar.Errors.Add(deError.ID, deError)
-                End If
-            Else
-                If m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.EmptyName)) Then
-                    m_ParentEditor.ErrorsBar.Errors.Remove(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.EmptyName))
-                End If
-            End If
+            'If Me.Text Is Nothing OrElse Me.Text.Trim.Length = 0 Then
+            '    If Not m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.EmptyName)) Then
+            '        Dim deError As New DiagramErrors.DataError(Me, DiagramError.enumErrorLevel.Warning, DiagramError.enumErrorTypes.EmptyName, "A node has no name.")
+            '        m_ParentEditor.ErrorsBar.Errors.Add(deError.ID, deError)
+            '    End If
+            'Else
+            '    If m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.EmptyName)) Then
+            '        m_ParentEditor.ErrorsBar.Errors.Remove(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.EmptyName))
+            '    End If
+            'End If
 
         End Sub
 
@@ -370,13 +376,14 @@ Namespace DataObjects.Behavior.Nodes
                     doData.InitializeAfterLoad()
                 Next
 
-                If m_bInitialized AndAlso Not m_ParentEditor Is Nothing Then
-                    If m_strSubsystemID.Trim.Length > 0 Then
-                        m_bdSubsystem = m_ParentEditor.FindDiagram(m_strSubsystemID)
-                        Me.Text = m_bdSubsystem.TabPageName
-                        m_bdSubsystem.Subsystem = Me   'Give this diagram a link to this subsystem
-                    End If
-                End If
+                'TODO
+                'If m_bInitialized AndAlso Not m_ParentEditor Is Nothing Then
+                '    If m_strSubsystemID.Trim.Length > 0 Then
+                '        m_bdSubsystem = m_ParentEditor.FindDiagram(m_strSubsystemID)
+                '        Me.Text = m_bdSubsystem.TabPageName
+                '        m_bdSubsystem.Subsystem = Me   'Give this diagram a link to this subsystem
+                '    End If
+                'End If
 
             Catch ex As System.Exception
                 m_bInitialized = False

@@ -76,19 +76,19 @@ Namespace DataObjects.Behavior.Nodes
             End Set
         End Property
 
-        Public Overrides Property ParentEditor() As Forms.Behavior.Editor
-            Get
-                Return m_ParentEditor
-            End Get
-            Set(ByVal Value As Forms.Behavior.Editor)
-                m_ParentEditor = Value
-                m_thLinkedNode = New TypeHelpers.LinkedNode(m_ParentEditor, Nothing)
+        'Public Overrides Property ParentEditor() As Forms.Behavior.Editor
+        '    Get
+        '        Return m_ParentEditor
+        '    End Get
+        '    Set(ByVal Value As Forms.Behavior.Editor)
+        '        m_ParentEditor = Value
+        '        m_thLinkedNode = New TypeHelpers.LinkedNode(m_ParentEditor, Nothing)
 
-                If Not m_ParentEditor Is Nothing AndAlso Not m_ParentEditor.Organism Is Nothing Then
-                    Me.Organism = m_ParentEditor.Organism
-                End If
-            End Set
-        End Property
+        '        If Not m_ParentEditor Is Nothing AndAlso Not m_ParentEditor.Organism Is Nothing Then
+        '            Me.Organism = m_ParentEditor.Organism
+        '        End If
+        '    End Set
+        'End Property
 
         Public Overrides ReadOnly Property NeuralModuleType() As System.Type
             Get
@@ -153,8 +153,9 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides Sub DoubleClicked()
             If Not m_thLinkedNode Is Nothing AndAlso Not m_thLinkedNode.Node Is Nothing Then
-                m_ParentEditor.SelectedDiagram(m_thLinkedNode.Node.ParentDiagram)
-                m_thLinkedNode.Node.ParentDiagram.SelectDataItem(m_thLinkedNode.Node)
+                'TODO
+                'm_ParentEditor.SelectedDiagram(m_thLinkedNode.Node.ParentDiagram)
+                'm_thLinkedNode.Node.ParentDiagram.SelectDataItem(m_thLinkedNode.Node)
             End If
         End Sub
 
@@ -162,19 +163,20 @@ Namespace DataObjects.Behavior.Nodes
         Public Overrides Sub CheckForErrors()
             MyBase.CheckForErrors()
 
-            If m_ParentEditor Is Nothing OrElse m_ParentEditor.ErrorsBar Is Nothing Then Return
+            'TODO
+            'If m_ParentEditor Is Nothing OrElse m_ParentEditor.ErrorsBar Is Nothing Then Return
 
-            If m_thLinkedNode Is Nothing OrElse m_thLinkedNode.Node Is Nothing Then
-                If Not m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.NodeNotSet)) Then
-                    Dim deError As New DiagramErrors.DataError(Me, DiagramError.enumErrorLevel.Error, DiagramError.enumErrorTypes.NodeNotSet, _
-                                                               "The offpage connector '" & Me.Text & "' has not been linked to another node. ")
-                    m_ParentEditor.ErrorsBar.Errors.Add(deError.ID, deError)
-                End If
-            Else
-                If m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.NodeNotSet)) Then
-                    m_ParentEditor.ErrorsBar.Errors.Remove(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.NodeNotSet))
-                End If
-            End If
+            'If m_thLinkedNode Is Nothing OrElse m_thLinkedNode.Node Is Nothing Then
+            '    If Not m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.NodeNotSet)) Then
+            '        Dim deError As New DiagramErrors.DataError(Me, DiagramError.enumErrorLevel.Error, DiagramError.enumErrorTypes.NodeNotSet, _
+            '                                                   "The offpage connector '" & Me.Text & "' has not been linked to another node. ")
+            '        m_ParentEditor.ErrorsBar.Errors.Add(deError.ID, deError)
+            '    End If
+            'Else
+            '    If m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.NodeNotSet)) Then
+            '        m_ParentEditor.ErrorsBar.Errors.Remove(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.NodeNotSet))
+            '    End If
+            'End If
 
         End Sub
 
@@ -217,7 +219,7 @@ Namespace DataObjects.Behavior.Nodes
                 If m_strLinkedNodeID.Trim.Length > 0 Then
                     Dim bnNode As Behavior.Node = Me.Organism.FindBehavioralNode(m_strLinkedNodeID, False)
                     If Not bnNode Is Nothing Then
-                        m_thLinkedNode = New TypeHelpers.LinkedNode(m_ParentEditor, bnNode)
+                        m_thLinkedNode = New TypeHelpers.LinkedNode(bnNode.Organism, bnNode)
                     Else
                         Util.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Error, "The offpage connector ID: " & Me.ID & " was unable to find its linked node ID: " & m_strLinkedNodeID & " in the diagram. I am defaulting it to nothing.")
                     End If
@@ -258,13 +260,14 @@ Namespace DataObjects.Behavior.Nodes
                     End If
                 Next
 
-                If m_strImageID.Trim.Length > 0 Then
-                    If Not m_parentEditor Is Nothing Then
-                        If m_ParentEditor.DiagramImages.Contains(m_strImageID) Then
-                            m_diImage = m_ParentEditor.DiagramImages(m_strImageID)
-                        End If
-                    End If
-                End If
+                'TODO
+                'If m_strImageID.Trim.Length > 0 Then
+                '    If Not m_parentEditor Is Nothing Then
+                '        If m_ParentEditor.DiagramImages.Contains(m_strImageID) Then
+                '            m_diImage = m_ParentEditor.DiagramImages(m_strImageID)
+                '        End If
+                '    End If
+                'End If
 
                 m_aryLoadingInLinkIDs.Clear()
                 m_aryLoadingOutLinkIDs.Clear()

@@ -755,10 +755,8 @@ Namespace Forms.Behavior
                     m_OutlookBar.AddBand(pdPanel.m_strPanelName, ipPanel)
 
                     For Each bnNode As DataObjects.Behavior.Node In pdPanel.m_aryNodes
-                        bnNode.ParentEditor = Me
                         ipPanel.AddIcon(bnNode.Name, bnNode.WorkspaceImage, bnNode.DragImage, bnNode)
                         bnNode.AfterAddedToIconBand()
-                        bnNode.ParentEditor = Nothing
                     Next
 
                 Next

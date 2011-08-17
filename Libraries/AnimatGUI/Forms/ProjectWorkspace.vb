@@ -213,6 +213,19 @@ Namespace Forms
 
         End Sub
 
+        Public Overridable Function SelectedObjectsContains(ByVal doObject As AnimatGUI.Framework.DataObject) As Boolean
+
+            For Each tnNode As Crownwood.DotNetMagic.Controls.Node In Me.TreeView.SelectedNodes
+                If Not tnNode.Tag Is Nothing AndAlso Util.IsTypeOf(tnNode.Tag.GetType, GetType(AnimatGUI.Framework.DataObject), False) Then
+                    If tnNode.Tag Is doObject Then
+                        Return True
+                    End If
+                End If
+            Next
+
+            Return False
+        End Function
+
 #End Region
 
 #Region " Events "

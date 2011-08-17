@@ -16,7 +16,7 @@ Namespace TypeHelpers
 
 #Region " Attributes "
 
-        Protected m_beEditor As AnimatGUI.Forms.Behavior.Editor
+        Protected m_doOrganism As AnimatGUI.DataObjects.Physical.Organism
         Protected m_bnLinkedNode As AnimatGUI.DataObjects.Behavior.Node
 
 #End Region
@@ -24,12 +24,12 @@ Namespace TypeHelpers
 #Region " Properties "
 
         <Browsable(False)> _
-        Public Property Editor() As AnimatGUI.Forms.Behavior.Editor
+        Public Property Organism() As AnimatGUI.DataObjects.Physical.Organism
             Get
-                Return m_beEditor
+                Return m_doOrganism
             End Get
-            Set(ByVal Value As AnimatGUI.Forms.Behavior.Editor)
-                m_beEditor = Value
+            Set(ByVal Value As AnimatGUI.DataObjects.Physical.Organism)
+                m_doOrganism = Value
             End Set
         End Property
 
@@ -60,18 +60,18 @@ Namespace TypeHelpers
             MyBase.New(doParent)
         End Sub
 
-        Public Sub New(ByVal beEditor As AnimatGUI.Forms.Behavior.Editor, _
+        Public Sub New(ByVal doOrganism As AnimatGUI.DataObjects.Physical.Organism, _
                        ByVal bnLinkedNode As AnimatGUI.DataObjects.Behavior.Node)
             MyBase.New(bnLinkedNode)
 
-            m_beEditor = beEditor
+            m_doOrganism = doOrganism
             m_bnLinkedNode = bnLinkedNode
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
                                         ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatGUI.Framework.DataObject
             Dim origNode As New LinkedNode(doParent)
-            origNode.m_beEditor = m_beEditor
+            origNode.m_doOrganism = m_doOrganism
             origNode.m_bnLinkedNode = m_bnLinkedNode
             Return origNode
         End Function
@@ -80,7 +80,7 @@ Namespace TypeHelpers
         End Sub
 
         Public Overrides Sub BuildPropertyDropDown(ByRef ctrlDropDown As System.Windows.Forms.Control)
-            If m_beEditor Is Nothing Then Return
+            If m_doOrganism Is Nothing Then Return
 
             If Not TypeOf (ctrlDropDown) Is Crownwood.DotNetMagic.Controls.TreeControl Then
                 Throw New System.Exception("The control passed into LinkedSynapse.BuildPropertyDropDown is not a treeview type")
@@ -91,7 +91,8 @@ Namespace TypeHelpers
             tvTree.SuspendLayout()
             tvTree.Nodes.Clear()
 
-            m_beEditor.CreateDiagramDropDownTree(tvTree)
+            'TODO
+            'm_doOrganism.CreateDiagramDropDownTree(tvTree)
 
             tvTree.Width = 300
             tvTree.ExpandAll()

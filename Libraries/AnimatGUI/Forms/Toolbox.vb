@@ -77,11 +77,25 @@ Namespace Forms
 
 #End Region
 
+#Region " Properties "
+
         Public Overrides ReadOnly Property IconName() As String
             Get
                 Return "AnimatGUI.Wrench_Small.gif"
             End Get
         End Property
+
+        Public Overridable ReadOnly Property OutlookBar() As Crownwood.Magic.Controls.OutlookBar
+            Get
+                Return ctrlOutlookbar
+            End Get
+        End Property
+
+#End Region
+        
+#Region " Methods "
+
+#End Region
 
     End Class
 

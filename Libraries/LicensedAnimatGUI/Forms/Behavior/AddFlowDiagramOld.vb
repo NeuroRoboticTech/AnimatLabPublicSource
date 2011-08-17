@@ -509,7 +509,7 @@ Namespace Forms.Behavior
             Dim afNode As New Lassalle.Flow.Node
             UpdateAddFlowNode(afNode, bdNode, True)
             bdNode.ParentDiagram = Me
-            bdNode.ParentEditor = m_beEditor
+            'bdNode.ParentEditor = m_beEditor
             bdNode.Organism = Me.Editor.Organism
 
             bdNode.BeforeAddNode()
@@ -591,7 +591,7 @@ Namespace Forms.Behavior
 
             blLink.BeginBatchUpdate()
             blLink.ParentDiagram = Me
-            blLink.ParentEditor = m_beEditor
+            'blLink.ParentEditor = m_beEditor
             blLink.Origin = bnOrigin
             blLink.Destination = bnDestination
             blLink.EndBatchUpdate(False)
@@ -1771,12 +1771,12 @@ Namespace Forms.Behavior
                     If bnNode Is Nothing Then
                         bnNode = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me.Editor.Organism), AnimatGUI.DataObjects.Behavior.Node)
                         bnNode.ParentDiagram = Me
-                        bnNode.ParentEditor = m_beEditor
+                        'bnNode.ParentEditor = m_beEditor
                         bnNode.LoadData(oXml)
                         AddToOrganism(bnNode)
                     Else
                         bnNode.ParentDiagram = Me
-                        bnNode.ParentEditor = m_beEditor
+                        'bnNode.ParentEditor = m_beEditor
                         m_aryNodes.Add(bnNode.ID, bnNode, False)
                         bnNode.AddToHierarchyBar()
                     End If
@@ -1813,14 +1813,14 @@ Namespace Forms.Behavior
                     If blLink Is Nothing Then
                         blLink = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me.Editor.Organism), AnimatGUI.DataObjects.Behavior.Link)
                         blLink.ParentDiagram = Me
-                        blLink.ParentEditor = m_beEditor
+                        'blLink.ParentEditor = m_beEditor
                         blLink.LoadData(oXml)
                         m_aryLinks.Add(blLink.ID, blLink, False)
                         blLink.AddToHierarchyBar()
                         AddToOrganism(blLink)
                     Else
                         blLink.ParentDiagram = Me
-                        blLink.ParentEditor = m_beEditor
+                        'blLink.ParentEditor = m_beEditor
                         m_aryLinks.Add(blLink.ID, blLink, False)
                         blLink.AddToHierarchyBar()
                     End If
@@ -2347,7 +2347,7 @@ Namespace Forms.Behavior
 
                 bnNode = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me.FormHelper), AnimatGUI.DataObjects.Behavior.Node)
                 bnNode.ParentDiagram = Me
-                bnNode.ParentEditor = m_beEditor
+                'bnNode.ParentEditor = m_beEditor
                 bnNode.LoadData(oXml)
 
                 bnNode.BeforeAddNode()
@@ -2372,7 +2372,7 @@ Namespace Forms.Behavior
 
                 blLink = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me.FormHelper), AnimatGUI.DataObjects.Behavior.Link)
                 blLink.ParentDiagram = Me
-                blLink.ParentEditor = m_beEditor
+                'blLink.ParentEditor = m_beEditor
                 blLink.LoadData(oXml)
 
                 blLink.BeforeAddLink()

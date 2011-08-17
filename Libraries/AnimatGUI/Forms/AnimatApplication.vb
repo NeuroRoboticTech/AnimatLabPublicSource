@@ -2321,21 +2321,21 @@ Namespace Forms
         End Sub
 
         Protected Sub PopulateToolbox()
+
             Try
-                'If m_frmToolbox Is Nothing Then Return
+                Dim ipPanel As Crownwood.Magic.Controls.IconPanel
+                For Each pdPanel As DataObjects.Behavior.PanelData In Util.Application.AlphabeticalBehavioralPanels
 
-                ''Only add this if it has not already been added.
-                'If m_frmToolbox.ctrlOutlookbar.Controls.Count = 0 Then
-                '    m_ipToolPanel = New IconPanel
-                '    'ipPanel.IconHeight = 55
-                '    m_frmToolbox.ctrlOutlookbar.AddBand("Toolbox", m_ipToolPanel)
+                    ipPanel = New Crownwood.Magic.Controls.IconPanel
+                    ipPanel.IconHeight = 55
+                    m_frmToolbox.OutlookBar.AddBand(pdPanel.m_strPanelName, ipPanel)
 
-                '    For Each frmTool As Forms.Tools.ToolForm In m_aryToolPlugins
-                '        Dim panelIcon As PanelIcon = m_ipToolPanel.AddIcon(frmTool.Name, frmTool.WorkspaceImage, frmTool.DragImage, frmTool)
-                '        AddHandler panelIcon.DoubleClickIcon, AddressOf Me.OnDoubleClickTool
-                '    Next
+                    For Each bnNode As DataObjects.Behavior.Node In pdPanel.m_aryNodes
+                        ipPanel.AddIcon(bnNode.Name, bnNode.WorkspaceImage, bnNode.DragImage, bnNode)
+                        bnNode.AfterAddedToIconBand()
+                    Next
 
-                'End If
+                Next
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

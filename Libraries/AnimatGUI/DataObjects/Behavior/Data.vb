@@ -27,7 +27,7 @@ Namespace DataObjects.Behavior
 #Region " Attributes "
 
         Protected m_strDescription As String = ""
-        Protected m_ParentEditor As Forms.Behavior.Editor
+        'Protected m_ParentEditor As Forms.Behavior.Editor
         Protected m_ParentDiagram As Forms.Behavior.DiagramOld
         Protected m_doOrganism As DataObjects.Physical.Organism
         Protected m_bUpdateBatch As Boolean
@@ -86,19 +86,19 @@ Namespace DataObjects.Behavior
             End Set
         End Property
 
-        <Browsable(False)> _
-        Public Overridable Property ParentEditor() As Forms.Behavior.Editor
-            Get
-                Return m_ParentEditor
-            End Get
-            Set(ByVal Value As Forms.Behavior.Editor)
-                m_ParentEditor = Value
+        '<Browsable(False)> _
+        'Public Overridable Property ParentEditor() As Forms.Behavior.Editor
+        '    Get
+        '        Return m_ParentEditor
+        '    End Get
+        '    Set(ByVal Value As Forms.Behavior.Editor)
+        '        m_ParentEditor = Value
 
-                If Not m_ParentEditor Is Nothing AndAlso Not m_ParentEditor.Organism Is Nothing Then
-                    Me.Organism = m_ParentEditor.Organism
-                End If
-            End Set
-        End Property
+        '        If Not m_ParentEditor Is Nothing AndAlso Not m_ParentEditor.Organism Is Nothing Then
+        '            Me.Organism = m_ParentEditor.Organism
+        '        End If
+        '    End Set
+        'End Property
 
         <Browsable(False)> _
         Public Overridable Property ParentDiagram() As Forms.Behavior.DiagramOld
@@ -139,11 +139,12 @@ Namespace DataObjects.Behavior
         <Browsable(False)> _
         Public Overrides ReadOnly Property RootForm() As System.Windows.Forms.Form
             Get
-                If Not m_ParentEditor Is Nothing Then
-                    Return m_ParentEditor
-                Else
-                    Return Util.Application
-                End If
+                'TODO
+                'If Not m_ParentEditor Is Nothing Then
+                '    Return m_ParentEditor
+                'Else
+                '    Return Util.Application
+                'End If
             End Get
         End Property
 
@@ -295,8 +296,9 @@ Namespace DataObjects.Behavior
                 m_ParentDiagram.UpdateChart(Me)
             End If
 
-            If Not m_bUpdateBatch AndAlso Not Me.ParentEditor Is Nothing AndAlso Not Me.ParentDiagram Is Nothing Then
-                Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me.ParentEditor, Me.ParentDiagram, Me))
+            If Not m_bUpdateBatch AndAlso Not Me.ParentDiagram Is Nothing Then
+                'TODO
+                'Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me.ParentEditor, Me.ParentDiagram, Me))
             End If
         End Sub
 
@@ -346,7 +348,7 @@ Namespace DataObjects.Behavior
             frmProperties.MaximizeBox = False
             frmProperties.Width = 400
             frmProperties.Height = 800
-            frmProperties.ShowDialog(Me.m_ParentEditor)
+            frmProperties.ShowDialog()
 
         End Sub
 
@@ -373,24 +375,25 @@ Namespace DataObjects.Behavior
 
         Public Overridable Sub ClearErrors()
 
-            If Not m_ParentEditor Is Nothing AndAlso Not m_ParentEditor.ErrorsBar Is Nothing Then
+            'TODO
+            'If Not m_ParentEditor Is Nothing AndAlso Not m_ParentEditor.ErrorsBar Is Nothing Then
 
-                Dim deError As DiagramErrors.DataError
-                Dim aryIDs As New ArrayList
-                For Each deItem As DictionaryEntry In m_ParentEditor.ErrorsBar.Errors
-                    If Util.IsTypeOf(deItem.Value.GetType(), GetType(DiagramErrors.DataError), False) Then
-                        deError = DirectCast(deItem.Value, DiagramErrors.DataError)
-                        If deError.Item Is Me Then
-                            aryIDs.Add(deError.ID)
-                        End If
-                    End If
-                Next
+            '    Dim deError As DiagramErrors.DataError
+            '    Dim aryIDs As New ArrayList
+            '    For Each deItem As DictionaryEntry In m_ParentEditor.ErrorsBar.Errors
+            '        If Util.IsTypeOf(deItem.Value.GetType(), GetType(DiagramErrors.DataError), False) Then
+            '            deError = DirectCast(deItem.Value, DiagramErrors.DataError)
+            '            If deError.Item Is Me Then
+            '                aryIDs.Add(deError.ID)
+            '            End If
+            '        End If
+            '    Next
 
-                For Each strID As String In aryIDs
-                    m_ParentEditor.ErrorsBar.Errors.Remove(strID)
-                Next
+            '    For Each strID As String In aryIDs
+            '        m_ParentEditor.ErrorsBar.Errors.Remove(strID)
+            '    Next
 
-            End If
+            'End If
 
         End Sub
 
