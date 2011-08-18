@@ -209,19 +209,18 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides Sub CheckForErrors()
 
-            'TODO
-            'If m_ParentEditor Is Nothing OrElse m_ParentEditor.ErrorsBar Is Nothing Then Return
+            If Util.Application.ProjectErrors Is Nothing Then Return
 
-            'If Me.Text Is Nothing OrElse Me.Text.Trim.Length = 0 Then
-            '    If Not m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.EmptyName)) Then
-            '        Dim deError As New DiagramErrors.DataError(Me, DiagramError.enumErrorLevel.Warning, DiagramError.enumErrorTypes.EmptyName, "A node has no name.")
-            '        m_ParentEditor.ErrorsBar.Errors.Add(deError.ID, deError)
-            '    End If
-            'Else
-            '    If m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.EmptyName)) Then
-            '        m_ParentEditor.ErrorsBar.Errors.Remove(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.EmptyName))
-            '    End If
-            'End If
+            If Me.Text Is Nothing OrElse Me.Text.Trim.Length = 0 Then
+                If Not Util.Application.ProjectErrors.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.EmptyName)) Then
+                    Dim deError As New DiagramErrors.DataError(Me, DiagramError.enumErrorLevel.Warning, DiagramError.enumErrorTypes.EmptyName, "A node has no name.")
+                    Util.Application.ProjectErrors.Errors.Add(deError.ID, deError)
+                End If
+            Else
+                If Util.Application.ProjectErrors.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.EmptyName)) Then
+                    Util.Application.ProjectErrors.Errors.Remove(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.EmptyName))
+                End If
+            End If
 
         End Sub
 

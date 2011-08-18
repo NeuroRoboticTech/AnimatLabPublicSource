@@ -163,20 +163,19 @@ Namespace DataObjects.Behavior.Nodes
         Public Overrides Sub CheckForErrors()
             MyBase.CheckForErrors()
 
-            'TODO
-            'If m_ParentEditor Is Nothing OrElse m_ParentEditor.ErrorsBar Is Nothing Then Return
+            If Util.Application.ProjectErrors Is Nothing Then Return
 
-            'If m_thLinkedNode Is Nothing OrElse m_thLinkedNode.Node Is Nothing Then
-            '    If Not m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.NodeNotSet)) Then
-            '        Dim deError As New DiagramErrors.DataError(Me, DiagramError.enumErrorLevel.Error, DiagramError.enumErrorTypes.NodeNotSet, _
-            '                                                   "The offpage connector '" & Me.Text & "' has not been linked to another node. ")
-            '        m_ParentEditor.ErrorsBar.Errors.Add(deError.ID, deError)
-            '    End If
-            'Else
-            '    If m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.NodeNotSet)) Then
-            '        m_ParentEditor.ErrorsBar.Errors.Remove(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.NodeNotSet))
-            '    End If
-            'End If
+            If m_thLinkedNode Is Nothing OrElse m_thLinkedNode.Node Is Nothing Then
+                If Not Util.Application.ProjectErrors.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.NodeNotSet)) Then
+                    Dim deError As New DiagramErrors.DataError(Me, DiagramError.enumErrorLevel.Error, DiagramError.enumErrorTypes.NodeNotSet, _
+                                                               "The offpage connector '" & Me.Text & "' has not been linked to another node. ")
+                    Util.Application.ProjectErrors.Errors.Add(deError.ID, deError)
+                End If
+            Else
+                If Util.Application.ProjectErrors.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.NodeNotSet)) Then
+                    Util.Application.ProjectErrors.Errors.Remove(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.NodeNotSet))
+                End If
+            End If
 
         End Sub
 

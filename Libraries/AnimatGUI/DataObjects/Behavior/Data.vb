@@ -375,25 +375,24 @@ Namespace DataObjects.Behavior
 
         Public Overridable Sub ClearErrors()
 
-            'TODO
-            'If Not m_ParentEditor Is Nothing AndAlso Not m_ParentEditor.ErrorsBar Is Nothing Then
+            If Not Util.Application.ProjectErrors Is Nothing Then
 
-            '    Dim deError As DiagramErrors.DataError
-            '    Dim aryIDs As New ArrayList
-            '    For Each deItem As DictionaryEntry In m_ParentEditor.ErrorsBar.Errors
-            '        If Util.IsTypeOf(deItem.Value.GetType(), GetType(DiagramErrors.DataError), False) Then
-            '            deError = DirectCast(deItem.Value, DiagramErrors.DataError)
-            '            If deError.Item Is Me Then
-            '                aryIDs.Add(deError.ID)
-            '            End If
-            '        End If
-            '    Next
+                Dim deError As DiagramErrors.DataError
+                Dim aryIDs As New ArrayList
+                For Each deItem As DictionaryEntry In Util.Application.ProjectErrors.Errors
+                    If Util.IsTypeOf(deItem.Value.GetType(), GetType(DiagramErrors.DataError), False) Then
+                        deError = DirectCast(deItem.Value, DiagramErrors.DataError)
+                        If deError.Item Is Me Then
+                            aryIDs.Add(deError.ID)
+                        End If
+                    End If
+                Next
 
-            '    For Each strID As String In aryIDs
-            '        m_ParentEditor.ErrorsBar.Errors.Remove(strID)
-            '    Next
+                For Each strID As String In aryIDs
+                    Util.Application.ProjectErrors.Errors.Remove(strID)
+                Next
 
-            'End If
+            End If
 
         End Sub
 

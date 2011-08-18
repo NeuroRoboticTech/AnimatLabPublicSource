@@ -234,20 +234,19 @@ Namespace DataObjects.Behavior.Nodes
         Public Overrides Sub CheckForErrors()
             MyBase.CheckForErrors()
 
-            'TODO
-            'If m_ParentEditor Is Nothing OrElse m_ParentEditor.ErrorsBar Is Nothing Then Return
+            If Util.Application.ProjectErrors Is Nothing Then Return
 
-            'If m_thDataTypes Is Nothing OrElse m_thDataTypes.ID Is Nothing OrElse m_thDataTypes.ID.Trim.Length = 0 Then
-            '    If Not m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.DataTypeNotSet)) Then
-            '        Dim deError As New DiagramErrors.DataError(Me, DiagramError.enumErrorLevel.Error, DiagramError.enumErrorTypes.DataTypeNotSet, _
-            '                                                   "The adapter '" & Me.Text & "' does not have a defined data type pointer value.")
-            '        m_ParentEditor.ErrorsBar.Errors.Add(deError.ID, deError)
-            '    End If
-            'Else
-            '    If m_ParentEditor.ErrorsBar.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.DataTypeNotSet)) Then
-            '        m_ParentEditor.ErrorsBar.Errors.Remove(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.DataTypeNotSet))
-            '    End If
-            'End If
+            If m_thDataTypes Is Nothing OrElse m_thDataTypes.ID Is Nothing OrElse m_thDataTypes.ID.Trim.Length = 0 Then
+                If Not Util.Application.ProjectErrors.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.DataTypeNotSet)) Then
+                    Dim deError As New DiagramErrors.DataError(Me, DiagramError.enumErrorLevel.Error, DiagramError.enumErrorTypes.DataTypeNotSet, _
+                                                               "The adapter '" & Me.Text & "' does not have a defined data type pointer value.")
+                    Util.Application.ProjectErrors.Errors.Add(deError.ID, deError)
+                End If
+            Else
+                If Util.Application.ProjectErrors.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.DataTypeNotSet)) Then
+                    Util.Application.ProjectErrors.Errors.Remove(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.DataTypeNotSet))
+                End If
+            End If
 
         End Sub
 
