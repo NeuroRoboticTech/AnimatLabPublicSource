@@ -31,6 +31,13 @@ Public MustInherit Class AnimatUITest
         EndsWith
     End Enum
 
+    Public Enum enumDataComparisonType
+        WithinRange
+        Average
+        Max
+        Min
+    End Enum
+
 #End Region
 
 #Region "Attributes"
@@ -40,6 +47,7 @@ Public MustInherit Class AnimatUITest
     Protected m_tcpChannel As TcpChannel
     Protected m_strRootFolder As String
     Protected m_bGenerateTempates As Boolean = False
+    Protected m_bAttachServerOnly As Boolean = False
     Protected m_strProjectName As String = ""
     Protected m_strProjectPath As String = ""
     Protected m_strTestDataPath As String = ""
@@ -51,6 +59,19 @@ Public MustInherit Class AnimatUITest
     Protected m_szCurrrentResoution As New Size(0, 0)
     Protected m_dblResScaleWidth As Double = 1
     Protected m_dblResScaleHeight As Double = 1
+
+    Protected m_strAmbient As String = "#1E1E1E"
+    Protected m_strDiffuse As String = "#FFFFFF"
+    Protected m_strSpecular As String = "#1E1E1E"
+    Protected m_iShininess As Integer = 70
+
+    Protected m_bTestTexture As Boolean = True
+
+    Protected m_strTextureFile As String = "Bricks.bmp"
+    Protected m_strMeshFile As String = "TestMesh.osg"
+
+    Dim m_aryChartColumns() As String
+    Dim m_aryChartData(,) As Double
 
 #End Region
 
@@ -66,6 +87,24 @@ Public MustInherit Class AnimatUITest
     End Property
 
     Public Overridable ReadOnly Property HasChildPart() As Boolean
+        Get
+            Return True
+        End Get
+    End Property
+
+    Protected Overridable ReadOnly Property HasRootGraphic() As Boolean
+        Get
+            Return True
+        End Get
+    End Property
+
+    Protected Overridable ReadOnly Property AllowRootRotations() As Boolean
+        Get
+            Return True
+        End Get
+    End Property
+
+    Protected Overridable ReadOnly Property AllowChildRotations() As Boolean
         Get
             Return True
         End Get
@@ -104,6 +143,17 @@ Public MustInherit Class AnimatUITest
         End If
 
         m_bGenerateTempates = CType(System.Configuration.ConfigurationManager.AppSettings("GenerateTemplates"), Boolean)
+        m_bAttachServerOnly = CType(System.Configuration.ConfigurationManager.AppSettings("AttachServerOnly"), Boolean)
+    End Sub
+
+    Protected Overridable Sub StartProject()
+        'Get a new port number each time we spin up a new independent test.
+        m_iPort = Util.GetNewPort()
+
+        'Start the application.
+        StartApplication("", m_iPort, m_bAttachServerOnly)
+
+        CreateNewProject(m_strProjectName, m_strProjectPath, m_dblSimEndTime)
     End Sub
 
     ' Use TestCleanup to run code after each test has run
@@ -270,7 +320,8 @@ Public MustInherit Class AnimatUITest
         End If
     End Sub
 
-    Protected Overridable Sub CompareSimulation(ByVal strTestDataPath As String, Optional ByVal strPrefix As String = "", Optional ByVal dblMaxError As Double = 0.1)
+    Protected Overridable Sub CompareSimulation(ByVal strTestDataPath As String, Optional ByVal strPrefix As String = "", _
+                                                Optional ByVal dblMaxError As Double = 0.1)
 
         'No prefix on the exported chart.
         ExecuteMethod("ExportDataCharts", New Object() {"", ""})
@@ -280,6 +331,78 @@ Public MustInherit Class AnimatUITest
             ExecuteMethod("CopyChartData", New Object() {strTestDataPath, strPrefix})
         Else
             ExecuteMethod("CompareExportedDataCharts", New Object() {strPrefix, strTestDataPath, dblMaxError})
+        End If
+
+    End Sub
+
+    Protected Overridable Sub LoadDataChart(ByVal strTestDataPath As String, ByVal strChartFileName As String, Optional ByVal strPrefix As String = "")
+
+        'Export all charts.
+        ExecuteMethod("ExportDataCharts", New Object() {"", ""})
+        ExecuteMethod("CopyChartData", New Object() {strTestDataPath, strPrefix})
+
+        Threading.Thread.Sleep(200)
+
+        'Load the template file data.
+        Util.ReadCSVFileToArray(m_strRootFolder & m_strTestDataPath & "\" & strPrefix & strChartFilename, m_aryChartColumns, m_aryChartData)
+
+        If m_aryChartColumns Is Nothing OrElse m_aryChartData Is Nothing Then
+            Throw New System.Exception("Could not read the template file. ('" & strChartFilename & "')")
+        End If
+
+    End Sub
+
+    Protected Overridable Sub CompareColummData(ByVal iColumn As Integer, ByVal iRowStart As Integer, ByVal iRowEnd As Integer, ByVal eCompareType As enumDataComparisonType, _
+                                                ByVal dblRange1 As Double, Optional ByVal dblRange2 As Double = 0, Optional ByVal dblMaxError As Double = 0.05)
+
+        If m_aryChartData Is Nothing OrElse m_aryChartData.Length <= 0 Then
+            Throw New System.Exception("The chart data has not been loaded.")
+        End If
+
+        If iRowStart <= 0 Then
+            Throw New System.Exception("Invalid row start index. Row start must be greater than zero.")
+        End If
+
+        If iRowEnd <= 0 OrElse iRowEnd <= iRowStart Then
+            Throw New System.Exception("Invalid row end index. Row end must be greater than the row start index.")
+        End If
+
+        If iRowEnd >= m_aryChartData.Length Then
+            Throw New System.Exception("The row end index cannot be larger than the size of the chart data.")
+        End If
+
+        Dim dblMin As Double = 999999
+        Dim dblMax As Double = -999999
+        Dim dblAvg As Double = 0
+        Dim dblAvgTotal As Double = 0
+        Dim dblData As Double = 0
+
+        For iRow As Integer = iRowStart To iRowEnd
+            dblData = m_aryChartData(iColumn, iRow)
+
+            If dblData < dblMin Then dblMin = dblData
+            If dblData > dblMax Then dblMax = dblData
+            dblAvgTotal = dblAvgTotal + dblData
+        Next
+
+        dblAvg = dblAvgTotal / CDbl(iRowEnd - iRowStart)
+
+        If eCompareType = enumDataComparisonType.Max Then
+            If Math.Abs(dblMax - dblRange1) > dblMaxError Then
+                Throw New System.Exception("The data within the range execeeds the maximum value specified. Data: " & dblMax & ", Max: " & dblRange1)
+            End If
+        ElseIf eCompareType = enumDataComparisonType.Min Then
+            If Math.Abs(dblMin - dblRange1) > dblMaxError Then
+                Throw New System.Exception("The data within the range execeeds the minimum value specified. Data: " & dblMin & ", Max: " & dblRange1)
+            End If
+        ElseIf eCompareType = enumDataComparisonType.Average Then
+            If Math.Abs(dblAvg - dblRange1) > dblMaxError Then
+                Throw New System.Exception("The data within the range execeeds the average value specified. Data: " & dblAvg & ", Max: " & dblRange1)
+            End If
+        ElseIf eCompareType = enumDataComparisonType.WithinRange Then
+            If dblMin < dblRange1 OrElse dblMax > dblRange2 Then
+                Throw New System.Exception("The data was not within the range specified. Data: (" & dblMin & ", " & dblMax & ") Range: (" & dblRange1 & ", " & dblRange2 & ")")
+            End If
         End If
 
     End Sub
@@ -582,6 +705,121 @@ Public MustInherit Class AnimatUITest
 
     End Sub
 
+
+    Protected Overridable Sub TestMovableItemProperties(ByVal strStructure As String, ByVal strPart As String)
+
+        TestSettingBodyColors(strStructure, strPart)
+
+        TestSettingBodyTexture(strStructure, strPart)
+
+        TestSettingBodyVisibility(strStructure, strPart)
+
+        'Set the Description to a valid value.
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Description", "Test"})
+
+        'Set the Name to a valid value.
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Name", "Test"})
+
+        'Set the Name to an valid value.
+        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\Test", "Name", ""}, "The name property can not be blank.")
+
+        'Reset the name to root.
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\Test", "Name", strPart})
+
+    End Sub
+
+    Protected Overridable Sub TestSettingBodyColors(ByVal strStructure As String, ByVal strPart As String)
+        'Set the ambient to a valid value.
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Ambient", m_strAmbient})
+
+        'Set the diffuse to a valid value.
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Diffuse", m_strDiffuse})
+
+        'Set the specular to a valid value.
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Specular", m_strSpecular})
+
+        'Set the shininess to a valid value.
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Shininess", m_iShininess.ToString})
+
+        'Set the shininess to an valid value.
+        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Shininess", "-1"}, "Shininess must be greater than or equal to zero.")
+
+        'Set the shininess to an valid value.
+        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Shininess", "129"}, "Shininess must be less than 128.")
+    End Sub
+
+    Protected Overridable Sub TestSettingBodyTexture(ByVal strStructure As String, ByVal strPart As String)
+
+        If m_bTestTexture Then
+            'Set the texture to an valid value.
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Texture", _
+                                                                        (m_strRootFolder & "\bin\Resources\" & m_strTextureFile)})
+            'Set the texture to an invalid value.
+            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Texture", _
+                                                                        (m_strRootFolder & "\bin\Resources\Bricks.gif")}, "The specified file does not exist: ", enumErrorTextType.BeginsWith)
+
+            'Set the texture to an invalid value.
+            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Texture", _
+                                                                        (m_strRootFolder & "\bin\Resources\Test.txt")}, "Unable to load the texture file. This does not appear to be a vaild image file.", enumErrorTextType.BeginsWith)
+        End If
+
+    End Sub
+
+    Protected Overridable Sub TestSettingHeightMap(ByVal strStructure As String, ByVal strPart As String)
+
+        'Set the texture to an valid value.
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "MeshFile", _
+                                                                    (m_strRootFolder & "\bin\Resources\" & m_strMeshFile)})
+        'Set the texture to an invalid value.
+        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "MeshFile", _
+                                                                    (m_strRootFolder & "\bin\Resources\Bricks.gif")}, "The specified file does not exist: ", enumErrorTextType.BeginsWith)
+
+        'Set the texture to an invalid value.
+        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "MeshFile", _
+                                                                    (m_strRootFolder & "\bin\Resources\Test.txt")}, "Unable to load the height map file. This does not appear to be a vaild image file.", enumErrorTextType.BeginsWith)
+
+    End Sub
+
+    Protected Overridable Sub TestSettingBodyVisibility(ByVal strStructure As String, ByVal strPart As String)
+
+        'Set the visible to a valid value.
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Visible", "False"})
+
+        'Turn visible back on.
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Visible", "True"})
+
+        TestSettingTransparency(strStructure, strPart, "Transparencies.GraphicsTransparency")
+        TestSettingTransparency(strStructure, strPart, "Transparencies.CollisionsTransparency")
+        TestSettingTransparency(strStructure, strPart, "Transparencies.JointsTransparency")
+        TestSettingTransparency(strStructure, strPart, "Transparencies.ReceptiveFieldsTransparency")
+        TestSettingTransparency(strStructure, strPart, "Transparencies.SimulationTransparency")
+
+        'If this is the root part then set its child graphics object to be clear for the rest of the tests so it does not look funky.
+        If strPart = "Root" AndAlso HasRootGraphic() Then
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart & "\Root_Graphics", "Transparencies.CollisionsTransparency", "100"})
+        End If
+    End Sub
+
+    Protected Overridable Sub TestSettingTransparency(ByVal strStructure As String, ByVal strPart As String, ByVal strTransparency As String)
+
+        'Get original value
+        Dim fltOrigRot As Single = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, strTransparency), Single)
+
+        'Set the Transparencies.GraphicsTransparency to a valid value.
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, strTransparency, "50"})
+
+        'Set the Transparencies.GraphicsTransparency to high.
+        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, strTransparency, "150"}, "Transparency values cannot be greater than 100%.")
+
+        'Set the Transparencies.GraphicsTransparency too low
+        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, strTransparency, "-50"}, "Transparency values cannont be less than 0%.")
+
+        'reset original value
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, strTransparency, fltOrigRot.ToString})
+
+    End Sub
+
+
 #Region "GenerateCode"
 
     Protected Overridable Sub ProcessExtraAddRootMethods(ByVal strPartType As String)
@@ -591,7 +829,7 @@ Public MustInherit Class AnimatUITest
     '''<summary>
     '''AddRootPartType - Use 'AddRootPartTypeParams' to pass parameters into this method.
     '''</summary>
-    Protected Overridable Sub AddRootPartType(ByVal strPartType As String)
+    Protected Overridable Sub AddRootPartType(ByVal strStructure As String, ByVal strPartType As String, Optional ByVal strName As String = "")
 
         OpenDialogAndWait("SelectPartType", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddPartToolStripButton"})
 
@@ -603,6 +841,18 @@ Public MustInherit Class AnimatUITest
         ProcessExtraAddRootMethods(strPartType)
 
         Threading.Thread.Sleep(2000)
+
+        'There is some kind of weird timing bug in the testing code here. When I add a part manually it goes to SelectCollisions mode just fine,
+        'but when I do it here for some reason I have to set it to something else first and then back. I think it has something to do with the 
+        ' timing of the call or something. Regardless, it does not really matter here, I just need it in Collisions mode and that works when done
+        ' manually, so I am using this trick to get it to work in the test.
+        ExecuteMethod("ClickToolbarItem", New Object() {"SelGraphicsToolStripButton"})
+        ExecuteMethod("ClickToolbarItem", New Object() {"SelCollisionToolStripButton"})
+        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\Root"})
+
+        If strName.Length > 0 Then
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Root", "Name", strName})
+        End If
     End Sub
 
     Public Overridable Sub ClickToAddBody(ByVal ptClick As Point)
@@ -671,6 +921,26 @@ Public MustInherit Class AnimatUITest
     End Sub
 
     '''<summary>
+    '''AddChildPartTypeWithJoint - Use 'AddChildPartTypeWithJointParams' to pass parameters into this method.
+    '''</summary>
+    Protected Overridable Sub AddChildPartTypeWithoutJoint(ByVal strPartType As String, ByVal ptAddClick As Point)
+
+        'Click 'Add Part' button
+        ExecuteMethod("ClickToolbarItem", New Object() {"AddPartToolStripButton"}, 2000)
+
+        OpenDialogAndWait("SelectPartType", Me.GetType.GetMethod("ClickToAddBody"), New Object() {ptAddClick})
+
+        ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strPartType})
+
+        'Click 'Ok' button
+        ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+
+        ProcessExtraChildMethods(strPartType, "")
+
+        Threading.Thread.Sleep(1000)
+    End Sub
+
+    '''<summary>
     '''AddLineChart - Use 'AddLineChartParams' to pass parameters into this method.
     '''</summary>
     Protected Overridable Sub AddChart(ByVal strChartType As String)
@@ -713,7 +983,8 @@ Public MustInherit Class AnimatUITest
     '''<summary>
     '''AddLineChart - Use 'AddLineChartParams' to pass parameters into this method.
     '''</summary>
-    Protected Overridable Sub AddStimulus(ByVal strStimulusType As String, ByVal strStructure As String, ByVal strPart As String)
+    Protected Overridable Sub AddStimulus(ByVal strStimulusType As String, ByVal strStructure As String, ByVal strPart As String, _
+                                          Optional ByVal strName As String = "", Optional ByVal strOldName As String = "Stimulus_1")
 
         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart})
 
@@ -724,14 +995,11 @@ Public MustInherit Class AnimatUITest
         'Click 'Ok' button
         ExecuteActiveDialogMethod("ClickOkButton", Nothing)
 
+        If strName.Length > 0 Then
+            ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strOldName, "Name", strName})
+        End If
+
         Threading.Thread.Sleep(1000)
-    End Sub
-
-    Protected Overridable Sub AddForceStimulus(ByVal strStructure As String, ByVal strPart As String, ByVal strStimName As String)
-        AddStimulus("Force", strStructure, strPart)
-
-        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_1", "Name", strStimName})
-
     End Sub
 
     Protected Overridable Sub SetForceStimulus(ByVal strStimName As String, ByVal bAlwaysActive As Boolean, ByVal bEnabled As Boolean, _
@@ -740,11 +1008,7 @@ Public MustInherit Class AnimatUITest
                                                ByVal dblForceX As Double, ByVal dblForceY As Double, ByVal dblForceZ As Double, _
                                                ByVal dblTorqueX As Double, ByVal dblTorqueY As Double, ByVal dblTorqueZ As Double)
 
-        'Set the stim properties
-        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "AlwaysActive", bAlwaysActive.ToString})
-        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "Enabled", bEnabled.ToString})
-        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "StartTime", dblStartTime.ToString})
-        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "EndTime", dblEndTime.ToString})
+        SetBaseStimulusProperties(strStimName, bAlwaysActive, bEnabled, dblStartTime, dblEndTime)
 
         'Set the force position.
         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "PositionX", dblPosX.ToString})
@@ -763,6 +1027,170 @@ Public MustInherit Class AnimatUITest
 
     End Sub
 
+    Protected Overridable Sub SetMotorVelocityStimulus(ByVal strStimName As String, ByVal bAlwaysActive As Boolean, ByVal bEnabled As Boolean, _
+                                             ByVal dblStartTime As Double, ByVal dblEndTime As Double, ByVal bDisableWhenDone As Boolean, _
+                                             ByVal bConstantValueType As Boolean, ByVal dblVelocity As Double, ByVal strEquation As String)
+
+        SetBaseStimulusProperties(strStimName, bAlwaysActive, bEnabled, dblStartTime, dblEndTime)
+
+        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "DisableWhenDone", bDisableWhenDone.ToString})
+
+        If bConstantValueType Then
+            ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "ValueType", "Constant"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "Velocity", dblVelocity.ToString})
+        Else
+            ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "ValueType", "Equation"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "Equation", strEquation})
+        End If
+
+    End Sub
+
+    Protected Overridable Sub SetBaseStimulusProperties(ByVal strStimName As String, ByVal bAlwaysActive As Boolean, _
+                                                        ByVal bEnabled As Boolean, ByVal dblStartTime As Double, ByVal dblEndTime As Double)
+
+        'Set the stim properties
+        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "AlwaysActive", bAlwaysActive.ToString})
+        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "Enabled", bEnabled.ToString})
+        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "StartTime", dblStartTime.ToString})
+        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "EndTime", dblEndTime.ToString})
+    End Sub
+
+
+    Protected Overridable Sub CreateArmature(ByVal strPartType As String, ByVal strSecondaryPartType As String, _
+                                             ByVal strJointType As String, ByVal ptClickToAddChild As Point, _
+                                             ByVal ptZoomStart As Point, ByVal iZoom1 As Integer, ByVal iZoom2 As Integer, _
+                                             ByVal bAddAttachments As Boolean, ByVal strAttachType As String, _
+                                             ByVal ptRootAttach As Point, ByVal ptArmAttach As Point)
+
+        'Add a root part.
+        AddRootPartType("Structure_1", strPartType)
+
+        RecalculatePositionsUsingResolution()
+
+        'Zoom in on the part so we can try and move it with the mouse.
+        ZoomInOnPart(ptZoomStart, iZoom1, iZoom2)
+
+        If strSecondaryPartType.Trim.Length = 0 Then
+            strSecondaryPartType = strPartType
+        End If
+
+        'We have tested moving/rotating the root part, now test doing it on a child part.
+        AddChildPartTypeWithJoint(strSecondaryPartType, strJointType, ptClickToAddChild)
+
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_1\Body_1_Graphics", "Name", "Arm_Graphics"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_1", "Name", "Arm"})
+
+        RepositionChildPart()
+
+        Dim iBlockerIndex As Integer = 2
+        If bAddAttachments Then
+            AddChildPartTypeWithoutJoint(strAttachType, ptRootAttach)
+            AddChildPartTypeWithoutJoint(strAttachType, ptRootAttach)
+            AddChildPartTypeWithoutJoint(strAttachType, ptArmAttach)
+            RepositionArmatureAttachments()
+            iBlockerIndex = 5
+        End If
+
+        AddChildPartTypeWithJoint("Box", "Hinge", ptRootAttach)
+
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2\Body_" & iBlockerIndex & "\Body_" & iBlockerIndex & "_Graphics", "Name", "Blocker_Graphics"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2\Body_" & iBlockerIndex, "Name", "Blocker"})
+
+        RepositionBlockerPart()
+
+        'Add motor velocity to joint. Set it to no velocity and always enabled. We want to lock this joint. 
+        'We cannot use a static part here because it is part of the geometry of the root, so collisions between it and arm will be disabled.
+        AddStimulus("Motor Velocity", "Structure_1", "Root\Joint_2", "BlockLock", "Stimulus_1")
+        SetMotorVelocityStimulus("BlockLock", True, True, 0, 5, False, True, 0, "")
+    End Sub
+
+    Protected Overridable Sub RepositionArmatureAttachments()
+        'First rename the attachments.
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Body_2", "Name", "RootAttach1"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Body_3", "Name", "RootAttach2"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Arm\Body_4", "Name", "ArmAttach"})
+
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\RootAttach1", "LocalPosition.X", "0.025"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\RootAttach1", "LocalPosition.Y", "0.06"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\RootAttach1", "LocalPosition.Z", "0"})
+
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\RootAttach2", "LocalPosition.X", "0.070"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\RootAttach2", "LocalPosition.Y", "0.06"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\RootAttach2", "LocalPosition.Z", "0"})
+
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Arm\ArmAttach", "LocalPosition.X", "0.075"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Arm\ArmAttach", "LocalPosition.Y", "0.025"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Arm\ArmAttach", "LocalPosition.Z", "0"})
+    End Sub
+
+    Protected Overridable Sub RepositionRootArmatureAttach1()
+
+    End Sub
+
+    Protected Overridable Sub RepositionBlockerPart()
+
+    End Sub
+
+    Protected Overridable Sub CreateArmatureChart(ByVal bChartAttachments As Boolean)
+
+        'Select the LineChart to add.
+        AddChart("Line Chart")
+
+        'Select the Chart axis
+        ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1"})
+
+        'Change the end time of the data chart to 45 seconds.
+        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectEndTime", m_dblChartEndTime.ToString})
+
+        AddItemToChart("Structure_1\Root\Joint_1\Arm")
+        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Arm", "Name", "Arm_X"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Arm_X", "DataTypeID", "WorldPositionX"})
+
+        AddItemToChart("Structure_1\Root\Joint_1\Arm")
+        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Arm", "Name", "Arm_Y"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Arm_Y", "DataTypeID", "WorldPositionY"})
+
+        AddItemToChart("Structure_1\Root\Joint_1\Arm")
+        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Arm", "Name", "Arm_Z"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Arm_Z", "DataTypeID", "WorldPositionZ"})
+
+        If bChartAttachments Then
+            AddItemToChart("Structure_1\Root\Joint_1\Arm\ArmAttach")
+            ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\ArmAttach", "Name", "ArmAttach_X"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\ArmAttach_X", "DataTypeID", "WorldPositionX"})
+
+            AddItemToChart("Structure_1\Root\Joint_1\Arm\ArmAttach")
+            ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\ArmAttach", "Name", "ArmAttach_Y"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\ArmAttach_Y", "DataTypeID", "WorldPositionY"})
+
+            AddItemToChart("Structure_1\Root\Joint_1\Arm\ArmAttach")
+            ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\ArmAttach", "Name", "ArmAttach_Z"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\ArmAttach_Z", "DataTypeID", "WorldPositionZ"})
+        End If
+
+        'Add a new axis to chart the joint rotation.
+        ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+
+        AddItemToChart("Structure_1\Root\Joint_1")
+        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 2\Joint_1", "Name", "Rotation"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 2\Rotation", "DataTypeID", "JointRotationDeg"})
+
+        'Add a new axis to chart the joint velocity.
+        ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+
+        AddItemToChart("Structure_1\Root\Joint_1")
+        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 3\Joint_1", "Name", "JointVelocity"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 3\JointVelocity", "DataTypeID", "JointActualVelocity"})
+
+        'Select the simulation window tab so it is visible now.
+        ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Simulation\Environment\Structures\Structure_1"}, 1000)
+    End Sub
+
+
+    Protected Overridable Sub RepositionChildPart()
+
+    End Sub
+
     Protected Overridable Sub DeletePart(ByVal strPath As String)
         ExecuteMethod("SelectWorkspaceItem", New Object() {strPath})
         ExecuteMethod("ClickToolbarItem", New Object() {"DeleteToolStripButton"})
@@ -773,23 +1201,33 @@ Public MustInherit Class AnimatUITest
     '''<summary>
     '''ZoomInOnRootPart
     '''</summary>
-    Public Sub ZoomInOnPart(ByVal ptStart As Point, ByVal iAmount1 As Integer, Optional ByVal iAmount2 As Integer = 0)
+    Public Sub ZoomInOnPart(ByVal ptStart As Point, ByVal iAmount1 As Integer, Optional ByVal iAmount2 As Integer = 0, _
+                            Optional ByVal bVertical As Boolean = True, Optional ByVal eButton As System.Windows.Forms.MouseButtons = MouseButtons.Right, _
+                            Optional ByVal eKeys As System.Windows.Input.ModifierKeys = ModifierKeys.None)
         Dim uIStructure_1BodyClient As WinClient = Me.UIProjectWindow(m_strProjectName).UIStructure_1BodyWindow.UIStructure_1BodyClient
 
-        If iAmount1 > 0 Then
+        If Math.Abs(iAmount1) > 0 Then
             'Move using Right button 'Structure_1 Body' client
-            Mouse.StartDragging(uIStructure_1BodyClient, ptStart, MouseButtons.Right, ModifierKeys.None)
-            Mouse.StopDragging(uIStructure_1BodyClient, 0, iAmount1)
+            Mouse.StartDragging(uIStructure_1BodyClient, ptStart, eButton, eKeys)
+            If bVertical Then
+                Mouse.StopDragging(uIStructure_1BodyClient, 0, iAmount1)
+            Else
+                Mouse.StopDragging(uIStructure_1BodyClient, iAmount1, 0)
+            End If
         End If
 
         'Move using Right button 'Structure_1 Body' client 
-        If iAmount2 > 0 Then
-            Mouse.StartDragging(uIStructure_1BodyClient, ptStart, MouseButtons.Right, ModifierKeys.None)
-            Mouse.StopDragging(uIStructure_1BodyClient, 0, iAmount2)
+        If Math.Abs(iAmount2) > 0 Then
+            Mouse.StartDragging(uIStructure_1BodyClient, ptStart, eButton, eKeys)
+            If bVertical Then
+                Mouse.StopDragging(uIStructure_1BodyClient, 0, iAmount2)
+            Else
+                Mouse.StopDragging(uIStructure_1BodyClient, iAmount2, 0)
+            End If
         End If
 
-        If iAmount1 > 0 OrElse iAmount2 > 0 Then
-            Mouse.Click(uIStructure_1BodyClient, MouseButtons.Right, ModifierKeys.None, ptStart)
+        If Math.Abs(iAmount1) > 0 OrElse Math.Abs(iAmount2) > 0 Then
+            Mouse.Click(uIStructure_1BodyClient, eButton, ModifierKeys.None, ptStart)
         End If
 
     End Sub

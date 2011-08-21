@@ -58,6 +58,7 @@ Namespace BodyEditorTests
                 <TestMethod()>
                 Public Sub TestFluidPlane()
 
+                    StartProject()
                     CreateAndTestRoot()
                     CreateChartAndAddBodies()
 
@@ -112,7 +113,7 @@ Namespace BodyEditorTests
                     'Compare chart data to verify simulation results.
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "BelowSurfaceSame_")
 
-                    AddForceStimulus("Structure_2", "Root", "ForceStim")
+                    AddStimulus("Force", "Structure_2", "Root", "ForceStim")
 
                     For iIdx As Integer = 0 To m_aryForceStimForceX.Count - 1
                         SetForceStimulus("ForceStim", False, True, 1, 1.5, _

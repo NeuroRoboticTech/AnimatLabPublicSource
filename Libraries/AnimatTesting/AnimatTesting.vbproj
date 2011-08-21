@@ -104,6 +104,8 @@
   <ItemGroup>
     <Compile Include="AnimatUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\BodyPartUITest.vb" />
+    <Compile Include="BodyEditorTests\BodyPartTests\JointUITest.vb" />
+    <Compile Include="BodyEditorTests\BodyPartTests\JointTests\HingeUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\BoxUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\FluidPlaneUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\TerrainUITest.vb" />
@@ -130,9 +132,7 @@
     </None>
     <None Include="UIMap.uitest" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BodyEditorTests\BodyPartTests\JointTests\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

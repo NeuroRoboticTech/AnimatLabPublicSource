@@ -38,7 +38,7 @@ Namespace CreationTests
             ExecuteMethod("SetObjectProperty", New Object() {"Simulation", "SimulationEndTime", "50"})
 
             'Add a root cylinder part.
-            AddRootPartType("Box")
+            AddRootPartType("Structure_1", "Box")
 
             'Select the LineChart to add.
             AddChart("Line Chart")
