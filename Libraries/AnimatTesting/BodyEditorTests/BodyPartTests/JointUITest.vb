@@ -58,8 +58,38 @@ Namespace BodyEditorTests
             Protected m_dblMinTranArmLocalZ As Double = 0
             Protected m_dblMaxTranArmLocalZ As Double = 2
 
+            Protected m_strInitialJointXPos As String = "-0.125"
+            Protected m_strInitialJointYPos As String = "0"
+            Protected m_strInitialJointZPos As String = "0"
+
+            Protected m_strInitialJointXRot As String = "90"
+            Protected m_strInitialJointYRot As String = "0"
+            Protected m_strInitialJointZRot As String = "90"
+
             Protected m_ptRotateJoint1Start As New Point(687, 428)
             Protected m_ptRotatejoint1End As New Point(652, 608)
+
+            Protected m_strFallUpper1 As String = "45"
+            Protected m_strFallUpper2 As String = "90"
+            Protected m_strFallUpper3 As String = "25"
+
+            Protected m_strFallLower1 As String = "-45"
+            Protected m_strFallLower2 As String = "-90"
+            Protected m_strFallLower3 As String = "-25"
+
+            Protected m_dblMaxMovePos As Double = 5.918866
+            Protected m_dblMaxMovePosError As Double = 0.2
+
+            Protected m_dblMaxMoveVel As Double = 14.38887
+            Protected m_dblMaxMoveVelError As Double = 0.3
+
+            Protected m_dblMaxRotPos As Double = 0.08810297
+            Protected m_dblMaxRotPosError As Double = 0.01
+
+            Protected m_strForceXJointRotation As String = "0"
+
+            Protected m_dblMouseRotateJointMin As Double = -360
+            Protected m_sblMouseRotateJointMax As Double = -90
 
 #End Region
 
@@ -144,13 +174,13 @@ Namespace BodyEditorTests
                 ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Arm", "LocalPosition.Z", "0"})
 
                 'Reposition the joint relative to the parent part
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "LocalPosition.X", "-0.125"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "LocalPosition.Y", "0"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "LocalPosition.Z", "0"})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "LocalPosition.X", m_strInitialJointXPos})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "LocalPosition.Y", m_strInitialJointYPos})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "LocalPosition.Z", m_strInitialJointZPos})
 
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "Rotation.X", "90"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "Rotation.Y", "0"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "Rotation.Z", "90"})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "Rotation.X", m_strInitialJointXRot})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "Rotation.Y", m_strInitialJointYRot})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "Rotation.Z", m_strInitialJointZRot})
 
             End Sub
 
@@ -183,57 +213,57 @@ Namespace BodyEditorTests
                 RunSimulationWaitToEnd()
 
                 'Compare chart data to verify simulation results.
-                CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallUp45Deg_")
+                CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallUp" & m_strFallUpper1 & "Deg_")
 
                 'Now increase upper limit
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "UpperLimit.LimitPos", "90"})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "UpperLimit.LimitPos", m_strFallUpper2})
 
                 'simulate the arm falling down under gravity.
                 RunSimulationWaitToEnd()
 
                 'Compare chart data to verify simulation results.
-                CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallUp90Deg_")
+                CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallUp" & m_strFallUpper2 & "Deg_")
 
                 'Now decrease upper limit
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "UpperLimit.LimitPos", "25"})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "UpperLimit.LimitPos", m_strFallUpper3})
 
                 'simulate the arm falling down under gravity.
                 RunSimulationWaitToEnd()
 
                 'Compare chart data to verify simulation results.
-                CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallUp25Deg_")
+                CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallUp" & m_strFallUpper3 & "Deg_")
 
                 'reset upper limit, rotate body to test lower limit
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "UpperLimit.LimitPos", "45"})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "UpperLimit.LimitPos", m_strFallUpper1})
                 ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root", "Rotation.X", "180"})
 
                 'simulate the arm falling down under gravity.
                 RunSimulationWaitToEnd()
 
                 'Compare chart data to verify simulation results.
-                CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallLow45Deg_")
+                CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallLow" & m_strFallLower1 & "Deg_")
 
                 'Now increase upper limit
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "LowerLimit.LimitPos", "-90"})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "LowerLimit.LimitPos", m_strFallLower2})
 
                 'simulate the arm falling down under gravity.
                 RunSimulationWaitToEnd()
 
                 'Compare chart data to verify simulation results.
-                CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallLow90Deg_")
+                CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallLow" & m_strFallLower2 & "Deg_")
 
                 'Now decrease upper limit
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "LowerLimit.LimitPos", "-25"})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "LowerLimit.LimitPos", m_strFallLower3})
 
                 'simulate the arm falling down under gravity.
                 RunSimulationWaitToEnd()
 
                 'Compare chart data to verify simulation results.
-                CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallLow25Deg_")
+                CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallLow" & m_strFallLower3 & "Deg_")
 
                 'Reset the limit, rotate the part so it should not fall.
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "LowerLimit.LimitPos", "-45"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root", "Rotation.X", "90"})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "LowerLimit.LimitPos", m_strFallLower1})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root", "Rotation.X", m_strInitialJointXRot})
 
                 'simulate the arm falling down under gravity.
                 RunSimulationWaitToEnd()
@@ -270,7 +300,7 @@ Namespace BodyEditorTests
 
                 'Reset armature
                 ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "EnableLimits", "True"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "Rotation.X", "90"})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "Rotation.X", m_strInitialJointXRot})
                 ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root", "Rotation.X", "0"})
 
                 'Reposition the blocker to be in the way
@@ -299,8 +329,8 @@ Namespace BodyEditorTests
 
                 'No prefix on the exported chart.
                 LoadDataChart(m_strRootFolder & m_strTestDataPath, "DataTool_1.txt", "MouseMove_")
-                CompareColummData(4, 150, 180, enumDataComparisonType.Max, 5.918866, 0, 0.2)
-                CompareColummData(5, 150, 180, enumDataComparisonType.Max, 14.38887, 0, 0.3)
+                CompareColummData(4, 150, 180, enumDataComparisonType.Max, m_dblMaxMovePos, 0, m_dblMaxMovePosError)
+                CompareColummData(5, 150, 180, enumDataComparisonType.Max, m_dblMaxMoveVel, 0, m_dblMaxMoveVelError)
 
                 'Reset blocker position
                 ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2\Blocker", "LocalPosition.X", "0"})
@@ -353,7 +383,7 @@ Namespace BodyEditorTests
                 CompareSimulation(m_strRootFolder & m_strTestDataPath, "MotorDownVelEqu45Deg_")
 
                 'Reset the joint
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "Rotation.Z", "90"})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "Rotation.Z", m_strInitialJointZRot})
 
                 DeletePart("Stimuli\JointVelocity")
             End Sub
@@ -372,7 +402,7 @@ Namespace BodyEditorTests
                 CompareSimulation(m_strRootFolder & m_strTestDataPath, "MotorUpForce15_")
 
                 'Rotate joint
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "Rotation.X", "0"})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "Rotation.X", m_strForceXJointRotation})
 
                 SetForceStimulus("ArmForce", False, True, 1, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0)
 
@@ -380,22 +410,23 @@ Namespace BodyEditorTests
                 CompareSimulation(m_strRootFolder & m_strTestDataPath, "MotorLeftForce1_")
 
                 'Reset the joint
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "Rotation.X", "90"})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "Rotation.X", m_strInitialJointXRot})
 
                 ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1"})
-                RotatePartAxis("Structure_1", "Root\Joint_1", "X", m_ptRotateJoint1Start, m_ptRotatejoint1End, -360, -90, False)
+                RotatePartAxis("Structure_1", "Root\Joint_1", "X", m_ptRotateJoint1Start, m_ptRotatejoint1End, m_dblMouseRotateJointMin, m_sblMouseRotateJointMax, False)
+                SetForceStimulus("ArmForce", False, True, 0, 15, 0, 0, 0, 0, 0, 5, 0, 0, 0)
 
                 RunSimulationWaitToEnd()
                 LoadDataChart(m_strRootFolder & m_strTestDataPath, "DataTool_1.txt", "MouseRotate_")
-                CompareColummData(3, 3070, 3080, enumDataComparisonType.Max, 0.08810297, 0, 0.01)
+                CompareColummData(3, 3070, 3080, enumDataComparisonType.Max, m_dblMaxRotPos, 0, m_dblMaxRotPosError)
 
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "Rotation.X", "90"})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "Rotation.X", m_strInitialJointXRot})
 
                 DeletePart("Stimuli\ArmForce")
             End Sub
 
-#End Region
 
+#End Region
 
         End Class
 

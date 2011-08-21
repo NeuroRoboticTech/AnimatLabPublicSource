@@ -73,6 +73,12 @@ Public MustInherit Class AnimatUITest
     Dim m_aryChartColumns() As String
     Dim m_aryChartData(,) As Double
 
+    Protected m_strJointChartMovementName As String = "Rotation"
+    Protected m_strJointChartMovementType As String = "JointRotationDeg"
+
+    Protected m_strJointChartVelocityName As String = "JointVelocity"
+    Protected m_strJointChartVelocityType As String = "JointActualVelocity"
+
 #End Region
 
 #Region "Properties"
@@ -1172,20 +1178,19 @@ Public MustInherit Class AnimatUITest
         ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
 
         AddItemToChart("Structure_1\Root\Joint_1")
-        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 2\Joint_1", "Name", "Rotation"})
-        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 2\Rotation", "DataTypeID", "JointRotationDeg"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 2\Joint_1", "Name", m_strJointChartMovementName})
+        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 2\" & m_strJointChartMovementName, "DataTypeID", m_strJointChartMovementType})
 
         'Add a new axis to chart the joint velocity.
         ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
 
         AddItemToChart("Structure_1\Root\Joint_1")
-        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 3\Joint_1", "Name", "JointVelocity"})
-        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 3\JointVelocity", "DataTypeID", "JointActualVelocity"})
+        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 3\Joint_1", "Name", m_strJointChartVelocityName})
+        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 3\" & m_strJointChartVelocityName, "DataTypeID", m_strJointChartVelocityType})
 
         'Select the simulation window tab so it is visible now.
         ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Simulation\Environment\Structures\Structure_1"}, 1000)
     End Sub
-
 
     Protected Overridable Sub RepositionChildPart()
 
