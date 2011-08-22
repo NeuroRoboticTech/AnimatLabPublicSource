@@ -365,16 +365,21 @@ Public MustInherit Class AnimatUITest
             Throw New System.Exception("The chart data has not been loaded.")
         End If
 
-        If iRowStart <= 0 Then
-            Throw New System.Exception("Invalid row start index. Row start must be greater than zero.")
-        End If
+        If iRowStart <> -1 AndAlso iRowEnd <> -1 Then
+            If iRowStart <= 0 Then
+                Throw New System.Exception("Invalid row start index. Row start must be greater than zero.")
+            End If
 
-        If iRowEnd <= 0 OrElse iRowEnd <= iRowStart Then
-            Throw New System.Exception("Invalid row end index. Row end must be greater than the row start index.")
-        End If
+            If iRowEnd <= 0 OrElse iRowEnd <= iRowStart Then
+                Throw New System.Exception("Invalid row end index. Row end must be greater than the row start index.")
+            End If
 
-        If iRowEnd >= m_aryChartData.Length Then
-            Throw New System.Exception("The row end index cannot be larger than the size of the chart data.")
+            If iRowEnd >= m_aryChartData.GetLength(1) Then
+                Throw New System.Exception("The row end index cannot be larger than the size of the chart data.")
+            End If
+        Else
+            iRowStart = 0
+            iRowEnd = m_aryChartData.GetLength(1) - 1
         End If
 
         Dim dblMin As Double = 999999
@@ -1174,19 +1179,23 @@ Public MustInherit Class AnimatUITest
             ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\ArmAttach_Z", "DataTypeID", "WorldPositionZ"})
         End If
 
-        'Add a new axis to chart the joint rotation.
-        ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+        If m_strJointChartMovementName.Length > 0 Then
+            'Add a new axis to chart the joint rotation.
+            ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
 
-        AddItemToChart("Structure_1\Root\Joint_1")
-        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 2\Joint_1", "Name", m_strJointChartMovementName})
-        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 2\" & m_strJointChartMovementName, "DataTypeID", m_strJointChartMovementType})
+            AddItemToChart("Structure_1\Root\Joint_1")
+            ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 2\Joint_1", "Name", m_strJointChartMovementName})
+            ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 2\" & m_strJointChartMovementName, "DataTypeID", m_strJointChartMovementType})
+        End If
 
-        'Add a new axis to chart the joint velocity.
-        ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+        If m_strJointChartVelocityName.Length > 0 Then
+            'Add a new axis to chart the joint velocity.
+            ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
 
-        AddItemToChart("Structure_1\Root\Joint_1")
-        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 3\Joint_1", "Name", m_strJointChartVelocityName})
-        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 3\" & m_strJointChartVelocityName, "DataTypeID", m_strJointChartVelocityType})
+            AddItemToChart("Structure_1\Root\Joint_1")
+            ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 3\Joint_1", "Name", m_strJointChartVelocityName})
+            ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 3\" & m_strJointChartVelocityName, "DataTypeID", m_strJointChartVelocityType})
+        End If
 
         'Select the simulation window tab so it is visible now.
         ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Simulation\Environment\Structures\Structure_1"}, 1000)

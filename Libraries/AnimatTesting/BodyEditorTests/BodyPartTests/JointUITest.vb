@@ -58,6 +58,17 @@ Namespace BodyEditorTests
             Protected m_dblMinTranArmLocalZ As Double = 0
             Protected m_dblMaxTranArmLocalZ As Double = 2
 
+            Protected m_strMoveJointWorldYAxis As String = "Y"
+            Protected m_strMoveJointLocalYAxis As String = "Y"
+            Protected m_ptTransJointYAxisStart As New Point(790, 634)
+            Protected m_ptTransJointYAxisEnd As New Point(741, 669)
+            Protected m_dblMinTranJointWorldY As Double = 0
+            Protected m_dblMaxTranJointWorldY As Double = 2
+            Protected m_dblMinTranJointStructY As Double = 0
+            Protected m_dblMaxTranJointStructY As Double = 0
+            Protected m_dblMinTranJointLocalY As Double = 0
+            Protected m_dblMaxTranJointLocalY As Double = 2
+
             Protected m_strInitialJointXPos As String = "-0.125"
             Protected m_strInitialJointYPos As String = "0"
             Protected m_strInitialJointZPos As String = "0"
@@ -65,6 +76,9 @@ Namespace BodyEditorTests
             Protected m_strInitialJointXRot As String = "90"
             Protected m_strInitialJointYRot As String = "0"
             Protected m_strInitialJointZRot As String = "90"
+
+            Protected m_ptMoveJoint1Start As New Point(687, 428)
+            Protected m_ptMovejoint1End As New Point(652, 608)
 
             Protected m_ptRotateJoint1Start As New Point(687, 428)
             Protected m_ptRotatejoint1End As New Point(652, 608)
@@ -90,6 +104,16 @@ Namespace BodyEditorTests
 
             Protected m_dblMouseRotateJointMin As Double = -360
             Protected m_sblMouseRotateJointMax As Double = -90
+
+#End Region
+
+#Region "Properties"
+
+            Public Overridable ReadOnly Property IsMotorizedJoint() As Boolean
+                Get
+                    Return True
+                End Get
+            End Property
 
 #End Region
 
@@ -140,6 +164,18 @@ Namespace BodyEditorTests
 
                 m_ptRotatejoint1End.X = CInt(m_ptRotatejoint1End.X * m_dblResScaleWidth)
                 m_ptRotatejoint1End.Y = CInt(m_ptRotatejoint1End.Y * m_dblResScaleHeight)
+
+                m_ptMoveJoint1Start.X = CInt(m_ptMoveJoint1Start.X * m_dblResScaleWidth)
+                m_ptMoveJoint1Start.Y = CInt(m_ptMoveJoint1Start.Y * m_dblResScaleHeight)
+
+                m_ptMovejoint1End.X = CInt(m_ptMovejoint1End.X * m_dblResScaleWidth)
+                m_ptMovejoint1End.Y = CInt(m_ptMovejoint1End.Y * m_dblResScaleHeight)
+
+                m_ptMoveJoint1Start.X = CInt(m_ptMoveJoint1Start.X * m_dblResScaleWidth)
+                m_ptMoveJoint1Start.Y = CInt(m_ptMoveJoint1Start.Y * m_dblResScaleHeight)
+
+                m_ptTransJointYAxisStart.X = CInt(m_ptTransJointYAxisStart.X * m_dblResScaleWidth)
+                m_ptTransJointYAxisEnd.Y = CInt(m_ptTransJointYAxisEnd.Y * m_dblResScaleHeight)
 
             End Sub
 
@@ -203,7 +239,7 @@ Namespace BodyEditorTests
             End Sub
 
             Protected Overridable Sub SimulateJointTests()
-                TestConstraintLimitsByFalling()
+                'TestConstraintLimitsByFalling()
                 TestConstraintLimitsWithMotor()
                 TestConstraintLimitsWithForce()
             End Sub
@@ -347,6 +383,9 @@ Namespace BodyEditorTests
             End Sub
 
             Protected Overridable Sub TestConstraintLimitsWithMotor()
+                'If this motor cannot be motorized then skip this test.
+                If Not Me.IsMotorizedJoint Then Return
+
                 'Add motor velocity to joint. 
                 AddStimulus("Motor Velocity", "Structure_1", "Root\Joint_1", "JointVelocity", "Stimulus_2")
                 SetMotorVelocityStimulus("JointVelocity", False, True, 0, 5, True, True, 1, "")

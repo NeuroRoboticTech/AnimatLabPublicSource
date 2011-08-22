@@ -131,6 +131,12 @@ void VsJoint::SetAlpha()
 		SetMaterialAlpha(m_osgDefaultBallMat.get(), m_osgDefaultBallSS.get(), m_lpThisMI->Alpha());
 }
 
+void VsJoint::Physics_PositionChanged()
+{
+	VsBody::Physics_PositionChanged();
+	Physics_ResetGraphicsAndPhysics();
+}
+
 void VsJoint::Physics_RotationChanged()
 {
 	Physics_ResetGraphicsAndPhysics();
