@@ -239,7 +239,7 @@ Namespace BodyEditorTests
             End Sub
 
             Protected Overridable Sub SimulateJointTests()
-                'TestConstraintLimitsByFalling()
+                TestConstraintLimitsByFalling()
                 TestConstraintLimitsWithMotor()
                 TestConstraintLimitsWithForce()
             End Sub
