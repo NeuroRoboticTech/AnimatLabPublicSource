@@ -471,6 +471,9 @@ Namespace Forms.Behavior
             Dim afNode As New Lassalle.Flow.Node
             UpdateAddFlowNode(afNode, bdNode, True)
 
+            bdNode.Organism = Me.Subsystem.Organism
+            bdNode.ParentDiagram = Me
+
             bdNode.BeforeAddNode()
             m_bnSubSystem.BehavioralNodes.Add(bdNode.ID, bdNode)
             m_ctrlAddFlow.Nodes.Add(afNode)
@@ -545,6 +548,9 @@ Namespace Forms.Behavior
 
             Dim afLink As New Lassalle.Flow.Link
             UpdateAddFlowLink(afLink, blLink, True)
+
+            blLink.Organism = Me.Subsystem.Organism
+            blLink.ParentDiagram = Me
 
             blLink.BeginBatchUpdate()
             blLink.Origin = bnOrigin
@@ -3263,8 +3269,8 @@ Namespace Forms.Behavior
 
                         bdData.Location = New PointF(ptAddFlow.X, ptAddFlow.Y)
 
-                        'm_beEditor.MaxNodeCount = m_beEditor.MaxNodeCount + 1
-                        bdData.Text = "A"
+                        Me.Subsystem.Organism.MaxNodeCount = Me.Subsystem.Organism.MaxNodeCount + 1
+                        bdData.Text = Me.Subsystem.Organism.MaxNodeCount.ToString
                         Me.AddNode(bdData)
 
                         Me.IsDirty = True
@@ -3306,9 +3312,8 @@ Namespace Forms.Behavior
                         Dim bnAdapter As AnimatGUI.DataObjects.Behavior.Node = bnDestination.CreateNewAdapter(bnOrigin, Me.FormHelper)
 
                         bnAdapter.Location = FindHalfwayLocation(bnOrigin, bnDestination, bnAdapter.Size)
-                        'TODO
-                        'm_beEditor.MaxNodeCount = m_beEditor.MaxNodeCount + 1
-                        'bnAdapter.Text = m_beEditor.MaxNodeCount.ToString
+                        Me.Subsystem.Organism.MaxNodeCount = Me.Subsystem.Organism.MaxNodeCount + 1
+                        bnAdapter.Text = Me.Subsystem.Organism.MaxNodeCount.ToString
 
                         Me.AddNode(bnAdapter)
 
@@ -3333,8 +3338,7 @@ Namespace Forms.Behavior
                 m_ctrlAddFlow.EndAction()
 
                 Me.IsDirty = True
-                'TODO
-                'Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me.Editor, Me))
+                Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me))
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

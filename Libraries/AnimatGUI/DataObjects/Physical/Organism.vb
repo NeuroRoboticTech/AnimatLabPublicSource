@@ -22,6 +22,9 @@ Namespace DataObjects.Physical
         Protected m_frmBehaviorEditor As Forms.Behavior.Editor
         Protected m_tnBehavioralSystem As Crownwood.DotNetMagic.Controls.Node
 
+        ''' Keeps track of the maximum node count for creating new nodes.
+        Protected m_iMaxNodeCount As Integer
+
         ''' This is a list of all neural modules used by this organism.
         Protected m_aryNeuralModules As New Collections.SortedNeuralModules(Me)
 
@@ -76,6 +79,15 @@ Namespace DataObjects.Physical
             Get
                 Return "Organism"
             End Get
+        End Property
+
+        Public Overridable Property MaxNodeCount() As Integer
+            Get
+                Return m_iMaxNodeCount
+            End Get
+            Set(ByVal Value As Integer)
+                m_iMaxNodeCount = Value
+            End Set
         End Property
 
 #End Region
