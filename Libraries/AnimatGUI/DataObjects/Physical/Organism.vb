@@ -378,6 +378,7 @@ Namespace DataObjects.Physical
             If Not nmPhysicsModule Is Nothing Then
                 nmPhysicsModule.SaveData(oXml)
             End If
+            oXml.OutOfElem() 'Outof Adapters
 
             If Not m_bnRootSubSystem Is Nothing Then
                 m_bnRootSubSystem.SaveData(oXml)
@@ -419,6 +420,7 @@ Namespace DataObjects.Physical
                 If Not nmPhysicsModule Is Nothing Then
                     nmPhysicsModule.SaveSimulationXml(oXml)
                 End If
+                oXml.OutOfElem() 'Outof Adapters
 
                 If Not m_bnRootSubSystem Is Nothing Then
                     m_bnRootSubSystem.SaveSimulationXml(oXml)

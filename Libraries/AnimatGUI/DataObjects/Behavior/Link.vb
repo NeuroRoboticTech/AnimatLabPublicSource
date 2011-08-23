@@ -237,6 +237,10 @@ Namespace DataObjects.Behavior
                 oXml.OutOfElem()
             End Sub
 
+            Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+                MyBase.SaveSimulationXml(oXml, nmParentControl, Util.GetName(strName, "Link"))
+            End Sub
+
 #End Region
 
         End Class

@@ -282,50 +282,6 @@ Namespace DataObjects.Behavior.Neurons
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
-
-            oXml.AddChildElement("Neuron")
-            oXml.IntoElem()
-
-            oXml.AddChildElement("ID", Me.ID)
-            oXml.AddChildElement("Name", Me.Text)
-            oXml.AddChildElement("Type", Me.NeuronType)
-            oXml.AddChildElement("Enabled", Me.Enabled)
-            oXml.AddChildElement("Cn", m_snCm.ActualValue)
-            oXml.AddChildElement("Gn", m_snGm.ActualValue)
-
-            Dim dblVth As Double = (m_snVth.ActualValue - m_snVrest.ActualValue)
-            oXml.AddChildElement("Vth", dblVth)
-            oXml.AddChildElement("Vrest", m_snVrest.ActualValue)
-            oXml.AddChildElement("Fmin", m_snFmin.ActualValue)
-            oXml.AddChildElement("Gain", m_snGain.ActualValue)
-            oXml.AddChildElement("ExternalI", 0)
-            oXml.AddChildElement("VNoiseMax", m_snVNoiseMax.ActualValue)
-            oXml.AddChildElement("RelativeAccom", m_snRelativeAccom.ActualValue)
-            oXml.AddChildElement("AccomTimeConst", m_snAccomTimeConstant.ActualValue)
-
-            oXml.AddChildElement("GainType", m_bGainType)
-
-            'If Me.Text = "LU Leg Forward" Then
-            '    Dim ival As Int16 = 5
-            'End If
-
-            oXml.AddChildElement("Synapses")
-            oXml.IntoElem()
-            Dim blLink As DataObjects.Behavior.Synapses.Normal
-            For Each deEntry As DictionaryEntry In m_aryInLinks
-                'Only save normal synapse types. Other synapses will be saved withing the normal one.
-                If Util.IsTypeOf(deEntry.Value.GetType(), GetType(DataObjects.Behavior.Synapses.Normal), False) Then
-                    blLink = DirectCast(deEntry.Value, DataObjects.Behavior.Synapses.Normal)
-                    blLink.SaveSimulationXml(oXml, nmParentControl)
-                End If
-            Next
-            oXml.OutOfElem() 'Outof Synapses
-
-            oXml.OutOfElem() 'Outof Neuron
-
-        End Sub
-
         Public Overrides Sub InitializeSimulationReferences()
             MyBase.InitializeSimulationReferences()
 
@@ -513,6 +469,50 @@ Namespace DataObjects.Behavior.Neurons
             oXml.AddChildElement("GainType", m_bGainType)
 
             oXml.OutOfElem() ' Outof Node Element
+
+        End Sub
+
+        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+
+            oXml.AddChildElement("Neuron")
+            oXml.IntoElem()
+
+            oXml.AddChildElement("ID", Me.ID)
+            oXml.AddChildElement("Name", Me.Text)
+            oXml.AddChildElement("Type", Me.NeuronType)
+            oXml.AddChildElement("Enabled", Me.Enabled)
+            oXml.AddChildElement("Cn", m_snCm.ActualValue)
+            oXml.AddChildElement("Gn", m_snGm.ActualValue)
+
+            Dim dblVth As Double = (m_snVth.ActualValue - m_snVrest.ActualValue)
+            oXml.AddChildElement("Vth", dblVth)
+            oXml.AddChildElement("Vrest", m_snVrest.ActualValue)
+            oXml.AddChildElement("Fmin", m_snFmin.ActualValue)
+            oXml.AddChildElement("Gain", m_snGain.ActualValue)
+            oXml.AddChildElement("ExternalI", 0)
+            oXml.AddChildElement("VNoiseMax", m_snVNoiseMax.ActualValue)
+            oXml.AddChildElement("RelativeAccom", m_snRelativeAccom.ActualValue)
+            oXml.AddChildElement("AccomTimeConst", m_snAccomTimeConstant.ActualValue)
+
+            oXml.AddChildElement("GainType", m_bGainType)
+
+            'If Me.Text = "LU Leg Forward" Then
+            '    Dim ival As Int16 = 5
+            'End If
+
+            oXml.AddChildElement("Synapses")
+            oXml.IntoElem()
+            Dim blLink As DataObjects.Behavior.Synapses.Normal
+            For Each deEntry As DictionaryEntry In m_aryInLinks
+                'Only save normal synapse types. Other synapses will be saved withing the normal one.
+                If Util.IsTypeOf(deEntry.Value.GetType(), GetType(DataObjects.Behavior.Synapses.Normal), False) Then
+                    blLink = DirectCast(deEntry.Value, DataObjects.Behavior.Synapses.Normal)
+                    blLink.SaveSimulationXml(oXml, nmParentControl)
+                End If
+            Next
+            oXml.OutOfElem() 'Outof Synapses
+
+            oXml.OutOfElem() 'Outof Neuron
 
         End Sub
 

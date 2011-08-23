@@ -437,10 +437,29 @@ Namespace DataObjects.Behavior
 
         End Sub
 
-#End Region
+        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+
+            Try
+                oXml.AddChildElement(strName)
+                oXml.IntoElem()  'Into Node Element
+
+                oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
+                oXml.AddChildElement("ClassName", Me.ClassName)
+
+                oXml.AddChildElement("ID", Me.SelectedID)
+                oXml.AddChildElement("Name", Me.Name)
+
+                oXml.OutOfElem()  'Outof Node Element
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Sub
 
 #End Region
 
+#End Region
 
 #Region " Events "
 

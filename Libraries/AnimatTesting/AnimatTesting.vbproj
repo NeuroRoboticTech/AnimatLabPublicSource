@@ -105,6 +105,7 @@
     <Compile Include="AnimatUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\BodyPartUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\JointTests\BallSocketUITest.vb" />
+    <Compile Include="BodyEditorTests\BodyPartTests\JointTests\StaticUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\JointTests\UniversialUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\JointTests\PrismaticUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\JointUITest.vb" />

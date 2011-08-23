@@ -1319,6 +1319,14 @@ Namespace Framework
             oXml.OutOfElem() 'Outof Node element
         End Sub
 
+        Public Shared Function GetName(ByVal strPrimName As String, ByVal strAltName As String) As String
+            If strPrimName.Length > 0 Then
+                Return strPrimName
+            Else
+                Return strAltName
+            End If
+        End Function
+
         '    Public Function IntersectLineRectangle(ByVal a1 As Point, ByVal a2 As Point, ByVal topRight As Point, ByVal bottomLeft As Point) As Boolean
 
         '        if(IntersectLineLine(min, topRight, a1, a2);
