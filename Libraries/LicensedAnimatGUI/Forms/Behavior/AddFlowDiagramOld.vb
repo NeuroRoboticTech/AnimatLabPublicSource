@@ -508,7 +508,7 @@ Namespace Forms.Behavior
         Public Overrides Sub AddNode(ByRef bdNode As AnimatGUI.DataObjects.Behavior.Node)
             Dim afNode As New Lassalle.Flow.Node
             UpdateAddFlowNode(afNode, bdNode, True)
-            bdNode.ParentDiagram = Me
+            'bdNode.ParentDiagram = Me
             'bdNode.ParentEditor = m_beEditor
             bdNode.Organism = Me.Editor.Organism
 
@@ -590,7 +590,7 @@ Namespace Forms.Behavior
             UpdateAddFlowLink(afLink, blLink, True)
 
             blLink.BeginBatchUpdate()
-            blLink.ParentDiagram = Me
+            'blLink.ParentDiagram = Me
             'blLink.ParentEditor = m_beEditor
             blLink.Origin = bnOrigin
             blLink.Destination = bnDestination
@@ -1770,12 +1770,12 @@ Namespace Forms.Behavior
                     bnNode = FindNodeInOrganism(strID)
                     If bnNode Is Nothing Then
                         bnNode = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me.Editor.Organism), AnimatGUI.DataObjects.Behavior.Node)
-                        bnNode.ParentDiagram = Me
+                        'bnNode.ParentDiagram = Me
                         'bnNode.ParentEditor = m_beEditor
                         bnNode.LoadData(oXml)
                         AddToOrganism(bnNode)
                     Else
-                        bnNode.ParentDiagram = Me
+                        'bnNode.ParentDiagram = Me
                         'bnNode.ParentEditor = m_beEditor
                         m_aryNodes.Add(bnNode.ID, bnNode, False)
                         bnNode.AddToHierarchyBar()
@@ -1812,14 +1812,14 @@ Namespace Forms.Behavior
                     blLink = FindLinkInOrganism(strID)
                     If blLink Is Nothing Then
                         blLink = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me.Editor.Organism), AnimatGUI.DataObjects.Behavior.Link)
-                        blLink.ParentDiagram = Me
+                        'blLink.ParentDiagram = Me
                         'blLink.ParentEditor = m_beEditor
                         blLink.LoadData(oXml)
                         m_aryLinks.Add(blLink.ID, blLink, False)
                         blLink.AddToHierarchyBar()
                         AddToOrganism(blLink)
                     Else
-                        blLink.ParentDiagram = Me
+                        'blLink.ParentDiagram = Me
                         'blLink.ParentEditor = m_beEditor
                         m_aryLinks.Add(blLink.ID, blLink, False)
                         blLink.AddToHierarchyBar()
@@ -2237,14 +2237,15 @@ Namespace Forms.Behavior
                 afItem.Selected = False
             Next
 
-            'Now if any of the selected items are subsystems then we need to make those subsystems generate temp ids
-            Dim bsSystem As AnimatGUI.DataObjects.Behavior.Nodes.Subsystem
-            For Each bnNode As AnimatGUI.DataObjects.Behavior.Node In aryNodes
-                If TypeOf bnNode Is AnimatGUI.DataObjects.Behavior.Nodes.Subsystem Then
-                    bsSystem = DirectCast(bnNode, AnimatGUI.DataObjects.Behavior.Nodes.Subsystem)
-                    bsSystem.Subsystem.GenerateTempSelectedIDs(bCopy)
-                End If
-            Next
+            'TODO
+            ''Now if any of the selected items are subsystems then we need to make those subsystems generate temp ids
+            'Dim bsSystem As AnimatGUI.DataObjects.Behavior.Nodes.Subsystem
+            'For Each bnNode As AnimatGUI.DataObjects.Behavior.Node In aryNodes
+            '    If TypeOf bnNode Is AnimatGUI.DataObjects.Behavior.Nodes.Subsystem Then
+            '        bsSystem = DirectCast(bnNode, AnimatGUI.DataObjects.Behavior.Nodes.Subsystem)
+            '        bsSystem.Subsystem.GenerateTempSelectedIDs(bCopy)
+            '    End If
+            'Next
 
             'Now we save the nodes and links.
             oXml.AddChildElement("Nodes")
@@ -2266,8 +2267,9 @@ Namespace Forms.Behavior
             oXml.IntoElem()
             For Each bnNode As AnimatGUI.DataObjects.Behavior.Node In aryNodes
                 If TypeOf bnNode Is AnimatGUI.DataObjects.Behavior.Nodes.Subsystem Then
-                    bsSystem = DirectCast(bnNode, AnimatGUI.DataObjects.Behavior.Nodes.Subsystem)
-                    bsSystem.Subsystem.SaveData(oXml)
+                    'TODO
+                    'bsSystem = DirectCast(bnNode, AnimatGUI.DataObjects.Behavior.Nodes.Subsystem)
+                    'bsSystem.Subsystem.SaveData(oXml)
                 End If
             Next
             oXml.OutOfElem() 'Outof Links Element
@@ -2346,7 +2348,7 @@ Namespace Forms.Behavior
                 oXml.OutOfElem() 'Outof Node element
 
                 bnNode = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me.FormHelper), AnimatGUI.DataObjects.Behavior.Node)
-                bnNode.ParentDiagram = Me
+                'bnNode.ParentDiagram = Me
                 'bnNode.ParentEditor = m_beEditor
                 bnNode.LoadData(oXml)
 
@@ -2371,7 +2373,7 @@ Namespace Forms.Behavior
                 oXml.OutOfElem() 'Outof Node element
 
                 blLink = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me.FormHelper), AnimatGUI.DataObjects.Behavior.Link)
-                blLink.ParentDiagram = Me
+                'blLink.ParentDiagram = Me
                 'blLink.ParentEditor = m_beEditor
                 blLink.LoadData(oXml)
 
@@ -3211,13 +3213,13 @@ Namespace Forms.Behavior
                     frmConn.Node = doNode
                     frmConn.ShowDialog()
 
-                    If Not frmConn.SelectedNode Is Nothing Then
-                        Me.Editor.SelectedDiagram(frmConn.SelectedNode.ParentDiagram)
-                        frmConn.SelectedNode.ParentDiagram.SelectDataItem(frmConn.SelectedNode)
-                    ElseIf Not frmConn.SelectedLink Is Nothing Then
-                        Me.Editor.SelectedDiagram(frmConn.SelectedLink.ParentDiagram)
-                        frmConn.SelectedLink.ParentDiagram.SelectDataItem(frmConn.SelectedLink)
-                    End If
+                    'If Not frmConn.SelectedNode Is Nothing Then
+                    '    Me.Editor.SelectedDiagram(frmConn.SelectedNode.ParentDiagram)
+                    '    frmConn.SelectedNode.ParentDiagram.SelectDataItem(frmConn.SelectedNode)
+                    'ElseIf Not frmConn.SelectedLink Is Nothing Then
+                    '    Me.Editor.SelectedDiagram(frmConn.SelectedLink.ParentDiagram)
+                    '    frmConn.SelectedLink.ParentDiagram.SelectDataItem(frmConn.SelectedLink)
+                    'End If
 
                 End If
 
@@ -3320,7 +3322,7 @@ Namespace Forms.Behavior
                         Me.AddNode(bdData)
 
                         Me.IsDirty = True
-                        Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me.Editor, Me))
+                        'Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me.Editor, Me))
                     End If
 
                     'Debug.WriteLine("Finishing DragDrop")
@@ -3384,7 +3386,7 @@ Namespace Forms.Behavior
                 m_ctrlAddFlow.EndAction()
 
                 Me.IsDirty = True
-                Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me.Editor, Me))
+                'Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me.Editor, Me))
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -3480,17 +3482,17 @@ Namespace Forms.Behavior
 
         Private Sub m_ctrlAddFlow_AfterMove(ByVal sender As Object, ByVal e As System.EventArgs) Handles m_ctrlAddFlow.AfterMove
             Me.IsDirty = True
-            Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me.Editor, Me))
+            'Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me.Editor, Me))
         End Sub
 
         Private Sub m_ctrlAddFlow_AfterResize(ByVal sender As Object, ByVal e As System.EventArgs) Handles m_ctrlAddFlow.AfterResize
             Me.IsDirty = True
-            Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me.Editor, Me))
+            'Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me.Editor, Me))
         End Sub
 
         Private Sub m_ctrlAddFlow_AfterStretch(ByVal sender As Object, ByVal e As System.EventArgs) Handles m_ctrlAddFlow.AfterStretch
             Me.IsDirty = True
-            Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me.Editor, Me))
+            'Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me.Editor, Me))
         End Sub
 
 #End Region

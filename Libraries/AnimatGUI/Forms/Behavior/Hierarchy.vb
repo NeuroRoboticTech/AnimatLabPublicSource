@@ -254,9 +254,9 @@ Namespace Forms.Behavior
 
                         If Not m_beEditor.TabFiller.SelectedTab Is Nothing AndAlso m_beEditor.TabFiller.SelectedTab.Control Is Nothing _
                            AndAlso Not m_beEditor.TabFiller.SelectedTab.Control Is doData.ParentDiagram Then
-                            m_beEditor.SelectedDiagram(doData.ParentDiagram)
+                            'm_beEditor.SelectedDiagram(doData.ParentDiagram)
                         End If
-                        doData.ParentDiagram.SelectDataItem(doData, Not Me.IsCtrlKeyPressed)
+                        'doData.ParentDiagram.SelectDataItem(doData, Not Me.IsCtrlKeyPressed)
                     End If
                 End If
 

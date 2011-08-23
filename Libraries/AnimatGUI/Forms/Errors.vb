@@ -73,22 +73,12 @@ Namespace Forms
 
 #Region " Attributes "
 
-        Protected m_beEditor As AnimatGUI.Forms.Behavior.Editor
         Protected m_mgrToolStripImages As AnimatGUI.Framework.ImageManager
         Protected m_aryErrors As Collections.DiagramErrors
 
 #End Region
 
 #Region " Properties "
-
-        Public Overridable Property Editor() As Forms.Behavior.Editor
-            Get
-                Return m_beEditor
-            End Get
-            Set(ByVal Value As Forms.Behavior.Editor)
-                m_beEditor = Value
-            End Set
-        End Property
 
         Public Overridable ReadOnly Property Errors() As Collections.DiagramErrors
             Get
@@ -111,7 +101,6 @@ Namespace Forms
 
                 MyBase.Initialize(frmParent)
 
-                'm_beEditor = DirectCast(frmMdiParent, AnimatGUI.Forms.Behavior.Editor)
                 m_aryErrors = New Collections.DiagramErrors(Me.FormHelper, Me)
 
                 lvErrors.HideSelection = False
@@ -181,7 +170,7 @@ Namespace Forms
 
                     If Not lvItem.Tag Is Nothing Then
                         Dim deError As DataObjects.Behavior.DiagramError = DirectCast(lvItem.Tag, DataObjects.Behavior.DiagramError)
-                        deError.DoubleClicked(m_beEditor)
+                        deError.DoubleClicked()
                     End If
                 End If
 

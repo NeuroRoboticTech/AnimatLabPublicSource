@@ -16,7 +16,7 @@ Namespace DataObjects.Behavior.Nodes
 
 #Region " Attributes "
 
-        Protected m_bdSubsystem As Forms.Behavior.DiagramOld
+        Protected m_bdSubsystem As Forms.Behavior.Diagram
 
         '''This is a list of all nodes within this subsystem. It is sorted by ID
         Protected m_aryBehavioralNodes As New Collections.AnimatSortedList(Me)
@@ -37,11 +37,11 @@ Namespace DataObjects.Behavior.Nodes
             End Get
         End Property
 
-        Public Overridable Property Subsystem() As Forms.Behavior.DiagramOld
+        Public Overridable Property Subsystem() As Forms.Behavior.Diagram
             Get
                 Return m_bdSubsystem
             End Get
-            Set(ByVal Value As Forms.Behavior.DiagramOld)
+            Set(ByVal Value As Forms.Behavior.Diagram)
                 m_bdSubsystem = Value
             End Set
         End Property
@@ -141,11 +141,12 @@ Namespace DataObjects.Behavior.Nodes
         End Function
 
         Public Overrides Sub AfterAddNode()
-            m_bdSubsystem = m_ParentDiagram.AddDiagram("LicensedAnimatGUI.dll", "LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram")
-            m_bdSubsystem.Subsystem = Me
-            Me.Text = m_bdSubsystem.TabPageName
-
             'TODO
+            'm_bdSubsystem = m_ParentDiagram.AddDiagram("LicensedAnimatGUI.dll", "LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram")
+            'm_bdSubsystem.Subsystem = Me
+            'Me.Text = m_bdSubsystem.TabPageName
+
+
             'm_ParentEditor.SelectedDiagram(m_ParentDiagram)
         End Sub
 
@@ -156,30 +157,30 @@ Namespace DataObjects.Behavior.Nodes
         Public Overrides Sub AfterRemoveNode()
 
             If Not m_bdSubsystem Is Nothing Then
-                m_ParentDiagram.RemoveDiagram(m_bdSubsystem)
-                m_bdSubsystem.Delete()
+                Util.Application.RemoveChildForm(m_bdSubsystem)
             End If
 
             MyBase.AfterRemoveNode()
         End Sub
 
         Public Overrides Sub AfterUndoRemove()
+            ''TODO
+            'If Not m_bdSubsystem Is Nothing Then
+            '    m_ParentDiagram.RestoreDiagram(m_bdSubsystem)
 
-            If Not m_bdSubsystem Is Nothing Then
-                m_ParentDiagram.RestoreDiagram(m_bdSubsystem)
-                'TODO
-                'm_ParentEditor.SelectedDiagram(m_ParentDiagram)
-                m_ParentDiagram.SelectDataItem(Me)
-            End If
+            '    'm_ParentEditor.SelectedDiagram(m_ParentDiagram)
+            '    m_ParentDiagram.SelectDataItem(Me)
+            'End If
 
             MyBase.AfterUndoRemove()
         End Sub
 
         Public Overrides Sub AfterRedoRemove()
 
-            If Not m_bdSubsystem Is Nothing Then
-                m_ParentDiagram.RemoveDiagram(m_bdSubsystem)
-            End If
+            'TODO
+            'If Not m_bdSubsystem Is Nothing Then
+            '    m_ParentDiagram.RemoveDiagram(m_bdSubsystem)
+            'End If
 
             MyBase.AfterRedoRemove()
         End Sub
@@ -193,16 +194,28 @@ Namespace DataObjects.Behavior.Nodes
         End Function
 
         Public Overrides Sub AfterEdit()
-            'TODO
-            'm_ParentEditor.ChangeDiagramName(m_bdSubsystem, Me.Text)
+            'm_bdSubsystem.TabPage.
         End Sub
 
         Public Overrides Sub DoubleClicked()
-            If Not m_bdSubsystem Is Nothing Then
-                'TODO
-                'm_ParentEditor.SelectedDiagram(m_bdSubsystem)
+            If m_bdSubsystem Is Nothing Then
+                m_bdSubsystem = CreateDiagram()
+                m_bdSubsystem.Subsystem = Me
+                Util.Application.AddChildForm(m_bdSubsystem)
+            ElseIf Not m_bdSubsystem.TabPage Is Nothing Then
+                m_bdSubsystem.TabPage.Selected = True
             End If
         End Sub
+
+        Public Overrides Sub WorkspaceTreeviewDoubleClick(ByVal tnSelectedNode As Crownwood.DotNetMagic.Controls.Node)
+            DoubleClicked()
+        End Sub
+
+        Protected Overridable Function CreateDiagram() As AnimatGUI.Forms.Behavior.Diagram
+            Dim afDiagram As AnimatGUI.Forms.Behavior.Diagram = DirectCast(Util.Application.CreateForm("LicensedAnimatGUI.dll", _
+                                                                      "LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram", Me.Name, True), AnimatGUI.Forms.Behavior.Diagram)
+            Return afDiagram
+        End Function
 
         Public Overrides Sub CreateDiagramDropDownTree(ByVal tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node)
         End Sub

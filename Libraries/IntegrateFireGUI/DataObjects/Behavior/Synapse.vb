@@ -77,7 +77,7 @@ Namespace DataObjects.Behavior
                 End If
 
                 If bReselect AndAlso Not m_ParentDiagram Is Nothing Then
-                    m_ParentDiagram.SelectDataItem(Me)
+                    Me.SelectItem(False)
                 End If
 
                 UpdateChart(True)

@@ -138,20 +138,16 @@ Namespace DataObjects.Physical
             Return False
         End Function
 
-        Public Overrides Function WorkspaceTreeviewDoubleClick(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node) As Boolean
+        Public Overrides Sub WorkspaceTreeviewDoubleClick(ByVal tnSelectedNode As Crownwood.DotNetMagic.Controls.Node)
 
             If tnSelectedNode Is m_tnBodyPlanNode OrElse tnSelectedNode Is m_tnBehavioralSystem Then
                 If tnSelectedNode Is m_tnBodyPlanNode Then
                     Util.Application.EditBodyPlan(Me)
-                    Return True
                 ElseIf tnSelectedNode Is m_tnBehavioralSystem Then
                     Util.Application.EditBehavioralSystem(Me)
-                    Return True
                 End If
             End If
-
-            Return False
-        End Function
+        End Sub
 
 #End Region
 

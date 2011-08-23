@@ -1108,8 +1108,8 @@ Namespace Forms
         Protected m_strBodyEditorDll As String = "AnimatGUI.dll"
         Protected m_strBodyEditorNamespace As String = "AnimatGUI"
 
-        Protected m_aryChildForms As New Collections.ExternalFileForms(Nothing)
-        Protected m_arySortedChildForms As New Collections.SortedExternalFileForms(Nothing)
+        Protected m_aryChildForms As New Collections.AnimatForms(Nothing)
+        Protected m_arySortedChildForms As New Collections.SortedAnimatForms(Nothing)
 
         Protected m_doSimulation As DataObjects.Simulation
         Protected m_doSimInterface As New AnimatGUI.Interfaces.SimulatorInterface
@@ -1244,13 +1244,13 @@ Namespace Forms
 
 #End Region
 
-        Public Overridable ReadOnly Property ChildForms() As Collections.ExternalFileForms
+        Public Overridable ReadOnly Property ChildForms() As Collections.AnimatForms
             Get
                 Return m_aryChildForms
             End Get
         End Property
 
-        Public Overridable ReadOnly Property SortedChildForms() As Collections.SortedExternalFileForms
+        Public Overridable ReadOnly Property SortedChildForms() As Collections.SortedAnimatForms
             Get
                 Return m_arySortedChildForms
             End Get
@@ -3576,7 +3576,7 @@ Namespace Forms
 
 #Region " Child Form Management "
 
-        Public Overridable Sub AddChildForm(ByVal frmChild As Forms.ExternalFileForm, Optional ByVal tabPage As Crownwood.DotNetMagic.Controls.TabPage = Nothing)
+        Public Overridable Sub AddChildForm(ByVal frmChild As Forms.AnimatForm, Optional ByVal tabPage As Crownwood.DotNetMagic.Controls.TabPage = Nothing)
 
             m_mgrTabPagesImages.AddImage(frmChild.TabImageName, frmChild.TabImage)
 
@@ -3596,7 +3596,7 @@ Namespace Forms
 
         End Sub
 
-        Public Overridable Sub RemoveChildForm(ByVal frmChild As Forms.ExternalFileForm)
+        Public Overridable Sub RemoveChildForm(ByVal frmChild As Forms.AnimatForm)
             If Not frmChild.TabPage Is Nothing Then
                 Dim leaf As TabGroupLeaf = Me.AnimatTabbedGroups.FirstLeaf()
 

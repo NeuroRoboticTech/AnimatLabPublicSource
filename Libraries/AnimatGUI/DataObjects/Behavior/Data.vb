@@ -27,8 +27,7 @@ Namespace DataObjects.Behavior
 #Region " Attributes "
 
         Protected m_strDescription As String = ""
-        'Protected m_ParentEditor As Forms.Behavior.Editor
-        Protected m_ParentDiagram As Forms.Behavior.DiagramOld
+        Protected m_ParentDiagram As Forms.Behavior.Diagram
         Protected m_doOrganism As DataObjects.Physical.Organism
         Protected m_bUpdateBatch As Boolean
         Protected m_bFound As Boolean
@@ -86,26 +85,12 @@ Namespace DataObjects.Behavior
             End Set
         End Property
 
-        '<Browsable(False)> _
-        'Public Overridable Property ParentEditor() As Forms.Behavior.Editor
-        '    Get
-        '        Return m_ParentEditor
-        '    End Get
-        '    Set(ByVal Value As Forms.Behavior.Editor)
-        '        m_ParentEditor = Value
-
-        '        If Not m_ParentEditor Is Nothing AndAlso Not m_ParentEditor.Organism Is Nothing Then
-        '            Me.Organism = m_ParentEditor.Organism
-        '        End If
-        '    End Set
-        'End Property
-
         <Browsable(False)> _
-        Public Overridable Property ParentDiagram() As Forms.Behavior.DiagramOld
+        Public Overridable Property ParentDiagram() As Forms.Behavior.Diagram
             Get
                 Return m_ParentDiagram
             End Get
-            Set(ByVal Value As Forms.Behavior.DiagramOld)
+            Set(ByVal Value As Forms.Behavior.Diagram)
                 m_ParentDiagram = Value
             End Set
         End Property
@@ -297,8 +282,7 @@ Namespace DataObjects.Behavior
             End If
 
             If Not m_bUpdateBatch AndAlso Not Me.ParentDiagram Is Nothing Then
-                'TODO
-                'Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me.ParentEditor, Me.ParentDiagram, Me))
+                Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me.ParentDiagram, Me))
             End If
         End Sub
 
@@ -404,12 +388,12 @@ Namespace DataObjects.Behavior
                 m_strTempSelectedID = m_strID
             End If
 
-            m_ParentDiagram.SetItemsTempID(Me, m_strTempSelectedID)
+            'm_ParentDiagram.SetItemsTempID(Me, m_strTempSelectedID)
         End Sub
 
         Public Overridable Sub ClearTempSelectedID()
             m_strTempSelectedID = ""
-            m_ParentDiagram.SetItemsTempID(Me, m_strID)
+            'm_ParentDiagram.SetItemsTempID(Me, m_strID)
         End Sub
 
         'Public Overrides Sub SaveDataColumnToXml(ByRef oXml As AnimatGUI.Interfaces.StdXml)

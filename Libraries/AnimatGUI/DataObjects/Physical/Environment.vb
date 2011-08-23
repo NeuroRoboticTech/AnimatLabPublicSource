@@ -694,28 +694,11 @@ Namespace DataObjects.Physical
             Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
         End Sub
 
-        Public Overrides Function WorkspaceTreeviewDoubleClick(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node) As Boolean
+        Public Overrides Sub WorkspaceTreeviewDoubleClick(ByVal tnSelectedNode As Crownwood.DotNetMagic.Controls.Node)
 
-            If tnSelectedNode Is m_tnWorkspaceNode Then
-                Util.Application.EditEnvironment()
-                Return True
-            End If
+            Util.Application.EditEnvironment()
 
-            Dim doOrganism As DataObjects.Physical.Organism
-            For Each deEntry As DictionaryEntry In m_aryOrganisms
-                doOrganism = DirectCast(deEntry.Value, DataObjects.Physical.Organism)
-                If doOrganism.WorkspaceTreeviewDoubleClick(tnSelectedNode) Then Return True
-            Next
-
-            Dim doStructure As DataObjects.Physical.PhysicalStructure
-            For Each deEntry As DictionaryEntry In m_aryStructures
-                doStructure = DirectCast(deEntry.Value, DataObjects.Physical.PhysicalStructure)
-                If doStructure.WorkspaceTreeviewDoubleClick(tnSelectedNode) Then Return True
-            Next
-
-            Return False
-
-        End Function
+        End Sub
 
 #End Region
 

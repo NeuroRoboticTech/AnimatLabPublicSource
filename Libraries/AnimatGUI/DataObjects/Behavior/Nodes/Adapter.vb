@@ -220,8 +220,8 @@ Namespace DataObjects.Behavior.Nodes
             Dim blLink As AnimatGUI.DataObjects.Behavior.Link
             For Each deEntry As DictionaryEntry In m_aryLinks
                 blLink = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
-                If Not m_ParentDiagram.IsItemSelected(blLink) Then
-                    m_ParentDiagram.SelectDataItem(blLink, False)
+                If Not blLink.Selected Then
+                    blLink.SelectItem(False)
                 End If
             Next
 

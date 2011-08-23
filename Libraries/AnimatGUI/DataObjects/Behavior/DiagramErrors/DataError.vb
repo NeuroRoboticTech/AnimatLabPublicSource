@@ -98,12 +98,13 @@ Namespace DataObjects.Behavior.DiagramErrors
             End If
         End Function
 
-        Public Overrides Sub DoubleClicked(ByVal beEditor As Forms.Behavior.Editor)
+        Public Overrides Sub DoubleClicked()
 
-            If Not m_bdItem Is Nothing Then
-                beEditor.SelectedDiagram(m_bdItem.ParentDiagram)
-                m_bdItem.ParentDiagram.SelectDataItem(m_bdItem)
-            End If
+            'TODO
+            'If Not m_bdItem Is Nothing Then
+            '    beEditor.SelectedDiagram(m_bdItem.ParentDiagram)
+            '    m_bdItem.ParentDiagram.SelectDataItem(m_bdItem)
+            'End If
 
         End Sub
 

@@ -3243,42 +3243,41 @@ Namespace Forms.Behavior
 
         Private Sub m_ctrlAddFlow_DragDrop(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles m_ctrlAddFlow.DragDrop
 
-            'TODO
-            'Try
-            '    Dim ptClient As Point = m_ctrlAddFlow.PointToClient(New Point(e.X, e.Y))
-            '    Dim ptAddFlow As Point = m_ctrlAddFlow.PointToAddFlow(ptClient)
+            Try
+                Dim ptClient As Point = m_ctrlAddFlow.PointToClient(New Point(e.X, e.Y))
+                Dim ptAddFlow As Point = m_ctrlAddFlow.PointToAddFlow(ptClient)
 
-            '    'Check if it is a behavioral node, the check if it is a behavioral connector
-            '    If (e.Data.GetDataPresent(GetType(Crownwood.Magic.Controls.PanelIcon))) Then
-            '        Dim pnlIcon As Crownwood.Magic.Controls.PanelIcon = DirectCast(e.Data.GetData(GetType(Crownwood.Magic.Controls.PanelIcon)), Crownwood.Magic.Controls.PanelIcon)
-            '        Dim bdDropData As AnimatGUI.DataObjects.Behavior.Data = DirectCast(pnlIcon.Data, AnimatGUI.DataObjects.Behavior.Data)
+                'Check if it is a behavioral node, the check if it is a behavioral connector
+                If (e.Data.GetDataPresent(GetType(Crownwood.Magic.Controls.PanelIcon))) Then
+                    Dim pnlIcon As Crownwood.Magic.Controls.PanelIcon = DirectCast(e.Data.GetData(GetType(Crownwood.Magic.Controls.PanelIcon)), Crownwood.Magic.Controls.PanelIcon)
+                    Dim bdDropData As AnimatGUI.DataObjects.Behavior.Data = DirectCast(pnlIcon.Data, AnimatGUI.DataObjects.Behavior.Data)
 
-            '        If Not bdDropData Is Nothing And TypeOf (bdDropData) Is AnimatGUI.DataObjects.Behavior.Node Then
-            '            Dim bdData As AnimatGUI.DataObjects.Behavior.Node = DirectCast(bdDropData.Clone(Me.Editor.Organism, False, Nothing), AnimatGUI.DataObjects.Behavior.Node)
+                    If Not bdDropData Is Nothing And TypeOf (bdDropData) Is AnimatGUI.DataObjects.Behavior.Node Then
+                        Dim bdData As AnimatGUI.DataObjects.Behavior.Node = DirectCast(bdDropData.Clone(Me.Subsystem.Organism, False, Nothing), AnimatGUI.DataObjects.Behavior.Node)
 
-            '            ptAddFlow.X = ptAddFlow.X - CInt(bdData.Size.Width / 2)
-            '            ptAddFlow.Y = ptAddFlow.Y - CInt(bdData.Size.Height / 2)
+                        ptAddFlow.X = ptAddFlow.X - CInt(bdData.Size.Width / 2)
+                        ptAddFlow.Y = ptAddFlow.Y - CInt(bdData.Size.Height / 2)
 
-            '            If ptAddFlow.X < 0 Then ptAddFlow.X = 0
-            '            If ptAddFlow.Y < 0 Then ptAddFlow.Y = 0
+                        If ptAddFlow.X < 0 Then ptAddFlow.X = 0
+                        If ptAddFlow.Y < 0 Then ptAddFlow.Y = 0
 
-            '            bdData.Location = New PointF(ptAddFlow.X, ptAddFlow.Y)
-            '            'TODO
-            '            'm_beEditor.MaxNodeCount = m_beEditor.MaxNodeCount + 1
-            '            'bdData.Text = m_beEditor.MaxNodeCount.ToString
-            '            Me.AddNode(bdData)
+                        bdData.Location = New PointF(ptAddFlow.X, ptAddFlow.Y)
 
-            '            Me.IsDirty = True
-            '            Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me.Editor, Me))
-            '        End If
+                        'm_beEditor.MaxNodeCount = m_beEditor.MaxNodeCount + 1
+                        bdData.Text = "A"
+                        Me.AddNode(bdData)
 
-            '        'Debug.WriteLine("Finishing DragDrop")
-            '        pnlIcon.DraggingIcon = False
-            '    End If
+                        Me.IsDirty = True
+                        Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me))
+                    End If
 
-            'Catch ex As System.Exception
-            '    AnimatGUI.Framework.Util.DisplayError(ex)
-            'End Try
+                    'Debug.WriteLine("Finishing DragDrop")
+                    pnlIcon.DraggingIcon = False
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
 
         End Sub
 

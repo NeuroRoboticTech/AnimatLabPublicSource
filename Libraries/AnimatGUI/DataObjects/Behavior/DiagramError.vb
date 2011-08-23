@@ -91,7 +91,7 @@ Namespace DataObjects.Behavior
 
 #Region " Methods "
 
-        Public Overridable Sub DoubleClicked(ByVal beEditor As Forms.Behavior.Editor)
+        Public Overridable Sub DoubleClicked()
 
         End Sub
 

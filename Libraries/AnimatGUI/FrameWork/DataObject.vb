@@ -747,14 +747,8 @@ Namespace Framework
 
         End Function
 
-        Public Overridable Function WorkspaceTreeviewDoubleClick(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node) As Boolean
-
-            If tnSelectedNode Is m_tnWorkspaceNode Then
-                Return True
-            End If
-
-            Return False
-        End Function
+        Public Overridable Sub WorkspaceTreeviewDoubleClick(ByVal tnSelectedNode As Crownwood.DotNetMagic.Controls.Node)
+        End Sub
 
         Public Overridable Sub RemoveWorksapceTreeView()
 

@@ -1912,23 +1912,23 @@ Namespace Forms.Behavior
                 If TypeOf oRefresh Is AnimatGUI.DataObjects.Behavior.Data Then
                     Dim doData As AnimatGUI.DataObjects.Behavior.Data = DirectCast(oRefresh, AnimatGUI.DataObjects.Behavior.Data)
 
-                    Me.SelectedDiagram(doData.ParentDiagram)
+                    'Me.SelectedDiagram(doData.ParentDiagram)
 
                     If Me.SelectedObject Is doData Then
                         Me.PropertiesBar.RefreshProperties()
                     Else
-                        doData.ParentDiagram.SelectDataItem(doData)
+                        'doData.ParentDiagram.SelectDataItem(doData)
                     End If
 
                 ElseIf Not doRefresh Is Nothing AndAlso Not doRefresh.Parent Is Nothing AndAlso TypeOf doRefresh.Parent Is AnimatGUI.DataObjects.Behavior.Data Then
                     Dim doData As AnimatGUI.DataObjects.Behavior.Data = DirectCast(doRefresh.Parent, AnimatGUI.DataObjects.Behavior.Data)
 
-                    Me.SelectedDiagram(doData.ParentDiagram)
+                    'Me.SelectedDiagram(doData.ParentDiagram)
 
                     If Me.SelectedObject Is doData Then
                         Me.PropertiesBar.RefreshProperties()
                     Else
-                        doData.ParentDiagram.SelectDataItem(doData)
+                        'doData.ParentDiagram.SelectDataItem(doData)
                     End If
                 ElseIf Not doRefresh Is Nothing AndAlso TypeOf doRefresh Is AnimatGUI.DataObjects.Behavior.NeuralModule Then
                     If Not Me.ModulesBar.Content Is Nothing AndAlso Not Me.ModulesBar.Content.ParentWindowContent Is Nothing Then

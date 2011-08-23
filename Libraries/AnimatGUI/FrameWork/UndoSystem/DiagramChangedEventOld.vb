@@ -16,18 +16,19 @@ Namespace Framework.UndoSystem
 
 #Region " Attributes "
 
-        Protected m_frmDiagram As AnimatGUI.Forms.Behavior.Diagram
+        Protected m_frmEditor As AnimatGUI.Forms.Behavior.Editor
+        Protected m_frmDiagram As AnimatGUI.Forms.Behavior.DiagramOld
         Protected m_bdAlteredData As AnimatGUI.DataObjects.Behavior.Data
 
 #End Region
 
 #Region " Properties "
 
-        Public Overridable Property Diagram() As AnimatGUI.Forms.Behavior.Diagram
+        Public Overridable Property Diagram() As AnimatGUI.Forms.Behavior.DiagramOld
             Get
                 Return m_frmDiagram
             End Get
-            Set(ByVal Value As AnimatGUI.Forms.Behavior.Diagram)
+            Set(ByVal Value As AnimatGUI.Forms.Behavior.DiagramOld)
                 If Value Is Nothing Then
                     Throw New System.Exception("A Diagram change event must be associated with a diagram.")
                 End If
@@ -49,13 +50,14 @@ Namespace Framework.UndoSystem
 
 #Region " Methods "
 
-        Public Sub New(ByVal frmDiagram As AnimatGUI.Forms.Behavior.Diagram, Optional ByVal bdAltered As AnimatGUI.DataObjects.Behavior.Data = Nothing)
-            MyBase.New(frmDiagram)
+        Public Sub New(ByVal frmEditor As AnimatGUI.Forms.Behavior.Editor, ByVal frmDiagram As AnimatGUI.Forms.Behavior.DiagramOld, Optional ByVal bdAltered As AnimatGUI.DataObjects.Behavior.Data = Nothing)
+            MyBase.New(frmEditor)
 
-            If frmDiagram Is Nothing Then
-                Throw New System.Exception("The behavioral diagram must not be null.")
+            If frmEditor Is Nothing Then
+                Throw New System.Exception("The behavioral editor must not be null.")
             End If
 
+            m_frmEditor = frmEditor
             Me.Diagram = frmDiagram
             Me.AlteredData = bdAltered
         End Sub
@@ -72,29 +74,24 @@ Namespace Framework.UndoSystem
         End Sub
 
         Public Overrides Sub Undo()
-            If Not m_frmDiagram Is Nothing AndAlso Not m_frmDiagram.TabPage Is Nothing Then
-                m_frmDiagram.TabPage.Selected = True
-            End If
+            m_frmEditor.SelectedDiagram(m_frmDiagram)
             m_frmDiagram.OnUndo()
 
             If Not m_bdAlteredData Is Nothing Then
                 m_frmDiagram.UpdateData(m_bdAlteredData, False, False)
             End If
-
-            Util.ProjectWorkspace.RefreshProperties()
+            m_frmEditor.PropertiesBar.RefreshProperties()
         End Sub
 
         Public Overrides Sub Redo()
-            If Not m_frmDiagram Is Nothing AndAlso Not m_frmDiagram.TabPage Is Nothing Then
-                m_frmDiagram.TabPage.Selected = True
-            End If
+            m_frmEditor.SelectedDiagram(m_frmDiagram)
             m_frmDiagram.OnRedo()
-            Util.ProjectWorkspace.RefreshProperties()
+            m_frmEditor.PropertiesBar.Refresh()
 
             If Not m_bdAlteredData Is Nothing Then
                 m_frmDiagram.UpdateData(m_bdAlteredData, False, False)
             End If
-            Util.ProjectWorkspace.RefreshProperties()
+            m_frmEditor.PropertiesBar.RefreshProperties()
         End Sub
 
 #End Region

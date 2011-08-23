@@ -378,8 +378,10 @@ Namespace Forms
         Private Sub ctrlTreeView_DoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctrlTreeView.DoubleClick
 
             Try
-                If Not Util.Application.Simulation Is Nothing AndAlso Not ctrlTreeView.SelectedNode Is Nothing Then
-                    Util.Application.Simulation.WorkspaceTreeviewDoubleClick(ctrlTreeView.SelectedNode)
+                If Not ctrlTreeView.SelectedNode Is Nothing AndAlso Not ctrlTreeView.SelectedNode.Tag Is Nothing _
+                    AndAlso Util.IsTypeOf(ctrlTreeView.SelectedNode.Tag.GetType, GetType(Framework.DataObject)) Then
+                    Dim doNode As Framework.DataObject = DirectCast(ctrlTreeView.SelectedNode.Tag, Framework.DataObject)
+                    doNode.WorkspaceTreeviewDoubleClick(ctrlTreeView.SelectedNode)
                 End If
 
             Catch ex As System.Exception

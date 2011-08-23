@@ -472,18 +472,6 @@ Namespace DataObjects
 
         End Sub
 
-        Public Overrides Function WorkspaceTreeviewDoubleClick(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node) As Boolean
-            If m_doEnvironment.WorkspaceTreeviewDoubleClick(tnSelectedNode) Then Return True
-
-            'Now check the tool holders
-            Dim doTool As DataObjects.ToolHolder
-            For Each deEntry As DictionaryEntry In m_aryToolHolders
-                doTool = DirectCast(deEntry.Value, DataObjects.ToolHolder)
-                If doTool.WorkspaceTreeviewDoubleClick(tnSelectedNode) Then Return True
-            Next
-
-            Return False
-        End Function
 
         'This will deselect all body part items. This is used when switching between visual selection modes.
         Protected Sub DeselectBodyPartSelections(ByVal ePrevMode As enumVisualSelectionMode)

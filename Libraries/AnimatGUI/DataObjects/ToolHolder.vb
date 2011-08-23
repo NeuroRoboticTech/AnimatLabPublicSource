@@ -212,19 +212,9 @@ Namespace DataObjects
             Return False
         End Function
 
-        Public Overrides Function WorkspaceTreeviewDoubleClick(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node) As Boolean
-
-            If tnSelectedNode Is m_tnWorkspaceNode Then
-                Util.Application.DisplayToolViewer(Me)
-                Return True
-            End If
-
-            If Not m_frmTool Is Nothing AndAlso m_frmTool.WorkspaceTreeviewDoubleClick(tnSelectedNode) Then
-                Return True
-            End If
-
-            Return False
-        End Function
+        Public Overrides Sub WorkspaceTreeviewDoubleClick(ByVal tnSelectedNode As Crownwood.DotNetMagic.Controls.Node)
+            Util.Application.DisplayToolViewer(Me)
+        End Sub
 
         Public Overrides Sub RemoveWorksapceTreeView()
             MyBase.RemoveWorksapceTreeView()

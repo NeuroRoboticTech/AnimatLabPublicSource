@@ -674,14 +674,9 @@ Namespace Forms
 
         End Function
 
-        Public Overridable Function WorkspaceTreeviewDoubleClick(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node) As Boolean
+        Public Overridable Sub WorkspaceTreeviewDoubleClick(ByVal tnSelectedNode As Crownwood.DotNetMagic.Controls.Node)
 
-            If tnSelectedNode Is m_tnWorkspaceNode Then
-                Return True
-            End If
-
-            Return False
-        End Function
+        End Sub
 
         Public Overridable Sub RemoveWorksapceTreeView()
 
