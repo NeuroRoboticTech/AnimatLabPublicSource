@@ -83,7 +83,7 @@ Namespace Forms.Behavior
 
         Protected m_iMaxNodeCount As Integer
 
-        Protected m_aryDiagramImages As New Collections.DiagramImages(Me.FormHelper, Me)
+        Protected m_aryDiagramImages As New Collections.DiagramImages(Me.FormHelper)
 
         Protected m_doOrganism As DataObjects.Physical.Organism
 

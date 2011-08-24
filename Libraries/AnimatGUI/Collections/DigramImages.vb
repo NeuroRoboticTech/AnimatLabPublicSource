@@ -14,23 +14,22 @@ Namespace Collections
     Public Class DiagramImages
         Inherits AnimatDictionaryBase
 
-        Protected m_beEditor As Forms.Behavior.Editor
-
-        Public Property Editor() As Forms.Behavior.Editor
-            Get
-                Return m_beEditor
-            End Get
-            Set(ByVal Value As Forms.Behavior.Editor)
-                m_beEditor = Value
-            End Set
-        End Property
+        Protected m_doOrganism As AnimatGUI.DataObjects.Physical.Organism
 
         Default Public Property Item(ByVal key As [String]) As AnimatGUI.DataObjects.Behavior.DiagramImage
             Get
                 Return CType(Dictionary(key), AnimatGUI.DataObjects.Behavior.DiagramImage)
             End Get
             Set(ByVal Value As AnimatGUI.DataObjects.Behavior.DiagramImage)
+                If Not m_doOrganism Is Nothing Then
+                    m_doOrganism.SignalImageRemoved(Me(key))
+                End If
+
                 Dictionary(key) = Value
+
+                If Not m_doOrganism Is Nothing Then
+                    m_doOrganism.SignalImageAdded(Value)
+                End If
             End Set
         End Property
 
@@ -46,15 +45,21 @@ Namespace Collections
             End Get
         End Property
 
-        Public Sub New(ByVal doParent As Framework.DataObject, ByRef beEditor As Forms.Behavior.Editor)
+        Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
 
-            m_beEditor = beEditor
+            If Not doParent Is Nothing Then
+                m_doOrganism = DirectCast(doParent, AnimatGUI.DataObjects.Physical.Organism)
+            End If
         End Sub
 
         Public Sub Add(ByVal key As [String], ByVal value As AnimatGUI.DataObjects.Behavior.DiagramImage)
             Dictionary.Add(key, value)
             Me.IsDirty = True
+
+            If Not m_doOrganism Is Nothing Then
+                m_doOrganism.SignalImageAdded(value)
+            End If
         End Sub 'Add
 
         Public Function Contains(ByVal key As [String]) As Boolean
@@ -62,8 +67,14 @@ Namespace Collections
         End Function 'Contains
 
         Public Sub Remove(ByVal key As [String])
+            Dim value As AnimatGUI.DataObjects.Behavior.DiagramImage = Me(key)
+
             Dictionary.Remove(key)
             Me.IsDirty = True
+
+            If Not m_doOrganism Is Nothing Then
+                m_doOrganism.SignalImageRemoved(value)
+            End If
         End Sub 'Remove
 
         Protected Overrides Sub OnInsert(ByVal key As [Object], ByVal value As [Object])
@@ -77,12 +88,6 @@ Namespace Collections
 
             Dim diImage As AnimatGUI.DataObjects.Behavior.DiagramImage = DirectCast(value, AnimatGUI.DataObjects.Behavior.DiagramImage)
 
-            Dim bdDiagram As Forms.Behavior.DiagramOld
-            For Each deEntry As DictionaryEntry In m_beEditor.Diagrams
-                bdDiagram = DirectCast(deEntry.Value, Forms.Behavior.DiagramOld)
-                bdDiagram.AddImage(diImage)
-            Next
-
         End Sub 'OnInsert
 
         Protected Overrides Sub OnRemove(ByVal key As [Object], ByVal value As [Object])
@@ -91,29 +96,8 @@ Namespace Collections
             End If
 
             Dim diImage As AnimatGUI.DataObjects.Behavior.DiagramImage = DirectCast(value, AnimatGUI.DataObjects.Behavior.DiagramImage)
-            RemoveImage(diImage)
 
         End Sub 'OnRemove
-
-        Protected Sub RemoveImage(ByVal diImage As AnimatGUI.DataObjects.Behavior.DiagramImage)
-
-            Dim bdDiagram As Forms.Behavior.DiagramOld
-            For Each deEntry As DictionaryEntry In m_beEditor.Diagrams
-                bdDiagram = DirectCast(deEntry.Value, Forms.Behavior.DiagramOld)
-                bdDiagram.RemoveImage(diImage)
-            Next
-
-        End Sub
-
-        Protected Overrides Sub OnClear()
-
-            Dim diImage As AnimatGUI.DataObjects.Behavior.DiagramImage
-            For Each deEntry As DictionaryEntry In Me
-                diImage = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.DiagramImage)
-                RemoveImage(diImage)
-            Next
-
-        End Sub
 
         Protected Overrides Sub OnSet(ByVal key As [Object], ByVal oldValue As [Object], ByVal newValue As [Object])
             If Not key.GetType() Is Type.GetType("System.String") Then
@@ -136,14 +120,14 @@ Namespace Collections
         End Sub 'OnValidate 
 
         Public Overrides Function Copy() As AnimatDictionaryBase
-            Dim aryList As New DiagramImages(m_doParent, m_beEditor)
+            Dim aryList As New DiagramImages(m_doParent)
             aryList.CopyInternal(Me)
             Return aryList
         End Function
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
                                            ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatDictionaryBase
-            Dim aryList As New DiagramImages(doParent, m_beEditor)
+            Dim aryList As New DiagramImages(doParent)
             aryList.CloneInternal(Me, doParent, bCutData, doParent)
             Return aryList
         End Function

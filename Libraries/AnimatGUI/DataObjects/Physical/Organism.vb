@@ -31,6 +31,8 @@ Namespace DataObjects.Physical
         ''' This is the root subsystem for the organism. All nodes and other subsystems are derived from it.
         Protected m_bnRootSubSystem As New DataObjects.Behavior.Nodes.Subsystem(Me)
 
+        Protected m_aryDiagramImages As New Collections.DiagramImages(Me)
+
 #End Region
 
 #Region " Properties "
@@ -88,6 +90,12 @@ Namespace DataObjects.Physical
             Set(ByVal Value As Integer)
                 m_iMaxNodeCount = Value
             End Set
+        End Property
+
+        Public Overridable ReadOnly Property DiagramImages() As Collections.DiagramImages
+            Get
+                Return m_aryDiagramImages
+            End Get
         End Property
 
 #End Region
@@ -450,8 +458,8 @@ Namespace DataObjects.Physical
             Dim doOrganism As Organism = DirectCast(doOriginal, Organism)
 
             m_frmBehaviorEditor = doOrganism.m_frmBehaviorEditor
-            'm_aryBehavioralNodes = DirectCast(doOrganism.m_aryBehavioralNodes.Clone(), AnimatGUI.Collections.AnimatSortedList)
-            'm_aryBehavioralLinks = DirectCast(doOrganism.m_aryBehavioralLinks.Clone(), AnimatGUI.Collections.AnimatSortedList)
+            m_bnRootSubSystem = DirectCast(doOrganism.m_bnRootSubSystem.Clone(Me, bCutData, doRoot), AnimatGUI.DataObjects.Behavior.Nodes.Subsystem)
+            m_aryDiagramImages = DirectCast(doOrganism.m_aryDiagramImages.Clone(Me, bCutData, doRoot), Collections.DiagramImages)
             m_aryNeuralModules = DirectCast(doOrganism.m_aryNeuralModules.Clone(Me, bCutData, doRoot), AnimatGUI.Collections.SortedNeuralModules)
 
         End Sub
@@ -475,17 +483,15 @@ Namespace DataObjects.Physical
             If Not m_bnRootSubSystem Is Nothing Then
                 m_bnRootSubSystem.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
             End If
-            'Dim doData As Behavior.Data
-            'For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
-            '    doData = DirectCast(deEntry.Value, Behavior.Data)
-            '    doData.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
-            'Next
 
-            'For Each deEntry As DictionaryEntry In m_aryBehavioralLinks
-            '    doData = DirectCast(deEntry.Value, Behavior.Data)
-            '    doData.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
-            'Next
+        End Sub
 
+        Public Overrides Sub ClearIsDirty()
+            MyBase.ClearIsDirty()
+
+            m_aryNeuralModules.ClearIsDirty()
+            m_bnRootSubSystem.ClearIsDirty()
+            m_aryDiagramImages.ClearIsDirty()
         End Sub
 
         Public Overridable Sub AddContactAdapters(ByVal nmPhysicsModule As DataObjects.Behavior.NeuralModule, ByVal m_aryNodes As Collections.SortedNodes)
@@ -493,7 +499,6 @@ Namespace DataObjects.Physical
                 m_dbRoot.AddContactAdapters(nmPhysicsModule, m_aryNodes)
             End If
         End Sub
-
 
         Public Overrides Sub InitializeAfterLoad()
             MyBase.InitializeAfterLoad()
@@ -522,22 +527,22 @@ Namespace DataObjects.Physical
                 m_bnRootSubSystem.InitializeSimulationReferences()
             End If
 
-            'Dim doData As DataObjects.Behavior.Data
-            'For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
-            '    doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
-            '    doData.InitializeSimulationReferences()
-            'Next
-
-            'For Each deEntry As DictionaryEntry In m_aryBehavioralLinks
-            '    doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
-            '    doData.InitializeSimulationReferences()
-            'Next
-
         End Sub
 
 #End Region
 
 #Region " Events "
+
+        Public Event ImageAdded(ByVal diImage As AnimatGUI.DataObjects.Behavior.DiagramImage)
+        Public Event ImageRemoved(ByVal diImage As AnimatGUI.DataObjects.Behavior.DiagramImage)
+
+        Public Overridable Sub SignalImageAdded(ByVal diImage As AnimatGUI.DataObjects.Behavior.DiagramImage)
+            RaiseEvent ImageAdded(diImage)
+        End Sub
+
+        Public Overridable Sub SignalImageRemoved(ByVal diImage As AnimatGUI.DataObjects.Behavior.DiagramImage)
+            RaiseEvent ImageRemoved(diImage)
+        End Sub
 
         Protected Overrides Sub OnCloneStructure(ByVal sender As Object, ByVal e As System.EventArgs)
 

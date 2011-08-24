@@ -17,12 +17,22 @@ Namespace DataObjects.Behavior
 
 #Region " Attributes "
 
+        Protected m_doOrganism As AnimatGUI.DataObjects.Physical.Organism
         Protected m_strFilePath As String = ""
         Protected m_bUserImage As Boolean = False
 
 #End Region
 
 #Region " Properties "
+
+        Public Overridable Property Organism() As AnimatGUI.DataObjects.Physical.Organism
+            Get
+                Return m_doOrganism
+            End Get
+            Set(ByVal Value As AnimatGUI.DataObjects.Physical.Organism)
+                m_doOrganism = Value
+            End Set
+        End Property
 
         Public Property FilePath() As String
             Get

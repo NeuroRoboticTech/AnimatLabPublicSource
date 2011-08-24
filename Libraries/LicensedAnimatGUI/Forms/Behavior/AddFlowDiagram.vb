@@ -252,12 +252,12 @@ Namespace Forms.Behavior
             afNode.Gradient = bdNode.Gradient
             afNode.GradientColor = bdNode.GradientColor
             afNode.GradientMode = bdNode.GradientMode
-            'TODO
-            'If bdNode.DiagramImageName.Length > 0 Then
-            '    afNode.ImageIndex = FindDiagramImageIndex(Me.Editor.DiagramImages.FindImageByID(bdNode.DiagramImageName))
-            'Else
-            '    afNode.ImageIndex = -1
-            'End If
+
+            If bdNode.DiagramImageName.Length > 0 Then
+                afNode.ImageIndex = FindDiagramImageIndex(Me.Subsystem.Organism.DiagramImages.FindImageByID(bdNode.DiagramImageName))
+            Else
+                afNode.ImageIndex = -1
+            End If
             afNode.ImageLocation = bdNode.ImageLocation
             afNode.ImagePosition = CType(bdNode.ImagePosition, Lassalle.Flow.ImagePosition)
             afNode.InLinkable = bdNode.InLinkable
@@ -674,32 +674,19 @@ Namespace Forms.Behavior
         End Sub
 
         Public Overrides Sub AddImage(ByRef diImage As AnimatGUI.DataObjects.Behavior.DiagramImage)
-            'TODO
-            'If Not m_ctrlAddFlow.Images.Contains(diImage.WorkspaceImage) Then
-            '    m_ctrlAddFlow.Images.Add(diImage.WorkspaceImage)
-            'End If
 
-            ''Now add it to any subdiagrams
-            'Dim doDiagram As AnimatGUI.Forms.Behavior.DiagramOld
-            'For Each deEntry As DictionaryEntry In Me.Diagrams
-            '    doDiagram = DirectCast(deEntry.Value, AnimatGUI.Forms.Behavior.DiagramOld)
-            '    doDiagram.AddImage(diImage)
-            'Next
+            If Not m_ctrlAddFlow.Images.Contains(diImage.WorkspaceImage) Then
+                m_ctrlAddFlow.Images.Add(diImage.WorkspaceImage)
+            End If
 
         End Sub
 
         Public Overrides Sub RemoveImage(ByRef diImage As AnimatGUI.DataObjects.Behavior.DiagramImage)
-            'TODO
-            'If m_ctrlAddFlow.Images.Contains(diImage.WorkspaceImage) Then
-            '    m_ctrlAddFlow.Images.Remove(diImage.WorkspaceImage)
-            'End If
 
-            ''Now remove it from any subdiagrams
-            'Dim doDiagram As AnimatGUI.Forms.Behavior.DiagramOld
-            'For Each deEntry As DictionaryEntry In Me.Diagrams
-            '    doDiagram = DirectCast(deEntry.Value, AnimatGUI.Forms.Behavior.DiagramOld)
-            '    doDiagram.RemoveImage(diImage)
-            'Next
+            If m_ctrlAddFlow.Images.Contains(diImage.WorkspaceImage) Then
+                m_ctrlAddFlow.Images.Remove(diImage.WorkspaceImage)
+            End If
+
         End Sub
 
         Public Overrides Function FindDiagramImageIndex(ByRef diImage As System.Drawing.Image, Optional ByVal bThrowError As Boolean = True) As Integer
@@ -717,28 +704,6 @@ Namespace Forms.Behavior
                 Throw New System.Exception("No addflow image found a given image.")
             End If
             Return -1
-        End Function
-
-        Public Overrides Function ImageUseCount(ByVal diImage As AnimatGUI.DataObjects.Behavior.DiagramImage) As Integer
-
-            Dim iCount As Integer = 0
-
-            'TODO
-            'Dim bnNode As AnimatGUI.DataObjects.Behavior.Node
-            'For Each deEntry As DictionaryEntry In m_aryNodes
-            '    bnNode = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Node)
-            '    If Not bnNode.DiagramImage Is Nothing AndAlso bnNode.DiagramImage.ID Is diImage.ID Then
-            '        iCount = iCount + 1
-            '    End If
-            'Next
-
-            'Dim bdDiagram As AnimatGUI.Forms.Behavior.DiagramOld
-            'For Each deEntry As DictionaryEntry In m_aryDiagrams
-            '    bdDiagram = DirectCast(deEntry.Value, AnimatGUI.Forms.Behavior.DiagramOld)
-            '    iCount = iCount + bdDiagram.ImageUseCount(diImage)
-            'Next
-
-            Return iCount
         End Function
 
         Public Overrides Sub FitToPage()
