@@ -721,12 +721,7 @@ Namespace DataObjects.Physical
                 End If
 
                 If bDelete Then
-                    If Not Util.Environment.Structures Is Nothing Then
-                        Util.Environment.Structures.Remove(Me.ID)
-                    End If
-                    Me.RemoveWorksapceTreeView()
-                    m_tnWorkspaceNode = Nothing
-                    m_tnBodyPlanNode = Nothing
+                    DeleteInternal()
                 End If
 
                 Return Not bDelete
@@ -735,6 +730,15 @@ Namespace DataObjects.Physical
             End Try
 
         End Function
+
+        Public Overridable Sub DeleteInternal()
+            If Not Util.Environment.Structures Is Nothing Then
+                Util.Environment.Structures.Remove(Me.ID)
+            End If
+            Me.RemoveWorksapceTreeView()
+            m_tnWorkspaceNode = Nothing
+            m_tnBodyPlanNode = Nothing
+        End Sub
 
         Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject
 

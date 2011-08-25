@@ -595,20 +595,10 @@ Namespace Forms.Tools
             If oXml.FindChildElement("AxisList", False) Then
                 oXml.IntoChildElement("AxisList")
 
-                Dim strAssemblyFile As String = ""
-                Dim strClassName As String = ""
-
                 Dim doAxis As DataObjects.Charting.Axis
                 Dim iCount As Integer = oXml.NumberOfChildren() - 1
                 For iIndex As Integer = 0 To iCount
-                    oXml.FindChildByIndex(iIndex)
-
-                    oXml.IntoElem()
-                    strAssemblyFile = oXml.GetChildString("AssemblyFile")
-                    strClassName = oXml.GetChildString("ClassName")
-                    oXml.OutOfElem()
-
-                    doAxis = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me.FormHelper), AnimatGUI.DataObjects.Charting.Axis)
+                    doAxis = DirectCast(Util.LoadClass(oXml, iIndex, Me.FormHelper), AnimatGUI.DataObjects.Charting.Axis)
                     doAxis.ParentChart = Me
                     doAxis.LoadData(oXml)
                     m_aryAxisList.Add(doAxis.Name, doAxis)

@@ -37,6 +37,8 @@ Namespace Framework
         Protected m_WorkspaceImage As System.Drawing.Image
         Protected m_tnWorkspaceNode As Crownwood.DotNetMagic.Controls.Node
 
+        Protected m_oTag As Object
+
 #End Region
 
 #Region " Properties "
@@ -277,6 +279,15 @@ Namespace Framework
             Get
                 Return m_doInterface
             End Get
+        End Property
+
+        Public Overridable Property Tag() As Object
+            Get
+                Return m_oTag
+            End Get
+            Set(ByVal Value As Object)
+                m_oTag = Value
+            End Set
         End Property
 
 #End Region
@@ -768,6 +779,8 @@ Namespace Framework
                     m_doInterface.SelectItem(True, bSelectMultiple)
                 End If
 
+                SignalItemSelected(Me, bSelectMultiple)
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -782,6 +795,9 @@ Namespace Framework
                 If Not m_doInterface Is Nothing Then
                     m_doInterface.SelectItem(False, False)
                 End If
+
+                SignalItemDeselected(Me)
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -871,6 +887,9 @@ Namespace Framework
         Public Event BeforeRemoveItem(ByRef doObject As AnimatGUI.Framework.DataObject)
         Public Event AfterRemoveItem(ByRef doObject As AnimatGUI.Framework.DataObject)
 
+        Public Event ItemSelected(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal bSelectMultiple As Boolean)
+        Public Event ItemDeselected(ByRef doObject As AnimatGUI.Framework.DataObject)
+
         Protected Sub SignalBeforePropertyChanged(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
             RaiseEvent BeforePropertyChanged(doObject, propInfo)
         End Sub
@@ -893,6 +912,14 @@ Namespace Framework
 
         Protected Sub SignalAfterRemoveItem(ByRef doObject As AnimatGUI.Framework.DataObject)
             RaiseEvent AfterRemoveItem(doObject)
+        End Sub
+
+        Protected Sub SignalItemSelected(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal bSelectMultiple As Boolean)
+            RaiseEvent ItemSelected(doObject, bSelectMultiple)
+        End Sub
+
+        Protected Sub SignalItemDeselected(ByRef doObject As AnimatGUI.Framework.DataObject)
+            RaiseEvent ItemDeselected(doObject)
         End Sub
 
         Protected Sub OnApplicationExiting()

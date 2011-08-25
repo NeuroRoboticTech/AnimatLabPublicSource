@@ -94,7 +94,7 @@ Namespace DataObjects.Behavior.Links
                 m_ParentDiagram.RemoveNode(bnAdapter)
             End If
 
-            RemoveFromHierarchyBar()
+            RemoveWorksapceTreeView()
             CheckForErrors()
         End Sub
 

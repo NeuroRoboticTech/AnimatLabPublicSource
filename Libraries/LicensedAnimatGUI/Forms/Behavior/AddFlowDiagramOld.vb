@@ -1778,7 +1778,7 @@ Namespace Forms.Behavior
                         'bnNode.ParentDiagram = Me
                         'bnNode.ParentEditor = m_beEditor
                         m_aryNodes.Add(bnNode.ID, bnNode, False)
-                        bnNode.AddToHierarchyBar()
+                        'bnNode.AddToHierarchyBar()
                     End If
 
                 Next
@@ -1816,13 +1816,13 @@ Namespace Forms.Behavior
                         'blLink.ParentEditor = m_beEditor
                         blLink.LoadData(oXml)
                         m_aryLinks.Add(blLink.ID, blLink, False)
-                        blLink.AddToHierarchyBar()
+                        'blLink.AddToHierarchyBar()
                         AddToOrganism(blLink)
                     Else
                         'blLink.ParentDiagram = Me
                         'blLink.ParentEditor = m_beEditor
                         m_aryLinks.Add(blLink.ID, blLink, False)
-                        blLink.AddToHierarchyBar()
+                        'blLink.AddToHierarchyBar()
                     End If
                 Next
                 oXml.OutOfElem() 'Outof Links Element
@@ -2358,7 +2358,7 @@ Namespace Forms.Behavior
                 bnNode.AfterAddNode()
 
                 AddToOrganism(bnNode)
-                bnNode.AddToHierarchyBar()
+                'bnNode.AddToHierarchyBar()
             Next
             oXml.OutOfElem() 'Outof Nodes Element
 
@@ -2384,7 +2384,7 @@ Namespace Forms.Behavior
                 blLink.AfterAddLink()
 
                 AddToOrganism(blLink)
-                blLink.AddToHierarchyBar()
+                'blLink.AddToHierarchyBar()
             Next
             oXml.OutOfElem() 'Outof Links Element
 
@@ -2450,7 +2450,7 @@ Namespace Forms.Behavior
                         m_aryLinks.Remove(bdData.ID, False)
                     End If
 
-                    bdData.RemoveFromHierarchyBar()
+                    '.RemoveFromHierarchyBar()
                     aryRemoveItems.Add(bdData)
                 End If
             Next

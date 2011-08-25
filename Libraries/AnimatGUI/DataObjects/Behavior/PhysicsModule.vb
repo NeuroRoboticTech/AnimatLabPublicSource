@@ -35,6 +35,8 @@ Namespace DataObjects.Behavior
         Public Sub New(ByVal doParent As AnimatGUI.Framework.DataObject)
             MyBase.New(doParent)
 
+            m_strModuleName = "PhysicsModule"
+ 
             m_snTimeStep = New AnimatGUI.Framework.ScaledNumber(Me, "TimeStep", 10, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
         End Sub
 

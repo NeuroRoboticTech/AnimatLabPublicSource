@@ -293,24 +293,14 @@ Namespace DataObjects.Behavior
             Set(ByVal Value As Boolean)
                 MyBase.Enabled = Value
 
-                If Not Me.TreeNode Is Nothing Then
+                If Not Me.WorkspaceNode Is Nothing Then
                     If m_bEnabled Then
-                        Me.TreeNode.BackColor = Color.White
+                        Me.WorkspaceNode.BackColor = Color.White
                     Else
-                        Me.TreeNode.BackColor = Color.Gray
+                        Me.WorkspaceNode.BackColor = Color.Gray
                     End If
                     UpdateChart()
                 End If
-            End Set
-        End Property
-
-        <Browsable(False)> _
-        Public Overrides Property Name() As String
-            Get
-                Return m_strName
-            End Get
-            Set(ByVal Value As String)
-                m_strName = Value
             End Set
         End Property
 
@@ -646,10 +636,31 @@ Namespace DataObjects.Behavior
         <Browsable(False)> _
         Public Overrides Property ItemName() As String
             Get
-                Return Me.Text
+                Dim strName As String = ""
+                If Not Me.Origin Is Nothing Then
+                    If Me.Text.Trim.Length = 0 Then
+                        strName = Me.Origin.Text
+                    Else
+                        strName = Me.Origin.Text & "( " & Me.Text & " ) "
+                    End If
+                Else
+                    strName = Me.Text
+                End If
+
+                Return strName
             End Get
             Set(ByVal Value As String)
                 Me.Text = Value
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overrides Property Name() As String
+            Get
+                Return m_strName
+            End Get
+            Set(ByVal Value As String)
+                m_strName = Value
             End Set
         End Property
 
@@ -701,24 +712,6 @@ Namespace DataObjects.Behavior
         Public Overrides ReadOnly Property AllowStimulus() As Boolean
             Get
                 Return False
-            End Get
-        End Property
-
-        <Browsable(False)> _
-        Public Overridable ReadOnly Property TreeViewName() As String
-            Get
-                Dim strName As String = ""
-                If Not Me.Origin Is Nothing AndAlso Not Me.Destination Is Nothing Then
-                    If Me.Text.Trim.Length = 0 Then
-                        strName = Me.Origin.Text & " --> " & Me.Destination.Text
-                    Else
-                        strName = "( " & Me.Text & " ) " & Me.Origin.Text & " --> " & Me.Destination.Text
-                    End If
-                Else
-                    strName = Me.Text
-                End If
-
-                Return strName
             End Get
         End Property
 
@@ -789,31 +782,9 @@ Namespace DataObjects.Behavior
             m_clTextColor = blOrig.m_clTextColor
         End Sub
 
-        Public Overrides Sub AddToHierarchyBar()
-            'TODO
-            ''Add this icon to the heirarchy bar
-            'If Not m_ParentDiagram Is Nothing Then
-            '    Dim strName As String = Me.TreeViewName
-
-            '    m_tnTreeNode = m_ParentDiagram.LinksTreeNode.Nodes.Add(strName)
-            '    If Me.WorkspaceImageName.Trim.Length > 0 Then
-            '        m_tnTreeNode.ImageIndex = m_ParentEditor.HierarchyBar.ImageManager.GetImageIndex(Me.WorkspaceImageName)
-            '        m_tnTreeNode.SelectedImageIndex = m_ParentEditor.HierarchyBar.ImageManager.GetImageIndex(Me.WorkspaceImageName)
-            '    End If
-
-            '    If Me.Enabled Then
-            '        m_tnTreeNode.BackColor = Color.White
-            '    Else
-            '        m_tnTreeNode.BackColor = Color.Gray
-            '    End If
-
-            '    m_tnTreeNode.Tag = Me
-            'End If
-        End Sub
-
         Public Overrides Sub UpdateTreeNode()
-            If Not m_ParentDiagram Is Nothing AndAlso Not m_tnTreeNode Is Nothing Then
-                m_tnTreeNode.Text = Me.TreeViewName
+            If Not m_ParentDiagram Is Nothing AndAlso Not Me.WorkspaceNode Is Nothing Then
+                Me.WorkspaceNode.Text = Me.ItemName
             End If
         End Sub
 
@@ -821,23 +792,31 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overridable Sub AfterAddLink()
-            AddToHierarchyBar()
+            AddWorkspaceTreeNode()
             CheckForErrors()
             ConnectNodeEvents()
+            ConnectDiagramEvents()
         End Sub
 
         Public Overridable Sub BeforeRemoveLink()
         End Sub
 
         Public Overridable Sub AfterRemoveLink()
-            RemoveFromHierarchyBar()
+            RemoveWorksapceTreeView()
             CheckForErrors()
             DisconnectNodeEvents()
+            DisconnectDiagramEvents()
         End Sub
 
         Public Overrides Sub AfterUndoRemove()
-            AddToHierarchyBar()
+            AddWorkspaceTreeNode()
             ClearErrors()
+        End Sub
+
+        Public Overrides Sub AddWorkspaceTreeNode()
+            If Not Me.Destination Is Nothing AndAlso Not Me.Destination.WorkspaceNode Is Nothing Then
+                CreateWorkspaceTreeView(Me.Destination, Me.Destination.WorkspaceNode)
+            End If
         End Sub
 
         Public Overrides Function CanCopy() As Boolean
@@ -898,7 +877,7 @@ Namespace DataObjects.Behavior
             myAssembly = System.Reflection.Assembly.Load(Me.AssemblyModuleName)
             frmDataItem.ImageManager.AddImage(myAssembly, Me.WorkspaceImageName)
 
-            Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(Me.TreeViewName)
+            Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(Me.ItemName)
             tnParent.Nodes.Add(tnNode)
             tnNode.ImageIndex = frmDataItem.ImageManager.GetImageIndex(Me.WorkspaceImageName)
             tnNode.SelectedImageIndex = frmDataItem.ImageManager.GetImageIndex(Me.WorkspaceImageName)
@@ -913,6 +892,7 @@ Namespace DataObjects.Behavior
 
         Public Overrides Sub AfterRemoveFromList(Optional ByVal bThrowError As Boolean = True)
             DisconnectNodeEvents()
+            DisconnectDiagramEvents()
         End Sub
 
 #End Region
@@ -1045,6 +1025,7 @@ Namespace DataObjects.Behavior
                     Me.Origin = Me.Organism.FindBehavioralNode(m_strOriginID)
                     Me.Destination = Me.Organism.FindBehavioralNode(m_strDestinationID)
                     ConnectNodeEvents()
+                    ConnectDiagramEvents()
                     UpdateTreeNode()
                 Else
                     Throw New System.Exception("Either a destination or origin was missing for this link. '" & Me.ID & "'")

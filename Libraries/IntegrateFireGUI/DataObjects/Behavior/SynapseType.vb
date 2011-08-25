@@ -37,8 +37,8 @@ Namespace DataObjects.Behavior
             Set(ByVal Value As String)
                 m_strName = Value
 
-                If Not Me.TreeNode Is Nothing Then
-                    Me.TreeNode.Text = m_strName
+                If Not Me.WorkspaceNode Is Nothing Then
+                    Me.WorkspaceNode.Text = m_strName
                 End If
             End Set
         End Property

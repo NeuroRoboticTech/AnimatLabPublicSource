@@ -549,6 +549,14 @@ Namespace Framework
             End Try
         End Function
 
+        Public Shared Function LoadClass(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal iIndex As Integer, _
+                                         ByVal doParent As AnimatGUI.Framework.DataObject, Optional ByVal bThrowError As Boolean = True) As Object
+            Dim strAssemblyFile As String = ""
+            Dim strClassName As String = ""
+            LoadClassModuleName(oXml, iIndex, strAssemblyFile, strClassName)
+            Return LoadClass(strAssemblyFile, strClassName, doParent, bThrowError)
+        End Function
+
         Public Shared Function LoadClass(ByVal strAssemblyPath As String, ByVal strClassName As String, _
                                          ByVal doParent As AnimatGUI.Framework.DataObject, Optional ByVal bThrowError As Boolean = True) As Object
             Dim aryArgs() As Object = {doParent}
@@ -1311,12 +1319,19 @@ Namespace Framework
         End Function
 
         Public Shared Sub LoadClassModuleName(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal iIndex As Integer, _
-                                              ByRef strAssemblyFile As String, ByRef strClassName As String)
-            oXml.FindChildByIndex(iIndex)
-            oXml.IntoElem() 'Into Node element
-            strAssemblyFile = oXml.GetChildString("AssemblyFile")
-            strClassName = oXml.GetChildString("ClassName")
-            oXml.OutOfElem() 'Outof Node element
+                                              ByRef strAssemblyFile As String, ByRef strClassName As String, Optional ByVal bThrowError As Boolean = True)
+
+            Try
+                oXml.FindChildByIndex(iIndex)
+                oXml.IntoElem() 'Into Node element
+                strAssemblyFile = oXml.GetChildString("AssemblyFile")
+                strClassName = oXml.GetChildString("ClassName")
+                oXml.OutOfElem() 'Outof Node element
+            Catch ex As Exception
+                If bThrowError Then
+                    Throw ex
+                End If
+            End Try
         End Sub
 
         Public Shared Function GetName(ByVal strPrimName As String, ByVal strAltName As String) As String

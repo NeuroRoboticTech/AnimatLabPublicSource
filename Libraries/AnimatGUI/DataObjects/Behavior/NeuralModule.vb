@@ -30,6 +30,16 @@ Namespace DataObjects.Behavior
 #Region " Properties "
 
         <Browsable(False)> _
+        Public Overrides Property Name As String
+            Get
+                Return m_strModuleName
+            End Get
+            Set(ByVal value As String)
+                'You cannot change the neural module name.
+            End Set
+        End Property
+
+        <Browsable(False)> _
         Public Overrides ReadOnly Property ModuleName() As String
             Get
                 If m_strModuleName.Trim.Length = 0 Then

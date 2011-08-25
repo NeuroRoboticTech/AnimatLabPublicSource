@@ -13,7 +13,7 @@ Imports AnimatGUI.Framework
 Namespace Forms.Behavior
 
     Public Class NeuralModules
-        Inherits AnimatForm 'System.Windows.Forms.Form
+        Inherits AnimatForm
 
 #Region " Windows Form Designer generated code "
 
@@ -91,20 +91,10 @@ Namespace Forms.Behavior
 
 #Region " Attributes "
 
-        Protected m_beEditor As AnimatGUI.Forms.Behavior.Editor
-
 #End Region
 
 #Region " Properties "
 
-        Public Overridable Property Editor() As Forms.Behavior.Editor
-            Get
-                Return m_beEditor
-            End Get
-            Set(ByVal Value As Forms.Behavior.Editor)
-                m_beEditor = Value
-            End Set
-        End Property
 
 #End Region
 
@@ -120,9 +110,10 @@ Namespace Forms.Behavior
                 Dim myAssembly As System.Reflection.Assembly
                 myAssembly = System.Reflection.Assembly.Load("AnimatGUI")
 
-                If Not m_beEditor.Organism Is Nothing Then
-                    PopulateNeuralModules()
-                End If
+                'TODO
+                'If Not m_beEditor.Organism Is Nothing Then
+                '    PopulateNeuralModules()
+                'End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -130,33 +121,34 @@ Namespace Forms.Behavior
 
         End Sub
 
-        Public Sub PopulateNeuralModules()
+        'TODO
+        'Public Sub PopulateNeuralModules()
 
-            lvNeuralModules.Clear()
+        '    lvNeuralModules.Clear()
 
-            lvNeuralModules.HideSelection = False
-            lvNeuralModules.MultiSelect = False
-            lvNeuralModules.FullRowSelect = True
-            lvNeuralModules.GridLines = True
-            lvNeuralModules.View = View.Details
-            lvNeuralModules.LabelEdit = False
-            lvNeuralModules.Sorting = SortOrder.Ascending
+        '    lvNeuralModules.HideSelection = False
+        '    lvNeuralModules.MultiSelect = False
+        '    lvNeuralModules.FullRowSelect = True
+        '    lvNeuralModules.GridLines = True
+        '    lvNeuralModules.View = View.Details
+        '    lvNeuralModules.LabelEdit = False
+        '    lvNeuralModules.Sorting = SortOrder.Ascending
 
-            lvNeuralModules.Columns.Add("Neural Modules", (lvNeuralModules.Width - 1), HorizontalAlignment.Left)
+        '    lvNeuralModules.Columns.Add("Neural Modules", (lvNeuralModules.Width - 1), HorizontalAlignment.Left)
 
-            Dim nmModule As DataObjects.Behavior.NeuralModule
-            Dim liItem As ListViewItem
-            For Each deEntry As DictionaryEntry In m_beEditor.Organism.NeuralModules
-                nmModule = DirectCast(deEntry.Value, DataObjects.Behavior.NeuralModule)
+        '    Dim nmModule As DataObjects.Behavior.NeuralModule
+        '    Dim liItem As ListViewItem
+        '    For Each deEntry As DictionaryEntry In m_beEditor.Organism.NeuralModules
+        '        nmModule = DirectCast(deEntry.Value, DataObjects.Behavior.NeuralModule)
 
-                If Not Util.IsTypeOf(nmModule.GetType(), GetType(DataObjects.Behavior.PhysicsModule), False) Then
-                    liItem = New ListViewItem(nmModule.ModuleName)
-                    liItem.Tag = nmModule
+        '        If Not Util.IsTypeOf(nmModule.GetType(), GetType(DataObjects.Behavior.PhysicsModule), False) Then
+        '            liItem = New ListViewItem(nmModule.ModuleName)
+        '            liItem.Tag = nmModule
 
-                    lvNeuralModules.Items.Add(liItem)
-                End If
-            Next
-        End Sub
+        '            lvNeuralModules.Items.Add(liItem)
+        '        End If
+        '    Next
+        'End Sub
 
         Public Sub RefreshProperties()
             pgModuleProperties.Refresh()

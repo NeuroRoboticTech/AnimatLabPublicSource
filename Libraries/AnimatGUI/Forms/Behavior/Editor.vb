@@ -1394,8 +1394,8 @@ Namespace Forms.Behavior
                 Me.Organism = DirectCast(Util.Application.Simulation.Environment.Organisms(strOrganism), DataObjects.Physical.Organism)
                 'Me.Organism.BehavioralNodes.Clear()
                 'Me.Organism.BehavioralLinks.Clear()
-                Me.Organism.BehaviorEditor = Me
-                Me.ModulesBar.PopulateNeuralModules()
+                'Me.Organism.BehaviorEditor = Me
+                'Me.ModulesBar.PopulateNeuralModules()
 
                 'Now lets go through and load each of the diagrams.
                 LoadDiagrams(oXml)
@@ -2363,7 +2363,7 @@ Namespace Forms.Behavior
 
             Try
                 If Not m_doOrganism Is Nothing Then
-                    m_doOrganism.BehaviorEditor = Nothing
+                    'm_doOrganism.BehaviorEditor = Nothing
                 End If
 
                 Util.ModificationHistory.RemoveMdiEvents(Me)

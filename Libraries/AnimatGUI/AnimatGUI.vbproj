@@ -1336,6 +1336,12 @@
     <EmbeddedResource Include="Graphics\BodyPlan\Terrain_Treeview.gif" />
     <EmbeddedResource Include="Graphics\BodyPlan\Torus_Treeview.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\BehavioralEditor\SubsystemNode_Treeview.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\BehavioralEditor\NeuralModules_Treeview.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PreBuildEvent />

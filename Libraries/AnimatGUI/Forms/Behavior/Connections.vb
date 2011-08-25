@@ -194,7 +194,7 @@ Namespace Forms.Behavior
                 aryCol.Add(doLink)
 
                 drRow = dtData.NewRow()
-                drRow(0) = doLink.TreeViewName
+                drRow(0) = doLink.ItemName
 
                 If bInLinks Then
                     drRow(1) = doLink.Origin.Name

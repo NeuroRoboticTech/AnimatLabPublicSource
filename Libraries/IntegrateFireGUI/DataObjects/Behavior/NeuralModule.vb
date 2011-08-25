@@ -584,17 +584,9 @@ Namespace DataObjects.Behavior
             m_arySynapseTypes.Clear()
             oXml.IntoChildElement("SynapseTypes")
             Dim iCount As Integer = oXml.NumberOfChildren() - 1
-            Dim strAssemblyFile As String
-            Dim strClassName As String
             Dim stType As SynapseType
             For iIndex As Integer = 0 To iCount
-                oXml.FindChildByIndex(iIndex)
-                oXml.IntoElem() 'Into Node Element
-                strAssemblyFile = oXml.GetChildString("AssemblyFile")
-                strClassName = oXml.GetChildString("ClassName")
-                oXml.OutOfElem() 'Outof Node Element
-
-                stType = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me), SynapseType)
+                stType = DirectCast(Util.LoadClass(oXml, iIndex, Me), SynapseType)
                 stType.LoadData(oXml)
                 'stType.NeuralModule = Me
 

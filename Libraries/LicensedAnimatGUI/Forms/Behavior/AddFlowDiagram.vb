@@ -104,6 +104,8 @@ Namespace Forms.Behavior
 
         Private m_prnFlow As New Lassalle.PrnFlow.PrnFlow
 
+        Protected m_bSelectingMultiple As Boolean = False
+
 #End Region
 
 #Region " Properties "
@@ -473,14 +475,15 @@ Namespace Forms.Behavior
 
             bdNode.Organism = Me.Subsystem.Organism
             bdNode.ParentDiagram = Me
+            bdNode.ParentSubsystem = Me.Subsystem
+            bdNode.Tag = afNode
 
             bdNode.BeforeAddNode()
             m_bnSubSystem.BehavioralNodes.Add(bdNode.ID, bdNode)
             m_ctrlAddFlow.Nodes.Add(afNode)
             m_aryAddFlowNodes.Add(bdNode.ID, afNode)
-            SelectAddFlowItem(DirectCast(afNode, Lassalle.Flow.Item))
-            bdNode.SelectItem()
             bdNode.AfterAddNode()
+            bdNode.SelectItem()
 
             m_Timer.Enabled = True
         End Sub
@@ -551,6 +554,8 @@ Namespace Forms.Behavior
 
             blLink.Organism = Me.Subsystem.Organism
             blLink.ParentDiagram = Me
+            blLink.ParentSubsystem = Me.Subsystem
+            blLink.Tag = afLink
 
             blLink.BeginBatchUpdate()
             blLink.Origin = bnOrigin
@@ -579,13 +584,12 @@ Namespace Forms.Behavior
                 blLink.Destination.AddInLink(blLink)
             End If
 
-            SelectAddFlowItem(DirectCast(afLink, Lassalle.Flow.Item))
-            blLink.SelectItem()
             m_aryAddFlowLinks.Add(blLink.ID, afLink)
 
             blLink.ActualOrigin.AfterAddLink(blLink)
             blLink.ActualDestination.AfterAddLink(blLink)
             blLink.AfterAddLink()
+            blLink.SelectItem()
 
         End Sub
 
@@ -668,9 +672,15 @@ Namespace Forms.Behavior
             End If
         End Sub
 
-        Protected Sub SelectAddFlowItem(ByRef afItem As Lassalle.Flow.Item)
-            m_ctrlAddFlow.SelectedItems.Clear()
+        Protected Sub SelectAddFlowItem(ByRef afItem As Lassalle.Flow.Item, ByVal bSelectMultiple As Boolean)
+            If Not bSelectMultiple Then
+                m_ctrlAddFlow.SelectedItems.Clear()
+            End If
             afItem.Selected = True
+        End Sub
+
+        Protected Sub DeselectAddFlowItem(ByRef afItem As Lassalle.Flow.Item)
+            afItem.Selected = False
         End Sub
 
         Public Overrides Sub AddImage(ByRef diImage As AnimatGUI.DataObjects.Behavior.DiagramImage)
@@ -2953,29 +2963,39 @@ Namespace Forms.Behavior
 
         Protected Sub OnItemsSelected()
 
-            If m_ctrlAddFlow.SelectedItems.Count = 1 Then
-                Dim item As Lassalle.Flow.Item = m_ctrlAddFlow.SelectedItem
-                If Not (item Is Nothing) AndAlso Not item.Tag Is Nothing Then
-                    Dim bdItem As AnimatGUI.DataObjects.Behavior.Data = FindItem(DirectCast(item.Tag, String))
-                    bdItem.SelectItem()
+            Try
+                If m_ctrlAddFlow.SelectedItems.Count = 1 Then
+                    Dim item As Lassalle.Flow.Item = m_ctrlAddFlow.SelectedItem
+                    If Not (item Is Nothing) AndAlso Not item.Tag Is Nothing Then
+                        Dim bdItem As AnimatGUI.DataObjects.Behavior.Data = FindItem(DirectCast(item.Tag, String))
+                        bdItem.SelectItem()
+                    Else
+                        m_bnSubSystem.SelectItem()
+                    End If
+                ElseIf m_ctrlAddFlow.SelectedItems.Count > 1 Then
+                    m_bSelectingMultiple = True
+
+                    'If more than one item is selected then lets get a list of them and pass that it.
+                    Dim bdItem As AnimatGUI.DataObjects.Behavior.Data
+                    Dim iIndex As Integer = 0
+                    Util.ProjectWorkspace.TreeView.ClearSelection()
+                    For Each afItem As Lassalle.Flow.Item In m_ctrlAddFlow.SelectedItems
+                        If Not afItem.Tag Is Nothing Then
+                            bdItem = FindItem(DirectCast(afItem.Tag, String))
+                            bdItem.SelectItem(True)
+                        End If
+                    Next
+
+                    m_bSelectingMultiple = False
                 Else
                     m_bnSubSystem.SelectItem()
                 End If
-            ElseIf m_ctrlAddFlow.SelectedItems.Count > 1 Then
 
-                'If more than one item is selected then lets get a list of them and pass that it.
-                Dim bdItem As AnimatGUI.DataObjects.Behavior.Data
-                Dim iIndex As Integer = 0
-                Util.ProjectWorkspace.TreeView.ClearSelection()
-                For Each afItem As Lassalle.Flow.Item In m_ctrlAddFlow.SelectedItems
-                    If Not afItem.Tag Is Nothing Then
-                        bdItem = FindItem(DirectCast(afItem.Tag, String))
-                        bdItem.SelectItem(True)
-                    End If
-                Next
-            Else
-                m_bnSubSystem.SelectItem()
-            End If
+            Catch ex As Exception
+                Throw ex
+            Finally
+                m_bSelectingMultiple = False
+            End Try
 
         End Sub
 
@@ -3168,6 +3188,18 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
+        Public Overrides Sub OnItemSelected(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal bSelectMultiple As Boolean)
+            If Not m_bSelectingMultiple AndAlso Not doObject.Tag Is Nothing AndAlso Util.IsTypeOf(doObject.Tag.GetType, GetType(Lassalle.Flow.Item), False) Then
+                SelectAddFlowItem(DirectCast(doObject.Tag, Lassalle.Flow.Item), bSelectMultiple)
+            End If
+        End Sub
+
+        Public Overrides Sub OnItemDeselected(ByRef doObject As AnimatGUI.Framework.DataObject)
+            If Not m_bSelectingMultiple AndAlso Not doObject.Tag Is Nothing AndAlso Util.IsTypeOf(doObject.Tag.GetType, GetType(Lassalle.Flow.Item), False) Then
+                DeselectAddFlowItem(DirectCast(doObject.Tag, Lassalle.Flow.Item))
+            End If
+        End Sub
+
 #Region " AddFlow Events "
 
         Private Sub m_ctrlAddFlow_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles m_ctrlAddFlow.MouseDown
@@ -3313,6 +3345,7 @@ Namespace Forms.Behavior
 
         Private Sub m_ctrlAddFlow_BeforeEdit(ByVal sender As Object, ByVal e As Lassalle.Flow.BeforeEditEventArgs) Handles m_ctrlAddFlow.BeforeEdit
             Try
+                'TODO
                 'MenuCommands Needs Fix
                 'Dim mcEdit As MenuCommand = m_beEditor.MainMenu.MenuCommands("Edit")
                 'Dim mcDelete As MenuCommand = mcEdit.MenuCommands("Delete")
@@ -3325,27 +3358,28 @@ Namespace Forms.Behavior
         Private Sub m_ctrlAddFlow_AfterEdit(ByVal sender As Object, ByVal e As Lassalle.Flow.AfterEditEventArgs) Handles m_ctrlAddFlow.AfterEdit
             Try
 
+                'TODO
                 'MenuCommands Needs Fix
                 'Dim mcEdit As MenuCommand = m_beEditor.MainMenu.MenuCommands("Edit")
                 'Dim mcDelete As MenuCommand = mcEdit.MenuCommands("Delete")
                 'mcDelete.Enabled = True
 
-                ''After we have edited the text directly we need to update the behavioral object.
-                'If Not e.Node Is Nothing Then
-                '    Dim bnNode As AnimatGUI.DataObjects.Behavior.Node = FindNode(DirectCast(e.Node.Tag, String))
+                'After we have edited the text directly we need to update the behavioral object.
+                If Not e.Node Is Nothing Then
+                    Dim bnNode As AnimatGUI.DataObjects.Behavior.Node = FindNode(DirectCast(e.Node.Tag, String))
 
-                '    If bnNode.BeforeEdit(e.Text) Then
-                '        e.Cancel.Cancel = True
-                '    Else
-                '        bnNode.BeginBatchUpdate()
-                '        bnNode.Text = e.Text
-                '        bnNode.EndBatchUpdate(False)
-                '        m_beEditor.SelectedObject = bnNode
+                    If bnNode.BeforeEdit(e.Text) Then
+                        e.Cancel.Cancel = True
+                    Else
+                        bnNode.BeginBatchUpdate()
+                        bnNode.Text = e.Text
+                        bnNode.EndBatchUpdate(False)
+                        bnNode.SelectItem(False)
 
-                '        bnNode.AfterEdit()
-                '        Me.IsDirty = True
-                '    End If
-                'End If
+                        bnNode.AfterEdit()
+                        Me.IsDirty = True
+                    End If
+                End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

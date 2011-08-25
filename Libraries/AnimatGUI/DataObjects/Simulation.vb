@@ -701,21 +701,12 @@ Namespace DataObjects
 
             Try
 
-                Dim strAssemblyFile As String
-                Dim strClassname As String
                 Dim doStim As DataObjects.ExternalStimuli.Stimulus
                 If oXml.FindChildElement("Stimuli", False) Then
                     oXml.IntoChildElement("Stimuli")
                     Dim iCount As Integer = oXml.NumberOfChildren() - 1
                     For iIndex As Integer = 0 To iCount
-                        oXml.FindChildByIndex(iIndex)
-
-                        oXml.IntoElem()
-                        strAssemblyFile = oXml.GetChildString("AssemblyFile")
-                        strClassname = oXml.GetChildString("ClassName")
-                        oXml.OutOfElem()
-
-                        doStim = DirectCast(Util.LoadClass(strAssemblyFile, strClassname, Me), DataObjects.ExternalStimuli.Stimulus)
+                        doStim = DirectCast(Util.LoadClass(oXml, iIndex, Me), DataObjects.ExternalStimuli.Stimulus)
                         doStim.LoadData(oXml)
 
                         'Add the stimulus to the projects stim list, but since we are just loading it in here then override

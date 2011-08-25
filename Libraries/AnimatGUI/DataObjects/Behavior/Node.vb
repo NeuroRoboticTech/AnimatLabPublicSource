@@ -178,12 +178,12 @@ Namespace DataObjects.Behavior
             Set(ByVal Value As Boolean)
                 MyBase.Enabled = Value
 
-                If Not Me.TreeNode Is Nothing Then
+                If Not Me.WorkspaceNode Is Nothing Then
                     If m_bEnabled Then
-                        Me.TreeNode.BackColor = Color.White
+                        Me.WorkspaceNode.BackColor = Color.White
                         Me.Transparent = False
                     Else
-                        Me.TreeNode.BackColor = Color.Gray
+                        Me.WorkspaceNode.BackColor = Color.Gray
                         Me.Transparent = True
                     End If
                     UpdateChart()
@@ -783,30 +783,13 @@ Namespace DataObjects.Behavior
             End If
         End Sub
 
-        Public Overrides Sub AddToHierarchyBar()
-            'TODO
-            ''Add this icon to the heirarchy bar
-            'If Not m_ParentDiagram Is Nothing Then
-            '    m_tnTreeNode = m_ParentDiagram.NodesTreeNode.Nodes.Add(Me.Text)
-            '    m_tnTreeNode.ImageIndex = m_ParentEditor.HierarchyBar.ImageManager.GetImageIndex(Me.WorkspaceImageName)
-            '    m_tnTreeNode.SelectedImageIndex = m_ParentEditor.HierarchyBar.ImageManager.GetImageIndex(Me.WorkspaceImageName)
-            '    m_tnTreeNode.Tag = Me
-
-            '    If Me.Enabled Then
-            '        m_tnTreeNode.BackColor = Color.White
-            '    Else
-            '        m_tnTreeNode.BackColor = Color.Gray
-            '    End If
-
-            'End If
-        End Sub
-
         Public Overridable Sub BeforeAddNode()
         End Sub
 
         Public Overridable Sub AfterAddNode()
-            AddToHierarchyBar()
+            AddWorkspaceTreeNode()
             CheckForErrors()
+            ConnectDiagramEvents()
         End Sub
 
         Public Overridable Sub BeforeAddLink(ByVal blLink As Behavior.Link)
@@ -823,8 +806,9 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overridable Sub AfterRemoveNode()
-            RemoveFromHierarchyBar()
+            RemoveWorksapceTreeView()
             ClearErrors()
+            DisconnectDiagramEvents()
         End Sub
 
         Public Overridable Sub BeforeRemoveLink(ByVal blLink As Behavior.Link)
@@ -838,11 +822,29 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overrides Sub AfterUndoRemove()
-            AddToHierarchyBar()
+            AddWorkspaceTreeNode()
             ClearErrors()
+            ConnectDiagramEvents()
         End Sub
 
         Public Overridable Sub AfterAddedToIconBand()
+        End Sub
+
+        Public Overrides Sub AddWorkspaceTreeNode()
+            If Not Me.ParentSubsystem Is Nothing AndAlso Not Me.ParentSubsystem.WorkspaceNode Is Nothing Then
+                CreateWorkspaceTreeView(Me.ParentSubsystem, Me.ParentSubsystem.WorkspaceNode)
+            End If
+        End Sub
+
+        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode)
+
+            'Now add back any links as children
+            For Each deEntry As DictionaryEntry In Me.InLinks
+                Dim blLink As Behavior.Link = DirectCast(deEntry.Value, Behavior.Link)
+                blLink.AddWorkspaceTreeNode()
+            Next
+
         End Sub
 
         Public Overridable Sub AddInLink(ByRef blLink As Behavior.Link)

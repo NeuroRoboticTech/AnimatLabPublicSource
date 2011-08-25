@@ -19,7 +19,6 @@ Namespace DataObjects.Physical
 
 #Region " Attributes "
 
-        Protected m_frmBehaviorEditor As Forms.Behavior.Editor
         Protected m_tnBehavioralSystem As Crownwood.DotNetMagic.Controls.Node
 
         ''' Keeps track of the maximum node count for creating new nodes.
@@ -33,18 +32,12 @@ Namespace DataObjects.Physical
 
         Protected m_aryDiagramImages As New Collections.DiagramImages(Me)
 
+        ''' The neural modules treeview node
+        Protected m_tnNeuralModules As Crownwood.DotNetMagic.Controls.Node
+
 #End Region
 
 #Region " Properties "
-
-        Public Overridable Property BehaviorEditor() As Forms.Behavior.Editor
-            Get
-                Return m_frmBehaviorEditor
-            End Get
-            Set(ByVal Value As Forms.Behavior.Editor)
-                m_frmBehaviorEditor = Value
-            End Set
-        End Property
 
         Protected Overrides ReadOnly Property ParentTreeNode(ByVal dsSim As AnimatGUI.DataObjects.Simulation) As Crownwood.DotNetMagic.Controls.Node
             Get
@@ -130,6 +123,16 @@ Namespace DataObjects.Physical
             m_tnBehavioralSystem = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Behavioral System", "AnimatGUI.Neuron.gif")
 
             m_bnRootSubSystem.CreateWorkspaceTreeView(Me, m_tnBehavioralSystem)
+
+            m_tnNeuralModules = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Neural Modules", "AnimatGUI.NeuralModules_Treeview.gif")
+
+            For Each deEntry As DictionaryEntry In Me.NeuralModules
+                Dim nmModule As Behavior.NeuralModule = DirectCast(deEntry.Value, Behavior.NeuralModule)
+                If Not Util.IsTypeOf(nmModule.GetType, GetType(Behavior.PhysicsModule), False) Then
+                    nmModule.CreateWorkspaceTreeView(Me, m_tnNeuralModules)
+                End If
+            Next
+            m_tnNeuralModules.CollapseAll()
 
         End Sub
 
@@ -289,39 +292,19 @@ Namespace DataObjects.Physical
 
 #Region " Load/Save Methods "
 
-        Protected Overridable Sub LoadBehavioralSystem()
-            Dim oXml As New AnimatGUI.Interfaces.StdXml
-
-            m_bnRootSubSystem = New DataObjects.Behavior.Nodes.Subsystem(Me)
-
-            LoadNeuralModules(oXml)
-
-            m_bnRootSubSystem.LoadData(oXml)
-            m_bnRootSubSystem.InitializeAfterLoad()
-
-        End Sub
-
         Public Overridable Sub LoadNeuralModules(ByRef oXml As AnimatGUI.Interfaces.StdXml)
 
             Try
-                Dim strAssemblyFile As String
-                Dim strClassName As String
                 Dim oMod As Object
+                Dim nmModule As AnimatGUI.DataObjects.Behavior.NeuralModule
 
                 m_aryNeuralModules.Clear()
 
                 oXml.IntoChildElement("NeuralModules")
                 Dim iCount As Integer = oXml.NumberOfChildren() - 1
-                Dim nmModule As AnimatGUI.DataObjects.Behavior.NeuralModule
                 For iIndex As Integer = 0 To iCount
-                    oXml.FindChildByIndex(iIndex)
-                    oXml.IntoElem() 'Into Diagram element
-                    strAssemblyFile = oXml.GetChildString("AssemblyFile")
-                    strClassName = oXml.GetChildString("ClassName")
-                    oXml.OutOfElem() 'Outof Diagram element
-
                     'If the module cannot be found then do not die because of this, just keep trying to go on.
-                    oMod = Util.LoadClass(strAssemblyFile, strClassName, Me, False)
+                    oMod = Util.LoadClass(oXml, iIndex, Me, False)
                     If Not oMod Is Nothing Then
                         nmModule = DirectCast(oMod, AnimatGUI.DataObjects.Behavior.NeuralModule)
                         nmModule.Organism = Me
@@ -357,7 +340,19 @@ Namespace DataObjects.Physical
                 'Load the structure data
                 MyBase.LoadData(oXml)
 
-                LoadBehavioralSystem()
+                oXml.IntoElem() 'Into Organism Element
+                oXml.IntoChildElement("NervousSystem") 'Into NervousSystem Element
+
+                LoadNeuralModules(oXml)
+
+                m_bnRootSubSystem = DirectCast(Util.LoadClass(oXml, 0, Me), DataObjects.Behavior.Nodes.Subsystem)
+                m_bnRootSubSystem.LoadData(oXml)
+
+                oXml.OutOfElem() 'Outof NervousSystem Element
+                oXml.OutOfElem() 'Outof Organism Element
+
+                m_bnRootSubSystem.InitializeAfterLoad()
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -457,7 +452,6 @@ Namespace DataObjects.Physical
 
             Dim doOrganism As Organism = DirectCast(doOriginal, Organism)
 
-            m_frmBehaviorEditor = doOrganism.m_frmBehaviorEditor
             m_bnRootSubSystem = DirectCast(doOrganism.m_bnRootSubSystem.Clone(Me, bCutData, doRoot), AnimatGUI.DataObjects.Behavior.Nodes.Subsystem)
             m_aryDiagramImages = DirectCast(doOrganism.m_aryDiagramImages.Clone(Me, bCutData, doRoot), Collections.DiagramImages)
             m_aryNeuralModules = DirectCast(doOrganism.m_aryNeuralModules.Clone(Me, bCutData, doRoot), AnimatGUI.Collections.SortedNeuralModules)
@@ -484,6 +478,15 @@ Namespace DataObjects.Physical
                 m_bnRootSubSystem.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
             End If
 
+        End Sub
+
+        Public Overrides Sub DeleteInternal()
+            If Not Util.Environment.Organisms Is Nothing Then
+                Util.Environment.Organisms.Remove(Me.ID)
+            End If
+            Me.RemoveWorksapceTreeView()
+            m_tnWorkspaceNode = Nothing
+            m_tnBodyPlanNode = Nothing
         End Sub
 
         Public Overrides Sub ClearIsDirty()

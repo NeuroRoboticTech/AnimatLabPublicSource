@@ -435,77 +435,78 @@ Namespace Forms.ProgramModules
 
         Protected Sub GenerateNetwork()
 
-            Dim doOrganism As AnimatGUI.DataObjects.Physical.Organism = DirectCast(cboOrganisms.SelectedItem, AnimatGUI.DataObjects.Physical.Organism)
+            'TODO
+            'Dim doOrganism As AnimatGUI.DataObjects.Physical.Organism = DirectCast(cboOrganisms.SelectedItem, AnimatGUI.DataObjects.Physical.Organism)
 
-            If doOrganism.BehaviorEditor Is Nothing Then
-                Util.Application.EditBehavioralSystem(doOrganism)
+            'If doOrganism.BehaviorEditor Is Nothing Then
+            '    Util.Application.EditBehavioralSystem(doOrganism)
 
-                If doOrganism.BehaviorEditor Is Nothing Then
-                    Throw New System.Exception("Could not open the behavioral editor window for this organism.")
-                End If
-            End If
+            '    If doOrganism.BehaviorEditor Is Nothing Then
+            '        Throw New System.Exception("Could not open the behavioral editor window for this organism.")
+            '    End If
+            'End If
 
-            Dim doDiagram As AnimatGUI.Forms.Behavior.DiagramOld = doOrganism.BehaviorEditor.AddDiagram("LicensedAnimatGUI.dll", "LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram", Nothing, txtDiagramName.Text)
+            'Dim doDiagram As AnimatGUI.Forms.Behavior.DiagramOld = doOrganism.BehaviorEditor.AddDiagram("LicensedAnimatGUI.dll", "LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram", Nothing, txtDiagramName.Text)
 
-            Dim fltThetaDiff As Single = CSng((2 * Math.PI) / m_iNumNeurons)
-            Dim fltTheta As Single = 0
-            Dim aryNeurons As New AnimatGUI.Collections.Nodes(Nothing)
-            Dim fltR As Single = 60 / fltThetaDiff
+            'Dim fltThetaDiff As Single = CSng((2 * Math.PI) / m_iNumNeurons)
+            'Dim fltTheta As Single = 0
+            'Dim aryNeurons As New AnimatGUI.Collections.Nodes(Nothing)
+            'Dim fltR As Single = 60 / fltThetaDiff
 
-            Dim doTemplateNeuron As New DataObjects.Behavior.Neurons.Tonic(doOrganism)
-            doTemplateNeuron.Ih.Value = m_fltTonicCurrent
-            Dim doNeuron As AnimatGUI.DataObjects.Behavior.Node
-            Dim fltX As Single, fltY As Single
-            Dim fltCenter As Single = (fltR * 2)
+            'Dim doTemplateNeuron As New DataObjects.Behavior.Neurons.Tonic(doOrganism)
+            'doTemplateNeuron.Ih.Value = m_fltTonicCurrent
+            'Dim doNeuron As AnimatGUI.DataObjects.Behavior.Node
+            'Dim fltX As Single, fltY As Single
+            'Dim fltCenter As Single = (fltR * 2)
 
-            doDiagram.BeginGraphicsUpdate()
+            'doDiagram.BeginGraphicsUpdate()
 
-            For iNeuron As Integer = 1 To m_iNumNeurons
-                doNeuron = DirectCast(doTemplateNeuron.Clone(doTemplateNeuron.Parent, False, Nothing), AnimatGUI.DataObjects.Behavior.Node)
-                doNeuron.Text = CStr(iNeuron)
-                aryNeurons.Add(doNeuron)
+            'For iNeuron As Integer = 1 To m_iNumNeurons
+            '    doNeuron = DirectCast(doTemplateNeuron.Clone(doTemplateNeuron.Parent, False, Nothing), AnimatGUI.DataObjects.Behavior.Node)
+            '    doNeuron.Text = CStr(iNeuron)
+            '    aryNeurons.Add(doNeuron)
 
-                fltX = fltCenter + CSng(fltR * Math.Cos(fltTheta))
-                fltY = fltCenter + CSng(fltR * Math.Sin(fltTheta))
+            '    fltX = fltCenter + CSng(fltR * Math.Cos(fltTheta))
+            '    fltY = fltCenter + CSng(fltR * Math.Sin(fltTheta))
 
-                doNeuron.Location = New PointF(fltX, fltY)
-                doDiagram.AddNode(doNeuron)
+            '    doNeuron.Location = New PointF(fltX, fltY)
+            '    doDiagram.AddNode(doNeuron)
 
-                fltTheta = fltTheta + fltThetaDiff
-            Next
+            '    fltTheta = fltTheta + fltThetaDiff
+            'Next
 
-            Dim doTemplateSynapse As New DataObjects.Behavior.Synapses.Normal(doOrganism)
-            doTemplateSynapse.Jump = AnimatGUI.DataObjects.Behavior.Link.enumJump.None
-            Dim fltFij As Single
+            'Dim doTemplateSynapse As New DataObjects.Behavior.Synapses.Normal(doOrganism)
+            'doTemplateSynapse.Jump = AnimatGUI.DataObjects.Behavior.Link.enumJump.None
+            'Dim fltFij As Single
 
-            Dim doNeuronI As AnimatGUI.DataObjects.Behavior.Node
-            Dim doNeuronJ As AnimatGUI.DataObjects.Behavior.Node
-            Dim doSynapse As DataObjects.Behavior.Synapses.Normal
-            Dim doLink As AnimatGUI.DataObjects.Behavior.Link
-            Dim doGain As New AnimatGUI.DataObjects.Gains.Bell(Nothing)
-            doGain.XOffset.ActualValue = m_fltA
-            doGain.Amplitude.ActualValue = m_fltB
-            doGain.Width.ActualValue = m_fltC
-            doGain.YOffset.ActualValue = m_fltD
+            'Dim doNeuronI As AnimatGUI.DataObjects.Behavior.Node
+            'Dim doNeuronJ As AnimatGUI.DataObjects.Behavior.Node
+            'Dim doSynapse As DataObjects.Behavior.Synapses.Normal
+            'Dim doLink As AnimatGUI.DataObjects.Behavior.Link
+            'Dim doGain As New AnimatGUI.DataObjects.Gains.Bell(Nothing)
+            'doGain.XOffset.ActualValue = m_fltA
+            'doGain.Amplitude.ActualValue = m_fltB
+            'doGain.Width.ActualValue = m_fltC
+            'doGain.YOffset.ActualValue = m_fltD
 
-            For iI As Integer = 1 To m_iNumNeurons
-                doNeuronI = DirectCast(aryNeurons(iI - 1), AnimatGUI.DataObjects.Behavior.Node)
+            'For iI As Integer = 1 To m_iNumNeurons
+            '    doNeuronI = DirectCast(aryNeurons(iI - 1), AnimatGUI.DataObjects.Behavior.Node)
 
-                For iJ As Integer = 1 To m_iNumNeurons
-                    If iJ <> iI Then
-                        fltFij = CalculateWeight(doGain, iI, iJ)
-                        doNeuronJ = DirectCast(aryNeurons(iJ - 1), AnimatGUI.DataObjects.Behavior.Node)
+            '    For iJ As Integer = 1 To m_iNumNeurons
+            '        If iJ <> iI Then
+            '            fltFij = CalculateWeight(doGain, iI, iJ)
+            '            doNeuronJ = DirectCast(aryNeurons(iJ - 1), AnimatGUI.DataObjects.Behavior.Node)
 
-                        doSynapse = DirectCast(doTemplateSynapse.Clone(doTemplateSynapse.Parent, False, Nothing), DataObjects.Behavior.Synapses.Normal)
-                        doLink = doSynapse
-                        doSynapse.Weight = New AnimatGUI.Framework.ScaledNumber(doSynapse, "Weight", fltFij, AnimatGUI.Framework.ScaledNumber.enumNumericScale.nano, "Amps", "A")
+            '            doSynapse = DirectCast(doTemplateSynapse.Clone(doTemplateSynapse.Parent, False, Nothing), DataObjects.Behavior.Synapses.Normal)
+            '            doLink = doSynapse
+            '            doSynapse.Weight = New AnimatGUI.Framework.ScaledNumber(doSynapse, "Weight", fltFij, AnimatGUI.Framework.ScaledNumber.enumNumericScale.nano, "Amps", "A")
 
-                        doDiagram.AddLink(doNeuronI, doNeuronJ, doLink)
-                    End If
-                Next
-            Next
+            '            doDiagram.AddLink(doNeuronI, doNeuronJ, doLink)
+            '        End If
+            '    Next
+            'Next
 
-            doDiagram.EndGraphicsUpdate()
+            'doDiagram.EndGraphicsUpdate()
 
         End Sub
 
@@ -525,55 +526,56 @@ Namespace Forms.ProgramModules
 
         Protected Sub ModifyNetwork()
 
-            Dim doOrganism As AnimatGUI.DataObjects.Physical.Organism = DirectCast(cboOrganisms.SelectedItem, AnimatGUI.DataObjects.Physical.Organism)
+            'TODO
+            'Dim doOrganism As AnimatGUI.DataObjects.Physical.Organism = DirectCast(cboOrganisms.SelectedItem, AnimatGUI.DataObjects.Physical.Organism)
 
-            If doOrganism.BehaviorEditor Is Nothing Then
-                Util.Application.EditBehavioralSystem(doOrganism)
+            'If doOrganism.BehaviorEditor Is Nothing Then
+            '    Util.Application.EditBehavioralSystem(doOrganism)
 
-                If doOrganism.BehaviorEditor Is Nothing Then
-                    Throw New System.Exception("Could not open the behavioral editor window for this organism.")
-                End If
-            End If
+            '    If doOrganism.BehaviorEditor Is Nothing Then
+            '        Throw New System.Exception("Could not open the behavioral editor window for this organism.")
+            '    End If
+            'End If
 
-            Dim doDiagram As AnimatGUI.Forms.Behavior.DiagramOld = doOrganism.BehaviorEditor.FindDiagramByName(txtDiagramName.Text)
+            'Dim doDiagram As AnimatGUI.Forms.Behavior.DiagramOld = doOrganism.BehaviorEditor.FindDiagramByName(txtDiagramName.Text)
 
-            Dim doGain As New AnimatGUI.DataObjects.Gains.Bell(Nothing)
-            doGain.XOffset.ActualValue = m_fltA
-            doGain.Amplitude.ActualValue = m_fltB
-            doGain.Width.ActualValue = m_fltC
-            doGain.YOffset.ActualValue = m_fltD
+            'Dim doGain As New AnimatGUI.DataObjects.Gains.Bell(Nothing)
+            'doGain.XOffset.ActualValue = m_fltA
+            'doGain.Amplitude.ActualValue = m_fltB
+            'doGain.Width.ActualValue = m_fltC
+            'doGain.YOffset.ActualValue = m_fltD
 
-            Dim doOrigin As AnimatGUI.DataObjects.Behavior.Node
-            Dim doDestination As AnimatGUI.DataObjects.Behavior.Node
-            Dim doLink As AnimatGUI.DataObjects.Behavior.Link
-            Dim doSynapse As DataObjects.Behavior.Synapses.Normal
+            'Dim doOrigin As AnimatGUI.DataObjects.Behavior.Node
+            'Dim doDestination As AnimatGUI.DataObjects.Behavior.Node
+            'Dim doLink As AnimatGUI.DataObjects.Behavior.Link
+            'Dim doSynapse As DataObjects.Behavior.Synapses.Normal
 
-            Dim iI As Integer
-            Dim iJ As Integer
-            Dim fltFij As Single
+            'Dim iI As Integer
+            'Dim iJ As Integer
+            'Dim fltFij As Single
 
-            For Each deEntry As DictionaryEntry In doDiagram.Nodes
-                doOrigin = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Node)
+            'For Each deEntry As DictionaryEntry In doDiagram.Nodes
+            '    doOrigin = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Node)
 
-                If TypeOf doOrigin Is AnimatGUI.DataObjects.Behavior.Nodes.Neuron AndAlso IsNumeric(doOrigin.Text) Then
+            '    If TypeOf doOrigin Is AnimatGUI.DataObjects.Behavior.Nodes.Neuron AndAlso IsNumeric(doOrigin.Text) Then
 
-                    iI = CInt(doOrigin.Text)
+            '        iI = CInt(doOrigin.Text)
 
-                    For Each doLinkEntry As DictionaryEntry In doOrigin.OutLinks
-                        doLink = DirectCast(doLinkEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
+            '        For Each doLinkEntry As DictionaryEntry In doOrigin.OutLinks
+            '            doLink = DirectCast(doLinkEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
 
-                        If Not doLink.ActualDestination Is Nothing AndAlso TypeOf doLink.ActualDestination Is AnimatGUI.DataObjects.Behavior.Nodes.Neuron AndAlso IsNumeric(doLink.ActualDestination.Text) Then
-                            doDestination = DirectCast(doLink.ActualDestination, AnimatGUI.DataObjects.Behavior.Node)
-                            doSynapse = DirectCast(doLink, DataObjects.Behavior.Synapses.Normal)
+            '            If Not doLink.ActualDestination Is Nothing AndAlso TypeOf doLink.ActualDestination Is AnimatGUI.DataObjects.Behavior.Nodes.Neuron AndAlso IsNumeric(doLink.ActualDestination.Text) Then
+            '                doDestination = DirectCast(doLink.ActualDestination, AnimatGUI.DataObjects.Behavior.Node)
+            '                doSynapse = DirectCast(doLink, DataObjects.Behavior.Synapses.Normal)
 
-                            iJ = CInt(doDestination.Text)
-                            fltFij = CalculateWeight(doGain, iI, iJ)
+            '                iJ = CInt(doDestination.Text)
+            '                fltFij = CalculateWeight(doGain, iI, iJ)
 
-                            doSynapse.Weight = New AnimatGUI.Framework.ScaledNumber(doSynapse, "Weight", fltFij, AnimatGUI.Framework.ScaledNumber.enumNumericScale.nano, "Amps", "A")
-                        End If
-                    Next
-                End If
-            Next
+            '                doSynapse.Weight = New AnimatGUI.Framework.ScaledNumber(doSynapse, "Weight", fltFij, AnimatGUI.Framework.ScaledNumber.enumNumericScale.nano, "Amps", "A")
+            '            End If
+            '        Next
+            '    End If
+            'Next
 
         End Sub
 

@@ -84,7 +84,7 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides ReadOnly Property WorkspaceImageName() As String
             Get
-                Return "AnimatGUI.SubsystemNode.gif"
+                Return "AnimatGUI.SubsystemNode_Treeview.gif"
             End Get
         End Property
 
@@ -240,18 +240,15 @@ Namespace DataObjects.Behavior.Nodes
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node)
             MyBase.CreateWorkspaceTreeView(doParent, doParentNode)
 
-            Dim tnNodes As Crownwood.DotNetMagic.Controls.Node = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Nodes", "AnimatGUI.DefaultObject.gif")
-            Dim tnLinks As Crownwood.DotNetMagic.Controls.Node = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Links", "AnimatGUI.DefaultLink.gif")
-
             Dim doData As DataObjects.Behavior.Data
             For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
                 doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
-                doData.CreateWorkspaceTreeView(Me, tnNodes)
+                doData.AddWorkspaceTreeNode()
             Next
 
             For Each deEntry As DictionaryEntry In m_aryBehavioralLinks
                 doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
-                doData.CreateWorkspaceTreeView(Me, tnLinks)
+                doData.AddWorkspaceTreeNode()
             Next
 
         End Sub
@@ -331,9 +328,6 @@ Namespace DataObjects.Behavior.Nodes
 
             Try
 
-                Dim strAssemblyFile As String
-                Dim strClassName As String
-
                 oXml.IntoElem()
 
                 m_strSubsystemID = Util.LoadID(oXml, "Subsystem", True, "")
@@ -342,9 +336,7 @@ Namespace DataObjects.Behavior.Nodes
                 Dim iCount As Integer = oXml.NumberOfChildren() - 1
                 Dim bnNode As AnimatGUI.DataObjects.Behavior.Node
                 For iIndex As Integer = 0 To iCount
-                    Util.LoadClassModuleName(oXml, iIndex, strAssemblyFile, strClassName)
-
-                    bnNode = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me), AnimatGUI.DataObjects.Behavior.Node)
+                    bnNode = DirectCast(Util.LoadClass(oXml, iIndex, Me), AnimatGUI.DataObjects.Behavior.Node)
                     bnNode.Organism = Me.Organism
                     bnNode.LoadData(oXml)
                     Me.BehavioralNodes.Add(bnNode.ID, bnNode)
@@ -355,9 +347,7 @@ Namespace DataObjects.Behavior.Nodes
                 iCount = oXml.NumberOfChildren() - 1
                 Dim blLink As AnimatGUI.DataObjects.Behavior.Link
                 For iIndex As Integer = 0 To iCount
-                    Util.LoadClassModuleName(oXml, iIndex, strAssemblyFile, strClassName)
-
-                    blLink = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me), AnimatGUI.DataObjects.Behavior.Link)
+                    blLink = DirectCast(Util.LoadClass(oXml, iIndex, Me), AnimatGUI.DataObjects.Behavior.Link)
                     blLink.Organism = Me.Organism
                     blLink.LoadData(oXml)
                     Me.BehavioralLinks.Add(blLink.ID, blLink)

@@ -393,19 +393,10 @@ Namespace DataObjects.Charting
 
             If oXml.FindChildElement("DataColumns", False) Then
                 oXml.IntoChildElement("DataColumns")
-                Dim strAssemblyFile As String
-                Dim strClassname As String
                 Dim doColumn As AnimatGUI.DataObjects.Charting.DataColumn
                 Dim iCount As Integer = oXml.NumberOfChildren() - 1
                 For iIndex As Integer = 0 To iCount
-                    oXml.FindChildByIndex(iIndex)
-
-                    oXml.IntoElem()
-                    strAssemblyFile = oXml.GetChildString("AssemblyFile")
-                    strClassname = oXml.GetChildString("ClassName")
-                    oXml.OutOfElem()
-
-                    doColumn = DirectCast(Util.LoadClass(strAssemblyFile, strClassname, Me), AnimatGUI.DataObjects.Charting.DataColumn)
+                    doColumn = DirectCast(Util.LoadClass(oXml, iIndex, Me), AnimatGUI.DataObjects.Charting.DataColumn)
                     doColumn.LoadData(oXml)
 
                     If doColumn.IsValidColumn Then

@@ -29,6 +29,8 @@ Namespace DataObjects.Behavior
         Protected m_strDescription As String = ""
         Protected m_ParentDiagram As Forms.Behavior.Diagram
         Protected m_doOrganism As DataObjects.Physical.Organism
+        Protected m_doParentSubsystem As DataObjects.Behavior.Nodes.Subsystem
+
         Protected m_bUpdateBatch As Boolean
         Protected m_bFound As Boolean
         Protected m_bOwnerDraw As Boolean = False
@@ -41,8 +43,6 @@ Namespace DataObjects.Behavior
         'with a different id than the original version. So we generate this temp id and use it
         'when saving.
         Protected m_strTempSelectedID As String = ""
-
-        Protected m_tnTreeNode As TreeNode
 
 #End Region
 
@@ -108,28 +108,36 @@ Namespace DataObjects.Behavior
         End Property
 
         <Browsable(False)> _
+        Public Overridable Property ParentSubsystem() As DataObjects.Behavior.Nodes.Subsystem
+            Get
+                Return m_doParentSubsystem
+            End Get
+            Set(ByVal Value As DataObjects.Behavior.Nodes.Subsystem)
+                'DisconnectOrganismEvents()
+                m_doParentSubsystem = Value
+                'ConnectOrganismEvents()
+            End Set
+        End Property
+
+        <Browsable(False)> _
         Public Overridable ReadOnly Property NeuralModule() As DataObjects.Behavior.NeuralModule
             Get
-                'If m_NeuralModule Is Nothing Then
                 If Not m_doOrganism Is Nothing Then
                     Return m_doOrganism.FindNeuralModuleByType(Me.NeuralModuleType, False)
                 Else
                     Return Nothing
                 End If
-                'End If
-                'Return m_NeuralModule
             End Get
         End Property
 
         <Browsable(False)> _
         Public Overrides ReadOnly Property RootForm() As System.Windows.Forms.Form
             Get
-                'TODO
-                'If Not m_ParentEditor Is Nothing Then
-                '    Return m_ParentEditor
-                'Else
-                '    Return Util.Application
-                'End If
+                If Not Me.ParentDiagram Is Nothing Then
+                    Return Me.ParentDiagram
+                Else
+                    Return Util.Application
+                End If
             End Get
         End Property
 
@@ -151,16 +159,6 @@ Namespace DataObjects.Behavior
             End Get
             Set(ByVal Value As Boolean)
                 m_bOwnerDraw = Value
-            End Set
-        End Property
-
-        <Browsable(False)> _
-        Public Overridable Property TreeNode() As System.Windows.Forms.TreeNode
-            Get
-                Return m_tnTreeNode
-            End Get
-            Set(ByVal Value As System.Windows.Forms.TreeNode)
-                m_tnTreeNode = Value
             End Set
         End Property
 
@@ -293,24 +291,22 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overridable Sub UpdateTreeNode()
-            'If Not m_tnTreeNode Is Nothing Then
-            '    If m_tnTreeNode.Text <> Me.Text Then
-            '        m_tnTreeNode.Text = Me.Text
-            '    End If
-            'End If
-            RemoveFromHierarchyBar()
-            AddToHierarchyBar()
+            RemoveWorksapceTreeView()
+            AddWorkspaceTreeNode()
         End Sub
 
-        Public Overridable Sub AddToHierarchyBar()
-
+        Public Overridable Sub AddWorkspaceTreeNode()
         End Sub
 
-        Public Overridable Sub RemoveFromHierarchyBar()
-            'Remove this icon from the heirarchy bar again
-            If Not m_tnTreeNode Is Nothing Then
-                m_tnTreeNode.Remove()
-                m_tnTreeNode = Nothing
+        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node)
+
+            m_tnWorkspaceNode = Util.ProjectWorkspace.AddTreeNode(doParentNode, Me.ItemName, Me.WorkspaceImageName)
+            m_tnWorkspaceNode.Tag = Me
+
+            If Me.Enabled Then
+                m_tnWorkspaceNode.BackColor = Color.White
+            Else
+                m_tnWorkspaceNode.BackColor = Color.Gray
             End If
         End Sub
 
@@ -341,7 +337,7 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overrides Sub AfterRedoRemove()
-            RemoveFromHierarchyBar()
+            RemoveWorksapceTreeView()
             ClearErrors()
         End Sub
 
@@ -415,8 +411,8 @@ Namespace DataObjects.Behavior
 
         Public Overrides Sub EnsureFormActive()
 
-            If Not Me.Organism Is Nothing AndAlso Me.Organism.BehaviorEditor Is Nothing Then
-                'Return Util.Application.EditBehavioralSystem(Me.Organism)
+            If Not Me.ParentDiagram Is Nothing AndAlso Not Me.ParentDiagram.TabPage Is Nothing Then
+                Me.ParentDiagram.TabPage.Selected = True
             End If
 
         End Sub
@@ -468,6 +464,24 @@ Namespace DataObjects.Behavior
                 If Not Me.NeuralModule Is Nothing Then
                     RemoveHandler Me.NeuralModule.AfterPropertyChanged, AddressOf Me.OnNeuralModuleModified
                 End If
+            End If
+
+        End Sub
+
+        Protected Overridable Sub ConnectDiagramEvents()
+
+            If Not Me.ParentDiagram Is Nothing Then
+                AddHandler Me.ItemSelected, AddressOf Me.ParentDiagram.OnItemSelected
+                AddHandler Me.ItemDeselected, AddressOf Me.ParentDiagram.OnItemDeselected
+            End If
+
+        End Sub
+
+        Protected Overridable Sub DisconnectDiagramEvents()
+
+            If Not Me.ParentDiagram Is Nothing Then
+                RemoveHandler Me.ItemSelected, AddressOf Me.ParentDiagram.OnItemSelected
+                RemoveHandler Me.ItemDeselected, AddressOf Me.ParentDiagram.OnItemDeselected
             End If
 
         End Sub

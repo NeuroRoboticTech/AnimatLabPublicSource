@@ -224,8 +224,8 @@ Namespace Forms.Behavior
 
         Public Overridable Sub DataItemSelected(ByVal doItem As DataObjects.Behavior.Data)
             m_bManualSelect = True
-            If Not doItem Is Nothing AndAlso Not doItem.TreeNode Is Nothing Then
-                ctrlTreeView.SelectedNode = doItem.TreeNode
+            If Not doItem Is Nothing AndAlso Not doItem.WorkspaceNode Is Nothing Then
+                'ctrlTreeView.SelectedNode = doItem.TreeNode
             Else
                 ctrlTreeView.SelectedNode = m_tnRoot
             End If

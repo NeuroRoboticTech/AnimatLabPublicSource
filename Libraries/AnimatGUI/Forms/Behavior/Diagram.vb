@@ -88,6 +88,9 @@ Namespace Forms.Behavior
         Public MustOverride Sub EndGraphicsUpdate()
         Public MustOverride Sub RefreshDiagram()
 
+        Public MustOverride Sub OnItemSelected(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal bSelectMultiple As Boolean)
+        Public MustOverride Sub OnItemDeselected(ByRef doObject As AnimatGUI.Framework.DataObject)
+
         'Shape Methods
         Public MustOverride Sub OnAlignTop(ByVal sender As Object, ByVal e As System.EventArgs)
         Public MustOverride Sub OnAlignVerticalCenter(ByVal sender As Object, ByVal e As System.EventArgs)

@@ -45,12 +45,12 @@ Namespace Forms
         'NOTE: The following procedure is required by the Windows Form Designer
         'It can be modified using the Windows Form Designer.  
         'Do not modify it using the code editor.
-        Friend WithEvents tvSynapseTypes As System.Windows.Forms.TreeView
+        Friend WithEvents tvSynapseTypes As Crownwood.DotNetMagic.Controls.TreeControl
         Friend WithEvents pgTypeProperties As System.Windows.Forms.PropertyGrid
         Friend WithEvents btnCancel As System.Windows.Forms.Button
         Friend WithEvents btnOk As System.Windows.Forms.Button
         <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-            Me.tvSynapseTypes = New System.Windows.Forms.TreeView
+            Me.tvSynapseTypes = New Crownwood.DotNetMagic.Controls.TreeControl
             Me.pgTypeProperties = New System.Windows.Forms.PropertyGrid
             Me.btnCancel = New System.Windows.Forms.Button
             Me.btnOk = New System.Windows.Forms.Button
@@ -58,15 +58,15 @@ Namespace Forms
             '
             'tvSynapseTypes
             '
-            Me.tvSynapseTypes.FullRowSelect = True
-            Me.tvSynapseTypes.HideSelection = False
+            'Me.tvSynapseTypes.FullRowSelect = True
+            'Me.tvSynapseTypes.HideSelection = False
             Me.tvSynapseTypes.ImageIndex = -1
             Me.tvSynapseTypes.LabelEdit = True
             Me.tvSynapseTypes.Location = New System.Drawing.Point(8, 8)
             Me.tvSynapseTypes.Name = "tvSynapseTypes"
             Me.tvSynapseTypes.SelectedImageIndex = -1
             Me.tvSynapseTypes.Size = New System.Drawing.Size(208, 416)
-            Me.tvSynapseTypes.Sorted = True
+            'Me.tvSynapseTypes.Sorted = True
             Me.tvSynapseTypes.TabIndex = 0
             '
             'pgTypeProperties
@@ -128,10 +128,10 @@ Namespace Forms
         Protected m_mgrIconImages As AnimatGUI.Framework.ImageManager
         Protected m_nmNeuralModule As DataObjects.Behavior.NeuralModule
 
-        Protected m_tnSynapseTypes As TreeNode
-        Protected m_tnSpikingChemical As TreeNode
-        Protected m_tnNonSpikingChemical As TreeNode
-        Protected m_tnElectrical As TreeNode
+        Protected m_tnSynapseTypes As Crownwood.DotNetMagic.Controls.Node
+        Protected m_tnSpikingChemical As Crownwood.DotNetMagic.Controls.Node
+        Protected m_tnNonSpikingChemical As Crownwood.DotNetMagic.Controls.Node
+        Protected m_tnElectrical As Crownwood.DotNetMagic.Controls.Node
 
         Protected m_bFirstSelect As Boolean = True
 
@@ -197,20 +197,20 @@ Namespace Forms
 
 #Region " Methods "
 
-        Protected Function AddSynapseType(ByVal stType As DataObjects.Behavior.SynapseType) As TreeNode
+        Protected Function AddSynapseType(ByVal stType As DataObjects.Behavior.SynapseType) As Crownwood.DotNetMagic.Controls.Node
+
+            stType.WorkspaceNode = New Crownwood.DotNetMagic.Controls.Node(stType.Name)
+            stType.WorkspaceNode.Tag = stType
 
             If stType.GetType() Is GetType(DataObjects.Behavior.SynapseTypes.SpikingChemical) Then
-                stType.TreeNode = m_tnSpikingChemical.Nodes.Add(stType.Name)
-                stType.TreeNode.Tag = stType
+                m_tnSpikingChemical.Nodes.Add(stType.WorkspaceNode)
             ElseIf stType.GetType() Is GetType(DataObjects.Behavior.SynapseTypes.NonSpikingChemical) Then
-                stType.TreeNode = m_tnNonSpikingChemical.Nodes.Add(stType.Name)
-                stType.TreeNode.Tag = stType
+                m_tnNonSpikingChemical.Nodes.Add(stType.WorkspaceNode)
             ElseIf stType.GetType() Is GetType(DataObjects.Behavior.SynapseTypes.Electrical) Then
-                stType.TreeNode = m_tnElectrical.Nodes.Add(stType.Name)
-                stType.TreeNode.Tag = stType
+                m_tnElectrical.Nodes.Add(stType.WorkspaceNode)
             End If
 
-            Return stType.TreeNode
+            Return stType.WorkspaceNode
         End Function
 
         Protected Sub CheckForSynapseTypeChanges()
@@ -234,18 +234,23 @@ Namespace Forms
             MyBase.OnLoad(e)
 
             Try
-                tvSynapseTypes.Sorted = True
+                'tvSynapseTypes.Sorted = True
 
                 'Lets fill in the tree view with the different types
-                m_tnSynapseTypes = tvSynapseTypes.Nodes.Add("Synapses Classes")
+                Dim tnSynapses As New Crownwood.DotNetMagic.Controls.Node("Synapses Classes")
+                m_tnSynapseTypes = tvSynapseTypes.Nodes.Add(tnSynapses)
 
                 'If the origin node is a non-spiking neuron then do not show the spiking synapses for them to choose.
                 If Not TypeOf m_bnOrigin Is DataObjects.Behavior.Neurons.NonSpiking Then
-                    m_tnSpikingChemical = m_tnSynapseTypes.Nodes.Add("Spiking Chemical Synapses")
+                    m_tnSpikingChemical = New Crownwood.DotNetMagic.Controls.Node("Spiking Chemical Synapses")
+                    m_tnSynapseTypes.Nodes.Add(m_tnSpikingChemical)
                 End If
 
-                m_tnNonSpikingChemical = m_tnSynapseTypes.Nodes.Add("Non-Spiking Chemical Synapses")
-                m_tnElectrical = m_tnSynapseTypes.Nodes.Add("Electrical Synapses")
+                m_tnNonSpikingChemical = New Crownwood.DotNetMagic.Controls.Node("Non-Spiking Chemical Synapses")
+                m_tnSynapseTypes.Nodes.Add(m_tnNonSpikingChemical)
+
+                m_tnElectrical = New Crownwood.DotNetMagic.Controls.Node("Electrical Synapses")
+                m_tnSynapseTypes.Nodes.Add(m_tnElectrical)
 
                 Dim stType As DataObjects.Behavior.SynapseType
                 For Each deEntry As DictionaryEntry In m_nmNeuralModule.SynapseTypes
@@ -287,7 +292,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Sub tvSynapseTypes_AfterSelect(ByVal sender As Object, ByVal e As System.Windows.Forms.TreeViewEventArgs) Handles tvSynapseTypes.AfterSelect
+        Private Sub tvSynapseTypes_AfterSelect1(ByVal tc As Crownwood.DotNetMagic.Controls.TreeControl, ByVal e As Crownwood.DotNetMagic.Controls.NodeEventArgs) Handles tvSynapseTypes.AfterSelect
             Try
 
                 'This is always called the first time the form is shown for some stupid reason.
@@ -308,46 +313,32 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Sub tvSynapseTypes_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles tvSynapseTypes.MouseDown
+        Private Sub ctrlTreeView_ShowContextMenuNode(ByVal tc As Crownwood.DotNetMagic.Controls.TreeControl, ByVal e As Crownwood.DotNetMagic.Controls.CancelNodeEventArgs) Handles tvSynapseTypes.ShowContextMenuNode
 
             Try
-                If e.Button = MouseButtons.Right Then
-                    Dim ctl As Control = CType(sender, System.Windows.Forms.Control)
+                 e.Cancel = False
 
-                    Dim tnSelected As TreeNode = tvSynapseTypes.GetNodeAt(e.X, e.Y)
-                    If tnSelected Is m_tnSynapseTypes Then
-                        Return
-                    End If
+                Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Charting.Axis.WorkspaceTreeviewPopupMenu", Util.SecurityMgr)
+                tvSynapseTypes.ContextMenuNode = popup
 
-                    If Not tnSelected Is Nothing Then
-                        tvSynapseTypes.SelectedNode = tnSelected
-                    End If
-
-                    ' Create the popup menu object
-                    Dim popup As New PopupMenu
-
-                    Dim mcNew As MenuCommand
-                    If Not tnSelected.Tag Is Nothing Then
-                        mcNew = New MenuCommand("Clone Synapse Type", "CloneSynapseType", New EventHandler(AddressOf Me.OnCloneSynapseType))
-                        Dim mcDelete As New MenuCommand("Delete Syanpse Type", "Delete", New EventHandler(AddressOf Me.OnDelete))
-                        popup.MenuCommands.AddRange(New MenuCommand() {mcNew, mcDelete})
-                    Else
-                        mcNew = New MenuCommand("New " & tnSelected.Text, "NewSynapseType", New EventHandler(AddressOf Me.OnNewSynapseType))
-                        popup.MenuCommands.AddRange(New MenuCommand() {mcNew})
-                    End If
-
-                    Dim selected As MenuCommand = popup.TrackPopup(ctl.PointToScreen(New Point(e.X, e.Y)))
+                If Not tvSynapseTypes.SelectedNode Is Nothing AndAlso Not tvSynapseTypes.SelectedNode.Tag Is Nothing Then
+                    Dim mcNew As New System.Windows.Forms.ToolStripMenuItem("Delete Syanpse Type", Nothing, New EventHandler(AddressOf Me.OnCloneSynapseType))
+                    Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete Axis", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Me.OnDelete))
+                    popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcNew, mcDelete})
+                Else
+                    Dim mcNew As New System.Windows.Forms.ToolStripMenuItem("Delete Syanpse Type", Nothing, New EventHandler(AddressOf Me.OnCloneSynapseType))
+                    popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcNew})
                 End If
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
-
         End Sub
 
         Protected Sub OnCloneSynapseType(ByVal sender As Object, ByVal e As System.EventArgs)
 
             Try
-                Dim tnSelected As TreeNode = tvSynapseTypes.SelectedNode
+                Dim tnSelected As Crownwood.DotNetMagic.Controls.Node = tvSynapseTypes.SelectedNode
                 If tnSelected Is Nothing Then
                     Return
                 ElseIf tnSelected.Tag Is Nothing Then
@@ -372,7 +363,7 @@ Namespace Forms
 
             Try
 
-                Dim tnSelected As TreeNode = tvSynapseTypes.SelectedNode
+                Dim tnSelected As Crownwood.DotNetMagic.Controls.Node = tvSynapseTypes.SelectedNode
                 If tnSelected Is Nothing Then
                     Return
                 End If
@@ -401,7 +392,7 @@ Namespace Forms
         Protected Sub OnDelete(ByVal sender As Object, ByVal e As System.EventArgs)
 
             Try
-                Dim tnSelected As TreeNode = tvSynapseTypes.SelectedNode
+                Dim tnSelected As Crownwood.DotNetMagic.Controls.Node = tvSynapseTypes.SelectedNode
                 If tnSelected Is Nothing Then
                     Return
                 ElseIf tnSelected.Tag Is Nothing Then
@@ -428,7 +419,7 @@ Namespace Forms
                         Next
                     End If
 
-                    stType.TreeNode.Remove()
+                    stType.WorkspaceNode.Remove()
                     Me.NeuralModule.SynapseTypes.Remove(stType.ID)
                     Me.pgTypeProperties.SelectedObject = Nothing
                 End If
@@ -440,17 +431,14 @@ Namespace Forms
         End Sub
 
 
-        Private Sub tvSynapseTypes_BeforeLabelEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.NodeLabelEditEventArgs) Handles tvSynapseTypes.BeforeLabelEdit
-
+        Private Sub tvSynapseTypes_BeforeLabelEdit(ByVal tc As Crownwood.DotNetMagic.Controls.TreeControl, ByVal e As Crownwood.DotNetMagic.Controls.LabelEditEventArgs) Handles tvSynapseTypes.BeforeLabelEdit
             If e.Node Is m_tnSynapseTypes OrElse e.Node Is m_tnSpikingChemical _
                OrElse e.Node Is m_tnNonSpikingChemical OrElse e.Node Is m_tnElectrical Then
-                e.CancelEdit = True
+                e.Cancel = True
             End If
-
         End Sub
 
-        Private Sub tvSynapseTypes_AfterLabelEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.NodeLabelEditEventArgs) Handles tvSynapseTypes.AfterLabelEdit
-
+        Private Sub tvSynapseTypes_AfterLabelEdit1(ByVal tc As Crownwood.DotNetMagic.Controls.TreeControl, ByVal e As Crownwood.DotNetMagic.Controls.LabelEditEventArgs) Handles tvSynapseTypes.AfterLabelEdit
             Try
 
                 If Not e.Node Is Nothing AndAlso Not e.Node.Tag Is Nothing AndAlso Not e.Label Is Nothing AndAlso e.Label.Trim.Length > 0 Then
@@ -458,13 +446,12 @@ Namespace Forms
                     Dim stType As DataObjects.Behavior.SynapseType = DirectCast(e.Node.Tag, DataObjects.Behavior.SynapseType)
                     stType.Name = e.Label
                 Else
-                    e.CancelEdit = True
+                    e.Cancel = True
                 End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
-
         End Sub
 
         Private Sub tvSynapseTypes_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles tvSynapseTypes.DoubleClick
