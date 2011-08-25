@@ -31,8 +31,7 @@ Namespace Forms
 
 #Region " Methods "
 
-
-        Public Overridable Sub LoadEditorData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByRef oXml As Interfaces.StdXml)
 
             oXml.IntoElem()
 
@@ -42,9 +41,11 @@ Namespace Forms
 
             oXml.OutOfElem()
 
+            LoadExternalFile(Me.ExternalFilename)
+
         End Sub
 
-        Public Overridable Sub SaveEditorData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByRef oXml As Interfaces.StdXml)
 
             oXml.AddChildElement("Form")
             oXml.IntoElem() 'Into Form Element
@@ -58,6 +59,7 @@ Namespace Forms
 
             oXml.OutOfElem()  'Outof Form Element
 
+            SaveExternalFile(Me.ExternalFilename)
         End Sub
 
         Public Overridable Overloads Sub SaveExternalFile(ByVal strFilename As String)
@@ -66,7 +68,7 @@ Namespace Forms
                 Dim oXml As New AnimatGUI.Interfaces.StdXml
 
                 oXml.AddElement("Form")
-                SaveData(oXml)
+                SaveExternalData(oXml)
 
                 oXml.Save(Util.GetFilePath(Util.Application.ProjectPath, strFilename))
 
@@ -85,12 +87,37 @@ Namespace Forms
                 If File.Exists(strFile) Then
                     oXml.Load(strFile)
                     oXml.FindElement("Form")
-                    LoadData(oXml)
+                    LoadExternalData(oXml)
                 End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+        End Sub
+
+        Protected Overridable Sub LoadExternalData(ByRef oXml As Interfaces.StdXml)
+            oXml.IntoElem() 'Into Form Element
+            m_strID = Util.LoadID(oXml, "")
+            m_strTitle = oXml.GetChildString("Title")
+            m_strTabPageName = oXml.GetChildString("TabPageName", "")
+            oXml.OutOfElem()
+        End Sub
+
+        Protected Overridable Sub SaveExternalData(ByRef oXml As Interfaces.StdXml)
+            oXml.AddChildElement("Form")
+            oXml.IntoElem() 'Into Form Element
+
+            oXml.AddChildElement("ID", m_strID)
+            oXml.AddChildElement("Title", Me.Title)
+            oXml.AddChildElement("TabPageName", m_strTabPageName)
+            oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
+            oXml.AddChildElement("ClassName", Me.ClassName)
+
+            If Not Me.Content Is Nothing Then
+                oXml.AddChildElement("BackgroundForm", Me.Content.BackgroundForm)
+            End If
+
+            oXml.OutOfElem()  'Outof Form Element
         End Sub
 
 #End Region

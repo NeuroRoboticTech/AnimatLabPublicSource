@@ -26,21 +26,19 @@ Namespace DataObjects.Behavior.Nodes
 
 #Region " Properties "
 
-        '<Browsable(False)> _
-        'Public Overrides Property ParentEditor() As AnimatGUI.Forms.Behavior.Editor
-        '    Get
-        '        Return m_ParentEditor
-        '    End Get
-        '    Set(ByVal Value As AnimatGUI.Forms.Behavior.Editor)
-        '        m_ParentEditor = Value
+        Public Overrides Property Organism As Physical.Organism
+            Get
+                Return MyBase.Organism
+            End Get
+            Set(ByVal value As Physical.Organism)
+                MyBase.Organism = value
 
-        '        If Not m_ParentEditor Is Nothing AndAlso Not m_ParentEditor.Organism Is Nothing Then
-        '            Me.Organism = m_ParentEditor.Organism
-        '            m_thLinkedPart = New AnimatGUI.TypeHelpers.LinkedBodyPartList(m_ParentEditor.Organism, Nothing, m_tpBodyPartType)
-        '            m_thDataTypes = New AnimatGUI.TypeHelpers.DataTypeID(Me)
-        '        End If
-        '    End Set
-        'End Property
+                If Not Me.Organism Is Nothing Then
+                    m_thLinkedPart = New AnimatGUI.TypeHelpers.LinkedBodyPartList(Me.Organism, Nothing, m_tpBodyPartType)
+                    m_thDataTypes = New AnimatGUI.TypeHelpers.DataTypeID(Me)
+                End If
+            End Set
+        End Property
 
         <Browsable(False)> _
         Public Overridable Property LinkedPart() As AnimatGUI.TypeHelpers.LinkedBodyPart

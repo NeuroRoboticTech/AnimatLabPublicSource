@@ -655,24 +655,22 @@ Namespace DataObjects.Behavior
                 Return m_diImage
             End Get
             Set(ByVal Value As DataObjects.Behavior.DiagramImage)
-                'TODO
-                'm_diImage = Value
+                m_diImage = Value
 
-                'If m_diImage Is Nothing Then
-                '    Me.DiagramImageName = ""
-                'Else
-                '    'If it is already in the list then use that one. If it is not in the list then add a new one.
-                '    If m_ParentEditor.DiagramImages.Contains(m_diImage.ID) Then
-                '        m_diImage = m_ParentEditor.DiagramImages(m_diImage.ID)
-                '        Me.DiagramImageName = m_diImage.ID
-                '    Else
-                '        m_ParentEditor.DiagramImages.Add(m_diImage.ID, m_diImage)
-                '        'Me.ParentDiagram.AddImage(m_diImage)
-                '        Me.DiagramImageName = m_diImage.ID
-                '    End If
-                'End If
+                If m_diImage Is Nothing Then
+                    Me.DiagramImageName = ""
+                Else
+                    'If it is already in the list then use that one. If it is not in the list then add a new one.
+                    If Me.Organism.DiagramImages.Contains(m_diImage.ID) Then
+                        m_diImage = Me.Organism.DiagramImages(m_diImage.ID)
+                        Me.DiagramImageName = m_diImage.ID
+                    Else
+                        Me.Organism.DiagramImages.Add(m_diImage.ID, m_diImage)
+                        Me.DiagramImageName = m_diImage.ID
+                    End If
+                End If
 
-                'UpdateChart()
+                UpdateChart()
             End Set
         End Property
 
@@ -907,8 +905,7 @@ Namespace DataObjects.Behavior
         Protected Overridable Function FindDiagramImageIndex(ByVal strID As String) As Integer
 
             Try
-                'TODO
-                Return -1 'm_ParentEditor.DiagramImages.FindIndexByID(strID)
+                Return Me.Organism.DiagramImages.FindIndexByID(strID)
             Catch ex As System.Exception
                 Return -1
             End Try
@@ -1251,12 +1248,11 @@ Namespace DataObjects.Behavior
                 Next
 
                 If m_strImageID.Trim.Length > 0 Then
-                    'TODO
-                    'If Not m_ParentEditor Is Nothing Then
-                    '    If m_ParentEditor.DiagramImages.Contains(m_strImageID) Then
-                    '        m_diImage = m_ParentEditor.DiagramImages(m_strImageID)
-                    '    End If
-                    'End If
+                    If Not Me.Organism Is Nothing Then
+                        If Me.Organism.DiagramImages.Contains(m_strImageID) Then
+                            m_diImage = Me.Organism.DiagramImages(m_strImageID)
+                        End If
+                    End If
                 End If
 
                 m_aryLoadingInLinkIDs.Clear()

@@ -147,7 +147,6 @@ Namespace Forms.Tools
             Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "DataChart", Me.GetSimulationXml("DataChart"), True)
             InitializeSimulationReferences()
 
-            CreateWorkspaceTreeView(m_doToolHolder, m_doToolHolder.WorkspaceNode)
         End Sub
 
         Public Overrides Sub LoadData(ByRef oXml As Interfaces.StdXml)
@@ -163,6 +162,7 @@ Namespace Forms.Tools
                 If doTool.ToolFormID = Me.ID Then
                     doTool.ToolForm = Me
                     Me.ToolHolder = doTool
+                    CreateWorkspaceTreeView(m_doToolHolder, m_doToolHolder.WorkspaceNode)
                     Return
                 End If
             Next

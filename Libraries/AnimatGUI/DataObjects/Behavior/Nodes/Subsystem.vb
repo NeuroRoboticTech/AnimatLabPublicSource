@@ -16,7 +16,7 @@ Namespace DataObjects.Behavior.Nodes
 
 #Region " Attributes "
 
-        Protected m_bdSubsystem As Forms.Behavior.Diagram
+        Protected m_bdSubsystemDiagram As Forms.Behavior.Diagram
 
         '''This is a list of all nodes within this subsystem. It is sorted by ID
         Protected m_aryBehavioralNodes As New Collections.AnimatSortedList(Me)
@@ -37,12 +37,12 @@ Namespace DataObjects.Behavior.Nodes
             End Get
         End Property
 
-        Public Overridable Property Subsystem() As Forms.Behavior.Diagram
+        Public Overridable Property SubsystemDiagram() As Forms.Behavior.Diagram
             Get
-                Return m_bdSubsystem
+                Return m_bdSubsystemDiagram
             End Get
             Set(ByVal Value As Forms.Behavior.Diagram)
-                m_bdSubsystem = Value
+                m_bdSubsystemDiagram = Value
             End Set
         End Property
 
@@ -140,37 +140,28 @@ Namespace DataObjects.Behavior.Nodes
             Return oNewNode
         End Function
 
-        Public Overrides Sub AfterAddNode()
-            'TODO
-            'm_bdSubsystem = m_ParentDiagram.AddDiagram("LicensedAnimatGUI.dll", "LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram")
-            'm_bdSubsystem.Subsystem = Me
-            'Me.Text = m_bdSubsystem.TabPageName
-
-
-            'm_ParentEditor.SelectedDiagram(m_ParentDiagram)
-        End Sub
-
         Public Overrides Sub BeforeRemoveNode()
 
         End Sub
 
         Public Overrides Sub AfterRemoveNode()
 
-            If Not m_bdSubsystem Is Nothing Then
-                Util.Application.RemoveChildForm(m_bdSubsystem)
+            If Not m_bdSubsystemDiagram Is Nothing Then
+                Util.Application.RemoveChildForm(m_bdSubsystemDiagram)
             End If
 
             MyBase.AfterRemoveNode()
         End Sub
 
         Public Overrides Sub AfterUndoRemove()
-            ''TODO
-            'If Not m_bdSubsystem Is Nothing Then
-            '    m_ParentDiagram.RestoreDiagram(m_bdSubsystem)
 
-            '    'm_ParentEditor.SelectedDiagram(m_ParentDiagram)
-            '    m_ParentDiagram.SelectDataItem(Me)
-            'End If
+            If Not m_bdSubsystemDiagram Is Nothing Then
+                'TODO
+                'm_ParentDiagram.RestoreDiagram(m_bdSubsystem)
+
+                ''m_ParentEditor.SelectedDiagram(m_ParentDiagram)
+                'm_ParentDiagram.SelectDataItem(Me)
+            End If
 
             MyBase.AfterUndoRemove()
         End Sub
@@ -194,16 +185,18 @@ Namespace DataObjects.Behavior.Nodes
         End Function
 
         Public Overrides Sub AfterEdit()
-            'm_bdSubsystem.TabPage.
+            If Not Me.SubsystemDiagram Is Nothing AndAlso Not Me.SubsystemDiagram.TabPage Is Nothing Then
+                Me.SubsystemDiagram.TabPage.Title = Me.Name
+            End If
         End Sub
 
         Public Overrides Sub DoubleClicked()
-            If m_bdSubsystem Is Nothing Then
-                m_bdSubsystem = CreateDiagram()
-                m_bdSubsystem.Subsystem = Me
-                Util.Application.AddChildForm(m_bdSubsystem)
-            ElseIf Not m_bdSubsystem.TabPage Is Nothing Then
-                m_bdSubsystem.TabPage.Selected = True
+            If m_bdSubsystemDiagram Is Nothing Then
+                m_bdSubsystemDiagram = CreateDiagram()
+                m_bdSubsystemDiagram.Subsystem = Me
+                Util.Application.AddChildForm(m_bdSubsystemDiagram)
+            ElseIf Not m_bdSubsystemDiagram.TabPage Is Nothing Then
+                m_bdSubsystemDiagram.TabPage.Selected = True
             End If
         End Sub
 
@@ -377,15 +370,6 @@ Namespace DataObjects.Behavior.Nodes
                     doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
                     doData.InitializeAfterLoad()
                 Next
-
-                'TODO
-                'If m_bInitialized AndAlso Not m_ParentEditor Is Nothing Then
-                '    If m_strSubsystemID.Trim.Length > 0 Then
-                '        m_bdSubsystem = m_ParentEditor.FindDiagram(m_strSubsystemID)
-                '        Me.Text = m_bdSubsystem.TabPageName
-                '        m_bdSubsystem.Subsystem = Me   'Give this diagram a link to this subsystem
-                '    End If
-                'End If
 
             Catch ex As System.Exception
                 m_bInitialized = False

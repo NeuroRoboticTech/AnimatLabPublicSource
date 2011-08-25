@@ -17,7 +17,7 @@ Imports System.Drawing.Imaging
 Namespace Forms
 
     Public Class SimulationWindow
-        Inherits ExternalFileForm
+        Inherits AnimatForm
 
 #Region " Windows Form Designer generated code "
 

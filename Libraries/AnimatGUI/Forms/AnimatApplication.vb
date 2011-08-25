@@ -3815,7 +3815,7 @@ Namespace Forms
 
         End Sub
 
-        Public Overridable Sub CloseForm(ByVal frmAnimat As Forms.ExternalFileForm, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing, Optional ByVal bThrowError As Boolean = True)
+        Public Overridable Sub CloseForm(ByVal frmAnimat As Forms.AnimatForm, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing, Optional ByVal bThrowError As Boolean = True)
             If frmAnimat Is Nothing OrElse frmAnimat.TabPage Is Nothing Then Return
 
             'We need to loop through all the leafs in the tabbed groups and then check the tabpages in each one
@@ -3943,7 +3943,6 @@ Namespace Forms
                 doStructure.BodyEditor = frmAnimat
                 frmAnimat.PhysicalStructure = doStructure
                 frmAnimat.Initialize(Me)
-                frmAnimat.LoadExternalFile(frmAnimat.ExternalFilename)
 
                 AddChildForm(frmAnimat)
 
@@ -5331,8 +5330,8 @@ Namespace Forms
 
         Private Sub AnimatTabbedGroups_PageCloseRequest(ByVal tg As Crownwood.DotNetMagic.Controls.TabbedGroups, ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs) Handles AnimatTabbedGroups.PageCloseRequest
             Try
-                If Not e.TabPage.Control Is Nothing AndAlso Util.IsTypeOf(e.TabPage.Control.GetType(), GetType(Forms.ExternalFileForm), False) Then
-                    Dim frmAnimat As Forms.ExternalFileForm = DirectCast(e.TabPage.Control, Forms.ExternalFileForm)
+                If Not e.TabPage.Control Is Nothing AndAlso Util.IsTypeOf(e.TabPage.Control.GetType(), GetType(Forms.AnimatForm), False) Then
+                    Dim frmAnimat As Forms.AnimatForm = DirectCast(e.TabPage.Control, Forms.AnimatForm)
 
                     If frmAnimat.IsDirty Then
                         Dim eResult As System.Windows.Forms.DialogResult = DialogResult.OK
@@ -5385,12 +5384,11 @@ Namespace Forms
                     Dim strAssembly As String = oXml.GetChildString("AssemblyFile")
                     Dim strClass As String = oXml.GetChildString("ClassName")
                     Dim strTitle As String = oXml.GetChildString("Title")
-                    Dim strFile As String = oXml.GetChildString("ExternalFile")
                     oXml.OutOfElem()
 
-                    Dim frmAnimat As Forms.ExternalFileForm = DirectCast(CreateForm(strAssembly, strClass, strTitle, False), Forms.ExternalFileForm)
+                    Dim frmAnimat As Forms.AnimatForm = DirectCast(CreateForm(strAssembly, strClass, strTitle, False), Forms.AnimatForm)
                     frmAnimat.Initialize(Me)
-                    frmAnimat.LoadExternalFile(frmAnimat.ExternalFilename)
+                    frmAnimat.LoadData(oXml)
 
                     AddChildForm(frmAnimat, e.TabPage)
                     e.TabPage.Control = frmAnimat
@@ -5403,17 +5401,16 @@ Namespace Forms
 
         Private Sub AnimatTabbedGroups_PageSaving(ByVal tg As Crownwood.DotNetMagic.Controls.TabbedGroups, ByVal e As Crownwood.DotNetMagic.Controls.TGPageSavingEventArgs) Handles AnimatTabbedGroups.PageSaving
             Try
-                If Not e.TabPage.Control Is Nothing AndAlso Util.IsTypeOf(e.TabPage.Control.GetType(), GetType(Forms.ExternalFileForm), False) Then
-                    Dim frmAnimat As Forms.ExternalFileForm = DirectCast(e.TabPage.Control, Forms.ExternalFileForm)
+                If Not e.TabPage.Control Is Nothing AndAlso Util.IsTypeOf(e.TabPage.Control.GetType(), GetType(Forms.AnimatForm), False) Then
+                    Dim frmAnimat As Forms.AnimatForm = DirectCast(e.TabPage.Control, Forms.AnimatForm)
                     Dim oXml As New AnimatGUI.Interfaces.StdXml()
 
                     oXml.AddElement("TabPage")
-                    frmAnimat.SaveEditorData(oXml)
+
+                    frmAnimat.SaveData(oXml)
 
                     Dim strXml As String = oXml.Serialize()
                     e.XmlOut.WriteCData(strXml)
-
-                    frmAnimat.SaveExternalFile(frmAnimat.ExternalFilename)
 
                 End If
             Catch ex As System.Exception

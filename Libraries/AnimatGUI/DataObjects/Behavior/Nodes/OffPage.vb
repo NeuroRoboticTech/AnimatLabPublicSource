@@ -76,19 +76,18 @@ Namespace DataObjects.Behavior.Nodes
             End Set
         End Property
 
-        'Public Overrides Property ParentEditor() As Forms.Behavior.Editor
-        '    Get
-        '        Return m_ParentEditor
-        '    End Get
-        '    Set(ByVal Value As Forms.Behavior.Editor)
-        '        m_ParentEditor = Value
-        '        m_thLinkedNode = New TypeHelpers.LinkedNode(m_ParentEditor, Nothing)
+        Public Overrides Property Organism As Physical.Organism
+            Get
+                Return MyBase.Organism
+            End Get
+            Set(ByVal value As Physical.Organism)
+                MyBase.Organism = value
 
-        '        If Not m_ParentEditor Is Nothing AndAlso Not m_ParentEditor.Organism Is Nothing Then
-        '            Me.Organism = m_ParentEditor.Organism
-        '        End If
-        '    End Set
-        'End Property
+                If Not Me.Organism Is Nothing Then
+                    m_thLinkedNode = New TypeHelpers.LinkedNode(Me.Organism, Nothing)
+                End If
+            End Set
+        End Property
 
         Public Overrides ReadOnly Property NeuralModuleType() As System.Type
             Get
@@ -153,9 +152,10 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides Sub DoubleClicked()
             If Not m_thLinkedNode Is Nothing AndAlso Not m_thLinkedNode.Node Is Nothing Then
-                'TODO
-                'm_ParentEditor.SelectedDiagram(m_thLinkedNode.Node.ParentDiagram)
-                'm_thLinkedNode.Node.ParentDiagram.SelectDataItem(m_thLinkedNode.Node)
+                If Not m_thLinkedNode.Node.ParentDiagram Is Nothing AndAlso Not m_thLinkedNode.Node.ParentDiagram.TabPage Is Nothing Then
+                    m_thLinkedNode.Node.ParentDiagram.TabPage.Selected = True
+                End If
+                m_thLinkedNode.Node.SelectItem(False)
             End If
         End Sub
 
@@ -259,14 +259,13 @@ Namespace DataObjects.Behavior.Nodes
                     End If
                 Next
 
-                'TODO
-                'If m_strImageID.Trim.Length > 0 Then
-                '    If Not m_parentEditor Is Nothing Then
-                '        If m_ParentEditor.DiagramImages.Contains(m_strImageID) Then
-                '            m_diImage = m_ParentEditor.DiagramImages(m_strImageID)
-                '        End If
-                '    End If
-                'End If
+                If m_strImageID.Trim.Length > 0 Then
+                    If Not Me.Organism Is Nothing Then
+                        If Me.Organism.DiagramImages.Contains(m_strImageID) Then
+                            m_diImage = Me.Organism.DiagramImages(m_strImageID)
+                        End If
+                    End If
+                End If
 
                 m_aryLoadingInLinkIDs.Clear()
                 m_aryLoadingOutLinkIDs.Clear()
