@@ -4,10 +4,7 @@ Imports System.Collections
 Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports System.Diagnostics
-Imports Crownwood.Magic.Common
 Imports AnimatGuiCtrls.Controls
-Imports Crownwood.Magic.Docking
-Imports Crownwood.Magic.Menus
 Imports AnimatGUI.Framework
 
 Namespace Forms
@@ -47,10 +44,10 @@ Namespace Forms
         'NOTE: The following procedure is required by the Windows Form Designer
         'It can be modified using the Windows Form Designer.  
         'Do not modify it using the code editor.
-        Friend WithEvents ctrlOutlookbar As Crownwood.Magic.Controls.OutlookBar
+        Friend WithEvents ctrlOutlookbar As AnimatGuiCtrls.Controls.OutlookBar
 
         <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-            Me.ctrlOutlookbar = New Crownwood.Magic.Controls.OutlookBar
+            Me.ctrlOutlookbar = New AnimatGuiCtrls.Controls.OutlookBar
             Me.SuspendLayout()
             '
             'Panel1
@@ -85,7 +82,7 @@ Namespace Forms
             End Get
         End Property
 
-        Public Overridable ReadOnly Property OutlookBar() As Crownwood.Magic.Controls.OutlookBar
+        Public Overridable ReadOnly Property OutlookBar() As AnimatGuiCtrls.Controls.OutlookBar
             Get
                 Return ctrlOutlookbar
             End Get

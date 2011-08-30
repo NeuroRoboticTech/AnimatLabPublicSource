@@ -105,10 +105,6 @@
       <Name>Lassalle.XMLFlow1</Name>
       <HintPath>..\..\bin\Lassalle.XMLFlow1.dll</HintPath>
     </Reference>
-    <Reference Include="MagicLibrary, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\MagicLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualBasic">
       <Name>Microsoft.VisualBasic</Name>
     </Reference>
@@ -163,9 +159,6 @@
     <Compile Include="Forms\Behavior\AddFlowDiagram.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Behavior\AddFlowDiagramOld.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Forms\Charts\GainControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
@@ -185,9 +178,6 @@
     </Compile>
     <EmbeddedResource Include="Forms\Behavior\AddFlowDiagram.resx">
       <DependentUpon>AddFlowDiagram.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Behavior\AddFlowDiagramOld.resx">
-      <DependentUpon>AddFlowDiagramOld.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Charts\GainControl.resx">
       <DependentUpon>GainControl.vb</DependentUpon>

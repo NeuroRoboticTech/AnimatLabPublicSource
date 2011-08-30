@@ -57,27 +57,27 @@ Namespace Framework.UndoSystem
             Return evHistory
         End Function
 
-        Public Sub RemoveMdiEvents(ByVal mdiParent As AnimatGUI.Forms.MdiChild)
+        'Public Sub RemoveMdiEvents(ByVal mdiParent As AnimatGUI.Forms.MdiChild)
 
-            Dim aryRemoveList As New ArrayList
-            For Each oEvent As Object In m_aryEvents
-                If TypeOf oEvent Is HistoryEvent Then
-                    Dim evHistory As HistoryEvent = DirectCast(oEvent, HistoryEvent)
-                    If evHistory.MdiParent Is mdiParent Then
-                        aryRemoveList.Add(evHistory)
-                    End If
-                ElseIf TypeOf oEvent Is EventGroup Then
-                    Dim evGroup As EventGroup = DirectCast(oEvent, EventGroup)
-                    evGroup.RemoveMdiEvents(mdiParent)
-                    If evGroup.UndoCount = 0 Then aryRemoveList.Add(evGroup)
-                End If
-            Next
+        '    Dim aryRemoveList As New ArrayList
+        '    For Each oEvent As Object In m_aryEvents
+        '        If TypeOf oEvent Is HistoryEvent Then
+        '            Dim evHistory As HistoryEvent = DirectCast(oEvent, HistoryEvent)
+        '            If evHistory.MdiParent Is mdiParent Then
+        '                aryRemoveList.Add(evHistory)
+        '            End If
+        '        ElseIf TypeOf oEvent Is EventGroup Then
+        '            Dim evGroup As EventGroup = DirectCast(oEvent, EventGroup)
+        '            evGroup.RemoveMdiEvents(mdiParent)
+        '            If evGroup.UndoCount = 0 Then aryRemoveList.Add(evGroup)
+        '        End If
+        '    Next
 
-            For Each oEvent As Object In aryRemoveList
-                m_aryEvents.Remove(oEvent)
-            Next
+        '    For Each oEvent As Object In aryRemoveList
+        '        m_aryEvents.Remove(oEvent)
+        '    Next
 
-        End Sub
+        'End Sub
 
         Public Sub Clear()
             m_aryEvents.Clear()

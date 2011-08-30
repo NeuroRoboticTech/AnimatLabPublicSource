@@ -62,12 +62,13 @@ Namespace Framework.UndoSystem
 
         Protected Overridable Sub RefreshParent(ByVal doObject As AnimatGUI.Framework.DataObject)
 
-            If Not m_mdiParent Is Nothing Then
-                m_mdiParent.MakeVisible()
-                m_mdiParent.UndoRedoRefresh(doObject)
-            ElseIf Not m_frmParent Is Nothing Then
-                m_frmParent.UndoRedoRefresh(doObject)
-            End If
+            'TODO
+            'If Not m_mdiParent Is Nothing Then
+            '    m_mdiParent.MakeVisible()
+            '    m_mdiParent.UndoRedoRefresh(doObject)
+            'ElseIf Not m_frmParent Is Nothing Then
+            '    m_frmParent.UndoRedoRefresh(doObject)
+            'End If
 
         End Sub
 

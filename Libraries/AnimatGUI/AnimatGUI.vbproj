@@ -88,11 +88,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\DotNetMagic.DLL</HintPath>
     </Reference>
-    <Reference Include="MagicLibrary, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\MagicLibrary.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -489,25 +484,13 @@
     <Compile Include="Forms\Behavior\Diagram.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Behavior\DiagramOld.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Behavior\Editor.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Forms\Behavior\Export.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Behavior\Hierarchy.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Behavior\NeuralModules.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Behavior\Relabel.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Behavior\SelectByType.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Behavior\SelectLinkType.vb">
@@ -575,9 +558,6 @@
     </Compile>
     <Compile Include="Forms\Gain\GainControl.vb">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\MdiChild.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\MultiLineStringEditor.vb">
       <SubType>Form</SubType>
@@ -815,9 +795,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Gain\GainControl.resx">
       <DependentUpon>GainControl.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MdiChild.resx">
-      <DependentUpon>MdiChild.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MultiLineStringEditor.resx">
       <DependentUpon>MultiLineStringEditor.vb</DependentUpon>
@@ -1113,26 +1090,14 @@
     <EmbeddedResource Include="Forms\Behavior\Connections.resx">
       <DependentUpon>Connections.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Behavior\DiagramOld.resx">
-      <DependentUpon>DiagramOld.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Behavior\Editor.resx">
-      <DependentUpon>Editor.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Behavior\Export.resx">
       <DependentUpon>Export.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Behavior\Hierarchy.resx">
-      <DependentUpon>Hierarchy.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Behavior\NeuralModules.resx">
       <DependentUpon>NeuralModules.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Behavior\Relabel.resx">
       <DependentUpon>Relabel.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Behavior\SelectByType.resx">
-      <DependentUpon>SelectByType.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Behavior\SelectLinkType.resx">
       <DependentUpon>SelectLinkType.vb</DependentUpon>

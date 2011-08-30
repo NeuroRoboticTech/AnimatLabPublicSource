@@ -19,68 +19,68 @@ Namespace Collections
             MyBase.New(doParent)
         End Sub
 
-        Default Public Property Item(ByVal index As Integer) As AnimatGUI.Forms.Behavior.DiagramOld
+        Default Public Property Item(ByVal index As Integer) As AnimatGUI.Forms.Behavior.Diagram
             Get
-                Return CType(List(index), AnimatGUI.Forms.Behavior.DiagramOld)
+                Return CType(List(index), AnimatGUI.Forms.Behavior.Diagram)
             End Get
-            Set(ByVal Value As AnimatGUI.Forms.Behavior.DiagramOld)
+            Set(ByVal Value As AnimatGUI.Forms.Behavior.Diagram)
                 List(index) = Value
             End Set
         End Property
 
 
-        Public Function Add(ByVal value As AnimatGUI.Forms.Behavior.DiagramOld) As Integer
+        Public Function Add(ByVal value As AnimatGUI.Forms.Behavior.Diagram) As Integer
             Me.IsDirty = True
             Return List.Add(value)
         End Function 'Add
 
-        Public Function IndexOf(ByVal value As AnimatGUI.Forms.Behavior.DiagramOld) As Integer
+        Public Function IndexOf(ByVal value As AnimatGUI.Forms.Behavior.Diagram) As Integer
             Return List.IndexOf(value)
         End Function 'IndexOf
 
 
-        Public Sub Insert(ByVal index As Integer, ByVal value As AnimatGUI.Forms.Behavior.DiagramOld)
+        Public Sub Insert(ByVal index As Integer, ByVal value As AnimatGUI.Forms.Behavior.Diagram)
             List.Insert(index, value)
             Me.IsDirty = True
         End Sub 'Insert
 
 
-        Public Sub Remove(ByVal value As AnimatGUI.Forms.Behavior.DiagramOld)
+        Public Sub Remove(ByVal value As AnimatGUI.Forms.Behavior.Diagram)
             List.Remove(value)
             Me.IsDirty = True
         End Sub 'Remove
 
 
-        Public Function Contains(ByVal value As AnimatGUI.Forms.Behavior.DiagramOld) As Boolean
+        Public Function Contains(ByVal value As AnimatGUI.Forms.Behavior.Diagram) As Boolean
             ' If value is not of type Int16, this will return false.
             Return List.Contains(value)
         End Function 'Contains
 
 
         Protected Overrides Sub OnInsert(ByVal index As Integer, ByVal value As [Object])
-            If Not TypeOf (value) Is AnimatGUI.Forms.Behavior.DiagramOld Then
-                Throw New ArgumentException("value must be of type AnimatGUI.Forms.Behavior.DiagramOld.", "value")
+            If Not TypeOf (value) Is AnimatGUI.Forms.Behavior.Diagram Then
+                Throw New ArgumentException("value must be of type AnimatGUI.Forms.Behavior.Diagram.", "value")
             End If
         End Sub 'OnInsert
 
 
         Protected Overrides Sub OnRemove(ByVal index As Integer, ByVal value As [Object])
-            If Not TypeOf (value) Is AnimatGUI.Forms.Behavior.DiagramOld Then
-                Throw New ArgumentException("value must be of type AnimatGUI.Forms.Behavior.DiagramOld.", "value")
+            If Not TypeOf (value) Is AnimatGUI.Forms.Behavior.Diagram Then
+                Throw New ArgumentException("value must be of type AnimatGUI.Forms.Behavior.Diagram.", "value")
             End If
         End Sub 'OnRemove
 
 
         Protected Overrides Sub OnSet(ByVal index As Integer, ByVal oldValue As [Object], ByVal newValue As [Object])
-            If Not TypeOf (newValue) Is AnimatGUI.Forms.Behavior.DiagramOld Then
-                Throw New ArgumentException("newValue must be of type AnimatGUI.Forms.Behavior.DiagramOld.", "newValue")
+            If Not TypeOf (newValue) Is AnimatGUI.Forms.Behavior.Diagram Then
+                Throw New ArgumentException("newValue must be of type AnimatGUI.Forms.Behavior.Diagram.", "newValue")
             End If
         End Sub 'OnSet
 
 
         Protected Overrides Sub OnValidate(ByVal value As [Object])
-            If Not TypeOf (value) Is AnimatGUI.Forms.Behavior.DiagramOld Then
-                Throw New ArgumentException("value must be of type AnimatGUI.Forms.Behavior.DiagramOld.")
+            If Not TypeOf (value) Is AnimatGUI.Forms.Behavior.Diagram Then
+                Throw New ArgumentException("value must be of type AnimatGUI.Forms.Behavior.Diagram.")
             End If
         End Sub 'OnValidate 
 
@@ -106,11 +106,11 @@ Namespace Collections
             MyBase.New(doParent)
         End Sub
 
-        Default Public Property Item(ByVal key As [String]) As AnimatGUI.Forms.Behavior.DiagramOld
+        Default Public Property Item(ByVal key As [String]) As AnimatGUI.Forms.Behavior.Diagram
             Get
-                Return CType(Dictionary(key), AnimatGUI.Forms.Behavior.DiagramOld)
+                Return CType(Dictionary(key), AnimatGUI.Forms.Behavior.Diagram)
             End Get
-            Set(ByVal Value As AnimatGUI.Forms.Behavior.DiagramOld)
+            Set(ByVal Value As AnimatGUI.Forms.Behavior.Diagram)
                 Dictionary(key) = Value
             End Set
         End Property
@@ -127,7 +127,7 @@ Namespace Collections
             End Get
         End Property
 
-        Public Sub Add(ByVal key As [String], ByVal value As AnimatGUI.Forms.Behavior.DiagramOld)
+        Public Sub Add(ByVal key As [String], ByVal value As AnimatGUI.Forms.Behavior.Diagram)
             Dictionary.Add(key, value)
             Me.IsDirty = True
         End Sub 'Add
@@ -146,11 +146,11 @@ Namespace Collections
                 Throw New ArgumentException("key must be of type String.", "key")
             End If
 
-            If Not TypeOf (value) Is AnimatGUI.Forms.Behavior.DiagramOld Then
-                Throw New ArgumentException("value must be of type AnimatGUI.Forms.Behavior.DiagramOld.", "value")
+            If Not TypeOf (value) Is AnimatGUI.Forms.Behavior.Diagram Then
+                Throw New ArgumentException("value must be of type AnimatGUI.Forms.Behavior.Diagram.", "value")
             End If
 
-            Dim diImage As AnimatGUI.Forms.Behavior.DiagramOld = DirectCast(value, AnimatGUI.Forms.Behavior.DiagramOld)
+            Dim diImage As AnimatGUI.Forms.Behavior.Diagram = DirectCast(value, AnimatGUI.Forms.Behavior.Diagram)
 
         End Sub 'OnInsert
 
@@ -165,8 +165,8 @@ Namespace Collections
                 Throw New ArgumentException("key must be of type String.", "key")
             End If
 
-            If Not TypeOf (newValue) Is AnimatGUI.Forms.Behavior.DiagramOld Then
-                Throw New ArgumentException("newValue must be of type AnimatGUI.Forms.Behavior.DiagramOld.", "newValue")
+            If Not TypeOf (newValue) Is AnimatGUI.Forms.Behavior.Diagram Then
+                Throw New ArgumentException("newValue must be of type AnimatGUI.Forms.Behavior.Diagram.", "newValue")
             End If
         End Sub 'OnSet
 
@@ -175,8 +175,8 @@ Namespace Collections
                 Throw New ArgumentException("key must be of type String.", "key")
             End If
 
-            If Not TypeOf (value) Is AnimatGUI.Forms.Behavior.DiagramOld Then
-                Throw New ArgumentException("value must be of type AnimatGUI.Forms.Behavior.DiagramOld.", "value")
+            If Not TypeOf (value) Is AnimatGUI.Forms.Behavior.Diagram Then
+                Throw New ArgumentException("value must be of type AnimatGUI.Forms.Behavior.Diagram.", "value")
             End If
         End Sub 'OnValidate 
 

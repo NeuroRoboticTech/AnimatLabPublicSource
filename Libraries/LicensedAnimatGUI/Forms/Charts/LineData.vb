@@ -5,10 +5,7 @@ Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports System.Diagnostics
 Imports System.Runtime.InteropServices
-Imports Crownwood.Magic.Common
 Imports AnimatGuiCtrls.Controls
-Imports Crownwood.Magic.Docking
-Imports Crownwood.Magic.Menus
 Imports AnimatGUI
 Imports AnimatGUI.Forms
 Imports AnimatGUI.Framework
@@ -83,7 +80,7 @@ Namespace Forms.Charts
         Public m_aryNames() As String
 
         Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
-            grdData.DataSource = New Crownwood.Magic.Controls.ArrayDataView(m_aryData, m_aryNames)
+            grdData.DataSource = New AnimatGuiCtrls.Controls.ArrayDataView(m_aryData, m_aryNames)
         End Sub
 
     End Class

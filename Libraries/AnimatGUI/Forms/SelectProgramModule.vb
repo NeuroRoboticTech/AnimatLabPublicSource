@@ -7,11 +7,7 @@ Imports System.Diagnostics
 Imports System.IO
 Imports System.Text
 Imports System.Runtime.Remoting
-Imports Crownwood.Magic.Common
 Imports AnimatGuiCtrls.Controls
-Imports Crownwood.Magic.Docking
-Imports Crownwood.Magic.Menus
-Imports Crownwood.Magic.Toolbars
 Imports AnimatGUI.Framework
 
 Namespace Forms

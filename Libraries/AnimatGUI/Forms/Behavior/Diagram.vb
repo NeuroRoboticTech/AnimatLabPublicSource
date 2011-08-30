@@ -5,10 +5,6 @@ Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports System.Diagnostics
 Imports AnimatGuiCtrls.Controls
-Imports Crownwood.Magic.Common
-Imports Crownwood.Magic.Controls
-Imports Crownwood.Magic.Docking
-Imports Crownwood.Magic.Menus
 Imports AnimatGUI
 Imports AnimatGUI.Framework
 Imports AnimatGUI.DataObjects

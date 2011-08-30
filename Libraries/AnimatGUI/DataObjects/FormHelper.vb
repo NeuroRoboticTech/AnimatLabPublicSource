@@ -16,21 +16,12 @@ Namespace DataObjects
 
 #Region " Attributes "
 
-        Protected m_mdiParent As Forms.MdiChild
         Protected m_afParent As Forms.AnimatForm
 
 #End Region
 
 #Region " Properties "
 
-        Public Property MdiParent() As Forms.MdiChild
-            Get
-                Return m_mdiParent
-            End Get
-            Set(ByVal Value As Forms.MdiChild)
-                m_mdiParent = Value
-            End Set
-        End Property
 
         Public Property AnimatParent() As Forms.AnimatForm
             Get
@@ -50,9 +41,7 @@ Namespace DataObjects
                     m_bIsDirty = Value
 
                     'Reset the text in the associated form
-                    If Not m_mdiParent Is Nothing Then
-                        m_mdiParent.RefreshTitle()
-                    ElseIf Not m_afParent Is Nothing Then
+                    If Not m_afParent Is Nothing Then
                         m_afParent.RefreshTitle()
                     End If
 
@@ -73,11 +62,6 @@ Namespace DataObjects
             m_afParent = afParent
         End Sub
 
-        Public Sub New(ByVal mdiParent As Forms.MdiChild)
-            MyBase.New(Nothing)
-            m_mdiParent = mdiParent
-        End Sub
-
 #Region " DataObject Methods "
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
@@ -86,15 +70,7 @@ Namespace DataObjects
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
                                         ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatGUI.Framework.DataObject
-            Dim doItem As FormHelper
-
-            If Not m_mdiParent Is Nothing Then
-                doItem = New FormHelper(m_mdiParent)
-            Else
-                doItem = New FormHelper(m_afParent)
-            End If
-
-            Return doItem
+            Return New FormHelper(m_afParent)
         End Function
 
 #End Region

@@ -14,21 +14,11 @@ Namespace Framework.UndoSystem
 
 #Region " Attributes "
 
-        Protected m_mdiParent As AnimatGUI.Forms.MdiChild
         Protected m_frmParent As AnimatGUI.Forms.AnimatForm
 
 #End Region
 
 #Region " Properties "
-
-        Public Overridable Property MdiParent() As AnimatGUI.Forms.MdiChild
-            Get
-                Return m_mdiParent
-            End Get
-            Set(ByVal Value As AnimatGUI.Forms.MdiChild)
-                m_mdiParent = Value
-            End Set
-        End Property
 
         Public Overridable Property AnimatParent() As AnimatGUI.Forms.AnimatForm
             Get
@@ -45,9 +35,7 @@ Namespace Framework.UndoSystem
 
         Public Sub New(ByVal frmParent As System.Windows.Forms.Form)
 
-            If TypeOf frmParent Is AnimatGUI.Forms.MdiChild Then
-                m_mdiParent = DirectCast(frmParent, AnimatGUI.Forms.MdiChild)
-            ElseIf TypeOf frmParent Is AnimatGUI.Forms.AnimatForm Then
+            If TypeOf frmParent Is AnimatGUI.Forms.AnimatForm Then
                 m_frmParent = DirectCast(frmParent, AnimatGUI.Forms.AnimatForm)
             End If
 

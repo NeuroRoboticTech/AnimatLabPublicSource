@@ -4,10 +4,7 @@ Imports System.Collections
 Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports System.Diagnostics
-Imports Crownwood.Magic.Common
 Imports AnimatGuiCtrls.Controls
-Imports Crownwood.Magic.Docking
-Imports Crownwood.Magic.Menus
 Imports AnimatGUI.Framework
 
 Namespace Forms.Behavior
@@ -187,7 +184,7 @@ Namespace Forms.Behavior
 #Region " Attributes "
 
         Protected m_aryItems As New ArrayList
-        Protected m_doDiagram As AnimatGUI.Forms.Behavior.DiagramOld
+        Protected m_doDiagram As AnimatGUI.Forms.Behavior.Diagram
 
 #End Region
 
@@ -199,11 +196,11 @@ Namespace Forms.Behavior
             End Get
         End Property
 
-        Public Overridable Property Diagram() As AnimatGUI.Forms.Behavior.DiagramOld
+        Public Overridable Property Diagram() As AnimatGUI.Forms.Behavior.Diagram
             Get
                 Return m_doDiagram
             End Get
-            Set(ByVal Value As AnimatGUI.Forms.Behavior.DiagramOld)
+            Set(ByVal Value As AnimatGUI.Forms.Behavior.Diagram)
                 m_doDiagram = Value
             End Set
         End Property

@@ -8,9 +8,6 @@ Imports System.Diagnostics
 Imports System.IO
 Imports System.Xml
 Imports AnimatGuiCtrls.Controls
-Imports Crownwood.Magic.Common
-Imports Crownwood.Magic.Docking
-Imports Crownwood.Magic.Menus
 Imports AnimatGUI.Framework
 
 Namespace DataObjects.Physical

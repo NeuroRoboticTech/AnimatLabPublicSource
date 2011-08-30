@@ -168,12 +168,12 @@ Namespace Framework.UndoSystem
             m_doGroup = Nothing
         End Sub
 
-        Public Overridable Sub RemoveMdiEvents(ByVal mdiParent As AnimatGUI.Forms.MdiChild)
-            m_stkUndoStack.RemoveMdiEvents(mdiParent)
-            m_stkRedoStack.RemoveMdiEvents(mdiParent)
+        'Public Overridable Sub RemoveMdiEvents(ByVal mdiParent As AnimatGUI.Forms.MdiChild)
+        '    m_stkUndoStack.RemoveMdiEvents(mdiParent)
+        '    m_stkRedoStack.RemoveMdiEvents(mdiParent)
 
-            If Not m_doGroup Is Nothing Then m_doGroup.RemoveMdiEvents(mdiParent)
-        End Sub
+        '    If Not m_doGroup Is Nothing Then m_doGroup.RemoveMdiEvents(mdiParent)
+        'End Sub
 
 #End Region
 

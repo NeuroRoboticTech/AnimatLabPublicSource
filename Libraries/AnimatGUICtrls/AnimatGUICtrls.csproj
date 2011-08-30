@@ -75,6 +75,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\KeyFrameCollection.cs" />
+    <Compile Include="Controls\DataGrid\ArrayDataView.cs" />
+    <Compile Include="Controls\DataGrid\ArrayPropertyDescriptor.cs" />
+    <Compile Include="Controls\DataGrid\ArrayRowView.cs" />
+    <Compile Include="Controls\DataGrid\DataGridComboBoxColumn.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ImageListDrag\ImageListDrag.cs" />
+    <Compile Include="Controls\OutlookBar\OutlookBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\PropertyGrid\PropertyBag.cs" />
     <Compile Include="Controls\PropertyGrid\PropertySlider.cs">
       <SubType>UserControl</SubType>
@@ -166,6 +176,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

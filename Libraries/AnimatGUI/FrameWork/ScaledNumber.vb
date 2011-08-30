@@ -560,11 +560,7 @@ Namespace Framework
                     Me.ManualAddPropertyHistory(m_doParent, m_strPropertyName, doOrig, snNewValue, True)
                 End If
 
-                Dim frmRoot As System.Windows.Forms.Form = Me.RootForm
-                If Not frmRoot Is Nothing AndAlso TypeOf frmRoot Is AnimatGUI.Forms.MdiChild Then
-                    Dim mdiRoot As AnimatGUI.Forms.MdiChild = DirectCast(frmRoot, AnimatGUI.Forms.MdiChild)
-                    mdiRoot.RefreshProperties()
-                End If
+                Util.Application.ProjectWorkspace.RefreshProperties()
 
                 Return True
             End If

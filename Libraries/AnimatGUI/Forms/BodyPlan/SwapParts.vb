@@ -4,10 +4,7 @@ Imports System.Collections
 Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports System.Diagnostics
-Imports Crownwood.Magic.Common
 Imports AnimatGuiCtrls.Controls
-Imports Crownwood.Magic.Docking
-Imports Crownwood.Magic.Menus
 Imports AnimatGUI
 Imports AnimatGUI.Framework
 Imports AnimatGUI.DataObjects
@@ -146,28 +143,29 @@ Namespace Forms.BodyPlan
             MyBase.OnLoad(e)
 
             Try
-                m_btnOk = Me.btnOk
-                m_btnCancel = Me.btnCancel
+                'TODO
+                'm_btnOk = Me.btnOk
+                'm_btnCancel = Me.btnCancel
 
-                'Load up the combo box with the available part types
-                If Not m_aryPartList Is Nothing AndAlso m_aryPartList.Count > 0 Then
+                ''Load up the combo box with the available part types
+                'If Not m_aryPartList Is Nothing AndAlso m_aryPartList.Count > 0 Then
 
-                    Dim ciItem As ImageComboItem
-                    cboPartTypes.Items.Clear()
-                    For Each doItem As Framework.DataObject In m_aryPartList
-                        Dim doPart As DataObjects.Physical.BodyPart = DirectCast(doItem, DataObjects.Physical.BodyPart)
-                        ciItem = New ImageComboItem(doPart.BodyPartName)
-                        ciItem.Tag = doPart
+                '    Dim ciItem As ImageComboItem
+                '    cboPartTypes.Items.Clear()
+                '    For Each doItem As Framework.DataObject In m_aryPartList
+                '        Dim doPart As DataObjects.Physical.BodyPart = DirectCast(doItem, DataObjects.Physical.BodyPart)
+                '        ciItem = New ImageComboItem(doPart.BodyPartName)
+                '        ciItem.Tag = doPart
 
-                        If Not doItem.GetType() Is m_doExistingPart.GetType Then
-                            cboPartTypes.Items.Add(ciItem)
+                '        If Not doItem.GetType() Is m_doExistingPart.GetType Then
+                '            cboPartTypes.Items.Add(ciItem)
 
-                            If cboPartTypes.SelectedItem Is Nothing Then
-                                cboPartTypes.SelectedItem = ciItem
-                            End If
-                        End If
-                    Next
-                End If
+                '            If cboPartTypes.SelectedItem Is Nothing Then
+                '                cboPartTypes.SelectedItem = ciItem
+                '            End If
+                '        End If
+                '    Next
+                'End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -176,17 +174,18 @@ Namespace Forms.BodyPlan
 
         Private Sub btnOk_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnOk.Click
             Try
-                Me.NewPart = Nothing
-                Me.DialogResult = DialogResult.Cancel
+                'TODO
+                'Me.NewPart = Nothing
+                'Me.DialogResult = DialogResult.Cancel
 
-                If Not cboPartTypes.SelectedItem Is Nothing Then
-                    Dim ciItem As ImageComboItem = DirectCast(cboPartTypes.SelectedItem, ImageComboItem)
+                'If Not cboPartTypes.SelectedItem Is Nothing Then
+                '    Dim ciItem As ImageComboItem = DirectCast(cboPartTypes.SelectedItem, ImageComboItem)
 
-                    If Not ciItem Is Nothing AndAlso Not ciItem.Tag Is Nothing Then
-                        Me.NewPart = DirectCast(ciItem.Tag, DataObjects.Physical.BodyPart)
-                        Me.DialogResult = DialogResult.OK
-                    End If
-                End If
+                '    If Not ciItem Is Nothing AndAlso Not ciItem.Tag Is Nothing Then
+                '        Me.NewPart = DirectCast(ciItem.Tag, DataObjects.Physical.BodyPart)
+                '        Me.DialogResult = DialogResult.OK
+                '    End If
+                'End If
 
                 Me.Close()
             Catch ex As System.Exception

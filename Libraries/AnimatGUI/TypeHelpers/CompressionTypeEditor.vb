@@ -4,7 +4,7 @@ Imports System.ComponentModel
 Imports System.Drawing.Design
 Imports System.Windows.Forms.Design
 Imports AnimatGUI.Framework
-Imports Crownwood.Magic.Video
+Imports AnimatGuiCtrls.Video
 
 Namespace TypeHelpers
 

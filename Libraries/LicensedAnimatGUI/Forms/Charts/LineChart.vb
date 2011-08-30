@@ -5,10 +5,7 @@ Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports System.Diagnostics
 Imports System.Runtime.InteropServices
-Imports Crownwood.Magic.Common
 Imports AnimatGuiCtrls.Controls
-Imports Crownwood.Magic.Docking
-Imports Crownwood.Magic.Menus
 Imports AnimatGUI
 Imports AnimatGUI.Forms
 Imports AnimatGUI.Framework
@@ -1044,96 +1041,6 @@ Namespace Forms.Charts
             'Setting the name on the axis adds it to the axis list
 
         End Sub
-
-        'Public Overrides Sub CreateToolStrips()
-        'If Util.Application Is Nothing Then Throw New System.Exception("Application object is not defined.")
-
-        'm_menuMain = Util.Application.CreateDefaultMenu()
-
-        'Dim mcFile As MenuCommand = m_menuMain.MenuCommands("File")
-        'Dim mcSep As MenuCommand = New MenuCommand("-")
-        'Dim mcPrint As New MenuCommand("Print", "Print", Util.Application.ToolStripImages.ImageList, _
-        '                                Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Print.gif"), _
-        '                                New EventHandler(AddressOf Me.OnPrintGraph))
-
-        'Dim iIndex As Integer = mcFile.MenuCommands.IndexOf(mcFile.MenuCommands("Exit"))
-        'mcFile.MenuCommands.Insert(iIndex, mcSep)
-        'iIndex = mcFile.MenuCommands.IndexOf(mcSep)
-        'mcFile.MenuCommands.Insert(iIndex, mcPrint)
-
-        'Dim mcEdit As MenuCommand = m_menuMain.MenuCommands("Edit")
-
-        'Dim mcSep2 As MenuCommand = New MenuCommand("-")
-        'Dim mcDelete As New MenuCommand("Delete", "Delete", Util.Application.ToolStripImages.ImageList, _
-        '                                Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.Delete.gif"), _
-        '                                Shortcut.Del, New EventHandler(AddressOf Me.OnDelete))
-        'Dim mcAddAxis As New MenuCommand("Add Chart Axis", "AddAxis", Util.Application.ToolStripImages.ImageList, _
-        '                                Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.AddChartAxis.gif"), _
-        '                                New EventHandler(AddressOf Me.OnAddAxis))
-        'Dim mcAddItem As New MenuCommand("Add Chart Item", "AddItem", Util.Application.ToolStripImages.ImageList, _
-        '                                Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.AddChartItem.gif"), _
-        '                                New EventHandler(AddressOf Me.OnAddItem))
-        'Dim mcSep3 As MenuCommand = New MenuCommand("-")
-        'Dim mcViewData As New MenuCommand("View Data", "ViewData", Util.Application.ToolStripImages.ImageList, _
-        '                                Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.ViewData.gif"), _
-        '                                New EventHandler(AddressOf Me.OnViewData))
-        'Dim mcExportData As New MenuCommand("Export Data", "ExportData", Util.Application.ToolStripImages.ImageList, _
-        '                                Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.ExportData.gif"), _
-        '                                New EventHandler(AddressOf Me.OnExportData))
-        'Dim mcSetZoom As New MenuCommand("Set Zoom Axis", "SetZoomAxis", Util.Application.ToolStripImages.ImageList, _
-        '                                Util.Application.ToolStripImages.GetImageIndex("AnimatGUI.SetZoomAxis.gif"), _
-        '                                New EventHandler(AddressOf Me.OnSetZoomAxis))
-
-        'mcEdit.MenuCommands.AddRange(New MenuCommand() {mcSep2, mcDelete, mcAddAxis, mcAddItem, mcSep3, mcViewData, mcExportData, mcSetZoom})
-
-
-        'Return m_menuMain
-        'End Sub
-
-        'Public Overrides Function CreateToolbar(ByRef menuDefault As AnimatGuiCtrls.Controls.AnimatMenuStrip) As AnimatGuiCtrls.Controls.AnimatToolStrip
-
-        '    'm_barMain = Util.Application.CreateDefaultToolbar(m_menuMain)
-
-        '    'Dim btnPrint As New ToolBarButton
-        '    'btnPrint.ImageIndex = Util.Application.LargeImages.GetImageIndex("AnimatGUI.Print.gif")
-        '    'btnPrint.ToolTipText = "Print Chart"
-
-        '    'Dim btnDelete As New ToolBarButton
-        '    'btnDelete.ImageIndex = Util.Application.LargeImages.GetImageIndex("AnimatGUI.Delete.gif")
-        '    'btnDelete.ToolTipText = "Delete"
-
-        '    'Dim btnAddAxis As New ToolBarButton
-        '    'btnAddAxis.ImageIndex = Util.Application.LargeImages.GetImageIndex("AnimatGUI.AddChartAxis.gif")
-        '    'btnAddAxis.ToolTipText = "Add Chart Axis"
-
-        '    'Dim btnAddItem As New ToolBarButton
-        '    'btnAddItem.ImageIndex = Util.Application.LargeImages.GetImageIndex("AnimatGUI.AddChartItem.gif")
-        '    'btnAddItem.ToolTipText = "Add Chart Data Item"
-
-        '    'Dim btnViewData As New ToolBarButton
-        '    'btnViewData.ImageIndex = Util.Application.LargeImages.GetImageIndex("AnimatGUI.ViewData.gif")
-        '    'btnViewData.ToolTipText = "List all data points for viewing"
-
-        '    'Dim btnExportData As New ToolBarButton
-        '    'btnExportData.ImageIndex = Util.Application.LargeImages.GetImageIndex("AnimatGUI.ExportData.gif")
-        '    'btnExportData.ToolTipText = "Export data to tab-delimited text file"
-
-        '    'Dim btnSetZoomAxis As New ToolBarButton
-        '    'btnSetZoomAxis.ImageIndex = Util.Application.LargeImages.GetImageIndex("AnimatGUI.SetZoomAxis.gif")
-        '    'btnSetZoomAxis.ToolTipText = "Manually specify the zoom axis"
-
-        '    'm_barMain.Buttons.AddRange(New ToolBarButton() {btnPrint, btnDelete, btnAddAxis, btnAddItem, btnViewData, btnExportData, btnSetZoomAxis})
-
-        '    'm_barMain.ButtonManager.SetButtonMenuItem(btnPrint, m_menuMain.MenuCommands.FindMenuCommand("Print"))
-        '    'm_barMain.ButtonManager.SetButtonMenuItem(btnDelete, m_menuMain.MenuCommands.FindMenuCommand("Delete"))
-        '    'm_barMain.ButtonManager.SetButtonMenuItem(btnAddAxis, m_menuMain.MenuCommands.FindMenuCommand("AddAxis"))
-        '    'm_barMain.ButtonManager.SetButtonMenuItem(btnAddItem, m_menuMain.MenuCommands.FindMenuCommand("AddItem"))
-        '    'm_barMain.ButtonManager.SetButtonMenuItem(btnViewData, m_menuMain.MenuCommands.FindMenuCommand("ViewData"))
-        '    'm_barMain.ButtonManager.SetButtonMenuItem(btnExportData, m_menuMain.MenuCommands.FindMenuCommand("ExportData"))
-        '    'm_barMain.ButtonManager.SetButtonMenuItem(btnSetZoomAxis, m_menuMain.MenuCommands.FindMenuCommand("SetZoomAxis"))
-
-        '    'Return m_barMain
-        'End Function
 
         Protected Overridable Sub CreateImageManager()
 

@@ -4,10 +4,7 @@ Imports System.Collections
 Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports System.Diagnostics
-Imports Crownwood.Magic.Common
 Imports AnimatGuiCtrls.Controls
-Imports Crownwood.Magic.Docking
-Imports Crownwood.Magic.Menus
 Imports AnimatGUI.Framework
 
 Namespace Forms.Behavior
@@ -15,22 +12,11 @@ Namespace Forms.Behavior
     Public Class Export
         Inherits AnimatGUI.Forms.AnimatDialog
 
-        Protected m_beEditor As Forms.Behavior.Editor
-
         Protected m_strFilter As String = "*.bmp|*.bmp"
         Protected m_strExtension As String = ".bmp"
         Protected m_strFileLocation As String
         Protected m_bAllDiagrams As Boolean
         Protected m_eFormat As System.Drawing.Imaging.ImageFormat
-
-        Public Property Editor() As Forms.Behavior.Editor
-            Get
-                Return m_beEditor
-            End Get
-            Set(ByVal Value As Forms.Behavior.Editor)
-                m_beEditor = Value
-            End Set
-        End Property
 
         Public Property FileLocation() As String
             Get

@@ -7,7 +7,7 @@ Imports System.Diagnostics
 Imports System.IO
 Imports System.Xml
 Imports AnimatGuiCtrls.Controls
-Imports Crownwood.Magic.Video
+Imports AnimatGuiCtrls.Video
 Imports AnimatGUI.Framework
 
 Namespace DataObjects.Physical
@@ -284,11 +284,11 @@ Namespace DataObjects.Physical
         End Property
 
         <Browsable(False)> _
-        Public Overridable Property AviOptions() As Crownwood.Magic.Video.Avi.AVICOMPRESSOPTIONS_CLASS
+        Public Overridable Property AviOptions() As AnimatGuiCtrls.Video.Avi.AVICOMPRESSOPTIONS_CLASS
             Get
                 Return m_aviOpts
             End Get
-            Set(ByVal Value As Crownwood.Magic.Video.Avi.AVICOMPRESSOPTIONS_CLASS)
+            Set(ByVal Value As AnimatGuiCtrls.Video.Avi.AVICOMPRESSOPTIONS_CLASS)
                 m_aviOpts = Value
             End Set
         End Property

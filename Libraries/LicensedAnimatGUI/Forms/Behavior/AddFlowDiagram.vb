@@ -5,10 +5,7 @@ Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports System.Diagnostics
 Imports System.Runtime.InteropServices
-Imports Crownwood.Magic.Common
 Imports AnimatGuiCtrls.Controls
-Imports Crownwood.Magic.Docking
-Imports Crownwood.Magic.Menus
 Imports AnimatGUI
 Imports AnimatGUI.Forms
 Imports AnimatGUI.Framework
@@ -3937,7 +3934,7 @@ Namespace Forms.Behavior
 
         Private Sub m_ctrlAddFlow_DragEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles m_ctrlAddFlow.DragEnter
             Try
-                If (e.Data.GetDataPresent(GetType(Crownwood.Magic.Controls.PanelIcon))) Then
+                If (e.Data.GetDataPresent(GetType(AnimatGuiCtrls.Controls.PanelIcon))) Then
                     e.Effect = DragDropEffects.Copy
                     Me.Cursor = Cursors.Arrow
                 Else
@@ -3966,8 +3963,8 @@ Namespace Forms.Behavior
                 Dim ptAddFlow As Point = m_ctrlAddFlow.PointToAddFlow(ptClient)
 
                 'Check if it is a behavioral node, the check if it is a behavioral connector
-                If (e.Data.GetDataPresent(GetType(Crownwood.Magic.Controls.PanelIcon))) Then
-                    Dim pnlIcon As Crownwood.Magic.Controls.PanelIcon = DirectCast(e.Data.GetData(GetType(Crownwood.Magic.Controls.PanelIcon)), Crownwood.Magic.Controls.PanelIcon)
+                If (e.Data.GetDataPresent(GetType(AnimatGuiCtrls.Controls.PanelIcon))) Then
+                    Dim pnlIcon As AnimatGuiCtrls.Controls.PanelIcon = DirectCast(e.Data.GetData(GetType(AnimatGuiCtrls.Controls.PanelIcon)), AnimatGuiCtrls.Controls.PanelIcon)
                     Dim bdDropData As AnimatGUI.DataObjects.Behavior.Data = DirectCast(pnlIcon.Data, AnimatGUI.DataObjects.Behavior.Data)
 
                     If Not bdDropData Is Nothing And TypeOf (bdDropData) Is AnimatGUI.DataObjects.Behavior.Node Then

@@ -4,10 +4,7 @@ Imports System.Collections
 Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports System.Diagnostics
-Imports Crownwood.Magic.Common
 Imports AnimatGuiCtrls.Controls
-Imports Crownwood.Magic.Docking
-Imports Crownwood.Magic.Menus
 Imports AnimatGUI.Framework
 
 Namespace Forms.Tools
@@ -99,7 +96,7 @@ Namespace Forms.Tools
 
         Protected Sub OnDragItemEntered(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs)
             Try
-                If e.Data.GetDataPresent(GetType(Crownwood.Magic.Controls.PanelIcon)) OrElse _
+                If e.Data.GetDataPresent(GetType(AnimatGuiCtrls.Controls.PanelIcon)) OrElse _
                    e.Data.GetDataPresent(GetType(Framework.DataDragHelper)) Then
                     e.Effect = DragDropEffects.Copy
                     Me.Cursor = Cursors.Arrow
@@ -122,8 +119,8 @@ Namespace Forms.Tools
             Try
 
                 'Check if it is a behavioral node, the check if it is a behavioral connector
-                If (e.Data.GetDataPresent(GetType(Crownwood.Magic.Controls.PanelIcon))) Then
-                    Dim pnlIcon As Crownwood.Magic.Controls.PanelIcon = DirectCast(e.Data.GetData(GetType(Crownwood.Magic.Controls.PanelIcon)), Crownwood.Magic.Controls.PanelIcon)
+                If (e.Data.GetDataPresent(GetType(AnimatGuiCtrls.Controls.PanelIcon))) Then
+                    Dim pnlIcon As AnimatGuiCtrls.Controls.PanelIcon = DirectCast(e.Data.GetData(GetType(AnimatGuiCtrls.Controls.PanelIcon)), AnimatGuiCtrls.Controls.PanelIcon)
 
                     'Debug.WriteLine("Finishing DragDrop")
                     pnlIcon.DraggingIcon = False

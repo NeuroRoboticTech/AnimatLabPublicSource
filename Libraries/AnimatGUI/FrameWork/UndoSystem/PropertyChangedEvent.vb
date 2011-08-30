@@ -84,31 +84,34 @@ Namespace Framework.UndoSystem
 
         Protected Overridable Sub RefreshParent(ByVal doObject As AnimatGUI.Framework.DataObject)
 
-            If Not m_mdiParent Is Nothing Then
-                m_mdiParent.MakeVisible()
-                m_mdiParent.UndoRedoRefresh(doObject)
-            ElseIf Not m_frmParent Is Nothing Then
-                m_frmParent.UndoRedoRefresh(doObject)
-            End If
+            'TODO
+            'If Not m_mdiParent Is Nothing Then
+            '    m_mdiParent.MakeVisible()
+            '    m_mdiParent.UndoRedoRefresh(doObject)
+            'ElseIf Not m_frmParent Is Nothing Then
+            '    m_frmParent.UndoRedoRefresh(doObject)
+            'End If
 
         End Sub
 
         Protected Overridable Sub EnsureFormVisible()
 
-            If Not m_mdiParent Is Nothing AndAlso TypeOf m_AlteredObject Is AnimatGUI.Framework.DataObject Then
-                Dim doObject As AnimatGUI.Framework.DataObject = DirectCast(m_AlteredObject, AnimatGUI.Framework.DataObject)
+            'TODO
+            'If Not m_mdiParent Is Nothing AndAlso TypeOf m_AlteredObject Is AnimatGUI.Framework.DataObject Then
+            '    Dim doObject As AnimatGUI.Framework.DataObject = DirectCast(m_AlteredObject, AnimatGUI.Framework.DataObject)
 
-                doObject.EnsureFormActive()
-            End If
+            '    doObject.EnsureFormActive()
+            'End If
 
         End Sub
 
         Protected Overridable Sub RefreshParent(ByVal frmObject As AnimatGUI.Forms.AnimatForm)
 
-            If Not m_mdiParent Is Nothing Then
-                m_mdiParent.MakeVisible()
-                m_mdiParent.UndoRedoRefresh(frmObject)
-            End If
+            'TODO
+            'If Not m_mdiParent Is Nothing Then
+            '    m_mdiParent.MakeVisible()
+            '    m_mdiParent.UndoRedoRefresh(frmObject)
+            'End If
 
         End Sub
 
