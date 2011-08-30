@@ -1,34 +1,48 @@
-// VsOrganism.h: interface for the VsOrganism class.
-//
-//////////////////////////////////////////////////////////////////////
+/**
+\file	VsOrganism.h
 
-#if !defined(AFX_VSORGANISM_H__8E0C0060_8F52_4E17_BF36_B05EFE795684__INCLUDED_)
-#define AFX_VSORGANISM_H__8E0C0060_8F52_4E17_BF36_B05EFE795684__INCLUDED_
+\brief	Declares the vortex organism class.
+**/
 
-#if _MSC_VER > 1000
 #pragma once
-#endif 
+
 
 namespace VortexAnimatSim
 {
 	namespace Environment
 	{
-		class VORTEX_PORT VsOrganism : public AnimatSim::Environment::Organism   
+		/**
+		\brief	Vortex Organism implementation. 
+		
+		\author	dcofer
+		\date	8/27/2011
+		**/
+		class VORTEX_PORT VsOrganism : public AnimatSim::Environment::Organism,  public VsMovableItem      
 		{
-
 		protected:
+			Structure *m_lpThisST;
+			Organism *m_lpThisOG;
+			VsRigidBody *m_lpVsBody;
 			Vx::VxAssembly *m_lpAssembly;
+
+			virtual void SetThisPointers();
+			virtual void SetupPhysics();
+			virtual void DeletePhysics() {};
+			virtual void UpdatePositionAndRotationFromMatrix();
 
 		public:
 			VsOrganism();
 			virtual ~VsOrganism();
 
+			virtual void Body(RigidBody *lpBody);
 			virtual void *Assembly() {return (void *)m_lpAssembly;};
 
+			virtual osg::Group *ParentOSG();
+			virtual void Create();
 			virtual void ResetSimulation();
+			virtual void Physics_Resize() {};
+
 		};
 
 	}			// Environment
 }				//VortexAnimatSim
-
-#endif // !defined(AFX_VSORGANISM_H__8E0C0060_8F52_4E17_BF36_B05EFE795684__INCLUDED_)

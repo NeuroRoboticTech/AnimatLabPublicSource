@@ -580,13 +580,29 @@ double Neuron::BurstHTimeConstant() {return m_dHTimeConst;}
 		
 #pragma endregion
 
+
+void Neuron::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+{
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+	
+	m_lpIGFModule = dynamic_cast<IntegrateFireNeuralModule *>(lpModule);
+
+	if(bVerify) VerifySystemPointers();
+}
+
+void Neuron::VerifySystemPointers()
+{
+	AnimatBase::VerifySystemPointers();
+
+	if(!m_lpIGFModule)
+		THROW_PARAM_ERROR(Al_Err_lStructureNotDefined, Al_Err_strStructureNotDefined, "IGFModule: ", m_strID);
+}
+
 void Neuron::Load(CStdXml &oXml)
 {
 	int i;
 	int j;
 	double d;
-
-	m_lpRealModule = dynamic_cast<IntegrateFireNeuralModule *>(m_lpModule);
 
 	m_aryTonicInputPeriod.RemoveAll();
 	m_aryTonicInputPeriodType.RemoveAll();
@@ -649,7 +665,7 @@ void Neuron::Load(CStdXml &oXml)
 	}
 	else
 	{
-		int iSpikingChemSynCount=m_lpRealModule->GetSpikingChemSynCount();
+		int iSpikingChemSynCount=m_lpIGFModule->GetSpikingChemSynCount();
 		for(i=0; i<iSpikingChemSynCount; i++)
 		{
 			m_aryTonicInputPeriod.Add(0);

@@ -107,10 +107,12 @@ Namespace DataObjects.Physical.Bodies
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+            If Me.IsInitialized Then
+                MyBase.InitializeSimulationReferences()
 
-            m_StimTension.InitializeSimulationReferences()
-            m_LengthTension.InitializeSimulationReferences()
+                m_StimTension.InitializeSimulationReferences()
+                m_LengthTension.InitializeSimulationReferences()
+            End If
         End Sub
 
         Protected Overrides Sub CloneInternal(ByVal doOriginal As Framework.DataObject, ByVal bCutData As Boolean, ByVal doRoot As Framework.DataObject)

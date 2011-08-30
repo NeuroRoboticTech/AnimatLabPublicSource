@@ -36,6 +36,9 @@ namespace IntegrateFireSim
 
 			virtual void ResetSimulation();
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+			
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure,  AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+			virtual void VerifySystemPointers();
 
 #pragma region Accessor-Mutators
 
@@ -60,7 +63,7 @@ namespace IntegrateFireSim
 
 		protected:
 			/// The pointer to the parent IntegrateFireNeuralModule.
-			IntegrateFireNeuralModule *m_lpModule;
+			IntegrateFireNeuralModule *m_lpIGFModule;
 
 		// LOADABLE
 			/// GUID ID for the source Neuron.

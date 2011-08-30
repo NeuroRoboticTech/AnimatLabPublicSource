@@ -27,7 +27,7 @@ namespace IntegrateFireSim
 	{
 	protected:
 		/// The pointer to the parent IntegrateFireNeuralModule
-		IntegrateFireNeuralModule *m_lpRealModule;
+		IntegrateFireNeuralModule *m_lpIGFModule;
 
 
 	/////////////////////////////////////
@@ -359,6 +359,9 @@ namespace IntegrateFireSim
 		virtual void AddExternalNodeInput(float fltInput);
 		virtual void ResetSimulation();
 		//Node Overrides
+					
+		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure,  AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+		virtual void VerifySystemPointers();
 
 	friend class IntegrateFireSim::IntegrateFireNeuralModule;
 	};

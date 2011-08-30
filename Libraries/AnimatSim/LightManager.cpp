@@ -179,10 +179,10 @@ void LightManager::Initialize()
 
 void LightManager::Load(CStdXml &oXml)
 {
-	AnimatBase::Load(oXml);
-
 	if(oXml.FindChildElement("Lights", false))
 	{
+		AnimatBase::Load(oXml);
+	
 		oXml.IntoElem(); //Into Lights Element
 
 		Light *lpLight = NULL;

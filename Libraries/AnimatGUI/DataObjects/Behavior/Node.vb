@@ -970,7 +970,6 @@ Namespace DataObjects.Behavior
                 doStimulus.Name = "Stimulus_" & Util.Simulation.NewStimuliIndex
 
                 Util.Simulation.ProjectStimuli.Add(doStimulus.ID, doStimulus)
-                doStimulus.CreateWorkspaceTreeView(Util.Simulation, Util.Simulation.StimuliTreeNode)
             End If
         End Sub
 
@@ -1027,6 +1026,7 @@ Namespace DataObjects.Behavior
 
         Public Overrides Sub AfterRemoveFromList(Optional ByVal bThrowError As Boolean = True)
             DisconnectLinkEvents()
+            DisconnectDiagramEvents()
         End Sub
 
 #End Region
@@ -1259,11 +1259,12 @@ Namespace DataObjects.Behavior
                 m_aryLoadingOutLinkIDs.Clear()
 
                 ConnectLinkEvents()
+                ConnectDiagramEvents()
 
-                m_bInitialized = True
+                m_bIsInitialized = True
 
             Catch ex As System.Exception
-                m_bInitialized = False
+                m_bIsInitialized = False
                 'If iAttempt = 1 Then
                 '    AnimatGUI.Framework.Util.DisplayError(ex)
                 'End If

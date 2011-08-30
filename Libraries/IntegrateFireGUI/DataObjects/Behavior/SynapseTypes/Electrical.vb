@@ -103,7 +103,7 @@ Namespace DataObjects.Behavior.SynapseTypes
         <Browsable(False)> _
         Public Overrides ReadOnly Property WorkspaceImageName() As String
             Get
-                Return "IntegrateFireGUI.ElectricalSynapse.gif"
+                Return "IntegrateFireGUI.ElectricalSynapse_Treeview.gif"
             End Get
         End Property
 

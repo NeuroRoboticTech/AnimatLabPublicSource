@@ -23,6 +23,8 @@ Namespace DataObjects.Behavior
 
 #Region " Events "
 
+        Dim m_bInitialized As Boolean
+
         Public Event SynapseTypeChanged()
 
 #End Region
@@ -142,12 +144,12 @@ Namespace DataObjects.Behavior
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "SynapseType", Me.GetSimulationXml("SynapseType"), bThrowError)
+            Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID, "SynapseType", Me.GetSimulationXml("SynapseType"), bThrowError)
             InitializeSimulationReferences()
         End Sub
 
         Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            Util.Application.SimulationInterface.RemoveItem(Me.Parent.ID, "SynapseType", Me.ID, bThrowError)
+            Util.Application.SimulationInterface.RemoveItem(Me.NeuralModule.ID, "SynapseType", Me.ID, bThrowError)
             m_doInterface = Nothing
         End Sub
 
@@ -239,7 +241,7 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overrides Sub InitializeAfterLoad()
-            m_bInitialized = True
+            m_bIsInitialized = True
         End Sub
 
 #End Region

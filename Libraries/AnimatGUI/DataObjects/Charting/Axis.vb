@@ -550,15 +550,17 @@ Namespace DataObjects.Charting
         End Property
 
         Public Overrides Sub InitializeSimulationReferences()
-            'We explicitly do NOT Call the base init here. The reason is that the Axis does not have a corresponding
-            ' object within the simulation. It is only an organiaztional tool within the GUI. It does not exist in the simulation.
-            'MyBase.InitializeSimulationReferences()
+            If Me.IsInitialized Then
+                'We explicitly do NOT Call the base init here. The reason is that the Axis does not have a corresponding
+                ' object within the simulation. It is only an organiaztional tool within the GUI. It does not exist in the simulation.
+                'MyBase.InitializeSimulationReferences()
 
-            Dim doColumn As AnimatGUI.DataObjects.Charting.DataColumn
-            For Each deEntry As DictionaryEntry In m_aryDataColumns
-                doColumn = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Charting.DataColumn)
-                doColumn.InitializeSimulationReferences()
-            Next
+                Dim doColumn As AnimatGUI.DataObjects.Charting.DataColumn
+                For Each deEntry As DictionaryEntry In m_aryDataColumns
+                    doColumn = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Charting.DataColumn)
+                    doColumn.InitializeSimulationReferences()
+                Next
+            End If
         End Sub
 
         <Browsable(False)> _

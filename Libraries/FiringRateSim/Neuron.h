@@ -36,7 +36,7 @@ namespace FiringRateSim
 		{
 		protected:
 			/// Pointer to the parent FiringRateModule.
-			FiringRateModule *m_lpFastModule;
+			FiringRateModule *m_lpFRModule;
 
 			///Membrane capacitance
 			float m_fltCn;

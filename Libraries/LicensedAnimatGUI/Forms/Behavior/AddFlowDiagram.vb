@@ -47,6 +47,128 @@ Namespace Forms.Behavior
         Private components As System.ComponentModel.IContainer
         Private WithEvents m_ctrlAddFlow As Lassalle.Flow.AddFlow
         Private WithEvents m_Timer As New Timer
+        Friend WithEvents AddFlowToolStrip As AnimatGuiCtrls.Controls.AnimatToolStrip
+        Friend WithEvents PrintToolStripButton As System.Windows.Forms.ToolStripButton
+        Friend WithEvents AddFlowMenuStrip As AnimatGuiCtrls.Controls.AnimatMenuStrip
+        Friend WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents toolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
+        Friend WithEvents PrintToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents PrintPreviewToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ViewToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ToolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
+        Friend WithEvents FitToPageMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOutMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOutBy10MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOutBy20MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut100MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut90MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut80MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut70MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut60MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut50MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut40MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut30MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut20MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut10MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomInMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomInBy10MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomInBy20MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomIn100MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomIn125MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomIn150MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomIn175MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomIn200MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomIn250MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomIn300MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomIn400MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomIn500MenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ShapeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents AlignMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents AlignTopMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents AlignVerticalCenterMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents AlignBottomMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents AlignLeftMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents AlignHorizontalCenterMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents AlignRightMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents DistributeMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents DistributeVerticalMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents DistributeHorizontalMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents SizeMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents SizeBothMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents SizeWidthMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents SizeHeightMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ExportToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents PageSetupToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents EditToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ShowConnectionsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomInDropDownButton As System.Windows.Forms.ToolStripDropDownButton
+        Friend WithEvents ZoomInBy10ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomInBy20ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomIn100ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomIn125ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomIn150ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomIn175ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomIn200ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomIn250ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomIn300ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomIn400ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomIn500ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOutDropDownButton As System.Windows.Forms.ToolStripDropDownButton
+        Friend WithEvents ZoomOutBy10ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOutBy20ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut100ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut90ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut80ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut70ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut60ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut50ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut40ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut30ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut20ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomOut10ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents AlignDropDownButton As System.Windows.Forms.ToolStripDropDownButton
+        Friend WithEvents AlignTopToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents AlignVerticalCenterToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents AlignBottomToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents AlignLeftToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents AlignHorizontalCenterToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents AlignRightToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents DistributeDropDownButton As System.Windows.Forms.ToolStripDropDownButton
+        Friend WithEvents DistributeVerticalToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents DistributeHorizontalToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents SizeDropDownButton As System.Windows.Forms.ToolStripDropDownButton
+        Friend WithEvents SizeBothToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents SizeWidthToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents SizeHeightToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents BringToFrontMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents SendToBackMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents PasteInPlaceMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents GridMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents CopyPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents PastePopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents CutPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents DeletePopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents SelectByTypePopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents RelabelPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents RelabelSelectedPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents CompareItemsPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents PasteInPlacePopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents AlignPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents AlignTopPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents AlignVerticalCenterPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents AlignBottomPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents AlignLeftPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents AlignHorizontalCenterPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents AlignRightPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents DistributePopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents DistributeVerticalPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents DistributeHorizontalPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents SizePopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents SizeBothPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents SizeWidthPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents SizeHeightPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents BringToFrontPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
+        'Friend WithEvents SendToBackPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
 
         'NOTE: The following procedure is required by the Windows Form Designer
         'It can be modified using the Windows Form Designer.  
@@ -54,6 +176,131 @@ Namespace Forms.Behavior
         <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
             Lassalle.Flow.AddFlow.LicenseKey = "A010C0600952-NqDrtr9tvzYV66Vnzg491Xm1mVYBZyJ3DUzI563gkFA5vAPvk+2VZV5J+i4jHaU0kyiZp0c3hXDXHhZiMoRNS2Awfhjd7EapukGr2wCP/O/UPoBtyVNxhIpS1aqbazMjbwlQoBsDzizH5GixDAWz9RDvg4vJozrCtS+TFU2Rnyk="
             Me.m_ctrlAddFlow = New Lassalle.Flow.AddFlow
+            Me.AddFlowToolStrip = New AnimatGuiCtrls.Controls.AnimatToolStrip
+            Me.PrintToolStripButton = New System.Windows.Forms.ToolStripButton()
+            Me.ZoomInDropDownButton = New System.Windows.Forms.ToolStripDropDownButton()
+            Me.ZoomInBy10ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomInBy20ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomIn100ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomIn125ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomIn150ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomIn175ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomIn200ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomIn250ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomIn300ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomIn400ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomIn500ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOutDropDownButton = New System.Windows.Forms.ToolStripDropDownButton()
+            Me.ZoomOutBy10ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOutBy20ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut100ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut90ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut80ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut70ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut60ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut50ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut40ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut30ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut20ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut10ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.AlignDropDownButton = New System.Windows.Forms.ToolStripDropDownButton()
+            Me.AlignTopToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.AlignVerticalCenterToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.AlignBottomToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.AlignLeftToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.AlignHorizontalCenterToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.AlignRightToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.DistributeDropDownButton = New System.Windows.Forms.ToolStripDropDownButton()
+            Me.DistributeVerticalToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.DistributeHorizontalToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.SizeDropDownButton = New System.Windows.Forms.ToolStripDropDownButton()
+            Me.SizeBothToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.SizeWidthToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.SizeHeightToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.AddFlowMenuStrip = New AnimatGuiCtrls.Controls.AnimatMenuStrip
+            Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.toolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+            Me.ExportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.PageSetupToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.PrintPreviewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.PrintToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ShowConnectionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
+            Me.FitToPageMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOutMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOutBy10MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOutBy20MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut100MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut90MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut80MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut70MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut60MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut50MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut40MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut30MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut20MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomOut10MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomInMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomInBy10MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomInBy20MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomIn100MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomIn125MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomIn150MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomIn175MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomIn200MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomIn250MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomIn300MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomIn400MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomIn500MenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ShapeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.AlignMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.AlignTopMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.AlignVerticalCenterMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.AlignBottomMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.AlignLeftMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.AlignHorizontalCenterMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.AlignRightMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.DistributeMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.DistributeVerticalMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.DistributeHorizontalMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.SizeMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.SizeBothMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.SizeWidthMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.SizeHeightMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.BringToFrontMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.SendToBackMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.PasteInPlaceMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.GridMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.CopyPopupMenuItem = New System.Windows.Forms.ToolStripMenuItem
+            'Me.PastePopupMenuItem = New System.Windows.Forms.ToolStripMenuItem
+            'Me.CutPopupMenuItem = New System.Windows.Forms.ToolStripMenuItem
+            'Me.DeletePopupMenuItem = New System.Windows.Forms.ToolStripMenuItem
+            'Me.SelectByTypePopupMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.RelabelPopupMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.RelabelSelectedPopupMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.CompareItemsPopupMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.PasteInPlacePopupMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.AlignPopupMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.AlignTopPopupMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.AlignVerticalCenterPopupMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.AlignBottomPopupMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.AlignLeftPopupMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.AlignHorizontalCenterPopupMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.AlignRightPopupMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.DistributePopupMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.DistributeVerticalPopupMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.DistributeHorizontalPopupMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.SizeMenuPopupItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.SizeBothMenuPopupItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.SizeWidthMenuPopupItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.SizeHeightMenuPopupItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.BringToFrontMenuPopupItem = New System.Windows.Forms.ToolStripMenuItem()
+            'Me.SendToBackMenuPopupItem = New System.Windows.Forms.ToolStripMenuItem()
+
+            Me.AddFlowToolStrip.SuspendLayout()
+            Me.AddFlowMenuStrip.SuspendLayout()
             Me.SuspendLayout()
             '
             'm_ctrlAddFlow
@@ -65,15 +312,712 @@ Namespace Forms.Behavior
             Me.m_ctrlAddFlow.Name = "m_ctrlAddFlow"
             Me.m_ctrlAddFlow.Size = New System.Drawing.Size(192, 200)
             Me.m_ctrlAddFlow.TabIndex = 0
+
             '
-            'BehavioralLayout
+            'AddFlowToolStrip
             '
+            Me.AddFlowToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PrintToolStripButton, Me.ZoomInDropDownButton, Me.ZoomOutDropDownButton, Me.AlignDropDownButton, Me.DistributeDropDownButton, Me.SizeDropDownButton})
+            Me.AddFlowToolStrip.Location = New System.Drawing.Point(0, 24)
+            Me.AddFlowToolStrip.Name = "AddFlowToolStrip"
+            Me.AddFlowToolStrip.Size = New System.Drawing.Size(351, 25)
+            Me.AddFlowToolStrip.TabIndex = 0
+            Me.AddFlowToolStrip.Text = "Add flow Tool stip"
+            Me.AddFlowToolStrip.Visible = False
+            '
+            'PrintToolStripButton
+            '
+            Me.PrintToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.PrintToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Print.gif")
+            Me.PrintToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.PrintToolStripButton.Name = "PrintToolStripButton"
+            Me.PrintToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.PrintToolStripButton.Text = "&Print"
+            '
+            'ZoomInDropDownButton
+            '
+            Me.ZoomInDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.ZoomInDropDownButton.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ZoomInBy10ToolStripItem, Me.ZoomInBy20ToolStripItem, Me.ZoomIn100ToolStripItem, Me.ZoomIn125ToolStripItem, Me.ZoomIn150ToolStripItem, Me.ZoomIn175ToolStripItem, Me.ZoomIn200ToolStripItem, Me.ZoomIn250ToolStripItem, Me.ZoomIn300ToolStripItem, Me.ZoomIn400ToolStripItem, Me.ZoomIn500ToolStripItem})
+            Me.ZoomInDropDownButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.ZoomIn.gif")
+            Me.ZoomInDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.ZoomInDropDownButton.Name = "ZoomInDropDownButton"
+            Me.ZoomInDropDownButton.Size = New System.Drawing.Size(29, 22)
+            Me.ZoomInDropDownButton.Text = "ZoomInDropDownButton"
+            Me.ZoomInDropDownButton.ToolTipText = "Zoom in to diagram"
+            '
+            'ZoomInBy10ToolStripItem
+            '
+            Me.ZoomInBy10ToolStripItem.Name = "ZoomInBy10ToolStripItem"
+            Me.ZoomInBy10ToolStripItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.K), System.Windows.Forms.Keys)
+            Me.ZoomInBy10ToolStripItem.Size = New System.Drawing.Size(201, 22)
+            Me.ZoomInBy10ToolStripItem.Text = "Zoom in by 10%"
+            '
+            'ZoomInBy20ToolStripItem
+            '
+            Me.ZoomInBy20ToolStripItem.Name = "ZoomInBy20ToolStripItem"
+            Me.ZoomInBy20ToolStripItem.Size = New System.Drawing.Size(201, 22)
+            Me.ZoomInBy20ToolStripItem.Text = "Zoom in by 20%"
+            '
+            'ZoomIn100ToolStripItem
+            '
+            Me.ZoomIn100ToolStripItem.Name = "ZoomIn100ToolStripItem"
+            Me.ZoomIn100ToolStripItem.Size = New System.Drawing.Size(201, 22)
+            Me.ZoomIn100ToolStripItem.Text = "100%"
+            '
+            'ZoomIn125ToolStripItem
+            '
+            Me.ZoomIn125ToolStripItem.Name = "ZoomIn125ToolStripItem"
+            Me.ZoomIn125ToolStripItem.Size = New System.Drawing.Size(201, 22)
+            Me.ZoomIn125ToolStripItem.Text = "125%"
+            '
+            'ZoomIn150ToolStripItem
+            '
+            Me.ZoomIn150ToolStripItem.Name = "ZoomIn150ToolStripItem"
+            Me.ZoomIn150ToolStripItem.Size = New System.Drawing.Size(201, 22)
+            Me.ZoomIn150ToolStripItem.Text = "150%"
+            '
+            'ZoomIn175ToolStripItem
+            '
+            Me.ZoomIn175ToolStripItem.Name = "ZoomIn175ToolStripItem"
+            Me.ZoomIn175ToolStripItem.Size = New System.Drawing.Size(201, 22)
+            Me.ZoomIn175ToolStripItem.Text = "175%"
+            '
+            'ZoomIn200ToolStripItem
+            '
+            Me.ZoomIn200ToolStripItem.Name = "ZoomIn200ToolStripItem"
+            Me.ZoomIn200ToolStripItem.Size = New System.Drawing.Size(201, 22)
+            Me.ZoomIn200ToolStripItem.Text = "200%"
+            '
+            'ZoomIn250ToolStripItem
+            '
+            Me.ZoomIn250ToolStripItem.Name = "ZoomIn250ToolStripItem"
+            Me.ZoomIn250ToolStripItem.Size = New System.Drawing.Size(201, 22)
+            Me.ZoomIn250ToolStripItem.Text = "250%"
+            '
+            'ZoomIn300ToolStripItem
+            '
+            Me.ZoomIn300ToolStripItem.Name = "ZoomIn300ToolStripItem"
+            Me.ZoomIn300ToolStripItem.Size = New System.Drawing.Size(201, 22)
+            Me.ZoomIn300ToolStripItem.Text = "300%"
+            '
+            'ZoomIn400ToolStripItem
+            '
+            Me.ZoomIn400ToolStripItem.Name = "ZoomIn400ToolStripItem"
+            Me.ZoomIn400ToolStripItem.Size = New System.Drawing.Size(201, 22)
+            Me.ZoomIn400ToolStripItem.Text = "400%"
+            '
+            'ZoomIn500ToolStripItem
+            '
+            Me.ZoomIn500ToolStripItem.Name = "ZoomIn500ToolStripItem"
+            Me.ZoomIn500ToolStripItem.Size = New System.Drawing.Size(201, 22)
+            Me.ZoomIn500ToolStripItem.Text = "500%"
+            '
+            'ZoomOutDropDownButton
+            '
+            Me.ZoomOutDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.ZoomOutDropDownButton.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ZoomOutBy10ToolStripItem, Me.ZoomOutBy20ToolStripItem, Me.ZoomOut100ToolStripItem, Me.ZoomOut90ToolStripItem, Me.ZoomOut80ToolStripItem, Me.ZoomOut70ToolStripItem, Me.ZoomOut60ToolStripItem, Me.ZoomOut50ToolStripItem, Me.ZoomOut40ToolStripItem, Me.ZoomOut30ToolStripItem, Me.ZoomOut20ToolStripItem, Me.ZoomOut10ToolStripItem})
+            Me.ZoomOutDropDownButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.ZoomOut.gif")
+            Me.ZoomOutDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.ZoomOutDropDownButton.Name = "ZoomOutDropDownButton"
+            Me.ZoomOutDropDownButton.Size = New System.Drawing.Size(29, 22)
+            Me.ZoomOutDropDownButton.Text = "ZoomOutDropDownButton"
+            Me.ZoomOutDropDownButton.ToolTipText = "Zoom out of diagram"
+            '
+            'ZoomOutBy10ToolStripItem
+            '
+            Me.ZoomOutBy10ToolStripItem.Name = "ZoomOutBy10ToolStripItem"
+            Me.ZoomOutBy10ToolStripItem.Size = New System.Drawing.Size(135, 22)
+            Me.ZoomOutBy10ToolStripItem.Text = "Out by 10%"
+            '
+            'ZoomOutBy20ToolStripItem
+            '
+            Me.ZoomOutBy20ToolStripItem.Name = "ZoomOutBy20ToolStripItem"
+            Me.ZoomOutBy20ToolStripItem.Size = New System.Drawing.Size(135, 22)
+            Me.ZoomOutBy20ToolStripItem.Text = "Out by 20%"
+            '
+            'ZoomOut100ToolStripItem
+            '
+            Me.ZoomOut100ToolStripItem.Name = "ZoomOut100ToolStripItem"
+            Me.ZoomOut100ToolStripItem.Size = New System.Drawing.Size(135, 22)
+            Me.ZoomOut100ToolStripItem.Text = "100%"
+            '
+            'ZoomOut90ToolStripItem
+            '
+            Me.ZoomOut90ToolStripItem.Name = "ZoomOut90ToolStripItem"
+            Me.ZoomOut90ToolStripItem.Size = New System.Drawing.Size(135, 22)
+            Me.ZoomOut90ToolStripItem.Text = "90%"
+            '
+            'ZoomOut80ToolStripItem
+            '
+            Me.ZoomOut80ToolStripItem.Name = "ZoomOut80ToolStripItem"
+            Me.ZoomOut80ToolStripItem.Size = New System.Drawing.Size(135, 22)
+            Me.ZoomOut80ToolStripItem.Text = "80%"
+            '
+            'ZoomOut70ToolStripItem
+            '
+            Me.ZoomOut70ToolStripItem.Name = "ZoomOut70ToolStripItem"
+            Me.ZoomOut70ToolStripItem.Size = New System.Drawing.Size(135, 22)
+            Me.ZoomOut70ToolStripItem.Text = "70%"
+            '
+            'ZoomOut60ToolStripItem
+            '
+            Me.ZoomOut60ToolStripItem.Name = "ZoomOut60ToolStripItem"
+            Me.ZoomOut60ToolStripItem.Size = New System.Drawing.Size(135, 22)
+            Me.ZoomOut60ToolStripItem.Text = "60%"
+            '
+            'ZoomOut50ToolStripItem
+            '
+            Me.ZoomOut50ToolStripItem.Name = "ZoomOut50ToolStripItem"
+            Me.ZoomOut50ToolStripItem.Size = New System.Drawing.Size(135, 22)
+            Me.ZoomOut50ToolStripItem.Text = "50%"
+            '
+            'ZoomOut40ToolStripItem
+            '
+            Me.ZoomOut40ToolStripItem.Name = "ZoomOut40ToolStripItem"
+            Me.ZoomOut40ToolStripItem.Size = New System.Drawing.Size(135, 22)
+            Me.ZoomOut40ToolStripItem.Text = "40%"
+            '
+            'ZoomOut30ToolStripItem
+            '
+            Me.ZoomOut30ToolStripItem.Name = "ZoomOut30ToolStripItem"
+            Me.ZoomOut30ToolStripItem.Size = New System.Drawing.Size(135, 22)
+            Me.ZoomOut30ToolStripItem.Text = "30%"
+            '
+            'ZoomOut20ToolStripItem
+            '
+            Me.ZoomOut20ToolStripItem.Name = "ZoomOut20ToolStripItem"
+            Me.ZoomOut20ToolStripItem.Size = New System.Drawing.Size(135, 22)
+            Me.ZoomOut20ToolStripItem.Text = "20%"
+            '
+            'ZoomOut10ToolStripItem
+            '
+            Me.ZoomOut10ToolStripItem.Name = "ZoomOut10ToolStripItem"
+            Me.ZoomOut10ToolStripItem.Size = New System.Drawing.Size(135, 22)
+            Me.ZoomOut10ToolStripItem.Text = "10%"
+            '
+            'AlignDropDownButton
+            '
+            Me.AlignDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.AlignDropDownButton.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AlignTopToolStripItem, Me.AlignVerticalCenterToolStripItem, Me.AlignBottomToolStripItem, Me.AlignLeftToolStripItem, Me.AlignHorizontalCenterToolStripItem, Me.AlignRightToolStripItem})
+            Me.AlignDropDownButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Align.gif")
+            Me.AlignDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.AlignDropDownButton.Name = "AlignDropDownButton"
+            Me.AlignDropDownButton.Size = New System.Drawing.Size(29, 22)
+            Me.AlignDropDownButton.Text = "AlignDropDownButton"
+            Me.AlignDropDownButton.ToolTipText = "Align selected shapes"
+            '
+            'AlignTopToolStripItem
+            '
+            Me.AlignTopToolStripItem.Name = "AlignTopToolStripItem"
+            Me.AlignTopToolStripItem.Size = New System.Drawing.Size(167, 22)
+            Me.AlignTopToolStripItem.Text = "Top"
+            Me.AlignTopToolStripItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AlignTop.gif")
+            '
+            'AlignVerticalCenterToolStripItem
+            '
+            Me.AlignVerticalCenterToolStripItem.Name = "AlignVerticalCenterToolStripItem"
+            Me.AlignVerticalCenterToolStripItem.Size = New System.Drawing.Size(167, 22)
+            Me.AlignVerticalCenterToolStripItem.Text = "Vertical Center"
+            Me.AlignVerticalCenterToolStripItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AlignVerticalCenter.gif")
+            '
+            'AlignBottomToolStripItem
+            '
+            Me.AlignBottomToolStripItem.Name = "AlignBottomToolStripItem"
+            Me.AlignBottomToolStripItem.Size = New System.Drawing.Size(167, 22)
+            Me.AlignBottomToolStripItem.Text = "Bottom"
+            Me.AlignBottomToolStripItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AlignBottom.gif")
+            '
+            'AlignLeftToolStripItem
+            '
+            Me.AlignLeftToolStripItem.Name = "AlignLeftToolStripItem"
+            Me.AlignLeftToolStripItem.Size = New System.Drawing.Size(167, 22)
+            Me.AlignLeftToolStripItem.Text = "Left"
+            Me.AlignLeftToolStripItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AlignLeft.gif")
+            '
+            'AlignHorizontalCenterToolStripItem
+            '
+            Me.AlignHorizontalCenterToolStripItem.Name = "AlignHorizontalCenterToolStripItem"
+            Me.AlignHorizontalCenterToolStripItem.Size = New System.Drawing.Size(167, 22)
+            Me.AlignHorizontalCenterToolStripItem.Text = "Horizontal Center"
+            Me.AlignHorizontalCenterToolStripItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AlignHorizontalCenter.gif")
+            '
+            'AlignRightToolStripItem
+            '
+            Me.AlignRightToolStripItem.Name = "AlignRightToolStripItem"
+            Me.AlignRightToolStripItem.Size = New System.Drawing.Size(167, 22)
+            Me.AlignRightToolStripItem.Text = "Right"
+            Me.AlignRightToolStripItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AlignRight.gif")
+            '
+            'DistributeDropDownButton
+            '
+            Me.DistributeDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.DistributeDropDownButton.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DistributeVerticalToolStripItem, Me.DistributeHorizontalToolStripItem})
+            Me.DistributeDropDownButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Distribute.gif")
+            Me.DistributeDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.DistributeDropDownButton.Name = "DistributeDropDownButton"
+            Me.DistributeDropDownButton.Size = New System.Drawing.Size(29, 22)
+            Me.DistributeDropDownButton.Text = "DistributeDropDownButton"
+            Me.DistributeDropDownButton.ToolTipText = "Distribute selected shapes"
+            '
+            'DistributeVerticalToolStripItem
+            '
+            Me.DistributeVerticalToolStripItem.Name = "DistributeVerticalToolStripItem"
+            Me.DistributeVerticalToolStripItem.Size = New System.Drawing.Size(129, 22)
+            Me.DistributeVerticalToolStripItem.Text = "Vertical"
+            Me.DistributeVerticalToolStripItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.DistributeVertical.gif")
+            '
+            'DistributeHorizontalToolStripItem
+            '
+            Me.DistributeHorizontalToolStripItem.Name = "DistributeHorizontalToolStripItem"
+            Me.DistributeHorizontalToolStripItem.Size = New System.Drawing.Size(129, 22)
+            Me.DistributeHorizontalToolStripItem.Text = "Horizontal"
+            Me.DistributeHorizontalToolStripItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.DistributeHorizontal.gif")
+            '
+            'SizeDropDownButton
+            '
+            Me.SizeDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.SizeDropDownButton.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SizeBothToolStripItem, Me.SizeWidthToolStripItem, Me.SizeHeightToolStripItem})
+            Me.SizeDropDownButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Size.gif")
+            Me.SizeDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.SizeDropDownButton.Name = "SizeDropDownButton"
+            Me.SizeDropDownButton.Size = New System.Drawing.Size(29, 22)
+            Me.SizeDropDownButton.Text = "ToolStripDropDownButton1"
+            '
+            'SizeBothToolStripItem
+            '
+            Me.SizeBothToolStripItem.Name = "SizeBothToolStripItem"
+            Me.SizeBothToolStripItem.Size = New System.Drawing.Size(110, 22)
+            Me.SizeBothToolStripItem.Text = "Both"
+            Me.SizeBothToolStripItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.SizeBoth.gif")
+            '
+            'SizeWidthToolStripItem
+            '
+            Me.SizeWidthToolStripItem.Name = "SizeWidthToolStripItem"
+            Me.SizeWidthToolStripItem.Size = New System.Drawing.Size(110, 22)
+            Me.SizeWidthToolStripItem.Text = "Width"
+            Me.SizeWidthToolStripItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.SizeWidth.gif")
+            '
+            'SizeHeightToolStripItem
+            '
+            Me.SizeHeightToolStripItem.Name = "SizeHeightToolStripItem"
+            Me.SizeHeightToolStripItem.Size = New System.Drawing.Size(110, 22)
+            Me.SizeHeightToolStripItem.Text = "Height"
+            Me.SizeHeightToolStripItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.SizeHeight.gif")
+            '
+            'AddFlowMenuStrip
+            '
+            Me.AddFlowMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.EditToolStripMenuItem, Me.ViewToolStripMenuItem, Me.ShapeToolStripMenuItem})
+            Me.AddFlowMenuStrip.Location = New System.Drawing.Point(0, 0)
+            Me.AddFlowMenuStrip.Name = "AddFlowMenuStrip"
+            Me.AddFlowMenuStrip.Size = New System.Drawing.Size(351, 24)
+            Me.AddFlowMenuStrip.TabIndex = 1
+            Me.AddFlowMenuStrip.Text = "AddFlowMenuStrip"
+            Me.AddFlowMenuStrip.Visible = False
+            '
+            'FileToolStripMenuItem
+            '
+            Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.toolStripSeparator1, Me.ExportToolStripMenuItem, Me.PageSetupToolStripMenuItem, Me.PrintPreviewToolStripMenuItem, Me.PrintToolStripMenuItem})
+            Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
+            Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
+            Me.FileToolStripMenuItem.Text = "&File"
+            Me.FileToolStripMenuItem.MergeAction = MergeAction.MatchOnly
+            '
+            'toolStripSeparator1
+            '
+            Me.toolStripSeparator1.Name = "toolStripSeparator1"
+            Me.toolStripSeparator1.Size = New System.Drawing.Size(140, 6)
+            Me.toolStripSeparator1.MergeAction = System.Windows.Forms.MergeAction.Append
+            '
+            'ExportToolStripMenuItem
+            '
+            Me.ExportToolStripMenuItem.Name = "ExportToolStripMenuItem"
+            Me.ExportToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
+            Me.ExportToolStripMenuItem.Text = "Export"
+            Me.ExportToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Export.gif")
+            Me.ExportToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Append
+            '
+            'PageSetupToolStripMenuItem
+            '
+            Me.PageSetupToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.PageSetup.gif")
+            Me.PageSetupToolStripMenuItem.Name = "PageSetupToolStripMenuItem"
+            Me.PageSetupToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
+            Me.PageSetupToolStripMenuItem.Text = "Page Setup"
+            Me.PageSetupToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Append
+            '
+            'PrintPreviewToolStripMenuItem
+            '
+            Me.PrintPreviewToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.PrintPreview.gif")
+            Me.PrintPreviewToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.PrintPreviewToolStripMenuItem.Name = "PrintPreviewToolStripMenuItem"
+            Me.PrintPreviewToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
+            Me.PrintPreviewToolStripMenuItem.Text = "Print Pre&view"
+            Me.PrintPreviewToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Append
+            '
+            'PrintToolStripMenuItem
+            '
+            Me.PrintPreviewToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Print.gif")
+            Me.PrintPreviewToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.PrintToolStripMenuItem.Name = "PrintToolStripMenuItem"
+            Me.PrintToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
+            Me.PrintToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
+            Me.PrintToolStripMenuItem.Text = "&Print"
+            Me.PrintToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Append
+            '
+            'EditToolStripMenuItem
+            '
+            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteInPlaceMenuItem, Me.ShowConnectionsToolStripMenuItem, Me.GridMenuItem})
+            Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
+            Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
+            Me.EditToolStripMenuItem.Text = "&Edit"
+            Me.EditToolStripMenuItem.MergeAction = MergeAction.MatchOnly
+            '
+            'ShowConnectionsToolStripMenuItem
+            '
+            Me.ShowConnectionsToolStripMenuItem.Name = "ShowConnectionsToolStripMenuItem"
+            Me.ShowConnectionsToolStripMenuItem.Size = New System.Drawing.Size(173, 22)
+            Me.ShowConnectionsToolStripMenuItem.Text = "Show Connections"
+            Me.ShowConnectionsToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Connections.gif")
+            Me.ShowConnectionsToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Append
+            '
+            'ViewToolStripMenuItem
+            '
+            Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripSeparator3, Me.FitToPageMenuItem, Me.ZoomOutMenuItem, Me.ZoomInMenuItem})
+            Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
+            Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
+            Me.ViewToolStripMenuItem.Text = "&View"
+            Me.ViewToolStripMenuItem.MergeAction = MergeAction.MatchOnly
+            '
+            'ToolStripSeparator3
+            '
+            Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+            Me.ToolStripSeparator3.Size = New System.Drawing.Size(149, 6)
+            Me.ToolStripSeparator3.MergeAction = MergeAction.Append
+            '
+            'FitToPageMenuItem
+            '
+            Me.FitToPageMenuItem.Name = "FitToPageMenuItem"
+            Me.FitToPageMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.FitToPageMenuItem.Text = "Fit to Page"
+            Me.FitToPageMenuItem.MergeAction = MergeAction.Append
+            '
+            'ZoomOutMenuItem
+            '
+            Me.ZoomOutMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ZoomOutBy10MenuItem, Me.ZoomOutBy20MenuItem, Me.ZoomOut100MenuItem, Me.ZoomOut90MenuItem, Me.ZoomOut80MenuItem, Me.ZoomOut70MenuItem, Me.ZoomOut60MenuItem, Me.ZoomOut50MenuItem, Me.ZoomOut40MenuItem, Me.ZoomOut30MenuItem, Me.ZoomOut20MenuItem, Me.ZoomOut10MenuItem})
+            Me.ZoomOutMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.ZoomOut.gif")
+            Me.ZoomOutMenuItem.Name = "ZoomOutMenuItem"
+            Me.ZoomOutMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.ZoomOutMenuItem.Text = "Zoom Out"
+            Me.ZoomOutMenuItem.MergeAction = MergeAction.Append
+            '
+            'ZoomOutBy10MenuItem
+            '
+            Me.ZoomOutBy10MenuItem.Name = "ZoomOutBy10MenuItem"
+            Me.ZoomOutBy10MenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.L), System.Windows.Forms.Keys)
+            Me.ZoomOutBy10MenuItem.Size = New System.Drawing.Size(175, 22)
+            Me.ZoomOutBy10MenuItem.Text = "Out by 10%"
+            '
+            'ZoomOutBy20MenuItem
+            '
+            Me.ZoomOutBy20MenuItem.Name = "ZoomOutBy20MenuItem"
+            Me.ZoomOutBy20MenuItem.Size = New System.Drawing.Size(175, 22)
+            Me.ZoomOutBy20MenuItem.Text = "Out by 20%"
+            '
+            'ZoomOut100MenuItem
+            '
+            Me.ZoomOut100MenuItem.Name = "ZoomOut100MenuItem"
+            Me.ZoomOut100MenuItem.Size = New System.Drawing.Size(175, 22)
+            Me.ZoomOut100MenuItem.Text = "100%"
+            '
+            'ZoomOut90MenuItem
+            '
+            Me.ZoomOut90MenuItem.Name = "ZoomOut90MenuItem"
+            Me.ZoomOut90MenuItem.Size = New System.Drawing.Size(175, 22)
+            Me.ZoomOut90MenuItem.Text = "90%"
+            '
+            'ZoomOut80MenuItem
+            '
+            Me.ZoomOut80MenuItem.Name = "ZoomOut80MenuItem"
+            Me.ZoomOut80MenuItem.Size = New System.Drawing.Size(175, 22)
+            Me.ZoomOut80MenuItem.Text = "80%"
+            '
+            'ZoomOut70MenuItem
+            '
+            Me.ZoomOut70MenuItem.Name = "ZoomOut70MenuItem"
+            Me.ZoomOut70MenuItem.Size = New System.Drawing.Size(175, 22)
+            Me.ZoomOut70MenuItem.Text = "70%"
+            '
+            'ZoomOut60MenuItem
+            '
+            Me.ZoomOut60MenuItem.Name = "ZoomOut60MenuItem"
+            Me.ZoomOut60MenuItem.Size = New System.Drawing.Size(175, 22)
+            Me.ZoomOut60MenuItem.Text = "60%"
+            '
+            'ZoomOut50MenuItem
+            '
+            Me.ZoomOut50MenuItem.Name = "ZoomOut50MenuItem"
+            Me.ZoomOut50MenuItem.Size = New System.Drawing.Size(175, 22)
+            Me.ZoomOut50MenuItem.Text = "50%"
+            '
+            'ZoomOut40MenuItem
+            '
+            Me.ZoomOut40MenuItem.Name = "ZoomOut40MenuItem"
+            Me.ZoomOut40MenuItem.Size = New System.Drawing.Size(175, 22)
+            Me.ZoomOut40MenuItem.Text = "40%"
+            '
+            'ZoomOut30MenuItem
+            '
+            Me.ZoomOut30MenuItem.Name = "ZoomOut30MenuItem"
+            Me.ZoomOut30MenuItem.Size = New System.Drawing.Size(175, 22)
+            Me.ZoomOut30MenuItem.Text = "30%"
+            '
+            'ZoomOut20MenuItem
+            '
+            Me.ZoomOut20MenuItem.Name = "ZoomOut20MenuItem"
+            Me.ZoomOut20MenuItem.Size = New System.Drawing.Size(175, 22)
+            Me.ZoomOut20MenuItem.Text = "20%"
+            '
+            'ZoomOut10MenuItem
+            '
+            Me.ZoomOut10MenuItem.Name = "ZoomOut10MenuItem"
+            Me.ZoomOut10MenuItem.Size = New System.Drawing.Size(175, 22)
+            Me.ZoomOut10MenuItem.Text = "10%"
+            '
+            'ZoomInMenuItem
+            '
+            Me.ZoomInMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ZoomInBy10MenuItem, Me.ZoomInBy20MenuItem, Me.ZoomIn100MenuItem, Me.ZoomIn125MenuItem, Me.ZoomIn150MenuItem, Me.ZoomIn175MenuItem, Me.ZoomIn200MenuItem, Me.ZoomIn250MenuItem, Me.ZoomIn300MenuItem, Me.ZoomIn400MenuItem, Me.ZoomIn500MenuItem})
+            Me.ZoomInMenuItem.Name = "ZoomInMenuItem"
+            Me.ZoomInMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.ZoomInMenuItem.Text = "Zoom In"
+            Me.ZoomInMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.ZoomIn.gif")
+            Me.ZoomInMenuItem.MergeAction = MergeAction.Append
+            '
+            'ZoomInBy10MenuItem
+            '
+            Me.ZoomInBy10MenuItem.Name = "ZoomInBy10MenuItem"
+            Me.ZoomInBy10MenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.K), System.Windows.Forms.Keys)
+            Me.ZoomInBy10MenuItem.Size = New System.Drawing.Size(166, 22)
+            Me.ZoomInBy10MenuItem.Text = "In by 10%"
+            '
+            'ZoomInBy20MenuItem
+            '
+            Me.ZoomInBy20MenuItem.Name = "ZoomInBy20MenuItem"
+            Me.ZoomInBy20MenuItem.Size = New System.Drawing.Size(166, 22)
+            Me.ZoomInBy20MenuItem.Text = "In by 20%"
+            '
+            'ZoomIn100MenuItem
+            '
+            Me.ZoomIn100MenuItem.Name = "ZoomIn100MenuItem"
+            Me.ZoomIn100MenuItem.Size = New System.Drawing.Size(166, 22)
+            Me.ZoomIn100MenuItem.Text = "100%"
+            '
+            'ZoomIn125MenuItem
+            '
+            Me.ZoomIn125MenuItem.Name = "ZoomIn125MenuItem"
+            Me.ZoomIn125MenuItem.Size = New System.Drawing.Size(166, 22)
+            Me.ZoomIn125MenuItem.Text = "125%"
+            '
+            'ZoomIn150MenuItem
+            '
+            Me.ZoomIn150MenuItem.Name = "ZoomIn150MenuItem"
+            Me.ZoomIn150MenuItem.Size = New System.Drawing.Size(166, 22)
+            Me.ZoomIn150MenuItem.Text = "150%"
+            '
+            'ZoomIn175MenuItem
+            '
+            Me.ZoomIn175MenuItem.Name = "ZoomIn175MenuItem"
+            Me.ZoomIn175MenuItem.Size = New System.Drawing.Size(166, 22)
+            Me.ZoomIn175MenuItem.Text = "175%"
+            '
+            'ZoomIn200MenuItem
+            '
+            Me.ZoomIn200MenuItem.Name = "ZoomIn200MenuItem"
+            Me.ZoomIn200MenuItem.Size = New System.Drawing.Size(166, 22)
+            Me.ZoomIn200MenuItem.Text = "200%"
+            '
+            'ZoomIn250MenuItem
+            '
+            Me.ZoomIn250MenuItem.Name = "ZoomIn250MenuItem"
+            Me.ZoomIn250MenuItem.Size = New System.Drawing.Size(166, 22)
+            Me.ZoomIn250MenuItem.Text = "250%"
+            '
+            'ZoomIn300MenuItem
+            '
+            Me.ZoomIn300MenuItem.Name = "ZoomIn300MenuItem"
+            Me.ZoomIn300MenuItem.Size = New System.Drawing.Size(166, 22)
+            Me.ZoomIn300MenuItem.Text = "300%"
+            '
+            'ZoomIn400MenuItem
+            '
+            Me.ZoomIn400MenuItem.Name = "ZoomIn400MenuItem"
+            Me.ZoomIn400MenuItem.Size = New System.Drawing.Size(166, 22)
+            Me.ZoomIn400MenuItem.Text = "400%"
+            '
+            'ZoomIn500MenuItem
+            '
+            Me.ZoomIn500MenuItem.Name = "ZoomIn500MenuItem"
+            Me.ZoomIn500MenuItem.Size = New System.Drawing.Size(166, 22)
+            Me.ZoomIn500MenuItem.Text = "500%"
+            '
+            'ShapeToolStripMenuItem
+            '
+            Me.ShapeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AlignMenuItem, Me.DistributeMenuItem, Me.SizeMenuItem, Me.BringToFrontMenuItem, Me.SendToBackMenuItem})
+            Me.ShapeToolStripMenuItem.Name = "ShapeToolStripMenuItem"
+            Me.ShapeToolStripMenuItem.Size = New System.Drawing.Size(51, 20)
+            Me.ShapeToolStripMenuItem.Text = "Shape"
+            '
+            'AlignMenuItem
+            '
+            Me.AlignMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AlignTopMenuItem, Me.AlignVerticalCenterMenuItem, Me.AlignBottomMenuItem, Me.AlignLeftMenuItem, Me.AlignHorizontalCenterMenuItem, Me.AlignRightMenuItem})
+            Me.AlignMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Align.gif")
+            Me.AlignMenuItem.Name = "AlignMenuItem"
+            Me.AlignMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.AlignMenuItem.Text = "Align"
+            '
+            'AlignTopMenuItem
+            '
+            Me.AlignTopMenuItem.Name = "AlignTopMenuItem"
+            Me.AlignTopMenuItem.Size = New System.Drawing.Size(167, 22)
+            Me.AlignTopMenuItem.Text = "Top"
+            Me.AlignTopMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AlignTop.gif")
+            '
+            'AlignVerticalCenterMenuItem
+            '
+            Me.AlignVerticalCenterMenuItem.Name = "AlignVerticalCenterMenuItem"
+            Me.AlignVerticalCenterMenuItem.Size = New System.Drawing.Size(167, 22)
+            Me.AlignVerticalCenterMenuItem.Text = "Vertical Center"
+            Me.AlignVerticalCenterMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AlignVerticalCenter.gif")
+            '
+            'AlignBottomMenuItem
+            '
+            Me.AlignBottomMenuItem.Name = "AlignBottomMenuItem"
+            Me.AlignBottomMenuItem.Size = New System.Drawing.Size(167, 22)
+            Me.AlignBottomMenuItem.Text = "Bottom"
+            Me.AlignBottomMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AlignBottom.gif")
+            '
+            'AlignLeftMenuItem
+            '
+            Me.AlignLeftMenuItem.Name = "AlignLeftMenuItem"
+            Me.AlignLeftMenuItem.Size = New System.Drawing.Size(167, 22)
+            Me.AlignLeftMenuItem.Text = "Left"
+            Me.AlignLeftMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AlignLeft.gif")
+            '
+            'AlignHorizontalCenterMenuItem
+            '
+            Me.AlignHorizontalCenterMenuItem.Name = "AlignHorizontalCenterMenuItem"
+            Me.AlignHorizontalCenterMenuItem.Size = New System.Drawing.Size(167, 22)
+            Me.AlignHorizontalCenterMenuItem.Text = "Horizontal Center"
+            Me.AlignHorizontalCenterMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AlignHorizontalCenter.gif")
+            '
+            'AlignRightMenuItem
+            '
+            Me.AlignRightMenuItem.Name = "AlignRightMenuItem"
+            Me.AlignRightMenuItem.Size = New System.Drawing.Size(167, 22)
+            Me.AlignRightMenuItem.Text = "Right"
+            Me.AlignRightMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.AlignRight.gif")
+            '
+            'DistributeMenuItem
+            '
+            Me.DistributeMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DistributeVerticalMenuItem, Me.DistributeHorizontalMenuItem})
+            Me.DistributeMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Distribute.gif")
+            Me.DistributeMenuItem.Name = "DistributeMenuItem"
+            Me.DistributeMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.DistributeMenuItem.Text = "Distribute"
+            '
+            'DistributeVerticalMenuItem
+            '
+            Me.DistributeVerticalMenuItem.Name = "DistributeVerticalMenuItem"
+            Me.DistributeVerticalMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.DistributeVerticalMenuItem.Text = "Vertical"
+            Me.DistributeVerticalMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.DistributeVertical.gif")
+            '
+            'DistributeHorizontalMenuItem
+            '
+            Me.DistributeHorizontalMenuItem.Name = "DistributeHorizontalMenuItem"
+            Me.DistributeHorizontalMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.DistributeHorizontalMenuItem.Text = "Horizontal"
+            Me.DistributeHorizontalMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.DistributeHorizontal.gif")
+            '
+            'SizeMenuItem
+            '
+            Me.SizeMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SizeBothMenuItem, Me.SizeWidthMenuItem, Me.SizeHeightMenuItem})
+            Me.SizeMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Size.gif")
+            Me.SizeMenuItem.Name = "SizeMenuItem"
+            Me.SizeMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.SizeMenuItem.Text = "Size"
+            '
+            'SizeBothMenuItem
+            '
+            Me.SizeBothMenuItem.Name = "SizeBothMenuItem"
+            Me.SizeBothMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.SizeBothMenuItem.Text = "Both"
+            Me.SizeBothMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.SizeBoth.gif")
+            '
+            'SizeWidthMenuItem
+            '
+            Me.SizeWidthMenuItem.Name = "SizeWidthMenuItem"
+            Me.SizeWidthMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.SizeWidthMenuItem.Text = "Width"
+            Me.SizeWidthMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.SizeWidth.gif")
+            '
+            'SizeHeightMenuItem
+            '
+            Me.SizeHeightMenuItem.Name = "SizeHeightMenuItem"
+            Me.SizeHeightMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.SizeHeightMenuItem.Text = "Height"
+            Me.SizeHeightMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.SizeHeight.gif")
+            '
+            'SelectByTypeToolStripMenuItem
+            '
+            Me.SendToBackMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.SendToBack.gif")
+            Me.SendToBackMenuItem.Name = "SendToBackToolStripMenuItem"
+            Me.SendToBackMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.SendToBackMenuItem.Text = "Send to back"
+            Me.SendToBackMenuItem.ToolTipText = "Send to back"
+            '
+            'SelectByTypeToolStripMenuItem
+            '
+            Me.BringToFrontMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.BringToFront.gif")
+            Me.BringToFrontMenuItem.Name = "BringToFrontToolStripMenuItem"
+            Me.BringToFrontMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.BringToFrontMenuItem.Text = "Bring to front"
+            Me.BringToFrontMenuItem.ToolTipText = "Bring to front"
+            '
+            'PasteInPlaseToolStripMenuItem
+            '
+            Me.PasteInPlaceMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.CopyClipboard.gif")
+            Me.PasteInPlaceMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.PasteInPlaceMenuItem.Name = "PasteInPlaceToolStripMenuItem"
+            Me.PasteInPlaceMenuItem.Size = New System.Drawing.Size(159, 22)
+            Me.PasteInPlaceMenuItem.Text = "Paste in place"
+            Me.PasteInPlaceMenuItem.MergeAction = MergeAction.Append
+            '
+            'PasteInPlaseToolStripMenuItem
+            '
+            Me.GridMenuItem.Name = "GridMenuItem"
+            Me.GridMenuItem.Size = New System.Drawing.Size(159, 22)
+            Me.GridMenuItem.Text = "Grid"
+            Me.GridMenuItem.MergeAction = MergeAction.Append
+            Me.GridMenuItem.CheckOnClick = True
+            Me.GridMenuItem.Checked = True
+
+            'AddFlowDiagram_ToolStrips
+            '
+            ' 
+            Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
+            Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.ClientSize = New System.Drawing.Size(292, 266)
+            Me.Controls.Add(Me.AddFlowToolStrip)
+            Me.Controls.Add(Me.AddFlowMenuStrip)
             Me.Controls.Add(Me.m_ctrlAddFlow)
+            Me.MainMenuStrip = Me.AddFlowMenuStrip
             Me.Name = "Behavioral Editor"
             Me.Text = "BehavioralLayout"
+            Me.AddFlowToolStrip.ResumeLayout(False)
+            Me.AddFlowToolStrip.PerformLayout()
+            Me.AddFlowMenuStrip.ResumeLayout(False)
+            Me.AddFlowMenuStrip.PerformLayout()
             Me.ResumeLayout(False)
+            Me.PerformLayout()
 
         End Sub
 
@@ -116,6 +1060,7 @@ Namespace Forms.Behavior
             End Get
             Set(ByVal Value As Boolean)
                 m_ctrlAddFlow.Grid.Draw = Value
+                Me.GridMenuItem.Checked = Value
                 m_Timer.Enabled = True
             End Set
         End Property
@@ -204,6 +1149,18 @@ Namespace Forms.Behavior
         '        m_beEditor.SwapDiagramIndex(Me, Value)
         '    End Set
         'End Property
+        ' 
+        Public Overrides ReadOnly Property FormMenuStrip() As AnimatGuiCtrls.Controls.AnimatMenuStrip
+            Get
+                Return Me.AddFlowMenuStrip
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property FormToolStrip() As AnimatGuiCtrls.Controls.AnimatToolStrip
+            Get
+                Return Me.AddFlowToolStrip
+            End Get
+        End Property
 
 #End Region
 
@@ -477,6 +1434,7 @@ Namespace Forms.Behavior
             bdNode.ParentDiagram = Me
             bdNode.ParentSubsystem = Me.Subsystem
             bdNode.Tag = afNode
+            afNode.Tag = bdNode.ID
 
             bdNode.BeforeAddNode()
             m_bnSubSystem.BehavioralNodes.Add(bdNode.ID, bdNode)
@@ -556,6 +1514,7 @@ Namespace Forms.Behavior
             blLink.ParentDiagram = Me
             blLink.ParentSubsystem = Me.Subsystem
             blLink.Tag = afLink
+            afLink.Tag = blLink.ID
 
             blLink.BeginBatchUpdate()
             blLink.Origin = bnOrigin
@@ -747,13 +1706,10 @@ Namespace Forms.Behavior
             m_ctrlAddFlow.Zoom.X = fltXZoomFactor
             m_ctrlAddFlow.Zoom.Y = fltYZoomFactor
 
-            'TODO
-            ''For some reason the diagrams are not sizing correctly once they are zoomed. 
-            ''I am doing this just to make the editor as a whole call the resize code.
-            ''This fixes the problem, but it is ugly looking
-            'Me.Editor.Width = Me.Editor.Width - 1
-            'Me.Editor.Width = Me.Editor.Width + 1
-            ''m_Timer.Enabled = True
+            'For some reason the diagrams are not sizing correctly once they are zoomed. 
+            'I am doing this just to make the editor as a whole call the resize code.
+            'This fixes the problem, but it is ugly looking
+            m_Timer.Enabled = True
         End Sub
 
         Public Overrides Sub ZoomTo(ByVal fltZoom As Single)
@@ -770,13 +1726,10 @@ Namespace Forms.Behavior
             m_ctrlAddFlow.Zoom.X = fltXZoomFactor
             m_ctrlAddFlow.Zoom.Y = fltYZoomFactor
 
-            'TODO
-            ''For some reason the diagrams are not sizing correctly once they are zoomed. 
-            ''I am doing this just to make the editor as a whole call the resize code.
-            ''This fixes the problem, but it is ugly looking
-            'Me.Editor.Width = Me.Editor.Width - 1
-            'Me.Editor.Width = Me.Editor.Width + 1
-            ''m_Timer.Enabled = True
+            'For some reason the diagrams are not sizing correctly once they are zoomed. 
+            'I am doing this just to make the editor as a whole call the resize code.
+            'This fixes the problem, but it is ugly looking
+            m_Timer.Enabled = True
         End Sub
 
         'TODO
@@ -1305,305 +2258,149 @@ Namespace Forms.Behavior
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Jump Size", GetType(enumJumpSize), "JumpSize", _
                                         "Diagram Properties", "Sets the size of the jumps at the intersection of links.", Me.JumpSize))
 
-            'TODO
-            'propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Tab Index", GetType(Integer), "SetDiagramIndex", _
-            '                            "Diagram Properties", "Sets the index of this tab.", Me.DiagramIndex))
-
 
         End Sub
 
 #Region " Menu Methods "
 
-        Protected Sub CreateDiagramPopupMenu(ByVal ptScreen As Point)
+        Public Overrides Sub ValidateEditToolStripItemState()
+            MyBase.ValidateEditToolStripItemState()
 
-            'TODO
-            '' Create the popup menu object
-            'Dim popup As New PopupMenu
-
-            '' Create the menu items
-            'Dim mcGrid As New MenuCommand("Grid", "Grid", New EventHandler(AddressOf Me.OnGrid))
-            'If m_ctrlAddFlow.Grid.Draw Then
-            '    mcGrid.Checked = True
-            'End If
-            'popup.MenuCommands.Add(mcGrid)
-
-
-            'Dim mcSepEditStart As MenuCommand = New MenuCommand("-")
-            'Dim mcCut As New MenuCommand("Cut", "Cut", m_beEditor.ToolStripImages.ImageList, _
-            '                             m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.Cut.gif"), _
-            '                             Shortcut.CtrlX, New EventHandler(AddressOf Me.OnCut))
-            'Dim mcCopy As New MenuCommand("Copy", "Copy", m_beEditor.ToolStripImages.ImageList, _
-            '                                m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.Copy.gif"), _
-            '                                Shortcut.CtrlC, New EventHandler(AddressOf Me.OnCopy))
-            'Dim mcPaste As New MenuCommand("Paste", "Paste", m_beEditor.ToolStripImages.ImageList, _
-            '                                m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.Paste.gif"), _
-            '                                Shortcut.CtrlV, New EventHandler(AddressOf Me.OnPaste))
-            'Dim mcPasteInPlace As New MenuCommand("Paste In Place", "PasteInPlace", m_beEditor.ToolStripImages.ImageList, _
-            '                                m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.Paste.gif"), _
-            '                                Shortcut.CtrlB, New EventHandler(AddressOf Me.OnPasteInPlace))
-            'Dim mcDelete As New MenuCommand("Delete", "Delete", m_beEditor.ToolStripImages.ImageList, _
-            '                                m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.Delete.gif"), _
-            '                                Shortcut.Del, New EventHandler(AddressOf Me.OnDelete))
-
-            'If m_ctrlAddFlow.SelectedItems.Count = 0 Then
-            '    mcCut.Enabled = False
-            '    mcCopy.Enabled = False
-            '    mcDelete.Enabled = False
-            'End If
-
-            'mcPaste.Enabled = False
-            'mcPasteInPlace.Enabled = False
-            'Dim data As IDataObject = Clipboard.GetDataObject()
-            'If Not data Is Nothing AndAlso data.GetDataPresent("AnimatLab.Behavior.XMLFormat") Then
-            '    Dim strXml As String = DirectCast(data.GetData("AnimatLab.Behavior.XMLFormat"), String)
-            '    If strXml.Trim.Length > 0 Then
-            '        mcPaste.Enabled = True
-            '        mcPasteInPlace.Enabled = True
-            '    End If
-            'End If
-
-            'popup.MenuCommands.AddRange(New MenuCommand() {mcSepEditStart, mcCut, mcCopy, mcPaste, mcPasteInPlace, mcDelete})
-
-            'Dim mcSepSelectStart As MenuCommand = New MenuCommand("-")
-            'Dim mcSelectAll As New MenuCommand("Select All", "SelectAll", New EventHandler(AddressOf Me.OnSelectAll))
-            'Dim mcSelectByType As New MenuCommand("Select By Type", "SelectByType", m_beEditor.ToolStripImages.ImageList, _
-            '                                m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.SelectByType.gif"), _
-            '                                New EventHandler(AddressOf Me.OnSelectByType))
-            'Dim mcRelabel As New MenuCommand("Relabel", "Relabel", Me.Editor.ToolStripImages.ImageList, _
-            '                                  Me.Editor.ToolStripImages.GetImageIndex("AnimatGUI.Relabel.gif"), _
-            '                                  New EventHandler(AddressOf Me.OnRelabel))
-            'Dim mcRelabelSelected As New MenuCommand("Relabel Selected", "RelabelSelected", Me.Editor.ToolStripImages.ImageList, _
-            '                                  Me.Editor.ToolStripImages.GetImageIndex("AnimatGUI.RelabelSelected.gif"), _
-            '                                  New EventHandler(AddressOf Me.OnRelabelSelected))
-
-            'If m_ctrlAddFlow.Items.Count = 0 Then
-            '    mcSelectAll.Enabled = False
-            '    mcSelectByType.Enabled = False
-            'End If
-
-            'popup.MenuCommands.AddRange(New MenuCommand() {mcSepSelectStart, mcSelectAll, mcSelectByType, mcRelabel, mcRelabelSelected})
-
-            'Dim mcSepZOrderStart As MenuCommand = New MenuCommand("-")
-            'Dim mcSendToBack As New MenuCommand("Send To Back", "SendToBack", m_beEditor.ToolStripImages.ImageList, _
-            '                            m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.SendToBack.gif"), New EventHandler(AddressOf Me.OnSendToBack))
-            'Dim mcBringToFront As New MenuCommand("Bring To Front", "BringToFront", m_beEditor.ToolStripImages.ImageList, _
-            '                            m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.BringToFront.gif"), New EventHandler(AddressOf Me.OnBringToFront))
-
-            'popup.MenuCommands.AddRange(New MenuCommand() {mcSepZOrderStart, mcSendToBack, mcBringToFront})
-
-            'If m_ctrlAddFlow.SelectedItems.Count = 0 Then
-            '    mcSendToBack.Enabled = False
-            '    mcBringToFront.Enabled = False
-            'End If
-
-            'Dim aryList As ArrayList = GetSelectedAddflowNodes()
-            'If aryList.Count > 1 Then
-            '    Dim mcAlign As New MenuCommand("Align", "Align", m_beEditor.ToolStripImages.ImageList, m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.Align.gif"))
-            '    Dim mcAlignTop As New MenuCommand("Top", "AlignTop", m_beEditor.ToolStripImages.ImageList, _
-            '                                    m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.AlignTop.gif"), New EventHandler(AddressOf Me.OnAlignTop))
-            '    Dim mcAlignVerticalCenter As New MenuCommand("Veritcal Center", "AlignVeritcalCenter", _
-            '                                                m_beEditor.ToolStripImages.ImageList, _
-            '                                                m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.AlignVerticalCenter.gif"), _
-            '                                                New EventHandler(AddressOf Me.OnAlignVerticalCenter))
-            '    Dim mcAlignBottom As New MenuCommand("Bottom", "AlignBottom", m_beEditor.ToolStripImages.ImageList, _
-            '                                        m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.AlignBottom.gif"), _
-            '                                        New EventHandler(AddressOf Me.OnAlignBottom))
-            '    Dim mcAlignLeft As New MenuCommand("Left", "AlignLeft", m_beEditor.ToolStripImages.ImageList, _
-            '                                    m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.AlignLeft.gif"), _
-            '                                    New EventHandler(AddressOf Me.OnAlignLeft))
-            '    Dim mcAlignHorizontalCenter As New MenuCommand("Horizontal Center", "AlignHorizontalCenter", _
-            '                                                m_beEditor.ToolStripImages.ImageList, _
-            '                                                m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.AlignHorizontalCenter.gif"), _
-            '                                                New EventHandler(AddressOf Me.OnAlignHorizontalCenter))
-            '    Dim mcAlignRight As New MenuCommand("Right", "AlignRight", m_beEditor.ToolStripImages.ImageList, _
-            '                                        m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.AlignRight.gif"), _
-            '                                        New EventHandler(AddressOf Me.OnAlignRight))
-
-            '    mcAlign.MenuCommands.AddRange(New MenuCommand() {mcAlignTop, mcAlignVerticalCenter, mcAlignBottom, mcAlignLeft, mcAlignHorizontalCenter, mcAlignRight})
-
-            '    Dim mcDistribute As New MenuCommand("Distribute", "Distribute", m_beEditor.ToolStripImages.ImageList, m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.Distribute.gif"))
-            '    Dim mcDistributeVertical As New MenuCommand("Veritcal", "DistributeVertical", _
-            '                                                m_beEditor.ToolStripImages.ImageList, _
-            '                                                m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.DistributeVertical.gif"), _
-            '                                                New EventHandler(AddressOf Me.OnDistributeVertical))
-            '    Dim mcDistributeHorizontal As New MenuCommand("Horizontal", "DistributeHorizontal", _
-            '                                                m_beEditor.ToolStripImages.ImageList, _
-            '                                                m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.DistributeHorizontal.gif"), _
-            '                                                New EventHandler(AddressOf Me.OnDistributeHorizontal))
-
-            '    mcDistribute.MenuCommands.AddRange(New MenuCommand() {mcDistributeVertical, mcDistributeHorizontal})
-
-
-            '    Dim mcSize As New MenuCommand("Size", "Size", m_beEditor.ToolStripImages.ImageList, m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.Size.gif"))
-            '    Dim mcSizeBoth As New MenuCommand("Both", "SizeBoth", m_beEditor.ToolStripImages.ImageList, _
-            '                                    m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.SizeBoth.gif"), _
-            '                                    New EventHandler(AddressOf Me.OnSizeBoth))
-            '    Dim mcSizeWidth As New MenuCommand("Width", "SizeWidth", m_beEditor.ToolStripImages.ImageList, _
-            '                                    m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.SizeWidth.gif"), _
-            '                                    New EventHandler(AddressOf Me.OnSizeWidth))
-            '    Dim mcSizeHeight As New MenuCommand("Height", "SizeHeight", m_beEditor.ToolStripImages.ImageList, _
-            '                                        m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.SizeHeight.gif"), _
-            '                                        New EventHandler(AddressOf Me.OnSizeHeight))
-
-            '    mcSize.MenuCommands.AddRange(New MenuCommand() {mcSizeBoth, mcSizeWidth, mcSizeHeight})
-
-            '    popup.MenuCommands.AddRange(New MenuCommand() {mcAlign, _
-            '                                                   mcDistribute, _
-            '                                                   mcSize})
-            'End If
-
-            'Dim mcFitToPage As New MenuCommand("Fit To Page", "FitToPage", New EventHandler(AddressOf Me.OnFitToPage))
-
-            'Dim mcZoomIn As New MenuCommand("Zoom In", "ZoomIn", m_beEditor.ToolStripImages.ImageList, _
-            '                                  m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.ZoomIn.gif"), _
-            '                                  New EventHandler(AddressOf Me.OnZoomInBy10))
-
-            'Dim mcZoomInBy10 As New MenuCommand("In By 10%", "ZoomInBy10", Shortcut.CtrlK, New EventHandler(AddressOf Me.OnZoomInBy10))
-            'Dim mcZoomInBy20 As New MenuCommand("In By 20%", "ZoomInBy20", New EventHandler(AddressOf Me.OnZoomInBy20))
-            'Dim mcZoomIn100 As New MenuCommand("100%", "Zoom100", New EventHandler(AddressOf Me.OnZoom100))
-            'Dim mcZoom125 As New MenuCommand("125%", "Zoom125", New EventHandler(AddressOf Me.OnZoom125))
-            'Dim mcZoom150 As New MenuCommand("150%", "Zoom150", New EventHandler(AddressOf Me.OnZoom150))
-            'Dim mcZoom175 As New MenuCommand("175%", "Zoom175", New EventHandler(AddressOf Me.OnZoom175))
-            'Dim mcZoom200 As New MenuCommand("200%", "Zoom200", New EventHandler(AddressOf Me.OnZoom200))
-            'Dim mcZoom250 As New MenuCommand("250%", "Zoom250", New EventHandler(AddressOf Me.OnZoom250))
-            'Dim mcZoom300 As New MenuCommand("300%", "Zoom300", New EventHandler(AddressOf Me.OnZoom300))
-            'Dim mcZoom400 As New MenuCommand("400%", "Zoom400", New EventHandler(AddressOf Me.OnZoom400))
-            'Dim mcZoom500 As New MenuCommand("500%", "Zoom500", New EventHandler(AddressOf Me.OnZoom500))
-
-            'mcZoomIn.MenuCommands.AddRange(New MenuCommand() {mcZoomInBy10, mcZoomInBy20, mcZoomIn100, mcZoom125, mcZoom150, mcZoom175, _
-            '                                                  mcZoom200, mcZoom250, mcZoom300, mcZoom400, mcZoom500})
-
-            'Dim mcZoomOut As New MenuCommand("Zoom Out", "ZoomOut", m_beEditor.ToolStripImages.ImageList, _
-            '                                  m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.ZoomOut.gif"), _
-            '                                  New EventHandler(AddressOf Me.OnZoomOutBy10))
-
-            'Dim mcZoomOutBy10 As New MenuCommand("Out By 10%", "ZoomOutBy10", Shortcut.CtrlL, New EventHandler(AddressOf Me.OnZoomOutBy10))
-            'Dim mcZoomOutBy20 As New MenuCommand("Out By 20%", "ZoomOutBy20", New EventHandler(AddressOf Me.OnZoomOutBy20))
-            'Dim mcZoomOut100 As New MenuCommand("100%", "Zoom100", New EventHandler(AddressOf Me.OnZoom100))
-            'Dim mcZoom90 As New MenuCommand("90%", "Zoom90", New EventHandler(AddressOf Me.OnZoom90))
-            'Dim mcZoom80 As New MenuCommand("80%", "Zoom80", New EventHandler(AddressOf Me.OnZoom80))
-            'Dim mcZoom70 As New MenuCommand("70%", "Zoom70", New EventHandler(AddressOf Me.OnZoom70))
-            'Dim mcZoom60 As New MenuCommand("60%", "Zoom60", New EventHandler(AddressOf Me.OnZoom60))
-            'Dim mcZoom50 As New MenuCommand("50%", "Zoom50", New EventHandler(AddressOf Me.OnZoom50))
-            'Dim mcZoom40 As New MenuCommand("40%", "Zoom40", New EventHandler(AddressOf Me.OnZoom40))
-            'Dim mcZoom30 As New MenuCommand("30%", "Zoom30", New EventHandler(AddressOf Me.OnZoom30))
-            'Dim mcZoom20 As New MenuCommand("20%", "Zoom20", New EventHandler(AddressOf Me.OnZoom20))
-            'Dim mcZoom10 As New MenuCommand("10%", "Zoom10", New EventHandler(AddressOf Me.OnZoom10))
-
-            'mcZoomOut.MenuCommands.AddRange(New MenuCommand() {mcZoomOutBy10, mcZoomOutBy20, mcZoomOut100, mcZoom90, _
-            '                                                   mcZoom80, mcZoom70, mcZoom60, mcZoom50, mcZoom40, mcZoom30, _
-            '                                                   mcZoom20, mcZoom10})
-
-            'Dim mcSep2 As MenuCommand = New MenuCommand("-")
-            'popup.MenuCommands.AddRange(New MenuCommand() {mcSep2, mcFitToPage, mcZoomIn, mcZoomOut})
-
-            ''If a node is selected then show the Add Stimulus entry
-            'If aryList.Count = 1 Then
-            '    Dim afNode As Lassalle.Flow.Node = DirectCast(aryList(0), Lassalle.Flow.Node)
-            '    Dim doNode As AnimatGUI.DataObjects.Behavior.Node = FindNode(DirectCast(afNode.Tag, String))
-
-            '    If doNode.AllowStimulus Then
-            '        Dim mcSep3 As MenuCommand = New MenuCommand("-")
-            '        Dim mcAddStimulus As New MenuCommand("Add Stimulus", "AddStimulus", m_beEditor.ToolStripImages.ImageList, _
-            '                                          m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.ExternalStimulus.gif"), _
-            '                                          New EventHandler(AddressOf Me.OnAddStimulus))
-
-            '        popup.MenuCommands.AddRange(New MenuCommand() {mcSep3, mcAddStimulus})
-            '    End If
-
-            '    'Also show the connections dialog entry
-            '    Dim mcShowConnections As New MenuCommand("ShowConnections", "ShowConnections", m_beEditor.ToolStripImages.ImageList, _
-            '                                      m_beEditor.ToolStripImages.GetImageIndex("AnimatGUI.Connections.gif"), _
-            '                                      New EventHandler(AddressOf Me.OnShowConnections))
-
-            '    popup.MenuCommands.Add(mcShowConnections)
-
-            'End If
-
-            '' Show it!
-            'Dim selected As MenuCommand = popup.TrackPopup(ptScreen)
-
-            ' '' Was an item selected?
-            'If selected Is Nothing Then
-            '    m_ctrlAddFlow.Focus()
-            'End If
+            If m_ctrlAddFlow.SelectedItems.Count = 0 Then
+                Me.BringToFrontMenuItem.Enabled = False
+                Me.SendToBackMenuItem.Enabled = False
+            Else
+                Me.BringToFrontMenuItem.Enabled = True
+                Me.SendToBackMenuItem.Enabled = True
+            End If
 
         End Sub
 
+        Protected Sub CreateDiagramPopupMenu(ByVal ptScreen As Point)
+            '
+            'SelectByTypeToolStripMenuItem
+            '
+            Me.SendToBackMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.SendToBack.gif")
+            Me.SendToBackMenuItem.Name = "SendToBackToolStripMenuItem"
+            Me.SendToBackMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.SendToBackMenuItem.Text = "Send to back"
+            Me.SendToBackMenuItem.ToolTipText = "Send to back"
+            '
+            'SelectByTypeToolStripMenuItem
+            '
+            Me.BringToFrontMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.BringToFront.gif")
+            Me.BringToFrontMenuItem.Name = "BringToFrontToolStripMenuItem"
+            Me.BringToFrontMenuItem.Size = New System.Drawing.Size(152, 22)
+            Me.BringToFrontMenuItem.Text = "Bring to front"
+            Me.BringToFrontMenuItem.ToolTipText = "Bring to front"
 
-        Public Overrides Sub OnEditPopupStart(ByVal mc As MenuCommand)
-            If m_ctrlAddFlow.SelectedItems.Count > 0 Then
-                mc.MenuCommands("Cut").Enabled = True
-                mc.MenuCommands("Copy").Enabled = True
-                mc.MenuCommands("Delete").Enabled = True
-            Else
-                mc.MenuCommands("Cut").Enabled = False
-                mc.MenuCommands("Copy").Enabled = False
-                mc.MenuCommands("Delete").Enabled = False
-            End If
+ 
 
-            mc.MenuCommands("Paste").Enabled = False
-            mc.MenuCommands("Paste In Place").Enabled = False
+            '
+            'AddFlowMenuStrip
+            '
+            Dim tsPopupMenu As New AnimatContextMenuStrip("AddFlowDiagramMenu", Nothing)
+
+            Dim mcCut As New System.Windows.Forms.ToolStripMenuItem("Cut", Util.Application.ToolStripImages.GetImage("AnimatGUI.Cut.gif"), New EventHandler(AddressOf Util.Application.OnCutFromWorkspace))
+            Dim mcCopy As New System.Windows.Forms.ToolStripMenuItem("Copy", Util.Application.ToolStripImages.GetImage("AnimatGUI.Copy.gif"), New EventHandler(AddressOf Util.Application.OnCopyFromWorkspace))
+            Dim mcPaste As New System.Windows.Forms.ToolStripMenuItem("Paste", Util.Application.ToolStripImages.GetImage("AnimatGUI.CopyClipboard.gif"), New EventHandler(AddressOf Util.Application.OnPasteFromWorkspace))
+            Dim mcPasteInPlace As New System.Windows.Forms.ToolStripMenuItem("Paste in Place", Nothing, New EventHandler(AddressOf Me.PasteInPlaceMenuItem_Click))
+            Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
+            mcCut.ImageScaling = ToolStripItemImageScaling.SizeToFit
+
+            Dim mcSelectByType As New System.Windows.Forms.ToolStripMenuItem("Select by type", Util.Application.ToolStripImages.GetImage("AnimatGUI.SelectByType.gif"), New EventHandler(AddressOf Util.Application.OnSelectByType))
+            Dim mcRelabel As New System.Windows.Forms.ToolStripMenuItem("Relabel", Util.Application.ToolStripImages.GetImage("AnimatGUI.Relabel.gif"), New EventHandler(AddressOf Util.Application.OnRelabel))
+            Dim mcRelabelSelected As New System.Windows.Forms.ToolStripMenuItem("Relable selected", Util.Application.ToolStripImages.GetImage("AnimatGUI.RelabelSelected.gif"), New EventHandler(AddressOf Util.Application.OnRelabelSelected))
+            Dim mcCompareItems As New System.Windows.Forms.ToolStripMenuItem("Compare items", Util.Application.ToolStripImages.GetImage("AnimatGUI.Equals.gif"), New EventHandler(AddressOf Util.Application.OnCompareItems))
+
+            Dim mcSendToBack As New System.Windows.Forms.ToolStripMenuItem("Send to back", Util.Application.ToolStripImages.GetImage("AnimatGUI.SendToBack.gif"), New EventHandler(AddressOf Me.SendToBackMenuItem_Click))
+            Dim mcBringToFront As New System.Windows.Forms.ToolStripMenuItem("Bring to front", Util.Application.ToolStripImages.GetImage("AnimatGUI.BringToFront.gif"), New EventHandler(AddressOf Me.BringToFrontMenuItem_Click))
+
+            Dim mcAlign As New System.Windows.Forms.ToolStripMenuItem("Align", Util.Application.ToolStripImages.GetImage("AnimatGUI.Align.gif"))
+            Dim mcAlignTop As New System.Windows.Forms.ToolStripMenuItem("Top", Util.Application.ToolStripImages.GetImage("AnimatGUI.AlignTop.gif"), New EventHandler(AddressOf Me.AlignTopMenuItem_Click))
+            Dim mcAlignVerticalCenter As New System.Windows.Forms.ToolStripMenuItem("Vertical center", Util.Application.ToolStripImages.GetImage("AnimatGUI.AlignVerticalCenter.gif"), New EventHandler(AddressOf Me.AlignVerticalCenterMenuItem_Click))
+            Dim mcAlignBottom As New System.Windows.Forms.ToolStripMenuItem("Bottom", Util.Application.ToolStripImages.GetImage("AnimatGUI.AlignBottom.gif"), New EventHandler(AddressOf Me.AlignBottomMenuItem_Click))
+            Dim mcAlignLeft As New System.Windows.Forms.ToolStripMenuItem("Left", Util.Application.ToolStripImages.GetImage("AnimatGUI.AlignLeft.gif"), New EventHandler(AddressOf Me.AlignLeftMenuItem_Click))
+            Dim mcAlignHorizontalCenter As New System.Windows.Forms.ToolStripMenuItem("Horizontal center", Util.Application.ToolStripImages.GetImage("AnimatGUI.AlignHorizontalCenter.gif"), New EventHandler(AddressOf Me.AlignHorizontalCenterMenuItem_Click))
+            Dim mcAlignRight As New System.Windows.Forms.ToolStripMenuItem("Right", Util.Application.ToolStripImages.GetImage("AnimatGUI.AlignRight.gif"), New EventHandler(AddressOf Me.AlignRightMenuItem_Click))
+            mcAlign.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {mcAlignTop, mcAlignVerticalCenter, mcAlignBottom, mcAlignLeft, mcAlignHorizontalCenter, mcAlignRight})
+
+            Dim mcDistribute As New System.Windows.Forms.ToolStripMenuItem("Distribute", Util.Application.ToolStripImages.GetImage("AnimatGUI.Distribute.gif"))
+            Dim mcDistributeVertical As New System.Windows.Forms.ToolStripMenuItem("Vertical", Util.Application.ToolStripImages.GetImage("AnimatGUI.DistributeVertical.gif"), New EventHandler(AddressOf Me.DistributeVerticalMenuItem_Click))
+            Dim mcDistributeHorizontal As New System.Windows.Forms.ToolStripMenuItem("Horizontal", Util.Application.ToolStripImages.GetImage("AnimatGUI.DistributeHorizontal.gif"), New EventHandler(AddressOf Me.DistributeHorizontalMenuItem_Click))
+            mcDistribute.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {mcDistributeVertical, mcDistributeHorizontal})
+
+            Dim mcSize As New System.Windows.Forms.ToolStripMenuItem("Size", Util.Application.ToolStripImages.GetImage("AnimatGUI.Size.gif"))
+            Dim mcSizeBoth As New System.Windows.Forms.ToolStripMenuItem("Both", Util.Application.ToolStripImages.GetImage("AnimatGUI.SizeBoth.gif"), New EventHandler(AddressOf Me.SizeBothMenuItem_Click))
+            Dim mcSizeWidth As New System.Windows.Forms.ToolStripMenuItem("Width", Util.Application.ToolStripImages.GetImage("AnimatGUI.SizeWidth.gif"), New EventHandler(AddressOf Me.SizeWidthMenuItem_Click))
+            Dim mcSizeHeight As New System.Windows.Forms.ToolStripMenuItem("Height", Util.Application.ToolStripImages.GetImage("AnimatGUI.SizeHeight.gif"), New EventHandler(AddressOf Me.SizeHeightMenuItem_Click))
+            mcSize.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {mcSizeBoth, mcSizeWidth, mcSizeHeight})
+
+            Dim mcAddStimulus As New System.Windows.Forms.ToolStripMenuItem("Add Stimulus", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddStimulus.gif"), New EventHandler(AddressOf Util.Application.OnAddStimulus))
+            Dim mcShowConnections As New System.Windows.Forms.ToolStripMenuItem("Show connections", Util.Application.ToolStripImages.GetImage("AnimatGUI.Connections.gif"), New EventHandler(AddressOf Me.ShowConnectionsToolStripMenuItem_Click))
+            Dim mcExport As New System.Windows.Forms.ToolStripMenuItem("Export", Util.Application.ToolStripImages.GetImage("AnimatGUI.Export.gif"), New EventHandler(AddressOf Me.ExportToolStripMenuItem_Click))
+            Dim mcPrint As New System.Windows.Forms.ToolStripMenuItem("Print", Util.Application.ToolStripImages.GetImage("AnimatGUI.Print.gif"), New EventHandler(AddressOf Me.PrintToolStripMenuItem_Click))
+            Dim mcGrid As New System.Windows.Forms.ToolStripMenuItem("Grid", Nothing, New EventHandler(AddressOf Me.GridMenuItem_Click))
+            mcGrid.CheckOnClick = True
+            mcGrid.Checked = Me.GridMenuItem.Checked
+
+            Dim bPaste As Boolean = False
             Dim data As IDataObject = Clipboard.GetDataObject()
             If Not data Is Nothing AndAlso data.GetDataPresent("AnimatLab.Behavior.XMLFormat") Then
                 Dim strXml As String = DirectCast(data.GetData("AnimatLab.Behavior.XMLFormat"), String)
                 If strXml.Trim.Length > 0 Then
-                    mc.MenuCommands("Paste").Enabled = True
-                    mc.MenuCommands("Paste In Place").Enabled = True
+                    bPaste = True
                 End If
             End If
 
-            mc.MenuCommands("Undo").Enabled = Util.ModificationHistory.CanUndo
-            mc.MenuCommands("Redo").Enabled = Util.ModificationHistory.CanRedo
+            Dim toolStripSeparator2 As New ToolStripSeparator()
 
-        End Sub
+            If m_ctrlAddFlow.SelectedItems.Count > 0 Then
+                tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcCut, mcCopy, mcDelete})
 
-        Public Overrides Sub OnEditPopupEnd(ByVal mc As MenuCommand)
-            mc.MenuCommands("Undo").Enabled = True
-            mc.MenuCommands("Redo").Enabled = True
-            mc.MenuCommands("Cut").Enabled = True
-            mc.MenuCommands("Copy").Enabled = True
-            mc.MenuCommands("Delete").Enabled = True
-            mc.MenuCommands("Paste").Enabled = True
-        End Sub
+                If bPaste Then
+                    tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcPaste, mcPasteInPlace})
+                End If
 
-        Public Overrides Sub OnShapePopupStart(ByVal mc As MenuCommand)
+                tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {toolStripSeparator2})
+            End If
+
+
+             tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcSelectByType, mcRelabel})
+
+            If m_ctrlAddFlow.SelectedItems.Count > 0 Then
+                tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcRelabelSelected})
+            End If
 
             If m_ctrlAddFlow.SelectedItems.Count > 1 Then
-                Dim mcAlign As MenuCommand = mc.MenuCommands("Align")
-                mcAlign.MenuCommands("Top").Enabled = True
-                mcAlign.MenuCommands("Veritcal Center").Enabled = True
-                mcAlign.MenuCommands("Bottom").Enabled = True
-                mcAlign.MenuCommands("Left").Enabled = True
-                mcAlign.MenuCommands("Horizontal Center").Enabled = True
-                mcAlign.MenuCommands("Right").Enabled = True
-
-                Dim mcDistribute As MenuCommand = mc.MenuCommands("Distribute")
-                mcDistribute.MenuCommands("Veritcal").Enabled = True
-                mcDistribute.MenuCommands("Horizontal").Enabled = True
-
-                Dim mcSize As MenuCommand = mc.MenuCommands("Size")
-                mcSize.MenuCommands("Both").Enabled = True
-                mcSize.MenuCommands("Width").Enabled = True
-                mcSize.MenuCommands("Height").Enabled = True
-            Else
-                Dim mcAlign As MenuCommand = mc.MenuCommands("Align")
-                mcAlign.MenuCommands("Top").Enabled = False
-                mcAlign.MenuCommands("Veritcal Center").Enabled = False
-                mcAlign.MenuCommands("Bottom").Enabled = False
-                mcAlign.MenuCommands("Left").Enabled = False
-                mcAlign.MenuCommands("Horizontal Center").Enabled = False
-                mcAlign.MenuCommands("Right").Enabled = False
-
-                Dim mcDistribute As MenuCommand = mc.MenuCommands("Distribute")
-                mcDistribute.MenuCommands("Veritcal").Enabled = False
-                mcDistribute.MenuCommands("Horizontal").Enabled = False
-
-                Dim mcSize As MenuCommand = mc.MenuCommands("Size")
-                mcSize.MenuCommands("Both").Enabled = False
-                mcSize.MenuCommands("Width").Enabled = False
-                mcSize.MenuCommands("Height").Enabled = False
+                tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcCompareItems})
             End If
+
+            If m_ctrlAddFlow.SelectedItems.Count > 0 Then
+                'ToolStripSeparator3
+                '
+                Dim toolStripSeparator3 As New ToolStripSeparator()
+
+                tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {toolStripSeparator3, mcBringToFront, mcSendToBack})
+
+                If m_ctrlAddFlow.SelectedItems.Count > 1 Then
+                    tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcAlign, mcDistribute, mcSize})
+                End If
+            End If
+
+            'ToolStripSeparator5
+            '
+            Dim toolStripSeparator5 As New ToolStripSeparator()
+
+            tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {toolStripSeparator5})
+
+            If m_ctrlAddFlow.SelectedItems.Count > 0 Then
+                tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcAddStimulus, mcShowConnections})
+            End If
+
+            tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcExport, mcPrint, mcGrid})
+
+            tsPopupMenu.Show(ptScreen)
 
         End Sub
 
@@ -1611,384 +2408,260 @@ Namespace Forms.Behavior
 
 #Region " Load/Save "
 
-        Public Overloads Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
-            MyBase.LoadData(oXml)
 
-            oXml.IntoElem() 'Into Diagram Element
+        Public Overrides Sub InitializeAfterLoad()
+            Dim aryDeleteNodes As New ArrayList
+            Dim aryDeleteLinks As New ArrayList
 
             Try
+                aryDeleteNodes.Clear()
+                aryDeleteLinks.Clear()
 
-                m_ctrlAddFlow.Zoom.X = oXml.GetChildFloat("ZoomX", m_ctrlAddFlow.Zoom.X)
-                m_ctrlAddFlow.Zoom.Y = oXml.GetChildFloat("ZoomY", m_ctrlAddFlow.Zoom.Y)
+                For Each deEntry As DictionaryEntry In Me.Subsystem.BehavioralNodes
+                    Dim bnNode As AnimatGUI.DataObjects.Behavior.Node = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Node)
+                    bnNode.ParentDiagram = Me
 
-                If oXml.FindChildElement("BackColor", False) Then
-                    m_ctrlAddFlow.BackColor = Util.LoadColor(oXml, "BackColor")
-                End If
+                    Try
+                        Dim afNode As Lassalle.Flow.Node = FindAddFlowNode(bnNode.ID)
+                        afNode.Tag = bnNode.ID
+                        bnNode.Tag = afNode
+                    Catch ex As Exception
+                        aryDeleteNodes.Add(bnNode)
+                    End Try
 
-                m_ctrlAddFlow.Grid.Draw = oXml.GetChildBool("ShowGrid", m_ctrlAddFlow.Grid.Draw)
+                Next
 
-                If oXml.FindChildElement("GridColor", False) Then
-                    m_ctrlAddFlow.Grid.Color = Util.LoadColor(oXml, "GridColor")
-                End If
+                For Each deEntry As DictionaryEntry In Me.Subsystem.BehavioralLinks
+                    Dim blLink As AnimatGUI.DataObjects.Behavior.Link = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
+                    blLink.ParentDiagram = Me
 
-                If oXml.FindChildElement("GridSize", False) Then
-                    m_ctrlAddFlow.Grid.Size = Util.LoadSize(oXml, "GridSize")
-                End If
+                    Try
+                        Dim afLink As Lassalle.Flow.Link = FindAddFlowLink(blLink.ID)
+                        afLink.Tag = blLink.ID
+                        blLink.Tag = afLink
+                    Catch ex As Exception
+                        aryDeleteNodes.Add(blLink)
+                    End Try
 
-                Me.GridStyle = DirectCast([Enum].Parse(GetType(enumGridStyle), oXml.GetChildString("GridStyle", Me.GridStyle.ToString), True), enumGridStyle)
-                Me.JumpSize = DirectCast([Enum].Parse(GetType(enumJumpSize), oXml.GetChildString("JumpSize", Me.JumpSize.ToString), True), enumJumpSize)
+                Next
 
-                m_ctrlAddFlow.Grid.Snap = oXml.GetChildBool("SnapToGrid", m_ctrlAddFlow.Grid.Snap)
+                For Each blLink As AnimatGUI.DataObjects.Behavior.Link In aryDeleteLinks
+                    blLink.Delete(False)
+                Next
 
-                oXml.FindChildElement("AddFlow")
-                Dim strAddFlowXml As String = oXml.GetChildDoc()
-                Dim stringReader As System.IO.StringReader = New System.IO.StringReader(strAddFlowXml)
-                Dim xmlReader As System.Xml.XmlTextReader = New System.Xml.XmlTextReader(stringReader)
-                Lassalle.XMLFlow.Serial.XMLToFlow(xmlReader, m_ctrlAddFlow)
+                For Each bnNode As AnimatGUI.DataObjects.Behavior.Node In aryDeleteNodes
+                    bnNode.Delete(False)
+                Next
 
-                'Now we need to go through and add all of the addflow nodes and links into the dictionaries for them.
-                For Each afNode As Lassalle.Flow.Node In m_ctrlAddFlow.Nodes
-                    m_aryAddFlowNodes.Add(DirectCast(afNode.Tag, String), afNode)
+                ''We need to re-initialize the image indices for the addflow nodes in case the indices were changed.
+                'Dim doNode As AnimatGUI.DataObjects.Behavior.Node
+                'For Each deEntry As DictionaryEntry In Me.Subsystem.BehavioralNodes
+                '    doNode = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Node)
+                '    If doNode.DiagramImageName.Length > 0 Then
+                '        Dim afNode As Lassalle.Flow.Node = Me.FindAddFlowNode(doNode.ID)
+                '        Dim iIndex As Integer = FindDiagramImageIndex(Me.Subsystem.Organism.DiagramImages.FindImageByID(doNode.DiagramImageName), False)
+                '        If iIndex > -1 Then
+                '            afNode.ImageIndex = iIndex
+                '        Else
+                '            Dim doImg As AnimatGUI.DataObjects.Behavior.DiagramImage = Me.Subsystem.Organism.DiagramImages.FindDiagramImageByID(doNode.DiagramImageName)
+                '            If Not doImg Is Nothing Then
+                '                Me.AddImage(doImg)
+                '            End If
+                '            afNode.ImageIndex = FindDiagramImageIndex(Me.Subsystem.Organism.DiagramImages.FindImageByID(doNode.DiagramImageName), False)
+                '        End If
+                '    End If
+                'Next
 
-                    For Each afLink As Lassalle.Flow.Link In afNode.InLinks
-                        m_aryAddFlowLinks.Add(DirectCast(afLink.Tag, String), afLink)
-                    Next
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Sub
+
+        Public Overrides Sub VerifyData()
+            Try
+
+                CheckForInvalidLinks()
+                VerifyNodesExist()
+
+                'Now go through and check for errors in all of the nodes and links.
+                Dim bdItem As AnimatGUI.DataObjects.Behavior.Data
+                For Each deEntry As DictionaryEntry In Me.Subsystem.BehavioralNodes
+                    bdItem = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                    bdItem.CheckForErrors()
+                Next
+
+                For Each deEntry As DictionaryEntry In Me.Subsystem.BehavioralLinks
+                    bdItem = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                    bdItem.CheckForErrors()
                 Next
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
-     
-            oXml.OutOfElem()  'Outof Diagram Element
+        End Sub
+
+        'This method makes sure that the dataobject nodes and the addflow nodes are synchronized. If for some reason an error occurs
+        'and graphical nodes are in addflow that do not have matching dataobject nodes, or vice versa, we need to identify these and 
+        'remove them because the user will not be able to and they will continually generate errors.
+        Protected Overrides Sub VerifyNodesExist()
+
+            Try
+                Dim aryRemove As New ArrayList
+
+                'First lets go through and make sure that all of the addflow nodes have corresponding data object nodes.
+                Dim bdData As AnimatGUI.DataObjects.Behavior.Data
+                Dim afItem As Lassalle.Flow.Item
+                For Each afItem In m_ctrlAddFlow.Items
+
+                    If Not afItem.Tag Is Nothing AndAlso TypeOf afItem.Tag Is String Then
+                        bdData = FindItem(DirectCast(afItem.Tag, String), False)
+
+                        'If it is nothing then we are missing a dataobject.
+                        If bdData Is Nothing Then
+                            Debug.WriteLine("No data item found for an addflow item. Text: " & afItem.Text & " Tag: " & DirectCast(afItem.Tag, String))
+                            aryRemove.Add(afItem)
+                        End If
+                    End If
+                Next
+
+                For Each afItem In aryRemove
+                    If TypeOf afItem Is Lassalle.Flow.Node Then
+                        Dim afNode As Lassalle.Flow.Node = DirectCast(afItem, Lassalle.Flow.Node)
+                        afNode.Remove()
+                    ElseIf TypeOf afItem Is Lassalle.Flow.Link Then
+                        Dim afLink As Lassalle.Flow.Link = DirectCast(afItem, Lassalle.Flow.Link)
+                        afLink.Remove()
+                    End If
+                Next
+
+                'Now we need to make sure that there are not any dataobjects that are not also associated with an
+                'addflow node.
+                Dim bdNode As AnimatGUI.DataObjects.Behavior.Node
+                For Each deEntry As DictionaryEntry In Me.Subsystem.BehavioralNodes
+                    bdNode = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Node)
+                    afItem = Me.FindAddFlowItem(bdNode.ID, False)
+
+                    If afItem Is Nothing Then
+                        aryRemove.Add(bdNode)
+                    End If
+                Next
+
+                For Each bdNode In aryRemove
+                    Debug.WriteLine("Removeing Node: " & bdNode.ID & "  Text: " & bdNode.Text)
+                    Me.RemoveNode(bdNode)
+                Next
+
+                aryRemove.Clear()
+                Dim bdLink As AnimatGUI.DataObjects.Behavior.Link
+                For Each deEntry As DictionaryEntry In Me.Subsystem.BehavioralLinks
+                    bdLink = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
+                    afItem = Me.FindAddFlowItem(bdLink.ID, False)
+
+                    If afItem Is Nothing Then
+                        aryRemove.Add(bdLink)
+                    End If
+                Next
+
+                For Each bdLink In aryRemove
+                    Debug.WriteLine("Removeing Link: " & bdLink.ID & "  Text: " & bdLink.Text)
+                    Me.RemoveLink(bdLink)
+                Next
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
 
         End Sub
 
-        'Protected Overridable Sub LoadNodes(ByRef oXml As AnimatGUI.Interfaces.StdXml)
-        '    Dim strAssemblyFile As String
-        '    Dim strClassName As String
-        '    Dim strID As String
+        Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+            MyBase.LoadData(oXml)
 
-        '    Try
+            'Now find the organism and subsystem we need to load the rest of the chart.
+            oXml.IntoElem()
+            Dim strOrganismID As String = oXml.GetChildString("OrganismID")
+            Dim strSubSystemID As String = oXml.GetChildString("SubSystemID")
+            oXml.OutOfElem()
 
-        '        oXml.IntoChildElement("Nodes")
-        '        Dim iCount As Integer = oXml.NumberOfChildren() - 1
-        '        Dim bnNode As AnimatGUI.DataObjects.Behavior.Node
-        '        For iIndex As Integer = 0 To iCount
-        '            oXml.FindChildByIndex(iIndex)
-        '            oXml.IntoElem() 'Into Node element
-        '            strAssemblyFile = oXml.GetChildString("AssemblyFile")
-        '            strClassName = oXml.GetChildString("ClassName")
-        '            strID = oXml.GetChildString("ID")
-        '            oXml.OutOfElem() 'Outof Node element
+            'Now find that subsystem.
+            Dim doOrganism As AnimatGUI.DataObjects.Physical.Organism = Util.Environment.FindOrganism(strOrganismID)
+            m_bnSubSystem = DirectCast(doOrganism.FindBehavioralNode(strSubSystemID), AnimatGUI.DataObjects.Behavior.Nodes.Subsystem)
+            m_bnSubSystem.SubsystemDiagram = Me
 
-        '            'We should have already loaded the node once in the organism. So there is no 
-        '            'need to load it again here. If we can find it then use it, otherwise load it.
-        '            bnNode = FindNodeInOrganism(strID)
-        '            If bnNode Is Nothing Then
-        '                bnNode = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me.Editor.Organism), AnimatGUI.DataObjects.Behavior.Node)
-        '                bnNode.ParentDiagram = Me
-        '                bnNode.ParentEditor = m_beEditor
-        '                bnNode.LoadData(oXml)
-        '                AddToOrganism(bnNode)
-        '            Else
-        '                bnNode.ParentDiagram = Me
-        '                bnNode.ParentEditor = m_beEditor
-        '                m_aryNodes.Add(bnNode.ID, bnNode, False)
-        '                bnNode.AddToHierarchyBar()
-        '            End If
-
-        '        Next
-        '        oXml.OutOfElem() 'Outof Nodes Element
-
-        '    Catch ex As System.Exception
-        '        AnimatGUI.Framework.Util.DisplayError(ex)
-        '    End Try
-        'End Sub
-
-        'Protected Overridable Sub LoadLinks(ByRef oXml As AnimatGUI.Interfaces.StdXml)
-        '    Dim strAssemblyFile As String
-        '    Dim strClassName As String
-        '    Dim strID As String
-
-        '    Try
-
-        '        oXml.IntoChildElement("Links")
-        '        Dim iCount As Integer = oXml.NumberOfChildren() - 1
-        '        Dim blLink As AnimatGUI.DataObjects.Behavior.Link
-        '        For iIndex As Integer = 0 To iCount
-        '            oXml.FindChildByIndex(iIndex)
-        '            oXml.IntoElem() 'Into Node element
-        '            strAssemblyFile = oXml.GetChildString("AssemblyFile")
-        '            strClassName = oXml.GetChildString("ClassName")
-        '            strID = oXml.GetChildString("ID")
-        '            oXml.OutOfElem() 'Outof Node element
-
-        '            'We should have already loaded the link once in the organism. So there is no 
-        '            'need to load it again here. If we can find it then use it, otherwise load it.
-        '            blLink = FindLinkInOrganism(strID)
-        '            If blLink Is Nothing Then
-        '                blLink = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me.Editor.Organism), AnimatGUI.DataObjects.Behavior.Link)
-        '                blLink.ParentDiagram = Me
-        '                blLink.ParentEditor = m_beEditor
-        '                blLink.LoadData(oXml)
-        '                m_aryLinks.Add(blLink.ID, blLink, False)
-        '                blLink.AddToHierarchyBar()
-        '                AddToOrganism(blLink)
-        '            Else
-        '                blLink.ParentDiagram = Me
-        '                blLink.ParentEditor = m_beEditor
-        '                m_aryLinks.Add(blLink.ID, blLink, False)
-        '                blLink.AddToHierarchyBar()
-        '            End If
-        '        Next
-        '        oXml.OutOfElem() 'Outof Links Element
-
-        '    Catch ex As System.Exception
-        '        AnimatGUI.Framework.Util.DisplayError(ex)
-        '    End Try
-        'End Sub
-
-        'Protected Overridable Sub LoadDiagrams(ByRef oXml As AnimatGUI.Interfaces.StdXml)
-        '    Dim strAssemblyFile As String
-        '    Dim strClassName As String
-        '    Dim strPageName As String
-        '    Dim strID As String
-
-        '    Try
-
-        '        oXml.IntoChildElement("Diagrams")
-        '        Dim bdDiagram As AnimatGUI.Forms.Behavior.DiagramOld
-        '        Dim iCount As Integer = oXml.NumberOfChildren() - 1
-        '        For iIndex As Integer = 0 To iCount
-        '            oXml.FindChildByIndex(iIndex)
-        '            oXml.IntoElem() 'Into Diagram element
-        '            strAssemblyFile = oXml.GetChildString("AssemblyFile")
-        '            strClassName = oXml.GetChildString("ClassName")
-        '            strID = Util.LoadID(oXml, "")
-        '            strPageName = oXml.GetChildString("PageName")
-        '            oXml.OutOfElem() 'Outof Diagram element
-
-        '            strPageName = m_beEditor.FindAvailableDiagramName(strPageName)
-        '            bdDiagram = AddDiagram(strAssemblyFile, strClassName, strPageName, strID)
-        '            bdDiagram.LoadData(oXml)
-        '        Next
-        '        oXml.OutOfElem() ' OutOf the Diagrams Element
-
-        '    Catch ex As System.Exception
-        '        AnimatGUI.Framework.Util.DisplayError(ex)
-        '    End Try
-        'End Sub
-
-        'Protected Overridable Sub LoadAddFlow(ByRef oXml As AnimatGUI.Interfaces.StdXml)
-
-        '    Try
-
-        '        If oXml.FindChildElement("DiagramIndex", False) Then
-        '            m_iDiagramIndex = oXml.GetChildInt("DiagramIndex")
-        '        End If
-
-        '        m_ctrlAddFlow.Zoom.X = oXml.GetChildFloat("ZoomX", m_ctrlAddFlow.Zoom.X)
-        '        m_ctrlAddFlow.Zoom.Y = oXml.GetChildFloat("ZoomY", m_ctrlAddFlow.Zoom.Y)
-
-        '        If oXml.FindChildElement("BackColor", False) Then
-        '            m_ctrlAddFlow.BackColor = Util.LoadColor(oXml, "BackColor")
-        '        End If
-
-        '        m_ctrlAddFlow.Grid.Draw = oXml.GetChildBool("ShowGrid", m_ctrlAddFlow.Grid.Draw)
-
-        '        If oXml.FindChildElement("GridColor", False) Then
-        '            m_ctrlAddFlow.Grid.Color = Util.LoadColor(oXml, "GridColor")
-        '        End If
-
-        '        If oXml.FindChildElement("GridSize", False) Then
-        '            m_ctrlAddFlow.Grid.Size = Util.LoadSize(oXml, "GridSize")
-        '        End If
-
-        '        Me.GridStyle = DirectCast([Enum].Parse(GetType(enumGridStyle), oXml.GetChildString("GridStyle", Me.GridStyle.ToString), True), enumGridStyle)
-        '        Me.JumpSize = DirectCast([Enum].Parse(GetType(enumJumpSize), oXml.GetChildString("JumpSize", Me.JumpSize.ToString), True), enumJumpSize)
-
-        '        m_ctrlAddFlow.Grid.Snap = oXml.GetChildBool("SnapToGrid", m_ctrlAddFlow.Grid.Snap)
-
-        '        oXml.FindChildElement("AddFlow")
-        '        Dim strAddFlowXml As String = oXml.GetChildDoc()
-        '        Dim stringReader As System.IO.StringReader = New System.IO.StringReader(strAddFlowXml)
-        '        Dim xmlReader As System.Xml.XmlTextReader = New System.Xml.XmlTextReader(stringReader)
-        '        Lassalle.XMLFlow.Serial.XMLToFlow(xmlReader, m_ctrlAddFlow)
-
-        '        'Now we need to go through and add all of the addflow nodes and links into the dictionaries for them.
-        '        For Each afNode As Lassalle.Flow.Node In m_ctrlAddFlow.Nodes
-        '            m_aryAddFlowNodes.Add(DirectCast(afNode.Tag, String), afNode)
-
-        '            For Each afLink As Lassalle.Flow.Link In afNode.InLinks
-        '                m_aryAddFlowLinks.Add(DirectCast(afLink.Tag, String), afLink)
-        '            Next
-        '        Next
-
-        '    Catch ex As System.Exception
-        '        AnimatGUI.Framework.Util.DisplayError(ex)
-        '    End Try
-        'End Sub
-
-        'Public Overrides Sub InitializeAfterLoad()
-
-        '    Try
-        '        InitializeDataAfterLoad(DirectCast(m_aryNodes, AnimatGUI.Collections.AnimatSortedList))
-        '        InitializeDataAfterLoad(DirectCast(m_aryLinks, AnimatGUI.Collections.AnimatSortedList))
-
-        '        Dim bdDiagram As AnimatGUI.Forms.Behavior.DiagramOld
-        '        For Each deEntry As DictionaryEntry In m_aryDiagrams
-        '            bdDiagram = DirectCast(deEntry.Value, AnimatGUI.Forms.Behavior.DiagramOld)
-        '            bdDiagram.InitializeAfterLoad()
-        '        Next
-
-        '        'We need to re-initialize the image indices for the addflow nodes in case the indices were changed.
-        '        Dim doNode As AnimatGUI.DataObjects.Behavior.Node
-        '        For Each deEntry As DictionaryEntry In Me.Nodes
-        '            doNode = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Node)
-        '            If doNode.DiagramImageName.Length > 0 Then
-        '                Dim afNode As Lassalle.Flow.Node = Me.FindAddFlowNode(doNode.ID)
-        '                Dim iIndex As Integer = FindDiagramImageIndex(Me.Editor.DiagramImages.FindImageByID(doNode.DiagramImageName), False)
-        '                If iIndex > -1 Then
-        '                    afNode.ImageIndex = iIndex
-        '                Else
-        '                    Dim doImg As AnimatGUI.DataObjects.Behavior.DiagramImage = Me.Editor.DiagramImages.FindDiagramImageByID(doNode.DiagramImageName)
-        '                    If Not doImg Is Nothing Then
-        '                        Me.AddImage(doImg)
-        '                    End If
-        '                    afNode.ImageIndex = FindDiagramImageIndex(Me.Editor.DiagramImages.FindImageByID(doNode.DiagramImageName), False)
-        '                End If
-        '            End If
-        '        Next
-
-        '        'Make sure that all of the diagram images are defined for this addflow diagram/
-        '        Dim doImage As AnimatGUI.DataObjects.Behavior.DiagramImage
-        '        For Each deEntry As DictionaryEntry In Me.Editor.DiagramImages
-        '            doImage = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.DiagramImage)
-        '            Dim iIndex As Integer = FindDiagramImageIndex(doImage.WorkspaceImage, False)
-        '            If iIndex < 0 Then
-        '                Me.AddImage(doImage)
-        '            End If
-        '        Next
-
-        '    Catch ex As System.Exception
-        '        AnimatGUI.Framework.Util.DisplayError(ex)
-        '    End Try
-
-        'End Sub
-
-        'Public Overrides Sub VerifyData()
-        '    Try
-
-        '        CheckForInvalidLinks()
-        '        VerifyNodesExist()
-
-        '        'Now go through and check for errors in all of the nodes and links.
-        '        Dim bdItem As AnimatGUI.DataObjects.Behavior.Data
-        '        For Each deEntry As DictionaryEntry In m_aryNodes
-        '            bdItem = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
-        '            bdItem.CheckForErrors()
-        '        Next
-
-        '        For Each deEntry As DictionaryEntry In m_aryLinks
-        '            bdItem = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
-        '            bdItem.CheckForErrors()
-        '        Next
-
-        '        'Now verify the data for all subdiagrams.
-        '        Dim bdDiagram As AnimatGUI.Forms.Behavior.DiagramOld
-        '        For Each deEntry As DictionaryEntry In m_aryDiagrams
-        '            bdDiagram = DirectCast(deEntry.Value, AnimatGUI.Forms.Behavior.DiagramOld)
-        '            bdDiagram.VerifyData()
-        '        Next
-
-        '    Catch ex As System.Exception
-        '        AnimatGUI.Framework.Util.DisplayError(ex)
-        '    End Try
-        'End Sub
-
-        ''This method makes sure that the dataobject nodes and the addflow nodes are synchronized. If for some reason an error occurs
-        ''and graphical nodes are in addflow that do not have matching dataobject nodes, or vice versa, we need to identify these and 
-        ''remove them because the user will not be able to and they will continually generate errors.
-        'Protected Overrides Sub VerifyNodesExist()
-
-        '    Try
-        '        Dim aryRemove As New ArrayList
-
-        '        'First lets go through and make sure that all of the addflow nodes have corresponding data object nodes.
-        '        Dim bdData As AnimatGUI.DataObjects.Behavior.Data
-        '        Dim afItem As Lassalle.Flow.Item
-        '        For Each afItem In m_ctrlAddFlow.Items
-
-        '            If Not afItem.Tag Is Nothing AndAlso TypeOf afItem.Tag Is String Then
-        '                bdData = FindItem(DirectCast(afItem.Tag, String), False)
-
-        '                'If it is nothing then we are missing a dataobject.
-        '                If bdData Is Nothing Then
-        '                    Debug.WriteLine("No data item found for an addflow item. Text: " & afItem.Text & " Tag: " & DirectCast(afItem.Tag, String))
-        '                    aryRemove.Add(afItem)
-        '                End If
-        '            End If
-        '        Next
-
-        '        For Each afItem In aryRemove
-        '            If TypeOf afItem Is Lassalle.Flow.Node Then
-        '                Dim afNode As Lassalle.Flow.Node = DirectCast(afItem, Lassalle.Flow.Node)
-        '                afNode.Remove()
-        '            ElseIf TypeOf afItem Is Lassalle.Flow.Link Then
-        '                Dim afLink As Lassalle.Flow.Link = DirectCast(afItem, Lassalle.Flow.Link)
-        '                afLink.Remove()
-        '            End If
-        '        Next
-
-        '        'Now we need to make sure that there are not any dataobjects that are not also associated with an
-        '        'addflow node.
-        '        Dim bdNode As AnimatGUI.DataObjects.Behavior.Node
-        '        For Each deEntry As DictionaryEntry In Me.Nodes
-        '            bdNode = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Node)
-        '            afItem = Me.FindAddFlowItem(bdNode.ID, False)
-
-        '            If afItem Is Nothing Then
-        '                aryRemove.Add(bdNode)
-        '            End If
-        '        Next
-
-        '        For Each bdNode In aryRemove
-        '            Debug.WriteLine("Removeing Node: " & bdNode.ID & "  Text: " & bdNode.Text)
-        '            Me.RemoveNode(bdNode)
-        '        Next
-
-        '        aryRemove.Clear()
-        '        Dim bdLink As AnimatGUI.DataObjects.Behavior.Link
-        '        For Each deEntry As DictionaryEntry In Me.Links
-        '            bdLink = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
-        '            afItem = Me.FindAddFlowItem(bdLink.ID, False)
-
-        '            If afItem Is Nothing Then
-        '                aryRemove.Add(bdLink)
-        '            End If
-        '        Next
-
-        '        For Each bdLink In aryRemove
-        '            Debug.WriteLine("Removeing Link: " & bdLink.ID & "  Text: " & bdLink.Text)
-        '            Me.RemoveLink(bdLink)
-        '        Next
-
-        '    Catch ex As System.Exception
-        '        AnimatGUI.Framework.Util.DisplayError(ex)
-        '    End Try
-
-        'End Sub
+            LoadDiagramXml(m_bnSubSystem.DiagramXml)
+        End Sub
 
         Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
             MyBase.SaveData(oXml)
 
+            oXml.IntoElem()
+            oXml.AddChildElement("OrganismID", m_bnSubSystem.Organism.ID)
+            oXml.AddChildElement("SubSystemID", m_bnSubSystem.ID)
+            oXml.OutOfElem()
+
+        End Sub
+
+        Public Overrides Sub LoadDiagramXml(ByVal strXml As String)
+            Dim oXml As New AnimatGUI.Interfaces.StdXml()
+            oXml.Deserialize(strXml)
+
+            oXml.FindElement("Root")
+            oXml.FindChildElement("Diagram")
+            oXml.IntoElem() 'Into Form Element
+
+            m_ctrlAddFlow.Zoom.X = oXml.GetChildFloat("ZoomX", m_ctrlAddFlow.Zoom.X)
+            m_ctrlAddFlow.Zoom.Y = oXml.GetChildFloat("ZoomY", m_ctrlAddFlow.Zoom.Y)
+
+            If oXml.FindChildElement("BackColor", False) Then
+                m_ctrlAddFlow.BackColor = Util.LoadColor(oXml, "BackColor")
+            End If
+
+            m_ctrlAddFlow.Grid.Draw = oXml.GetChildBool("ShowGrid", m_ctrlAddFlow.Grid.Draw)
+
+            If oXml.FindChildElement("GridColor", False) Then
+                m_ctrlAddFlow.Grid.Color = Util.LoadColor(oXml, "GridColor")
+            End If
+
+            If oXml.FindChildElement("GridSize", False) Then
+                m_ctrlAddFlow.Grid.Size = Util.LoadSize(oXml, "GridSize")
+            End If
+
+            Me.GridStyle = DirectCast([Enum].Parse(GetType(enumGridStyle), oXml.GetChildString("GridStyle", Me.GridStyle.ToString), True), enumGridStyle)
+            Me.JumpSize = DirectCast([Enum].Parse(GetType(enumJumpSize), oXml.GetChildString("JumpSize", Me.JumpSize.ToString), True), enumJumpSize)
+
+            m_ctrlAddFlow.Grid.Snap = oXml.GetChildBool("SnapToGrid", m_ctrlAddFlow.Grid.Snap)
+
+            oXml.FindChildElement("AddFlow")
+            Dim strAddFlowXml As String = oXml.GetChildDoc()
+            Dim stringReader As System.IO.StringReader = New System.IO.StringReader(strAddFlowXml)
+            Dim xmlReader As System.Xml.XmlTextReader = New System.Xml.XmlTextReader(stringReader)
+            Lassalle.XMLFlow.Serial.XMLToFlow(xmlReader, m_ctrlAddFlow)
+
+            'Now we need to go through and add all of the addflow nodes and links into the dictionaries for them.
+            For Each afNode As Lassalle.Flow.Node In m_ctrlAddFlow.Nodes
+                m_aryAddFlowNodes.Add(DirectCast(afNode.Tag, String), afNode)
+
+                For Each afLink As Lassalle.Flow.Link In afNode.InLinks
+                    m_aryAddFlowLinks.Add(DirectCast(afLink.Tag, String), afLink)
+                Next
+            Next
+
+            oXml.OutOfElem()  'Outof Diagram Element
+
+        End Sub
+
+        Public Overrides Function SaveDiagramXml() As String
+            Dim oXml As New AnimatGUI.Interfaces.StdXml()
+
+            oXml.AddElement("Root")
             oXml.AddChildElement("Diagram")
+
             oXml.IntoElem() 'Into Diagram Element
 
-            'oXml.AddChildElement("ID", Me.SelectedID)
-            'oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
-            'oXml.AddChildElement("ClassName", Me.ClassName)
-            'oXml.AddChildElement("PageName", Me.TabPageName)
+            oXml.AddChildElement("ID", Me.ID)
+            oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
+            oXml.AddChildElement("ClassName", Me.ClassName)
+            oXml.AddChildElement("PageName", Me.TabPageName)
 
             oXml.AddChildElement("ZoomX", m_ctrlAddFlow.Zoom.X)
             oXml.AddChildElement("ZoomY", m_ctrlAddFlow.Zoom.Y)
@@ -2014,96 +2687,9 @@ Namespace Forms.Behavior
             oXml.AddChildDoc(strAddFlowXml)
 
             oXml.OutOfElem()  'Outof Diagram Element
-        End Sub
 
-        'Protected Overridable Sub SaveNodes(ByRef oXml As AnimatGUI.Interfaces.StdXml)
-
-        '    Try
-
-        '        oXml.AddChildElement("Nodes")
-        '        oXml.IntoElem() 'Into Nodes Element
-        '        Dim bnNode As AnimatGUI.DataObjects.Behavior.Node
-        '        For Each deEntry As DictionaryEntry In m_aryNodes
-        '            bnNode = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Node)
-        '            bnNode.SaveData(oXml)
-        '        Next
-        '        oXml.OutOfElem() 'Outof Nodes Element
-
-        '    Catch ex As System.Exception
-        '        AnimatGUI.Framework.Util.DisplayError(ex)
-        '    End Try
-        'End Sub
-
-        'Protected Overridable Sub SaveLinks(ByRef oXml As AnimatGUI.Interfaces.StdXml)
-
-        '    Try
-
-        '        oXml.AddChildElement("Links")
-        '        oXml.IntoElem() 'Into Links Element
-        '        Dim blLink As AnimatGUI.DataObjects.Behavior.Link
-        '        For Each deEntry As DictionaryEntry In m_aryLinks
-        '            blLink = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
-        '            blLink.SaveData(oXml)
-        '        Next
-        '        oXml.OutOfElem() 'Outof Links Element
-
-        '    Catch ex As System.Exception
-        '        AnimatGUI.Framework.Util.DisplayError(ex)
-        '    End Try
-        'End Sub
-
-        'Protected Overridable Overloads Sub SaveDiagrams(ByRef oXml As AnimatGUI.Interfaces.StdXml)
-
-        '    Try
-
-        '        'Now lets go through and save each of the diagrams.
-        '        oXml.AddChildElement("Diagrams")
-        '        oXml.IntoElem()
-        '        Dim bdDiagram As AnimatGUI.Forms.Behavior.DiagramOld
-        '        For Each deEntry As DictionaryEntry In m_aryDiagrams
-        '            bdDiagram = DirectCast(deEntry.Value, AnimatGUI.Forms.Behavior.DiagramOld)
-        '            bdDiagram.SaveData(oXml)
-        '        Next
-        '        oXml.OutOfElem()
-
-        '    Catch ex As System.Exception
-        '        AnimatGUI.Framework.Util.DisplayError(ex)
-        '    End Try
-        'End Sub
-
-        'Protected Overridable Sub SaveAddFlow(ByRef oXml As AnimatGUI.Interfaces.StdXml)
-
-        '    Try
-
-        '        oXml.AddChildElement("DiagramIndex", m_iDiagramIndex)
-
-        '        oXml.AddChildElement("ZoomX", m_ctrlAddFlow.Zoom.X)
-        '        oXml.AddChildElement("ZoomY", m_ctrlAddFlow.Zoom.Y)
-
-        '        Util.SaveColor(oXml, "BackColor", m_ctrlAddFlow.BackColor)
-        '        oXml.AddChildElement("ShowGrid", m_ctrlAddFlow.Grid.Draw)
-        '        Util.SaveColor(oXml, "GridColor", m_ctrlAddFlow.Grid.Color)
-        '        Util.SaveSize(oXml, "GridSize", m_ctrlAddFlow.Grid.Size)
-        '        oXml.AddChildElement("GridStyle", Me.GridStyle.ToString)
-        '        oXml.AddChildElement("JumpSize", Me.JumpSize.ToString)
-        '        oXml.AddChildElement("SnapToGrid", m_ctrlAddFlow.Grid.Snap)
-
-        '        'Save the addflow configuration
-        '        Dim sb As System.Text.StringBuilder = New System.Text.StringBuilder
-        '        Dim stringWriter As System.IO.StringWriter = New System.IO.StringWriter(sb)
-        '        Dim xmlWriter As System.Xml.XmlTextWriter = New System.Xml.XmlTextWriter(stringWriter)
-        '        Lassalle.XMLFlow.Serial.FlowToXML(xmlWriter, m_ctrlAddFlow, False, False)
-        '        Dim strAddFlowXml As String = sb.ToString & vbCrLf
-
-        '        'We must remove the Xml header infomration before adding it as a child document
-        '        strAddFlowXml = strAddFlowXml.Remove(0, 69)
-
-        '        oXml.AddChildDoc(strAddFlowXml)
-
-        '    Catch ex As System.Exception
-        '        AnimatGUI.Framework.Util.DisplayError(ex)
-        '    End Try
-        'End Sub
+            Return oXml.Serialize()
+        End Function
 
         Public Overrides Sub ExportDiagram(ByVal strFilename As String, ByVal eFormat As System.Drawing.Imaging.ImageFormat)
             Dim mfFile As Metafile = m_ctrlAddFlow.ExportMetafile(False, True, True)
@@ -2519,74 +3105,60 @@ Namespace Forms.Behavior
 
 #Region " PopUp Menu Events "
 
-        Protected Sub OnGrid(ByVal sender As Object, ByVal e As System.EventArgs)
+        Private Sub GridMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles GridMenuItem.Click
 
             Try
-                m_ctrlAddFlow.Grid.Draw = Not m_ctrlAddFlow.Grid.Draw
-                m_Timer.Enabled = True
+                If Not sender Is Nothing AndAlso TypeOf sender Is ToolStripMenuItem Then
+                    Dim menuItem As ToolStripMenuItem = DirectCast(sender, ToolStripMenuItem)
+                    Me.DrawGrid = menuItem.Checked
+                    m_Timer.Enabled = True
+                End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+        End Sub
+
+        Private Sub SendToBackMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles SendToBackMenuItem.Click
+            Try
+                SendSelectedToBack()
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub BringToFrontMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles BringToFrontMenuItem.Click
+            Try
+                BringSelectedToFront()
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub PasteInPlaceMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles PasteInPlaceMenuItem.Click
 
         End Sub
 
-        Public Sub OnSendToBack(ByVal sender As Object, ByVal e As System.EventArgs)
-            SendSelectedToBack()
+        Private Sub ExportToolStripMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ExportToolStripMenuItem.Click
+
         End Sub
 
-        Public Sub OnBringToFront(ByVal sender As Object, ByVal e As System.EventArgs)
-            BringSelectedToFront()
+        Private Sub PrintToolStripMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles PrintToolStripMenuItem.Click, PrintToolStripButton.Click
+
         End Sub
 
-#Region " Copy/Paste Events "
-
-        Public Sub OnCopy(ByVal sender As Object, ByVal e As System.EventArgs)
-            CopySelected()
-        End Sub
-
-        Public Sub OnCut(ByVal sender As Object, ByVal e As System.EventArgs)
-            CutSelected()
-        End Sub
-
-        Public Sub OnPaste(ByVal sender As Object, ByVal e As System.EventArgs)
-            PasteSelected(False)
-        End Sub
-
-        Public Sub OnPasteInPlace(ByVal sender As Object, ByVal e As System.EventArgs)
-            PasteSelected(True)
-        End Sub
-
-        Public Sub OnDelete(ByVal sender As Object, ByVal e As System.EventArgs)
-            DeleteSelected()
-        End Sub
-
-        Public Sub OnSelectAll(ByVal sender As Object, ByVal e As System.EventArgs)
-            SelectAll()
-        End Sub
-
-        Public Sub OnSelectByType(ByVal sender As Object, ByVal e As System.EventArgs)
-            'TODO
-            'SelectByType()
-        End Sub
-
-        Public Sub OnRelabel(ByVal sender As Object, ByVal e As System.EventArgs)
-            'TODO
-            'Relabel()
-        End Sub
-
-        Public Sub OnRelabelSelected(ByVal sender As Object, ByVal e As System.EventArgs)
-            'TODO
-            'RelabelSelected()
-        End Sub
-
-#End Region
+        'Public Sub OnSelectAll(ByVal sender As Object, ByVal e As System.EventArgs)
+        '    SelectAll()
+        'End Sub
+        ' 
 
 #End Region
 
 #Region " Format Events "
 
-        Public Overrides Sub OnAlignTop(ByVal sender As Object, ByVal e As System.EventArgs)
+#Region " Align Events "
+
+        Private Sub AlignTopMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles AlignTopMenuItem.Click, AlignTopToolStripItem.Click
 
             Try
                 If m_ctrlAddFlow.SelectedItems.Count <= 1 Then Return
@@ -2612,10 +3184,9 @@ Namespace Forms.Behavior
             Finally
                 EndGroupChange()
             End Try
-
         End Sub
 
-        Public Overrides Sub OnAlignVerticalCenter(ByVal sender As Object, ByVal e As System.EventArgs)
+        Private Sub AlignVerticalCenterMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles AlignVerticalCenterMenuItem.Click, AlignVerticalCenterToolStripItem.Click
 
             Try
                 If m_ctrlAddFlow.SelectedItems.Count <= 1 Then Return
@@ -2645,10 +3216,9 @@ Namespace Forms.Behavior
             Finally
                 EndGroupChange()
             End Try
-
         End Sub
 
-        Public Overrides Sub OnAlignBottom(ByVal sender As Object, ByVal e As System.EventArgs)
+        Private Sub AlignBottomMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles AlignBottomMenuItem.Click, AlignBottomToolStripItem.Click
 
             Try
                 If m_ctrlAddFlow.SelectedItems.Count <= 1 Then Return
@@ -2678,10 +3248,9 @@ Namespace Forms.Behavior
             Finally
                 EndGroupChange()
             End Try
-
         End Sub
 
-        Public Overrides Sub OnAlignLeft(ByVal sender As Object, ByVal e As System.EventArgs)
+        Private Sub AlignLeftMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles AlignLeftMenuItem.Click, AlignLeftToolStripItem.Click
 
             Try
                 If m_ctrlAddFlow.SelectedItems.Count <= 1 Then Return
@@ -2711,10 +3280,9 @@ Namespace Forms.Behavior
             Finally
                 EndGroupChange()
             End Try
-
         End Sub
 
-        Public Overrides Sub OnAlignHorizontalCenter(ByVal sender As Object, ByVal e As System.EventArgs)
+        Private Sub AlignHorizontalCenterMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles AlignHorizontalCenterMenuItem.Click, AlignHorizontalCenterToolStripItem.Click
 
             Try
                 If m_ctrlAddFlow.SelectedItems.Count <= 1 Then Return
@@ -2747,7 +3315,7 @@ Namespace Forms.Behavior
 
         End Sub
 
-        Public Overrides Sub OnAlignRight(ByVal sender As Object, ByVal e As System.EventArgs)
+        Private Sub AlignRightMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles AlignRightMenuItem.Click, AlignRightToolStripItem.Click
 
             Try
                 If m_ctrlAddFlow.SelectedItems.Count <= 1 Then Return
@@ -2777,10 +3345,58 @@ Namespace Forms.Behavior
             Finally
                 EndGroupChange()
             End Try
-
         End Sub
 
-        Public Overrides Sub OnDistributeVertical(ByVal sender As Object, ByVal e As System.EventArgs)
+#End Region
+
+#Region " Distribute Events "
+
+        Private Sub DistributeHorizontalMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles DistributeHorizontalMenuItem.Click, DistributeHorizontalToolStripItem.Click
+
+            Try
+                If m_ctrlAddFlow.SelectedItems.Count <= 1 Then Return
+
+                Dim aryList As ArrayList = GetSelectedAddflowNodes()
+                aryList.Sort(New FlowNodeXLocation)
+
+                If aryList.Count <= 1 Then Return
+
+                'Find the first and last selected node.
+                Dim afFirstNode As Lassalle.Flow.Node = DirectCast(aryList(0), Lassalle.Flow.Node)
+                Dim afLastNode As Lassalle.Flow.Node = DirectCast(aryList(aryList.Count - 1), Lassalle.Flow.Node)
+
+                'If afFirstNode.Location.X > afLastNode.Location.X Then
+                '    Dim afTemp As Lassalle.Flow.Node = afFirstNode
+                '    afFirstNode = afLastNode
+                '    afLastNode = afTemp
+                'End If
+
+                Dim fltFirstCenter As Single = afFirstNode.Location.X + (afFirstNode.Size.Width / 2)
+                Dim fltLastCenter As Single = afLastNode.Location.X + (afLastNode.Size.Width / 2)
+
+                Dim fltWidth As Single = Math.Abs(fltLastCenter - fltFirstCenter)
+                fltWidth = fltWidth / (aryList.Count - 1)
+
+                Dim fltDelta As Single = 0
+
+                BeginGroupChange()
+
+                For Each afNode As Lassalle.Flow.Node In aryList
+                    afNode.Location = New PointF((fltFirstCenter + fltDelta - (afNode.Size.Width / 2)), afNode.Location.Y)
+                    fltDelta = fltDelta + fltWidth
+                Next
+
+                m_Timer.Enabled = True
+                Me.IsDirty = True
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                EndGroupChange()
+            End Try
+        End Sub
+
+        Private Sub DistributeVerticalMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles DistributeVerticalMenuItem.Click, DistributeVerticalToolStripItem.Click
 
             Try
                 If m_ctrlAddFlow.SelectedItems.Count <= 1 Then Return
@@ -2826,53 +3442,11 @@ Namespace Forms.Behavior
 
         End Sub
 
-        Public Overrides Sub OnDistributeHorizontal(ByVal sender As Object, ByVal e As System.EventArgs)
+#End Region
 
-            Try
-                If m_ctrlAddFlow.SelectedItems.Count <= 1 Then Return
+#Region " Size Events "
 
-                Dim aryList As ArrayList = GetSelectedAddflowNodes()
-                aryList.Sort(New FlowNodeXLocation)
-
-                If aryList.Count <= 1 Then Return
-
-                'Find the first and last selected node.
-                Dim afFirstNode As Lassalle.Flow.Node = DirectCast(aryList(0), Lassalle.Flow.Node)
-                Dim afLastNode As Lassalle.Flow.Node = DirectCast(aryList(aryList.Count - 1), Lassalle.Flow.Node)
-
-                'If afFirstNode.Location.X > afLastNode.Location.X Then
-                '    Dim afTemp As Lassalle.Flow.Node = afFirstNode
-                '    afFirstNode = afLastNode
-                '    afLastNode = afTemp
-                'End If
-
-                Dim fltFirstCenter As Single = afFirstNode.Location.X + (afFirstNode.Size.Width / 2)
-                Dim fltLastCenter As Single = afLastNode.Location.X + (afLastNode.Size.Width / 2)
-
-                Dim fltWidth As Single = Math.Abs(fltLastCenter - fltFirstCenter)
-                fltWidth = fltWidth / (aryList.Count - 1)
-
-                Dim fltDelta As Single = 0
-
-                BeginGroupChange()
-
-                For Each afNode As Lassalle.Flow.Node In aryList
-                    afNode.Location = New PointF((fltFirstCenter + fltDelta - (afNode.Size.Width / 2)), afNode.Location.Y)
-                    fltDelta = fltDelta + fltWidth
-                Next
-
-                m_Timer.Enabled = True
-                Me.IsDirty = True
-
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            Finally
-                EndGroupChange()
-            End Try
-
-        End Sub
-
-        Public Overrides Sub OnSizeBoth(ByVal sender As Object, ByVal e As System.EventArgs)
+        Private Sub SizeBothMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles SizeBothMenuItem.Click, SizeBothToolStripItem.Click
 
             Try
                 If m_ctrlAddFlow.SelectedItems.Count <= 1 Then Return
@@ -2898,39 +3472,9 @@ Namespace Forms.Behavior
             Finally
                 EndGroupChange()
             End Try
-
         End Sub
 
-        Public Overrides Sub OnSizeWidth(ByVal sender As Object, ByVal e As System.EventArgs)
-
-            Try
-                If m_ctrlAddFlow.SelectedItems.Count <= 1 Then Return
-
-                Dim aryList As ArrayList = GetSelectedAddflowNodes()
-
-                If aryList.Count <= 1 Then Return
-
-                'Find the last selected node.
-                Dim afLastNode As Lassalle.Flow.Node = DirectCast(aryList(aryList.Count - 1), Lassalle.Flow.Node)
-
-                BeginGroupChange()
-
-                For Each afNode As Lassalle.Flow.Node In aryList
-                    afNode.Size = New SizeF(afLastNode.Size.Width, afNode.Size.Height)
-                Next
-
-                m_Timer.Enabled = True
-                Me.IsDirty = True
-
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            Finally
-                EndGroupChange()
-            End Try
-
-        End Sub
-
-        Public Overrides Sub OnSizeHeight(ByVal sender As Object, ByVal e As System.EventArgs)
+        Private Sub SizeHeightMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles SizeHeightMenuItem.Click, SizeHeightToolStripItem.Click
 
             Try
                 If m_ctrlAddFlow.SelectedItems.Count <= 1 Then Return
@@ -2956,10 +3500,332 @@ Namespace Forms.Behavior
             Finally
                 EndGroupChange()
             End Try
+        End Sub
 
+        Private Sub SizeWidthMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles SizeWidthMenuItem.Click, SizeWidthToolStripItem.Click
+
+            Try
+                If m_ctrlAddFlow.SelectedItems.Count <= 1 Then Return
+
+                Dim aryList As ArrayList = GetSelectedAddflowNodes()
+
+                If aryList.Count <= 1 Then Return
+
+                'Find the last selected node.
+                Dim afLastNode As Lassalle.Flow.Node = DirectCast(aryList(aryList.Count - 1), Lassalle.Flow.Node)
+
+                BeginGroupChange()
+
+                For Each afNode As Lassalle.Flow.Node In aryList
+                    afNode.Size = New SizeF(afLastNode.Size.Width, afNode.Size.Height)
+                Next
+
+                m_Timer.Enabled = True
+                Me.IsDirty = True
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                EndGroupChange()
+            End Try
         End Sub
 
 #End Region
+
+
+#End Region
+
+#Region " Zoom Events "
+
+        Private Sub FitToPageMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles FitToPageMenuItem.Click
+            Try
+                FitToPage()
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomInBy10MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomInBy10MenuItem.Click, ZoomInBy10ToolStripItem.Click
+            Try
+                ZoomBy(0.1)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomInBy20MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomInBy20MenuItem.Click, ZoomInBy20ToolStripItem.Click
+            Try
+                ZoomBy(0.2)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomIn100MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn100MenuItem.Click, ZoomIn100ToolStripItem.Click
+            Try
+                ZoomTo(1)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomIn125MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn125MenuItem.Click, ZoomIn125ToolStripItem.Click
+            Try
+                ZoomTo(1.25)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomIn150MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn150MenuItem.Click, ZoomIn150ToolStripItem.Click
+            Try
+                ZoomTo(1.5)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomIn175MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn175MenuItem.Click, ZoomIn175ToolStripItem.Click
+            Try
+                ZoomTo(1.75)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomIn200MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn200MenuItem.Click, ZoomIn200ToolStripItem.Click
+            Try
+                ZoomTo(2)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomIn250MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn250MenuItem.Click, ZoomIn250ToolStripItem.Click
+            Try
+                ZoomTo(2.5)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomIn300MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn300MenuItem.Click, ZoomIn300ToolStripItem.Click
+            Try
+                ZoomTo(3)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomIn400MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn400MenuItem.Click, ZoomIn400ToolStripItem.Click
+            Try
+                ZoomTo(4)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomIn500MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn500MenuItem.Click, ZoomIn500ToolStripItem.Click
+            Try
+                ZoomTo(5)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomOutBy10MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOutBy10MenuItem.Click, ZoomOutBy10ToolStripItem.Click
+            Try
+                ZoomBy(-0.1)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomOutBy20MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOutBy20MenuItem.Click, ZoomOutBy20ToolStripItem.Click
+            Try
+                ZoomBy(-0.2)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomOut100MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut100MenuItem.Click, ZoomOut100ToolStripItem.Click
+            Try
+                ZoomTo(1)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomOut90MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut90MenuItem.Click, ZoomOut90ToolStripItem.Click
+            Try
+                ZoomTo(0.9)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomOut80MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut80MenuItem.Click, ZoomOut80ToolStripItem.Click
+            Try
+                ZoomTo(0.8)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomOut70MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut70MenuItem.Click, ZoomOut70ToolStripItem.Click
+            Try
+                ZoomTo(0.7)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomOut60MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut60MenuItem.Click, ZoomOut60ToolStripItem.Click
+            Try
+                ZoomTo(0.6)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomOut50MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut50MenuItem.Click, ZoomOut50ToolStripItem.Click
+            Try
+                ZoomTo(0.5)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomOut40MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut40MenuItem.Click, ZoomOut40ToolStripItem.Click
+            Try
+                ZoomTo(0.4)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomOut30MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut30MenuItem.Click, ZoomOut30ToolStripItem.Click
+            Try
+                ZoomTo(0.3)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomOut20MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut20MenuItem.Click, ZoomOut20ToolStripItem.Click
+            Try
+                ZoomTo(0.2)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ZoomOut10MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut10MenuItem.Click, ZoomOut10ToolStripItem.Click
+            Try
+                ZoomTo(0.1)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+#End Region
+
+        'Protected Sub OnAddStimulus(ByVal sender As Object, ByVal e As System.EventArgs)
+
+        '    Try
+
+        '        Dim aryList As ArrayList = GetSelectedAddflowNodes()
+        '        If aryList.Count = 1 Then
+        '            Dim afNode As Lassalle.Flow.Node = DirectCast(aryList(0), Lassalle.Flow.Node)
+        '            Dim doNode As AnimatGUI.DataObjects.Behavior.Node = FindNode(DirectCast(afNode.Tag, String))
+
+        '            If doNode.AllowStimulus AndAlso doNode.CompatibleStimuli.Count > 0 Then
+        '                'If this is an offpage connector then lets get its linked node
+        '                If TypeOf (doNode) Is AnimatGUI.DataObjects.Behavior.Nodes.OffPage Then
+        '                    Dim opNode As AnimatGUI.DataObjects.Behavior.Nodes.OffPage = DirectCast(doNode, AnimatGUI.DataObjects.Behavior.Nodes.OffPage)
+
+        '                    If opNode.LinkedNode Is Nothing OrElse opNode.LinkedNode.Node Is Nothing Then
+        '                        Throw New System.Exception("You can not add a stimulus to an offpage connector that has not be assigned a linked node.")
+        '                    End If
+
+        '                    doNode = opNode.LinkedNode.Node
+        '                End If
+
+        '                doNode.SelectStimulusType()
+        '            End If
+        '        End If
+
+        '    Catch ex As System.Exception
+        '        AnimatGUI.Framework.Util.DisplayError(ex)
+        '    End Try
+
+        'End Sub
+
+        Private Sub ShowConnectionsToolStripMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ShowConnectionsToolStripMenuItem.Click
+
+            Try
+
+                Dim aryList As ArrayList = GetSelectedAddflowNodes()
+                If aryList.Count = 1 Then
+                    Dim afNode As Lassalle.Flow.Node = DirectCast(aryList(0), Lassalle.Flow.Node)
+                    Dim doNode As AnimatGUI.DataObjects.Behavior.Node = FindNode(DirectCast(afNode.Tag, String))
+
+                    If TypeOf doNode Is AnimatGUI.DataObjects.Behavior.Nodes.OffPage Then
+                        Dim doOffpage As AnimatGUI.DataObjects.Behavior.Nodes.OffPage = DirectCast(doNode, AnimatGUI.DataObjects.Behavior.Nodes.OffPage)
+                        If Not doOffpage.LinkedNode Is Nothing AndAlso Not doOffpage.LinkedNode.Node Is Nothing Then
+                            doNode = doOffpage.LinkedNode.Node
+                        End If
+                    End If
+
+                    Dim frmConn As New AnimatGUI.Forms.Behavior.Connections
+
+                    frmConn.Node = doNode
+                    frmConn.ShowDialog()
+
+                    'TODO
+                    'If Not frmConn.SelectedNode Is Nothing Then
+                    '    Me.Editor.SelectedDiagram(frmConn.SelectedNode.ParentDiagram)
+                    '    frmConn.SelectedNode.ParentDiagram.SelectDataItem(frmConn.SelectedNode)
+                    'ElseIf Not frmConn.SelectedLink Is Nothing Then
+                    '    Me.Editor.SelectedDiagram(frmConn.SelectedLink.ParentDiagram)
+                    '    frmConn.SelectedLink.ParentDiagram.SelectDataItem(frmConn.SelectedLink)
+                    'End If
+
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+
+        'Public Overrides Sub OnCompareItems(ByVal sender As Object, ByVal e As System.EventArgs)
+
+        '    Try
+        '        Dim frmCompare As New AnimatGUI.Forms.Tools.CompareItems
+        '        frmCompare.PhysicalStructure = Me.Subsystem.Organism
+
+        '        'TODOD
+        '        'frmCompare.SelectedItems().Clear()
+        '        'For Each oItem As Object In Me.Subsystem.SelectedObjects()
+        '        '    If TypeOf oItem Is AnimatGUI.Framework.DataObject Then
+        '        '        Dim doItem As AnimatGUI.Framework.DataObject = DirectCast(oItem, AnimatGUI.Framework.DataObject)
+        '        '        frmCompare.SelectedItems.Add(doItem)
+        '        '    End If
+        '        'Next
+        '        'frmCompare.VerifyItemType()
+        '        'If frmCompare.SelectedItems.Count > 0 Then
+        '        '    frmCompare.ShowDialog()
+        '        'End If
+
+        '    Catch ex As System.Exception
+        '        AnimatGUI.Framework.Util.DisplayError(ex)
+        '    End Try
+        'End Sub
+
+
+#Region " Item Selection Events "
 
         Protected Sub OnItemsSelected()
 
@@ -2999,195 +3865,6 @@ Namespace Forms.Behavior
 
         End Sub
 
-#Region " Zoom Events "
-
-        Protected Sub OnFitToPage(ByVal sender As Object, ByVal e As System.EventArgs)
-            FitToPage()
-        End Sub
-
-        Protected Sub OnZoomOutBy10(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomBy(-0.1)
-        End Sub
-
-        Protected Sub OnZoomInBy10(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomBy(0.1)
-        End Sub
-
-        Protected Sub OnZoomOutBy20(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomBy(-0.2)
-        End Sub
-
-        Protected Sub OnZoomInBy20(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomBy(0.2)
-        End Sub
-
-        Protected Sub OnZoom10(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomTo(0.1)
-        End Sub
-
-        Protected Sub OnZoom20(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomTo(0.2)
-        End Sub
-
-        Protected Sub OnZoom30(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomTo(0.3)
-        End Sub
-
-        Protected Sub OnZoom40(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomTo(0.4)
-        End Sub
-
-        Protected Sub OnZoom50(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomTo(0.5)
-        End Sub
-
-        Protected Sub OnZoom60(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomTo(0.6)
-        End Sub
-
-        Protected Sub OnZoom70(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomTo(0.7)
-        End Sub
-
-        Protected Sub OnZoom80(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomTo(0.8)
-        End Sub
-
-        Protected Sub OnZoom90(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomTo(0.9)
-        End Sub
-
-        Protected Sub OnZoom100(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomTo(1)
-        End Sub
-
-        Protected Sub OnZoom125(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomTo(1.25)
-        End Sub
-
-        Protected Sub OnZoom150(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomTo(1.5)
-        End Sub
-
-        Protected Sub OnZoom175(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomTo(1.75)
-        End Sub
-
-        Protected Sub OnZoom200(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomTo(2.0)
-        End Sub
-
-        Protected Sub OnZoom250(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomTo(2.5)
-        End Sub
-
-        Protected Sub OnZoom300(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomTo(3.0)
-        End Sub
-
-        Protected Sub OnZoom400(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomTo(4.0)
-        End Sub
-
-        Protected Sub OnZoom500(ByVal sender As Object, ByVal e As System.EventArgs)
-            ZoomTo(5.0)
-        End Sub
-
-#End Region
-
-        Protected Sub OnAddStimulus(ByVal sender As Object, ByVal e As System.EventArgs)
-
-            Try
-
-                Dim aryList As ArrayList = GetSelectedAddflowNodes()
-                If aryList.Count = 1 Then
-                    Dim afNode As Lassalle.Flow.Node = DirectCast(aryList(0), Lassalle.Flow.Node)
-                    Dim doNode As AnimatGUI.DataObjects.Behavior.Node = FindNode(DirectCast(afNode.Tag, String))
-
-                    If doNode.AllowStimulus AndAlso doNode.CompatibleStimuli.Count > 0 Then
-                        'If this is an offpage connector then lets get its linked node
-                        If TypeOf (doNode) Is AnimatGUI.DataObjects.Behavior.Nodes.OffPage Then
-                            Dim opNode As AnimatGUI.DataObjects.Behavior.Nodes.OffPage = DirectCast(doNode, AnimatGUI.DataObjects.Behavior.Nodes.OffPage)
-
-                            If opNode.LinkedNode Is Nothing OrElse opNode.LinkedNode.Node Is Nothing Then
-                                Throw New System.Exception("You can not add a stimulus to an offpage connector that has not be assigned a linked node.")
-                            End If
-
-                            doNode = opNode.LinkedNode.Node
-                        End If
-
-                        doNode.SelectStimulusType()
-                    End If
-                End If
-
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            End Try
-
-        End Sub
-
-        Public Overrides Sub OnShowConnections(ByVal sender As Object, ByVal e As System.EventArgs)
-
-            Try
-
-                Dim aryList As ArrayList = GetSelectedAddflowNodes()
-                If aryList.Count = 1 Then
-                    Dim afNode As Lassalle.Flow.Node = DirectCast(aryList(0), Lassalle.Flow.Node)
-                    Dim doNode As AnimatGUI.DataObjects.Behavior.Node = FindNode(DirectCast(afNode.Tag, String))
-
-                    If TypeOf doNode Is AnimatGUI.DataObjects.Behavior.Nodes.OffPage Then
-                        Dim doOffpage As AnimatGUI.DataObjects.Behavior.Nodes.OffPage = DirectCast(doNode, AnimatGUI.DataObjects.Behavior.Nodes.OffPage)
-                        If Not doOffpage.LinkedNode Is Nothing AndAlso Not doOffpage.LinkedNode.Node Is Nothing Then
-                            doNode = doOffpage.LinkedNode.Node
-                        End If
-                    End If
-
-                    Dim frmConn As New AnimatGUI.Forms.Behavior.Connections
-
-                    frmConn.Node = doNode
-                    frmConn.ShowDialog()
-
-                    'TODO
-                    'If Not frmConn.SelectedNode Is Nothing Then
-                    '    Me.Editor.SelectedDiagram(frmConn.SelectedNode.ParentDiagram)
-                    '    frmConn.SelectedNode.ParentDiagram.SelectDataItem(frmConn.SelectedNode)
-                    'ElseIf Not frmConn.SelectedLink Is Nothing Then
-                    '    Me.Editor.SelectedDiagram(frmConn.SelectedLink.ParentDiagram)
-                    '    frmConn.SelectedLink.ParentDiagram.SelectDataItem(frmConn.SelectedLink)
-                    'End If
-
-                End If
-
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            End Try
-
-        End Sub
-
-        Public Overrides Sub OnCompareItems(ByVal sender As Object, ByVal e As System.EventArgs)
-
-            Try
-                Dim frmCompare As New AnimatGUI.Forms.Tools.CompareItems
-                frmCompare.PhysicalStructure = Me.Subsystem.Organism
-
-                'TODOD
-                'frmCompare.SelectedItems().Clear()
-                'For Each oItem As Object In Me.Subsystem.SelectedObjects()
-                '    If TypeOf oItem Is AnimatGUI.Framework.DataObject Then
-                '        Dim doItem As AnimatGUI.Framework.DataObject = DirectCast(oItem, AnimatGUI.Framework.DataObject)
-                '        frmCompare.SelectedItems.Add(doItem)
-                '    End If
-                'Next
-                'frmCompare.VerifyItemType()
-                'If frmCompare.SelectedItems.Count > 0 Then
-                '    frmCompare.ShowDialog()
-                'End If
-
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            End Try
-        End Sub
-
         Public Overrides Sub OnItemSelected(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal bSelectMultiple As Boolean)
             If Not m_bSelectingMultiple AndAlso Not doObject.Tag Is Nothing AndAlso Util.IsTypeOf(doObject.Tag.GetType, GetType(Lassalle.Flow.Item), False) Then
                 SelectAddFlowItem(DirectCast(doObject.Tag, Lassalle.Flow.Item), bSelectMultiple)
@@ -3198,6 +3875,44 @@ Namespace Forms.Behavior
             If Not m_bSelectingMultiple AndAlso Not doObject.Tag Is Nothing AndAlso Util.IsTypeOf(doObject.Tag.GetType, GetType(Lassalle.Flow.Item), False) Then
                 DeselectAddFlowItem(DirectCast(doObject.Tag, Lassalle.Flow.Item))
             End If
+        End Sub
+
+#End Region
+
+        Protected Overrides Sub AnimatForm_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+            MyBase.AnimatForm_FormClosing(sender, e)
+
+            'If we are closing then reset the Parent diagram property of all nodes/links and the subsystem node link
+            If e.Cancel = False Then
+                Me.Subsystem.SubsystemDiagram = Nothing
+
+                For Each deEntry As DictionaryEntry In Me.Subsystem.BehavioralNodes
+                    Dim bnNode As AnimatGUI.DataObjects.Behavior.Node = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Node)
+                    bnNode.ParentDiagram = Nothing
+                Next
+
+                For Each deEntry As DictionaryEntry In Me.Subsystem.BehavioralLinks
+                    Dim blLink As AnimatGUI.DataObjects.Behavior.Link = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
+                    blLink.ParentDiagram = Nothing
+                Next
+            End If
+
+        End Sub
+
+        Private Sub ShapeToolStripMenuItem_DropDownOpening(ByVal sender As Object, ByVal e As System.EventArgs) Handles ShapeToolStripMenuItem.DropDownOpening
+            Try
+                If m_ctrlAddFlow.SelectedItems.Count > 1 Then
+                    Me.AlignMenuItem.Enabled = True
+                    Me.DistributeMenuItem.Enabled = True
+                    Me.SizeMenuItem.Enabled = True
+                Else
+                    Me.AlignMenuItem.Enabled = False
+                    Me.DistributeMenuItem.Enabled = False
+                    Me.SizeMenuItem.Enabled = False
+                End If
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
         End Sub
 
 #Region " AddFlow Events "
@@ -3449,6 +4164,7 @@ Namespace Forms.Behavior
             'Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me.Editor, Me))
         End Sub
 
+
 #End Region
 
 #End Region
@@ -3501,6 +4217,8 @@ Namespace Forms.Behavior
 
 #End Region
 
+
+ 
     End Class
 
 End Namespace

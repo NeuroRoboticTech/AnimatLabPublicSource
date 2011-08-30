@@ -325,7 +325,7 @@ Namespace DataObjects.Behavior.Synapses
             Try
                 MyBase.InitializeAfterLoad()
 
-                If m_bInitialized Then
+                If m_bIsInitialized Then
                     If m_strGatedSynapseID.Trim.Length > 0 Then
                         Dim blLink As AnimatGUI.DataObjects.Behavior.Link = Me.Organism.FindBehavioralLink(m_strGatedSynapseID)
                         Dim bnNode As AnimatGUI.DataObjects.Behavior.Node = Me.Organism.FindBehavioralNode(m_strGatedOriginID)
@@ -337,7 +337,7 @@ Namespace DataObjects.Behavior.Synapses
                 End If
 
             Catch ex As System.Exception
-                m_bInitialized = False
+                m_bIsInitialized = False
                 'If iAttempt = 1 Then
                 '    AnimatGUI.Framework.Util.DisplayError(ex)
                 'End If

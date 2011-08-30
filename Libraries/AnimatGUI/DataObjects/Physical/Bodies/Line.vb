@@ -151,11 +151,13 @@ Namespace DataObjects.Physical.Bodies
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+            If Me.IsInitialized Then
+                MyBase.InitializeSimulationReferences()
 
-            'Lets get a data pointer for the muscle length so we can use that to update our length variable.
-            If Not m_doInterface Is Nothing Then
-                m_doInterface.GetDataPointer("Length")
+                'Lets get a data pointer for the muscle length so we can use that to update our length variable.
+                If Not m_doInterface Is Nothing Then
+                    m_doInterface.GetDataPointer("Length")
+                End If
             End If
         End Sub
 

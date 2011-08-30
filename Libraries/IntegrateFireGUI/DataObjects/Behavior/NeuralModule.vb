@@ -35,17 +35,7 @@ Namespace DataObjects.Behavior
 #Region " Properties "
 
         <Browsable(False)> _
-        Public Overrides Property Organism() As AnimatGUI.DataObjects.Physical.Organism
-            Get
-                Return m_doOrganism
-            End Get
-            Set(ByVal Value As AnimatGUI.DataObjects.Physical.Organism)
-                m_doOrganism = Value
-            End Set
-        End Property
-
-        <Browsable(False)> _
-        Public Overrides ReadOnly Property NetworkFilename() As String
+            Public Overrides ReadOnly Property NetworkFilename() As String
             Get
                 If Not m_doOrganism Is Nothing Then
                     Return m_doOrganism.Name & ".arnn"
@@ -225,9 +215,9 @@ Namespace DataObjects.Behavior
         Public Overrides ReadOnly Property ModuleFilename() As String
             Get
 #If Not Debug Then
-                Return "RealisticNeuralNet_VC10.dll"
+                Return "IntegrateFireSim_VC10.dll"
 #Else
-                Return "RealisticNeuralNet_VC10D.dll"
+                Return "IntegrateFireSim_VC10D.dll"
 #End If
             End Get
         End Property
@@ -239,8 +229,8 @@ Namespace DataObjects.Behavior
         Public Sub New(ByVal doParent As AnimatGUI.Framework.DataObject)
             MyBase.New(doParent)
 
-            m_strModuleName = "RealisticNeuralNet"
-            m_strModuleType = "RealisticNeuralModule"
+            m_strModuleName = "IntegrateFireSim"
+            m_strModuleType = "IntegrateFireSimModule"
 
             m_snTimeStep = New AnimatGUI.Framework.ScaledNumber(Me, "TimeStep", 0.2, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
             m_snAHPEquilibriumPotential = New AnimatGUI.Framework.ScaledNumber(Me, "AHPEquilibriumPotential", -70, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "Volts", "V")
@@ -633,24 +623,25 @@ Namespace DataObjects.Behavior
 
 
         Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+            If Me.IsInitialized Then
+                MyBase.InitializeSimulationReferences()
 
-            Dim doObject As AnimatGUI.Framework.DataObject
-            For Each deEntry As DictionaryEntry In m_arySynapseTypes
-                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                doObject.InitializeSimulationReferences()
-            Next
+                Dim doObject As AnimatGUI.Framework.DataObject
+                For Each deEntry As DictionaryEntry In m_arySynapseTypes
+                    doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                    doObject.InitializeSimulationReferences()
+                Next
 
-            For Each deEntry As DictionaryEntry In m_aryNodes
-                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                doObject.InitializeSimulationReferences()
-            Next
+                For Each deEntry As DictionaryEntry In m_aryNodes
+                    doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                    doObject.InitializeSimulationReferences()
+                Next
 
-            For Each deEntry As DictionaryEntry In m_aryLinks
-                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                doObject.InitializeSimulationReferences()
-            Next
-
+                For Each deEntry As DictionaryEntry In m_aryLinks
+                    doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                    doObject.InitializeSimulationReferences()
+                Next
+            End If
         End Sub
 
 #End Region

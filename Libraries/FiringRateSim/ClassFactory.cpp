@@ -225,7 +225,7 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "FASTNEURALMODULE")
+	if(strType == "FIRINGRATESIMMODULE")
 		lpModule = new FiringRateModule;
 	else
 	{

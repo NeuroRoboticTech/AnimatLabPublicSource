@@ -641,7 +641,7 @@ Namespace DataObjects.Behavior
                     If Me.Text.Trim.Length = 0 Then
                         strName = Me.Origin.Text
                     Else
-                        strName = Me.Origin.Text & "( " & Me.Text & " ) "
+                        strName = Me.Origin.Text.Trim & " ( " & Me.Text.Trim & " ) "
                     End If
                 Else
                     strName = Me.Text
@@ -1031,10 +1031,10 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("Either a destination or origin was missing for this link. '" & Me.ID & "'")
                 End If
 
-                m_bInitialized = True
+                m_bIsInitialized = True
 
             Catch ex As System.Exception
-                m_bInitialized = False
+                m_bIsInitialized = False
                 'If iAttempt = 1 Then
                 '    AnimatGUI.Framework.Util.DisplayError(ex)
                 'End If

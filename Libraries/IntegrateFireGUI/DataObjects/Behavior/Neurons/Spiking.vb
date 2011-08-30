@@ -445,14 +445,15 @@ Namespace DataObjects.Behavior.Neurons
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+            If Me.IsInitialized Then
+                MyBase.InitializeSimulationReferences()
 
-            Dim doObject As AnimatGUI.Framework.DataObject
-            For Each deEntry As DictionaryEntry In m_aryIonChannels
-                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                doObject.InitializeSimulationReferences()
-            Next
-
+                Dim doObject As AnimatGUI.Framework.DataObject
+                For Each deEntry As DictionaryEntry In m_aryIonChannels
+                    doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                    doObject.InitializeSimulationReferences()
+                Next
+            End If
         End Sub
 
         'Public Overrides Sub SaveDataColumnToXml(ByRef oXml As AnimatGUI.Interfaces.StdXml)
@@ -638,26 +639,6 @@ Namespace DataObjects.Behavior.Neurons
             If Not m_aryIonChannels Is Nothing Then m_aryIonChannels.ClearIsDirty()
 
         End Sub
-
-
-#Region " Add-Remove to List Methods "
-
-        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            If Not NeuralModule Is Nothing Then
-                NeuralModule.VerifyExistsInSim()
-                Util.Application.SimulationInterface.AddItem(NeuralModule.ID(), "Neuron", Me.GetSimulationXml("Neuron"), bThrowError)
-            End If
-            InitializeSimulationReferences()
-        End Sub
-
-        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            If Not NeuralModule Is Nothing Then
-                Util.Application.SimulationInterface.RemoveItem(NeuralModule.ID(), "Neuron", Me.ID, bThrowError)
-            End If
-            m_doInterface = Nothing
-        End Sub
-
-#End Region
 
         Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
             MyBase.LoadData(oXml)

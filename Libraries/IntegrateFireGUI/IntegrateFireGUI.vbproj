@@ -240,6 +240,11 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\ElectricalSynapse_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\NonSpikingSynapse_Treeview.gif" />
+    <EmbeddedResource Include="Graphics\SpikingSynapse_Treeview.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PreBuildEvent />

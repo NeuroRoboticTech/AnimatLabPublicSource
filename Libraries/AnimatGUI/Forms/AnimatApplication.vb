@@ -47,105 +47,105 @@ Namespace Forms
             MyBase.Dispose(disposing)
         End Sub
 
-        Friend WithEvents AnimatStripContainer As System.Windows.Forms.ToolStripContainer
-        Friend WithEvents AnimatStatusBar As Crownwood.DotNetMagic.Controls.StatusBarControl
-        Friend WithEvents AnimatMenuStrip As AnimatGuiCtrls.Controls.AnimatMenuStrip
-        Friend WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents NewToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents OpenToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents toolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
-        Friend WithEvents SaveToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents SaveAsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents toolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
-        Friend WithEvents ExitToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents EditToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents UndoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents RedoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents toolStripSeparator6 As System.Windows.Forms.ToolStripSeparator
-        Friend WithEvents ViewToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents CustomizeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents PreferencesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents HelpToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ContentsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents IndexToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents SearchToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents toolStripSeparator7 As System.Windows.Forms.ToolStripSeparator
-        Friend WithEvents AboutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents AnimatToolStrip As AnimatGuiCtrls.Controls.AnimatToolStrip
-        Friend WithEvents NewToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents OpenToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents SaveToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents HelpToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents AnimatTabbedGroups As Crownwood.DotNetMagic.Controls.TabbedGroups
-        Friend WithEvents SupportToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents RunSimulationToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ToolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
-        Friend WithEvents ToolStripSeparator8 As System.Windows.Forms.ToolStripSeparator
-        Friend WithEvents CloseProjectToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ExportStandaloneToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents RunMacroToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ToolStripSeparator5 As System.Windows.Forms.ToolStripSeparator
-        Friend WithEvents AddOrganismStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents AddStructureToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents AddToolToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents DeleteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents DeleteToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents ToolStripSeparator9 As System.Windows.Forms.ToolStripSeparator
-        Friend WithEvents DisplayModeDropDown As System.Windows.Forms.ToolStripDropDownButton
-        Friend WithEvents ShowGraphicsGeometryToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ShowCollisionGeometryToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ShowJointsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ShowCenterOfMassToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ShowPartOriginToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ShowContactsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents SelGraphicsToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents SelCollisionToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents SelJointsToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents SelRecFieldsToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents SelectionModeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents GraphicsObjectsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents CollisionObjectsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents JointsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ReceptiveFieldsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents SimulationToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents DisplayToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ShowGraphicsGeometryToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ShowCollisionGeomoetryToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ShowJointsToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ShowCenterOfMassToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ShowPartOriginsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ShowContactsToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents SelSimToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents SnapshotSimToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ToolStripSeparator10 As System.Windows.Forms.ToolStripSeparator
-        Friend WithEvents AddStimulusToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents PasteToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents CopyToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents CutToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents toolStripSeparator As System.Windows.Forms.ToolStripSeparator
-        Friend WithEvents SelectByTypeToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents RelabelToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents RelabelSelectedToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents AddPartToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents AddJointToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents CompareItemsToolStripButton As System.Windows.Forms.ToolStripButton
-        Friend WithEvents CutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents CopyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents PasteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
-        Friend WithEvents SelectByTypeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents RelabelToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents RelabelSelectedToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents CompareItemsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents AddItemToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents AddStructureToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents AddOrganismToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents AddTooToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents AddBodyPartToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents AddBodyJointToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents AddStimulusToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents EditMaterialsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents EditMaterialsToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents AnimatStripContainer As System.Windows.Forms.ToolStripContainer
+        Public WithEvents AnimatStatusBar As Crownwood.DotNetMagic.Controls.StatusBarControl
+        Public WithEvents AnimatMenuStrip As AnimatGuiCtrls.Controls.AnimatMenuStrip
+        Public WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents NewToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents OpenToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents toolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
+        Public WithEvents SaveToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents SaveAsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents toolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
+        Public WithEvents ExitToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents EditToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents UndoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents RedoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents toolStripSeparator6 As System.Windows.Forms.ToolStripSeparator
+        Public WithEvents ViewToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents CustomizeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents PreferencesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents HelpToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents ContentsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents IndexToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents SearchToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents toolStripSeparator7 As System.Windows.Forms.ToolStripSeparator
+        Public WithEvents AboutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents AnimatToolStrip As AnimatGuiCtrls.Controls.AnimatToolStrip
+        Public WithEvents NewToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents OpenToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents SaveToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents HelpToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents AnimatTabbedGroups As Crownwood.DotNetMagic.Controls.TabbedGroups
+        Public WithEvents SupportToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents RunSimulationToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents ToolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
+        Public WithEvents ToolStripSeparator8 As System.Windows.Forms.ToolStripSeparator
+        Public WithEvents CloseProjectToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents ExportStandaloneToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents RunMacroToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents ToolStripSeparator5 As System.Windows.Forms.ToolStripSeparator
+        Public WithEvents AddOrganismStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents AddStructureToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents AddToolToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents DeleteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents DeleteToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents ToolStripSeparator9 As System.Windows.Forms.ToolStripSeparator
+        Public WithEvents DisplayModeDropDown As System.Windows.Forms.ToolStripDropDownButton
+        Public WithEvents ShowGraphicsGeometryToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents ShowCollisionGeometryToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents ShowJointsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents ShowCenterOfMassToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents ShowPartOriginToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents ShowContactsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents SelGraphicsToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents SelCollisionToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents SelJointsToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents SelRecFieldsToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents SelectionModeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents GraphicsObjectsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents CollisionObjectsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents JointsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents ReceptiveFieldsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents SimulationToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents DisplayToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents ShowGraphicsGeometryToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents ShowCollisionGeomoetryToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents ShowJointsToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents ShowCenterOfMassToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents ShowPartOriginsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents ShowContactsToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents SelSimToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents SnapshotSimToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents ToolStripSeparator10 As System.Windows.Forms.ToolStripSeparator
+        Public WithEvents AddStimulusToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents PasteToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents CopyToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents CutToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents toolStripSeparator As System.Windows.Forms.ToolStripSeparator
+        Public WithEvents SelectByTypeToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents RelabelToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents RelabelSelectedToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents AddPartToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents AddJointToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents CompareItemsToolStripButton As System.Windows.Forms.ToolStripButton
+        Public WithEvents CutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents CopyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents PasteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
+        Public WithEvents SelectByTypeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents RelabelToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents RelabelSelectedToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents CompareItemsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents AddItemToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents AddStructureToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents AddOrganismToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents AddTooToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents AddBodyPartToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents AddBodyJointToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents AddStimulusToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents EditMaterialsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents EditMaterialsToolStripButton As System.Windows.Forms.ToolStripButton
 
         'Required by the Windows Form Designer
         Private components As System.ComponentModel.IContainer
@@ -398,7 +398,12 @@ Namespace Forms
             '
             'EditToolStripMenuItem
             '
-            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UndoToolStripMenuItem, Me.RedoToolStripMenuItem, Me.RunMacroToolStripMenuItem, Me.toolStripSeparator6, Me.CutToolStripMenuItem, Me.CopyToolStripMenuItem, Me.PasteToolStripMenuItem, Me.DeleteToolStripMenuItem, Me.ToolStripSeparator1, Me.SelectByTypeToolStripMenuItem, Me.RelabelToolStripMenuItem, Me.RelabelSelectedToolStripMenuItem, Me.CompareItemsToolStripMenuItem, Me.EditMaterialsToolStripMenuItem})
+            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UndoToolStripMenuItem, Me.RedoToolStripMenuItem, Me.RunMacroToolStripMenuItem})
+            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.toolStripSeparator6, Me.CutToolStripMenuItem, Me.CopyToolStripMenuItem, _
+                                                                                                      Me.PasteToolStripMenuItem, Me.DeleteToolStripMenuItem})
+            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripSeparator1, Me.SelectByTypeToolStripMenuItem, _
+                                                                                                      Me.RelabelToolStripMenuItem, Me.RelabelSelectedToolStripMenuItem, _
+                                                                                                      Me.CompareItemsToolStripMenuItem, Me.EditMaterialsToolStripMenuItem})
             Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
             Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
             Me.EditToolStripMenuItem.Text = "&Edit"
@@ -5112,43 +5117,23 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Sub AddStimulusToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddStimulusToolStripMenuItem.Click
+        Public Sub OnAddStimulus(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddStimulusToolStripButton.Click, AddStimulusToolStripMenuItem.Click
             AddStimulus()
         End Sub
 
-        Private Sub SelectByTypeToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SelectByTypeToolStripButton.Click
+        Public Sub OnSelectByType(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SelectByTypeToolStripMenuItem.Click, SelectByTypeToolStripButton.Click
             SelectByType()
         End Sub
 
-        Private Sub RelabelToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RelabelToolStripButton.Click
+        Public Sub OnRelabel(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RelabelToolStripMenuItem.Click, RelabelToolStripButton.Click
             Relabel()
         End Sub
 
-        Private Sub RelabelSelectedToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RelabelSelectedToolStripButton.Click
+        Public Sub OnRelabelSelected(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RelabelSelectedToolStripMenuItem.Click, RelabelSelectedToolStripButton.Click
             RelabelSelected()
         End Sub
 
-        Private Sub AddStimulusToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddStimulusToolStripButton.Click
-            AddStimulus()
-        End Sub
-
-        Private Sub CompareItemsToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CompareItemsToolStripButton.Click
-            CompareItems()
-        End Sub
-
-        Private Sub SelectByTypeToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SelectByTypeToolStripMenuItem.Click
-            SelectByType()
-        End Sub
-
-        Private Sub RelabelToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RelabelToolStripMenuItem.Click
-            Relabel()
-        End Sub
-
-        Private Sub RelabelSelectedToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RelabelSelectedToolStripMenuItem.Click
-            RelabelSelected()
-        End Sub
-
-        Private Sub CompareItemsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CompareItemsToolStripMenuItem.Click
+        Public Sub OnCompareItems(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CompareItemsToolStripMenuItem.Click, CompareItemsToolStripButton.Click
             CompareItems()
         End Sub
 
@@ -5218,6 +5203,130 @@ Namespace Forms
                 Me.Cursor = System.Windows.Forms.Cursors.Arrow
             End Try
         End Sub
+
+#Region " Menu Opening Event Handlers "
+
+
+        Public Overrides Sub ValidateFileToolStripItemState()
+
+            If Not m_selTabPage Is Nothing AndAlso Not m_selTabPage.Tag Is Nothing AndAlso Util.IsTypeOf(m_selTabPage.Tag.GetType, GetType(AnimatForm), False) Then
+                Dim afForm As AnimatForm = DirectCast(m_selTabPage.Tag, AnimatForm)
+                afForm.ValidateFileToolStripItemState()
+            End If
+
+        End Sub
+
+        Public Overrides Sub ValidateEditToolStripItemState()
+
+            If Util.ProjectWorkspace.TreeView.SelectedCount = 0 Then
+                Util.Application.CutToolStripMenuItem.Enabled = False
+                Util.Application.CopyToolStripMenuItem.Enabled = False
+                Util.Application.DeleteToolStripMenuItem.Enabled = False
+                'Util.Application.SelectAllToolStripMenu.Enabled = False
+                Util.Application.SelectByTypeToolStripMenuItem.Enabled = False
+                Util.Application.RelabelSelectedToolStripMenuItem.Enabled = False
+            Else
+                Util.Application.CutToolStripMenuItem.Enabled = True
+                Util.Application.CopyToolStripMenuItem.Enabled = True
+                Util.Application.DeleteToolStripMenuItem.Enabled = True
+                'Util.Application.SelectAllToolStripMenu.Enabled = True
+                Util.Application.SelectByTypeToolStripMenuItem.Enabled = True
+                Util.Application.RelabelSelectedToolStripMenuItem.Enabled = True
+            End If
+
+            Util.Application.PasteToolStripButton.Enabled = False
+            Dim data As IDataObject = Clipboard.GetDataObject()
+            If Not data Is Nothing AndAlso data.GetDataPresent("AnimatLab.Behavior.XMLFormat") Then
+                Dim strXml As String = DirectCast(data.GetData("AnimatLab.Behavior.XMLFormat"), String)
+                If strXml.Trim.Length > 0 Then
+                    Util.Application.PasteToolStripMenuItem.Enabled = True
+                End If
+            Else
+                Util.Application.PasteToolStripMenuItem.Enabled = False
+            End If
+
+            If Util.ProjectWorkspace.TreeView.SelectedCount < 2 Then
+                Util.Application.CompareItemsToolStripMenuItem.Enabled = False
+            Else
+                Util.Application.CompareItemsToolStripMenuItem.Enabled = True
+            End If
+
+            If Not m_selTabPage Is Nothing AndAlso Not m_selTabPage.Tag Is Nothing AndAlso Util.IsTypeOf(m_selTabPage.Tag.GetType, GetType(AnimatForm), False) Then
+                Dim afForm As AnimatForm = DirectCast(m_selTabPage.Tag, AnimatForm)
+                afForm.ValidateEditToolStripItemState()
+            End If
+
+        End Sub
+
+        Public Overrides Sub ValidateViewToolStripItemState()
+
+            If Not m_selTabPage Is Nothing AndAlso Not m_selTabPage.Tag Is Nothing AndAlso Util.IsTypeOf(m_selTabPage.Tag.GetType, GetType(AnimatForm), False) Then
+                Dim afForm As AnimatForm = DirectCast(m_selTabPage.Tag, AnimatForm)
+                afForm.ValidateViewToolStripItemState()
+            End If
+
+        End Sub
+
+        Public Overrides Sub ValidateAddToolStripItemState()
+
+            If Not m_selTabPage Is Nothing AndAlso Not m_selTabPage.Tag Is Nothing AndAlso Util.IsTypeOf(m_selTabPage.Tag.GetType, GetType(AnimatForm), False) Then
+                Dim afForm As AnimatForm = DirectCast(m_selTabPage.Tag, AnimatForm)
+                afForm.ValidateAddToolStripItemState()
+            End If
+
+        End Sub
+
+        Public Overrides Sub ValidateHelpToolStripItemState()
+
+            If Not m_selTabPage Is Nothing AndAlso Not m_selTabPage.Tag Is Nothing AndAlso Util.IsTypeOf(m_selTabPage.Tag.GetType, GetType(AnimatForm), False) Then
+                Dim afForm As AnimatForm = DirectCast(m_selTabPage.Tag, AnimatForm)
+                afForm.ValidateHelpToolStripItemState()
+            End If
+
+        End Sub
+
+        Private Sub FileToolStripMenuItem_DropDownOpening(ByVal sender As Object, ByVal e As System.EventArgs) Handles FileToolStripMenuItem.DropDownOpening
+            Try
+                Me.ValidateFileToolStripItemState()
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+   
+        Private Sub EditToolStripMenuItem_DropDownOpening(ByVal sender As Object, ByVal e As System.EventArgs) Handles EditToolStripMenuItem.DropDownOpening
+            Try
+                Me.ValidateEditToolStripItemState()
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub ViewToolStripMenuItem_DropDownOpening(ByVal sender As Object, ByVal e As System.EventArgs) Handles ViewToolStripMenuItem.DropDownOpening
+            Try
+                Me.ValidateViewToolStripItemState()
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub AddTooToolStripMenuItem_DropDownOpening(ByVal sender As Object, ByVal e As System.EventArgs) Handles AddTooToolStripMenuItem.DropDownOpening
+            Try
+                Me.ValidateAddToolStripItemState()
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub HelpToolStripMenuItem_DropDownOpening(ByVal sender As Object, ByVal e As System.EventArgs) Handles HelpToolStripMenuItem.DropDownOpening
+            Try
+                Me.ValidateHelpToolStripItemState()
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+#End Region
 
         'Protected Overridable Sub OnViewDockingForm(ByVal sender As Object, ByVal e As EventArgs)
 
@@ -5389,6 +5498,7 @@ Namespace Forms
                     Dim frmAnimat As Forms.AnimatForm = DirectCast(CreateForm(strAssembly, strClass, strTitle, False), Forms.AnimatForm)
                     frmAnimat.Initialize(Me)
                     frmAnimat.LoadData(oXml)
+                    frmAnimat.InitializeAfterLoad()
 
                     AddChildForm(frmAnimat, e.TabPage)
                     e.TabPage.Control = frmAnimat
@@ -5585,6 +5695,7 @@ Namespace Forms
         End Sub
 
 #End Region
+
 
 #End Region
 

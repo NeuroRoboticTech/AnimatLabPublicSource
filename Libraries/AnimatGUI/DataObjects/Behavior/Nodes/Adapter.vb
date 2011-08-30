@@ -278,9 +278,11 @@ Namespace DataObjects.Behavior.Nodes
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+            If Me.IsInitialized Then
+                MyBase.InitializeSimulationReferences()
 
-            m_gnGain.InitializeSimulationReferences()
+                m_gnGain.InitializeSimulationReferences()
+            End If
         End Sub
 
         Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
@@ -312,12 +314,12 @@ Namespace DataObjects.Behavior.Nodes
             Try
                 MyBase.InitializeAfterLoad()
 
-                If m_bInitialized Then
+                If m_bIsInitialized Then
                     If m_strOriginID.Trim.Length > 0 Then
                         m_bnOrigin = Me.Organism.FindBehavioralNode(m_strOriginID)
 
-                        If Not m_bnOrigin.Initialized Then
-                            m_bInitialized = False
+                        If Not m_bnOrigin.IsInitialized Then
+                            m_bIsInitialized = False
                             Return
                         End If
 
@@ -336,7 +338,7 @@ Namespace DataObjects.Behavior.Nodes
                 End If
 
             Catch ex As System.Exception
-                m_bInitialized = False
+                m_bIsInitialized = False
                 'If iAttempt = 1 Then
                 '    AnimatGUI.Framework.Util.DisplayError(ex)
                 'End If

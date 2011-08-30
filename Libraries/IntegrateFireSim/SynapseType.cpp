@@ -30,7 +30,7 @@ namespace IntegrateFireSim
 **/
 SynapseType::SynapseType()
 {
-	m_lpModule = NULL;
+	m_lpIGFModule = NULL;
 	m_iSynapseTypeID = 0;
 }
 
@@ -78,6 +78,23 @@ int SynapseType::SynapseTypeID() {return m_iSynapseTypeID;}
 void SynapseType::SynapseTypeID(int iID) {m_iSynapseTypeID = iID;}
 
 #pragma endregion
+
+void SynapseType::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+{
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+	
+	m_lpIGFModule = dynamic_cast<IntegrateFireNeuralModule *>(lpModule);
+
+	if(bVerify) VerifySystemPointers();
+}
+
+void SynapseType::VerifySystemPointers()
+{
+	AnimatBase::VerifySystemPointers();
+
+	if(!m_lpIGFModule)
+		THROW_PARAM_ERROR(Al_Err_lStructureNotDefined, Al_Err_strStructureNotDefined, "IGFModule: ", m_strID);
+}
 
 	}			//Synapses
 }				//IntegrateFireSim

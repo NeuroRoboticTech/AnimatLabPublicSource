@@ -51,8 +51,8 @@ Namespace DataObjects.Behavior
         End Function
 
         Public Overrides Sub SaveData(ByRef oXml As Interfaces.StdXml)
-            PopulateModuleData()
-            Me.Organism.AddContactAdapters(Me, m_aryNodes)
+            'TODO
+            'Me.Organism.AddContactAdapters(Me, m_aryNodes)
 
             oXml.IntoElem() 'Into the Adapters Element
             Dim bnNode As DataObjects.Behavior.Node
@@ -64,8 +64,8 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
-            PopulateModuleData()
-            Me.Organism.AddContactAdapters(Me, m_aryNodes)
+            'TODO
+            'Me.Organism.AddContactAdapters(Me, m_aryNodes)
 
             oXml.IntoElem() 'Into the Adapters Element
             Dim bnNode As DataObjects.Behavior.Node

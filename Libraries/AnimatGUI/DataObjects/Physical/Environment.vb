@@ -704,11 +704,11 @@ Namespace DataObjects.Physical
 
 #Region " Find Methods "
 
-        Public Overridable Function FindOrganism(ByVal strID As String, Optional ByVal bThrowError As Boolean = True) As DataObjects.Physical.PhysicalStructure
-            Dim doStructure As DataObjects.Physical.PhysicalStructure = Nothing
+        Public Overridable Function FindOrganism(ByVal strID As String, Optional ByVal bThrowError As Boolean = True) As DataObjects.Physical.Organism
+            Dim doStructure As DataObjects.Physical.Organism = Nothing
 
             If Me.Organisms.Contains(strID) Then
-                doStructure = Me.Organisms(strID)
+                doStructure = DirectCast(Me.Organisms(strID), DataObjects.Physical.Organism)
             ElseIf bThrowError Then
                 Throw New System.Exception("No organism with the id '" & strID & "' was found.")
             End If
@@ -1285,32 +1285,33 @@ Namespace DataObjects.Physical
         End Function
 
         Public Overrides Sub InitializeSimulationReferences()
-            'The environment is really just a pointer to the simulation object in the sim.
-            If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
-                m_doInterface = New Interfaces.DataObjectInterface(Util.Application.SimulationInterface, Util.Simulation.ID)
+            If Me.IsInitialized Then
+                'The environment is really just a pointer to the simulation object in the sim.
+                If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
+                    m_doInterface = New Interfaces.DataObjectInterface(Util.Application.SimulationInterface, Util.Simulation.ID)
+                End If
+
+                Dim doObject As AnimatGUI.Framework.DataObject
+                For Each deEntry As DictionaryEntry In m_aryOdorTypes
+                    doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                    doObject.InitializeSimulationReferences()
+                Next
+
+                For Each deEntry As DictionaryEntry In m_aryOrganisms
+                    doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                    doObject.InitializeSimulationReferences()
+                Next
+
+                For Each deEntry As DictionaryEntry In m_aryStructures
+                    doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                    doObject.InitializeSimulationReferences()
+                Next
+
+                For Each deEntry As DictionaryEntry In m_aryLights
+                    doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                    doObject.InitializeSimulationReferences()
+                Next
             End If
-
-            Dim doObject As AnimatGUI.Framework.DataObject
-            For Each deEntry As DictionaryEntry In m_aryOdorTypes
-                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                doObject.InitializeSimulationReferences()
-            Next
-
-            For Each deEntry As DictionaryEntry In m_aryOrganisms
-                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                doObject.InitializeSimulationReferences()
-            Next
-
-            For Each deEntry As DictionaryEntry In m_aryStructures
-                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                doObject.InitializeSimulationReferences()
-            Next
-
-            For Each deEntry As DictionaryEntry In m_aryLights
-                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                doObject.InitializeSimulationReferences()
-            Next
-
         End Sub
 
 #End Region

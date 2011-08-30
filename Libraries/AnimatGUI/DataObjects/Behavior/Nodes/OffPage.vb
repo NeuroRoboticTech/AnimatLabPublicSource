@@ -270,10 +270,10 @@ Namespace DataObjects.Behavior.Nodes
                 m_aryLoadingInLinkIDs.Clear()
                 m_aryLoadingOutLinkIDs.Clear()
 
-                m_bInitialized = True
+                m_bIsInitialized = True
 
             Catch ex As System.Exception
-                m_bInitialized = False
+                m_bIsInitialized = False
                 'If iAttempt = 1 Then
                 '    AnimatGUI.Framework.Util.DisplayError(ex)
                 'End If

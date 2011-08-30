@@ -39,6 +39,8 @@ Namespace Framework
 
         Protected m_oTag As Object
 
+        Protected m_bIsInitialized As Boolean = False
+
 #End Region
 
 #Region " Properties "
@@ -287,6 +289,15 @@ Namespace Framework
             End Get
             Set(ByVal Value As Object)
                 m_oTag = Value
+            End Set
+        End Property
+
+        Public Overridable Property IsInitialized() As Boolean
+            Get
+                Return m_bIsInitialized
+            End Get
+            Set(ByVal Value As Boolean)
+                m_bIsInitialized = Value
             End Set
         End Property
 
@@ -657,10 +668,11 @@ Namespace Framework
         End Sub
 
         Public Overridable Sub InitializeAfterLoad()
+            m_bIsInitialized = True
         End Sub
 
         Public Overridable Sub InitializeSimulationReferences()
-            If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
+            If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen AndAlso Me.IsInitialized Then
                 m_doInterface = New Interfaces.DataObjectInterface(Util.Application.SimulationInterface, Me.ID)
             End If
         End Sub

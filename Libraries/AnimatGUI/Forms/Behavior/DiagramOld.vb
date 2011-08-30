@@ -586,7 +586,7 @@ Namespace Forms.Behavior
         End Sub
 
         'Loading/Saving functions
-        Public MustOverride Sub InitializeAfterLoad()
+        'Public MustOverride Sub InitializeAfterLoad()
         Public MustOverride Sub VerifyData()
         Protected MustOverride Sub VerifyNodesExist()
 
@@ -612,10 +612,10 @@ Namespace Forms.Behavior
 
             'Run through and inialize them once.
             For Each bdData In aryItems
-                If Not bdData.Initialized Then
+                If Not bdData.IsInitialized Then
                     bdData.InitializeAfterLoad()
 
-                    If Not bdData.Initialized Then
+                    If Not bdData.IsInitialized Then
                         Util.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Error, "Failed to initialize Data Item: " & bdData.Text & "  ID: " & bdData.ID)
                         aryFailed.Add(bdData)
                     End If
@@ -635,10 +635,10 @@ Namespace Forms.Behavior
 
                 For Each bdData In aryFailed
 
-                    If Not bdData.Initialized Then
+                    If Not bdData.IsInitialized Then
                         bdData.InitializeAfterLoad()
 
-                        If Not bdData.Initialized Then
+                        If Not bdData.IsInitialized Then
                             bDone = False
                         End If
                     End If
@@ -648,7 +648,7 @@ Namespace Forms.Behavior
 
             'Called the failed to init function to remove that item.
             For Each bdData In aryFailed
-                If Not bdData.Initialized Then
+                If Not bdData.IsInitialized Then
                     bdData.FailedToInitialize()
                 End If
             Next
@@ -684,18 +684,18 @@ Namespace Forms.Behavior
                 dlLink = DirectCast(deEntry.Value, DataObjects.Behavior.Link)
 
                 'If this link is not an inlink then we have a mismatch
-                If dlLink.Initialized Then
-                    If dlLink.Origin.Initialized AndAlso dlLink.Origin.Links(dlLink.ID) Is Nothing Then
+                If dlLink.IsInitialized Then
+                    If dlLink.Origin.IsInitialized AndAlso dlLink.Origin.Links(dlLink.ID) Is Nothing Then
                         dlLink.Origin.AddOutLink(dlLink)
                     End If
-                    If dlLink.ActualOrigin.Initialized AndAlso dlLink.ActualOrigin.Links(dlLink.ID) Is Nothing Then
+                    If dlLink.ActualOrigin.IsInitialized AndAlso dlLink.ActualOrigin.Links(dlLink.ID) Is Nothing Then
                         dlLink.ActualOrigin.AddOutLink(dlLink)
                     End If
 
-                    If dlLink.Destination.Initialized AndAlso dlLink.Destination.Links(dlLink.ID) Is Nothing Then
+                    If dlLink.Destination.IsInitialized AndAlso dlLink.Destination.Links(dlLink.ID) Is Nothing Then
                         dlLink.Destination.AddInLink(dlLink)
                     End If
-                    If dlLink.ActualDestination.Initialized AndAlso dlLink.ActualDestination.Links(dlLink.ID) Is Nothing Then
+                    If dlLink.ActualDestination.IsInitialized AndAlso dlLink.ActualDestination.Links(dlLink.ID) Is Nothing Then
                         dlLink.ActualDestination.AddInLink(dlLink)
                     End If
                 End If

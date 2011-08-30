@@ -669,6 +669,22 @@ void Connexion::ResetSimulation()
 	m_HebbList.Release();
 }
 
+void Connexion::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
+{
+	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+	
+	m_lpIGFModule = dynamic_cast<IntegrateFireNeuralModule *>(lpModule);
+
+	if(bVerify) VerifySystemPointers();
+}
+
+void Connexion::VerifySystemPointers()
+{
+	AnimatBase::VerifySystemPointers();
+
+	if(!m_lpIGFModule)
+		THROW_PARAM_ERROR(Al_Err_lStructureNotDefined, Al_Err_strStructureNotDefined, "IGFModule: ", m_strID);
+}
 
 #pragma region DataAccesMethods
 
@@ -691,7 +707,7 @@ BOOL Connexion::SetData(string strDataType, string strValue, BOOL bThrowError)
 	if(strType == "SYNAPSETYPEID")
 	{
 		SynapseTypeID(strValue);
-		m_lpModule->PreCalc();
+		m_lpIGFModule->PreCalc();
 		return TRUE;
 	}
 

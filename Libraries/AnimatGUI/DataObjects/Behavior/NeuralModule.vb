@@ -109,8 +109,7 @@ Namespace DataObjects.Behavior
         <Browsable(False)> _
         Public Overridable ReadOnly Property HasNodesToSave() As Boolean
             Get
-                PopulateModuleData()
-                If m_aryNodes.Count > 0 Then
+                 If m_aryNodes.Count > 0 Then
                     Return True
                 End If
 
@@ -156,39 +155,6 @@ Namespace DataObjects.Behavior
 
         End Sub
 
-#Region " Save Simulation "
-
-        Public Overridable Sub PopulateModuleData()
-
-            m_aryNodes.Clear()
-            m_aryLinks.Clear()
-
-            'TODO: Have to fix this.
-            ''Lets loop through the nodes and links in the organism and add them to this module.
-            'Dim bnNode As DataObjects.Behavior.Node
-            'If Not Me.Organism Is Nothing Then
-            '    For Each deEntry As DictionaryEntry In Me.Organism.BehavioralNodes
-            '        bnNode = DirectCast(deEntry.Value, DataObjects.Behavior.Node)
-
-            '        If Me.GetType Is bnNode.NeuralModuleType Then
-            '            m_aryNodes.Add(bnNode.ID, bnNode)
-            '        End If
-            '    Next
-
-            '    Dim blLink As DataObjects.Behavior.Link
-            '    For Each deEntry As DictionaryEntry In Me.Organism.BehavioralLinks
-            '        blLink = DirectCast(deEntry.Value, DataObjects.Behavior.Link)
-
-            '        If Me.GetType Is blLink.NeuralModuleType Then
-            '            m_aryLinks.Add(blLink.ID, blLink)
-            '        End If
-            '    Next
-            'End If
-
-        End Sub
-
-#End Region
-
 #Region " DataObject Methods "
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
@@ -213,8 +179,8 @@ Namespace DataObjects.Behavior
             MyBase.ClearIsDirty()
 
             If Not m_snTimeStep Is Nothing Then m_snTimeStep.ClearIsDirty()
-            'm_aryNodes.ClearIsDirty()
-            'm_aryLinks.ClearIsDirty()
+            m_aryNodes.ClearIsDirty()
+            m_aryLinks.ClearIsDirty()
         End Sub
 
         Public Overrides Sub LoadData(ByRef oXml As Interfaces.StdXml)
@@ -243,7 +209,6 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
-            PopulateModuleData()
 
             oXml.AddChildElement("NeuralModule")
             oXml.IntoElem()

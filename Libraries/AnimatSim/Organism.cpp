@@ -155,6 +155,9 @@ BOOL Organism::AddItem(string strItemType, string strXml, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 
+	if(Structure::AddItem(strItemType, strXml, FALSE))
+		return TRUE;
+
 	if(strType == "NEURALMODULE")
 	{
 		try
@@ -179,6 +182,9 @@ BOOL Organism::AddItem(string strItemType, string strXml, BOOL bThrowError)
 BOOL Organism::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
+	
+	if(Structure::RemoveItem(strItemType, strID, FALSE))
+		return TRUE;
 
 	if(strType == "NEURALMODULE")
 	{

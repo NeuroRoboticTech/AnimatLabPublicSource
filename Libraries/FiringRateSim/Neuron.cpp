@@ -23,7 +23,7 @@ namespace FiringRateSim
 **/
 Neuron::Neuron()
 {
-	m_lpFastModule = NULL;
+	m_lpFRModule = NULL;
 
 	m_bEnabled = TRUE;
 
@@ -354,8 +354,8 @@ void Neuron::RelativeAccomodation(float fltVal)
 	else
 		m_bUseAccom = FALSE;
 
-	if(m_bUseAccom && m_lpFastModule)
-		m_fltDCTH = exp(-m_lpFastModule->TimeStep()/m_fltAccomTimeConst);
+	if(m_bUseAccom && m_lpFRModule)
+		m_fltDCTH = exp(-m_lpFRModule->TimeStep()/m_fltAccomTimeConst);
 	else
 		m_fltDCTH = 0;
 }
@@ -383,8 +383,8 @@ void Neuron::AccomodationTimeConstant(float fltVal)
 {
 	m_fltAccomTimeConst = fltVal;
 
-	if(m_bUseAccom && m_lpFastModule)
-		m_fltDCTH = exp(-m_lpFastModule->TimeStep()/m_fltAccomTimeConst);
+	if(m_bUseAccom && m_lpFRModule)
+		m_fltDCTH = exp(-m_lpFRModule->TimeStep()/m_fltAccomTimeConst);
 	else
 		m_fltDCTH = 0;
 }
@@ -428,13 +428,13 @@ float Neuron::Vn()
 \author	dcofer
 \date	3/29/2011
 
-\param [in,out]	m_lpFastModule	Pointer to a fast module. 
+\param [in,out]	m_lpFRModule	Pointer to a fast module. 
 
 \return	firing frequency.
 **/
-float Neuron::FiringFreq(FiringRateModule *m_lpFastModule)
+float Neuron::FiringFreq(FiringRateModule *m_lpFRModule)
 {
-	return CalculateFiringFrequency(m_aryVn[m_lpFastModule->ActiveArray()], m_aryVth[m_lpFastModule->ActiveArray()]);
+	return CalculateFiringFrequency(m_aryVn[m_lpFRModule->ActiveArray()], m_aryVth[m_lpFRModule->ActiveArray()]);
 }
 
 /**
@@ -608,8 +608,8 @@ void Neuron::StepSimulation()
 	if(m_bEnabled)
 	{
 		//Lets get the Summation of synaptic inputs
-		m_fltSynapticI = CalculateSynapticCurrent(m_lpFastModule);
-		m_fltIntrinsicI = CalculateIntrinsicCurrent(m_lpFastModule, m_fltExternalI+m_fltSynapticI);
+		m_fltSynapticI = CalculateSynapticCurrent(m_lpFRModule);
+		m_fltIntrinsicI = CalculateIntrinsicCurrent(m_lpFRModule, m_fltExternalI+m_fltSynapticI);
 
 		if(m_bUseNoise)
 			m_fltVNoise = Std_FRand(-m_fltVNoiseMax, m_fltVNoiseMax);
@@ -617,20 +617,20 @@ void Neuron::StepSimulation()
 		//Get the total current being applied to the neuron.
 		m_fltTotalMemoryI = m_fltSynapticI + m_fltIntrinsicI + m_fltExternalI + m_fltAdapterI;
 
-		m_aryVn[m_lpFastModule->InactiveArray()] = m_aryVn[m_lpFastModule->ActiveArray()] + m_fltVNoise + 
-							(m_lpFastModule->TimeStep() * m_fltInvCn * 
+		m_aryVn[m_lpFRModule->InactiveArray()] = m_aryVn[m_lpFRModule->ActiveArray()] + m_fltVNoise + 
+							(m_lpFRModule->TimeStep() * m_fltInvCn * 
 							(m_fltSynapticI + m_fltIntrinsicI + m_fltExternalI + m_fltAdapterI - 
-							(m_aryVn[m_lpFastModule->ActiveArray()]*m_fltGn)));
+							(m_aryVn[m_lpFRModule->ActiveArray()]*m_fltGn)));
 
-		m_fltVn = m_aryVn[m_lpFastModule->InactiveArray()];
+		m_fltVn = m_aryVn[m_lpFRModule->InactiveArray()];
 		m_fltVndisp = m_fltVrest + m_fltVn;
 
 		if(m_bUseAccom)
-			m_aryVth[m_lpFastModule->InactiveArray()] = m_fltVthi + (m_aryVth[m_lpFastModule->ActiveArray()]-m_fltVthi)*m_fltDCTH + m_fltRelativeAccom*m_fltVn*(1-m_fltDCTH);
+			m_aryVth[m_lpFRModule->InactiveArray()] = m_fltVthi + (m_aryVth[m_lpFRModule->ActiveArray()]-m_fltVthi)*m_fltDCTH + m_fltRelativeAccom*m_fltVn*(1-m_fltDCTH);
 		else
-			m_aryVth[m_lpFastModule->InactiveArray()] = m_fltVthi;
+			m_aryVth[m_lpFRModule->InactiveArray()] = m_fltVthi;
 
-		m_fltVth = m_aryVth[m_lpFastModule->InactiveArray()];
+		m_fltVth = m_aryVth[m_lpFRModule->InactiveArray()];
 		m_fltVthdisp = m_fltVrest + m_fltVth;
 
 		m_fltFiringFreq = CalculateFiringFrequency(m_fltVn, m_fltVth);
@@ -691,12 +691,12 @@ float Neuron::CalculateFiringFrequency(float fltVn, float fltVth)
 \author	dcofer
 \date	3/29/2011
 
-\param [in,out]	m_lpFastModule	Pointer to the parent FiringRateModule. 
+\param [in,out]	m_lpFRModule	Pointer to the parent FiringRateModule. 
 \param	fltInputCurrent		  	The input current. 
 
 \return	The calculated intrinsic current.
 **/
-float Neuron::CalculateIntrinsicCurrent(FiringRateModule *m_lpFastModule, float fltInputCurrent)
+float Neuron::CalculateIntrinsicCurrent(FiringRateModule *m_lpFRModule, float fltInputCurrent)
 {return 0;}
 
 /**
@@ -705,11 +705,11 @@ float Neuron::CalculateIntrinsicCurrent(FiringRateModule *m_lpFastModule, float 
 \author	dcofer
 \date	3/29/2011
 
-\param [in,out]	m_lpFastModule	Pointer to the parent FiringRateModule. 
+\param [in,out]	m_lpFRModule	Pointer to the parent FiringRateModule. 
 
 \return	The calculated synaptic current.
 **/
-float Neuron::CalculateSynapticCurrent(FiringRateModule *m_lpFastModule)
+float Neuron::CalculateSynapticCurrent(FiringRateModule *m_lpFRModule)
 {
 	unsigned char iSynapse, iCount;
 	float fltSynapticI=0;
@@ -721,7 +721,7 @@ float Neuron::CalculateSynapticCurrent(FiringRateModule *m_lpFastModule)
 		lpSynapse = m_arySynapses[iSynapse];
 
 		if(lpSynapse->Enabled() && lpSynapse->FromNeuron())
-			fltSynapticI+= (lpSynapse->FromNeuron()->FiringFreq(m_lpFastModule) * lpSynapse->Weight() * lpSynapse->CalculateModulation(m_lpFastModule) ); 
+			fltSynapticI+= (lpSynapse->FromNeuron()->FiringFreq(m_lpFRModule) * lpSynapse->Weight() * lpSynapse->CalculateModulation(m_lpFRModule) ); 
 	}
 
 	return fltSynapticI;
@@ -743,7 +743,7 @@ void Neuron::Initialize()
 	Node::Initialize();
 
 	if(m_bUseAccom)
-		m_fltDCTH = exp(-m_lpFastModule->TimeStep()/m_fltAccomTimeConst);
+		m_fltDCTH = exp(-m_lpFRModule->TimeStep()/m_fltAccomTimeConst);
 
 	int iCount = m_arySynapses.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -754,7 +754,7 @@ void Neuron::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralM
 {
 	Node::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
 
-	m_lpFastModule = dynamic_cast<FiringRateModule *>(lpModule);
+	m_lpFRModule = dynamic_cast<FiringRateModule *>(lpModule);
 
 	if(bVerify) VerifySystemPointers();
 }
@@ -763,8 +763,8 @@ void Neuron::VerifySystemPointers()
 {
 	Node::VerifySystemPointers();
 
-	if(!m_lpFastModule)
-		THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpFastModule->ID());
+	if(!m_lpFRModule)
+		THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpFRModule->ID());
 
 	if(!m_lpOrganism) 
 		THROW_PARAM_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Link: ", m_strID);
@@ -1087,7 +1087,7 @@ try
 	if(!lpSynapse)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Synapse");
 
-	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpFastModule, this, TRUE);
+	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpFRModule, this, TRUE);
 	lpSynapse->Load(oXml);
 	AddSynapse(lpSynapse);
 

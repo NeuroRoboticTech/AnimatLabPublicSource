@@ -30,7 +30,7 @@ namespace FiringRateSim
 		{
 		protected:
 			/// Pointer to parent FiringRateModule.
-			FiringRateModule *m_lpFastModule;
+			FiringRateModule *m_lpFRModule;
 
 			/// Array of moduled/gated child synapses
 			CStdPtrArray<Synapse> m_arySynapses;

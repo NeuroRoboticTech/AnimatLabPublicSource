@@ -37,7 +37,7 @@ Namespace DataObjects.Behavior
         Protected m_tpNeuralModuleType As System.Type
         'Protected m_NeuralModule As DataObjects.Behavior.NeuralModule = Nothing
 
-        Protected m_bInitialized As Boolean = False
+        'Protected m_bInitialized As Boolean = False
 
         'This is used when we are doing a copy/paste operation. We need to save the objects
         'with a different id than the original version. So we generate this temp id and use it
@@ -91,7 +91,9 @@ Namespace DataObjects.Behavior
                 Return m_ParentDiagram
             End Get
             Set(ByVal Value As Forms.Behavior.Diagram)
+                DisconnectDiagramEvents()
                 m_ParentDiagram = Value
+                ConnectDiagramEvents()
             End Set
         End Property
 
@@ -188,15 +190,15 @@ Namespace DataObjects.Behavior
             End Get
         End Property
 
-        <Browsable(False)> _
-        Public Overridable Property Initialized() As Boolean
-            Get
-                Return m_bInitialized
-            End Get
-            Set(ByVal Value As Boolean)
-                m_bInitialized = Value
-            End Set
-        End Property
+        '<Browsable(False)> _
+        'Public Overridable Property Initialized() As Boolean
+        '    Get
+        '        Return m_bInitialized
+        '    End Get
+        '    Set(ByVal Value As Boolean)
+        '        m_bInitialized = Value
+        '    End Set
+        'End Property
 
         'Override the TimeStep property of the drag object.
         <Browsable(False)> _
@@ -342,10 +344,6 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overridable Sub OwnerDraw(ByVal sender As Object, ByVal szRect As RectangleF, ByVal eGraphics As System.Drawing.Graphics)
-        End Sub
-
-        Public Overrides Sub InitializeAfterLoad()
-            m_bInitialized = True
         End Sub
 
         Public MustOverride Sub FailedToInitialize()

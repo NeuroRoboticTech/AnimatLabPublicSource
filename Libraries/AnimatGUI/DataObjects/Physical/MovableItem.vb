@@ -498,7 +498,7 @@ Namespace DataObjects.Physical
         End Function
 
         Public Overrides Sub InitializeSimulationReferences()
-            If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
+            If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen AndAlso Me.IsInitialized Then
                 m_doInterface = New Interfaces.DataObjectInterface(Util.Application.SimulationInterface, Me.ID)
                 AddHandler m_doInterface.OnPositionChanged, AddressOf Me.OnPositionChanged
                 AddHandler m_doInterface.OnRotationChanged, AddressOf Me.OnRotationChanged

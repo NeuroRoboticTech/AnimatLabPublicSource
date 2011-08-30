@@ -1018,28 +1018,29 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+            If Me.IsInitialized Then
+                MyBase.InitializeSimulationReferences()
 
-            If Not m_doInterface Is Nothing Then
-                AddHandler m_doInterface.OnAddBodyClicked, AddressOf Me.OnAddBodyClicked
+                If Not m_doInterface Is Nothing Then
+                    AddHandler m_doInterface.OnAddBodyClicked, AddressOf Me.OnAddBodyClicked
+                End If
+
+                If Not m_JointToParent Is Nothing Then
+                    m_JointToParent.InitializeSimulationReferences()
+                End If
+
+                Dim doChild As AnimatGUI.DataObjects.Physical.RigidBody
+                For Each deEntry As DictionaryEntry In m_aryChildBodies
+                    doChild = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Physical.RigidBody)
+                    doChild.InitializeSimulationReferences()
+                Next
+
+                Dim doPair As ReceptiveFieldPair
+                For Each deEntry As DictionaryEntry In m_aryReceptiveFieldPairs
+                    doPair = DirectCast(deEntry.Value, ReceptiveFieldPair)
+                    doPair.InitializeSimulationReferences()
+                Next
             End If
-
-            If Not m_JointToParent Is Nothing Then
-                m_JointToParent.InitializeSimulationReferences()
-            End If
-
-            Dim doChild As AnimatGUI.DataObjects.Physical.RigidBody
-            For Each deEntry As DictionaryEntry In m_aryChildBodies
-                doChild = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Physical.RigidBody)
-                doChild.InitializeSimulationReferences()
-            Next
-
-            Dim doPair As ReceptiveFieldPair
-            For Each deEntry As DictionaryEntry In m_aryReceptiveFieldPairs
-                doPair = DirectCast(deEntry.Value, ReceptiveFieldPair)
-                doPair.InitializeSimulationReferences()
-            Next
-
         End Sub
 
         Public Overloads Overrides Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)

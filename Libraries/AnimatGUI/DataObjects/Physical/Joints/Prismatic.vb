@@ -233,10 +233,12 @@ Namespace DataObjects.Physical.Joints
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+            If Me.IsInitialized Then
+                MyBase.InitializeSimulationReferences()
 
-            m_doLowerLimit.InitializeSimulationReferences()
-            m_doUpperLimit.InitializeSimulationReferences()
+                m_doLowerLimit.InitializeSimulationReferences()
+                m_doUpperLimit.InitializeSimulationReferences()
+            End If
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)

@@ -239,22 +239,6 @@ Namespace DataObjects.Behavior.Synapses
             If Not m_snWeight Is Nothing Then m_snWeight.ClearIsDirty()
         End Sub
 
-#Region " Add-Remove to List Methods "
-
-        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            'Synpases are stored in the destination neuron object.
-            Util.Application.SimulationInterface.AddItem(Me.Destination.ID, "Synapse", Me.GetSimulationXml("Synapse"), bThrowError)
-            InitializeSimulationReferences()
-        End Sub
-
-        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            'Synpases are stored in the destination neuron object.
-            Util.Application.SimulationInterface.RemoveItem(Me.Destination.ID, "Synapse", Me.ID, bThrowError)
-            m_doInterface = Nothing
-        End Sub
-
-#End Region
-
         Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
 
             Try

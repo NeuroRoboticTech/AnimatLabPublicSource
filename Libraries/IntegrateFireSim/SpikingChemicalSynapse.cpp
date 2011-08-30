@@ -174,6 +174,7 @@ double SpikingChemicalSynapse::RelFacil() {return m_dRelFacil;}
 **/
 void SpikingChemicalSynapse::FacilitationDecay(double dVal) 
 {
+	Std_IsAboveMin((double) 0, dVal, TRUE, "FacilitationDecay");
 	m_dFacilDecay = dVal;
 	m_dFacilD = exp(-m_lpModule->TimeStep()/m_dFacilDecay);
 }

@@ -314,10 +314,10 @@ void PacemakerNeuron::StepSimulation()
 
 //	//Now we need to check if this neuron has crossed the firing threshold.
 //	//If it has then we initiate High current.
-		if( ((m_aryVn[m_lpFastModule->InactiveArray()] - m_fltVth) > 1e-6) && ((m_aryVn[m_lpFastModule->ActiveArray()] - m_fltVth) < 1e-6) )
+		if( ((m_aryVn[m_lpFRModule->InactiveArray()] - m_fltVth) > 1e-6) && ((m_aryVn[m_lpFRModule->ActiveArray()] - m_fltVth) < 1e-6) )
 			HighCurrentOn();
 
-		if( ((m_aryVn[m_lpFastModule->InactiveArray()] - m_fltVth) < 1e-6) && ((m_aryVn[m_lpFastModule->ActiveArray()] - m_fltVth) > 1e-6) )
+		if( ((m_aryVn[m_lpFRModule->InactiveArray()] - m_fltVth) < 1e-6) && ((m_aryVn[m_lpFRModule->ActiveArray()] - m_fltVth) > 1e-6) )
 			LowCurrentOn(0);
 }
 

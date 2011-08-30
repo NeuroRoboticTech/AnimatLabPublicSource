@@ -34,9 +34,12 @@ namespace IntegrateFireSim
 
 #pragma endregion
 
+		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure,  AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+		virtual void VerifySystemPointers();
+
 		protected:
 			/// Pointer to the parent IntegrateFireNeuralModule.
-			IntegrateFireNeuralModule *m_lpModule;
+			IntegrateFireNeuralModule *m_lpIGFModule;
 
 			/// Integre ID for the synapse type
 			int m_iSynapseTypeID;

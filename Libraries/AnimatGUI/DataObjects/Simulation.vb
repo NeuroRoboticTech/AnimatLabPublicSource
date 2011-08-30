@@ -946,22 +946,24 @@ Namespace DataObjects
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+            If Me.IsInitialized Then
+                MyBase.InitializeSimulationReferences()
 
-            m_doEnvironment.InitializeSimulationReferences()
+                m_doEnvironment.InitializeSimulationReferences()
 
-            Dim doStim As DataObjects.ExternalStimuli.Stimulus
-            For Each deEntry As DictionaryEntry In m_aryProjectStimuli
-                doStim = DirectCast(deEntry.Value, DataObjects.ExternalStimuli.Stimulus)
-                doStim.InitializeSimulationReferences()
-            Next
+                Dim doStim As DataObjects.ExternalStimuli.Stimulus
+                For Each deEntry As DictionaryEntry In m_aryProjectStimuli
+                    doStim = DirectCast(deEntry.Value, DataObjects.ExternalStimuli.Stimulus)
+                    doStim.InitializeSimulationReferences()
+                Next
 
-            For Each frmWindow As System.Windows.Forms.Form In Util.Application.ChildForms
-                If TypeOf frmWindow Is Forms.Tools.ToolForm Then
-                    Dim frmViewer As Forms.Tools.ToolForm = DirectCast(frmWindow, Forms.Tools.ToolForm)
-                    frmViewer.InitializeSimulationReferences()
-                End If
-            Next
+                For Each frmWindow As System.Windows.Forms.Form In Util.Application.ChildForms
+                    If TypeOf frmWindow Is Forms.Tools.ToolForm Then
+                        Dim frmViewer As Forms.Tools.ToolForm = DirectCast(frmWindow, Forms.Tools.ToolForm)
+                        frmViewer.InitializeSimulationReferences()
+                    End If
+                Next
+            End If
         End Sub
 
         Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject

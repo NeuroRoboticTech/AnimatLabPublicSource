@@ -14,44 +14,38 @@ namespace AnimatGUI
 
 DataObjectInterface::DataObjectInterface(Interfaces::SimulatorInterface ^SimInt, String ^strID)
 {
-	m_aryDataPointers = NULL;
-	m_Sim = SimInt;
-	m_lpSim = m_Sim->Sim();
-	string strSID = Util::StringToStd(strID);
-	m_lpBase = m_lpSim->FindByID(strSID);
-	m_lpMovable = dynamic_cast<MovableItem *>(m_lpBase);
-
-	//If this is a bodypart or struture type then lets add the callbacks to it so those
-	//classes can fire managed events back up to the gui.
-	if(m_lpMovable)
+	try
 	{
-		MovableItemCallback *lpCallback = NULL;
-		lpCallback = new MovableItemCallback(this);
-		m_lpMovable->Callback(lpCallback);
-		GetPointers();
-	}
+		m_aryDataPointers = NULL;
+		m_Sim = SimInt;
+		m_lpSim = m_Sim->Sim();
+		string strSID = Util::StringToStd(strID);
+		m_lpBase = m_lpSim->FindByID(strSID);
+		m_lpMovable = dynamic_cast<MovableItem *>(m_lpBase);
 
-	//BodyPart *lpPart = dynamic_cast<BodyPart *>(m_lpBase);
-	//Structure *lpStruct = dynamic_cast<Structure *>(m_lpBase);
-	//Light *lpLight = dynamic_cast<Light *>(m_lpBase);
-	//if(lpPart || lpStruct || lpLight)
-	//{
-	//	lpCallback = new MovableItemCallback(this);
-	//	lpPart->Callback(lpCallback);
-	//	GetPointers();
-	//}
-	//else if(lpStruct)
-	//{
-	//	lpCallback = new MovableItemCallback(this);
-	//	lpStruct->Callback(lpCallback);
-	//	GetPointers();
-	//}
-	//else if(lpLight)
-	//{
-	//	lpCallback = new MovableItemCallback(this);
-	//	lpStruct->Callback(lpCallback);
-	//	GetPointers();
-	//}
+		//If this is a bodypart or struture type then lets add the callbacks to it so those
+		//classes can fire managed events back up to the gui.
+		if(m_lpMovable)
+		{
+			MovableItemCallback *lpCallback = NULL;
+			lpCallback = new MovableItemCallback(this);
+			m_lpMovable->Callback(lpCallback);
+			GetPointers();
+		}
+	}
+	catch(CStdErrorInfo oError)
+	{
+		string strError = "An error occurred while attempting to set a data value.\nError: " + oError.m_strError;
+		String ^strErrorMessage = gcnew String(strError.c_str());
+		throw gcnew System::Exception(strErrorMessage);
+	}
+	catch(System::Exception ^ex)
+	{throw ex;}
+	catch(...)
+	{
+		String ^strErrorMessage = "An unknown error occurred while attempting to set a data value.";
+		throw gcnew System::Exception(strErrorMessage);
+	}
 }
 
 DataObjectInterface::!DataObjectInterface()

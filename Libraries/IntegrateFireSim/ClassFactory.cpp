@@ -95,7 +95,7 @@ try
 {
 	strType = Std_ToUpper(Std_Trim(strType));
 
-	if(strType == "REALISTICNEURALMODULE")
+	if(strType == "INTEGRATEFIRESIMMODULE")
 		lpModule = new IntegrateFireNeuralModule;
 	else
 	{

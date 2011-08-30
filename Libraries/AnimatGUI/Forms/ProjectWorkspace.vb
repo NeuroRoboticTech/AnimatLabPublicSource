@@ -378,10 +378,17 @@ Namespace Forms
         Private Sub ctrlTreeView_DoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctrlTreeView.DoubleClick
 
             Try
-                If Not ctrlTreeView.SelectedNode Is Nothing AndAlso Not ctrlTreeView.SelectedNode.Tag Is Nothing _
-                    AndAlso Util.IsTypeOf(ctrlTreeView.SelectedNode.Tag.GetType, GetType(Framework.DataObject)) Then
-                    Dim doNode As Framework.DataObject = DirectCast(ctrlTreeView.SelectedNode.Tag, Framework.DataObject)
-                    doNode.WorkspaceTreeviewDoubleClick(ctrlTreeView.SelectedNode)
+                If Not ctrlTreeView.SelectedNode Is Nothing AndAlso Not ctrlTreeView.SelectedNode.Tag Is Nothing Then
+                    If Util.IsTypeOf(ctrlTreeView.SelectedNode.Tag.GetType, GetType(Framework.DataObject)) Then
+                        Dim doNode As Framework.DataObject = DirectCast(ctrlTreeView.SelectedNode.Tag, Framework.DataObject)
+                        doNode.WorkspaceTreeviewDoubleClick(ctrlTreeView.SelectedNode)
+                    ElseIf Util.IsTypeOf(ctrlTreeView.SelectedNode.Tag.GetType, GetType(Framework.DataObjectTreeViewRef), False) Then
+                        Dim doRef As Framework.DataObjectTreeViewRef = DirectCast(ctrlTreeView.SelectedNode.Tag, Framework.DataObjectTreeViewRef)
+                        If Not doRef.m_doObject Is Nothing AndAlso Util.IsTypeOf(doRef.m_doObject.GetType, GetType(Framework.DataObject), False) Then
+                            Dim doNode As Framework.DataObject = DirectCast(doRef.m_doObject, Framework.DataObject)
+                            doNode.WorkspaceTreeviewDoubleClick(ctrlTreeView.SelectedNode)
+                        End If
+                    End If
                 End If
 
             Catch ex As System.Exception

@@ -23,7 +23,7 @@ namespace FiringRateSim
 **/
 Synapse::Synapse()
 {
-	m_lpFastModule = NULL;
+	m_lpFRModule = NULL;
 
 	m_lpFromNeuron = NULL;
 	m_lpToNeuron = NULL;
@@ -192,11 +192,11 @@ int Synapse::FindSynapseListPos(string strID, BOOL bThrowError)
 \author	dcofer
 \date	3/29/2011
 
-\param [in,out]	m_lpFastModule	Pointer to a fast module. 
+\param [in,out]	m_lpFRModule	Pointer to a fast module. 
 
 \return	The calculated modulation.
 **/
-float Synapse::CalculateModulation(FiringRateModule *m_lpFastModule)
+float Synapse::CalculateModulation(FiringRateModule *m_lpFRModule)
 {
 	m_fltModulation=1;
 	int iCount, iIndex;
@@ -206,7 +206,7 @@ float Synapse::CalculateModulation(FiringRateModule *m_lpFastModule)
 	for(iIndex=0; iIndex<iCount; iIndex++)
 	{
 		lpSynapse = m_arySynapses[iIndex];
-		m_fltModulation*=lpSynapse->CalculateModulation(m_lpFastModule);
+		m_fltModulation*=lpSynapse->CalculateModulation(m_lpFRModule);
 	}
 
 	return m_fltModulation;
@@ -230,7 +230,7 @@ void Synapse::SetSystemPointers(Simulator *m_lpSim, Structure *lpStructure, Neur
 {
 	Link::SetSystemPointers(m_lpSim, lpStructure, lpModule, lpNode, FALSE);
 
-	m_lpFastModule = dynamic_cast<FiringRateModule *>(lpModule);
+	m_lpFRModule = dynamic_cast<FiringRateModule *>(lpModule);
 
 	if(bVerify) VerifySystemPointers();
 }
@@ -239,8 +239,8 @@ void Synapse::VerifySystemPointers()
 {
 	Link::VerifySystemPointers();
 
-	if(!m_lpFastModule)
-		THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpFastModule->ID());
+	if(!m_lpFRModule)
+		THROW_PARAM_ERROR(Al_Err_lUnableToCastNeuralModuleToDesiredType, Al_Err_strUnableToCastNeuralModuleToDesiredType, "ID: ", m_lpFRModule->ID());
 
 	if(!m_lpOrganism) 
 		THROW_PARAM_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Link: ", m_strID);
@@ -384,7 +384,7 @@ try
 	if(!lpSynapse)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Synapse");
 
-	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpFastModule, m_lpNode, TRUE);
+	lpSynapse->SetSystemPointers(m_lpSim, m_lpStructure, m_lpFRModule, m_lpNode, TRUE);
 	lpSynapse->Load(oXml);
 	m_arySynapses.Add(lpSynapse);
 

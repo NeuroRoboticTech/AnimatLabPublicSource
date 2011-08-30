@@ -488,7 +488,7 @@ Namespace DataObjects.Physical
             MyBase.CreateWorkspaceTreeView(doParent, doParentNode)
 
             m_tnBodyPlanNode = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Body Plan", "AnimatGUI.Joint.gif")
-            m_tnBodyPlanNode.Tag = doParentNode
+            m_tnBodyPlanNode.Tag = New Framework.DataObjectTreeViewRef(Me)
 
             If Not m_dbRoot Is Nothing Then
                 m_dbRoot.CreateWorkspaceTreeView(Me, m_tnBodyPlanNode)
@@ -560,10 +560,12 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+            If Me.IsInitialized Then
+                MyBase.InitializeSimulationReferences()
 
-            If Not m_dbRoot Is Nothing Then
-                m_dbRoot.InitializeSimulationReferences()
+                If Not m_dbRoot Is Nothing Then
+                    m_dbRoot.InitializeSimulationReferences()
+                End If
             End If
         End Sub
 
@@ -618,7 +620,7 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overridable Overloads Sub SaveData(ByRef oXml As Interfaces.StdXml)
-            MyBase.SaveData(oXml, "Structure")
+            MyBase.SaveData(oXml, Me.TypeName)
 
             Try
 
@@ -753,8 +755,10 @@ Namespace DataObjects.Physical
 
         Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
             MyBase.BeforeAddToList(bThrowError)
-            Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, Me.TypeName, Me.GetSimulationXml(Me.TypeName), bThrowError)
-            InitializeSimulationReferences()
+            If Me.IsInitialized Then
+                Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, Me.TypeName, Me.GetSimulationXml(Me.TypeName), bThrowError)
+                InitializeSimulationReferences()
+            End If
         End Sub
 
         Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)

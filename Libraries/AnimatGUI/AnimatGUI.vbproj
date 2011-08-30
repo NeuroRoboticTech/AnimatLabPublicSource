@@ -648,6 +648,7 @@
     <Compile Include="FrameWork\DataObject.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FrameWork\ObjectTreeViewRef.vb" />
     <Compile Include="FrameWork\ImageManager.vb">
       <SubType>Code</SubType>
     </Compile>

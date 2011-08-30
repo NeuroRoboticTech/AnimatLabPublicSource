@@ -20,15 +20,6 @@ Namespace DataObjects.Behavior
 
 #Region " Properties "
 
-        Public Overrides Property Organism() As AnimatGUI.DataObjects.Physical.Organism
-            Get
-                Return m_doOrganism
-            End Get
-            Set(ByVal Value As AnimatGUI.DataObjects.Physical.Organism)
-                m_doOrganism = Value
-            End Set
-        End Property
-
         Public Overrides ReadOnly Property NetworkFilename() As String
             Get
                 If Not m_doOrganism Is Nothing Then
@@ -42,9 +33,9 @@ Namespace DataObjects.Behavior
         Public Overrides ReadOnly Property ModuleFilename() As String
             Get
 #If Not Debug Then
-                Return "FastNeuralNet_VC10.dll"
+                Return "FiringRateSim_VC10.dll"
 #Else
-                Return "FastNeuralNet_VC10D.dll"
+                Return "FiringRateSim_VC10D.dll"
 #End If
 
             End Get
@@ -57,8 +48,8 @@ Namespace DataObjects.Behavior
         Public Sub New(ByVal doParent As AnimatGUI.Framework.DataObject)
             MyBase.New(doParent)
 
-            m_strModuleName = "FastNeuralNet"
-            m_strModuleType = "FastNeuralModule"
+            m_strModuleName = "FiringRateSim"
+            m_strModuleType = "FiringRateSimModule"
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _

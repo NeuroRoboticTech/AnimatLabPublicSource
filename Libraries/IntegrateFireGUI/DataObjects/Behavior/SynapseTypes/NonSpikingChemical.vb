@@ -103,7 +103,7 @@ Namespace DataObjects.Behavior.SynapseTypes
         <Browsable(False)> _
         Public Overrides ReadOnly Property WorkspaceImageName() As String
             Get
-                Return "IntegrateFireGUI.NonSpikingSynapse.gif"
+                Return "IntegrateFireGUI.NonSpikingSynapse_Treeview.gif"
             End Get
         End Property
 

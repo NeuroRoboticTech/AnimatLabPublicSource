@@ -19,13 +19,13 @@ Namespace DataObjects.Behavior.Nodes
         Protected m_bdSubsystemDiagram As Forms.Behavior.Diagram
 
         '''This is a list of all nodes within this subsystem. It is sorted by ID
-        Protected m_aryBehavioralNodes As New Collections.AnimatSortedList(Me)
+        Protected m_aryBehavioralNodes As New Collections.SortedNodeList(Me)
 
         '''This is a list of all links within this subsystem. It is sorted by ID
-        Protected m_aryBehavioralLinks As New Collections.AnimatSortedList(Me)
+        Protected m_aryBehavioralLinks As New Collections.SortedLinkList(Me)
 
-        'Only used during loading
-        Protected m_strSubsystemID As String
+        ''' The xml string that defines the layout of the diagram for this subsystem.
+        Protected m_strDiagramXml As String = ""
 
 #End Region
 
@@ -46,13 +46,13 @@ Namespace DataObjects.Behavior.Nodes
             End Set
         End Property
 
-        Public Overridable ReadOnly Property BehavioralNodes() As Collections.AnimatSortedList
+        Public Overridable ReadOnly Property BehavioralNodes() As Collections.SortedNodeList
             Get
                 Return m_aryBehavioralNodes
             End Get
         End Property
 
-        Public Overridable ReadOnly Property BehavioralLinks() As Collections.AnimatSortedList
+        Public Overridable ReadOnly Property BehavioralLinks() As Collections.SortedLinkList
             Get
                 Return m_aryBehavioralLinks
             End Get
@@ -102,6 +102,15 @@ Namespace DataObjects.Behavior.Nodes
             End Get
         End Property
 
+        Public Overridable Property DiagramXml() As String
+            Get
+                Return m_strDiagramXml
+            End Get
+            Set(ByVal Value As String)
+                m_strDiagramXml = Value
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -139,6 +148,18 @@ Namespace DataObjects.Behavior.Nodes
             If Not doRoot Is Nothing AndAlso doRoot Is Me Then oNewNode.AfterClone(Me, bCutData, doRoot, oNewNode)
             Return oNewNode
         End Function
+
+        Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
+                                            ByVal doRoot As AnimatGUI.Framework.DataObject)
+            MyBase.CloneInternal(doOriginal, bCutData, doRoot)
+
+            Dim bnOrig As Subsystem = DirectCast(doOriginal, Subsystem)
+
+            m_aryBehavioralNodes = DirectCast(bnOrig.m_aryBehavioralNodes.Clone(), AnimatGUI.Collections.SortedNodeList)
+            m_aryBehavioralLinks = DirectCast(bnOrig.m_aryBehavioralLinks.Clone(), AnimatGUI.Collections.SortedLinkList)
+            m_strDiagramXml = bnOrig.m_strDiagramXml
+
+        End Sub
 
         Public Overrides Sub BeforeRemoveNode()
 
@@ -239,11 +260,6 @@ Namespace DataObjects.Behavior.Nodes
                 doData.AddWorkspaceTreeNode()
             Next
 
-            For Each deEntry As DictionaryEntry In m_aryBehavioralLinks
-                doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
-                doData.AddWorkspaceTreeNode()
-            Next
-
         End Sub
 
         Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, ByVal tpTemplatePartType As Type) As Crownwood.DotNetMagic.Controls.Node
@@ -297,21 +313,22 @@ Namespace DataObjects.Behavior.Nodes
         End Function
 
         Public Overrides Sub InitializeSimulationReferences()
-            'Do not call base class Initialize method here. The subsystem is not a node that is within the 
-            'simulator. It is a GUI editor object only. It is merely a place holder for other objects in the 
-            ' nervous system.
-            ' 
-            Dim doData As DataObjects.Behavior.Data
-            For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
-                doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
-                doData.InitializeSimulationReferences()
-            Next
+            If Me.IsInitialized Then
+                'Do not call base class Initialize method here. The subsystem is not a node that is within the 
+                'simulator. It is a GUI editor object only. It is merely a place holder for other objects in the 
+                ' nervous system.
+                ' 
+                Dim doData As DataObjects.Behavior.Data
+                For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
+                    doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
+                    doData.InitializeSimulationReferences()
+                Next
 
-            For Each deEntry As DictionaryEntry In m_aryBehavioralLinks
-                doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
-                doData.InitializeSimulationReferences()
-            Next
-
+                For Each deEntry As DictionaryEntry In m_aryBehavioralLinks
+                    doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
+                    doData.InitializeSimulationReferences()
+                Next
+            End If
         End Sub
 
 #Region " DataObject Methods "
@@ -323,14 +340,13 @@ Namespace DataObjects.Behavior.Nodes
 
                 oXml.IntoElem()
 
-                m_strSubsystemID = Util.LoadID(oXml, "Subsystem", True, "")
-
                 oXml.IntoChildElement("Nodes")
                 Dim iCount As Integer = oXml.NumberOfChildren() - 1
                 Dim bnNode As AnimatGUI.DataObjects.Behavior.Node
                 For iIndex As Integer = 0 To iCount
                     bnNode = DirectCast(Util.LoadClass(oXml, iIndex, Me), AnimatGUI.DataObjects.Behavior.Node)
                     bnNode.Organism = Me.Organism
+                    bnNode.ParentSubsystem = Me
                     bnNode.LoadData(oXml)
                     Me.BehavioralNodes.Add(bnNode.ID, bnNode)
                 Next
@@ -342,10 +358,13 @@ Namespace DataObjects.Behavior.Nodes
                 For iIndex As Integer = 0 To iCount
                     blLink = DirectCast(Util.LoadClass(oXml, iIndex, Me), AnimatGUI.DataObjects.Behavior.Link)
                     blLink.Organism = Me.Organism
+                    blLink.ParentSubsystem = Me
                     blLink.LoadData(oXml)
                     Me.BehavioralLinks.Add(blLink.ID, blLink)
                 Next
                 oXml.OutOfElem() 'Outof Links Element
+
+                m_strDiagramXml = oXml.GetChildString("DiagramXml", "")
 
                 oXml.OutOfElem()  'Outof Subsystem Element
 
@@ -372,7 +391,7 @@ Namespace DataObjects.Behavior.Nodes
                 Next
 
             Catch ex As System.Exception
-                m_bInitialized = False
+                m_bIsInitialized = False
                 'If iAttempt = 1 Then
                 '    AnimatGUI.Framework.Util.DisplayError(ex)
                 'End If
@@ -383,7 +402,7 @@ Namespace DataObjects.Behavior.Nodes
         Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
             MyBase.SaveData(oXml)
 
-            oXml.IntoElem() 'Into Node Element
+            oXml.IntoElem() 'Into Subsystem Element
 
             oXml.AddChildElement("Nodes")
             oXml.IntoElem()
@@ -400,9 +419,14 @@ Namespace DataObjects.Behavior.Nodes
                 doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
                 doData.SaveData(oXml)
             Next
-            oXml.OutOfElem() ' Outof Node Element
+            oXml.OutOfElem() ' Outof Links Element
 
-            oXml.OutOfElem() ' Outof Node Element
+            If Not Me.SubsystemDiagram Is Nothing Then
+                m_strDiagramXml = Me.SubsystemDiagram.SaveDiagramXml
+            End If
+            oXml.AddChildCData("DiagramXml", m_strDiagramXml)
+
+            oXml.OutOfElem() ' Outof Subsystem Element
 
         End Sub
 

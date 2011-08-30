@@ -324,7 +324,7 @@ Namespace DataObjects.Physical
                         nmNewModule = DirectCast(nmModule.Clone(nmModule.Parent, False, Nothing), AnimatGUI.DataObjects.Behavior.NeuralModule)
                         nmNewModule.Organism = Me
                         nmNewModule.Parent = Me
-                        m_aryNeuralModules.Add(nmModule.GetType().FullName, nmModule)
+                        m_aryNeuralModules.Add(nmNewModule.GetType().FullName, nmNewModule)
                     End If
                 Next
 
@@ -345,13 +345,21 @@ Namespace DataObjects.Physical
 
                 LoadNeuralModules(oXml)
 
-                m_bnRootSubSystem = DirectCast(Util.LoadClass(oXml, 0, Me), DataObjects.Behavior.Nodes.Subsystem)
-                m_bnRootSubSystem.LoadData(oXml)
+                If oXml.FindChildElement("Node", False) Then
+                    Dim strAssemblyFile As String
+                    Dim strClassName As String
+
+                    oXml.IntoElem() 'Into Node element
+                    strAssemblyFile = oXml.GetChildString("AssemblyFile")
+                    strClassName = oXml.GetChildString("ClassName")
+                    oXml.OutOfElem() 'Outof Node element
+
+                    m_bnRootSubSystem = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me), DataObjects.Behavior.Nodes.Subsystem)
+                    m_bnRootSubSystem.LoadData(oXml)
+                End If
 
                 oXml.OutOfElem() 'Outof NervousSystem Element
                 oXml.OutOfElem() 'Outof Organism Element
-
-                m_bnRootSubSystem.InitializeAfterLoad()
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -386,6 +394,7 @@ Namespace DataObjects.Physical
             oXml.OutOfElem() 'Outof NeuralModules
 
             oXml.AddChildElement("Adapters")
+            oXml.IntoElem()
             If Not nmPhysicsModule Is Nothing Then
                 nmPhysicsModule.SaveData(oXml)
             End If
@@ -428,6 +437,7 @@ Namespace DataObjects.Physical
                 oXml.OutOfElem() 'Outof NeuralModules
 
                 oXml.AddChildElement("Adapters")
+                oXml.IntoElem()
                 If Not nmPhysicsModule Is Nothing Then
                     nmPhysicsModule.SaveSimulationXml(oXml)
                 End If
@@ -509,27 +519,33 @@ Namespace DataObjects.Physical
             If Not m_bnRootSubSystem Is Nothing Then
                 m_bnRootSubSystem.InitializeAfterLoad()
             End If
+
+            For Each deEntry As DictionaryEntry In Me.NeuralModules
+                Dim nmModule As Behavior.NeuralModule = DirectCast(deEntry.Value, Behavior.NeuralModule)
+                nmModule.InitializeAfterLoad()
+            Next
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+            If Me.IsInitialized Then
+                MyBase.InitializeSimulationReferences()
 
-            Dim nmModule As DataObjects.Behavior.NeuralModule
-            For Each deEntry As DictionaryEntry In m_aryNeuralModules
-                nmModule = DirectCast(deEntry.Value, DataObjects.Behavior.NeuralModule)
+                Dim nmModule As DataObjects.Behavior.NeuralModule
+                For Each deEntry As DictionaryEntry In m_aryNeuralModules
+                    nmModule = DirectCast(deEntry.Value, DataObjects.Behavior.NeuralModule)
 
-                'Only attempt to initialize the neural module if it exists in the simulation.
-                'The problem is that a neural module is not created in the simulation unless it 
-                ' has neurons. 
-                If nmModule.SimObjectExists Then
-                    nmModule.InitializeSimulationReferences()
+                    'Only attempt to initialize the neural module if it exists in the simulation.
+                    'The problem is that a neural module is not created in the simulation unless it 
+                    ' has neurons. 
+                    If nmModule.SimObjectExists Then
+                        nmModule.InitializeSimulationReferences()
+                    End If
+                Next
+
+                If Not m_bnRootSubSystem Is Nothing Then
+                    m_bnRootSubSystem.InitializeSimulationReferences()
                 End If
-            Next
-
-            If Not m_bnRootSubSystem Is Nothing Then
-                m_bnRootSubSystem.InitializeSimulationReferences()
             End If
-
         End Sub
 
 #End Region

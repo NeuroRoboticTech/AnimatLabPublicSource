@@ -379,6 +379,15 @@ Namespace Forms
             oXml.OutOfElem()  'Outof Form Element
         End Sub
 
+        Public Overridable Function SaveDataXml(Optional ByVal strRoot As String = "Root") As String
+            Dim oXml As New AnimatGUI.Interfaces.StdXml()
+
+            oXml.AddElement(strRoot)
+            SaveData(oXml)
+
+            Return oXml.Serialize()
+        End Function
+
         Public Overridable Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
         End Sub
@@ -391,6 +400,10 @@ Namespace Forms
 
             Return oXml.Serialize()
         End Function
+
+        Public Overridable Sub InitializeAfterLoad()
+
+        End Sub
 
         Public Overridable Sub OnBeforeFormAdded()
         End Sub
@@ -716,6 +729,26 @@ Namespace Forms
         End Sub
 
         Public Overridable Sub AfterDeselected()
+        End Sub
+
+        Public Overridable Sub ValidateFileToolStripItemState()
+
+        End Sub
+
+        Public Overridable Sub ValidateEditToolStripItemState()
+
+        End Sub
+
+        Public Overridable Sub ValidateViewToolStripItemState()
+
+        End Sub
+
+        Public Overridable Sub ValidateAddToolStripItemState()
+
+        End Sub
+
+        Public Overridable Sub ValidateHelpToolStripItemState()
+
         End Sub
 
 #End Region

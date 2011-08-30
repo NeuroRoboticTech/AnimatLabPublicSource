@@ -91,19 +91,6 @@ Namespace Forms.Behavior
         Public MustOverride Sub OnItemSelected(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal bSelectMultiple As Boolean)
         Public MustOverride Sub OnItemDeselected(ByRef doObject As AnimatGUI.Framework.DataObject)
 
-        'Shape Methods
-        Public MustOverride Sub OnAlignTop(ByVal sender As Object, ByVal e As System.EventArgs)
-        Public MustOverride Sub OnAlignVerticalCenter(ByVal sender As Object, ByVal e As System.EventArgs)
-        Public MustOverride Sub OnAlignBottom(ByVal sender As Object, ByVal e As System.EventArgs)
-        Public MustOverride Sub OnAlignLeft(ByVal sender As Object, ByVal e As System.EventArgs)
-        Public MustOverride Sub OnAlignHorizontalCenter(ByVal sender As Object, ByVal e As System.EventArgs)
-        Public MustOverride Sub OnAlignRight(ByVal sender As Object, ByVal e As System.EventArgs)
-        Public MustOverride Sub OnDistributeVertical(ByVal sender As Object, ByVal e As System.EventArgs)
-        Public MustOverride Sub OnDistributeHorizontal(ByVal sender As Object, ByVal e As System.EventArgs)
-        Public MustOverride Sub OnSizeBoth(ByVal sender As Object, ByVal e As System.EventArgs)
-        Public MustOverride Sub OnSizeWidth(ByVal sender As Object, ByVal e As System.EventArgs)
-        Public MustOverride Sub OnSizeHeight(ByVal sender As Object, ByVal e As System.EventArgs)
-
         'Printing
         Public MustOverride Sub GenerateMetafiles(ByVal aryMetaFiles As Collections.MetaDocuments)
         Public MustOverride Sub DumpNodeLinkInfo()
@@ -116,18 +103,6 @@ Namespace Forms.Behavior
 
         Public MustOverride Sub SendSelectedToBack()
         Public MustOverride Sub BringSelectedToFront()
-
-        Public Overridable Sub OnEditPopupStart(ByVal mc As MenuCommand)
-        End Sub
-
-        Public Overridable Sub OnEditPopupEnd(ByVal mc As MenuCommand)
-        End Sub
-
-        Public Overridable Sub OnShapePopupStart(ByVal mc As MenuCommand)
-        End Sub
-
-        Public Overridable Sub OnShapePopupEnd(ByVal mc As MenuCommand)
-        End Sub
 
         'Undo/Redo methods
         Public MustOverride Sub OnUndo()
@@ -212,9 +187,6 @@ Namespace Forms.Behavior
 
             Return blLink
         End Function
-
-        Public MustOverride Sub OnShowConnections(ByVal sender As Object, ByVal e As System.EventArgs)
-        Public MustOverride Sub OnCompareItems(ByVal sender As Object, ByVal e As System.EventArgs)
 
         Public MustOverride Sub ExportDiagram(ByVal strFilename As String, ByVal eFormat As System.Drawing.Imaging.ImageFormat)
         Public MustOverride Function SaveSelected(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal bCopy As Boolean) As Boolean
@@ -370,6 +342,60 @@ Namespace Forms.Behavior
 
             Return aryCompatible
         End Function
+
+        Public MustOverride Function SaveDiagramXml() As String
+        Public MustOverride Sub LoadDiagramXml(ByVal strXml As String)
+
+        Public MustOverride Sub VerifyData()
+        Protected MustOverride Sub VerifyNodesExist()
+
+        Protected Overridable Sub CheckForInvalidLinks()
+
+            Dim dlLink As DataObjects.Behavior.Link
+            Dim aryDelete As New ArrayList
+            For Each deEntry As DictionaryEntry In Me.Subsystem.BehavioralLinks
+                dlLink = DirectCast(deEntry.Value, DataObjects.Behavior.Link)
+
+                If dlLink.Origin Is Nothing OrElse dlLink.Destination Is Nothing Then
+                    aryDelete.Add(dlLink)
+                End If
+            Next
+
+            For Each dlLink In aryDelete
+                Try
+                    Me.Subsystem.BehavioralLinks.Remove(dlLink.ID)
+                Catch ex As System.Exception
+                    'This method can be called during loading and during normal operation so we need to try
+                    'and remove the simulation links also if they exist, but if for some reason they do not, or if
+                    'we are loading then we need to just eat the errors and go on.
+                End Try
+            Next
+
+            'This is in here because prior to the fix that was put in to keep the links for copied
+            'offpage connectors correct the data links for these objects could easily get lost.
+            'If these links are lost then this will be sure to add them back correctly.
+            For Each deEntry As DictionaryEntry In Me.Subsystem.BehavioralLinks
+                dlLink = DirectCast(deEntry.Value, DataObjects.Behavior.Link)
+
+                'If this link is not an inlink then we have a mismatch
+                If dlLink.IsInitialized Then
+                    If dlLink.Origin.IsInitialized AndAlso dlLink.Origin.Links(dlLink.ID) Is Nothing Then
+                        dlLink.Origin.AddOutLink(dlLink)
+                    End If
+                    If dlLink.ActualOrigin.IsInitialized AndAlso dlLink.ActualOrigin.Links(dlLink.ID) Is Nothing Then
+                        dlLink.ActualOrigin.AddOutLink(dlLink)
+                    End If
+
+                    If dlLink.Destination.IsInitialized AndAlso dlLink.Destination.Links(dlLink.ID) Is Nothing Then
+                        dlLink.Destination.AddInLink(dlLink)
+                    End If
+                    If dlLink.ActualDestination.IsInitialized AndAlso dlLink.ActualDestination.Links(dlLink.ID) Is Nothing Then
+                        dlLink.ActualDestination.AddInLink(dlLink)
+                    End If
+                End If
+            Next
+
+        End Sub
 
 #End Region
 

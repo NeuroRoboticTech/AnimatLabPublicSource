@@ -381,20 +381,6 @@ Namespace DataObjects.Behavior
             If Not m_snConductionDelay Is Nothing Then m_snConductionDelay.ClearIsDirty()
         End Sub
 
-#Region " Add-Remove to List Methods "
-
-        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            Util.Application.SimulationInterface.AddItem(NeuralModule.ID(), "Synapse", Me.GetSimulationXml("Synapse"), bThrowError)
-            InitializeSimulationReferences()
-        End Sub
-
-        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            Util.Application.SimulationInterface.RemoveItem(NeuralModule.ID(), "Synapse", Me.ID, bThrowError)
-            m_doInterface = Nothing
-        End Sub
-
-#End Region
-
         Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
 
             Try
@@ -427,7 +413,7 @@ Namespace DataObjects.Behavior
                 End If
 
                 If m_stSynapseType Is Nothing Then
-                    m_bInitialized = False
+                    m_bIsInitialized = False
                 End If
 
                 'If Not m_stSynapseType Is Nothing Then
@@ -437,7 +423,7 @@ Namespace DataObjects.Behavior
                 MyBase.InitializeAfterLoad()
 
             Catch ex As System.Exception
-                m_bInitialized = False
+                m_bIsInitialized = False
                 'If iAttempt = 1 Then
                 '    AnimatGUI.Framework.Util.DisplayError(ex)
                 'End If
@@ -467,6 +453,23 @@ Namespace DataObjects.Behavior
             End Try
 
         End Sub
+
+#Region " Add-Remove to List Methods "
+
+        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
+            'Synpases are stored in the destination neuron object.
+            'Synapses are handled different for this model type. They are stored in the neural module, not in the destination neuron.
+            Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID, "Synapse", Me.GetSimulationXml("Synapse"), bThrowError)
+            InitializeSimulationReferences()
+        End Sub
+
+        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+            'Synpases are stored in the destination neuron object.
+            Util.Application.SimulationInterface.RemoveItem(Me.NeuralModule.ID, "Synapse", Me.ID, bThrowError)
+            m_doInterface = Nothing
+        End Sub
+
+#End Region
 
 #End Region
 
