@@ -58,6 +58,7 @@ namespace AnimatSim
 			virtual void StepNeuralEngine();
 			virtual void ResetSimulation();
 			virtual void Kill(BOOL bState = TRUE);
+			virtual void MinTimeStep(float &fltMin);
 
 			virtual void Load(CStdXml &oXml);
 			virtual AnimatSim::Behavior::NervousSystem *NervousSystem();

@@ -1284,7 +1284,7 @@ Namespace DataObjects.Behavior
                 oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
                 oXml.AddChildElement("ClassName", Me.ClassName)
 
-                oXml.AddChildElement("ID", Me.SelectedID)
+                oXml.AddChildElement("ID", Me.ID)
                 oXml.AddChildElement("Alignment", m_eAlignment.ToString)
                 oXml.AddChildElement("AutoSize", m_eAutoSize.ToString)
                 oXml.AddChildElement("BackMode", m_eBackMode.ToString)
@@ -1334,7 +1334,7 @@ Namespace DataObjects.Behavior
                 oXml.IntoElem()  'Into InLinks Element
                 For Each deItem As DictionaryEntry In m_aryInLinks
                     blLink = DirectCast(deItem.Value, AnimatGUI.DataObjects.Behavior.Link)
-                    oXml.AddChildElement("ID", blLink.SelectedID)
+                    oXml.AddChildElement("ID", blLink.ID)
                 Next
                 oXml.OutOfElem()  'Outof InLinks Element
 
@@ -1342,7 +1342,7 @@ Namespace DataObjects.Behavior
                 oXml.IntoElem()  'Into OutLinks Element
                 For Each deItem As DictionaryEntry In m_aryOutLinks
                     blLink = DirectCast(deItem.Value, AnimatGUI.DataObjects.Behavior.Link)
-                    oXml.AddChildElement("ID", blLink.SelectedID)
+                    oXml.AddChildElement("ID", blLink.ID)
                 Next
                 oXml.OutOfElem()  'Outof OutLinks Element
 

@@ -218,9 +218,8 @@ BOOL IntegrateFireNeuralModule::HH() {return m_bHH;}
 **/
 void IntegrateFireNeuralModule::TimeStep(float fltVal)
 {
-	Std_InValidRange((float) 1e-10, (float) 1, fltVal, TRUE, "TimeStep");
+	NeuralModule::TimeStep(fltVal);
 
-	m_fltTimeStep = fltVal;
 	m_dTimeStep = m_fltTimeStep * 1000;
 	Neuron::m_dDT=m_dTimeStep;
 
@@ -526,7 +525,8 @@ void IntegrateFireNeuralModule::LoadInternal(CStdXml &oXml)
 	if(m_lpSim)
 		m_lpSim->AddToObjectList(this);
 
-	TimeStep(oXml.GetChildFloat("TimeStep"));
+	//We do NOT call the TimeStep mutator here because we need to call it only after all modules are loaded so we can calculate the min time step correctly.
+	m_fltTimeStep = oXml.GetChildFloat("TimeStep");
 	m_dTimeStep = m_fltTimeStep * 1000;
 	Std_InValidRange((float) 1e-10, (float) 1, m_fltTimeStep, TRUE, "TimeStep");
 

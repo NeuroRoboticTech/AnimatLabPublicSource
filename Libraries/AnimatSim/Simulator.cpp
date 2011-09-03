@@ -841,26 +841,6 @@ float Simulator::TimeStep()
 {return m_fltTimeStep;}
 
 /**
-\brief	Sets the smallest integration time step used within the simulation.
-
-\author	dcofer
-\date	3/28/2011
-
-\param	fltVal	The new time value. 
-**/
-void Simulator::TimeStep(float fltVal) 
-{
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "TimeStep");
-	m_fltTimeStep = fltVal;
-
-	//Find the number of timeslices that need to occur before the physics system is updated
-	m_iPhysicsStepInterval = m_fltPhysicsTimeStep / m_fltTimeStep;
-
-	//Now recaculate the physics time step using the minimum time step as the base.
-	m_fltPhysicsTimeStep = m_fltTimeStep * m_iPhysicsStepInterval;
-}
-
-/**
 \brief	Gets whether to use the set simulation end time.
 
 \author	dcofer
@@ -1006,7 +986,12 @@ between each iteration of the physics engine.
 
 \param	iVal	The new value. 
 **/
-void Simulator::PhysicsStepInterval(short iVal) {m_iPhysicsStepInterval = iVal;}
+void Simulator::PhysicsStepInterval(short iVal) 
+{
+	if(iVal == 0) iVal = 1;
+	Std_IsAboveMin((int) 0, (int) iVal, TRUE, "PhysicsStepInterval");
+	m_iPhysicsStepInterval = iVal;
+}
 
 /**
 \brief	Sets the integration time step for the physics engine.
@@ -1020,16 +1005,23 @@ void Simulator::PhysicsTimeStep(float fltVal)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "PhysicsTimeStep");
 
-	//If no timestep has been set then start the time step with the physics system and then later on we will find the 
-	//real minimum value while looking at all of the neural modules.
-	if(m_fltTimeStep < 0 || m_fltTimeStep > fltVal)
-		m_fltTimeStep = fltVal;
+	//Set it so that it will be taken into consideration when finding min value.
+	m_fltPhysicsTimeStep = fltVal;
 
+	//Find min time step.
+	float fltMin = MinTimeStep();
+	
+	//Division
+	int iDiv = (int) ((fltVal / fltMin) + 0.5f);
+	
 	//Find the number of timeslices that need to occur before the physics system is updated
-	m_iPhysicsStepInterval = fltVal / m_fltTimeStep;
+	PhysicsStepInterval(iDiv);
 
 	//Now recaculate the physics time step using the minimum time step as the base.
 	m_fltPhysicsTimeStep = m_fltTimeStep * m_iPhysicsStepInterval;
+
+	//Now reset the m_fltTimeStep of the sim.
+	if(m_iPhysicsStepInterval == 1) fltMin = MinTimeStep();
 }
 
 /**
@@ -1500,6 +1492,13 @@ void Simulator::InitializeStructures()
 {
 	m_oMaterialMgr.Initialize();
 
+	//We need to rerun the code to set the physics time step here in initialize. The reason is that we set this when 
+	//loading the simulator and neural modules, but if one of the neural modules has the miniumum time step then
+	//we need to recalculate the time slice per step for all modules in initialize after everything has loaded.
+	// Once everything is loaded and initialized, then if a given time step is changed then that one is changed in
+	// the sim, and events will change it for the rest of them afterwards, so the values should be correct. 
+	PhysicsTimeStep(m_fltPhysicsTimeStep);
+
 	CStdMap<string, Structure *>::iterator oPos;
 	Structure *lpStructure = NULL;
 	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
@@ -1808,6 +1807,20 @@ void Simulator::ResetSimulation()
 	
 	if(m_lpSimRecorder)
 		m_lpSimRecorder->ResetSimulation();
+}
+
+float Simulator::MinTimeStep()
+{
+	m_fltTimeStep = m_fltPhysicsTimeStep;
+	CStdMap<string, Structure *>::iterator oPos;
+	Structure *lpStructure = NULL;
+	for(oPos=m_aryAllStructures.begin(); oPos!=m_aryAllStructures.end(); ++oPos)
+	{
+		lpStructure = oPos->second;
+		lpStructure->MinTimeStep(m_fltTimeStep);
+	}
+
+	return m_fltTimeStep;
 }
 
 /**
@@ -2249,7 +2262,9 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 	DistanceUnits(oXml.GetChildString("DistanceUnits", "centimeter"));
 	MassUnits(oXml.GetChildString("MassUnits", "gram"));
 	Gravity(oXml.GetChildFloat("Gravity", m_fltGravity));
-	PhysicsTimeStep(oXml.GetChildFloat("PhysicsTimeStep", m_fltPhysicsTimeStep));
+
+	//We do NOT call the TimeStep mutator here because we need to call it only after all modules are loaded so we can calculate the min time step correctly.
+	m_fltPhysicsTimeStep = oXml.GetChildFloat("PhysicsTimeStep", m_fltPhysicsTimeStep);
 
 	SimulateHydrodynamics(oXml.GetChildBool("SimulateHydrodynamics", m_bSimulateHydrodynamics));
 
@@ -3338,6 +3353,8 @@ float *Simulator::GetDataPointer(string strDataType)
 
 	if(strType == "TIME")
 		lpData = &m_fltTime;
+	else if(strType == "PHYSICSTIMESTEP")
+		lpData = &m_fltPhysicsTimeStep;
 	else
 		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Simulator DataType: " + strDataType);
 

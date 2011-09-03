@@ -296,6 +296,8 @@ Namespace Forms.Tools
             m_aryAutoFillColors(19) = System.Drawing.Color.Navy
             m_aryAutoFillColors(20) = System.Drawing.Color.OliveDrab
 
+            'AddHandler Util.Application.TimeStepChanged, AddressOf Me.OnTimeStepChanged
+
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
@@ -658,6 +660,10 @@ Namespace Forms.Tools
         End Sub
 
         Protected Overridable Sub OnClearCharts(ByVal sender As Object, ByVal e As System.EventArgs)
+        End Sub
+
+        Protected Sub OnTimeStepChanged(ByVal doObject As Framework.DataObject)
+            If Me.RequiresAutoDataCollectInterval Then ResetCollectDataInterval()
         End Sub
 
 #End Region

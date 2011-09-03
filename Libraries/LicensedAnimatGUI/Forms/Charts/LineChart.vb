@@ -1402,7 +1402,6 @@ Namespace Forms.Charts
             'The simulation is starting so we need to go through and add this chart and all of its
             'data columns so we can recieve data during the simulation run.
 
-            'Temporary. I need to replace this call here with a call when the timestep of the neural module is changed.
             If Me.RequiresAutoDataCollectInterval Then ResetCollectDataInterval()
 
             'If we are updating the chart at the end of the collection interval then

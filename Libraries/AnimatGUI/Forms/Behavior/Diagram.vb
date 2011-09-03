@@ -139,16 +139,14 @@ Namespace Forms.Behavior
             Dim objVal As Object = m_bnSubSystem.FindObjectByID(strID)
 
             Dim bdObj As AnimatGUI.DataObjects.Behavior.Data
-            If bThrowError Then
-                If objVal Is Nothing Then
-                    Throw New System.Exception("No item with ID='" & strID & "' was found.")
-                End If
-
-                If Not Util.IsTypeOf(objVal.GetType, GetType(AnimatGUI.DataObjects.Behavior.Data), False) Then
+            If Not objVal Is Nothing Then
+                If Util.IsTypeOf(objVal.GetType, GetType(AnimatGUI.DataObjects.Behavior.Data), False) Then
+                    bdObj = DirectCast(objVal, AnimatGUI.DataObjects.Behavior.Data)
+                ElseIf bThrowError Then
                     Throw New System.Exception("Object with ID='" & strID & "' is not a Behavior.Data object.")
                 End If
-
-                bdObj = DirectCast(objVal, AnimatGUI.DataObjects.Behavior.Data)
+            ElseIf bThrowError Then
+                Throw New System.Exception("No item with ID='" & strID & "' was found.")
             End If
 
             Return bdObj

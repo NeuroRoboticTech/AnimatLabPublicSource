@@ -53,8 +53,9 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The time step must be between the range 0.0001 to 50 ms.")
                 End If
 
-                SetSimData("TimeStep", Value.ValueFromDefaultScale.ToString, True)
+                SetSimData("TimeStep", Value.ActualValue.ToString, True)
                 m_snTimeStep.CopyData(Value)
+                Util.Application.SignalTimeStepChanged(Me)
             End Set
         End Property
 
@@ -68,6 +69,7 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The after-hyperpolarizing equilibrium potential must be between the range -150 to -10 mV.")
                 End If
 
+                'TODO
                 m_snAHPEquilibriumPotential.CopyData(Value)
             End Set
         End Property
@@ -82,6 +84,7 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The spike peak must be between the range -30 to 50 mV.")
                 End If
 
+                'TODO
                 m_snSpikePeak.CopyData(Value)
             End Set
         End Property
@@ -96,6 +99,7 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The spike strength must be between the range 1 to 1000.")
                 End If
 
+                'TODO
                 m_fltSpikeStrength = Value
             End Set
         End Property
@@ -110,6 +114,7 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The calcium equilibrium potential must be between the range -100 to 500 mV.")
                 End If
 
+                'TODO
                 m_snCaEquilibriumPotential.CopyData(Value)
             End Set
         End Property
@@ -124,6 +129,7 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The absolute refractory period must be between the range 1 to 50 ms.")
                 End If
 
+                'TODO
                 m_snRefractoryPeriod.CopyData(Value)
             End Set
         End Property
@@ -134,6 +140,7 @@ Namespace DataObjects.Behavior
                 Return m_bUseCriticalPeriod
             End Get
             Set(ByVal Value As Boolean)
+                'TODO
                 m_bUseCriticalPeriod = Value
             End Set
         End Property
@@ -144,6 +151,7 @@ Namespace DataObjects.Behavior
                 Return m_bTTX
             End Get
             Set(ByVal Value As Boolean)
+                'TODO
                 m_bTTX = Value
             End Set
         End Property
@@ -154,6 +162,7 @@ Namespace DataObjects.Behavior
                 Return m_bCd
             End Get
             Set(ByVal Value As Boolean)
+                'TODO
                 m_bCd = Value
             End Set
         End Property
@@ -164,6 +173,7 @@ Namespace DataObjects.Behavior
                 Return m_bHodgkinHuxley
             End Get
             Set(ByVal Value As Boolean)
+                'TODO
                 m_bHodgkinHuxley = Value
             End Set
         End Property
@@ -182,6 +192,7 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The critical period start time must be less than the end time.")
                 End If
 
+                'TODO
                 m_snStartCriticalPeriod.CopyData(Value)
             End Set
         End Property
@@ -200,6 +211,7 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The critical period end time must be greater than the start time.")
                 End If
 
+                'TODO
                 m_snEndCriticalPeriod.CopyData(Value)
             End Set
         End Property

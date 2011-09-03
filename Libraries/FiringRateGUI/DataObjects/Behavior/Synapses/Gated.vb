@@ -358,8 +358,8 @@ Namespace DataObjects.Behavior.Synapses
                 m_snWeight.SaveData(oXml, "Weight")
 
                 If Not m_lsGatedSynapse Is Nothing AndAlso Not m_lsGatedSynapse.Link Is Nothing AndAlso Not m_lsGatedSynapse.Node Is Nothing Then
-                    oXml.AddChildElement("GatedSynapseID", m_lsGatedSynapse.Link.SelectedID)
-                    oXml.AddChildElement("GatedOriginID", m_lsGatedSynapse.Node.SelectedID)
+                    oXml.AddChildElement("GatedSynapseID", m_lsGatedSynapse.Link.ID)
+                    oXml.AddChildElement("GatedOriginID", m_lsGatedSynapse.Node.ID)
                 End If
 
                 oXml.OutOfElem() ' Outof Node Element

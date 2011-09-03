@@ -244,6 +244,37 @@ float DataObjectInterface::GetDataValue(String ^sData)
 }
 
 
+
+float DataObjectInterface::GetDataValueImmediate(String ^sData)
+{
+	if(!m_lpBase) 
+		throw gcnew System::Exception("The base object has not been defined!");
+
+	try
+	{
+		string strData = Util::StringToStd(sData);
+		float *lpData = m_lpBase->GetDataPointer(strData);
+
+		if(!lpData) 
+			throw gcnew System::Exception("The data pointer is not defined!");
+
+		return *lpData;
+	}
+	catch(CStdErrorInfo oError)
+	{
+		string strError = "An error occurred while attempting to get a data value.\nError: " + oError.m_strError;
+		String ^strErrorMessage = gcnew String(strError.c_str());
+		throw gcnew PropertyUpdateException(strErrorMessage);
+	}
+	catch(System::Exception ^ex)
+	{throw ex;}
+	catch(...)
+	{
+		String ^strErrorMessage = "An unknown error occurred while attempting to get a data value.";
+		throw gcnew System::Exception(strErrorMessage);
+	}
+}
+
 float DataObjectInterface::GetBoundingBoxValue(int iIndex)
 {
 	if(m_lpMovable)

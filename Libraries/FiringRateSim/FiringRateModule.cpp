@@ -351,7 +351,9 @@ void FiringRateModule::LoadNetworkXml(CStdXml &oXml)
 	ID(oXml.GetChildString("ID", m_strID));
 	Type(oXml.GetChildString("Type", m_strType));
 	Name(oXml.GetChildString("Name", m_strName));
-	TimeStep(oXml.GetChildFloat("TimeStep", m_fltTimeStep));
+
+	//We do NOT call the TimeStep mutator here because we need to call it only after all modules are loaded so we can calculate the min time step correctly.
+	m_fltTimeStep = oXml.GetChildFloat("TimeStep", m_fltTimeStep);
 
 	//This will add this object to the object list of the simulation.
 	m_lpSim->AddToObjectList(this);

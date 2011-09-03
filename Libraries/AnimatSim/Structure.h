@@ -143,6 +143,8 @@ namespace AnimatSim
 			virtual CStdPtrArray<CollisionPair> ExclusionList();
 			virtual void AddCollisionPair(string strID1, string strID2);
 
+			virtual void MinTimeStep(float &fltMin);
+
 			/**
 			\fn	virtual void Structure::*Assembly() = 0;
 			

@@ -135,6 +135,9 @@ namespace AnimatSim
 			**/
 			virtual void AttachTargetAdapter(Adapter *lpAdapter);
 
+			virtual float *GetDataPointer(string strDataType);
+
+			virtual void Initialize();
 			virtual BOOL NeedToStep();
 			virtual void StepSimulation();
 		};

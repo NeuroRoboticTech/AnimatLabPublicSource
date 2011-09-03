@@ -114,6 +114,7 @@ public:
 
 	void GetDataPointer(String ^sData);
 	float GetDataValue(String ^sData);
+	float DataObjectInterface::GetDataValueImmediate(String ^sData);
 
 	float GetBoundingBoxValue(int iIndex);
 	void OrientNewPart(double dblXPos, double dblYPos, double dblZPos, double dblXNorm, double dblYNorm, double dblZNorm);

@@ -246,6 +246,9 @@ void Structure::ResetSimulation()
 	}
 }
 
+void Structure::MinTimeStep(float &fltMin) {}
+
+
 /**
 \brief	Allows the organism and its parts to update at each time slice.
 

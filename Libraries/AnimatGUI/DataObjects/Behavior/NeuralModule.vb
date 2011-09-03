@@ -78,7 +78,13 @@ Namespace DataObjects.Behavior
                 End If
 
                 SetSimData("TimeStep", Value.ActualValue.ToString, True)
-                m_snTimeStep.CopyData(Value)
+                If Not m_doInterface Is Nothing Then
+                    m_snTimeStep.ActualValue = m_doInterface.GetDataValueImmediate("TimeStep")
+                Else
+                    m_snTimeStep.CopyData(Value)
+                End If
+
+                Util.Application.SignalTimeStepChanged(Me)
             End Set
         End Property
 
@@ -129,6 +135,8 @@ Namespace DataObjects.Behavior
             End If
 
             m_snTimeStep = New AnimatGUI.Framework.ScaledNumber(Me, "TimeStep", 2.5, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
+
+            AddHandler Util.Application.TimeStepChanged, AddressOf Me.OnTimeStepChanged
         End Sub
 
         Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -153,6 +161,15 @@ Namespace DataObjects.Behavior
                 Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "NeuralModule", Me.GetSimulationXml("NeuralModule"), True)
             End If
 
+        End Sub
+
+        Public Overrides Sub InitializeSimulationReferences()
+            MyBase.InitializeSimulationReferences()
+
+            'Get the actual physics time step after initialization of the sim object.
+            If Not m_doInterface Is Nothing Then
+                m_snTimeStep.ActualValue = m_doInterface.GetDataValueImmediate("TimeStep")
+            End If
         End Sub
 
 #Region " DataObject Methods "
@@ -223,6 +240,17 @@ Namespace DataObjects.Behavior
         End Sub
 
 #End Region
+
+#End Region
+
+#Region " Events "
+
+        Protected Sub OnTimeStepChanged(ByVal doObject As Framework.DataObject)
+            If Not doObject Is Me AndAlso Not m_doInterface Is Nothing Then
+                SetSimData("TimeStep", m_snTimeStep.ActualValue.ToString, True)
+                m_snTimeStep.ActualValue = m_doInterface.GetDataValueImmediate("TimeStep")
+            End If
+        End Sub
 
 #End Region
 

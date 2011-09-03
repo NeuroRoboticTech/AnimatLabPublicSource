@@ -133,7 +133,13 @@ Namespace DataObjects.Physical
                 End If
 
                 Me.SetSimData("PhysicsTimeStep", Value.ActualValue.ToString, True)
-                m_snPhysicsTimeStep.CopyData(Value)
+                If Not m_doInterface Is Nothing Then
+                    m_snPhysicsTimeStep.ActualValue = m_doInterface.GetDataValueImmediate("PhysicsTimeStep")
+                Else
+                    m_snPhysicsTimeStep.CopyData(Value)
+                End If
+
+                Util.Application.SignalTimeStepChanged(Me)
             End Set
         End Property
 
@@ -548,6 +554,8 @@ Namespace DataObjects.Physical
             m_aryLights.Add(newLight.ID, newLight)
 
             m_clBackgroundcolor = Color.FromArgb(255, 51, 51, 153)
+
+            AddHandler Util.Application.TimeStepChanged, AddressOf Me.OnTimeStepChanged
 
         End Sub
 
@@ -1308,6 +1316,11 @@ Namespace DataObjects.Physical
                     doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
                     doObject.InitializeSimulationReferences()
                 Next
+
+                'Get the actual physics time step after initialization of the sim object.
+                If Not m_doInterface Is Nothing Then
+                    m_snPhysicsTimeStep.ActualValue = m_doInterface.GetDataValueImmediate("PhysicsTimeStep")
+                End If
             End If
         End Sub
 
@@ -1375,6 +1388,14 @@ Namespace DataObjects.Physical
             End Try
 
         End Sub
+
+        Protected Sub OnTimeStepChanged(ByVal doObject As Framework.DataObject)
+            If Not doObject Is Me AndAlso Not m_doInterface Is Nothing Then
+                Me.SetSimData("PhysicsTimeStep", m_snPhysicsTimeStep.ActualValue.ToString, True)
+                m_snPhysicsTimeStep.ActualValue = m_doInterface.GetDataValueImmediate("PhysicsTimeStep")
+            End If
+        End Sub
+
 #End Region
 
     End Class

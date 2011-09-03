@@ -42,11 +42,12 @@ Namespace DataObjects.Behavior
         'This is used when we are doing a copy/paste operation. We need to save the objects
         'with a different id than the original version. So we generate this temp id and use it
         'when saving.
-        Protected m_strTempSelectedID As String = ""
+        'Protected m_strTempSelectedID As String = ""
 
 #End Region
 
 #Region " Properties "
+        Dim m_strTempSelectedID As String
 
         Public Overrides Property Name() As String
             Get
@@ -55,24 +56,6 @@ Namespace DataObjects.Behavior
             Set(ByVal Value As String)
                 Me.Text = Value
             End Set
-        End Property
-
-        <Browsable(False)> _
-        Public Overridable ReadOnly Property SelectedID() As String
-            Get
-                If m_strTempSelectedID.Trim.Length = 0 Then
-                    Return m_strID
-                Else
-                    Return m_strTempSelectedID
-                End If
-            End Get
-        End Property
-
-        <Browsable(False)> _
-        Public Overridable ReadOnly Property TempSelectedID() As String
-            Get
-                Return m_strTempSelectedID
-            End Get
         End Property
 
         <Browsable(False)> _
@@ -374,25 +357,6 @@ Namespace DataObjects.Behavior
 
         End Sub
 
-        Public Overridable Sub GenerateTempSelectedID(ByVal bCopy As Boolean)
-            If bCopy Then
-                m_strTempSelectedID = System.Guid.NewGuid().ToString()
-            Else
-                'Otherwise this must be a cut so lets keep the current ID instead of generating a new one.
-                m_strTempSelectedID = m_strID
-            End If
-
-            'm_ParentDiagram.SetItemsTempID(Me, m_strTempSelectedID)
-        End Sub
-
-        Public Overridable Sub ClearTempSelectedID()
-            m_strTempSelectedID = ""
-            'm_ParentDiagram.SetItemsTempID(Me, m_strID)
-        End Sub
-
-        'Public Overrides Sub SaveDataColumnToXml(ByRef oXml As AnimatGUI.Interfaces.StdXml)
-        'End Sub
-
         Public Overrides Function ToString() As String
             Return Me.Text
         End Function
@@ -424,7 +388,7 @@ Namespace DataObjects.Behavior
                 oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
                 oXml.AddChildElement("ClassName", Me.ClassName)
 
-                oXml.AddChildElement("ID", Me.SelectedID)
+                oXml.AddChildElement("ID", Me.ID)
                 oXml.AddChildElement("Name", Me.Name)
 
                 oXml.OutOfElem()  'Outof Node Element

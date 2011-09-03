@@ -287,9 +287,8 @@ Namespace DataObjects.Behavior.Nodes
             oXml.IntoElem() 'Into Node Element
 
             If Not m_thLinkedNode Is Nothing AndAlso Not m_thLinkedNode.Node Is Nothing Then
-                'TODO
-                'oXml.AddChildElement("LinkedDiagramID", m_thLinkedNode.Node.ParentDiagram.SelectedID)
-                oXml.AddChildElement("LinkedNodeID", m_thLinkedNode.Node.SelectedID)
+                oXml.AddChildElement("LinkedDiagramID", m_thLinkedNode.Node.ParentDiagram.ID)
+                oXml.AddChildElement("LinkedNodeID", m_thLinkedNode.Node.ID)
             End If
 
             oXml.OutOfElem() ' Outof Node Element

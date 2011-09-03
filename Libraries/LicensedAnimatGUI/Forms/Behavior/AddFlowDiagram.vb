@@ -1159,6 +1159,12 @@ Namespace Forms.Behavior
             End Get
         End Property
 
+        Public Overrides ReadOnly Property CheckSaveOnClose() As Boolean
+            Get
+                Return False
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -3881,6 +3887,7 @@ Namespace Forms.Behavior
 
             'If we are closing then reset the Parent diagram property of all nodes/links and the subsystem node link
             If e.Cancel = False Then
+                Me.Subsystem.DiagramXml = Me.SaveDiagramXml
                 Me.Subsystem.SubsystemDiagram = Nothing
 
                 For Each deEntry As DictionaryEntry In Me.Subsystem.BehavioralNodes

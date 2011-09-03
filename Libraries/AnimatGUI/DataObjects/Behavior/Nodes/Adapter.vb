@@ -352,13 +352,13 @@ Namespace DataObjects.Behavior.Nodes
             oXml.IntoElem() 'Into Node Element
 
             If Not m_bnOrigin Is Nothing Then
-                oXml.AddChildElement("OriginID", m_bnOrigin.SelectedID)
+                oXml.AddChildElement("OriginID", m_bnOrigin.ID)
             Else
                 Throw New System.Exception("The orgin node for an adapter has been lost!!")
             End If
 
             If Not m_bnDestination Is Nothing Then
-                oXml.AddChildElement("DestinationID", m_bnDestination.SelectedID)
+                oXml.AddChildElement("DestinationID", m_bnDestination.ID)
             Else
                 Throw New System.Exception("The destination node for an adapter has been lost!!")
             End If

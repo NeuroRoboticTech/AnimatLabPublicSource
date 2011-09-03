@@ -52,6 +52,7 @@ namespace AnimatSim
 
 			virtual void Kill(BOOL bState = TRUE);
 			virtual void ResetSimulation();
+			virtual void MinTimeStep(float &fltMin);
 
 			/**
 			\brief	Sets the system pointers.

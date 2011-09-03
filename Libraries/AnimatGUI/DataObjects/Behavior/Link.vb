@@ -305,23 +305,6 @@ Namespace DataObjects.Behavior
         End Property
 
         <Browsable(False)> _
-        Public Overrides ReadOnly Property SelectedID() As String
-            Get
-                'If a link does not have a temp id then it is not being copied and thus
-                'should not be associated with anything in the pasted version.
-                If m_strTempSelectedID.Trim.Length = 0 Then
-                    If Util.CopyInProgress Then
-                        Return ""
-                    Else
-                        Return m_strID
-                    End If
-                Else
-                    Return m_strTempSelectedID
-                End If
-            End Get
-        End Property
-
-        <Browsable(False)> _
         Public Overridable Property AdjustDestination() As Boolean
             Get
                 Return m_bAdjustDst
@@ -749,6 +732,8 @@ Namespace DataObjects.Behavior
             m_strToolTip = ""
         End Sub
 
+        Property SelectedID As Byte()
+
         Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
                                             ByVal doRoot As AnimatGUI.Framework.DataObject)
             MyBase.CloneInternal(doOriginal, bCutData, doRoot)
@@ -1048,8 +1033,7 @@ Namespace DataObjects.Behavior
                 If Not Me.ParentDiagram Is Nothing Then
                     Me.ParentDiagram.RemoveLink(Me)
                 ElseIf Not Me.Organism Is Nothing Then
-                    'TODO: Must redo this.
-                    'Me.Organism.BehavioralLinks.Remove(Me.ID)
+                    Me.ParentSubsystem.BehavioralLinks.Remove(Me.ID)
                 End If
 
             Catch ex As System.Exception
@@ -1066,7 +1050,7 @@ Namespace DataObjects.Behavior
                 oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
                 oXml.AddChildElement("ClassName", Me.ClassName)
 
-                oXml.AddChildElement("ID", Me.SelectedID)
+                oXml.AddChildElement("ID", Me.ID)
                 oXml.AddChildElement("AdjustDst", m_bAdjustDst)
                 oXml.AddChildElement("AdjustOrg", m_bAdjustOrg)
                 m_ArrowDst.SaveData("ArrowDestination", oXml)
@@ -1076,13 +1060,13 @@ Namespace DataObjects.Behavior
                 oXml.AddChildElement("DashStyle", m_DashStyle.ToString)
                 oXml.AddChildElement("DrawColor", m_clDrawColor.ToArgb)
                 oXml.AddChildElement("DrawWidth", m_iDrawWidth)
-                oXml.AddChildElement("DestinationID", m_bnDestination.SelectedID)
+                oXml.AddChildElement("DestinationID", m_bnDestination.ID)
                 Util.SaveFont(oXml, "Font", m_Font)
                 oXml.AddChildElement("Hidden", m_bHidden)
                 oXml.AddChildElement("Jump", m_eJump.ToString)
                 oXml.AddChildElement("LineStyle", m_eLineStyle.ToString)
                 oXml.AddChildElement("OrthogonalDynamic", m_bOrthogonalDynamic)
-                oXml.AddChildElement("OriginID", m_bnOrigin.SelectedID)
+                oXml.AddChildElement("OriginID", m_bnOrigin.ID)
                 oXml.AddChildElement("OrientedText", m_bOrientedText)
                 oXml.AddChildElement("Selectable", m_bSelectable)
                 oXml.AddChildElement("Stretchable", m_bStretchable)

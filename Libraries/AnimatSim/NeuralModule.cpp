@@ -162,6 +162,8 @@ short NeuralModule::TimeStepInterval()
 
 void NeuralModule::TimeStepInterval(short iVal)
 {
+	if(iVal == 0) iVal = 1;
+
 	Std_IsAboveMin((int) 0, (int) iVal, TRUE, "TimeStepInterval");
 	m_iTimeStepInterval = iVal;
 }
@@ -191,18 +193,34 @@ void NeuralModule::TimeStep(float fltVal)
 {
 	Std_IsAboveMin((float) 0, (float) fltVal, TRUE, "TimeStep");
 
+	//Set it so that it will be taken into consideration when finding min value.
+	m_fltTimeStep = fltVal;
+
+	//Find min time step.
+	float fltMin = m_lpSim->MinTimeStep();
+
+	//Division
+	int iDiv = (int) ((fltVal / fltMin) + 0.5f);
+
 	//Find the number of timeslices that need to occur before this module is updated
-	m_iTimeStepInterval = fltVal / m_lpSim->TimeStep();
+	TimeStepInterval(iDiv);
 
 	//Now recaculate the time step using the minimum time step as the base.
 	m_fltTimeStep = m_lpSim->TimeStep() * m_iTimeStepInterval;
 
-	//Check to see if this time step is less than the physics time step.
-	//If it is then we need to re-update that timestep.
-	if(m_fltTimeStep < m_lpSim->TimeStep())
-		m_lpSim->TimeStep(m_fltTimeStep);
+	//Now reset the m_fltTimeStep of the sim.
+	if(m_iTimeStepInterval == 1) fltMin = m_lpSim->MinTimeStep();
 }
 
+void NeuralModule::Initialize()
+{
+	//We need to rerun the code to set the  time step here in initialize. The reason is that we set this when 
+	//loading the simulator and neural modules, but if one of the neural modules has the miniumum time step then
+	//we need to recalculate the time slice per step for all modules in initialize after everything has loaded.
+	// Once everything is loaded and initialized, then if a given time step is changed then that one is changed in
+	// the sim, and events will change it for the rest of them afterwards, so the values should be correct. 
+	TimeStep(m_fltTimeStep);
+}
 
 /**
 \brief	Tells whether this NeuralModule needs to call StepSimulation.
@@ -258,6 +276,20 @@ void NeuralModule::VerifySystemPointers()
 
 	if(!m_lpOrganism) 
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
+}
+
+
+float *NeuralModule::GetDataPointer(string strDataType)
+{
+	string strType = Std_CheckString(strDataType);
+	float *lpData = NULL;
+
+	if(strType == "TIMESTEP")
+		return &m_fltTimeStep;
+
+	lpData = AnimatBase::GetDataPointer(strDataType);
+
+	return lpData;
 }
 
 void NeuralModule::StepSimulation()

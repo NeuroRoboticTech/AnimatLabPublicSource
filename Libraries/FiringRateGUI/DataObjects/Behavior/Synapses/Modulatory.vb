@@ -335,8 +335,8 @@ Namespace DataObjects.Behavior.Synapses
                 m_snGain.SaveData(oXml, "Gain")
 
                 If Not m_lsModulatedSynapse Is Nothing AndAlso Not m_lsModulatedSynapse.Link Is Nothing Then
-                    oXml.AddChildElement("ModulatedSynapseID", m_lsModulatedSynapse.Link.SelectedID)
-                    oXml.AddChildElement("ModulatedOriginID", m_lsModulatedSynapse.Node.SelectedID)
+                    oXml.AddChildElement("ModulatedSynapseID", m_lsModulatedSynapse.Link.ID)
+                    oXml.AddChildElement("ModulatedOriginID", m_lsModulatedSynapse.Node.ID)
                 End If
 
                 oXml.OutOfElem() ' Outof Node Element

@@ -3303,6 +3303,11 @@ Namespace Forms
         End Sub
 
         Public Overridable Sub ClearChildForms()
+
+            For Each frmChild As Form In Me.ChildForms
+                frmChild.Close()
+            Next
+
             Me.AnimatTabbedGroups.RootSequence.Clear()
             Me.ChildForms.Clear()
             Me.SortedChildForms.Clear()
@@ -4293,12 +4298,17 @@ Namespace Forms
         Public Event SimulationStarted()
         Public Event SimulationPaused()
         Public Event SimulationStopped()
+        Public Event TimeStepChanged(ByVal doObject As Framework.DataObject)
         Public Event UnitsChanged(ByVal ePrevMass As AnimatGUI.DataObjects.Physical.Environment.enumMassUnits, _
                                   ByVal eNewMass As AnimatGUI.DataObjects.Physical.Environment.enumMassUnits, _
                                   ByVal fltMassChange As Single, _
                                   ByVal ePrevDistance As AnimatGUI.DataObjects.Physical.Environment.enumDistanceUnits, _
                                   ByVal eNewDistance As AnimatGUI.DataObjects.Physical.Environment.enumDistanceUnits, _
                                   ByVal fltDistanceChange As Single)
+
+        Public Overridable Sub SignalTimeStepChanged(ByVal doObject As Framework.DataObject)
+            RaiseEvent TimeStepChanged(doObject)
+        End Sub
 
 #End Region
 
@@ -5095,18 +5105,7 @@ Namespace Forms
                 If Not e.TabPage.Control Is Nothing AndAlso Util.IsTypeOf(e.TabPage.Control.GetType(), GetType(Forms.AnimatForm), False) Then
                     Dim frmAnimat As Forms.AnimatForm = DirectCast(e.TabPage.Control, Forms.AnimatForm)
 
-                    If frmAnimat.IsDirty Then
-                        Dim eResult As System.Windows.Forms.DialogResult = DialogResult.OK
-                        eResult = Util.ShowMessage("There are unsaved changes in this form. " & _
-                                                                                            "Do you want to save them before you exit?", _
-                                                                                            "Save Changes", MessageBoxButtons.YesNoCancel)
-                        If eResult = DialogResult.Cancel Then
-                            If Not e Is Nothing Then e.Cancel = True
-                            Return
-                        ElseIf eResult = DialogResult.Yes Then
-                            Me.SaveProject(Me.ProjectFile)
-                        End If
-                    End If
+                    frmAnimat.PageCloseSaveRequest(e)
 
                     If Not e.Cancel Then
                         Util.Application.CloseForm(frmAnimat, e)

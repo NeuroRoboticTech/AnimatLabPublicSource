@@ -129,6 +129,11 @@ void Organism::StepNeuralEngine()
 		m_lpNervousSystem->StepSimulation();
 }
 
+void Organism::MinTimeStep(float &fltMin) 
+{
+	m_lpNervousSystem->MinTimeStep(fltMin);
+}
+
 #pragma region DataAccesMethods
 
 BOOL Organism::SetData(string strDataType, string strValue, BOOL bThrowError)

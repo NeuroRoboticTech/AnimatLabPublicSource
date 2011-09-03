@@ -518,6 +518,18 @@ namespace AnimatSim
 			virtual long SliceToMillisecond(long lSlice);
 			virtual DWORD StartSimTick();
 
+			virtual float MinTimeStep();
+			virtual float TimeStep();
+
+			virtual BOOL SetEndSimTime();
+			virtual void SetEndSimTime(BOOL bVal);
+
+			virtual float EndSimTime();
+			virtual void EndSimTime(float fltVal);
+
+			virtual long EndSimTimeSlice();
+			virtual void EndSimTimeSlice(long lVal);
+
 			virtual long TimeSlice();
 			virtual void TimeSlice(long lVal);
 
@@ -555,18 +567,6 @@ namespace AnimatSim
 
 			virtual float AngularKineticLoss();
 			virtual void AngularKineticLoss(float fltVal);
-
-			virtual float TimeStep();
-			virtual void TimeStep(float fltVal);
-
-			virtual BOOL SetEndSimTime();
-			virtual void SetEndSimTime(BOOL bVal);
-
-			virtual float EndSimTime();
-			virtual void EndSimTime(float fltVal);
-
-			virtual long EndSimTimeSlice();
-			virtual void EndSimTimeSlice(long lVal);
 
 			virtual BOOL Stopped();
 

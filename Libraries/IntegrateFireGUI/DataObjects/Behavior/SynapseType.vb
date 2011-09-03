@@ -206,7 +206,7 @@ Namespace DataObjects.Behavior
                 oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
                 oXml.AddChildElement("ClassName", Me.ClassName)
 
-                oXml.AddChildElement("ID", Me.SelectedID)
+                oXml.AddChildElement("ID", Me.ID)
                 oXml.AddChildElement("AdjustDst", m_bAdjustDst)
                 oXml.AddChildElement("AdjustOrg", m_bAdjustOrg)
                 m_ArrowDst.SaveData("ArrowDestination", oXml)

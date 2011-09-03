@@ -215,6 +215,7 @@ Namespace DataObjects.Behavior.Nodes
             If m_bdSubsystemDiagram Is Nothing Then
                 m_bdSubsystemDiagram = CreateDiagram()
                 m_bdSubsystemDiagram.Subsystem = Me
+                m_bdSubsystemDiagram.LoadDiagramXml(Me.DiagramXml)
                 Util.Application.AddChildForm(m_bdSubsystemDiagram)
             ElseIf Not m_bdSubsystemDiagram.TabPage Is Nothing Then
                 m_bdSubsystemDiagram.TabPage.Selected = True

@@ -240,6 +240,19 @@ void NervousSystem::Initialize()
 
 }
 
+void NervousSystem::MinTimeStep(float &fltMin)
+{
+	NeuralModule *lpModule = NULL;
+	CStdPtrMap<string, NeuralModule>::iterator oPos;
+	
+	for(oPos=m_aryNeuralModules.begin(); oPos!=m_aryNeuralModules.end(); ++oPos)
+	{
+		lpModule = oPos->second;
+
+		if(lpModule->TimeStep() < fltMin)
+			fltMin = lpModule->TimeStep();
+	}
+}
 
 void NervousSystem::StepSimulation()
 {

@@ -303,6 +303,12 @@ Namespace Forms
             End Get
         End Property
 
+        Public Overridable ReadOnly Property CheckSaveOnClose() As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -761,6 +767,23 @@ Namespace Forms
         End Sub
 
         Protected Overridable Sub AnimatForm_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+        End Sub
+
+        Public Overridable Sub PageCloseSaveRequest(ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs)
+
+            If Me.IsDirty AndAlso Me.CheckSaveOnClose Then
+                Dim eResult As System.Windows.Forms.DialogResult = DialogResult.OK
+                eResult = Util.ShowMessage("There are unsaved changes in this form. " & _
+                                                                                    "Do you want to save them before you exit?", _
+                                                                                    "Save Changes", MessageBoxButtons.YesNoCancel)
+                If eResult = DialogResult.Cancel Then
+                    If Not e Is Nothing Then e.Cancel = True
+                    Return
+                ElseIf eResult = DialogResult.Yes Then
+                    Util.Application.SaveProject(Util.Application.ProjectFile)
+                End If
+            End If
+
         End Sub
 
         Protected Overridable Sub OnExpandAll(ByVal sender As Object, ByVal e As System.EventArgs)
