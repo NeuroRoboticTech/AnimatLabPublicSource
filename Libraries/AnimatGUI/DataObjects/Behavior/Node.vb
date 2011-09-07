@@ -912,9 +912,15 @@ Namespace DataObjects.Behavior
 
         End Function
 
-        Public Overridable Sub CreateDiagramDropDownTree(ByVal tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node)
+        Public Overridable Sub CreateNodeTreeView(ByRef tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal aryNodes As Crownwood.DotNetMagic.Controls.NodeCollection)
             Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(Me.Text)
-            tnParent.Nodes.Add(tnNode)
+            aryNodes.Add(tnNode)
+
+            If Not tvTree.ImageList.Images.ContainsKey(Me.WorkspaceImageName) Then
+                tvTree.ImageList.Images.Add(Me.WorkspaceImageName, Me.WorkspaceImage)
+            End If
+            tnNode.ImageIndex = tvTree.ImageList.Images.IndexOfKey(Me.WorkspaceImageName)
+
             tnNode.Tag = New TypeHelpers.LinkedNode(Me.Organism, Me)
         End Sub
 

@@ -91,8 +91,7 @@ Namespace TypeHelpers
             tvTree.SuspendLayout()
             tvTree.Nodes.Clear()
 
-            'TODO
-            'm_doOrganism.CreateDiagramDropDownTree(tvTree)
+            m_doOrganism.CreateNodeTreeView(tvTree)
 
             tvTree.Width = 300
             tvTree.ExpandAll()

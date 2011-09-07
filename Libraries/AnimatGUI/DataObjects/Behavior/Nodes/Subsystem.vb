@@ -232,7 +232,20 @@ Namespace DataObjects.Behavior.Nodes
             Return afDiagram
         End Function
 
-        Public Overrides Sub CreateDiagramDropDownTree(ByVal tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node)
+        Public Overrides Sub CreateNodeTreeView(ByRef tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal aryNodes As Crownwood.DotNetMagic.Controls.NodeCollection)
+            Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(Me.Text)
+            aryNodes.Add(tnNode)
+            'We do NOT setup the Tag for the subsystem. We do not want to actually be able to select it.
+
+            If Not tvTree.ImageList.Images.ContainsKey(Me.WorkspaceImageName) Then
+                tvTree.ImageList.Images.Add(Me.WorkspaceImageName, Me.WorkspaceImage)
+            End If
+            tnNode.ImageIndex = tvTree.ImageList.Images.IndexOfKey(Me.WorkspaceImageName)
+
+            For Each deEntry As DictionaryEntry In Me.BehavioralNodes
+                Dim bnNode As Behavior.Node = DirectCast(deEntry.Value, Behavior.Node)
+                bnNode.CreateNodeTreeView(tvTree, tnNode.Nodes)
+            Next
         End Sub
 
         Public Overrides Sub CheckForErrors()

@@ -210,6 +210,14 @@ Namespace DataObjects.Physical
 
         End Function
 
+        Public Overridable Sub CreateNodeTreeView(ByRef tvTree As Crownwood.DotNetMagic.Controls.TreeControl)
+            tvTree.ClearSelection()
+            tvTree.LabelEdit = False
+            tvTree.ImageList = New ImageList
+            tvTree.ImageList.ImageSize = New Size(16, 16)
+            m_bnRootSubSystem.CreateNodeTreeView(tvTree, tvTree.Nodes)
+        End Sub
+
 #End Region
 
 #Region " Find Methods "

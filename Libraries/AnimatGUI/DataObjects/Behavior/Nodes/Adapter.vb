@@ -227,9 +227,9 @@ Namespace DataObjects.Behavior.Nodes
 
         End Sub
 
-        Public Overrides Sub CreateDiagramDropDownTree(ByVal tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node)
+        'We do not want adapters to show up in the node tree view drop down.
+        Public Overrides Sub CreateNodeTreeView(ByRef tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal aryNodes As Crownwood.DotNetMagic.Controls.NodeCollection)
         End Sub
-
 
         Public Overrides Sub CheckForErrors()
             MyBase.CheckForErrors()
