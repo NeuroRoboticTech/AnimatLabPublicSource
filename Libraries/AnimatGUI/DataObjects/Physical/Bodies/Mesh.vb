@@ -132,7 +132,7 @@ Namespace DataObjects.Physical.Bodies
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
             m_strDescription = ""
-            Me.Diffuse = Drawing.Color.White
+            m_clDiffuse = Drawing.Color.White
 
         End Sub
 

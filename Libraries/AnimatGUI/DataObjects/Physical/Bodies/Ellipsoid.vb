@@ -117,7 +117,7 @@ Namespace DataObjects.Physical.Bodies
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
             m_strDescription = ""
-            Me.Diffuse = Drawing.Color.Green
+            m_clDiffuse = Drawing.Color.Green
 
             m_snMajorAxisRadius = New AnimatGUI.Framework.ScaledNumber(Me, "MajorAxisRadius", "meters", "m")
             m_snMinorAxisRadius = New AnimatGUI.Framework.ScaledNumber(Me, "MinorAxisRadius", "meters", "m")
