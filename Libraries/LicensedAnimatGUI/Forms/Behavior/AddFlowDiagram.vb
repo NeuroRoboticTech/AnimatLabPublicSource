@@ -1040,8 +1040,8 @@ Namespace Forms.Behavior
         Protected m_aryAddFlowNodes As New SortedList
         Protected m_aryAddFlowLinks As New SortedList
 
-        Protected m_aryDeletedNodes As New SortedList
-        Protected m_aryDeletedLinks As New SortedList
+        'Protected m_aryDeletedNodes As New SortedList
+        'Protected m_aryDeletedLinks As New SortedList
 
         Private m_prnFlow As New Lassalle.PrnFlow.PrnFlow
 
@@ -1433,18 +1433,11 @@ Namespace Forms.Behavior
             Dim afNode As New Lassalle.Flow.Node
             UpdateAddFlowNode(afNode, bdNode, True)
 
-            bdNode.Organism = Me.Subsystem.Organism
-            bdNode.ParentDiagram = Me
-            bdNode.ParentSubsystem = Me.Subsystem
             bdNode.Tag = afNode
             afNode.Tag = bdNode.ID
 
-            bdNode.BeforeAddNode()
-            m_bnSubSystem.BehavioralNodes.Add(bdNode.ID, bdNode)
             m_ctrlAddFlow.Nodes.Add(afNode)
             m_aryAddFlowNodes.Add(bdNode.ID, afNode)
-            bdNode.AfterAddNode()
-            bdNode.SelectItem()
 
             m_Timer.Enabled = True
         End Sub
@@ -1460,41 +1453,12 @@ Namespace Forms.Behavior
         End Sub
 
         Public Overrides Sub RemoveNode(ByRef bnNode As AnimatGUI.DataObjects.Behavior.Node)
+            If bnNode Is Nothing Then Return
 
-            Try
-                If bnNode Is Nothing Then Return
+            Dim afNode As Lassalle.Flow.Node = FindAddFlowNode(bnNode.ID, False)
 
-                Dim afNode As Lassalle.Flow.Node = FindAddFlowNode(bnNode.ID, False)
-
-                BeginGroupChange()
-
-                Dim aryLinkIDs As New Collection
-                For Each deLink As DictionaryEntry In bnNode.Links
-                    aryLinkIDs.Add(deLink.Key)
-                Next
-
-                Dim blLink As AnimatGUI.DataObjects.Behavior.Link
-                For Each strID As String In aryLinkIDs
-                    blLink = DirectCast(bnNode.Links(strID), AnimatGUI.DataObjects.Behavior.Link)
-                    RemoveLink(blLink)
-                Next
-
-                bnNode.BeforeRemoveNode()
-                m_bnSubSystem.BehavioralNodes.Remove(bnNode.ID)
-                m_aryAddFlowNodes.Remove(bnNode.ID)
-                If Not afNode Is Nothing Then afNode.Remove()
-                bnNode.AfterRemoveNode()
-
-                'Add it to the deleted nodes list so we can get it back later if needed when the user hits the undo button.
-                If m_aryDeletedNodes(bnNode.ID) Is Nothing Then
-                    m_aryDeletedNodes.Add(bnNode.ID, bnNode)
-                End If
-
-            Catch ex As System.Exception
-                Throw ex
-            Finally
-                EndGroupChange()
-            End Try
+            m_aryAddFlowNodes.Remove(bnNode.ID)
+            If Not afNode Is Nothing Then afNode.Remove()
 
         End Sub
 
@@ -1508,101 +1472,30 @@ Namespace Forms.Behavior
             Return FindItem(strID, bThrowError)
         End Function
 
-        Public Overrides Sub AddLink(ByRef bnOrigin As AnimatGUI.DataObjects.Behavior.Node, ByRef bnDestination As AnimatGUI.DataObjects.Behavior.Node, ByRef blLink As AnimatGUI.DataObjects.Behavior.Link)
+        Public Overrides Sub AddLink(ByRef blLink As AnimatGUI.DataObjects.Behavior.Link)
 
             Dim afLink As New Lassalle.Flow.Link
             UpdateAddFlowLink(afLink, blLink, True)
 
-            blLink.Organism = Me.Subsystem.Organism
-            blLink.ParentDiagram = Me
-            blLink.ParentSubsystem = Me.Subsystem
             blLink.Tag = afLink
             afLink.Tag = blLink.ID
-
-            blLink.BeginBatchUpdate()
-            blLink.Origin = bnOrigin
-            blLink.Destination = bnDestination
-            blLink.EndBatchUpdate(False)
 
             Dim afOrigin As Lassalle.Flow.Node = FindAddFlowNode(blLink.ActualOrigin.ID)
             Dim afDestination As Lassalle.Flow.Node = FindAddFlowNode(blLink.ActualDestination.ID)
 
-            blLink.ActualOrigin.BeforeAddLink(blLink)
-            blLink.ActualDestination.BeforeAddLink(blLink)
-            blLink.BeforeAddLink()
-
-            m_bnSubSystem.BehavioralLinks.Add(blLink.ID, blLink)
             m_ctrlAddFlow.AddLink(afLink, afOrigin, afDestination)
-
-            blLink.ActualOrigin.AddOutLink(blLink)
-            blLink.ActualDestination.AddInLink(blLink)
-
-            'If we are using an offpage connector it is possible for the origin and actual origin to be different.
-            'the both need to have the inlink though.
-            If Not blLink.Origin Is blLink.ActualOrigin AndAlso Not blLink.Origin.OutLinks.Contains(blLink.ID) Then
-                blLink.Origin.AddOutLink(blLink)
-            End If
-            If Not blLink.Destination Is blLink.ActualDestination AndAlso Not blLink.Destination.InLinks.Contains(blLink.ID) Then
-                blLink.Destination.AddInLink(blLink)
-            End If
-
             m_aryAddFlowLinks.Add(blLink.ID, afLink)
-
-            blLink.ActualOrigin.AfterAddLink(blLink)
-            blLink.ActualDestination.AfterAddLink(blLink)
-            blLink.AfterAddLink()
-            blLink.SelectItem()
 
         End Sub
 
         Public Overrides Sub RemoveLink(ByRef blLink As AnimatGUI.DataObjects.Behavior.Link)
+            If Not blLink Is Nothing Then
 
-            Try
-                If Not blLink Is Nothing Then
-                    BeginGroupChange()
+                Dim afLink As Lassalle.Flow.Link = FindAddFlowLink(blLink.ID, False)
 
-                    Dim afLink As Lassalle.Flow.Link = FindAddFlowLink(blLink.ID, False)
-
-                    If Not blLink.ActualOrigin Is Nothing Then blLink.ActualOrigin.BeforeRemoveLink(blLink)
-                    If Not blLink.ActualDestination Is Nothing Then blLink.ActualDestination.BeforeRemoveLink(blLink)
-                    blLink.BeforeRemoveLink()
-
-                    If Not afLink Is Nothing Then afLink.Remove()
-                    If Not blLink.ActualOrigin Is Nothing Then blLink.ActualOrigin.RemoveOutLink(blLink)
-                    If Not blLink.ActualDestination Is Nothing Then blLink.ActualDestination.RemoveInLink(blLink)
-
-                    'If we are using an offpage connector it is possible for the origin and actual origin to be different.
-                    'they both need to have the inlink though.
-                    'blLink.Origin.OutLinks.DumpListInfo()
-                    'blLink.Destination.InLinks.DumpListInfo()
-                    If Not blLink.Origin Is Nothing AndAlso Not blLink.ActualOrigin Is Nothing AndAlso _
-                       Not blLink.Origin Is blLink.ActualOrigin AndAlso blLink.Origin.OutLinks.Contains(blLink.ID) Then
-                        blLink.Origin.RemoveOutLink(blLink)
-                    End If
-                    If Not blLink.Destination Is Nothing AndAlso Not blLink.ActualDestination Is Nothing AndAlso _
-                       Not blLink.Destination Is blLink.ActualDestination AndAlso blLink.Destination.InLinks.Contains(blLink.ID) Then
-                        blLink.Destination.RemoveInLink(blLink)
-                    End If
-
-                    m_bnSubSystem.BehavioralLinks.Remove(blLink.ID)
-                    m_aryAddFlowLinks.Remove(blLink.ID)
-
-                    If Not blLink.ActualOrigin Is Nothing Then blLink.ActualOrigin.AfterRemoveLink(blLink)
-                    If Not blLink.ActualDestination Is Nothing Then blLink.ActualDestination.AfterRemoveLink(blLink)
-                    blLink.AfterRemoveLink()
-
-                    'Add it to the deleted links list so we can get it back later if needed when the user hits the undo button.
-                    If m_aryDeletedLinks(blLink.ID) Is Nothing Then
-                        m_aryDeletedLinks.Add(blLink.ID, blLink)
-                    End If
-                End If
-
-            Catch ex As System.Exception
-                Throw ex
-            Finally
-                EndGroupChange()
-            End Try
-
+                If Not afLink Is Nothing Then afLink.Remove()
+                m_aryAddFlowLinks.Remove(blLink.ID)
+            End If
         End Sub
 
         Public Overrides Sub UpdateChart(ByRef bdData As AnimatGUI.DataObjects.Behavior.Data)
@@ -2125,17 +2018,6 @@ Namespace Forms.Behavior
 
         End Function
 
-        'TODO
-        'Public Overrides Sub AddStimulusToSelected()
-
-        '    Try
-        '        OnAddStimulus(Me, New System.EventArgs)
-        '    Catch ex As System.Exception
-        '        Throw ex
-        '    End Try
-
-        'End Sub
-
 #End Region
 
         Public Overrides Sub SendSelectedToBack()
@@ -2605,52 +2487,54 @@ Namespace Forms.Behavior
         End Sub
 
         Public Overrides Sub LoadDiagramXml(ByVal strXml As String)
-            Dim oXml As New AnimatGUI.Interfaces.StdXml()
-            oXml.Deserialize(strXml)
+            'Only attempt to load this if there is something in the string.
+            If strXml.Trim.Length > 0 Then
+                Dim oXml As New AnimatGUI.Interfaces.StdXml()
+                oXml.Deserialize(strXml)
 
-            oXml.FindElement("Root")
-            oXml.FindChildElement("Diagram")
-            oXml.IntoElem() 'Into Form Element
+                oXml.FindElement("Root")
+                oXml.FindChildElement("Diagram")
+                oXml.IntoElem() 'Into Form Element
 
-            m_ctrlAddFlow.Zoom.X = oXml.GetChildFloat("ZoomX", m_ctrlAddFlow.Zoom.X)
-            m_ctrlAddFlow.Zoom.Y = oXml.GetChildFloat("ZoomY", m_ctrlAddFlow.Zoom.Y)
+                m_ctrlAddFlow.Zoom.X = oXml.GetChildFloat("ZoomX", m_ctrlAddFlow.Zoom.X)
+                m_ctrlAddFlow.Zoom.Y = oXml.GetChildFloat("ZoomY", m_ctrlAddFlow.Zoom.Y)
 
-            If oXml.FindChildElement("BackColor", False) Then
-                m_ctrlAddFlow.BackColor = Util.LoadColor(oXml, "BackColor")
-            End If
+                If oXml.FindChildElement("BackColor", False) Then
+                    m_ctrlAddFlow.BackColor = Util.LoadColor(oXml, "BackColor")
+                End If
 
-            m_ctrlAddFlow.Grid.Draw = oXml.GetChildBool("ShowGrid", m_ctrlAddFlow.Grid.Draw)
+                m_ctrlAddFlow.Grid.Draw = oXml.GetChildBool("ShowGrid", m_ctrlAddFlow.Grid.Draw)
 
-            If oXml.FindChildElement("GridColor", False) Then
-                m_ctrlAddFlow.Grid.Color = Util.LoadColor(oXml, "GridColor")
-            End If
+                If oXml.FindChildElement("GridColor", False) Then
+                    m_ctrlAddFlow.Grid.Color = Util.LoadColor(oXml, "GridColor")
+                End If
 
-            If oXml.FindChildElement("GridSize", False) Then
-                m_ctrlAddFlow.Grid.Size = Util.LoadSize(oXml, "GridSize")
-            End If
+                If oXml.FindChildElement("GridSize", False) Then
+                    m_ctrlAddFlow.Grid.Size = Util.LoadSize(oXml, "GridSize")
+                End If
 
-            Me.GridStyle = DirectCast([Enum].Parse(GetType(enumGridStyle), oXml.GetChildString("GridStyle", Me.GridStyle.ToString), True), enumGridStyle)
-            Me.JumpSize = DirectCast([Enum].Parse(GetType(enumJumpSize), oXml.GetChildString("JumpSize", Me.JumpSize.ToString), True), enumJumpSize)
+                Me.GridStyle = DirectCast([Enum].Parse(GetType(enumGridStyle), oXml.GetChildString("GridStyle", Me.GridStyle.ToString), True), enumGridStyle)
+                Me.JumpSize = DirectCast([Enum].Parse(GetType(enumJumpSize), oXml.GetChildString("JumpSize", Me.JumpSize.ToString), True), enumJumpSize)
 
-            m_ctrlAddFlow.Grid.Snap = oXml.GetChildBool("SnapToGrid", m_ctrlAddFlow.Grid.Snap)
+                m_ctrlAddFlow.Grid.Snap = oXml.GetChildBool("SnapToGrid", m_ctrlAddFlow.Grid.Snap)
 
-            oXml.FindChildElement("AddFlow")
-            Dim strAddFlowXml As String = oXml.GetChildDoc()
-            Dim stringReader As System.IO.StringReader = New System.IO.StringReader(strAddFlowXml)
-            Dim xmlReader As System.Xml.XmlTextReader = New System.Xml.XmlTextReader(stringReader)
-            Lassalle.XMLFlow.Serial.XMLToFlow(xmlReader, m_ctrlAddFlow)
+                oXml.FindChildElement("AddFlow")
+                Dim strAddFlowXml As String = oXml.GetChildDoc()
+                Dim stringReader As System.IO.StringReader = New System.IO.StringReader(strAddFlowXml)
+                Dim xmlReader As System.Xml.XmlTextReader = New System.Xml.XmlTextReader(stringReader)
+                Lassalle.XMLFlow.Serial.XMLToFlow(xmlReader, m_ctrlAddFlow)
 
-            'Now we need to go through and add all of the addflow nodes and links into the dictionaries for them.
-            For Each afNode As Lassalle.Flow.Node In m_ctrlAddFlow.Nodes
-                m_aryAddFlowNodes.Add(DirectCast(afNode.Tag, String), afNode)
+                'Now we need to go through and add all of the addflow nodes and links into the dictionaries for them.
+                For Each afNode As Lassalle.Flow.Node In m_ctrlAddFlow.Nodes
+                    m_aryAddFlowNodes.Add(DirectCast(afNode.Tag, String), afNode)
 
-                For Each afLink As Lassalle.Flow.Link In afNode.InLinks
-                    m_aryAddFlowLinks.Add(DirectCast(afLink.Tag, String), afLink)
+                    For Each afLink As Lassalle.Flow.Link In afNode.InLinks
+                        m_aryAddFlowLinks.Add(DirectCast(afLink.Tag, String), afLink)
+                    Next
                 Next
-            Next
 
-            oXml.OutOfElem()  'Outof Diagram Element
-
+                oXml.OutOfElem()  'Outof Diagram Element
+            End If
         End Sub
 
         Public Overrides Function SaveDiagramXml() As String
@@ -3987,7 +3871,7 @@ Namespace Forms.Behavior
 
                         Me.Subsystem.Organism.MaxNodeCount = Me.Subsystem.Organism.MaxNodeCount + 1
                         bdData.Text = Me.Subsystem.Organism.MaxNodeCount.ToString
-                        Me.AddNode(bdData)
+                        Me.Subsystem.AddNode(bdData)
 
                         Me.IsDirty = True
                         Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me))
@@ -4021,7 +3905,7 @@ Namespace Forms.Behavior
                 If SelectLinkType(bnOrigin, bnDestination, blLink, bRequiresAdapter) Then
                     If Not bRequiresAdapter Then
                         'If it does not require an adapter then just add the link directly.
-                        Me.AddLink(bnOrigin, bnDestination, blLink)
+                        Me.Subsystem.AddLink(bnOrigin, bnDestination, blLink)
                     Else
 
                         ''If it does require an adapter then lets add the pieces.
@@ -4031,10 +3915,10 @@ Namespace Forms.Behavior
                         Me.Subsystem.Organism.MaxNodeCount = Me.Subsystem.Organism.MaxNodeCount + 1
                         bnAdapter.Text = Me.Subsystem.Organism.MaxNodeCount.ToString
 
-                        Me.AddNode(bnAdapter)
+                        Me.Subsystem.AddNode(bnAdapter)
 
                         'Connect the origin to the new adapter using the adapter link.
-                        Me.AddLink(bnOrigin, bnAdapter, blLink)
+                        Me.Subsystem.AddLink(bnOrigin, bnAdapter, blLink)
 
                         'Now we need a new link to go from the adapter to the destination.
                         blLink = DirectCast(blLink.Clone(Me.Subsystem.Organism, False, Nothing), AnimatGUI.DataObjects.Behavior.Link)
@@ -4045,7 +3929,7 @@ Namespace Forms.Behavior
                                                                                       AnimatGUI.DataObjects.Behavior.Link.enumArrowAngle.deg15, False)
                         blLink.EndBatchUpdate(False)
 
-                        Me.AddLink(bnAdapter, bnDestination, blLink)
+                        Me.Subsystem.AddLink(bnAdapter, bnDestination, blLink)
 
                         bnAdapter.SelectItem()
                     End If

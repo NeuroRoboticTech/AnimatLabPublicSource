@@ -1031,6 +1031,7 @@ Namespace DataObjects.Behavior
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub AfterRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.AfterRemoveFromList(bThrowError)
             DisconnectLinkEvents()
             DisconnectDiagramEvents()
         End Sub
@@ -1123,7 +1124,7 @@ Namespace DataObjects.Behavior
                                         "Node Properties", "Sets the description for this node.", m_strToolTip, _
                                         GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
 
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Image", GetType(AnimatGUI.DataObjects.Behavior.DiagramImage), "DiagramImage", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Image", GetType(AnimatGUI.DataObjects.Behavior.DiagramImage), "DiagramImage", _
                                         "Graphical Properties", "Assigns an image to this node. ", m_diImage, _
                                         GetType(AnimatGUI.TypeHelpers.ImageTypeEditor), _
                                         GetType(AnimatGUI.TypeHelpers.ImageTypeConverter)))
@@ -1139,6 +1140,22 @@ Namespace DataObjects.Behavior
             m_aryOutLinks.ClearIsDirty()
             m_aryCompatibleLinks.ClearIsDirty()
         End Sub
+
+        Public Overrides Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
+
+            Try
+                If bAskToDelete AndAlso Util.ShowMessage("Are you certain that you want to delete this " & _
+                                    "node and all of its links?", "Delete Axis", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
+                    Return False
+                End If
+
+                Me.ParentSubsystem.RemoveNode(Me)
+                Return True
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Function
 
         Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
             Dim iColor As Integer

@@ -4837,15 +4837,59 @@ Namespace Forms
         'project workspace
         Public Sub OnDeleteFromWorkspace(ByVal sender As Object, ByVal e As System.EventArgs) Handles DeleteToolStripButton.Click, DeleteToolStripMenuItem.Click
             Try
-                If Not Util.ProjectWorkspace.SelectedDataObject Is Nothing Then
-                    Util.ProjectWorkspace.SelectedDataObject.Delete()
-                ElseIf Not Util.ProjectWorkspace.SelectedAnimatform Is Nothing Then
-                    Util.ProjectWorkspace.SelectedAnimatform.Delete()
-                Else
-                    Throw New System.Exception("The selected object cannot be deleted")
+                'If selected cound is 1 then just delete that object. If it is not then
+                'we need some more complicated logic.
+                If Util.ProjectWorkspace.TreeView.SelectedCount = 1 Then
+                    DeleteSingeItem()
+                ElseIf Util.ProjectWorkspace.TreeView.SelectedCount > 1 Then
+                    DeleteMultipleItems()
                 End If
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overridable Sub DeleteSingeItem()
+            If Not Util.ProjectWorkspace.SelectedDataObject Is Nothing Then
+                Util.ProjectWorkspace.SelectedDataObject.Delete()
+            ElseIf Not Util.ProjectWorkspace.SelectedAnimatform Is Nothing Then
+                Util.ProjectWorkspace.SelectedAnimatform.Delete()
+            Else
+                Throw New System.Exception("The selected object cannot be deleted")
+            End If
+        End Sub
+
+        Protected Overridable Sub DeleteMultipleItems()
+            Try
+                If Util.ShowMessage("Are you certain that you want to delete the currently selected group of objects?", _
+                                    "Delete group", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
+                    Return
+                End If
+
+                'TODO
+                'BeginGroupChange()
+
+                'Lets go through and get a list a seperate list of the selected items 
+                'so we can use it. otherwise it may change while we are deleting.
+                Dim aryItems As New Collection
+                Dim doItem As Framework.DataObject
+                For Each tnNode As Crownwood.DotNetMagic.Controls.Node In Util.ProjectWorkspace.TreeView.SelectedNodes
+                    If Not tnNode.Tag Is Nothing AndAlso Util.IsTypeOf(tnNode.Tag.GetType, GetType(Framework.DataObject)) Then
+                        doItem = DirectCast(tnNode.Tag, Framework.DataObject)
+                        aryItems.Add(doItem)
+                    End If
+                Next
+
+                For Each doItem In aryItems
+                    doItem.Delete(False)
+                Next
+
+            Catch ex As System.Exception
+                Throw ex
+            Finally
+                'TODO
+                'EndGroupChange()
             End Try
         End Sub
 

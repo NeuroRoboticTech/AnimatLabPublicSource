@@ -278,8 +278,8 @@ Namespace DataObjects.Behavior
         Protected m_strUrl As String
         Protected m_iZOrder As Integer
 
-        Protected m_strOriginID As String
-        Protected m_strDestinationID As String
+        Protected m_strOriginID As String = ""
+        Protected m_strDestinationID As String = ""
 
 #End Region
 
@@ -966,6 +966,22 @@ Namespace DataObjects.Behavior
             If Not m_ArrowOrg Is Nothing Then m_ArrowOrg.ClearIsDirty()
         End Sub
 
+        Public Overrides Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
+
+            Try
+                If bAskToDelete AndAlso Util.ShowMessage("Are you certain that you want to delete this " & _
+                                    "link?", "Delete Axis", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
+                    Return False
+                End If
+
+                Me.ParentSubsystem.SubsystemDiagram.RemoveLink(Me)
+                Return True
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Function
+
         Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
 
             MyBase.LoadData(oXml)
@@ -1009,12 +1025,13 @@ Namespace DataObjects.Behavior
                 If m_strOriginID.Trim.Length > 0 AndAlso m_strDestinationID.Trim.Length > 0 Then
                     Me.Origin = Me.Organism.FindBehavioralNode(m_strOriginID)
                     Me.Destination = Me.Organism.FindBehavioralNode(m_strDestinationID)
-                    ConnectNodeEvents()
-                    ConnectDiagramEvents()
-                    UpdateTreeNode()
-                Else
+                ElseIf Me.Origin Is Nothing OrElse Me.Destination Is Nothing Then
                     Throw New System.Exception("Either a destination or origin was missing for this link. '" & Me.ID & "'")
                 End If
+
+                ConnectNodeEvents()
+                ConnectDiagramEvents()
+                UpdateTreeNode()
 
                 m_bIsInitialized = True
 

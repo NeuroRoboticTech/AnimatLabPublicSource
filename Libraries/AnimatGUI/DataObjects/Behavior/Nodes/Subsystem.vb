@@ -345,6 +345,149 @@ Namespace DataObjects.Behavior.Nodes
             End If
         End Sub
 
+        Public Overridable Sub AddNode(ByRef bdNode As AnimatGUI.DataObjects.Behavior.Node)
+
+            bdNode.Organism = Me.Organism
+            bdNode.ParentDiagram = Me.SubsystemDiagram
+            bdNode.ParentSubsystem = Me
+
+            bdNode.InitializeAfterLoad()
+
+            bdNode.BeforeAddNode()
+
+            Me.BehavioralNodes.Add(bdNode.ID, bdNode)
+
+            If Not Me.SubsystemDiagram Is Nothing Then
+                Me.SubsystemDiagram.AddNode(bdNode)
+            End If
+
+            bdNode.AfterAddNode()
+            bdNode.SelectItem()
+        End Sub
+
+        Public Overridable Sub RemoveNode(ByRef bnNode As AnimatGUI.DataObjects.Behavior.Node)
+
+            Try
+                If Not bnNode Is Nothing AndAlso Me.BehavioralNodes.ContainsKey(bnNode.ID) Then
+                    'BeginGroupChange()
+
+                    Dim aryLinkIDs As New Collection
+                    For Each deLink As DictionaryEntry In bnNode.Links
+                        aryLinkIDs.Add(deLink.Key)
+                    Next
+
+                    Dim blLink As AnimatGUI.DataObjects.Behavior.Link
+                    For Each strID As String In aryLinkIDs
+                        blLink = DirectCast(bnNode.Links(strID), AnimatGUI.DataObjects.Behavior.Link)
+                        RemoveLink(blLink)
+                    Next
+
+                    bnNode.BeforeRemoveNode()
+
+                    Me.BehavioralNodes.Remove(bnNode.ID)
+
+                    If Not Me.SubsystemDiagram Is Nothing Then
+                        Me.SubsystemDiagram.RemoveNode(bnNode)
+                    End If
+
+                    bnNode.AfterRemoveNode()
+                End If
+            Catch ex As System.Exception
+                Throw ex
+            Finally
+                'EndGroupChange()
+            End Try
+
+        End Sub
+
+        Public Overridable Sub AddLink(ByRef bnOrigin As AnimatGUI.DataObjects.Behavior.Node, ByRef bnDestination As AnimatGUI.DataObjects.Behavior.Node, ByRef blLink As AnimatGUI.DataObjects.Behavior.Link)
+
+            blLink.Organism = Me.Organism
+            blLink.ParentDiagram = Me.SubsystemDiagram
+            blLink.ParentSubsystem = Me
+
+            blLink.BeginBatchUpdate()
+            blLink.Origin = bnOrigin
+            blLink.Destination = bnDestination
+            blLink.EndBatchUpdate(False)
+
+            blLink.ActualOrigin.BeforeAddLink(blLink)
+            blLink.ActualDestination.BeforeAddLink(blLink)
+
+            blLink.InitializeAfterLoad()
+
+            blLink.BeforeAddLink()
+
+            blLink.ActualOrigin.AddOutLink(blLink)
+            blLink.ActualDestination.AddInLink(blLink)
+
+            'If we are using an offpage connector it is possible for the origin and actual origin to be different.
+            'the both need to have the inlink though.
+            If Not blLink.Origin Is blLink.ActualOrigin AndAlso Not blLink.Origin.OutLinks.Contains(blLink.ID) Then
+                blLink.Origin.AddOutLink(blLink)
+            End If
+            If Not blLink.Destination Is blLink.ActualDestination AndAlso Not blLink.Destination.InLinks.Contains(blLink.ID) Then
+                blLink.Destination.AddInLink(blLink)
+            End If
+
+            Me.BehavioralLinks.Add(blLink.ID, blLink)
+
+            If Not Me.SubsystemDiagram Is Nothing Then
+                Me.SubsystemDiagram.AddLink(blLink)
+            End If
+
+            blLink.ActualOrigin.AfterAddLink(blLink)
+            blLink.ActualDestination.AfterAddLink(blLink)
+            blLink.AfterAddLink()
+            blLink.SelectItem()
+
+        End Sub
+
+
+        Public Overridable Sub RemoveLink(ByRef blLink As AnimatGUI.DataObjects.Behavior.Link)
+
+            Try
+                If Not blLink Is Nothing AndAlso Me.BehavioralLinks.ContainsKey(blLink.ID) Then
+                    'BeginGroupChange()
+
+                    If Not blLink.ActualOrigin Is Nothing Then blLink.ActualOrigin.BeforeRemoveLink(blLink)
+                    If Not blLink.ActualDestination Is Nothing Then blLink.ActualDestination.BeforeRemoveLink(blLink)
+                    blLink.BeforeRemoveLink()
+
+                    If Not blLink.ActualOrigin Is Nothing Then blLink.ActualOrigin.RemoveOutLink(blLink)
+                    If Not blLink.ActualDestination Is Nothing Then blLink.ActualDestination.RemoveInLink(blLink)
+
+                    'If we are using an offpage connector it is possible for the origin and actual origin to be different.
+                    'they both need to have the inlink though.
+                    'blLink.Origin.OutLinks.DumpListInfo()
+                    'blLink.Destination.InLinks.DumpListInfo()
+                    If Not blLink.Origin Is Nothing AndAlso Not blLink.ActualOrigin Is Nothing AndAlso _
+                       Not blLink.Origin Is blLink.ActualOrigin AndAlso blLink.Origin.OutLinks.Contains(blLink.ID) Then
+                        blLink.Origin.RemoveOutLink(blLink)
+                    End If
+                    If Not blLink.Destination Is Nothing AndAlso Not blLink.ActualDestination Is Nothing AndAlso _
+                       Not blLink.Destination Is blLink.ActualDestination AndAlso blLink.Destination.InLinks.Contains(blLink.ID) Then
+                        blLink.Destination.RemoveInLink(blLink)
+                    End If
+
+                    Me.BehavioralLinks.Remove(blLink.ID)
+                    If Not Me.SubsystemDiagram Is Nothing Then
+                        Me.SubsystemDiagram.RemoveLink(blLink)
+                    End If
+
+                    If Not blLink.ActualOrigin Is Nothing Then blLink.ActualOrigin.AfterRemoveLink(blLink)
+                    If Not blLink.ActualDestination Is Nothing Then blLink.ActualDestination.AfterRemoveLink(blLink)
+                    blLink.AfterRemoveLink()
+                End If
+
+            Catch ex As System.Exception
+                Throw ex
+            Finally
+                'EndGroupChange()
+            End Try
+
+        End Sub
+
 #Region " DataObject Methods "
 
         Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
