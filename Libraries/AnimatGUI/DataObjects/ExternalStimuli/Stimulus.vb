@@ -436,7 +436,9 @@ Namespace DataObjects.ExternalStimuli
 
         Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
             MyBase.BeforeRemoveFromList(bThrowError)
-            Util.Application.SimulationInterface.RemoveItem("Simulator", "Stimulus", Me.ID, bThrowError)
+            If Not m_doInterface Is Nothing Then
+                Util.Application.SimulationInterface.RemoveItem("Simulator", "Stimulus", Me.ID, bThrowError)
+            End If
             m_doInterface = Nothing
         End Sub
 

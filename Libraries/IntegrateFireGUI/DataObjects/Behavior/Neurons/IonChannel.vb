@@ -474,12 +474,20 @@ Namespace DataObjects.Behavior.Neurons
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "IonChannel", Me.GetSimulationXml("IonChannel"), bThrowError)
-            InitializeSimulationReferences()
+            MyBase.BeforeAddToList(bThrowError)
+
+            If Not Me.Parent Is Nothing Then
+                Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "IonChannel", Me.GetSimulationXml("IonChannel"), bThrowError)
+                InitializeSimulationReferences()
+            End If
         End Sub
 
         Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            Util.Application.SimulationInterface.RemoveItem(Me.Parent.ID, "IonChannel", Me.ID, bThrowError)
+            MyBase.BeforeRemoveFromList(bThrowError)
+
+            If Not Me.Parent Is Nothing AndAlso Not m_doInterface Is Nothing Then
+                Util.Application.SimulationInterface.RemoveItem(Me.Parent.ID, "IonChannel", Me.ID, bThrowError)
+            End If
             m_doInterface = Nothing
         End Sub
 

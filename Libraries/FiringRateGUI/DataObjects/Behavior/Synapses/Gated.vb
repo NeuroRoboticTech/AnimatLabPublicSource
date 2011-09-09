@@ -295,8 +295,11 @@ Namespace DataObjects.Behavior.Synapses
         End Sub
 
         Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+            'We do not want to call the base class here because we are doing a completely different simint.RemoveItem
+            Me.SignalBeforeRemoveItem(Me)
+
             'However, we do need to remove it if it is removed from the list.
-            If Not m_lsGatedSynapse Is Nothing AndAlso Not m_lsGatedSynapse.Link Is Nothing Then
+            If Not m_lsGatedSynapse Is Nothing AndAlso Not m_lsGatedSynapse.Link Is Nothing AndAlso Not m_doInterface Is Nothing Then
                 Util.Application.SimulationInterface.RemoveItem(m_lsGatedSynapse.Link.ID, "Synapse", Me.ID, bThrowError)
                 m_doInterface = Nothing
             End If

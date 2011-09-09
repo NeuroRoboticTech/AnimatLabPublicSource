@@ -1676,6 +1676,8 @@ Namespace DataObjects.Physical
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.BeforeAddToList(bThrowError)
+
             'Verify that this part can be added to the parent 
             If Not Me.IsRoot Then
                 If Not Me.Parent Is Nothing AndAlso Util.IsTypeOf(Me.Parent.GetType(), GetType(RigidBody)) Then
@@ -1693,12 +1695,15 @@ Namespace DataObjects.Physical
                 m_JointToParent.BeforeAddToList(bThrowError)
             End If
 
-            Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "RigidBody", Me.GetSimulationXml("RigidBody"), bThrowError)
-            InitializeSimulationReferences()
+            If Not Me.Parent Is Nothing Then
+                Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "RigidBody", Me.GetSimulationXml("RigidBody"), bThrowError)
+                InitializeSimulationReferences()
+            End If
         End Sub
 
         Public Overrides Sub AfterAddToList(Optional ByVal bThrowError As Boolean = True)
             MyBase.AfterAddToList(bThrowError)
+
             If Not m_JointToParent Is Nothing Then
                 m_JointToParent.AfterAddToList(bThrowError)
             End If
@@ -1706,11 +1711,14 @@ Namespace DataObjects.Physical
 
         Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
             MyBase.BeforeRemoveFromList(bThrowError)
+
             If Not m_JointToParent Is Nothing Then
                 m_JointToParent.BeforeRemoveFromList(bThrowError)
             End If
 
-            Util.Application.SimulationInterface.RemoveItem(Me.Parent.ID(), "RigidBody", Me.ID, bThrowError)
+            If Not Me.Parent Is Nothing AndAlso Not m_doInterface Is Nothing Then
+                Util.Application.SimulationInterface.RemoveItem(Me.Parent.ID(), "RigidBody", Me.ID, bThrowError)
+            End If
             m_doInterface = Nothing
         End Sub
 

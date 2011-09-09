@@ -705,6 +705,47 @@ catch(...)
 
 // ************* Light Conversion functions ******************************
 
+// ************* External Neural Module Conversion functions ******************************
+
+NeuralModule *VsClassFactory::CreateNeuralModule(string strType, BOOL bThrowError)
+{
+	NeuralModule *lpModule=NULL;
+
+try
+{
+	strType = Std_ToUpper(Std_Trim(strType));
+
+	if(strType == "PHYSICSNEURALMODULE")
+	{
+		lpModule = new AnimatSim::Behavior::PhysicsNeuralModule;
+		lpModule->ClassFactory(this);
+	}
+	else
+	{
+		lpModule = NULL;
+		if(bThrowError)
+			THROW_PARAM_ERROR(Al_Err_lInvalidNeuralModuleType, Al_Err_strInvalidNeuralModuleType, "NeuralModule", strType);
+	}
+
+	return lpModule;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpModule) delete lpModule;
+	RELAY_ERROR(oError); 
+	return NULL;
+}
+catch(...)
+{
+	if(lpModule) delete lpModule;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+
+// ************* Neural Module Type Conversion functions ******************************
+
 // ************* IStdClassFactory functions ******************************
 
 CStdSerialize *VsClassFactory::CreateObject(string strClassType, string strObjectType, BOOL bThrowError)
@@ -745,6 +786,8 @@ CStdSerialize *VsClassFactory::CreateObject(string strClassType, string strObjec
 		lpObject = CreateWindowItem(strObjectType, bThrowError);
 	else if(strClassType == "LIGHT")
 		lpObject = CreateLight(strObjectType, bThrowError);
+	else if(strClassType == "NEURALMODULE")
+		lpObject = CreateNeuralModule(strObjectType, bThrowError);
 	else
 	{
 		lpObject = NULL;

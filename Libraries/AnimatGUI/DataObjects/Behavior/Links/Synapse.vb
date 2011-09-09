@@ -22,6 +22,8 @@ Namespace DataObjects.Behavior.Links
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.BeforeAddToList(bThrowError)
+
             'Synpases are stored in the destination neuron object.
             If Not Me.Destination Is Nothing Then
                 Util.Application.SimulationInterface.AddItem(Me.Destination.ID, "Synapse", Me.GetSimulationXml("Synapse"), bThrowError)
@@ -30,8 +32,10 @@ Namespace DataObjects.Behavior.Links
         End Sub
 
         Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.BeforeRemoveFromList(bThrowError)
+
             'Synpases are stored in the destination neuron object.
-            If Not Me.Destination Is Nothing Then
+            If Not Me.Destination Is Nothing AndAlso Not m_doInterface Is Nothing Then
                 Util.Application.SimulationInterface.RemoveItem(Me.Destination.ID, "Synapse", Me.ID, bThrowError)
                 m_doInterface = Nothing
             End If

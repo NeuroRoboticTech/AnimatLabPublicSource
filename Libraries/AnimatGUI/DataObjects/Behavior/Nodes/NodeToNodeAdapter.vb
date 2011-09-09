@@ -99,10 +99,10 @@ Namespace DataObjects.Behavior.Nodes
 
                 oXml.AddChildElement("Type", Me.AdapterType)
                 oXml.AddChildElement("SourceModule", nmSource.ModuleName)
-                oXml.AddChildElement("SourceNodeID", bnOrigin.ID)
+                oXml.AddChildElement("SourceID", bnOrigin.ID)
                 oXml.AddChildElement("SourceDataType", m_thDataTypes.ID)
                 oXml.AddChildElement("TargetModule", nmTarget.ModuleName)
-                oXml.AddChildElement("TargetNodeID", bnDestination.ID)
+                oXml.AddChildElement("TargetID", bnDestination.ID)
 
                 m_gnGain.SaveSimulationXml(oXml, Nothing, "Gain")
 

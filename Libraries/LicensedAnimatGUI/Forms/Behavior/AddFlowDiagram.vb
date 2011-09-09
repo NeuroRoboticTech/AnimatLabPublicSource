@@ -2179,7 +2179,7 @@ Namespace Forms.Behavior
             Me.BringToFrontMenuItem.Text = "Bring to front"
             Me.BringToFrontMenuItem.ToolTipText = "Bring to front"
 
- 
+
 
             '
             'AddFlowMenuStrip
@@ -2251,7 +2251,7 @@ Namespace Forms.Behavior
             End If
 
 
-             tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcSelectByType, mcRelabel})
+            tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcSelectByType, mcRelabel})
 
             If m_ctrlAddFlow.SelectedItems.Count > 0 Then
                 tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcRelabelSelected})
@@ -3930,6 +3930,14 @@ Namespace Forms.Behavior
                         blLink.EndBatchUpdate(False)
 
                         Me.Subsystem.AddLink(bnAdapter, bnDestination, blLink)
+
+                        Try
+                            Dim baAdapter As AnimatGUI.DataObjects.Behavior.Nodes.Adapter = DirectCast(bnAdapter, AnimatGUI.DataObjects.Behavior.Nodes.Adapter)
+                            baAdapter.CreateAdapterSimReferences()
+                        Catch ex As Exception
+                            bnAdapter.Delete(False)
+                            Throw ex
+                        End Try
 
                         bnAdapter.SelectItem()
                     End If

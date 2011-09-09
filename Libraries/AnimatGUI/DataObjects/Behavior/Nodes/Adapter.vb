@@ -285,6 +285,40 @@ Namespace DataObjects.Behavior.Nodes
             End If
         End Sub
 
+#Region " Add-Remove to List Methods "
+
+        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.BeforeRemoveFromList(bThrowError)
+
+            If Not NeuralModule Is Nothing AndAlso Not m_doInterface Is Nothing Then
+                Util.Application.SimulationInterface.RemoveItem(Me.Organism.ID(), "Adapter", Me.ID, bThrowError)
+            End If
+            m_doInterface = Nothing
+        End Sub
+
+        Public Overrides Sub AfterRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.AfterRemoveFromList(bThrowError)
+
+            If Not NeuralModule Is Nothing AndAlso NeuralModule.Nodes.Contains(Me.ID) Then
+                NeuralModule.Nodes.Remove(Me.ID)
+            End If
+        End Sub
+
+        Public Overridable Sub CreateAdapterSimReferences(Optional ByVal bThrowError As Boolean = True)
+            If Not NeuralModule Is Nothing Then
+                NeuralModule.VerifyExistsInSim()
+                Util.Application.SimulationInterface.AddItem(Me.Organism.ID(), "Adapter", Me.GetSimulationXml("Adapter"), bThrowError)
+            End If
+            InitializeSimulationReferences()
+
+            If Not NeuralModule Is Nothing Then
+                NeuralModule.Nodes.Add(Me.ID, Me)
+            End If
+        End Sub
+
+
+#End Region
+
         Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
             MyBase.LoadData(oXml)
 

@@ -181,6 +181,7 @@ Copy "$(TargetPath)" ..\..\bin
     <ClCompile Include="OdorSensor.cpp" />
     <ClCompile Include="OdorType.cpp" />
     <ClCompile Include="Organism.cpp" />
+    <ClCompile Include="PhysicalNeuralModule.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="PolynomialGain.cpp" />
     <ClCompile Include="Prismatic.cpp" />
@@ -269,6 +270,7 @@ Copy "$(TargetPath)" ..\..\bin
     <ClInclude Include="OdorSensor.h" />
     <ClInclude Include="OdorType.h" />
     <ClInclude Include="Organism.h" />
+    <ClInclude Include="PhysicalNeuralModule.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="PolynomialGain.h" />
     <ClInclude Include="Prismatic.h" />

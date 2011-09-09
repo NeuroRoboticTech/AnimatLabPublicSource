@@ -36,7 +36,8 @@ Namespace DataObjects.Behavior
             MyBase.New(doParent)
 
             m_strModuleName = "PhysicsModule"
- 
+            m_strModuleType = "PhysicsNeuralModule"
+
             m_snTimeStep = New AnimatGUI.Framework.ScaledNumber(Me, "TimeStep", 10, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
         End Sub
 
@@ -50,22 +51,22 @@ Namespace DataObjects.Behavior
             Return oNewModule
         End Function
 
-        Public Overrides Sub SaveData(ByRef oXml As Interfaces.StdXml)
-            'TODO
-            'Me.Organism.AddContactAdapters(Me, m_aryNodes)
-
-            oXml.IntoElem() 'Into the Adapters Element
-            Dim bnNode As DataObjects.Behavior.Node
-            For Each deEntry As DictionaryEntry In m_aryNodes
-                bnNode = DirectCast(deEntry.Value, DataObjects.Behavior.Node)
-                bnNode.SaveData(oXml)
-            Next
-            oXml.OutOfElem()
+        ''' \brief Verifies this Neural module exists in simulation.
+        ''' 
+        ''' \details We do not want to call this method for the physics module. The reason is that if the sim is up and running
+        ''' 		 then the physics module is actually the nervous system, which will always be there.
+        ''' 
+        ''' \author dcofer
+        ''' \date   9/8/2011
+        Public Overrides Sub VerifyExistsInSim()
         End Sub
 
         Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
-            'TODO
-            'Me.Organism.AddContactAdapters(Me, m_aryNodes)
+            MyBase.SaveSimulationXml(oXml, nmParentControl, strName)
+
+            oXml.IntoElem() 'Into the neural module element.
+
+            oXml.AddChildElement("Adapters")
 
             oXml.IntoElem() 'Into the Adapters Element
             Dim bnNode As DataObjects.Behavior.Node
@@ -73,7 +74,9 @@ Namespace DataObjects.Behavior
                 bnNode = DirectCast(deEntry.Value, DataObjects.Behavior.Node)
                 bnNode.SaveSimulationXml(oXml, Me)
             Next
-            oXml.OutOfElem()
+            oXml.OutOfElem() 'outof the adapters element.
+
+            oXml.OutOfElem() 'outof the neural module element.
         End Sub
 
 #End Region

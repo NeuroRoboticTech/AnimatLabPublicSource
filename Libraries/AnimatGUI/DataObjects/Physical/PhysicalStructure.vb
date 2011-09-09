@@ -760,7 +760,9 @@ Namespace DataObjects.Physical
 
         Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
             MyBase.BeforeRemoveFromList(bThrowError)
-            Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, Me.TypeName, Me.ID, bThrowError)
+            If Not Util.Simulation Is Nothing AndAlso Not m_doInterface Is Nothing Then
+                Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, Me.TypeName, Me.ID, bThrowError)
+            End If
             m_doInterface = Nothing
         End Sub
 

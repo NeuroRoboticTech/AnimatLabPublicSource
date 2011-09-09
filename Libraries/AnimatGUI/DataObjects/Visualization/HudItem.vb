@@ -66,13 +66,18 @@ Namespace DataObjects.Visualization
 
         Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
             MyBase.BeforeAddToList(bThrowError)
-            Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "HudItem", Me.GetSimulationXml("HudItem"), bThrowError)
-            InitializeSimulationReferences()
+
+            If Not Util.Simulation Is Nothing Then
+                Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "HudItem", Me.GetSimulationXml("HudItem"), bThrowError)
+                InitializeSimulationReferences()
+            End If
         End Sub
 
         Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
             MyBase.BeforeRemoveFromList(bThrowError)
-            Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, "HudItem", Me.ID, bThrowError)
+            If Not Util.Simulation Is Nothing AndAlso Not m_doInterface Is Nothing Then
+                Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, "HudItem", Me.ID, bThrowError)
+            End If
             m_doInterface = Nothing
         End Sub
 

@@ -82,6 +82,7 @@ namespace AnimatSim
 			virtual void TimeStep(float fltVal);
 
 			virtual IStdClassFactory *ClassFactory();
+			virtual void ClassFactory(IStdClassFactory *lpFactory);
 
 			Simulator *GetSimulator();
 			Organism *GetOrganism();

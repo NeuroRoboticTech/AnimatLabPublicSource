@@ -33,14 +33,9 @@ namespace AnimatSim
 
 			/// The array of neural modules used within this nervous system.
 			CStdPtrMap<string, NeuralModule> m_aryNeuralModules;
-
-			/// The array of adapters that need to be processed by this neural module.
-			CStdPtrArray<Adapter> m_aryAdapters;
-
+			
 			NeuralModule *LoadNeuralModule(CStdXml &oXml);
 			void AddNeuralModule(NeuralModule *lpModule);
-
-			Adapter *LoadAdapter(CStdXml &oXml);
 
 		public:
 			NervousSystem();

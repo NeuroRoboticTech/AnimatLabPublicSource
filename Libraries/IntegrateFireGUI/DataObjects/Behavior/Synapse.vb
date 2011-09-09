@@ -457,15 +457,25 @@ Namespace DataObjects.Behavior
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
+            'We do not want to call the base class here because we are doing a completely different simint.addItem
+            Me.SignalBeforeAddItem(Me)
+
             'Synpases are stored in the destination neuron object.
             'Synapses are handled different for this model type. They are stored in the neural module, not in the destination neuron.
-            Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID, "Synapse", Me.GetSimulationXml("Synapse"), bThrowError)
-            InitializeSimulationReferences()
+            If Not Me.NeuralModule Is Nothing Then
+                Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID, "Synapse", Me.GetSimulationXml("Synapse"), bThrowError)
+                InitializeSimulationReferences()
+            End If
         End Sub
 
         Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+            'We do not want to call the base class here because we are doing a completely different simint.RemoveItem
+            Me.SignalBeforeRemoveItem(Me)
+
             'Synpases are stored in the destination neuron object.
-            Util.Application.SimulationInterface.RemoveItem(Me.NeuralModule.ID, "Synapse", Me.ID, bThrowError)
+            If Not Me.NeuralModule Is Nothing AndAlso Not m_doInterface Is Nothing Then
+                Util.Application.SimulationInterface.RemoveItem(Me.NeuralModule.ID, "Synapse", Me.ID, bThrowError)
+            End If
             m_doInterface = Nothing
         End Sub
 

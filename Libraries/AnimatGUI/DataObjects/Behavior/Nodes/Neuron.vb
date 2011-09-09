@@ -23,6 +23,8 @@ Namespace DataObjects.Behavior.Nodes
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.BeforeAddToList(bThrowError)
+
             If Not NeuralModule Is Nothing Then
                 NeuralModule.VerifyExistsInSim()
                 Util.Application.SimulationInterface.AddItem(NeuralModule.ID(), "Neuron", Me.GetSimulationXml("Neuron"), bThrowError)
@@ -31,7 +33,9 @@ Namespace DataObjects.Behavior.Nodes
         End Sub
 
         Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            If Not NeuralModule Is Nothing Then
+            MyBase.BeforeRemoveFromList(bThrowError)
+
+            If Not NeuralModule Is Nothing AndAlso Not m_doInterface Is Nothing Then
                 Util.Application.SimulationInterface.RemoveItem(NeuralModule.ID(), "Neuron", Me.ID, bThrowError)
             End If
             m_doInterface = Nothing

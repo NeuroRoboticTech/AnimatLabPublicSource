@@ -67,7 +67,6 @@ NervousSystem::~NervousSystem()
 try
 {
 	m_aryNeuralModules.RemoveAll();
-	m_aryAdapters.RemoveAll();
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of NervousSystem\r\n", "", -1, FALSE, TRUE);}
@@ -177,6 +176,7 @@ NeuralModule *NervousSystem::FindNeuralModule(string strModuleName, BOOL bThrowE
 	return lpModule;
 }
 
+
 void NervousSystem::Kill(BOOL bState)
 {
 	NeuralModule *lpModule = NULL;
@@ -232,12 +232,6 @@ void NervousSystem::Initialize()
 		lpModule = oPos->second;
 		lpModule->Initialize();
 	}
-
-	//Now initialize the adapters
-	int iCount = m_aryAdapters.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryAdapters[iIndex]->Initialize();
-
 }
 
 void NervousSystem::MinTimeStep(float &fltMin)
@@ -267,7 +261,6 @@ void NervousSystem::StepSimulation()
 			lpModule->StepSimulation();
 	}
 }
-
 
 long NervousSystem::CalculateSnapshotByteSize()
 {
@@ -325,20 +318,6 @@ void NervousSystem::Load(CStdXml &oXml)
 	}
 
 	oXml.OutOfElem(); //OutOf NeuralModules Element
-
-	if(oXml.FindChildElement("Adapters", FALSE))
-	{
-		oXml.IntoElem(); //Into Adapters Element
-		int iCount = oXml.NumberOfChildren();
-
-		for(int iIndex=0; iIndex<iCount; iIndex++)
-		{
-			oXml.FindChildByIndex(iIndex);
-			LoadAdapter(oXml);		
-		}
-		oXml.OutOfElem(); //OutOf Adapters Element
-	}
-
 }
 
 /**
@@ -409,60 +388,6 @@ catch(...)
 {
 	if(lpFactory) delete lpFactory;
 	if(lpModule) delete lpModule;
-	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
-	return NULL;
-}
-}
-
-/**
-\fn	Adapter *NervousSystem::LoadAdapter(CStdXml &oXml)
-
-\brief	Creates and loads an adapter.
-
-\details This method uses the module name and type specified in the xml packet to create a new
-adapter object using the simulator::CreateObject method. It then loads the adapter using the xml
-data. 
-
-\author	dcofer
-\date	2/25/2011
-
-\param [in,out]	oXml	The xml data packet to load. 
-
-\return	null if it fails, else the adapter. 
-**/
-
-Adapter *NervousSystem::LoadAdapter(CStdXml &oXml)
-{
-	Adapter *lpAdapter = NULL;
-	string strModuleName, strType;
-
-try
-{
-	oXml.IntoElem(); //Into Child Element
-	strModuleName = oXml.GetChildString("ModuleName", "");
-	strType = oXml.GetChildString("Type");
-	oXml.OutOfElem(); //OutOf Child Element
-
-	lpAdapter = dynamic_cast<Adapter *>(m_lpSim->CreateObject(strModuleName, "Adapter", strType));
-	if(!lpAdapter)
-		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Adapter");
-
-	lpAdapter->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
-	lpAdapter->Load(oXml);
-
-	m_aryAdapters.Add(lpAdapter);
-
-	return lpAdapter;
-}
-catch(CStdErrorInfo oError)
-{
-	if(lpAdapter) delete lpAdapter;
-	RELAY_ERROR(oError);
-	return NULL;
-}
-catch(...)
-{
-	if(lpAdapter) delete lpAdapter;
 	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
 	return NULL;
 }

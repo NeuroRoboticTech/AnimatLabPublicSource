@@ -109,6 +109,16 @@ catch(...)
 IStdClassFactory *NeuralModule::ClassFactory() {return m_lpClassFactory;}
 
 /**
+\brief	Sets the class factory for this neural module.
+
+\author	dcofer
+\date	9/9/2011
+
+\param [in,out]	lpFactory	The pointer to a factory.
+**/
+void NeuralModule::ClassFactory(IStdClassFactory *lpFactory) {m_lpClassFactory = lpFactory;}
+
+/**
 \fn	Simulator *NeuralModule::GetSimulator()
 
 \brief	Gets the simulator. 

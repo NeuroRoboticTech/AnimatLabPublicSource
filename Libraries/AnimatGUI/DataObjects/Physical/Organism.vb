@@ -383,27 +383,15 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("NeuralModules")
             oXml.IntoElem()
             Dim nmModule As DataObjects.Behavior.NeuralModule
-            Dim nmPhysicsModule As DataObjects.Behavior.NeuralModule
             For Each deEntry As DictionaryEntry In m_aryNeuralModules
                 nmModule = DirectCast(deEntry.Value, DataObjects.Behavior.NeuralModule)
 
-                If Not nmModule.GetType() Is GetType(DataObjects.Behavior.PhysicsModule) Then
-                    'Only save out the modules that have some nodes in them. Others are unused.
-                    If nmModule.HasNodesToSave Then
-                        nmModule.SaveData(oXml)
-                    End If
-                Else
-                    nmPhysicsModule = nmModule
+                'Only save out the modules that have some nodes in them. Others are unused.
+                If nmModule.HasNodesToSave Then
+                    nmModule.SaveData(oXml)
                 End If
             Next
             oXml.OutOfElem() 'Outof NeuralModules
-
-            oXml.AddChildElement("Adapters")
-            oXml.IntoElem()
-            If Not nmPhysicsModule Is Nothing Then
-                nmPhysicsModule.SaveData(oXml)
-            End If
-            oXml.OutOfElem() 'Outof Adapters
 
             If Not m_bnRootSubSystem Is Nothing Then
                 m_bnRootSubSystem.SaveData(oXml)
@@ -447,10 +435,6 @@ Namespace DataObjects.Physical
                     nmPhysicsModule.SaveSimulationXml(oXml)
                 End If
                 oXml.OutOfElem() 'Outof Adapters
-
-                If Not m_bnRootSubSystem Is Nothing Then
-                    m_bnRootSubSystem.SaveSimulationXml(oXml)
-                End If
 
                 oXml.OutOfElem() 'Outof Nervous System
                 oXml.OutOfElem() 'Outof Organism 

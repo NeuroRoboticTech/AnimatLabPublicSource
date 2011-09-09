@@ -144,12 +144,22 @@ Namespace DataObjects.Behavior
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID, "SynapseType", Me.GetSimulationXml("SynapseType"), bThrowError)
-            InitializeSimulationReferences()
+            'We do not want to call the base class here because we are doing a completely different simint.addItem
+            Me.SignalBeforeAddItem(Me)
+
+            If Not Me.NeuralModule Is Nothing Then
+                Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID, "SynapseType", Me.GetSimulationXml("SynapseType"), bThrowError)
+                InitializeSimulationReferences()
+            End If
         End Sub
 
         Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            Util.Application.SimulationInterface.RemoveItem(Me.NeuralModule.ID, "SynapseType", Me.ID, bThrowError)
+            'We do not want to call the base class here because we are doing a completely different simint.RemoveItem
+            Me.SignalBeforeRemoveItem(Me)
+
+            If Not Me.NeuralModule Is Nothing AndAlso Not m_doInterface Is Nothing Then
+                Util.Application.SimulationInterface.RemoveItem(Me.NeuralModule.ID, "SynapseType", Me.ID, bThrowError)
+            End If
             m_doInterface = Nothing
         End Sub
 
