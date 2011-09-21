@@ -638,6 +638,28 @@ Namespace Forms.Tools
 
         End Sub
 
+        Public Overrides Sub InitializeSimulationReferences()
+            MyBase.InitializeSimulationReferences()
+
+            Dim doAxis As DataObjects.Charting.Axis
+            For Each deEntry As DictionaryEntry In m_aryAxisList
+                doAxis = DirectCast(deEntry.Value, DataObjects.Charting.Axis)
+                doAxis.InitializeSimulationReferences()
+            Next
+
+        End Sub
+
+        Public Overrides Sub InitializeAfterLoad()
+            MyBase.InitializeAfterLoad()
+
+            Dim doAxis As DataObjects.Charting.Axis
+            For Each deEntry As DictionaryEntry In m_aryAxisList
+                doAxis = DirectCast(deEntry.Value, DataObjects.Charting.Axis)
+                doAxis.InitializeAfterLoad()
+            Next
+
+        End Sub
+
 #End Region
 
 #Region " Events "

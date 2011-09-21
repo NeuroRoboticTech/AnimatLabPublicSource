@@ -284,13 +284,16 @@ void ActivatedItemMgr::StepSimulation()
 	{
 		lpItem = m_aryItems[iIndex];
 
-		if(lpItem->NeedToActivate())
-			lpItem->Activate();
-		else if(lpItem->NeedToDeactivate())
-			lpItem->Deactivate();
+		if(lpItem->Enabled())
+		{
+			if(lpItem->NeedToActivate())
+				lpItem->Activate();
+			else if(lpItem->NeedToDeactivate())
+				lpItem->Deactivate();
 
-		if(lpItem->IsActivated())
-			lpItem->StepSimulation();
+			if(lpItem->IsActivated())
+				lpItem->StepSimulation();
+		}
 	}
 }
 

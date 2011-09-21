@@ -385,6 +385,7 @@ Namespace DataObjects.Behavior
                 oXml.AddChildElement(strName)
                 oXml.IntoElem()  'Into Node Element
 
+                'TODO: Do I need these two items in the simulation xml??
                 oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
                 oXml.AddChildElement("ClassName", Me.ClassName)
 

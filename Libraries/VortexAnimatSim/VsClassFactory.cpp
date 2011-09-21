@@ -718,7 +718,7 @@ try
 	if(strType == "PHYSICSNEURALMODULE")
 	{
 		lpModule = new AnimatSim::Behavior::PhysicsNeuralModule;
-		lpModule->ClassFactory(this);
+		lpModule->ClassFactory(new VsClassFactory());
 	}
 	else
 	{

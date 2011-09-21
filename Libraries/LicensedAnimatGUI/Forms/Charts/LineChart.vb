@@ -1931,16 +1931,6 @@ Namespace Forms.Charts
 
         End Sub
 
-        Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
-
-            Dim doAxis As AnimatGUI.DataObjects.Charting.Axis
-            For Each deEntry As DictionaryEntry In m_aryAxisList
-                doAxis = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Charting.Axis)
-                doAxis.InitializeSimulationReferences()
-            Next
-        End Sub
-
         Protected Overrides Sub AnimatForm_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
             MyBase.AnimatForm_FormClosing(sender, e)
 

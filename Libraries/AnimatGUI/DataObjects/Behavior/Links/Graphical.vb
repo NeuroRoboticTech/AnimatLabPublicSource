@@ -74,6 +74,10 @@ Namespace DataObjects.Behavior.Links
 
 #Region " DataObject Methods "
 
+        Public Overrides Sub InitializeSimulationReferences()
+            'The graphical link is in the editor only. It has nothing to initialize.
+        End Sub
+
 #End Region
 
 #End Region

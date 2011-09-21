@@ -122,6 +122,7 @@ Namespace DataObjects.ExternalStimuli
             oXml.AddChildElement("ID", m_strID)
             oXml.AddChildElement("Name", m_strName)
             oXml.AddChildElement("AlwaysActive", m_bAlwaysActive)
+            oXml.AddChildElement("Enabled", m_bEnabled)
 
             oXml.AddChildElement("ModuleName", Me.StimulusModuleName)
             oXml.AddChildElement("Type", Me.StimulusClassType)

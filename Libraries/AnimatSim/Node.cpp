@@ -98,15 +98,15 @@ void Node::Enabled(BOOL bValue)
 	m_fltEnabled = (float) m_bEnabled;
 }
 
-void Node::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
-{
-	m_lpSim->AttachSourceAdapter(lpStructure, lpAdapter);
-}
-
-void Node::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
-{
-	m_lpSim->AttachTargetAdapter(lpStructure, lpAdapter);
-}
+//void Node::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
+//{
+//	m_lpSim->AttachSourceAdapter(lpStructure, lpAdapter);
+//}
+//
+//void Node::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
+//{
+//	m_lpSim->AttachTargetAdapter(lpStructure, lpAdapter);
+//}
 
 void Node::Kill(BOOL bState)
 {
@@ -144,6 +144,26 @@ void Node::VerifySystemPointers()
 
 	if(!m_lpStructure)
 		THROW_PARAM_ERROR(Al_Err_lStructureNotDefined, Al_Err_strStructureNotDefined, "Link: ", m_strID);
+}
+
+BOOL Node::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(AnimatBase::SetData(strType, strValue, FALSE))
+		return true;
+
+	if(strType == "ENABLED")
+	{
+		Enabled(Std_ToBool(strValue));
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
 }
 
 }			//AnimatSim

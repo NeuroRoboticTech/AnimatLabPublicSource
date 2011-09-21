@@ -96,7 +96,17 @@ BOOL ActivatedItem::Enabled()
 \param	bVal	true to enable, false to disable. 
 **/
 void ActivatedItem::Enabled(BOOL bVal)
-{m_bEnabled = bVal;}
+{
+	m_bEnabled = bVal;
+
+	if(m_lpSim->Paused() && m_lpSim->TimeSlice() > 0)
+	{
+		if(!m_bEnabled && IsActivated())
+			Deactivate();
+		else if(m_bEnabled && !IsActivated() && NeedToActivate())
+			Activate();
+	}
+}
 
 /**
 \fn	BOOL ActivatedItem::LoadedTime()
@@ -562,7 +572,8 @@ void ActivatedItem::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Item Element
 
-	Enabled(oXml.GetChildBool("Enabled", m_bEnabled));
+	//Do not call the mutator here because it will run code we do not want to run on load.
+	m_bEnabled = oXml.GetChildBool("Enabled", "True");
 
 	if(oXml.FindChildElement("StartTime", FALSE))
 	{

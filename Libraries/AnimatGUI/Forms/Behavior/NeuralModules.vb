@@ -118,35 +118,6 @@ Namespace Forms.Behavior
 
         End Sub
 
-        'TODO
-        'Public Sub PopulateNeuralModules()
-
-        '    lvNeuralModules.Clear()
-
-        '    lvNeuralModules.HideSelection = False
-        '    lvNeuralModules.MultiSelect = False
-        '    lvNeuralModules.FullRowSelect = True
-        '    lvNeuralModules.GridLines = True
-        '    lvNeuralModules.View = View.Details
-        '    lvNeuralModules.LabelEdit = False
-        '    lvNeuralModules.Sorting = SortOrder.Ascending
-
-        '    lvNeuralModules.Columns.Add("Neural Modules", (lvNeuralModules.Width - 1), HorizontalAlignment.Left)
-
-        '    Dim nmModule As DataObjects.Behavior.NeuralModule
-        '    Dim liItem As ListViewItem
-        '    For Each deEntry As DictionaryEntry In m_beEditor.Organism.NeuralModules
-        '        nmModule = DirectCast(deEntry.Value, DataObjects.Behavior.NeuralModule)
-
-        '        If Not Util.IsTypeOf(nmModule.GetType(), GetType(DataObjects.Behavior.PhysicsModule), False) Then
-        '            liItem = New ListViewItem(nmModule.ModuleName)
-        '            liItem.Tag = nmModule
-
-        '            lvNeuralModules.Items.Add(liItem)
-        '        End If
-        '    Next
-        'End Sub
-
         Public Sub RefreshProperties()
             pgModuleProperties.Refresh()
         End Sub

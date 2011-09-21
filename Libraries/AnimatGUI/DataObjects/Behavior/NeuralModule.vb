@@ -245,7 +245,7 @@ Namespace DataObjects.Behavior
 
 #Region " Events "
 
-        Protected Sub OnTimeStepChanged(ByVal doObject As Framework.DataObject)
+        Protected Overridable Sub OnTimeStepChanged(ByVal doObject As Framework.DataObject)
             If Not doObject Is Me AndAlso Not m_doInterface Is Nothing Then
                 SetSimData("TimeStep", m_snTimeStep.ActualValue.ToString, True)
                 m_snTimeStep.ActualValue = m_doInterface.GetDataValueImmediate("TimeStep")

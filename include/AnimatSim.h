@@ -43,6 +43,7 @@ namespace AnimatSim
 	{
 		class NervousSystem;
 		class NeuralModule;
+		class PhysicalNeuralModule;
 	}
 
 	namespace Charting
@@ -209,6 +210,7 @@ using namespace AnimatSim::Recording;
 #include "Structure.h"
 #include "NervousSystem.h"
 #include "NeuralModule.h"
+#include "PhysicalNeuralModule.h"
 #include "Organism.h"
 #include "Light.h"
 #include "LightManager.h"

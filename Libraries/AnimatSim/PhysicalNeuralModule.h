@@ -48,7 +48,6 @@ namespace AnimatSim
 			virtual void Kill(BOOL bState = TRUE);
 			virtual void Initialize();
 			virtual void ResetSimulation();
-			virtual void StepSimulation();
 			virtual void Load(CStdXml &oXml);
 
 	#pragma region DataAccesMethods
@@ -56,10 +55,6 @@ namespace AnimatSim
 			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE);
 			virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
 	#pragma endregion
-
-			virtual void AddNeuron(string strXml);
-			virtual void RemoveNeuron(string strID, BOOL bThrowError = TRUE);
-			virtual int FindNeuronListPos(string strID, BOOL bThrowError = TRUE);
 
 	#pragma region SnapshotMethods
 				virtual long CalculateSnapshotByteSize();

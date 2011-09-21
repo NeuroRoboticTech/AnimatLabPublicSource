@@ -296,13 +296,14 @@ void Adapter::Initialize()
 	if(!m_lpTargetNode)
 		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strTargetID);
 
-	m_lpSourceNode->AttachSourceAdapter(m_lpStructure, this);
-	m_lpTargetNode->AttachTargetAdapter(m_lpStructure, this);
+	m_lpSim->AttachSourceAdapter(m_lpStructure, this);
+	m_lpSim->AttachTargetAdapter(m_lpStructure, this);
 }
 
 void Adapter::StepSimulation()
 {
-	m_lpTargetNode->AddExternalNodeInput(m_lpGain->CalculateGain(*m_lpSourceData));
+	float fltInput = m_lpGain->CalculateGain(*m_lpSourceData);
+	m_lpTargetNode->AddExternalNodeInput(fltInput);
 }
 
 void Adapter::Load(CStdXml &oXml)

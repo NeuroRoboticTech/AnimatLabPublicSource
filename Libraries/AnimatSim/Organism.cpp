@@ -177,19 +177,6 @@ BOOL Organism::AddItem(string strItemType, string strXml, BOOL bThrowError)
 		}
 	}
 
-	if(strType == "ADAPTER")
-	{
-		try
-		{
-			m_lpNervousSystem->AddAdapter(strXml);
-			return TRUE;
-		}
-		catch(CStdErrorInfo oError)
-		{
-			if(bThrowError)
-				RELAY_ERROR(oError);
-		}
-	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)

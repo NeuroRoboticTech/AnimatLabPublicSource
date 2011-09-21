@@ -140,6 +140,7 @@ Namespace Forms.Tools
 
         Public Overloads Overrides Sub LoadExternalFile(ByVal strFilename As String)
             MyBase.LoadExternalFile(strFilename)
+            InitializeAfterLoad()
 
             Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "DataChart", Me.GetSimulationXml("DataChart"), True)
             InitializeSimulationReferences()

@@ -888,9 +888,7 @@ Namespace DataObjects
 
             For Each deEntry As DictionaryEntry In m_aryProjectStimuli
                 doStim = DirectCast(deEntry.Value, DataObjects.ExternalStimuli.Stimulus)
-                If doStim.Enabled Then
-                    doStim.SaveSimulationXml(oXml)
-                End If
+                doStim.SaveSimulationXml(oXml)
             Next
 
             oXml.OutOfElem()

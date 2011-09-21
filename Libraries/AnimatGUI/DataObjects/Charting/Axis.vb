@@ -560,6 +560,17 @@ Namespace DataObjects.Charting
             End If
         End Sub
 
+        Public Overrides Sub InitializeAfterLoad()
+            MyBase.InitializeAfterLoad()
+
+            Dim doColumn As AnimatGUI.DataObjects.Charting.DataColumn
+            For Each deEntry As DictionaryEntry In m_aryDataColumns
+                doColumn = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Charting.DataColumn)
+                doColumn.InitializeAfterLoad()
+            Next
+
+        End Sub
+
         <Browsable(False)> _
         Public Overrides ReadOnly Property StructureID() As String
             Get

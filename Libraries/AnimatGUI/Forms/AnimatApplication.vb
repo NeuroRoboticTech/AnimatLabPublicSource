@@ -5194,7 +5194,6 @@ Namespace Forms
                     Dim frmAnimat As Forms.AnimatForm = DirectCast(CreateForm(strAssembly, strClass, strTitle, False), Forms.AnimatForm)
                     frmAnimat.Initialize(Me)
                     frmAnimat.LoadData(oXml)
-                    frmAnimat.InitializeAfterLoad()
 
                     AddChildForm(frmAnimat, e.TabPage)
                     e.TabPage.Control = frmAnimat

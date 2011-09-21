@@ -125,7 +125,7 @@ void ContactAdapter::Initialize()
 	if(!m_lpSourceNode)
 		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strSourceBodyID);
 
-	m_lpSourceNode->AttachSourceAdapter(m_lpStructure, this);
+	m_lpSim->AttachSourceAdapter(m_lpStructure, this);
 	m_lpSim->AttachTargetAdapter(m_lpStructure, this);
 
 	int iCount = m_aryFieldPairs.GetSize();

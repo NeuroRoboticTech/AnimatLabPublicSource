@@ -27,7 +27,10 @@ Namespace DataObjects.Behavior.Nodes
 
             If Not NeuralModule Is Nothing Then
                 NeuralModule.VerifyExistsInSim()
-                Util.Application.SimulationInterface.AddItem(NeuralModule.ID(), "Neuron", Me.GetSimulationXml("Neuron"), bThrowError)
+                If Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
+                    'If we just created this neuralmodule in the sim then this object might already exist now. We should only add it if it does not exist.
+                    Util.Application.SimulationInterface.AddItem(NeuralModule.ID(), "Neuron", Me.GetSimulationXml("Neuron"), bThrowError)
+                End If
             End If
             InitializeSimulationReferences()
         End Sub

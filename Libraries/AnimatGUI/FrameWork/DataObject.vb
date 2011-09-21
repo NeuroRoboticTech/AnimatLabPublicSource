@@ -672,7 +672,7 @@ Namespace Framework
         End Sub
 
         Public Overridable Sub InitializeSimulationReferences()
-            If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen AndAlso Me.IsInitialized Then
+            If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
                 m_doInterface = New Interfaces.DataObjectInterface(Util.Application.SimulationInterface, Me.ID)
             End If
         End Sub

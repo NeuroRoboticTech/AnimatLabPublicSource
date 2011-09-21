@@ -79,32 +79,6 @@ void PhysicsNeuralModule::Kill(BOOL bState)
 			m_aryAdapters[iIndex]->Kill(bState);
 }
 
-/**
-\brief	Searches for the neuron with the specified ID and returns its position in the list.
-
-\author	dcofer
-\date	3/29/2011
-
-\param	strID	   	GUID ID of the neruon to find. 
-\param	bThrowError	true to throw error if nothing found. 
-
-\return	The found neuron list position.
-**/
-int PhysicsNeuralModule::FindNeuronListPos(string strID, BOOL bThrowError)
-{
-	string sID = Std_ToUpper(Std_Trim(strID));
-
-	int iCount = m_aryAdapters.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		if(m_aryAdapters[iIndex]->ID() == sID)
-			return iIndex;
-
-	if(bThrowError)
-		THROW_TEXT_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID");
-
-	return -1;
-}
-
 void PhysicsNeuralModule::ResetSimulation()
 {
 	int iCount = m_aryAdapters.GetSize();
@@ -125,16 +99,6 @@ void PhysicsNeuralModule::Initialize()
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		if(m_aryAdapters[iIndex])
 			m_aryAdapters[iIndex]->Initialize();
-}
-
-void PhysicsNeuralModule::StepSimulation()
-{
-	NeuralModule::StepSimulation();
-
-	int iCount = m_aryAdapters.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		if(m_aryAdapters[iIndex])
-			m_aryAdapters[iIndex]->StepSimulation();
 }
 
 #pragma region DataAccesMethods
@@ -195,12 +159,19 @@ BOOL PhysicsNeuralModule::AddItem(string strItemType, string strXml, BOOL bThrow
 {
 	string strType = Std_CheckString(strItemType);
 
-	if(strType == "NEURON")
+	if(strType == "ADAPTER")
 	{
-		AddNeuron(strXml);
-		return TRUE;
+		try
+		{
+			AddAdapter(strXml);
+			return TRUE;
+		}
+		catch(CStdErrorInfo oError)
+		{
+			if(bThrowError)
+				RELAY_ERROR(oError);
+		}
 	}
-	//Synapses are stored in the destination neuron. They will be added there.
 
 
 	//If it was not one of those above then we have a problem.
@@ -214,9 +185,9 @@ BOOL PhysicsNeuralModule::RemoveItem(string strItemType, string strID, BOOL bThr
 {
 	string strType = Std_CheckString(strItemType);
 
-	if(strType == "NEURON")
+	if(strType == "ADAPTER")
 	{
-		RemoveNeuron(strID, bThrowError);
+		RemoveAdapter(strID);
 		return TRUE;
 	}
 	//Synapses are stored in the destination neuron. They will be removed there.
@@ -264,13 +235,20 @@ void PhysicsNeuralModule::Load(CStdXml &oXml)
 
 	CStdXml oNetXml;
 
-	//if(Std_IsBlank(m_strProjectPath)) 
-	//	THROW_ERROR(Al_Err_lProjectPathBlank, Al_Err_strProjectPathBlank);
+	oXml.IntoElem();  //Into NeuralModule Element
+
+	ID(oXml.GetChildString("ID", m_strID));
+	Type(oXml.GetChildString("Type", m_strType));
+	Name(oXml.GetChildString("Name", m_strName));
+
+	//We do NOT call the TimeStep mutator here because we need to call it only after all modules are loaded so we can calculate the min time step correctly.
+	m_fltTimeStep = oXml.GetChildFloat("TimeStep", m_fltTimeStep);
+	
+	//This will add this object to the object list of the simulation.
+	m_lpSim->AddToObjectList(this);
 
 	m_arySourceAdapters.RemoveAll();
 	m_aryTargetAdapters.RemoveAll();
-
-	oXml.IntoElem();  //Into NeuralModule Element
 
 	if(oXml.FindChildElement("Adapters", FALSE))
 	{
@@ -286,8 +264,6 @@ void PhysicsNeuralModule::Load(CStdXml &oXml)
 	}
 
 	oXml.OutOfElem(); //OutOf NeuralModule Element
-
-	//GenerateAutoSeed();
 
 	TRACE_DEBUG("Finished loading nervous system config file.");
 }

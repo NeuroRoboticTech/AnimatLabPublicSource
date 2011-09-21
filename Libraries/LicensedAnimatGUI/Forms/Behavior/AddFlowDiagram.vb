@@ -2474,6 +2474,8 @@ Namespace Forms.Behavior
             m_bnSubSystem.SubsystemDiagram = Me
 
             LoadDiagramXml(m_bnSubSystem.DiagramXml)
+
+            InitializeAfterLoad()
         End Sub
 
         Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
@@ -2484,6 +2486,10 @@ Namespace Forms.Behavior
             oXml.AddChildElement("SubSystemID", m_bnSubSystem.ID)
             oXml.OutOfElem()
 
+        End Sub
+
+        'AddFlow Diagrams have no sim object
+        Public Overrides Sub InitializeSimulationReferences()
         End Sub
 
         Public Overrides Sub LoadDiagramXml(ByVal strXml As String)
@@ -3933,6 +3939,7 @@ Namespace Forms.Behavior
 
                         Try
                             Dim baAdapter As AnimatGUI.DataObjects.Behavior.Nodes.Adapter = DirectCast(bnAdapter, AnimatGUI.DataObjects.Behavior.Nodes.Adapter)
+                            baAdapter.InitializeAfterLoad()
                             baAdapter.CreateAdapterSimReferences()
                         Catch ex As Exception
                             bnAdapter.Delete(False)

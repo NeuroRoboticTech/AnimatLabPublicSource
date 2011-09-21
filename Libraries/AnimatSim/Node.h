@@ -66,30 +66,14 @@ namespace AnimatSim
 		**/
 		virtual void AddExternalNodeInput(float fltInput) = 0;
 
-		/**
-		\brief	Attach this node to a source adapter. 
-		
-		\author	dcofer
-		\date	3/2/2011
-		
-		\param [in,out]	lpStructure	The pointer to a structure. 
-		\param [in,out]	lpAdapter	The pointer to an adapter. 
-		**/
-		virtual void AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter);
+#pragma region DataAccesMethods
 
-		/**
-		\brief	Attach this node to a target adapter. 
-		
-		\author	dcofer
-		\date	3/2/2011
-		
-		\param [in,out]	lpStructure	The pointer to a structure. 
-		\param [in,out]	lpAdapter	The pointer to an adapter. 
-		**/
-		virtual void AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter);
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+			virtual void VerifySystemPointers();
+			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
-		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
-		virtual void VerifySystemPointers();
+#pragma endregion
+
 	};
 
 }				//AnimatSim

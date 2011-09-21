@@ -291,9 +291,17 @@ Namespace DataObjects.Behavior.Nodes
             MyBase.BeforeRemoveFromList(bThrowError)
 
             If Not NeuralModule Is Nothing AndAlso Not m_doInterface Is Nothing Then
-                Util.Application.SimulationInterface.RemoveItem(Me.Organism.ID(), "Adapter", Me.ID, bThrowError)
+                Util.Application.SimulationInterface.RemoveItem(Me.NeuralModule.ID(), "Adapter", Me.ID, bThrowError)
             End If
             m_doInterface = Nothing
+        End Sub
+
+        Public Overrides Sub AfterAddToList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.AfterAddToList(bThrowError)
+
+            If Not NeuralModule Is Nothing Then
+                NeuralModule.Nodes.Add(Me.ID, Me)
+            End If
         End Sub
 
         Public Overrides Sub AfterRemoveFromList(Optional ByVal bThrowError As Boolean = True)
@@ -303,17 +311,16 @@ Namespace DataObjects.Behavior.Nodes
                 NeuralModule.Nodes.Remove(Me.ID)
             End If
         End Sub
-
         Public Overridable Sub CreateAdapterSimReferences(Optional ByVal bThrowError As Boolean = True)
             If Not NeuralModule Is Nothing Then
                 NeuralModule.VerifyExistsInSim()
-                Util.Application.SimulationInterface.AddItem(Me.Organism.ID(), "Adapter", Me.GetSimulationXml("Adapter"), bThrowError)
+                If Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
+                    'If we just created this neuralmodule in the sim then this object might already exist now. We should only add it if it does not exist.
+                    Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID(), "Adapter", Me.GetSimulationXml("Adapter"), bThrowError)
+                End If
             End If
             InitializeSimulationReferences()
 
-            If Not NeuralModule Is Nothing Then
-                NeuralModule.Nodes.Add(Me.ID, Me)
-            End If
         End Sub
 
 
@@ -349,26 +356,34 @@ Namespace DataObjects.Behavior.Nodes
                 MyBase.InitializeAfterLoad()
 
                 If m_bIsInitialized Then
-                    If m_strOriginID.Trim.Length > 0 Then
-                        m_bnOrigin = Me.Organism.FindBehavioralNode(m_strOriginID)
+                    If m_bnOrigin Is Nothing Then
+                        If m_strOriginID.Trim.Length > 0 Then
+                            m_bnOrigin = Me.Organism.FindBehavioralNode(m_strOriginID)
 
-                        If Not m_bnOrigin.IsInitialized Then
-                            m_bIsInitialized = False
-                            Return
-                        End If
+                            If Not m_bnOrigin.IsInitialized Then
+                                m_bIsInitialized = False
+                                Return
+                            End If
 
-                        m_thDataTypes = DirectCast(m_bnOrigin.DataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
+                            m_thDataTypes = DirectCast(m_bnOrigin.DataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
 
-                        If Not m_thDataTypes Is Nothing AndAlso m_strDataTypeID.Trim.Length > 0 AndAlso m_strDataTypeID.Trim.Length > 0 Then
-                            If Me.m_thDataTypes.DataTypes.Contains(m_strDataTypeID) Then
-                                Me.m_thDataTypes.ID = m_strDataTypeID
+                            If Not m_thDataTypes Is Nothing AndAlso m_strDataTypeID.Trim.Length > 0 AndAlso m_strDataTypeID.Trim.Length > 0 Then
+                                If Me.m_thDataTypes.DataTypes.Contains(m_strDataTypeID) Then
+                                    Me.m_thDataTypes.ID = m_strDataTypeID
+                                End If
                             End If
                         End If
                     End If
 
-                    If m_strDestinationID.Trim.Length > 0 Then
-                        m_bnDestination = Me.Organism.FindBehavioralNode(m_strDestinationID)
+                    If m_bnDestination Is Nothing Then
+                        If m_strDestinationID.Trim.Length > 0 Then
+                            m_bnDestination = Me.Organism.FindBehavioralNode(m_strDestinationID)
+                        End If
                     End If
+                End If
+
+                If Not m_gnGain Is Nothing Then
+                    m_gnGain.InitializeAfterLoad()
                 End If
 
             Catch ex As System.Exception

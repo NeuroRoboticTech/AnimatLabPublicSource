@@ -305,7 +305,8 @@ float *NeuralModule::GetDataPointer(string strDataType)
 void NeuralModule::StepSimulation()
 {
 	for(int iIndex=0; iIndex<m_iTargetAdapterCount; iIndex++)
-		m_aryTargetAdapters[iIndex]->StepSimulation();
+		if(m_aryTargetAdapters[iIndex]->Enabled())
+			m_aryTargetAdapters[iIndex]->StepSimulation();
 }
 
 	}			//Behavior

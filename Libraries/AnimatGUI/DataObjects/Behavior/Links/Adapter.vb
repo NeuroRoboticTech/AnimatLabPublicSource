@@ -100,6 +100,11 @@ Namespace DataObjects.Behavior.Links
 
 #Region " DataObject Methods "
 
+        Public Overrides Sub InitializeSimulationReferences()
+            'The adapter link is in the editor only. It has nothing to initialize.
+            Dim iVal As Integer = 5
+        End Sub
+
 #End Region
 
 #End Region

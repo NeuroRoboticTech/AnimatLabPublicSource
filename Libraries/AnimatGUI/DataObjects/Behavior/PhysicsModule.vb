@@ -24,8 +24,23 @@ Namespace DataObjects.Behavior
 
         Public Overrides ReadOnly Property ModuleFilename() As String
             Get
-                Return ""
+#If Not Debug Then
+                Return "VortexAnimatPrivateSim_VC10.dll"
+#Else
+                Return "VortexAnimatPrivateSim_VC10D.dll"
+#End If
             End Get
+        End Property
+
+        Public Overrides Property TimeStep As Framework.ScaledNumber
+            Get
+                If Not Util.Environment Is Nothing Then
+                    Return Util.Environment.PhysicsTimeStep
+                End If
+            End Get
+            Set(ByVal value As Framework.ScaledNumber)
+                'We cannot set this time step. It is always the environment.PhysicsTimeStep.
+            End Set
         End Property
 
 #End Region
@@ -38,7 +53,6 @@ Namespace DataObjects.Behavior
             m_strModuleName = "PhysicsModule"
             m_strModuleType = "PhysicsNeuralModule"
 
-            m_snTimeStep = New AnimatGUI.Framework.ScaledNumber(Me, "TimeStep", 10, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
         End Sub
 
 #Region " DataObject Methods "
@@ -50,16 +64,6 @@ Namespace DataObjects.Behavior
             If Not doRoot Is Nothing AndAlso doRoot Is Me Then oNewModule.AfterClone(Me, bCutData, doRoot, oNewModule)
             Return oNewModule
         End Function
-
-        ''' \brief Verifies this Neural module exists in simulation.
-        ''' 
-        ''' \details We do not want to call this method for the physics module. The reason is that if the sim is up and running
-        ''' 		 then the physics module is actually the nervous system, which will always be there.
-        ''' 
-        ''' \author dcofer
-        ''' \date   9/8/2011
-        Public Overrides Sub VerifyExistsInSim()
-        End Sub
 
         Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
             MyBase.SaveSimulationXml(oXml, nmParentControl, strName)
@@ -80,6 +84,16 @@ Namespace DataObjects.Behavior
         End Sub
 
 #End Region
+
+#End Region
+
+#Region " Events "
+
+        Protected Overrides Sub OnTimeStepChanged(ByVal doObject As Framework.DataObject)
+            If Not doObject Is Me AndAlso Not m_doInterface Is Nothing AndAlso Not Util.Environment Is Nothing Then
+                SetSimData("TimeStep", Util.Environment.PhysicsTimeStep.ActualValue.ToString, True)
+            End If
+        End Sub
 
 #End Region
 
