@@ -124,7 +124,19 @@ namespace AnimatSim
 			**/
 			virtual void AttachSourceAdapter(Adapter *lpAdapter);
 
-/**
+			/**
+			\brief	Removes a source adapter.
+
+			\details This removes the specified adapter from this module.
+
+			\author	dcofer
+			\date	3/18/2011
+
+			\param [in,out]	lpAdapter	Pointer to an adapter. 
+			**/
+			virtual void RemoveSourceAdapter(Adapter *lpAdapter);
+
+			/**
 			\brief	Attaches a target adapter.
 
 			\details This adds the specified adapter to this module. It can then process the adapters during a step of the simulation.
@@ -135,6 +147,18 @@ namespace AnimatSim
 			\param [in,out]	lpAdapter	Pointer to an adapter. 
 			**/
 			virtual void AttachTargetAdapter(Adapter *lpAdapter);
+
+			/**
+			\brief	Removes a target adapter.
+
+			\details This removes the specified adapter from this module.
+
+			\author	dcofer
+			\date	3/18/2011
+
+			\param [in,out]	lpAdapter	Pointer to an adapter. 
+			**/
+			virtual void RemoveTargetAdapter(Adapter *lpAdapter);
 
 			virtual float *GetDataPointer(string strDataType);
 

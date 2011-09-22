@@ -1429,7 +1429,7 @@ Namespace Forms.Behavior
             Return aryList
         End Function
 
-        Public Overrides Sub AddNode(ByRef bdNode As AnimatGUI.DataObjects.Behavior.Node)
+        Public Overrides Sub AddDiagramNode(ByRef bdNode As AnimatGUI.DataObjects.Behavior.Node)
             Dim afNode As New Lassalle.Flow.Node
             UpdateAddFlowNode(afNode, bdNode, True)
 
@@ -1452,7 +1452,7 @@ Namespace Forms.Behavior
             afNode.EndEdit(bCancel)
         End Sub
 
-        Public Overrides Sub RemoveNode(ByRef bnNode As AnimatGUI.DataObjects.Behavior.Node)
+        Public Overrides Sub RemoveDiagramNode(ByRef bnNode As AnimatGUI.DataObjects.Behavior.Node)
             If bnNode Is Nothing Then Return
 
             Dim afNode As Lassalle.Flow.Node = FindAddFlowNode(bnNode.ID, False)
@@ -1472,7 +1472,7 @@ Namespace Forms.Behavior
             Return FindItem(strID, bThrowError)
         End Function
 
-        Public Overrides Sub AddLink(ByRef blLink As AnimatGUI.DataObjects.Behavior.Link)
+        Public Overrides Sub AddDiagramLink(ByRef blLink As AnimatGUI.DataObjects.Behavior.Link)
 
             Dim afLink As New Lassalle.Flow.Link
             UpdateAddFlowLink(afLink, blLink, True)
@@ -1488,7 +1488,7 @@ Namespace Forms.Behavior
 
         End Sub
 
-        Public Overrides Sub RemoveLink(ByRef blLink As AnimatGUI.DataObjects.Behavior.Link)
+        Public Overrides Sub RemoveDiagramLink(ByRef blLink As AnimatGUI.DataObjects.Behavior.Link)
             If Not blLink Is Nothing Then
 
                 Dim afLink As Lassalle.Flow.Link = FindAddFlowLink(blLink.ID, False)
@@ -1940,44 +1940,44 @@ Namespace Forms.Behavior
 
         Public Overrides Sub DeleteSelected()
 
-            Try
-                If m_ctrlAddFlow.SelectedItems.Count > 0 Then
+            'Try
+            '    If m_ctrlAddFlow.SelectedItems.Count > 0 Then
 
-                    BeginGroupChange()
+            '        BeginGroupChange()
 
-                    'Lets go through and get a list a seperate list of the selected items 
-                    'so we can use it. otherwise it may change while we are deleting.
-                    Dim afItem As Lassalle.Flow.Item
-                    Dim aryItems As New Collection
-                    For Each afItem In m_ctrlAddFlow.SelectedItems
-                        aryItems.Add(afItem)
-                    Next
+            '        'Lets go through and get a list a seperate list of the selected items 
+            '        'so we can use it. otherwise it may change while we are deleting.
+            '        Dim afItem As Lassalle.Flow.Item
+            '        Dim aryItems As New Collection
+            '        For Each afItem In m_ctrlAddFlow.SelectedItems
+            '            aryItems.Add(afItem)
+            '        Next
 
-                    For Each afItem In aryItems
+            '        For Each afItem In aryItems
 
-                        If TypeOf (afItem) Is Lassalle.Flow.Node Then
-                            Dim bdNode As AnimatGUI.DataObjects.Behavior.Node = FindNode(DirectCast(afItem.Tag, String), False)
-                            If Not bdNode Is Nothing Then
-                                RemoveNode(bdNode)
-                            End If
-                        ElseIf TypeOf (afItem) Is Lassalle.Flow.Link Then
-                            Dim blLink As AnimatGUI.DataObjects.Behavior.Link = FindLink(DirectCast(afItem.Tag, String), False)
-                            If Not blLink Is Nothing Then
-                                RemoveLink(blLink)
-                            End If
-                        End If
-                    Next
+            '            If TypeOf (afItem) Is Lassalle.Flow.Node Then
+            '                Dim bdNode As AnimatGUI.DataObjects.Behavior.Node = FindNode(DirectCast(afItem.Tag, String), False)
+            '                If Not bdNode Is Nothing Then
+            '                    RemoveNode(bdNode)
+            '                End If
+            '            ElseIf TypeOf (afItem) Is Lassalle.Flow.Link Then
+            '                Dim blLink As AnimatGUI.DataObjects.Behavior.Link = FindLink(DirectCast(afItem.Tag, String), False)
+            '                If Not blLink Is Nothing Then
+            '                    RemoveLink(blLink)
+            '                End If
+            '            End If
+            '        Next
 
-                End If
+            '    End If
 
-                'TODO
-                'Me.Editor.ResetDiagramTabIndexes()
+            '    'TODO
+            '    'Me.Editor.ResetDiagramTabIndexes()
 
-            Catch ex As System.Exception
-                Throw ex
-            Finally
-                EndGroupChange()
-            End Try
+            'Catch ex As System.Exception
+            '    Throw ex
+            'Finally
+            '    EndGroupChange()
+            'End Try
 
         End Sub
 
@@ -2434,7 +2434,7 @@ Namespace Forms.Behavior
 
                 For Each bdNode In aryRemove
                     Debug.WriteLine("Removeing Node: " & bdNode.ID & "  Text: " & bdNode.Text)
-                    Me.RemoveNode(bdNode)
+                    Me.Subsystem.RemoveNode(bdNode)
                 Next
 
                 aryRemove.Clear()
@@ -2450,7 +2450,7 @@ Namespace Forms.Behavior
 
                 For Each bdLink In aryRemove
                     Debug.WriteLine("Removeing Link: " & bdLink.ID & "  Text: " & bdLink.Text)
-                    Me.RemoveLink(bdLink)
+                    Me.Subsystem.RemoveLink(bdLink)
                 Next
 
             Catch ex As System.Exception

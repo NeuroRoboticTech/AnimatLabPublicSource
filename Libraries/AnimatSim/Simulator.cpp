@@ -3163,6 +3163,37 @@ void Simulator::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 }
 
 /**
+\brief	Removes a source adapter.
+
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	lpStructure	Pointer to a structure. 
+\param [in,out]	lpAdapter  	Pointer to an adapter. 
+**/
+void Simulator::RemoveSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
+{
+	//string strModuleName = Std_CheckString(lpAdapter->SourceModule());
+
+	////If no neural module name is specified then this must be getting attached to the physics engine.
+	////Otherwise it gets attached to the specified neural module in an organism
+	//if(strModuleName == "" || strModuleName == "ANIMATLAB")
+	//{
+	//	//if(m_arySourcePhysicsAdapters.Add(
+	//	m_arySourcePhysicsAdapters.Add(lpAdapter);
+	//}
+	//else
+	//{
+	//	Organism *lpOrganism = dynamic_cast<Organism *>(lpStructure);
+	//	if(!lpOrganism)
+	//		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
+
+	//	NeuralModule *lpModule = lpOrganism->NervousSystem()->FindNeuralModule(strModuleName);
+	//	lpModule->RemoveSourceAdapter(lpAdapter);
+	//}
+}
+
+/**
 \brief	Attaches a target adapter.
 
 \author	dcofer
@@ -3192,6 +3223,38 @@ void Simulator::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 		lpModule->AttachTargetAdapter(lpAdapter);
 	}
 }
+
+/**
+\brief	Remoaves a target adapter.
+
+\author	dcofer
+\date	3/28/2011
+
+\param [in,out]	lpStructure	Pointer to a structure. 
+\param [in,out]	lpAdapter  	Pointer to an adapter. 
+**/
+void Simulator::RemoveTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
+{
+	//string strModuleName = Std_CheckString(lpAdapter->TargetModule());
+
+	////If no neural module name is specified then this must be getting attached to the physics engine.
+	////Otherwise it gets attached to the specified neural module in an organism
+	//if(strModuleName == "" || strModuleName == "ANIMATLAB")
+	//{
+	//	m_aryTargetPhysicsAdapters.Add(lpAdapter);
+	//	m_iTargetAdapterCount = m_aryTargetPhysicsAdapters.GetSize();
+	//}
+	//else
+	//{
+	//	Organism *lpOrganism = dynamic_cast<Organism *>(lpStructure);
+	//	if(!lpOrganism)
+	//		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
+
+	//	NeuralModule *lpModule = lpOrganism->NervousSystem()->FindNeuralModule(strModuleName);
+	//	lpModule->AttachTargetAdapter(lpAdapter);
+	//}
+}
+
 
 /**
 \brief	Adds a food source to the list of all simulation food sources. 

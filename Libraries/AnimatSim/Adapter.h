@@ -88,30 +88,6 @@ namespace AnimatSim
 
 			virtual Gain *GetGain();
 
-			/**
-			\brief	Attaches this adapter for the source to the correct NeuralModule. This allows the neural module to process the
-			adapters correctly when it steps the simulation.
-
-			\author	dcofer
-			\date	3/18/2011
-
-			\param [in,out]	lpStructure	Pointer to parent structure. 
-			\param [in,out]	lpNode	   	Pointer to the source node. 
-			**/
-			virtual void AttachSourceAdapter(Structure *lpStructure, Node *lpNode);
-
-			/**
-			\brief	Attaches this adapter for the target to the correct NeuralModule. This allows the neural module to process the
-			adapters correctly when it steps the simulation.
-
-			\author	dcofer
-			\date	3/18/2011
-
-			\param [in,out]	lpStructure	Pointer to parent structure. 
-			\param [in,out]	lpNode	   	Pointer to the source node. 
-			**/
-			virtual void AttachTargetAdapter(Structure *lpStructure, Node *lpNode);
-
 			virtual void Initialize();
 			virtual void AddExternalNodeInput(float fltInput);
 			virtual float *GetDataPointer(string strDataType);

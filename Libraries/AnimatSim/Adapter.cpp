@@ -67,6 +67,12 @@ Adapter::~Adapter()
 
 try
 {
+	if(m_lpSim)
+	{
+		m_lpSim->RemoveSourceAdapter(m_lpStructure, this);
+		m_lpSim->AttachTargetAdapter(m_lpStructure, this);
+	}
+
 	m_lpSourceNode = NULL;
 	m_lpSourceData = NULL;
 	m_lpTargetNode = NULL;
@@ -260,16 +266,6 @@ Gain *Adapter::GetGain() {return m_lpGain;}
 void Adapter::AddExternalNodeInput(float fltInput)
 {
 	THROW_TEXT_ERROR(Al_Err_lOpNotDefinedForAdapter, Al_Err_strOpNotDefinedForAdapter, "AddExternalNodeInput");
-}
-
-void Adapter::AttachSourceAdapter(Structure *lpStructure, Node *lpNode)
-{
-	THROW_TEXT_ERROR(Al_Err_lOpNotDefinedForAdapter, Al_Err_strOpNotDefinedForAdapter, "AttachSourceAdapter");
-}
-
-void Adapter::AttachTargetAdapter(Structure *lpStructure, Node *lpNode)
-{
-	THROW_TEXT_ERROR(Al_Err_lOpNotDefinedForAdapter, Al_Err_strOpNotDefinedForAdapter, "AttachTargetAdapter");
 }
 
 float *Adapter::GetDataPointer(string strDataType)

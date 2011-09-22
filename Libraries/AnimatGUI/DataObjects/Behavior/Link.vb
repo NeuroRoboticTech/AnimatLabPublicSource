@@ -974,7 +974,7 @@ Namespace DataObjects.Behavior
                     Return False
                 End If
 
-                Me.ParentSubsystem.SubsystemDiagram.RemoveLink(Me)
+                Me.ParentSubsystem.RemoveLink(Me)
                 Return True
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -1047,10 +1047,8 @@ Namespace DataObjects.Behavior
         Public Overrides Sub FailedToInitialize()
 
             Try
-                If Not Me.ParentDiagram Is Nothing Then
-                    Me.ParentDiagram.RemoveLink(Me)
-                ElseIf Not Me.Organism Is Nothing Then
-                    Me.ParentSubsystem.BehavioralLinks.Remove(Me.ID)
+                If Not Me.ParentSubsystem Is Nothing Then
+                    Me.ParentSubsystem.RemoveLink(Me)
                 End If
 
             Catch ex As System.Exception

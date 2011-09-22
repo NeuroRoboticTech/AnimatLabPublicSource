@@ -98,16 +98,6 @@ void Node::Enabled(BOOL bValue)
 	m_fltEnabled = (float) m_bEnabled;
 }
 
-//void Node::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
-//{
-//	m_lpSim->AttachSourceAdapter(lpStructure, lpAdapter);
-//}
-//
-//void Node::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
-//{
-//	m_lpSim->AttachTargetAdapter(lpStructure, lpAdapter);
-//}
-
 void Node::Kill(BOOL bState)
 {
 	if(bState)

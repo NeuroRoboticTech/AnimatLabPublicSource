@@ -817,7 +817,9 @@ namespace AnimatSim
 			virtual void AddFoodSource(RigidBody *lpFood);
 
 			virtual void AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter);
+			virtual void RemoveSourceAdapter(Structure *lpStructure, Adapter *lpAdapter);
 			virtual void AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter);
+			virtual void RemoveTargetAdapter(Structure *lpStructure, Adapter *lpAdapter);
 
 #pragma endregion
 

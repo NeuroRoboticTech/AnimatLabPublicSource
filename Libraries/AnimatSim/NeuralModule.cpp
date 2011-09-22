@@ -261,11 +261,21 @@ void NeuralModule::AttachSourceAdapter(Adapter *lpAdapter)
 	m_arySourceAdapters.Add(lpAdapter);
 }
 
+void NeuralModule::RemoveSourceAdapter(Adapter *lpAdapter)
+{
+	//m_arySourceAdapters.Add(lpAdapter);
+}
 
 void NeuralModule::AttachTargetAdapter(Adapter *lpAdapter)
 {
 	m_aryTargetAdapters.Add(lpAdapter);
 	m_iTargetAdapterCount = m_aryTargetAdapters.GetSize();
+}
+
+void NeuralModule::RemoveTargetAdapter(Adapter *lpAdapter)
+{
+	//m_aryTargetAdapters.Add(lpAdapter);
+	//m_iTargetAdapterCount = m_aryTargetAdapters.GetSize();
 }
 
 void NeuralModule::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)

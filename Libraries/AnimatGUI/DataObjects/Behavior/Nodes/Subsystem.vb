@@ -358,7 +358,7 @@ Namespace DataObjects.Behavior.Nodes
             Me.BehavioralNodes.Add(bdNode.ID, bdNode)
 
             If Not Me.SubsystemDiagram Is Nothing Then
-                Me.SubsystemDiagram.AddNode(bdNode)
+                Me.SubsystemDiagram.AddDiagramNode(bdNode)
             End If
 
             bdNode.AfterAddNode()
@@ -387,7 +387,7 @@ Namespace DataObjects.Behavior.Nodes
                     Me.BehavioralNodes.Remove(bnNode.ID)
 
                     If Not Me.SubsystemDiagram Is Nothing Then
-                        Me.SubsystemDiagram.RemoveNode(bnNode)
+                        Me.SubsystemDiagram.RemoveDiagramNode(bnNode)
                     End If
 
                     bnNode.AfterRemoveNode()
@@ -433,7 +433,7 @@ Namespace DataObjects.Behavior.Nodes
             Me.BehavioralLinks.Add(blLink.ID, blLink)
 
             If Not Me.SubsystemDiagram Is Nothing Then
-                Me.SubsystemDiagram.AddLink(blLink)
+                Me.SubsystemDiagram.AddDiagramLink(blLink)
             End If
 
             blLink.ActualOrigin.AfterAddLink(blLink)
@@ -472,7 +472,7 @@ Namespace DataObjects.Behavior.Nodes
 
                     Me.BehavioralLinks.Remove(blLink.ID)
                     If Not Me.SubsystemDiagram Is Nothing Then
-                        Me.SubsystemDiagram.RemoveLink(blLink)
+                        Me.SubsystemDiagram.RemoveDiagramLink(blLink)
                     End If
 
                     If Not blLink.ActualOrigin Is Nothing Then blLink.ActualOrigin.AfterRemoveLink(blLink)

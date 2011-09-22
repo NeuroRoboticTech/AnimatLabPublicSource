@@ -91,7 +91,7 @@ Namespace DataObjects.Behavior.Links
             'in that parent diagram and select them???? No idea why. But if I do not make this call
             'then everything appears to work fine???
             If bnAdapter.Links.Count > 0 AndAlso Not Me.ParentDiagram.DeletingDiagram Then
-                m_ParentDiagram.RemoveNode(bnAdapter)
+                Me.ParentSubsystem.RemoveNode(bnAdapter)
             End If
 
             RemoveWorksapceTreeView()

@@ -65,13 +65,13 @@ Namespace Forms.Behavior
 
         Public MustOverride Function GetChartItemAt(ByVal ptPosition As Point, Optional ByVal bThrowError As Boolean = True) As DataObjects.Behavior.Data
 
-        Public MustOverride Sub AddNode(ByRef oNode As DataObjects.Behavior.Node)
+        Public MustOverride Sub AddDiagramNode(ByRef oNode As DataObjects.Behavior.Node)
         Public MustOverride Sub BeginEditNode(ByRef bnNode As DataObjects.Behavior.Node)
         Public MustOverride Sub EndEditNode(ByRef bnNode As DataObjects.Behavior.Node, ByVal bCancel As Boolean)
-        Public MustOverride Sub RemoveNode(ByRef bnNode As DataObjects.Behavior.Node)
+        Public MustOverride Sub RemoveDiagramNode(ByRef bnNode As DataObjects.Behavior.Node)
 
-        Public MustOverride Sub AddLink(ByRef blLink As DataObjects.Behavior.Link)
-        Public MustOverride Sub RemoveLink(ByRef blLink As DataObjects.Behavior.Link)
+        Public MustOverride Sub AddDiagramLink(ByRef blLink As DataObjects.Behavior.Link)
+        Public MustOverride Sub RemoveDiagramLink(ByRef blLink As DataObjects.Behavior.Link)
 
         Public MustOverride Sub AddImage(ByRef diImage As DataObjects.Behavior.DiagramImage)
         Public MustOverride Sub RemoveImage(ByRef diImage As DataObjects.Behavior.DiagramImage)
