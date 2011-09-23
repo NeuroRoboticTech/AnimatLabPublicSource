@@ -150,7 +150,7 @@ int PhysicsNeuralModule::FindAdapterListPos(string strID, BOOL bThrowError)
 			return iIndex;
 
 	if(bThrowError)
-		THROW_PARAM_ERROR(Al_Err_lAdapterIDNotFound, Al_Err_strAdapterIDIDNotFound, "ID", m_strID);
+		THROW_PARAM_ERROR(Al_Err_lAdapterIDNotFound, Al_Err_strAdapterIDNotFound, "ID", m_strID);
 
 	return -1;
 }

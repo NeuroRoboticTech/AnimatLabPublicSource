@@ -3134,6 +3134,20 @@ void Simulator::AddNeuralModuleFactory(string strModuleName, NeuralModule *lpMod
 		m_aryNeuralModuleFactories.Add(Std_CheckString(strModuleName), lpModule->ClassFactory());
 }
 
+
+int Simulator::FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, BOOL bThrowError)
+{
+	int iCount = aryAdapters.GetSize();
+	for(int iIdx=0; iIdx<iCount; iIdx++)
+		if(aryAdapters[iIdx]->ID() == strID)
+			return iIdx;
+
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lAdapterIDNotFound, Al_Err_strAdapterIDNotFound, "ID", strID);
+
+	return -1;
+}
+
 /**
 \brief	Attaches a source adapter.
 
@@ -3150,7 +3164,10 @@ void Simulator::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 	//If no neural module name is specified then this must be getting attached to the physics engine.
 	//Otherwise it gets attached to the specified neural module in an organism
 	if(strModuleName == "" || strModuleName == "ANIMATLAB")
-		m_arySourcePhysicsAdapters.Add(lpAdapter);
+	{
+		if(FindAdapterListIndex(m_arySourcePhysicsAdapters, lpAdapter->ID(), FALSE) == -1)
+			m_arySourcePhysicsAdapters.Add(lpAdapter);
+	}
 	else
 	{
 		Organism *lpOrganism = dynamic_cast<Organism *>(lpStructure);
@@ -3173,24 +3190,25 @@ void Simulator::AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 **/
 void Simulator::RemoveSourceAdapter(Structure *lpStructure, Adapter *lpAdapter)
 {
-	//string strModuleName = Std_CheckString(lpAdapter->SourceModule());
+	string strModuleName = Std_CheckString(lpAdapter->SourceModule());
 
-	////If no neural module name is specified then this must be getting attached to the physics engine.
-	////Otherwise it gets attached to the specified neural module in an organism
-	//if(strModuleName == "" || strModuleName == "ANIMATLAB")
-	//{
-	//	//if(m_arySourcePhysicsAdapters.Add(
-	//	m_arySourcePhysicsAdapters.Add(lpAdapter);
-	//}
-	//else
-	//{
-	//	Organism *lpOrganism = dynamic_cast<Organism *>(lpStructure);
-	//	if(!lpOrganism)
-	//		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
+	//If no neural module name is specified then this must be getting attached to the physics engine.
+	//Otherwise it gets attached to the specified neural module in an organism
+	if(strModuleName == "" || strModuleName == "ANIMATLAB")
+	{
+		int iIdx = FindAdapterListIndex(m_arySourcePhysicsAdapters, lpAdapter->ID(), FALSE);
+		if(iIdx > -1)
+			m_arySourcePhysicsAdapters.RemoveAt(iIdx);
+	}
+	else
+	{
+		Organism *lpOrganism = dynamic_cast<Organism *>(lpStructure);
+		if(!lpOrganism)
+			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 
-	//	NeuralModule *lpModule = lpOrganism->NervousSystem()->FindNeuralModule(strModuleName);
-	//	lpModule->RemoveSourceAdapter(lpAdapter);
-	//}
+		NeuralModule *lpModule = lpOrganism->NervousSystem()->FindNeuralModule(strModuleName);
+		lpModule->RemoveSourceAdapter(lpAdapter);
+	}
 }
 
 /**
@@ -3210,8 +3228,11 @@ void Simulator::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 	//Otherwise it gets attached to the specified neural module in an organism
 	if(strModuleName == "" || strModuleName == "ANIMATLAB")
 	{
-		m_aryTargetPhysicsAdapters.Add(lpAdapter);
-		m_iTargetAdapterCount = m_aryTargetPhysicsAdapters.GetSize();
+		if(FindAdapterListIndex(m_aryTargetPhysicsAdapters, lpAdapter->ID(), FALSE) == -1)
+		{
+			m_aryTargetPhysicsAdapters.Add(lpAdapter);
+			m_iTargetAdapterCount = m_aryTargetPhysicsAdapters.GetSize();
+		}
 	}
 	else
 	{
@@ -3235,24 +3256,28 @@ void Simulator::AttachTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 **/
 void Simulator::RemoveTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 {
-	//string strModuleName = Std_CheckString(lpAdapter->TargetModule());
+	string strModuleName = Std_CheckString(lpAdapter->TargetModule());
 
-	////If no neural module name is specified then this must be getting attached to the physics engine.
-	////Otherwise it gets attached to the specified neural module in an organism
-	//if(strModuleName == "" || strModuleName == "ANIMATLAB")
-	//{
-	//	m_aryTargetPhysicsAdapters.Add(lpAdapter);
-	//	m_iTargetAdapterCount = m_aryTargetPhysicsAdapters.GetSize();
-	//}
-	//else
-	//{
-	//	Organism *lpOrganism = dynamic_cast<Organism *>(lpStructure);
-	//	if(!lpOrganism)
-	//		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
+	//If no neural module name is specified then this must be getting attached to the physics engine.
+	//Otherwise it gets attached to the specified neural module in an organism
+	if(strModuleName == "" || strModuleName == "ANIMATLAB")
+	{
+		int iIdx = FindAdapterListIndex(m_aryTargetPhysicsAdapters, lpAdapter->ID(), FALSE);
+		if(iIdx > -1)
+		{
+			m_aryTargetPhysicsAdapters.RemoveAt(iIdx);
+			m_iTargetAdapterCount = m_aryTargetPhysicsAdapters.GetSize();
+		}
+	}
+	else
+	{
+		Organism *lpOrganism = dynamic_cast<Organism *>(lpStructure);
+		if(!lpOrganism)
+			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Organism");
 
-	//	NeuralModule *lpModule = lpOrganism->NervousSystem()->FindNeuralModule(strModuleName);
-	//	lpModule->AttachTargetAdapter(lpAdapter);
-	//}
+		NeuralModule *lpModule = lpOrganism->NervousSystem()->FindNeuralModule(strModuleName);
+		lpModule->RemoveTargetAdapter(lpAdapter);
+	}
 }
 
 

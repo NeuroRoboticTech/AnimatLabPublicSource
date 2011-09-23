@@ -255,27 +255,49 @@ BOOL NeuralModule::NeedToStep()
 		return FALSE;
 }
 
+int NeuralModule::FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, BOOL bThrowError)
+{
+	int iCount = aryAdapters.GetSize();
+	for(int iIdx=0; iIdx<iCount; iIdx++)
+		if(aryAdapters[iIdx]->ID() == strID)
+			return iIdx;
+
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lAdapterIDNotFound, Al_Err_strAdapterIDNotFound, "ID", strID);
+
+	return -1;
+}
 
 void NeuralModule::AttachSourceAdapter(Adapter *lpAdapter)
 {
-	m_arySourceAdapters.Add(lpAdapter);
+	if(FindAdapterListIndex(m_arySourceAdapters, lpAdapter->ID(), FALSE) == -1)
+		m_arySourceAdapters.Add(lpAdapter);
 }
 
 void NeuralModule::RemoveSourceAdapter(Adapter *lpAdapter)
 {
-	//m_arySourceAdapters.Add(lpAdapter);
+	int iIdx = FindAdapterListIndex(m_arySourceAdapters, lpAdapter->ID(), FALSE);
+	if(iIdx > -1)
+		m_arySourceAdapters.RemoveAt(iIdx);
 }
 
 void NeuralModule::AttachTargetAdapter(Adapter *lpAdapter)
 {
-	m_aryTargetAdapters.Add(lpAdapter);
-	m_iTargetAdapterCount = m_aryTargetAdapters.GetSize();
+	if(FindAdapterListIndex(m_aryTargetAdapters, lpAdapter->ID(), FALSE) == -1)
+	{
+		m_aryTargetAdapters.Add(lpAdapter);
+		m_iTargetAdapterCount = m_aryTargetAdapters.GetSize();
+	}
 }
 
 void NeuralModule::RemoveTargetAdapter(Adapter *lpAdapter)
 {
-	//m_aryTargetAdapters.Add(lpAdapter);
-	//m_iTargetAdapterCount = m_aryTargetAdapters.GetSize();
+	int iIdx = FindAdapterListIndex(m_aryTargetAdapters, lpAdapter->ID(), FALSE);
+	if(iIdx > -1)
+	{
+		m_aryTargetAdapters.RemoveAt(iIdx);
+		m_iTargetAdapterCount = m_aryTargetAdapters.GetSize();
+	}
 }
 
 void NeuralModule::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify)

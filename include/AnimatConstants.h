@@ -386,7 +386,7 @@
 #define Al_Err_strCriticalSimError "A critical simulation error has occurred. The application is being shut down."
 
 #define Al_Err_lAdapterIDNotFound -4052
-#define Al_Err_strAdapterIDIDNotFound "The specified adapter ID was not found."
+#define Al_Err_strAdapterIDNotFound "The specified adapter ID was not found."
 
 #define MAX_DATA_CHART_BUFFER 10485760
 

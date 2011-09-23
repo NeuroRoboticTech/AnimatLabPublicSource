@@ -399,6 +399,8 @@ namespace AnimatSim
 
 			void AddOdorType(OdorType *lpOdorType);
 
+			virtual int FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, BOOL bThrowError = TRUE);
+
 #pragma endregion
 
 #pragma region UnitScaleMethods

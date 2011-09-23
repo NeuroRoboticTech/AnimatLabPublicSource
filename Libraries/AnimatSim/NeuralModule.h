@@ -61,6 +61,8 @@ namespace AnimatSim
 			/// Number of target adapters
 			short m_iTargetAdapterCount;
 
+			virtual int FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, BOOL bThrowError = TRUE);
+
 		public:
 			NeuralModule();
 			virtual ~NeuralModule();
