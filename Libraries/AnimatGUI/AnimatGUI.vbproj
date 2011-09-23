@@ -270,6 +270,7 @@
     <Compile Include="DataObjects\Behavior\Nodes\Graphical.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataObjects\Behavior\Nodes\Joint.vb" />
     <Compile Include="DataObjects\Behavior\Nodes\Neuron.vb">
       <SubType>Code</SubType>
     </Compile>
