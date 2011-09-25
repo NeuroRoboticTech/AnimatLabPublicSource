@@ -1216,7 +1216,7 @@ Namespace Forms.Behavior
             afNode.GradientMode = bdNode.GradientMode
 
             If bdNode.DiagramImageName.Length > 0 Then
-                afNode.ImageIndex = FindDiagramImageIndex(Me.Subsystem.Organism.DiagramImages.FindImageByID(bdNode.DiagramImageName))
+                'afNode.ImageIndex = GetDiagramImageIndex(bdNode.DiagramImageName)
             Else
                 afNode.ImageIndex = -1
             End If
@@ -1570,6 +1570,11 @@ Namespace Forms.Behavior
             End If
             Return -1
         End Function
+
+        'Public Overrides Function GetDiagramImageIndex(ByVal strImageName As String) As Integer
+        '    'Dim imgToFind As Image = Me.Subsystem.Organism.DiagramImages.FindImageBy
+
+        'End Function
 
         Public Overrides Sub FitToPage()
             Dim rc As RectangleF = New RectangleF(New PointF(0, 0), m_ctrlAddFlow.Extent)

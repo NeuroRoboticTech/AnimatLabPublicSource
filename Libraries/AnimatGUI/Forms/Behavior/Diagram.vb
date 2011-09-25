@@ -76,6 +76,7 @@ Namespace Forms.Behavior
         Public MustOverride Sub AddImage(ByRef diImage As DataObjects.Behavior.DiagramImage)
         Public MustOverride Sub RemoveImage(ByRef diImage As DataObjects.Behavior.DiagramImage)
         Public MustOverride Function FindDiagramImageIndex(ByRef diImage As System.Drawing.Image, Optional ByVal bThrowError As Boolean = True) As Integer
+        'Public MustOverride Function GetDiagramImageIndex(ByVal strImageName As String) As Integer
 
         Public MustOverride Sub UpdateChart(ByRef bdData As DataObjects.Behavior.Data)
         Public MustOverride Sub UpdateData(ByRef bdData As DataObjects.Behavior.Data, Optional ByVal bSimple As Boolean = True, Optional ByVal bThrowError As Boolean = True)

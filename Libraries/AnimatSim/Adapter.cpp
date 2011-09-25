@@ -67,7 +67,7 @@ Adapter::~Adapter()
 
 try
 {
-	if(m_lpSim)
+	if(m_lpSim && !m_lpSim->ShuttingDown())
 	{
 		m_lpSim->RemoveSourceAdapter(m_lpStructure, this);
 		m_lpSim->RemoveTargetAdapter(m_lpStructure, this);

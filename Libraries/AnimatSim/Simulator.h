@@ -140,6 +140,9 @@ namespace AnimatSim
 			/// true if we need to set the physics system to force handling of fast moving objects.
 			BOOL m_bForceFastMoving;
 
+			/// True if the simulation is shutting down. This is used by other objects in their destructor to know whether to do certain operations or not.
+			BOOL m_bShuttingDown;
+
 #pragma endregion
 
 #pragma region UnitScalingVariables
@@ -542,6 +545,8 @@ namespace AnimatSim
 			virtual void ManualStepSimulation(BOOL bVal);
 
 			virtual BOOL SimRunning();
+
+			virtual BOOL ShuttingDown();
 
 			virtual BOOL ForceFastMoving();
 			virtual void ForceFastMoving(BOOL bVal);

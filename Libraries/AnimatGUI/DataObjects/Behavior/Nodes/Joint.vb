@@ -38,6 +38,12 @@ Namespace DataObjects.Behavior.Nodes
             End Get
         End Property
 
+        Public Overrides ReadOnly Property DragImageName As String
+            Get
+                Return "AnimatGUI.DragHinge.gif"
+            End Get
+        End Property
+
         <Browsable(False)> _
         Public Overrides ReadOnly Property CanBeCharted() As Boolean
             Get
@@ -71,7 +77,8 @@ Namespace DataObjects.Behavior.Nodes
                 Size = New SizeF(40, 40)
                 Me.DrawColor = Color.BurlyWood
                 Me.WorkspaceImage = AnimatGUI.Framework.ImageManager.LoadImage(myAssembly, "AnimatGUI.Hinge.gif")
-                Me.DragImage = AnimatGUI.Framework.ImageManager.LoadImage(myAssembly, "AnimatGUI.Graphics.DragHinge.gif", False)
+                Me.DiagramImageName = "AnimatGUI.DragHinge.gif"
+                Me.DragImage = AnimatGUI.Framework.ImageManager.LoadImage(myAssembly, "AnimatGUI.DragHinge.gif", False)
                 Me.Name = "Joint"
                 Me.Description = "This node allows the user to collect data directly from a joint or to control a motorized joint."
                 Me.Alignment = enumAlignment.CenterBottom
@@ -150,6 +157,10 @@ Namespace DataObjects.Behavior.Nodes
             Catch ex As System.Exception
                 m_bIsInitialized = False
             End Try
+        End Sub
+
+        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.BeforeAddToList(bThrowError)
         End Sub
 
 #End Region

@@ -55,6 +55,7 @@ Simulator ANIMAT_PORT *GetSimulator()
 **/
 Simulator::Simulator()
 {
+	m_bShuttingDown = FALSE;
 	m_strID = "SIMULATOR";
 	m_strName = m_strID;
 	m_fltTime = 0;
@@ -161,6 +162,7 @@ Simulator::~Simulator()
 
 try
 {
+	m_bShuttingDown = TRUE;
 	g_lpSimulator = NULL;
 	if(m_lpAnimatClassFactory) {delete m_lpAnimatClassFactory; m_lpAnimatClassFactory = NULL;}
 	m_aryOrganisms.RemoveAll();
@@ -602,6 +604,18 @@ void Simulator::ManualStepSimulation(BOOL bVal) {m_bManualStepSimulation = bVal;
 \return	true if it is running, false else.
 **/
 BOOL Simulator::SimRunning() {return m_bSimRunning;}
+
+/**
+\brief	Tells whether the simulation is shutting down or not.
+
+\details This is used by other objects in their destructor to determine whether to make certain calls or not. 
+
+\author	dcofer
+\date	9/25/2011
+
+\return	true if it shutting down, false otherwise.
+**/
+BOOL Simulator::ShuttingDown() {return m_bShuttingDown;}
 
 /**
 \brief	Gets whether we have set the simulation to force fast moving calculations.

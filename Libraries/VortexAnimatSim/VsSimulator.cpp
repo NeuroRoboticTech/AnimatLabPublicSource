@@ -50,6 +50,8 @@ VsSimulator::~VsSimulator()
 
 try
 {
+	m_bShuttingDown = TRUE;
+
 	//Set this to NULL so all of the DeletePhysics calls will not try and remove
 	//entities from the universe when shutting down.
 	m_uUniverse = NULL;
