@@ -278,11 +278,9 @@ Namespace DataObjects.Behavior.Nodes
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
-            If Me.IsInitialized Then
-                MyBase.InitializeSimulationReferences()
+            MyBase.InitializeSimulationReferences()
 
-                m_gnGain.InitializeSimulationReferences()
-            End If
+            m_gnGain.InitializeSimulationReferences()
         End Sub
 
 #Region " Add-Remove to List Methods "

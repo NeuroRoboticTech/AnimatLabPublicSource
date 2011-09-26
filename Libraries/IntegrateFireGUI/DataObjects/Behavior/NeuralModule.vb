@@ -635,25 +635,23 @@ Namespace DataObjects.Behavior
 
 
         Public Overrides Sub InitializeSimulationReferences()
-            If Me.IsInitialized Then
-                MyBase.InitializeSimulationReferences()
+            MyBase.InitializeSimulationReferences()
 
-                Dim doObject As AnimatGUI.Framework.DataObject
-                For Each deEntry As DictionaryEntry In m_arySynapseTypes
-                    doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                    doObject.InitializeSimulationReferences()
-                Next
+            Dim doObject As AnimatGUI.Framework.DataObject
+            For Each deEntry As DictionaryEntry In m_arySynapseTypes
+                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                doObject.InitializeSimulationReferences()
+            Next
 
-                For Each deEntry As DictionaryEntry In m_aryNodes
-                    doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                    doObject.InitializeSimulationReferences()
-                Next
+            For Each deEntry As DictionaryEntry In m_aryNodes
+                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                doObject.InitializeSimulationReferences()
+            Next
 
-                For Each deEntry As DictionaryEntry In m_aryLinks
-                    doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                    doObject.InitializeSimulationReferences()
-                Next
-            End If
+            For Each deEntry As DictionaryEntry In m_aryLinks
+                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                doObject.InitializeSimulationReferences()
+            Next
         End Sub
 
 #End Region

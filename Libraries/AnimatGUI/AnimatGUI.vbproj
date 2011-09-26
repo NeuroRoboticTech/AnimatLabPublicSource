@@ -171,9 +171,6 @@
     <Compile Include="Collections\Diagrams.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Collections\DigramImages.vb">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Collections\ExternalFileForms.vb" />
     <Compile Include="Collections\Gains.vb">
       <SubType>Code</SubType>
@@ -235,9 +232,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataObjects\Behavior\DiagramErrors\DataError.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataObjects\Behavior\DiagramImage.vb">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataObjects\Behavior\Link.vb">
@@ -713,12 +707,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TypeHelpers\ImageFileEditor.vb" />
-    <Compile Include="TypeHelpers\ImageTypeConverter.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TypeHelpers\ImageTypeEditor.vb">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="TypeHelpers\LinkedBodyPart.vb">
       <SubType>Code</SubType>
     </Compile>

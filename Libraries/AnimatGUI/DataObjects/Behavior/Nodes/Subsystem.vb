@@ -327,22 +327,20 @@ Namespace DataObjects.Behavior.Nodes
         End Function
 
         Public Overrides Sub InitializeSimulationReferences()
-            If Me.IsInitialized Then
-                'Do not call base class Initialize method here. The subsystem is not a node that is within the 
-                'simulator. It is a GUI editor object only. It is merely a place holder for other objects in the 
-                ' nervous system.
-                ' 
-                Dim doData As DataObjects.Behavior.Data
-                For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
-                    doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
-                    doData.InitializeSimulationReferences()
-                Next
+            'Do not call base class Initialize method here. The subsystem is not a node that is within the 
+            'simulator. It is a GUI editor object only. It is merely a place holder for other objects in the 
+            ' nervous system.
+            ' 
+            Dim doData As DataObjects.Behavior.Data
+            For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
+                doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
+                doData.InitializeSimulationReferences()
+            Next
 
-                For Each deEntry As DictionaryEntry In m_aryBehavioralLinks
-                    doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
-                    doData.InitializeSimulationReferences()
-                Next
-            End If
+            For Each deEntry As DictionaryEntry In m_aryBehavioralLinks
+                doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
+                doData.InitializeSimulationReferences()
+            Next
         End Sub
 
         Public Overridable Sub AddNode(ByRef bdNode As AnimatGUI.DataObjects.Behavior.Node)
@@ -382,15 +380,17 @@ Namespace DataObjects.Behavior.Nodes
                         RemoveLink(blLink)
                     Next
 
-                    bnNode.BeforeRemoveNode()
+                    If Me.BehavioralNodes.ContainsKey(bnNode.ID) Then
+                        bnNode.BeforeRemoveNode()
 
-                    Me.BehavioralNodes.Remove(bnNode.ID)
+                        Me.BehavioralNodes.Remove(bnNode.ID)
 
-                    If Not Me.SubsystemDiagram Is Nothing Then
-                        Me.SubsystemDiagram.RemoveDiagramNode(bnNode)
+                        If Not Me.SubsystemDiagram Is Nothing Then
+                            Me.SubsystemDiagram.RemoveDiagramNode(bnNode)
+                        End If
+
+                        bnNode.AfterRemoveNode()
                     End If
-
-                    bnNode.AfterRemoveNode()
                 End If
             Catch ex As System.Exception
                 Throw ex

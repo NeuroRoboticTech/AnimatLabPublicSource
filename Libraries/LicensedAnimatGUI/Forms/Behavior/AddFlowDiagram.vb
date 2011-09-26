@@ -1214,12 +1214,7 @@ Namespace Forms.Behavior
             afNode.Gradient = bdNode.Gradient
             afNode.GradientColor = bdNode.GradientColor
             afNode.GradientMode = bdNode.GradientMode
-
-            If bdNode.DiagramImageName.Length > 0 Then
-                'afNode.ImageIndex = GetDiagramImageIndex(bdNode.DiagramImageName)
-            Else
-                afNode.ImageIndex = -1
-            End If
+            afNode.ImageIndex = GetDiagramImageIndex(bdNode)
             afNode.ImageLocation = bdNode.ImageLocation
             afNode.ImagePosition = CType(bdNode.ImagePosition, Lassalle.Flow.ImagePosition)
             afNode.InLinkable = bdNode.InLinkable
@@ -1538,28 +1533,35 @@ Namespace Forms.Behavior
             afItem.Selected = False
         End Sub
 
-        Public Overrides Sub AddImage(ByRef diImage As AnimatGUI.DataObjects.Behavior.DiagramImage)
+        Protected Overrides Function AddImage(ByVal strImageName As String, ByVal oImage As System.Drawing.Image) As Integer
 
-            If Not m_ctrlAddFlow.Images.Contains(diImage.WorkspaceImage) Then
-                m_ctrlAddFlow.Images.Add(diImage.WorkspaceImage)
+            If m_ctrlAddFlow.Images.Contains(oImage) Then
+                Throw New System.Exception("Image is already contained in addflow images collection.")
+            End If
+
+            m_ctrlAddFlow.Images.Add(oImage)
+            m_hashImages.Add(strImageName, oImage)
+
+            Return m_ctrlAddFlow.Images.IndexOf(oImage)
+        End Function
+
+        Protected Overrides Sub RemoveImage(ByVal strImageName As String)
+
+            Dim oImage As System.Drawing.Image = DirectCast(m_hashImages(strImageName), System.Drawing.Image)
+
+            If m_ctrlAddFlow.Images.Contains(oImage) Then
+                m_ctrlAddFlow.Images.Remove(oImage)
+                m_hashImages.Remove(strImageName)
             End If
 
         End Sub
 
-        Public Overrides Sub RemoveImage(ByRef diImage As AnimatGUI.DataObjects.Behavior.DiagramImage)
-
-            If m_ctrlAddFlow.Images.Contains(diImage.WorkspaceImage) Then
-                m_ctrlAddFlow.Images.Remove(diImage.WorkspaceImage)
-            End If
-
-        End Sub
-
-        Public Overrides Function FindDiagramImageIndex(ByRef diImage As System.Drawing.Image, Optional ByVal bThrowError As Boolean = True) As Integer
+        Protected Overrides Function FindDiagramImageIndex(ByVal oImage As System.Drawing.Image, Optional ByVal bThrowError As Boolean = True) As Integer
 
             Dim iIndex As Integer = 0
             Dim doImage As Lassalle.Flow.FlowImage
             For Each doImage In m_ctrlAddFlow.Images
-                If doImage.Image Is diImage Then
+                If doImage.Image Is oImage Then
                     Return iIndex
                 End If
                 iIndex = iIndex + 1
@@ -1571,10 +1573,43 @@ Namespace Forms.Behavior
             Return -1
         End Function
 
-        'Public Overrides Function GetDiagramImageIndex(ByVal strImageName As String) As Integer
-        '    'Dim imgToFind As Image = Me.Subsystem.Organism.DiagramImages.FindImageBy
+        Protected Overrides Function GetDiagramImageIndex(ByVal bnNode As AnimatGUI.DataObjects.Behavior.Node) As Integer
 
-        'End Function
+            'First check to see if there is an image name. If not then return -1
+            If bnNode.DiagramImageName.Trim.Length = 0 AndAlso bnNode.ImageName.Trim.Length = 0 Then
+                Return -1
+            End If
+
+            Dim strKey As String = ""
+            If bnNode.ImageName.Trim.Length > 0 Then
+                strKey = bnNode.ImageName
+            Else
+                strKey = bnNode.DiagramImageName
+            End If
+
+            'Then lets look in the hashtable to see if we have an image with the given name yet.
+            If m_hashImages.ContainsKey(strKey) Then
+                Dim oImage As System.Drawing.Image = DirectCast(m_hashImages(strKey), System.Drawing.Image)
+
+                Return FindDiagramImageIndex(oImage)
+            Else
+                'if this is a new image then add it.
+                If bnNode.ImageName.Trim.Length > 0 Then
+                    Dim strFile As String = Util.GetFilePath(Util.Application.ProjectPath, strKey)
+                    'Attempt to load the file first to make sure it is a valid image file.
+                    Try
+                        Dim bm As New Bitmap(strFile)
+                        Return Me.AddImage(strFile, bm)
+                    Catch ex As System.Exception
+                        Throw New System.Exception("Unable to load the image. This does not appear to be a vaild image file. File: " & strFile)
+                    End Try
+                Else
+                    Dim oImage As System.Drawing.Image = AnimatGUI.Framework.ImageManager.LoadImage(strKey)
+                    Return Me.AddImage(strKey, oImage)
+                End If
+            End If
+
+        End Function
 
         Public Overrides Sub FitToPage()
             Dim rc As RectangleF = New RectangleF(New PointF(0, 0), m_ctrlAddFlow.Extent)
@@ -2537,7 +2572,12 @@ Namespace Forms.Behavior
 
                 'Now we need to go through and add all of the addflow nodes and links into the dictionaries for them.
                 For Each afNode As Lassalle.Flow.Node In m_ctrlAddFlow.Nodes
-                    m_aryAddFlowNodes.Add(DirectCast(afNode.Tag, String), afNode)
+                    Dim strNodeID As String = DirectCast(afNode.Tag, String)
+                    Dim bnNode As AnimatGUI.DataObjects.Behavior.Node = DirectCast(Me.Subsystem.BehavioralNodes.FindObjectByID(strNodeID), AnimatGUI.DataObjects.Behavior.Node)
+
+                    afNode.ImageIndex = GetDiagramImageIndex(bnNode)
+
+                    m_aryAddFlowNodes.Add(strNodeID, afNode)
 
                     For Each afLink As Lassalle.Flow.Link In afNode.InLinks
                         m_aryAddFlowLinks.Add(DirectCast(afLink.Tag, String), afLink)

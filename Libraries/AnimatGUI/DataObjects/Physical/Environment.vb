@@ -1290,37 +1290,35 @@ Namespace DataObjects.Physical
         End Function
 
         Public Overrides Sub InitializeSimulationReferences()
-            If Me.IsInitialized Then
-                'The environment is really just a pointer to the simulation object in the sim.
-                If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
-                    m_doInterface = New Interfaces.DataObjectInterface(Util.Application.SimulationInterface, Util.Simulation.ID)
-                End If
+            'The environment is really just a pointer to the simulation object in the sim.
+            If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
+                m_doInterface = New Interfaces.DataObjectInterface(Util.Application.SimulationInterface, Util.Simulation.ID)
+            End If
 
-                Dim doObject As AnimatGUI.Framework.DataObject
-                For Each deEntry As DictionaryEntry In m_aryOdorTypes
-                    doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                    doObject.InitializeSimulationReferences()
-                Next
+            Dim doObject As AnimatGUI.Framework.DataObject
+            For Each deEntry As DictionaryEntry In m_aryOdorTypes
+                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                doObject.InitializeSimulationReferences()
+            Next
 
-                For Each deEntry As DictionaryEntry In m_aryOrganisms
-                    doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                    doObject.InitializeSimulationReferences()
-                Next
+            For Each deEntry As DictionaryEntry In m_aryOrganisms
+                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                doObject.InitializeSimulationReferences()
+            Next
 
-                For Each deEntry As DictionaryEntry In m_aryStructures
-                    doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                    doObject.InitializeSimulationReferences()
-                Next
+            For Each deEntry As DictionaryEntry In m_aryStructures
+                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                doObject.InitializeSimulationReferences()
+            Next
 
-                For Each deEntry As DictionaryEntry In m_aryLights
-                    doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                    doObject.InitializeSimulationReferences()
-                Next
+            For Each deEntry As DictionaryEntry In m_aryLights
+                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                doObject.InitializeSimulationReferences()
+            Next
 
-                'Get the actual physics time step after initialization of the sim object.
-                If Not m_doInterface Is Nothing Then
-                    m_snPhysicsTimeStep.ActualValue = m_doInterface.GetDataValueImmediate("PhysicsTimeStep")
-                End If
+            'Get the actual physics time step after initialization of the sim object.
+            If Not m_doInterface Is Nothing Then
+                m_snPhysicsTimeStep.ActualValue = m_doInterface.GetDataValueImmediate("PhysicsTimeStep")
             End If
         End Sub
 

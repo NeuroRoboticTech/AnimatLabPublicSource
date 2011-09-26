@@ -25,6 +25,8 @@ Namespace Forms.Behavior
         '''flag to let me know when a diagram was being deleted so I did not make those calls.
         Protected m_bDeletingDiagram As Boolean = False
 
+        Protected m_hashImages As New Hashtable()
+
 #End Region
 
 #Region " Properties "
@@ -73,10 +75,10 @@ Namespace Forms.Behavior
         Public MustOverride Sub AddDiagramLink(ByRef blLink As DataObjects.Behavior.Link)
         Public MustOverride Sub RemoveDiagramLink(ByRef blLink As DataObjects.Behavior.Link)
 
-        Public MustOverride Sub AddImage(ByRef diImage As DataObjects.Behavior.DiagramImage)
-        Public MustOverride Sub RemoveImage(ByRef diImage As DataObjects.Behavior.DiagramImage)
-        Public MustOverride Function FindDiagramImageIndex(ByRef diImage As System.Drawing.Image, Optional ByVal bThrowError As Boolean = True) As Integer
-        'Public MustOverride Function GetDiagramImageIndex(ByVal strImageName As String) As Integer
+        Protected MustOverride Function AddImage(ByVal strImageName As String, ByVal oImage As System.Drawing.Image) As Integer
+        Protected MustOverride Sub RemoveImage(ByVal strImageName As String)
+        Protected MustOverride Function FindDiagramImageIndex(ByVal oImage As System.Drawing.Image, Optional ByVal bThrowError As Boolean = True) As Integer
+        Protected MustOverride Function GetDiagramImageIndex(ByVal bnNode As AnimatGUI.DataObjects.Behavior.Node) As Integer
 
         Public MustOverride Sub UpdateChart(ByRef bdData As DataObjects.Behavior.Data)
         Public MustOverride Sub UpdateData(ByRef bdData As DataObjects.Behavior.Data, Optional ByVal bSimple As Boolean = True, Optional ByVal bThrowError As Boolean = True)

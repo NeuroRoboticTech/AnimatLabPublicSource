@@ -27,8 +27,6 @@ Namespace DataObjects.Physical
         ''' This is the root subsystem for the organism. All nodes and other subsystems are derived from it.
         Protected m_bnRootSubSystem As New DataObjects.Behavior.Nodes.Subsystem(Me)
 
-        Protected m_aryDiagramImages As New Collections.DiagramImages(Me)
-
         ''' The neural modules treeview node
         Protected m_tnNeuralModules As Crownwood.DotNetMagic.Controls.Node
 
@@ -80,12 +78,6 @@ Namespace DataObjects.Physical
             Set(ByVal Value As Integer)
                 m_iMaxNodeCount = Value
             End Set
-        End Property
-
-        Public Overridable ReadOnly Property DiagramImages() As Collections.DiagramImages
-            Get
-                Return m_aryDiagramImages
-            End Get
         End Property
 
 #End Region
@@ -440,7 +432,6 @@ Namespace DataObjects.Physical
             Dim doOrganism As Organism = DirectCast(doOriginal, Organism)
 
             m_bnRootSubSystem = DirectCast(doOrganism.m_bnRootSubSystem.Clone(Me, bCutData, doRoot), AnimatGUI.DataObjects.Behavior.Nodes.Subsystem)
-            m_aryDiagramImages = DirectCast(doOrganism.m_aryDiagramImages.Clone(Me, bCutData, doRoot), Collections.DiagramImages)
             m_aryNeuralModules = DirectCast(doOrganism.m_aryNeuralModules.Clone(Me, bCutData, doRoot), AnimatGUI.Collections.SortedNeuralModules)
 
         End Sub
@@ -481,7 +472,6 @@ Namespace DataObjects.Physical
 
             m_aryNeuralModules.ClearIsDirty()
             m_bnRootSubSystem.ClearIsDirty()
-            m_aryDiagramImages.ClearIsDirty()
         End Sub
 
         Public Overridable Sub AddContactAdapters(ByVal nmPhysicsModule As DataObjects.Behavior.NeuralModule, ByVal m_aryNodes As Collections.SortedNodes)
@@ -504,41 +494,28 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
-            If Me.IsInitialized Then
-                MyBase.InitializeSimulationReferences()
+            MyBase.InitializeSimulationReferences()
 
-                Dim nmModule As DataObjects.Behavior.NeuralModule
-                For Each deEntry As DictionaryEntry In m_aryNeuralModules
-                    nmModule = DirectCast(deEntry.Value, DataObjects.Behavior.NeuralModule)
+            Dim nmModule As DataObjects.Behavior.NeuralModule
+            For Each deEntry As DictionaryEntry In m_aryNeuralModules
+                nmModule = DirectCast(deEntry.Value, DataObjects.Behavior.NeuralModule)
 
-                    'Only attempt to initialize the neural module if it exists in the simulation.
-                    'The problem is that a neural module is not created in the simulation unless it 
-                    ' has neurons. 
-                    If nmModule.SimObjectExists Then
-                        nmModule.InitializeSimulationReferences()
-                    End If
-                Next
-
-                If Not m_bnRootSubSystem Is Nothing Then
-                    m_bnRootSubSystem.InitializeSimulationReferences()
+                'Only attempt to initialize the neural module if it exists in the simulation.
+                'The problem is that a neural module is not created in the simulation unless it 
+                ' has neurons. 
+                If nmModule.SimObjectExists Then
+                    nmModule.InitializeSimulationReferences()
                 End If
+            Next
+
+            If Not m_bnRootSubSystem Is Nothing Then
+                m_bnRootSubSystem.InitializeSimulationReferences()
             End If
         End Sub
 
 #End Region
 
 #Region " Events "
-
-        Public Event ImageAdded(ByVal diImage As AnimatGUI.DataObjects.Behavior.DiagramImage)
-        Public Event ImageRemoved(ByVal diImage As AnimatGUI.DataObjects.Behavior.DiagramImage)
-
-        Public Overridable Sub SignalImageAdded(ByVal diImage As AnimatGUI.DataObjects.Behavior.DiagramImage)
-            RaiseEvent ImageAdded(diImage)
-        End Sub
-
-        Public Overridable Sub SignalImageRemoved(ByVal diImage As AnimatGUI.DataObjects.Behavior.DiagramImage)
-            RaiseEvent ImageRemoved(diImage)
-        End Sub
 
         Protected Overrides Sub OnCloneStructure(ByVal sender As Object, ByVal e As System.EventArgs)
 

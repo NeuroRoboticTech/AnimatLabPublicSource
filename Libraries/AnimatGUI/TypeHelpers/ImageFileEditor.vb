@@ -27,7 +27,7 @@ Namespace TypeHelpers
 
                 openFileDialog1.InitialDirectory = Util.Application.ProjectPath
                 openFileDialog1.Filter = strFilter
-                openFileDialog1.FilterIndex = 4
+                openFileDialog1.FilterIndex = 1
                 openFileDialog1.RestoreDirectory = True
 
                 If openFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then

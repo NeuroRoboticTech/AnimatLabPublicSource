@@ -105,13 +105,11 @@ Namespace DataObjects.Behavior.Nodes
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
-            If Me.IsInitialized Then
-                MyBase.InitializeSimulationReferences()
+            MyBase.InitializeSimulationReferences()
 
-                For Each doPair As DataObjects.Physical.ReceptiveFieldPair In m_aryReceptiveFieldPairs
-                    doPair.InitializeSimulationReferences()
-                Next
-            End If
+            For Each doPair As DataObjects.Physical.ReceptiveFieldPair In m_aryReceptiveFieldPairs
+                doPair.InitializeSimulationReferences()
+            Next
         End Sub
 
 #Region " DataObject Methods "

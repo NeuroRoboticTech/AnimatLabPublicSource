@@ -557,12 +557,10 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
-            If Me.IsInitialized Then
-                MyBase.InitializeSimulationReferences()
+            MyBase.InitializeSimulationReferences()
 
-                If Not m_dbRoot Is Nothing Then
-                    m_dbRoot.InitializeSimulationReferences()
-                End If
+            If Not m_dbRoot Is Nothing Then
+                m_dbRoot.InitializeSimulationReferences()
             End If
         End Sub
 

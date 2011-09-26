@@ -159,8 +159,13 @@ Namespace DataObjects.Behavior.Nodes
             End Try
         End Sub
 
-        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeAddToList(bThrowError)
+        ''' \brief  Initializes the simulation references.
+        '''
+        ''' \details This type of object has no related simulation object, so do not call base class here.
+        ''' 		 
+        ''' \author dcofer
+        ''' \date   9/25/2011
+        Public Overrides Sub InitializeSimulationReferences()
         End Sub
 
 #End Region

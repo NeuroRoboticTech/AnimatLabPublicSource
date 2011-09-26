@@ -283,15 +283,13 @@ Namespace DataObjects.Behavior.Neurons
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
-            If Me.IsInitialized Then
-                MyBase.InitializeSimulationReferences()
+            MyBase.InitializeSimulationReferences()
 
-                Dim doObject As AnimatGUI.Framework.DataObject
-                For Each deEntry As DictionaryEntry In m_aryInLinks
-                    doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                    doObject.InitializeSimulationReferences()
-                Next
-            End If
+            Dim doObject As AnimatGUI.Framework.DataObject
+            For Each deEntry As DictionaryEntry In m_aryInLinks
+                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                doObject.InitializeSimulationReferences()
+            Next
         End Sub
 
         'Public Overrides Sub SaveDataColumnToXml(ByRef oXml As AnimatGUI.Interfaces.StdXml)

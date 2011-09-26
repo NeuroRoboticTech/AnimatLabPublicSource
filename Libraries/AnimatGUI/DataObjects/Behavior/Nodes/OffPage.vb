@@ -260,14 +260,6 @@ Namespace DataObjects.Behavior.Nodes
                     End If
                 Next
 
-                If m_strImageID.Trim.Length > 0 Then
-                    If Not Me.Organism Is Nothing Then
-                        If Me.Organism.DiagramImages.Contains(m_strImageID) Then
-                            m_diImage = Me.Organism.DiagramImages(m_strImageID)
-                        End If
-                    End If
-                End If
-
                 m_aryLoadingInLinkIDs.Clear()
                 m_aryLoadingOutLinkIDs.Clear()
 

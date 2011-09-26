@@ -128,6 +128,7 @@ Namespace DataObjects.Behavior
         Protected m_clGradientColor As System.Drawing.Color
         Protected m_eGradientMode As System.Drawing.Drawing2D.LinearGradientMode
         Protected m_strDiagramImageName As String
+        Protected m_strImageName As String
         Protected m_ptImageLocation As PointF
         Protected m_eImagePosition As enumImagePosition
         Protected m_bInLinkable As Boolean
@@ -152,9 +153,6 @@ Namespace DataObjects.Behavior
         Protected m_bYMoveable As Boolean
         Protected m_bYSizeable As Boolean
         Protected m_iZOrder As Integer
-
-        Protected m_diImage As DataObjects.Behavior.DiagramImage
-        Protected m_strImageID As String = ""
 
         Protected m_aryLinks As New Collections.SortedLinks(Me)
         Protected m_aryInLinks As New Collections.SortedLinks(Me)
@@ -327,6 +325,40 @@ Namespace DataObjects.Behavior
             Set(ByVal Value As String)
                 m_strDiagramImageName = Value
                 UpdateChart()
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property ImageName() As String
+            Get
+                Return m_strImageName
+            End Get
+            Set(ByVal Value As String)
+
+                'Check to see if the file exists.
+                If Value.Trim.Length > 0 Then
+                    If Not File.Exists(Value) Then
+                        Throw New System.Exception("The specified file does not exist: " & Value)
+                    End If
+
+                    'Attempt to load the file first to make sure it is a valid image file.
+                    Try
+                        Dim bm As New Bitmap(Value)
+                    Catch ex As System.Exception
+                        Throw New System.Exception("Unable to load the image. This does not appear to be a vaild image file.")
+                    End Try
+
+                    If Not Value Is Nothing Then
+                        Dim strPath As String, strFile As String
+                        If Util.DetermineFilePath(Value, strPath, strFile) Then
+                            Value = strFile
+                        End If
+                    End If
+                End If
+
+                m_strImageName = Value
+                UpdateChart()
+
             End Set
         End Property
 
@@ -650,31 +682,6 @@ Namespace DataObjects.Behavior
         End Property
 
         <Browsable(False)> _
-        Public Overridable Property DiagramImage() As DataObjects.Behavior.DiagramImage
-            Get
-                Return m_diImage
-            End Get
-            Set(ByVal Value As DataObjects.Behavior.DiagramImage)
-                m_diImage = Value
-
-                If m_diImage Is Nothing Then
-                    Me.DiagramImageName = ""
-                Else
-                    'If it is already in the list then use that one. If it is not in the list then add a new one.
-                    If Me.Organism.DiagramImages.Contains(m_diImage.ID) Then
-                        m_diImage = Me.Organism.DiagramImages(m_diImage.ID)
-                        Me.DiagramImageName = m_diImage.ID
-                    Else
-                        Me.Organism.DiagramImages.Add(m_diImage.ID, m_diImage)
-                        Me.DiagramImageName = m_diImage.ID
-                    End If
-                End If
-
-                UpdateChart()
-            End Set
-        End Property
-
-        <Browsable(False)> _
         Public Overrides ReadOnly Property AllowStimulus() As Boolean
             Get
                 Return True
@@ -699,6 +706,7 @@ Namespace DataObjects.Behavior
             m_bGradient = False
             m_eGradientMode = Drawing2D.LinearGradientMode.BackwardDiagonal
             m_strDiagramImageName = ""
+            m_strImageName = ""
             m_ptImageLocation = New PointF(0, 0)
             m_eImagePosition = enumImagePosition.RelativeToText
             m_bInLinkable = True
@@ -742,7 +750,7 @@ Namespace DataObjects.Behavior
             m_clGradientColor = bnOrig.m_clGradientColor
             m_eGradientMode = bnOrig.m_eGradientMode
             m_strDiagramImageName = bnOrig.m_strDiagramImageName
-            m_strImageID = bnOrig.m_strImageID
+            m_strImageName = bnOrig.m_strImageName
             m_ptImageLocation = bnOrig.m_ptImageLocation
             m_eImagePosition = bnOrig.m_eImagePosition
             m_bInLinkable = bnOrig.m_bInLinkable
@@ -901,16 +909,6 @@ Namespace DataObjects.Behavior
 
             m_aryCompatibleLinks.Add(blLink)
         End Sub
-
-        Protected Overridable Function FindDiagramImageIndex(ByVal strID As String) As Integer
-
-            Try
-                Return Me.Organism.DiagramImages.FindIndexByID(strID)
-            Catch ex As System.Exception
-                Return -1
-            End Try
-
-        End Function
 
         Public Overridable Sub CreateNodeTreeView(ByRef tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal aryNodes As Crownwood.DotNetMagic.Controls.NodeCollection)
             Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(Me.Text)
@@ -1124,10 +1122,9 @@ Namespace DataObjects.Behavior
                                         "Node Properties", "Sets the description for this node.", m_strToolTip, _
                                         GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Image", GetType(AnimatGUI.DataObjects.Behavior.DiagramImage), "DiagramImage", _
-                                        "Graphical Properties", "Assigns an image to this node. ", m_diImage, _
-                                        GetType(AnimatGUI.TypeHelpers.ImageTypeEditor), _
-                                        GetType(AnimatGUI.TypeHelpers.ImageTypeConverter)))
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Image", GetType(String), "ImageName", _
+                                        "Graphical Properties", "Sets the image file to use for this node.", Me.ImageName, _
+                                        GetType(TypeHelpers.ImageFileEditor)))
 
         End Sub
 
@@ -1181,6 +1178,7 @@ Namespace DataObjects.Behavior
                 m_clGradientColor = Color.FromArgb(iColor)
                 m_eGradientMode = DirectCast([Enum].Parse(GetType(System.Drawing.Drawing2D.LinearGradientMode), oXml.GetChildString("GradientMode"), True), System.Drawing.Drawing2D.LinearGradientMode)
                 m_strDiagramImageName = oXml.GetChildString("DiagramImageName", m_strDiagramImageName)
+                m_strImageName = oXml.GetChildString("ImageName", m_strImageName)
                 m_ptImageLocation = Util.LoadPointF(oXml, "ImageLocation")
                 m_eImagePosition = DirectCast([Enum].Parse(GetType(enumImagePosition), oXml.GetChildString("ImagePosition"), True), enumImagePosition)
                 m_bInLinkable = oXml.GetChildBool("InLinkable")
@@ -1206,8 +1204,6 @@ Namespace DataObjects.Behavior
                 m_bYMoveable = oXml.GetChildBool("YMoveable")
                 m_bYSizeable = oXml.GetChildBool("YSizeable")
                 m_iZOrder = oXml.GetChildInt("ZOrder")
-
-                m_strImageID = Util.LoadID(oXml, "Image", True, "")
 
                 m_aryLoadingInLinkIDs.Clear()
                 m_aryLoadingOutLinkIDs.Clear()
@@ -1270,14 +1266,6 @@ Namespace DataObjects.Behavior
                     End If
                 Next
 
-                If m_strImageID.Trim.Length > 0 Then
-                    If Not Me.Organism Is Nothing Then
-                        If Me.Organism.DiagramImages.Contains(m_strImageID) Then
-                            m_diImage = Me.Organism.DiagramImages(m_strImageID)
-                        End If
-                    End If
-                End If
-
                 m_aryLoadingInLinkIDs.Clear()
                 m_aryLoadingOutLinkIDs.Clear()
 
@@ -1321,6 +1309,7 @@ Namespace DataObjects.Behavior
                 oXml.AddChildElement("GradientColor", m_clGradientColor.ToArgb)
                 oXml.AddChildElement("GradientMode", m_eGradientMode.ToString)
                 oXml.AddChildElement("DiagramImageName", m_strDiagramImageName)
+                oXml.AddChildElement("ImageName", m_strImageName)
                 Util.SavePoint(oXml, "ImageLocation", m_ptImageLocation)
                 oXml.AddChildElement("ImagePosition", m_eImagePosition.ToString)
                 oXml.AddChildElement("InLinkable", m_bInLinkable)
@@ -1345,10 +1334,6 @@ Namespace DataObjects.Behavior
                 oXml.AddChildElement("YMoveable", m_bYMoveable)
                 oXml.AddChildElement("YSizeable", m_bYSizeable)
                 oXml.AddChildElement("ZOrder", m_iZOrder)
-
-                If Not m_diImage Is Nothing Then
-                    oXml.AddChildElement("ImageID", m_diImage.ID)
-                End If
 
                 'Now lets write out the in and out links.
                 Dim blLink As AnimatGUI.DataObjects.Behavior.Link

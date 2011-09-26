@@ -115,7 +115,7 @@ Namespace DataObjects.Behavior.Nodes
                 oXml.AddChildElement("SourceModule", nmSource.ModuleName)
                 oXml.AddChildElement("SourceID", bnOrigin.ID)
                 oXml.AddChildElement("SourceDataType", m_thDataTypes.ID)
-                oXml.AddChildElement("TargetMoule", "AnimatLab")
+                oXml.AddChildElement("TargetModule", "AnimatLab")
                 oXml.AddChildElement("TargetID", bpPart.LinkedPart.BodyPart.ID())
 
                 m_gnGain.SaveSimulationXml(oXml, Nothing, "Gain")

@@ -34,7 +34,7 @@ Namespace DataObjects.Behavior.Nodes
                 MyBase.Organism = value
 
                 If Not Me.Organism Is Nothing Then
-                    m_thLinkedPart = New AnimatGUI.TypeHelpers.LinkedBodyPartList(Me.Organism, Nothing, m_tpBodyPartType)
+                    m_thLinkedPart = New AnimatGUI.TypeHelpers.LinkedBodyPartTree(Me.Organism, Nothing, m_tpBodyPartType)
                     m_thDataTypes = New AnimatGUI.TypeHelpers.DataTypeID(Me)
                 End If
             End Set
@@ -132,7 +132,7 @@ Namespace DataObjects.Behavior.Nodes
 
             Try
 
-                m_thLinkedPart = New AnimatGUI.TypeHelpers.LinkedBodyPartList(Me)
+                m_thLinkedPart = New AnimatGUI.TypeHelpers.LinkedBodyPartTree(Me)
 
                 Shape = AnimatGUI.DataObjects.Behavior.Node.enumShape.Ellipse
                 Size = New System.Drawing.SizeF(50, 50)
