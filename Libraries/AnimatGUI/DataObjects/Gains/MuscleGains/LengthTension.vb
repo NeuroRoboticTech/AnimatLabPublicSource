@@ -306,7 +306,7 @@ Namespace DataObjects.Gains.MuscleGains
 
         End Sub
 
-        Public Overrides Sub SetAllSimData(ByVal doInterface As Interfaces.DataObjectInterface)
+        Protected Overrides Sub SetAllSimData(ByVal doInterface As Interfaces.DataObjectInterface)
             MyBase.SetAllSimData(doInterface)
 
             SetSimData("RestingLength", m_snRestingLength.ActualValue.ToString, True)

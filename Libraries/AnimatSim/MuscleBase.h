@@ -73,7 +73,10 @@ namespace AnimatSim
 				virtual void Enabled(BOOL bVal);
 
 				virtual SigmoidGain *StimTension();
+				virtual void StimTension(string strXml);
+
 				virtual LengthTensionGain *LengthTension();
+				virtual void LengthTension(string strXml);
 
 				/**
 				\brief	Calculates the activation needed for a given tension value. 

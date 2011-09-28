@@ -65,8 +65,14 @@ Namespace DataObjects.Physical.Bodies
             End Get
             Set(ByVal value As Gains.MuscleGains.StimulusTension)
                 If Not value Is Nothing Then
-                    value.SetAllSimData(m_StimTension.SimInterface)
-                    m_StimTension = value
+                    SetSimData("StimulusTension", value.GetSimulationXml("Gain", Me), True)
+                    value.InitializeSimulationReferences()
+                End If
+
+                If Not m_StimTension Is Nothing Then m_StimTension.ParentData = Nothing
+                m_StimTension = value
+                If Not m_StimTension Is Nothing Then
+                    m_StimTension.GainPropertyName = "StimulusTension"
                 End If
             End Set
         End Property
@@ -81,8 +87,14 @@ Namespace DataObjects.Physical.Bodies
             End Get
             Set(ByVal value As Gains.MuscleGains.LengthTension)
                 If Not value Is Nothing Then
-                    value.SetAllSimData(m_LengthTension.SimInterface)
-                    m_LengthTension = value
+                    SetSimData("LengthTension", value.GetSimulationXml("Gain", Me), True)
+                    value.InitializeSimulationReferences()
+                End If
+
+                If Not m_LengthTension Is Nothing Then m_LengthTension.ParentData = Nothing
+                m_LengthTension = value
+                If Not m_LengthTension Is Nothing Then
+                    m_LengthTension.GainPropertyName = "LengthTension"
                 End If
             End Set
         End Property

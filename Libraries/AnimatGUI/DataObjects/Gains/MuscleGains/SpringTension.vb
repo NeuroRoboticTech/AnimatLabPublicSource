@@ -302,7 +302,7 @@ Namespace DataObjects.Gains.MuscleGains
             'RecalculuateLimits()
         End Sub
 
-        Public Overrides Sub SetAllSimData(ByVal doInterface As Interfaces.DataObjectInterface)
+        Protected Overrides Sub SetAllSimData(ByVal doInterface As Interfaces.DataObjectInterface)
             MyBase.SetAllSimData(doInterface)
 
             SetSimData("Stiffness", m_snStiffness.ActualValue.ToString, True)

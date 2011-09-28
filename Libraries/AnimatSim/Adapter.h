@@ -60,6 +60,8 @@ namespace AnimatSim
 			/// Pointer to the Gain that will be used to convert the source value into the target value.
 			Gain *m_lpGain;
 
+			virtual void Adapter::AddGain(string strXml);
+
 		public:
 			Adapter();
 			virtual ~Adapter();
@@ -87,9 +89,11 @@ namespace AnimatSim
 			virtual Node *TargetNode();
 
 			virtual Gain *GetGain();
+			virtual void SetGain(Gain *lpGain);
 
 			virtual void Initialize();
 			virtual void AddExternalNodeInput(float fltInput);
+			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 			virtual float *GetDataPointer(string strDataType);
 			virtual void ResetSimulation() {};
 			virtual void StepSimulation();

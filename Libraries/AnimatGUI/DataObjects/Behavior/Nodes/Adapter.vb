@@ -50,7 +50,12 @@ Namespace DataObjects.Behavior.Nodes
             End Get
             Set(ByVal Value As AnimatGUI.DataObjects.Gain)
                 If Not Value Is Nothing Then
-                    Value.SetAllSimData(m_gnGain.SimInterface)
+                    If Not Value Is Nothing Then
+                        SetSimData("Gain", Value.GetSimulationXml("Gain", Me), True)
+                        'Util.Application.SimulationInterface.AddItem(Me.ID, "Gain", Value.GetSimulationXml("Gain", Me), True)
+                        Value.InitializeSimulationReferences()
+                    End If
+
                     If Not m_gnGain Is Nothing Then m_gnGain.ParentData = Nothing
                     m_gnGain = Value
                     If Not m_gnGain Is Nothing Then

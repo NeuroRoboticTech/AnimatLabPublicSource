@@ -202,7 +202,11 @@ Namespace DataObjects.Behavior.Neurons
                 Return m_gnMinf
             End Get
             Set(ByVal Value As AnimatGUI.DataObjects.Gain)
-                Value.SetAllSimData(m_gnMinf.SimInterface)
+                If Not Value Is Nothing Then
+                    SetSimData("Minf", Value.GetSimulationXml("Gain", Me), True)
+                    Value.InitializeSimulationReferences()
+                End If
+
                 m_gnMinf = Value
             End Set
         End Property
@@ -213,7 +217,11 @@ Namespace DataObjects.Behavior.Neurons
                 Return m_gnTm
             End Get
             Set(ByVal Value As AnimatGUI.DataObjects.Gain)
-                Value.SetAllSimData(m_gnTm.SimInterface)
+                If Not Value Is Nothing Then
+                    SetSimData("Tm", Value.GetSimulationXml("Gain", Me), True)
+                    Value.InitializeSimulationReferences()
+                End If
+
                 m_gnTm = Value
             End Set
         End Property
@@ -250,7 +258,11 @@ Namespace DataObjects.Behavior.Neurons
                 Return m_gnHinf
             End Get
             Set(ByVal Value As AnimatGUI.DataObjects.Gain)
-                Value.SetAllSimData(m_gnHinf.SimInterface)
+                If Not Value Is Nothing Then
+                    SetSimData("Hinf", Value.GetSimulationXml("Gain", Me), True)
+                    Value.InitializeSimulationReferences()
+                End If
+
                 m_gnHinf = Value
             End Set
         End Property
@@ -261,7 +273,11 @@ Namespace DataObjects.Behavior.Neurons
                 Return m_gnTh
             End Get
             Set(ByVal Value As AnimatGUI.DataObjects.Gain)
-                Value.SetAllSimData(m_gnTh.SimInterface)
+                If Not Value Is Nothing Then
+                    SetSimData("Th", Value.GetSimulationXml("Gain", Me), True)
+                    Value.InitializeSimulationReferences()
+                End If
+
                 m_gnTh = Value
             End Set
         End Property

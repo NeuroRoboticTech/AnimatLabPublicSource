@@ -263,6 +263,18 @@ Node *Adapter::TargetNode() {return m_lpTargetNode;}
 **/
 Gain *Adapter::GetGain() {return m_lpGain;}
 
+void Adapter::SetGain(Gain *lpGain)
+{
+	if(m_lpGain)
+	{
+		delete m_lpGain;
+		m_lpGain = NULL;
+	}
+
+	m_lpGain = lpGain;
+	m_lpGain->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, TRUE);
+}
+
 void Adapter::AddExternalNodeInput(float fltInput)
 {
 	THROW_TEXT_ERROR(Al_Err_lOpNotDefinedForAdapter, Al_Err_strOpNotDefinedForAdapter, "AddExternalNodeInput");
@@ -272,6 +284,45 @@ float *Adapter::GetDataPointer(string strDataType)
 {
 	THROW_TEXT_ERROR(Al_Err_lOpNotDefinedForAdapter, Al_Err_strOpNotDefinedForAdapter, "GetDataPointer");
 	return 0;
+}
+
+/**
+\brief	Creates and adds a gain object. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml	The xml data packet for loading the gain. 
+**/
+void Adapter::AddGain(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Gain");
+
+	SetGain(LoadGain(m_lpSim, "Gain", oXml));
+}
+
+BOOL Adapter::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(AnimatBase::SetData(strDataType, strValue, FALSE))
+		return TRUE;
+
+	if(strType == "GAIN")
+	{
+		AddGain(strValue);
+		return TRUE;
+	}
+
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Data Type", strDataType);
+
+	return FALSE;
 }
 
 void Adapter::Initialize()
@@ -317,8 +368,7 @@ void Adapter::Load(CStdXml &oXml)
 	TargetModule(oXml.GetChildString("TargetModule"));
 	TargetID(oXml.GetChildString("TargetID"));
 
-	m_lpGain = LoadGain(m_lpSim, "Gain", oXml);
-	m_lpGain->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, TRUE);
+	SetGain(LoadGain(m_lpSim, "Gain", oXml));
 
 	oXml.OutOfElem(); //OutOf Adapter Element
 }

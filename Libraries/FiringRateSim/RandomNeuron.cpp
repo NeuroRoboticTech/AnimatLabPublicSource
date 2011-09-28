@@ -188,7 +188,8 @@ void RandomNeuron::CurrentDistribution(string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
-	oXml.FindElement("Gain");
+	oXml.FindElement("Root");
+	oXml.FindChildElement("CurrentGraph");
 	CurrentDistribution(AnimatSim::Gains::LoadGain(m_lpSim, "CurrentGraph", oXml));
 }
 
@@ -222,7 +223,8 @@ void RandomNeuron::BurstLengthDistribution(string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
-	oXml.FindElement("Gain");
+	oXml.FindElement("Root");
+	oXml.FindChildElement("BurstGraph");
 	BurstLengthDistribution(AnimatSim::Gains::LoadGain(m_lpSim, "BurstGraph", oXml));
 }
 
@@ -256,7 +258,8 @@ void RandomNeuron::InterbusrtLengthDistribution(string strXml)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
-	oXml.FindElement("Gain");
+	oXml.FindElement("Root");
+	oXml.FindChildElement("InterBurstGraph");
 	InterbusrtLengthDistribution(AnimatSim::Gains::LoadGain(m_lpSim, "InterBurstGraph", oXml));
 }
 

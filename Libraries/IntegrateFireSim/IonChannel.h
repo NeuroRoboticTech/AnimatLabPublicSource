@@ -120,6 +120,22 @@ namespace IntegrateFireSim
 		void Nh(float fltVal);
 		float Nh();
 
+		AnimatSim::Gains::Gain *Minf();
+		void Minf(AnimatSim::Gains::Gain *lpGain);
+		void Minf(string strXml);
+
+		AnimatSim::Gains::Gain *Tm();
+		void Tm(AnimatSim::Gains::Gain *lpGain);
+		void Tm(string strXml);
+
+		AnimatSim::Gains::Gain *Hinf();
+		void Hinf(AnimatSim::Gains::Gain *lpGain);
+		void Hinf(string strXml);
+
+		AnimatSim::Gains::Gain *Th();
+		void Th(AnimatSim::Gains::Gain *lpGain);
+		void Th(string strXml);
+
 #pragma endregion
 
 #pragma region DataAccesMethods

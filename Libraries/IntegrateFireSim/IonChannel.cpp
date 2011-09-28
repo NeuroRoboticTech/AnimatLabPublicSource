@@ -301,6 +301,189 @@ void  IonChannel::Nh(float fltVal) {m_fltNh = fltVal;}
 **/
 float  IonChannel::Nh() {return m_fltNh;}
 
+/**
+\brief	Gets the minf.
+
+\author	dcofer
+\date	9/28/2011
+
+\return	null if it fails, else.
+**/
+AnimatSim::Gains::Gain *IonChannel::Minf() {return m_lpMinf;}
+
+/**
+\brief	Sets the Minf equation.
+
+\author	dcofer
+\date	3/29/2011
+
+\param [in,out]	lpGain	Pointer to a gain. 
+**/
+void IonChannel::Minf(AnimatSim::Gains::Gain *lpGain)
+{
+	if(m_lpMinf)
+	{
+		if(m_lpMinf) 
+			{delete m_lpMinf; m_lpMinf = NULL;}
+		m_lpMinf = lpGain;
+	}
+}
+
+/**
+\brief	Sets the Minf gain using an xml packet.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strXml	The xml packet defining the gain. 
+**/
+void IonChannel::Minf(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Gain");
+	Minf(AnimatSim::Gains::LoadGain(m_lpSim, "Gain", oXml));
+}
+
+
+/**
+\brief	Gets the Tm.
+
+\author	dcofer
+\date	9/28/2011
+
+\return	null if it fails, else.
+**/
+AnimatSim::Gains::Gain *IonChannel::Tm() {return m_lpTm;}
+
+/**
+\brief	Sets the Tm equation.
+
+\author	dcofer
+\date	3/29/2011
+
+\param [in,out]	lpGain	Pointer to a gain. 
+**/
+void IonChannel::Tm(AnimatSim::Gains::Gain *lpGain)
+{
+	if(m_lpTm)
+	{
+		if(m_lpTm) 
+			{delete m_lpTm; m_lpTm = NULL;}
+		m_lpTm = lpGain;
+	}
+}
+
+/**
+\brief	Sets the Tm gain using an xml packet.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strXml	The xml packet defining the gain. 
+**/
+void IonChannel::Tm(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Gain");
+	Tm(AnimatSim::Gains::LoadGain(m_lpSim, "Gain", oXml));
+}
+
+
+/**
+\brief	Gets the Hinf.
+
+\author	dcofer
+\date	9/28/2011
+
+\return	null if it fails, else.
+**/
+AnimatSim::Gains::Gain *IonChannel::Hinf() {return m_lpHinf;}
+
+/**
+\brief	Sets the Hinf equation.
+
+\author	dcofer
+\date	3/29/2011
+
+\param [in,out]	lpGain	Pointer to a gain. 
+**/
+void IonChannel::Hinf(AnimatSim::Gains::Gain *lpGain)
+{
+	if(m_lpHinf)
+	{
+		if(m_lpHinf) 
+			{delete m_lpHinf; m_lpHinf = NULL;}
+		m_lpHinf = lpGain;
+	}
+}
+
+/**
+\brief	Sets the Hinf gain using an xml packet.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strXml	The xml packet defining the gain. 
+**/
+void IonChannel::Hinf(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Gain");
+	Hinf(AnimatSim::Gains::LoadGain(m_lpSim, "Gain", oXml));
+}
+
+
+/**
+\brief	Gets the Th.
+
+\author	dcofer
+\date	9/28/2011
+
+\return	null if it fails, else.
+**/
+AnimatSim::Gains::Gain *IonChannel::Th() {return m_lpTh;}
+
+/**
+\brief	Sets the Hinf equation.
+
+\author	dcofer
+\date	3/29/2011
+
+\param [in,out]	lpGain	Pointer to a gain. 
+**/
+void IonChannel::Th(AnimatSim::Gains::Gain *lpGain)
+{
+	if(m_lpTh)
+	{
+		if(m_lpTh) 
+			{delete m_lpTh; m_lpTh = NULL;}
+		m_lpTh = lpGain;
+	}
+}
+
+/**
+\brief	Sets the Th gain using an xml packet.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	strXml	The xml packet defining the gain. 
+**/
+void IonChannel::Th(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Gain");
+	Th(AnimatSim::Gains::LoadGain(m_lpSim, "Gain", oXml));
+}
+
 #pragma endregion
 
 /**
@@ -442,6 +625,30 @@ BOOL IonChannel::SetData(string strDataType, string strValue, BOOL bThrowError)
 	if(strType == "NH")
 	{
 		Nh(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "MINF")
+	{
+		Minf(strValue);
+		return TRUE;
+	}
+
+	if(strType == "TM")
+	{
+		Tm(strValue);
+		return TRUE;
+	}
+
+	if(strType == "HINF")
+	{
+		Hinf(strValue);
+		return TRUE;
+	}
+
+	if(strType == "TH")
+	{
+		Th(strValue);
 		return TRUE;
 	}
 

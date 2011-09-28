@@ -194,7 +194,41 @@ void MuscleBase::Enabled(BOOL bVal)
 
 SigmoidGain *MuscleBase::StimTension() {return &m_gainStimTension;}
 
+
+
+/**
+\brief	Sets the stim-tension gain using an xml packet.
+
+\author	dcofer
+
+\param	strXml	The xml packet defining the gain. 
+**/
+void MuscleBase::StimTension(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Gain");
+	m_gainStimTension.Load(oXml);
+}
+
 LengthTensionGain *MuscleBase::LengthTension() {return &m_gainLengthTension;}
+
+/**
+\brief	Sets the stim-tension gain using an xml packet.
+
+\author	dcofer
+
+\param	strXml	The xml packet defining the gain. 
+**/
+void MuscleBase::LengthTension(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Gain");
+	m_gainLengthTension.Load(oXml);
+}
 
 void MuscleBase::AddExternalNodeInput(float fltInput)
 {
@@ -246,6 +280,18 @@ BOOL MuscleBase::SetData(string strDataType, string strValue, BOOL bThrowError)
 	if(strDataType == "MAXTENSION")
 	{
 		MaxTension(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strDataType == "STIMULUSTENSION")
+	{
+		StimTension(strValue);
+		return true;
+	}
+
+	if(strDataType == "LENGTHTENSION")
+	{
+		LengthTension(strValue);
 		return true;
 	}
 
