@@ -370,35 +370,33 @@ Namespace DataObjects.Behavior.Nodes
         Public Overrides Sub InitializeAfterLoad()
 
             Try
-                MyBase.InitializeAfterLoad()
+                If m_bnOrigin Is Nothing Then
+                    If m_strOriginID.Trim.Length > 0 Then
+                        m_bnOrigin = Me.Organism.FindBehavioralNode(m_strOriginID)
 
-                If m_bIsInitialized Then
-                    If m_bnOrigin Is Nothing Then
-                        If m_strOriginID.Trim.Length > 0 Then
-                            m_bnOrigin = Me.Organism.FindBehavioralNode(m_strOriginID)
-
-                            If Not m_bnOrigin.IsInitialized Then
-                                m_bnOrigin = Nothing
-                                m_bIsInitialized = False
-                                Return
-                            End If
-
-                            m_thDataTypes = DirectCast(m_bnOrigin.DataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
-
-                            If Not m_thDataTypes Is Nothing AndAlso m_strDataTypeID.Trim.Length > 0 AndAlso m_strDataTypeID.Trim.Length > 0 Then
-                                If Me.m_thDataTypes.DataTypes.Contains(m_strDataTypeID) Then
-                                    Me.m_thDataTypes.ID = m_strDataTypeID
-                                End If
-                            End If
+                        If Not m_bnOrigin.IsInitialized Then
+                            m_bnOrigin = Nothing
+                            m_bIsInitialized = False
+                            Return
                         End If
-                    End If
 
-                    If m_bnDestination Is Nothing Then
-                        If m_strDestinationID.Trim.Length > 0 Then
-                            m_bnDestination = Me.Organism.FindBehavioralNode(m_strDestinationID)
+                        m_thDataTypes = DirectCast(m_bnOrigin.DataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
+
+                        If Not m_thDataTypes Is Nothing AndAlso m_strDataTypeID.Trim.Length > 0 AndAlso m_strDataTypeID.Trim.Length > 0 Then
+                            If Me.m_thDataTypes.DataTypes.Contains(m_strDataTypeID) Then
+                                Me.m_thDataTypes.ID = m_strDataTypeID
+                            End If
                         End If
                     End If
                 End If
+
+                If m_bnDestination Is Nothing Then
+                    If m_strDestinationID.Trim.Length > 0 Then
+                        m_bnDestination = Me.Organism.FindBehavioralNode(m_strDestinationID)
+                    End If
+                End If
+
+                MyBase.InitializeAfterLoad()
 
                 If Not m_bnDestination Is Nothing Then
                     AddHandler m_bnDestination.AfterPropertyChanged, AddressOf Me.OnDestinationPropertyChanged
