@@ -484,7 +484,14 @@ Namespace DataObjects.Physical
             MyBase.InitializeAfterLoad()
 
             If Not m_bnRootSubSystem Is Nothing Then
-                m_bnRootSubSystem.InitializeAfterLoad()
+                Dim iRetryCount As Integer = 0
+                While Not m_bnRootSubSystem.IsInitialized AndAlso iRetryCount < 5
+                    m_bnRootSubSystem.InitializeAfterLoad()
+                    iRetryCount = iRetryCount + 1
+                    If iRetryCount > 5 Then
+                        Util.DisplayError(New System.Exception("Retry count for InitializeAfterLoad method is > 5. Giving up on this."))
+                    End If
+                End While
             End If
 
             For Each deEntry As DictionaryEntry In Me.NeuralModules

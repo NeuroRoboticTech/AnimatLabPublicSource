@@ -280,9 +280,6 @@ Namespace DataObjects.Behavior.Nodes
 
             Catch ex As System.Exception
                 m_bIsInitialized = False
-                'If iAttempt = 1 Then
-                '    AnimatGUI.Framework.Util.DisplayError(ex)
-                'End If
             End Try
 
         End Sub

@@ -378,6 +378,7 @@ Namespace DataObjects.Behavior.Nodes
                             m_bnOrigin = Me.Organism.FindBehavioralNode(m_strOriginID)
 
                             If Not m_bnOrigin.IsInitialized Then
+                                m_bnOrigin = Nothing
                                 m_bIsInitialized = False
                                 Return
                             End If
@@ -413,9 +414,6 @@ Namespace DataObjects.Behavior.Nodes
 
             Catch ex As System.Exception
                 m_bIsInitialized = False
-                'If iAttempt = 1 Then
-                '    AnimatGUI.Framework.Util.DisplayError(ex)
-                'End If
             End Try
 
         End Sub

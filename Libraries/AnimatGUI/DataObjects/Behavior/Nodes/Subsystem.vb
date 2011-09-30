@@ -111,6 +111,19 @@ Namespace DataObjects.Behavior.Nodes
             End Set
         End Property
 
+        Public Overrides Property IsInitialized() As Boolean
+            Get
+                If m_bIsInitialized AndAlso Me.AllChildrenInitialized() Then
+                    Return True
+                Else
+                    Return False
+                End If
+            End Get
+            Set(ByVal Value As Boolean)
+                m_bIsInitialized = Value
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -531,6 +544,26 @@ Namespace DataObjects.Behavior.Nodes
 
         End Sub
 
+        Protected Overridable Function AllChildrenInitialized() As Boolean
+
+            Dim doData As AnimatGUI.DataObjects.Behavior.Data
+            For Each deEntry As DictionaryEntry In Me.BehavioralNodes
+                doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                If Not doData.IsInitialized Then
+                    Return False
+                End If
+            Next
+
+            For Each deEntry As DictionaryEntry In Me.BehavioralLinks
+                doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                If Not doData.IsInitialized Then
+                    Return False
+                End If
+            Next
+
+            Return True
+        End Function
+
         Public Overrides Sub InitializeAfterLoad()
 
             Try
@@ -539,19 +572,20 @@ Namespace DataObjects.Behavior.Nodes
                 Dim doData As AnimatGUI.DataObjects.Behavior.Data
                 For Each deEntry As DictionaryEntry In Me.BehavioralNodes
                     doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
-                    doData.InitializeAfterLoad()
+                    If Not doData.IsInitialized Then
+                        doData.InitializeAfterLoad()
+                    End If
                 Next
 
                 For Each deEntry As DictionaryEntry In Me.BehavioralLinks
                     doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
-                    doData.InitializeAfterLoad()
+                    If Not doData.IsInitialized Then
+                        doData.InitializeAfterLoad()
+                    End If
                 Next
 
             Catch ex As System.Exception
                 m_bIsInitialized = False
-                'If iAttempt = 1 Then
-                '    AnimatGUI.Framework.Util.DisplayError(ex)
-                'End If
             End Try
 
         End Sub

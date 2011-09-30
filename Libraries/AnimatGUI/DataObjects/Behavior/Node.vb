@@ -1249,44 +1249,42 @@ Namespace DataObjects.Behavior
             Dim strID As String = ""
 
             Try
+                If Not m_bIsInitialized Then
+                    Dim blLink As Behavior.Link
+                    For Each strID In m_aryLoadingInLinkIDs
+                        If strID.Trim.Length > 0 Then
+                            blLink = Me.Organism.FindBehavioralLink(strID, False)
 
-                Dim blLink As Behavior.Link
-                For Each strID In m_aryLoadingInLinkIDs
-                    If strID.Trim.Length > 0 Then
-                        blLink = Me.Organism.FindBehavioralLink(strID, False)
-
-                        If Not blLink Is Nothing Then
-                            If Not m_aryInLinks.Contains(strID) Then m_aryInLinks.Add(strID, blLink)
-                            If Not m_aryLinks.Contains(strID) Then m_aryLinks.Add(strID, blLink)
+                            If Not blLink Is Nothing Then
+                                If Not m_aryInLinks.Contains(strID) Then m_aryInLinks.Add(strID, blLink)
+                                If Not m_aryLinks.Contains(strID) Then m_aryLinks.Add(strID, blLink)
+                            End If
                         End If
-                    End If
-                Next
+                    Next
 
-                For Each strID In m_aryLoadingOutLinkIDs
-                    If strID.Trim.Length > 0 Then
-                        blLink = Me.Organism.FindBehavioralLink(strID, False)
+                    For Each strID In m_aryLoadingOutLinkIDs
+                        If strID.Trim.Length > 0 Then
+                            blLink = Me.Organism.FindBehavioralLink(strID, False)
 
-                        If Not blLink Is Nothing Then
-                            If Not m_aryOutLinks.Contains(strID) Then m_aryOutLinks.Add(strID, blLink)
-                            If Not m_aryLinks.Contains(strID) Then m_aryLinks.Add(strID, blLink)
+                            If Not blLink Is Nothing Then
+                                If Not m_aryOutLinks.Contains(strID) Then m_aryOutLinks.Add(strID, blLink)
+                                If Not m_aryLinks.Contains(strID) Then m_aryLinks.Add(strID, blLink)
+                            End If
                         End If
-                    End If
-                Next
+                    Next
 
-                m_aryLoadingInLinkIDs.Clear()
-                m_aryLoadingOutLinkIDs.Clear()
+                    m_aryLoadingInLinkIDs.Clear()
+                    m_aryLoadingOutLinkIDs.Clear()
 
-                ConnectLinkEvents()
-                ConnectDiagramEvents()
+                    ConnectLinkEvents()
+                    ConnectDiagramEvents()
 
-                m_bIsInitialized = True
+                    m_bIsInitialized = True
+                End If
 
             Catch ex As System.Exception
                 m_bIsInitialized = False
-                'If iAttempt = 1 Then
-                '    AnimatGUI.Framework.Util.DisplayError(ex)
-                'End If
-            End Try
+             End Try
 
         End Sub
 
