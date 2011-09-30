@@ -11,7 +11,7 @@ Imports AnimatGUI.Framework
 
 Namespace DataObjects.Behavior.Nodes
 
-    Public Class Joint
+    Public Class RigidBody
         Inherits BodyPart
 
 #Region " Attributes "
@@ -22,7 +22,7 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides ReadOnly Property TypeName() As String
             Get
-                Return "Joint"
+                Return "Rigid Body"
             End Get
         End Property
 
@@ -34,13 +34,13 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides ReadOnly Property WorkspaceImageName() As String
             Get
-                Return "AnimatGUI.Joint.gif"
+                Return "AnimatGUI.Bone.gif"
             End Get
         End Property
 
         Public Overrides ReadOnly Property DragImageName As String
             Get
-                Return "AnimatGUI.DragHinge.gif"
+                Return "AnimatGUI.DragBone.gif"
             End Get
         End Property
 
@@ -68,11 +68,12 @@ Namespace DataObjects.Behavior.Nodes
             Try
                 m_thLinkedPart = New AnimatGUI.TypeHelpers.LinkedBodyPartTree(Me)
 
-                m_tpBodyPartType = GetType(AnimatGUI.DataObjects.Physical.Joint)
+                m_tpBodyPartType = GetType(AnimatGUI.DataObjects.Physical.RigidBody)
 
-                Me.DiagramImageName = "AnimatGUI.HingeNodeImage.gif"
+                Me.Size = New System.Drawing.SizeF(30, 150)
+                Me.DiagramImageName = "AnimatGUI.BoneNodeImage.gif"
                 Me.Name = "Joint"
-                Me.Description = "This node allows the user to collect data directly from a joint or to control a motorized joint."
+                Me.Description = "This node allows the user to collect data directly from a rigid body."
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -82,7 +83,7 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
                                         ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatGUI.Framework.DataObject
-            Dim oNewNode As New Behavior.Nodes.Joint(doParent)
+            Dim oNewNode As New Behavior.Nodes.RigidBody(doParent)
             oNewNode.CloneInternal(Me, bCutData, doRoot)
             If Not doRoot Is Nothing AndAlso doRoot Is Me Then oNewNode.AfterClone(Me, bCutData, doRoot, oNewNode)
             Return oNewNode
@@ -94,14 +95,14 @@ Namespace DataObjects.Behavior.Nodes
             If Util.Application.ProjectErrors Is Nothing Then Return
 
             If m_thLinkedPart Is Nothing OrElse m_thLinkedPart.BodyPart Is Nothing Then
-                If Util.Application.ProjectErrors.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.JointNotSet)) Then
-                    Dim deError As DiagramErrors.DataError = New DiagramErrors.DataError(Me, DiagramError.enumErrorLevel.Error, DiagramError.enumErrorTypes.JointNotSet, _
-                                                  "The reference for the joint '" + Me.Text + "' is not set.")
+                If Util.Application.ProjectErrors.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.RigidBodyNotSet)) Then
+                    Dim deError As DiagramErrors.DataError = New DiagramErrors.DataError(Me, DiagramError.enumErrorLevel.Error, DiagramError.enumErrorTypes.RigidBodyNotSet, _
+                                                  "The reference for the rigid body '" + Me.Text + "' is not set.")
                     Util.Application.ProjectErrors.Errors.Add(deError.ID, deError)
                 End If
             Else
-                If Util.Application.ProjectErrors.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.JointNotSet)) Then
-                    Util.Application.ProjectErrors.Errors.Remove(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.JointNotSet))
+                If Util.Application.ProjectErrors.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.RigidBodyNotSet)) Then
+                    Util.Application.ProjectErrors.Errors.Remove(DiagramErrors.DataError.GenerateID(Me, DiagramError.enumErrorTypes.RigidBodyNotSet))
                 End If
             End If
 
@@ -117,17 +118,16 @@ Namespace DataObjects.Behavior.Nodes
             MyBase.BuildProperties(propTable)
 
             'Now lets add the property for the linked muscle.
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Joint ID", GetType(AnimatGUI.TypeHelpers.LinkedBodyPartTree), "LinkedPart", _
-                                        "Joint Properties", "Associates this joint to an ID of a joint that exists within the body of the organism.", m_thLinkedPart, _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Body ID", GetType(AnimatGUI.TypeHelpers.LinkedBodyPartTree), "LinkedPart", _
+                                        "Body Properties", "Associates this body to an ID of a body that exists within the  organism.", m_thLinkedPart, _
                                         GetType(AnimatGUI.TypeHelpers.DropDownTreeEditor), _
                                         GetType(AnimatGUI.TypeHelpers.LinkedBodyPartTypeConverter)))
 
-
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Node Type", GetType(String), "TypeName", _
-                                        "Joint Properties", "Returns the type of this node.", TypeName(), True))
+                                        "Body Properties", "Returns the type of this node.", TypeName(), True))
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Description", m_strDescription.GetType(), "ToolTip", _
-                                        "Joint Properties", "Sets the description for this joint connection.", m_strToolTip, _
+                                        "Body Properties", "Sets the description for this body connection.", m_strToolTip, _
                                         GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
 
         End Sub

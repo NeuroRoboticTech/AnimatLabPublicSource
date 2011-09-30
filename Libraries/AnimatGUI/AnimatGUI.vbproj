@@ -281,6 +281,7 @@
     <Compile Include="DataObjects\Behavior\Nodes\PhysicalToNodeAdapter.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataObjects\Behavior\Nodes\RigidBody.vb" />
     <Compile Include="DataObjects\Behavior\Nodes\StretchReceptor.vb" />
     <Compile Include="DataObjects\Behavior\Nodes\Subsystem.vb">
       <SubType>Code</SubType>
