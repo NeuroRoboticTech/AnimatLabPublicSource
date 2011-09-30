@@ -621,6 +621,10 @@ Namespace Framework
 
         Public Shared Function IsTypeOf(ByVal tpNew As Type, ByVal tpOriginal As Type, Optional ByVal bInheritedOnly As Boolean = True) As Boolean
 
+            If Not tpOriginal Is Nothing AndAlso tpOriginal.IsAssignableFrom(tpNew) Then
+                Return True
+            End If
+
             If Not tpNew Is Nothing Then
                 If tpNew Is tpOriginal Then
                     If bInheritedOnly Then

@@ -180,6 +180,19 @@ Namespace DataObjects.Behavior.Nodes
 
         End Sub
 
+        Public Overrides Sub CheckCanAttachAdapter()
+            'Only allow an adapter if we have a linked body part.
+            If Not (Not m_thLinkedNode Is Nothing AndAlso Not m_thLinkedNode.Node Is Nothing) Then
+                Throw New System.Exception("You must specify a linked node before you can add an adapter to this node.")
+            End If
+        End Sub
+
+        Public Overrides Function NeedToUpdateAdapterID(ByVal propInfo As System.Reflection.PropertyInfo) As Boolean
+            If propInfo.Name = "LinkedNode" Then
+                Return True
+            End If
+        End Function
+
         Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, ByVal tpTemplatePartType As Type) As Crownwood.DotNetMagic.Controls.Node
         End Function
 

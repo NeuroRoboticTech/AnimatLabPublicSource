@@ -507,8 +507,7 @@ float *LinearHillMuscle::GetDataPointer(string strDataType)
 	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);
 
-	float *lpVal = MuscleBase::GetDataPointer(strDataType);
-	if(lpVal) return lpVal;
+	float *lpVal = NULL; 
 
 	if(strType == "VMUSCLE")
 		lpData = &m_fltVmuscle;
@@ -537,7 +536,7 @@ float *LinearHillMuscle::GetDataPointer(string strDataType)
 	else if(strType == "TL")
 		lpData = &m_fltTLPerc;
 	else
-		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "RigidBodyID: " + STR(m_strName) + "  DataType: " + strDataType);
+		lpData = MuscleBase::GetDataPointer(strDataType);
 
 	return lpData;
 }

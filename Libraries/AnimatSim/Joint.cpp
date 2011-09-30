@@ -260,9 +260,7 @@ float *Joint::GetDataPointer(string strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 
-	float *lpData = BodyPart::GetDataPointer(strDataType);
-	if(lpData)
-		return lpData;
+	float *lpData = NULL;
 
 	if(strType == "ENABLE")
 		return &m_fltEnabled;
@@ -273,6 +271,8 @@ float *Joint::GetDataPointer(string strDataType)
 		lpData = m_lpPhysicsMovableItem->Physics_GetDataPointer(strDataType);
 		if(lpData) return lpData;
 	}
+
+	lpData = BodyPart::GetDataPointer(strDataType);
 
 	return NULL;
 }

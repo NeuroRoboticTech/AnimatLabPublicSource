@@ -1075,10 +1075,6 @@ float *RigidBody::GetDataPointer(string strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 
-	float *lpData = BodyPart::GetDataPointer(strDataType);
-	if(lpData)
-		return lpData;
-
 	if(strType == "FOODQUANTITY")
 		return &m_fltFoodQuantity;
 	if(strType == "FOODEATEN")
@@ -1088,6 +1084,7 @@ float *RigidBody::GetDataPointer(string strDataType)
 	if(strType == "CONTACTCOUNT")
 		return &m_fltSurfaceContactCount;
 
+	float *lpData = NULL;
 	if(m_lpPhysicsMovableItem)
 	{
 		float *lpData = NULL;
@@ -1095,7 +1092,9 @@ float *RigidBody::GetDataPointer(string strDataType)
 		if(lpData) return lpData;
 	}
 
-	return NULL;
+	lpData = BodyPart::GetDataPointer(strDataType);
+
+	return lpData;
 }
 
 

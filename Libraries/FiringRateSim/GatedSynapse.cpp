@@ -74,16 +74,14 @@ float GatedSynapse::CalculateModulation(FiringRateModule *lpModule)
 
 float *GatedSynapse::GetDataPointer(string strDataType)
 {
-	float *fltVal = Synapse::GetDataPointer(strDataType);
-	if(fltVal) return fltVal;
-
 	string strType = Std_CheckString(strDataType);
 
 	if(strType == "MODULATION")
 		return &m_fltModulation;
 
-	return NULL;
+	return Synapse::GetDataPointer(strDataType);
 }
+
 BOOL GatedSynapse::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);

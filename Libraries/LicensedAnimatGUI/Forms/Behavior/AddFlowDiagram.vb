@@ -3968,21 +3968,22 @@ Namespace Forms.Behavior
 
                         Me.Subsystem.AddNode(bnAdapter)
 
-                        'Connect the origin to the new adapter using the adapter link.
-                        Me.Subsystem.AddLink(bnOrigin, bnAdapter, blLink)
-
-                        'Now we need a new link to go from the adapter to the destination.
-                        blLink = DirectCast(blLink.Clone(Me.Subsystem.Organism, False, Nothing), AnimatGUI.DataObjects.Behavior.Link)
-
-                        blLink.BeginBatchUpdate()
-                        blLink.ArrowDestination = New AnimatGUI.DataObjects.Behavior.Link.Arrow(blLink, AnimatGUI.DataObjects.Behavior.Link.enumArrowStyle.Arrow, _
-                                                                                      AnimatGUI.DataObjects.Behavior.Link.enumArrowSize.Small, _
-                                                                                      AnimatGUI.DataObjects.Behavior.Link.enumArrowAngle.deg15, False)
-                        blLink.EndBatchUpdate(False)
-
-                        Me.Subsystem.AddLink(bnAdapter, bnDestination, blLink)
-
                         Try
+                            'Connect the origin to the new adapter using the adapter link.
+                            Me.Subsystem.AddLink(bnOrigin, bnAdapter, blLink)
+
+                            'Now we need a new link to go from the adapter to the destination.
+                            blLink = DirectCast(blLink.Clone(Me.Subsystem.Organism, False, Nothing), AnimatGUI.DataObjects.Behavior.Link)
+
+                            blLink.BeginBatchUpdate()
+                            blLink.ArrowDestination = New AnimatGUI.DataObjects.Behavior.Link.Arrow(blLink, AnimatGUI.DataObjects.Behavior.Link.enumArrowStyle.Arrow, _
+                                                                                          AnimatGUI.DataObjects.Behavior.Link.enumArrowSize.Small, _
+                                                                                          AnimatGUI.DataObjects.Behavior.Link.enumArrowAngle.deg15, False)
+                            blLink.EndBatchUpdate(False)
+
+                            Me.Subsystem.AddLink(bnAdapter, bnDestination, blLink)
+
+
                             Dim baAdapter As AnimatGUI.DataObjects.Behavior.Nodes.Adapter = DirectCast(bnAdapter, AnimatGUI.DataObjects.Behavior.Nodes.Adapter)
                             baAdapter.InitializeAfterLoad()
                             baAdapter.CreateAdapterSimReferences()

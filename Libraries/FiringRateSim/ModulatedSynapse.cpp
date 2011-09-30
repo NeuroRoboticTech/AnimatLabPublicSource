@@ -42,15 +42,12 @@ ModulatedSynapse::~ModulatedSynapse()
 
 float *ModulatedSynapse::GetDataPointer(string strDataType)
 {
-	float *fltVal = Synapse::GetDataPointer(strDataType);
-	if(fltVal) return fltVal;
-
 	string strType = Std_CheckString(strDataType);
 
 	if(strType == "MODULATION")
 		return &m_fltModulation;
 
-	return NULL;
+	return Synapse::GetDataPointer(strDataType);
 }
 
 #pragma endregion

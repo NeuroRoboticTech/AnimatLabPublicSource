@@ -90,6 +90,8 @@ Namespace DataObjects.Behavior.Nodes
                     m_thDataTypes = Value
                     CheckForErrors()
                     SetGainLimits()
+
+                    Me.SetSimData("OriginID", Me.GetSimulationXml("Adapter"), True)
                 End If
             End Set
         End Property
@@ -178,6 +180,10 @@ Namespace DataObjects.Behavior.Nodes
             m_bEnabled = bnOrig.m_bEnabled
         End Sub
 
+        Public Overrides Sub CheckCanAttachAdapter()
+            Throw New System.Exception("You cannot attach an adapter to another adapter.")
+        End Sub
+
         Public Overrides Sub BeforeAddLink(ByVal blLink As Link)
 
             If blLink.ActualDestination Is Me AndAlso Me.InLinks.Count > 0 Then
@@ -186,6 +192,14 @@ Namespace DataObjects.Behavior.Nodes
 
             If blLink.ActualOrigin Is Me AndAlso Me.OutLinks.Count > 0 Then
                 Throw New System.Exception("You can only have one outgoing link from an adapter node!")
+            End If
+
+            If blLink.Origin Is Me AndAlso Not blLink.Destination Is Nothing Then
+                blLink.Destination.CheckCanAttachAdapter()
+            End If
+
+            If blLink.Destination Is Me AndAlso Not blLink.Origin Is Nothing Then
+                blLink.Origin.CheckCanAttachAdapter()
             End If
 
         End Sub
@@ -209,12 +223,12 @@ Namespace DataObjects.Behavior.Nodes
 
         Protected Sub SetGainLimits()
             If Not m_gnGain Is Nothing AndAlso Not m_thDataTypes Is Nothing AndAlso Not m_thDataTypes.Value Is Nothing Then
-                m_gnGain.LowerLimit = New ScaledNumber(m_gnGain, "LowerLimit", m_thDataTypes.Value.LowerLimit, _
-                                                       m_thDataTypes.Value.LowerLimitscale, _
-                                                       m_thDataTypes.Value.Units, _
-                                                       m_thDataTypes.Value.UnitsAbbreviation)
                 m_gnGain.UpperLimit = New ScaledNumber(m_gnGain, "UpperLimit", m_thDataTypes.Value.UpperLimit, _
                                                        m_thDataTypes.Value.UpperLimitscale, _
+                                                       m_thDataTypes.Value.Units, _
+                                                       m_thDataTypes.Value.UnitsAbbreviation)
+                m_gnGain.LowerLimit = New ScaledNumber(m_gnGain, "LowerLimit", m_thDataTypes.Value.LowerLimit, _
+                                                       m_thDataTypes.Value.LowerLimitscale, _
                                                        m_thDataTypes.Value.Units, _
                                                        m_thDataTypes.Value.UnitsAbbreviation)
             End If
@@ -385,6 +399,14 @@ Namespace DataObjects.Behavior.Nodes
                     End If
                 End If
 
+                If Not m_bnDestination Is Nothing Then
+                    AddHandler m_bnDestination.AfterPropertyChanged, AddressOf Me.OnDestinationPropertyChanged
+                End If
+
+                If Not m_bnOrigin Is Nothing Then
+                    AddHandler m_bnOrigin.AfterPropertyChanged, AddressOf Me.OnOriginPropertyChanged
+                End If
+
                 If Not m_gnGain Is Nothing Then
                     m_gnGain.InitializeAfterLoad()
                 End If
@@ -430,6 +452,36 @@ Namespace DataObjects.Behavior.Nodes
         End Sub
 
 #End Region
+
+#End Region
+
+#Region "Event Handlers"
+
+        Protected Overridable Sub OnOriginPropertyChanged(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
+            Try
+                If Util.IsTypeOf(doObject.GetType, GetType(Behavior.Node), False) Then
+                    Dim bnNode As Behavior.Node = DirectCast(doObject, Behavior.Node)
+                    If bnNode.NeedToUpdateAdapterID(propInfo) Then
+                        Me.SetSimData("OriginID", Me.GetSimulationXml("Adapter"), True)
+                    End If
+                End If
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overridable Sub OnDestinationPropertyChanged(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
+            Try
+                If Util.IsTypeOf(doObject.GetType, GetType(Behavior.Node), False) Then
+                    Dim bnNode As Behavior.Node = DirectCast(doObject, Behavior.Node)
+                    If bnNode.NeedToUpdateAdapterID(propInfo) Then
+                        Me.SetSimData("DestinationID", Me.GetSimulationXml("Adapter"), True)
+                    End If
+                End If
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
 
 #End Region
 

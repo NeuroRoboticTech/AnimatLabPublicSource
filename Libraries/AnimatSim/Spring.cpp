@@ -171,10 +171,6 @@ void Spring::AddExternalNodeInput(float fltInput)
 float *Spring::GetDataPointer(string strDataType)
 {
 	string strType = Std_CheckString(strDataType);
-	float *lpData = NULL;
-
-	float *lpVal = LineBase::GetDataPointer(strDataType);
-	if(lpVal) return lpVal;
 
 	if(strType == "SPRINGLENGTH")
 		return &m_fltLength;
@@ -191,9 +187,7 @@ float *Spring::GetDataPointer(string strDataType)
 	if(strType == "ENABLE")
 		return &m_fltEnabled;
 
-	THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "RigidBodyID: " + STR(m_strName) + "  DataType: " + strDataType);
-
-	return NULL;
+	return LineBase::GetDataPointer(strDataType);
 }
 
 BOOL Spring::SetData(string strDataType, string strValue, BOOL bThrowError)

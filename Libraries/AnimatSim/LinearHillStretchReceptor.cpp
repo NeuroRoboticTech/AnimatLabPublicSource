@@ -177,8 +177,7 @@ float *LinearHillStretchReceptor::GetDataPointer(string strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 
-	float *lpData = LinearHillMuscle::GetDataPointer(strDataType);
-	if(lpData) return lpData;
+	float *lpData = NULL;
 
 	if(strType == "IA")
 		lpData = &m_fltIaRate;
@@ -187,7 +186,7 @@ float *LinearHillStretchReceptor::GetDataPointer(string strDataType)
 	else if(strType == "II")
 		lpData = &m_fltIIRate;
 	else
-		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "RigidBodyID: " + STR(m_strName) + "  DataType: " + strDataType);
+		lpData = LinearHillMuscle::GetDataPointer(strDataType);
 
 	return lpData;
 }

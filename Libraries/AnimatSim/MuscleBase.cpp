@@ -259,8 +259,7 @@ float *MuscleBase::GetDataPointer(string strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 
-	float *lpData = LineBase::GetDataPointer(strDataType);
-	if(lpData) return lpData;
+	float *lpData = NULL;
 
 	if(strType == "TENSION")
 		lpData = &m_fltTension;
@@ -268,6 +267,8 @@ float *MuscleBase::GetDataPointer(string strDataType)
 		lpData = &m_fltTdot;
 	else if(strType == "MEMBRANEVOLTAGE")
 		lpData = &m_fltVm;
+	else
+		lpData = LineBase::GetDataPointer(strDataType);
 
 	return lpData;
 }

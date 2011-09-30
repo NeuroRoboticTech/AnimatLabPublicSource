@@ -60,7 +60,9 @@ namespace AnimatSim
 			/// Pointer to the Gain that will be used to convert the source value into the target value.
 			Gain *m_lpGain;
 
-			virtual void Adapter::AddGain(string strXml);
+			virtual void AddGain(string strXml);
+			virtual void SetOriginID(string strXml);
+			virtual void SetDestinationID(string strXml);
 
 		public:
 			Adapter();

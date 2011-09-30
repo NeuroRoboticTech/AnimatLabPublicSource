@@ -304,6 +304,51 @@ void Adapter::AddGain(string strXml)
 	SetGain(LoadGain(m_lpSim, "Gain", oXml));
 }
 
+void Adapter::SetOriginID(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Adapter");
+
+	oXml.IntoElem();  //Into Adapter Element
+
+	//Load Source Data
+	SourceModule(oXml.GetChildString("SourceModule"));
+	SourceID(oXml.GetChildString("SourceID"));
+	SourceDataType(oXml.GetChildString("SourceDataType"));
+
+	oXml.OutOfElem(); //OutOf Adapter Element
+
+	//Remove the adatper settings.
+	m_lpSim->RemoveSourceAdapter(m_lpStructure, this);
+	m_lpSim->RemoveTargetAdapter(m_lpStructure, this);
+
+	Initialize();
+}
+
+void Adapter::SetDestinationID(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Adapter");
+
+	oXml.IntoElem();  //Into Adapter Element
+
+	//Load Source Data
+	TargetModule(oXml.GetChildString("TargetModule"));
+	TargetID(oXml.GetChildString("TargetID"));
+
+	oXml.OutOfElem(); //OutOf Adapter Element
+
+	//Remove the adatper settings.
+	m_lpSim->RemoveSourceAdapter(m_lpStructure, this);
+	m_lpSim->RemoveTargetAdapter(m_lpStructure, this);
+
+	Initialize();
+}
+
 BOOL Adapter::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
@@ -317,6 +362,17 @@ BOOL Adapter::SetData(string strDataType, string strValue, BOOL bThrowError)
 		return TRUE;
 	}
 
+	if(strType == "ORIGINID")
+	{
+		SetOriginID(strValue);
+		return TRUE;
+	}
+
+	if(strType == "DESTINATIONID")
+	{
+		SetDestinationID(strValue);
+		return TRUE;
+	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)

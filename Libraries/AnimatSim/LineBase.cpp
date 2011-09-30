@@ -198,13 +198,14 @@ float *LineBase::GetDataPointer(string strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 
-	float *lpData = RigidBody::GetDataPointer(strDataType);
-	if(lpData) return lpData;
+	float *lpData = NULL;
 
 	if(strType == "MUSCLELENGTH" || strType == "LENGTH")
 		lpData = &m_fltLength;
 	else if(strType == "ENABLE")
 		lpData = &m_fltEnabled;
+	else
+		lpData = RigidBody::GetDataPointer(strDataType);
 
 	return lpData;
 }

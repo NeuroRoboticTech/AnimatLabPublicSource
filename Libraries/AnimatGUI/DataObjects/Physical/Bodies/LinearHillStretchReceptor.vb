@@ -13,6 +13,7 @@ Namespace DataObjects.Physical.Bodies
 
     Public Class LinearHillStretchReceptor
         Inherits Physical.Bodies.LinearHillMuscle
+        Implements Physical.IStretchReceptor
 
 #Region " Attributes "
 
@@ -58,7 +59,7 @@ Namespace DataObjects.Physical.Bodies
             End Set
         End Property
 
-        Public Overridable Property IaDischargeConstant() As ScaledNumber
+        Public Overridable Property IaDischargeConstant() As ScaledNumber Implements IStretchReceptor.IaDischargeConstant
             Get
                 Return m_snIaDischargeConstant
             End Get
@@ -74,7 +75,7 @@ Namespace DataObjects.Physical.Bodies
             End Set
         End Property
 
-        Public Overridable Property IIDischargeConstant() As ScaledNumber
+        Public Overridable Property IIDischargeConstant() As ScaledNumber Implements IStretchReceptor.IIDischargeConstant
             Get
                 Return m_snIIDischargeConstant
             End Get

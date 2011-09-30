@@ -34,7 +34,7 @@ Namespace DataObjects.Behavior.Nodes
                 MyBase.Organism = value
 
                 If Not Me.Organism Is Nothing Then
-                    m_thLinkedPart = New AnimatGUI.TypeHelpers.LinkedBodyPartTree(Me.Organism, Nothing, m_tpBodyPartType)
+                    m_thLinkedPart = CreateBodyPartList(Me.Organism, Nothing, m_tpBodyPartType)
                     m_thDataTypes = New AnimatGUI.TypeHelpers.DataTypeID(Me)
                 End If
             End Set
@@ -123,6 +123,7 @@ Namespace DataObjects.Behavior.Nodes
                 End If
             End Get
         End Property
+
 #End Region
 
 #Region " Methods "
@@ -132,14 +133,20 @@ Namespace DataObjects.Behavior.Nodes
 
             Try
 
-                m_thLinkedPart = New AnimatGUI.TypeHelpers.LinkedBodyPartTree(Me)
+                m_thLinkedPart = CreateBodyPartList(Me)
 
-                Shape = AnimatGUI.DataObjects.Behavior.Node.enumShape.Ellipse
+                Shape = AnimatGUI.DataObjects.Behavior.Node.enumShape.Rectangle
                 Size = New System.Drawing.SizeF(50, 50)
                 Me.DrawColor = Color.Transparent
                 Me.FillColor = Color.White
                 Me.AutoSize = AnimatGUI.DataObjects.Behavior.Node.enumAutoSize.ImageToNode
                 Me.Font = New Font("Arial", 14, FontStyle.Bold)
+                Me.Alignment = enumAlignment.CenterBottom
+
+                Dim myAssembly As System.Reflection.Assembly
+                myAssembly = System.Reflection.Assembly.Load("AnimatGUI")
+                Me.WorkspaceImage = AnimatGUI.Framework.ImageManager.LoadImage(myAssembly, Me.WorkspaceImageName)
+                Me.DragImage = AnimatGUI.Framework.ImageManager.LoadImage(myAssembly, Me.DragImageName, False)
 
                 AddCompatibleLink(New AnimatGUI.DataObjects.Behavior.Links.Adapter(Nothing))
 
@@ -149,6 +156,14 @@ Namespace DataObjects.Behavior.Nodes
             End Try
 
         End Sub
+
+        Protected Overridable Overloads Function CreateBodyPartList(ByVal doParent As AnimatGUI.Framework.DataObject) As TypeHelpers.LinkedBodyPart
+            Return New AnimatGUI.TypeHelpers.LinkedBodyPartTree(doParent)
+        End Function
+
+        Protected Overridable Overloads Function CreateBodyPartList(ByVal doStruct As Physical.PhysicalStructure, ByVal doBodyPart As Physical.BodyPart, ByVal tpBodyPartType As System.Type) As TypeHelpers.LinkedBodyPart
+            Return New AnimatGUI.TypeHelpers.LinkedBodyPartTree(doStruct, doBodyPart, tpBodyPartType)
+        End Function
 
         Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
                                             ByVal doRoot As AnimatGUI.Framework.DataObject)
@@ -187,6 +202,19 @@ Namespace DataObjects.Behavior.Nodes
 
             If Not m_thLinkedPart Is Nothing Then m_thLinkedPart.ClearIsDirty()
         End Sub
+
+        Public Overrides Sub CheckCanAttachAdapter()
+            'Only allow an adapter if we have a linked body part.
+            If Not (Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing) Then
+                Throw New System.Exception("You must specify a linked body part before you can add an adapter to this node.")
+            End If
+        End Sub
+
+        Public Overrides Function NeedToUpdateAdapterID(ByVal propInfo As System.Reflection.PropertyInfo) As Boolean
+            If propInfo.Name = "LinkedPart" Then
+                Return True
+            End If
+        End Function
 
         Public Overrides Sub LoadData(ByRef oXml As Interfaces.StdXml)
             MyBase.LoadData(oXml)

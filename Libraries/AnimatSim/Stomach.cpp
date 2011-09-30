@@ -270,7 +270,6 @@ BOOL Stomach::SetData(string strDataType, string strValue, BOOL bThrowError)
 float *Stomach::GetDataPointer(string strDataType)
 {
 	string strType = Std_CheckString(strDataType);
-	float *lpData = NULL;
 
 	if(strType == "ENERGYLEVEL")
 		return &m_fltEnergyLevel;
@@ -284,12 +283,7 @@ float *Stomach::GetDataPointer(string strDataType)
 	if(strType == "ADAPTERCONSUMPTIONRATE")
 		return &m_fltAdapterConsumptionRate;
 
-	lpData = RigidBody::GetDataPointer(strDataType);
-	if(lpData) return lpData;
-
-	THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "RigidBodyID: " + STR(m_strName) + "  DataType: " + strDataType);
-
-	return NULL;
+	return RigidBody::GetDataPointer(strDataType);
 }
 
 void Stomach::AddExternalNodeInput(float fltInput)

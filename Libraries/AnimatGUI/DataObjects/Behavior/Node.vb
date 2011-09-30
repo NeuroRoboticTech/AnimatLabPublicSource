@@ -1008,6 +1008,13 @@ Namespace DataObjects.Behavior
 
         End Sub
 
+        Public Overridable Sub CheckCanAttachAdapter()
+        End Sub
+
+        Public Overridable Function NeedToUpdateAdapterID(ByVal propInfo As System.Reflection.PropertyInfo) As Boolean
+            Return False
+        End Function
+
         Public Overrides Function FindDragObject(ByVal strStructureName As String, ByVal strDataItemID As String, Optional ByVal bThrowError As Boolean = True) As DataObjects.DragObject
 
             Dim oOrg As Object = Util.Environment.FindOrganism(strStructureName, bThrowError)
