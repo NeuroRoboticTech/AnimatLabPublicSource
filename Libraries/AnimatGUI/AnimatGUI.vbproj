@@ -275,6 +275,7 @@
     <Compile Include="DataObjects\Behavior\Nodes\NodeToPhysicalAdapter.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataObjects\Behavior\Nodes\OdorSensor.vb" />
     <Compile Include="DataObjects\Behavior\Nodes\OffPage.vb">
       <SubType>Code</SubType>
     </Compile>

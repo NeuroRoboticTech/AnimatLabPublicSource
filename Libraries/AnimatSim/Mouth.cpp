@@ -217,14 +217,11 @@ BOOL Mouth::SetData(string strDataType, string strValue, BOOL bThrowError)
 float *Mouth::GetDataPointer(string strDataType)
 {
 	string strType = Std_CheckString(strDataType);
-	float *lpData = NULL;
 
 	if(strType == "EATINGRATE")
 		return &m_fltEatingRate;
 
-	lpData = RigidBody::GetDataPointer(strDataType);
-
-	return lpData;
+	return RigidBody::GetDataPointer(strDataType);
 }
 
 void Mouth::AddExternalNodeInput(float fltInput)

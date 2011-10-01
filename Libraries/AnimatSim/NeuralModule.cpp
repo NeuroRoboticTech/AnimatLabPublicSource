@@ -324,14 +324,11 @@ void NeuralModule::VerifySystemPointers()
 float *NeuralModule::GetDataPointer(string strDataType)
 {
 	string strType = Std_CheckString(strDataType);
-	float *lpData = NULL;
 
 	if(strType == "TIMESTEP")
 		return &m_fltTimeStep;
 
-	lpData = AnimatBase::GetDataPointer(strDataType);
-
-	return lpData;
+	return AnimatBase::GetDataPointer(strDataType);
 }
 
 void NeuralModule::StepSimulation()

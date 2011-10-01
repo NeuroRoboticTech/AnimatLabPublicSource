@@ -272,9 +272,7 @@ float *Joint::GetDataPointer(string strDataType)
 		if(lpData) return lpData;
 	}
 
-	lpData = BodyPart::GetDataPointer(strDataType);
-
-	return NULL;
+	return BodyPart::GetDataPointer(strDataType);
 }
 
 BOOL Joint::SetData(string strDataType, string strValue, BOOL bThrowError)

@@ -58,10 +58,9 @@ Namespace DataObjects.Behavior.Nodes
             End Get
         End Property
 
-        <Browsable(False)> _
         Public Overrides ReadOnly Property NeuralModuleType() As System.Type
             Get
-                Return Nothing
+                Return GetType(AnimatGUI.DataObjects.Behavior.PhysicsModule)
             End Get
         End Property
 
@@ -124,6 +123,8 @@ Namespace DataObjects.Behavior.Nodes
             End Get
         End Property
 
+        Public MustOverride ReadOnly Property BaseErrorType() As DiagramError.enumErrorTypes
+
 #End Region
 
 #Region " Methods "
@@ -165,6 +166,10 @@ Namespace DataObjects.Behavior.Nodes
             Return New AnimatGUI.TypeHelpers.LinkedBodyPartTree(doStruct, doBodyPart, tpBodyPartType)
         End Function
 
+        Protected Overridable Function GetBodyPartListDropDownType() As System.Type
+            Return GetType(AnimatGUI.TypeHelpers.DropDownTreeEditor)
+        End Function
+
         Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
                                             ByVal doRoot As AnimatGUI.Framework.DataObject)
             MyBase.CloneInternal(doOriginal, bCutData, doRoot)
@@ -195,6 +200,58 @@ Namespace DataObjects.Behavior.Nodes
             End If
 
             CheckForErrors()
+        End Sub
+
+        Public Overrides Sub CheckForErrors()
+            MyBase.CheckForErrors()
+
+            If Util.Application.ProjectErrors Is Nothing Then Return
+
+            If m_thLinkedPart Is Nothing OrElse m_thLinkedPart.BodyPart Is Nothing Then
+                If Util.Application.ProjectErrors.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, Me.BaseErrorType)) Then
+                    Dim deError As DiagramErrors.DataError = New DiagramErrors.DataError(Me, DiagramError.enumErrorLevel.Error, Me.BaseErrorType, _
+                                                  "The reference for the rigid body '" + Me.Text + "' is not set.")
+                    Util.Application.ProjectErrors.Errors.Add(deError.ID, deError)
+                End If
+            Else
+                If Util.Application.ProjectErrors.Errors.Contains(DiagramErrors.DataError.GenerateID(Me, Me.BaseErrorType)) Then
+                    Util.Application.ProjectErrors.Errors.Remove(DiagramErrors.DataError.GenerateID(Me, Me.BaseErrorType))
+                End If
+            End If
+
+        End Sub
+
+        Public Overrides Sub InitializeAfterLoad()
+
+            Try
+                MyBase.InitializeAfterLoad()
+
+                If m_bIsInitialized Then
+                    Dim bpPart As AnimatGUI.DataObjects.Physical.BodyPart
+                    If (m_strLinkedBodyPartID.Length > 0) Then
+                        bpPart = m_doOrganism.FindBodyPart(m_strLinkedBodyPartID, False)
+
+                        m_thLinkedPart = CreateBodyPartList(m_doOrganism, bpPart, m_tpBodyPartType)
+                        SetDataType()
+                    End If
+                End If
+
+            Catch ex As System.Exception
+                m_bIsInitialized = False
+            End Try
+        End Sub
+
+        Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, ByVal tpTemplatePartType As Type) As Crownwood.DotNetMagic.Controls.Node
+            Return Nothing
+        End Function
+
+        ''' \brief  Initializes the simulation references.
+        '''
+        ''' \details This type of object has no related simulation object, so do not call base class here.
+        ''' 		 
+        ''' \author dcofer
+        ''' \date   9/25/2011
+        Public Overrides Sub InitializeSimulationReferences()
         End Sub
 
         Public Overrides Sub ClearIsDirty()
@@ -243,6 +300,20 @@ Namespace DataObjects.Behavior.Nodes
             propTable.Properties.Remove("ID")
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("ID", Me.LinkedID.GetType(), "LinkedID", _
                                         "Node Properties", "ID", Me.LinkedID, True))
+
+            'Now lets add the property for the linked muscle.
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec(Me.TypeName & " ID", m_thLinkedPart.GetType, "LinkedPart", _
+                                        Me.TypeName & " Properties", "Associates this " & Me.TypeName.ToLower & " node to an ID of a " & Me.TypeName.ToLower & " that exists within the body of the organism.", m_thLinkedPart, _
+                                        Me.GetBodyPartListDropDownType, _
+                                        GetType(AnimatGUI.TypeHelpers.LinkedBodyPartTypeConverter)))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Node Type", GetType(String), "TypeName", _
+                                        Me.TypeName & " Properties", "Returns the type of this node.", TypeName(), True))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Description", m_strDescription.GetType(), "ToolTip", _
+                                        Me.TypeName & " Properties", "Sets the description for this " & Me.TypeName.ToLower & " connection.", m_strToolTip, _
+                                        GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
+
         End Sub
 
 #End Region

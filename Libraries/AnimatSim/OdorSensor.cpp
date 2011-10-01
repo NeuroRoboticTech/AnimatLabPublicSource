@@ -131,14 +131,11 @@ BOOL OdorSensor::SetData(string strDataType, string strValue, BOOL bThrowError)
 float *OdorSensor::GetDataPointer(string strDataType)
 {
 	string strType = Std_CheckString(strDataType);
-	float *lpData = NULL;
 
 	if(strType == "ODORVALUE")
-		lpData = &m_fltOdorValue;
+		return &m_fltOdorValue;
 
-	lpData = RigidBody::GetDataPointer(strDataType);
-
-	return lpData;
+	return RigidBody::GetDataPointer(strDataType);
 }
 
 void OdorSensor::StepSimulation()

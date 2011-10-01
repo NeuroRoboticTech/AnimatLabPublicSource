@@ -1092,9 +1092,7 @@ float *RigidBody::GetDataPointer(string strDataType)
 		if(lpData) return lpData;
 	}
 
-	lpData = BodyPart::GetDataPointer(strDataType);
-
-	return lpData;
+	return BodyPart::GetDataPointer(strDataType);
 }
 
 

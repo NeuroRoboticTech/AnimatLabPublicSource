@@ -72,7 +72,7 @@ Namespace DataObjects.Behavior.Nodes
                     Next
                 End If
 
-                CheckForErrors()
+                SetDataType()
             End Set
         End Property
 
@@ -195,6 +195,27 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, ByVal tpTemplatePartType As Type) As Crownwood.DotNetMagic.Controls.Node
         End Function
+
+        Protected Sub SetDataType()
+            If Not m_thLinkedNode.Node Is Nothing AndAlso Not m_thLinkedNode.Node.DataTypes Is Nothing Then
+                m_thDataTypes = DirectCast(m_thLinkedNode.Node.DataTypes.Clone(m_thLinkedNode.Node.DataTypes.Parent, False, Nothing), TypeHelpers.DataTypeID)
+
+                'Go through and change all of the adapters connected to this body part.
+                For Each deItem As System.Collections.DictionaryEntry In Me.m_aryOutLinks
+                    If Util.IsTypeOf(deItem.Value.GetType(), GetType(AnimatGUI.DataObjects.Behavior.Links.Adapter), False) Then
+                        Dim blAdapter As AnimatGUI.DataObjects.Behavior.Links.Adapter = DirectCast(deItem.Value, AnimatGUI.DataObjects.Behavior.Links.Adapter)
+
+                        If Not blAdapter.Destination Is Nothing Then
+                            blAdapter.Destination.DataTypes = DirectCast(m_thDataTypes.Clone(blAdapter.Destination, False, Nothing), TypeHelpers.DataTypeID)
+                        End If
+                    End If
+                Next
+            Else
+                m_thDataTypes = New AnimatGUI.TypeHelpers.DataTypeID(Me)
+            End If
+
+            CheckForErrors()
+        End Sub
 
 #Region " DataObject Methods "
 

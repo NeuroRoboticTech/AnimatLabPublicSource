@@ -308,6 +308,10 @@ void ContactSensor::ClearCurrents()
 /**
 \brief	Process a contact for all ReceptiveFields.
 
+\details Process contact of the ContactSensor detects the collisions and calculates
+the amount of current that needs to be added to a given receptive field. It is the 
+contact adapter that actually 
+
 \author	dcofer
 \date	3/22/2011
 
