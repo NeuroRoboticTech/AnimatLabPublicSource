@@ -169,13 +169,43 @@ Namespace Forms
         Private Sub OnWorkspaceSelectionChanged()
 
             Try
+                If Not chartFieldGain Is Nothing AndAlso Not chartFieldGain.Gain Is Nothing Then
+                    RemoveHandler chartFieldGain.Gain.AfterPropertyChanged, AddressOf Me.onGainPropertyChanged
+                End If
 
                 If Not Util.ProjectWorkspace.SelectedDataObject Is Nothing AndAlso _
                     Util.IsTypeOf(Util.ProjectWorkspace.SelectedDataObject.GetType, GetType(DataObjects.Physical.RigidBody)) AndAlso _
                     Util.ProjectWorkspace.TreeView.SelectedCount = 1 Then
                     m_doSelPart = DirectCast(Util.ProjectWorkspace.SelectedDataObject, DataObjects.Physical.RigidBody)
+
+                    If Not m_doSelPart.ReceptiveFieldSensor Is Nothing Then
+                        chartFieldGain.Gain = m_doSelPart.ReceptiveFieldSensor.ReceptiveFieldGain
+                        grdGainProps.SelectedObject = m_doSelPart.ReceptiveFieldSensor.ReceptiveFieldGain.Properties
+                    Else
+                        chartFieldGain.Gain = New DataObjects.Gains.Polynomial(Nothing)
+                        grdGainProps.SelectedObject = Nothing
+                    End If
                 Else
                     m_doSelPart = Nothing
+                    chartFieldGain.Gain = New DataObjects.Gains.Polynomial(Nothing)
+                    grdGainProps.SelectedObject = Nothing
+                End If
+
+                If Not chartFieldGain Is Nothing AndAlso Not chartFieldGain.Gain Is Nothing Then
+                    AddHandler chartFieldGain.Gain.AfterPropertyChanged, AddressOf Me.onGainPropertyChanged
+                    chartFieldGain.DrawGainChart(True)
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub onGainPropertyChanged(ByRef doObject As Framework.DataObject, propInfo As Reflection.PropertyInfo)
+            Try
+
+                If Not chartFieldGain Is Nothing AndAlso Not chartFieldGain.Gain Is Nothing Then
+                    chartFieldGain.DrawGainChart(True)
                 End If
 
             Catch ex As System.Exception

@@ -711,7 +711,7 @@ Namespace DataObjects.Physical
                                                 "Part Properties", "If the root body is frozen then it is locked in place in the environment.", m_bFreeze))
 
             Else
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Contact Sensor", m_bContactSensor.GetType(), "ContactSensor", _
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Contact Sensor", m_bContactSensor.GetType(), "IsContactSensor", _
                                             "Part Properties", "Sets whether or not this part can detect contacts.", m_bContactSensor))
             End If
 
