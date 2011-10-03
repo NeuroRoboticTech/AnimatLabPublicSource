@@ -261,6 +261,25 @@ Namespace Framework
 
         End Function
 
+        Public Shared Operator =(ByVal v1 As Vec3d, ByVal V2 As Vec3d) As Boolean
+
+            If (Math.Abs(v1.X - V2.X) < 0.0001) AndAlso (Math.Abs(v1.Y - V2.Y) < 0.0001) AndAlso (Math.Abs(v1.Z - V2.Z) < 0.0001) Then
+                Return True
+            Else
+                Return False
+            End If
+
+        End Operator
+
+        Public Shared Operator <>(ByVal v1 As Vec3d, ByVal V2 As Vec3d) As Boolean
+
+            If (Math.Abs(v1.X - V2.X) < 0.0001) AndAlso (Math.Abs(v1.Y - V2.Y) < 0.0001) AndAlso (Math.Abs(v1.Z - V2.Z) < 0.0001) Then
+                Return False
+            Else
+                Return True
+            End If
+
+        End Operator
 
     End Class
 

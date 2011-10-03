@@ -17,8 +17,11 @@ Namespace DataObjects.Behavior.Nodes
 #Region " Attributes "
 
         Protected m_doRigidBody As DataObjects.Physical.RigidBody
-        Protected m_aryReceptiveFieldPairs As New ArrayList
+        Protected m_aryFieldPairs As New Collections.SortedReceptiveFieldPairs(Me)
         Protected m_nmTargetModule As NeuralModule
+        Protected m_doSensor As Physical.ContactSensor
+
+        Protected m_strNeuralModuleKey As String = ""
 
 #End Region
 
@@ -36,9 +39,9 @@ Namespace DataObjects.Behavior.Nodes
             End Get
         End Property
 
-        Public Overridable ReadOnly Property ReceptiveFieldPairs() As ArrayList
+        Public Overridable ReadOnly Property FieldPairs() As Collections.SortedReceptiveFieldPairs
             Get
-                Return m_aryReceptiveFieldPairs
+                Return m_aryFieldPairs
             End Get
         End Property
 
@@ -60,6 +63,21 @@ Namespace DataObjects.Behavior.Nodes
             End Set
         End Property
 
+        Public Overridable Property Sensor() As Physical.ContactSensor
+            Get
+                Return m_doSensor
+            End Get
+            Set(ByVal Value As Physical.ContactSensor)
+                m_doSensor = Value
+            End Set
+        End Property
+
+        Public Overridable ReadOnly Property NeuralModuleKey As String
+            Get
+                Return m_strNeuralModuleKey
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -71,48 +89,143 @@ Namespace DataObjects.Behavior.Nodes
             Me.Description = "Provides an interface adapter between an receptive field contacts and neurons."
         End Sub
 
+        Public Sub New(ByVal doParent As AnimatGUI.Framework.DataObject, _
+                       ByVal doPart As DataObjects.Physical.RigidBody, ByVal doSensor As Physical.ContactSensor)
+            MyBase.New(doParent)
+
+            m_nmTargetModule = DirectCast(doParent, Behavior.NeuralModule)
+            m_doRigidBody = doPart
+            m_doSensor = doSensor
+            Me.Name = "Contact Adapter"
+            Me.Description = "Provides an interface adapter between an receptive field contacts and neurons."
+        End Sub
+
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
                                         ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatGUI.Framework.DataObject
-            Dim oNewNode As New Behavior.Nodes.ContactAdapter(doParent)
+            Dim oNewNode As New Behavior.Nodes.ContactAdapter(doParent, m_doRigidBody, m_doSensor)
             oNewNode.CloneInternal(Me, bCutData, doRoot)
             If Not doRoot Is Nothing AndAlso doRoot Is Me Then oNewNode.AfterClone(Me, bCutData, doRoot, oNewNode)
             Return oNewNode
         End Function
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
+                                            ByVal doRoot As AnimatGUI.Framework.DataObject)
+            MyBase.CloneInternal(doOriginal, bCutData, doRoot)
 
-            If Not m_doRigidBody Is Nothing AndAlso m_aryReceptiveFieldPairs.Count > 0 Then
-                Dim doStruct As Framework.DataObject = m_doRigidBody.ParentStructure
+            Dim doAdapter As ContactAdapter = DirectCast(doOriginal, ContactAdapter)
 
-                oXml.AddChildElement("Adapter")
+            m_doRigidBody = doAdapter.m_doRigidBody
+            m_nmTargetModule = doAdapter.m_nmTargetModule
+            m_doSensor = doAdapter.m_doSensor
+            m_aryFieldPairs = DirectCast(doAdapter.FieldPairs.CloneList(), Collections.SortedReceptiveFieldPairs)
+
+        End Sub
+
+        Public Overrides Sub ClearIsDirty()
+            MyBase.ClearIsDirty()
+            m_aryFieldPairs.ClearIsDirty()
+        End Sub
+
+        Public Overridable Sub PopulatePairsListView(ByVal lvFieldPairs As ListView)
+
+            For Each deEntry As DictionaryEntry In Me.FieldPairs
+                Dim doPair As DataObjects.Physical.ReceptiveFieldPair = DirectCast(deEntry.Value, DataObjects.Physical.ReceptiveFieldPair)
+
+                Dim lvItem As New ListViewItem(doPair.Field.Vertex.ToString())
+                lvItem.SubItems.Add(doPair.Neuron.Name)
+                lvItem.Tag = doPair
+
+                lvFieldPairs.Items.Add(lvItem)
+            Next
+
+        End Sub
+
+        Public Overridable Overloads Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
+            MyBase.LoadData(oXml)
+
+            oXml.IntoElem()
+
+            m_strNeuralModuleKey = oXml.GetChildString("Key")
+
+            m_aryFieldPairs.Clear()
+            If oXml.FindChildElement("FieldPairs", False) Then
                 oXml.IntoElem()
 
-                oXml.AddChildElement("Type", Me.AdapterType)
-
-                oXml.AddChildElement("SourceBodyID", m_doRigidBody.ID)
-                oXml.AddChildElement("TargetModule", m_nmTargetModule.ModuleName)
-
-                oXml.AddChildElement("FieldPairs")
-                oXml.IntoElem()
-                For Each doPair As DataObjects.Physical.ReceptiveFieldPair In m_aryReceptiveFieldPairs
-                    doPair.SaveSimulationXml(oXml, doStruct)
+                Dim iCount As Integer = oXml.NumberOfChildren()
+                For iIndex As Integer = 0 To iCount - 1
+                    oXml.FindChildByIndex(iIndex)
+                    Dim doPair As New DataObjects.Physical.ReceptiveFieldPair(Me)
+                    doPair.LoadData(oXml)
+                    m_aryFieldPairs.Add(doPair.ID, doPair)
                 Next
-                oXml.OutOfElem()
 
                 oXml.OutOfElem()
             End If
 
+            oXml.OutOfElem()
         End Sub
 
-        Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+        Public Overridable Overloads Sub SaveData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
+            MyBase.SaveData(oXml)
 
-            For Each doPair As DataObjects.Physical.ReceptiveFieldPair In m_aryReceptiveFieldPairs
-                doPair.InitializeSimulationReferences()
+            oXml.IntoElem()
+
+            oXml.AddChildElement("Key", Me.NeuralModuleType.ToString)
+
+            oXml.AddChildElement("FieldPairs")
+            oXml.IntoElem()
+            For Each deEntry As DictionaryEntry In m_aryFieldPairs
+                Dim doPair As DataObjects.Physical.ReceptiveFieldPair = DirectCast(deEntry.Value, DataObjects.Physical.ReceptiveFieldPair)
+                doPair.SaveData(oXml)
             Next
+            oXml.OutOfElem()
+
+            oXml.OutOfElem()
+
+        End Sub
+
+        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+
+            'oXml.AddChildElement("Adapter")
+            'oXml.IntoElem()
+
+            'oXml.AddChildElement("ID", Me.ID)
+            'oXml.AddChildElement("Name", Me.Name)
+            'oXml.AddChildElement("Type", Me.AdapterType)
+
+            'oXml.AddChildElement("Type", Me.AdapterType)
+            'oXml.AddChildElement("SourceModule", m_doRigidBody.ModuleName)
+            'oXml.AddChildElement("SourceID", m_doRigidBody.ID)
+            'oXml.AddChildElement("TargetModule", m_nmTargetModule.ModuleName)
+
+            'oXml.AddChildElement("FieldPairs")
+            'oXml.IntoElem()
+            'For Each deEntry As DictionaryEntry In m_aryFieldPairs
+            '    Dim doPair As DataObjects.Physical.ReceptiveFieldPair = DirectCast(deEntry.Value, DataObjects.Physical.ReceptiveFieldPair)
+            '    doPair.SaveSimulationXml(oXml, Me, "FieldPair")
+            'Next
+            'oXml.OutOfElem()
+
+            'oXml.OutOfElem()
+
         End Sub
 
 #Region " DataObject Methods "
+
+        Public Overrides Sub InitializeSimulationReferences()
+            'MyBase.InitializeSimulationReferences()
+
+            'For Each deEntry As DictionaryEntry In m_aryFieldPairs
+            '    Dim doPair As DataObjects.Physical.ReceptiveFieldPair = DirectCast(deEntry.Value, DataObjects.Physical.ReceptiveFieldPair)
+            '    doPair.InitializeSimulationReferences()
+            'Next
+        End Sub
+
+        Public Overrides Sub InitializeAfterLoad()
+            MyBase.InitializeAfterLoad()
+
+
+        End Sub
 
 #End Region
 

@@ -84,6 +84,7 @@ Namespace Forms
 #Region " Attributes "
 
         Protected chartCurrentGain As AnimatGUI.Forms.Gain.GainControl
+        Protected m_doSelPart As DataObjects.Physical.RigidBody
 
 #End Region
 
@@ -113,6 +114,8 @@ Namespace Forms
                 Me.chartCurrentGain.Name = "chartCurrentGain"
                 Me.chartCurrentGain.Size = New System.Drawing.Size(267, 160)
                 Me.chartCurrentGain.TabIndex = 1
+
+                AddHandler Util.Application.ProjectLoaded, AddressOf Me.OnProjectLoaded
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -148,6 +151,36 @@ Namespace Forms
 
         Protected Overrides Sub AnimatForm_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
             chartCurrentGain = Nothing
+        End Sub
+
+        Private Sub OnProjectLoaded()
+            Try
+                If Util.ProjectWorkspace Is Nothing Then
+                    Throw New System.Exception("Project is loaded but project workspace is not defined!")
+                End If
+
+                AddHandler Util.ProjectWorkspace.WorkspaceSelectionChanged, AddressOf Me.OnWorkspaceSelectionChanged
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub OnWorkspaceSelectionChanged()
+
+            Try
+
+                If Not Util.ProjectWorkspace.SelectedDataObject Is Nothing AndAlso _
+                    Util.IsTypeOf(Util.ProjectWorkspace.SelectedDataObject.GetType, GetType(DataObjects.Physical.RigidBody)) AndAlso _
+                    Util.ProjectWorkspace.TreeView.SelectedCount = 1 Then
+                    m_doSelPart = DirectCast(Util.ProjectWorkspace.SelectedDataObject, DataObjects.Physical.RigidBody)
+                Else
+                    m_doSelPart = Nothing
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
         End Sub
 
 #End Region

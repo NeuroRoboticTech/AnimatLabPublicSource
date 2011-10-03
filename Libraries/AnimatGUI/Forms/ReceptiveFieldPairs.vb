@@ -43,6 +43,8 @@ Namespace Forms
         Friend WithEvents lblReceptivePairs As System.Windows.Forms.Label
         Friend WithEvents lblSelectedVertex As System.Windows.Forms.Label
         Friend WithEvents lblNeurons As System.Windows.Forms.Label
+        Friend WithEvents colVertex As System.Windows.Forms.ColumnHeader
+        Friend WithEvents colNeuron As System.Windows.Forms.ColumnHeader
 
         'Required by the Windows Form Designer
         Private components As System.ComponentModel.IContainer
@@ -60,14 +62,32 @@ Namespace Forms
             Me.lblReceptivePairs = New System.Windows.Forms.Label
             Me.lblSelectedVertex = New System.Windows.Forms.Label
             Me.lblNeurons = New System.Windows.Forms.Label
+            Me.colNeuron = New System.Windows.Forms.ColumnHeader()
+            Me.colVertex = New System.Windows.Forms.ColumnHeader()
             Me.SuspendLayout()
+
+            '
+            ' colNeuron
+            ' 
+            Me.colNeuron.Text = "Neuron"
+            Me.colNeuron.Width = 100
+            ' 
+            ' colVertex
+            ' 
+            Me.colVertex.Text = "Vertex"
+            Me.colVertex.Width = 100
             '
             'lvFieldPairs
             '
+            Me.lvFieldPairs.FullRowSelect = True
+            Me.lvFieldPairs.GridLines = True
             Me.lvFieldPairs.Location = New System.Drawing.Point(12, 150)
+            Me.lvFieldPairs.MultiSelect = False
             Me.lvFieldPairs.Name = "lvFieldPairs"
             Me.lvFieldPairs.Size = New System.Drawing.Size(268, 164)
+            Me.lvFieldPairs.Sorting = System.Windows.Forms.SortOrder.Ascending
             Me.lvFieldPairs.TabIndex = 0
+            Me.lvFieldPairs.View = System.Windows.Forms.View.Details
             Me.lvFieldPairs.UseCompatibleStateImageBehavior = False
             '
             'btnAdd
@@ -104,6 +124,8 @@ Namespace Forms
             Me.cboNeurons.Name = "cboNeurons"
             Me.cboNeurons.Size = New System.Drawing.Size(268, 21)
             Me.cboNeurons.TabIndex = 9
+            Me.cboNeurons.Sorted = True
+            Me.cboNeurons.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
             '
             'txtSelVertex
             '
@@ -163,6 +185,9 @@ Namespace Forms
 
 #Region " Attributes "
 
+        Protected m_doOrganism As DataObjects.Physical.Organism
+        Protected m_doSelPart As DataObjects.Physical.RigidBody
+
 #End Region
 
 #Region " Properties "
@@ -182,10 +207,20 @@ Namespace Forms
             Try
                 MyBase.Initialize(frmParent)
 
+                AddHandler Util.Application.ProjectLoaded, AddressOf Me.OnProjectLoaded
+
+                ClearPairsListView()
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
 
+        End Sub
+
+        Protected Overridable Sub ClearPairsListView()
+            lvFieldPairs.Clear()
+
+            lvFieldPairs.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.colVertex, Me.colNeuron})
         End Sub
 
 #End Region
@@ -208,7 +243,186 @@ Namespace Forms
 
         End Sub
 
+        Private Sub OnProjectLoaded()
+            Try
+                If Util.ProjectWorkspace Is Nothing Then
+                    Throw New System.Exception("Project is loaded but project workspace is not defined!")
+                End If
+
+                AddHandler Util.ProjectWorkspace.WorkspaceSelectionChanged, AddressOf Me.OnWorkspaceSelectionChanged
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub OnWorkspaceSelectionChanged()
+
+            Try
+
+                If Not Util.ProjectWorkspace.SelectedDataObject Is Nothing AndAlso _
+                    Util.IsTypeOf(Util.ProjectWorkspace.SelectedDataObject.GetType, GetType(DataObjects.Physical.RigidBody)) AndAlso _
+                    Util.ProjectWorkspace.TreeView.SelectedCount = 1 Then
+                    Dim doSelPart As DataObjects.Physical.RigidBody = DirectCast(Util.ProjectWorkspace.SelectedDataObject, DataObjects.Physical.RigidBody)
+
+                    If doSelPart.ParentStructure Is Nothing Then
+                        Throw New System.Exception("The selected rigid body parts parent structure is not set!")
+                    End If
+
+                    'Can only set receptive fields on organism type parts.
+                    If Util.IsTypeOf(doSelPart.ParentStructure.GetType(), GetType(DataObjects.Physical.Organism), False) Then
+                        m_doSelPart = doSelPart
+                        m_doOrganism = DirectCast(doSelPart.ParentStructure, DataObjects.Physical.Organism)
+                        AddHandler m_doSelPart.SimInterface.OnSelectedVertexChanged, AddressOf Me.OnSelectedVertexChanged
+                        txtSelVertex.Text = m_doSelPart.SelectedVertex.ToString
+
+                        ClearPairsListView()
+                        If Not m_doSelPart.ReceptiveFieldSensor Is Nothing Then
+                            m_doSelPart.ReceptiveFieldSensor.PopulatePairsListView(lvFieldPairs)
+                        End If
+                    End If
+                Else
+                    If Not m_doSelPart Is Nothing Then
+                        RemoveHandler m_doSelPart.SimInterface.OnSelectedVertexChanged, AddressOf Me.OnSelectedVertexChanged
+                    End If
+
+                    m_doOrganism = Nothing
+                    m_doSelPart = Nothing
+                    txtSelVertex.Text = ""
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Delegate Sub OnSelectedVertexChangedDelegate(ByVal fltX As Single, ByVal fltY As Single, ByVal fltZ As Single)
+
+        Private Sub OnSelectedVertexChanged(ByVal fltX As Single, ByVal fltY As Single, ByVal fltZ As Single)
+            If Me.InvokeRequired Then
+                Me.Invoke(New OnSelectedVertexChangedDelegate(AddressOf OnSelectedVertexChanged), New Object() {fltX, fltY, fltZ})
+                Return
+            End If
+
+            Try
+                If Not m_doSelPart Is Nothing AndAlso Not m_doSelPart.SelectedVertex Is Nothing Then
+                    txtSelVertex.Text = m_doSelPart.SelectedVertex.ToString
+                Else
+                    txtSelVertex.Text = ""
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub cboNeurons_DropDown(ByVal sender As Object, ByVal e As System.EventArgs) Handles cboNeurons.DropDown
+
+            Try
+                Dim doSelNeuron As Object = cboNeurons.SelectedItem
+
+                cboNeurons.Items.Clear()
+
+                If Not m_doOrganism Is Nothing Then
+                    Dim aryNeurons As New Collections.DataObjects(Nothing)
+                    m_doOrganism.RootSubSystem.FindChildrenOfType(GetType(DataObjects.Behavior.Nodes.Neuron), aryNeurons)
+
+                    For Each doNeuron As DataObjects.Behavior.Nodes.Neuron In aryNeurons
+                        cboNeurons.Items.Add(doNeuron)
+
+                        If doNeuron Is doSelNeuron Then
+                            cboNeurons.SelectedItem = doNeuron
+                        End If
+                    Next
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub btnAdd_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAdd.Click
+            Try
+                If cboNeurons.SelectedItem Is Nothing Then
+                    Throw New System.Exception("You must select a neuron before you can add a receptive field pair.")
+                End If
+
+                If m_doSelPart Is Nothing Or m_doSelPart.SelectedVertex Is Nothing Then
+                    Throw New System.Exception("You must select a rigid body from an organism and select a vertex before you can add a receptive field pair.")
+                End If
+
+                'Check to see if the rigid body has a contact sensor or not. If it does not then add one.
+                If m_doSelPart.ReceptiveFieldSensor Is Nothing Then
+                    m_doSelPart.AddReceptiveFieldSensor()
+                End If
+
+                Dim doNeuron As DataObjects.Behavior.Nodes.Neuron = DirectCast(cboNeurons.SelectedItem, DataObjects.Behavior.Nodes.Neuron)
+
+                Dim doPair As DataObjects.Physical.ReceptiveFieldPair = m_doSelPart.ReceptiveFieldSensor.AddFieldPair(doNeuron, m_doSelPart.SelectedVertex)
+
+                Dim lvItem As New ListViewItem(doPair.Field.Vertex.ToString())
+                lvItem.SubItems.Add(doPair.Neuron.Name)
+                lvItem.Tag = doPair
+
+                lvFieldPairs.Items.Add(lvItem)
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub btnClear_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnClear.Click
+            Try
+                If Not m_doSelPart Is Nothing Then
+                    If m_doSelPart.ReceptiveFieldSensor Is Nothing Then
+                        Throw New System.Exception("The receptive field sensor for the selected part is not set.")
+                    End If
+
+                    m_doSelPart.ReceptiveFieldSensor.ClearFieldPairs()
+
+                    ClearPairsListView()
+
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Sub
+
+        Private Sub btnRemove_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnRemove.Click
+            Try
+                If Not m_doSelPart Is Nothing Then
+                    If lvFieldPairs.SelectedItems.Count = 0 Then
+                        Throw New System.Exception("You must select a receptive field pair from the list view in order to remove it.")
+                    End If
+
+                    If m_doSelPart.ReceptiveFieldSensor Is Nothing Then
+                        Throw New System.Exception("The receptive field sensor for the selected part is not set.")
+                    End If
+
+                    Dim lvItem As ListViewItem = lvFieldPairs.SelectedItems(0)
+
+                    If lvItem.Tag Is Nothing OrElse Not Util.IsTypeOf(lvItem.Tag.GetType(), GetType(DataObjects.Physical.ReceptiveFieldPair), False) Then
+                        Throw New System.Exception("The listview item tag is not a receptive field pair object type.")
+                    End If
+
+                    Dim doPair As DataObjects.Physical.ReceptiveFieldPair = DirectCast(lvItem.Tag, DataObjects.Physical.ReceptiveFieldPair)
+
+                    m_doSelPart.ReceptiveFieldSensor.RemoveFieldPair(doPair)
+
+                    lvFieldPairs.Items.Remove(lvItem)
+
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+
 #End Region
+
 
     End Class
 

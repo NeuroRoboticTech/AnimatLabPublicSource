@@ -194,7 +194,7 @@ Namespace DataObjects.Physical.Bodies
             doGraphics.SetDefaultSizes()
             doGraphics.m_JointToParent = Nothing
             doGraphics.IsCollisionObject = False
-            doGraphics.ContactSensor = False
+            doGraphics.IsContactSensor = False
             doGraphics.IsRoot = False
             doGraphics.Name = doGraphics.Name & "_Graphics"
             doGraphics.MeshType = enumMeshType.Triangular

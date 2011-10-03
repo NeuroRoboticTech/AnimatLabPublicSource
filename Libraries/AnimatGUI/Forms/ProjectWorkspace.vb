@@ -280,6 +280,8 @@ Namespace Forms
             End Try
         End Sub
 
+        Public Event WorkspaceSelectionChanged()
+
         Private Sub ctrlTreeView_AfterSelectionChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctrlTreeView.AfterSelectionChanged
 
             Try
@@ -336,6 +338,8 @@ Namespace Forms
                         Util.ProjectProperties.PropertyData = Nothing
                     End If
                 End If
+
+                RaiseEvent WorkspaceSelectionChanged()
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

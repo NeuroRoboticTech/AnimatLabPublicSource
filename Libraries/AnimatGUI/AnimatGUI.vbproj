@@ -156,6 +156,7 @@
     <Compile Include="Collections\CollisionPairs.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Collections\ContactAdapters.vb" />
     <Compile Include="Collections\DataColumns.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -207,6 +208,8 @@
     <Compile Include="Collections\ProgramModules.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Collections\ReceptiveFieldPairs.vb" />
+    <Compile Include="Collections\ReceptiveFields.vb" />
     <Compile Include="Collections\RigidBodies.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -376,6 +379,7 @@
     <Compile Include="DataObjects\Physical\Bodies\Cylinder.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Ellipsoid.vb" />
     <Compile Include="DataObjects\Physical\Bodies\FluidPlane.vb" />
+    <Compile Include="DataObjects\Physical\ContactSensor.vb" />
     <Compile Include="DataObjects\Physical\IStretchReceptor.vb" />
     <Compile Include="DataObjects\Physical\Bodies\Line.vb" />
     <Compile Include="DataObjects\Physical\Bodies\LinearHillMuscle.vb" />
@@ -438,6 +442,7 @@
     <Compile Include="DataObjects\Physical\PhysicalStructure.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataObjects\Physical\ReceptiveField.vb" />
     <Compile Include="DataObjects\Physical\ReceptiveFieldPair.vb">
       <SubType>Code</SubType>
     </Compile>

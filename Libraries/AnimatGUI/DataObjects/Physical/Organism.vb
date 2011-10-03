@@ -474,12 +474,6 @@ Namespace DataObjects.Physical
             m_bnRootSubSystem.ClearIsDirty()
         End Sub
 
-        Public Overridable Sub AddContactAdapters(ByVal nmPhysicsModule As DataObjects.Behavior.NeuralModule, ByVal m_aryNodes As Collections.SortedNodes)
-            If Not m_dbRoot Is Nothing Then
-                m_dbRoot.AddContactAdapters(nmPhysicsModule, m_aryNodes)
-            End If
-        End Sub
-
         Public Overrides Sub InitializeAfterLoad()
             MyBase.InitializeAfterLoad()
 

@@ -39,13 +39,6 @@ Namespace DataObjects.Physical
         Protected m_fltMagnus As Single = 0
         Protected m_bEnableFluids As Boolean = False
 
-        Protected m_snReceptiveFieldDistance As ScaledNumber
-        Protected m_gnReceptiveFieldGain As Gain
-        Protected m_gnReceptiveCurrentGain As Gain
-        Protected m_aryReceptiveFields As New ArrayList
-        Protected m_aryReceptiveFieldPairs As New Collections.AnimatSortedList(Me)
-        Protected m_vSelectedReceptiveField As Vec3d    'The vertex of the selected receptive field.
-
         Protected m_aryOdorSources As New Collections.SortedOdors(Me)
 
         Protected m_bFoodSource As Boolean = False
@@ -53,6 +46,9 @@ Namespace DataObjects.Physical
         Protected m_snFoodReplenishRate As ScaledNumber
         Protected m_snFoodEnergyContent As ScaledNumber
         Protected m_snMaxFoodQuantity As ScaledNumber
+
+        Protected m_doReceptiveFieldSensor As ContactSensor
+        Protected m_vSelectedVertex As Vec3d    'The selected vertex for this part.
 
         Protected m_bIsRoot As Boolean = False
 
@@ -95,7 +91,7 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
-        Public Overridable Property ContactSensor() As Boolean
+        Public Overridable Property IsContactSensor() As Boolean
             Get
                 Return m_bContactSensor
             End Get
@@ -219,66 +215,6 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
-        Public Overridable Property ReceptiveFieldDistance() As ScaledNumber
-            Get
-                Return m_snReceptiveFieldDistance
-            End Get
-            Set(ByVal Value As ScaledNumber)
-                If Value.ActualValue <= 0 Then
-                    Throw New System.Exception("The receptive field distance can not be less than or equal to zero.")
-                End If
-
-                m_snReceptiveFieldDistance.CopyData(Value)
-            End Set
-        End Property
-
-        Public Overridable Property ReceptiveFieldGain() As Gain
-            Get
-                Return m_gnReceptiveFieldGain
-            End Get
-            Set(ByVal Value As Gain)
-                If Not Value Is Nothing Then
-                    m_gnReceptiveFieldGain = Value
-                Else
-                    Throw New System.Exception("You can not set the receptive field gain to null.")
-                End If
-            End Set
-        End Property
-
-        Public Overridable Property ReceptiveCurrentGain() As Gain
-            Get
-                Return m_gnReceptiveCurrentGain
-            End Get
-            Set(ByVal Value As Gain)
-                If Not Value Is Nothing Then
-                    m_gnReceptiveCurrentGain = Value
-                Else
-                    Throw New System.Exception("You can not set the receptive current gain to null.")
-                End If
-            End Set
-        End Property
-
-        Public Overridable ReadOnly Property ReceptiveFields() As ArrayList
-            Get
-                Return m_aryReceptiveFields
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property ReceptiveFieldPairs() As Collections.AnimatSortedList
-            Get
-                Return m_aryReceptiveFieldPairs
-            End Get
-        End Property
-
-        Public Overridable Property SelectedReceptiveField() As Vec3d
-            Get
-                Return m_vSelectedReceptiveField
-            End Get
-            Set(ByVal Value As Vec3d)
-                m_vSelectedReceptiveField = Value
-            End Set
-        End Property
-
         Public Overridable ReadOnly Property CanBeRootBody() As Boolean
             Get
                 Return True
@@ -287,7 +223,7 @@ Namespace DataObjects.Physical
 
         Public Overridable ReadOnly Property UsesAJoint() As Boolean
             Get
-                If Me.IsCollisionObject AndAlso Not Me.ContactSensor Then
+                If Me.IsCollisionObject AndAlso Not Me.IsContactSensor Then
                     Return True
                 Else
                     Return False
@@ -383,22 +319,21 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
-        ''If this a rigid body then we do not want to allow the user to be able to change the position or orientation
-        ''of the body. They need to do this using the structure/organism.
-        '<Browsable(False)> _
-        'Public Overrides ReadOnly Property AllowGuiCoordinateChange() As Boolean
-        '    Get
-        '        If Me.IsRoot Then
-        '            Return False
-        '        Else
-        '            Return True
-        '        End If
-        '    End Get
-        'End Property
-
         Public Overrides ReadOnly Property TypeName() As String
             Get
                 Return "Rigid Body"
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property ReceptiveFieldSensor() As ContactSensor
+            Get
+                Return m_doReceptiveFieldSensor
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property SelectedVertex() As Vec3d
+            Get
+                Return m_vSelectedVertex
             End Get
         End Property
 
@@ -473,8 +408,6 @@ Namespace DataObjects.Physical
 
             m_thIncomingDataType = New AnimatGUI.DataObjects.DataType("BodyForceX", "Body Force X", "Newtons", "N", -100, 100, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None)
 
-            m_snReceptiveFieldDistance = New ScaledNumber(Me, "RecptiveFieldDistance", 25, ScaledNumber.enumNumericScale.centi, "Meters", "m")
-
             m_svCOM = New ScaledVector3(Me, "COM", "Location of the COM relative to the (0,0,0) point of this part.", "Meters", "m")
             m_svBuoyancyCenter = New ScaledVector3(Me, "BuoyancyCenter", "Location of the center of buoyancy relative to the (0,0,0) point of this part.", "Meters", "m")
             m_svDrag = New ScaledVector3(Me, "Drag", "Drag coefficients of this part.", "", "")
@@ -495,28 +428,9 @@ Namespace DataObjects.Physical
             m_snFoodReplenishRate = New ScaledNumber(Me, "FoodReplenishRate", 1, ScaledNumber.enumNumericScale.None, "Quantity/s", "Q/s")
             m_snFoodEnergyContent = New ScaledNumber(Me, "FoodEnergyContent", 1, ScaledNumber.enumNumericScale.Kilo, "Calories/Quantity", "C/Q")
 
-            Dim gnRFGain As New Gains.Bell(Me, "ReceptiveFieldGain", "Meters", "Gain")
-            gnRFGain.XOffset.ActualValue = 0
-            gnRFGain.Amplitude.ActualValue = 1
-            gnRFGain.Width.ActualValue = 10
-            gnRFGain.YOffset.ActualValue = 0
-            gnRFGain.LowerLimit.ActualValue = -1
-            gnRFGain.UpperLimit.ActualValue = 1
-            m_gnReceptiveFieldGain = gnRFGain
-
-            Dim gnRCGain As New Gains.Polynomial(Me, "ReceptiveCurrnetGain", "Force", "Current")
-            gnRCGain.A.ActualValue = 0
-            gnRCGain.B.ActualValue = 0
-            gnRCGain.C.ActualValue = 0.000000001
-            gnRCGain.D.ActualValue = 0
-            gnRCGain.UseLimits = True
-            gnRCGain.LowerLimit.ActualValue = 0
-            gnRCGain.UpperLimit.ActualValue = 10
-            gnRCGain.LowerOutput.ActualValue = 0
-            gnRCGain.UpperOutput.SetFromValue(0.00000007, ScaledNumber.enumNumericScale.nano)
-            m_gnReceptiveCurrentGain = gnRCGain
-
-            m_vSelectedReceptiveField = New AnimatGUI.Framework.Vec3d(Nothing, 0, 0, 0)
+            'Receptive field sensor is NOT set initially. It will only be set when it is needed, and cleared if it is no longer needed.
+            m_doReceptiveFieldSensor = Nothing
+            m_vSelectedVertex = Nothing
 
         End Sub
 
@@ -533,15 +447,12 @@ Namespace DataObjects.Physical
             m_svBuoyancyCenter.ClearIsDirty()
             m_svDrag.ClearIsDirty()
             m_svCOM.ClearIsDirty()
-            m_snReceptiveFieldDistance.ClearIsDirty()
-            m_vSelectedReceptiveField.ClearIsDirty()
             m_snDensity.ClearIsDirty()
             m_snFoodQuantity.ClearIsDirty()
             m_snMaxFoodQuantity.ClearIsDirty()
             m_snFoodReplenishRate.ClearIsDirty()
             m_snFoodEnergyContent.ClearIsDirty()
-            m_gnReceptiveFieldGain.ClearIsDirty()
-            m_gnReceptiveCurrentGain.ClearIsDirty()
+            If Not m_doReceptiveFieldSensor Is Nothing Then m_doReceptiveFieldSensor.ClearIsDirty()
         End Sub
 
         Public Overrides Sub SetupInitialTransparencies()
@@ -637,9 +548,7 @@ Namespace DataObjects.Physical
             Dim doObject As AnimatGUI.Framework.DataObject = MyBase.FindObjectByID(strID)
             If doObject Is Nothing AndAlso Not m_JointToParent Is Nothing Then doObject = m_JointToParent.FindObjectByID(strID)
             If doObject Is Nothing AndAlso Not m_aryChildBodies Is Nothing Then doObject = m_aryChildBodies.FindObjectByID(strID)
-            If doObject Is Nothing AndAlso Not m_gnReceptiveFieldGain Is Nothing Then doObject = m_gnReceptiveFieldGain.FindObjectByID(strID)
-            If doObject Is Nothing AndAlso Not m_gnReceptiveCurrentGain Is Nothing Then doObject = m_gnReceptiveCurrentGain.FindObjectByID(strID)
-            If doObject Is Nothing AndAlso Not m_aryReceptiveFieldPairs Is Nothing Then doObject = m_aryReceptiveFieldPairs.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_doReceptiveFieldSensor Is Nothing Then m_doReceptiveFieldSensor.FindObjectByID(strID)
             If doObject Is Nothing AndAlso Not m_aryOdorSources Is Nothing Then doObject = m_aryOdorSources.FindObjectByID(strID)
             Return doObject
 
@@ -880,7 +789,6 @@ Namespace DataObjects.Physical
             m_bContactSensor = doOrigPart.m_bContactSensor
             m_bIsCollisionObject = doOrigPart.m_bIsCollisionObject
             m_snDensity = DirectCast(doOrigPart.m_snDensity, ScaledNumber)
-            m_snReceptiveFieldDistance = DirectCast(doOrigPart.m_snReceptiveFieldDistance, ScaledNumber)
 
             m_svBuoyancyCenter = DirectCast(doOrigPart.m_svBuoyancyCenter.Clone(Me, bCutData, doRoot), ScaledVector3)
             m_fltBuoyancyScale = doOrigPart.m_fltBuoyancyScale
@@ -907,6 +815,10 @@ Namespace DataObjects.Physical
             Next
 
             m_aryOdorSources = DirectCast(doOrigPart.m_aryOdorSources.Clone(Me, bCutData, doRoot), Collections.SortedOdors)
+
+            If Not m_doReceptiveFieldSensor Is Nothing Then
+                m_doReceptiveFieldSensor = DirectCast(doOrigPart.m_doReceptiveFieldSensor.Clone(Me, bCutData, doRoot), ContactSensor)
+            End If
 
         End Sub
 
@@ -985,8 +897,6 @@ Namespace DataObjects.Physical
             Me.IsRoot = doExisting.IsRoot
             Me.MaxFoodQuantity = doExisting.MaxFoodQuantity
             Me.OdorSources = doExisting.OdorSources
-            Me.ReceptiveCurrentGain = doExisting.ReceptiveCurrentGain
-            Me.ReceptiveFieldDistance = doExisting.ReceptiveFieldDistance
             Me.Texture = doExisting.Texture
             Me.Visible = doExisting.Visible
             Me.Transparencies = doExisting.Transparencies
@@ -1006,11 +916,9 @@ Namespace DataObjects.Physical
                 doChild.InitializeAfterLoad()
             Next
 
-            Dim doPair As ReceptiveFieldPair
-            For Each deEntry As DictionaryEntry In m_aryReceptiveFieldPairs
-                doPair = DirectCast(deEntry.Value, ReceptiveFieldPair)
-                doPair.InitializeAfterLoad()
-            Next
+            If Not m_doReceptiveFieldSensor Is Nothing Then
+                m_doReceptiveFieldSensor.InitializeAfterLoad()
+            End If
 
         End Sub
 
@@ -1019,6 +927,7 @@ Namespace DataObjects.Physical
 
             If Not m_doInterface Is Nothing Then
                 AddHandler m_doInterface.OnAddBodyClicked, AddressOf Me.OnAddBodyClicked
+                AddHandler m_doInterface.OnSelectedVertexChanged, AddressOf Me.OnSelectedVertexChanged
             End If
 
             If Not m_JointToParent Is Nothing Then
@@ -1031,11 +940,10 @@ Namespace DataObjects.Physical
                 doChild.InitializeSimulationReferences()
             Next
 
-            Dim doPair As ReceptiveFieldPair
-            For Each deEntry As DictionaryEntry In m_aryReceptiveFieldPairs
-                doPair = DirectCast(deEntry.Value, ReceptiveFieldPair)
-                doPair.InitializeSimulationReferences()
-            Next
+            If Not m_doReceptiveFieldSensor Is Nothing Then
+                m_doReceptiveFieldSensor.InitializeSimulationReferences()
+            End If
+
         End Sub
 
         Public Overloads Overrides Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
@@ -1057,30 +965,6 @@ Namespace DataObjects.Physical
             m_svDrag.LoadData(oXml, "Drag", False)
             m_fltMagnus = oXml.GetChildFloat("Magnus", m_fltMagnus)
             m_bEnableFluids = oXml.GetChildBool("EnableFluids", m_bEnableFluids)
-
-            If oXml.FindChildElement("ReceptiveFields", False) Then
-                oXml.IntoElem()
-
-                m_snReceptiveFieldDistance.LoadData(oXml, "ReceptiveFieldDistance")
-                m_gnReceptiveFieldGain.LoadData(oXml, "FieldGain", "ReceptiveFieldGain")
-                m_gnReceptiveCurrentGain.LoadData(oXml, "CurrentGain", "ReceptiveCurrentGain")
-
-                m_aryReceptiveFieldPairs.Clear()
-
-                oXml.IntoChildElement("FieldPairs")
-                Dim doPair As ReceptiveFieldPair
-                Dim iCount As Integer = oXml.NumberOfChildren() - 1
-                For iIndex As Integer = 0 To iCount
-                    oXml.FindChildByIndex(iIndex)
-
-                    doPair = New ReceptiveFieldPair(Me)
-                    doPair.LoadData(doStructure, oXml)
-                    m_aryReceptiveFieldPairs.Add(doPair.ID, doPair)
-                Next
-                oXml.OutOfElem()   'Outof ChildBodies Element
-
-                oXml.OutOfElem()
-            End If
 
             'If this is the root body element then do not attempt to load the joint. Otherwise it must have a joint
             If Not Me.IsRoot Then
@@ -1134,6 +1018,11 @@ Namespace DataObjects.Physical
                 m_snFoodEnergyContent.LoadData(oXml, "FoodEnergyContent")
             End If
 
+            If oXml.FindChildElement("ReceptiveFieldSensor", False) Then
+                m_doReceptiveFieldSensor = New ContactSensor(Me)
+                m_doReceptiveFieldSensor.LoadData(oXml)
+            End If
+
             oXml.OutOfElem() 'Outof RigidBody Element
 
         End Sub
@@ -1154,36 +1043,6 @@ Namespace DataObjects.Physical
 
             m_snDensity.SaveData(oXml, "Density")
             m_svCOM.SaveData(oXml, "COM")
-
-            If m_aryReceptiveFieldPairs.Count > 0 AndAlso TypeOf doStructure Is AnimatGUI.DataObjects.Physical.Organism Then
-                oXml.AddChildElement("ReceptiveFields")
-                oXml.IntoElem()
-
-                m_snReceptiveFieldDistance.SaveData(oXml, "ReceptiveFieldDistance")
-                m_gnReceptiveFieldGain.SaveData(oXml, "FieldGain")
-                m_gnReceptiveCurrentGain.SaveData(oXml, "CurrentGain")
-
-                oXml.AddChildElement("FieldPairs")
-                oXml.IntoElem()
-                Dim doPair As ReceptiveFieldPair
-                Dim aryRemovePairs As New ArrayList
-                For Each deEntry As DictionaryEntry In m_aryReceptiveFieldPairs
-                    doPair = DirectCast(deEntry.Value, ReceptiveFieldPair)
-
-                    If doPair.IsValidPair Then
-                        doPair.SaveData(doStructure, oXml)
-                    Else
-                        aryRemovePairs.Add(doPair)
-                    End If
-                Next
-                oXml.OutOfElem()
-
-                oXml.OutOfElem()
-
-                For Each doPair In aryRemovePairs
-                    m_aryReceptiveFieldPairs.Remove(doPair.ID)
-                Next
-            End If
 
             If Me Is doStructure.RootBody Then
                 oXml.AddChildElement("Freeze", m_bFreeze)
@@ -1227,6 +1086,10 @@ Namespace DataObjects.Physical
                 m_snFoodEnergyContent.SaveData(oXml, "FoodEnergyContent")
             End If
 
+            If Not m_doReceptiveFieldSensor Is Nothing Then
+                m_doReceptiveFieldSensor.SaveData(oXml)
+            End If
+
             oXml.OutOfElem() 'Outof BodyPart Element
 
         End Sub
@@ -1247,36 +1110,6 @@ Namespace DataObjects.Physical
 
             m_snDensity.SaveSimulationXml(oXml, Me, "Density")
             m_svCOM.SaveSimulationXml(oXml, Me, "COM")
-
-            If m_aryReceptiveFieldPairs.Count > 0 AndAlso Not Me.ParentStructure Is Nothing AndAlso TypeOf Me.ParentStructure Is AnimatGUI.DataObjects.Physical.Organism Then
-                oXml.AddChildElement("ReceptiveFields")
-                oXml.IntoElem()
-
-                m_snReceptiveFieldDistance.SaveSimulationXml(oXml, Me, "ReceptiveFieldDistance")
-                m_gnReceptiveFieldGain.SaveSimulationXml(oXml, Me, "FieldGain")
-                m_gnReceptiveCurrentGain.SaveSimulationXml(oXml, Me, "CurrentGain")
-
-                oXml.AddChildElement("FieldPairs")
-                oXml.IntoElem()
-                Dim doPair As ReceptiveFieldPair
-                Dim aryRemovePairs As New ArrayList
-                For Each deEntry As DictionaryEntry In m_aryReceptiveFieldPairs
-                    doPair = DirectCast(deEntry.Value, ReceptiveFieldPair)
-
-                    If doPair.IsValidPair Then
-                        doPair.SaveSimulationXml(oXml)
-                    Else
-                        aryRemovePairs.Add(doPair)
-                    End If
-                Next
-                oXml.OutOfElem()
-
-                oXml.OutOfElem()
-
-                For Each doPair In aryRemovePairs
-                    m_aryReceptiveFieldPairs.Remove(doPair.ID)
-                Next
-            End If
 
             If Me.IsRoot Then
                 oXml.AddChildElement("Freeze", m_bFreeze)
@@ -1320,6 +1153,10 @@ Namespace DataObjects.Physical
                 m_snFoodEnergyContent.SaveSimulationXml(oXml, Me, "FoodEnergyContent")
             End If
 
+            If Not m_doReceptiveFieldSensor Is Nothing Then
+                m_doReceptiveFieldSensor.SaveSimulationXml(oXml, Me, "ReceptiveFieldSensor")
+            End If
+
             oXml.OutOfElem() 'Outof BodyPart Element
 
         End Sub
@@ -1356,11 +1193,11 @@ Namespace DataObjects.Physical
                     If rbNew.IsCollisionObject Then
                         bAddDefaultGraphics = frmSelectParts.chkAddGraphics.Checked
                     Else
-                        rbNew.ContactSensor = frmSelectParts.chkIsSensor.Checked
+                        rbNew.IsContactSensor = frmSelectParts.chkIsSensor.Checked
                     End If
                 Else
                     rbNew.IsCollisionObject = False
-                    rbNew.ContactSensor = False
+                    rbNew.IsContactSensor = False
                 End If
 
                 Me.ParentStructure.NewBodyIndex = Me.ParentStructure.NewBodyIndex + 1
@@ -1494,7 +1331,9 @@ Namespace DataObjects.Physical
             Dim strUnits As String = "g/" & Util.Environment.DistanceUnitAbbreviation(Util.Environment.DisplayDistanceUnits) & "^3"
             m_snDensity = New ScaledNumber(Me, "Density", fltValue, eSCale, strUnits, strUnits)
 
-            m_snReceptiveFieldDistance.ActualValue = m_snReceptiveFieldDistance.ActualValue * fltDistanceChange
+            If Not m_doReceptiveFieldSensor Is Nothing Then
+                m_doReceptiveFieldSensor.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
+            End If
 
             If Not m_JointToParent Is Nothing Then
                 m_JointToParent.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)
@@ -1507,147 +1346,13 @@ Namespace DataObjects.Physical
             Next
         End Sub
 
-        Protected Overridable Function IncludeReceptiveFieldPairsInModule(ByVal nmNeuralModule As DataObjects.Behavior.NeuralModule) As Boolean
-
-            Dim doOrganism As DataObjects.Physical.Organism
-
-            If Not Me.ParentStructure Is Nothing AndAlso TypeOf Me.ParentStructure Is DataObjects.Physical.Organism Then
-                doOrganism = DirectCast(Me.ParentStructure, DataObjects.Physical.Organism)
-
-                Dim doPair As ReceptiveFieldPair
-                For Each deEntry As DictionaryEntry In m_aryReceptiveFieldPairs
-                    doPair = DirectCast(deEntry.Value, ReceptiveFieldPair)
-
-                    If nmNeuralModule.GetType Is doPair.Neuron.NeuralModuleType Then
-                        If Not doOrganism.FindObjectByID(doPair.Neuron.ID) Is Nothing Then
-                            Return True
-                        End If
-                    End If
-                Next
-            End If
-
-            Return False
-        End Function
-
-        Public Overridable Sub AddContactAdapters(ByVal nmPhysicsModule As DataObjects.Behavior.NeuralModule, ByVal m_aryNodes As Collections.SortedNodes)
-            Dim doOrganism As DataObjects.Physical.Organism
-
-            If Not Me.ParentStructure Is Nothing AndAlso TypeOf Me.ParentStructure Is DataObjects.Physical.Organism AndAlso m_aryReceptiveFieldPairs.Count > 0 Then
-                doOrganism = DirectCast(Me.ParentStructure, DataObjects.Physical.Organism)
-
-                'For each rigid body we could have one contact adapter for each neural module. Basically we need to divide out the associated neurons
-                'so that they have a target neural module ID the same as their native module. This will ensure that those neurons are updated at the correct
-                'times during the simulation. So first we make an array of adapters for each neural module, and then as we loop through the association pairs
-                'we add them to the adapter associated with a given neural module and then only save the adapters that end up with neuron pairs in them.
-                Dim aryAdapters As New ArrayList
-                Dim doAdapter As DataObjects.Behavior.Nodes.ContactAdapter
-                For Each deEntry As DictionaryEntry In doOrganism.NeuralModules
-                    doAdapter = New DataObjects.Behavior.Nodes.ContactAdapter(nmPhysicsModule)
-                    doAdapter.RigidBody = Me
-                    doAdapter.TargetNeuralModule = DirectCast(deEntry.Value, DataObjects.Behavior.NeuralModule)
-                    aryAdapters.Add(doAdapter)
-                Next
-
-                Dim doPair As ReceptiveFieldPair
-                For Each deRFEntry As DictionaryEntry In m_aryReceptiveFieldPairs
-                    doPair = DirectCast(deRFEntry.Value, ReceptiveFieldPair)
-
-                    If Not doOrganism.FindObjectByID(doPair.Neuron.ID) Is Nothing Then
-                        For Each doAdapter In aryAdapters
-                            If doAdapter.TargetNeuralModule.GetType() Is doPair.Neuron.NeuralModuleType Then
-                                doAdapter.ReceptiveFieldPairs.Add(doPair)
-                            End If
-                        Next
-                    End If
-                Next
-
-                For Each doAdapter In aryAdapters
-                    If doAdapter.ReceptiveFieldPairs.Count > 0 Then
-                        m_aryNodes.Add(doAdapter.ID, doAdapter)
-                    End If
-                Next
-            End If
-
-            'dwc change
-            'Now add the contact adapters for any children objects.
-            Dim doChild As RigidBody
-            For Each deEntry As DictionaryEntry In m_aryChildBodies
-                doChild = DirectCast(deEntry.Value, RigidBody)
-                doChild.AddContactAdapters(nmPhysicsModule, m_aryNodes)
-            Next
-
-        End Sub
-
-        Public Overridable Function FindReceptiveField(ByVal fltX As Single, ByVal fltY As Single, ByVal fltZ As Single, ByRef iIndex As Integer) As Boolean
-            iIndex = m_aryReceptiveFields.BinarySearch(New AnimatGUI.Framework.Vec3d(Nothing, fltX, fltY, fltZ))
-
-            If (iIndex < 0) Then
-                Return False
-            Else
-                Return True
-            End If
-        End Function
-
-
-        Public Overridable Sub DumpReceptiveFields()
-            Dim i As Integer = 0
-            For Each vField As AnimatGUI.Framework.Vec3d In m_aryReceptiveFields
-                Debug.WriteLine("Index: " + i.ToString() + "  (" + vField.X.ToString() + ", " + vField.Y.ToString() + ", " + vField.Z.ToString() + ")")
-                i = i + 1
-            Next
-        End Sub
-
-        Public Overridable Sub SortReceptiveFields()
-            'I need to sort the list of receptive fields, and I need to remove any duplicates
-            m_aryReceptiveFields.Sort()
-
-            Dim aryFields As New ArrayList
-
-            For Each vField As Vec3d In m_aryReceptiveFields
-                'Only add in vectors that have not already been added
-                If aryFields.BinarySearch(vField) <> 0 Then
-                    aryFields.Add(vField)
-                End If
-            Next
-
-            'Now reset the receptive fields array to be this new array
-            m_aryReceptiveFields = aryFields
-        End Sub
-
-        'If the receptive field vertices are changed then we need to go back through the list of field pairs and find the vertex that is closest to
-        'each of the vertices in the pairs.
-        Protected Overridable Sub VerifyReceptiveFielPairs()
-
-            Dim doPair As ReceptiveFieldPair
-            For Each deEntry As DictionaryEntry In Me.ReceptiveFieldPairs
-                doPair = DirectCast(deEntry.Value, ReceptiveFieldPair)
-                doPair.Vertex = FindClosestVertex(doPair.Vertex)
-            Next
-        End Sub
-
-        Protected Overridable Function FindClosestVertex(ByVal vOrig As Vec3d) As Vec3d
-            Dim fltMin As Double = -1
-            Dim fltDist As Double
-            Dim vMin As Vec3d
-
-            For Each vVertex As Vec3d In Me.ReceptiveFields
-                fltDist = Util.Distance(vOrig, vVertex)
-                If fltMin = -1 OrElse fltDist < fltMin Then
-                    fltMin = fltDist
-                    vMin = vVertex
-                End If
-            Next
-
-            Return vMin
-        End Function
-
         Public Overridable Sub CreateDefaultGraphicsObject()
 
             Dim doGraphics As RigidBody = DirectCast(Me.Clone(Me, False, Me), Physical.RigidBody)
             doGraphics.SetDefaultSizes()
             doGraphics.m_JointToParent = Nothing
             doGraphics.IsCollisionObject = False
-            doGraphics.ContactSensor = False
+            doGraphics.IsContactSensor = False
             doGraphics.IsRoot = False
             doGraphics.Name = doGraphics.Name & "_Graphics"
 
@@ -1669,6 +1374,20 @@ Namespace DataObjects.Physical
                 doChild = DirectCast(deEntry.Value, RigidBody)
                 doChild.ResetEnableFluidsForRigidBodies()
             Next
+        End Sub
+
+        Public Overridable Sub AddReceptiveFieldSensor()
+
+            If Not m_doReceptiveFieldSensor Is Nothing Then
+                Throw New System.Exception("A receptive field sensor is already defined.")
+            End If
+
+            m_doReceptiveFieldSensor = New ContactSensor(Me)
+
+            'Make sure it is added to the simulation
+            m_doReceptiveFieldSensor.BeforeAddToList()
+            m_doReceptiveFieldSensor.AfterAddToList()
+
         End Sub
 
 #Region " Add-Remove to List Methods "
@@ -1693,6 +1412,10 @@ Namespace DataObjects.Physical
                 m_JointToParent.BeforeAddToList(bThrowError)
             End If
 
+            If Not m_doReceptiveFieldSensor Is Nothing Then
+                m_doReceptiveFieldSensor.BeforeAddToList(bThrowError)
+            End If
+
             If Not Me.Parent Is Nothing Then
                 Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "RigidBody", Me.GetSimulationXml("RigidBody"), bThrowError)
                 InitializeSimulationReferences()
@@ -1705,6 +1428,11 @@ Namespace DataObjects.Physical
             If Not m_JointToParent Is Nothing Then
                 m_JointToParent.AfterAddToList(bThrowError)
             End If
+
+            If Not m_doReceptiveFieldSensor Is Nothing Then
+                m_doReceptiveFieldSensor.AfterAddToList(bThrowError)
+            End If
+
         End Sub
 
         Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
@@ -1712,6 +1440,10 @@ Namespace DataObjects.Physical
 
             If Not m_JointToParent Is Nothing Then
                 m_JointToParent.BeforeRemoveFromList(bThrowError)
+            End If
+
+            If Not m_doReceptiveFieldSensor Is Nothing Then
+                m_doReceptiveFieldSensor.BeforeRemoveFromList(bThrowError)
             End If
 
             If Not Me.Parent Is Nothing AndAlso Not m_doInterface Is Nothing Then
@@ -1724,6 +1456,10 @@ Namespace DataObjects.Physical
             MyBase.AfterRemoveFromList(bThrowError)
             If Not m_JointToParent Is Nothing Then
                 m_JointToParent.AfterRemoveFromList(bThrowError)
+            End If
+
+            If Not m_doReceptiveFieldSensor Is Nothing Then
+                m_doReceptiveFieldSensor.AfterRemoveFromList(bThrowError)
             End If
         End Sub
 
@@ -1779,6 +1515,14 @@ Namespace DataObjects.Physical
                 aryObjs(1) = vNorm
                 Util.Application.BeginInvoke(New AddChildBodyDelegate(AddressOf Me.AddChildBody), aryObjs)
 
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overridable Sub OnSelectedVertexChanged(ByVal fltX As Single, ByVal fltY As Single, ByVal fltZ As Single)
+            Try
+                m_vSelectedVertex = New Vec3d(Me, fltX, fltY, fltZ)
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
