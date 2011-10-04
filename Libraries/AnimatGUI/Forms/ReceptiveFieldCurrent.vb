@@ -105,17 +105,9 @@ Namespace Forms
             Try
                 MyBase.Initialize(frmParent)
 
-                Dim oAssembly As System.Reflection.Assembly = System.Reflection.Assembly.LoadFrom(Util.GetFilePath(Util.Application.ApplicationDirectory, "LicensedAnimatGUI.dll"))
-                chartCurrentGain = DirectCast(oAssembly.CreateInstance("LicensedAnimatGUI.Forms.Charts.GainControl"), AnimatGUI.Forms.Gain.GainControl)
-
-                Me.Controls.Add(Me.chartCurrentGain)
-                Me.chartCurrentGain.Anchor = System.Windows.Forms.AnchorStyles.Left
-                Me.chartCurrentGain.Location = New System.Drawing.Point(13, 182)
-                Me.chartCurrentGain.Name = "chartCurrentGain"
-                Me.chartCurrentGain.Size = New System.Drawing.Size(267, 160)
-                Me.chartCurrentGain.TabIndex = 1
-
                 AddHandler Util.Application.ProjectLoaded, AddressOf Me.OnProjectLoaded
+
+                CreateGainChart()
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -150,6 +142,11 @@ Namespace Forms
         End Sub
 
         Protected Overrides Sub AnimatForm_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+            RemoveHandler Util.Application.ProjectLoaded, AddressOf Me.OnProjectLoaded
+            RemoveHandler Util.ProjectWorkspace.WorkspaceSelectionChanged, AddressOf Me.OnWorkspaceSelectionChanged
+            If Not chartCurrentGain Is Nothing AndAlso Not chartCurrentGain.Gain Is Nothing Then
+                RemoveHandler chartCurrentGain.Gain.AfterPropertyChanged, AddressOf Me.onGainPropertyChanged
+            End If
             chartCurrentGain = Nothing
         End Sub
 
@@ -164,6 +161,20 @@ Namespace Forms
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+        End Sub
+
+        Protected Sub CreateGainChart()
+            Dim oAssembly As System.Reflection.Assembly = System.Reflection.Assembly.LoadFrom(Util.GetFilePath(Util.Application.ApplicationDirectory, "LicensedAnimatGUI.dll"))
+            chartCurrentGain = DirectCast(oAssembly.CreateInstance("LicensedAnimatGUI.Forms.Charts.GainControl"), AnimatGUI.Forms.Gain.GainControl)
+
+            Me.Controls.Add(Me.chartCurrentGain)
+            Me.chartCurrentGain.Anchor = System.Windows.Forms.AnchorStyles.Left
+            Me.chartCurrentGain.Location = New System.Drawing.Point(13, 182)
+            Me.chartCurrentGain.Name = "chartCurrentGain"
+            Me.chartCurrentGain.Size = New System.Drawing.Size(267, 160)
+            Me.chartCurrentGain.TabIndex = 1
+            ReceptiveFieldPairs_Resize(Me, New System.EventArgs)
+
         End Sub
 
         Private Sub OnWorkspaceSelectionChanged()
