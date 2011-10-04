@@ -310,6 +310,27 @@ Namespace DataObjects.Physical
 
         End Sub
 
+#Region " Add-Remove to List Methods "
+
+        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
+            If Not m_doPart Is Nothing Then
+                MyBase.BeforeAddToList(bThrowError)
+                Util.Application.SimulationInterface.AddItem(m_doPart.ID, "ContactSensor", Me.GetSimulationXml("ContactSensor"), bThrowError)
+                InitializeSimulationReferences()
+            End If
+        End Sub
+
+        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.BeforeRemoveFromList(bThrowError)
+
+            If Not m_doInterface Is Nothing AndAlso Not m_doPart Is Nothing Then
+                Util.Application.SimulationInterface.RemoveItem(m_doPart.ID, "ContactSensor", Me.ID, bThrowError)
+            End If
+            m_doInterface = Nothing
+        End Sub
+
+#End Region
+
         Public Overrides Sub LoadData(ByRef oXml As Interfaces.StdXml)
 
             oXml.IntoElem()

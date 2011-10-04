@@ -142,12 +142,23 @@ Namespace Forms
         End Sub
 
         Protected Overrides Sub AnimatForm_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
-            RemoveHandler Util.Application.ProjectLoaded, AddressOf Me.OnProjectLoaded
-            RemoveHandler Util.ProjectWorkspace.WorkspaceSelectionChanged, AddressOf Me.OnWorkspaceSelectionChanged
+            Try
+                RemoveHandler Util.Application.ProjectLoaded, AddressOf Me.OnProjectLoaded
+            Catch ex As Exception
+            End Try
+
+            Try
+                RemoveHandler Util.ProjectWorkspace.WorkspaceSelectionChanged, AddressOf Me.OnWorkspaceSelectionChanged
+            Catch ex As Exception
+            End Try
+
             If Not chartCurrentGain Is Nothing AndAlso Not chartCurrentGain.Gain Is Nothing Then
-                RemoveHandler chartCurrentGain.Gain.AfterPropertyChanged, AddressOf Me.onGainPropertyChanged
+                Try
+                    RemoveHandler chartCurrentGain.Gain.AfterPropertyChanged, AddressOf Me.onGainPropertyChanged
+                Catch ex As Exception
+                End Try
+                chartCurrentGain = Nothing
             End If
-            chartCurrentGain = Nothing
         End Sub
 
         Private Sub OnProjectLoaded()

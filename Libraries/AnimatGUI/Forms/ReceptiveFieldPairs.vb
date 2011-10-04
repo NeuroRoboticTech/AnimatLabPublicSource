@@ -244,10 +244,21 @@ Namespace Forms
         End Sub
 
         Protected Overrides Sub AnimatForm_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
-            RemoveHandler Util.Application.ProjectLoaded, AddressOf Me.OnProjectLoaded
-            RemoveHandler Util.ProjectWorkspace.WorkspaceSelectionChanged, AddressOf Me.OnWorkspaceSelectionChanged
+            Try
+                RemoveHandler Util.Application.ProjectLoaded, AddressOf Me.OnProjectLoaded
+            Catch ex As Exception
+            End Try
+
+            Try
+                RemoveHandler Util.ProjectWorkspace.WorkspaceSelectionChanged, AddressOf Me.OnWorkspaceSelectionChanged
+            Catch ex As Exception
+            End Try
+
             If Not m_doSelPart Is Nothing Then
-                RemoveHandler m_doSelPart.SimInterface.OnSelectedVertexChanged, AddressOf Me.OnSelectedVertexChanged
+                Try
+                    RemoveHandler m_doSelPart.SimInterface.OnSelectedVertexChanged, AddressOf Me.OnSelectedVertexChanged
+                Catch ex As Exception
+                End Try
                 m_doSelPart = Nothing
             End If
          End Sub

@@ -364,19 +364,19 @@ void ContactSensor::Load(CStdXml &oXml)
 	if(m_lpCurrentGain->UseLimits())
 		m_fltMaxForce = m_lpCurrentGain->UpperLimit();
 
-	oXml.FindChildElement("FieldPairs");
-	oXml.IntoElem(); //Into FieldPairs Element
-	int iCount = oXml.NumberOfChildren();
-
-	m_aryFields.RemoveAll();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
+	if(oXml.FindChildElement("FieldPairs", FALSE))
 	{
-		oXml.FindChildByIndex(iIndex);
-		LoadReceptiveField(oXml);
-	}
-	oXml.OutOfElem(); //OutOf FieldPairs Element
+		oXml.IntoElem(); //Into FieldPairs Element
+		int iCount = oXml.NumberOfChildren();
 
-	//DumpVertices(m_aryPairs);
+		m_aryFields.RemoveAll();
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+		{
+			oXml.FindChildByIndex(iIndex);
+			LoadReceptiveField(oXml);
+		}
+		oXml.OutOfElem(); //OutOf FieldPairs Element
+	}
 
 	oXml.OutOfElem(); //OutOf Adapter Element
 }
