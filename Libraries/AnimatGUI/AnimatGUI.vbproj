@@ -1307,6 +1307,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Graphics\BehavioralEditor\NeuralModules_Treeview.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\ReceptiveCurrentGain.gif" />
+    <EmbeddedResource Include="Graphics\ReceptiveFieldGain.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PreBuildEvent />

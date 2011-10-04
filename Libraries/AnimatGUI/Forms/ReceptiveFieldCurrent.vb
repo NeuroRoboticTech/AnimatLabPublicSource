@@ -92,7 +92,7 @@ Namespace Forms
 
         Public Overrides ReadOnly Property IconName() As String
             Get
-                Return "AnimatGUI.ReceptiveField.gif"
+                Return "AnimatGUI.ReceptiveCurrentGain.gif"
             End Get
         End Property
 
