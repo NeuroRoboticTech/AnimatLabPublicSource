@@ -50,7 +50,6 @@ ContactSensor::ContactSensor()
 {
 	m_lpFieldGain = NULL;
 	m_lpCurrentGain = NULL;
-	m_fltReceptiveFieldDistance = 0.25f;
 	m_fltMaxForce = 100;
 }
 
@@ -96,16 +95,6 @@ Gain *ContactSensor::FieldGain() {return m_lpFieldGain;}
 \return	Gain pointer.
 **/
 Gain *ContactSensor::CurrentGain() {return m_lpCurrentGain;}
-
-/**
-\brief	Gets the distance between receptive field centers.
-
-\author	dcofer
-\date	3/22/2011
-
-\return	.
-**/
-float ContactSensor::ReceptiveFieldDistance() {return m_fltReceptiveFieldDistance;}
 
 /**
 \brief	Gets a receptive field based on its index in the array.
@@ -374,9 +363,6 @@ void ContactSensor::Load(CStdXml &oXml)
 
 	if(m_lpCurrentGain->UseLimits())
 		m_fltMaxForce = m_lpCurrentGain->UpperLimit();
-
-	m_fltReceptiveFieldDistance = oXml.GetChildFloat("ReceptiveFieldDistance", m_fltReceptiveFieldDistance);
-	m_fltReceptiveFieldDistance *= m_lpSim->InverseDistanceUnits(); 
 
 	oXml.FindChildElement("FieldPairs");
 	oXml.IntoElem(); //Into FieldPairs Element

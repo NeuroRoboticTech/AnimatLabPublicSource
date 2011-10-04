@@ -28,9 +28,6 @@ namespace AnimatSim
 			/// The array of ReceptiveField objects.
 			CStdPtrArray<ReceptiveField> m_aryFields;
 
-			/// The distance between ReceptiveField objects on the surface of the RigidBody.
-			float m_fltReceptiveFieldDistance;
-
 			/// The Gain function that modulates the force of contact based on the distance from the center of the ReceptiveField.
 			Gain *m_lpFieldGain;
 

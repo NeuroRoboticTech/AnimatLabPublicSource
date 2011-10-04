@@ -235,10 +235,10 @@ void Gain::Load(CStdXml &oXml)
 
 	if(m_bUseLimits)
 	{
-		LowerLimit(oXml.GetChildFloat("LowerLimit"));
-		LowerOutput(oXml.GetChildFloat("LowerOutput"));
 		UpperLimit(oXml.GetChildFloat("UpperLimit"));
+		LowerLimit(oXml.GetChildFloat("LowerLimit"));
 		UpperOutput(oXml.GetChildFloat("UpperOutput"));
+		LowerOutput(oXml.GetChildFloat("LowerOutput"));
 	}
 
 	oXml.OutOfElem(); //OutOf Adapter Element

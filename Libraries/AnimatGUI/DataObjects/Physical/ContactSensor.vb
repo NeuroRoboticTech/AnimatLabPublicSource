@@ -22,7 +22,6 @@ Namespace DataObjects.Physical
         Protected m_aryFieldPairs As New Collections.SortedReceptiveFieldPairs(Me)
         Protected m_aryAdapters As New Collections.SortedContactAdapters(Me)
 
-        Protected m_snReceptiveFieldDistance As ScaledNumber
         Protected m_gnReceptiveFieldGain As Gain
         Protected m_gnReceptiveCurrentGain As Gain
 
@@ -51,19 +50,6 @@ Namespace DataObjects.Physical
             Get
                 Return m_aryAdapters
             End Get
-        End Property
-
-        Public Overridable Property ReceptiveFieldDistance() As ScaledNumber
-            Get
-                Return m_snReceptiveFieldDistance
-            End Get
-            Set(ByVal Value As ScaledNumber)
-                If Value.ActualValue <= 0 Then
-                    Throw New System.Exception("The receptive field distance can not be less than or equal to zero.")
-                End If
-
-                m_snReceptiveFieldDistance.CopyData(Value)
-            End Set
         End Property
 
         Public Overridable Property ReceptiveFieldGain() As Gain
@@ -108,8 +94,6 @@ Namespace DataObjects.Physical
 
                 m_doOrganism = DirectCast(m_doPart.ParentStructure, Physical.Organism)
             End If
-
-            m_snReceptiveFieldDistance = New ScaledNumber(Me, "RecptiveFieldDistance", 25, ScaledNumber.enumNumericScale.centi, "Meters", "m")
 
             Dim gnRFGain As New Gains.Bell(Me, "ReceptiveFieldGain", "Meters", "Gain")
             gnRFGain.XOffset.ActualValue = 0
@@ -156,7 +140,6 @@ Namespace DataObjects.Physical
             m_aryFields = DirectCast(doOrig.Fields.CloneList(), Collections.SortedReceptiveFields)
             m_aryFieldPairs = DirectCast(doOrig.FieldPairs.CloneList(), Collections.SortedReceptiveFieldPairs)
 
-            m_snReceptiveFieldDistance = DirectCast(doOrig.m_snReceptiveFieldDistance.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_gnReceptiveFieldGain = DirectCast(doOrig.m_gnReceptiveFieldGain.Clone(Me, bCutData, doRoot), Gain)
             m_gnReceptiveCurrentGain = DirectCast(doOrig.m_gnReceptiveCurrentGain.Clone(Me, bCutData, doRoot), Gain)
 
@@ -167,7 +150,6 @@ Namespace DataObjects.Physical
 
             m_aryFields.ClearIsDirty()
             m_aryFieldPairs.ClearIsDirty()
-            m_snReceptiveFieldDistance.ClearIsDirty()
             m_gnReceptiveFieldGain.ClearIsDirty()
             m_gnReceptiveCurrentGain.ClearIsDirty()
 
@@ -184,10 +166,10 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
-            'MyBase.InitializeSimulationReferences()
+            MyBase.InitializeSimulationReferences()
 
-            'm_gnReceptiveFieldGain.InitializeSimulationReferences()
-            'm_gnReceptiveCurrentGain.InitializeSimulationReferences()
+            m_gnReceptiveFieldGain.InitializeSimulationReferences()
+            m_gnReceptiveCurrentGain.InitializeSimulationReferences()
 
             'For Each deEntry As DictionaryEntry In m_aryFields
             '    Dim doField As DataObjects.Physical.ReceptiveField = DirectCast(deEntry.Value, DataObjects.Physical.ReceptiveField)
@@ -334,7 +316,6 @@ Namespace DataObjects.Physical
 
             Me.ID = oXml.GetChildString("ID")
 
-            m_snReceptiveFieldDistance.LoadData(oXml, "ReceptiveFieldDistance")
             m_gnReceptiveFieldGain.LoadData(oXml, "FieldGain", "ReceptiveFieldGain")
             m_gnReceptiveCurrentGain.LoadData(oXml, "CurrentGain", "ReceptiveCurrentGain")
 
@@ -365,7 +346,6 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("ClassName", Me.ClassName)
             oXml.AddChildElement("ID", Me.ID)
 
-            m_snReceptiveFieldDistance.SaveData(oXml, "ReceptiveFieldDistance")
             m_gnReceptiveFieldGain.SaveData(oXml, "FieldGain")
             m_gnReceptiveCurrentGain.SaveData(oXml, "CurrentGain")
 
@@ -386,14 +366,13 @@ Namespace DataObjects.Physical
 
         Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
-            'oXml.AddChildElement("ContactSensor")
-            'oXml.IntoElem()
+            oXml.AddChildElement("ContactSensor")
+            oXml.IntoElem()
 
-            'oXml.AddChildElement("ID", Me.ID)
+            oXml.AddChildElement("ID", Me.ID)
 
-            'm_snReceptiveFieldDistance.SaveSimulationXml(oXml, Me, "ReceptiveFieldDistance")
-            'm_gnReceptiveFieldGain.SaveSimulationXml(oXml, Me, "FieldGain")
-            'm_gnReceptiveCurrentGain.SaveSimulationXml(oXml, Me, "CurrentGain")
+            m_gnReceptiveFieldGain.SaveSimulationXml(oXml, Me, "FieldGain")
+            m_gnReceptiveCurrentGain.SaveSimulationXml(oXml, Me, "CurrentGain")
 
             'oXml.AddChildElement("Fields")
             'oXml.IntoElem()
@@ -403,7 +382,7 @@ Namespace DataObjects.Physical
             'Next
             'oXml.OutOfElem()
 
-            'oXml.OutOfElem()
+            oXml.OutOfElem()
 
         End Sub
 
