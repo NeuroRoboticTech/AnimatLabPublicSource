@@ -54,6 +54,21 @@ ReceptiveField::~ReceptiveField()
 }
 
 /**
+\brief	Sets the vertex.
+
+\author	dcofer
+\date	10/5/2011
+
+\param	vPoint	The point.
+**/
+void ReceptiveField::SetVertex(CStdFPoint vPoint)
+{
+	m_vVertex[0] = vPoint.x;
+	m_vVertex[1] = vPoint.y;
+	m_vVertex[2] = vPoint.z;
+}
+
+/**
 \brief	Method used to sort the ReceptiveField by vertex.
 
 \details This method compares the vertex coordinates to find if this vertex is less than the one passed in.
@@ -198,6 +213,20 @@ BOOL ReceptiveField::Equals(float fltX, float fltY, float fltZ)
 
 	return false;
 }
+
+void ReceptiveField::Load(CStdXml &oXml)
+{
+	AnimatBase::Load(oXml);
+
+	oXml.IntoElem();
+
+	CStdFPoint vPoint;
+	Std_LoadPoint(oXml, "Vertex", vPoint);
+	SetVertex(vPoint);
+
+	oXml.OutOfElem();
+}
+
 
 	}			//Environment
 }				//AnimatSim

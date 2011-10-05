@@ -189,33 +189,6 @@ int ContactSensor::FindClosestReceptiveField(float fltX, float fltY, float fltZ)
 	return iMinIndex;
 }
 
-/**
-\brief	Adds a new ReceptiveField vertex.
-
-\author	dcofer
-\date	3/22/2011
-
-\param [in,out]	aryFields	The array of ReceptiveFields we will add to. 
-\param	fltX			 	The x coordinate. 
-\param	fltY			 	The y coordinate. 
-\param	fltZ			 	The z coordinate. 
-**/
-void ContactSensor::AddVertex(CStdPtrArray<ReceptiveField> &aryFields, float fltX, float fltY, float fltZ)
-{
-	int iIndex=-1, iVerifyIndex=-1;
-
-	if(!FindReceptiveField(aryFields, fltX, fltY, fltZ, iIndex))
-	{
-		ReceptiveField *lpField = new ReceptiveField(fltX, fltY, fltZ, 0);
-
-		if(iIndex == -1)
-			aryFields.Add(lpField);
-		else
-			aryFields.InsertAt(iIndex, lpField);
-
-		//TRACE_STL_CONTAINER(aryFields);
-	}
-}
 
 /**
 \brief	Searches for the first receptive field at the specified location.
@@ -233,21 +206,6 @@ void ContactSensor::AddVertex(CStdPtrArray<ReceptiveField> &aryFields, float flt
 BOOL ContactSensor::FindReceptiveField(float fltX, float fltY, float fltZ, int &iIndex)
 {
 	return FindReceptiveField(m_aryFields, fltX, fltY, fltZ, iIndex);
-}
-
-/**
-\brief	Adds a ReceptiveField vertex.
-
-\author	dcofer
-\date	3/22/2011
-
-\param	fltX	The x coordinate. 
-\param	fltY	The y coordinate. 
-\param	fltZ	The z coordinate. 
-**/
-void ContactSensor::AddVertex(float fltX, float fltY, float fltZ)
-{
-	AddVertex(m_aryFields, fltX, fltY, fltZ);
 }
 
 /**
@@ -279,6 +237,37 @@ void ContactSensor::DumpVertices(CStdPtrArray<ReceptiveField> &aryFields)
 		//oss << "\r\n";
 		Std_TraceMsg(StdLogDebug, oss.str(), "", -1, STD_TRACE_TO_FILE, false);
 	}
+}
+
+void ContactSensor::AddReceptiveField(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("ReceptiveField");
+
+	LoadReceptiveField(oXml);
+}
+
+void ContactSensor::RemoveReceptiveField(string strID, BOOL bThrowError)
+{
+	int iPos = FindReceptiveFieldListPos(strID, bThrowError);
+	m_aryFields.RemoveAt(iPos);
+}
+
+int ContactSensor::FindReceptiveFieldListPos(string strID, BOOL bThrowError)
+{
+	string sID = Std_ToUpper(Std_Trim(strID));
+
+	int iCount = m_aryFields.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(m_aryFields[iIndex]->ID() == sID)
+			return iIndex;
+
+	if(bThrowError)
+		THROW_TEXT_ERROR(Al_Err_lReceptiveFieldIDNotFound, Al_Err_strReceptiveFieldIDNotFound, "ID");
+
+	return -1;
 }
 
 /**
@@ -330,6 +319,41 @@ void ContactSensor::ProcessContact(StdVector3 vPos, float fltForceMagnitude)
 		//	fltCurrent = fltCurrent;
 	}
 }
+
+BOOL ContactSensor::AddItem(string strItemType, string strXml, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strItemType);
+
+	if(strType == "RECEPTIVEFIELD")
+	{
+		AddReceptiveField(strXml);
+		return TRUE;
+	}
+	
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
+
+	return FALSE;
+}
+
+BOOL ContactSensor::RemoveItem(string strItemType, string strID, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strItemType);
+
+	if(strType == "RECEPTIVEFIELD")
+	{
+		RemoveReceptiveField(strID);
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
+
+	return FALSE;
+}
+
 
 void ContactSensor::Load(CStdXml &oXml)
 {
@@ -391,13 +415,26 @@ void ContactSensor::Load(CStdXml &oXml)
 **/
 void ContactSensor::LoadReceptiveField(CStdXml &oXml)
 {
-	CStdFPoint vPoint;
+	ReceptiveField *lpField = NULL;
 
-	oXml.IntoElem();
-	Std_LoadPoint(oXml, "Vertex", vPoint);
-	oXml.OutOfElem(); //OutOf FieldPairs Element
+	try
+	{
+		lpField = new ReceptiveField();
+		lpField->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
+		lpField->Load(oXml);
 
-	AddVertex(m_aryFields, vPoint.x, vPoint.y, vPoint.z); 
+		m_aryFields.Add(lpField);
+	}
+	catch(CStdErrorInfo oError)
+	{
+		if(lpField) delete lpField;
+		RELAY_ERROR(oError);
+	}
+	catch(...)
+	{
+		if(lpField) delete lpField;
+		THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	}
 }
 
 	}			//Environment

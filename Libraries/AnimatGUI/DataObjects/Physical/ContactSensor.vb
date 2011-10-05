@@ -395,13 +395,13 @@ Namespace DataObjects.Physical
             m_gnReceptiveFieldGain.SaveSimulationXml(oXml, Me, "FieldGain")
             m_gnReceptiveCurrentGain.SaveSimulationXml(oXml, Me, "CurrentGain")
 
-            'oXml.AddChildElement("Fields")
-            'oXml.IntoElem()
-            'For Each deEntry As DictionaryEntry In m_aryFields
-            '    Dim doField As ReceptiveField = DirectCast(deEntry.Value, ReceptiveField)
-            '    doField.SaveSimulationXml(oXml, Me, "ReceptiveField")
-            'Next
-            'oXml.OutOfElem()
+            oXml.AddChildElement("Fields")
+            oXml.IntoElem()
+            For Each deEntry As DictionaryEntry In m_aryFields
+                Dim doField As ReceptiveField = DirectCast(deEntry.Value, ReceptiveField)
+                doField.SaveSimulationXml(oXml, Me, "ReceptiveField")
+            Next
+            oXml.OutOfElem()
 
             oXml.OutOfElem()
 

@@ -40,9 +40,12 @@ namespace AnimatSim
 			void LoadReceptiveField(CStdXml &oXml);
 
 			BOOL FindReceptiveField(CStdPtrArray<ReceptiveField> &aryFields, float fltX, float fltY, float fltZ, int &iIndex);
-			void AddVertex(CStdPtrArray<ReceptiveField> &aryFields, float fltX, float fltY, float fltZ);
 
 			void DumpVertices(CStdPtrArray<ReceptiveField> &aryFields);
+
+			virtual void AddReceptiveField(string strXml);
+			virtual void RemoveReceptiveField(string strID, BOOL bThrowError = TRUE);
+			virtual int FindReceptiveFieldListPos(string strID, BOOL bThrowError = TRUE);
 
 		public:
 			ContactSensor();
@@ -57,6 +60,14 @@ namespace AnimatSim
 			int FindClosestReceptiveField(float fltX, float fltY, float fltZ);
 			void AddVertex(float fltX, float fltY, float fltZ);
 			void FinishedAddingVertices();
+
+
+#pragma region DataAccesMethods
+
+			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE);
+			virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
+
+#pragma endregion
 
 			void ClearCurrents();
 			void ProcessContact(StdVector3 vPos, float fltForceMagnitude);

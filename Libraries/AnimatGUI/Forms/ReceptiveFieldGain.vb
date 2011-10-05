@@ -128,6 +128,25 @@ Namespace Forms
 
         End Sub
 
+        Protected Sub SetupGainInfo()
+            If Not chartFieldGain Is Nothing AndAlso Not chartFieldGain.Gain Is Nothing Then
+                RemoveHandler chartFieldGain.Gain.AfterPropertyChanged, AddressOf Me.onGainPropertyChanged
+            End If
+
+            If Not m_doSelPart Is Nothing AndAlso Not m_doSelPart.ReceptiveFieldSensor Is Nothing Then
+                chartFieldGain.Gain = m_doSelPart.ReceptiveFieldSensor.ReceptiveFieldGain
+                grdGainProps.SelectedObject = m_doSelPart.ReceptiveFieldSensor.ReceptiveFieldGain.Properties
+            Else
+                chartFieldGain.Gain = New DataObjects.Gains.Bell(Nothing)
+                grdGainProps.SelectedObject = Nothing
+            End If
+
+            If Not chartFieldGain Is Nothing AndAlso Not chartFieldGain.Gain Is Nothing Then
+                AddHandler chartFieldGain.Gain.AfterPropertyChanged, AddressOf Me.onGainPropertyChanged
+                chartFieldGain.DrawGainChart(True)
+            End If
+
+        End Sub
 #End Region
 
 #Region " Events "
@@ -173,6 +192,14 @@ Namespace Forms
                 chartFieldGain = Nothing
             End If
 
+            If Not m_doSelPart Is Nothing Then
+                Try
+                    RemoveHandler m_doSelPart.ContactSensorAdded, AddressOf Me.OnContatSenosrAdded
+                    RemoveHandler m_doSelPart.ContactSensorRemoved, AddressOf Me.OnContatSenosrAdded
+                Catch ex As Exception
+                End Try
+                m_doSelPart = Nothing
+            End If
         End Sub
 
         Private Sub OnProjectLoaded()
@@ -200,23 +227,15 @@ Namespace Forms
                     Util.ProjectWorkspace.TreeView.SelectedCount = 1 Then
                     m_doSelPart = DirectCast(Util.ProjectWorkspace.SelectedDataObject, DataObjects.Physical.RigidBody)
 
-                    If Not m_doSelPart.ReceptiveFieldSensor Is Nothing Then
-                        chartFieldGain.Gain = m_doSelPart.ReceptiveFieldSensor.ReceptiveFieldGain
-                        grdGainProps.SelectedObject = m_doSelPart.ReceptiveFieldSensor.ReceptiveFieldGain.Properties
-                    Else
-                        chartFieldGain.Gain = New DataObjects.Gains.Bell(Nothing)
-                        grdGainProps.SelectedObject = Nothing
-                    End If
+                    AddHandler m_doSelPart.ContactSensorAdded, AddressOf Me.OnContatSenosrAdded
+                    AddHandler m_doSelPart.ContactSensorRemoved, AddressOf Me.OnContatSenosrAdded
                 Else
+                    RemoveHandler m_doSelPart.ContactSensorAdded, AddressOf Me.OnContatSenosrAdded
+                    RemoveHandler m_doSelPart.ContactSensorRemoved, AddressOf Me.OnContatSenosrAdded
                     m_doSelPart = Nothing
-                    chartFieldGain.Gain = New DataObjects.Gains.Bell(Nothing)
-                    grdGainProps.SelectedObject = Nothing
                 End If
 
-                If Not chartFieldGain Is Nothing AndAlso Not chartFieldGain.Gain Is Nothing Then
-                    AddHandler chartFieldGain.Gain.AfterPropertyChanged, AddressOf Me.onGainPropertyChanged
-                    chartFieldGain.DrawGainChart(True)
-                End If
+                SetupGainInfo()
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -231,6 +250,14 @@ Namespace Forms
                 End If
 
             Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub OnContatSenosrAdded()
+            Try
+                SetupGainInfo()
+            Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
         End Sub

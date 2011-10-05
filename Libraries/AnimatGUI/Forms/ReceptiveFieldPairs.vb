@@ -399,6 +399,7 @@ Namespace Forms
                     End If
 
                     m_doSelPart.ReceptiveFieldSensor.ClearFieldPairs()
+                    m_doSelPart.RemoveReceptiveFieldSensorIfNeeded()
 
                     ClearPairsListView()
 
@@ -432,6 +433,8 @@ Namespace Forms
                     m_doSelPart.ReceptiveFieldSensor.RemoveFieldPair(doPair)
 
                     lvFieldPairs.Items.Remove(lvItem)
+
+                    m_doSelPart.RemoveReceptiveFieldSensorIfNeeded()
 
                 End If
 

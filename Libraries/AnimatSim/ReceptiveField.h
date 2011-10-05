@@ -31,12 +31,16 @@ namespace AnimatSim
 			ReceptiveField(float fltX, float fltY, float fltZ, float fltStim);
 			virtual ~ReceptiveField();
 
+			void SetVertex(CStdFPoint vPoint);
+
 			BOOL operator<(ReceptiveField *lpItem);
 			BOOL operator>(ReceptiveField *lpItem);
 			BOOL operator==(ReceptiveField *lpItem);
 			BOOL LessThanThan(float fltX, float fltY, float fltZ);
 			BOOL GreaterThanThan(float fltX, float fltY, float fltZ);
 			BOOL Equals(float fltX, float fltY, float fltZ);
+
+			virtual void Load(CStdXml &oXml);
 		};
 
 	}			// Environment

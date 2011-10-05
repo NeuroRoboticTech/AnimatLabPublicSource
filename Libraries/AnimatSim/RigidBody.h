@@ -166,6 +166,10 @@ namespace AnimatSim
 			virtual void RemoveRigidBody(string strID, BOOL bThrowError = TRUE);
 			virtual int FindChildListPos(string strID, BOOL bThrowError = TRUE);
 
+			virtual void AddContactSensor(string strXml);
+			virtual void RemoveContactSensor(string strID, BOOL bThrowError = TRUE);
+			virtual void LoadContactSensor(CStdXml &oXml);
+
 			virtual Odor *LoadOdor(CStdXml &oXml);
 			virtual void AddOdor(Odor *lpOdor);
 

@@ -1388,6 +1388,27 @@ Namespace DataObjects.Physical
             m_doReceptiveFieldSensor.BeforeAddToList()
             m_doReceptiveFieldSensor.AfterAddToList()
 
+            RaiseEvent ContactSensorAdded()
+
+        End Sub
+
+        Public Overridable Sub RemoveReceptiveFieldSensorIfNeeded()
+
+            If Not m_doReceptiveFieldSensor Is Nothing AndAlso m_doReceptiveFieldSensor.Fields.Count = 0 AndAlso _
+                m_doReceptiveFieldSensor.FieldPairs.Count = 0 AndAlso m_doReceptiveFieldSensor.Adapters.Count = 0 Then
+                RemoveReceptiveFieldSensor()
+            End If
+
+        End Sub
+
+        Protected Overridable Sub RemoveReceptiveFieldSensor()
+
+            m_doReceptiveFieldSensor.BeforeRemoveFromList()
+            m_doReceptiveFieldSensor.AfterRemoveFromList()
+            m_doReceptiveFieldSensor = Nothing
+
+            RaiseEvent ContactSensorRemoved()
+
         End Sub
 
 #Region " Add-Remove to List Methods "
@@ -1468,6 +1489,9 @@ Namespace DataObjects.Physical
 #End Region
 
 #Region " Events "
+
+        Public Event ContactSensorAdded()
+        Public Event ContactSensorRemoved()
 
         'These three events handlers are called whenever a user manually changes the value of the COM, Buoyancycenter or drag.
         Protected Overridable Sub OnCOMValueChanged()

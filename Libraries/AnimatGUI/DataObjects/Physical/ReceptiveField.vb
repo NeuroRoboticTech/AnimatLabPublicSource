@@ -62,6 +62,27 @@ Namespace DataObjects.Physical
             Return doNewRF
         End Function
 
+#Region " Add-Remove to List Methods "
+
+        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
+            If Not m_doParent Is Nothing Then
+                MyBase.BeforeAddToList(bThrowError)
+                Util.Application.SimulationInterface.AddItem(m_doParent.ID, "ReceptiveField", Me.GetSimulationXml("ReceptiveField"), bThrowError)
+                InitializeSimulationReferences()
+            End If
+        End Sub
+
+        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.BeforeRemoveFromList(bThrowError)
+
+            If Not m_doInterface Is Nothing AndAlso Not m_doParent Is Nothing Then
+                Util.Application.SimulationInterface.RemoveItem(m_doParent.ID, "ReceptiveField", Me.ID, bThrowError)
+            End If
+            m_doInterface = Nothing
+        End Sub
+
+#End Region
+
         Public Overridable Overloads Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
 
             m_aryPairs.Clear()

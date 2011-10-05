@@ -1198,6 +1198,12 @@ BOOL RigidBody::AddItem(string strItemType, string strXml, BOOL bThrowError)
 		return TRUE;
 	}
 
+	if(strType == "CONTACTSENSOR")
+	{
+		AddContactSensor(strXml);
+		return TRUE;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
@@ -1212,6 +1218,12 @@ BOOL RigidBody::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 	if(strType == "RIGIDBODY")
 	{
 		RemoveRigidBody(strID);
+		return TRUE;
+	}
+
+	if(strType == "CONTACTSENSOR")
+	{
+		RemoveContactSensor(strID);
 		return TRUE;
 	}
 
@@ -1291,6 +1303,43 @@ int RigidBody::FindChildListPos(string strID, BOOL bThrowError)
 		THROW_TEXT_ERROR(Al_Err_lBodyOrJointIDNotFound, Al_Err_strBodyOrJointIDNotFound, "ID");
 
 	return -1;
+}
+
+/**
+\brief	Creates and adds a ContactSensor. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml	The xml data packet for loading the body. 
+**/
+void RigidBody::AddContactSensor(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("ContactSensor");
+
+	LoadContactSensor(oXml);
+}
+
+/**
+\brief	Removes the ContactSensor. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strID	ID of the contact senosr to remove
+\param	bThrowError	If true and ID is not found then it will throw an error.
+\exception If bThrowError is true and ID is not found.
+**/
+void RigidBody::RemoveContactSensor(string strID, BOOL bThrowError)
+{
+	if(m_lpContactSensor)
+	{
+		delete m_lpContactSensor;
+		m_lpContactSensor = NULL;
+	}
 }
 
 void RigidBody::UpdatePhysicsPosFromGraphics()
@@ -1396,12 +1445,7 @@ void RigidBody::Load(CStdXml &oXml)
 		oXml.OutOfElem(); //OutOf ChildBodies Element
 	}
 
-	if(oXml.FindChildElement("ContactSensor", FALSE))
-	{
-		m_lpContactSensor = new AnimatSim::Environment::ContactSensor();
-		m_lpContactSensor->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
-		m_lpContactSensor->Load(oXml);
-	}
+	LoadContactSensor(oXml);
 
 	if(oXml.FindChildElement("OdorSources", FALSE))
 	{
@@ -1417,6 +1461,19 @@ void RigidBody::Load(CStdXml &oXml)
 	}	
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
+}
+
+void RigidBody::LoadContactSensor(CStdXml &oXml)
+{
+	if(m_lpContactSensor)
+		THROW_TEXT_ERROR(Al_Err_lContactSensorExists, Al_Err_strContactSensorExists, " RigidBodyID: " + m_strID);
+
+	if(oXml.FindChildElement("ContactSensor", FALSE))
+	{
+		m_lpContactSensor = new AnimatSim::Environment::ContactSensor();
+		m_lpContactSensor->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
+		m_lpContactSensor->Load(oXml);
+	}
 }
 
 /**
