@@ -61,7 +61,6 @@ namespace AnimatSim
 			void AddVertex(float fltX, float fltY, float fltZ);
 			void FinishedAddingVertices();
 
-
 #pragma region DataAccesMethods
 
 			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE);

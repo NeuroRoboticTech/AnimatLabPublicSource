@@ -196,13 +196,13 @@ Namespace DataObjects.Behavior.Nodes
             oXml.AddChildElement("SourceBodyID", m_doRigidBody.ID)
             oXml.AddChildElement("TargetModule", m_nmTargetModule.ModuleName)
 
-            'oXml.AddChildElement("FieldPairs")
-            'oXml.IntoElem()
-            'For Each deEntry As DictionaryEntry In m_aryFieldPairs
-            '    Dim doPair As DataObjects.Physical.ReceptiveFieldPair = DirectCast(deEntry.Value, DataObjects.Physical.ReceptiveFieldPair)
-            '    doPair.SaveSimulationXml(oXml, Me, "FieldPair")
-            'Next
-            'oXml.OutOfElem()
+            oXml.AddChildElement("FieldPairs")
+            oXml.IntoElem()
+            For Each deEntry As DictionaryEntry In m_aryFieldPairs
+                Dim doPair As DataObjects.Physical.ReceptiveFieldPair = DirectCast(deEntry.Value, DataObjects.Physical.ReceptiveFieldPair)
+                doPair.SaveSimulationXml(oXml, Me, "FieldPair")
+            Next
+            oXml.OutOfElem()
 
             oXml.OutOfElem()
 
@@ -215,16 +215,10 @@ Namespace DataObjects.Behavior.Nodes
                 m_doInterface = New Interfaces.DataObjectInterface(Util.Application.SimulationInterface, Me.ID)
             End If
 
-            'For Each deEntry As DictionaryEntry In m_aryFieldPairs
-            '    Dim doPair As DataObjects.Physical.ReceptiveFieldPair = DirectCast(deEntry.Value, DataObjects.Physical.ReceptiveFieldPair)
-            '    doPair.InitializeSimulationReferences()
-            'Next
-        End Sub
-
-        Public Overrides Sub InitializeAfterLoad()
-            MyBase.InitializeAfterLoad()
-
-
+            For Each deEntry As DictionaryEntry In m_aryFieldPairs
+                Dim doPair As DataObjects.Physical.ReceptiveFieldPair = DirectCast(deEntry.Value, DataObjects.Physical.ReceptiveFieldPair)
+                doPair.InitializeSimulationReferences()
+            Next
         End Sub
 
 #End Region

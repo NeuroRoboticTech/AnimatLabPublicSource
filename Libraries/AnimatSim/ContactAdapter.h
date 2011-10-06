@@ -45,6 +45,13 @@ namespace AnimatSim
 
 			virtual string TargetModule();
 			virtual void TargetModule(string strModule);
+			
+#pragma region DataAccesMethods
+
+			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE);
+			virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
+
+#pragma endregion
 
 			virtual void Initialize();
 			virtual void StepSimulation();

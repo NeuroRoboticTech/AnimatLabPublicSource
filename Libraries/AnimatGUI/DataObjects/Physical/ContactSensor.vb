@@ -176,10 +176,10 @@ Namespace DataObjects.Physical
                 doAdapter.InitializeSimulationReferences()
             Next
 
-            'For Each deEntry As DictionaryEntry In m_aryFields
-            '    Dim doField As DataObjects.Physical.ReceptiveField = DirectCast(deEntry.Value, DataObjects.Physical.ReceptiveField)
-            '    doField.InitializeSimulationReferences()
-            'Next
+            For Each deEntry As DictionaryEntry In m_aryFields
+                Dim doField As DataObjects.Physical.ReceptiveField = DirectCast(deEntry.Value, DataObjects.Physical.ReceptiveField)
+                doField.InitializeSimulationReferences()
+            Next
         End Sub
 
         Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject

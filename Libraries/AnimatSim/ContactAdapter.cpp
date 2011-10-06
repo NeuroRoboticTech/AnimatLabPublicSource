@@ -137,6 +137,40 @@ void ContactAdapter::Initialize()
 	}
 }
 
+BOOL ContactAdapter::AddItem(string strItemType, string strXml, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strItemType);
+
+	if(strType == "RECEPTIVEFIELD")
+	{
+		AddReceptiveField(strXml);
+		return TRUE;
+	}
+	
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
+
+	return FALSE;
+}
+
+BOOL ContactAdapter::RemoveItem(string strItemType, string strID, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strItemType);
+
+	if(strType == "RECEPTIVEFIELD")
+	{
+		RemoveReceptiveField(strID);
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
+
+	return FALSE;
+}
+
 void ContactAdapter::StepSimulation()
 {
 	int iCount = m_aryFieldPairs.GetSize();
