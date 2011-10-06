@@ -186,17 +186,15 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
-            'oXml.AddChildElement("Adapter")
-            'oXml.IntoElem()
+            oXml.AddChildElement("Adapter")
+            oXml.IntoElem()
 
-            'oXml.AddChildElement("ID", Me.ID)
-            'oXml.AddChildElement("Name", Me.Name)
-            'oXml.AddChildElement("Type", Me.AdapterType)
+            oXml.AddChildElement("ID", Me.ID)
+            oXml.AddChildElement("Name", Me.Name)
 
-            'oXml.AddChildElement("Type", Me.AdapterType)
-            'oXml.AddChildElement("SourceModule", m_doRigidBody.ModuleName)
-            'oXml.AddChildElement("SourceID", m_doRigidBody.ID)
-            'oXml.AddChildElement("TargetModule", m_nmTargetModule.ModuleName)
+            oXml.AddChildElement("Type", Me.AdapterType)
+            oXml.AddChildElement("SourceBodyID", m_doRigidBody.ID)
+            oXml.AddChildElement("TargetModule", m_nmTargetModule.ModuleName)
 
             'oXml.AddChildElement("FieldPairs")
             'oXml.IntoElem()
@@ -206,14 +204,16 @@ Namespace DataObjects.Behavior.Nodes
             'Next
             'oXml.OutOfElem()
 
-            'oXml.OutOfElem()
+            oXml.OutOfElem()
 
         End Sub
 
 #Region " DataObject Methods "
 
         Public Overrides Sub InitializeSimulationReferences()
-            'MyBase.InitializeSimulationReferences()
+            If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
+                m_doInterface = New Interfaces.DataObjectInterface(Util.Application.SimulationInterface, Me.ID)
+            End If
 
             'For Each deEntry As DictionaryEntry In m_aryFieldPairs
             '    Dim doPair As DataObjects.Physical.ReceptiveFieldPair = DirectCast(deEntry.Value, DataObjects.Physical.ReceptiveFieldPair)

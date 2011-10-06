@@ -230,8 +230,10 @@ Namespace Forms
                     AddHandler m_doSelPart.ContactSensorAdded, AddressOf Me.OnContatSenosrAdded
                     AddHandler m_doSelPart.ContactSensorRemoved, AddressOf Me.OnContatSenosrAdded
                 Else
-                    RemoveHandler m_doSelPart.ContactSensorAdded, AddressOf Me.OnContatSenosrAdded
-                    RemoveHandler m_doSelPart.ContactSensorRemoved, AddressOf Me.OnContatSenosrAdded
+                    If Not m_doSelPart Is Nothing Then
+                        RemoveHandler m_doSelPart.ContactSensorAdded, AddressOf Me.OnContatSenosrAdded
+                        RemoveHandler m_doSelPart.ContactSensorRemoved, AddressOf Me.OnContatSenosrAdded
+                    End If
                     m_doSelPart = Nothing
                 End If
 

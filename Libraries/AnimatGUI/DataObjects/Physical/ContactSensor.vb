@@ -160,7 +160,7 @@ Namespace DataObjects.Physical
 
             For Each doInfo As PairLoadInfo In m_aryPairInfo
                 Dim doNeuron As Behavior.Nodes.Neuron = DirectCast(Util.Simulation.FindObjectByID(doInfo.m_strNeuronID), Behavior.Nodes.Neuron)
-                AddFieldPair(doNeuron, doInfo.m_vVertex)
+                AddFieldPair(doNeuron, doInfo.m_vVertex, True)
             Next
 
         End Sub
@@ -170,6 +170,11 @@ Namespace DataObjects.Physical
 
             m_gnReceptiveFieldGain.InitializeSimulationReferences()
             m_gnReceptiveCurrentGain.InitializeSimulationReferences()
+
+            For Each deEntry As DictionaryEntry In Me.Adapters
+                Dim doAdapter As DataObjects.Behavior.Nodes.ContactAdapter = DirectCast(deEntry.Value, DataObjects.Behavior.Nodes.ContactAdapter)
+                doAdapter.InitializeSimulationReferences()
+            Next
 
             'For Each deEntry As DictionaryEntry In m_aryFields
             '    Dim doField As DataObjects.Physical.ReceptiveField = DirectCast(deEntry.Value, DataObjects.Physical.ReceptiveField)
@@ -189,7 +194,7 @@ Namespace DataObjects.Physical
 
         End Function
 
-        Public Overridable Function AddFieldPair(ByVal doNeuron As DataObjects.Behavior.Nodes.Neuron, ByVal vVertex As Vec3d) As ReceptiveFieldPair
+        Public Overridable Function AddFieldPair(ByVal doNeuron As DataObjects.Behavior.Nodes.Neuron, ByVal vVertex As Vec3d, ByVal bLoading As Boolean) As ReceptiveFieldPair
 
             If doNeuron Is Nothing Then
                 Throw New System.Exception("The neuron must be defined in order to add a new receptive field pair.")
@@ -206,12 +211,12 @@ Namespace DataObjects.Physical
             If Me.Adapters.ContainsKey(strModuleName) Then
                 doAdapter = Me.Adapters(strModuleName)
             Else
-                doAdapter = New DataObjects.Behavior.Nodes.ContactAdapter(doNeuron.NeuralModule)
+                doAdapter = New DataObjects.Behavior.Nodes.ContactAdapter(doNeuron.NeuralModule, m_doPart, Me)
                 m_aryAdapters.Add(strModuleName, doAdapter)
-                Dim strPhysicsModuleKey As String = GetType(Behavior.PhysicsModule).ToString
-                Dim doModule As Behavior.NeuralModule = m_doOrganism.NeuralModules(strPhysicsModuleKey)
 
-                doModule.Nodes.Add(doAdapter.ID, doAdapter)
+                If Not bLoading Then
+                    doAdapter.CreateAdapterSimReferences()
+                End If
             End If
 
             'Now add the receptive field to the sensor if one does not already exist.
@@ -277,11 +282,6 @@ Namespace DataObjects.Physical
 
             'Now check to see if the adapter has any field pairs left in it. If not then get rid of it.
             If doAdapter.FieldPairs.Count = 0 Then
-                Dim strPhysicsModuleKey As String = GetType(Behavior.PhysicsModule).ToString
-                Dim doModule As Behavior.NeuralModule = m_doOrganism.NeuralModules(strPhysicsModuleKey)
-
-                doModule.Nodes.Remove(doAdapter.ID)
-
                 Me.Adapters.Remove(strModuleType)
             End If
 

@@ -137,6 +137,7 @@ void PhysicsNeuralModule::AddAdapter(string strXml)
 void PhysicsNeuralModule::RemoveAdapter(string strID)
 {
 	int iIdx = FindAdapterListPos(strID);
+	m_aryAdapters[iIdx]->DetachAdaptersFromSimulation();
 	m_aryAdapters.RemoveAt(iIdx);
 }
 

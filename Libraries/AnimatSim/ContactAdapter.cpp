@@ -119,7 +119,7 @@ void ContactAdapter::TargetModule(string strModule)
 
 void ContactAdapter::Initialize()
 {
-	Adapter::Initialize();
+	Node::Initialize();
 
 	m_lpSourceNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strSourceBodyID));
 	if(!m_lpSourceNode)
@@ -155,16 +155,18 @@ void ContactAdapter::Load(CStdXml &oXml)
 
 	m_aryFieldPairs.RemoveAll();
 
-	oXml.FindChildElement("FieldPairs");
-	oXml.IntoElem(); //Into FieldPairs Element
-	int iCount = oXml.NumberOfChildren();
-
-	for(int iIndex=0; iIndex<iCount; iIndex++)
+	if(oXml.FindChildElement("FieldPairs", FALSE))
 	{
-		oXml.FindChildByIndex(iIndex);
-		LoadFieldPair(oXml);
+		oXml.IntoElem(); //Into FieldPairs Element
+		int iCount = oXml.NumberOfChildren();
+
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+		{
+			oXml.FindChildByIndex(iIndex);
+			LoadFieldPair(oXml);
+		}
+		oXml.OutOfElem(); //OutOf FieldPairs Element
 	}
-	oXml.OutOfElem(); //OutOf FieldPairs Element
 
 	oXml.OutOfElem(); //OutOf Adapter Element
 }

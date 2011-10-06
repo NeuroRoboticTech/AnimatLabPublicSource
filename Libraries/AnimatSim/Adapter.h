@@ -93,6 +93,8 @@ namespace AnimatSim
 			virtual Gain *GetGain();
 			virtual void SetGain(Gain *lpGain);
 
+			virtual void DetachAdaptersFromSimulation();
+
 			virtual void Initialize();
 			virtual void AddExternalNodeInput(float fltInput);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);

@@ -67,12 +67,6 @@ Adapter::~Adapter()
 
 try
 {
-	if(m_lpSim && !m_lpSim->ShuttingDown())
-	{
-		m_lpSim->RemoveSourceAdapter(m_lpStructure, this);
-		m_lpSim->RemoveTargetAdapter(m_lpStructure, this);
-	}
-
 	m_lpSourceNode = NULL;
 	m_lpSourceData = NULL;
 	m_lpTargetNode = NULL;
@@ -273,6 +267,15 @@ void Adapter::SetGain(Gain *lpGain)
 
 	m_lpGain = lpGain;
 	m_lpGain->SetSystemPointers(m_lpSim, m_lpStructure, m_lpModule, this, TRUE);
+}
+
+void Adapter::DetachAdaptersFromSimulation()
+{
+	if(m_lpSim)
+	{
+		m_lpSim->RemoveSourceAdapter(m_lpStructure, this);
+		m_lpSim->RemoveTargetAdapter(m_lpStructure, this);
+	}
 }
 
 void Adapter::AddExternalNodeInput(float fltInput)

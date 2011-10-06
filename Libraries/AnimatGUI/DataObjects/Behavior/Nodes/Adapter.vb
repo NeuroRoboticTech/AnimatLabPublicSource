@@ -328,6 +328,7 @@ Namespace DataObjects.Behavior.Nodes
                 NeuralModule.Nodes.Remove(Me.ID)
             End If
         End Sub
+
         Public Overridable Sub CreateAdapterSimReferences(Optional ByVal bThrowError As Boolean = True)
             If Not NeuralModule Is Nothing Then
                 NeuralModule.VerifyExistsInSim()
