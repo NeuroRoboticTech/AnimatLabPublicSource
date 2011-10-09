@@ -89,13 +89,6 @@ Namespace DataObjects.Behavior.Nodes
         End Property
 
         <Browsable(False)> _
-        Public Overrides ReadOnly Property CanBeCharted() As Boolean
-            Get
-                Return False
-            End Get
-        End Property
-
-        <Browsable(False)> _
         Public Overrides ReadOnly Property AllowStimulus() As Boolean
             Get
                 Return False
@@ -290,10 +283,17 @@ Namespace DataObjects.Behavior.Nodes
         End Sub
 
         Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, ByVal tpTemplatePartType As Type) As Crownwood.DotNetMagic.Controls.Node
-            MyBase.CreateDataItemTreeView(frmDataItem, tnParent, tpTemplatePartType)
+            Dim tnSubSystem As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateDataItemTreeView(frmDataItem, tnParent, tpTemplatePartType)
 
-            Dim tnNodes As Crownwood.DotNetMagic.Controls.Node = Util.ProjectWorkspace.AddTreeNode(tnParent, "Nodes", "AnimatGUI.DefaultObject.gif")
-            Dim tnLinks As Crownwood.DotNetMagic.Controls.Node = Util.ProjectWorkspace.AddTreeNode(tnParent, "Links", "AnimatGUI.DefaultLink.gif")
+            Dim tnNodes As New Crownwood.DotNetMagic.Controls.Node("Nodes")
+            tnSubSystem.Nodes.Add(tnNodes)
+            tnNodes.ImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.DefaultObject.gif")
+            tnNodes.SelectedImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.DefaultObject.gif")
+
+            Dim tnLinks As New Crownwood.DotNetMagic.Controls.Node("Links")
+            tnSubSystem.Nodes.Add(tnLinks)
+            tnLinks.ImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.DefaultLink.gif")
+            tnLinks.SelectedImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.DefaultLink.gif")
 
             Dim doData As DataObjects.Behavior.Data
             For Each deEntry As DictionaryEntry In m_aryBehavioralNodes

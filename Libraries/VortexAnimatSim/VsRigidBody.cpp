@@ -514,6 +514,8 @@ int VsRigidBody::GetPartIndex(VxPart *vxP0, VxPart *vxP1)
 void VsRigidBody::ProcessContacts()
 {
 	ContactSensor *lpSensor = m_lpThisRB->ContactSensor();
+	float fDisUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
+	float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
 
 	if(m_vxPart && lpSensor)
 	{
@@ -537,7 +539,7 @@ void VsRigidBody::ProcessContacts()
 
 			iPartIdx = GetPartIndex(p[0], p[1]);
 			vxDyn->getForce(iPartIdx, vForce);
-			fltForceMag = V3_MAG(vForce);
+			fltForceMag = V3_MAG(vForce) * (fMassUnits * fDisUnits);
 
 			lpSensor->ProcessContact(vBodyPos, fltForceMag);
 		}

@@ -302,8 +302,8 @@ void VsSimulator::InitializeVortex(int argc, const char **argv)
     //pM->setSlipSecondary(0.00001f); // some slip is necessary to allow the vehicle to turn
 
     // Register the simple callback to be notified at beginning and end of the interaction between parts and sensors.
-    m_uUniverse->addIntersectSubscriber(VxUniverse::kResponsePart, VxUniverse::kResponseSensor, VxUniverse::kEventFirst, &m_vsIntersect, 0);
-    m_uUniverse->addIntersectSubscriber(VxUniverse::kResponsePart, VxUniverse::kResponseSensor, VxUniverse::kEventDisjoint, &m_vsIntersect, 0);
+    m_uUniverse->addIntersectSubscriber(VxUniverse::kResponsePart, VxUniverse::kResponsePart, VxUniverse::kEventFirst, &m_vsIntersect, 0);
+    m_uUniverse->addIntersectSubscriber(VxUniverse::kResponsePart, VxUniverse::kResponsePart, VxUniverse::kEventDisjoint, &m_vsIntersect, 0);
 }
 
 Vx::VxTriangleMesh *VsSimulator::CreatTriangleMeshFromOsg(osg::Node *osgNode)

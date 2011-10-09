@@ -105,8 +105,7 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
-            MyBase.SaveSimulationXml(oXml, nmParentControl, strName)
-
+ 
             oXml.AddChildElement("ReceptiveField")
             oXml.IntoElem()
 

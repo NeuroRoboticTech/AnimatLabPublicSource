@@ -294,7 +294,10 @@ Namespace Forms
                         m_doSelPart = doSelPart
                         m_doOrganism = DirectCast(doSelPart.ParentStructure, DataObjects.Physical.Organism)
                         AddHandler m_doSelPart.SimInterface.OnSelectedVertexChanged, AddressOf Me.OnSelectedVertexChanged
-                        txtSelVertex.Text = m_doSelPart.SelectedVertex.ToString
+
+                        If Not m_doSelPart.SelectedVertex Is Nothing Then
+                            txtSelVertex.Text = m_doSelPart.SelectedVertex.ToString
+                        End If
 
                         ClearPairsListView()
                         If Not m_doSelPart.ReceptiveFieldSensor Is Nothing Then

@@ -79,31 +79,49 @@ Namespace DataObjects.Physical
         End Function
 
         Public Overrides Sub InitializeAfterLoad()
-            If Not m_doPart.IsInitialized Then
-                Return
-            End If
+            MyBase.InitializeAfterLoad()
 
             m_doNeuron = DirectCast(Util.Simulation.FindObjectByID(m_strNeuronID), AnimatGUI.DataObjects.Behavior.Nodes.Neuron)
             m_doField = DirectCast(Util.Simulation.FindObjectByID(m_strFieldID), AnimatGUI.DataObjects.Physical.ReceptiveField)
 
             m_doField.FieldPairs.Add(Me.ID, Me)
 
-            'Now add this field pair to an adapter.
-
-            MyBase.InitializeAfterLoad()
         End Sub
+
+#Region " Add-Remove to List Methods "
+
+        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
+            If Not m_doParent Is Nothing Then
+                MyBase.BeforeAddToList(bThrowError)
+                Util.Application.SimulationInterface.AddItem(m_doParent.ID, "FieldPair", Me.GetSimulationXml("FieldPair"), bThrowError)
+                InitializeSimulationReferences()
+            End If
+        End Sub
+
+        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.BeforeRemoveFromList(bThrowError)
+
+            If Not m_doInterface Is Nothing AndAlso Not m_doParent Is Nothing Then
+                Util.Application.SimulationInterface.RemoveItem(m_doParent.ID, "FieldPair", Me.ID, bThrowError)
+            End If
+            m_doInterface = Nothing
+        End Sub
+
+#End Region
 
         Public Overridable Overloads Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
             oXml.IntoElem()
+            m_strID = oXml.GetChildString("ID")
             m_strFieldID = oXml.GetChildString("FieldID")
             m_strNeuronID = oXml.GetChildString("NeuronID")
             oXml.OutOfElem()
         End Sub
 
         Public Overridable Overloads Sub SaveData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
-            MyBase.SaveData(oXml)
 
+            oXml.AddChildElement("FieldPair")
             oXml.IntoElem()
+            oXml.AddChildElement("ID", m_strID)
             oXml.AddChildElement("FieldID", m_doField.ID)
             oXml.AddChildElement("NeuronID", m_doNeuron.ID)
             oXml.OutOfElem()
@@ -111,11 +129,14 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
-            MyBase.SaveSimulationXml(oXml, nmParentControl, strName)
 
+            oXml.AddChildElement("FieldPair")
             oXml.IntoElem()
+
+            oXml.AddChildElement("ID", m_strID)
             oXml.AddChildElement("FieldID", m_doField.ID)
-            oXml.AddChildElement("NeuronID", m_doNeuron.ID)
+            oXml.AddChildElement("TargetNodeID", m_doNeuron.ID)
+
             oXml.OutOfElem()
 
         End Sub

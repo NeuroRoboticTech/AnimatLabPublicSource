@@ -117,6 +117,39 @@ void ContactAdapter::TargetModule(string strModule)
 	m_strTargetModule = strModule;
 }
 
+
+void ContactAdapter::AddFieldPair(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("FieldPair");
+
+	ReceptiveFieldPair *lpPair = LoadFieldPair(oXml);
+	lpPair->Initialize();
+}
+
+void ContactAdapter::RemoveFieldPair(string strID, BOOL bThrowError)
+{
+	int iPos = FindFieldPairListPos(strID, bThrowError);
+	m_aryFieldPairs.RemoveAt(iPos);
+}
+
+int ContactAdapter::FindFieldPairListPos(string strID, BOOL bThrowError)
+{
+	string sID = Std_ToUpper(Std_Trim(strID));
+
+	int iCount = m_aryFieldPairs.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(m_aryFieldPairs[iIndex]->ID() == sID)
+			return iIndex;
+
+	if(bThrowError)
+		THROW_TEXT_ERROR(Al_Err_lReceptiveFieldIDNotFound, Al_Err_strReceptiveFieldIDNotFound, "ID");
+
+	return -1;
+}
+
 void ContactAdapter::Initialize()
 {
 	Node::Initialize();
@@ -141,9 +174,9 @@ BOOL ContactAdapter::AddItem(string strItemType, string strXml, BOOL bThrowError
 {
 	string strType = Std_CheckString(strItemType);
 
-	if(strType == "RECEPTIVEFIELD")
+	if(strType == "FIELDPAIR")
 	{
-		AddReceptiveField(strXml);
+		AddFieldPair(strXml);
 		return TRUE;
 	}
 	
@@ -158,9 +191,9 @@ BOOL ContactAdapter::RemoveItem(string strItemType, string strID, BOOL bThrowErr
 {
 	string strType = Std_CheckString(strItemType);
 
-	if(strType == "RECEPTIVEFIELD")
+	if(strType == "FIELDPAIR")
 	{
-		RemoveReceptiveField(strID);
+		RemoveFieldPair(strID);
 		return TRUE;
 	}
 

@@ -232,7 +232,7 @@ Namespace DataObjects.Physical
             Dim doPair As New ReceptiveFieldPair(doAdapter, doField, doNeuron)
 
             'Add it to the adapter
-            doAdapter.FieldPairs.Add(doPair.ID, doPair)
+            doAdapter.FieldPairs.Add(doPair.ID, doPair, Not bLoading)
 
             'Add it to the receptive field
             doField.FieldPairs.Add(doPair.ID, doPair, False)

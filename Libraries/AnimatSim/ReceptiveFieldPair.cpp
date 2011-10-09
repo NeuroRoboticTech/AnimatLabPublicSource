@@ -52,7 +52,6 @@ namespace AnimatSim
 **/
 ReceptiveFieldPair::ReceptiveFieldPair()
 {
-	m_vVertex[0] = 0; m_vVertex[1] = 0; m_vVertex[2] = 0;
 	m_lpNode = NULL;
 	m_lpField = NULL;
 }
@@ -67,6 +66,28 @@ ReceptiveFieldPair::~ReceptiveFieldPair()
 {
 }
 
+void ReceptiveFieldPair::FieldID(string strID)
+{
+	if(Std_IsBlank(strID)) 
+		THROW_ERROR(Al_Err_lIDBlank, Al_Err_strIDBlank);
+
+	m_strFieldID = strID;
+}
+
+string ReceptiveFieldPair::FieldID() {return m_strFieldID;}
+
+void ReceptiveFieldPair::TargetNodeID(string strID)
+{
+	if(Std_IsBlank(strID)) 
+		THROW_ERROR(Al_Err_lIDBlank, Al_Err_strIDBlank);
+
+	m_strTargetNodeID = strID;
+}
+
+string ReceptiveFieldPair::TargetNodeID() {return m_strTargetNodeID;}
+
+ReceptiveField *ReceptiveFieldPair::Field() {return m_lpField;}
+
 void ReceptiveFieldPair::Initialize()
 {
 	AnimatBase::Initialize();
@@ -75,42 +96,26 @@ void ReceptiveFieldPair::Initialize()
 	if(!m_lpNode)
 		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strTargetNodeID);
 
-	RigidBody *lpBody = dynamic_cast<RigidBody *>(m_lpNode);
-
-	if(!lpBody)
-		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "SourceNode to RigidBody");
-
-	ContactSensor *lpSensor = lpBody->ContactSensor();
-
-	//I wanted to make this get the closest vertex that matched this one. However, we only save vertices in the list in the sensor
-	//if they have been saved in the file as a pair already. So if there is a mismatch of some kind then the pair in the file might 
-	//not match any of the generated vertices closely enough to be saved. So there is no real reason to try and find the closest matching
-	//vertex here. In fact it would be misleading because the closest matching one may be far away from this vertex. Also, if no error 
-	//is reported then we would not know there was a problem.
-	int iIndex = 0;
-	if(!lpSensor->FindReceptiveField(m_vVertex[0], m_vVertex[1], m_vVertex[2], iIndex))
-		THROW_TEXT_ERROR(Al_Err_lReceptiveFieldVertexNotFound, Al_Err_strReceptiveFieldVertexNotFound, "BodyID: " + lpBody->Name() + "  Vertex: (" + STR(m_vVertex[0]) + ", " + STR(m_vVertex[1]) + ", " + STR(m_vVertex[2]) + ")");
-
-	m_lpField = lpSensor->GetReceptiveField(iIndex);
+	m_lpField = dynamic_cast<ReceptiveField *>(m_lpSim->FindByID(m_strFieldID));
+	if(!m_lpField)
+		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strFieldID);
 }
 
 void ReceptiveFieldPair::StepSimulation()
 {
-	if(m_lpField)
+	if(m_lpField && m_lpNode)
 		m_lpNode->AddExternalNodeInput(m_lpField->m_fltCurrent);
 }
 
 
 void ReceptiveFieldPair::Load(CStdXml &oXml)
 {
+	AnimatBase::Load(oXml);
+
 	oXml.IntoElem();  //Into Adapter Element
 
-	CStdFPoint vPoint;
-	Std_LoadPoint(oXml, "Vertex", vPoint);
-	m_vVertex[0] = vPoint.x; m_vVertex[1] = vPoint.y; m_vVertex[2] = vPoint.z;
-	m_strTargetNodeID = oXml.GetChildString("TargetNodeID");
-	if(Std_IsBlank(m_strTargetNodeID)) 
-		THROW_ERROR(Al_Err_lIDBlank, Al_Err_strIDBlank);
+	FieldID(oXml.GetChildString("FieldID"));
+	TargetNodeID(oXml.GetChildString("TargetNodeID"));
 
 	oXml.OutOfElem(); //OutOf Adapter Element
 }
