@@ -126,19 +126,27 @@ Namespace Collections
             End Get
         End Property
 
-        Public Sub Add(ByVal key As [String], ByVal value As AnimatGUI.DataObjects.Physical.OdorType)
+        Public Overloads Sub Add(ByVal key As [String], ByVal value As AnimatGUI.DataObjects.Physical.OdorType, Optional ByVal bCallAddMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+
+            If bCallAddMethods Then value.BeforeAddToList(bThrowError)
             Dictionary.Add(key, value)
+            If bCallAddMethods Then value.AfterAddToList(bThrowError)
+
             Me.IsDirty = True
         End Sub 'Add
+
+        Public Overloads Sub Remove(ByVal key As Object, Optional ByVal bCallAddMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+            Dim value As AnimatGUI.DataObjects.Physical.OdorType = DirectCast(Me(DirectCast(key, String)), AnimatGUI.DataObjects.Physical.OdorType)
+
+            If bCallAddMethods Then value.BeforeRemoveFromList(bThrowError)
+            Dictionary.Remove(key)
+            If bCallAddMethods Then value.AfterRemoveFromList(bThrowError)
+            Me.IsDirty = True
+        End Sub
 
         Public Function Contains(ByVal key As [String]) As Boolean
             Return Dictionary.Contains(key)
         End Function 'Contains
-
-        Public Sub Remove(ByVal key As [String])
-            Dictionary.Remove(key)
-            Me.IsDirty = True
-        End Sub 'Remove
 
         Public Overloads Function GetItem(ByVal key As String) As AnimatGUI.DataObjects.Physical.OdorType
             Return (Me.Item(key))

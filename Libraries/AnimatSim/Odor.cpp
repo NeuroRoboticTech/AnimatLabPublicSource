@@ -180,6 +180,32 @@ float Odor::CalculateOdorValue(OdorType *lpType, CStdFPoint &oSensorPos)
 	return fltVal;
 }
 
+BOOL Odor::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(AnimatBase::SetData(strType, strValue, FALSE))
+		return TRUE;
+
+	if(strType == "QUANTITY")
+	{
+		Quantity(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "USEFOODQUANTITY")
+	{
+		UseFoodQuantity(Std_ToBool(strValue));
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
+
 void Odor::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);
@@ -188,7 +214,7 @@ void Odor::Load(CStdXml &oXml)
 
 	SetOdorType(oXml.GetChildString("OdorTypeID"));
 	Quantity(oXml.GetChildFloat("Quantity", m_fltQuantity));
-	UseFoodQuantity(oXml.GetChildFloat("UseFoodQuantity", m_bUseFoodQuantity));
+	UseFoodQuantity(oXml.GetChildBool("UseFoodQuantity", m_bUseFoodQuantity));
 
 	oXml.OutOfElem(); //OutOf Odor Element
 }

@@ -27,14 +27,6 @@ namespace AnimatSim
 		class ANIMAT_PORT OdorType : public AnimatBase 
 		{
 		protected:
-				///The unique Id for this OdorType. It is unique for each structure, 
-				///but not across structures. So you could have two rigid bodies with the
-				///same ID in two different organisms.
-				string m_strID;  
-
-				///The name for this body. 
-				string m_strName;  
-
 				/// The diffusion constant that defines how fast odors of this type move through the environment.
 				float m_fltDiffusionConstant;
 
@@ -52,6 +44,8 @@ namespace AnimatSim
 			virtual void AddOdorSource(Odor *lpOdor);
 			
 			virtual float CalculateOdorValue(CStdFPoint &oSensorPos);
+			
+			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
 			virtual void Load(CStdXml &oXml);
 		};

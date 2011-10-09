@@ -108,6 +108,11 @@ void OdorSensor::SetOdorTypePointer(string strID)
 	}
 }
 
+void OdorSensor::ResetSimulation()
+{
+	m_fltOdorValue = 0;
+}
+
 BOOL OdorSensor::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);

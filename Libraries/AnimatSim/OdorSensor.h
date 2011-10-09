@@ -42,6 +42,7 @@ namespace AnimatSim
 				virtual void OdorTypeID(string strID);
 				virtual string OdorTypeID();
 
+				virtual void ResetSimulation();
 				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 				virtual float *GetDataPointer(string strDataType);
 				virtual void StepSimulation();

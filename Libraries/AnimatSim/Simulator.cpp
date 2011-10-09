@@ -3444,6 +3444,22 @@ void Simulator::AddOdorType(OdorType *lpOdorType)
 	}
 }
 
+void Simulator::AddOdorType(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("OdorType");
+
+	OdorType *lpType = LoadOdorType(oXml);
+	lpType->Initialize();
+}
+
+void Simulator::RemoveOdorType(string strID, BOOL bThrowError)
+{
+	m_aryOdorTypes.Remove(strID);
+}
+
 #pragma endregion
 
 #pragma region DataAccesMethods
@@ -3616,6 +3632,11 @@ BOOL Simulator::AddItem(string strItemType, string strXml, BOOL bThrowError)
 			return m_lpWinMgr->AddItem(strType, strXml, TRUE);
 		return FALSE;
 	}
+	else if(strType == "ODORTYPE")
+	{
+		AddOdorType(strXml);
+		return TRUE;
+	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
@@ -3642,6 +3663,11 @@ BOOL Simulator::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 	else if(strType == "ORGANISM")
 	{
 		RemoveOrganism(strID);
+		return TRUE;
+	}
+	else if(strType == "ODORTYPE")
+	{
+		RemoveOdorType(strID);
 		return TRUE;
 	}
 

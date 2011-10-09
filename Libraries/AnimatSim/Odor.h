@@ -25,15 +25,7 @@ namespace AnimatSim
 			/// Pointer to the type of odor the body part is emitting.
 			OdorType *m_lpOdorType;
 
-			///The unique Id for this odor. It is unique for each structure, 
-			///but not across structures. So you could have two rigid bodies with the
-			///same ID in two different organisms.
-			string m_strID;  
-
-			///The name for this body. 
-			string m_strName;  
-
-			/// The quantity used to calculate the odor value. 
+				/// The quantity used to calculate the odor value. 
 			float m_fltQuantity;
 
 			/// If this is true then the food quantity of the parent RigidBody is used to calculate
@@ -54,6 +46,8 @@ namespace AnimatSim
 			virtual void UseFoodQuantity(BOOL bVal);
 			
 			virtual float CalculateOdorValue(OdorType *lpType, CStdFPoint &oSensorPos);
+						
+			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
 			virtual void Load(CStdXml &oXml);
 		};

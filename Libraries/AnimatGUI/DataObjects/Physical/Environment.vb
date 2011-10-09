@@ -1055,7 +1055,7 @@ Namespace DataObjects.Physical
                     newOdorType = New DataObjects.Physical.OdorType(Me)
                     newOdorType.LoadData(oXml)
 
-                    m_aryOdorTypes.Add(newOdorType.ID, newOdorType)
+                    m_aryOdorTypes.Add(newOdorType.ID, newOdorType, False)
                 Next
                 oXml.OutOfElem() 'Outof Structures Element
             End If

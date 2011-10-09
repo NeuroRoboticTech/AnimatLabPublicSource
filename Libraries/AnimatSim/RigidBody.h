@@ -172,6 +172,8 @@ namespace AnimatSim
 
 			virtual Odor *LoadOdor(CStdXml &oXml);
 			virtual void AddOdor(Odor *lpOdor);
+			virtual void AddOdor(string strXml);
+			virtual void RemoveOdor(string strID, BOOL bThrowError = TRUE);
 
 		public:
 			RigidBody();

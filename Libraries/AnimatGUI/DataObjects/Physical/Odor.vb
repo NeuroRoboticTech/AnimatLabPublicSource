@@ -77,6 +77,7 @@ Namespace DataObjects.Physical
                     Throw New System.Exception("Quantity must be greater than or eqaul to zero.")
                 End If
 
+                SetSimData("Quantity", Value.ToString, True)
                 m_fltQuantity = Value
             End Set
         End Property
@@ -87,6 +88,7 @@ Namespace DataObjects.Physical
                 Return m_bUseFoodQuantity
             End Get
             Set(ByVal Value As Boolean)
+                SetSimData("UseFoodQuantity", Value.ToString, True)
                 m_bUseFoodQuantity = Value
             End Set
         End Property
@@ -131,6 +133,27 @@ Namespace DataObjects.Physical
 
             Return doItem
         End Function
+
+#Region " Add-Remove to List Methods "
+
+        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
+            If Not m_doParent Is Nothing Then
+                MyBase.BeforeAddToList(bThrowError)
+                Util.Application.SimulationInterface.AddItem(m_doParent.ID, "Odor", Me.GetSimulationXml("Odor"), bThrowError)
+                InitializeSimulationReferences()
+            End If
+        End Sub
+
+        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+            MyBase.BeforeRemoveFromList(bThrowError)
+
+            If Not m_doInterface Is Nothing AndAlso Not m_doParent Is Nothing Then
+                Util.Application.SimulationInterface.RemoveItem(m_doParent.ID, "Odor", Me.ID, bThrowError)
+            End If
+            m_doInterface = Nothing
+        End Sub
+
+#End Region
 
         Public Overridable Overloads Sub LoadData(ByRef oXml As Interfaces.StdXml)
 

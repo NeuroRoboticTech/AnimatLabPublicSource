@@ -384,9 +384,9 @@ namespace AnimatSim
 
 			\param [in,out]	lpOrganism	Pointer to an organism. 
 			**/
-			void AddOrganism(Organism *lpOrganism);
-			void AddOrganism(string strXml);
-			void RemoveOrganism(string strID, BOOL bThrowError = TRUE);
+			virtual void AddOrganism(Organism *lpOrganism);
+			virtual void AddOrganism(string strXml);
+			virtual void RemoveOrganism(string strID, BOOL bThrowError = TRUE);
 
 			/**
 			\brief	Adds a new "static" structure to the list of structures for this simulation.
@@ -396,13 +396,15 @@ namespace AnimatSim
 
 			\param [in,out]	lpStructure	Pointer to the structure to add. 
 			**/
-			void AddStructure(Structure *lpStructure);
-			void AddStructure(string strXml);
-			void RemoveStructure(string strID, BOOL bThrowError = TRUE);
-
-			void AddOdorType(OdorType *lpOdorType);
+			virtual void AddStructure(Structure *lpStructure);
+			virtual void AddStructure(string strXml);
+			virtual void RemoveStructure(string strID, BOOL bThrowError = TRUE);
 
 			virtual int FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, BOOL bThrowError = TRUE);
+
+			virtual void AddOdorType(OdorType *lpOdorType);
+			virtual void Simulator::AddOdorType(string strXml);
+			virtual void Simulator::RemoveOdorType(string strID, BOOL bThrowError = TRUE);
 
 #pragma endregion
 

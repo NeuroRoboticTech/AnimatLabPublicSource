@@ -168,6 +168,26 @@ float OdorType::CalculateOdorValue(CStdFPoint &oSensorPos)
 	return fltVal;
 }
 
+BOOL OdorType::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(AnimatBase::SetData(strType, strValue, FALSE))
+		return TRUE;
+
+	if(strType == "DIFFUSIONCONSTANT")
+	{
+		DiffusionConstant(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
+
 void OdorType::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);

@@ -440,7 +440,7 @@ Namespace Forms.BodyPlan
                         m_aryOdorSources.Add(doOdor.ID, doOdor)
 
                         If Not doType.OdorSources.Contains(doOdor.ID) Then
-                            doType.OdorSources.Add(doOdor.ID, doOdor)
+                            doType.OdorSources.Add(doOdor.ID, doOdor, False)
                         End If
 
                         Dim liOdorItem As ListViewItem
@@ -475,7 +475,7 @@ Namespace Forms.BodyPlan
                         End If
 
                         If Not doOdor.OdorType Is Nothing AndAlso doOdor.OdorType.OdorSources.Contains(doOdor.ID) Then
-                            doOdor.OdorType.OdorSources.Remove(doOdor.ID)
+                            doOdor.OdorType.OdorSources.Remove(doOdor.ID, False)
                         End If
                     End If
 

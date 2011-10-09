@@ -1003,7 +1003,7 @@ Namespace DataObjects.Physical
                     doOdor.LoadData(oXml)
 
                     If Not doOdor.OdorType Is Nothing Then
-                        m_aryOdorSources.Add(doOdor.ID, doOdor)
+                        m_aryOdorSources.Add(doOdor.ID, doOdor, False)
                     End If
                 Next
                 oXml.OutOfElem()   'Outof ChildBodies Element

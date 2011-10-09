@@ -1204,6 +1204,12 @@ BOOL RigidBody::AddItem(string strItemType, string strXml, BOOL bThrowError)
 		return TRUE;
 	}
 
+	if(strType == "ODOR")
+	{
+		AddOdor(strXml);
+		return TRUE;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
@@ -1224,6 +1230,12 @@ BOOL RigidBody::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 	if(strType == "CONTACTSENSOR")
 	{
 		RemoveContactSensor(strID);
+		return TRUE;
+	}
+
+	if(strType == "ODOR")
+	{
+		RemoveOdor(strID);
 		return TRUE;
 	}
 
@@ -1601,6 +1613,23 @@ void RigidBody::AddOdor(Odor *lpOdor)
 		oError.m_strError += " Duplicate odor type Key: " + lpOdor->ID(); 
 		RELAY_ERROR(oError);
 	}
+}
+
+
+void RigidBody::AddOdor(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Odor");
+
+	Odor *lpOdor = LoadOdor(oXml);
+	lpOdor->Initialize();
+}
+
+void RigidBody::RemoveOdor(string strID, BOOL bThrowError)
+{
+	m_aryOdorSources.Remove(strID);
 }
 
 /**
