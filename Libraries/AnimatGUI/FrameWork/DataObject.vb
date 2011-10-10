@@ -717,6 +717,10 @@ Namespace Framework
             Return True
         End Function
 
+        Public Overridable Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
+            aryReplaceIDList.Add(Me.ID)
+        End Sub
+
 #End Region
 
 #Region " Undo-Redo Methods "

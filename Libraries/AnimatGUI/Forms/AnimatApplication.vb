@@ -119,9 +119,6 @@ Namespace Forms
         Public WithEvents SnapshotSimToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents ToolStripSeparator10 As System.Windows.Forms.ToolStripSeparator
         Public WithEvents AddStimulusToolStripButton As System.Windows.Forms.ToolStripButton
-        Public WithEvents PasteToolStripButton As System.Windows.Forms.ToolStripButton
-        Public WithEvents CopyToolStripButton As System.Windows.Forms.ToolStripButton
-        Public WithEvents CutToolStripButton As System.Windows.Forms.ToolStripButton
         Public WithEvents toolStripSeparator As System.Windows.Forms.ToolStripSeparator
         Public WithEvents SelectByTypeToolStripButton As System.Windows.Forms.ToolStripButton
         Public WithEvents RelabelToolStripButton As System.Windows.Forms.ToolStripButton
@@ -129,9 +126,6 @@ Namespace Forms
         Public WithEvents AddPartToolStripButton As System.Windows.Forms.ToolStripButton
         Public WithEvents AddJointToolStripButton As System.Windows.Forms.ToolStripButton
         Public WithEvents CompareItemsToolStripButton As System.Windows.Forms.ToolStripButton
-        Public WithEvents CutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Public WithEvents CopyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Public WithEvents PasteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
         Public WithEvents SelectByTypeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents RelabelToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -178,9 +172,6 @@ Namespace Forms
             Me.RedoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.RunMacroToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.toolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
-            Me.CutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.CopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.PasteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
             Me.SelectByTypeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -223,9 +214,6 @@ Namespace Forms
             Me.NewToolStripButton = New System.Windows.Forms.ToolStripButton()
             Me.OpenToolStripButton = New System.Windows.Forms.ToolStripButton()
             Me.SaveToolStripButton = New System.Windows.Forms.ToolStripButton()
-            Me.PasteToolStripButton = New System.Windows.Forms.ToolStripButton()
-            Me.CopyToolStripButton = New System.Windows.Forms.ToolStripButton()
-            Me.CutToolStripButton = New System.Windows.Forms.ToolStripButton()
             Me.DeleteToolStripButton = New System.Windows.Forms.ToolStripButton()
             Me.toolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
             Me.HelpToolStripButton = New System.Windows.Forms.ToolStripButton()
@@ -399,8 +387,7 @@ Namespace Forms
             'EditToolStripMenuItem
             '
             Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UndoToolStripMenuItem, Me.RedoToolStripMenuItem, Me.RunMacroToolStripMenuItem})
-            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.toolStripSeparator6, Me.CutToolStripMenuItem, Me.CopyToolStripMenuItem, _
-                                                                                                      Me.PasteToolStripMenuItem, Me.DeleteToolStripMenuItem})
+            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.toolStripSeparator6, Me.DeleteToolStripMenuItem})
             Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripSeparator1, Me.SelectByTypeToolStripMenuItem, _
                                                                                                       Me.RelabelToolStripMenuItem, Me.RelabelSelectedToolStripMenuItem, _
                                                                                                       Me.CompareItemsToolStripMenuItem, Me.EditMaterialsToolStripMenuItem})
@@ -434,33 +421,6 @@ Namespace Forms
             '
             Me.toolStripSeparator6.Name = "toolStripSeparator6"
             Me.toolStripSeparator6.Size = New System.Drawing.Size(156, 6)
-            '
-            'CutToolStripMenuItem
-            '
-            Me.CutToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Cut.gif")
-            Me.CutToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.CutToolStripMenuItem.Name = "CutToolStripMenuItem"
-            Me.CutToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.X), System.Windows.Forms.Keys)
-            Me.CutToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
-            Me.CutToolStripMenuItem.Text = "Cu&t"
-            '
-            'CopyToolStripMenuItem
-            '
-            Me.CopyToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Copy.gif")
-            Me.CopyToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem"
-            Me.CopyToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
-            Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
-            Me.CopyToolStripMenuItem.Text = "&Copy"
-            '
-            'PasteToolStripMenuItem
-            '
-            Me.PasteToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.CopyClipboard.gif")
-            Me.PasteToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem"
-            Me.PasteToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V), System.Windows.Forms.Keys)
-            Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
-            Me.PasteToolStripMenuItem.Text = "&Paste"
             '
             'DeleteToolStripMenuItem
             '
@@ -722,7 +682,18 @@ Namespace Forms
             'AnimatToolStrip
             '
             Me.AnimatToolStrip.Dock = System.Windows.Forms.DockStyle.None
-            Me.AnimatToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.OpenToolStripButton, Me.SaveToolStripButton, Me.PasteToolStripButton, Me.CopyToolStripButton, Me.CutToolStripButton, Me.DeleteToolStripButton, Me.toolStripSeparator, Me.HelpToolStripButton, Me.ToolStripSeparator5, Me.AddOrganismStripButton, Me.AddStructureToolStripButton, Me.AddToolToolStripButton, Me.AddPartToolStripButton, Me.AddJointToolStripButton, Me.AddStimulusToolStripButton, Me.ToolStripSeparator9, Me.SelectByTypeToolStripButton, Me.RelabelToolStripButton, Me.RelabelSelectedToolStripButton, Me.CompareItemsToolStripButton, Me.EditMaterialsToolStripButton, Me.ToolStripSeparator10, Me.SelGraphicsToolStripButton, Me.SelCollisionToolStripButton, Me.SelJointsToolStripButton, Me.SelRecFieldsToolStripButton, Me.SelSimToolStripButton, Me.DisplayModeDropDown})
+            Me.AnimatToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.OpenToolStripButton, Me.SaveToolStripButton, _
+                                                                                        Me.DeleteToolStripButton, Me.toolStripSeparator, Me.HelpToolStripButton, _
+                                                                                        Me.ToolStripSeparator5, Me.AddOrganismStripButton, _
+                                                                                        Me.AddStructureToolStripButton, Me.AddToolToolStripButton, _
+                                                                                        Me.AddPartToolStripButton, Me.AddJointToolStripButton, _
+                                                                                        Me.AddStimulusToolStripButton, Me.ToolStripSeparator9, _
+                                                                                        Me.SelectByTypeToolStripButton, Me.RelabelToolStripButton, _
+                                                                                        Me.RelabelSelectedToolStripButton, Me.CompareItemsToolStripButton, _
+                                                                                        Me.EditMaterialsToolStripButton, Me.ToolStripSeparator10, _
+                                                                                        Me.SelGraphicsToolStripButton, Me.SelCollisionToolStripButton, _
+                                                                                        Me.SelJointsToolStripButton, Me.SelRecFieldsToolStripButton, _
+                                                                                        Me.SelSimToolStripButton, Me.DisplayModeDropDown})
             Me.AnimatToolStrip.Location = New System.Drawing.Point(3, 24)
             Me.AnimatToolStrip.Name = "AnimatToolStrip"
             Me.AnimatToolStrip.SecurityMgr = Nothing
@@ -756,33 +727,6 @@ Namespace Forms
             Me.SaveToolStripButton.Name = "SaveToolStripButton"
             Me.SaveToolStripButton.Size = New System.Drawing.Size(23, 22)
             Me.SaveToolStripButton.Text = "&Save"
-            '
-            'PasteToolStripButton
-            '
-            Me.PasteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.PasteToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.CopyClipboard.gif")
-            Me.PasteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.PasteToolStripButton.Name = "PasteToolStripButton"
-            Me.PasteToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.PasteToolStripButton.Text = "&Paste"
-            '
-            'CopyToolStripButton
-            '
-            Me.CopyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.CopyToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Copy.gif")
-            Me.CopyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.CopyToolStripButton.Name = "CopyToolStripButton"
-            Me.CopyToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.CopyToolStripButton.Text = "&Copy"
-            '
-            'CutToolStripButton
-            '
-            Me.CutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.CutToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Cut.gif")
-            Me.CutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.CutToolStripButton.Name = "CutToolStripButton"
-            Me.CutToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.CutToolStripButton.Text = "C&ut"
             '
             'DeleteToolStripButton
             '
@@ -2465,12 +2409,6 @@ Namespace Forms
                 Me.RunSimulationToolStripMenuItem.Enabled = True
                 Me.CustomizeToolStripMenuItem.Enabled = True
 
-                Me.CutToolStripButton.Enabled = True
-                Me.CutToolStripMenuItem.Enabled = True
-                Me.CopyToolStripButton.Enabled = True
-                Me.CopyToolStripMenuItem.Enabled = True
-                Me.PasteToolStripButton.Enabled = True
-                Me.PasteToolStripMenuItem.Enabled = True
                 Me.DeleteToolStripButton.Enabled = True
                 Me.DeleteToolStripMenuItem.Enabled = True
 
@@ -2533,12 +2471,6 @@ Namespace Forms
                 Me.RunSimulationToolStripMenuItem.Enabled = False
                 Me.CustomizeToolStripMenuItem.Enabled = False
 
-                Me.CutToolStripButton.Enabled = False
-                Me.CutToolStripMenuItem.Enabled = False
-                Me.CopyToolStripButton.Enabled = False
-                Me.CopyToolStripMenuItem.Enabled = False
-                Me.PasteToolStripButton.Enabled = False
-                Me.PasteToolStripMenuItem.Enabled = False
                 Me.DeleteToolStripButton.Enabled = False
                 Me.DeleteToolStripMenuItem.Enabled = False
 
@@ -4821,18 +4753,6 @@ Namespace Forms
             CompareItems()
         End Sub
 
-        Public Sub OnCopyFromWorkspace(ByVal sender As Object, ByVal e As System.EventArgs) Handles CopyToolStripButton.Click, CopyToolStripMenuItem.Click
-
-        End Sub
-
-        Public Sub OnCutFromWorkspace(ByVal sender As Object, ByVal e As System.EventArgs) Handles CutToolStripButton.Click, CutToolStripMenuItem.Click
-
-        End Sub
-
-        Public Sub OnPasteFromWorkspace(ByVal sender As Object, ByVal e As System.EventArgs) Handles PasteToolStripButton.Click, PasteToolStripMenuItem.Click
-
-        End Sub
-
         'This is the general event that is called when someone tries to delete something in the 
         'project workspace
         Public Sub OnDeleteFromWorkspace(ByVal sender As Object, ByVal e As System.EventArgs) Handles DeleteToolStripButton.Click, DeleteToolStripMenuItem.Click
@@ -4947,31 +4867,28 @@ Namespace Forms
         Public Overrides Sub ValidateEditToolStripItemState()
 
             If Util.ProjectWorkspace.TreeView.SelectedCount = 0 Then
-                Util.Application.CutToolStripMenuItem.Enabled = False
-                Util.Application.CopyToolStripMenuItem.Enabled = False
                 Util.Application.DeleteToolStripMenuItem.Enabled = False
                 'Util.Application.SelectAllToolStripMenu.Enabled = False
                 Util.Application.SelectByTypeToolStripMenuItem.Enabled = False
                 Util.Application.RelabelSelectedToolStripMenuItem.Enabled = False
             Else
-                Util.Application.CutToolStripMenuItem.Enabled = True
-                Util.Application.CopyToolStripMenuItem.Enabled = True
                 Util.Application.DeleteToolStripMenuItem.Enabled = True
                 'Util.Application.SelectAllToolStripMenu.Enabled = True
                 Util.Application.SelectByTypeToolStripMenuItem.Enabled = True
                 Util.Application.RelabelSelectedToolStripMenuItem.Enabled = True
             End If
 
-            Util.Application.PasteToolStripButton.Enabled = False
-            Dim data As IDataObject = Clipboard.GetDataObject()
-            If Not data Is Nothing AndAlso data.GetDataPresent("AnimatLab.Behavior.XMLFormat") Then
-                Dim strXml As String = DirectCast(data.GetData("AnimatLab.Behavior.XMLFormat"), String)
-                If strXml.Trim.Length > 0 Then
-                    Util.Application.PasteToolStripMenuItem.Enabled = True
-                End If
-            Else
-                Util.Application.PasteToolStripMenuItem.Enabled = False
-            End If
+            'TODO
+            'Util.Application.PasteToolStripButton.Enabled = False
+            'Dim data As IDataObject = Clipboard.GetDataObject()
+            'If Not data Is Nothing AndAlso data.GetDataPresent("AnimatLab.Behavior.XMLFormat") Then
+            '    Dim strXml As String = DirectCast(data.GetData("AnimatLab.Behavior.XMLFormat"), String)
+            '    If strXml.Trim.Length > 0 Then
+            '        Util.Application.PasteToolStripMenuItem.Enabled = True
+            '    End If
+            'Else
+            '    Util.Application.PasteToolStripMenuItem.Enabled = False
+            'End If
 
             If Util.ProjectWorkspace.TreeView.SelectedCount < 2 Then
                 Util.Application.CompareItemsToolStripMenuItem.Enabled = False

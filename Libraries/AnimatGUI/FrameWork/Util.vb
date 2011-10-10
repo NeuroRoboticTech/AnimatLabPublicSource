@@ -145,24 +145,6 @@ Namespace Framework
             End Get
         End Property
 
-        Public Shared Property CopyInProgress() As Boolean
-            Get
-                Return m_bCopyInProgress
-            End Get
-            Set(ByVal Value As Boolean)
-                m_bCopyInProgress = Value
-            End Set
-        End Property
-
-        Public Shared Property CutInProgress() As Boolean
-            Get
-                Return m_bCutInProgress
-            End Get
-            Set(ByVal Value As Boolean)
-                m_bCutInProgress = Value
-            End Set
-        End Property
-
         Public Shared Property LoadInProgress() As Boolean
             Get
                 Return m_bLoadInProgress
@@ -1365,6 +1347,53 @@ Namespace Framework
 
         'return result;
         '    End Function
+
+        Public Shared Function GetXmlForPaste(ByVal data As IDataObject, ByVal strFormatType As String) As AnimatGUI.Interfaces.StdXml
+
+            ' Get the data from the clipboard
+            Dim strXml As String = DirectCast(data.GetData(strFormatType), String)
+            If strXml Is Nothing OrElse strXml.Trim.Length = 0 Then
+                Return Nothing
+            End If
+
+            Dim oXml As New AnimatGUI.Interfaces.StdXml
+            oXml.Deserialize(strXml)
+
+            'Get the list of 
+            Dim aryReplaceIDList As ArrayList = GetReplaceIDList(oXml)
+
+            Dim strReplacedXml As String = ReplaceIDsFromList(strXml, aryReplaceIDList)
+
+            Dim oReplaceXml As New AnimatGUI.Interfaces.StdXml
+            oReplaceXml.Deserialize(strReplacedXml)
+
+            Return oReplaceXml
+        End Function
+
+        Protected Shared Function GetReplaceIDList(ByVal oXml As AnimatGUI.Interfaces.StdXml) As ArrayList
+
+            Dim aryRepaceList As New ArrayList
+            Dim strID As String = ""
+            oXml.FindElement("Diagram")
+            oXml.IntoChildElement("ReplaceIDList")
+            Dim iCount As Integer = oXml.NumberOfChildren() - 1
+            For iIdx As Integer = 0 To iCount
+                oXml.FindChildByIndex(iIdx)
+                strID = oXml.GetChildString()
+                aryRepaceList.Add(strID)
+            Next
+
+            Return aryRepaceList
+        End Function
+
+        Protected Shared Function ReplaceIDsFromList(ByVal strXml As String, ByVal aryReplaceIDList As ArrayList) As String
+
+            For Each strID As String In aryReplaceIDList
+                strXml = strXml.Replace(strID, System.Guid.NewGuid().ToString())
+            Next
+
+            Return strXml
+        End Function
 
     End Class
 

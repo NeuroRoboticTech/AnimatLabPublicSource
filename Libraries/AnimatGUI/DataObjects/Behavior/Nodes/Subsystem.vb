@@ -503,6 +503,22 @@ Namespace DataObjects.Behavior.Nodes
 
 #Region " DataObject Methods "
 
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList)
+
+            Dim doObj As Framework.DataObject
+            For Each deEntry As DictionaryEntry In Me.BehavioralNodes
+                doObj = DirectCast(deEntry.Value, Framework.DataObject)
+                doObj.AddToReplaceIDList(aryReplaceIDList)
+            Next
+
+            For Each deEntry As DictionaryEntry In Me.BehavioralLinks
+                doObj = DirectCast(deEntry.Value, Framework.DataObject)
+                doObj.AddToReplaceIDList(aryReplaceIDList)
+            Next
+
+        End Sub
+
         Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
             MyBase.LoadData(oXml)
 

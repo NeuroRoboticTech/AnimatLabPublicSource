@@ -152,7 +152,7 @@ Namespace Collections
 
             For Each doAttach As AnimatGUI.DataObjects.Physical.Bodies.Attachment In Me
                 'If it is a copy/cut in progress then it may be trying to save parts that are not on the main structure yet.
-                If Not doStruct.FindBodyPart(doAttach.ID, False) Is Nothing OrElse Util.CopyInProgress OrElse Util.CutInProgress Then
+                If Not doStruct.FindBodyPart(doAttach.ID, False) Is Nothing Then
                     oXml.AddChildElement("AttachID", doAttach.ID)
                 End If
             Next
@@ -167,7 +167,7 @@ Namespace Collections
 
             For Each doAttach As AnimatGUI.DataObjects.Physical.Bodies.Attachment In Me
                 'If it is a copy/cut in progress then it may be trying to save parts that are not on the main structure yet.
-                If Not doStruct.FindBodyPart(doAttach.ID, False) Is Nothing OrElse Util.CopyInProgress OrElse Util.CutInProgress Then
+                If Not doStruct.FindBodyPart(doAttach.ID, False) Is Nothing Then
                     oXml.AddChildElement("AttachID", doAttach.ID)
                 End If
             Next

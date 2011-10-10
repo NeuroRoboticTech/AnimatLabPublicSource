@@ -141,6 +141,13 @@ Namespace Forms.Behavior
         Friend WithEvents SendToBackMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents PasteInPlaceMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents GridMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents PasteToolStripButton As System.Windows.Forms.ToolStripButton
+        Friend WithEvents CopyToolStripButton As System.Windows.Forms.ToolStripButton
+        Friend WithEvents CutToolStripButton As System.Windows.Forms.ToolStripButton
+        Friend WithEvents CutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents CopyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents PasteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+
         'Friend WithEvents CopyPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
         'Friend WithEvents PastePopupMenuItem As System.Windows.Forms.ToolStripMenuItem
         'Friend WithEvents CutPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -270,6 +277,13 @@ Namespace Forms.Behavior
             Me.SendToBackMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.PasteInPlaceMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.GridMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.PasteToolStripButton = New System.Windows.Forms.ToolStripButton()
+            Me.CopyToolStripButton = New System.Windows.Forms.ToolStripButton()
+            Me.CutToolStripButton = New System.Windows.Forms.ToolStripButton()
+            Me.CutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.CopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.PasteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+
             'Me.CopyPopupMenuItem = New System.Windows.Forms.ToolStripMenuItem
             'Me.PastePopupMenuItem = New System.Windows.Forms.ToolStripMenuItem
             'Me.CutPopupMenuItem = New System.Windows.Forms.ToolStripMenuItem
@@ -313,7 +327,9 @@ Namespace Forms.Behavior
             '
             'AddFlowToolStrip
             '
-            Me.AddFlowToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PrintToolStripButton, Me.ZoomInDropDownButton, Me.ZoomOutDropDownButton, Me.AlignDropDownButton, Me.DistributeDropDownButton, Me.SizeDropDownButton})
+            Me.AddFlowToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PrintToolStripButton, Me.PasteToolStripButton, Me.CopyToolStripButton, _
+                                                                                         Me.CutToolStripButton, Me.ZoomInDropDownButton, Me.ZoomOutDropDownButton, _
+                                                                                         Me.AlignDropDownButton, Me.DistributeDropDownButton, Me.SizeDropDownButton})
             Me.AddFlowToolStrip.Location = New System.Drawing.Point(0, 24)
             Me.AddFlowToolStrip.Name = "AddFlowToolStrip"
             Me.AddFlowToolStrip.Size = New System.Drawing.Size(351, 25)
@@ -661,7 +677,8 @@ Namespace Forms.Behavior
             '
             'EditToolStripMenuItem
             '
-            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteInPlaceMenuItem, Me.ShowConnectionsToolStripMenuItem, Me.GridMenuItem})
+            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteToolStripMenuItem, Me.CopyToolStripMenuItem, Me.CutToolStripMenuItem, _
+                                                                                                      Me.PasteInPlaceMenuItem, Me.ShowConnectionsToolStripMenuItem, Me.GridMenuItem})
             Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
             Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
             Me.EditToolStripMenuItem.Text = "&Edit"
@@ -995,6 +1012,73 @@ Namespace Forms.Behavior
             Me.GridMenuItem.MergeAction = MergeAction.Append
             Me.GridMenuItem.CheckOnClick = True
             Me.GridMenuItem.Checked = True
+            '
+            'CopyToolStripButton
+            '
+            Me.CopyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.CopyToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Copy.gif")
+            Me.CopyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.CopyToolStripButton.Name = "CopyToolStripButton"
+            Me.CopyToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.CopyToolStripButton.Text = "&Copy"
+            Me.CopyToolStripButton.MergeAction = MergeAction.Insert
+            Me.CopyToolStripButton.MergeIndex = 4
+            '
+            'CutToolStripButton
+            '
+            Me.CutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.CutToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Cut.gif")
+            Me.CutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.CutToolStripButton.Name = "CutToolStripButton"
+            Me.CutToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.CutToolStripButton.Text = "C&ut"
+            Me.CutToolStripButton.MergeAction = MergeAction.Insert
+            Me.CutToolStripButton.MergeIndex = 4
+            '
+            'PasteToolStripButton
+            '
+            Me.PasteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.PasteToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.CopyClipboard.gif")
+            Me.PasteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.PasteToolStripButton.Name = "PasteToolStripButton"
+            Me.PasteToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.PasteToolStripButton.Text = "&Paste"
+            Me.PasteToolStripButton.MergeAction = MergeAction.Insert
+            Me.PasteToolStripButton.MergeIndex = 4
+            '
+            'CopyToolStripMenuItem
+            '
+            Me.CopyToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Copy.gif")
+            Me.CopyToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem"
+            Me.CopyToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
+            Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
+            Me.CopyToolStripMenuItem.Text = "&Copy"
+            Me.CopyToolStripMenuItem.MergeAction = MergeAction.Insert
+            Me.CopyToolStripMenuItem.MergeIndex = 4
+            '
+            'CutToolStripMenuItem
+            '
+            Me.CutToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Cut.gif")
+            Me.CutToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.CutToolStripMenuItem.Name = "CutToolStripMenuItem"
+            Me.CutToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.X), System.Windows.Forms.Keys)
+            Me.CutToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
+            Me.CutToolStripMenuItem.Text = "Cu&t"
+            Me.CutToolStripMenuItem.MergeAction = MergeAction.Insert
+            Me.CutToolStripMenuItem.MergeIndex = 4
+            '
+            'PasteToolStripMenuItem
+            '
+            Me.PasteToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.CopyClipboard.gif")
+            Me.PasteToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem"
+            Me.PasteToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V), System.Windows.Forms.Keys)
+            Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
+            Me.PasteToolStripMenuItem.Text = "&Paste"
+            Me.PasteToolStripMenuItem.MergeAction = MergeAction.Insert
+            Me.PasteToolStripMenuItem.MergeIndex = 4
+
 
             'AddFlowDiagram_ToolStrips
             '
@@ -1137,16 +1221,6 @@ Namespace Forms.Behavior
             End Get
         End Property
 
-        'TODO
-        'Public Overridable Property SetDiagramIndex() As Integer
-        '    Get
-        '        Return Me.DiagramIndex
-        '    End Get
-        '    Set(ByVal Value As Integer)
-        '        m_beEditor.SwapDiagramIndex(Me, Value)
-        '    End Set
-        'End Property
-        ' 
         Public Overrides ReadOnly Property FormMenuStrip() As AnimatGuiCtrls.Controls.AnimatMenuStrip
             Get
                 Return Me.AddFlowMenuStrip
@@ -1668,12 +1742,6 @@ Namespace Forms.Behavior
             m_Timer.Enabled = True
         End Sub
 
-        'TODO
-        'Public Overrides Sub SetItemsTempID(ByVal bdItem As AnimatGUI.DataObjects.Behavior.Data, ByVal strId As String)
-        '    Dim afItem As Lassalle.Flow.Item = FindAddFlowItem(bdItem.ID)
-        '    afItem.Tag = strId
-        'End Sub
-
         Public Overrides Sub BeginGraphicsUpdate()
             m_ctrlAddFlow.BeginUpdate()
         End Sub
@@ -1894,9 +1962,7 @@ Namespace Forms.Behavior
             Try
                 Dim oXml As New AnimatGUI.Interfaces.StdXml
 
-                Util.CopyInProgress = True
-                Dim bSave As Boolean = SaveSelected(oXml, False)
-                Util.CopyInProgress = False
+                 Dim bSave As Boolean = SaveSelected(oXml, False)
 
                 'If there is nothing to save then exit
                 If Not bSave Then Return
@@ -1912,7 +1978,6 @@ Namespace Forms.Behavior
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
-                Util.CopyInProgress = False
             End Try
 
         End Sub
@@ -1922,9 +1987,7 @@ Namespace Forms.Behavior
             Try
                 Dim oXml As New AnimatGUI.Interfaces.StdXml
 
-                Util.CopyInProgress = True
                 Dim bSave As Boolean = SaveSelected(oXml, True)
-                Util.CopyInProgress = False
 
                 'If there is nothing to save then exit
                 If Not bSave Then Return
@@ -1938,7 +2001,6 @@ Namespace Forms.Behavior
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
-                Util.CopyInProgress = False
             End Try
 
         End Sub
@@ -1951,19 +2013,11 @@ Namespace Forms.Behavior
                     ' We first unselect the selected items
                     m_ctrlAddFlow.SelectedItems.Clear()
 
-                    ' Get the data from the clipboard
-                    Dim strXml As String = DirectCast(data.GetData("AnimatLab.Behavior.XMLFormat"), String)
-                    If strXml Is Nothing OrElse strXml.Trim.Length = 0 Then Return
+                    Dim oXml As AnimatGUI.Interfaces.StdXml = Util.GetXmlForPaste(data, "AnimatLab.Behavior.XMLFormat")
 
-                    Dim oXml As New AnimatGUI.Interfaces.StdXml
-                    oXml.Deserialize(strXml)
-
-                    LoadSelected(oXml, bInPlace)
-
-                    'Clear out the data so they can not paste it again.
-                    data = New System.Windows.Forms.DataObject
-                    data.SetData("AnimatLab.Behavior.XMLFormat", "")
-                    Clipboard.SetDataObject(data, False)
+                    If Not oXml Is Nothing Then
+                        LoadPasted(oXml, bInPlace)
+                    End If
 
                     m_Timer.Enabled = True
                 End If
@@ -2226,12 +2280,13 @@ Namespace Forms.Behavior
             '
             Dim tsPopupMenu As New AnimatContextMenuStrip("AddFlowDiagramMenu", Nothing)
 
-            Dim mcCut As New System.Windows.Forms.ToolStripMenuItem("Cut", Util.Application.ToolStripImages.GetImage("AnimatGUI.Cut.gif"), New EventHandler(AddressOf Util.Application.OnCutFromWorkspace))
-            Dim mcCopy As New System.Windows.Forms.ToolStripMenuItem("Copy", Util.Application.ToolStripImages.GetImage("AnimatGUI.Copy.gif"), New EventHandler(AddressOf Util.Application.OnCopyFromWorkspace))
-            Dim mcPaste As New System.Windows.Forms.ToolStripMenuItem("Paste", Util.Application.ToolStripImages.GetImage("AnimatGUI.CopyClipboard.gif"), New EventHandler(AddressOf Util.Application.OnPasteFromWorkspace))
+            'TODO
+            'Dim mcCut As New System.Windows.Forms.ToolStripMenuItem("Cut", Util.Application.ToolStripImages.GetImage("AnimatGUI.Cut.gif"), New EventHandler(AddressOf Util.Application.OnCutFromWorkspace))
+            'Dim mcCopy As New System.Windows.Forms.ToolStripMenuItem("Copy", Util.Application.ToolStripImages.GetImage("AnimatGUI.Copy.gif"), New EventHandler(AddressOf Util.Application.OnCopyFromWorkspace))
+            'Dim mcPaste As New System.Windows.Forms.ToolStripMenuItem("Paste", Util.Application.ToolStripImages.GetImage("AnimatGUI.CopyClipboard.gif"), New EventHandler(AddressOf Util.Application.OnPasteFromWorkspace))
             Dim mcPasteInPlace As New System.Windows.Forms.ToolStripMenuItem("Paste in Place", Nothing, New EventHandler(AddressOf Me.PasteInPlaceMenuItem_Click))
             Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
-            mcCut.ImageScaling = ToolStripItemImageScaling.SizeToFit
+            'mcCut.ImageScaling = ToolStripItemImageScaling.SizeToFit
 
             Dim mcSelectByType As New System.Windows.Forms.ToolStripMenuItem("Select by type", Util.Application.ToolStripImages.GetImage("AnimatGUI.SelectByType.gif"), New EventHandler(AddressOf Util.Application.OnSelectByType))
             Dim mcRelabel As New System.Windows.Forms.ToolStripMenuItem("Relabel", Util.Application.ToolStripImages.GetImage("AnimatGUI.Relabel.gif"), New EventHandler(AddressOf Util.Application.OnRelabel))
@@ -2281,10 +2336,12 @@ Namespace Forms.Behavior
             Dim toolStripSeparator2 As New ToolStripSeparator()
 
             If m_ctrlAddFlow.SelectedItems.Count > 0 Then
-                tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcCut, mcCopy, mcDelete})
+                'TODO
+                'tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcCut, mcCopy, mcDelete})
 
                 If bPaste Then
-                    tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcPaste, mcPasteInPlace})
+                    'TODO
+                    'tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcPaste, mcPasteInPlace})
                 End If
 
                 tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {toolStripSeparator2})
@@ -2636,115 +2693,100 @@ Namespace Forms.Behavior
 
         Public Overrides Function SaveSelected(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal bCopy As Boolean) As Boolean
 
-            'TODO
-            'If m_ctrlAddFlow.SelectedItems.Count = 0 Then Return False
+            If m_ctrlAddFlow.SelectedItems.Count = 0 Then Return False
 
-            'oXml.AddElement("Diagram")
+            oXml.AddElement("Diagram")
 
-            ''First lets sort the selected items into nodes and links and generate temp selected ids
-            'Dim aryNodes As New AnimatGUI.Collections.Nodes(Nothing)
-            'Dim aryLinks As New AnimatGUI.Collections.Links(Nothing)
-            'Dim aryItems As New AnimatGUI.Collections.BehaviorItems(Nothing)
-            'Dim bdData As AnimatGUI.DataObjects.Behavior.Data
-            'Dim aryData As New ArrayList
-            'Dim aryDeselect As New ArrayList
+            'First lets sort the selected items into nodes and links and generate temp selected ids
+            Dim aryReplaceIDs As New ArrayList
+            Dim aryNodes As New AnimatGUI.Collections.Nodes(Nothing)
+            Dim aryLinks As New AnimatGUI.Collections.Links(Nothing)
+            Dim aryItems As New AnimatGUI.Collections.BehaviorItems(Nothing)
+            Dim bdData As AnimatGUI.DataObjects.Behavior.Data
+            Dim aryData As New ArrayList
+            Dim aryDeselect As New ArrayList
 
-            ''Call BeforeCopy first
-            'For Each afItem As Lassalle.Flow.Item In m_ctrlAddFlow.SelectedItems
-            '    bdData = FindItem(DirectCast(afItem.Tag, String))
-            '    aryItems.Add(bdData)
-            'Next
+            'Call BeforeCopy first
+            For Each afItem As Lassalle.Flow.Item In m_ctrlAddFlow.SelectedItems
+                bdData = FindItem(DirectCast(afItem.Tag, String))
+                aryItems.Add(bdData)
+            Next
 
-            'For Each bdData In aryItems
-            '    bdData.BeforeCopy()
-            'Next
+            For Each bdData In aryItems
+                bdData.BeforeCopy()
+            Next
 
-            'aryItems.Clear()
-            'For Each afItem As Lassalle.Flow.Item In m_ctrlAddFlow.SelectedItems
-            '    bdData = FindItem(DirectCast(afItem.Tag, String))
+            aryItems.Clear()
+            For Each afItem As Lassalle.Flow.Item In m_ctrlAddFlow.SelectedItems
+                bdData = FindItem(DirectCast(afItem.Tag, String))
 
-            '    If bdData.CanCopy() Then
-            '        If TypeOf bdData Is AnimatGUI.DataObjects.Behavior.Node Then
-            '            aryNodes.Add(DirectCast(bdData, AnimatGUI.DataObjects.Behavior.Node))
-            '        ElseIf TypeOf bdData Is AnimatGUI.DataObjects.Behavior.Link Then
-            '            aryLinks.Add(DirectCast(bdData, AnimatGUI.DataObjects.Behavior.Link))
-            '        Else
-            '            Throw New System.Exception("An unkown data type was found in the diagram named '" & bdData.Name & "' of type '" & bdData.GetType.FullName & "'")
-            '        End If
+                If bdData.CanCopy() Then
+                    If TypeOf bdData Is AnimatGUI.DataObjects.Behavior.Node Then
+                        aryNodes.Add(DirectCast(bdData, AnimatGUI.DataObjects.Behavior.Node))
+                    ElseIf TypeOf bdData Is AnimatGUI.DataObjects.Behavior.Link Then
+                        aryLinks.Add(DirectCast(bdData, AnimatGUI.DataObjects.Behavior.Link))
+                    Else
+                        Throw New System.Exception("An unkown data type was found in the diagram named '" & bdData.Name & "' of type '" & bdData.GetType.FullName & "'")
+                    End If
 
-            '        aryItems.Add(bdData)
+                    aryItems.Add(bdData)
 
-            '        bdData.GenerateTempSelectedID(bCopy)
-            '    Else
-            '        aryDeselect.Add(afItem)
-            '    End If
-            'Next
+                    bdData.AddToReplaceIDList(aryReplaceIDs)
+                Else
+                    aryDeselect.Add(afItem)
+                End If
+            Next
 
-            ''If we got here and none of the selected items can be copied then lets leave.
-            'If aryItems.Count = 0 Then
-            '    Return False
-            'End If
+            'If we got here and none of the selected items can be copied then lets leave.
+            If aryItems.Count = 0 Then
+                Return False
+            End If
 
-            ''If we can not copy an item on the chart then we MUST deselect it so that it is NOT copied 
-            ''in the purely addflow xml stuff. Otherwise we will be getting stuff in the diagram
-            ''that does not have a real link to nodes in the system.
-            'For Each afItem As Lassalle.Flow.Item In aryDeselect
-            '    afItem.Selected = False
-            'Next
+            'If we can not copy an item on the chart then we MUST deselect it so that it is NOT copied 
+            'in the purely addflow xml stuff. Otherwise we will be getting stuff in the diagram
+            'that does not have a real link to nodes in the system.
+            For Each afItem As Lassalle.Flow.Item In aryDeselect
+                afItem.Selected = False
+            Next
 
-            ''Now if any of the selected items are subsystems then we need to make those subsystems generate temp ids
-            'Dim bsSystem As AnimatGUI.DataObjects.Behavior.Nodes.Subsystem
-            'For Each bnNode As AnimatGUI.DataObjects.Behavior.Node In aryNodes
-            '    If TypeOf bnNode Is AnimatGUI.DataObjects.Behavior.Nodes.Subsystem Then
-            '        bsSystem = DirectCast(bnNode, AnimatGUI.DataObjects.Behavior.Nodes.Subsystem)
-            '        bsSystem.Subsystem.GenerateTempSelectedIDs(bCopy)
-            '    End If
-            'Next
+            'Save the replaceme ID list
+            oXml.AddChildElement("ReplaceIDList")
+            oXml.IntoElem() 'Into ReplaceIDList Element
+            For Each strID As String In aryReplaceIDs
+                oXml.AddChildElement("ID", strID)
+            Next
+            oXml.OutOfElem() 'Outof ReplaceIDList Element
 
-            ''Now we save the nodes and links.
-            'oXml.AddChildElement("Nodes")
-            'oXml.IntoElem() 'Into Nodes Element
-            'For Each bnNode As AnimatGUI.DataObjects.Behavior.Node In aryNodes
-            '    bnNode.SaveData(oXml)
-            'Next
-            'oXml.OutOfElem() 'Outof Nodes Element
+            'Now we save the nodes and links.
+            oXml.AddChildElement("Nodes")
+            oXml.IntoElem() 'Into Nodes Element
+            For Each bnNode As AnimatGUI.DataObjects.Behavior.Node In aryNodes
+                bnNode.SaveData(oXml)
+            Next
+            oXml.OutOfElem() 'Outof Nodes Element
 
-            'oXml.AddChildElement("Links")
-            'oXml.IntoElem() 'Into Links Element
-            'For Each blLink As AnimatGUI.DataObjects.Behavior.Link In aryLinks
-            '    blLink.SaveData(oXml)
-            'Next
-            'oXml.OutOfElem() 'Outof Links Element
+            oXml.AddChildElement("Links")
+            oXml.IntoElem() 'Into Links Element
+            For Each blLink As AnimatGUI.DataObjects.Behavior.Link In aryLinks
+                blLink.SaveData(oXml)
+            Next
+            oXml.OutOfElem() 'Outof Links Element
 
-            ''Now we save any subsystems
-            'oXml.AddChildElement("Diagrams")
-            'oXml.IntoElem()
-            'For Each bnNode As AnimatGUI.DataObjects.Behavior.Node In aryNodes
-            '    If TypeOf bnNode Is AnimatGUI.DataObjects.Behavior.Nodes.Subsystem Then
-            '        bsSystem = DirectCast(bnNode, AnimatGUI.DataObjects.Behavior.Nodes.Subsystem)
-            '        bsSystem.Subsystem.SaveData(oXml)
-            '    End If
-            'Next
-            'oXml.OutOfElem() 'Outof Links Element
+            'Save the addflow configuration
+            Dim sb As System.Text.StringBuilder = New System.Text.StringBuilder
+            Dim stringWriter As System.IO.StringWriter = New System.IO.StringWriter(sb)
+            Dim xmlWriter As System.Xml.XmlTextWriter = New System.Xml.XmlTextWriter(stringWriter)
+            Lassalle.XMLFlow.Serial.FlowToXML(xmlWriter, m_ctrlAddFlow, True, False)
+            Dim strAddFlowXml As String = sb.ToString & vbCrLf
 
-            ''Save the addflow configuration
-            'Dim sb As System.Text.StringBuilder = New System.Text.StringBuilder
-            'Dim stringWriter As System.IO.StringWriter = New System.IO.StringWriter(sb)
-            'Dim xmlWriter As System.Xml.XmlTextWriter = New System.Xml.XmlTextWriter(stringWriter)
-            'Lassalle.XMLFlow.Serial.FlowToXML(xmlWriter, m_ctrlAddFlow, True, False)
-            'Dim strAddFlowXml As String = sb.ToString & vbCrLf
+            'We must remove the Xml header infomration before adding it as a child document
+            strAddFlowXml = strAddFlowXml.Remove(0, 69)
 
-            ''We must remove the Xml header infomration before adding it as a child document
-            'strAddFlowXml = strAddFlowXml.Remove(0, 69)
+            oXml.AddChildDoc(strAddFlowXml)
 
-            'oXml.AddChildDoc(strAddFlowXml)
-
-            ''Now make sure we clear all of the temporary ids
-            'm_beEditor.ClearTempSelectedIDs()
-
-            'For Each bdItem As AnimatGUI.DataObjects.Behavior.Data In aryItems
-            '    bdItem.AfterCopy()
-            'Next
+            For Each bdItem As AnimatGUI.DataObjects.Behavior.Data In aryItems
+                bdItem.AfterCopy()
+            Next
 
             Return True
         End Function
@@ -2776,191 +2818,190 @@ Namespace Forms.Behavior
         End Sub
 
 
-        Public Overrides Sub LoadSelected(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal bInPlace As Boolean)
+        Public Overrides Sub LoadPasted(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal bInPlace As Boolean)
 
-            'TODO
-            'Dim ptClient As Point = m_ctrlAddFlow.PointToClient(Cursor.Position)
-            'Dim ptBase As Point = m_ctrlAddFlow.PointToAddFlow(ptClient)
+            Dim ptClient As Point = m_ctrlAddFlow.PointToClient(Cursor.Position)
+            Dim ptBase As Point = m_ctrlAddFlow.PointToAddFlow(ptClient)
 
-            'oXml.FindElement("Diagram")
+            oXml.FindElement("Diagram")
 
-            ''Now lets go through and load each of the child diagrams.
-            'Dim strAssemblyFile As String
-            'Dim strClassName As String
-            'Dim strPageName As String
-            'Dim strID As String
-            'Dim aryItems As New AnimatGUI.Collections.BehaviorItems(Nothing)
-            'Dim aryDiagrams As New AnimatGUI.Collections.Diagrams(Nothing)
+            'Now lets go through and load each of the child diagrams.
+            Dim aryItems As New AnimatGUI.Collections.BehaviorItems(Nothing)
 
-            'oXml.IntoChildElement("Nodes")
-            'Dim iCount As Integer = oXml.NumberOfChildren() - 1
-            'Dim bnNode As AnimatGUI.DataObjects.Behavior.Node
-            'For iIndex As Integer = 0 To iCount
-            '    oXml.FindChildByIndex(iIndex)
-            '    oXml.IntoElem() 'Into Node element
-            '    strAssemblyFile = oXml.GetChildString("AssemblyFile")
-            '    strClassName = oXml.GetChildString("ClassName")
-            '    oXml.OutOfElem() 'Outof Node element
+            LoadPastedNodes(oXml, aryItems)
+            LoadPastedLinks(oXml, aryItems)
 
-            '    bnNode = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me.FormHelper), AnimatGUI.DataObjects.Behavior.Node)
-            '    bnNode.ParentDiagram = Me
-            '    bnNode.ParentEditor = m_beEditor
-            '    bnNode.LoadData(oXml)
+            Dim fltMinX As Single = -1
+            Dim fltMinY As Single = -1
+            ProcessPastedAddFlowData(oXml, aryItems, fltMinX, fltMinY)
 
-            '    bnNode.BeforeAddNode()
-            '    m_aryNodes.Add(bnNode.ID, bnNode, False)
-            '    aryItems.Add(bnNode)
-            '    bnNode.AfterAddNode()
+            'we need to go through and initialize all the nodes/links after loading.
+            Me.Subsystem.InitializeAfterLoad()
+            Me.Subsystem.InitializeSimulationReferences()
 
-            '    AddToOrganism(bnNode)
-            '    bnNode.AddToHierarchyBar()
-            'Next
-            'oXml.OutOfElem() 'Outof Nodes Element
-
-            'oXml.IntoChildElement("Links")
-            'iCount = oXml.NumberOfChildren() - 1
-            'Dim blLink As AnimatGUI.DataObjects.Behavior.Link
-            'For iIndex As Integer = 0 To iCount
-            '    oXml.FindChildByIndex(iIndex)
-            '    oXml.IntoElem() 'Into Node element
-            '    strAssemblyFile = oXml.GetChildString("AssemblyFile")
-            '    strClassName = oXml.GetChildString("ClassName")
-            '    oXml.OutOfElem() 'Outof Node element
-
-            '    blLink = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me.FormHelper), AnimatGUI.DataObjects.Behavior.Link)
-            '    blLink.ParentDiagram = Me
-            '    blLink.ParentEditor = m_beEditor
-            '    blLink.LoadData(oXml)
-
-            '    blLink.BeforeAddLink()
-            '    m_aryLinks.Add(blLink.ID, blLink, False)
-            '    aryItems.Add(blLink)
-
-            '    blLink.AfterAddLink()
-
-            '    AddToOrganism(blLink)
-            '    blLink.AddToHierarchyBar()
-            'Next
-            'oXml.OutOfElem() 'Outof Links Element
-
-            'oXml.IntoChildElement("Diagrams")
-            'Dim bdDiagram As AnimatGUI.Forms.Behavior.DiagramOld
-            'iCount = oXml.NumberOfChildren() - 1
-            'For iIndex As Integer = 0 To iCount
-            '    oXml.FindChildByIndex(iIndex)
-            '    oXml.IntoElem() 'Into Diagram element
-            '    strAssemblyFile = oXml.GetChildString("AssemblyFile")
-            '    strClassName = oXml.GetChildString("ClassName")
-            '    strID = Util.LoadID(oXml, "")
-            '    strPageName = oXml.GetChildString("PageName")
-            '    oXml.OutOfElem() 'Outof Diagram element
-
-            '    strPageName = m_beEditor.FindAvailableDiagramName(strPageName)
-            '    bdDiagram = AddDiagram(strAssemblyFile, strClassName, strPageName, strID)
-            '    bdDiagram.LoadData(oXml)
-
-            '    aryDiagrams.Add(bdDiagram)
-            'Next
-            'oXml.OutOfElem() ' OutOf the Diagrams Element
-
-
-            'oXml.FindChildElement("AddFlow")
-            'Dim strAddFlowXml As String = oXml.GetChildDoc()
-
-            ''Now I need to replace any of the old ids with the new ids.
-            ''Debug.Write(strAddFlowXml)
-
-            'Dim stringReader As System.IO.StringReader = New System.IO.StringReader(strAddFlowXml)
-            'Dim xmlReader As System.Xml.XmlTextReader = New System.Xml.XmlTextReader(stringReader)
-            'Lassalle.XMLFlow.Serial.XMLToFlow(xmlReader, m_ctrlAddFlow)
-
-            ''Now we need to go through and add all of the addflow nodes and links into the dictionaries for them.
-            ''Also, lets find the rightmost and topmost element for the reposisioning below.
-            'Dim aryRemoveItems As New ArrayList
-            'Dim afNode As Lassalle.Flow.Node
-            'Dim afLink As Lassalle.Flow.Link
-            'Dim afItem As Lassalle.Flow.Item
-            'Dim fltMinX As Single = -1
-            'Dim fltMinY As Single = -1
-            'For Each bdData As AnimatGUI.DataObjects.Behavior.Data In aryItems
-            '    'The find routine should add the addflow item if it finds it.
-            '    afItem = FindAddFlowItem(bdData.ID, False)
-
-            '    If Not afItem Is Nothing Then
-            '        If TypeOf afItem Is Lassalle.Flow.Node Then
-            '            afNode = DirectCast(afItem, Lassalle.Flow.Node)
-            '            If fltMinX < 0 OrElse afNode.Location.X < fltMinX Then
-            '                fltMinX = afNode.Location.X
-            '            End If
-
-            '            If fltMinY < 0 OrElse afNode.Location.Y < fltMinY Then
-            '                fltMinY = afNode.Location.Y
-            '            End If
-            '        End If
-            '    Else
-            '        'If it cannot find the associated addflow item then remove it.
-            '        If TypeOf bdData Is AnimatGUI.DataObjects.Behavior.Node AndAlso m_aryNodes.Contains(bdData.ID) Then
-            '            m_aryNodes.Remove(bdData.ID, False)
-            '        ElseIf TypeOf bdData Is AnimatGUI.DataObjects.Behavior.Link AndAlso m_aryLinks.Contains(bdData.ID) Then
-            '            m_aryLinks.Remove(bdData.ID, False)
-            '        End If
-
-            '        bdData.RemoveFromHierarchyBar()
-            '        aryRemoveItems.Add(bdData)
-            '    End If
-            'Next
-
-            ''Check to see if we need to remove any items.
-            'For Each bdData As AnimatGUI.DataObjects.Behavior.Data In aryRemoveItems
-            '    If aryItems.Contains(bdData) Then
-            '        aryItems.Remove(bdData)
-            '    End If
-            'Next
-
-            ''we need to go through and initialize all the nodes/links after loading.
-            'InitializeDataAfterLoad(aryItems)
             'InitializeImageDataAfterLoad(aryItems)
 
-            'For Each bdDiagram In aryDiagrams
-            '    bdDiagram.InitializeAfterLoad()
-            'Next
+            For Each bdItem As AnimatGUI.DataObjects.Behavior.Data In aryItems
+                bdItem.CheckForErrors()
+            Next
 
-            'For Each bdItem As AnimatGUI.DataObjects.Behavior.Data In aryItems
-            '    bdItem.CheckForErrors()
-            'Next
-
-            ''Now lets move the addflow items so that they are positioned near the mouse.
-            '' We move a little each pasted node and link so that they do not recover
-            '' the original items.
-            'If Not bInPlace Then
-            '    For Each bdData As AnimatGUI.DataObjects.Behavior.Data In aryItems
-            '        afItem = FindAddFlowItem(bdData.ID)
-
-            '        If TypeOf (afItem) Is Lassalle.Flow.Node Then
-            '            afNode = DirectCast(afItem, Lassalle.Flow.Node)
-            '            afNode.Location = New PointF(ptBase.X + (afNode.Location.X - fltMinX), ptBase.Y + (afNode.Location.Y - fltMinY))
-            '        Else
-            '            Dim pt As PointF
-            '            Dim k As Integer
-            '            afLink = DirectCast(afItem, Lassalle.Flow.Link)
-
-            '            If afLink.AdjustOrg Then
-            '                pt = afLink.Points(0)
-            '                afLink.Points(0) = New PointF(ptBase.X + (pt.X - fltMinX), ptBase.Y + (pt.Y - fltMinY))
-            '            End If
-            '            For k = 1 To afLink.Points.Count - 2
-            '                pt = afLink.Points(k)
-            '                afLink.Points(k) = New PointF(ptBase.X + (pt.X - fltMinX), ptBase.Y + (pt.Y - fltMinY))
-            '            Next
-            '            If afLink.AdjustDst Then
-            '                pt = afLink.Points(afLink.Points.Count - 1)
-            '                afLink.Points(afLink.Points.Count - 1) = New PointF(ptBase.X + (pt.X - fltMinX), ptBase.Y + (pt.Y - fltMinY))
-            '            End If
-            '        End If
-            '    Next
-            'End If
+            'Now lets move the addflow items so that they are positioned near the mouse.
+            ' We move a little each pasted node and link so that they do not recover
+            ' the original items.
+            If Not bInPlace Then
+                PositionPastedToInPlace(aryItems, ptBase, fltMinX, fltMinY)
+            End If
 
         End Sub
+
+        Protected Sub LoadPastedNodes(ByRef oXml As AnimatGUI.Interfaces.StdXml, _
+                                      ByVal aryItems As AnimatGUI.Collections.BehaviorItems)
+
+            Dim strAssemblyFile As String
+            Dim strClassName As String
+            oXml.IntoChildElement("Nodes")
+            Dim iCount As Integer = oXml.NumberOfChildren() - 1
+            Dim bnNode As AnimatGUI.DataObjects.Behavior.Node
+            For iIndex As Integer = 0 To iCount
+                oXml.FindChildByIndex(iIndex)
+                oXml.IntoElem() 'Into Node element
+                strAssemblyFile = oXml.GetChildString("AssemblyFile")
+                strClassName = oXml.GetChildString("ClassName")
+                oXml.OutOfElem() 'Outof Node element
+
+                bnNode = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me.FormHelper), AnimatGUI.DataObjects.Behavior.Node)
+                bnNode.ParentDiagram = Me
+                bnNode.ParentSubsystem = Me.Subsystem
+                bnNode.Organism = Me.Subsystem.Organism
+                bnNode.LoadData(oXml)
+
+                bnNode.BeforeAddNode()
+                Me.Subsystem.BehavioralNodes.Add(bnNode.ID, bnNode)
+                aryItems.Add(bnNode)
+                bnNode.AfterAddNode()
+            Next
+            oXml.OutOfElem() 'Outof Nodes Element
+
+        End Sub
+
+        Protected Sub LoadPastedLinks(ByRef oXml As AnimatGUI.Interfaces.StdXml, _
+                                      ByVal aryItems As AnimatGUI.Collections.BehaviorItems)
+            Dim strAssemblyFile As String
+            Dim strClassName As String
+            oXml.IntoChildElement("Links")
+            Dim iCount As Integer = oXml.NumberOfChildren() - 1
+            Dim blLink As AnimatGUI.DataObjects.Behavior.Link
+            For iIndex As Integer = 0 To iCount
+                oXml.FindChildByIndex(iIndex)
+                oXml.IntoElem() 'Into Node element
+                strAssemblyFile = oXml.GetChildString("AssemblyFile")
+                strClassName = oXml.GetChildString("ClassName")
+                oXml.OutOfElem() 'Outof Node element
+
+                blLink = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me.FormHelper), AnimatGUI.DataObjects.Behavior.Link)
+                blLink.ParentDiagram = Me
+                blLink.ParentSubsystem = Me.Subsystem
+                blLink.Organism = Me.Subsystem.Organism
+                blLink.LoadData(oXml)
+
+                blLink.BeforeAddLink()
+                Me.Subsystem.BehavioralLinks.Add(blLink.ID, blLink)
+                aryItems.Add(blLink)
+
+                blLink.AfterAddLink()
+            Next
+            oXml.OutOfElem() 'Outof Links Element
+        End Sub
+
+        Protected Sub ProcessPastedAddFlowData(ByRef oXml As AnimatGUI.Interfaces.StdXml, _
+                                               ByVal aryItems As AnimatGUI.Collections.BehaviorItems, _
+                                               ByRef fltMinX As Single, ByRef fltMinY As Single)
+
+            oXml.FindChildElement("AddFlow")
+            Dim strAddFlowXml As String = oXml.GetChildDoc()
+
+            'Now I need to replace any of the old ids with the new ids.
+            'Debug.Write(strAddFlowXml)
+
+            Dim stringReader As System.IO.StringReader = New System.IO.StringReader(strAddFlowXml)
+            Dim xmlReader As System.Xml.XmlTextReader = New System.Xml.XmlTextReader(stringReader)
+            Lassalle.XMLFlow.Serial.XMLToFlow(xmlReader, m_ctrlAddFlow)
+
+            'Now we need to go through and add all of the addflow nodes and links into the dictionaries for them.
+            'Also, lets find the rightmost and topmost element for the reposisioning below.
+            Dim aryRemoveItems As New ArrayList
+            Dim afNode As Lassalle.Flow.Node
+            Dim afItem As Lassalle.Flow.Item
+            For Each bdData As AnimatGUI.DataObjects.Behavior.Data In aryItems
+                'The find routine should add the addflow item if it finds it.
+                afItem = FindAddFlowItem(bdData.ID, False)
+
+                If Not afItem Is Nothing Then
+                    If TypeOf afItem Is Lassalle.Flow.Node Then
+                        afNode = DirectCast(afItem, Lassalle.Flow.Node)
+                        If fltMinX < 0 OrElse afNode.Location.X < fltMinX Then
+                            fltMinX = afNode.Location.X
+                        End If
+
+                        If fltMinY < 0 OrElse afNode.Location.Y < fltMinY Then
+                            fltMinY = afNode.Location.Y
+                        End If
+                    End If
+                Else
+                    'If it cannot find the associated addflow item then remove it.
+                    If TypeOf bdData Is AnimatGUI.DataObjects.Behavior.Node AndAlso Me.Subsystem.BehavioralNodes.Contains(bdData.ID) Then
+                        Me.Subsystem.BehavioralNodes.Remove(bdData.ID)
+                    ElseIf TypeOf bdData Is AnimatGUI.DataObjects.Behavior.Link AndAlso Me.Subsystem.BehavioralLinks.Contains(bdData.ID) Then
+                        Me.Subsystem.BehavioralLinks.Remove(bdData.ID, False)
+                    End If
+
+                    bdData.RemoveWorksapceTreeView()
+                    aryRemoveItems.Add(bdData)
+                End If
+            Next
+
+            'Check to see if we need to remove any items.
+            For Each bdData As AnimatGUI.DataObjects.Behavior.Data In aryRemoveItems
+                If aryItems.Contains(bdData) Then
+                    aryItems.Remove(bdData)
+                End If
+            Next
+        End Sub
+
+        Protected Sub PositionPastedToInPlace(ByVal aryItems As AnimatGUI.Collections.BehaviorItems, ByVal ptBase As Point, ByVal fltMinX As Single, ByVal fltMinY As Single)
+
+            Dim afNode As Lassalle.Flow.Node
+            Dim afLink As Lassalle.Flow.Link
+            Dim afItem As Lassalle.Flow.Item
+
+            For Each bdData As AnimatGUI.DataObjects.Behavior.Data In aryItems
+                afItem = FindAddFlowItem(bdData.ID)
+
+                If TypeOf (afItem) Is Lassalle.Flow.Node Then
+                    afNode = DirectCast(afItem, Lassalle.Flow.Node)
+                    afNode.Location = New PointF(ptBase.X + (afNode.Location.X - fltMinX), ptBase.Y + (afNode.Location.Y - fltMinY))
+                Else
+                    Dim pt As PointF
+                    Dim k As Integer
+                    afLink = DirectCast(afItem, Lassalle.Flow.Link)
+
+                    If afLink.AdjustOrg Then
+                        pt = afLink.Points(0)
+                        afLink.Points(0) = New PointF(ptBase.X + (pt.X - fltMinX), ptBase.Y + (pt.Y - fltMinY))
+                    End If
+                    For k = 1 To afLink.Points.Count - 2
+                        pt = afLink.Points(k)
+                        afLink.Points(k) = New PointF(ptBase.X + (pt.X - fltMinX), ptBase.Y + (pt.Y - fltMinY))
+                    Next
+                    If afLink.AdjustDst Then
+                        pt = afLink.Points(afLink.Points.Count - 1)
+                        afLink.Points(afLink.Points.Count - 1) = New PointF(ptBase.X + (pt.X - fltMinX), ptBase.Y + (pt.Y - fltMinY))
+                    End If
+                End If
+            Next
+
+        End Sub
+
 
         Protected Sub InitializeImageDataAfterLoad(ByRef aryItems As AnimatGUI.Collections.BehaviorItems)
 
@@ -3089,6 +3130,17 @@ Namespace Forms.Behavior
         '    SelectAll()
         'End Sub
         ' 
+        Private Sub CutToolStripButton_Click(sender As Object, e As System.EventArgs) Handles CutToolStripButton.Click, CutToolStripMenuItem.Click
+            CutSelected()
+        End Sub
+
+        Private Sub CopyToolStripButton_Click(sender As Object, e As System.EventArgs) Handles CopyToolStripButton.Click, CopyToolStripMenuItem.Click
+            CopySelected()
+        End Sub
+
+        Private Sub PasteToolStripButton_Click(sender As Object, e As System.EventArgs) Handles PasteToolStripButton.Click, PasteToolStripMenuItem.Click
+            PasteSelected(False)
+        End Sub
 
 #End Region
 
@@ -3669,37 +3721,6 @@ Namespace Forms.Behavior
 
 #End Region
 
-        'Protected Sub OnAddStimulus(ByVal sender As Object, ByVal e As System.EventArgs)
-
-        '    Try
-
-        '        Dim aryList As ArrayList = GetSelectedAddflowNodes()
-        '        If aryList.Count = 1 Then
-        '            Dim afNode As Lassalle.Flow.Node = DirectCast(aryList(0), Lassalle.Flow.Node)
-        '            Dim doNode As AnimatGUI.DataObjects.Behavior.Node = FindNode(DirectCast(afNode.Tag, String))
-
-        '            If doNode.AllowStimulus AndAlso doNode.CompatibleStimuli.Count > 0 Then
-        '                'If this is an offpage connector then lets get its linked node
-        '                If TypeOf (doNode) Is AnimatGUI.DataObjects.Behavior.Nodes.OffPage Then
-        '                    Dim opNode As AnimatGUI.DataObjects.Behavior.Nodes.OffPage = DirectCast(doNode, AnimatGUI.DataObjects.Behavior.Nodes.OffPage)
-
-        '                    If opNode.LinkedNode Is Nothing OrElse opNode.LinkedNode.Node Is Nothing Then
-        '                        Throw New System.Exception("You can not add a stimulus to an offpage connector that has not be assigned a linked node.")
-        '                    End If
-
-        '                    doNode = opNode.LinkedNode.Node
-        '                End If
-
-        '                doNode.SelectStimulusType()
-        '            End If
-        '        End If
-
-        '    Catch ex As System.Exception
-        '        AnimatGUI.Framework.Util.DisplayError(ex)
-        '    End Try
-
-        'End Sub
-
         Private Sub ShowConnectionsToolStripMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ShowConnectionsToolStripMenuItem.Click
 
             Try
@@ -3721,14 +3742,11 @@ Namespace Forms.Behavior
                     frmConn.Node = doNode
                     frmConn.ShowDialog()
 
-                    'TODO
-                    'If Not frmConn.SelectedNode Is Nothing Then
-                    '    Me.Editor.SelectedDiagram(frmConn.SelectedNode.ParentDiagram)
-                    '    frmConn.SelectedNode.ParentDiagram.SelectDataItem(frmConn.SelectedNode)
-                    'ElseIf Not frmConn.SelectedLink Is Nothing Then
-                    '    Me.Editor.SelectedDiagram(frmConn.SelectedLink.ParentDiagram)
-                    '    frmConn.SelectedLink.ParentDiagram.SelectDataItem(frmConn.SelectedLink)
-                    'End If
+                    If Not frmConn.SelectedNode Is Nothing Then
+                        frmConn.SelectedNode.SelectItem(False)
+                    ElseIf Not frmConn.SelectedLink Is Nothing Then
+                        frmConn.SelectedLink.SelectItem(False)
+                    End If
 
                 End If
 
@@ -3736,31 +3754,6 @@ Namespace Forms.Behavior
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
         End Sub
-
-
-        'Public Overrides Sub OnCompareItems(ByVal sender As Object, ByVal e As System.EventArgs)
-
-        '    Try
-        '        Dim frmCompare As New AnimatGUI.Forms.Tools.CompareItems
-        '        frmCompare.PhysicalStructure = Me.Subsystem.Organism
-
-        '        'TODOD
-        '        'frmCompare.SelectedItems().Clear()
-        '        'For Each oItem As Object In Me.Subsystem.SelectedObjects()
-        '        '    If TypeOf oItem Is AnimatGUI.Framework.DataObject Then
-        '        '        Dim doItem As AnimatGUI.Framework.DataObject = DirectCast(oItem, AnimatGUI.Framework.DataObject)
-        '        '        frmCompare.SelectedItems.Add(doItem)
-        '        '    End If
-        '        'Next
-        '        'frmCompare.VerifyItemType()
-        '        'If frmCompare.SelectedItems.Count > 0 Then
-        '        '    frmCompare.ShowDialog()
-        '        'End If
-
-        '    Catch ex As System.Exception
-        '        AnimatGUI.Framework.Util.DisplayError(ex)
-        '    End Try
-        'End Sub
 
 
 #Region " Item Selection Events "
@@ -4167,7 +4160,6 @@ Namespace Forms.Behavior
 #End Region
 
 
- 
     End Class
 
 End Namespace

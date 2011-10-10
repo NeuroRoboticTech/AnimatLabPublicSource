@@ -297,7 +297,14 @@ Namespace DataObjects.Behavior.Nodes
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+
+            If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
+                If Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
+                    CreateAdapterSimReferences()
+                End If
+
+                m_doInterface = New Interfaces.DataObjectInterface(Util.Application.SimulationInterface, Me.ID)
+            End If
 
             m_gnGain.InitializeSimulationReferences()
         End Sub
@@ -340,7 +347,6 @@ Namespace DataObjects.Behavior.Nodes
             InitializeSimulationReferences()
 
         End Sub
-
 
 #End Region
 
