@@ -394,6 +394,9 @@
 #define Al_Err_lReceptiveFieldIDNotFound -4054
 #define Al_Err_strReceptiveFieldIDNotFound "The specified receptor ID was not found."
 
+#define Al_Err_lDuplicateAddOfObject -4055
+#define Al_Err_strDuplicateAddOfObject "Attempted to add an object with the same ID twice to the simulation."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 #define PI 3.14159

@@ -22,38 +22,34 @@ Namespace DataObjects.Behavior.Nodes
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeAddToList(bThrowError)
-
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
             If Not NeuralModule Is Nothing Then
                 NeuralModule.VerifyExistsInSim()
                 If Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
                     'If we just created this neuralmodule in the sim then this object might already exist now. We should only add it if it does not exist.
-                    Util.Application.SimulationInterface.AddItem(NeuralModule.ID(), "Neuron", Me.GetSimulationXml("Neuron"), bThrowError)
+                    Util.Application.SimulationInterface.AddItem(NeuralModule.ID(), "Neuron", Me.ID, Me.GetSimulationXml("Neuron"), bThrowError)
                 End If
             End If
             InitializeSimulationReferences()
         End Sub
 
-        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeRemoveFromList(bThrowError)
-
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
             If Not NeuralModule Is Nothing AndAlso Not m_doInterface Is Nothing Then
                 Util.Application.SimulationInterface.RemoveItem(NeuralModule.ID(), "Neuron", Me.ID, bThrowError)
             End If
             m_doInterface = Nothing
         End Sub
 
-        Public Overrides Sub AfterAddToList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.AfterAddToList(bThrowError)
+        Public Overrides Sub AfterAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            MyBase.AfterAddToList(bCallSimMethods, bThrowError)
 
             If Not NeuralModule Is Nothing Then
                 NeuralModule.Nodes.Add(Me.ID, Me)
             End If
         End Sub
 
-        Public Overrides Sub AfterRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.AfterRemoveFromList(bThrowError)
+        Public Overrides Sub AfterRemoveFromList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            MyBase.AfterRemoveFromList(bCallSimMethods, bThrowError)
 
             If Not NeuralModule Is Nothing AndAlso NeuralModule.Nodes.Contains(Me.ID) Then
                 NeuralModule.Nodes.Remove(Me.ID)

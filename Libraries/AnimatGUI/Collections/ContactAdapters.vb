@@ -113,29 +113,29 @@ Namespace Collections
             End Set
         End Property
 
-        Public Overloads Sub Add(ByVal key As [String], ByVal value As AnimatGUI.DataObjects.Behavior.Nodes.ContactAdapter, Optional ByVal bCallAddMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
-            If bCallAddMethods Then value.BeforeAddToList(bThrowError)
+        Public Overloads Sub Add(ByVal key As [String], ByVal value As AnimatGUI.DataObjects.Behavior.Nodes.ContactAdapter, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+            value.BeforeAddToList(bCallSimMethods, bThrowError)
             MyBase.Add(key, value)
-            If bCallAddMethods Then value.AfterAddToList(bThrowError)
+            value.AfterAddToList(bCallSimMethods, bThrowError)
 
             Me.IsDirty = True
         End Sub 'Add
 
-        Public Overloads Sub Remove(ByVal key As Object, Optional ByVal bCallAddMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+        Public Overloads Sub Remove(ByVal key As Object, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
             Dim value As AnimatGUI.DataObjects.Behavior.Nodes.ContactAdapter = DirectCast(Me(key), AnimatGUI.DataObjects.Behavior.Nodes.ContactAdapter)
 
-            If bCallAddMethods Then value.BeforeRemoveFromList(bThrowError)
+            value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
             MyBase.Remove(key)
-            If bCallAddMethods Then value.AfterRemoveFromList(bThrowError)
+            value.AfterRemoveFromList(bCallSimMethods, bThrowError)
             Me.IsDirty = True
         End Sub
 
-        Public Overloads Sub RemoveAt(ByVal index As Integer, Optional ByVal bCallAddMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+        Public Overloads Sub RemoveAt(ByVal index As Integer, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
             Dim value As AnimatGUI.DataObjects.Behavior.Nodes.ContactAdapter = DirectCast(Me.GetByIndex(index), AnimatGUI.DataObjects.Behavior.Nodes.ContactAdapter)
 
-            If bCallAddMethods Then value.BeforeRemoveFromList(bThrowError)
+            value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
             MyBase.RemoveAt(index)
-            If bCallAddMethods Then value.AfterRemoveFromList(bThrowError)
+            value.AfterRemoveFromList(bCallSimMethods, bThrowError)
             Me.IsDirty = True
         End Sub
 

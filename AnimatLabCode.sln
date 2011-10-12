@@ -27,8 +27,6 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "IntegrateFireGUI", "Librari
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "LicensedAnimatGUI", "Libraries\LicensedAnimatGUI\LicensedAnimatGUI.vbproj", "{058DF82A-3C95-41B6-BF81-F30EE747515C}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AnimatTesting", "Libraries\AnimatTesting\AnimatTesting.vbproj", "{0C1F8D9D-7110-4225-8A78-82EDC3DC51DA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -149,16 +147,6 @@ Global
 		{058DF82A-3C95-41B6-BF81-F30EE747515C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{058DF82A-3C95-41B6-BF81-F30EE747515C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{058DF82A-3C95-41B6-BF81-F30EE747515C}.Release|Win32.ActiveCfg = Release|Any CPU
-		{0C1F8D9D-7110-4225-8A78-82EDC3DC51DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C1F8D9D-7110-4225-8A78-82EDC3DC51DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C1F8D9D-7110-4225-8A78-82EDC3DC51DA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{0C1F8D9D-7110-4225-8A78-82EDC3DC51DA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{0C1F8D9D-7110-4225-8A78-82EDC3DC51DA}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{0C1F8D9D-7110-4225-8A78-82EDC3DC51DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C1F8D9D-7110-4225-8A78-82EDC3DC51DA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C1F8D9D-7110-4225-8A78-82EDC3DC51DA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{0C1F8D9D-7110-4225-8A78-82EDC3DC51DA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{0C1F8D9D-7110-4225-8A78-82EDC3DC51DA}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

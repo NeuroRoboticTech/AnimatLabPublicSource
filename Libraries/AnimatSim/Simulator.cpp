@@ -3110,8 +3110,10 @@ RigidBody *Simulator::FindClosestFoodSource(CStdFPoint &oMouthPos, float fltMinR
 **/
 void Simulator::AddToObjectList(AnimatBase *lpItem)
 {
-	if(!FindByID(lpItem->ID(), FALSE))
-		m_aryObjectList.Add(lpItem->ID(), lpItem);
+	if(FindByID(lpItem->ID(), FALSE) != NULL)
+		THROW_PARAM_ERROR(Al_Err_lDuplicateAddOfObject, Al_Err_strDuplicateAddOfObject, "ID", lpItem->ID());
+
+	m_aryObjectList.Add(lpItem->ID(), lpItem);
 }
 
 /**
@@ -3344,7 +3346,7 @@ void Simulator::AddOrganism(string strXml)
 	oXml.FindChildElement("Organism");
 
 	Organism *lpOrg = LoadOrganism(oXml);
-	lpOrg->Initialize();
+	lpOrg->Create();
 }
 
 /**

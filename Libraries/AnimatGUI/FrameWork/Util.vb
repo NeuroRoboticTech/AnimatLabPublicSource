@@ -1395,6 +1395,21 @@ Namespace Framework
             Return strXml
         End Function
 
+        Public Shared Function FindIDInList(ByVal aryList As ArrayList, ByVal strID As String) As Boolean
+
+            For Each oObj As Object In aryList
+                If Util.IsTypeOf(oObj.GetType, GetType(Framework.DataObject)) Then
+                    Dim doObj As Framework.DataObject = DirectCast(oObj, Framework.DataObject)
+
+                    If doObj.ID.Trim.ToUpper = strID.Trim.ToUpper Then
+                        Return True
+                    End If
+                End If
+            Next
+
+            Return False
+        End Function
+
     End Class
 
 End Namespace

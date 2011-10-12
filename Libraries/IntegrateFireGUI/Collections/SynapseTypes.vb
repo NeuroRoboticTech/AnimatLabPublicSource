@@ -39,19 +39,19 @@ Namespace Collections
             End Get
         End Property
 
-        Public Sub Add(ByVal key As [String], ByVal value As IntegrateFireGUI.DataObjects.Behavior.SynapseType, Optional ByVal bCallAddMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
-            If bCallAddMethods Then value.BeforeAddToList(bThrowError)
+        Public Sub Add(ByVal key As [String], ByVal value As IntegrateFireGUI.DataObjects.Behavior.SynapseType, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+            value.BeforeAddToList(bCallSimMethods, bThrowError)
             Dictionary.Add(key, value)
-            If bCallAddMethods Then value.AfterAddToList(bThrowError)
+            value.AfterAddToList(bCallSimMethods, bThrowError)
             Me.IsDirty = True
         End Sub 'Add
 
-        Public Sub Remove(ByVal key As [String], Optional ByVal bCallAddMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+        Public Sub Remove(ByVal key As [String], Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
             Dim value As IntegrateFireGUI.DataObjects.Behavior.SynapseType = Me(key)
 
-            If bCallAddMethods Then value.BeforeRemoveFromList(bThrowError)
+            value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
             Dictionary.Remove(key)
-            If bCallAddMethods Then value.AfterRemoveFromList(bThrowError)
+            value.AfterRemoveFromList(bCallSimMethods, bThrowError)
             Me.IsDirty = True
         End Sub 'Remove
 

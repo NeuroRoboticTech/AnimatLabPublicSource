@@ -713,12 +713,15 @@ Namespace Framework
         Public Overridable Sub AfterCopy()
         End Sub
 
-        Public Overridable Function CanCopy() As Boolean
+        Public Overridable Function CanCopy(ByVal aryItems As ArrayList) As Boolean
             Return True
         End Function
 
         Public Overridable Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
             aryReplaceIDList.Add(Me.ID)
+        End Sub
+
+        Public Overridable Sub VerifyAfterPaste(ByVal aryItems As ArrayList)
         End Sub
 
 #End Region
@@ -836,19 +839,27 @@ Namespace Framework
 
 #Region " Add-Remove to List Methods "
 
-        Public Overridable Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            Me.SignalBeforeAddItem(Me)
+        Public Overridable Sub AddToSim(ByVal bThrowError As Boolean)
         End Sub
 
-        Public Overridable Sub AfterAddToList(Optional ByVal bThrowError As Boolean = True)
+        Public Overridable Sub RemoveFromSim(ByVal bThrowError As Boolean)
+        End Sub
+
+        Public Overridable Sub BeforeAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            Me.SignalBeforeAddItem(Me)
+            If bCallSimMethods Then AddToSim(bThrowError)
+        End Sub
+
+        Public Overridable Sub AfterAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
             Me.SignalAfterAddItem(Me)
         End Sub
 
-        Public Overridable Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+        Public Overridable Sub BeforeRemoveFromList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
             Me.SignalBeforeRemoveItem(Me)
+            If bCallSimMethods Then RemoveFromSim(bThrowError)
         End Sub
 
-        Public Overridable Sub AfterRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+        Public Overridable Sub AfterRemoveFromList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
             Me.SignalAfterRemoveItem(Me)
         End Sub
 

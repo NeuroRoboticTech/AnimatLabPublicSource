@@ -158,7 +158,7 @@ Namespace DataObjects.Behavior
 
             'If we do not find this object then we need to add it.
             If Not Me.Parent Is Nothing AndAlso Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
-                Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "NeuralModule", Me.GetSimulationXml("NeuralModule"), True)
+                Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "NeuralModule", Me.ID, Me.GetSimulationXml("NeuralModule"), True)
             End If
 
         End Sub

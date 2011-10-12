@@ -354,9 +354,6 @@ void DataColumn::Load(CStdXml &oXml)
 	RowIndex(oXml.GetChildInt("Row", m_iColumnIndex));
 
 	oXml.OutOfElem(); //OutOf DataColumn Element
-
-	//This will add this object to the object list of the simulation.
-	m_lpSim->AddToObjectList(this);
 }
 
 /**

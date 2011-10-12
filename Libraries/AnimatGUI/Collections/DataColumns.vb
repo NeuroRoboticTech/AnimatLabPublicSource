@@ -115,29 +115,29 @@ Namespace Collections
             End Set
         End Property
 
-        Public Overloads Sub Add(ByVal key As [String], ByVal value As AnimatGUI.DataObjects.Charting.DataColumn, Optional ByVal bCallAddMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
-            If bCallAddMethods Then value.BeforeAddToList(bThrowError)
+        Public Overloads Sub Add(ByVal key As [String], ByVal value As AnimatGUI.DataObjects.Charting.DataColumn, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+            value.BeforeAddToList(bCallSimMethods, bThrowError)
             MyBase.Add(key, value)
-            If bCallAddMethods Then value.AfterAddToList(bThrowError)
+            value.AfterAddToList(bCallSimMethods, bThrowError)
 
             Me.IsDirty = True
         End Sub 'Add
 
-        Public Overloads Sub Remove(ByVal key As [String], Optional ByVal bCallAddMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+        Public Overloads Sub Remove(ByVal key As [String], Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
             Dim value As AnimatGUI.DataObjects.Charting.DataColumn = Me(key)
 
-            If bCallAddMethods Then value.BeforeRemoveFromList(bThrowError)
+            value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
             MyBase.Remove(key)
-            If bCallAddMethods Then value.AfterRemoveFromList(bThrowError)
+            value.AfterRemoveFromList(bCallSimMethods, bThrowError)
             Me.IsDirty = True
         End Sub 'Remove
 
-        Public Overloads Sub RemoveAt(ByVal iIndex As Integer, Optional ByVal bCallAddMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+        Public Overloads Sub RemoveAt(ByVal iIndex As Integer, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
             Dim value As AnimatGUI.DataObjects.Charting.DataColumn = DirectCast(Me.GetByIndex(iIndex), AnimatGUI.DataObjects.Charting.DataColumn)
 
-            If bCallAddMethods Then value.BeforeRemoveFromList(bThrowError)
+            value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
             MyBase.RemoveAt(iIndex)
-            If bCallAddMethods Then value.AfterRemoveFromList(bThrowError)
+            value.AfterRemoveFromList(bCallSimMethods, bThrowError)
             Me.IsDirty = True
 
         End Sub

@@ -100,19 +100,9 @@ void Organism::Initialize()
 
 void Organism::ResetSimulation()
 {
-	if(m_lpBody)
-	{
-		m_lpBody->ResetSimulation();
-		
-		UpdateData();
-	}
+	Structure::ResetSimulation();
 
 	m_lpNervousSystem->ResetSimulation();
-
-	//We have to call this after method because some objects (ie: muscles and spindles, etc.) depend on other items
-	//already being reset to their original positions. So they must be done first and then these items get reset.
-	if(m_lpBody)
-		m_lpBody->AfterResetSimulation();
 }
 
 /**

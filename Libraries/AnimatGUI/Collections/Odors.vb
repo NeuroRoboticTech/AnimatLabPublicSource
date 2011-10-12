@@ -129,21 +129,21 @@ Namespace Collections
             End Get
         End Property
 
-        Public Overloads Sub Add(ByVal key As [String], ByVal value As AnimatGUI.DataObjects.Physical.Odor, Optional ByVal bCallAddMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+        Public Overloads Sub Add(ByVal key As [String], ByVal value As AnimatGUI.DataObjects.Physical.Odor, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
 
-            If bCallAddMethods Then value.BeforeAddToList(bThrowError)
+            value.BeforeAddToList(bCallSimMethods, bThrowError)
             Dictionary.Add(key, value)
-            If bCallAddMethods Then value.AfterAddToList(bThrowError)
+            value.AfterAddToList(bCallSimMethods, bThrowError)
 
             Me.IsDirty = True
         End Sub 'Add
 
-        Public Overloads Sub Remove(ByVal key As Object, Optional ByVal bCallAddMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+        Public Overloads Sub Remove(ByVal key As Object, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
             Dim value As AnimatGUI.DataObjects.Physical.Odor = DirectCast(Me(DirectCast(key, String)), AnimatGUI.DataObjects.Physical.Odor)
 
-            If bCallAddMethods Then value.BeforeRemoveFromList(bThrowError)
+            value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
             Dictionary.Remove(key)
-            If bCallAddMethods Then value.AfterRemoveFromList(bThrowError)
+            value.AfterRemoveFromList(bCallSimMethods, bThrowError)
             Me.IsDirty = True
         End Sub
 

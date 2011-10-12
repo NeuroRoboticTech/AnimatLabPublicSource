@@ -27,11 +27,11 @@ Namespace Collections
             End Set
         End Property
 
-        Public Function Add(ByVal value As AnimatGUI.DataObjects.ExternalStimuli.Stimulus, Optional ByVal bCallAddMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True) As Integer
+        Public Function Add(ByVal value As AnimatGUI.DataObjects.ExternalStimuli.Stimulus, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True) As Integer
             Me.IsDirty = True
-            If bCallAddMethods Then value.BeforeAddToList(bThrowError)
+            value.BeforeAddToList(bCallSimMethods, bThrowError)
             Dim iVal As Integer = List.Add(value)
-            If bCallAddMethods Then value.AfterAddToList(bThrowError)
+            value.AfterAddToList(bCallSimMethods, bThrowError)
             Return iVal
         End Function 'Add
 
@@ -40,19 +40,19 @@ Namespace Collections
         End Function 'IndexOf
 
 
-        Public Sub Insert(ByVal index As Integer, ByVal value As AnimatGUI.DataObjects.ExternalStimuli.Stimulus, Optional ByVal bCallAddMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+        Public Sub Insert(ByVal index As Integer, ByVal value As AnimatGUI.DataObjects.ExternalStimuli.Stimulus, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
             Me.IsDirty = True
-            If bCallAddMethods Then value.BeforeAddToList(bThrowError)
+            value.BeforeAddToList(bCallSimMethods, bThrowError)
             List.Insert(index, value)
-            If bCallAddMethods Then value.AfterAddToList(bThrowError)
+            value.AfterAddToList(bCallSimMethods, bThrowError)
         End Sub 'Insert
 
 
-        Public Sub Remove(ByVal value As AnimatGUI.DataObjects.ExternalStimuli.Stimulus, Optional ByVal bCallAddMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+        Public Sub Remove(ByVal value As AnimatGUI.DataObjects.ExternalStimuli.Stimulus, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
             Me.IsDirty = True
-            If bCallAddMethods Then value.BeforeRemoveFromList(bThrowError)
+            value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
             List.Remove(value)
-            If bCallAddMethods Then value.AfterRemoveFromList(bThrowError)
+            value.AfterRemoveFromList(bCallSimMethods, bThrowError)
         End Sub 'Remove
 
 
@@ -132,10 +132,10 @@ Namespace Collections
             End Get
         End Property
 
-        Public Sub Add(ByVal key As [String], ByVal value As AnimatGUI.DataObjects.ExternalStimuli.Stimulus, Optional ByVal bCallAddMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
-            If bCallAddMethods Then value.BeforeAddToList(bThrowError)
+        Public Sub Add(ByVal key As [String], ByVal value As AnimatGUI.DataObjects.ExternalStimuli.Stimulus, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+            value.BeforeAddToList(bCallSimMethods, bThrowError)
             Dictionary.Add(key, value)
-            If bCallAddMethods Then value.AfterAddToList(bThrowError)
+            value.AfterAddToList(bCallSimMethods, bThrowError)
             Me.IsDirty = True
         End Sub 'Add
 
@@ -143,12 +143,12 @@ Namespace Collections
             Return Dictionary.Contains(key)
         End Function 'Contains
 
-        Public Sub Remove(ByVal key As [String], Optional ByVal bCallAddMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+        Public Sub Remove(ByVal key As [String], Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
             Dim value As ExternalStimuli.Stimulus = Me(key)
 
-            If bCallAddMethods Then value.BeforeRemoveFromList(bThrowError)
+            value.BeforeRemoveFromList(bCallSimMethods, bThrowError)
             Dictionary.Remove(key)
-            If bCallAddMethods Then value.AfterRemoveFromList(bThrowError)
+            value.AfterRemoveFromList(bCallSimMethods, bThrowError)
             Me.IsDirty = True
         End Sub 'Remove
 

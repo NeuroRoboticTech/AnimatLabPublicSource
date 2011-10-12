@@ -1035,8 +1035,8 @@ Namespace DataObjects.Behavior
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub AfterRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.AfterRemoveFromList(bThrowError)
+        Public Overrides Sub AfterRemoveFromList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            MyBase.AfterRemoveFromList(bCallSimMethods, bThrowError)
             DisconnectLinkEvents()
             DisconnectDiagramEvents()
         End Sub
@@ -1285,6 +1285,34 @@ Namespace DataObjects.Behavior
             Catch ex As System.Exception
                 m_bIsInitialized = False
              End Try
+
+        End Sub
+
+        Public Overrides Sub VerifyAfterPaste(ByVal aryItems As ArrayList)
+            Dim aryRemoveList As New ArrayList
+
+            'We need to go through the in and out links and any that are NOT within the list of items 
+            'being copied then we need to get them out of the in/out lists.
+            For Each strID As String In m_aryLoadingInLinkIDs
+                If Not Util.FindIDInList(aryItems, strID) Then
+                    aryRemoveList.Add(strID)
+                End If
+            Next
+
+            For Each strID As String In aryRemoveList
+                m_aryLoadingInLinkIDs.Remove(strID)
+            Next
+
+            aryRemoveList.Clear()
+            For Each strID As String In m_aryLoadingOutLinkIDs
+                If Not Util.FindIDInList(aryItems, strID) Then
+                    aryRemoveList.Add(strID)
+                End If
+            Next
+
+            For Each strID As String In aryRemoveList
+                m_aryLoadingOutLinkIDs.Remove(strID)
+            Next
 
         End Sub
 

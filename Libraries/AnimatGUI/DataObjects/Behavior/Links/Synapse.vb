@@ -21,19 +21,15 @@ Namespace DataObjects.Behavior.Links
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeAddToList(bThrowError)
-
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
             'Synpases are stored in the destination neuron object.
             If Not Me.Destination Is Nothing Then
-                Util.Application.SimulationInterface.AddItem(Me.Destination.ID, "Synapse", Me.GetSimulationXml("Synapse"), bThrowError)
+                Util.Application.SimulationInterface.AddItem(Me.Destination.ID, "Synapse", Me.ID, Me.GetSimulationXml("Synapse"), bThrowError)
                 InitializeSimulationReferences()
             End If
         End Sub
 
-        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeRemoveFromList(bThrowError)
-
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
             'Synpases are stored in the destination neuron object.
             If Not Me.Destination Is Nothing AndAlso Not m_doInterface Is Nothing Then
                 Util.Application.SimulationInterface.RemoveItem(Me.Destination.ID, "Synapse", Me.ID, bThrowError)
@@ -41,16 +37,16 @@ Namespace DataObjects.Behavior.Links
             End If
         End Sub
 
-        Public Overrides Sub AfterAddToList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.AfterAddToList(bThrowError)
+        Public Overrides Sub AfterAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            MyBase.AfterAddToList(bCallSimMethods, bThrowError)
 
             If Not NeuralModule Is Nothing Then
                 NeuralModule.Links.Add(Me.ID, Me)
             End If
         End Sub
 
-        Public Overrides Sub AfterRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.AfterRemoveFromList(bThrowError)
+        Public Overrides Sub AfterRemoveFromList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            MyBase.AfterRemoveFromList(bCallSimMethods, bThrowError)
 
             If Not NeuralModule Is Nothing AndAlso NeuralModule.Links.Contains(Me.ID) Then
                 NeuralModule.Links.Remove(Me.ID)

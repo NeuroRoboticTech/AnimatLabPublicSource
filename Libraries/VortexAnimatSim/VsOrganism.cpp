@@ -64,11 +64,6 @@ osg::Group *VsOrganism::ParentOSG()
 
 void VsOrganism::Create()
 {
-	//m_osgGeometry = CreateSphereGeometry(15, 15,  m_lpThisST->Size());
-	//osg::Geode *osgGroup = new osg::Geode;
-	//osgGroup->addDrawable(m_osgGeometry.get());
-	//m_osgNode = osgGroup;
-
 	CreateItem();
 
 	Organism::Create();
@@ -90,8 +85,6 @@ void VsOrganism::UpdatePositionAndRotationFromMatrix()
 	VsMovableItem::UpdatePositionAndRotationFromMatrix();
 
 	m_lpVsBody->EndGripDrag();
-
-	//m_lpThisST->UpdatePhysicsPosFromGraphics();
 }
 
 	}			// Environment

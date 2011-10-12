@@ -145,6 +145,19 @@ Namespace DataObjects.Physical
 
         End Sub
 
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList)
+
+            m_gnReceptiveFieldGain.AddToReplaceIDList(aryReplaceIDList)
+            m_gnReceptiveCurrentGain.AddToReplaceIDList(aryReplaceIDList)
+
+            'TODO: Do i need to do the fields, field pairs here???
+            'For Each deEntry As DictionaryEntry In m_aryDataColumns
+            '    Dim doColumn As DataObjects.Charting.DataColumn = DirectCast(deEntry.Value, DataObjects.Charting.DataColumn)
+            '    doColumn.AddToReplaceIDList(aryReplaceIDList)
+            'Next
+        End Sub
+
         Public Overrides Sub ClearIsDirty()
             MyBase.ClearIsDirty()
 
@@ -312,17 +325,14 @@ Namespace DataObjects.Physical
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
             If Not m_doPart Is Nothing Then
-                MyBase.BeforeAddToList(bThrowError)
-                Util.Application.SimulationInterface.AddItem(m_doPart.ID, "ContactSensor", Me.GetSimulationXml("ContactSensor"), bThrowError)
+                Util.Application.SimulationInterface.AddItem(m_doPart.ID, "ContactSensor", Me.ID, Me.GetSimulationXml("ContactSensor"), bThrowError)
                 InitializeSimulationReferences()
             End If
         End Sub
 
-        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeRemoveFromList(bThrowError)
-
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
             If Not m_doInterface Is Nothing AndAlso Not m_doPart Is Nothing Then
                 Util.Application.SimulationInterface.RemoveItem(m_doPart.ID, "ContactSensor", Me.ID, bThrowError)
             End If

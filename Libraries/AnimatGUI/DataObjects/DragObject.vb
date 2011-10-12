@@ -218,14 +218,6 @@ Namespace DataObjects
             End If
         End Function
 
-        'Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
-        '                                    ByVal doRoot As AnimatGUI.Framework.DataObject)
-        '    MyBase.CloneInternal(doOriginal, bCutData, doRoot)
-
-        '    Dim bnOrig As DragObject = DirectCast(doOriginal, DragObject)
-
-        'End Sub
-
 #End Region
 
     End Class

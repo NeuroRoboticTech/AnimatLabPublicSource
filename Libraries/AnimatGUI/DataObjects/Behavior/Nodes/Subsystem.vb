@@ -534,7 +534,7 @@ Namespace DataObjects.Behavior.Nodes
                     bnNode.Organism = Me.Organism
                     bnNode.ParentSubsystem = Me
                     bnNode.LoadData(oXml)
-                    Me.BehavioralNodes.Add(bnNode.ID, bnNode)
+                    Me.BehavioralNodes.Add(bnNode.ID, bnNode, False)
                 Next
                 oXml.OutOfElem() 'Outof Nodes Element
 
@@ -546,7 +546,7 @@ Namespace DataObjects.Behavior.Nodes
                     blLink.Organism = Me.Organism
                     blLink.ParentSubsystem = Me
                     blLink.LoadData(oXml)
-                    Me.BehavioralLinks.Add(blLink.ID, blLink)
+                    Me.BehavioralLinks.Add(blLink.ID, blLink, False)
                 Next
                 oXml.OutOfElem() 'Outof Links Element
 

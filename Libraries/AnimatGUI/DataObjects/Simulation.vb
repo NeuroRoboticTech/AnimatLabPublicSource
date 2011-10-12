@@ -429,6 +429,7 @@ Namespace DataObjects
 
                 For Each doTool As Forms.Tools.ToolForm In Util.Application.ToolPlugins
                     Dim mcTool As New System.Windows.Forms.ToolStripMenuItem(doTool.Name, doTool.TabImage, New EventHandler(AddressOf Me.OnAddToolViewer))
+                    mcTool.Tag = doTool
                     mcAddTool.DropDown.Items.Add(mcTool)
                 Next
 

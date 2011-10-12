@@ -187,13 +187,13 @@ Namespace DataObjects.Physical.Bodies
         '''
         ''' \details A plane can only be added as the root body of a structure or to another plane. We must check
         ''' that here before it is added to the list. If this is not a valid case the throw an exception.
-        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
+        Public Overrides Sub BeforeAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
             If Not ((Me.IsRoot AndAlso Util.IsTypeOf(Me.Parent.GetType(), GetType(PhysicalStructure), False)) OrElse _
                (Util.IsTypeOf(Me.Parent.GetType(), GetType(Plane), False)) OrElse (Util.IsTypeOf(Me.Parent.GetType(), GetType(Terrain), False))) Then
                 Throw New System.Exception("You can only add a plane as the root body of a structure, or to another plane or terrain object.")
             End If
 
-            MyBase.BeforeAddToList(bThrowError)
+            MyBase.BeforeAddToList(bCallSimMethods, bThrowError)
         End Sub
 
 #End Region

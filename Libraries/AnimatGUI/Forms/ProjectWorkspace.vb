@@ -223,6 +223,16 @@ Namespace Forms
             Return False
         End Function
 
+        Public Overridable Sub ClearSelections()
+
+            For Each tnNode As Crownwood.DotNetMagic.Controls.Node In Me.TreeView.SelectedNodes
+                If Not tnNode.Tag Is Nothing AndAlso Util.IsTypeOf(tnNode.Tag.GetType, GetType(AnimatGUI.Framework.DataObject), False) Then
+                    Dim doObj As Framework.DataObject = DirectCast(tnNode.Tag, Framework.DataObject)
+                    doObj.DeselectItem()
+                End If
+            Next
+        End Sub
+
 #End Region
 
 #Region " Events "

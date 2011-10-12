@@ -52,7 +52,6 @@ Namespace DataObjects.Behavior.Nodes
                 If Not Value Is Nothing Then
                     If Not Value Is Nothing Then
                         SetSimData("Gain", Value.GetSimulationXml("Gain", Me), True)
-                        'Util.Application.SimulationInterface.AddItem(Me.ID, "Gain", Value.GetSimulationXml("Gain", Me), True)
                         Value.InitializeSimulationReferences()
                     End If
 
@@ -178,6 +177,12 @@ Namespace DataObjects.Behavior.Nodes
 
             m_gnGain = DirectCast(bnOrig.m_gnGain.Clone(Me, bCutData, doRoot), AnimatGUI.DataObjects.Gain)
             m_bEnabled = bnOrig.m_bEnabled
+        End Sub
+
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList)
+
+            m_gnGain.AddToReplaceIDList(aryReplaceIDList)
         End Sub
 
         Public Overrides Sub CheckCanAttachAdapter()
@@ -309,27 +314,45 @@ Namespace DataObjects.Behavior.Nodes
             m_gnGain.InitializeSimulationReferences()
         End Sub
 
+        Public Overrides Function CanCopy(ByVal aryItems As ArrayList) As Boolean
+
+            If m_bnOrigin Is Nothing OrElse m_bnDestination Is Nothing Then
+                Return False
+            End If
+
+            If Not Util.FindIDInList(aryItems, m_bnOrigin.ID) Then
+                Return False
+            End If
+
+            If Not Util.FindIDInList(aryItems, m_bnDestination.ID) Then
+                Return False
+            End If
+
+            Return True
+        End Function
+
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeRemoveFromList(bThrowError)
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+        End Sub
 
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
             If Not NeuralModule Is Nothing AndAlso Not m_doInterface Is Nothing Then
                 Util.Application.SimulationInterface.RemoveItem(Me.NeuralModule.ID(), "Adapter", Me.ID, bThrowError)
             End If
             m_doInterface = Nothing
         End Sub
 
-        Public Overrides Sub AfterAddToList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.AfterAddToList(bThrowError)
+        Public Overrides Sub AfterAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            MyBase.AfterAddToList(bCallSimMethods, bThrowError)
 
             If Not NeuralModule Is Nothing Then
                 NeuralModule.Nodes.Add(Me.ID, Me)
             End If
         End Sub
 
-        Public Overrides Sub AfterRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.AfterRemoveFromList(bThrowError)
+        Public Overrides Sub AfterRemoveFromList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            MyBase.AfterRemoveFromList(bCallSimMethods, bThrowError)
 
             If Not NeuralModule Is Nothing AndAlso NeuralModule.Nodes.Contains(Me.ID) Then
                 NeuralModule.Nodes.Remove(Me.ID)
@@ -341,7 +364,7 @@ Namespace DataObjects.Behavior.Nodes
                 NeuralModule.VerifyExistsInSim()
                 If Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
                     'If we just created this neuralmodule in the sim then this object might already exist now. We should only add it if it does not exist.
-                    Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID(), "Adapter", Me.GetSimulationXml("Adapter"), bThrowError)
+                    Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID(), "Adapter", Me.ID, Me.GetSimulationXml("Adapter"), bThrowError)
                 End If
             End If
             InitializeSimulationReferences()

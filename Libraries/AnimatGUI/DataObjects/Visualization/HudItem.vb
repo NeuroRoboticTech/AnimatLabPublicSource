@@ -64,17 +64,14 @@ Namespace DataObjects.Visualization
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeAddToList(bThrowError)
-
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
             If Not Util.Simulation Is Nothing Then
-                Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "HudItem", Me.GetSimulationXml("HudItem"), bThrowError)
+                Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "HudItem", Me.ID, Me.GetSimulationXml("HudItem"), bThrowError)
                 InitializeSimulationReferences()
             End If
         End Sub
 
-        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeRemoveFromList(bThrowError)
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
             If Not Util.Simulation Is Nothing AndAlso Not m_doInterface Is Nothing Then
                 Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, "HudItem", Me.ID, bThrowError)
             End If

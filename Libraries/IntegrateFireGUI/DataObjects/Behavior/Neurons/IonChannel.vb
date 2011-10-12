@@ -471,6 +471,15 @@ Namespace DataObjects.Behavior.Neurons
 
         End Sub
 
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList)
+
+            m_gnMinf.AddToReplaceIDList(aryReplaceIDList)
+            m_gnTm.AddToReplaceIDList(aryReplaceIDList)
+            m_gnHinf.AddToReplaceIDList(aryReplaceIDList)
+            m_gnTh.AddToReplaceIDList(aryReplaceIDList)
+        End Sub
+
         Public Overrides Sub ClearIsDirty()
             MyBase.ClearIsDirty()
 
@@ -489,18 +498,14 @@ Namespace DataObjects.Behavior.Neurons
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeAddToList(bThrowError)
-
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
             If Not Me.Parent Is Nothing Then
-                Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "IonChannel", Me.GetSimulationXml("IonChannel"), bThrowError)
+                Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "IonChannel", Me.ID, Me.GetSimulationXml("IonChannel"), bThrowError)
                 InitializeSimulationReferences()
             End If
         End Sub
 
-        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeRemoveFromList(bThrowError)
-
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
             If Not Me.Parent Is Nothing AndAlso Not m_doInterface Is Nothing Then
                 Util.Application.SimulationInterface.RemoveItem(Me.Parent.ID, "IonChannel", Me.ID, bThrowError)
             End If

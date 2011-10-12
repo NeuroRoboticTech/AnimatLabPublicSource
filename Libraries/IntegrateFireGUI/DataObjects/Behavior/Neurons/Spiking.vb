@@ -382,6 +382,18 @@ Namespace DataObjects.Behavior.Neurons
 
         End Sub
 
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList)
+
+            m_atCaActivation.AddToReplaceIDList(aryReplaceIDList)
+            m_atCaDeactivation.AddToReplaceIDList(aryReplaceIDList)
+
+            Dim doChannel As DataObjects.Behavior.Neurons.IonChannel
+            For Each deEntry As DictionaryEntry In m_aryIonChannels
+                doChannel = DirectCast(deEntry.Value, DataObjects.Behavior.Neurons.IonChannel)
+                doChannel.AddToReplaceIDList(aryReplaceIDList)
+            Next
+        End Sub
 
         Public Overrides Function SelectLinkType(ByRef bnOrigin As AnimatGUI.DataObjects.Behavior.Node, _
                                                  ByRef bnDestination As AnimatGUI.DataObjects.Behavior.Node, _

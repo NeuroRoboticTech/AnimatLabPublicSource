@@ -1859,6 +1859,7 @@ Namespace Forms
             Dim strFile As String
             Dim strFailedLoad As String = ""
             Dim iFailedLoad As Integer = 0
+            Dim bDebugOutput As Boolean = False
 
             Try
                 Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "Beginning to catalog plugin modules")
@@ -1916,6 +1917,7 @@ Namespace Forms
                                 For Each tpClass In aryTypes
 
                                     If Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Behavior.Node)) Then
+                                        If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Behavior.Node")
                                         Dim bnNode As DataObjects.Behavior.Node = CreateNode(assemModule, tpClass, Nothing)
                                         If Not bnNode Is Nothing Then
                                             m_aryBehavioralNodes.Add(bnNode)
@@ -1923,6 +1925,7 @@ Namespace Forms
                                             bAddModule = True
                                         End If
                                     ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Behavior.Link)) Then
+                                        If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Behavior.Link")
                                         Dim blLink As DataObjects.Behavior.Link = CreateLink(assemModule, tpClass, Nothing)
                                         If Not blLink Is Nothing Then
                                             m_aryBehavioralLinks.Add(blLink)
@@ -1930,6 +1933,7 @@ Namespace Forms
                                             bAddModule = True
                                         End If
                                     ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Behavior.NeuralModule)) Then
+                                        If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Behavior.NeuralModule")
                                         Dim nmModule As DataObjects.Behavior.NeuralModule = CreateNeuralModule(assemModule, tpClass, Nothing)
                                         If Not nmModule Is Nothing Then
                                             m_aryNeuralModules.Add(nmModule.ClassName, nmModule)
@@ -1937,12 +1941,14 @@ Namespace Forms
                                             bAddModule = True
                                         End If
                                     ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.Forms.Tools.ToolForm)) Then
+                                        If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.Forms.Tools.ToolForm")
                                         Dim frmTool As Forms.Tools.ToolForm = CreateToolForm(assemModule, tpClass, Nothing)
                                         If Not frmTool Is Nothing Then
                                             m_aryToolPlugins.Add(frmTool)
                                         End If
                                     ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Physical.RigidBody)) Then
                                         Try
+                                            If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Physical.RigidBody")
                                             Dim doPart As AnimatGUI.DataObjects.Physical.RigidBody = CreateRigidBody(assemModule, tpClass, Nothing)
                                             If Not doPart Is Nothing Then
 
@@ -1956,6 +1962,7 @@ Namespace Forms
                                         End Try
                                     ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Physical.Joint)) Then
                                         Try
+                                            If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Physical.Joint")
                                             Dim doPart As AnimatGUI.DataObjects.Physical.Joint = CreateJoint(assemModule, tpClass, Nothing)
                                             If Not doPart Is Nothing Then
 
@@ -1968,18 +1975,21 @@ Namespace Forms
                                             Util.ShowMessage("Error loading joint part")
                                         End Try
                                     ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Gain)) Then
+                                        If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Gain")
                                         Dim doGain As DataObjects.Gain = CreateGain(assemModule, tpClass, Nothing)
                                         If Not doGain Is Nothing Then
                                             m_aryGainTypes.Add(doGain)
                                             m_aryAllDataTypes.Add(doGain)
                                         End If
                                     ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.ProgramModule)) Then
+                                        If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.ProgramModule")
                                         Dim doModule As DataObjects.ProgramModule = CreateProgramModule(assemModule, tpClass, Nothing)
                                         If Not doModule Is Nothing Then
                                             m_aryProgramModules.Add(doModule)
                                             m_aryAllDataTypes.Add(doModule)
                                         End If
                                     ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.ExternalStimuli.Stimulus), False) Then
+                                        If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.ExternalStimuli.Stimulus")
                                         Dim doStim As DataObjects.ExternalStimuli.Stimulus = CreateExternalStimuli(assemModule, tpClass, Nothing)
                                         If Not doStim Is Nothing Then
                                             m_aryExternalStimuli.Add(doStim, False)
@@ -4116,7 +4126,7 @@ Namespace Forms
                     Dim colObjects As New AnimatGUI.Collections.DataObjects(Nothing)
                     frmType.SelectedItem.FindChildrenOfType(frmType.SelectedType, colObjects)
 
-                    Util.ProjectWorkspace.TreeView.ClearSelection()
+                    Util.ProjectWorkspace.ClearSelections()
 
                     Dim doPart As AnimatGUI.DataObjects.Physical.BodyPart
                     For Each doData As Framework.DataObject In colObjects
@@ -4986,7 +4996,7 @@ Namespace Forms
 
                 'Deselect all currently selected items so that the property grids do not cause problems when closing.
                 If Not Util.ProjectWorkspace Is Nothing AndAlso Not Util.ProjectWorkspace.TreeView Is Nothing AndAlso Not Util.ProjectWorkspace.TreeView.SelectedNodes Is Nothing Then
-                    Util.ProjectWorkspace.TreeView.SelectedNodes.Clear()
+                    Util.ProjectWorkspace.ClearSelections()
                 End If
 
                 'Shutdown the simulation if it is running. Must shut this down before closing the other stuff below or it throws an exception.

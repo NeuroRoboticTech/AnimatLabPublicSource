@@ -1339,6 +1339,7 @@ Namespace DataObjects.Physical
 
                 m_iNewOrganismCount = m_iNewOrganismCount + 1
                 doOrganism.Name = "Organism_" & m_iNewOrganismCount
+                doOrganism.InitializeAfterLoad()
                 Me.Organisms.Add(doOrganism.ID, doOrganism)
 
                 doOrganism.CreateWorkspaceTreeView(Me, m_tnOrganisms)
@@ -1358,6 +1359,7 @@ Namespace DataObjects.Physical
 
                 m_iNewStructureCount = m_iNewStructureCount + 1
                 doStructure.Name = "Structure_" & m_iNewStructureCount
+                doStructure.InitializeAfterLoad()
                 Me.Structures.Add(doStructure.ID, doStructure)
 
                 doStructure.CreateWorkspaceTreeView(Me, m_tnStructures)

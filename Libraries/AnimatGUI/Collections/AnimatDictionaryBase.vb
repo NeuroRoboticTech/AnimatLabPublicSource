@@ -162,6 +162,17 @@ Namespace Collections
             'Debug.WriteLine("")
         End Sub
 
+        Public Overridable Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
+            Dim doVal As AnimatGUI.Framework.DataObject
+            For Each deEntry As DictionaryEntry In Me
+                If TypeOf deEntry.Value Is AnimatGUI.Framework.DataObject Then
+                    doVal = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                    doVal.AddToReplaceIDList(aryReplaceIDList)
+                End If
+            Next
+
+        End Sub
+
     End Class
 
 End Namespace

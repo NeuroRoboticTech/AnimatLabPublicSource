@@ -436,6 +436,13 @@ Namespace DataObjects.Physical
 
         End Sub
 
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList)
+
+            m_bnRootSubSystem.AddToReplaceIDList(aryReplaceIDList)
+            m_aryNeuralModules.AddToReplaceIDList(aryReplaceIDList)
+        End Sub
+
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
                                         ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatGUI.Framework.DataObject
             Dim doItem As New Organism(doParent)

@@ -88,17 +88,14 @@ Namespace DataObjects.Physical
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
             If Not Util.Simulation Is Nothing Then
-                MyBase.BeforeAddToList(bThrowError)
-                Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "OdorType", Me.GetSimulationXml("OdorType"), bThrowError)
+                Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "OdorType", Me.ID, Me.GetSimulationXml("OdorType"), bThrowError)
                 InitializeSimulationReferences()
             End If
         End Sub
 
-        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeRemoveFromList(bThrowError)
-
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
             If Not m_doInterface Is Nothing AndAlso Not Util.Simulation Is Nothing Then
                 Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, "OdorType", Me.ID, bThrowError)
             End If

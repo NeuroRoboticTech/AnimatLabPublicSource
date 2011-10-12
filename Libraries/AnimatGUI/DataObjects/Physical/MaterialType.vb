@@ -44,8 +44,8 @@ Namespace DataObjects.Physical
             Return doItem
         End Function
 
-        Public Overrides Sub AfterAddToList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.AfterAddToList(bThrowError)
+        Public Overrides Sub AfterAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            MyBase.AfterAddToList(bCallSimMethods, bThrowError)
             'temporary code
             Dim colPairs As MaterialPairs
             'colPairs = get collection of materialpairs 

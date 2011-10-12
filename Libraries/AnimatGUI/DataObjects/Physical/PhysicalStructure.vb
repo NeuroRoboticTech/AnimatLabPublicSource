@@ -231,6 +231,12 @@ Namespace DataObjects.Physical
 
         End Sub
 
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList)
+
+            Me.RootBody.AddToReplaceIDList(aryReplaceIDList)
+        End Sub
+
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
                                         ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatGUI.Framework.DataObject
             Dim doItem As New PhysicalStructure(doParent)
@@ -309,7 +315,7 @@ Namespace DataObjects.Physical
             rbRootToAdd.IsContactSensor = False
             rbRootToAdd.Freeze = False
             rbRootToAdd.BeforeAddBody()
-            rbRootToAdd.BeforeAddToList()
+            rbRootToAdd.BeforeAddToList(True, True)
 
             m_dbRoot = rbRootToAdd
 
@@ -321,7 +327,7 @@ Namespace DataObjects.Physical
                 m_dbRoot.CreateWorkspaceTreeView(Me, m_tnBodyPlanNode)
             End If
 
-            m_dbRoot.AfterAddToList()
+            m_dbRoot.AfterAddToList(True, True)
             rbRootToAdd.AfterAddBody()
 
             m_dbRoot.SelectItem()
@@ -373,9 +379,9 @@ Namespace DataObjects.Physical
                 If TypeOf bpPart Is AnimatGUI.DataObjects.Physical.RigidBody Then
 
                     If bpPart Is m_dbRoot Then
-                        bpPart.BeforeRemoveFromList()
+                        bpPart.BeforeRemoveFromList(True, True)
                         m_dbRoot = Nothing
-                        bpPart.AfterRemoveFromList()
+                        bpPart.AfterRemoveFromList(True, True)
                     Else
                         Dim bpParent As RigidBody = DirectCast(bpPart.Parent, RigidBody)
                         If bpParent.ChildBodies.Contains(bpPart.ID) Then
@@ -748,16 +754,14 @@ Namespace DataObjects.Physical
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeAddToList(bThrowError)
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
             If Me.IsInitialized Then
-                Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, Me.TypeName, Me.GetSimulationXml(Me.TypeName), bThrowError)
+                Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, Me.TypeName, Me.ID, Me.GetSimulationXml(Me.TypeName), bThrowError)
                 InitializeSimulationReferences()
             End If
         End Sub
 
-        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeRemoveFromList(bThrowError)
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
             If Not Util.Simulation Is Nothing AndAlso Not m_doInterface Is Nothing Then
                 Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, Me.TypeName, Me.ID, bThrowError)
             End If

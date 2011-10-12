@@ -64,7 +64,11 @@ Namespace DataObjects.Behavior
         <Browsable(False)> _
         Public Overrides ReadOnly Property NeuralModule() As AnimatGUI.DataObjects.Behavior.NeuralModule
             Get
-                Return DirectCast(Me.Parent, AnimatGUI.DataObjects.Behavior.NeuralModule)
+                If Not Me.Parent Is Nothing AndAlso Util.IsTypeOf(Me.Parent.GetType, GetType(AnimatGUI.DataObjects.Behavior.NeuralModule), False) Then
+                    Return DirectCast(Me.Parent, AnimatGUI.DataObjects.Behavior.NeuralModule)
+                Else
+                    Return Nothing
+                End If
             End Get
         End Property
 
@@ -143,24 +147,40 @@ Namespace DataObjects.Behavior
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            'We do not want to call the base class here because we are doing a completely different simint.addItem
-            Me.SignalBeforeAddItem(Me)
-
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
             If Not Me.NeuralModule Is Nothing Then
-                Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID, "SynapseType", Me.GetSimulationXml("SynapseType"), bThrowError)
+                Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID, "SynapseType", Me.ID, Me.GetSimulationXml("SynapseType"), bThrowError)
                 InitializeSimulationReferences()
             End If
         End Sub
 
-        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            'We do not want to call the base class here because we are doing a completely different simint.RemoveItem
-            Me.SignalBeforeRemoveItem(Me)
-
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
             If Not Me.NeuralModule Is Nothing AndAlso Not m_doInterface Is Nothing Then
                 Util.Application.SimulationInterface.RemoveItem(Me.NeuralModule.ID, "SynapseType", Me.ID, bThrowError)
             End If
             m_doInterface = Nothing
+        End Sub
+
+        Public Overrides Sub BeforeAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            'We do not want to call the base class here because we are doing a completely different simint.addItem
+            Me.SignalBeforeAddItem(Me)
+
+            If bCallSimMethods Then AddToSim(bThrowError)
+        End Sub
+
+        Public Overrides Sub AfterAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            Me.SignalAfterAddItem(Me)
+        End Sub
+
+        Public Overrides Sub BeforeRemoveFromList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            'We do not want to call the base class here because we are doing a completely different simint.RemoveItem
+            Me.SignalBeforeRemoveItem(Me)
+
+            If bCallSimMethods Then RemoveFromSim(bThrowError)
+        End Sub
+
+        Public Overrides Sub AfterRemoveFromList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            Me.SignalAfterRemoveItem(Me)
         End Sub
 
 #End Region

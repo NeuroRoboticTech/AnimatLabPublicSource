@@ -804,10 +804,14 @@ Namespace DataObjects.Behavior
             End If
         End Sub
 
-        Public Overrides Function CanCopy() As Boolean
+        Public Overrides Function CanCopy(ByVal aryItems As ArrayList) As Boolean
 
             'We should only attempt to copy a synapse if both its origin and destination nodes are also being copied.
             If m_bnOrigin Is Nothing OrElse m_bnDestination Is Nothing Then
+                Return False
+            End If
+
+            If Not m_bnOrigin.CanCopy(aryItems) OrElse Not m_bnDestination.CanCopy(aryItems) Then
                 Return False
             End If
 
@@ -875,7 +879,7 @@ Namespace DataObjects.Behavior
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub AfterRemoveFromList(Optional ByVal bThrowError As Boolean = True)
+        Public Overrides Sub AfterRemoveFromList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
             DisconnectNodeEvents()
             DisconnectDiagramEvents()
         End Sub

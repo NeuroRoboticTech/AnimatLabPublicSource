@@ -468,6 +468,15 @@ Namespace DataObjects.Charting
             m_WorkspaceImage = DirectCast(doOrigAxis.m_WorkspaceImage.Clone, Image)
         End Sub
 
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList)
+
+            For Each deEntry As DictionaryEntry In m_aryDataColumns
+                Dim doColumn As DataObjects.Charting.DataColumn = DirectCast(deEntry.Value, DataObjects.Charting.DataColumn)
+                doColumn.AddToReplaceIDList(aryReplaceIDList)
+            Next
+        End Sub
+
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
                                         ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatGUI.Framework.DataObject
             Dim doAxis As New Axis(doParent)

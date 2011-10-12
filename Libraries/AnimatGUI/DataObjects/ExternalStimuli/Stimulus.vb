@@ -428,14 +428,12 @@ Namespace DataObjects.ExternalStimuli
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeAddToList(bThrowError)
-            Util.Application.SimulationInterface.AddItem("Simulator", "Stimulus", Me.GetSimulationXml("Stimulus"), bThrowError)
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+            Util.Application.SimulationInterface.AddItem("Simulator", "Stimulus", Me.ID, Me.GetSimulationXml("Stimulus"), bThrowError)
             InitializeSimulationReferences()
         End Sub
 
-        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeRemoveFromList(bThrowError)
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
             If Not m_doInterface Is Nothing Then
                 Util.Application.SimulationInterface.RemoveItem("Simulator", "Stimulus", Me.ID, bThrowError)
             End If

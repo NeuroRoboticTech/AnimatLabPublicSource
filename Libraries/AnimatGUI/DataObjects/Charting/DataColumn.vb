@@ -475,16 +475,14 @@ Namespace DataObjects.Charting
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeAddToList(bThrowError)
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
             If Not Me.ParentAxis Is Nothing AndAlso Not Me.ParentAxis.ParentChart Is Nothing Then
-                Util.Application.SimulationInterface.AddItem(Me.ParentAxis.ParentChart.ID, "DataColumn", Me.GetSimulationXml("DataColumn"), bThrowError)
+                Util.Application.SimulationInterface.AddItem(Me.ParentAxis.ParentChart.ID, "DataColumn", Me.ID, Me.GetSimulationXml("DataColumn"), bThrowError)
                 InitializeSimulationReferences()
             End If
         End Sub
 
-        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeRemoveFromList(bThrowError)
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
             If Not Me.ParentAxis Is Nothing AndAlso Not Me.ParentAxis.ParentChart Is Nothing AndAlso Not m_doInterface Is Nothing Then
                 Util.Application.SimulationInterface.RemoveItem(Me.ParentAxis.ParentChart.ID, "DataColumn", Me.ID, bThrowError)
             End If

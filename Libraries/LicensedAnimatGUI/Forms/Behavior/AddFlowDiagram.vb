@@ -316,9 +316,10 @@ Namespace Forms.Behavior
             '
             'm_ctrlAddFlow
             '
-            Me.m_ctrlAddFlow.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                        Or System.Windows.Forms.AnchorStyles.Left) _
-                        Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.m_ctrlAddFlow.Dock = System.Windows.Forms.DockStyle.Fill
+            'Me.m_ctrlAddFlow.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            '            Or System.Windows.Forms.AnchorStyles.Left) _
+            '            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.m_ctrlAddFlow.Location = New System.Drawing.Point(8, 8)
             Me.m_ctrlAddFlow.Name = "m_ctrlAddFlow"
             Me.m_ctrlAddFlow.Size = New System.Drawing.Size(192, 200)
@@ -2407,6 +2408,7 @@ Namespace Forms.Behavior
                         Dim afNode As Lassalle.Flow.Node = FindAddFlowNode(bnNode.ID)
                         afNode.Tag = bnNode.ID
                         bnNode.Tag = afNode
+                        UpdateAddFlowNode(afNode, bnNode)
                     Catch ex As Exception
                         aryDeleteNodes.Add(bnNode)
                     End Try
@@ -2421,6 +2423,7 @@ Namespace Forms.Behavior
                         Dim afLink As Lassalle.Flow.Link = FindAddFlowLink(blLink.ID)
                         afLink.Tag = blLink.ID
                         blLink.Tag = afLink
+                        UpdateAddFlowLink(afLink, blLink)
                     Catch ex As Exception
                         aryDeleteNodes.Add(blLink)
                     End Try
@@ -2699,9 +2702,9 @@ Namespace Forms.Behavior
 
             'First lets sort the selected items into nodes and links and generate temp selected ids
             Dim aryReplaceIDs As New ArrayList
-            Dim aryNodes As New AnimatGUI.Collections.Nodes(Nothing)
-            Dim aryLinks As New AnimatGUI.Collections.Links(Nothing)
-            Dim aryItems As New AnimatGUI.Collections.BehaviorItems(Nothing)
+            Dim aryNodes As New ArrayList
+            Dim aryLinks As New ArrayList
+            Dim aryItems As New ArrayList
             Dim bdData As AnimatGUI.DataObjects.Behavior.Data
             Dim aryData As New ArrayList
             Dim aryDeselect As New ArrayList
@@ -2716,11 +2719,18 @@ Namespace Forms.Behavior
                 bdData.BeforeCopy()
             Next
 
+            'First get a list of all selected items.
             aryItems.Clear()
             For Each afItem As Lassalle.Flow.Item In m_ctrlAddFlow.SelectedItems
                 bdData = FindItem(DirectCast(afItem.Tag, String))
+                aryItems.Add(bdData)
+            Next
 
-                If bdData.CanCopy() Then
+            'Now check to make sure each object can be copied, and sort into appropriate lists.
+            For Each afItem As Lassalle.Flow.Item In m_ctrlAddFlow.SelectedItems
+                bdData = FindItem(DirectCast(afItem.Tag, String))
+
+                If bdData.CanCopy(aryItems) Then
                     If TypeOf bdData Is AnimatGUI.DataObjects.Behavior.Node Then
                         aryNodes.Add(DirectCast(bdData, AnimatGUI.DataObjects.Behavior.Node))
                     ElseIf TypeOf bdData Is AnimatGUI.DataObjects.Behavior.Link Then
@@ -2728,8 +2738,6 @@ Namespace Forms.Behavior
                     Else
                         Throw New System.Exception("An unkown data type was found in the diagram named '" & bdData.Name & "' of type '" & bdData.GetType.FullName & "'")
                     End If
-
-                    aryItems.Add(bdData)
 
                     bdData.AddToReplaceIDList(aryReplaceIDs)
                 Else
@@ -2826,10 +2834,13 @@ Namespace Forms.Behavior
             oXml.FindElement("Diagram")
 
             'Now lets go through and load each of the child diagrams.
-            Dim aryItems As New AnimatGUI.Collections.BehaviorItems(Nothing)
+            Dim aryItems As New ArrayList
+            Dim aryNodes As New ArrayList
+            Dim aryLinks As New ArrayList
 
-            LoadPastedNodes(oXml, aryItems)
-            LoadPastedLinks(oXml, aryItems)
+            LoadPastedNodes(oXml, aryItems, aryNodes)
+            LoadPastedLinks(oXml, aryItems, aryLinks)
+            VerifyPastedData(aryItems)
 
             Dim fltMinX As Single = -1
             Dim fltMinY As Single = -1
@@ -2837,25 +2848,28 @@ Namespace Forms.Behavior
 
             'we need to go through and initialize all the nodes/links after loading.
             Me.Subsystem.InitializeAfterLoad()
-            Me.Subsystem.InitializeSimulationReferences()
+            AddPastedToSim(aryNodes, aryLinks)
 
             'InitializeImageDataAfterLoad(aryItems)
 
+            Util.ProjectWorkspace.ClearSelections()
             For Each bdItem As AnimatGUI.DataObjects.Behavior.Data In aryItems
                 bdItem.CheckForErrors()
+                bdItem.SelectItem(True)
             Next
 
             'Now lets move the addflow items so that they are positioned near the mouse.
             ' We move a little each pasted node and link so that they do not recover
             ' the original items.
-            If Not bInPlace Then
+            If bInPlace Then
                 PositionPastedToInPlace(aryItems, ptBase, fltMinX, fltMinY)
             End If
 
         End Sub
 
         Protected Sub LoadPastedNodes(ByRef oXml As AnimatGUI.Interfaces.StdXml, _
-                                      ByVal aryItems As AnimatGUI.Collections.BehaviorItems)
+                                      ByVal aryItems As ArrayList, _
+                                      ByVal aryNodes As ArrayList)
 
             Dim strAssemblyFile As String
             Dim strClassName As String
@@ -2876,8 +2890,9 @@ Namespace Forms.Behavior
                 bnNode.LoadData(oXml)
 
                 bnNode.BeforeAddNode()
-                Me.Subsystem.BehavioralNodes.Add(bnNode.ID, bnNode)
+                Me.Subsystem.BehavioralNodes.Add(bnNode.ID, bnNode, False)
                 aryItems.Add(bnNode)
+                aryNodes.Add(bnNode)
                 bnNode.AfterAddNode()
             Next
             oXml.OutOfElem() 'Outof Nodes Element
@@ -2885,7 +2900,9 @@ Namespace Forms.Behavior
         End Sub
 
         Protected Sub LoadPastedLinks(ByRef oXml As AnimatGUI.Interfaces.StdXml, _
-                                      ByVal aryItems As AnimatGUI.Collections.BehaviorItems)
+                                      ByVal aryItems As ArrayList, _
+                                      ByVal aryLinks As ArrayList)
+
             Dim strAssemblyFile As String
             Dim strClassName As String
             oXml.IntoChildElement("Links")
@@ -2905,16 +2922,24 @@ Namespace Forms.Behavior
                 blLink.LoadData(oXml)
 
                 blLink.BeforeAddLink()
-                Me.Subsystem.BehavioralLinks.Add(blLink.ID, blLink)
+                Me.Subsystem.BehavioralLinks.Add(blLink.ID, blLink, False)
                 aryItems.Add(blLink)
+                aryLinks.Add(blLink)
 
                 blLink.AfterAddLink()
             Next
             oXml.OutOfElem() 'Outof Links Element
         End Sub
 
+        Protected Sub VerifyPastedData(ByVal aryItems As ArrayList)
+
+            For Each doItem As Framework.DataObject In aryItems
+                doItem.VerifyAfterPaste(aryItems)
+            Next
+        End Sub
+
         Protected Sub ProcessPastedAddFlowData(ByRef oXml As AnimatGUI.Interfaces.StdXml, _
-                                               ByVal aryItems As AnimatGUI.Collections.BehaviorItems, _
+                                               ByVal aryItems As ArrayList, _
                                                ByRef fltMinX As Single, ByRef fltMinY As Single)
 
             oXml.FindChildElement("AddFlow")
@@ -2947,6 +2972,8 @@ Namespace Forms.Behavior
                             fltMinY = afNode.Location.Y
                         End If
                     End If
+
+                    bdData.Tag = afItem
                 Else
                     'If it cannot find the associated addflow item then remove it.
                     If TypeOf bdData Is AnimatGUI.DataObjects.Behavior.Node AndAlso Me.Subsystem.BehavioralNodes.Contains(bdData.ID) Then
@@ -2968,7 +2995,19 @@ Namespace Forms.Behavior
             Next
         End Sub
 
-        Protected Sub PositionPastedToInPlace(ByVal aryItems As AnimatGUI.Collections.BehaviorItems, ByVal ptBase As Point, ByVal fltMinX As Single, ByVal fltMinY As Single)
+        Protected Sub AddPastedToSim(ByVal aryNodes As ArrayList, ByVal aryLinks As ArrayList)
+
+            For Each bdNode As AnimatGUI.DataObjects.Behavior.Data In aryNodes
+                bdNode.AddToSim(True)
+            Next
+
+            For Each bdLink As AnimatGUI.DataObjects.Behavior.Data In aryLinks
+                bdLink.AddToSim(True)
+            Next
+
+        End Sub
+
+        Protected Sub PositionPastedToInPlace(ByVal aryItems As ArrayList, ByVal ptBase As Point, ByVal fltMinX As Single, ByVal fltMinY As Single)
 
             Dim afNode As Lassalle.Flow.Node
             Dim afLink As Lassalle.Flow.Link
@@ -3130,15 +3169,15 @@ Namespace Forms.Behavior
         '    SelectAll()
         'End Sub
         ' 
-        Private Sub CutToolStripButton_Click(sender As Object, e As System.EventArgs) Handles CutToolStripButton.Click, CutToolStripMenuItem.Click
+        Private Sub CutToolStripButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles CutToolStripButton.Click, CutToolStripMenuItem.Click
             CutSelected()
         End Sub
 
-        Private Sub CopyToolStripButton_Click(sender As Object, e As System.EventArgs) Handles CopyToolStripButton.Click, CopyToolStripMenuItem.Click
+        Private Sub CopyToolStripButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles CopyToolStripButton.Click, CopyToolStripMenuItem.Click
             CopySelected()
         End Sub
 
-        Private Sub PasteToolStripButton_Click(sender As Object, e As System.EventArgs) Handles PasteToolStripButton.Click, PasteToolStripMenuItem.Click
+        Private Sub PasteToolStripButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles PasteToolStripButton.Click, PasteToolStripMenuItem.Click
             PasteSelected(False)
         End Sub
 
@@ -3775,7 +3814,7 @@ Namespace Forms.Behavior
                     'If more than one item is selected then lets get a list of them and pass that it.
                     Dim bdItem As AnimatGUI.DataObjects.Behavior.Data
                     Dim iIndex As Integer = 0
-                    Util.ProjectWorkspace.TreeView.ClearSelection()
+                    Util.ProjectWorkspace.ClearSelections()
                     For Each afItem As Lassalle.Flow.Item In m_ctrlAddFlow.SelectedItems
                         If Not afItem.Tag Is Nothing Then
                             bdItem = FindItem(DirectCast(afItem.Tag, String))

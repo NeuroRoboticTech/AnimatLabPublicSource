@@ -132,13 +132,16 @@ Namespace DataObjects.Behavior.Synapses
             End Get
             Set(ByVal Value As LinkedSynapse)
                 'We must first get rid of the current synapse and then replace it with a new one.
-                If Not m_lsModulatedSynapse Is Nothing AndAlso Not m_lsModulatedSynapse.Link Is Nothing Then
-                    Util.Application.SimulationInterface.RemoveItem(m_lsModulatedSynapse.Link.ID, "Synapse", Me.ID, True)
-                End If
-
-                Util.Application.SimulationInterface.AddItem(Value.Link.ID, "Synapse", Me.GetSimulationXml("Synapse"), True)
+                RemoveFromSim(True)
 
                 m_lsModulatedSynapse.Link = Value.Link
+
+                Try
+                    AddToSim(True)
+                Catch ex As Exception
+                    m_lsModulatedSynapse.Link = Nothing
+                    Throw ex
+                End Try
             End Set
         End Property
 
@@ -204,6 +207,12 @@ Namespace DataObjects.Behavior.Synapses
             m_snGain = DirectCast(bnLink.m_snGain.Clone(Me, bCutData, doRoot), ScaledNumber)
         End Sub
 
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList)
+
+            m_lsModulatedSynapse.AddToReplaceIDList(aryReplaceIDList)
+        End Sub
+
         Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             'Only save this as a synapse if the origin node is another FastNeuralNet neuron
@@ -264,18 +273,30 @@ Namespace DataObjects.Behavior.Synapses
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            'We do not add this one when it is added to the list. Instead, it is added when the user selects the linked synapse.
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+            If Not m_lsModulatedSynapse Is Nothing AndAlso Not m_lsModulatedSynapse.Link Is Nothing Then
+                Util.Application.SimulationInterface.AddItem(m_lsModulatedSynapse.Link.ID, "Synapse", Me.ID, Me.GetSimulationXml("Synapse"), True)
+                InitializeSimulationReferences()
+            End If
         End Sub
 
-        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            'We do not want to call the base class here because we are doing a completely different simint.RemoveItem
-            Me.SignalBeforeRemoveItem(Me)
-
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
             'However, we do need to remove it if it is removed from the list.
             If Not m_lsModulatedSynapse Is Nothing AndAlso Not m_lsModulatedSynapse.Link Is Nothing AndAlso Not m_doInterface Is Nothing Then
                 Util.Application.SimulationInterface.RemoveItem(m_lsModulatedSynapse.Link.ID, "Synapse", Me.ID, bThrowError)
+                m_doInterface = Nothing
             End If
+        End Sub
+
+        Public Overrides Sub BeforeAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            'We do not add this one when it is added to the list. Instead, it is added when the user selects the linked synapse.
+        End Sub
+
+        Public Overrides Sub BeforeRemoveFromList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            'We do not want to call the base class here because we are doing a completely different simint.RemoveItem
+            Me.SignalBeforeRemoveItem(Me)
+
+            If bCallSimMethods Then RemoveFromSim(bThrowError)
         End Sub
 
 #End Region

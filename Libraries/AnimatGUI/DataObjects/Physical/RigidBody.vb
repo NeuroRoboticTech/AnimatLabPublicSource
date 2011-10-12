@@ -822,6 +822,16 @@ Namespace DataObjects.Physical
 
         End Sub
 
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList)
+
+            m_aryChildBodies.AddToReplaceIDList(aryReplaceIDList)
+            m_aryOdorSources.AddToReplaceIDList(aryReplaceIDList)
+            If Not m_doReceptiveFieldSensor Is Nothing Then
+                m_doReceptiveFieldSensor.AddToReplaceIDList(aryReplaceIDList)
+            End If
+        End Sub
+
         Public Overrides Sub RenameBodyParts(ByVal doStructure As AnimatGUI.DataObjects.Physical.PhysicalStructure)
 
             Me.m_strID = System.Guid.NewGuid.ToString()
@@ -1385,8 +1395,8 @@ Namespace DataObjects.Physical
             m_doReceptiveFieldSensor = New ContactSensor(Me)
 
             'Make sure it is added to the simulation
-            m_doReceptiveFieldSensor.BeforeAddToList()
-            m_doReceptiveFieldSensor.AfterAddToList()
+            m_doReceptiveFieldSensor.BeforeAddToList(True, True)
+            m_doReceptiveFieldSensor.AfterAddToList(True, True)
 
             RaiseEvent ContactSensorAdded()
 
@@ -1403,8 +1413,8 @@ Namespace DataObjects.Physical
 
         Protected Overridable Sub RemoveReceptiveFieldSensor()
 
-            m_doReceptiveFieldSensor.BeforeRemoveFromList()
-            m_doReceptiveFieldSensor.AfterRemoveFromList()
+            m_doReceptiveFieldSensor.BeforeRemoveFromList(True, True)
+            m_doReceptiveFieldSensor.AfterRemoveFromList(True, True)
             m_doReceptiveFieldSensor = Nothing
 
             RaiseEvent ContactSensorRemoved()
@@ -1413,8 +1423,14 @@ Namespace DataObjects.Physical
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeAddToList(bThrowError)
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+            If Not Me.Parent Is Nothing Then
+                Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "RigidBody", Me.ID, Me.GetSimulationXml("RigidBody"), bThrowError)
+                InitializeSimulationReferences()
+            End If
+        End Sub
+
+        Public Overrides Sub BeforeAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
 
             'Verify that this part can be added to the parent 
             If Not Me.IsRoot Then
@@ -1428,59 +1444,61 @@ Namespace DataObjects.Physical
                 End If
             End If
 
-            MyBase.BeforeAddToList(bThrowError)
+            Me.SignalBeforeAddItem(Me)
             If Not m_JointToParent Is Nothing Then
-                m_JointToParent.BeforeAddToList(bThrowError)
+                m_JointToParent.BeforeAddToList(bCallSimMethods, bThrowError)
             End If
 
             If Not m_doReceptiveFieldSensor Is Nothing Then
-                m_doReceptiveFieldSensor.BeforeAddToList(bThrowError)
+                m_doReceptiveFieldSensor.BeforeAddToList(bCallSimMethods, bThrowError)
             End If
 
-            If Not Me.Parent Is Nothing Then
-                Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "RigidBody", Me.GetSimulationXml("RigidBody"), bThrowError)
-                InitializeSimulationReferences()
-            End If
+            If bCallSimMethods Then AddToSim(bThrowError)
         End Sub
 
-        Public Overrides Sub AfterAddToList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.AfterAddToList(bThrowError)
+        Public Overrides Sub AfterAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            MyBase.AfterAddToList(bCallSimMethods, bThrowError)
 
             If Not m_JointToParent Is Nothing Then
-                m_JointToParent.AfterAddToList(bThrowError)
+                m_JointToParent.AfterAddToList(bCallSimMethods, bThrowError)
             End If
 
             If Not m_doReceptiveFieldSensor Is Nothing Then
-                m_doReceptiveFieldSensor.AfterAddToList(bThrowError)
+                m_doReceptiveFieldSensor.AfterAddToList(bCallSimMethods, bThrowError)
             End If
 
         End Sub
 
-        Public Overrides Sub BeforeRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.BeforeRemoveFromList(bThrowError)
-
-            If Not m_JointToParent Is Nothing Then
-                m_JointToParent.BeforeRemoveFromList(bThrowError)
-            End If
-
-            If Not m_doReceptiveFieldSensor Is Nothing Then
-                m_doReceptiveFieldSensor.BeforeRemoveFromList(bThrowError)
-            End If
-
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
             If Not Me.Parent Is Nothing AndAlso Not m_doInterface Is Nothing Then
                 Util.Application.SimulationInterface.RemoveItem(Me.Parent.ID(), "RigidBody", Me.ID, bThrowError)
             End If
             m_doInterface = Nothing
         End Sub
 
-        Public Overrides Sub AfterRemoveFromList(Optional ByVal bThrowError As Boolean = True)
-            MyBase.AfterRemoveFromList(bThrowError)
+        Public Overrides Sub BeforeRemoveFromList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            Me.SignalBeforeRemoveItem(Me)
+
             If Not m_JointToParent Is Nothing Then
-                m_JointToParent.AfterRemoveFromList(bThrowError)
+                m_JointToParent.BeforeRemoveFromList(bCallSimMethods, bThrowError)
             End If
 
             If Not m_doReceptiveFieldSensor Is Nothing Then
-                m_doReceptiveFieldSensor.AfterRemoveFromList(bThrowError)
+                m_doReceptiveFieldSensor.BeforeRemoveFromList(bCallSimMethods, bThrowError)
+            End If
+
+            If bCallSimMethods Then RemoveFromSim(bThrowError)
+        End Sub
+
+        Public Overrides Sub AfterRemoveFromList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            MyBase.AfterRemoveFromList(bCallSimMethods, bThrowError)
+
+            If Not m_JointToParent Is Nothing Then
+                m_JointToParent.AfterRemoveFromList(bCallSimMethods, bThrowError)
+            End If
+
+            If Not m_doReceptiveFieldSensor Is Nothing Then
+                m_doReceptiveFieldSensor.AfterRemoveFromList(bCallSimMethods, bThrowError)
             End If
         End Sub
 

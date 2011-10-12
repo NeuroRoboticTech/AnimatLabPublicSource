@@ -215,9 +215,6 @@ void VsInverseMuscleCurrent::Load(CStdXml &oXml)
 	Std_IsAboveMin((float) 0, m_fltRestPotential, FALSE, "RestPotential");
 
 	oXml.OutOfElem(); //OutOf Simulus Element
-
-	//This will add this object to the object list of the simulation.
-	m_lpSim->AddToObjectList(this);
 }
 
 void VsInverseMuscleCurrent::LoadMuscleData(string strFilename)
