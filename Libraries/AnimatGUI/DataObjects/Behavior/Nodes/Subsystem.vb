@@ -580,6 +580,21 @@ Namespace DataObjects.Behavior.Nodes
             Return True
         End Function
 
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+            MyBase.AddToSim(bThrowError)
+
+            Dim doData As AnimatGUI.DataObjects.Behavior.Data
+            For Each deEntry As DictionaryEntry In Me.BehavioralNodes
+                doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                doData.AddToSim(bThrowError)
+            Next
+
+            For Each deEntry As DictionaryEntry In Me.BehavioralLinks
+                doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                doData.AddToSim(bThrowError)
+            Next
+        End Sub
+
         Public Overrides Sub InitializeAfterLoad()
 
             Try
