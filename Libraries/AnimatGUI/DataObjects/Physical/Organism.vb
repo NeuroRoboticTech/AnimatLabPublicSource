@@ -109,11 +109,11 @@ Namespace DataObjects.Physical
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node)
             MyBase.CreateWorkspaceTreeView(doParent, doParentNode)
 
-            m_tnBehavioralSystem = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Behavioral System", "AnimatGUI.Neuron.gif")
+            If m_tnBehavioralSystem Is Nothing Then m_tnBehavioralSystem = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Behavioral System", "AnimatGUI.Neuron.gif")
 
             m_bnRootSubSystem.CreateWorkspaceTreeView(Me, m_tnBehavioralSystem)
 
-            m_tnNeuralModules = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Neural Modules", "AnimatGUI.NeuralModules_Treeview.gif")
+            If m_tnNeuralModules Is Nothing Then m_tnNeuralModules = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Neural Modules", "AnimatGUI.NeuralModules_Treeview.gif")
 
             For Each deEntry As DictionaryEntry In Me.NeuralModules
                 Dim nmModule As Behavior.NeuralModule = DirectCast(deEntry.Value, Behavior.NeuralModule)

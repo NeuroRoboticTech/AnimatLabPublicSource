@@ -3000,10 +3000,12 @@ Namespace Forms.Behavior
 
             For Each bdNode As AnimatGUI.DataObjects.Behavior.Data In aryNodes
                 bdNode.AddToSim(True)
+                bdNode.AddWorkspaceTreeNode()
             Next
 
             For Each bdLink As AnimatGUI.DataObjects.Behavior.Data In aryLinks
                 bdLink.AddToSim(True)
+                bdLink.AddWorkspaceTreeNode()
             Next
 
         End Sub

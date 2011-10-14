@@ -574,9 +574,9 @@ Namespace DataObjects.Physical
             MyBase.CreateWorkspaceTreeView(doParent, doParentNode)
             m_tnWorkspaceNode.Select()
 
-            m_tnOrganisms = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Organisms", "AnimatGUI.Organisms.gif")
-            m_tnStructures = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Structures", "AnimatGUI.Structures.gif")
-            m_tnLights = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Lights", "AnimatGUI.Lamp.gif")
+            If m_tnOrganisms Is Nothing Then m_tnOrganisms = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Organisms", "AnimatGUI.Organisms.gif")
+            If m_tnStructures Is Nothing Then m_tnStructures = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Structures", "AnimatGUI.Structures.gif")
+            If m_tnLights Is Nothing Then m_tnLights = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Lights", "AnimatGUI.Lamp.gif")
 
             Dim doOrganism As DataObjects.Physical.Organism
             For Each deEntry As DictionaryEntry In m_aryOrganisms

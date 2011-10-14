@@ -767,13 +767,15 @@ Namespace Framework
 
         Public Overridable Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node)
 
-            m_tnWorkspaceNode = Util.ProjectWorkspace.AddTreeNode(doParentNode, Me.Name, Me.WorkspaceImageName)
-            m_tnWorkspaceNode.Tag = Me
+            If m_tnWorkspaceNode Is Nothing Then
+                m_tnWorkspaceNode = Util.ProjectWorkspace.AddTreeNode(doParentNode, Me.Name, Me.WorkspaceImageName)
+                m_tnWorkspaceNode.Tag = Me
 
-            If Me.Enabled Then
-                m_tnWorkspaceNode.BackColor = Color.White
-            Else
-                m_tnWorkspaceNode.BackColor = Color.Gray
+                If Me.Enabled Then
+                    m_tnWorkspaceNode.BackColor = Color.White
+                Else
+                    m_tnWorkspaceNode.BackColor = Color.Gray
+                End If
             End If
         End Sub
 

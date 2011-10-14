@@ -347,16 +347,12 @@ Namespace DataObjects
             Dim myAssembly As System.Reflection.Assembly
             myAssembly = System.Reflection.Assembly.Load("AnimatGUI")
 
-            'Util.Application.WorkspaceImages.AddImage(myAssembly, "AnimatGUI.DefaultObject.gif")
-            'Util.Application.WorkspaceImages.AddImage(myAssembly, "AnimatGUI.Simulation.gif")
-            'Util.Application.WorkspaceImages.AddImage(myAssembly, "AnimatGUI.RemoteControl.gif")
-            'Util.Application.WorkspaceImages.AddImage(myAssembly, "AnimatGUI.Toolbox.gif")
-            'Util.Application.WorkspaceImages.AddImage(myAssembly, "AnimatGUI.ExternalStimulus.gif")
-
-            m_tnToolViewers = Util.ProjectWorkspace.AddTreeNode(Nothing, "Tool Viewers", "AnimatGUI.Toolbox.gif")
-            m_tnExternalStimuli = Util.ProjectWorkspace.AddTreeNode(Nothing, "Stimuli", "AnimatGUI.ExternalStimulus.gif")
-            m_nodePlaybackControl = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Playback Control", "AnimatGUI.RemoteControl.gif")
-            m_nodePlaybackControl.Tag = Util.Application.SimulationController
+            If m_tnToolViewers Is Nothing Then m_tnToolViewers = Util.ProjectWorkspace.AddTreeNode(Nothing, "Tool Viewers", "AnimatGUI.Toolbox.gif")
+            If m_tnExternalStimuli Is Nothing Then m_tnExternalStimuli = Util.ProjectWorkspace.AddTreeNode(Nothing, "Stimuli", "AnimatGUI.ExternalStimulus.gif")
+            If m_nodePlaybackControl Is Nothing Then
+                m_nodePlaybackControl = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Playback Control", "AnimatGUI.RemoteControl.gif")
+                m_nodePlaybackControl.Tag = Util.Application.SimulationController
+            End If
 
             Dim doTool As DataObjects.ToolHolder
             For Each deEntry As DictionaryEntry In Util.Simulation.ToolHolders
