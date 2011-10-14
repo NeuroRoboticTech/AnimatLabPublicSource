@@ -305,7 +305,7 @@ Namespace DataObjects.Behavior.Nodes
 
             If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
                 If Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
-                    CreateAdapterSimReferences()
+                    AddToSim(True)
                 End If
 
                 m_doInterface = New Interfaces.DataObjectInterface(Util.Application.SimulationInterface, Me.ID)
@@ -334,6 +334,14 @@ Namespace DataObjects.Behavior.Nodes
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+            If Not NeuralModule Is Nothing Then
+                NeuralModule.VerifyExistsInSim()
+                If Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
+                    'If we just created this neuralmodule in the sim then this object might already exist now. We should only add it if it does not exist.
+                    Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID(), "Adapter", Me.ID, Me.GetSimulationXml("Adapter"), bThrowError)
+                End If
+            End If
+            InitializeSimulationReferences()
         End Sub
 
         Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
@@ -341,6 +349,12 @@ Namespace DataObjects.Behavior.Nodes
                 Util.Application.SimulationInterface.RemoveItem(Me.NeuralModule.ID(), "Adapter", Me.ID, bThrowError)
             End If
             m_doInterface = Nothing
+        End Sub
+
+        Public Overrides Sub BeforeAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            Me.SignalBeforeAddItem(Me)
+            'Adapters do NOT call AddToSim when first added to the list.
+            'If bCallSimMethods Then AddToSim(bThrowError)
         End Sub
 
         Public Overrides Sub AfterAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
@@ -360,14 +374,7 @@ Namespace DataObjects.Behavior.Nodes
         End Sub
 
         Public Overridable Sub CreateAdapterSimReferences(Optional ByVal bThrowError As Boolean = True)
-            If Not NeuralModule Is Nothing Then
-                NeuralModule.VerifyExistsInSim()
-                If Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
-                    'If we just created this neuralmodule in the sim then this object might already exist now. We should only add it if it does not exist.
-                    Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID(), "Adapter", Me.ID, Me.GetSimulationXml("Adapter"), bThrowError)
-                End If
-            End If
-            InitializeSimulationReferences()
+
 
         End Sub
 

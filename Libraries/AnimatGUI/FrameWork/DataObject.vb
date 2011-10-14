@@ -214,6 +214,7 @@ Namespace Framework
             End Get
         End Property
 
+        <Browsable(False)> _
         Public Overridable ReadOnly Property WorkspaceImageName() As String
             Get
                 Return "AnimatGUI.DefaultObject.gif"
@@ -277,12 +278,14 @@ Namespace Framework
             End Set
         End Property
 
+        <Browsable(False)> _
         Public Overridable ReadOnly Property SimInterface() As Interfaces.DataObjectInterface
             Get
                 Return m_doInterface
             End Get
         End Property
 
+        <Browsable(False)> _
         Public Overridable Property Tag() As Object
             Get
                 Return m_oTag
@@ -292,6 +295,7 @@ Namespace Framework
             End Set
         End Property
 
+        <Browsable(False)> _
         Public Overridable Property IsInitialized() As Boolean
             Get
                 Return m_bIsInitialized
@@ -792,7 +796,11 @@ Namespace Framework
         Public Overridable Sub SelectItem(Optional ByVal bSelectMultiple As Boolean = False)
 
             Try
-                If Not m_tnWorkspaceNode Is Nothing AndAlso Not Util.ProjectWorkspace.TreeView.SelectedNodes.Contains(m_tnWorkspaceNode) Then
+                If m_tnWorkspaceNode Is Nothing Then
+                    Throw New System.Exception("Attempting to select an item before its workspace node is defined.")
+                End If
+
+                If Not Util.ProjectWorkspace.TreeView.SelectedNodes.Contains(m_tnWorkspaceNode) Then
                     Util.ProjectWorkspace.TreeView.SelectNode(m_tnWorkspaceNode, False, bSelectMultiple)
                 ElseIf Not m_doInterface Is Nothing Then
                     m_doInterface.SelectItem(True, bSelectMultiple)
@@ -807,7 +815,11 @@ Namespace Framework
 
         Public Overridable Sub DeselectItem()
             Try
-                If Not m_tnWorkspaceNode Is Nothing AndAlso Util.ProjectWorkspace.TreeView.SelectedNodes.Contains(m_tnWorkspaceNode) Then
+                If m_tnWorkspaceNode Is Nothing Then
+                    Throw New System.Exception("Attempting to select an item before its workspace node is defined.")
+                End If
+
+                If Util.ProjectWorkspace.TreeView.SelectedNodes.Contains(m_tnWorkspaceNode) Then
                     Util.ProjectWorkspace.TreeView.DeselectNode(m_tnWorkspaceNode, True)
                 End If
 

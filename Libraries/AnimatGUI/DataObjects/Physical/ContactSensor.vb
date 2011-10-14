@@ -228,7 +228,7 @@ Namespace DataObjects.Physical
                 m_aryAdapters.Add(strModuleName, doAdapter)
 
                 If Not bLoading Then
-                    doAdapter.CreateAdapterSimReferences()
+                    doAdapter.AddToSim(True)
                 End If
             End If
 

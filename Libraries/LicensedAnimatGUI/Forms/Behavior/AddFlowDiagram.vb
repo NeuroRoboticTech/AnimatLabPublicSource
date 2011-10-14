@@ -2847,10 +2847,8 @@ Namespace Forms.Behavior
             ProcessPastedAddFlowData(oXml, aryItems, fltMinX, fltMinY)
 
             'we need to go through and initialize all the nodes/links after loading.
-            Me.Subsystem.InitializeAfterLoad()
+            Me.Subsystem.InitializeAfterPasted()
             AddPastedToSim(aryNodes, aryLinks)
-
-            'InitializeImageDataAfterLoad(aryItems)
 
             Util.ProjectWorkspace.ClearSelections()
             For Each bdItem As AnimatGUI.DataObjects.Behavior.Data In aryItems
@@ -2971,6 +2969,9 @@ Namespace Forms.Behavior
                         If fltMinY < 0 OrElse afNode.Location.Y < fltMinY Then
                             fltMinY = afNode.Location.Y
                         End If
+
+                        Dim bnData As AnimatGUI.DataObjects.Behavior.Node = DirectCast(bdData, AnimatGUI.DataObjects.Behavior.Node)
+                        afNode.ImageIndex = GetDiagramImageIndex(bnData)
                     End If
 
                     bdData.Tag = afItem
@@ -3038,29 +3039,6 @@ Namespace Forms.Behavior
                     End If
                 End If
             Next
-
-        End Sub
-
-
-        Protected Sub InitializeImageDataAfterLoad(ByRef aryItems As AnimatGUI.Collections.BehaviorItems)
-
-            'TODO
-            'Dim doNode As AnimatGUI.DataObjects.Behavior.Node
-            'For Each bdData As AnimatGUI.DataObjects.Behavior.Data In aryItems
-            '    If Util.IsTypeOf(bdData.GetType, GetType(AnimatGUI.DataObjects.Behavior.Node)) Then
-            '        doNode = DirectCast(bdData, AnimatGUI.DataObjects.Behavior.Node)
-            '        If doNode.DiagramImageName.Length > 0 Then
-            '            Dim afNode As Lassalle.Flow.Node = Me.FindAddFlowNode(doNode.ID)
-            '            Dim iIndex As Integer = FindDiagramImageIndex(Me.Editor.DiagramImages.FindImageByID(doNode.DiagramImageName), False)
-            '            If iIndex > -1 Then
-            '                afNode.ImageIndex = iIndex
-            '            Else
-            '                Me.AddImage(Me.Editor.DiagramImages.FindDiagramImageByID(doNode.DiagramImageName))
-            '                afNode.ImageIndex = FindDiagramImageIndex(Me.Editor.DiagramImages.FindImageByID(doNode.DiagramImageName), False)
-            '            End If
-            '        End If
-            '    End If
-            'Next
 
         End Sub
 
@@ -4018,7 +3996,8 @@ Namespace Forms.Behavior
 
                             Dim baAdapter As AnimatGUI.DataObjects.Behavior.Nodes.Adapter = DirectCast(bnAdapter, AnimatGUI.DataObjects.Behavior.Nodes.Adapter)
                             baAdapter.InitializeAfterLoad()
-                            baAdapter.CreateAdapterSimReferences()
+                            baAdapter.AddToSim(True)
+
                         Catch ex As Exception
                             bnAdapter.Delete(False)
                             Throw ex

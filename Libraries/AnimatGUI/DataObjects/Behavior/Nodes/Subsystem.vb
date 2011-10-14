@@ -31,12 +31,14 @@ Namespace DataObjects.Behavior.Nodes
 
 #Region " Properties "
 
+        <Browsable(False)> _
         Public Overrides ReadOnly Property TypeName() As String
             Get
                 Return "Subsystem"
             End Get
         End Property
 
+        <Browsable(False)> _
         Public Overridable Property SubsystemDiagram() As Forms.Behavior.Diagram
             Get
                 Return m_bdSubsystemDiagram
@@ -46,12 +48,14 @@ Namespace DataObjects.Behavior.Nodes
             End Set
         End Property
 
+        <Browsable(False)> _
         Public Overridable ReadOnly Property BehavioralNodes() As Collections.SortedNodeList
             Get
                 Return m_aryBehavioralNodes
             End Get
         End Property
 
+        <Browsable(False)> _
         Public Overridable ReadOnly Property BehavioralLinks() As Collections.SortedLinkList
             Get
                 Return m_aryBehavioralLinks
@@ -66,6 +70,9 @@ Namespace DataObjects.Behavior.Nodes
                 If Value.Trim.Length > 0 Then
                     m_strText = Value
                     UpdateChart()
+                    If Not Me.WorkspaceNode Is Nothing Then
+                        Me.WorkspaceNode.Text = m_strText
+                    End If
                 Else
                     'If the text is set to blank then
                     'keep it the current value and reupdate
@@ -76,12 +83,14 @@ Namespace DataObjects.Behavior.Nodes
             End Set
         End Property
 
+        <Browsable(False)> _
         Public Overrides ReadOnly Property NeuralModuleType() As System.Type
             Get
                 Return Nothing
             End Get
         End Property
 
+        <Browsable(False)> _
         Public Overrides ReadOnly Property WorkspaceImageName() As String
             Get
                 Return "AnimatGUI.SubsystemNode_Treeview.gif"
@@ -95,6 +104,7 @@ Namespace DataObjects.Behavior.Nodes
             End Get
         End Property
 
+        <Browsable(False)> _
         Public Overridable Property DiagramXml() As String
             Get
                 Return m_strDiagramXml
@@ -104,6 +114,7 @@ Namespace DataObjects.Behavior.Nodes
             End Set
         End Property
 
+        <Browsable(False)> _
         Public Overrides Property IsInitialized() As Boolean
             Get
                 If m_bIsInitialized AndAlso Me.AllChildrenInitialized() Then
@@ -580,19 +591,19 @@ Namespace DataObjects.Behavior.Nodes
             Return True
         End Function
 
-        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
-            MyBase.AddToSim(bThrowError)
+        Public Sub InitializeAfterPasted()
 
-            Dim doData As AnimatGUI.DataObjects.Behavior.Data
-            For Each deEntry As DictionaryEntry In Me.BehavioralNodes
-                doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
-                doData.AddToSim(bThrowError)
-            Next
+            Dim iCount As Integer = 0
 
-            For Each deEntry As DictionaryEntry In Me.BehavioralLinks
-                doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
-                doData.AddToSim(bThrowError)
-            Next
+            While Not Me.IsInitialized
+                Me.InitializeAfterLoad()
+
+                iCount = iCount + 1
+                If iCount = 3 Then
+                    Throw New System.Exception("Unable to initialize subsystem after paste operation. (" & Me.Name & ", " & Me.ID & ")")
+                End If
+            End While
+
         End Sub
 
         Public Overrides Sub InitializeAfterLoad()
@@ -616,10 +627,45 @@ Namespace DataObjects.Behavior.Nodes
                 Next
 
             Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
                 m_bIsInitialized = False
             End Try
 
         End Sub
+
+#Region " Add-Remove to List Methods "
+
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+            MyBase.AddToSim(bThrowError)
+
+            Dim doData As AnimatGUI.DataObjects.Behavior.Data
+            For Each deEntry As DictionaryEntry In Me.BehavioralNodes
+                doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                doData.AddToSim(bThrowError)
+            Next
+
+            For Each deEntry As DictionaryEntry In Me.BehavioralLinks
+                doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                doData.AddToSim(bThrowError)
+            Next
+        End Sub
+
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
+            MyBase.RemoveFromSim(bThrowError)
+
+            Dim doData As AnimatGUI.DataObjects.Behavior.Data
+            For Each deEntry As DictionaryEntry In Me.BehavioralLinks
+                doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                doData.RemoveFromSim(bThrowError)
+            Next
+
+            For Each deEntry As DictionaryEntry In Me.BehavioralNodes
+                doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                doData.RemoveFromSim(bThrowError)
+            Next
+        End Sub
+
+#End Region
 
         Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
             MyBase.SaveData(oXml)
