@@ -179,7 +179,23 @@ Namespace DataObjects.Behavior.Nodes
         End Sub
 
         Public Overrides Sub BeforeRemoveNode()
+            MyBase.BeforeRemoveNode()
 
+            Dim aryList As New ArrayList
+            Dim doObj As Framework.DataObject
+            For Each deEntry As DictionaryEntry In Me.BehavioralLinks
+                doObj = DirectCast(deEntry.Value, Framework.DataObject)
+                aryList.Add(doObj)
+            Next
+
+            For Each deEntry As DictionaryEntry In Me.BehavioralNodes
+                doObj = DirectCast(deEntry.Value, Framework.DataObject)
+                aryList.Add(doObj)
+            Next
+
+            For Each doObj In aryList
+                doObj.Delete(False)
+            Next
         End Sub
 
         Public Overrides Sub AfterRemoveNode()
@@ -401,7 +417,7 @@ Namespace DataObjects.Behavior.Nodes
                     Dim blLink As AnimatGUI.DataObjects.Behavior.Link
                     For Each strID As String In aryLinkIDs
                         blLink = DirectCast(bnNode.Links(strID), AnimatGUI.DataObjects.Behavior.Link)
-                        RemoveLink(blLink)
+                        blLink.Delete(False)
                     Next
 
                     If Me.BehavioralNodes.ContainsKey(bnNode.ID) Then

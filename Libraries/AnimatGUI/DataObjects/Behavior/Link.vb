@@ -986,6 +986,21 @@ Namespace DataObjects.Behavior
 
         End Function
 
+        ''' \brief  Deletes the sort compare described by doObj2.
+        '''
+        ''' \details Link should always be deleted first above all other objects.
+        ''' 		 
+        ''' \param  doObj2  The second do object.
+        '''
+        ''' \return comparison.
+        Public Overrides Function DeleteSortCompare(ByVal doObj2 As Framework.DataObject) As Integer
+            If Util.IsTypeOf(doObj2.GetType, GetType(Behavior.Link), False) Then
+                Return 0
+            End If
+
+            Return -1
+        End Function
+
         Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
 
             MyBase.LoadData(oXml)

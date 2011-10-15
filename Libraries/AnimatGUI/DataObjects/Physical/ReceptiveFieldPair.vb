@@ -43,7 +43,15 @@ Namespace DataObjects.Physical
                 Return m_doNeuron
             End Get
             Set(ByVal Value As DataObjects.Behavior.Nodes.Neuron)
+                If Not m_doNeuron Is Nothing Then
+                    RemoveHandler m_doNeuron.AfterRemoveItem, AddressOf Me.OnNeuronRemoved
+                End If
+
                 m_doNeuron = Value
+
+                If Not m_doNeuron Is Nothing Then
+                    AddHandler m_doNeuron.AfterRemoveItem, AddressOf Me.OnNeuronRemoved
+                End If
             End Set
         End Property
 
@@ -59,14 +67,12 @@ Namespace DataObjects.Physical
             End If
         End Sub
 
-        Public Sub New(ByVal doParent As Framework.DataObject, ByVal doField As DataObjects.Physical.ReceptiveField, ByVal doNeuron As DataObjects.Behavior.Nodes.Neuron)
+        Public Sub New(ByVal doParent As Framework.DataObject, ByVal doField As DataObjects.Physical.ReceptiveField, _
+                       ByVal doNeuron As DataObjects.Behavior.Nodes.Neuron, ByVal doPart As DataObjects.Physical.RigidBody)
             MyBase.New(doParent)
-            m_doField = doField
-            m_doNeuron = doNeuron
-
-            If Not doParent Is Nothing AndAlso Util.IsTypeOf(doParent.GetType, GetType(DataObjects.Physical.RigidBody)) Then
-                m_doPart = DirectCast(doParent, DataObjects.Physical.RigidBody)
-            End If
+            Me.Field = doField
+            Me.Neuron = doNeuron
+            m_doPart = doPart
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
@@ -74,15 +80,15 @@ Namespace DataObjects.Physical
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
                                         ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatGUI.Framework.DataObject
-            Dim doNewRF As New ReceptiveFieldPair(doParent, m_doField, m_doNeuron)
+            Dim doNewRF As New ReceptiveFieldPair(doParent, m_doField, m_doNeuron, m_doPart)
             Return doNewRF
         End Function
 
         Public Overrides Sub InitializeAfterLoad()
             MyBase.InitializeAfterLoad()
 
-            m_doNeuron = DirectCast(Util.Simulation.FindObjectByID(m_strNeuronID), AnimatGUI.DataObjects.Behavior.Nodes.Neuron)
-            m_doField = DirectCast(Util.Simulation.FindObjectByID(m_strFieldID), AnimatGUI.DataObjects.Physical.ReceptiveField)
+            Me.Neuron = DirectCast(Util.Simulation.FindObjectByID(m_strNeuronID), AnimatGUI.DataObjects.Behavior.Nodes.Neuron)
+            Me.Field = DirectCast(Util.Simulation.FindObjectByID(m_strFieldID), AnimatGUI.DataObjects.Physical.ReceptiveField)
 
             m_doField.FieldPairs.Add(Me.ID, Me)
 
@@ -136,6 +142,16 @@ Namespace DataObjects.Physical
 
             oXml.OutOfElem()
 
+        End Sub
+
+#End Region
+
+#Region "Events"
+
+        Private Sub OnNeuronRemoved(ByRef doObject As Framework.DataObject)
+            If Not m_doPart Is Nothing AndAlso Not m_doPart.ReceptiveFieldSensor Is Nothing Then
+                m_doPart.ReceptiveFieldSensor.RemoveFieldPair(Me)
+            End If
         End Sub
 
 #End Region

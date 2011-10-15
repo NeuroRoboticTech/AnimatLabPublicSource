@@ -4802,7 +4802,7 @@ Namespace Forms
 
                 'Lets go through and get a list a seperate list of the selected items 
                 'so we can use it. otherwise it may change while we are deleting.
-                Dim aryItems As New Collection
+                Dim aryItems As New ArrayList
                 Dim doItem As Framework.DataObject
                 For Each tnNode As Crownwood.DotNetMagic.Controls.Node In Util.ProjectWorkspace.TreeView.SelectedNodes
                     If Not tnNode.Tag Is Nothing AndAlso Util.IsTypeOf(tnNode.Tag.GetType, GetType(Framework.DataObject)) Then
@@ -4810,6 +4810,8 @@ Namespace Forms
                         aryItems.Add(doItem)
                     End If
                 Next
+
+                aryItems.Sort(New DeleteSortComparer)
 
                 For Each doItem In aryItems
                     doItem.Delete(False)
@@ -5318,6 +5320,26 @@ Namespace Forms
 
 #End Region
 
+
+#End Region
+
+#Region " Comparer classes "
+
+        Protected Class DeleteSortComparer
+            Implements IComparer
+
+            ' Calls CaseInsensitiveComparer.Compare with the parameters reversed.
+            Function Compare(ByVal x As [Object], ByVal y As [Object]) As Integer Implements IComparer.Compare
+                If Not (TypeOf x Is AnimatGUI.Framework.DataObject AndAlso TypeOf y Is AnimatGUI.Framework.DataObject) Then Return 0
+
+                Dim doX As AnimatGUI.Framework.DataObject = DirectCast(x, AnimatGUI.Framework.DataObject)
+                Dim doY As AnimatGUI.Framework.DataObject = DirectCast(y, AnimatGUI.Framework.DataObject)
+
+                Return doX.DeleteSortCompare(doY)
+
+            End Function 'IComparer.Compare
+
+        End Class
 
 #End Region
 

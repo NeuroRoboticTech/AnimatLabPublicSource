@@ -242,7 +242,7 @@ Namespace DataObjects.Physical
             End If
 
             'now create the new pair object.
-            Dim doPair As New ReceptiveFieldPair(doAdapter, doField, doNeuron)
+            Dim doPair As New ReceptiveFieldPair(doAdapter, doField, doNeuron, m_doPart)
 
             'Add it to the adapter
             doAdapter.FieldPairs.Add(doPair.ID, doPair, Not bLoading)

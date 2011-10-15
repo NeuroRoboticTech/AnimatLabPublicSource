@@ -39,10 +39,15 @@ Namespace DataObjects.Behavior.Nodes
             Set(ByVal Value As TypeHelpers.LinkedNode)
                 Dim thPrevLinked As TypeHelpers.LinkedNode = m_thLinkedNode
 
+                If Not thPrevLinked Is Nothing AndAlso Not thPrevLinked.Node Is Nothing Then
+                    RemoveHandler thPrevLinked.Node.AfterRemoveItem, AddressOf Me.OnAfterRemoveLinkedNode
+                End If
+
                 m_thLinkedNode = Value
 
                 If Not m_thLinkedNode Is Nothing AndAlso Not m_thLinkedNode.Node Is Nothing Then
                     Me.Text = m_thLinkedNode.Node.Text
+                    AddHandler thPrevLinked.Node.AfterRemoveItem, AddressOf Me.OnAfterRemoveLinkedNode
                 End If
 
                 'If the user changes the item this node is linked to directly in the diagram after it
@@ -259,6 +264,10 @@ Namespace DataObjects.Behavior.Nodes
                     End If
                 End If
 
+                If Not m_thLinkedNode Is Nothing AndAlso Not m_thLinkedNode.Node Is Nothing Then
+                    AddHandler m_thLinkedNode.Node.AfterRemoveItem, AddressOf Me.OnAfterRemoveLinkedNode
+                End If
+
                 Dim strID As String = ""
 
                 Dim blLink As Behavior.Link
@@ -332,6 +341,15 @@ Namespace DataObjects.Behavior.Nodes
 #End Region
 
 #End Region
+
+#Region "Events"
+
+        Private Sub OnAfterRemoveLinkedNode(ByRef doObject As Framework.DataObject)
+            Me.LinkedNode = New TypeHelpers.LinkedNode(Me.ParentSubsystem.Organism, Nothing)
+        End Sub
+
+#End Region
+
 
     End Class
 

@@ -1656,10 +1656,13 @@ Namespace Forms.Behavior
             End If
 
             Dim strKey As String = ""
+            Dim strFile As String = ""
             If bnNode.ImageName.Trim.Length > 0 Then
                 strKey = bnNode.ImageName
+                strFile = Util.GetFilePath(Util.Application.ProjectPath, bnNode.ImageName)
             Else
                 strKey = bnNode.DiagramImageName
+                strFile = Util.GetFilePath(Util.Application.ProjectPath, bnNode.DiagramImageName)
             End If
 
             'Then lets look in the hashtable to see if we have an image with the given name yet.
@@ -1667,18 +1670,27 @@ Namespace Forms.Behavior
                 Dim oImage As System.Drawing.Image = DirectCast(m_hashImages(strKey), System.Drawing.Image)
 
                 Return FindDiagramImageIndex(oImage)
+            ElseIf m_hashImages.ContainsKey(strFile) Then
+                Dim oImage As System.Drawing.Image = DirectCast(m_hashImages(strFile), System.Drawing.Image)
+
+                Return FindDiagramImageIndex(oImage)
             Else
-                'if this is a new image then add it.
-                If bnNode.ImageName.Trim.Length > 0 Then
-                    Dim strFile As String = Util.GetFilePath(Util.Application.ProjectPath, strKey)
-                    'Attempt to load the file first to make sure it is a valid image file.
+                'If the file exists then try and load and use it.
+                If System.IO.File.Exists(strFile) Then
                     Try
                         Dim bm As New Bitmap(strFile)
                         Return Me.AddImage(strFile, bm)
                     Catch ex As System.Exception
-                        Throw New System.Exception("Unable to load the image. This does not appear to be a vaild image file. File: " & strFile)
+                        'If the file cannot be loaded then try the key.
+                        Try
+                            Dim oImage As System.Drawing.Image = AnimatGUI.Framework.ImageManager.LoadImage(strKey)
+                            Return Me.AddImage(strKey, oImage)
+                        Catch ex2 As Exception
+                            Throw New System.Exception("Unable to load the image. This does not appear to be a vaild image file. File: " & strFile & ", Key: " & strKey)
+                        End Try
                     End Try
                 Else
+                    'If the file does not exist then load the key
                     Dim oImage As System.Drawing.Image = AnimatGUI.Framework.ImageManager.LoadImage(strKey)
                     Return Me.AddImage(strKey, oImage)
                 End If

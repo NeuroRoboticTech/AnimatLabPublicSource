@@ -709,6 +709,10 @@ Namespace Framework
             Return False
         End Function
 
+        Public Overridable Function DeleteSortCompare(ByVal doObj2 As DataObject) As Integer
+            Return 0
+        End Function
+
 #Region " Copy Methods "
 
         Public Overridable Sub BeforeCopy()

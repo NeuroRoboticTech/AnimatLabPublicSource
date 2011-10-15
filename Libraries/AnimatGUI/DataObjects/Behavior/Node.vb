@@ -1161,6 +1161,14 @@ Namespace DataObjects.Behavior
 
         End Function
 
+        Public Overrides Function DeleteSortCompare(ByVal doObj2 As Framework.DataObject) As Integer
+            If Util.IsTypeOf(doObj2.GetType, GetType(Behavior.Link), False) Then
+                Return 1
+            End If
+
+            Return 0
+        End Function
+
         Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
             Dim iColor As Integer
 
