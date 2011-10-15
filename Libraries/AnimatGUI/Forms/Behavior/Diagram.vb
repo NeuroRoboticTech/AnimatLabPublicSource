@@ -98,7 +98,6 @@ Namespace Forms.Behavior
         Public MustOverride Sub CutSelected()
         Public MustOverride Sub CopySelected()
         Public MustOverride Sub PasteSelected(ByVal bInPlace As Boolean)
-        Public MustOverride Sub DeleteSelected()
 
         Public MustOverride Sub SendSelectedToBack()
         Public MustOverride Sub BringSelectedToFront()

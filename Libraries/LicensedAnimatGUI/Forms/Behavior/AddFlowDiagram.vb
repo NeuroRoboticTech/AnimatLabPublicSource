@@ -1973,21 +1973,8 @@ Namespace Forms.Behavior
         Public Overrides Sub CutSelected()
 
             Try
-                Dim oXml As New AnimatGUI.Interfaces.StdXml
-
-                 Dim bSave As Boolean = SaveSelected(oXml, False)
-
-                'If there is nothing to save then exit
-                If Not bSave Then Return
-
-                'oXml.Save("C:\Projects\bin\Experiments\Copy.txt")
-                Dim strXml As String = oXml.Serialize()
-
-                Dim data As New System.Windows.Forms.DataObject
-                data.SetData("AnimatLab.Behavior.XMLFormat", strXml)
-                Clipboard.SetDataObject(data, True)
-
-                DeleteSelected()
+                CopySelected()
+                Util.Application.OnDeleteFromWorkspace(Me, Nothing)
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -2037,93 +2024,9 @@ Namespace Forms.Behavior
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
-            Finally
-                'TODO
-                'CheckForInvalidLinks()
-                'VerifyNodesExist()
             End Try
 
         End Sub
-
-        Public Overrides Sub DeleteSelected()
-
-            'Try
-            '    If m_ctrlAddFlow.SelectedItems.Count > 0 Then
-
-            '        BeginGroupChange()
-
-            '        'Lets go through and get a list a seperate list of the selected items 
-            '        'so we can use it. otherwise it may change while we are deleting.
-            '        Dim afItem As Lassalle.Flow.Item
-            '        Dim aryItems As New Collection
-            '        For Each afItem In m_ctrlAddFlow.SelectedItems
-            '            aryItems.Add(afItem)
-            '        Next
-
-            '        For Each afItem In aryItems
-
-            '            If TypeOf (afItem) Is Lassalle.Flow.Node Then
-            '                Dim bdNode As AnimatGUI.DataObjects.Behavior.Node = FindNode(DirectCast(afItem.Tag, String), False)
-            '                If Not bdNode Is Nothing Then
-            '                    RemoveNode(bdNode)
-            '                End If
-            '            ElseIf TypeOf (afItem) Is Lassalle.Flow.Link Then
-            '                Dim blLink As AnimatGUI.DataObjects.Behavior.Link = FindLink(DirectCast(afItem.Tag, String), False)
-            '                If Not blLink Is Nothing Then
-            '                    RemoveLink(blLink)
-            '                End If
-            '            End If
-            '        Next
-
-            '    End If
-
-            '    'TODO
-            '    'Me.Editor.ResetDiagramTabIndexes()
-
-            'Catch ex As System.Exception
-            '    Throw ex
-            'Finally
-            '    EndGroupChange()
-            'End Try
-
-        End Sub
-
-        Public Overrides Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
-
-            'TODO
-            'Try
-            '    BeginGroupChange()
-            '    m_bDeletingDiagram = True
-
-            '    'Lets go through and get a list a seperate list of the selected items 
-            '    'so we can use it. otherwise it may change while we are deleting.
-            '    Dim aryTempNodes As AnimatGUI.Collections.AnimatSortedList = m_aryNodes.Copy()
-
-            '    Dim bdNode As AnimatGUI.DataObjects.Behavior.Node
-            '    For Each deEntry As DictionaryEntry In aryTempNodes
-            '        bdNode = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Node)
-            '        RemoveNode(bdNode)
-            '    Next
-
-            '    Dim aryTempLinks As AnimatGUI.Collections.AnimatSortedList = m_aryLinks.Copy()
-
-            '    Dim bdLink As AnimatGUI.DataObjects.Behavior.Link
-            '    For Each deEntry As DictionaryEntry In aryTempLinks
-            '        bdLink = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
-            '        RemoveLink(bdLink)
-            '    Next
-
-            '    Me.Editor.ResetDiagramTabIndexes()
-
-            '    Return False
-            'Catch ex As System.Exception
-            '    Throw ex
-            'Finally
-            '    m_bDeletingDiagram = False
-            '    EndGroupChange()
-            'End Try
-
-        End Function
 
 #End Region
 
