@@ -153,11 +153,8 @@ Namespace DataObjects.Physical
             m_gnReceptiveFieldGain.AddToReplaceIDList(aryReplaceIDList)
             m_gnReceptiveCurrentGain.AddToReplaceIDList(aryReplaceIDList)
 
-            'TODO: Do i need to do the fields, field pairs here???
-            'For Each deEntry As DictionaryEntry In m_aryDataColumns
-            '    Dim doColumn As DataObjects.Charting.DataColumn = DirectCast(deEntry.Value, DataObjects.Charting.DataColumn)
-            '    doColumn.AddToReplaceIDList(aryReplaceIDList)
-            'Next
+            m_aryFields.AddToReplaceIDList(aryReplaceIDList)
+            m_aryFieldPairs.AddToReplaceIDList(aryReplaceIDList)
         End Sub
 
         Public Overrides Sub ClearIsDirty()

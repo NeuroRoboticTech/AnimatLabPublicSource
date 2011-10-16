@@ -1436,7 +1436,6 @@ Namespace Framework
 
                         rbPart.IsRoot = bRoot
                         rbPart.LoadData(doParentStruct, oXml)
-                        'rbPart.InitializeAfterLoad()
                     End If
                 End If
             End If
