@@ -183,8 +183,9 @@ void DataObjectInterface::GetDataPointer(String ^sData)
 
 			if(!m_aryDataPointers)
 				m_aryDataPointers = new CStdMap<string, float *>;
-			
-			m_aryDataPointers->Add(Std_CheckString(strData), lpData);
+
+			if(FindDataPointer(strData, FALSE) == NULL)
+				m_aryDataPointers->Add(Std_CheckString(strData), lpData);
 		}
 	}
 	catch(CStdErrorInfo oError)
@@ -200,6 +201,24 @@ void DataObjectInterface::GetDataPointer(String ^sData)
 		String ^strErrorMessage = "An unknown error occurred while attempting to get a data pointer.";
 		throw gcnew System::Exception(strErrorMessage);
 	}
+}
+
+float *DataObjectInterface::FindDataPointer(string strData, BOOL bThrowError)
+{
+	float *lpData = NULL;
+
+	if(m_aryDataPointers)
+	{
+		CStdMap<string, float *>::iterator oPos;
+		oPos = m_aryDataPointers->find(Std_CheckString(strData));
+
+		if(oPos != m_aryDataPointers->end())
+			lpData =  oPos->second;
+		//else if(bThrowError)
+		//	THROW_TEXT_ERROR(Al_Err_lDataTypeNotFound, Al_Err_strDataTypeNotFound, " Data Type: " + strData);
+	}
+
+	return lpData;
 }
 
 float DataObjectInterface::GetDataValue(String ^sData)

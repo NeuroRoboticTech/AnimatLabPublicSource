@@ -38,12 +38,20 @@ Namespace Forms
             Me.SimWindowMenuStrip = New AnimatGuiCtrls.Controls.AnimatMenuStrip
             Me.lblBodyPart = New System.Windows.Forms.ToolStripLabel()
             Me.cboBodyPart = New System.Windows.Forms.ToolStripComboBox()
+            Me.PasteToolStripButton = New System.Windows.Forms.ToolStripButton()
+            Me.CopyToolStripButton = New System.Windows.Forms.ToolStripButton()
+            Me.CutToolStripButton = New System.Windows.Forms.ToolStripButton()
+            Me.CutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.CopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.PasteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.SimWindowToolStrip.SuspendLayout()
             Me.SuspendLayout()
             '
             'SimWindowToolStrip
             '
-            Me.SimWindowToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lbStucture, Me.cboStructure, Me.lblBodyPart, Me.cboBodyPart})
+            Me.SimWindowToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteToolStripButton, Me.CopyToolStripButton, _
+                                                                                          Me.CutToolStripButton, Me.lbStucture, Me.cboStructure, Me.lblBodyPart, Me.cboBodyPart})
             Me.SimWindowToolStrip.Location = New System.Drawing.Point(0, 0)
             Me.SimWindowToolStrip.Name = "SimWindowToolStrip"
             Me.SimWindowToolStrip.Size = New System.Drawing.Size(774, 25)
@@ -66,12 +74,22 @@ Namespace Forms
             '
             'SimWindowMenuStrip
             '
+            Me.SimWindowMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EditToolStripMenuItem})
             Me.SimWindowMenuStrip.Location = New System.Drawing.Point(0, 0)
             Me.SimWindowMenuStrip.Name = "SimWindowMenuStrip"
             Me.SimWindowMenuStrip.Size = New System.Drawing.Size(284, 24)
             Me.SimWindowMenuStrip.TabIndex = 1
             Me.SimWindowMenuStrip.Text = "MenuStrip1"
             Me.SimWindowMenuStrip.Visible = False
+            '
+            'EditToolStripMenuItem
+            '
+            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteToolStripMenuItem, Me.CopyToolStripMenuItem, Me.CutToolStripMenuItem})
+            Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
+            Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
+            Me.EditToolStripMenuItem.Text = "&Edit"
+            Me.EditToolStripMenuItem.MergeAction = MergeAction.MatchOnly
+
             '
             'lblBodyPart
             '
@@ -85,6 +103,74 @@ Namespace Forms
             Me.cboBodyPart.Size = New System.Drawing.Size(121, 25)
             Me.cboBodyPart.ToolTipText = ""
             Me.cboBodyPart.ComboBox.DropDownStyle = ComboBoxStyle.DropDownList
+            '
+            'CopyToolStripButton
+            '
+            Me.CopyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.CopyToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Copy.gif")
+            Me.CopyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.CopyToolStripButton.Name = "CopyToolStripButton"
+            Me.CopyToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.CopyToolStripButton.Text = "&Copy"
+            Me.CopyToolStripButton.MergeAction = MergeAction.Insert
+            Me.CopyToolStripButton.MergeIndex = 4
+            '
+            'CutToolStripButton
+            '
+            Me.CutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.CutToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Cut.gif")
+            Me.CutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.CutToolStripButton.Name = "CutToolStripButton"
+            Me.CutToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.CutToolStripButton.Text = "C&ut"
+            Me.CutToolStripButton.MergeAction = MergeAction.Insert
+            Me.CutToolStripButton.MergeIndex = 4
+            '
+            'PasteToolStripButton
+            '
+            Me.PasteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.PasteToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.CopyClipboard.gif")
+            Me.PasteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.PasteToolStripButton.Name = "PasteToolStripButton"
+            Me.PasteToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.PasteToolStripButton.Text = "&Paste"
+            Me.PasteToolStripButton.MergeAction = MergeAction.Insert
+            Me.PasteToolStripButton.MergeIndex = 4
+            Me.PasteToolStripButton.CheckOnClick = True
+            '
+            'CopyToolStripMenuItem
+            '
+            Me.CopyToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Copy.gif")
+            Me.CopyToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem"
+            Me.CopyToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
+            Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
+            Me.CopyToolStripMenuItem.Text = "&Copy"
+            Me.CopyToolStripMenuItem.MergeAction = MergeAction.Insert
+            Me.CopyToolStripMenuItem.MergeIndex = 4
+            '
+            'CutToolStripMenuItem
+            '
+            Me.CutToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Cut.gif")
+            Me.CutToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.CutToolStripMenuItem.Name = "CutToolStripMenuItem"
+            Me.CutToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.X), System.Windows.Forms.Keys)
+            Me.CutToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
+            Me.CutToolStripMenuItem.Text = "Cu&t"
+            Me.CutToolStripMenuItem.MergeAction = MergeAction.Insert
+            Me.CutToolStripMenuItem.MergeIndex = 4
+            '
+            'PasteToolStripMenuItem
+            '
+            Me.PasteToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.CopyClipboard.gif")
+            Me.PasteToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem"
+            Me.PasteToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V), System.Windows.Forms.Keys)
+            Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
+            Me.PasteToolStripMenuItem.Text = "&Paste"
+            Me.PasteToolStripMenuItem.MergeAction = MergeAction.Insert
+            Me.PasteToolStripMenuItem.MergeIndex = 4
+            Me.PasteToolStripMenuItem.CheckOnClick = True
             '
             'SimulationWindow_Toolstrips
             '
@@ -106,6 +192,13 @@ Namespace Forms
         Friend WithEvents SimWindowMenuStrip As AnimatGuiCtrls.Controls.AnimatMenuStrip
         Friend WithEvents lblBodyPart As System.Windows.Forms.ToolStripLabel
         Friend WithEvents cboBodyPart As System.Windows.Forms.ToolStripComboBox
+        Friend WithEvents PasteToolStripButton As System.Windows.Forms.ToolStripButton
+        Friend WithEvents CopyToolStripButton As System.Windows.Forms.ToolStripButton
+        Friend WithEvents CutToolStripButton As System.Windows.Forms.ToolStripButton
+        Friend WithEvents CutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents CopyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents PasteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents EditToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 #End Region
 
@@ -292,6 +385,8 @@ Namespace Forms
                 AddHandler Me.cboStructure.SelectedIndexChanged, AddressOf Me.OnStructureChanged
                 AddHandler Me.cboBodyPart.DropDown, AddressOf Me.OnBodyPartDropDown
                 AddHandler Me.cboBodyPart.SelectedIndexChanged, AddressOf Me.OnBodyPartChanged
+                AddHandler Util.Application.BodyPartPasteStarting, AddressOf Me.OnBodyPartPasteStarting
+                AddHandler Util.Application.BodyPartPasteEnding, AddressOf Me.OnBodyPartPasteEnding
 
                 m_timerStartSimWindow.Enabled = False
                 m_timerStartSimWindow.Interval = 100
@@ -383,6 +478,97 @@ Namespace Forms
 
         End Sub
 
+#Region " Copy/Paste Methods "
+
+        Public Overridable Sub CutSelected()
+
+            Try
+                CopySelected()
+                Util.Application.OnDeleteFromWorkspace(Me, Nothing)
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Sub
+
+        Public Overridable Sub CopySelected()
+
+            Try
+                If Util.ProjectWorkspace.TreeView.SelectedCount > 1 Then
+                    Throw New System.Exception("Only one body part can be selected to be copied at one time.")
+                End If
+
+                If Util.ProjectWorkspace.SelectedDataObject Is Nothing Then
+                    Throw New System.Exception("You must select at least one body part to be copied.")
+                End If
+
+                If Not Util.IsTypeOf(Util.ProjectWorkspace.SelectedDataObject.GetType, GetType(DataObjects.Physical.RigidBody)) Then
+                    Throw New System.Exception("The selected item must be a body part type in order to be copied.")
+                End If
+
+                Dim rbPart As DataObjects.Physical.RigidBody = DirectCast(Util.ProjectWorkspace.SelectedDataObject, DataObjects.Physical.RigidBody)
+
+                If Not rbPart.CanCopy(New ArrayList) Then
+                    Throw New System.Exception("This part cannot be copied.")
+                End If
+
+                Dim oXml As New AnimatGUI.Interfaces.StdXml
+
+                SaveSelected(oXml, rbPart)
+
+                'oXml.Save("C:\Projects\bin\Experiments\Copy.txt")
+                Dim strXml As String = oXml.Serialize()
+
+                Dim data As New System.Windows.Forms.DataObject
+                data.SetData("AnimatLab.BodyPlan.XMLFormat", strXml)
+                Clipboard.SetDataObject(data, True)
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Sub
+
+        Public Overridable Function SaveSelected(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal rbPart As DataObjects.Physical.RigidBody) As Boolean
+
+            oXml.AddElement("BodyPlan")
+
+            'First lets sort the selected items into nodes and links and generate temp selected ids
+            Dim aryReplaceIDs As New ArrayList
+
+            'Call BeforeCopy first
+            rbPart.BeforeCopy()
+
+            rbPart.AddToReplaceIDList(aryReplaceIDs)
+
+            'Save the replaceme ID list
+            oXml.AddChildElement("ReplaceIDList")
+            oXml.IntoElem() 'Into ReplaceIDList Element
+            For Each strID As String In aryReplaceIDs
+                oXml.AddChildElement("ID", strID)
+            Next
+            oXml.OutOfElem() 'Outof ReplaceIDList Element
+
+            rbPart.SaveData(rbPart.ParentStructure, oXml)
+
+            rbPart.AfterCopy()
+
+            Return True
+        End Function
+
+        Public Overridable Sub PasteSelected(ByVal bInPlace As Boolean)
+
+            Try
+                Util.Application.ToggleBodyPartPasteInProgress()
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Sub
+
+#End Region
+
 #End Region
 
 #Region " Events "
@@ -447,6 +633,18 @@ Namespace Forms
 
             Try
                 RemoveHandler Util.Application.UnitsChanged, AddressOf Me.Application_UnitsChanged
+                RemoveHandler Util.Application.BodyPartPasteStarting, AddressOf Me.OnBodyPartPasteStarting
+                RemoveHandler Util.Application.BodyPartPasteEnding, AddressOf Me.OnBodyPartPasteEnding
+
+                If Not m_doStructure Is Nothing Then
+                    RemoveHandler m_doStructure.AfterPropertyChanged, AddressOf Me.OnStructurePropertyChanged
+                    RemoveHandler m_doStructure.BeforeRemoveItem, AddressOf Me.OnStructureRemoved
+                End If
+
+                If Not m_doBodyPart Is Nothing Then
+                    RemoveHandler m_doBodyPart.BeforeRemoveItem, AddressOf Me.OnBodyPartRemoved
+                End If
+
                 Util.Application.SimulationInterface.RemoveWindow(Me.Handle)
                 m_doInterface = Nothing
             Catch ex As System.Exception
@@ -644,6 +842,28 @@ Namespace Forms
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+        End Sub
+
+        Private Sub CutToolStripButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles CutToolStripButton.Click, CutToolStripMenuItem.Click
+            CutSelected()
+        End Sub
+
+        Private Sub CopyToolStripButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles CopyToolStripButton.Click, CopyToolStripMenuItem.Click
+            CopySelected()
+        End Sub
+
+        Private Sub PasteToolStripButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles PasteToolStripButton.Click, PasteToolStripMenuItem.Click
+            PasteSelected(False)
+        End Sub
+
+        Protected Sub OnBodyPartPasteStarting()
+            Me.PasteToolStripMenuItem.Checked = True
+            Me.PasteToolStripButton.Checked = True
+        End Sub
+
+        Protected Sub OnBodyPartPasteEnding()
+            Me.PasteToolStripMenuItem.Checked = False
+            Me.PasteToolStripButton.Checked = False
         End Sub
 
 #End Region

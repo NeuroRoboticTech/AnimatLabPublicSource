@@ -1348,7 +1348,7 @@ Namespace Framework
         'return result;
         '    End Function
 
-        Public Shared Function GetXmlForPaste(ByVal data As IDataObject, ByVal strFormatType As String) As AnimatGUI.Interfaces.StdXml
+        Public Shared Function GetXmlForPaste(ByVal data As IDataObject, ByVal strFormatType As String, ByVal strRootName As String) As AnimatGUI.Interfaces.StdXml
 
             ' Get the data from the clipboard
             Dim strXml As String = DirectCast(data.GetData(strFormatType), String)
@@ -1360,7 +1360,7 @@ Namespace Framework
             oXml.Deserialize(strXml)
 
             'Get the list of 
-            Dim aryReplaceIDList As ArrayList = GetReplaceIDList(oXml)
+            Dim aryReplaceIDList As ArrayList = GetReplaceIDList(oXml, strRootName)
 
             Dim strReplacedXml As String = ReplaceIDsFromList(strXml, aryReplaceIDList)
 
@@ -1370,11 +1370,11 @@ Namespace Framework
             Return oReplaceXml
         End Function
 
-        Protected Shared Function GetReplaceIDList(ByVal oXml As AnimatGUI.Interfaces.StdXml) As ArrayList
+        Protected Shared Function GetReplaceIDList(ByVal oXml As AnimatGUI.Interfaces.StdXml, ByVal strRootName As String) As ArrayList
 
             Dim aryRepaceList As New ArrayList
             Dim strID As String = ""
-            oXml.FindElement("Diagram")
+            oXml.FindElement(strRootName)
             oXml.IntoChildElement("ReplaceIDList")
             Dim iCount As Integer = oXml.NumberOfChildren() - 1
             For iIdx As Integer = 0 To iCount
@@ -1409,6 +1409,41 @@ Namespace Framework
 
             Return False
         End Function
+
+        Public Shared Function GetPastedBodyPart(ByVal doParentStruct As DataObjects.Physical.PhysicalStructure, _
+                                                 ByVal rbParentPart As DataObjects.Physical.RigidBody, _
+                                                 ByVal bRoot As Boolean) As DataObjects.Physical.RigidBody
+            Dim rbPart As DataObjects.Physical.RigidBody
+
+            If Util.Application.BodyPasteInProgress Then
+                Dim data As IDataObject = Clipboard.GetDataObject()
+                If Not data Is Nothing AndAlso data.GetDataPresent("AnimatLab.BodyPlan.XMLFormat") Then
+                    Dim oXml As AnimatGUI.Interfaces.StdXml = GetXmlForPaste(data, "AnimatLab.BodyPlan.XMLFormat", "BodyPlan")
+
+                    If Not oXml Is Nothing Then
+                        oXml.FindElement("BodyPlan")
+                        oXml.FindChildElement("RigidBody")
+
+                        If Not rbParentPart Is Nothing Then
+                            rbPart = DirectCast(Util.Simulation.CreateObject(oXml, "RigidBody", rbParentPart), DataObjects.Physical.RigidBody)
+                        Else
+                            rbPart = DirectCast(Util.Simulation.CreateObject(oXml, "RigidBody", doParentStruct), DataObjects.Physical.RigidBody)
+                        End If
+
+                        If rbPart Is Nothing Then
+                            Throw New System.Exception("Unable to create the pasted part type.")
+                        End If
+
+                        rbPart.IsRoot = bRoot
+                        rbPart.LoadData(doParentStruct, oXml)
+                        'rbPart.InitializeAfterLoad()
+                    End If
+                End If
+            End If
+
+            Return rbPart
+        End Function
+
 
     End Class
 

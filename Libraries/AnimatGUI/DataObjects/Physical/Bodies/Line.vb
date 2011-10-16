@@ -349,10 +349,10 @@ Namespace DataObjects.Physical.Bodies
         Public Overrides Sub InitializeAfterLoad()
             MyBase.InitializeAfterLoad()
 
-            Dim doAttach As DataObjects.Physical.Bodies.Attachment
+            Dim rbAttach As DataObjects.Physical.Bodies.Attachment
             For Each strID As String In m_aryAttachmentPointIDs
-                doAttach = DirectCast(Me.ParentStructure.FindBodyPart(strID, True), DataObjects.Physical.Bodies.Attachment)
-                m_aryAttachmentPoints.Add(doAttach)
+                rbAttach = DirectCast(Me.ParentStructure.FindBodyPart(strID), DataObjects.Physical.Bodies.Attachment)
+                m_aryAttachmentPoints.Add(rbAttach)
             Next
 
             AddMoveHandlers(m_aryAttachmentPoints)

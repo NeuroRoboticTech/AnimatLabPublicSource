@@ -137,6 +137,9 @@ namespace AnimatSim
 			/// true if the simulation is running
 			BOOL m_bSimRunning;
 
+			/// true if stepping of simulation has begun. This is set to true once the Simulate methods has been called.
+			BOOL m_bSteppingSim;
+
 			/// true if we need to set the physics system to force handling of fast moving objects.
 			BOOL m_bForceFastMoving;
 

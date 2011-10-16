@@ -92,7 +92,6 @@ Namespace Forms.Behavior
 
         'Printing
         Public MustOverride Sub GenerateMetafiles(ByVal aryMetaFiles As Collections.MetaDocuments)
-        Public MustOverride Sub DumpNodeLinkInfo()
 
         'Copy/Paste callback methods
         Public MustOverride Sub CutSelected()

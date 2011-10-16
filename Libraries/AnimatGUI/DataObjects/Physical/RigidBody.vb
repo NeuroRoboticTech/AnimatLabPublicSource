@@ -754,6 +754,8 @@ Namespace DataObjects.Physical
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Texture", GetType(String), "Texture", _
                                         "Visibility", "Sets the bmp texture file to wrap onto this body part.", Me.Texture, GetType(TypeHelpers.ImageFileEditor)))
 
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Body Type", Me.Type.GetType(), "Type", _
+                                        "Part Properties", "Type of rigid body.", Me.Type, True))
 
         End Sub
 
@@ -996,7 +998,7 @@ Namespace DataObjects.Physical
 
                     dbBody = DirectCast(Util.Simulation.CreateObject(oXml, "RigidBody", Me), DataObjects.Physical.RigidBody)
                     dbBody.LoadData(doStructure, oXml)
-                    m_aryChildBodies.Add(dbBody.ID, dbBody)
+                    m_aryChildBodies.Add(dbBody.ID, dbBody, False)
                 Next
                 oXml.OutOfElem()   'Outof ChildBodies Element
             End If
@@ -1029,8 +1031,14 @@ Namespace DataObjects.Physical
             End If
 
             If oXml.FindChildElement("ReceptiveFieldSensor", False) Then
-                m_doReceptiveFieldSensor = New ContactSensor(Me)
-                m_doReceptiveFieldSensor.LoadData(oXml)
+                Try
+                    m_doReceptiveFieldSensor = New ContactSensor(Me)
+                    m_doReceptiveFieldSensor.LoadData(oXml)
+                Catch ex As ContactSensor.ContactSensorOrganismException
+                    'If we get this type of exception then it mens that we are trying to add this rigid body to regular structure.
+                    'In that case we want to just eat this error and not have a receptive field sensor.
+                    m_doReceptiveFieldSensor = Nothing
+                End Try
             End If
 
             oXml.OutOfElem() 'Outof RigidBody Element
@@ -1181,38 +1189,50 @@ Namespace DataObjects.Physical
             m_doInterface.OrientNewPart(vPos.X, vPos.Y, vPos.Z, vNorm.X, vNorm.Y, vNorm.Z)
         End Sub
 
-        Public Overridable Overloads Function AddChildBody(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d) As Boolean
+        Protected Overridable Function CreateNewBody(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d, ByRef bAddDefaultGraphics As Boolean) As RigidBody
             Dim rbNew As RigidBody
 
-            Try
+            'First Select the new rigid body part type
+            Dim frmSelectParts As New Forms.BodyPlan.SelectPartType()
+            frmSelectParts.PartType = GetType(Physical.RigidBody)
+            frmSelectParts.IsRoot = False
+            frmSelectParts.ParentBody = Me
 
-                'First Select the new rigid body part type
-                Dim frmSelectParts As New Forms.BodyPlan.SelectPartType()
-                frmSelectParts.PartType = GetType(Physical.RigidBody)
-                frmSelectParts.IsRoot = False
-                frmSelectParts.ParentBody = Me
+            If frmSelectParts.ShowDialog() <> DialogResult.OK Then Return Nothing
 
-                If frmSelectParts.ShowDialog() <> DialogResult.OK Then Return False
+            rbNew = DirectCast(frmSelectParts.SelectedPart.Clone(Me, False, Nothing), RigidBody)
+            rbNew.SetDefaultSizes()
 
-                rbNew = DirectCast(frmSelectParts.SelectedPart.Clone(Me, False, Nothing), RigidBody)
-                rbNew.SetDefaultSizes()
-
-                Dim bAddDefaultGraphics As Boolean = False
-                If rbNew.HasDynamics Then
-                    rbNew.IsCollisionObject = frmSelectParts.rdCollision.Checked
-                    If rbNew.IsCollisionObject Then
-                        bAddDefaultGraphics = frmSelectParts.chkAddGraphics.Checked
-                    Else
-                        rbNew.IsContactSensor = frmSelectParts.chkIsSensor.Checked
-                    End If
+            If rbNew.HasDynamics Then
+                rbNew.IsCollisionObject = frmSelectParts.rdCollision.Checked
+                If rbNew.IsCollisionObject Then
+                    bAddDefaultGraphics = frmSelectParts.chkAddGraphics.Checked
                 Else
-                    rbNew.IsCollisionObject = False
-                    rbNew.IsContactSensor = False
+                    rbNew.IsContactSensor = frmSelectParts.chkIsSensor.Checked
                 End If
+            Else
+                rbNew.IsCollisionObject = False
+                rbNew.IsContactSensor = False
+            End If
 
-                Me.ParentStructure.NewBodyIndex = Me.ParentStructure.NewBodyIndex + 1
-                rbNew.Name = "Body_" & Me.ParentStructure.NewBodyIndex
-                rbNew.IsRoot = False
+            Me.ParentStructure.NewBodyIndex = Me.ParentStructure.NewBodyIndex + 1
+            rbNew.Name = "Body_" & Me.ParentStructure.NewBodyIndex
+            rbNew.IsRoot = False
+
+            Return rbNew
+        End Function
+
+        Public Overridable Overloads Function AddChildBody(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d) As Boolean
+            Dim rbNew As RigidBody
+            Dim bAddDefaultGraphics As Boolean = False
+
+            Try
+                rbNew = Util.GetPastedBodyPart(Me.ParentStructure, Me, False)
+
+                If rbNew Is Nothing Then
+                    rbNew = CreateNewBody(vPos, vNorm, bAddDefaultGraphics)
+                    If rbNew Is Nothing Then Return False
+                End If
 
                 'Now, if it needs a joint then select the joint type to use
                 If rbNew.UsesAJoint Then
@@ -1226,6 +1246,8 @@ Namespace DataObjects.Physical
                 'Now add the new part to the parent
                 AddChildBody(rbNew, bAddDefaultGraphics)
 
+                rbNew.InitializeAfterLoad()
+                rbNew.AddToSim(True)
                 rbNew.OrientNewPart(vPos, vNorm)
                 rbNew.SelectItem(False)
 
@@ -1241,7 +1263,7 @@ Namespace DataObjects.Physical
             If Not Me.ChildBodies.Contains(rbChildBody.ID) Then
                 rbChildBody.BeforeAddBody()
 
-                Me.ChildBodies.Add(rbChildBody.ID, rbChildBody)
+                Me.ChildBodies.Add(rbChildBody.ID, rbChildBody, False)
 
                 'If this is  a collision objectthen we need to add a default graphics object for this item.
                 If bAddDefaultGraphics AndAlso rbChildBody.IsCollisionObject Then
@@ -1445,15 +1467,16 @@ Namespace DataObjects.Physical
             End If
 
             Me.SignalBeforeAddItem(Me)
-            If Not m_JointToParent Is Nothing Then
-                m_JointToParent.BeforeAddToList(bCallSimMethods, bThrowError)
-            End If
-
-            If Not m_doReceptiveFieldSensor Is Nothing Then
-                m_doReceptiveFieldSensor.BeforeAddToList(bCallSimMethods, bThrowError)
-            End If
-
             If bCallSimMethods Then AddToSim(bThrowError)
+
+            'If Not m_JointToParent Is Nothing Then
+            '    m_JointToParent.BeforeAddToList(False, bThrowError)
+            'End If
+
+            'If Not m_doReceptiveFieldSensor Is Nothing Then
+            '    m_doReceptiveFieldSensor.BeforeAddToList(False, bThrowError)
+            'End If
+
         End Sub
 
         Public Overrides Sub AfterAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)

@@ -361,7 +361,7 @@ Namespace DataObjects.Behavior.Synapses
 
             Catch ex As System.Exception
                 m_bIsInitialized = False
-             End Try
+            End Try
 
         End Sub
 

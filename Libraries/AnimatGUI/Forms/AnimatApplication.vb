@@ -1119,6 +1119,8 @@ Namespace Forms
         Protected m_doAutomationStructure As DataObjects.Physical.PhysicalStructure
         Protected m_doAutomationBodyPart As DataObjects.Physical.BodyPart
 
+        Protected m_bBodyPartPasteInProgress As Boolean = False
+
 #Region " Preferences "
 
         Protected m_strDefaultNewFolder As String = ""
@@ -1505,6 +1507,12 @@ Namespace Forms
         Public Overridable ReadOnly Property SimIsRunning() As Boolean
             Get
                 Return Me.SimulationInterface.SimRunning()
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property BodyPasteInProgress As Boolean
+            Get
+                Return m_bBodyPartPasteInProgress
             End Get
         End Property
 
@@ -4224,6 +4232,22 @@ Namespace Forms
             End Try
         End Sub
 
+        Public Overridable Sub ToggleBodyPartPasteInProgress()
+
+            If m_bBodyPartPasteInProgress Then
+                RaiseEvent BodyPartPasteEnding()
+                m_bBodyPartPasteInProgress = False
+            Else
+                Dim data As IDataObject = Clipboard.GetDataObject()
+                If data.GetDataPresent("AnimatLab.BodyPlan.XMLFormat") Then
+                    RaiseEvent BodyPartPasteStarting()
+                    m_bBodyPartPasteInProgress = True
+                    AddPartToolStripButton.PerformClick()
+                End If
+            End If
+
+        End Sub
+
 #End Region
 
 #End Region
@@ -4247,6 +4271,8 @@ Namespace Forms
                                   ByVal ePrevDistance As AnimatGUI.DataObjects.Physical.Environment.enumDistanceUnits, _
                                   ByVal eNewDistance As AnimatGUI.DataObjects.Physical.Environment.enumDistanceUnits, _
                                   ByVal fltDistanceChange As Single)
+        Public Event BodyPartPasteStarting()
+        Public Event BodyPartPasteEnding()
 
         Public Overridable Sub SignalTimeStepChanged(ByVal doObject As Framework.DataObject)
             RaiseEvent TimeStepChanged(doObject)
@@ -4729,7 +4755,8 @@ Namespace Forms
                     Dim frmSimWindow As SimulationWindow = DirectCast(Me.m_selTabPage.Control, SimulationWindow)
 
                     If Not frmSimWindow.PhysicalStructure Is Nothing AndAlso frmSimWindow.PhysicalStructure.RootBody Is Nothing Then
-                        If frmSimWindow.PhysicalStructure.AddRootBody() Then
+                        Dim rbPasteBody As DataObjects.Physical.RigidBody = Util.GetPastedBodyPart(frmSimWindow.PhysicalStructure, Nothing, True)
+                        If frmSimWindow.PhysicalStructure.AddRootBody(rbPasteBody, False) Then
                             SetSimData("LookatBodyID", frmSimWindow.PhysicalStructure.RootBody.ID, True)
                         End If
                         AddPartToolStripButton.Checked = False

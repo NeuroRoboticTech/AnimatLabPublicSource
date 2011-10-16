@@ -346,9 +346,6 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overridable Sub AfterAddBody()
-            'The newly added part may be a copy of an entire heirarchy of parts. If htis is the
-            'case then it may have things in it like springs and muscles that will need to be re-initialized.
-            Me.InitializeAfterLoad()
         End Sub
 
         Public MustOverride Function SwapBodyPartList() As AnimatGUI.Collections.BodyParts

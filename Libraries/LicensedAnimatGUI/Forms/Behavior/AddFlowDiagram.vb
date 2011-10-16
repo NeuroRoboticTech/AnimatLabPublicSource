@@ -678,8 +678,8 @@ Namespace Forms.Behavior
             '
             'EditToolStripMenuItem
             '
-            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteToolStripMenuItem, Me.CopyToolStripMenuItem, Me.CutToolStripMenuItem, _
-                                                                                                      Me.PasteInPlaceMenuItem, Me.ShowConnectionsToolStripMenuItem, Me.GridMenuItem})
+            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteInPlaceMenuItem, Me.PasteToolStripMenuItem, Me.CopyToolStripMenuItem, _
+                                                                                                      Me.CutToolStripMenuItem, Me.ShowConnectionsToolStripMenuItem, Me.GridMenuItem})
             Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
             Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
             Me.EditToolStripMenuItem.Text = "&Edit"
@@ -996,16 +996,7 @@ Namespace Forms.Behavior
             Me.BringToFrontMenuItem.Text = "Bring to front"
             Me.BringToFrontMenuItem.ToolTipText = "Bring to front"
             '
-            'PasteInPlaseToolStripMenuItem
-            '
-            Me.PasteInPlaceMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.CopyClipboard.gif")
-            Me.PasteInPlaceMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.PasteInPlaceMenuItem.Name = "PasteInPlaceToolStripMenuItem"
-            Me.PasteInPlaceMenuItem.Size = New System.Drawing.Size(159, 22)
-            Me.PasteInPlaceMenuItem.Text = "Paste in place"
-            Me.PasteInPlaceMenuItem.MergeAction = MergeAction.Append
-            '
-            'PasteInPlaseToolStripMenuItem
+            'GridMenuItem
             '
             Me.GridMenuItem.Name = "GridMenuItem"
             Me.GridMenuItem.Size = New System.Drawing.Size(159, 22)
@@ -1079,6 +1070,16 @@ Namespace Forms.Behavior
             Me.PasteToolStripMenuItem.Text = "&Paste"
             Me.PasteToolStripMenuItem.MergeAction = MergeAction.Insert
             Me.PasteToolStripMenuItem.MergeIndex = 4
+            '
+            'PasteInPlaseToolStripMenuItem
+            '
+            Me.PasteInPlaceMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.CopyClipboard.gif")
+            Me.PasteInPlaceMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.PasteInPlaceMenuItem.Name = "PasteInPlaceToolStripMenuItem"
+            Me.PasteInPlaceMenuItem.Size = New System.Drawing.Size(159, 22)
+            Me.PasteInPlaceMenuItem.Text = "Paste in place"
+            Me.PasteInPlaceMenuItem.MergeAction = MergeAction.Insert
+            Me.PasteInPlaceMenuItem.MergeIndex = 4
 
 
             'AddFlowDiagram_ToolStrips
@@ -2013,7 +2014,7 @@ Namespace Forms.Behavior
                     ' We first unselect the selected items
                     m_ctrlAddFlow.SelectedItems.Clear()
 
-                    Dim oXml As AnimatGUI.Interfaces.StdXml = Util.GetXmlForPaste(data, "AnimatLab.Behavior.XMLFormat")
+                    Dim oXml As AnimatGUI.Interfaces.StdXml = Util.GetXmlForPaste(data, "AnimatLab.Behavior.XMLFormat", "Diagram")
 
                     If Not oXml Is Nothing Then
                         LoadPasted(oXml, bInPlace)
@@ -2713,33 +2714,6 @@ Namespace Forms.Behavior
 
             Return True
         End Function
-
-        Public Overrides Sub DumpNodeLinkInfo()
-            'TODO
-            'Dim bnNode As AnimatGUI.DataObjects.Behavior.Node
-            ''Test Code
-            'Debug.WriteLine("")
-            'Debug.WriteLine("Dumping Node Data: " & Me.Title)
-            'For Each doItem As DictionaryEntry In Me.Nodes
-            '    bnNode = DirectCast(doItem.Value, AnimatGUI.DataObjects.Behavior.Node)
-            '    Debug.WriteLine("Node: " & bnNode.Name & " Type: " & bnNode.TypeName)
-            '    Debug.WriteLine("Outlinks")
-            '    bnNode.OutLinks.DumpListInfo()
-            '    Debug.WriteLine("")
-            '    Debug.WriteLine("Inlinks")
-            '    bnNode.InLinks.DumpListInfo()
-            '    Debug.WriteLine("")
-            '    Debug.WriteLine("")
-            'Next
-
-            'Dim bdDiagram As AnimatGUI.Forms.Behavior.DiagramOld
-            'For Each deEntry As DictionaryEntry In m_aryDiagrams
-            '    bdDiagram = DirectCast(deEntry.Value, AnimatGUI.Forms.Behavior.DiagramOld)
-            '    bdDiagram.DumpNodeLinkInfo()
-            'Next
-
-        End Sub
-
 
         Public Overrides Sub LoadPasted(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal bInPlace As Boolean)
 

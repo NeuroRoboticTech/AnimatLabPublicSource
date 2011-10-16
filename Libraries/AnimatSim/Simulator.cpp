@@ -55,6 +55,7 @@ Simulator ANIMAT_PORT *GetSimulator()
 **/
 Simulator::Simulator()
 {
+	m_bSteppingSim = FALSE;
 	m_bShuttingDown = FALSE;
 	m_strID = "SIMULATOR";
 	m_strName = m_strID;
@@ -162,6 +163,7 @@ Simulator::~Simulator()
 
 try
 {
+	m_bSteppingSim = FALSE;
 	m_bShuttingDown = TRUE;
 	g_lpSimulator = NULL;
 	if(m_lpAnimatClassFactory) {delete m_lpAnimatClassFactory; m_lpAnimatClassFactory = NULL;}
@@ -1611,6 +1613,9 @@ occurs.
 **/
 BOOL Simulator::WaitForSimulationBlock(long lTimeout)
 {
+	if(!m_bSteppingSim)
+		return TRUE;
+
 	m_bBlockSimulation = TRUE;
 	long lTime = 0;
 	BOOL bDone = FALSE;
@@ -1699,7 +1704,7 @@ void Simulator::Reset()
 	m_fltLinearKineticLoss = 1e6f;
 	m_fltAngularKineticLoss = 1e6f;
 	m_bForceFastMoving = TRUE;
-
+	m_bSteppingSim = FALSE;
 
 	if(m_lpWinMgr)
 		m_lpWinMgr->Close();
@@ -1934,6 +1939,7 @@ void Simulator::StepSimulation()
 **/
 void Simulator::SimulateBegin()
 {
+	m_bSteppingSim = TRUE;
 }
 
 /**

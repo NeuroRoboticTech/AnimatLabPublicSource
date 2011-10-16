@@ -313,7 +313,7 @@ Namespace DataObjects.ExternalStimuli
 
         'End Sub
 
-        'Protected Overridable Sub RemoveFromSimulation()
+        'Protected Overridable Sub RemoveFromSim()
 
         '    If Util.Application.SimulationInterface.FindStimulus(m_strID, False) Then
         '        Util.DisableDirtyFlags = True

@@ -247,6 +247,9 @@ Namespace DataObjects.Physical
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Enable Limits", m_bEnabled.GetType(), "EnableLimits", _
                                         "Constraints", "Enables or disables this joint limit constraints.", m_bEnabled))
 
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Joint Type", Me.Type.GetType(), "Type", _
+                                        "Part Properties", "Type of joint.", Me.Type, True))
+
         End Sub
 
         Public Overloads Overrides Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)

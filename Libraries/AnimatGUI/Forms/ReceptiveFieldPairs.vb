@@ -381,7 +381,7 @@ Namespace Forms
 
                 Dim doNeuron As DataObjects.Behavior.Nodes.Neuron = DirectCast(cboNeurons.SelectedItem, DataObjects.Behavior.Nodes.Neuron)
 
-                Dim doPair As DataObjects.Physical.ReceptiveFieldPair = m_doSelPart.ReceptiveFieldSensor.AddFieldPair(doNeuron, m_doSelPart.SelectedVertex, False)
+                Dim doPair As DataObjects.Physical.ReceptiveFieldPair = m_doSelPart.ReceptiveFieldSensor.AddFieldPair(doNeuron, m_doSelPart.SelectedVertex)
 
                 Dim lvItem As New ListViewItem(doPair.Field.Vertex.ToString())
                 lvItem.SubItems.Add(doPair.Neuron.Name)

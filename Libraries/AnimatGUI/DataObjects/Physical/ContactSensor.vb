@@ -27,6 +27,8 @@ Namespace DataObjects.Physical
 
         Protected m_aryPairInfo As ArrayList
 
+        Protected m_bAddedInitialFieldPairs As Boolean = False
+
 #End Region
 
 #Region " Properties "
@@ -89,7 +91,7 @@ Namespace DataObjects.Physical
                 m_doPart = DirectCast(doParent, DataObjects.Physical.RigidBody)
 
                 If m_doPart.ParentStructure Is Nothing OrElse Not Util.IsTypeOf(m_doPart.ParentStructure.GetType(), GetType(Physical.Organism), False) Then
-                    Throw New System.Exception("The rigid body for the contact sensor was not an organism type.")
+                    Throw New ContactSensorOrganismException("Rigid bodies with contact sensors can only be added to an organism.")
                 End If
 
                 m_doOrganism = DirectCast(m_doPart.ParentStructure, Physical.Organism)
@@ -168,31 +170,37 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub InitializeAfterLoad()
-            MyBase.InitializeAfterLoad()
-
-            For Each doInfo As PairLoadInfo In m_aryPairInfo
-                Dim doNeuron As Behavior.Nodes.Neuron = DirectCast(Util.Simulation.FindObjectByID(doInfo.m_strNeuronID), Behavior.Nodes.Neuron)
-                AddFieldPair(doNeuron, doInfo.m_vVertex, True)
-            Next
-
-        End Sub
-
         Public Overrides Sub InitializeSimulationReferences()
             MyBase.InitializeSimulationReferences()
 
             m_gnReceptiveFieldGain.InitializeSimulationReferences()
             m_gnReceptiveCurrentGain.InitializeSimulationReferences()
 
-            For Each deEntry As DictionaryEntry In Me.Adapters
-                Dim doAdapter As DataObjects.Behavior.Nodes.ContactAdapter = DirectCast(deEntry.Value, DataObjects.Behavior.Nodes.ContactAdapter)
-                doAdapter.InitializeSimulationReferences()
-            Next
-
             For Each deEntry As DictionaryEntry In m_aryFields
                 Dim doField As DataObjects.Physical.ReceptiveField = DirectCast(deEntry.Value, DataObjects.Physical.ReceptiveField)
-                doField.InitializeSimulationReferences()
+                doField.AddToSim(True)
             Next
+
+            For Each deEntry As DictionaryEntry In Me.Adapters
+                Dim doAdapter As DataObjects.Behavior.Nodes.ContactAdapter = DirectCast(deEntry.Value, DataObjects.Behavior.Nodes.ContactAdapter)
+                doAdapter.AddToSim(True)
+            Next
+
+            If Not m_doInterface Is Nothing And Not m_bAddedInitialFieldPairs Then
+                'Only attempt to do this if the simulation is running and we have obtained a reference to the sensor object.
+                'I am doing this here because this should ALWAYS be called only after the simulation has been created and its interface has been referenced.
+                ' The reason is that the receptive field stuff is always done "on the fly". We are only loading some rough field pair datas and then creating
+                ' all the many references and stuff like contact adapters, sensors, fields, and field pairs afterwards because there are so many interactions 
+                ' between them. It would be more difficult to save/open these interactions than to just re-create them, but we can only do that after the sim
+                ' has started.
+
+                For Each doInfo As PairLoadInfo In m_aryPairInfo
+                    Dim doNeuron As Behavior.Nodes.Neuron = DirectCast(Util.Simulation.FindObjectByID(doInfo.m_strNeuronID), Behavior.Nodes.Neuron)
+                    AddFieldPair(doNeuron, doInfo.m_vVertex)
+                Next
+
+                m_bAddedInitialFieldPairs = True
+            End If
         End Sub
 
         Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject
@@ -207,7 +215,7 @@ Namespace DataObjects.Physical
 
         End Function
 
-        Public Overridable Function AddFieldPair(ByVal doNeuron As DataObjects.Behavior.Nodes.Neuron, ByVal vVertex As Vec3d, ByVal bLoading As Boolean) As ReceptiveFieldPair
+        Public Overridable Function AddFieldPair(ByVal doNeuron As DataObjects.Behavior.Nodes.Neuron, ByVal vVertex As Vec3d) As ReceptiveFieldPair
 
             If doNeuron Is Nothing Then
                 Throw New System.Exception("The neuron must be defined in order to add a new receptive field pair.")
@@ -227,9 +235,7 @@ Namespace DataObjects.Physical
                 doAdapter = New DataObjects.Behavior.Nodes.ContactAdapter(doNeuron.NeuralModule, m_doPart, Me)
                 m_aryAdapters.Add(strModuleName, doAdapter)
 
-                If Not bLoading Then
-                    doAdapter.AddToSim(True)
-                End If
+                doAdapter.AddToSim(True)
             End If
 
             'Now add the receptive field to the sensor if one does not already exist.
@@ -245,7 +251,7 @@ Namespace DataObjects.Physical
             Dim doPair As New ReceptiveFieldPair(doAdapter, doField, doNeuron, m_doPart)
 
             'Add it to the adapter
-            doAdapter.FieldPairs.Add(doPair.ID, doPair, Not bLoading)
+            doAdapter.FieldPairs.Add(doPair.ID, doPair)
 
             'Add it to the receptive field
             doField.FieldPairs.Add(doPair.ID, doPair, False)
@@ -434,6 +440,19 @@ Namespace DataObjects.Physical
                 oXml.AddChildElement("NeuronID", m_strNeuronID)
                 Util.SaveVector(oXml, "Vertex", m_vVertex)
                 oXml.OutOfElem()
+            End Sub
+
+        End Class
+
+#End Region
+
+#Region "ContactSensorExceptions"
+
+        Public Class ContactSensorOrganismException
+            Inherits System.Exception
+
+            Public Sub New(ByVal strMessage As String)
+                MyBase.New(strMessage)
             End Sub
 
         End Class

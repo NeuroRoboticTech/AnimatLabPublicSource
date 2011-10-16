@@ -44,6 +44,8 @@ protected:
 
 	void GetPointers();
 
+	float *DataObjectInterface::FindDataPointer(string strData, BOOL bThrowError);
+
 public:
 	DataObjectInterface(Interfaces::SimulatorInterface ^SimInt, String ^strID);
 	!DataObjectInterface();

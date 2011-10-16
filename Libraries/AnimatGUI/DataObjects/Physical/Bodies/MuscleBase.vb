@@ -133,6 +133,13 @@ Namespace DataObjects.Physical.Bodies
 
         End Sub
 
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList)
+
+            m_StimTension.AddToReplaceIDList(aryReplaceIDList)
+            m_LengthTension.AddToReplaceIDList(aryReplaceIDList)
+        End Sub
+
         Public Overrides Sub SwapBodyPartCopy(ByVal doOriginal As BodyPart)
             MyBase.SwapBodyPartCopy(doOriginal)
 

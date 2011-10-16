@@ -170,7 +170,7 @@ Namespace DataObjects.Physical
                     m_doOdorType = Util.Environment.OdorTypes(strOdorTypeID)
 
                     If Not m_doOdorType.OdorSources.Contains(Me.ID) Then
-                        m_doOdorType.OdorSources.Add(Me.ID, Me)
+                        m_doOdorType.OdorSources.Add(Me.ID, Me, False)
                     End If
                 Else
                     Throw New System.Exception("No odor type with ID '" & strOdorTypeID & "' was found.")

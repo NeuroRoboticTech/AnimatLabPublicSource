@@ -306,9 +306,9 @@ Namespace DataObjects.Physical
 
                 rbRootToAdd = DirectCast(frmSelectParts.SelectedPart.Clone(Me, False, Nothing), RigidBody)
                 bAddDefaultGraphics = frmSelectParts.chkAddGraphics.Checked
+                rbRootToAdd.SetDefaultSizes()
             End If
 
-            rbRootToAdd.SetDefaultSizes()
             rbRootToAdd.Name = "Root"
             rbRootToAdd.IsRoot = True
             rbRootToAdd.IsCollisionObject = True
@@ -329,6 +329,8 @@ Namespace DataObjects.Physical
 
             m_dbRoot.AfterAddToList(True, True)
             rbRootToAdd.AfterAddBody()
+
+            rbRootToAdd.InitializeSimulationReferences()
 
             m_dbRoot.SelectItem()
 
