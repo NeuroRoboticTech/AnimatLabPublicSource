@@ -202,13 +202,20 @@ Namespace DataObjects.Physical
             End If
 
             If Not Me.ParentStructure Is Nothing Then
+                If Not m_doInterface Is Nothing Then
+                    RemoveHandler m_doInterface.OnPositionChanged, AddressOf Me.OnPositionChanged
+                    RemoveHandler m_doInterface.OnRotationChanged, AddressOf Me.OnRotationChanged
+                    RemoveHandler m_doInterface.OnSelectionChanged, AddressOf Me.OnSelectionChanged
+                End If
+
                 Me.ParentStructure.DeleteBodyPart(Me)
+
                 If Not Me.ParentStructure Is Nothing Then
                     Me.ParentStructure.SelectItem()
                 End If
             End If
 
-            Return False
+                Return False
         End Function
 
         Public Overridable Sub CopyBodyPart(ByVal bCutData As Boolean)
