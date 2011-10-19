@@ -315,6 +315,7 @@ Namespace DataObjects.Behavior.Neurons
                 AddCompatibleLink(New SynapseTypes.NonSpikingChemical(Nothing))
                 AddCompatibleLink(New SynapseTypes.SpikingChemical(Nothing))
                 AddCompatibleLink(New SynapseTypes.Electrical(Nothing))
+                AddCompatibleLink(New Behavior.Synapse(Nothing))
 
                 'Lets add the data types that this node understands.
                 'm_thDataTypes.DataTypes.Add("IntrinsicCurrent", "Intrinsic Current")

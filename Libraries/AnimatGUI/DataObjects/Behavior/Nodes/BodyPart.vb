@@ -34,8 +34,7 @@ Namespace DataObjects.Behavior.Nodes
                 MyBase.Organism = value
 
                 If Not Me.Organism Is Nothing Then
-                    m_thLinkedPart = CreateBodyPartList(Me.Organism, Nothing, m_tpBodyPartType)
-                    m_thDataTypes = New AnimatGUI.TypeHelpers.DataTypeID(Me)
+                    Me.LinkedPart = CreateBodyPartList(Me.Organism, Nothing, m_tpBodyPartType)
                 End If
             End Set
         End Property
@@ -46,8 +45,10 @@ Namespace DataObjects.Behavior.Nodes
                 Return m_thLinkedPart
             End Get
             Set(ByVal Value As AnimatGUI.TypeHelpers.LinkedBodyPart)
+                DiconnectLinkedPartEvents()
                 m_thLinkedPart = Value
                 SetDataType()
+                ConnectLinkedPartEvents()
             End Set
         End Property
 
@@ -231,8 +232,7 @@ Namespace DataObjects.Behavior.Nodes
                     If (m_strLinkedBodyPartID.Length > 0) Then
                         bpPart = m_doOrganism.FindBodyPart(m_strLinkedBodyPartID, False)
 
-                        m_thLinkedPart = CreateBodyPartList(m_doOrganism, bpPart, m_tpBodyPartType)
-                        SetDataType()
+                        Me.LinkedPart = CreateBodyPartList(m_doOrganism, bpPart, m_tpBodyPartType)
                     End If
                 End If
 
@@ -272,6 +272,18 @@ Namespace DataObjects.Behavior.Nodes
                 Return True
             End If
         End Function
+
+        Public Overridable Sub ConnectLinkedPartEvents()
+            If Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing Then
+                AddHandler m_thLinkedPart.BodyPart.AfterRemoveItem, AddressOf Me.OnAfterRemoveLinkedPart
+            End If
+        End Sub
+
+        Public Overridable Sub DiconnectLinkedPartEvents()
+            If Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing Then
+                RemoveHandler m_thLinkedPart.BodyPart.AfterRemoveItem, AddressOf Me.OnAfterRemoveLinkedPart
+            End If
+        End Sub
 
         Public Overrides Sub LoadData(ByRef oXml As Interfaces.StdXml)
             MyBase.LoadData(oXml)
@@ -314,6 +326,18 @@ Namespace DataObjects.Behavior.Nodes
                                         Me.TypeName & " Properties", "Sets the description for this " & Me.TypeName.ToLower & " connection.", m_strToolTip, _
                                         GetType(AnimatGUI.TypeHelpers.MultiLineStringTypeEditor)))
 
+        End Sub
+
+#End Region
+
+#Region "Events"
+
+        Private Sub OnAfterRemoveLinkedPart(ByRef doObject As Framework.DataObject)
+            Try
+                Me.LinkedPart = CreateBodyPartList(Me.Organism, Nothing, m_tpBodyPartType)
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
         End Sub
 
 #End Region

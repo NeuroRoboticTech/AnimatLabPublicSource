@@ -898,6 +898,16 @@ Namespace DataObjects.Behavior
             End If
         End Sub
 
+        Public Overridable Function IsLinkCompatible(ByVal blLink As Behavior.Link) As Boolean
+            For Each blItem As Behavior.Link In m_aryCompatibleLinks
+                If blItem.GetType() Is blLink.GetType() Then
+                    Return True
+                End If
+            Next
+
+            Return False
+        End Function
+
         Protected Overridable Sub AddCompatibleLink(ByVal blLink As Behavior.Link)
 
             'First lets make sure that there is not a link of this type already in the list.

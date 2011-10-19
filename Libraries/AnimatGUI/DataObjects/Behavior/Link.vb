@@ -1001,6 +1001,17 @@ Namespace DataObjects.Behavior
             Return -1
         End Function
 
+        Public Overridable Function IsLinkCompatibleWithNodes(ByVal doOrigin As DataObjects.Behavior.Node, ByVal doDestination As DataObjects.Behavior.Node) As Boolean
+
+            If Not doOrigin Is Nothing AndAlso Not doDestination Is Nothing Then
+                If doOrigin.IsLinkCompatible(Me) AndAlso doDestination.IsLinkCompatible(Me) Then
+                    Return True
+                End If
+            End If
+
+            Return False
+        End Function
+
         Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
 
             MyBase.LoadData(oXml)
