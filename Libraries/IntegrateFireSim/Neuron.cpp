@@ -1068,6 +1068,7 @@ void Neuron::CalcUpdate(IntegrateFireNeuralModule *lpNS)
 
 	// sum spiking synaptic stuff
 		GS=GSI=0;
+		m_fltSpikingSynCurMemory = 0;
 		for (i=0; i<iSpikingChemSynCount; i++)
 		{
 			SpikingChemicalSynapse *pSyn=lpNS->GetSpikingChemSynAt(i);
@@ -1078,9 +1079,11 @@ void Neuron::CalcUpdate(IntegrateFireNeuralModule *lpNS)
 	// not resting pot), but is actually right.  It's the exponential predictor maths
 	// (all currents relative to rest ????)
 			GSI+=(arySynG[i]*(pSyn->m_dEquil-m_dRestingPot));
+			m_fltSpikingSynCurMemory += (arySynG[i]*(pSyn->EquilibriumPotential()-GetMemPot()));
+			if(fabs(m_fltSpikingSynCurMemory) > 0)
+				m_fltSpikingSynCurMemory = m_fltSpikingSynCurMemory;
 		}
-
-		m_fltSpikingSynCurMemory = GSI * 1e-9;
+		m_fltSpikingSynCurMemory *= (float) 1e-9;
 
 	// do burster
 		if (m_dGMaxCa>0)
