@@ -935,27 +935,29 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+            'Only do this if not already initialized.
+            If m_doInterface Is Nothing Then
+                MyBase.InitializeSimulationReferences()
 
-            If Not m_doInterface Is Nothing Then
-                AddHandler m_doInterface.OnAddBodyClicked, AddressOf Me.OnAddBodyClicked
-                AddHandler m_doInterface.OnSelectedVertexChanged, AddressOf Me.OnSelectedVertexChanged
+                If Not m_doInterface Is Nothing Then
+                    AddHandler m_doInterface.OnAddBodyClicked, AddressOf Me.OnAddBodyClicked
+                    AddHandler m_doInterface.OnSelectedVertexChanged, AddressOf Me.OnSelectedVertexChanged
+                End If
+
+                If Not m_JointToParent Is Nothing Then
+                    m_JointToParent.InitializeSimulationReferences()
+                End If
+
+                Dim doChild As AnimatGUI.DataObjects.Physical.RigidBody
+                For Each deEntry As DictionaryEntry In m_aryChildBodies
+                    doChild = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Physical.RigidBody)
+                    doChild.InitializeSimulationReferences()
+                Next
+
+                If Not m_doReceptiveFieldSensor Is Nothing Then
+                    m_doReceptiveFieldSensor.InitializeSimulationReferences()
+                End If
             End If
-
-            If Not m_JointToParent Is Nothing Then
-                m_JointToParent.InitializeSimulationReferences()
-            End If
-
-            Dim doChild As AnimatGUI.DataObjects.Physical.RigidBody
-            For Each deEntry As DictionaryEntry In m_aryChildBodies
-                doChild = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Physical.RigidBody)
-                doChild.InitializeSimulationReferences()
-            Next
-
-            If Not m_doReceptiveFieldSensor Is Nothing Then
-                m_doReceptiveFieldSensor.InitializeSimulationReferences()
-            End If
-
         End Sub
 
         Public Overloads Overrides Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
@@ -1469,13 +1471,19 @@ Namespace DataObjects.Physical
             Me.SignalBeforeAddItem(Me)
             If bCallSimMethods Then AddToSim(bThrowError)
 
-            'If Not m_JointToParent Is Nothing Then
-            '    m_JointToParent.BeforeAddToList(False, bThrowError)
-            'End If
+            If Not m_JointToParent Is Nothing Then
+                m_JointToParent.BeforeAddToList(bCallSimMethods, bThrowError)
+            End If
 
-            'If Not m_doReceptiveFieldSensor Is Nothing Then
-            '    m_doReceptiveFieldSensor.BeforeAddToList(False, bThrowError)
-            'End If
+            If Not m_doReceptiveFieldSensor Is Nothing Then
+                m_doReceptiveFieldSensor.BeforeAddToList(bCallSimMethods, bThrowError)
+            End If
+
+            Dim doChild As RigidBody
+            For Each deEntry As DictionaryEntry In m_aryChildBodies
+                doChild = DirectCast(deEntry.Value, RigidBody)
+                doChild.BeforeAddToList(bCallSimMethods, bThrowError)
+            Next
 
         End Sub
 
@@ -1489,6 +1497,12 @@ Namespace DataObjects.Physical
             If Not m_doReceptiveFieldSensor Is Nothing Then
                 m_doReceptiveFieldSensor.AfterAddToList(bCallSimMethods, bThrowError)
             End If
+
+            Dim doChild As RigidBody
+            For Each deEntry As DictionaryEntry In m_aryChildBodies
+                doChild = DirectCast(deEntry.Value, RigidBody)
+                doChild.AfterAddToList(bCallSimMethods, bThrowError)
+            Next
 
         End Sub
 
@@ -1510,6 +1524,12 @@ Namespace DataObjects.Physical
                 m_doReceptiveFieldSensor.BeforeRemoveFromList(bCallSimMethods, bThrowError)
             End If
 
+            Dim doChild As RigidBody
+            For Each deEntry As DictionaryEntry In m_aryChildBodies
+                doChild = DirectCast(deEntry.Value, RigidBody)
+                doChild.BeforeRemoveFromList(bCallSimMethods, bThrowError)
+            Next
+
             If bCallSimMethods Then RemoveFromSim(bThrowError)
         End Sub
 
@@ -1523,6 +1543,12 @@ Namespace DataObjects.Physical
             If Not m_doReceptiveFieldSensor Is Nothing Then
                 m_doReceptiveFieldSensor.AfterRemoveFromList(bCallSimMethods, bThrowError)
             End If
+
+            Dim doChild As RigidBody
+            For Each deEntry As DictionaryEntry In m_aryChildBodies
+                doChild = DirectCast(deEntry.Value, RigidBody)
+                doChild.AfterRemoveFromList(bCallSimMethods, bThrowError)
+            Next
         End Sub
 
 #End Region

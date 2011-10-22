@@ -263,6 +263,9 @@ float *Synapse::GetDataPointer(string strDataType)
 BOOL Synapse::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
+		
+	if(Link::SetData(strDataType, strValue, FALSE))
+		return TRUE;
 
 	if(strType == "WEIGHT")
 	{

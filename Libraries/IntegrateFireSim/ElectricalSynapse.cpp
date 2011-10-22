@@ -127,7 +127,10 @@ double ElectricalSynapse::TurnOnSaturate() {return m_dSaturateV;}
 BOOL ElectricalSynapse::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
-	
+			
+	if(AnimatBase::SetData(strDataType, strValue, FALSE))
+		return TRUE;
+
 	if(strType == "LOWCOUPLING")
 	{
 		LowCoupling(atof(strValue.c_str()));

@@ -130,4 +130,24 @@ void Link::VerifySystemPointers()
 		THROW_PARAM_ERROR(Al_Err_lNodeNotDefined, Al_Err_strNodeNotDefined, "Link: ", m_strID);
 }
 
+BOOL Link::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(AnimatBase::SetData(strType, strValue, FALSE))
+		return true;
+
+	if(strType == "ENABLED")
+	{
+		Enabled(Std_ToBool(strValue));
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
+
 }			//AnimatSim

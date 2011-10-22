@@ -527,7 +527,9 @@ double SpikingChemicalSynapse::Consolidation() {return m_dConsolidation;}
 BOOL SpikingChemicalSynapse::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
-	
+		
+	if(AnimatBase::SetData(strDataType, strValue, FALSE))
+		return TRUE;
 
 	if(strType == "EQUILIBRIUMPOTENTIAL")
 	{

@@ -35,9 +35,22 @@ Namespace DataObjects.ExternalStimuli
 
         Protected m_aryCompatibleDataObjects As New Collections.CompatibleDataObjects(Me)
 
+        Protected m_doStimulatedItem As DragObject
+
 #End Region
 
 #Region " Properties "
+
+        Public Overridable Property StimulatedItem() As DragObject
+            Get
+                Return m_doStimulatedItem
+            End Get
+            Set(value As DragObject)
+                DisconnectItemEvents()
+                m_doStimulatedItem = value
+                ConnectItemEvents()
+            End Set
+        End Property
 
         Public Overrides Property Name() As String
             Get
@@ -299,39 +312,6 @@ Namespace DataObjects.ExternalStimuli
             m_strEquation = OrigStim.m_strEquation
         End Sub
 
-        'Public Overridable Sub PrepareForSimulation()
-
-        '    If m_bEnabled AndAlso Not Util.Application.SimulationInterface.FindStimulus(m_strID, False) Then
-        '        Util.DisableDirtyFlags = True
-        '        Dim strXml As String = GetSimulationXml("Stimulus")
-
-        '        If strXml.Trim().Length > 0 Then
-        '            Util.Application.SimulationInterface.AddStimulus(m_strID, m_strName, Me.StimulusModuleName, Me.StimulusClassType, strXml)
-        '        End If
-        '        Util.DisableDirtyFlags = False
-        '    End If
-
-        'End Sub
-
-        'Protected Overridable Sub RemoveFromSim()
-
-        '    If Util.Application.SimulationInterface.FindStimulus(m_strID, False) Then
-        '        Util.DisableDirtyFlags = True
-        '        Util.Application.SimulationInterface.RemoveStimulus(m_strID)
-        '        Util.DisableDirtyFlags = False
-        '    End If
-
-        'End Sub
-
-        'Protected Overridable Sub ModifyStimulus()
-
-        '    Util.DisableDirtyFlags = True
-        '    Dim strXml As String = GetSimulationXml("Stimulus")
-        '    Util.Application.SimulationInterface.ModifyStimulus(m_strID, m_strName, Me.StimulusModuleName, Me.StimulusClassType, m_bEnabled, strXml)
-        '    Util.DisableDirtyFlags = False
-
-        'End Sub
-
         Public Overrides Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
 
             If Not bAskToDelete OrElse (bAskToDelete AndAlso Util.ShowMessage("Are you certain that you want to permanently delete this " & _
@@ -351,6 +331,18 @@ Namespace DataObjects.ExternalStimuli
                 m_aryCompatibleDataObjects.Add(doObject.GetType.FullName, doObject)
             End If
 
+        End Sub
+
+        Protected Overridable Sub ConnectItemEvents()
+            If Not m_doStimulatedItem Is Nothing Then
+                AddHandler m_doStimulatedItem.AfterRemoveItem, AddressOf Me.OnAfterRemoveItem
+            End If
+        End Sub
+
+        Protected Overridable Sub DisconnectItemEvents()
+            If Not m_doStimulatedItem Is Nothing Then
+                RemoveHandler m_doStimulatedItem.AfterRemoveItem, AddressOf Me.OnAfterRemoveItem
+            End If
         End Sub
 
 #Region " DragObject Methods "
@@ -561,7 +553,16 @@ Namespace DataObjects.ExternalStimuli
 
 #End Region
 
-#Region " Events "
+
+#Region "Events"
+
+        Private Sub OnAfterRemoveItem(ByRef doObject As Framework.DataObject)
+            Try
+                Me.Delete(False)
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
 
 #End Region
 

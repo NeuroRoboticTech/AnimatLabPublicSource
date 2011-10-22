@@ -702,12 +702,7 @@ Namespace DataObjects
                     For iIndex As Integer = 0 To iCount
                         doStim = DirectCast(Util.LoadClass(oXml, iIndex, Me), DataObjects.ExternalStimuli.Stimulus)
                         doStim.LoadData(oXml)
-
-                        'Add the stimulus to the projects stim list, but since we are just loading it in here then override
-                        'the call to the before/after add methods.
-                        If Not doStim.StimulusNoLongerValid Then
-                            m_aryProjectStimuli.Add(doStim.ID, doStim, False)
-                        End If
+                        m_aryProjectStimuli.Add(doStim.ID, doStim, False)
                     Next
 
                     oXml.OutOfElem()

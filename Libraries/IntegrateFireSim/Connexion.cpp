@@ -691,7 +691,10 @@ void Connexion::VerifySystemPointers()
 BOOL Connexion::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
-	
+				
+	if(Link::SetData(strDataType, strValue, FALSE))
+		return TRUE;
+
 	if(strType == "SYNAPTICCONDUCTANCE")
 	{
 		BaseConductance(atof(strValue.c_str()));

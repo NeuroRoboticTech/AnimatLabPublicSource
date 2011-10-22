@@ -185,6 +185,9 @@ float *SimulationWindow::GetDataPointer(string strDataType)
 BOOL SimulationWindow::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
+	
+	if(AnimatBase::SetData(strDataType, strValue, FALSE))
+		return TRUE;
 
 	if(strType == "LOOKATSTRUCTUREID")
 	{

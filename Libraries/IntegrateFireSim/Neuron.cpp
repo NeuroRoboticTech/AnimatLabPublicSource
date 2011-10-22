@@ -1080,8 +1080,6 @@ void Neuron::CalcUpdate(IntegrateFireNeuralModule *lpNS)
 	// (all currents relative to rest ????)
 			GSI+=(arySynG[i]*(pSyn->m_dEquil-m_dRestingPot));
 			m_fltSpikingSynCurMemory += (arySynG[i]*(pSyn->EquilibriumPotential()-GetMemPot()));
-			if(fabs(m_fltSpikingSynCurMemory) > 0)
-				m_fltSpikingSynCurMemory = m_fltSpikingSynCurMemory;
 		}
 		m_fltSpikingSynCurMemory *= (float) 1e-9;
 
@@ -1358,7 +1356,10 @@ float *Neuron::GetDataPointer(string strDataType)
 BOOL Neuron::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
-	
+			
+	if(Node::SetData(strDataType, strValue, FALSE))
+		return TRUE;
+
 	if(strType == "RESTINGPOTENTIAL")
 	{
 		RestingPotential(atof(strValue.c_str()));

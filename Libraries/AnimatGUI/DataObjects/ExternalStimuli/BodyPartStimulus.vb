@@ -19,6 +19,9 @@ Namespace DataObjects.ExternalStimuli
         Protected m_doStructure As DataObjects.Physical.PhysicalStructure
         Protected m_doBodyPart As DataObjects.Physical.BodyPart
 
+        Protected m_strStructureID As String = ""
+        Protected m_strPartID As String = ""
+
 #End Region
 
 #Region " Properties "
@@ -51,6 +54,7 @@ Namespace DataObjects.ExternalStimuli
             End Get
             Set(ByVal Value As DataObjects.Physical.BodyPart)
                 m_doBodyPart = Value
+                Me.StimulatedItem = Value
             End Set
         End Property
 
@@ -131,23 +135,28 @@ Namespace DataObjects.ExternalStimuli
 
         End Sub
 
+        Public Overrides Sub InitializeAfterLoad()
+            MyBase.InitializeAfterLoad()
+
+            If m_strStructureID.Trim.Length > 0 Then
+                Dim objStruct As Object = Util.Environment.FindStructureFromAll(m_strStructureID)
+                If Not objStruct Is Nothing Then
+                    Me.PhysicalStructure = DirectCast(objStruct, DataObjects.Physical.PhysicalStructure)
+                End If
+            End If
+
+            If Not m_doStructure Is Nothing AndAlso m_strPartID.Trim.Length > 0 Then
+                Me.BodyPart = m_doStructure.FindBodyPart(m_strPartID, False)
+            End If
+        End Sub
+
         Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
             MyBase.LoadData(oXml)
 
             oXml.IntoElem()
 
-            Dim strStructureID As String = oXml.GetChildString("StructureID", "")
-            If strStructureID.Trim.Length > 0 Then
-                Dim objStruct As Object = Util.Environment.FindStructureFromAll(strStructureID)
-                If Not objStruct Is Nothing Then
-                    m_doStructure = DirectCast(objStruct, DataObjects.Physical.PhysicalStructure)
-                End If
-            End If
-
-            Dim strPartID As String = oXml.GetChildString("PartID", "")
-            If Not m_doStructure Is Nothing AndAlso strPartID.Trim.Length > 0 Then
-                m_doBodyPart = m_doStructure.FindBodyPart(strPartID, False)
-            End If
+            m_strStructureID = oXml.GetChildString("StructureID", "")
+            m_strPartID = oXml.GetChildString("PartID", "")
 
             oXml.OutOfElem()
 

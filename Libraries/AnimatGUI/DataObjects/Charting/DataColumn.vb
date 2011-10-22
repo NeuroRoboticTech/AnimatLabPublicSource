@@ -36,6 +36,7 @@ Namespace DataObjects.Charting
         Protected m_bUseIncomingDataType As Boolean = False
         Protected m_strSelectedDataTypeID As String = ""
         Protected m_iColumnIndex As Integer = 0
+        Protected m_doItem As DragObject
 
         Protected m_frmParentAxis As AnimatGUI.DataObjects.Charting.Axis
 
@@ -50,9 +51,7 @@ Namespace DataObjects.Charting
         <Browsable(False)> _
         Public Overridable Property DataItem() As AnimatGUI.DataObjects.DragObject
             Get
-                Dim doBase As DataObjects.DragObject = DirectCast(Util.LoadClass(m_strDataItemAssemblyFile, m_strDataItemClassName, Me), DataObjects.DragObject)
-                Dim doItem As DataObjects.DragObject = doBase.FindDragObject(m_strStructureID, m_strDataItemID, False)
-                Return doItem
+                Return m_doItem
             End Get
             Set(ByVal Value As AnimatGUI.DataObjects.DragObject)
                 If Not Value Is Nothing Then
@@ -83,6 +82,9 @@ Namespace DataObjects.Charting
                         End If
                     End If
 
+                    DisconnectItemEvents()
+                    m_doItem = Value
+                    ConnectItemEvents()
                 End If
             End Set
         End Property
@@ -388,6 +390,27 @@ Namespace DataObjects.Charting
             'Me.ParentAxis.AddColumnToSimulation(Me, True)
         End Sub
 
+        Protected Overridable Function FindDataItem(ByVal strID As String) As DragObject
+            Dim doObj As Framework.DataObject = Util.Simulation.FindObjectByID(strID)
+            If Not doObj Is Nothing And Util.IsTypeOf(doObj.GetType, GetType(DragObject)) Then
+                Return DirectCast(doObj, DragObject)
+            Else
+                Return Nothing
+            End If
+        End Function
+
+        Protected Overridable Sub ConnectItemEvents()
+            If Not m_doItem Is Nothing Then
+                AddHandler m_doItem.AfterRemoveItem, AddressOf Me.OnAfterRemoveItem
+            End If
+        End Sub
+
+        Protected Overridable Sub DisconnectItemEvents()
+            If Not m_doItem Is Nothing Then
+                RemoveHandler m_doItem.AfterRemoveItem, AddressOf Me.OnAfterRemoveItem
+            End If
+        End Sub
+
         Public Overridable Function IsValidColumn() As Boolean
 
             If m_strDataItemAssemblyFile.Trim.Length = 0 OrElse m_strDataItemClassName.Trim.Length = 0 Then
@@ -573,6 +596,12 @@ Namespace DataObjects.Charting
 
         End Function
 
+        Public Overrides Sub InitializeAfterLoad()
+            MyBase.InitializeAfterLoad()
+
+            Me.DataItem = FindDataItem(m_strDataItemID)
+        End Sub
+
         Public Overridable Overloads Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
 
             oXml.IntoElem()
@@ -593,13 +622,6 @@ Namespace DataObjects.Charting
             End If
 
             m_strSelectedDataTypeID = oXml.GetChildString("SelectedDataType")
-
-            'This statement looks a little weird. We do not keep a reference to the actual data item we are charting.
-            'There are several reasons for this, but the main one is that this object can be deleted in its editor and
-            'then we will be trying to chart an item that no longer exists. Instead we have a way to lookup that item
-            'when it is needed to check each time that it is still valid (during load/save for example.) So in this statement
-            'we first look up the item with the get accessor and then set id data with the set mutator.
-            Me.DataItem = Me.DataItem
 
             oXml.OutOfElem()
 
@@ -634,8 +656,17 @@ Namespace DataObjects.Charting
 
 #End Region
 
-#Region " Events "
 
+#Region "Events"
+
+        Private Sub OnAfterRemoveItem(ByRef doObject As Framework.DataObject)
+            Try
+                'When the linked part is deleted then delete this column.
+                Me.Delete(False)
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
 
 #End Region
 

@@ -213,14 +213,14 @@ Namespace DataObjects.Behavior.Nodes
 
             'If this is the destination then get the origin from the other end
             If blLink.ActualDestination Is Me Then
-                m_bnOrigin = blLink.Origin
+                SetOrigin(blLink.Origin, False)
                 Me.m_thDataTypes = DirectCast(m_bnOrigin.DataTypes.Clone(Me, False, Nothing), TypeHelpers.DataTypeID)
                 SetGainLimits()
             End If
 
             'If this is the Origin then get the destination from the other end
             If blLink.ActualOrigin Is Me Then
-                m_bnDestination = blLink.Destination
+                SetDestination(blLink.Destination, False)
             End If
 
             MyBase.AfterAddLink(blLink)
@@ -349,6 +349,7 @@ Namespace DataObjects.Behavior.Nodes
                 Util.Application.SimulationInterface.RemoveItem(Me.NeuralModule.ID(), "Adapter", Me.ID, bThrowError)
             End If
             m_doInterface = Nothing
+            m_gnGain.RemoveFromSim(True)
         End Sub
 
         Public Overrides Sub BeforeAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
@@ -377,6 +378,7 @@ Namespace DataObjects.Behavior.Nodes
 
 
         End Sub
+
 
 #End Region
 
@@ -409,10 +411,10 @@ Namespace DataObjects.Behavior.Nodes
             Try
                 If m_bnOrigin Is Nothing Then
                     If m_strOriginID.Trim.Length > 0 Then
-                        m_bnOrigin = Me.Organism.FindBehavioralNode(m_strOriginID)
+                        SetOrigin(Me.Organism.FindBehavioralNode(m_strOriginID), False)
 
                         If Not m_bnOrigin.IsInitialized Then
-                            m_bnOrigin = Nothing
+                            SetOrigin(Nothing, False)
                             m_bIsInitialized = False
                             Return
                         End If
@@ -429,19 +431,11 @@ Namespace DataObjects.Behavior.Nodes
 
                 If m_bnDestination Is Nothing Then
                     If m_strDestinationID.Trim.Length > 0 Then
-                        m_bnDestination = Me.Organism.FindBehavioralNode(m_strDestinationID)
+                        SetDestination(Me.Organism.FindBehavioralNode(m_strDestinationID), False)
                     End If
                 End If
 
                 MyBase.InitializeAfterLoad()
-
-                If Not m_bnDestination Is Nothing Then
-                    AddHandler m_bnDestination.AfterPropertyChanged, AddressOf Me.OnDestinationPropertyChanged
-                End If
-
-                If Not m_bnOrigin Is Nothing Then
-                    AddHandler m_bnOrigin.AfterPropertyChanged, AddressOf Me.OnOriginPropertyChanged
-                End If
 
                 If Not m_gnGain Is Nothing Then
                     m_gnGain.InitializeAfterLoad()
@@ -451,6 +445,72 @@ Namespace DataObjects.Behavior.Nodes
                 m_bIsInitialized = False
             End Try
 
+        End Sub
+
+        Protected Overridable Sub SetOrigin(ByVal bnValue As Behavior.Node, ByVal bCallSimMethods As Boolean)
+            Dim bnPrev As Behavior.Node = m_bnOrigin
+
+            DisconnectOriginEvents()
+            If bCallSimMethods Then RemoveFromSim(True)
+            m_bnOrigin = bnValue
+
+            If bCallSimMethods Then
+                Try
+                    AddToSim(True)
+                Catch ex As Exception
+                    m_bnOrigin = bnPrev
+                    AddToSim(True)
+                    ConnectOriginEvents()
+                    Throw ex
+                End Try
+            End If
+
+            ConnectOriginEvents()
+        End Sub
+
+        Protected Sub ConnectOriginEvents()
+            If Not m_bnOrigin Is Nothing Then
+                AddHandler m_bnOrigin.AfterPropertyChanged, AddressOf Me.OnOriginPropertyChanged
+            End If
+        End Sub
+
+        Protected Sub DisconnectOriginEvents()
+            If Not m_bnOrigin Is Nothing Then
+                RemoveHandler m_bnOrigin.AfterPropertyChanged, AddressOf Me.OnOriginPropertyChanged
+            End If
+        End Sub
+
+        Protected Overridable Sub SetDestination(ByVal bnValue As Behavior.Node, ByVal bCallSimMethods As Boolean)
+            Dim bnPrev As Behavior.Node = m_bnDestination
+
+            DisconnectDestinationEvents()
+            If bCallSimMethods Then RemoveFromSim(True)
+            m_bnDestination = bnValue
+
+            If bCallSimMethods Then
+                Try
+                    AddToSim(True)
+                Catch ex As Exception
+                    m_bnDestination = bnPrev
+                    AddToSim(True)
+                    ConnectDestinationEvents()
+                    Throw ex
+                End Try
+            End If
+
+            ConnectDestinationEvents()
+        End Sub
+
+        Protected Sub ConnectDestinationEvents()
+            If Not m_bnDestination Is Nothing Then
+                AddHandler m_bnDestination.AfterPropertyChanged, AddressOf Me.OnDestinationPropertyChanged
+            End If
+        End Sub
+
+        Protected Sub DisconnectDestinationEvents()
+            If Not m_bnDestination Is Nothing Then
+                RemoveHandler m_bnDestination.AfterPropertyChanged, AddressOf Me.OnDestinationPropertyChanged
+            End If
         End Sub
 
         Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
@@ -512,6 +572,26 @@ Namespace DataObjects.Behavior.Nodes
                     End If
                 End If
             Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overrides Sub OnOriginModified(ByVal blLink As Link)
+            Try
+                If Not Util.IsTypeOf(blLink.Origin.GetType, GetType(Behavior.Nodes.Adapter), False) Then
+                    SetOrigin(blLink.Origin, True)
+                End If
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overrides Sub OnDestinationModified(ByVal blLink As Link)
+            Try
+                If Not Util.IsTypeOf(blLink.Destination.GetType, GetType(Behavior.Nodes.Adapter), False) Then
+                    SetDestination(blLink.Destination, True)
+                End If
+            Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
         End Sub

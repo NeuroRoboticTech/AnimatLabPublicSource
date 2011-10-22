@@ -26,7 +26,7 @@ namespace IntegrateFireSim
 		\author	dcofer
 		\date	3/31/2011
 		**/
-		class ADV_NEURAL_PORT Connexion : public AnimatSim::AnimatBase  
+		class ADV_NEURAL_PORT Connexion : public AnimatSim::Link  
 		{
 		public:
 			Connexion();

@@ -36,8 +36,14 @@ namespace AnimatSim
 		virtual BOOL Enabled();
 		virtual void Enabled(BOOL bValue);
 
-		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
-		virtual void VerifySystemPointers();
+
+#pragma region DataAccesMethods
+
+			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
+			virtual void VerifySystemPointers();
+			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+
+#pragma endregion
 	};
 
 }				//AnimatSim

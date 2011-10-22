@@ -433,6 +433,7 @@ Namespace DataObjects.Behavior
             Set(ByVal Value As Behavior.Node)
                 m_bnDestination = Value
                 UpdateChart()
+                RaiseEvent DestinationModified(Me)
             End Set
         End Property
 
@@ -454,6 +455,7 @@ Namespace DataObjects.Behavior
             Set(ByVal Value As Behavior.Node)
                 m_bnDestination = Value
                 UpdateChart()
+                RaiseEvent DestinationModified(Me)
             End Set
         End Property
 
@@ -531,6 +533,7 @@ Namespace DataObjects.Behavior
             Set(ByVal Value As Behavior.Node)
                 m_bnOrigin = Value
                 UpdateChart()
+                RaiseEvent OriginModified(Me)
             End Set
         End Property
 
@@ -552,6 +555,7 @@ Namespace DataObjects.Behavior
             Set(ByVal Value As Behavior.Node)
                 m_bnOrigin = Value
                 UpdateChart()
+                RaiseEvent OriginModified(Me)
             End Set
         End Property
 
@@ -1129,6 +1133,9 @@ Namespace DataObjects.Behavior
 #End Region
 
 #Region " Events "
+
+        Public Event OriginModified(ByVal blLink As Link)
+        Public Event DestinationModified(ByVal blLink As Link)
 
         Protected Overridable Sub DisconnectNodeEvents()
 

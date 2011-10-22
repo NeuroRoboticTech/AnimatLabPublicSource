@@ -861,11 +861,7 @@ Namespace Framework
         End Sub
 
         Public Overridable Sub RemoveFromSim(ByVal bThrowError As Boolean)
-        End Sub
-
-        Public Overridable Sub ResetSimObjects(Optional ByVal bThrowError As Boolean = True)
-            RemoveFromSim(bThrowError)
-            AddToSim(bThrowError)
+            m_doInterface = Nothing
         End Sub
 
         Public Overridable Sub BeforeAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)

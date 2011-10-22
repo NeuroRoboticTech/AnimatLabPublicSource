@@ -127,7 +127,10 @@ double NonSpikingChemicalSynapse::PreSynapticSaturationLevel() {return m_dSatura
 BOOL NonSpikingChemicalSynapse::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
-	
+			
+	if(AnimatBase::SetData(strDataType, strValue, FALSE))
+		return TRUE;
+
 	if(strType == "EQUILIBRIUMPOTENTIAL")
 	{
 		EquilibriumPotential(atof(strValue.c_str()));

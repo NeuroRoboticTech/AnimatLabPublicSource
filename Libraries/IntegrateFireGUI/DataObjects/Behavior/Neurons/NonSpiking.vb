@@ -35,7 +35,7 @@ Namespace DataObjects.Behavior.Neurons
                     Throw New System.Exception("The initial threshold must be between the range -100 mV and 100 mV.")
                 End If
 
-                SetSimData("InitialThreshold", Value.ActualValue.ToString, True)
+                SetSimData("InitialThreshold", Value.ValueFromDefaultScale.ToString, True)
                 m_snInitialThreshold.CopyData(Value)
             End Set
         End Property
@@ -55,7 +55,7 @@ Namespace DataObjects.Behavior.Neurons
                     Throw New System.Exception("The resting potential must be between the range -100 mV and 100 mV.")
                 End If
 
-                SetSimData("RestingPotential", Value.ActualValue.ToString, True)
+                SetSimData("RestingPotential", Value.ValueFromDefaultScale.ToString, True)
                 m_snRestingPotential.CopyData(Value)
             End Set
         End Property

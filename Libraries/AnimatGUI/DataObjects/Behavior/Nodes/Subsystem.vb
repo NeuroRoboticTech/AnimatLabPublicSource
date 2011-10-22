@@ -417,7 +417,9 @@ Namespace DataObjects.Behavior.Nodes
                     Dim blLink As AnimatGUI.DataObjects.Behavior.Link
                     For Each strID As String In aryLinkIDs
                         blLink = DirectCast(bnNode.Links(strID), AnimatGUI.DataObjects.Behavior.Link)
-                        blLink.Delete(False)
+                        If Not blLink Is Nothing Then
+                            blLink.Delete(False)
+                        End If
                     Next
 
                     If Me.BehavioralNodes.ContainsKey(bnNode.ID) Then

@@ -39,11 +39,12 @@ Namespace DataObjects.Behavior.Nodes
             Set(ByVal Value As TypeHelpers.LinkedNode)
                 Dim thPrevLinked As TypeHelpers.LinkedNode = m_thLinkedNode
 
+                RemoveLinkages(thPrevLinked, Value)
                 DisconnectLinkedNodeEvents()
                 m_thLinkedNode = Value
+                ReaddLinkages(thPrevLinked, Value)
                 ConnectLinkedNodeEvents()
 
-                ResetLinkages(thPrevLinked)
                 SetDataType()
             End Set
         End Property
@@ -167,26 +168,28 @@ Namespace DataObjects.Behavior.Nodes
         Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, ByVal tpTemplatePartType As Type) As Crownwood.DotNetMagic.Controls.Node
         End Function
 
-        Protected Sub ResetLinkages(ByVal thPrevLinked As TypeHelpers.LinkedNode)
+        Protected Overridable Sub RemoveLinkages(ByVal thOldLink As TypeHelpers.LinkedNode, ByVal thNewLink As TypeHelpers.LinkedNode)
             'If the user changes the item this node is linked to directly in the diagram after it
             'has already been connected up then we need to change the inlink/outlinks for all nodes
             'connected to this one.
             Dim aryRemoveLinks As New ArrayList
-            If Not thPrevLinked Is Nothing AndAlso Not thPrevLinked.Node Is Nothing _
-               AndAlso Not m_thLinkedNode Is Nothing AndAlso Not m_thLinkedNode.Node Is Nothing _
-               AndAlso Not thPrevLinked.Node Is m_thLinkedNode.Node Then
+            Dim doNewNode As Behavior.Node = Nothing
+            If Not thNewLink Is Nothing Then
+                doNewNode = thNewLink.Node
+            End If
+
+            If Not thOldLink Is Nothing AndAlso Not thOldLink.Node Is Nothing AndAlso Not doNewNode Is thOldLink.Node Then
 
                 'switch the inlinks from the prev node to the new one
                 Dim bdLink As AnimatGUI.DataObjects.Behavior.Link
                 For Each deEntry As DictionaryEntry In Me.InLinks
                     bdLink = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
 
-                    If bdLink.IsLinkCompatibleWithNodes(bdLink.ActualOrigin, m_thLinkedNode.Node) Then
-                        If thPrevLinked.Node.InLinks.Contains(bdLink.ID) Then thPrevLinked.Node.InLinks.Remove(bdLink.ID)
-                        If Not m_thLinkedNode.Node.InLinks.Contains(bdLink.ID) Then m_thLinkedNode.Node.InLinks.Add(bdLink.ID, bdLink)
-                        bdLink.ActualDestination = Me
+                    If bdLink.IsLinkCompatibleWithNodes(bdLink.ActualOrigin, doNewNode) Then
+                        If thOldLink.Node.InLinks.Contains(bdLink.ID) Then thOldLink.Node.InLinks.Remove(bdLink.ID)
+                        If Not thOldLink.Node.InLinks.Contains(bdLink.ID) Then thOldLink.Node.InLinks.Add(bdLink.ID, bdLink)
 
-                        bdLink.ResetSimObjects()
+                        bdLink.RemoveFromSim(True)
                     Else
                         aryRemoveLinks.Add(bdLink)
                     End If
@@ -196,21 +199,44 @@ Namespace DataObjects.Behavior.Nodes
                 For Each deEntry As DictionaryEntry In Me.OutLinks
                     bdLink = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
 
-                    If bdLink.IsLinkCompatibleWithNodes(m_thLinkedNode.Node, bdLink.ActualDestination) Then
-                        If thPrevLinked.Node.OutLinks.Contains(bdLink.ID) Then thPrevLinked.Node.OutLinks.Remove(bdLink.ID)
-                        If Not m_thLinkedNode.Node.OutLinks.Contains(bdLink.ID) Then m_thLinkedNode.Node.OutLinks.Add(bdLink.ID, bdLink)
-                        bdLink.ActualOrigin = Me
-                        bdLink.ResetSimObjects()
+                    If bdLink.IsLinkCompatibleWithNodes(doNewNode, bdLink.ActualDestination) Then
+                        If thOldLink.Node.OutLinks.Contains(bdLink.ID) Then thOldLink.Node.OutLinks.Remove(bdLink.ID)
+                        If Not thOldLink.Node.OutLinks.Contains(bdLink.ID) Then thOldLink.Node.OutLinks.Add(bdLink.ID, bdLink)
+
+                        bdLink.RemoveFromSim(True)
                     Else
                         aryRemoveLinks.Add(bdLink)
                     End If
                 Next
             End If
 
-            For Each bdLink As AnimatGUI.DataObjects.Behavior.Link In aryRemoveLinks
-                bdLink.Delete(False)
-            Next
+                For Each bdLink As AnimatGUI.DataObjects.Behavior.Link In aryRemoveLinks
+                    bdLink.Delete(False)
+                Next
 
+        End Sub
+
+        Protected Overridable Sub ReaddLinkages(ByVal thOldLink As TypeHelpers.LinkedNode, ByVal thNewLink As TypeHelpers.LinkedNode)
+
+            If Not thNewLink Is Nothing AndAlso Not thNewLink.Node Is Nothing _
+                AndAlso Not thOldLink Is Nothing AndAlso Not thOldLink.Node Is Nothing _
+                AndAlso Not thNewLink.Node Is thOldLink.Node Then
+
+                'switch the inlinks from the prev node to the new one
+                Dim bdLink As AnimatGUI.DataObjects.Behavior.Link
+                For Each deEntry As DictionaryEntry In Me.InLinks
+                    bdLink = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
+                    bdLink.ActualDestination = Me
+                    bdLink.AddToSim(True)
+                Next
+
+                'switch the outlinks from the prev node to the new one
+                For Each deEntry As DictionaryEntry In Me.OutLinks
+                    bdLink = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
+                    bdLink.ActualOrigin = Me
+                    bdLink.AddToSim(True)
+                Next
+            End If
         End Sub
 
         Protected Sub SetDataType()

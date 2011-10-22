@@ -1433,6 +1433,8 @@ Namespace DataObjects.Behavior
             For Each deEntry As DictionaryEntry In Me.Links
                 blLink = DirectCast(deEntry.Value, Link)
                 AddHandler blLink.AfterPropertyChanged, AddressOf Me.OnLinkModified
+                AddHandler blLink.OriginModified, AddressOf Me.OnOriginModified
+                AddHandler blLink.DestinationModified, AddressOf Me.OnDestinationModified
             Next
 
         End Sub
@@ -1444,6 +1446,8 @@ Namespace DataObjects.Behavior
             For Each deEntry As DictionaryEntry In Me.Links
                 blLink = DirectCast(deEntry.Value, Link)
                 RemoveHandler blLink.AfterPropertyChanged, AddressOf Me.OnLinkModified
+                RemoveHandler blLink.OriginModified, AddressOf Me.OnOriginModified
+                RemoveHandler blLink.DestinationModified, AddressOf Me.OnDestinationModified
             Next
 
         End Sub
@@ -1451,7 +1455,14 @@ Namespace DataObjects.Behavior
         Protected Overridable Sub OnLinkModified(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
         End Sub
 
+        Protected Overridable Sub OnOriginModified(ByVal blLink As Link)
+        End Sub
+
+        Protected Overridable Sub OnDestinationModified(ByVal blLink As Link)
+        End Sub
+
 #End Region
+
 
     End Class
 

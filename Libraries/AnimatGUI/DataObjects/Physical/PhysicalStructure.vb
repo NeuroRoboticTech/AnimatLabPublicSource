@@ -315,7 +315,7 @@ Namespace DataObjects.Physical
             rbRootToAdd.IsContactSensor = False
             rbRootToAdd.Freeze = False
             rbRootToAdd.BeforeAddBody()
-            rbRootToAdd.BeforeAddToList(True, True)
+            rbRootToAdd.BeforeAddToList(False, True)
 
             m_dbRoot = rbRootToAdd
 
@@ -327,10 +327,10 @@ Namespace DataObjects.Physical
                 m_dbRoot.CreateWorkspaceTreeView(Me, m_tnBodyPlanNode)
             End If
 
-            m_dbRoot.AfterAddToList(True, True)
+            m_dbRoot.AfterAddToList(False, True)
             rbRootToAdd.AfterAddBody()
 
-            rbRootToAdd.InitializeSimulationReferences()
+            rbRootToAdd.AddToSim(True)
 
             m_dbRoot.SelectItem()
 

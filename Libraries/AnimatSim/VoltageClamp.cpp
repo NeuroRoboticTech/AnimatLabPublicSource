@@ -199,6 +199,9 @@ float *VoltageClamp::GetDataPointer(string strDataType)
 BOOL VoltageClamp::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
+		
+	if(ExternalStimulus::SetData(strDataType, strValue, FALSE))
+		return TRUE;
 
 	if(strType == "VTARGET")
 	{

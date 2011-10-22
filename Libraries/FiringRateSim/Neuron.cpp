@@ -848,6 +848,9 @@ float *Neuron::GetDataPointer(string strDataType)
 BOOL Neuron::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
+	
+	if(Node::SetData(strDataType, strValue, FALSE))
+		return TRUE;
 
 	if(strType == "CM")
 	{

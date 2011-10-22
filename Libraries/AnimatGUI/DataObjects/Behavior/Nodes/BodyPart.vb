@@ -45,10 +45,15 @@ Namespace DataObjects.Behavior.Nodes
                 Return m_thLinkedPart
             End Get
             Set(ByVal Value As AnimatGUI.TypeHelpers.LinkedBodyPart)
+                Dim thPrevLinked As AnimatGUI.TypeHelpers.LinkedBodyPart = m_thLinkedPart
+
+                RemoveLinkages(thPrevLinked, Value)
                 DiconnectLinkedPartEvents()
                 m_thLinkedPart = Value
-                SetDataType()
+                ReaddLinkages(thPrevLinked, Value)
                 ConnectLinkedPartEvents()
+
+                SetDataType()
             End Set
         End Property
 
@@ -182,6 +187,60 @@ Namespace DataObjects.Behavior.Nodes
 
         End Sub
 
+        Protected Overridable Sub RemoveLinkages(ByVal thOldLink As AnimatGUI.TypeHelpers.LinkedBodyPart, ByVal thNewLink As AnimatGUI.TypeHelpers.LinkedBodyPart)
+            'If the user changes the item this node is linked to directly in the diagram after it
+            'has already been connected up then we need to change the inlink/outlinks for all nodes
+            'connected to this one.
+            Dim aryRemoveLinks As New ArrayList
+            Dim doNewNode As AnimatGUI.DataObjects.Physical.BodyPart = Nothing
+            If Not thNewLink Is Nothing Then
+                doNewNode = thNewLink.BodyPart
+            End If
+
+            If Not thOldLink Is Nothing AndAlso Not thOldLink.BodyPart Is Nothing AndAlso Not doNewNode Is thOldLink.BodyPart Then
+
+                'switch the inlinks from the prev node to the new one
+                Dim bdLink As AnimatGUI.DataObjects.Behavior.Link
+                For Each deEntry As DictionaryEntry In Me.Links
+                    bdLink = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
+
+                    If Not doNewNode Is Nothing Then
+                        bdLink.RemoveFromSim(True)
+                    Else
+                        aryRemoveLinks.Add(bdLink)
+                    End If
+                Next
+            End If
+
+            For Each bdLink As AnimatGUI.DataObjects.Behavior.Link In aryRemoveLinks
+                bdLink.Delete(False)
+            Next
+
+        End Sub
+
+        Protected Overridable Sub ReaddLinkages(ByVal thOldLink As AnimatGUI.TypeHelpers.LinkedBodyPart, ByVal thNewLink As AnimatGUI.TypeHelpers.LinkedBodyPart)
+
+            If Not thNewLink Is Nothing AndAlso Not thNewLink.BodyPart Is Nothing _
+                AndAlso Not thOldLink Is Nothing AndAlso Not thOldLink.BodyPart Is Nothing _
+                AndAlso Not thNewLink.BodyPart Is thOldLink.BodyPart Then
+
+                'switch the inlinks from the prev node to the new one
+                Dim bdLink As AnimatGUI.DataObjects.Behavior.Link
+                For Each deEntry As DictionaryEntry In Me.InLinks
+                    bdLink = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
+                    bdLink.ActualDestination = Me
+                    bdLink.AddToSim(True)
+                Next
+
+                'switch the outlinks from the prev node to the new one
+                For Each deEntry As DictionaryEntry In Me.OutLinks
+                    bdLink = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
+                    bdLink.ActualOrigin = Me
+                    bdLink.AddToSim(True)
+                Next
+            End If
+        End Sub
+
         Protected Sub SetDataType()
             If Not m_thLinkedPart.BodyPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart.DataTypes Is Nothing Then
                 m_thDataTypes = DirectCast(m_thLinkedPart.BodyPart.DataTypes.Clone(m_thLinkedPart.BodyPart.DataTypes.Parent, False, Nothing), TypeHelpers.DataTypeID)
@@ -273,13 +332,13 @@ Namespace DataObjects.Behavior.Nodes
             End If
         End Function
 
-        Public Overridable Sub ConnectLinkedPartEvents()
+        Protected Overridable Sub ConnectLinkedPartEvents()
             If Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing Then
                 AddHandler m_thLinkedPart.BodyPart.AfterRemoveItem, AddressOf Me.OnAfterRemoveLinkedPart
             End If
         End Sub
 
-        Public Overridable Sub DiconnectLinkedPartEvents()
+        Protected Overridable Sub DiconnectLinkedPartEvents()
             If Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing Then
                 RemoveHandler m_thLinkedPart.BodyPart.AfterRemoveItem, AddressOf Me.OnAfterRemoveLinkedPart
             End If

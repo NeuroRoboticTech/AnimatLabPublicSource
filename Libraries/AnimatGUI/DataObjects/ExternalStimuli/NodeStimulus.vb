@@ -19,6 +19,9 @@ Namespace DataObjects.ExternalStimuli
         Protected m_doOrganism As DataObjects.Physical.Organism
         Protected m_doNode As DataObjects.Behavior.Node
 
+        Protected m_strOrganismID As String = ""
+        Protected m_strNodeID As String = "'"
+
 #End Region
 
 #Region " Properties "
@@ -51,6 +54,7 @@ Namespace DataObjects.ExternalStimuli
             End Get
             Set(ByVal Value As DataObjects.Behavior.Node)
                 m_doNode = Value
+                Me.StimulatedItem = Value
             End Set
         End Property
 
@@ -131,21 +135,27 @@ Namespace DataObjects.ExternalStimuli
 
         End Sub
 
+        Public Overrides Sub InitializeAfterLoad()
+            MyBase.InitializeAfterLoad()
+
+            If m_strOrganismID.Trim.Length > 0 Then
+                Me.Organism = DirectCast(Util.Environment.Organisms(m_strOrganismID), DataObjects.Physical.Organism)
+            End If
+
+            If Not m_doOrganism Is Nothing AndAlso m_strNodeID.Trim.Length > 0 Then
+                Me.Node = m_doOrganism.FindBehavioralNode(m_strNodeID, False)
+            End If
+
+        End Sub
+
         Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
             MyBase.LoadData(oXml)
 
             oXml.IntoElem()
 
-            Dim strOrganismID As String = oXml.GetChildString("OrganismID")
-            If strOrganismID.Trim.Length > 0 Then
-                m_doOrganism = DirectCast(Util.Environment.Organisms(strOrganismID), DataObjects.Physical.Organism)
-            End If
-
-            Dim strNodeID As String = oXml.GetChildString("NodeID")
-            If Not m_doOrganism Is Nothing AndAlso strNodeID.Trim.Length > 0 Then
-                m_doNode = m_doOrganism.FindBehavioralNode(strNodeID, False)
-            End If
-
+            m_strOrganismID = oXml.GetChildString("OrganismID")
+            m_strNodeID = oXml.GetChildString("NodeID")
+ 
             oXml.OutOfElem()
 
             Me.IsDirty = False
