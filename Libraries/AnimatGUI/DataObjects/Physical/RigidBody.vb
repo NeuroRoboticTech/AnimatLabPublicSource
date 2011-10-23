@@ -827,6 +827,10 @@ Namespace DataObjects.Physical
         Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
             MyBase.AddToReplaceIDList(aryReplaceIDList)
 
+            If Not m_JointToParent Is Nothing Then
+                m_JointToParent.AddToReplaceIDList(aryReplaceIDList)
+            End If
+
             m_aryChildBodies.AddToReplaceIDList(aryReplaceIDList)
             m_aryOdorSources.AddToReplaceIDList(aryReplaceIDList)
             If Not m_doReceptiveFieldSensor Is Nothing Then
@@ -1227,6 +1231,7 @@ Namespace DataObjects.Physical
         Public Overridable Overloads Function AddChildBody(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d) As Boolean
             Dim rbNew As RigidBody
             Dim bAddDefaultGraphics As Boolean = False
+            Dim bPastedPart As Boolean = False
 
             Try
                 rbNew = Util.GetPastedBodyPart(Me.ParentStructure, Me, False)
@@ -1234,6 +1239,8 @@ Namespace DataObjects.Physical
                 If rbNew Is Nothing Then
                     rbNew = CreateNewBody(vPos, vNorm, bAddDefaultGraphics)
                     If rbNew Is Nothing Then Return False
+                Else
+                    bPastedPart = True
                 End If
 
                 'Now, if it needs a joint then select the joint type to use
@@ -1255,6 +1262,10 @@ Namespace DataObjects.Physical
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                If bPastedPart Then
+                    Util.Application.ToggleBodyPartPasteInProgress()
+                End If
             End Try
         End Function
 

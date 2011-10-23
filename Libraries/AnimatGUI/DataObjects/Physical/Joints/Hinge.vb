@@ -216,6 +216,13 @@ Namespace DataObjects.Physical.Joints
             m_doUpperLimit.InitializeSimulationReferences()
         End Sub
 
+        Public Overrides Sub AddToReplaceIDList(aryReplaceIDList As System.Collections.ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList)
+
+            If Not m_doLowerLimit Is Nothing Then m_doLowerLimit.AddToReplaceIDList(aryReplaceIDList)
+            If Not m_doUpperLimit Is Nothing Then m_doUpperLimit.AddToReplaceIDList(aryReplaceIDList)
+        End Sub
+
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 

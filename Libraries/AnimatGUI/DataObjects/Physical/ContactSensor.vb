@@ -183,7 +183,7 @@ Namespace DataObjects.Physical
                 doAdapter.AddToSim(True)
             Next
 
-            If Not m_doInterface Is Nothing And Not m_bAddedInitialFieldPairs Then
+            If Not m_aryPairInfo Is Nothing AndAlso Not m_doInterface Is Nothing And Not m_bAddedInitialFieldPairs Then
                 'Only attempt to do this if the simulation is running and we have obtained a reference to the sensor object.
                 'I am doing this here because this should ALWAYS be called only after the simulation has been created and its interface has been referenced.
                 ' The reason is that the receptive field stuff is always done "on the fly". We are only loading some rough field pair datas and then creating
