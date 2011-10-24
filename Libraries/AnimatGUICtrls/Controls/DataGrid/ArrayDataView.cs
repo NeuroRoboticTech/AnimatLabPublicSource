@@ -22,7 +22,9 @@ namespace AnimatGuiCtrls.Controls
 		/// <summary>
 		/// Alternative column names.
 		/// </summary>
-		private		string[]		_colnames;	
+		private		string[]		_colnames;
+
+        private bool m_bReadOnly = false;
 
 		#endregion // Variables
 
@@ -64,7 +66,13 @@ namespace AnimatGuiCtrls.Controls
 			}
 		}
 
-		#endregion // Constructors
+        public ArrayDataView(Array array, object[] colnames, bool bReadonly)
+            : this(array, colnames)
+        {
+            m_bReadOnly = bReadonly;
+        }
+
+        #endregion // Constructors
 
 //		#region Events
 //		public delegate void ValueChangingEventHandler(int row,int col,object value);
@@ -221,7 +229,7 @@ namespace AnimatGuiCtrls.Controls
 		{
 			get
 			{
-				return true;
+                return !m_bReadOnly;
 			}
 		}
 

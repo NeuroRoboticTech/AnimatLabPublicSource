@@ -63,16 +63,20 @@ Namespace DataObjects.Physical
             'add the needed materialpair combinations. 
         End Sub
 
+#End Region
+
+#Region " Events "
+
         'This is the new event that rigid bodies will subscribe to when they set the material type for themselves.
         'When this is fired they will replace this material type with the new one that is passed in. Within the 
         ' material editor window they will be able to delete a material type. When they do we will first open a new
         ' dialog to allow them to pick the new material. If they hit ok then we will then call ReplaceMaterial to signla
         ' this event to all subscribing objects.
-        Public Event MaterialReplaced(ByVal doNewMaterial As MaterialType)
+        Public Event ReplaceMaterial(ByVal doReplacement As MaterialType)
 
         'This method is called after the users have picked the new material to switch to using.
-        Public Sub ReplaceMaterial(ByVal doNewMaterial As MaterialType)
-            RaiseEvent MaterialReplaced(doNewMaterial)
+        Public Sub RemovingType(ByVal doReplacement As MaterialType)
+            RaiseEvent ReplaceMaterial(doReplacement)
         End Sub
 
 #End Region

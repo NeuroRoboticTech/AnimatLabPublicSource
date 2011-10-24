@@ -132,7 +132,12 @@ Namespace Forms.BodyPlan
             '
             'gridMaterialPairs
             '
-            Me.gridMaterialPairs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+            Me.gridMaterialPairs.AllowUserToAddRows = False
+            Me.gridMaterialPairs.AllowUserToDeleteRows = False
+            Me.gridMaterialPairs.AllowUserToOrderColumns = False
+            Me.gridMaterialPairs.AllowUserToResizeColumns = True
+            Me.gridMaterialPairs.AllowUserToResizeRows = True
+            Me.gridMaterialPairs.DataMember = ""
             Me.gridMaterialPairs.Location = New System.Drawing.Point(119, 24)
             Me.gridMaterialPairs.Name = "gridMaterialPairs"
             Me.gridMaterialPairs.Size = New System.Drawing.Size(419, 304)
@@ -191,16 +196,156 @@ Namespace Forms.BodyPlan
                 'm_btnOk = Me.btnOk
                 'm_btnCancel = Me.btnCancel
 
+                SetMaterialTypesListView()
+                SetupMaterialPairsGrid()
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
 
         End Sub
 
+        Protected Sub SetMaterialTypesListView()
+            lvMaterialTypes.HideSelection = False
+            lvMaterialTypes.MultiSelect = False
+            lvMaterialTypes.FullRowSelect = True
+            lvMaterialTypes.View = View.Details
+            lvMaterialTypes.AllowColumnReorder = True
+            lvMaterialTypes.LabelEdit = True
+            lvMaterialTypes.Sorting = SortOrder.Ascending
+
+            lvMaterialTypes.Columns.Add("Material Types", 200, HorizontalAlignment.Left)
+
+            'Now go through and add all the odor types and then sources.
+
+            Dim doType As DataObjects.Physical.MaterialType
+            For Each deEntry As DictionaryEntry In Util.Environment.MaterialTypes
+                doType = DirectCast(deEntry.Value, DataObjects.Physical.MaterialType)
+                AddListItem(doType)
+            Next
+        End Sub
+
+        Protected Sub AddListItem(ByVal doType As DataObjects.Physical.MaterialType)
+            Dim liItem As ListViewItem
+            liItem = New ListViewItem(doType.Name)
+            liItem.Tag = doType
+            lvMaterialTypes.Items.Add(liItem)
+        End Sub
+
+        Protected Sub RemoveListItem(ByVal doType As DataObjects.Physical.MaterialType)
+            For Each liItem As ListViewItem In lvMaterialTypes.Items
+                If liItem.Tag Is doType Then
+                    lvMaterialTypes.Items.Remove(liItem)
+                    Return
+                End If
+            Next
+        End Sub
+
+        Protected Sub SetupMaterialPairsGrid()
+
+            Dim aryColNames() As String
+            Dim aryData(,) As Framework.DataObject
+
+            Util.Environment.GetMaterialPairsDataGridArray(aryColNames, aryData)
+
+            gridMaterialPairs.DataSource = New AnimatGuiCtrls.Controls.ArrayDataView(aryData, aryColNames, True)
+            gridMaterialPairs.AutoResizeColumns()
+            SetPropertyGrid()
+        End Sub
+
+        Protected Sub SetPropertyGrid()
+            If gridMaterialPairs.SelectedCells.Count > 0 Then
+                Dim iCount As Integer = gridMaterialPairs.SelectedCells.Count - 1
+                Dim aryItems(iCount) As PropertyBag
+                Dim iIndex As Integer = 0
+                For Each dcCell As DataGridViewCell In gridMaterialPairs.SelectedCells
+                    If Not dcCell.Value Is Nothing Then
+                        If Util.IsTypeOf(dcCell.Value.GetType, GetType(Framework.DataObject), False) Then
+                            Dim doObj As Framework.DataObject = DirectCast(dcCell.Value, Framework.DataObject)
+                            aryItems(iIndex) = doObj.Properties
+                            iIndex = iIndex + 1
+                        End If
+                    Else
+                        iCount = iCount - 1
+                        ReDim Preserve aryItems(iCount)
+                    End If
+                Next
+
+                If iIndex > 0 Then
+                    pgMaterialPairs.SelectedObjects = aryItems
+                Else
+                    pgMaterialPairs.SelectedObjects = Nothing
+                End If
+            End If
+        End Sub
+
 #End Region
 
 #Region " Events "
 
+        Private Sub btnAddMaterial_Click(sender As System.Object, e As System.EventArgs) Handles btnAddMaterial.Click
+            Try
+                Dim doType As DataObjects.Physical.MaterialType = Util.Environment.AddMaterialType()
+                AddListItem(doType)
+                SetupMaterialPairsGrid()
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub btnRemoveMaterial_Click(sender As System.Object, e As System.EventArgs) Handles btnRemoveMaterial.Click
+            Try
+                If lvMaterialTypes.SelectedItems.Count > 0 Then
+                    Dim liItem As ListViewItem = lvMaterialTypes.SelectedItems(0)
+
+                    If Not liItem.Tag Is Nothing AndAlso TypeOf liItem.Tag Is DataObjects.Physical.MaterialType Then
+                        Dim doType As DataObjects.Physical.MaterialType = DirectCast(liItem.Tag, DataObjects.Physical.MaterialType)
+
+                        If doType.ID = "DEFAULT" Then
+                            Throw New System.Exception("You cannot delete the default material type.")
+                        End If
+
+                        Dim frmReplaceType As New Forms.BodyPlan.ReplaceMaterialType
+                        frmReplaceType.TypeToReplace = doType
+
+                        If frmReplaceType.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                            Dim doReplaceType As DataObjects.Physical.MaterialType = DirectCast(frmReplaceType.cboMaterialTypes.SelectedItem, DataObjects.Physical.MaterialType)
+                            Util.Environment.RemoveMaterialType(doType, doReplaceType)
+                            RemoveListItem(doType)
+                            SetupMaterialPairsGrid()
+                        End If
+                    End If
+                End If
+
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub lvMaterialTypes_AfterLabelEdit(sender As Object, e As System.Windows.Forms.LabelEditEventArgs) Handles lvMaterialTypes.AfterLabelEdit
+            Try
+                If lvMaterialTypes.SelectedItems.Count > 0 Then
+                    Dim liItem As ListViewItem = lvMaterialTypes.SelectedItems(0)
+
+                    If Not liItem.Tag Is Nothing AndAlso TypeOf liItem.Tag Is DataObjects.Physical.MaterialType Then
+                        Dim doType As DataObjects.Physical.MaterialType = DirectCast(liItem.Tag, DataObjects.Physical.MaterialType)
+                        doType.Name = e.Label
+                        SetupMaterialPairsGrid()
+                    End If
+                End If
+
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub gridMaterialPairs_Click(sender As Object, e As System.EventArgs) Handles gridMaterialPairs.Click
+            Try
+                SetPropertyGrid()
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
 
 #End Region
 

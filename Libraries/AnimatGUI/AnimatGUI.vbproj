@@ -526,6 +526,9 @@
     <Compile Include="Forms\BodyPlan\Relabel.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\BodyPlan\ReplaceMaterialType.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\BodyPlan\SelectByType.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -783,6 +786,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\BodyPlan\EditMaterialTypes.resx">
       <DependentUpon>EditMaterialTypes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BodyPlan\ReplaceMaterialType.resx">
+      <DependentUpon>ReplaceMaterialType.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConfirmRelabel.resx">
       <DependentUpon>ConfirmRelabel.vb</DependentUpon>

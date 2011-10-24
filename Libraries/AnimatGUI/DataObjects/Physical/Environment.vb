@@ -77,6 +77,9 @@ Namespace DataObjects.Physical
         Protected m_bAutoGenerateRandomSeed As Boolean = True
         Protected m_iManualRandomSeed As Integer = 12345
 
+        Protected m_aryMaterialTypes As New Collections.SortedMaterialTypes(Me)
+        Protected m_aryMaterialPairs As New Collections.SortedMaterialPairs(Me)
+
 #End Region
 
 #Region " Properties "
@@ -523,6 +526,18 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
+        Public Overridable ReadOnly Property MaterialTypes() As Collections.SortedMaterialTypes
+            Get
+                Return m_aryMaterialTypes
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property MaterialPairs() As Collections.SortedMaterialPairs
+            Get
+                Return m_aryMaterialPairs
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -566,6 +581,94 @@ Namespace DataObjects.Physical
         Public Overridable Sub AddStructure()
             Me.OnNewStructure(Me, New System.EventArgs)
         End Sub
+
+        Public Overridable Function AddMaterialType() As MaterialType
+            Dim doType As New DataObjects.Physical.MaterialType(Util.Environment)
+            doType.Name = "Material_" & (Me.MaterialTypes.Count + 1)
+            Me.MaterialTypes.Add(doType.ID, doType, False)
+
+            'Now add new material pairs for this object and all associated items.
+            Dim doType2 As MaterialType
+            For Each deEntry As DictionaryEntry In Me.MaterialTypes
+                doType2 = DirectCast(deEntry.Value, MaterialType)
+                Dim doPair As New MaterialPair(Me)
+                doPair.Material1 = doType
+                doPair.Material2 = doType2
+                Me.MaterialPairs.Add(doPair.ID, doPair, False)
+            Next
+
+            Return doType
+        End Function
+
+        Public Overridable Sub RemoveMaterialType(ByVal doType As MaterialType, ByVal doReplaceType As MaterialType)
+
+            'Fire the event to let any rigid bodies using this type know to switch to a different type.
+            doType.RemovingType(doReplaceType)
+
+            'then remove all associated material pairs for this material type.
+            Dim aryRemove As New ArrayList
+            Dim doPair As MaterialPair
+            For Each deEntry As DictionaryEntry In Me.MaterialPairs
+                doPair = DirectCast(deEntry.Value, MaterialPair)
+
+                If doPair.Material1 Is doType OrElse doPair.Material2 Is doType Then
+                    aryRemove.Add(doPair)
+                End If
+            Next
+
+            For Each doPair In aryRemove
+                Me.MaterialPairs.Remove(doPair.ID, False)
+            Next
+
+            Me.MaterialTypes.Remove(doType.ID, False)
+
+        End Sub
+
+        Public Sub GetMaterialPairsDataGridArray(ByRef aryColNames() As String, ByRef aryData(,) As Framework.DataObject)
+
+            ReDim aryData(m_aryMaterialTypes.Count - 1, m_aryMaterialTypes.Count - 1)
+            ReDim aryColNames(m_aryMaterialTypes.Count - 1)
+
+            Dim doType1 As MaterialType
+            Dim doType2 As MaterialType
+            Dim iX As Integer = 0
+            Dim iY As Integer = 0
+            Dim doPair As MaterialPair
+            For Each deEntry1 As DictionaryEntry In m_aryMaterialTypes
+                doType1 = DirectCast(deEntry1.Value, MaterialType)
+                aryColNames(iX) = doType1.Name
+                iY = 0
+
+                For Each deEntry2 As DictionaryEntry In m_aryMaterialTypes
+                    doType2 = DirectCast(deEntry2.Value, MaterialType)
+                    doPair = FindMaterialPair(doType1, doType2)
+
+                    aryData(iX, iY) = doPair
+                    iY = iY + 1
+                Next
+
+                iX = iX + 1
+            Next
+
+        End Sub
+
+        Protected Overridable Function FindMaterialPair(ByVal doType1 As MaterialType, ByVal doType2 As MaterialType, Optional ByVal bThrowError As Boolean = True) As MaterialPair
+
+            Dim doPair As MaterialPair
+            For Each deEntry As DictionaryEntry In m_aryMaterialPairs
+                doPair = DirectCast(deEntry.Value, MaterialPair)
+
+                If (doPair.Material1 Is doType1 And doPair.Material2 Is doType2) _
+                    OrElse (doPair.Material1 Is doType2 And doPair.Material2 Is doType1) Then
+                    Return doPair
+                End If
+            Next
+
+            If bThrowError Then
+                Throw New System.Exception("The material pair for (" & doType1.ID & ", " & doType2.ID & ") was not found.")
+            End If
+            Return Nothing
+        End Function
 
 #Region " Treeview/Menu Methods "
 
@@ -898,6 +1001,8 @@ Namespace DataObjects.Physical
             m_aryStructures.ClearIsDirty()
             m_aryOdorTypes.ClearIsDirty()
             m_aryLights.ClearIsDirty()
+            m_aryMaterialPairs.ClearIsDirty()
+            m_aryMaterialTypes.ClearIsDirty()
 
             If Not m_snPhysicsTimeStep Is Nothing Then m_snPhysicsTimeStep.ClearIsDirty()
             If Not m_snGravity Is Nothing Then m_snGravity.ClearIsDirty()
@@ -934,6 +1039,9 @@ Namespace DataObjects.Physical
 
             m_snRecFieldSelRadius = DirectCast(doOrig.m_snRecFieldSelRadius.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_clBackgroundcolor = doOrig.m_clBackgroundcolor
+
+            m_aryMaterialTypes = DirectCast(doOrig.m_aryMaterialTypes.CloneList(), Collections.SortedMaterialTypes)
+            m_aryMaterialPairs = DirectCast(doOrig.m_aryMaterialPairs.CloneList(), Collections.SortedMaterialPairs)
 
             m_eDistanceUnits = doOrig.m_eDistanceUnits
             m_eMassUnits = doOrig.m_eMassUnits
@@ -1108,7 +1216,88 @@ Namespace DataObjects.Physical
                 m_aryLights.Add(newLight.ID, newLight)
             End If
 
+            LoadMaterialTypes(oXml)
+            LoadMaterialPairs(oXml)
+
             oXml.OutOfElem() 'Outof Environment Element
+
+        End Sub
+
+        Protected Overridable Sub AddDefaultMaterialType(ByVal bCallSimMethods As Boolean)
+            Dim doMat As New DataObjects.Physical.MaterialType(Me)
+            doMat.ID = "DEFAULT"
+            doMat.Name = "Default"
+            m_aryMaterialTypes.Add(doMat.ID, doMat, bCallSimMethods)
+        End Sub
+
+        Protected Overridable Sub AddDefaultMaterialPair(ByVal bCallSimMethods As Boolean)
+            Dim doPair As New DataObjects.Physical.MaterialPair(Me)
+            Dim doMat As DataObjects.Physical.MaterialType = DirectCast(m_aryMaterialTypes("DEFAULT"), DataObjects.Physical.MaterialType)
+
+            doPair.ID = "DEFAULT"
+            doPair.Material1 = doMat
+            doPair.Material2 = doMat
+
+            'TODO: Need to set default values here.
+            m_aryMaterialPairs.Add(doPair.ID, doPair, bCallSimMethods)
+
+        End Sub
+
+        Protected Overridable Sub LoadMaterialTypes(ByVal oXml As AnimatGUI.Interfaces.StdXml)
+
+            Try
+                m_aryMaterialTypes.Clear()
+
+                Dim iCount As Integer
+                Dim doType As DataObjects.Physical.MaterialType
+                If oXml.FindChildElement("MaterialTypes", False) Then
+                    oXml.IntoChildElement("MaterialTypes")
+
+                    iCount = oXml.NumberOfChildren() - 1
+                    For iIndex As Integer = 0 To iCount
+                        oXml.FindChildByIndex(iIndex)
+                        doType = New DataObjects.Physical.MaterialType(Me)
+                        doType.LoadData(oXml)
+                        m_aryMaterialTypes.Add(doType.ID, doType)
+                    Next
+
+                    oXml.OutOfElem()
+                Else
+                    AddDefaultMaterialType(False)
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Sub
+
+        Protected Overridable Sub LoadMaterialPairs(ByVal oXml As AnimatGUI.Interfaces.StdXml)
+
+            Try
+                m_aryMaterialPairs.Clear()
+
+                Dim iCount As Integer
+                Dim doPair As DataObjects.Physical.MaterialPair
+                If oXml.FindChildElement("MaterialPairs", False) Then
+                    oXml.IntoChildElement("MaterialPairs")
+
+                    iCount = oXml.NumberOfChildren() - 1
+                    For iIndex As Integer = 0 To iCount
+                        oXml.FindChildByIndex(iIndex)
+                        doPair = New DataObjects.Physical.MaterialPair(Me)
+                        doPair.LoadData(oXml)
+                        m_aryMaterialPairs.Add(doPair.ID, doPair)
+                    Next
+
+                    oXml.OutOfElem()
+                Else
+                    AddDefaultMaterialPair(False)
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
 
         End Sub
 
@@ -1153,6 +1342,9 @@ Namespace DataObjects.Physical
                 oXml.OutOfElem() 'Outof Organisms Element
             End If
 
+            SaveMaterialTypes(oXml)
+            SaveMaterialPairs(oXml)
+
             oXml.AddChildElement("Organisms")
             oXml.IntoElem()
             Dim doOrganism As DataObjects.Physical.Organism
@@ -1182,6 +1374,32 @@ Namespace DataObjects.Physical
 
             oXml.OutOfElem() 'Outof Environment Element
 
+        End Sub
+
+        Protected Overridable Sub SaveMaterialTypes(ByRef oXml As Interfaces.StdXml)
+            oXml.AddChildElement("MaterialTypes")
+            oXml.IntoElem()   'Into MaterialTypes element
+
+            Dim doType As DataObjects.Physical.MaterialType
+            For Each deItem As DictionaryEntry In m_aryMaterialTypes
+                doType = DirectCast(deItem.Value, DataObjects.Physical.MaterialType)
+                doType.SaveData(oXml)
+            Next
+
+            oXml.OutOfElem()    'Outof MaterialTypes element
+        End Sub
+
+        Protected Overridable Sub SaveMaterialPairs(ByRef oXml As Interfaces.StdXml)
+            oXml.AddChildElement("MaterialPairs")
+            oXml.IntoElem()   'Into MaterialPairs element
+
+            Dim doPair As DataObjects.Physical.MaterialPair
+            For Each deItem As DictionaryEntry In m_aryMaterialPairs
+                doPair = DirectCast(deItem.Value, DataObjects.Physical.MaterialPair)
+                doPair.SaveData(oXml)
+            Next
+
+            oXml.OutOfElem()    'Outof MaterialPairs element
         End Sub
 
         Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
@@ -1225,6 +1443,9 @@ Namespace DataObjects.Physical
                 oXml.OutOfElem() 'Outof Organisms Element
             End If
 
+            SaveSimMaterialTypes(oXml)
+            SaveSimMaterialPairs(oXml)
+
             oXml.AddChildElement("Organisms")
             oXml.IntoElem()
             Dim doOrganism As DataObjects.Physical.Organism
@@ -1256,25 +1477,40 @@ Namespace DataObjects.Physical
 
         End Sub
 
+        Protected Overridable Sub SaveSimMaterialTypes(ByRef oXml As Interfaces.StdXml)
+            oXml.AddChildElement("MaterialTypes")
+            oXml.IntoElem()   'Into MaterialTypes element
+
+            Dim doType As DataObjects.Physical.MaterialType
+            For Each deItem As DictionaryEntry In m_aryMaterialTypes
+                doType = DirectCast(deItem.Value, DataObjects.Physical.MaterialType)
+                doType.SaveSimulationXml(oXml)
+            Next
+
+            oXml.OutOfElem()    'Outof MaterialTypes element
+        End Sub
+
+        Protected Overridable Sub SaveSimMaterialPairs(ByRef oXml As Interfaces.StdXml)
+            oXml.AddChildElement("MaterialPairs")
+            oXml.IntoElem()   'Into MaterialPairs element
+
+            Dim doPair As DataObjects.Physical.MaterialPair
+            For Each deItem As DictionaryEntry In m_aryMaterialPairs
+                doPair = DirectCast(deItem.Value, DataObjects.Physical.MaterialPair)
+                doPair.SaveSimulationXml(oXml)
+            Next
+
+            oXml.OutOfElem()    'Outof MaterialPairs element
+        End Sub
+
         Public Overrides Sub InitializeAfterLoad()
             MyBase.InitializeAfterLoad()
 
-            Dim newStructure As DataObjects.Physical.PhysicalStructure
-            For Each deEntry As DictionaryEntry In m_aryOrganisms
-                newStructure = DirectCast(deEntry.Value, PhysicalStructure)
-                newStructure.InitializeAfterLoad()
-            Next
-
-            For Each deEntry As DictionaryEntry In m_aryStructures
-                newStructure = DirectCast(deEntry.Value, PhysicalStructure)
-                newStructure.InitializeAfterLoad()
-            Next
-
-            Dim doLight As DataObjects.Physical.Light
-            For Each deEntry As DictionaryEntry In m_aryLights
-                doLight = DirectCast(deEntry.Value, Light)
-                doLight.InitializeAfterLoad()
-            Next
+            m_aryOrganisms.InitializeAfterLoad()
+            m_aryStructures.InitializeAfterLoad()
+            m_aryLights.InitializeAfterLoad()
+            m_aryMaterialTypes.InitializeAfterLoad()
+            m_aryMaterialPairs.InitializeAfterLoad()
 
         End Sub
 
@@ -1285,6 +1521,9 @@ Namespace DataObjects.Physical
             If doObject Is Nothing AndAlso Not m_aryStructures Is Nothing Then doObject = m_aryStructures.FindObjectByID(strID)
             If doObject Is Nothing AndAlso Not m_aryOdorTypes Is Nothing Then doObject = m_aryOdorTypes.FindObjectByID(strID)
             If doObject Is Nothing AndAlso Not m_aryLights Is Nothing Then doObject = m_aryLights.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_aryMaterialTypes Is Nothing Then doObject = m_aryMaterialTypes.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_aryMaterialPairs Is Nothing Then doObject = m_aryMaterialPairs.FindObjectByID(strID)
+
             Return doObject
 
         End Function
@@ -1295,26 +1534,12 @@ Namespace DataObjects.Physical
                 m_doInterface = New Interfaces.DataObjectInterface(Util.Application.SimulationInterface, Util.Simulation.ID)
             End If
 
-            Dim doObject As AnimatGUI.Framework.DataObject
-            For Each deEntry As DictionaryEntry In m_aryOdorTypes
-                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                doObject.InitializeSimulationReferences()
-            Next
-
-            For Each deEntry As DictionaryEntry In m_aryOrganisms
-                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                doObject.InitializeSimulationReferences()
-            Next
-
-            For Each deEntry As DictionaryEntry In m_aryStructures
-                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                doObject.InitializeSimulationReferences()
-            Next
-
-            For Each deEntry As DictionaryEntry In m_aryLights
-                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                doObject.InitializeSimulationReferences()
-            Next
+            m_aryOdorTypes.InitializeSimulationReferences()
+            m_aryOrganisms.InitializeSimulationReferences()
+            m_aryStructures.InitializeSimulationReferences()
+            m_aryLights.InitializeSimulationReferences()
+            'm_aryMaterialTypes.InitializeSimulationReferences()
+            'm_aryMaterialPairs.InitializeSimulationReferences()
 
             'Get the actual physics time step after initialization of the sim object.
             If Not m_doInterface Is Nothing Then

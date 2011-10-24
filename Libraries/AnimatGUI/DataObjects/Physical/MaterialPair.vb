@@ -65,7 +65,7 @@ Namespace DataObjects.Physical
 
 #Region " Properties "
 
-        Public Overridable Property PrimaryCOF() As ScaledNumber
+        Public Overridable Property FrictionPrimary() As ScaledNumber
             Get
                 Return m_snFrictionPrimary
             End Get
@@ -77,7 +77,7 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
-        Public Overridable Property SecondaryCOF() As ScaledNumber
+        Public Overridable Property FrictionSecondary() As ScaledNumber
             Get
                 Return m_snFrictionSecondary
             End Get
@@ -89,7 +89,7 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
-        Public Overridable Property MaxPrimaryFriction() As ScaledNumber
+        Public Overridable Property MaxFrictionPrimary() As ScaledNumber
             Get
                 Return m_snMaxFrictionPrimary
             End Get
@@ -113,7 +113,7 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
-        Public Overridable Property ComplianceOfCollision() As ScaledNumber
+        Public Overridable Property Compliance() As ScaledNumber
             Get
                 Return m_snCompliance
             End Get
@@ -254,9 +254,9 @@ Namespace DataObjects.Physical
 
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
-            m_snFrictionPrimary = New AnimatGUI.Framework.ScaledNumber(Me, "PrimaryCOF", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None)
-            m_snFrictionSecondary = New AnimatGUI.Framework.ScaledNumber(Me, "SecondaryCOF", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None)
-            m_snMaxFrictionPrimary = New AnimatGUI.Framework.ScaledNumber(Me, "MaxPrimaryFriction", 500, ScaledNumber.enumNumericScale.None, "Newtons", "N")
+            m_snFrictionPrimary = New AnimatGUI.Framework.ScaledNumber(Me, "FrictionPrimary", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None)
+            m_snFrictionSecondary = New AnimatGUI.Framework.ScaledNumber(Me, "FrictionSecondary", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None)
+            m_snMaxFrictionPrimary = New AnimatGUI.Framework.ScaledNumber(Me, "MaxFrictionPrimary", 500, ScaledNumber.enumNumericScale.None, "Newtons", "N")
             m_snMaxFrictionSecondary = New AnimatGUI.Framework.ScaledNumber(Me, "MaxSecondaryFriction", 500, ScaledNumber.enumNumericScale.None, "Newtons", "N")
             'Linear compliance
             m_snCompliance = New AnimatGUI.Framework.ScaledNumber(Me, "Compliance", 0.1, ScaledNumber.enumNumericScale.micro, "m/N", "m/N")
@@ -331,46 +331,46 @@ Namespace DataObjects.Physical
             Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Material1", GetType(String), "Material1Name", _
-                            "Material Pair Properties", "The unique name of first material in the pair", _
+                            "Pair Properties", "The unique name of first material in the pair", _
                             Me.Material1Name, True))
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Material2", GetType(String), "Material2Name", _
-                            "Material Pair Properties", "The unique name of second material in the pair", _
+                            "Pair Properties", "The unique name of second material in the pair", _
                             Me.Material2Name, True))
 
             pbNumberBag = m_snFrictionPrimary.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Primary Friction Coefficient", pbNumberBag.GetType(), "COF", _
-                            "Constraints", "The primary coefficient of friction", pbNumberBag, _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Primary Friction Coefficient", pbNumberBag.GetType(), "FrictionPrimary", _
+                            "Pair Properties", "The primary coefficient of friction", pbNumberBag, _
                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snFrictionSecondary.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Secondary Friction Coefficient", pbNumberBag.GetType(), "COF", _
-                            "Constraints", "The secondary coefficient of friction", pbNumberBag, _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Secondary Friction Coefficient", pbNumberBag.GetType(), "FrictionSecondary", _
+                            "Pair Properties", "The secondary coefficient of friction", pbNumberBag, _
                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snMaxFrictionPrimary.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Maximum Primary Friction", pbNumberBag.GetType(), "Friction", _
-                            "Constraints", "The maximum primary friction allowed", pbNumberBag, _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Maximum Primary Friction", pbNumberBag.GetType(), "MaxFrictionPrimary", _
+                            "Pair Properties", "The maximum primary friction allowed", pbNumberBag, _
                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snMaxFrictionSecondary.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Maximum Secondary Friction", pbNumberBag.GetType(), "Friction", _
-                            "Constraints", "The maximum secondary friction allowed", pbNumberBag, _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Maximum Secondary Friction", pbNumberBag.GetType(), "MaxSecondaryFriction", _
+                            "Pair Properties", "The maximum secondary friction allowed", pbNumberBag, _
                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snCompliance.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Compliance", pbNumberBag.GetType(), "Compliance", _
-                            "Constraints", "The compliance for collisions between RigidBodies with these two materials.", pbNumberBag, _
+                            "Pair Properties", "The compliance for collisions between RigidBodies with these two materials.", pbNumberBag, _
                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snDamping.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Damping", pbNumberBag.GetType(), "Damping", _
-                            "Constraints", "The damping for collisions between RigidBodies with these two materials.", pbNumberBag, _
+                            "Pair Properties", "The damping for collisions between RigidBodies with these two materials.", pbNumberBag, _
                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snRestitution.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Restitution", pbNumberBag.GetType(), "Restitution", _
-                            "Constraints", "When a collision occurs between two rigid bodies, the impulse corresponding to the force is equal" & _
+                            "Pair Properties", "When a collision occurs between two rigid bodies, the impulse corresponding to the force is equal" & _
                             " to the total change in momentum that each body undergoes. This change of momentum is affected by the degree" & _
                             " of resilience of each body, that is, the extent to which energy is diffused.<br>The coefficient of restitution" & _
                             " is a parameter representing the degree of resilience of a particular material pair. To make simulations more " & _
@@ -379,36 +379,36 @@ Namespace DataObjects.Physical
                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snSlipPrimary.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Primary Slip", pbNumberBag.GetType(), "Slip", _
-                            "Constraints", "Contact slip allows a tangential loss at the contact position to be defined. For example, this" & _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Primary Slip", pbNumberBag.GetType(), "PrimarySlip", _
+                            "Pair Properties", "Contact slip allows a tangential loss at the contact position to be defined. For example, this" & _
                             " is a useful parameter to set for the interaction between a cylindrical wheel and a terrain where, without a " & _
                             "minimum amount of slip, the vehicle would have a hard time turning.", pbNumberBag, _
                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snSlipSecondary.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Secondary Slip", pbNumberBag.GetType(), "Slip", _
-                            "Constraints", "Contact slip allows a tangential loss at the contact position to be defined. For example, this" & _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Secondary Slip", pbNumberBag.GetType(), "SecondarySlip", _
+                            "Pair Properties", "Contact slip allows a tangential loss at the contact position to be defined. For example, this" & _
                             " is a useful parameter to set for the interaction between a cylindrical wheel and a terrain where, without a " & _
                             "minimum amount of slip, the vehicle would have a hard time turning.", pbNumberBag, _
                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snSlidePrimary.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Primary Slide", pbNumberBag.GetType(), "Slide", _
-                            "Constraints", "The contact sliding parameter allows a desired relative linear velocity to be specified between" & _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Primary Slide", pbNumberBag.GetType(), "PrimarySlide", _
+                            "Pair Properties", "The contact sliding parameter allows a desired relative linear velocity to be specified between" & _
                             " the colliding parts at the contact position. A conveyor belt would be an example of an application. The belt " & _
                             "part itself would not be moving.", pbNumberBag, _
                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snSlideSecondary.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Secondary Slide", pbNumberBag.GetType(), "Slide", _
-                            "Constraints", "The contact sliding parameter allows a desired relative linear velocity to be specified between" & _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Secondary Slide", pbNumberBag.GetType(), "SecondarySlide", _
+                            "Pair Properties", "The contact sliding parameter allows a desired relative linear velocity to be specified between" & _
                             " the colliding parts at the contact position. A conveyor belt would be an example of an application. The belt " & _
                             "part itself would not be moving.", pbNumberBag, _
                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snMaxAdhesion.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Maximum Adhesion", pbNumberBag.GetType(), "Adhesion", _
-                            "Constraints", "Adhesive force allows objects to stick together, as if they were glued. This property provides " & _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Maximum Adhesion", pbNumberBag.GetType(), "MaxAdhesion", _
+                            "Pair Properties", "Adhesive force allows objects to stick together, as if they were glued. This property provides " & _
                             "the minimal force needed to separate the two objects.", pbNumberBag, _
                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
         End Sub
@@ -417,11 +417,11 @@ Namespace DataObjects.Physical
             MyBase.InitializeAfterLoad()
 
             If m_mtMaterial1 Is Nothing Then
-                m_mtMaterial1 = DirectCast(Util.Simulation.MaterialTypes(m_strMaterial1ID), DataObjects.Physical.MaterialType)
+                m_mtMaterial1 = DirectCast(Util.Environment.MaterialTypes(m_strMaterial1ID), DataObjects.Physical.MaterialType)
             End If
 
             If m_mtMaterial2 Is Nothing Then
-                m_mtMaterial2 = DirectCast(Util.Simulation.MaterialTypes(m_strMaterial2ID), DataObjects.Physical.MaterialType)
+                m_mtMaterial2 = DirectCast(Util.Environment.MaterialTypes(m_strMaterial2ID), DataObjects.Physical.MaterialType)
             End If
 
         End Sub
@@ -436,7 +436,7 @@ Namespace DataObjects.Physical
             m_strMaterial1ID = oXml.GetChildString("Material1ID")
             m_strMaterial2ID = oXml.GetChildString("Material2ID")
 
-            m_snFrictionPrimary.LoadData(oXml, "PrimaryFrictionCoefficient")
+            m_snFrictionPrimary.LoadData(oXml, "FrictionPrimaryCoefficient")
             m_snFrictionSecondary.LoadData(oXml, "SecondaryFrictionCoefficient")
             m_snMaxFrictionPrimary.LoadData(oXml, "PrimaryMaximumFriction")
             m_snMaxFrictionSecondary.LoadData(oXml, "SecondaryMaximumFriction")
@@ -467,7 +467,7 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("Material1ID", m_mtMaterial1.ID)
             oXml.AddChildElement("Material1ID", m_mtMaterial2.ID)
 
-            m_snFrictionPrimary.SaveData(oXml, "PrimaryFrictionCoefficient")
+            m_snFrictionPrimary.SaveData(oXml, "FrictionPrimaryCoefficient")
             m_snFrictionSecondary.SaveData(oXml, "SecondaryFrictionCoefficient")
             m_snMaxFrictionPrimary.SaveData(oXml, "PrimaryMaximumFriction")
             m_snMaxFrictionSecondary.SaveData(oXml, "SecondaryMaximumFriction")
@@ -495,7 +495,7 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("Material1ID", m_mtMaterial1.ID)
             oXml.AddChildElement("Material1ID", m_mtMaterial2.ID)
 
-            m_snFrictionPrimary.SaveSimulationXml(oXml, Me, "PrimaryFrictionCoefficient")
+            m_snFrictionPrimary.SaveSimulationXml(oXml, Me, "FrictionPrimaryCoefficient")
             m_snFrictionSecondary.SaveSimulationXml(oXml, Me, "SecondaryFrictionCoefficient")
             m_snMaxFrictionPrimary.SaveSimulationXml(oXml, Me, "PrimaryMaximumFriction")
             m_snMaxFrictionSecondary.SaveSimulationXml(oXml, Me, "SecondaryMaximumFriction")
