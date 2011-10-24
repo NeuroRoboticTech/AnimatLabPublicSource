@@ -5329,7 +5329,8 @@ Namespace Forms
 
         Private Sub EditMaterialsToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EditMaterialsToolStripButton.Click, EditMaterialsToolStripMenuItem.Click
             Try
-                Dim iVal As Integer = 5
+                Dim frmEditMaterials As New Forms.BodyPlan.EditMaterialTypes
+                frmEditMaterials.ShowDialog()
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

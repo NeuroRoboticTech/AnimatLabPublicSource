@@ -8,6 +8,7 @@ Imports System.IO
 Imports System.Xml
 Imports AnimatGuiCtrls.Controls
 Imports AnimatGUI.DataObjects
+Imports AnimatGUI.Collections
 
 Namespace DataObjects.Physical
 
@@ -46,16 +47,16 @@ Namespace DataObjects.Physical
 
         Public Overrides Sub AfterAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
             MyBase.AfterAddToList(bCallSimMethods, bThrowError)
-            'temporary code
-            Dim colPairs As MaterialPairs
-            'colPairs = get collection of materialpairs 
-            Dim colTypes As Collection
-            'colTypes = get collection of materialtypes
-            Dim doParent As Framework.DataObject
-            For Each aMatType As MaterialType In colTypes
-                Dim newMatPair As New MaterialPair(doParent, aMatType, Me)
-                colPairs.Add(newMatPair)
-            Next
+            ''temporary code
+            'Dim colPairs As MaterialPairs
+            ''colPairs = get collection of materialpairs 
+            'Dim colTypes As Collection
+            ''colTypes = get collection of materialtypes
+            'Dim doParent As Framework.DataObject
+            'For Each aMatType As MaterialType In colTypes
+            '    Dim newMatPair As New MaterialPair(doParent, aMatType, Me)
+            '    colPairs.Add(newMatPair)
+            'Next
 
             'When a new materialType is added to the collection we need to create new materialpair objects for all the various combinations
             ' (you will need to make sure that you only do one combination pair

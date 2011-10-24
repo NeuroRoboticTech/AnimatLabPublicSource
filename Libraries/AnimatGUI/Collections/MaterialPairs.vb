@@ -11,7 +11,7 @@ Imports AnimatGUI.DataObjects
 Imports AnimatGUI.Framework
 Imports AnimatGUI.Collections
 
-Namespace DataObjects.Physical
+Namespace Collections
 
     Public Class MaterialPairs
         Inherits AnimatCollectionBase
@@ -174,100 +174,6 @@ Namespace DataObjects.Physical
 
 
     Public Class SortedMaterialPairs
-        Inherits AnimatDictionaryBase
-
-        Public Sub New(ByVal doParent As Framework.DataObject)
-            MyBase.New(doParent)
-        End Sub
-
-        Default Public Property Item(ByVal key As [String]) As AnimatGUI.DataObjects.Physical.MaterialPair
-            Get
-                Return CType(Dictionary(key), AnimatGUI.DataObjects.Physical.MaterialPair)
-            End Get
-            Set(ByVal Value As AnimatGUI.DataObjects.Physical.MaterialPair)
-                Dictionary(key) = Value
-            End Set
-        End Property
-
-        Public ReadOnly Property Keys() As ICollection
-            Get
-                Return Dictionary.Keys
-            End Get
-        End Property
-
-        Public ReadOnly Property Values() As ICollection
-            Get
-                Return Dictionary.Values
-            End Get
-        End Property
-
-        Public Sub Add(ByVal key As [String], ByVal value As AnimatGUI.DataObjects.Physical.MaterialPair)
-            Dictionary.Add(key, value)
-            Me.IsDirty = True
-        End Sub 'Add
-
-        Public Function Contains(ByVal key As [String]) As Boolean
-            Return Dictionary.Contains(key)
-        End Function 'Contains
-
-        Public Sub Remove(ByVal key As [String])
-            Dictionary.Remove(key)
-            Me.IsDirty = True
-        End Sub 'Remove
-
-        Protected Overrides Sub OnInsert(ByVal key As [Object], ByVal value As [Object])
-            If Not key.GetType() Is Type.GetType("System.String") Then
-                Throw New ArgumentException("key must be of type String.", "key")
-            End If
-
-            If Not TypeOf (value) Is AnimatGUI.DataObjects.Physical.MaterialPair Then
-                Throw New ArgumentException("value must be of type AnimatGUI.DataObjects.Physical.MaterialPair.", "value")
-            End If
-        End Sub 'OnInsert
-
-        Protected Overrides Sub OnRemove(ByVal key As [Object], ByVal value As [Object])
-            If Not key.GetType() Is Type.GetType("System.String") Then
-                Throw New ArgumentException("key must be of type String.", "key")
-            End If
-        End Sub 'OnRemove
-
-        Protected Overrides Sub OnSet(ByVal key As [Object], ByVal oldValue As [Object], ByVal newValue As [Object])
-            If Not key.GetType() Is Type.GetType("System.String") Then
-                Throw New ArgumentException("key must be of type String.", "key")
-            End If
-
-            If Not TypeOf (newValue) Is AnimatGUI.DataObjects.Physical.MaterialPair Then
-                Throw New ArgumentException("newValue must be of type AnimatGUI.DataObjects.Physical.MaterialPair.", "newValue")
-            End If
-        End Sub 'OnSet
-
-        Protected Overrides Sub OnValidate(ByVal key As [Object], ByVal value As [Object])
-            If Not key.GetType() Is Type.GetType("System.String") Then
-                Throw New ArgumentException("key must be of type String.", "key")
-            End If
-
-            If Not TypeOf (value) Is AnimatGUI.DataObjects.Physical.MaterialPair Then
-                Throw New ArgumentException("value must be of type AnimatGUI.DataObjects.Physical.MaterialPair.", "value")
-            End If
-        End Sub 'OnValidate 
-
-        Public Overrides Function Copy() As AnimatDictionaryBase
-            Dim aryList As New SortedMaterialPairs(m_doParent)
-            aryList.CopyInternal(Me)
-            Return aryList
-        End Function
-
-        Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
-                                           ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatDictionaryBase
-            Dim aryList As New SortedMaterialPairs(doParent)
-            aryList.CloneInternal(Me, doParent, bCutData, doRoot)
-            Return aryList
-        End Function
-
-    End Class
-
-
-    Public Class SortedMaterialPairList
         Inherits AnimatSortedList
 
         Public Sub New(ByVal doParent As Framework.DataObject)
@@ -284,6 +190,7 @@ Namespace DataObjects.Physical
         End Property
 
         Public Overloads Sub Add(ByVal key As [String], ByVal value As AnimatGUI.DataObjects.Physical.MaterialPair, Optional ByVal bCallSimMethods As Boolean = True, Optional ByVal bThrowError As Boolean = True)
+
             value.BeforeAddToList(bCallSimMethods, bThrowError)
             MyBase.Add(key, value)
             value.AfterAddToList(bCallSimMethods, bThrowError)
@@ -310,48 +217,17 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overrides Function Copy() As AnimatSortedList
-            Dim aryList As New SortedMaterialPairList(m_doParent)
+            Dim aryList As New SortedMaterialPairs(m_doParent)
             aryList.CopyInternal(Me)
             Return aryList
         End Function
 
         Public Overrides Function CloneList() As AnimatSortedList
-            Dim aryList As New SortedMaterialPairList(m_doParent)
+            Dim aryList As New SortedMaterialPairs(m_doParent)
             aryList.CloneInternal(Me)
             Return aryList
         End Function
 
     End Class
 
-
-    Namespace Comparers
-
-        Public Class CompareAttachmentNames
-            Implements IComparer
-
-            ' Calls CaseInsensitiveComparer.Compare with the parameters reversed.
-            Function Compare(ByVal x As [Object], ByVal y As [Object]) As Integer Implements IComparer.Compare
-                If Not (TypeOf x Is AnimatGUI.DataObjects.Physical.MaterialPair AndAlso TypeOf y Is AnimatGUI.DataObjects.Physical.MaterialPair) Then Return 0
-
-                Dim bnX As AnimatGUI.DataObjects.Physical.MaterialPair = DirectCast(x, AnimatGUI.DataObjects.Physical.MaterialPair)
-                Dim bnY As AnimatGUI.DataObjects.Physical.MaterialPair = DirectCast(y, AnimatGUI.DataObjects.Physical.MaterialPair)
-
-                Return New CaseInsensitiveComparer().Compare(bnX.Name, bnY.Name)
-
-            End Function 'IComparer.Compare
-
-        End Class
-
-    End Namespace
-
 End Namespace
-
-'When a new materialType is added to the collection we need to create new materialpair objects for all
-' the various combinations (you will need to make sure that you only do one combination pair. 
-
-'For example, only do wood-concrete once, do not do it again for concrete-wood. 
-'There should only be one actual pair object for a given combination.) To do this adding you will need to override the 
-
-'Public Overridable Sub AfterAddToList(Optional ByVal bThrowError As Boolean = True)
-'method and add a new method there to add the needed materialpair combinations. 
-'    Stub it out at first until the materialpair object has been created.

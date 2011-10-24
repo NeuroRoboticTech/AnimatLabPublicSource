@@ -22,6 +22,9 @@ Namespace DataObjects.Physical
         Protected m_mtMaterial1 As MaterialType
         Protected m_mtMaterial2 As MaterialType
 
+        Protected m_strMaterial1ID As String = ""
+        Protected m_strMaterial2ID As String = ""
+
         'The primary coefficient of friction parameter.
         Protected m_snFrictionPrimary As ScaledNumber
 
@@ -277,8 +280,6 @@ Namespace DataObjects.Physical
 
         Public Overrides Sub ClearIsDirty()
             MyBase.ClearIsDirty()
-            m_mtMaterial1.ClearIsDirty()
-            m_mtMaterial2.ClearIsDirty()
 
             m_snFrictionPrimary.ClearIsDirty()
             m_snFrictionSecondary.ClearIsDirty()
@@ -412,12 +413,28 @@ Namespace DataObjects.Physical
                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
         End Sub
 
+        Public Overrides Sub InitializeAfterLoad()
+            MyBase.InitializeAfterLoad()
+
+            If m_mtMaterial1 Is Nothing Then
+                m_mtMaterial1 = DirectCast(Util.Simulation.MaterialTypes(m_strMaterial1ID), DataObjects.Physical.MaterialType)
+            End If
+
+            If m_mtMaterial2 Is Nothing Then
+                m_mtMaterial2 = DirectCast(Util.Simulation.MaterialTypes(m_strMaterial2ID), DataObjects.Physical.MaterialType)
+            End If
+
+        End Sub
+
         Public Overloads Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strPropName As String)
-            MyBase.LoadData(oXml)
+
             oXml.IntoElem()
 
-            m_mtMaterial1.LoadData(oXml)
-            m_mtMaterial2.LoadData(oXml)
+            m_strID = oXml.GetChildString("ID")
+            m_strName = oXml.GetChildString("Name")
+
+            m_strMaterial1ID = oXml.GetChildString("Material1ID")
+            m_strMaterial2ID = oXml.GetChildString("Material2ID")
 
             m_snFrictionPrimary.LoadData(oXml, "PrimaryFrictionCoefficient")
             m_snFrictionSecondary.LoadData(oXml, "SecondaryFrictionCoefficient")
@@ -437,37 +454,46 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overloads Sub SaveData(ByRef oXml As Interfaces.StdXml, ByVal strPropName As String)
-            MyBase.SaveData(oXml)
-            If Not m_mtMaterial1 Is Nothing AndAlso Not m_mtMaterial2 Is Nothing Then
-                oXml.AddChildElement("MaterialPair")
-                oXml.IntoElem()
 
-                m_mtMaterial1.SaveData(oXml)
-                m_mtMaterial2.SaveData(oXml)
+            oXml.AddChildElement("MaterialPair")
+            oXml.IntoElem()
 
-                m_snFrictionPrimary.SaveData(oXml, "PrimaryFrictionCoefficient")
-                m_snFrictionSecondary.SaveData(oXml, "SecondaryFrictionCoefficient")
-                m_snMaxFrictionPrimary.SaveData(oXml, "PrimaryMaximumFriction")
-                m_snMaxFrictionSecondary.SaveData(oXml, "SecondaryMaximumFriction")
-                m_snCompliance.SaveData(oXml, "Compliance")
-                m_snDamping.SaveData(oXml, "Damping")
-                m_snRestitution.SaveData(oXml, "Restitution")
-                m_snSlipPrimary.SaveData(oXml, "PrimarySlip")
-                m_snSlipSecondary.SaveData(oXml, "SecondarySlip")
-                m_snSlidePrimary.SaveData(oXml, "PrimarySlide")
-                m_snSlideSecondary.SaveData(oXml, "SecondarySlide")
-                m_snMaxAdhesion.SaveData(oXml, "MaximumAdhesion")
+            oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
+            oXml.AddChildElement("ClassName", Me.ClassName)
 
-                oXml.OutOfElem()
-            End If
+            oXml.AddChildElement("ID", Me.ID)
+            oXml.AddChildElement("Name", Me.Name)
+
+            oXml.AddChildElement("Material1ID", m_mtMaterial1.ID)
+            oXml.AddChildElement("Material1ID", m_mtMaterial2.ID)
+
+            m_snFrictionPrimary.SaveData(oXml, "PrimaryFrictionCoefficient")
+            m_snFrictionSecondary.SaveData(oXml, "SecondaryFrictionCoefficient")
+            m_snMaxFrictionPrimary.SaveData(oXml, "PrimaryMaximumFriction")
+            m_snMaxFrictionSecondary.SaveData(oXml, "SecondaryMaximumFriction")
+            m_snCompliance.SaveData(oXml, "Compliance")
+            m_snDamping.SaveData(oXml, "Damping")
+            m_snRestitution.SaveData(oXml, "Restitution")
+            m_snSlipPrimary.SaveData(oXml, "PrimarySlip")
+            m_snSlipSecondary.SaveData(oXml, "SecondarySlip")
+            m_snSlidePrimary.SaveData(oXml, "PrimarySlide")
+            m_snSlideSecondary.SaveData(oXml, "SecondarySlide")
+            m_snMaxAdhesion.SaveData(oXml, "MaximumAdhesion")
+
+            oXml.OutOfElem()
+
         End Sub
 
         Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
-            MyBase.SaveSimulationXml(oXml, nmParentControl, strName)
+
+            oXml.AddChildElement("MaterialPair")
             oXml.IntoElem()
 
-            m_mtMaterial1.SaveSimulationXml(oXml)
-            m_mtMaterial2.SaveSimulationXml(oXml)
+            oXml.AddChildElement("ID", Me.ID)
+            oXml.AddChildElement("Name", Me.Name)
+
+            oXml.AddChildElement("Material1ID", m_mtMaterial1.ID)
+            oXml.AddChildElement("Material1ID", m_mtMaterial2.ID)
 
             m_snFrictionPrimary.SaveSimulationXml(oXml, Me, "PrimaryFrictionCoefficient")
             m_snFrictionSecondary.SaveSimulationXml(oXml, Me, "SecondaryFrictionCoefficient")
