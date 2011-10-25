@@ -216,8 +216,6 @@ Namespace Forms.BodyPlan
 
             lvMaterialTypes.Columns.Add("Material Types", 200, HorizontalAlignment.Left)
 
-            'Now go through and add all the odor types and then sources.
-
             Dim doType As DataObjects.Physical.MaterialType
             For Each deEntry As DictionaryEntry In Util.Environment.MaterialTypes
                 doType = DirectCast(deEntry.Value, DataObjects.Physical.MaterialType)
@@ -250,6 +248,7 @@ Namespace Forms.BodyPlan
 
             gridMaterialPairs.DataSource = New AnimatGuiCtrls.Controls.ArrayDataView(aryData, aryColNames, True)
             gridMaterialPairs.AutoResizeColumns()
+
             SetPropertyGrid()
         End Sub
 
@@ -301,7 +300,7 @@ Namespace Forms.BodyPlan
                     If Not liItem.Tag Is Nothing AndAlso TypeOf liItem.Tag Is DataObjects.Physical.MaterialType Then
                         Dim doType As DataObjects.Physical.MaterialType = DirectCast(liItem.Tag, DataObjects.Physical.MaterialType)
 
-                        If doType.ID = "DEFAULT" Then
+                        If doType.ID = "DEFAULTMATERIAL" Then
                             Throw New System.Exception("You cannot delete the default material type.")
                         End If
 
@@ -324,18 +323,27 @@ Namespace Forms.BodyPlan
 
         Private Sub lvMaterialTypes_AfterLabelEdit(sender As Object, e As System.Windows.Forms.LabelEditEventArgs) Handles lvMaterialTypes.AfterLabelEdit
             Try
-                If lvMaterialTypes.SelectedItems.Count > 0 Then
-                    Dim liItem As ListViewItem = lvMaterialTypes.SelectedItems(0)
+                If Not e.Label Is Nothing Then
+                    If lvMaterialTypes.SelectedItems.Count > 0 Then
+                        If e.Label.Trim.Length = 0 Then
+                            Throw New System.Exception("Material name cannot be blank.")
+                        End If
 
-                    If Not liItem.Tag Is Nothing AndAlso TypeOf liItem.Tag Is DataObjects.Physical.MaterialType Then
-                        Dim doType As DataObjects.Physical.MaterialType = DirectCast(liItem.Tag, DataObjects.Physical.MaterialType)
-                        doType.Name = e.Label
-                        SetupMaterialPairsGrid()
+                        Dim liItem As ListViewItem = lvMaterialTypes.SelectedItems(0)
+
+                        If Not liItem.Tag Is Nothing AndAlso TypeOf liItem.Tag Is DataObjects.Physical.MaterialType Then
+                            Dim doType As DataObjects.Physical.MaterialType = DirectCast(liItem.Tag, DataObjects.Physical.MaterialType)
+                            doType.Name = e.Label
+                            SetupMaterialPairsGrid()
+                        End If
                     End If
+                Else
+                    e.CancelEdit = True
                 End If
 
             Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+                e.CancelEdit = True
             End Try
         End Sub
 

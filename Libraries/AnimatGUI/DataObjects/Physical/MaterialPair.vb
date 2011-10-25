@@ -426,7 +426,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overloads Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strPropName As String)
+        Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
 
             oXml.IntoElem()
 
@@ -453,7 +453,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overloads Sub SaveData(ByRef oXml As Interfaces.StdXml, ByVal strPropName As String)
+        Public Overrides Sub SaveData(ByRef oXml As Interfaces.StdXml)
 
             oXml.AddChildElement("MaterialPair")
             oXml.IntoElem()
@@ -465,7 +465,7 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("Name", Me.Name)
 
             oXml.AddChildElement("Material1ID", m_mtMaterial1.ID)
-            oXml.AddChildElement("Material1ID", m_mtMaterial2.ID)
+            oXml.AddChildElement("Material2ID", m_mtMaterial2.ID)
 
             m_snFrictionPrimary.SaveData(oXml, "FrictionPrimaryCoefficient")
             m_snFrictionSecondary.SaveData(oXml, "SecondaryFrictionCoefficient")
@@ -493,7 +493,7 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("Name", Me.Name)
 
             oXml.AddChildElement("Material1ID", m_mtMaterial1.ID)
-            oXml.AddChildElement("Material1ID", m_mtMaterial2.ID)
+            oXml.AddChildElement("Material2ID", m_mtMaterial2.ID)
 
             m_snFrictionPrimary.SaveSimulationXml(oXml, Me, "FrictionPrimaryCoefficient")
             m_snFrictionSecondary.SaveSimulationXml(oXml, Me, "SecondaryFrictionCoefficient")
@@ -512,7 +512,11 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overrides Function ToString() As String
-            Return m_mtMaterial1.Name & " - " & m_mtMaterial2.Name
+            If m_mtMaterial1.Name <= m_mtMaterial2.Name Then
+                Return m_mtMaterial1.Name & " - " & m_mtMaterial2.Name
+            Else
+                Return m_mtMaterial2.Name & " - " & m_mtMaterial1.Name
+            End If
         End Function
 
 #End Region

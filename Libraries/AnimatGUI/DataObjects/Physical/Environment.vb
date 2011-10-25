@@ -626,21 +626,20 @@ Namespace DataObjects.Physical
 
         Public Sub GetMaterialPairsDataGridArray(ByRef aryColNames() As String, ByRef aryData(,) As Framework.DataObject)
 
-            ReDim aryData(m_aryMaterialTypes.Count - 1, m_aryMaterialTypes.Count - 1)
-            ReDim aryColNames(m_aryMaterialTypes.Count - 1)
+            Dim aryTypes As ArrayList = Util.Environment.MaterialTypes.CopyIntoArraylist()
+            aryTypes.Sort(New Framework.DataObject.NameComparer())
 
-            Dim doType1 As MaterialType
-            Dim doType2 As MaterialType
+            ReDim aryData(aryTypes.Count - 1, aryTypes.Count - 1)
+            ReDim aryColNames(aryTypes.Count - 1)
+
             Dim iX As Integer = 0
             Dim iY As Integer = 0
             Dim doPair As MaterialPair
-            For Each deEntry1 As DictionaryEntry In m_aryMaterialTypes
-                doType1 = DirectCast(deEntry1.Value, MaterialType)
+            For Each doType1 As MaterialType In aryTypes
                 aryColNames(iX) = doType1.Name
                 iY = 0
 
-                For Each deEntry2 As DictionaryEntry In m_aryMaterialTypes
-                    doType2 = DirectCast(deEntry2.Value, MaterialType)
+                For Each doType2 As MaterialType In aryTypes
                     doPair = FindMaterialPair(doType1, doType2)
 
                     aryData(iX, iY) = doPair
@@ -1150,6 +1149,9 @@ Namespace DataObjects.Physical
             m_aryStructures.Clear()
             m_aryLights.Clear()
 
+            LoadMaterialTypes(oXml)
+            LoadMaterialPairs(oXml)
+
             'Odor types must be loaded before structures
             Dim iCount As Integer
             If oXml.FindChildElement("OdorTypes", False) Then
@@ -1216,16 +1218,13 @@ Namespace DataObjects.Physical
                 m_aryLights.Add(newLight.ID, newLight)
             End If
 
-            LoadMaterialTypes(oXml)
-            LoadMaterialPairs(oXml)
-
             oXml.OutOfElem() 'Outof Environment Element
 
         End Sub
 
         Protected Overridable Sub AddDefaultMaterialType(ByVal bCallSimMethods As Boolean)
             Dim doMat As New DataObjects.Physical.MaterialType(Me)
-            doMat.ID = "DEFAULT"
+            doMat.ID = "DEFAULTMATERIAL"
             doMat.Name = "Default"
             m_aryMaterialTypes.Add(doMat.ID, doMat, bCallSimMethods)
         End Sub
@@ -1234,7 +1233,7 @@ Namespace DataObjects.Physical
             Dim doPair As New DataObjects.Physical.MaterialPair(Me)
             Dim doMat As DataObjects.Physical.MaterialType = DirectCast(m_aryMaterialTypes("DEFAULT"), DataObjects.Physical.MaterialType)
 
-            doPair.ID = "DEFAULT"
+            doPair.ID = "DEFAULTMATERIAL"
             doPair.Material1 = doMat
             doPair.Material2 = doMat
 

@@ -168,6 +168,7 @@ Copy "$(TargetPath)" ..\..\bin
     <ClCompile Include="Link.cpp" />
     <ClCompile Include="MaterialPair.cpp" />
     <ClCompile Include="Materials.cpp" />
+    <ClCompile Include="MaterialType.cpp" />
     <ClCompile Include="MemoryChart.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MotorizedJoint.cpp" />
@@ -257,6 +258,7 @@ Copy "$(TargetPath)" ..\..\bin
     <ClInclude Include="Link.h" />
     <ClInclude Include="MaterialPair.h" />
     <ClInclude Include="Materials.h" />
+    <ClInclude Include="MaterialType.h" />
     <ClInclude Include="MemoryChart.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MotorizedJoint.h" />

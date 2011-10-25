@@ -45,22 +45,41 @@ Namespace DataObjects.Physical
             Return doItem
         End Function
 
-        Public Overrides Sub AfterAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
-            MyBase.AfterAddToList(bCallSimMethods, bThrowError)
-            ''temporary code
-            'Dim colPairs As MaterialPairs
-            ''colPairs = get collection of materialpairs 
-            'Dim colTypes As Collection
-            ''colTypes = get collection of materialtypes
-            'Dim doParent As Framework.DataObject
-            'For Each aMatType As MaterialType In colTypes
-            '    Dim newMatPair As New MaterialPair(doParent, aMatType, Me)
-            '    colPairs.Add(newMatPair)
-            'Next
+        Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
 
-            'When a new materialType is added to the collection we need to create new materialpair objects for all the various combinations
-            ' (you will need to make sure that you only do one combination pair
-            'add the needed materialpair combinations. 
+            oXml.IntoElem()
+
+            m_strID = oXml.GetChildString("ID")
+            m_strName = oXml.GetChildString("Name")
+
+            oXml.OutOfElem()
+
+        End Sub
+
+        Public Overrides Sub SaveData(ByRef oXml As Interfaces.StdXml)
+
+            oXml.AddChildElement("MaterialType")
+            oXml.IntoElem()
+
+            oXml.AddChildElement("AssemblyFile", Me.AssemblyFile)
+            oXml.AddChildElement("ClassName", Me.ClassName)
+
+            oXml.AddChildElement("ID", Me.ID)
+            oXml.AddChildElement("Name", Me.Name)
+
+            oXml.OutOfElem()
+
+        End Sub
+
+        Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+
+            oXml.AddChildElement("MaterialType")
+            oXml.IntoElem()
+
+            oXml.AddChildElement("ID", Me.ID)
+            oXml.AddChildElement("Name", Me.Name)
+
+            oXml.OutOfElem()
         End Sub
 
 #End Region

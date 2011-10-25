@@ -39,10 +39,10 @@ namespace AnimatSim
 		{
 		protected:
 			/// The unique material name for first material
-			string m_strMaterial1;
+			string m_strMaterial1ID;
 
 			/// The unique material name for second material
-			string m_strMaterial2;
+			string m_strMaterial2ID;
 
 			/// The primary coefficient of friction parameter.
 			float m_fltFrictionPrimary;
@@ -84,11 +84,11 @@ namespace AnimatSim
 			MaterialPair();
 			virtual ~MaterialPair();
 			
-			virtual string Material1();
-			virtual void Material1(string strMat);
+			virtual string Material1ID();
+			virtual void Material1ID(string strMat);
 
-			virtual string Material2();
-			virtual void Material2(string strMat);
+			virtual string Material2ID();
+			virtual void Material2ID(string strMat);
 
 			virtual float FrictionPrimary();
 			virtual void FrictionPrimary(float fltVal);

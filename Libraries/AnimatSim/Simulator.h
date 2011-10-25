@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include "MaterialType.h"
 #include "MaterialPair.h"
 #include "Materials.h"
 #include "SimulationWindow.h"

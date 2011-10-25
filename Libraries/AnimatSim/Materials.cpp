@@ -67,6 +67,14 @@ void Materials::Initialize()
 {
 	AnimatBase::Initialize();
 
+	MaterialType *lpItem = NULL;
+	int iCount = m_aryMaterialTypes.GetSize();
+	for(int iIndex = 0; iIndex < iCount; iIndex++)
+	{
+		lpItem = m_aryMaterialTypes[iIndex];
+		lpItem->Initialize();
+	}
+
 	MaterialPair *lpItem = NULL;
 	int iCount = m_aryMaterialPairs.GetSize();
 	for(int iIndex = 0; iIndex < iCount; iIndex++)
@@ -78,10 +86,17 @@ void Materials::Initialize()
 
 void Materials::CreateDefaultMaterial()
 {
+	MaterialType *lpType=NULL;
 	MaterialPair *lpItem=NULL;
 
+	m_aryMaterialTypes.RemoveAll();
+	lpType = new MaterialType();
+	lpType->ID("DEFAULTMATERIAL");
+	lpType->Name("Default");
+	lpType->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
+	m_aryMaterialTypes.Add(lpType);
+
 	//Add a default pair association for all material pairs.
-	string strType;
 	int iCount = m_aryMaterialTypes.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 	{
@@ -92,12 +107,52 @@ void Materials::CreateDefaultMaterial()
 			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Material");
 
 		lpItem->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
-		lpItem->Material1("DEFAULT");
-		lpItem->Material2(strType);
+		lpItem->Material1ID("DEFAULTMATERIAL");
+		lpItem->Material2ID(lpType->ID());
 		lpItem->CreateDefaultUnits();
 
 		m_aryMaterialPairs.Add(lpItem);
 	}
+}
+
+void Materials::LoadMaterialTypes(CStdXml &oXml)
+{
+	oXml.IntoElem(); //Into MaterialsTypes Element
+
+	string strMaterial;
+	MaterialType *lpItem = NULL;
+	BOOL bDefaultFound = FALSE;
+	int iCount = oXml.NumberOfChildren();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+	{
+		oXml.FindChildByIndex(iIndex);
+		lpItem = LoadMaterialType(oXml);
+		m_aryMaterialTypes.Add(lpItem);
+
+		if(lpItem->ID() == "DEFAULT")
+			bDefaultFound = TRUE;
+	}
+
+	oXml.OutOfElem(); //Outof MaterialsTypes Element
+
+	if(!bDefaultFound)
+		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Material");
+}
+
+void Materials::LoadMaterialPairs(CStdXml &oXml)
+{
+	oXml.IntoElem(); //Into MaterialPairs Element
+
+	int iCount = oXml.NumberOfChildren();
+	MaterialPair *lpItem = NULL;
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+	{
+		oXml.FindChildByIndex(iIndex);
+		lpItem = LoadMaterialPair(oXml);
+		m_aryMaterialPairs.Add(lpItem);
+	}
+
+	oXml.OutOfElem();  //Outof MaterialPairs Element
 }
 
 void Materials::Load(CStdXml &oXml)
@@ -106,49 +161,45 @@ void Materials::Load(CStdXml &oXml)
 
 	m_aryMaterialTypes.RemoveAll();
 	m_aryMaterialPairs.RemoveAll();
-	m_aryMaterialTypes.Add("DEFAULT");
 
 	if(oXml.FindChildElement("Materials", false))
 	{
 		oXml.IntoElem(); //Into Materials Element
 
-		if(oXml.FindChildElement("MaterialTypes", false))
-		{
-			oXml.IntoElem(); //Into MaterialsTypes Element
-
-			string strMaterial;
-			int iCount = oXml.NumberOfChildren();
-			for(int iIndex=0; iIndex<iCount; iIndex++)
-			{
-				oXml.FindChildByIndex(iIndex);
-				strMaterial = Std_ToUpper(oXml.GetChildString());
-				m_aryMaterialTypes.Add(strMaterial);
-			}
-
-			oXml.OutOfElem(); //Outof MaterialsTypes Element
-		}
-
-		if(oXml.FindChildElement("MaterialPairs", false))
-		{
-			//*** Begin Loading HudItems. *****
-			oXml.IntoElem(); //Into MaterialPairs Element
-
-			int iCount = oXml.NumberOfChildren();
-			MaterialPair *lpItem = NULL;
-			for(int iIndex=0; iIndex<iCount; iIndex++)
-			{
-				oXml.FindChildByIndex(iIndex);
-				lpItem = LoadMaterialPair(oXml);
-				m_aryMaterialPairs.Add(lpItem);
-			}
-
-			oXml.OutOfElem();  //Outof MaterialPairs Element
-		}
+		LoadMaterialTypes(oXml);
+		LoadMaterialPairs(oXml);
 
 		oXml.OutOfElem();  //Outof Materials Element
 	}
+	else
+		CreateDefaultMaterial(); //Always create a default material.
+}
 
-	CreateDefaultMaterial(); //Always create a default material.
+MaterialType *Materials::LoadMaterialType(CStdXml &oXml)
+{
+	MaterialType *lpItem=NULL;
+	string strModuleName, strType;
+
+try
+{
+	lpItem = new MaterialType();
+	lpItem->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
+	lpItem->Load(oXml);
+
+	return lpItem;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpItem) delete lpItem;
+	RELAY_ERROR(oError);
+	return NULL;
+}
+catch(...)
+{
+	if(lpItem) delete lpItem;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
 }
 
 MaterialPair *Materials::LoadMaterialPair(CStdXml &oXml)

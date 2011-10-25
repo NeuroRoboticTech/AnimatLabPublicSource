@@ -78,7 +78,7 @@ MaterialPair::~MaterialPair()
 
 \return	string name.
 **/
-string MaterialPair::Material1ID() {return m_strMaterial1ID;}
+string MaterialPair::Material1() {return m_strMaterial1;}
 
 /**
 \brief	Sets the unique name for material 1.
@@ -88,11 +88,11 @@ string MaterialPair::Material1ID() {return m_strMaterial1ID;}
 
 \param	strMat	The string name. 
 **/
-void MaterialPair::Material1ID(string strMat) 
+void MaterialPair::Material1(string strMat) 
 {
 	if(Std_IsBlank(strMat))
 		THROW_ERROR(Al_Err_lMaterialPairBlank, Al_Err_strMaterialPairBlank);
-	m_strMaterial1ID = Std_ToUpper(strMat);
+	m_strMaterial1 = Std_ToUpper(strMat);
 }
 
 /**
@@ -103,7 +103,7 @@ void MaterialPair::Material1ID(string strMat)
 
 \return	String name.
 **/
-string MaterialPair::Material2ID() {return m_strMaterial2ID;}
+string MaterialPair::Material2() {return m_strMaterial2;}
 
 /**
 \brief	Sets the unique name for material 2.
@@ -113,11 +113,11 @@ string MaterialPair::Material2ID() {return m_strMaterial2ID;}
 
 \param	strMat	The string name. 
 **/
-void MaterialPair::Material2ID(string strMat) 
+void MaterialPair::Material2(string strMat) 
 {
 	if(Std_IsBlank(strMat))
 		THROW_ERROR(Al_Err_lMaterialPairBlank, Al_Err_strMaterialPairBlank);
-	m_strMaterial2ID = Std_ToUpper(strMat);
+	m_strMaterial2 = Std_ToUpper(strMat);
 }
 
 /**
@@ -551,8 +551,8 @@ void MaterialPair::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into MaterialPair Element
 
-	Material1ID(oXml.GetChildString("Material1ID"));
-	Material2ID(oXml.GetChildString("Material2ID"));
+	Material1(oXml.GetChildString("Material1"));
+	Material2(oXml.GetChildString("Material2"));
 
 	FrictionPrimary(oXml.GetChildFloat("FrictionPrimary", m_fltFrictionPrimary));
 	FrictionSecondary(oXml.GetChildFloat("FrictionSecondary", m_fltFrictionSecondary));

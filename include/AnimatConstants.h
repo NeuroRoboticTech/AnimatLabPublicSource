@@ -397,6 +397,9 @@
 #define Al_Err_lDuplicateAddOfObject -4055
 #define Al_Err_strDuplicateAddOfObject "Attempted to add an object with the same ID twice to the simulation."
 
+#define Al_Err_lDefaultMaterialNotFound -4056
+#define Al_Err_strDefaultMaterialNotFound "The default material type was not found while loading."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 #define PI 3.14159

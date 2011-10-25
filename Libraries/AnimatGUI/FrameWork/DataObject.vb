@@ -979,6 +979,26 @@ Namespace Framework
 
 #End Region
 
+#Region "Comparers"
+
+        Protected Class NameComparer
+            Implements IComparer
+
+            ' Calls CaseInsensitiveComparer.Compare with the parameters reversed.
+            Function Compare(ByVal x As [Object], ByVal y As [Object]) As Integer Implements IComparer.Compare
+                If Not (TypeOf x Is DataObject AndAlso TypeOf y Is DataObject) Then Return 0
+
+                Dim bnX As DataObject = DirectCast(x, DataObject)
+                Dim bnY As DataObject = DirectCast(y, DataObject)
+
+                Return New CaseInsensitiveComparer().Compare(bnX.Name, bnY.Name)
+
+            End Function 'IComparer.Compare
+
+        End Class
+
+#End Region
+
     End Class
 
 End Namespace

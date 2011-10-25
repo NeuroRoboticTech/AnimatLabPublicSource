@@ -111,6 +111,16 @@ Namespace Collections
                                            ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatDictionaryBase
         End Function
 
+        Public Overridable Function CopyIntoArraylist() As ArrayList
+            Dim aryList As New ArrayList()
+
+            For Each deItem As DictionaryEntry In Me
+                aryList.Add(deItem.Value)
+            Next
+
+            Return aryList
+        End Function
+
         Public Overridable Function FindDataObjectByName(ByVal strName As String, Optional ByVal bThrowError As Boolean = True) As AnimatGUI.Framework.DataObject
 
             Dim doVal As AnimatGUI.Framework.DataObject

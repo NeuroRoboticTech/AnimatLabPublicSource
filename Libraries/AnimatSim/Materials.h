@@ -26,9 +26,12 @@ namespace AnimatSim
 		class ANIMAT_PORT Materials : public AnimatBase 
 		{
 		protected:
-			CStdArray<string> m_aryMaterialTypes;
+			CStdPtrArray<MaterialType> m_aryMaterialTypes;
 			CStdPtrArray<MaterialPair> m_aryMaterialPairs;
 
+			virtual void Materials::LoadMaterialTypes(CStdXml &oXml);
+			virtual MaterialType *Materials::LoadMaterialType(CStdXml &oXml);
+			virtual void Materials::LoadMaterialPairs(CStdXml &oXml);
 			virtual MaterialPair *LoadMaterialPair(CStdXml &oXml);
 
 			virtual void CreateDefaultMaterial();
