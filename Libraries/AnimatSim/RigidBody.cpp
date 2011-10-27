@@ -71,7 +71,7 @@ RigidBody::RigidBody()
 	m_fltMagnus = 0;
 	m_bEnableFluids = FALSE;
 
-	m_strMaterialID = "DEFAULT";
+	m_strMaterialID = "DEFAULTMATERIAL";
 }
 
 /**

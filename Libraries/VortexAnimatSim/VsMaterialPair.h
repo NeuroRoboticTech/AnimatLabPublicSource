@@ -18,7 +18,7 @@ namespace VortexAnimatSim
 			virtual ~VsMaterialPair();
 
 			virtual int GetMaterialID(string strName);
-			virtual void RegisterMaterialTypes(CStdArray<string> aryMaterialTypes);
+			virtual void RegisterMaterialType(string strID);
 			virtual void Initialize();
 		};
 

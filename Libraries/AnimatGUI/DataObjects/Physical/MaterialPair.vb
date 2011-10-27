@@ -418,10 +418,18 @@ Namespace DataObjects.Physical
 
             If m_mtMaterial1 Is Nothing Then
                 m_mtMaterial1 = DirectCast(Util.Environment.MaterialTypes(m_strMaterial1ID), DataObjects.Physical.MaterialType)
+
+                If m_mtMaterial1 Is Nothing Then
+                    Throw New System.Exception("Material not found ID: " & m_strMaterial1ID)
+                End If
             End If
 
             If m_mtMaterial2 Is Nothing Then
                 m_mtMaterial2 = DirectCast(Util.Environment.MaterialTypes(m_strMaterial2ID), DataObjects.Physical.MaterialType)
+
+                If m_mtMaterial2 Is Nothing Then
+                    Throw New System.Exception("Material not found ID: " & m_strMaterial2ID)
+                End If
             End If
 
         End Sub
@@ -491,6 +499,7 @@ Namespace DataObjects.Physical
 
             oXml.AddChildElement("ID", Me.ID)
             oXml.AddChildElement("Name", Me.Name)
+            oXml.AddChildElement("Type", "Default")
 
             oXml.AddChildElement("Material1ID", m_mtMaterial1.ID)
             oXml.AddChildElement("Material2ID", m_mtMaterial2.ID)

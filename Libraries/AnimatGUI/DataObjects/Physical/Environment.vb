@@ -1231,9 +1231,12 @@ Namespace DataObjects.Physical
 
         Protected Overridable Sub AddDefaultMaterialPair(ByVal bCallSimMethods As Boolean)
             Dim doPair As New DataObjects.Physical.MaterialPair(Me)
-            Dim doMat As DataObjects.Physical.MaterialType = DirectCast(m_aryMaterialTypes("DEFAULT"), DataObjects.Physical.MaterialType)
+            Dim doMat As DataObjects.Physical.MaterialType = DirectCast(m_aryMaterialTypes("DEFAULTMATERIAL"), DataObjects.Physical.MaterialType)
 
-            doPair.ID = "DEFAULTMATERIAL"
+            If doMat Is Nothing Then
+                Throw New System.Exception("Default material not found.")
+            End If
+
             doPair.Material1 = doMat
             doPair.Material2 = doMat
 
@@ -1442,8 +1445,11 @@ Namespace DataObjects.Physical
                 oXml.OutOfElem() 'Outof Organisms Element
             End If
 
+            oXml.AddChildElement("Materials")
+            oXml.IntoElem()
             SaveSimMaterialTypes(oXml)
             SaveSimMaterialPairs(oXml)
+            oXml.OutOfElem()
 
             oXml.AddChildElement("Organisms")
             oXml.IntoElem()

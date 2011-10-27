@@ -31,7 +31,7 @@ int VsMaterialPair::GetMaterialID(string strName)
 	return m_vxMaterialTable->getMaterialID(strName.c_str());
 }
 
-void VsMaterialPair::RegisterMaterialTypes(CStdArray<string> aryMaterialTypes)
+void VsMaterialPair::RegisterMaterialType(string strID)
 {
 	VsSimulator *lpVsSim = dynamic_cast<VsSimulator *>(m_lpSim);
 	if(!lpVsSim)
@@ -39,13 +39,7 @@ void VsMaterialPair::RegisterMaterialTypes(CStdArray<string> aryMaterialTypes)
 	
     m_vxMaterialTable = lpVsSim->Frame()->getMaterialTable();
 
-	string strMat;
-	int iCount = aryMaterialTypes.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-	{
-		strMat = aryMaterialTypes[iIndex];
-		m_vxMaterialTable->registerMaterial(strMat.c_str());
-	}
+	m_vxMaterialTable->registerMaterial(strID.c_str());
 }
 
 void VsMaterialPair::Initialize()
@@ -58,7 +52,7 @@ void VsMaterialPair::Initialize()
 	
 	m_vxMaterialTable = lpVsSim->Frame()->getMaterialTable();
 
-	VxContactProperties *pM = m_vxMaterialTable->getContactProperties(m_strMaterial1.c_str(), m_strMaterial2.c_str());
+	VxContactProperties *pM = m_vxMaterialTable->getContactProperties(m_strMaterial1ID.c_str(), m_strMaterial2ID.c_str());
     pM->setFrictionType(VxContactProperties::kFrictionTypeTwoDirection);
     pM->setFrictionModel(VxContactProperties::kFrictionModelScaledBox);
     pM->setFrictionCoefficientPrimary(m_fltFrictionPrimary);
@@ -75,7 +69,7 @@ void VsMaterialPair::Initialize()
     pM->setAdhesiveForce(m_fltMaxAdhesive);
 
 	pM = NULL;
-	pM = m_vxMaterialTable->getContactProperties(m_strMaterial1.c_str(), m_strMaterial2.c_str());
+	pM = m_vxMaterialTable->getContactProperties(m_strMaterial1ID.c_str(), m_strMaterial2ID.c_str());
 	float fltVal = pM->getFrictionCoefficientPrimary();
 }
 

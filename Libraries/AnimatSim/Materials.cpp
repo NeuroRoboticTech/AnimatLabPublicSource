@@ -67,27 +67,33 @@ void Materials::Initialize()
 {
 	AnimatBase::Initialize();
 
+	if(m_aryMaterialTypes.GetSize() == 0 && m_aryMaterialPairs.GetSize() == 0)
+		THROW_ERROR(Al_Err_lDefaultMaterialNotFound, Al_Err_strDefaultMaterialNotFound);
+
+	//Get the first matieralpair so we can use it to register the material types.
+	MaterialPair *lpPair = m_aryMaterialPairs[0];
+
 	MaterialType *lpItem = NULL;
 	int iCount = m_aryMaterialTypes.GetSize();
 	for(int iIndex = 0; iIndex < iCount; iIndex++)
 	{
 		lpItem = m_aryMaterialTypes[iIndex];
 		lpItem->Initialize();
+		lpPair->RegisterMaterialType(lpItem->ID());
 	}
 
-	MaterialPair *lpItem = NULL;
-	int iCount = m_aryMaterialPairs.GetSize();
+	iCount = m_aryMaterialPairs.GetSize();
 	for(int iIndex = 0; iIndex < iCount; iIndex++)
 	{
-		lpItem = m_aryMaterialPairs[iIndex];
-		lpItem->Initialize();
+		lpPair = m_aryMaterialPairs[iIndex];
+		lpPair->Initialize();
 	}
 }
 
 void Materials::CreateDefaultMaterial()
 {
 	MaterialType *lpType=NULL;
-	MaterialPair *lpItem=NULL;
+	MaterialPair *lpPair=NULL;
 
 	m_aryMaterialTypes.RemoveAll();
 	lpType = new MaterialType();
@@ -96,27 +102,19 @@ void Materials::CreateDefaultMaterial()
 	lpType->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
 	m_aryMaterialTypes.Add(lpType);
 
-	//Add a default pair association for all material pairs.
-	int iCount = m_aryMaterialTypes.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-	{
-		strType = m_aryMaterialTypes[iIndex];
+	lpPair = dynamic_cast<MaterialPair *>(m_lpSim->CreateObject("", "Material", "DEFAULT"));
+	if(!lpPair)
+		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Material");
 
-		lpItem = dynamic_cast<MaterialPair *>(m_lpSim->CreateObject("", "Material", "Default"));
-		if(!lpItem)
-			THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Material");
-
-		lpItem->SetSystemPointers(m_lpSim, NULL, NULL, NULL, TRUE);
-		lpItem->Material1ID("DEFAULTMATERIAL");
-		lpItem->Material2ID(lpType->ID());
-		lpItem->CreateDefaultUnits();
-
-		m_aryMaterialPairs.Add(lpItem);
-	}
+	lpPair->SetSystemPointers(m_lpSim, m_lpStructure, NULL, NULL, TRUE);
+	lpPair->Material1ID(lpType->ID());
+	lpPair->Material2ID(lpType->ID());
+	m_aryMaterialPairs.Add(lpPair);
 }
 
 void Materials::LoadMaterialTypes(CStdXml &oXml)
 {
+	oXml.FindChildElement("MaterialTypes");
 	oXml.IntoElem(); //Into MaterialsTypes Element
 
 	string strMaterial;
@@ -129,7 +127,7 @@ void Materials::LoadMaterialTypes(CStdXml &oXml)
 		lpItem = LoadMaterialType(oXml);
 		m_aryMaterialTypes.Add(lpItem);
 
-		if(lpItem->ID() == "DEFAULT")
+		if(lpItem->ID() == "DEFAULTMATERIAL")
 			bDefaultFound = TRUE;
 	}
 
@@ -141,6 +139,7 @@ void Materials::LoadMaterialTypes(CStdXml &oXml)
 
 void Materials::LoadMaterialPairs(CStdXml &oXml)
 {
+	oXml.FindChildElement("MaterialPairs");
 	oXml.IntoElem(); //Into MaterialPairs Element
 
 	int iCount = oXml.NumberOfChildren();

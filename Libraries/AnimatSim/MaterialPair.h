@@ -146,7 +146,7 @@ namespace AnimatSim
 			
 			\param	aryMaterialTypes	List of types of the ary materials. 
 			**/
-			virtual void RegisterMaterialTypes(CStdArray<string> aryMaterialTypes) = 0;
+			virtual void RegisterMaterialType(string strID) = 0;
 
 			virtual void CreateDefaultUnits();
 

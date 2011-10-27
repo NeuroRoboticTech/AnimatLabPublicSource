@@ -2209,7 +2209,6 @@ void Simulator::Load(CStdXml &oXml)
 	//Other stuff Later
 	LoadEnvironment(oXml);
 	m_oDataChartMgr.Load(oXml);
-	m_oMaterialMgr.Load(oXml);
 
 	if(m_lpWinMgr) 
 		m_lpWinMgr->Load(oXml);
@@ -2306,6 +2305,8 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 	RecFieldSelRadius(oXml.GetChildFloat("RecFieldSelRadius", m_fltRecFieldSelRadius));
 	
 	m_vBackgroundColor.Load(oXml, "BackgroundColor", false);
+
+	m_oMaterialMgr.Load(oXml);
 
 	if(oXml.FindChildElement("OdorTypes", FALSE))
 	{
