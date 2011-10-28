@@ -210,7 +210,7 @@ Namespace DataObjects.Gains
 
         End Sub
 
-        Protected Overrides Sub SetAllSimData(ByVal doInterface As Interfaces.DataObjectInterface)
+        Protected Overrides Sub SetAllSimData(ByVal doInterface As Interfaces.IDataObjectInterface)
             MyBase.SetAllSimData(doInterface)
 
             SetSimData("A", m_snA.ActualValue.ToString, True)

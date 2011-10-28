@@ -116,17 +116,24 @@
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="DataObjectInterface.cpp" />
+    <ClCompile Include="DataObjectInterfaceMock.cpp" />
+    <ClCompile Include="IDataObjectInterface.cpp" />
+    <ClCompile Include="ISimulatorInterface.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="MovableItemCallback.cpp" />
     <ClCompile Include="MStdXml.cpp" />
     <ClCompile Include="PropertyUpdateException.cpp" />
     <ClCompile Include="SimGUICallback.cpp" />
     <ClCompile Include="SimulatorInterface.cpp" />
+    <ClCompile Include="SimulatorInterfaceMock.cpp" />
     <ClCompile Include="Stdafx.cpp" />
     <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataObjectInterface.h" />
+    <ClInclude Include="DataObjectInterfaceMock.h" />
+    <ClInclude Include="IDataObjectInterface.h" />
+    <ClInclude Include="ISimulatorInterface.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="MovableItemCallback.h" />
     <ClInclude Include="MStdXml.h" />
@@ -134,16 +141,9 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="SimGUICallback.h" />
     <ClInclude Include="SimulatorInterface.h" />
+    <ClInclude Include="SimulatorInterfaceMock.h" />
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="Util.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Logger.resX">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SimulatorInterface.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\AnimatSim\AnimatSim.vcxproj">

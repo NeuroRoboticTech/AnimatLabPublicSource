@@ -15,21 +15,11 @@ namespace AnimatGUI
 		/// <summary> 
 		/// Summary for Logger
 		/// </summary>
-		public ref class Logger :  public System::ComponentModel::Component
+		public ref class Logger
 		{
 		public:
 			Logger(void)
 			{
-				InitializeComponent();
-			}
-			Logger(System::ComponentModel::IContainer ^container) : components(nullptr)
-			{
-				/// <summary>
-				/// Required for Windows.Forms Class Composition Designer support
-				/// </summary>
-
-				container->Add(this);
-				InitializeComponent();
 			}
  
 			enum class enumLogLevel
@@ -131,36 +121,12 @@ namespace AnimatGUI
 			}
 
 		protected: 
-			/*void Dispose(Boolean disposing)
-			{
-				if (disposing && components)
-				{
-					components->Dispose();
-				}
-				__super::Dispose(disposing);
-			}*/
+			
 			~Logger()
 			{
-				if (components)
-				{
-					delete components;
-				}
+				
 			}
-					
-		private:
-			/// <summary>
-			/// Required designer variable.
-			/// </summary>
-			System::ComponentModel::Container ^components;
-			
-			/// <summary>
-			/// Required method for Designer support - do not modify
-			/// the contents of this method with the code editor.
-			/// </summary>		
-			void InitializeComponent(void)
-			{
-				components = gcnew System::ComponentModel::Container();
-			}
+		
 		};
 
 	}

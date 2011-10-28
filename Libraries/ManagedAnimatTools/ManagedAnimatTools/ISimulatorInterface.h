@@ -12,14 +12,16 @@ namespace AnimatGUI
 	namespace Interfaces
 	{
  
+		public delegate void VoidHandler();
+		public delegate void ErrorHandler(System::String ^strError);
+		public delegate void CreateSimHandler(System::String ^%strXml);
+
 		/// <summary> 
 		/// Summary for SimulatorInterface
 		/// </summary>
-		public ref class SimulatorInterface : public ISimulatorInterface
+		public interface class ISimulatorInterface
 		{
 		public:
-			SimulatorInterface(void);
-			~SimulatorInterface();
 
 #pragma region EventSystems
 
@@ -37,9 +39,7 @@ namespace AnimatGUI
 
 #pragma region Properties
 
-			//virtual property AnimatGUI::Interfaces::Logger^ Logger;		
-
-			virtual Simulator *Sim();
+			virtual Simulator *Sim() ;
 			virtual long CurrentMillisecond();
 			virtual bool Paused();
 			virtual bool SimRunning();
@@ -103,30 +103,6 @@ namespace AnimatGUI
 			virtual System::Boolean RemoveItem(String ^sParentID, String ^sItemType, String ^sID, System::Boolean bThrowError);
 			virtual System::Boolean SetData(String ^sID, String ^sDataType, String ^sValue, System::Boolean bThrowError);
 			virtual System::Boolean FindItem(String ^sID, System::Boolean bThrowError);
-
-#pragma endregion
-
-		protected: 
-			AnimatSim::Simulator *m_lpSim;
-			AnimatSim::ISimGUICallback *m_lpSimGUICallback;
-			bool m_bPaused;
-			System::Boolean m_bIsLoaded;
-			//This tells if the simulation window has been started or not. It is always true when the window is open, even if the sim is paused.
-			System::Boolean m_bSimOpen; 
-			System::String ^m_strProjectFile;
-			System::String ^m_strProjectPath;
-			System::Threading::Thread ^m_newThread;
-			System::String ^m_strErrorMessage;
-			AnimatGUI::Interfaces::Logger ^m_lpLogger;
-
-#pragma region SimulationThreading
-
-
-			virtual void RunSimulator();
-
-			virtual void LogMsg(AnimatGUI::Interfaces::Logger::enumLogLevel eLevel, System::String ^sMessage);
-			virtual void AddSimWindow(System::String ^sWindowXml, BOOL bInit, HWND hWnd);
-			virtual void RemoveSimWindow(HWND hWnd);
 
 #pragma endregion
 

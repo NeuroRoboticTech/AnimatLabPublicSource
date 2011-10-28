@@ -13,10 +13,10 @@ namespace AnimatGUI
 class SimGUICallback : public AnimatSim::ISimGUICallback
 {
 protected:
-	gcroot<SimulatorInterface ^>  m_doSim;
+	gcroot<ISimulatorInterface ^>  m_doSim;
 
 public:
-	SimGUICallback(SimulatorInterface ^doSim);
+	SimGUICallback(ISimulatorInterface ^doSim);
 	SimGUICallback();
 	virtual ~SimGUICallback(void);
 

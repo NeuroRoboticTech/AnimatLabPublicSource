@@ -1536,7 +1536,7 @@ Namespace DataObjects.Physical
         Public Overrides Sub InitializeSimulationReferences()
             'The environment is really just a pointer to the simulation object in the sim.
             If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
-                m_doInterface = New Interfaces.DataObjectInterface(Util.Application.SimulationInterface, Util.Simulation.ID)
+                m_doInterface = Util.Application.CreateDataObjectInterface(Util.Simulation.ID)
             End If
 
             m_aryOdorTypes.InitializeSimulationReferences()

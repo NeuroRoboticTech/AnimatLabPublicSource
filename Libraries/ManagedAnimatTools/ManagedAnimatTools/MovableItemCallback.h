@@ -13,10 +13,10 @@ namespace AnimatGUI
 class MovableItemCallback : public AnimatSim::IMovableItemCallback
 {
 protected:
-	gcroot<DataObjectInterface ^>  m_doObj;
+	gcroot<IDataObjectInterface ^>  m_doObj;
 
 public:
-	MovableItemCallback(DataObjectInterface ^doObj);
+	MovableItemCallback(IDataObjectInterface ^doObj);
 	virtual ~MovableItemCallback(void);
 
 	virtual void PositionChanged();

@@ -34,7 +34,7 @@ Namespace Forms
         Protected m_bUndoRedoInProgress As Boolean = False
         Protected m_bSetValueInProgress As Boolean = False
 
-        Protected m_doInterface As Interfaces.DataObjectInterface = Nothing
+        Protected m_doInterface As Interfaces.IDataObjectInterface = Nothing
 
         Protected m_WorkspaceImage As System.Drawing.Image
         Protected m_TabImage As System.Drawing.Image
@@ -343,7 +343,7 @@ Namespace Forms
 
         Public Overridable Sub InitializeSimulationReferences()
             If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
-                m_doInterface = New Interfaces.DataObjectInterface(Util.Application.SimulationInterface, Me.ID)
+                m_doInterface = Util.Application.CreateDataObjectInterface(Me.ID)
             End If
         End Sub
 

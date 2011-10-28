@@ -316,7 +316,7 @@ Namespace DataObjects
         Public Overridable Sub RecalculuateLimits()
         End Sub
 
-        Protected Overridable Sub SetAllSimData(ByVal doInterface As Interfaces.DataObjectInterface)
+        Protected Overridable Sub SetAllSimData(ByVal doInterface As Interfaces.IDataObjectInterface)
             m_doInterface = doInterface
             SetSimData("UseLimits", m_bUseLimits.ToString, True)
             SetSimData("LowerLimit", m_snLowerLimit.ActualValue.ToString, True)

@@ -31,6 +31,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return nullptr;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while attempting to Serialize.";
+				throw gcnew System::Exception(strError);
+				return nullptr;
+			}
 		}
 
 		void StdXml::Deserialize(System::String ^strXml)
@@ -43,6 +49,11 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while attempting to Deserialize: " + strXml;
+				throw gcnew System::Exception(strError);
 			}
 		}
 
@@ -57,6 +68,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return NULL;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling IntoElem.";
+				throw gcnew System::Exception(strError);
+				return NULL;
+			}
 		}
 
 		bool StdXml::OutOfElem()
@@ -68,6 +85,12 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				return NULL;
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling OutOfElem.";
+				throw gcnew System::Exception(strError);
 				return NULL;
 			}
 		}
@@ -86,6 +109,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return nullptr;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling FullTagPath.";
+				throw gcnew System::Exception(strError);
+				return nullptr;
+			}
 		}
 
 		System::String ^StdXml::TagName()
@@ -98,6 +127,12 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				return "";
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling TagName.";
+				throw gcnew System::Exception(strError);
 				return "";
 			}
 		}
@@ -114,6 +149,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return "";
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling ChildTagName.";
+				throw gcnew System::Exception(strError);
+				return "";
+			}
 		}
 
 		int StdXml::NumberOfChildren()
@@ -125,6 +166,12 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				return NULL;
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling NumberOfChildren.";
+				throw gcnew System::Exception(strError);
 				return NULL;
 			}
 		}
@@ -143,6 +190,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return NULL;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling FindElement.";
+				throw gcnew System::Exception(strError);
+				return NULL;
+			}
 		}
 
 		bool StdXml::FindChildByIndex(int iIndex)
@@ -157,6 +210,12 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				return NULL;
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling FindChildByIndex.";
+				throw gcnew System::Exception(strError);
 				return NULL;
 			}
 		}
@@ -175,6 +234,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return NULL;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling FindChildElement.";
+				throw gcnew System::Exception(strError);
+				return NULL;
+			}
 		}
 
 		bool StdXml::IntoChildElement(System::String ^strElementName)
@@ -191,6 +256,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return NULL;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling IntoChildElement.";
+				throw gcnew System::Exception(strError);
+				return NULL;
+			}
 		}
 
 		System::String ^StdXml::GetChildString(System::String ^strElementName)
@@ -202,6 +273,12 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				return "";
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildString.";
+				throw gcnew System::Exception(strError);
 				return "";
 			}
 		}
@@ -217,6 +294,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return "";
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildString.";
+				throw gcnew System::Exception(strError);
+				return "";
+			}
 		}
 
 		System::String ^StdXml::GetChildString()
@@ -228,6 +311,12 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				return "";
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildString.";
+				throw gcnew System::Exception(strError);
 				return "";
 			}
 		}
@@ -243,6 +332,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return NULL;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildLong.";
+				throw gcnew System::Exception(strError);
+				return NULL;
+			}
 		}
 		
 		long StdXml::GetChildLong(System::String ^strElementName, long lDefault)
@@ -254,6 +349,12 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				return NULL;
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildLong.";
+				throw gcnew System::Exception(strError);
 				return NULL;
 			}
 		}
@@ -269,6 +370,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return NULL;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildLong.";
+				throw gcnew System::Exception(strError);
+				return NULL;
+			}
 		}
 
 		int StdXml::GetChildInt(System::String ^strElementName)
@@ -280,6 +387,12 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				return NULL;
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildInt.";
+				throw gcnew System::Exception(strError);
 				return NULL;
 			}
 		}
@@ -295,6 +408,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return NULL;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildInt.";
+				throw gcnew System::Exception(strError);
+				return NULL;
+			}
 		}
 
 		int StdXml::GetChildInt()
@@ -306,6 +425,12 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				return NULL;
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildInt.";
+				throw gcnew System::Exception(strError);
 				return NULL;
 			}
 		}
@@ -321,6 +446,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return NULL;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildDouble.";
+				throw gcnew System::Exception(strError);
+				return NULL;
+			}
 		}
 
 		double StdXml::GetChildDouble(System::String ^strElementName, double dblDefault)
@@ -332,6 +463,12 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				return NULL;
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildDouble.";
+				throw gcnew System::Exception(strError);
 				return NULL;
 			}
 		}
@@ -347,6 +484,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return NULL;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildDouble.";
+				throw gcnew System::Exception(strError);
+				return NULL;
+			}
 		}
 
 		float StdXml::GetChildFloat(System::String ^strElementName)
@@ -358,6 +501,12 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				return NULL;
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildFloat.";
+				throw gcnew System::Exception(strError);
 				return NULL;
 			}
 		}
@@ -373,6 +522,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return NULL;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildFloat.";
+				throw gcnew System::Exception(strError);
+				return NULL;
+			}
 		}
 
 		float StdXml::GetChildFloat()
@@ -384,6 +539,12 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				return NULL;
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildFloat.";
+				throw gcnew System::Exception(strError);
 				return NULL;
 			}
 		}
@@ -399,6 +560,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return NULL;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildBool.";
+				throw gcnew System::Exception(strError);
+				return NULL;
+			}
 		}
 
 		bool StdXml::GetChildBool(System::String ^strElementName, bool bDefault)
@@ -412,6 +579,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return NULL;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildBool.";
+				throw gcnew System::Exception(strError);
+				return NULL;
+			}
 		}
 
 		bool StdXml::GetChildBool()
@@ -423,6 +596,12 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				return NULL;
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildBool.";
+				throw gcnew System::Exception(strError);
 				return NULL;
 			}
 		}
@@ -456,6 +635,13 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				return nullptr;
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildByteArray.";
+				throw gcnew System::Exception(strError);
+				return nullptr;
 			}
 		}
 
@@ -472,6 +658,11 @@ namespace AnimatGUI
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling AddElement.";
+				throw gcnew System::Exception(strError);
+			}
 		}
 
 		void StdXml::AddChildElement(System::String ^strElementName)
@@ -483,6 +674,11 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling AddChildElement.";
+				throw gcnew System::Exception(strError);
 			}
 		}
 
@@ -496,6 +692,11 @@ namespace AnimatGUI
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling AddChildElement.";
+				throw gcnew System::Exception(strError);
+			}
 		}
 
 		void StdXml::AddChildElement(System::String ^strElementName, char cVal)
@@ -507,6 +708,11 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling AddChildElement.";
+				throw gcnew System::Exception(strError);
 			}
 		}
 
@@ -520,6 +726,11 @@ namespace AnimatGUI
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling AddChildElement.";
+				throw gcnew System::Exception(strError);
+			}
 		}
 
 		void StdXml::AddChildElement(System::String ^strElementName, Int32 lVal)
@@ -531,6 +742,11 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling AddChildElement.";
+				throw gcnew System::Exception(strError);
 			}
 		}
 
@@ -544,6 +760,11 @@ namespace AnimatGUI
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling AddChildElement.";
+				throw gcnew System::Exception(strError);
+			}
 		}
 
 		void StdXml::AddChildElement(System::String ^strElementName, double dblVal)
@@ -555,6 +776,11 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling AddChildElement.";
+				throw gcnew System::Exception(strError);
 			}
 		}
 
@@ -568,6 +794,11 @@ namespace AnimatGUI
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling AddChildElement.";
+				throw gcnew System::Exception(strError);
+			}
 		}
 
 		void StdXml::AddChildElement(System::String ^strElementName, bool bVal)
@@ -579,6 +810,11 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling AddChildElement.";
+				throw gcnew System::Exception(strError);
 			}
 		}
 
@@ -606,6 +842,11 @@ namespace AnimatGUI
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling AddChildElement.";
+				throw gcnew System::Exception(strError);
+			}
 		}
 
 		void StdXml::AddChildCData(System::String ^strElementName, System::String ^strCData)
@@ -617,6 +858,11 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling AddChildCData.";
+				throw gcnew System::Exception(strError);
 			}
 		}
 
@@ -640,6 +886,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return "";
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetAttribString.";
+				throw gcnew System::Exception(strError);
+				return "";
+			}
 		}
 
 		long StdXml::GetAttribLong(System::String ^strAttribName)
@@ -657,6 +909,12 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				return NULL;
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetAttribLong.";
+				throw gcnew System::Exception(strError);
 				return NULL;
 			}
 		}
@@ -678,6 +936,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return NULL;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetAttribInt.";
+				throw gcnew System::Exception(strError);
+				return NULL;
+			}
 		}
 
 		double StdXml::GetAttribDouble(System::String ^strAttribName)
@@ -695,6 +959,12 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				return NULL;
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetAttribDouble.";
+				throw gcnew System::Exception(strError);
 				return NULL;
 			}
 		}
@@ -716,6 +986,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return NULL;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetAttribFloat.";
+				throw gcnew System::Exception(strError);
+				return NULL;
+			}
 		}
 
 		bool StdXml::GetAttribBool(System::String ^strAttribName)
@@ -735,6 +1011,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return NULL;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetAttribBool.";
+				throw gcnew System::Exception(strError);
+				return NULL;
+			}
 		}
 
 		void StdXml::SetAttrib(System::String ^strAttribName, System::String ^strVal)
@@ -746,6 +1028,11 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling SetAttrib.";
+				throw gcnew System::Exception(strError);
 			}
 		}
 
@@ -759,6 +1046,11 @@ namespace AnimatGUI
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling SetAttrib.";
+				throw gcnew System::Exception(strError);
+			}
 		}
 
 		void StdXml::SetAttrib(System::String ^strAttribName, unsigned char cVal)
@@ -770,6 +1062,11 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling SetAttrib.";
+				throw gcnew System::Exception(strError);
 			}
 		}
 
@@ -783,6 +1080,11 @@ namespace AnimatGUI
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling SetAttrib.";
+				throw gcnew System::Exception(strError);
+			}
 		}
 
 		void StdXml::SetAttrib(System::String ^strAttribName, Int16 iVal)
@@ -794,6 +1096,11 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling SetAttrib.";
+				throw gcnew System::Exception(strError);
 			}
 		}
 
@@ -807,6 +1114,11 @@ namespace AnimatGUI
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling SetAttrib.";
+				throw gcnew System::Exception(strError);
+			}
 		}
 
 		void StdXml::SetAttrib(System::String ^strAttribName, float fltVal)
@@ -819,6 +1131,11 @@ namespace AnimatGUI
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling SetAttrib.";
+				throw gcnew System::Exception(strError);
+			}
 		}
 
 		void StdXml::SetAttrib(System::String ^strAttribName, bool bVal)
@@ -830,6 +1147,11 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling SetAttrib.";
+				throw gcnew System::Exception(strError);
 			}
 		}
 
@@ -853,6 +1175,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return "";
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildAttribString.";
+				throw gcnew System::Exception(strError);
+				return "";
+			}
 		}
 
 		long StdXml::GetChildAttribLong(System::String ^strAttribName)
@@ -870,6 +1198,12 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				return NULL;
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildAttribLong.";
+				throw gcnew System::Exception(strError);
 				return NULL;
 			}
 		}
@@ -891,6 +1225,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return NULL;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildAttribInt.";
+				throw gcnew System::Exception(strError);
+				return NULL;
+			}
 		}
 
 		double StdXml::GetChildAttribDouble(System::String ^strAttribName)
@@ -908,6 +1248,12 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				return NULL;
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildAttribDouble.";
+				throw gcnew System::Exception(strError);
 				return NULL;
 			}
 		}
@@ -929,6 +1275,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return NULL;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildAttribFloat.";
+				throw gcnew System::Exception(strError);
+				return NULL;
+			}
 		}
 
 		bool StdXml::GetChildAttribBool(System::String ^strAttribName)
@@ -948,6 +1300,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return NULL;
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildAttribBool.";
+				throw gcnew System::Exception(strError);
+				return NULL;
+			}
 		}
 
 		void StdXml::SetChildAttrib(System::String ^strAttribName, System::String ^strVal)
@@ -959,6 +1317,11 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling SetChildAttrib.";
+				throw gcnew System::Exception(strError);
 			}
 		}
 
@@ -972,6 +1335,11 @@ namespace AnimatGUI
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling SetChildAttrib.";
+				throw gcnew System::Exception(strError);
+			}
 		}
 
 		void StdXml::SetChildAttrib(System::String ^strAttribName, unsigned char cVal)
@@ -983,6 +1351,11 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling SetChildAttrib.";
+				throw gcnew System::Exception(strError);
 			}
 		}
 
@@ -996,6 +1369,11 @@ namespace AnimatGUI
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling SetChildAttrib.";
+				throw gcnew System::Exception(strError);
+			}
 		}
 
 		void StdXml::SetChildAttrib(System::String ^strAttribName, Int16 iVal)
@@ -1007,6 +1385,11 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling SetChildAttrib.";
+				throw gcnew System::Exception(strError);
 			}
 		}
 
@@ -1020,6 +1403,11 @@ namespace AnimatGUI
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling SetChildAttrib.";
+				throw gcnew System::Exception(strError);
+			}
 		}
 
 		void StdXml::SetChildAttrib(System::String ^strAttribName, float fltVal)
@@ -1032,6 +1420,11 @@ namespace AnimatGUI
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling SetChildAttrib.";
+				throw gcnew System::Exception(strError);
+			}
 		}
 
 		void StdXml::SetChildAttrib(System::String ^strAttribName, bool bVal)
@@ -1043,6 +1436,11 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling SetChildAttrib.";
+				throw gcnew System::Exception(strError);
 			}
 		}
 
@@ -1057,6 +1455,11 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling AddChildDoc.";
+				throw gcnew System::Exception(strError);
 			}
 		}
 
@@ -1073,6 +1476,12 @@ namespace AnimatGUI
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 				return "";
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetChildDoc.";
+				throw gcnew System::Exception(strError);
+				return "";
+			}
 		}
 
 		System::String ^StdXml::GetParentTagName()
@@ -1084,6 +1493,12 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+				return "";
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling GetParentTagName.";
+				throw gcnew System::Exception(strError);
 				return "";
 			}
 		}
@@ -1098,6 +1513,11 @@ namespace AnimatGUI
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
 			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling Load.";
+				throw gcnew System::Exception(strError);
+			}
 		}
 
 		void StdXml::Save(System::String ^strFilename)
@@ -1109,6 +1529,11 @@ namespace AnimatGUI
 			catch(CStdErrorInfo oError)
 			{
 				throw gcnew Exception(gcnew String(oError.m_strError.c_str()));
+			}
+			catch(...)
+			{
+				System::String ^strError = "An unknown error occurred while calling Save.";
+				throw gcnew System::Exception(strError);
 			}
 		}
 	}

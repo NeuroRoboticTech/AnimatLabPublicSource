@@ -1443,7 +1443,6 @@ Namespace Framework
             Return rbPart
         End Function
 
-
     End Class
 
 End Namespace

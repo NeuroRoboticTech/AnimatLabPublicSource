@@ -1035,6 +1035,8 @@ Namespace Forms
         Private Declare Function WebUpdate Lib "wuw4.dll" (ByVal URL As String) As Long
 
         Protected m_strAppVersion As String = "2.0"
+        Protected m_bUseMockSimInterface As Boolean = True
+        Protected m_bUseMockDataObjectInterface As Boolean = True
 
         Protected m_mgrToolStripImages As AnimatGUI.Framework.ImageManager
         Protected m_mgrLargeImages As AnimatGUI.Framework.ImageManager
@@ -1063,7 +1065,7 @@ Namespace Forms
         Protected m_arySortedChildForms As New Collections.SortedAnimatForms(Nothing)
 
         Protected m_doSimulation As DataObjects.Simulation
-        Protected m_doSimInterface As New AnimatGUI.Interfaces.SimulatorInterface
+        Protected m_doSimInterface As AnimatGUI.Interfaces.ISimulatorInterface
 
         Protected m_aryAllDataTypes As New Collections.DataObjects(Nothing)
         Protected m_aryNeuralModules As New Collections.SortedNeuralModules(Nothing)
@@ -1380,7 +1382,7 @@ Namespace Forms
             End Set
         End Property
 
-        Public Overridable ReadOnly Property SimulationInterface() As AnimatGUI.Interfaces.SimulatorInterface
+        Public Overridable ReadOnly Property SimulationInterface() As AnimatGUI.Interfaces.ISimulatorInterface
             Get
                 Return m_doSimInterface
             End Get
@@ -1518,6 +1520,24 @@ Namespace Forms
             End Get
         End Property
 
+        Public Overridable Property UseMockSimInteface() As Boolean
+            Get
+                Return m_bUseMockSimInterface
+            End Get
+            Set(ByVal Value As Boolean)
+                m_bUseMockSimInterface = Value
+            End Set
+        End Property
+
+        Public Overridable Property MockDataObjectInterface() As Boolean
+            Get
+                Return m_bUseMockDataObjectInterface
+            End Get
+            Set(ByVal Value As Boolean)
+                m_bUseMockDataObjectInterface = Value
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -1553,12 +1573,30 @@ Namespace Forms
 
         End Sub
 
+        Protected Function CreateSimInterface() As AnimatGUI.Interfaces.ISimulatorInterface
+            If Not m_bUseMockSimInterface Then
+                Return New AnimatGUI.Interfaces.SimulatorInterface()
+            Else
+                Return New AnimatGUI.Interfaces.SimulatorInterfaceMock()
+            End If
+        End Function
+
+        Public Function CreateDataObjectInterface(ByVal strID As String) As Interfaces.IDataObjectInterface
+            If Not m_bUseMockDataObjectInterface Then
+                Return New AnimatGUI.Interfaces.DataObjectInterface(Me.SimulationInterface, strID)
+            Else
+                Return New AnimatGUI.Interfaces.DataObjectInterfaceMock(Me.SimulationInterface, strID)
+            End If
+        End Function
+
         Public Overrides Sub Initialize(Optional ByVal frmParent As AnimatForm = Nothing)
 
             Try
+                m_doSimInterface = CreateSimInterface()
+
                 Util.DisableDirtyFlags = True
                 Util.Application = Me
-                m_doSimInterface.Logger = Util.Logger
+                m_doSimInterface.SetLogger(Util.Logger)
 
                 Me.AnimatToolStrip.ToolName = "AnimatGUI.Forms.AnimatApplication"
                 Me.AnimatToolStrip.SecurityMgr = Me.SecurityMgr
@@ -1569,8 +1607,7 @@ Namespace Forms
                 'Reset the culture info to be invariant english. I was getting problems 
                 'with foriegn culture infos not parsing the xml files correctly.
                 Thread.CurrentThread.CurrentCulture = New CultureInfo("")
-                'Thread.CurrentThread.CurrentUICulture = New CultureInfo("")
-
+ 
                 InitLogging()
                 FindMdiClient()
                 CatalogPluginModules()
@@ -1697,19 +1734,13 @@ Namespace Forms
                     Throw New System.Exception("Logger is null")
                 End If
 
-                If Directory.Exists(Me.ApplicationDirectory & "Logs") Then
-                    Me.LogDirectory = Me.ApplicationDirectory & "Logs\"
-                Else
-                    Me.LogDirectory = Me.ApplicationDirectory
+                If Not Directory.Exists(Me.ApplicationDirectory & "Logs") Then
+                    Directory.CreateDirectory(Me.ApplicationDirectory & "Logs")
                 End If
+                Me.LogDirectory = Me.ApplicationDirectory & "Logs\"
 
                 Me.Logger.TraceLevel = Interfaces.Logger.enumLogLevel.Error
                 Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Initialized Logging")
-
-                ''Dim frame As New StackFrame(True)
-                'Dim iVal As Integer
-                'Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "File: " & frame.GetFileName & " Line: " & frame.GetFileLineNumber)
-                'iVal = frame.GetFileLineNumber()
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

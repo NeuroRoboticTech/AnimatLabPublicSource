@@ -308,7 +308,7 @@ Namespace DataObjects.Behavior.Nodes
                     AddToSim(True)
                 End If
 
-                m_doInterface = New Interfaces.DataObjectInterface(Util.Application.SimulationInterface, Me.ID)
+                m_doInterface = Util.Application.CreateDataObjectInterface(Me.ID)
             End If
 
             m_gnGain.InitializeSimulationReferences()

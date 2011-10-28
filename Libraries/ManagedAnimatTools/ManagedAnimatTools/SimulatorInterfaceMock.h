@@ -15,11 +15,11 @@ namespace AnimatGUI
 		/// <summary> 
 		/// Summary for SimulatorInterface
 		/// </summary>
-		public ref class SimulatorInterface : public ISimulatorInterface
+		public ref class SimulatorInterfaceMock : public ISimulatorInterface
 		{
 		public:
-			SimulatorInterface(void);
-			~SimulatorInterface();
+			SimulatorInterfaceMock(void);
+			~SimulatorInterfaceMock();
 
 #pragma region EventSystems
 
@@ -107,17 +107,17 @@ namespace AnimatGUI
 #pragma endregion
 
 		protected: 
-			AnimatSim::Simulator *m_lpSim;
-			AnimatSim::ISimGUICallback *m_lpSimGUICallback;
-			bool m_bPaused;
-			System::Boolean m_bIsLoaded;
-			//This tells if the simulation window has been started or not. It is always true when the window is open, even if the sim is paused.
-			System::Boolean m_bSimOpen; 
-			System::String ^m_strProjectFile;
-			System::String ^m_strProjectPath;
-			System::Threading::Thread ^m_newThread;
-			System::String ^m_strErrorMessage;
-			AnimatGUI::Interfaces::Logger ^m_lpLogger;
+			//AnimatSim::Simulator *m_lpSim;
+			//AnimatSim::ISimGUICallback *m_lpSimGUICallback;
+			//bool m_bPaused;
+			//System::Boolean m_bIsLoaded;
+			////This tells if the simulation window has been started or not. It is always true when the window is open, even if the sim is paused.
+			//System::Boolean m_bSimOpen; 
+			//System::String ^m_strProjectFile;
+			//System::String ^m_strProjectPath;
+			//System::Threading::Thread ^m_newThread;
+			//System::String ^m_strErrorMessage;
+			//AnimatGUI::Interfaces::Logger ^m_lpLogger;
 
 #pragma region SimulationThreading
 

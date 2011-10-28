@@ -221,7 +221,7 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides Sub InitializeSimulationReferences()
             If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
-                m_doInterface = New Interfaces.DataObjectInterface(Util.Application.SimulationInterface, Me.ID)
+                m_doInterface = Util.Application.CreateDataObjectInterface(Me.ID)
             End If
 
             For Each deEntry As DictionaryEntry In m_aryFieldPairs

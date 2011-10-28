@@ -2,8 +2,10 @@
 #include "Util.h"
 #include "Logger.h"
 #include "PropertyUpdateException.h"
+#include "ISimulatorInterface.h"
 #include "SimulatorInterface.h"
 #include "SimGUICallback.h"
+#include "IDataObjectInterface.h"
 #include "DataObjectInterface.h"
 
 namespace AnimatGUI
@@ -11,7 +13,7 @@ namespace AnimatGUI
 	namespace Interfaces
 	{
 
-SimGUICallback::SimGUICallback(SimulatorInterface ^doSim)
+SimGUICallback::SimGUICallback(AnimatGUI::Interfaces::ISimulatorInterface ^doSim)
 {
 	m_doSim = doSim;
 }

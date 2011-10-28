@@ -13,127 +13,122 @@ namespace AnimatGUI
 	namespace Interfaces
 	{
 
-		public delegate void PositionChangedHandler();
-		public delegate void RotationChangedHandler();
-		public delegate void SelectionChangedHandler(System::Boolean bSelected, System::Boolean bSelectMultiple);
-		public delegate void AddBodyClickedHandler(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ);
-		public delegate void SelectedVertexChangedHandler(float fltPosX, float fltPosY, float fltPosZ);
+	
+		public ref class DataObjectInterface : public IDataObjectInterface
+		{
+		protected:
+			Interfaces::ISimulatorInterface ^m_Sim;
+			Simulator *m_lpSim;
+			AnimatBase *m_lpBase;
+			MovableItem *m_lpMovable;
 
-public ref class DataObjectInterface
-{
-protected:
-	Interfaces::SimulatorInterface ^m_Sim;
-	Simulator *m_lpSim;
-	AnimatBase *m_lpBase;
-	MovableItem *m_lpMovable;
+			float *m_lpWorldPositionX;
+			float *m_lpWorldPositionY;
+			float *m_lpWorldPositionZ;
 
-	float *m_lpWorldPositionX;
-	float *m_lpWorldPositionY;
-	float *m_lpWorldPositionZ;
+			float *m_lpPositionX;
+			float *m_lpPositionY;
+			float *m_lpPositionZ;
 
-	float *m_lpPositionX;
-	float *m_lpPositionY;
-	float *m_lpPositionZ;
+			float *m_lpRotationX;
+			float *m_lpRotationY;
+			float *m_lpRotationZ;
 
-	float *m_lpRotationX;
-	float *m_lpRotationY;
-	float *m_lpRotationZ;
+			/// The array of odor sources of this type within the environment.
+			CStdMap<string, float *> *m_aryDataPointers;
 
-	/// The array of odor sources of this type within the environment.
-	CStdMap<string, float *> *m_aryDataPointers;
+			void GetPointers();
 
-	void GetPointers();
+			float *FindDataPointer(string strData, BOOL bThrowError);
 
-	float *DataObjectInterface::FindDataPointer(string strData, BOOL bThrowError);
+		public:
+			DataObjectInterface(Interfaces::ISimulatorInterface ^SimInt, String ^strID);
+			!DataObjectInterface();
+			~DataObjectInterface();
 
-public:
-	DataObjectInterface(Interfaces::SimulatorInterface ^SimInt, String ^strID);
-	!DataObjectInterface();
-	~DataObjectInterface();
+		#pragma region Properties
 
-#pragma region Properties
+					virtual property float Position[int]
+					{
+						float get(int i) 
+						{
+							if(i == 0 && m_lpPositionX)
+								return *m_lpPositionX;
+							else if(i == 1 && m_lpPositionY)
+								return *m_lpPositionY;
+							else if(i == 2 && m_lpPositionZ)
+								return *m_lpPositionZ;
+							else
+								return 0;
+						}
+						void set(int i, float fltVal) 
+						{
+						}
+					}
 
-			property float Position[int]
-			{
-				float get(int i) 
-				{
-					if(i == 0 && m_lpPositionX)
-						return *m_lpPositionX;
-					else if(i == 1 && m_lpPositionY)
-						return *m_lpPositionY;
-					else if(i == 2 && m_lpPositionZ)
-						return *m_lpPositionZ;
-					else
-						return 0;
-				}
-				void set(int i, float fltVal) 
-				{
-				}
-			}
+					virtual property float WorldPosition[int]
+					{
+						float get(int i) 
+						{
+							if(i == 0 && m_lpWorldPositionX)
+								return *m_lpWorldPositionX;
+							else if(i == 1 && m_lpWorldPositionY)
+								return *m_lpWorldPositionY;
+							else if(i == 2 && m_lpWorldPositionZ)
+								return *m_lpWorldPositionZ;
+							else
+								return 0;
+						}
+						void set(int i, float fltVal) 
+						{
+						}
+					}
 
-			property float WorldPosition[int]
-			{
-				float get(int i) 
-				{
-					if(i == 0 && m_lpWorldPositionX)
-						return *m_lpWorldPositionX;
-					else if(i == 1 && m_lpWorldPositionY)
-						return *m_lpWorldPositionY;
-					else if(i == 2 && m_lpWorldPositionZ)
-						return *m_lpWorldPositionZ;
-					else
-						return 0;
-				}
-				void set(int i, float fltVal) 
-				{
-				}
-			}
+					virtual property float Rotation[int]
+					{
+						float get(int i) 
+						{
+							if(i == 0 && m_lpRotationX)
+								return *m_lpRotationX;
+							else if(i == 1 && m_lpRotationY)
+								return *m_lpRotationY;
+							else if(i == 2 && m_lpRotationZ)
+								return *m_lpRotationZ;
+							else
+								return 0;
+						}
+						void set(int i, float fltVal) 
+						{
+						}
+					}
 
-			property float Rotation[int]
-			{
-				float get(int i) 
-				{
-					if(i == 0 && m_lpRotationX)
-						return *m_lpRotationX;
-					else if(i == 1 && m_lpRotationY)
-						return *m_lpRotationY;
-					else if(i == 2 && m_lpRotationZ)
-						return *m_lpRotationZ;
-					else
-						return 0;
-				}
-				void set(int i, float fltVal) 
-				{
-				}
-			}
+		#pragma endregion
 
-#pragma endregion
+		#pragma region Methods
 
-#pragma region Methods
+			virtual System::Boolean SetData(String ^sDataType, String ^sValue, System::Boolean bThrowError);
+			virtual void SelectItem(bool bVal, bool bSelectMultiple);
 
-	System::Boolean SetData(String ^sDataType, String ^sValue, System::Boolean bThrowError);
-	void SelectItem(bool bVal, bool bSelectMultiple);
+			virtual void GetDataPointer(String ^sData);
+			virtual float GetDataValue(String ^sData);
+			virtual float GetDataValueImmediate(String ^sData);
 
-	void GetDataPointer(String ^sData);
-	float GetDataValue(String ^sData);
-	float DataObjectInterface::GetDataValueImmediate(String ^sData);
+			virtual float GetBoundingBoxValue(int iIndex);
+			virtual void OrientNewPart(double dblXPos, double dblYPos, double dblZPos, double dblXNorm, double dblYNorm, double dblZNorm);
+			virtual System::Boolean CalculateLocalPosForWorldPos(double dblXWorldX, double dblWorldY, double dblWorldZ, System::Collections::ArrayList ^aryLocalPos);
 
-	float GetBoundingBoxValue(int iIndex);
-	void OrientNewPart(double dblXPos, double dblYPos, double dblZPos, double dblXNorm, double dblYNorm, double dblZNorm);
-	System::Boolean CalculateLocalPosForWorldPos(double dblXWorldX, double dblWorldY, double dblWorldZ, System::Collections::ArrayList ^aryLocalPos);
-
-#pragma endregion
+		#pragma endregion
 
 
-#pragma region Events
+		#pragma region Events
 
-			event PositionChangedHandler^ OnPositionChanged;
-			event RotationChangedHandler^ OnRotationChanged;
-			event SelectionChangedHandler^ OnSelectionChanged;
-			event AddBodyClickedHandler^ OnAddBodyClicked;
-			event SelectedVertexChangedHandler^ OnSelectedVertexChanged;
+			virtual event PositionChangedHandler^ OnPositionChanged;
+			virtual event RotationChangedHandler^ OnRotationChanged;
+			virtual event SelectionChangedHandler^ OnSelectionChanged;
+			virtual event AddBodyClickedHandler^ OnAddBodyClicked;
+			virtual event SelectedVertexChangedHandler^ OnSelectedVertexChanged;
 
-			void FirePositionChangedEvent()    
+			virtual void FirePositionChangedEvent()    
 			{
 				try
 				{
@@ -145,7 +140,7 @@ public:
 				}
 			}
 
-			void FireRotationChangedEvent()    
+			virtual void FireRotationChangedEvent()    
 			{
 				try
 				{
@@ -157,7 +152,7 @@ public:
 				}
 			}
 
-			void FireSelectionChangedEvent(BOOL bSelected, BOOL bSelectMultiple)    
+			virtual void FireSelectionChangedEvent(BOOL bSelected, BOOL bSelectMultiple)    
 			{
 				try
 				{
@@ -169,7 +164,7 @@ public:
 				}
 			}
 
-			void FireAddBodyClickedEvent(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ)    
+			virtual void FireAddBodyClickedEvent(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ)    
 			{
 				try
 				{
@@ -181,7 +176,7 @@ public:
 				}
 			}
 
-			void FireSelectedVertexChangedEvent(float fltPosX, float fltPosY, float fltPosZ)    
+			virtual void FireSelectedVertexChangedEvent(float fltPosX, float fltPosY, float fltPosZ)    
 			{
 				try
 				{
@@ -193,10 +188,10 @@ public:
 				}
 			}
 
-#pragma endregion
+		#pragma endregion
 
 
-};
+		};
 
 	}
 }
