@@ -9,6 +9,7 @@ Imports System.Xml
 Imports AnimatGuiCtrls.Controls
 Imports AnimatGUI.DataObjects
 Imports AnimatGUI.Collections
+Imports AnimatGUI.Framework
 
 Namespace DataObjects.Physical
 
@@ -44,6 +45,24 @@ Namespace DataObjects.Physical
             If Not doItem Is Nothing AndAlso doItem Is Me Then doItem.AfterClone(Me, bCutData, doRoot, doItem)
             Return doItem
         End Function
+
+#Region " Add-Remove to List Methods "
+
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+            If m_doInterface Is Nothing AndAlso Not Util.Simulation Is Nothing Then
+                Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "MaterialType", Me.ID, Me.GetSimulationXml("MaterialType"), bThrowError)
+                InitializeSimulationReferences()
+            End If
+        End Sub
+
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
+            If Not m_doInterface Is Nothing AndAlso Not Util.Simulation Is Nothing Then
+                Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, "MaterialType", Me.ID, bThrowError)
+            End If
+            m_doInterface = Nothing
+        End Sub
+
+#End Region
 
         Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
 

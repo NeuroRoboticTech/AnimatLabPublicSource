@@ -400,6 +400,12 @@
 #define Al_Err_lDefaultMaterialNotFound -4056
 #define Al_Err_strDefaultMaterialNotFound "The default material type was not found while loading."
 
+#define Al_Err_lMaterialTypeIDNotFound -4057
+#define Al_Err_strMaterialTypeIDNotFound "The material type ID was not found."
+
+#define Al_Err_lMaterialPairIDNotFound -4058
+#define Al_Err_strMaterialPairIDNotFound "The material pair ID was not found."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 #define PI 3.14159

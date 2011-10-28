@@ -13,6 +13,8 @@ namespace VortexAnimatSim
 		protected:
 			VxMaterialTable *m_vxMaterialTable;
 
+			virtual void SetMaterialProperties();
+
 		public:
 			VsMaterialPair();
 			virtual ~VsMaterialPair();

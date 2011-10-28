@@ -34,6 +34,15 @@ namespace AnimatSim
 			virtual void Materials::LoadMaterialPairs(CStdXml &oXml);
 			virtual MaterialPair *LoadMaterialPair(CStdXml &oXml);
 
+			virtual void AddMaterialType(string strXml);
+			virtual void RemoveMaterialType(string strID, BOOL bThrowError = TRUE);
+			
+			virtual void AddMaterialPair(string strXml);
+			virtual void RemoveMaterialPair(string strID, BOOL bThrowError = TRUE);
+
+			virtual int FindTypeListPos(string strID, BOOL bThrowError = TRUE);
+			virtual int FindPairListPos(string strID, BOOL bThrowError = TRUE);
+
 			virtual void CreateDefaultMaterial();
 
 		public:
@@ -42,6 +51,13 @@ namespace AnimatSim
 
 			virtual void Reset();
 			virtual void Initialize();
+
+#pragma region DataAccesMethods
+
+			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE);
+			virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
+
+#pragma endregion
 
 			virtual void Load(CStdXml &oXml);
 		};

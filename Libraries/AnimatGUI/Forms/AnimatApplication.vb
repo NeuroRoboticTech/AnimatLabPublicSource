@@ -6,7 +6,7 @@ Imports System.Windows.Forms
 Imports System.Diagnostics
 Imports System.IO
 Imports System.Text
-imports System.Runtime.Remoting
+Imports System.Runtime.Remoting
 Imports System.Threading
 Imports System.Globalization
 Imports AnimatGuiCtrls.Controls
@@ -15,6 +15,7 @@ Imports Crownwood.DotNetMagic.Common
 Imports Crownwood.DotNetMagic.Docking
 Imports AnimatGUI.Framework
 Imports System.Reflection
+Imports System.Configuration
 
 Namespace Forms
 
@@ -979,7 +980,7 @@ Namespace Forms
             'EditMaterialsToolStripButton
             '
             Me.EditMaterialsToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.EditMaterialsToolStripButton.Image = CType(resources.GetObject("EditMaterialsToolStripButton.Image"), System.Drawing.Image)
+            Me.EditMaterialsToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.EditMaterials.gif")
             Me.EditMaterialsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
             Me.EditMaterialsToolStripButton.Name = "EditMaterialsToolStripButton"
             Me.EditMaterialsToolStripButton.Size = New System.Drawing.Size(23, 22)
@@ -990,6 +991,7 @@ Namespace Forms
             '
             Me.EditMaterialsToolStripMenuItem.Name = "EditMaterialsToolStripMenuItem"
             Me.EditMaterialsToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
+            Me.EditMaterialsToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.EditMaterials.gif")
             Me.EditMaterialsToolStripMenuItem.Text = "Edit Materials"
             '
             'AnimatApplication_ToolStrips
@@ -1088,7 +1090,7 @@ Namespace Forms
         Protected m_wcRecFieldCurrentContent As Crownwood.DotNetMagic.Docking.WindowContent
 
         Protected m_frmWorkspace As Forms.ProjectWorkspace
-        Protected m_frmProperties As Forms.projectProperties
+        Protected m_frmProperties As Forms.ProjectProperties
         Protected m_frmToolbox As Forms.Toolbox
         Protected m_frmErrors As Forms.Errors
         Protected m_frmSimulationController As Forms.SimulationController
@@ -1872,8 +1874,9 @@ Namespace Forms
             Try
                 Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "Beginning to catalog plugin modules")
 
+                Dim aryExcludeDlls As Hashtable = DirectCast(System.Configuration.ConfigurationManager.GetSection("DllExclusionList/Dlls"), Hashtable)
+
                 Dim aryFileNames As New ArrayList
-                Dim bAddModule As Boolean = False
 
                 m_aryAllDataTypes.Clear()
                 m_aryNeuralModules.Clear()
@@ -1898,131 +1901,11 @@ Namespace Forms
 
                 For Each oFile As Object In aryFileNames
                     strFile = DirectCast(oFile, String)
-                    bAddModule = False
+                    Dim strName As String = Util.ExtractFilename(strFile)
 
-                    'If strFile.Contains("nunit.fixtures.dll") Then
-                    '    strFile = strFile
-                    'End If
-                    Try
-                        Dim assemModule As System.Reflection.Assembly = Util.LoadAssembly(Util.GetFilePath(Me.ApplicationDirectory, strFile), False)
-                        If Not assemModule Is Nothing Then
-
-                            Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "About to get types: " & assemModule.FullName)
-
-                            Dim aryTypes() As Type
-                            Try
-                                aryTypes = assemModule.GetTypes()
-                            Catch ex As Exception
-                                'If we have trouble gettting the object types then this is not 
-                                'one of our dlls so skip it.
-                                ReDim aryTypes(0)
-                            End Try
-
-                            Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "Starting to loop through: " & assemModule.FullName)
-
-                            If assemModule.GetName().Name <> "UI Components" Then
-
-                                For Each tpClass In aryTypes
-
-                                    If Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Behavior.Node)) Then
-                                        If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Behavior.Node")
-                                        Dim bnNode As DataObjects.Behavior.Node = CreateNode(assemModule, tpClass, Nothing)
-                                        If Not bnNode Is Nothing Then
-                                            m_aryBehavioralNodes.Add(bnNode)
-                                            m_aryAllDataTypes.Add(bnNode)
-                                            bAddModule = True
-                                        End If
-                                    ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Behavior.Link)) Then
-                                        If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Behavior.Link")
-                                        Dim blLink As DataObjects.Behavior.Link = CreateLink(assemModule, tpClass, Nothing)
-                                        If Not blLink Is Nothing Then
-                                            m_aryBehavioralLinks.Add(blLink)
-                                            m_aryAllDataTypes.Add(blLink)
-                                            bAddModule = True
-                                        End If
-                                    ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Behavior.NeuralModule)) Then
-                                        If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Behavior.NeuralModule")
-                                        Dim nmModule As DataObjects.Behavior.NeuralModule = CreateNeuralModule(assemModule, tpClass, Nothing)
-                                        If Not nmModule Is Nothing Then
-                                            m_aryNeuralModules.Add(nmModule.ClassName, nmModule)
-                                            m_aryAllDataTypes.Add(nmModule)
-                                            bAddModule = True
-                                        End If
-                                    ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.Forms.Tools.ToolForm)) Then
-                                        If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.Forms.Tools.ToolForm")
-                                        Dim frmTool As Forms.Tools.ToolForm = CreateToolForm(assemModule, tpClass, Nothing)
-                                        If Not frmTool Is Nothing Then
-                                            m_aryToolPlugins.Add(frmTool)
-                                        End If
-                                    ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Physical.RigidBody)) Then
-                                        Try
-                                            If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Physical.RigidBody")
-                                            Dim doPart As AnimatGUI.DataObjects.Physical.RigidBody = CreateRigidBody(assemModule, tpClass, Nothing)
-                                            If Not doPart Is Nothing Then
-
-                                                m_aryBodyPartTypes.Add(doPart)
-                                                m_aryRigidBodyTypes.Add(doPart)
-                                                m_aryAllDataTypes.Add(doPart)
-                                                bAddModule = True
-                                            End If
-                                        Catch ex As System.Exception
-                                            Util.ShowMessage("Error loading rigid body part")
-                                        End Try
-                                    ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Physical.Joint)) Then
-                                        Try
-                                            If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Physical.Joint")
-                                            Dim doPart As AnimatGUI.DataObjects.Physical.Joint = CreateJoint(assemModule, tpClass, Nothing)
-                                            If Not doPart Is Nothing Then
-
-                                                m_aryBodyPartTypes.Add(doPart)
-                                                m_aryJointTypes.Add(doPart)
-                                                m_aryAllDataTypes.Add(doPart)
-                                                bAddModule = True
-                                            End If
-                                        Catch ex As System.Exception
-                                            Util.ShowMessage("Error loading joint part")
-                                        End Try
-                                    ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Gain)) Then
-                                        If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Gain")
-                                        Dim doGain As DataObjects.Gain = CreateGain(assemModule, tpClass, Nothing)
-                                        If Not doGain Is Nothing Then
-                                            m_aryGainTypes.Add(doGain)
-                                            m_aryAllDataTypes.Add(doGain)
-                                        End If
-                                    ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.ProgramModule)) Then
-                                        If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.ProgramModule")
-                                        Dim doModule As DataObjects.ProgramModule = CreateProgramModule(assemModule, tpClass, Nothing)
-                                        If Not doModule Is Nothing Then
-                                            m_aryProgramModules.Add(doModule)
-                                            m_aryAllDataTypes.Add(doModule)
-                                        End If
-                                    ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.ExternalStimuli.Stimulus), False) Then
-                                        If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.ExternalStimuli.Stimulus")
-                                        Dim doStim As DataObjects.ExternalStimuli.Stimulus = CreateExternalStimuli(assemModule, tpClass, Nothing)
-                                        If Not doStim Is Nothing Then
-                                            m_aryExternalStimuli.Add(doStim, False)
-                                            m_aryAllDataTypes.Add(doStim)
-                                        End If
-                                    End If
-                                Next
-
-                                tpClass = Nothing
-                            End If
-
-                            Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "Finished looping through: " & assemModule.FullName)
-                        End If
-
-                        If bAddModule Then
-                            m_aryPlugInAssemblies.Add(Util.RootNamespace(assemModule), assemModule)
-                        End If
-
-                    Catch ex As System.Exception
-                        iFailedLoad = iFailedLoad + 1
-                        If Not tpClass Is Nothing Then
-                            strFailedLoad = strFailedLoad + vbTab & tpClass.FullName & vbCrLf
-                        End If
-                    End Try
-
+                    If Not aryExcludeDlls.ContainsKey(strName) Then
+                        CatalogPluginModule(strFile, bDebugOutput, tpClass, iFailedLoad, strFailedLoad)
+                    End If
                 Next
 
                 Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "Initialize dataobjects after Application Start")
@@ -2063,6 +1946,132 @@ Namespace Forms
                     End If
 
                     Util.ShowMessage(strMessage)
+                End If
+            End Try
+
+        End Sub
+
+        Protected Overridable Sub CatalogPluginModule(ByVal strFile As String, ByVal bDebugOutput As Boolean, _
+                                                      ByRef tpClass As Type, ByRef iFailedLoad As Integer, ByRef strFailedLoad As String)
+            Dim bAddModule As Boolean = False
+
+            Try
+                Dim assemModule As System.Reflection.Assembly = Util.LoadAssembly(Util.GetFilePath(Me.ApplicationDirectory, strFile), False)
+                If Not assemModule Is Nothing Then
+
+                    Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "About to get types: " & assemModule.FullName)
+
+                    Dim aryTypes() As Type
+                    Try
+                        aryTypes = assemModule.GetTypes()
+                    Catch ex As Exception
+                        'If we have trouble gettting the object types then this is not 
+                        'one of our dlls so skip it.
+                        ReDim aryTypes(0)
+                    End Try
+
+                    Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "Starting to loop through: " & assemModule.FullName)
+
+                    If assemModule.GetName().Name <> "UI Components" Then
+
+                        For Each tpClass In aryTypes
+
+                            If Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Behavior.Node)) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Behavior.Node")
+                                Dim bnNode As DataObjects.Behavior.Node = CreateNode(assemModule, tpClass, Nothing)
+                                If Not bnNode Is Nothing Then
+                                    m_aryBehavioralNodes.Add(bnNode)
+                                    m_aryAllDataTypes.Add(bnNode)
+                                    bAddModule = True
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Behavior.Link)) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Behavior.Link")
+                                Dim blLink As DataObjects.Behavior.Link = CreateLink(assemModule, tpClass, Nothing)
+                                If Not blLink Is Nothing Then
+                                    m_aryBehavioralLinks.Add(blLink)
+                                    m_aryAllDataTypes.Add(blLink)
+                                    bAddModule = True
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Behavior.NeuralModule)) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Behavior.NeuralModule")
+                                Dim nmModule As DataObjects.Behavior.NeuralModule = CreateNeuralModule(assemModule, tpClass, Nothing)
+                                If Not nmModule Is Nothing Then
+                                    m_aryNeuralModules.Add(nmModule.ClassName, nmModule)
+                                    m_aryAllDataTypes.Add(nmModule)
+                                    bAddModule = True
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.Forms.Tools.ToolForm)) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.Forms.Tools.ToolForm")
+                                Dim frmTool As Forms.Tools.ToolForm = CreateToolForm(assemModule, tpClass, Nothing)
+                                If Not frmTool Is Nothing Then
+                                    m_aryToolPlugins.Add(frmTool)
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Physical.RigidBody)) Then
+                                Try
+                                    If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Physical.RigidBody")
+                                    Dim doPart As AnimatGUI.DataObjects.Physical.RigidBody = CreateRigidBody(assemModule, tpClass, Nothing)
+                                    If Not doPart Is Nothing Then
+
+                                        m_aryBodyPartTypes.Add(doPart)
+                                        m_aryRigidBodyTypes.Add(doPart)
+                                        m_aryAllDataTypes.Add(doPart)
+                                        bAddModule = True
+                                    End If
+                                Catch ex As System.Exception
+                                    Util.ShowMessage("Error loading rigid body part")
+                                End Try
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Physical.Joint)) Then
+                                Try
+                                    If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Physical.Joint")
+                                    Dim doPart As AnimatGUI.DataObjects.Physical.Joint = CreateJoint(assemModule, tpClass, Nothing)
+                                    If Not doPart Is Nothing Then
+
+                                        m_aryBodyPartTypes.Add(doPart)
+                                        m_aryJointTypes.Add(doPart)
+                                        m_aryAllDataTypes.Add(doPart)
+                                        bAddModule = True
+                                    End If
+                                Catch ex As System.Exception
+                                    Util.ShowMessage("Error loading joint part")
+                                End Try
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Gain)) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Gain")
+                                Dim doGain As DataObjects.Gain = CreateGain(assemModule, tpClass, Nothing)
+                                If Not doGain Is Nothing Then
+                                    m_aryGainTypes.Add(doGain)
+                                    m_aryAllDataTypes.Add(doGain)
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.ProgramModule)) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.ProgramModule")
+                                Dim doModule As DataObjects.ProgramModule = CreateProgramModule(assemModule, tpClass, Nothing)
+                                If Not doModule Is Nothing Then
+                                    m_aryProgramModules.Add(doModule)
+                                    m_aryAllDataTypes.Add(doModule)
+                                End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.ExternalStimuli.Stimulus), False) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.ExternalStimuli.Stimulus")
+                                Dim doStim As DataObjects.ExternalStimuli.Stimulus = CreateExternalStimuli(assemModule, tpClass, Nothing)
+                                If Not doStim Is Nothing Then
+                                    m_aryExternalStimuli.Add(doStim, False)
+                                    m_aryAllDataTypes.Add(doStim)
+                                End If
+                            End If
+                        Next
+
+                        tpClass = Nothing
+                    End If
+
+                    Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "Finished looping through: " & assemModule.FullName)
+                End If
+
+                If bAddModule Then
+                    m_aryPlugInAssemblies.Add(Util.RootNamespace(assemModule), assemModule)
+                End If
+
+            Catch ex As System.Exception
+                iFailedLoad = iFailedLoad + 1
+                If Not tpClass Is Nothing Then
+                    strFailedLoad = strFailedLoad + vbTab & tpClass.FullName & vbCrLf
                 End If
             End Try
 
@@ -2741,7 +2750,7 @@ Namespace Forms
 
             m_ModificationHistory = New AnimatGUI.Framework.UndoSystem.ModificationHistory
 
-            UpdateToolStrips()
+            UpdateToolstrips()
 
             Me.ClearIsDirty()
 
@@ -2851,7 +2860,7 @@ Namespace Forms
 
                 Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Finished successful load of project: '" & strFilename & "'")
 
-                UpdateToolStrips()
+                UpdateToolstrips()
                 RaiseEvent ProjectLoaded()
 
             Catch ex As System.Exception
@@ -4977,7 +4986,7 @@ Namespace Forms
             End Try
         End Sub
 
-   
+
         Private Sub EditToolStripMenuItem_DropDownOpening(ByVal sender As Object, ByVal e As System.EventArgs) Handles EditToolStripMenuItem.DropDownOpening
             Try
                 Me.ValidateEditToolStripItemState()

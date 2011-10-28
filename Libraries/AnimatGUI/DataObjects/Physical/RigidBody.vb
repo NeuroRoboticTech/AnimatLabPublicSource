@@ -52,6 +52,9 @@ Namespace DataObjects.Physical
 
         Protected m_bIsRoot As Boolean = False
 
+        Protected m_thMaterialType As TypeHelpers.LinkedMaterialType
+        Protected m_strMaterialTypeID As String = ""
+
 #End Region
 
 #Region " Properties "
@@ -337,6 +340,21 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
+        <Browsable(False)> _
+        Public Overridable Property MaterialType() As AnimatGUI.TypeHelpers.LinkedMaterialType
+            Get
+                Return m_thMaterialType
+            End Get
+            Set(ByVal Value As AnimatGUI.TypeHelpers.LinkedMaterialType)
+                If Not Value Is Nothing AndAlso Not Value.MaterialType Is Nothing Then
+                    SetSimData("MaterialTypeID", Value.MaterialType.ID, True)
+                    DisconnectLinkedMaterialEvents()
+                    m_thMaterialType = Value
+                    ConnectLinkedMaterialEvents()
+                End If
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -413,6 +431,8 @@ Namespace DataObjects.Physical
             m_svDrag = New ScaledVector3(Me, "Drag", "Drag coefficients of this part.", "", "")
             m_svDrag.CopyData(1, 1, 1, True)
 
+            m_thMaterialType = New AnimatGUI.TypeHelpers.LinkedMaterialType(Me)
+
             AddHandler m_svCOM.ValueChanged, AddressOf Me.OnCOMValueChanged
             AddHandler m_svBuoyancyCenter.ValueChanged, AddressOf Me.OnBuoyancyCenterValueChanged
             AddHandler m_svDrag.ValueChanged, AddressOf Me.OnDragValueChanged
@@ -471,6 +491,19 @@ Namespace DataObjects.Physical
                     m_Transparencies.ReceptiveFieldsTransparency = 50
                     m_Transparencies.SimulationTransparency = 0
                 End If
+            End If
+        End Sub
+
+        Protected Sub ConnectLinkedMaterialEvents()
+            If Not m_thMaterialType Is Nothing AndAlso Not m_thMaterialType.MaterialType Is Nothing Then
+                AddHandler m_thMaterialType.MaterialType.ReplaceMaterial, AddressOf Me.OnReplaceMaterial
+            End If
+        End Sub
+
+
+        Protected Sub DisconnectLinkedMaterialEvents()
+            If Not m_thMaterialType Is Nothing AndAlso Not m_thMaterialType.MaterialType Is Nothing Then
+                RemoveHandler m_thMaterialType.MaterialType.ReplaceMaterial, AddressOf Me.OnReplaceMaterial
             End If
         End Sub
 
@@ -710,6 +743,10 @@ Namespace DataObjects.Physical
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Freeze", m_bFreeze.GetType(), "Freeze", _
                                                 "Part Properties", "If the root body is frozen then it is locked in place in the environment.", m_bFreeze))
 
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Maerial Type", GetType(AnimatGUI.TypeHelpers.LinkedMaterialType), "MaterialType", _
+                               "Part Properties", "The material to be used for this part.", _
+                               m_thMaterialType, GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
+                               GetType(AnimatGUI.TypeHelpers.LinkedMaterialTypeConverter)))
             Else
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Contact Sensor", m_bContactSensor.GetType(), "IsContactSensor", _
                                             "Part Properties", "Sets whether or not this part can detect contacts.", m_bContactSensor))
@@ -805,6 +842,8 @@ Namespace DataObjects.Physical
             m_snFoodReplenishRate = DirectCast(doOrigPart.m_snFoodReplenishRate, ScaledNumber)
             m_snFoodEnergyContent = DirectCast(doOrigPart.m_snFoodEnergyContent, ScaledNumber)
             m_svCOM = DirectCast(doOrigPart.m_svCOM.Clone(Me, bCutData, doRoot), ScaledVector3)
+
+            Me.MaterialType = DirectCast(doOrigPart.m_thMaterialType.Clone(Me, bCutData, doRoot), TypeHelpers.LinkedMaterialType)
 
             m_aryChildBodies.Clear()
 
@@ -936,6 +975,12 @@ Namespace DataObjects.Physical
                 m_doReceptiveFieldSensor.InitializeAfterLoad()
             End If
 
+            If m_strMaterialTypeID.Trim.Length > 0 Then
+                If Util.Environment.MaterialTypes.Contains(m_strMaterialTypeID) Then
+                    Me.MaterialType = New AnimatGUI.TypeHelpers.LinkedMaterialType(Me, Util.Environment.MaterialTypes(m_strMaterialTypeID))
+                End If
+            End If
+
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()
@@ -983,6 +1028,8 @@ Namespace DataObjects.Physical
             m_svDrag.LoadData(oXml, "Drag", False)
             m_fltMagnus = oXml.GetChildFloat("Magnus", m_fltMagnus)
             m_bEnableFluids = oXml.GetChildBool("EnableFluids", m_bEnableFluids)
+
+            m_strMaterialTypeID = oXml.GetChildString("MaterialTypeID", "DEFAULTMATERIAL")
 
             'If this is the root body element then do not attempt to load the joint. Otherwise it must have a joint
             If Not Me.IsRoot Then
@@ -1068,6 +1115,10 @@ Namespace DataObjects.Physical
             m_snDensity.SaveData(oXml, "Density")
             m_svCOM.SaveData(oXml, "COM")
 
+            If Not m_thMaterialType Is Nothing AndAlso Not m_thMaterialType.MaterialType Is Nothing Then
+                oXml.AddChildElement("MaterialTypeID", m_thMaterialType.MaterialType.ID)
+            End If
+
             If Me Is doStructure.RootBody Then
                 oXml.AddChildElement("Freeze", m_bFreeze)
             End If
@@ -1137,6 +1188,10 @@ Namespace DataObjects.Physical
 
             If Me.IsRoot Then
                 oXml.AddChildElement("Freeze", m_bFreeze)
+            End If
+
+            If Not m_thMaterialType Is Nothing AndAlso Not m_thMaterialType.MaterialType Is Nothing Then
+                oXml.AddChildElement("MaterialTypeID", m_thMaterialType.MaterialType.ID)
             End If
 
             If Not m_JointToParent Is Nothing Then
@@ -1630,9 +1685,18 @@ Namespace DataObjects.Physical
             End Try
         End Sub
 
+        Private Sub OnReplaceMaterial(doReplacement As Physical.MaterialType)
+            Try
+                Me.MaterialType = New TypeHelpers.LinkedMaterialType(Me, doReplacement)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
 #End Region
 
 #End Region
+
 
     End Class
 

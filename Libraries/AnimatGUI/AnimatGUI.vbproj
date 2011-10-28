@@ -736,6 +736,8 @@
     <Compile Include="TypeHelpers\LinkedBodyPartTypeConverter.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TypeHelpers\LinkedMaterialTypeConverter.vb" />
+    <Compile Include="TypeHelpers\LinkedMaterialType.vb" />
     <Compile Include="TypeHelpers\LinkedNode.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -1323,6 +1325,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Graphics\ReceptiveCurrentGain.gif" />
     <EmbeddedResource Include="Graphics\ReceptiveFieldGain.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\EditMaterials.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

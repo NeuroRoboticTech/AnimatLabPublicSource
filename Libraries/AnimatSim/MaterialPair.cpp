@@ -143,6 +143,7 @@ void MaterialPair::FrictionPrimary(float fltVal)
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "FrictionPrimary", TRUE);
 	
 	m_fltFrictionPrimary = fltVal;
+	SetMaterialProperties();
 }
 
 /**
@@ -167,6 +168,7 @@ void MaterialPair::FrictionSecondary(float fltVal)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "FrictionSecondary", TRUE);
 	m_fltFrictionSecondary = fltVal;
+	SetMaterialProperties();
 }
 
 /**
@@ -196,6 +198,7 @@ void MaterialPair::MaxFrictionPrimary(float fltVal, BOOL bUseScaling)
 		fltVal *= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits()); //This is a force. 
 
 	m_fltMaxFrictionPrimary = fltVal;
+	SetMaterialProperties();
 }
 
 /**
@@ -225,6 +228,7 @@ void MaterialPair::MaxFrictionSecondary(float fltVal, BOOL bUseScaling)
 		fltVal *= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits()); //This is a force. 
 
 	m_fltMaxFrictionSecondary = fltVal;
+	SetMaterialProperties();
 }
 
 /**
@@ -262,6 +266,7 @@ void MaterialPair::SlipPrimary(float fltVal, BOOL bUseScaling)
 		fltVal *= m_lpSim->MassUnits();  //Slip units are s/Kg
 
 	m_fltSlipPrimary = fltVal;
+	SetMaterialProperties();
 }
 
 /**
@@ -300,6 +305,7 @@ void MaterialPair::SlipSecondary(float fltVal, BOOL bUseScaling)
 		fltVal *= m_lpSim->MassUnits();  //Slip units are s/Kg
 
 	m_fltSlipSecondary = fltVal;
+	SetMaterialProperties();
 }
 
 /**
@@ -337,6 +343,7 @@ void MaterialPair::SlidePrimary(float fltVal, BOOL bUseScaling)
 		fltVal *= m_lpSim->InverseDistanceUnits(); //slide is a velocity so units are m/s
 
 	m_fltSlidePrimary = fltVal;
+	SetMaterialProperties();
 }
 
 
@@ -376,6 +383,7 @@ void MaterialPair::SlideSecondary(float fltVal, BOOL bUseScaling)
 		fltVal *= m_lpSim->InverseDistanceUnits(); //slide is a velocity so units are m/s
 
 	m_fltSlideSecondary = fltVal;
+	SetMaterialProperties();
 }
 
 /**
@@ -405,6 +413,7 @@ void MaterialPair::Compliance(float fltVal, BOOL bUseScaling)
 		fltVal *= m_lpSim->MassUnits();  //Compliance units are m/N or s^2/Kg
 	
 	m_fltCompliance = fltVal;
+	SetMaterialProperties();
 }
 
 /**
@@ -434,6 +443,7 @@ void MaterialPair::Damping(float fltVal, BOOL bUseScaling)
 		fltVal *= m_lpSim->InverseMassUnits();
 
 	m_fltDamping = fltVal;
+	SetMaterialProperties();
 }
 
 /**
@@ -474,6 +484,7 @@ void MaterialPair::Restitution(float fltVal)
 {
 	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "Restitution");
 	m_fltRestitution = fltVal;
+	SetMaterialProperties();
 }
 
 /**
@@ -507,6 +518,7 @@ void MaterialPair::MaxAdhesive(float fltVal, BOOL bUseScaling)
 		fltVal *= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits()); //This is a force.
 
 	m_fltMaxAdhesive = fltVal;
+	SetMaterialProperties();
 }
 
 /**
@@ -544,6 +556,91 @@ void MaterialPair::CreateDefaultUnits()
 	m_fltMaxAdhesive *= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits()); //This is a force.
 }
 
+BOOL MaterialPair::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(AnimatBase::SetData(strType, strValue, FALSE))
+		return TRUE;
+
+	if(strType == "FRICTIONPRIMARY")
+	{
+		FrictionPrimary(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "FRICTIONSECONDARY")
+	{
+		FrictionSecondary(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "MAXFRICTIONPRIMARY")
+	{
+		MaxFrictionPrimary(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "MAXFRICTIONSECONDARY")
+	{
+		MaxFrictionSecondary(atof(strValue.c_str()));
+		return TRUE;
+	}
+	
+	if(strType == "COMPLIANCE")
+	{
+		Compliance(atof(strValue.c_str()));
+		return TRUE;
+	}
+	
+	if(strType == "DAMPING")
+	{
+		Damping(atof(strValue.c_str()));
+		return TRUE;
+	}
+	
+	if(strType == "RESTITUTION")
+	{
+		Restitution(atof(strValue.c_str()));
+		return TRUE;
+	}
+	
+	if(strType == "PRIMARYSLIP")
+	{
+		SlipPrimary(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strDataType == "SECONDARYSLIP")
+	{
+		SlipSecondary(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "PRIMARYSLIDE")
+	{
+		SlidePrimary(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strDataType == "SECONDARYSLIDE")
+	{
+		SlideSecondary(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "MAXADHESION")
+	{
+		MaxAdhesive(atof(strValue.c_str()));
+		return TRUE;
+	}
+	
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
 
 void MaterialPair::Load(CStdXml &oXml)
 {

@@ -129,9 +129,6 @@
     <Compile Include="DataObjects\Behavior\NeuralModule.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataObjects\Behavior\Neurons\FiringRateAdapter.vb">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DataObjects\Behavior\Neurons\IonChannel.vb">
       <SubType>Code</SubType>
     </Compile>

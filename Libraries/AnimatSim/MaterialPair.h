@@ -80,6 +80,8 @@ namespace AnimatSim
 			/// The maximum adhesion of the collision between those two materials.
 			float m_fltMaxAdhesive;
 
+			virtual void SetMaterialProperties() = 0;
+
 		public:
 			MaterialPair();
 			virtual ~MaterialPair();
@@ -149,6 +151,7 @@ namespace AnimatSim
 			virtual void RegisterMaterialType(string strID) = 0;
 
 			virtual void CreateDefaultUnits();
+			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
 			virtual void Load(CStdXml &oXml);
 		};

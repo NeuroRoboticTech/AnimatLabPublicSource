@@ -73,6 +73,7 @@ Namespace DataObjects.Physical
                 If Value.ActualValue < 0 Then
                     Throw New System.Exception("The primary coefficient of friction can not be less than zero.")
                 End If
+                SetSimData("FrictionPrimary", Value.ActualValue.ToString, True)
                 m_snFrictionPrimary.CopyData(Value)
             End Set
         End Property
@@ -85,6 +86,7 @@ Namespace DataObjects.Physical
                 If Value.ActualValue < 0 Then
                     Throw New System.Exception("The secondary coefficient of friction can not be less than zero.")
                 End If
+                SetSimData("FrictionSecondary", Value.ActualValue.ToString, True)
                 m_snFrictionSecondary.CopyData(Value)
             End Set
         End Property
@@ -97,11 +99,12 @@ Namespace DataObjects.Physical
                 If Value.ActualValue < 0 Then
                     Throw New System.Exception("The maximum primary friction can not be less than zero.")
                 End If
+                SetSimData("MaxFrictionPrimary", Value.ActualValue.ToString, True)
                 m_snMaxFrictionPrimary.CopyData(Value)
             End Set
         End Property
 
-        Public Overridable Property MaxSecondaryFriction() As ScaledNumber
+        Public Overridable Property MaxFrictionSecondary() As ScaledNumber
             Get
                 Return m_snMaxFrictionSecondary
             End Get
@@ -109,6 +112,7 @@ Namespace DataObjects.Physical
                 If Value.ActualValue < 0 Then
                     Throw New System.Exception("The maximum secondary friction can not be less than zero.")
                 End If
+                SetSimData("MaxFrictionSecondary", Value.ActualValue.ToString, True)
                 m_snMaxFrictionSecondary.CopyData(Value)
             End Set
         End Property
@@ -121,6 +125,7 @@ Namespace DataObjects.Physical
                 If Value.ActualValue < 0 Then
                     Throw New System.Exception("The compliance of the collision between materials can not be less than zero.")
                 End If
+                SetSimData("Compliance", Value.ActualValue.ToString, True)
                 m_snCompliance.CopyData(Value)
             End Set
         End Property
@@ -134,6 +139,7 @@ Namespace DataObjects.Physical
                 If Value.ActualValue < 0 Then
                     Throw New System.Exception("The damping of the collision between materials can not be less than zero.")
                 End If
+                SetSimData("Damping", Value.ActualValue.ToString, True)
                 m_snDamping.CopyData(Value)
             End Set
         End Property
@@ -146,6 +152,7 @@ Namespace DataObjects.Physical
                 If Value.ActualValue < 0 Then
                     Throw New System.Exception("The restitution of the collision between materials can not be less than zero.")
                 End If
+                SetSimData("Restitution", Value.ActualValue.ToString, True)
                 m_snRestitution.CopyData(Value)
             End Set
         End Property
@@ -158,6 +165,7 @@ Namespace DataObjects.Physical
                 If Value.ActualValue < 0 Then
                     Throw New System.Exception("The primary slip of the collision between materials can not be less than zero.")
                 End If
+                SetSimData("PrimarySlip", Value.ActualValue.ToString, True)
                 m_snSlipPrimary.CopyData(Value)
             End Set
         End Property
@@ -170,6 +178,7 @@ Namespace DataObjects.Physical
                 If Value.ActualValue < 0 Then
                     Throw New System.Exception("The secondary slip of the collision between materials can not be less than zero.")
                 End If
+                SetSimData("SecondarySlip", Value.ActualValue.ToString, True)
                 m_snSlipSecondary.CopyData(Value)
             End Set
         End Property
@@ -182,6 +191,7 @@ Namespace DataObjects.Physical
                 If Value.ActualValue < 0 Then
                     Throw New System.Exception("The primary slide of the collision between materials can not be less than zero.")
                 End If
+                SetSimData("PrimarySlide", Value.ActualValue.ToString, True)
                 m_snSlidePrimary.CopyData(Value)
             End Set
         End Property
@@ -194,6 +204,7 @@ Namespace DataObjects.Physical
                 If Value.ActualValue < 0 Then
                     Throw New System.Exception("The secondary slide of the collision between materials can not be less than zero.")
                 End If
+                SetSimData("SecondarySlide", Value.ActualValue.ToString, True)
                 m_snSlideSecondary.CopyData(Value)
             End Set
         End Property
@@ -206,6 +217,7 @@ Namespace DataObjects.Physical
                 If Value.ActualValue < 0 Then
                     Throw New System.Exception("The maximum adhesion of the collision between materials can not be less than zero.")
                 End If
+                SetSimData("MaxAdhesion", Value.ActualValue.ToString, True)
                 m_snMaxAdhesion.CopyData(Value)
             End Set
         End Property
@@ -254,20 +266,20 @@ Namespace DataObjects.Physical
 
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
+
             m_snFrictionPrimary = New AnimatGUI.Framework.ScaledNumber(Me, "FrictionPrimary", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None)
             m_snFrictionSecondary = New AnimatGUI.Framework.ScaledNumber(Me, "FrictionSecondary", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None)
             m_snMaxFrictionPrimary = New AnimatGUI.Framework.ScaledNumber(Me, "MaxFrictionPrimary", 500, ScaledNumber.enumNumericScale.None, "Newtons", "N")
             m_snMaxFrictionSecondary = New AnimatGUI.Framework.ScaledNumber(Me, "MaxSecondaryFriction", 500, ScaledNumber.enumNumericScale.None, "Newtons", "N")
-            'Linear compliance
             m_snCompliance = New AnimatGUI.Framework.ScaledNumber(Me, "Compliance", 0.1, ScaledNumber.enumNumericScale.micro, "m/N", "m/N")
-            'Linear damping
-            m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 200, ScaledNumber.enumNumericScale.Kilo, "g/s", "g/s")
+            m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 50, ScaledNumber.enumNumericScale.Kilo, "g/s", "g/s")
             m_snRestitution = New AnimatGUI.Framework.ScaledNumber(Me, "Restitution", 0, ScaledNumber.enumNumericScale.None)
             m_snSlipPrimary = New AnimatGUI.Framework.ScaledNumber(Me, "PrimarySlip", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "s/Kg", "s/Kg")
             m_snSlipSecondary = New AnimatGUI.Framework.ScaledNumber(Me, "SecondarySlip", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "s/Kg", "s/Kg")
             m_snSlidePrimary = New AnimatGUI.Framework.ScaledNumber(Me, "PrimarySlide", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "m/s", "m/s")
             m_snSlideSecondary = New AnimatGUI.Framework.ScaledNumber(Me, "SecondarySlide", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "m/s", "m/s")
             m_snMaxAdhesion = New AnimatGUI.Framework.ScaledNumber(Me, "MaxAdhesion", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Newtons", "N")
+
             m_mtMaterial1 = Nothing
             m_mtMaterial2 = Nothing
         End Sub
@@ -354,7 +366,7 @@ Namespace DataObjects.Physical
                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
             pbNumberBag = m_snMaxFrictionSecondary.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Maximum Secondary Friction", pbNumberBag.GetType(), "MaxSecondaryFriction", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Maximum Secondary Friction", pbNumberBag.GetType(), "MaxFrictionSecondary", _
                             "Pair Properties", "The maximum secondary friction allowed", pbNumberBag, _
                             "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
@@ -433,6 +445,24 @@ Namespace DataObjects.Physical
             End If
 
         End Sub
+
+#Region " Add-Remove to List Methods "
+
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+            If m_doInterface Is Nothing AndAlso Not Util.Simulation Is Nothing Then
+                Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "MaterialPair", Me.ID, Me.GetSimulationXml("MaterialPair"), bThrowError)
+                InitializeSimulationReferences()
+            End If
+        End Sub
+
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
+            If Not m_doInterface Is Nothing AndAlso Not Util.Simulation Is Nothing Then
+                Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, "MaterialPair", Me.ID, bThrowError)
+            End If
+            m_doInterface = Nothing
+        End Sub
+
+#End Region
 
         Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
 

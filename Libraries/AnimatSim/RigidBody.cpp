@@ -1181,6 +1181,12 @@ BOOL RigidBody::SetData(string strDataType, string strValue, BOOL bThrowError)
 		return true;
 	}
 
+	if(strDataType == "MATERIALTYPEID")
+	{
+		MaterialID(strValue);
+		return true;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);

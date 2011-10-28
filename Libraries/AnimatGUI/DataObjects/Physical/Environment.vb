@@ -585,7 +585,7 @@ Namespace DataObjects.Physical
         Public Overridable Function AddMaterialType() As MaterialType
             Dim doType As New DataObjects.Physical.MaterialType(Util.Environment)
             doType.Name = "Material_" & (Me.MaterialTypes.Count + 1)
-            Me.MaterialTypes.Add(doType.ID, doType, False)
+            Me.MaterialTypes.Add(doType.ID, doType, True)
 
             'Now add new material pairs for this object and all associated items.
             Dim doType2 As MaterialType
@@ -594,7 +594,7 @@ Namespace DataObjects.Physical
                 Dim doPair As New MaterialPair(Me)
                 doPair.Material1 = doType
                 doPair.Material2 = doType2
-                Me.MaterialPairs.Add(doPair.ID, doPair, False)
+                Me.MaterialPairs.Add(doPair.ID, doPair, True)
             Next
 
             Return doType
@@ -617,10 +617,10 @@ Namespace DataObjects.Physical
             Next
 
             For Each doPair In aryRemove
-                Me.MaterialPairs.Remove(doPair.ID, False)
+                Me.MaterialPairs.Remove(doPair.ID, True)
             Next
 
-            Me.MaterialTypes.Remove(doType.ID, False)
+            Me.MaterialTypes.Remove(doType.ID, True)
 
         End Sub
 
@@ -1260,7 +1260,7 @@ Namespace DataObjects.Physical
                         oXml.FindChildByIndex(iIndex)
                         doType = New DataObjects.Physical.MaterialType(Me)
                         doType.LoadData(oXml)
-                        m_aryMaterialTypes.Add(doType.ID, doType)
+                        m_aryMaterialTypes.Add(doType.ID, doType, False)
                     Next
 
                     oXml.OutOfElem()
@@ -1289,7 +1289,7 @@ Namespace DataObjects.Physical
                         oXml.FindChildByIndex(iIndex)
                         doPair = New DataObjects.Physical.MaterialPair(Me)
                         doPair.LoadData(oXml)
-                        m_aryMaterialPairs.Add(doPair.ID, doPair)
+                        m_aryMaterialPairs.Add(doPair.ID, doPair, False)
                     Next
 
                     oXml.OutOfElem()
@@ -1543,8 +1543,8 @@ Namespace DataObjects.Physical
             m_aryOrganisms.InitializeSimulationReferences()
             m_aryStructures.InitializeSimulationReferences()
             m_aryLights.InitializeSimulationReferences()
-            'm_aryMaterialTypes.InitializeSimulationReferences()
-            'm_aryMaterialPairs.InitializeSimulationReferences()
+            m_aryMaterialTypes.InitializeSimulationReferences()
+            m_aryMaterialPairs.InitializeSimulationReferences()
 
             'Get the actual physics time step after initialization of the sim object.
             If Not m_doInterface Is Nothing Then

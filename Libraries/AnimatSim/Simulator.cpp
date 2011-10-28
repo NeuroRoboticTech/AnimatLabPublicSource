@@ -3646,6 +3646,8 @@ BOOL Simulator::AddItem(string strItemType, string strXml, BOOL bThrowError)
 		AddOdorType(strXml);
 		return TRUE;
 	}
+	else if(strType == "MATERIALTYPE" || strType == "MATERIALPAIR")
+		return m_oMaterialMgr.AddItem(strItemType, strXml, bThrowError);
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
@@ -3679,6 +3681,8 @@ BOOL Simulator::RemoveItem(string strItemType, string strID, BOOL bThrowError)
 		RemoveOdorType(strID);
 		return TRUE;
 	}
+	else if(strType == "MATERIALTYPE" || strType == "MATERIALPAIR")
+		return m_oMaterialMgr.RemoveItem(strItemType, strID, bThrowError);
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)

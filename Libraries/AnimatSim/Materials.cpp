@@ -63,6 +63,138 @@ void Materials::Reset()
 	m_aryMaterialPairs.RemoveAll();
 }
 
+/**
+\brief	Creates and adds a new material type. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml	The xml data packet for loading the type. 
+**/
+void Materials::AddMaterialType(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("MaterialType");
+
+	MaterialType *lpType = LoadMaterialType(oXml);
+
+	//Get the first matieralpair so we can use it to register the material types.
+	MaterialPair *lpPair = m_aryMaterialPairs[0];
+
+	lpType->Initialize();
+	lpPair->RegisterMaterialType(lpType->ID());
+
+	m_aryMaterialTypes.Add(lpType);
+}
+
+/**
+\brief	Removes the material type with the specified ID. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strID	ID of the material type to remove
+\param	bThrowError	If true and ID is not found then it will throw an error.
+\exception If bThrowError is true and ID is not found.
+**/
+void Materials::RemoveMaterialType(string strID, BOOL bThrowError)
+{
+	int iPos = FindTypeListPos(strID, bThrowError);
+	m_aryMaterialTypes.RemoveAt(iPos);
+}
+
+/**
+\brief	Creates and adds a new material Pair. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml	The xml data packet for loading the pair. 
+**/
+void Materials::AddMaterialPair(string strXml)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("MaterialPair");
+
+	MaterialPair *lpPair = LoadMaterialPair(oXml);
+
+	lpPair->Initialize();
+	m_aryMaterialPairs.Add(lpPair);
+}
+
+/**
+\brief	Removes the material pair with the specified ID. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strID	ID of the material pair to remove
+\param	bThrowError	If true and ID is not found then it will throw an error.
+\exception If bThrowError is true and ID is not found.
+**/
+void Materials::RemoveMaterialPair(string strID, BOOL bThrowError)
+{
+	int iPos = FindPairListPos(strID, bThrowError);
+	m_aryMaterialPairs.RemoveAt(iPos);
+}
+
+/**
+\brief	Finds the array index for the material type with the specified ID
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strID ID of material type to find
+\param	bThrowError	If true and ID is not found then it will throw an error, else return NULL
+\exception If bThrowError is true and ID is not found.
+
+\return	If bThrowError is false and ID is not found returns NULL, 
+else returns the pointer to the found part.
+**/
+int Materials::FindTypeListPos(string strID, BOOL bThrowError)
+{
+	string sID = Std_ToUpper(Std_Trim(strID));
+
+	int iCount = m_aryMaterialTypes.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(m_aryMaterialTypes[iIndex]->ID() == sID)
+			return iIndex;
+
+	if(bThrowError)
+		THROW_TEXT_ERROR(Al_Err_lMaterialTypeIDNotFound, Al_Err_strMaterialTypeIDNotFound, "ID");
+
+	return -1;
+}
+
+/**
+\brief	Finds the array index for the material pair with the specified ID
+
+\param	strID ID of material pair to find
+\param	bThrowError	If true and ID is not found then it will throw an error, else return NULL
+\exception If bThrowError is true and ID is not found.
+
+\return	If bThrowError is false and ID is not found returns NULL, 
+else returns the pointer to the found part.
+**/
+int Materials::FindPairListPos(string strID, BOOL bThrowError)
+{
+	string sID = Std_ToUpper(Std_Trim(strID));
+
+	int iCount = m_aryMaterialPairs.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		if(m_aryMaterialPairs[iIndex]->ID() == sID)
+			return iIndex;
+
+	if(bThrowError)
+		THROW_TEXT_ERROR(Al_Err_lMaterialPairIDNotFound, Al_Err_strMaterialPairIDNotFound, "ID");
+
+	return -1;
+}
+
 void Materials::Initialize()
 {
 	AnimatBase::Initialize();
@@ -88,6 +220,52 @@ void Materials::Initialize()
 		lpPair = m_aryMaterialPairs[iIndex];
 		lpPair->Initialize();
 	}
+}
+
+BOOL Materials::AddItem(string strItemType, string strXml, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strItemType);
+
+	if(strType == "MATERIALTYPE")
+	{
+		AddMaterialType(strXml);
+		return TRUE;
+	}
+
+	if(strType == "MATERIALPAIR")
+	{
+		AddMaterialPair(strXml);
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
+
+	return FALSE;
+}
+
+BOOL Materials::RemoveItem(string strItemType, string strID, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strItemType);
+
+	if(strType == "MATERIALTYPE")
+	{
+		RemoveMaterialType(strID);
+		return TRUE;
+	}
+
+	if(strType == "MATERIALPAIR")
+	{
+		RemoveMaterialPair(strID);
+		return TRUE;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidItemType, Al_Err_strInvalidItemType, "Item Type", strItemType);
+
+	return FALSE;
 }
 
 void Materials::CreateDefaultMaterial()
