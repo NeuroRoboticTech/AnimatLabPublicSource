@@ -67,11 +67,7 @@ Namespace DataObjects
 
         Public ReadOnly Property AnimatModule() As String
             Get
-#If Not Debug Then
-                Return "VortexAnimatSim_VC10.dll"
-#Else
-                Return "VortexAnimatSim_VC10D.dll"
-#End If
+                Return "VortexAnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll"
             End Get
         End Property
 
@@ -113,11 +109,11 @@ Namespace DataObjects
             End Set
         End Property
 
-        Public Overridable Property LogLevel() As AnimatGUI.Interfaces.Logger.enumLogLevel
+        Public Overridable Property LogLevel() As ManagedAnimatInterfaces.ILogger.enumLogLevel
             Get
                 Return Util.Logger.TraceLevel
             End Get
-            Set(ByVal Value As AnimatGUI.Interfaces.Logger.enumLogLevel)
+            Set(ByVal Value As ManagedAnimatInterfaces.ILogger.enumLogLevel)
                 Util.Logger.TraceLevel = Value
             End Set
         End Property
@@ -273,25 +269,37 @@ Namespace DataObjects
         Public Sub New()
             MyBase.New(Nothing)
 
+            Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Sim.New started")
+
             m_strName = "Simulation"
             m_strID = "Simulator"
             m_snSimEndTime = New AnimatGUI.Framework.ScaledNumber(Me, "SimEndTime", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "seconds", "s")
 
+            Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Sim.New Adding handlers")
+
             'These events are called when the simulation is starting or resuming so that we can initialize certain objects like stimuli and data charts.
             AddHandler Util.Application.SimulationStarting, AddressOf Me.OnSimulationStarting
             AddHandler Util.Application.SimulationResuming, AddressOf Me.OnSimulationResuming
+
+            Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Sim.New Finished")
         End Sub
 
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
 
+            Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Sim.New started")
+
             m_strName = "Simulation"
             m_strID = "Simulator"
             m_snSimEndTime = New AnimatGUI.Framework.ScaledNumber(Me, "SimEndTime", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "seconds", "s")
 
+            Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Sim.New Adding handlers")
+
             'These events are called when the simulation is starting or resuming so that we can initialize certain objects like stimuli and data charts.
             AddHandler Util.Application.SimulationStarting, AddressOf Me.OnSimulationStarting
             AddHandler Util.Application.SimulationResuming, AddressOf Me.OnSimulationResuming
+
+            Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Sim.New Finished")
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As Framework.DataObject, ByVal bCutData As Boolean, ByVal doRoot As Framework.DataObject) As Framework.DataObject
@@ -299,7 +307,7 @@ Namespace DataObjects
             Return Nothing
         End Function
 
-        Public Overridable Overloads Function CreateObject(ByRef oXml As Interfaces.StdXml, ByVal strClassType As String, _
+        Public Overridable Overloads Function CreateObject(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strClassType As String, _
                                                            ByVal doParent As AnimatGUI.Framework.DataObject) As Framework.DataObject
             oXml.IntoElem()
 
@@ -628,7 +636,7 @@ Namespace DataObjects
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("API File", m_strAPI_File.GetType(), "APIFile", _
                                         "Settings", "APIFile", m_strAPI_File))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Log Level", GetType(AnimatGUI.Interfaces.Logger.enumLogLevel), "LogLevel", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Log Level", GetType(ManagedAnimatInterfaces.ILogger.enumLogLevel), "LogLevel", _
                                         "Logging", "Sets the level of logging in the application.", Me.LogLevel))
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Set Sim To End", m_bSetSimEnd.GetType(), "SetSimulationEnd", _
@@ -664,7 +672,7 @@ Namespace DataObjects
             Next
         End Sub
 
-        Public Overridable Overloads Sub LoadData(ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.IntoChildElement("Simulation")
 
@@ -691,7 +699,7 @@ Namespace DataObjects
 
         End Sub
 
-        Protected Overridable Sub LoadStimuli(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Protected Overridable Sub LoadStimuli(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             Try
 
@@ -718,7 +726,7 @@ Namespace DataObjects
 
         End Sub
 
-        Protected Overridable Sub LoadToolHolders(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Protected Overridable Sub LoadToolHolders(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             Try
 
@@ -744,7 +752,7 @@ Namespace DataObjects
 
         End Sub
 
-        Protected Overridable Sub LoadHudItems(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Protected Overridable Sub LoadHudItems(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             Try
 
@@ -777,7 +785,7 @@ Namespace DataObjects
 
         End Sub
 
-        Protected Overridable Sub SaveToolHolder(ByRef oXml As Interfaces.StdXml)
+        Protected Overridable Sub SaveToolHolder(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             oXml.AddChildElement("ToolViewers")
             oXml.IntoElem()
 
@@ -790,7 +798,7 @@ Namespace DataObjects
             oXml.OutOfElem()   'Outof ToolViewers element
         End Sub
 
-        Protected Overridable Function SaveStimuli(ByRef oXml As Interfaces.StdXml) As Collection
+        Protected Overridable Function SaveStimuli(ByVal oXml As ManagedAnimatInterfaces.IStdXml) As Collection
             oXml.AddChildElement("Stimuli")
             oXml.IntoElem()
 
@@ -819,7 +827,7 @@ Namespace DataObjects
             Next
         End Sub
 
-        Protected Overridable Sub SaveHudItems(ByRef oXml As Interfaces.StdXml)
+        Protected Overridable Sub SaveHudItems(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             oXml.AddChildElement("HudItems")
             oXml.IntoElem()   'Into Hud Items element
 
@@ -832,7 +840,7 @@ Namespace DataObjects
             oXml.OutOfElem()    'Outof Hud Items element
         End Sub
 
-        Public Overridable Overloads Sub SaveData(ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.AddChildElement("Simulation")
             oXml.IntoElem()
@@ -859,14 +867,14 @@ Namespace DataObjects
 
         Public Overloads Sub SaveSimulationXml(ByVal strFilename As String)
 
-            Dim oXml As New AnimatGUI.Interfaces.StdXml
+            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
             SaveSimulationXml(oXml, Nothing)
 
             oXml.Save(strFilename)
         End Sub
 
-        Protected Overridable Sub SaveSimStimuli(ByRef oXml As Interfaces.StdXml)
+        Protected Overridable Sub SaveSimStimuli(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             Dim doStim As DataObjects.ExternalStimuli.Stimulus
 
             oXml.AddChildElement("ExternalStimuli")
@@ -880,7 +888,7 @@ Namespace DataObjects
             oXml.OutOfElem()
         End Sub
 
-        Protected Overridable Sub SaveSimDataCharts(ByRef oXml As Interfaces.StdXml)
+        Protected Overridable Sub SaveSimDataCharts(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             oXml.AddChildElement("DataCharts")
             oXml.IntoElem()
             For Each frmWindow As System.Windows.Forms.Form In Util.Application.ChildForms
@@ -892,7 +900,7 @@ Namespace DataObjects
             oXml.OutOfElem()
         End Sub
 
-        Protected Overridable Sub SaveSimWindowMgr(ByRef oXml As Interfaces.StdXml)
+        Protected Overridable Sub SaveSimWindowMgr(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             oXml.AddChildElement("WindowMgr")
             oXml.IntoElem()   'Into WindowMgr element
 
@@ -914,7 +922,7 @@ Namespace DataObjects
             oXml.OutOfElem()    'Outof WindowMgr element
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             oXml.AddElement("Simulation")
 
@@ -939,7 +947,7 @@ Namespace DataObjects
             SaveSimStimuli(oXml)
             SaveSimDataCharts(oXml)
             SaveSimWindowMgr(oXml)
-   
+
             oXml.OutOfElem()
         End Sub
 
@@ -972,7 +980,7 @@ Namespace DataObjects
             Dim doObject As AnimatGUI.Framework.DataObject = MyBase.FindObjectByID(strID)
             If doObject Is Nothing AndAlso Not m_doEnvironment Is Nothing Then doObject = m_doEnvironment.FindObjectByID(strID)
             If doObject Is Nothing AndAlso Not m_aryProjectStimuli Is Nothing Then doObject = m_aryProjectStimuli.FindObjectByID(strID)
-             Return doObject
+            Return doObject
 
         End Function
 

@@ -125,7 +125,7 @@ Namespace Framework
             End Get
         End Property
 
-        Public Shared ReadOnly Property Logger() As AnimatGUI.Interfaces.Logger
+        Public Shared ReadOnly Property Logger() As ManagedAnimatInterfaces.ILogger
             Get
                 If Not Util.Application Is Nothing Then
                     Return Util.Application.Logger
@@ -531,7 +531,7 @@ Namespace Framework
             End Try
         End Function
 
-        Public Shared Function LoadClass(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal iIndex As Integer, _
+        Public Shared Function LoadClass(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal iIndex As Integer, _
                                          ByVal doParent As AnimatGUI.Framework.DataObject, Optional ByVal bThrowError As Boolean = True) As Object
             Dim strAssemblyFile As String = ""
             Dim strClassName As String = ""
@@ -749,7 +749,7 @@ Namespace Framework
             End If
         End Function
 
-        Public Overloads Shared Sub SavePoint(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String, ByVal ptPoint As PointF)
+        Public Overloads Shared Sub SavePoint(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String, ByVal ptPoint As PointF)
             oXml.AddChildElement(strName)
             oXml.IntoElem()
             oXml.SetAttrib("x", ptPoint.X)
@@ -757,7 +757,7 @@ Namespace Framework
             oXml.OutOfElem()
         End Sub
 
-        Public Overloads Shared Sub SavePoint(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String, ByVal ptPoint As Point)
+        Public Overloads Shared Sub SavePoint(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String, ByVal ptPoint As Point)
             oXml.AddChildElement(strName)
             oXml.IntoElem()
             oXml.SetAttrib("x", ptPoint.X)
@@ -765,7 +765,7 @@ Namespace Framework
             oXml.OutOfElem()
         End Sub
 
-        Public Shared Function LoadPointF(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String) As PointF
+        Public Shared Function LoadPointF(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String) As PointF
             Dim ptPoint As New PointF
             oXml.IntoChildElement(strName)
 
@@ -779,7 +779,7 @@ Namespace Framework
             oXml.OutOfElem()
         End Function
 
-        Public Shared Function LoadPoint(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String) As Point
+        Public Shared Function LoadPoint(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String) As Point
             Dim ptPoint As New Point
             oXml.IntoChildElement(strName)
 
@@ -795,7 +795,7 @@ Namespace Framework
             Return ptPoint
         End Function
 
-        Public Shared Function LoadColor(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String, ByVal clDefault As Color) As System.Drawing.Color
+        Public Shared Function LoadColor(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String, ByVal clDefault As Color) As System.Drawing.Color
             Dim r, g, b, alpha As Integer
             Dim clColor As Color
 
@@ -817,7 +817,7 @@ Namespace Framework
             Return clColor
         End Function
 
-        Public Shared Function LoadColor(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String) As System.Drawing.Color
+        Public Shared Function LoadColor(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String) As System.Drawing.Color
             Dim r, g, b, alpha As Integer
             Dim clColor As Color
 
@@ -837,14 +837,14 @@ Namespace Framework
 
         Public Shared Function SaveColorXml(ByVal strName As String, ByVal oColor As System.Drawing.Color) As String
 
-            Dim oXml As New AnimatGUI.Interfaces.StdXml
+            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
             oXml.AddElement("Root")
             SaveColor(oXml, strName, oColor)
 
             Return oXml.Serialize()
         End Function
 
-        Public Shared Sub SaveColor(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String, ByVal oColor As System.Drawing.Color)
+        Public Shared Sub SaveColor(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String, ByVal oColor As System.Drawing.Color)
 
             oXml.AddChildElement(strName)
             oXml.IntoElem()
@@ -856,7 +856,7 @@ Namespace Framework
 
         End Sub
 
-        Public Overloads Shared Sub SaveSize(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String, ByVal szSize As SizeF)
+        Public Overloads Shared Sub SaveSize(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String, ByVal szSize As SizeF)
             oXml.AddChildElement(strName)
             oXml.IntoElem()
             oXml.SetAttrib("Width", szSize.Width)
@@ -864,7 +864,7 @@ Namespace Framework
             oXml.OutOfElem()
         End Sub
 
-        Public Overloads Shared Sub SaveSize(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String, ByVal szSize As Size)
+        Public Overloads Shared Sub SaveSize(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String, ByVal szSize As Size)
             oXml.AddChildElement(strName)
             oXml.IntoElem()
             oXml.SetAttrib("Width", szSize.Width)
@@ -872,7 +872,7 @@ Namespace Framework
             oXml.OutOfElem()
         End Sub
 
-        Public Shared Function LoadSizeF(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String) As SizeF
+        Public Shared Function LoadSizeF(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String) As SizeF
             Dim szSize As SizeF
             oXml.IntoChildElement(strName)
             szSize.Width = oXml.GetAttribFloat("Width")
@@ -881,7 +881,7 @@ Namespace Framework
             Return szSize
         End Function
 
-        Public Shared Function LoadSize(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String) As Size
+        Public Shared Function LoadSize(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String) As Size
             Dim szSize As Size
             oXml.IntoChildElement(strName)
             szSize.Width = oXml.GetAttribInt("Width")
@@ -890,7 +890,7 @@ Namespace Framework
             Return szSize
         End Function
 
-        Public Overloads Shared Sub SaveVector(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String, ByVal ptVector As Vec3i)
+        Public Overloads Shared Sub SaveVector(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String, ByVal ptVector As Vec3i)
             oXml.AddChildElement(strName)
             oXml.IntoElem()
             oXml.SetAttrib("x", ptVector.X)
@@ -899,7 +899,7 @@ Namespace Framework
             oXml.OutOfElem()
         End Sub
 
-        Public Shared Function LoadVec3i(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String, ByVal doParent As AnimatGUI.Framework.DataObject) As Vec3i
+        Public Shared Function LoadVec3i(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String, ByVal doParent As AnimatGUI.Framework.DataObject) As Vec3i
             Dim ptVector As New Vec3i(doParent)
             oXml.IntoChildElement(strName)
             ptVector.X = oXml.GetAttribInt("x")
@@ -909,7 +909,7 @@ Namespace Framework
             Return ptVector
         End Function
 
-        Public Overloads Shared Sub SaveVector(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String, ByVal ptVector As Vec3d)
+        Public Overloads Shared Sub SaveVector(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String, ByVal ptVector As Vec3d)
             oXml.AddChildElement(strName)
             oXml.IntoElem()
             oXml.SetAttrib("x", ptVector.X)
@@ -918,7 +918,7 @@ Namespace Framework
             oXml.OutOfElem()
         End Sub
 
-        Public Shared Function LoadVec3d(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String, ByVal doParent As AnimatGUI.Framework.DataObject) As Vec3d
+        Public Shared Function LoadVec3d(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String, ByVal doParent As AnimatGUI.Framework.DataObject) As Vec3d
             Dim ptVector As New Vec3d(doParent)
             oXml.IntoChildElement(strName)
             ptVector.X = oXml.GetAttribDouble("x")
@@ -928,7 +928,7 @@ Namespace Framework
             Return ptVector
         End Function
 
-        Public Shared Sub SaveFont(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String, ByVal oFont As Font)
+        Public Shared Sub SaveFont(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String, ByVal oFont As Font)
             oXml.AddChildElement(strName)
             oXml.IntoElem()
             oXml.SetAttrib("Family", oFont.Name)
@@ -940,7 +940,7 @@ Namespace Framework
             oXml.OutOfElem()
         End Sub
 
-        Public Shared Function LoadFont(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String) As Font
+        Public Shared Function LoadFont(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String) As Font
             oXml.IntoChildElement(strName)
             Dim strFamily As String = oXml.GetAttribString("Family")
             Dim fltSize As Single = oXml.GetAttribFloat("Size")
@@ -1001,7 +1001,7 @@ Namespace Framework
             Return CSng((fltRadians / Math.PI) * 180.0)
         End Function
 
-        Public Shared Function LoadID(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strRootName As String, Optional ByVal bUseDefault As Boolean = False, Optional ByVal strDefault As String = "") As String
+        Public Shared Function LoadID(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strRootName As String, Optional ByVal bUseDefault As Boolean = False, Optional ByVal strDefault As String = "") As String
             Dim strID As String = ""
 
             If bUseDefault Then
@@ -1125,7 +1125,7 @@ Namespace Framework
                 System.Configuration.ConfigurationManager.AppSettings("DefaultNewFolder") = Util.Application.DefaultNewFolder
 
 
-                'Dim oXmlRead As New AnimatGUI.Interfaces.StdXml
+                'Dim oXmlRead As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
                 ''Dim readInfo as
                 'oXmlRead.Load(Util.Application.ApplicationDirectory() & "AnimatLab.config")
 
@@ -1137,7 +1137,7 @@ Namespace Framework
 
                 'oXmlRead = Nothing
 
-                'Dim oXmlWrite As New AnimatGUI.Interfaces.StdXml
+                'Dim oXmlWrite As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
                 'oXmlWrite.AddElement("AnimatLabConfig")
                 'oXmlWrite.AddChildElement("AssemblyName", strAssemName)
@@ -1155,7 +1155,7 @@ Namespace Framework
             End Try
         End Sub
 
-        Public Shared Function LoadGain(ByVal strGainName As String, ByVal strPropName As String, ByRef oParent As Framework.DataObject, ByRef oXml As AnimatGUI.Interfaces.StdXml) As AnimatGUI.DataObjects.Gain
+        Public Shared Function LoadGain(ByVal strGainName As String, ByVal strPropName As String, ByRef oParent As Framework.DataObject, ByVal oXml As ManagedAnimatInterfaces.IStdXml) As AnimatGUI.DataObjects.Gain
             Dim gnGain As AnimatGUI.DataObjects.Gain
 
             Try
@@ -1304,7 +1304,7 @@ Namespace Framework
             Return tnNode
         End Function
 
-        Public Shared Sub LoadClassModuleName(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal iIndex As Integer, _
+        Public Shared Sub LoadClassModuleName(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal iIndex As Integer, _
                                               ByRef strAssemblyFile As String, ByRef strClassName As String, Optional ByVal bThrowError As Boolean = True)
 
             Try
@@ -1348,7 +1348,7 @@ Namespace Framework
         'return result;
         '    End Function
 
-        Public Shared Function GetXmlForPaste(ByVal data As IDataObject, ByVal strFormatType As String, ByVal strRootName As String) As AnimatGUI.Interfaces.StdXml
+        Public Shared Function GetXmlForPaste(ByVal data As IDataObject, ByVal strFormatType As String, ByVal strRootName As String) As ManagedAnimatInterfaces.IStdXml
 
             ' Get the data from the clipboard
             Dim strXml As String = DirectCast(data.GetData(strFormatType), String)
@@ -1356,7 +1356,7 @@ Namespace Framework
                 Return Nothing
             End If
 
-            Dim oXml As New AnimatGUI.Interfaces.StdXml
+            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
             oXml.Deserialize(strXml)
 
             'Get the list of 
@@ -1364,13 +1364,13 @@ Namespace Framework
 
             Dim strReplacedXml As String = ReplaceIDsFromList(strXml, aryReplaceIDList)
 
-            Dim oReplaceXml As New AnimatGUI.Interfaces.StdXml
+            Dim oReplaceXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
             oReplaceXml.Deserialize(strReplacedXml)
 
             Return oReplaceXml
         End Function
 
-        Protected Shared Function GetReplaceIDList(ByVal oXml As AnimatGUI.Interfaces.StdXml, ByVal strRootName As String) As ArrayList
+        Protected Shared Function GetReplaceIDList(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strRootName As String) As ArrayList
 
             Dim aryRepaceList As New ArrayList
             Dim strID As String = ""
@@ -1418,7 +1418,7 @@ Namespace Framework
             If Util.Application.BodyPasteInProgress Then
                 Dim data As IDataObject = Clipboard.GetDataObject()
                 If Not data Is Nothing AndAlso data.GetDataPresent("AnimatLab.BodyPlan.XMLFormat") Then
-                    Dim oXml As AnimatGUI.Interfaces.StdXml = GetXmlForPaste(data, "AnimatLab.BodyPlan.XMLFormat", "BodyPlan")
+                    Dim oXml As ManagedAnimatInterfaces.IStdXml = GetXmlForPaste(data, "AnimatLab.BodyPlan.XMLFormat", "BodyPlan")
 
                     If Not oXml Is Nothing Then
                         oXml.FindElement("BodyPlan")

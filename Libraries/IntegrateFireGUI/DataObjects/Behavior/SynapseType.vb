@@ -185,7 +185,7 @@ Namespace DataObjects.Behavior
 
 #End Region
 
-        Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             Try
                 Me.IsDirty = False
 
@@ -226,7 +226,7 @@ Namespace DataObjects.Behavior
 
         End Sub
 
-        Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             Try
 

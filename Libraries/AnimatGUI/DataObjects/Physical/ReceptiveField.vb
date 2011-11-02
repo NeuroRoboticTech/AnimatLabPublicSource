@@ -80,7 +80,7 @@ Namespace DataObjects.Physical
 
 #End Region
 
-        Public Overridable Overloads Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             m_aryPairs.Clear()
 
@@ -89,7 +89,7 @@ Namespace DataObjects.Physical
             oXml.OutOfElem()
         End Sub
 
-        Public Overridable Overloads Sub SaveData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub SaveData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.AddChildElement("ReceptiveField")
             oXml.IntoElem()
@@ -101,8 +101,8 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
- 
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+
             oXml.AddChildElement("ReceptiveField")
             oXml.IntoElem()
 

@@ -758,7 +758,7 @@ void DataChart::Load(string strProjectPath, string strConfigFile)
 {
 	CStdXml oXml;
 
-	TRACE_DEBUG("Loading data chart config file.\r\nFile: " + strConfigFile);
+	//TRACE_DEBUG(("Loading data chart config file.\r\nFile: " + strConfigFile);
 
 	if(Std_IsBlank(strProjectPath)) 
 		THROW_ERROR(Al_Err_lProjectPathBlank, Al_Err_strProjectPathBlank);
@@ -776,7 +776,7 @@ void DataChart::Load(string strProjectPath, string strConfigFile)
 
 	Load(oXml);
 
-	TRACE_DEBUG("Finished loading data chart config file.");
+	//TRACE_DEBUG(("Finished loading data chart config file.");
 }
 
 

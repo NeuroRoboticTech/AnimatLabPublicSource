@@ -104,11 +104,7 @@ Namespace DataObjects.Physical.Bodies
         <Browsable(False)> _
         Public Overrides ReadOnly Property ModuleName() As String
             Get
-#If Not Debug Then
-                Return "VortexAnimatPrivateSim_VC10.dll"
-#Else
-                Return "VortexAnimatPrivateSim_VC10D.dll"
-#End If
+                Return "VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll"
             End Get
         End Property
 
@@ -181,7 +177,7 @@ Namespace DataObjects.Physical.Bodies
         End Sub
 
 
-        Public Overloads Overrides Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
+        Public Overloads Overrides Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(doStructure, oXml)
 
             oXml.IntoElem() 'Into RigidBody Element
@@ -196,7 +192,7 @@ Namespace DataObjects.Physical.Bodies
 
         End Sub
 
-        Public Overloads Overrides Sub SaveData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
+        Public Overloads Overrides Sub SaveData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.SaveData(doStructure, oXml)
 
             oXml.IntoElem() 'Into Child Elemement
@@ -211,7 +207,7 @@ Namespace DataObjects.Physical.Bodies
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
             MyBase.SaveSimulationXml(oXml, nmParentControl, strName)
 
             oXml.IntoElem()

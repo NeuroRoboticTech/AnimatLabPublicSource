@@ -36,10 +36,10 @@
 #include <string.h>
 using namespace std;
 
-//#define STD_TRACING_ON
+#define STD_TRACING_ON
 //#define STD_TRACE_DEBUG
 //#define STD_TRACE_INFO
-//#define STD_TRACE_DETAIL
+#define STD_TRACE_DETAIL
 
 #define STD_TRACE_TO_DEBUGGER
 #define STD_TRACE_TO_FILE true

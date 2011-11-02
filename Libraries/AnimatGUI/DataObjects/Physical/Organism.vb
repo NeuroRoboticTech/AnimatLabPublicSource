@@ -289,7 +289,7 @@ Namespace DataObjects.Physical
 
 #Region " Load/Save Methods "
 
-        Public Overridable Sub LoadNeuralModules(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overridable Sub LoadNeuralModules(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             Try
                 Dim oMod As Object
@@ -331,7 +331,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overridable Overloads Sub LoadData(ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             Try
                 'Load the structure data
@@ -364,7 +364,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overridable Overloads Sub SaveData(ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.SaveData(oXml)
 
             oXml.IntoElem()  'Into organism
@@ -394,7 +394,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
             MyBase.SaveSimulationXml(oXml, nmParentControl, strName)
 
             Try

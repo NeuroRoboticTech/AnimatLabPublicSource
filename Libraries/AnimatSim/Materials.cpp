@@ -312,7 +312,7 @@ void Materials::LoadMaterialTypes(CStdXml &oXml)
 	oXml.OutOfElem(); //Outof MaterialsTypes Element
 
 	if(!bDefaultFound)
-		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Material");
+		THROW_ERROR(Al_Err_lDefaultMaterialNotFound, Al_Err_strDefaultMaterialNotFound);
 }
 
 void Materials::LoadMaterialPairs(CStdXml &oXml)

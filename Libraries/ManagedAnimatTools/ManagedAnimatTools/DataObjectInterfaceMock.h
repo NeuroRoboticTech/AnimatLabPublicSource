@@ -19,44 +19,44 @@ namespace AnimatGUI
 		protected:
 
 		public:
-			DataObjectInterfaceMock(Interfaces::ISimulatorInterface ^SimInt, String ^strID);
+			DataObjectInterfaceMock(ManagedAnimatInterfaces::ISimulatorInterface ^SimInt, String ^strID);
 			!DataObjectInterfaceMock();
 			~DataObjectInterfaceMock();
 
 		#pragma region Properties
 
-					virtual property float Position[int]
-					{
-						float get(int i) 
-						{
-							return 0;
-						}
-						void set(int i, float fltVal) 
-						{
-						}
-					}
+			virtual property float Position[int]
+			{
+				float get(int i) 
+				{
+					return 0;
+				}
+				void set(int i, float fltVal) 
+				{
+				}
+			}
 
-					virtual property float WorldPosition[int]
-					{
-						float get(int i) 
-						{
-							return 0;
-						}
-						void set(int i, float fltVal) 
-						{
-						}
-					}
+			virtual property float WorldPosition[int]
+			{
+				float get(int i) 
+				{
+					return 0;
+				}
+				void set(int i, float fltVal) 
+				{
+				}
+			}
 
-					virtual property float Rotation[int]
-					{
-						float get(int i) 
-						{
-							return 0;
-						}
-						void set(int i, float fltVal) 
-						{
-						}
-					}
+			virtual property float Rotation[int]
+			{
+				float get(int i) 
+				{
+					return 0;
+				}
+				void set(int i, float fltVal) 
+				{
+				}
+			}
 
 		#pragma endregion
 

@@ -302,7 +302,7 @@ Namespace DataObjects.Gains.MuscleGains
             'RecalculuateLimits()
         End Sub
 
-        Protected Overrides Sub SetAllSimData(ByVal doInterface As Interfaces.IDataObjectInterface)
+        Protected Overrides Sub SetAllSimData(ByVal doInterface As ManagedAnimatInterfaces.IDataObjectInterface)
             MyBase.SetAllSimData(doInterface)
 
             SetSimData("Stiffness", m_snStiffness.ActualValue.ToString, True)
@@ -332,7 +332,7 @@ Namespace DataObjects.Gains.MuscleGains
             m_snUpperOutput.ActualValue = m_snUpperOutput.ActualValue * fltDistChange
         End Sub
 
-        Public Overloads Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String, ByVal strGainPropertyName As String)
+        Public Overloads Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String, ByVal strGainPropertyName As String)
             MyBase.LoadData(oXml, strName, strGainPropertyName)
 
             oXml.IntoElem()
@@ -354,7 +354,7 @@ Namespace DataObjects.Gains.MuscleGains
 
         End Sub
 
-        Public Overloads Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String)
+        Public Overloads Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String)
             MyBase.SaveData(oXml, strName)
 
             oXml.IntoElem()
@@ -366,7 +366,7 @@ Namespace DataObjects.Gains.MuscleGains
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
             MyBase.SaveSimulationXml(oXml, nmParentControl, strName)
 
             oXml.IntoElem()

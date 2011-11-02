@@ -112,7 +112,7 @@ Namespace DataObjects.Physical
 
 #End Region
 
-        Public Overridable Overloads Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             oXml.IntoElem()
             m_strID = oXml.GetChildString("ID")
             m_strFieldID = oXml.GetChildString("FieldID")
@@ -120,7 +120,7 @@ Namespace DataObjects.Physical
             oXml.OutOfElem()
         End Sub
 
-        Public Overridable Overloads Sub SaveData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub SaveData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.AddChildElement("FieldPair")
             oXml.IntoElem()
@@ -131,7 +131,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             oXml.AddChildElement("FieldPair")
             oXml.IntoElem()

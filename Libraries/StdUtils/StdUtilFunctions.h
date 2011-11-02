@@ -230,28 +230,55 @@ void STD_UTILS_PORT Std_ResetLog();
 //Turn on logging depending on the detail desired.
 #ifdef STD_TRACING_ON
 	#ifdef STD_TRACE_DETAIL
-		#define TRACE_DEBUG_NS(m) Std_TraceMsg(StdLogDebug, m, "", -1, STD_TRACE_TO_FILE, false)
-		#define TRACE_DEBUG(m) Std_TraceMsg(StdLogDebug, m, __FILE__, __LINE__, STD_TRACE_TO_FILE, true)
-		#define TRACE_INFO(m) Std_TraceMsg(StdLogInfo, m, __FILE__, __LINE__, STD_TRACE_TO_FILE, true)
-		#define TRACE_INFO_NS(m) Std_TraceMsg(StdLogInfo, m, "", -1, STD_TRACE_TO_FILE, false)
-		#define TRACE_DETAIL(m) Std_TraceMsg(StdLogDetail, m, __FILE__, __LINE__, STD_TRACE_TO_FILE, true)
-		#define TRACE_DETAIL_NS(m) Std_TraceMsg(StdLogDetail, m, "", -1, STD_TRACE_TO_FILE, false)
-	#else
-		#ifdef STD_TRACE_INFO
+		#ifdef _DEBUG
 			#define TRACE_DEBUG_NS(m) Std_TraceMsg(StdLogDebug, m, "", -1, STD_TRACE_TO_FILE, false)
 			#define TRACE_DEBUG(m) Std_TraceMsg(StdLogDebug, m, __FILE__, __LINE__, STD_TRACE_TO_FILE, true)
 			#define TRACE_INFO(m) Std_TraceMsg(StdLogInfo, m, __FILE__, __LINE__, STD_TRACE_TO_FILE, true)
 			#define TRACE_INFO_NS(m) Std_TraceMsg(StdLogInfo, m, "", -1, STD_TRACE_TO_FILE, false)
-			#define TRACE_DETAIL(m)
-			#define TRACE_DETAIL_NS(m)
+			#define TRACE_DETAIL(m) Std_TraceMsg(StdLogDetail, m, __FILE__, __LINE__, STD_TRACE_TO_FILE, true)
+			#define TRACE_DETAIL_NS(m) Std_TraceMsg(StdLogDetail, m, "", -1, STD_TRACE_TO_FILE, false)
 		#else
-			#ifdef STD_TRACE_DEBUG
+			#define TRACE_DEBUG_NS(m) Std_LogMsg(StdLogDebug, m, "", -1, false)
+			#define TRACE_DEBUG(m) Std_LogMsg(StdLogDebug, m, __FILE__, __LINE__, true)
+			#define TRACE_INFO(m) Std_LogMsg(StdLogInfo, m, __FILE__, __LINE__, true)
+			#define TRACE_INFO_NS(m) Std_LogMsg(StdLogInfo, m, "", -1, false)
+			#define TRACE_DETAIL(m) Std_LogMsg(StdLogDetail, m, __FILE__, __LINE__, true)
+			#define TRACE_DETAIL_NS(m) Std_LogMsg(StdLogDetail, m, "", -1, false)
+		#endif          
+	#else
+		#ifdef STD_TRACE_INFO
+			#ifdef _DEBUG
 				#define TRACE_DEBUG_NS(m) Std_TraceMsg(StdLogDebug, m, "", -1, STD_TRACE_TO_FILE, false)
 				#define TRACE_DEBUG(m) Std_TraceMsg(StdLogDebug, m, __FILE__, __LINE__, STD_TRACE_TO_FILE, true)
-				#define TRACE_INFO(m)
-				#define TRACE_INFO_NS(m)
+				#define TRACE_INFO(m) Std_TraceMsg(StdLogInfo, m, __FILE__, __LINE__, STD_TRACE_TO_FILE, true)
+				#define TRACE_INFO_NS(m) Std_TraceMsg(StdLogInfo, m, "", -1, STD_TRACE_TO_FILE, false)
 				#define TRACE_DETAIL(m)
 				#define TRACE_DETAIL_NS(m)
+			#else
+				#define TRACE_DEBUG_NS(m) Std_LogMsg(StdLogDebug, m, "", -1, false)
+				#define TRACE_DEBUG(m) Std_LogMsg(StdLogDebug, m, __FILE__, __LINE__, true)
+				#define TRACE_INFO(m) Std_LogMsg(StdLogInfo, m, __FILE__, __LINE__, true)
+				#define TRACE_INFO_NS(m) Std_LogMsg(StdLogInfo, m, "", -1, false)
+				#define TRACE_DETAIL(m)
+				#define TRACE_DETAIL_NS(m)
+			#endif          
+		#else
+			#ifdef STD_TRACE_DEBUG
+				#ifdef _DEBUG
+					#define TRACE_DEBUG_NS(m) Std_TraceMsg(StdLogDebug, m, "", -1, STD_TRACE_TO_FILE, false)
+					#define TRACE_DEBUG(m) Std_TraceMsg(StdLogDebug, m, __FILE__, __LINE__, STD_TRACE_TO_FILE, true)
+					#define TRACE_INFO(m)
+					#define TRACE_INFO_NS(m)
+					#define TRACE_DETAIL(m)
+					#define TRACE_DETAIL_NS(m)
+				#else
+					#define TRACE_DEBUG_NS(m) Std_LogMsg(StdLogDebug, m, "", -1, false)
+					#define TRACE_DEBUG(m) Std_LogMsg(StdLogDebug, m, __FILE__, __LINE__, true)
+					#define TRACE_INFO(m)
+					#define TRACE_INFO_NS(m)
+					#define TRACE_DETAIL(m)
+					#define TRACE_DETAIL_NS(m)
+				#endif          
 			#else
 				#define TRACE_DEBUG_NS(m)
 				#define TRACE_DEBUG(m)

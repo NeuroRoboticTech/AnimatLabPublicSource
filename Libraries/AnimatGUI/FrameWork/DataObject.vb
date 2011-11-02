@@ -32,7 +32,7 @@ Namespace Framework
         Protected m_bUndoRedoInProgress As Boolean = False
         Protected m_bSetValueInProgress As Boolean = False
 
-        Protected m_doInterface As Interfaces.IDataObjectInterface = Nothing
+        Protected m_doInterface As ManagedAnimatInterfaces.IDataObjectInterface = Nothing
 
         Protected m_WorkspaceImage As System.Drawing.Image
         Protected m_tnWorkspaceNode As Crownwood.DotNetMagic.Controls.Node
@@ -279,7 +279,7 @@ Namespace Framework
         End Property
 
         <Browsable(False)> _
-        Public Overridable ReadOnly Property SimInterface() As Interfaces.IDataObjectInterface
+        Public Overridable ReadOnly Property SimInterface() As ManagedAnimatInterfaces.IDataObjectInterface
             Get
                 Return m_doInterface
             End Get
@@ -310,11 +310,15 @@ Namespace Framework
 #Region " Methods "
 
         Public Sub New(ByVal doParent As Framework.DataObject)
+            If Not Util.Logger Is Nothing Then Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Creating Dataobject: " & Me.GetType().ToString)
+
             m_doParent = doParent
 
             If Not Util.Application Is Nothing Then
                 AddHandler Util.Application.ApplicationExiting, AddressOf Me.OnApplicationExiting
             End If
+
+            If Not Util.Logger Is Nothing Then Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Finished Dataobject: " & Me.GetType().ToString)
         End Sub
 
         Protected Overridable Sub CreateProperties()
@@ -664,11 +668,11 @@ Namespace Framework
         Public Overridable Sub EnsureFormActive()
         End Sub
 
-        Public Overridable Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overridable Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             Me.IsDirty = False
         End Sub
 
-        Public Overridable Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overridable Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
         End Sub
 
         Public Overridable Sub InitializeAfterLoad()
@@ -752,12 +756,12 @@ Namespace Framework
 
 #Region " Save Simulation Methods "
 
-        Public Overridable Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overridable Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
         End Sub
 
         Public Overridable Function GetSimulationXml(ByVal strName As String, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing) As String
 
-            Dim oXml As New AnimatGUI.Interfaces.StdXml
+            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
             oXml.AddElement("Root")
             SaveSimulationXml(oXml, nmParentControl, strName)
 

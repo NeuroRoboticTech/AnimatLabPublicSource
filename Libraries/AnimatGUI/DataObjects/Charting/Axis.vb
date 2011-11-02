@@ -381,7 +381,7 @@ Namespace DataObjects.Charting
             End If
         End Sub
 
-        Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.IntoElem() 'Into Axis Element
 
@@ -407,7 +407,7 @@ Namespace DataObjects.Charting
         End Sub
 
 
-        Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.AddChildElement("Axis")
             oXml.IntoElem()
@@ -443,7 +443,7 @@ Namespace DataObjects.Charting
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             Me.RemoveInvalidDataColumns()
 

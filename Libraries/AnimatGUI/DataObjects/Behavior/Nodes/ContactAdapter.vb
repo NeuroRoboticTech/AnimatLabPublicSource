@@ -149,7 +149,7 @@ Namespace DataObjects.Behavior.Nodes
 
         End Sub
 
-        Public Overridable Overloads Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(oXml)
 
             oXml.IntoElem()
@@ -174,7 +174,7 @@ Namespace DataObjects.Behavior.Nodes
             oXml.OutOfElem()
         End Sub
 
-        Public Overridable Overloads Sub SaveData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub SaveData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.SaveData(oXml)
 
             oXml.IntoElem()
@@ -193,7 +193,7 @@ Namespace DataObjects.Behavior.Nodes
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             oXml.AddChildElement("Adapter")
             oXml.IntoElem()

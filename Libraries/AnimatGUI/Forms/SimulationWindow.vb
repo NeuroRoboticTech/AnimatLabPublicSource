@@ -422,7 +422,7 @@ Namespace Forms
         End Sub
 
         Public Overridable Function GenerateSimWindowXml() As String
-            Dim oXml As New AnimatGUI.Interfaces.StdXml()
+            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
             oXml.AddElement("WindowMgr")
             oXml.AddChildElement("Window")
@@ -449,7 +449,7 @@ Namespace Forms
             Return oXml.Serialize()
         End Function
 
-        Public Overrides Sub LoadData(ByRef oXml As Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(oXml)
 
             oXml.IntoElem()
@@ -461,7 +461,7 @@ Namespace Forms
             ReconnectFormToWorkspace()
         End Sub
 
-        Public Overrides Sub SaveData(ByRef oXml As Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.SaveData(oXml)
 
             oXml.IntoElem()
@@ -513,7 +513,7 @@ Namespace Forms
                     Throw New System.Exception("This part cannot be copied.")
                 End If
 
-                Dim oXml As New AnimatGUI.Interfaces.StdXml
+                Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
                 SaveSelected(oXml, rbPart)
 
@@ -530,7 +530,7 @@ Namespace Forms
 
         End Sub
 
-        Public Overridable Function SaveSelected(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal rbPart As DataObjects.Physical.RigidBody) As Boolean
+        Public Overridable Function SaveSelected(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal rbPart As DataObjects.Physical.RigidBody) As Boolean
 
             oXml.AddElement("BodyPlan")
 

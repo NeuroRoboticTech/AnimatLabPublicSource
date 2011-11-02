@@ -230,7 +230,7 @@ Namespace DataObjects.Behavior.Synapses
             m_lsGatedSynapse.AddToReplaceIDList(aryReplaceIDList)
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             'Only save this as a synapse if the origin node is another FastNeuralNet neuron
             If Not Util.IsTypeOf(Me.Origin.GetType(), GetType(DataObjects.Behavior.Neurons.Normal), False) Then
@@ -327,7 +327,7 @@ Namespace DataObjects.Behavior.Synapses
 
 #End Region
 
-        Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(oXml)
 
             oXml.IntoElem()
@@ -365,7 +365,7 @@ Namespace DataObjects.Behavior.Synapses
 
         End Sub
 
-        Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             Try
                 MyBase.SaveData(oXml)

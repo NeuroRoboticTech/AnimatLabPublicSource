@@ -134,7 +134,7 @@ Namespace DataObjects.Physical
             Return doItem
         End Function
 
-        Public Overridable Overloads Sub LoadData(ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.IntoElem() 'Into Camera Element
 
@@ -161,7 +161,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overridable Overloads Sub SaveData(ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             'Only save this thing if we have good references for BOTH body parts.
             If Not m_doStructure Is Nothing AndAlso Not m_doPart1 Is Nothing AndAlso Not m_doPart2 Is Nothing Then
@@ -179,7 +179,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
             'Only save this thing if we have good references for BOTH body parts.
             If Not m_doStructure Is Nothing AndAlso Not m_doPart1 Is Nothing AndAlso Not m_doPart2 Is Nothing Then
                 If Not m_doStructure.FindBodyPart(m_doPart1.ID, False) Is Nothing AndAlso Not m_doStructure.FindBodyPart(m_doPart2.ID, False) Is Nothing Then

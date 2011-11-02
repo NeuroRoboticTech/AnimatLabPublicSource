@@ -252,14 +252,14 @@ Namespace DataObjects.ExternalStimuli
                 Throw New System.Exception("No bodypart was defined for the stimulus '" & m_strName & "'.")
             End If
 
-            Dim oXml As New AnimatGUI.Interfaces.StdXml
+            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
             oXml.AddElement("Root")
             SaveSimulationXml(oXml, nmParentControl, strName)
 
             Return oXml.Serialize()
         End Function
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             If m_doStructure Is Nothing Then
                 Throw New System.Exception("No structure was defined for the stimulus '" & m_strName & "'.")
@@ -380,7 +380,7 @@ Namespace DataObjects.ExternalStimuli
 
         End Sub
 
-        Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(oXml)
 
             oXml.IntoElem()
@@ -415,7 +415,7 @@ Namespace DataObjects.ExternalStimuli
             Me.IsDirty = False
         End Sub
 
-        Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.SaveData(oXml)
 
             oXml.IntoElem()

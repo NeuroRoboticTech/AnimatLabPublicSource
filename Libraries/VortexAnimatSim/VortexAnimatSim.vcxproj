@@ -97,6 +97,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4204;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libVx5.lib;libVxController5.lib;libVxControllerPersistence5.lib;libVxGraphics5.lib;libVxPersistence5.lib;libVxPs5.lib;libVxPsExtraOSG5.lib;libVxVehicle5.lib;libVxVehiclePersistence5.lib;libVxExtra5.lib;libVxExtraOSG5.lib;libVxVehicleExtra5.lib;libVxVehicleExtraOSG5.lib;libVxOSG5-2.8.3.lib;libboostVx_filesystem-vc100-mt.lib;libboostVx_regex-vc100-mt.lib;libboostVx_serialization-vc100-mt.lib;libboostVx_system-vc100-mt.lib;OpenThreads.lib;osgAnimation.lib;osg.lib;osgDB.lib;osgFX.lib;osgGA.lib;osgManipulator.lib;osgParticle.lib;osgShadow.lib;osgSim.lib;osgTerrain.lib;osgText.lib;osgUtil.lib;osgViewer.lib;osgVolume.lib;osgWidget.lib;SDL.lib;opengl32.lib;wsock32.lib;netapi32.lib;comctl32.lib;wbemuuid.lib;;%(AdditionalDependencies)</AdditionalDependencies>

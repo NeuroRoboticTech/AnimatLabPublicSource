@@ -1,11 +1,11 @@
 #include "stdafx.h"
+//#include "ILogger.h"
 #include "Util.h"
-#include "Logger.h"
 #include "PropertyUpdateException.h"
-#include "ISimulatorInterface.h"
+//#include "ISimulatorInterface.h"
 #include "SimulatorInterface.h"
 #include "SimGUICallback.h"
-#include "IDataObjectInterface.h"
+//#include "IDataObjectInterface.h"
 #include "DataObjectInterface.h"
 #include "MovableItemCallback.h"
 
@@ -14,7 +14,7 @@ namespace AnimatGUI
 	namespace Interfaces
 	{
 
-MovableItemCallback::MovableItemCallback(IDataObjectInterface ^doObj)
+MovableItemCallback::MovableItemCallback(ManagedAnimatInterfaces::IDataObjectInterface ^doObj)
 {
 	m_doObj = doObj;
 }

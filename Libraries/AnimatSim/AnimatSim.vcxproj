@@ -94,6 +94,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)AnimatSim_vc10.dll</OutputFile>

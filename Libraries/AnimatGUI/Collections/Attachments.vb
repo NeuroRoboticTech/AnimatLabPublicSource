@@ -128,7 +128,7 @@ Namespace Collections
             End Try
         End Sub
 
-        Public Overridable Sub LoadData(ByRef oXml As Interfaces.StdXml, ByVal aryIDs As ArrayList)
+        Public Overridable Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal aryIDs As ArrayList)
             aryIDs.Clear()
             If oXml.FindChildElement("Attachments", False) Then
                 oXml.IntoElem()
@@ -145,7 +145,7 @@ Namespace Collections
             End If
         End Sub
 
-        Public Overridable Sub SaveData(ByRef oXml As Interfaces.StdXml, ByVal doStruct As AnimatGUI.DataObjects.Physical.PhysicalStructure)
+        Public Overridable Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal doStruct As AnimatGUI.DataObjects.Physical.PhysicalStructure)
 
             oXml.AddChildElement("Attachments")
             oXml.IntoElem()  'Into MuscleAttachments
@@ -161,7 +161,7 @@ Namespace Collections
 
         End Sub
 
-        Public Overridable Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, ByVal doStruct As AnimatGUI.DataObjects.Physical.PhysicalStructure, Optional ByVal strName As String = "")
+        Public Overridable Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal doStruct As AnimatGUI.DataObjects.Physical.PhysicalStructure, Optional ByVal strName As String = "")
             oXml.AddChildElement("Attachments")
             oXml.IntoElem()  'Into MuscleAttachments
 
@@ -177,7 +177,7 @@ Namespace Collections
 
         Public Overridable Function GetSimulationXml(ByVal strName As String, ByVal doStruct As AnimatGUI.DataObjects.Physical.PhysicalStructure) As String
 
-            Dim oXml As New AnimatGUI.Interfaces.StdXml
+            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
             oXml.AddElement("Root")
             SaveSimulationXml(oXml, doStruct, strName)
 

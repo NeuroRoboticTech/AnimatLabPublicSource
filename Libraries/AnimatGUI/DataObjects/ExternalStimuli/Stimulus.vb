@@ -347,7 +347,7 @@ Namespace DataObjects.ExternalStimuli
 
 #Region " DragObject Methods "
 
-        Public Overrides Sub SaveDataColumnToXml(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub SaveDataColumnToXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
         End Sub
 
@@ -477,7 +477,7 @@ Namespace DataObjects.ExternalStimuli
             If Not m_snStepInterval Is Nothing Then m_snStepInterval.ClearIsDirty()
         End Sub
 
-        Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.IntoElem()
 
@@ -499,7 +499,7 @@ Namespace DataObjects.ExternalStimuli
             Me.IsDirty = False
         End Sub
 
-        Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.AddChildElement("Stimulus")
             oXml.IntoElem()
@@ -524,7 +524,7 @@ Namespace DataObjects.ExternalStimuli
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             oXml.AddChildElement("Stimulus")
             oXml.IntoElem()

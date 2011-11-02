@@ -92,6 +92,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)IntegrateFireSim_vc10.dll</OutputFile>

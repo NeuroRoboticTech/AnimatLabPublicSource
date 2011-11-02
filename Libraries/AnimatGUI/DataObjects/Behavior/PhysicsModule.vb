@@ -24,11 +24,7 @@ Namespace DataObjects.Behavior
 
         Public Overrides ReadOnly Property ModuleFilename() As String
             Get
-#If Not Debug Then
-                Return "VortexAnimatPrivateSim_VC10.dll"
-#Else
-                Return "VortexAnimatPrivateSim_VC10D.dll"
-#End If
+                Return "VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll"
             End Get
         End Property
 
@@ -65,7 +61,7 @@ Namespace DataObjects.Behavior
             Return oNewModule
         End Function
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
             MyBase.SaveSimulationXml(oXml, nmParentControl, strName)
 
             oXml.IntoElem() 'Into the neural module element.

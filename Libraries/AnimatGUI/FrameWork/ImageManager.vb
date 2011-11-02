@@ -279,7 +279,7 @@ Namespace Framework
             Return m_imgList.Images(GetImageIndex(strImageName))
         End Function
 
-        Public Overloads Shared Sub ImageToXml(ByRef oXml As Interfaces.StdXml, ByVal strName As String, ByVal image As Image)
+        Public Overloads Shared Sub ImageToXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String, ByVal image As Image)
 
             Dim sb As System.Text.StringBuilder = New System.Text.StringBuilder
             Dim stringWriter As System.IO.StringWriter = New System.IO.StringWriter(sb)
@@ -317,7 +317,7 @@ Namespace Framework
 
         End Sub
 
-        Public Overloads Shared Function XmlToImage(ByVal oXml As Interfaces.StdXml, ByVal strName As String) As Image
+        Public Overloads Shared Function XmlToImage(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String) As Image
 
             oXml.FindChildElement(strName)
             Dim strImageXml As String = oXml.GetChildDoc()

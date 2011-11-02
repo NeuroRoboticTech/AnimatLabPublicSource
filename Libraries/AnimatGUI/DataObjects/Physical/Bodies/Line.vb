@@ -324,7 +324,7 @@ Namespace DataObjects.Physical.Bodies
             If Not m_snLength Is Nothing Then m_snLength.ClearIsDirty()
         End Sub
 
-        Public Overloads Overrides Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
+        Public Overloads Overrides Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.IntoElem() 'Into RigidBody Element
 
@@ -359,7 +359,7 @@ Namespace DataObjects.Physical.Bodies
 
         End Sub
 
-        Public Overloads Overrides Sub SaveData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByRef oXml As Interfaces.StdXml)
+        Public Overloads Overrides Sub SaveData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             oXml.AddChildElement(Me.BodyPartType)
 
             oXml.IntoElem() 'Into Child Elemement
@@ -387,7 +387,7 @@ Namespace DataObjects.Physical.Bodies
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
             oXml.AddChildElement(Me.BodyPartType)
 
             oXml.IntoElem() 'Into Child Elemement

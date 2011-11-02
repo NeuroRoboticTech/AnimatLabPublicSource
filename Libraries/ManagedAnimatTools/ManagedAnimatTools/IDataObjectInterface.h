@@ -47,33 +47,33 @@ public:
 
 #pragma region Methods
 
-	virtual System::Boolean SetData(String ^sDataType, String ^sValue, System::Boolean bThrowError);
-	virtual void SelectItem(bool bVal, bool bSelectMultiple);
+		virtual System::Boolean SetData(String ^sDataType, String ^sValue, System::Boolean bThrowError);
+		virtual void SelectItem(bool bVal, bool bSelectMultiple);
 
-	virtual void GetDataPointer(String ^sData);
-	virtual float GetDataValue(String ^sData);
-	virtual float GetDataValueImmediate(String ^sData);
+		virtual void GetDataPointer(String ^sData);
+		virtual float GetDataValue(String ^sData);
+		virtual float GetDataValueImmediate(String ^sData);
 
-	virtual float GetBoundingBoxValue(int iIndex) = 0;
-	virtual void OrientNewPart(double dblXPos, double dblYPos, double dblZPos, double dblXNorm, double dblYNorm, double dblZNorm);
-	virtual System::Boolean CalculateLocalPosForWorldPos(double dblXWorldX, double dblWorldY, double dblWorldZ, System::Collections::ArrayList ^aryLocalPos);
+		virtual float GetBoundingBoxValue(int iIndex) = 0;
+		virtual void OrientNewPart(double dblXPos, double dblYPos, double dblZPos, double dblXNorm, double dblYNorm, double dblZNorm);
+		virtual System::Boolean CalculateLocalPosForWorldPos(double dblXWorldX, double dblWorldY, double dblWorldZ, System::Collections::ArrayList ^aryLocalPos);
 
 #pragma endregion
 
 
 #pragma region Events
 
-	virtual event PositionChangedHandler^ OnPositionChanged;
-	virtual event RotationChangedHandler^ OnRotationChanged;
-	virtual event SelectionChangedHandler^ OnSelectionChanged;
-	virtual event AddBodyClickedHandler^ OnAddBodyClicked;
-	virtual event SelectedVertexChangedHandler^ OnSelectedVertexChanged;
+		virtual event PositionChangedHandler^ OnPositionChanged;
+		virtual event RotationChangedHandler^ OnRotationChanged;
+		virtual event SelectionChangedHandler^ OnSelectionChanged;
+		virtual event AddBodyClickedHandler^ OnAddBodyClicked;
+		virtual event SelectedVertexChangedHandler^ OnSelectedVertexChanged;
 
-	virtual void FirePositionChangedEvent();
-	virtual void FireRotationChangedEvent();
-	virtual void FireSelectionChangedEvent(BOOL bSelected, BOOL bSelectMultiple);
-	virtual void FireAddBodyClickedEvent(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ);
-	virtual void FireSelectedVertexChangedEvent(float fltPosX, float fltPosY, float fltPosZ); 
+		virtual void FirePositionChangedEvent();
+		virtual void FireRotationChangedEvent();
+		virtual void FireSelectionChangedEvent(BOOL bSelected, BOOL bSelectMultiple);
+		virtual void FireAddBodyClickedEvent(float fltPosX, float fltPosY, float fltPosZ, float fltNormX, float fltNormY, float fltNormZ);
+		virtual void FireSelectedVertexChangedEvent(float fltPosX, float fltPosY, float fltPosZ); 
 
 #pragma endregion
 

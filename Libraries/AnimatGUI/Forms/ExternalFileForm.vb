@@ -31,7 +31,7 @@ Namespace Forms
 
 #Region " Methods "
 
-        Public Overrides Sub LoadData(ByRef oXml As Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.IntoElem()
 
@@ -45,7 +45,7 @@ Namespace Forms
 
         End Sub
 
-        Public Overrides Sub SaveData(ByRef oXml As Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.AddChildElement("Form")
             oXml.IntoElem() 'Into Form Element
@@ -65,7 +65,7 @@ Namespace Forms
         Public Overridable Overloads Sub SaveExternalFile(ByVal strFilename As String)
 
             Try
-                Dim oXml As New AnimatGUI.Interfaces.StdXml
+                Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
                 oXml.AddElement("Form")
                 SaveExternalData(oXml)
@@ -80,7 +80,7 @@ Namespace Forms
         Public Overridable Overloads Sub LoadExternalFile(ByVal strFilename As String)
 
             Try
-                Dim oXml As New AnimatGUI.Interfaces.StdXml
+                Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
                 'If no file exsists yet then one has not been saved. Just go with the default creation
                 Dim strFile As String = Util.GetFilePath(Util.Application.ProjectPath, strFilename)
@@ -95,7 +95,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Protected Overridable Sub LoadExternalData(ByRef oXml As Interfaces.StdXml)
+        Protected Overridable Sub LoadExternalData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             oXml.IntoElem() 'Into Form Element
             m_strID = Util.LoadID(oXml, "")
             m_strTitle = oXml.GetChildString("Title")
@@ -103,7 +103,7 @@ Namespace Forms
             oXml.OutOfElem()
         End Sub
 
-        Protected Overridable Sub SaveExternalData(ByRef oXml As Interfaces.StdXml)
+        Protected Overridable Sub SaveExternalData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             oXml.AddChildElement("Form")
             oXml.IntoElem() 'Into Form Element
 

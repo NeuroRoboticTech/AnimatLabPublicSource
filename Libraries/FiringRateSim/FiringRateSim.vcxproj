@@ -93,6 +93,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)FiringRateSim_vc10.dll</OutputFile>

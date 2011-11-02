@@ -147,7 +147,7 @@ Namespace Forms.Tools
 
         End Sub
 
-        Public Overrides Sub LoadData(ByRef oXml As Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(oXml)
 
             ReconnectFormToWorkspace()

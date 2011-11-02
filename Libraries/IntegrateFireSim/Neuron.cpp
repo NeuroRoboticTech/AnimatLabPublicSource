@@ -643,10 +643,7 @@ void Neuron::Load(CStdXml &oXml)
 
 	m_fltGm = (float) (1/(m_dSize*1e6));
 	m_fltVrest = (float) (m_dRestingPot*1e-3);
-
-//	Std_LogMsg(0, "Test", __FILE__, __LINE__);
-//	LOG_MSG(0, STR(m_dHTimeConst)+ " H time const: ");
-
+	
 	if(oXml.FindChildElement("NeuronTonicInputs", FALSE) )
 	{
 		oXml.IntoElem();

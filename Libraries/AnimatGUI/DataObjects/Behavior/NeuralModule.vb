@@ -200,7 +200,7 @@ Namespace DataObjects.Behavior
             m_aryLinks.ClearIsDirty()
         End Sub
 
-        Public Overrides Sub LoadData(ByRef oXml As Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.IntoElem()  'Into Module Element
             m_strID = oXml.GetChildString("ID", m_strID)
@@ -210,7 +210,7 @@ Namespace DataObjects.Behavior
             Me.IsDirty = False
         End Sub
 
-        Public Overrides Sub SaveData(ByRef oXml As Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.AddChildElement("Node")
             oXml.IntoElem()  'Into Module Element
@@ -225,7 +225,7 @@ Namespace DataObjects.Behavior
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             oXml.AddChildElement("NeuralModule")
             oXml.IntoElem()

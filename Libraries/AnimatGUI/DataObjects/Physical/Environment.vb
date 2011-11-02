@@ -572,6 +572,9 @@ Namespace DataObjects.Physical
 
             AddHandler Util.Application.TimeStepChanged, AddressOf Me.OnTimeStepChanged
 
+            AddDefaultMaterialType(False)
+            AddDefaultMaterialPair(False)
+
         End Sub
 
         Public Overridable Sub AddOrganism()
@@ -1116,7 +1119,7 @@ Namespace DataObjects.Physical
             Next
         End Sub
 
-        Public Overridable Overloads Sub LoadData(ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.IntoChildElement("Environment") 'Into Environment Element
 
@@ -1245,9 +1248,10 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Protected Overridable Sub LoadMaterialTypes(ByVal oXml As AnimatGUI.Interfaces.StdXml)
+        Protected Overridable Sub LoadMaterialTypes(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             Try
+                m_aryMaterialPairs.Clear()
                 m_aryMaterialTypes.Clear()
 
                 Dim iCount As Integer
@@ -1274,7 +1278,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Protected Overridable Sub LoadMaterialPairs(ByVal oXml As AnimatGUI.Interfaces.StdXml)
+        Protected Overridable Sub LoadMaterialPairs(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             Try
                 m_aryMaterialPairs.Clear()
@@ -1303,7 +1307,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overridable Overloads Sub SaveData(ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.AddChildElement("Environment")
             oXml.IntoElem()
@@ -1378,7 +1382,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Protected Overridable Sub SaveMaterialTypes(ByRef oXml As Interfaces.StdXml)
+        Protected Overridable Sub SaveMaterialTypes(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             oXml.AddChildElement("MaterialTypes")
             oXml.IntoElem()   'Into MaterialTypes element
 
@@ -1391,7 +1395,7 @@ Namespace DataObjects.Physical
             oXml.OutOfElem()    'Outof MaterialTypes element
         End Sub
 
-        Protected Overridable Sub SaveMaterialPairs(ByRef oXml As Interfaces.StdXml)
+        Protected Overridable Sub SaveMaterialPairs(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             oXml.AddChildElement("MaterialPairs")
             oXml.IntoElem()   'Into MaterialPairs element
 
@@ -1404,7 +1408,7 @@ Namespace DataObjects.Physical
             oXml.OutOfElem()    'Outof MaterialPairs element
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             oXml.AddChildElement("Environment")
             oXml.IntoElem()
@@ -1482,7 +1486,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Protected Overridable Sub SaveSimMaterialTypes(ByRef oXml As Interfaces.StdXml)
+        Protected Overridable Sub SaveSimMaterialTypes(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             oXml.AddChildElement("MaterialTypes")
             oXml.IntoElem()   'Into MaterialTypes element
 
@@ -1495,7 +1499,7 @@ Namespace DataObjects.Physical
             oXml.OutOfElem()    'Outof MaterialTypes element
         End Sub
 
-        Protected Overridable Sub SaveSimMaterialPairs(ByRef oXml As Interfaces.StdXml)
+        Protected Overridable Sub SaveSimMaterialPairs(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             oXml.AddChildElement("MaterialPairs")
             oXml.IntoElem()   'Into MaterialPairs element
 

@@ -491,7 +491,7 @@ Namespace DataObjects.Physical
             Return doItem
         End Function
 
-        Public Overridable Overloads Sub LoadData(ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.FindChildElement("Camera")
             oXml.IntoElem() 'Into Camera Element
@@ -548,7 +548,7 @@ Namespace DataObjects.Physical
         End Sub
 
 
-        Public Overridable Overloads Sub SaveData(ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.AddChildElement("Camera")
             oXml.IntoElem()

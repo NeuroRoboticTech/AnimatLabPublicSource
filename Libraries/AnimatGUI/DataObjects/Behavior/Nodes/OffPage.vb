@@ -292,7 +292,7 @@ Namespace DataObjects.Behavior.Nodes
             If Not m_thLinkedNode Is Nothing Then m_thLinkedNode.ClearIsDirty()
         End Sub
 
-        Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(oXml)
 
             oXml.IntoElem()
@@ -312,7 +312,7 @@ Namespace DataObjects.Behavior.Nodes
                     If Not bnNode Is Nothing Then
                         m_thLinkedNode = New TypeHelpers.LinkedNode(bnNode.Organism, bnNode)
                     Else
-                        Util.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Error, "The offpage connector ID: " & Me.ID & " was unable to find its linked node ID: " & m_strLinkedNodeID & " in the diagram. I am defaulting it to nothing.")
+                        Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.ErrorType, "The offpage connector ID: " & Me.ID & " was unable to find its linked node ID: " & m_strLinkedNodeID & " in the diagram. I am defaulting it to nothing.")
                     End If
                 End If
 
@@ -376,7 +376,7 @@ Namespace DataObjects.Behavior.Nodes
         Public Overrides Sub InitializeSimulationReferences()
         End Sub
 
-        Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.SaveData(oXml)
 
             oXml.IntoElem() 'Into Node Element

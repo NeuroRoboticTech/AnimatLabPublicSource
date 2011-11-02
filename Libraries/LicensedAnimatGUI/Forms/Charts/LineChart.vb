@@ -196,7 +196,7 @@ Namespace Forms.Charts
 
         'Protected m_graphStream As System.IO.MemoryStream
         'Protected m_aryData() As Byte
-        'Protected m_xmlData As AnimatGUI.Interfaces.StdXml
+        'Protected m_xmlDataAs ManagedAnimatInterfaces.IStdXml
 
         Protected m_Image As System.Drawing.Image
         Protected m_bAddedHandlers As Boolean = False
@@ -1797,7 +1797,7 @@ Namespace Forms.Charts
 
         End Sub
 
-        Protected Overrides Sub LoadExternalData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Protected Overrides Sub LoadExternalData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadExternalData(oXml)
 
             oXml.IntoElem() 'Into Form Element
@@ -1825,7 +1825,7 @@ Namespace Forms.Charts
 
         End Sub
 
-        Protected Overrides Sub SaveExternalData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Protected Overrides Sub SaveExternalData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.SaveExternalData(oXml)
 
             oXml.IntoElem()
@@ -1872,7 +1872,7 @@ Namespace Forms.Charts
         ''This is used to save the xml out for when we add a chart to the opened simulation.
         'Public Overrides Function SaveChartToXml() As String
 
-        '    Dim oXml As New Interfaces.StdXml
+        '    Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
         '    oXml.AddElement("ChartConfiguration")
         '    oXml.AddChildElement("DataChart")
         '    oXml.IntoElem()
@@ -1892,7 +1892,7 @@ Namespace Forms.Charts
         '    Return oXml.Serialize()
         'End Function
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             oXml.AddChildElement("DataChart")
             oXml.IntoElem()

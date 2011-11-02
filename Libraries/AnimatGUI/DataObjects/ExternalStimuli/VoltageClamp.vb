@@ -140,7 +140,7 @@ Namespace DataObjects.ExternalStimuli
                 m_doNode = m_doOrganism.FindBehavioralNode(m_doNode.ID, False)
             End If
 
-            Dim oXml As New AnimatGUI.Interfaces.StdXml
+            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
             'We need to get a new reference to the neuron here because it may be different than the one we originally got. The reason is that when the
             'project is first loaded we load in a list of the neurons. But if the user opens the behavioral editor then we need to reload that list because
@@ -154,7 +154,7 @@ Namespace DataObjects.ExternalStimuli
             Return oXml.Serialize()
         End Function
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             If m_doOrganism Is Nothing Then
                 Throw New System.Exception("No organism was defined for the stimulus '" & m_strName & "'.")
@@ -215,7 +215,7 @@ Namespace DataObjects.ExternalStimuli
         End Sub
 
 
-        Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(oXml)
 
             oXml.IntoElem()
@@ -227,7 +227,7 @@ Namespace DataObjects.ExternalStimuli
             Me.IsDirty = False
         End Sub
 
-        Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             If Not m_doNode Is Nothing Then
                 m_doNode = m_doOrganism.FindBehavioralNode(m_doNode.ID, False)
@@ -245,7 +245,7 @@ Namespace DataObjects.ExternalStimuli
 
         End Sub
 
-        'Public Overrides Sub SaveDataColumnToXml(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        'Public Overrides Sub SaveDataColumnToXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
         '    oXml.IntoElem()
         '    oXml.AddChildElement("StimulusID", Me.ID)
         '    oXml.OutOfElem()

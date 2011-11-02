@@ -371,7 +371,7 @@ Namespace DataObjects.Behavior.SynapseTypes
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             oXml.AddChildElement("SynapseType")
             oXml.IntoElem()
@@ -522,7 +522,7 @@ Namespace DataObjects.Behavior.SynapseTypes
             If Not m_snForgettingTimeWindow Is Nothing Then m_snForgettingTimeWindow.ClearIsDirty()
         End Sub
 
-        Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             Try
                 MyBase.LoadData(oXml)
 
@@ -557,7 +557,7 @@ Namespace DataObjects.Behavior.SynapseTypes
 
         End Sub
 
-        Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             Try
                 MyBase.SaveData(oXml)
 

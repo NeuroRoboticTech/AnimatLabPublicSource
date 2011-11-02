@@ -207,10 +207,9 @@
       <Name>AnimatTools</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\ManagedAnimatTools\ManagedAnimatTools\ManagedAnimatTools.vcxproj">
-      <Project>{C4F78ED0-5777-47E1-8D4C-2FDD548FCE79}</Project>
-      <Name>ManagedAnimatTools</Name>
-      <Private>False</Private>
+    <ProjectReference Include="..\ManagedAnimatInterfaces\ManagedAnimatInterfaces.vbproj">
+      <Project>{EBC9D7C3-EB4A-4515-9426-AD41E0BBEBFC}</Project>
+      <Name>ManagedAnimatInterfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -410,7 +410,7 @@ Namespace DataObjects.Physical
                                         "Visibility", "Sets the shininess for this item.", m_fltShininess))
         End Sub
 
-        Public Overrides Sub LoadData(ByRef oXml As Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.IntoElem() 'Into BodyPart Element
             Me.ID = oXml.GetChildString("ID")
@@ -435,7 +435,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overridable Overloads Sub SaveData(ByRef oXml As Interfaces.StdXml, ByVal strName As String)
+        Public Overridable Overloads Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String)
 
             oXml.AddChildElement(strName)
 
@@ -463,7 +463,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             oXml.AddChildElement(strName)
 

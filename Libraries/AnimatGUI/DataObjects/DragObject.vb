@@ -150,7 +150,7 @@ Namespace DataObjects
         End Sub
 
 
-        Public Overridable Sub SaveDataColumnToXml(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overridable Sub SaveDataColumnToXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.IntoElem()
             oXml.AddChildElement("TargetID", Me.ID)

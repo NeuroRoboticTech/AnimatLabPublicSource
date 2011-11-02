@@ -12,146 +12,152 @@ namespace AnimatGUI
 		/// <summary> 
 		/// Summary for StdXml
 		/// </summary>
-		public ref class StdXml
+		public ref class StdXml : public ManagedAnimatInterfaces::IStdXml
 		{
 		protected: 
 			CStdXml *m_lpXml; 
+	
+			ManagedAnimatInterfaces::ILogger ^m_lpLogger;
+
+			virtual void LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel eLevel, System::String ^sMessage);
 
 		public: 
 			StdXml(void);
 			~StdXml(void);
 
-			String ^Serialize();
-			void Deserialize(String ^strXml);
+			virtual void SetLogger(ManagedAnimatInterfaces::ILogger ^lpLog);
 
-			bool IntoElem();
-			bool OutOfElem();
-			String ^FullTagPath();
-			String ^FullTagPath(bool bAddChildName);
-			String ^TagName();
-			String ^ChildTagName();
+			virtual String ^Serialize();
+			virtual void Deserialize(String ^strXml);
 
-			int NumberOfChildren();
-			bool FindElement(String ^strElementName);
-			bool FindElement(String ^strElementName, bool bThrowError);
-			bool FindChildByIndex(int iIndex);
-			bool FindChildByIndex(int iIndex, bool bThrowError);
-			bool FindChildElement(String ^strElementName);
-			bool FindChildElement(String ^strElementName, bool bThrowError);
+			virtual bool IntoElem();
+			virtual bool OutOfElem();
+			virtual String ^FullTagPath();
+			virtual String ^FullTagPath(bool bAddChildName);
+			virtual String ^TagName();
+			virtual String ^ChildTagName();
 
-			bool IntoChildElement(String ^strElementName);
-			bool IntoChildElement(String ^strElementName, bool bThrowError);
+			virtual int NumberOfChildren();
+			virtual bool FindElement(String ^strElementName);
+			virtual bool FindElement(String ^strElementName, bool bThrowError);
+			virtual bool FindChildByIndex(int iIndex);
+			virtual bool FindChildByIndex(int iIndex, bool bThrowError);
+			virtual bool FindChildElement(String ^strElementName);
+			virtual bool FindChildElement(String ^strElementName, bool bThrowError);
 
-			String ^GetChildString(String ^strElementName);
-			String ^GetChildString(String ^strElementName, String ^strDefault);
-			String ^GetChildString();
-			long GetChildLong(String ^strElementName);
-			long GetChildLong(String ^strElementName, long lDefault);
-			long GetChildLong();
-			int GetChildInt(String ^strElementName);
-			int GetChildInt(String ^strElementName, int iDefault);
-			int GetChildInt();
-			double GetChildDouble(String ^strElementName);
-			double GetChildDouble(String ^strElementName, double dblDefault);
-			double GetChildDouble();
-			float GetChildFloat(String ^strElementName);
-			float GetChildFloat(String ^strElementName, float fltDefault);
-			float GetChildFloat();
-			bool GetChildBool(String ^strElementName);
-			bool GetChildBool(String ^strElementName, bool bDefault);
-			bool GetChildBool();
-			array<System::Byte>^ StdXml::GetChildByteArray(String ^strElementName);
+			virtual bool IntoChildElement(String ^strElementName);
+			virtual bool IntoChildElement(String ^strElementName, bool bThrowError);
 
-			void AddElement(String ^strElementName);
-			void AddElement(String ^strElementName, String ^strData);
+			virtual String ^GetChildString(String ^strElementName);
+			virtual String ^GetChildString(String ^strElementName, String ^strDefault);
+			virtual String ^GetChildString();
+			virtual System::Int64 GetChildLong(String ^strElementName);
+			virtual System::Int64 GetChildLong(String ^strElementName, System::Int64 lDefault);
+			virtual System::Int64 GetChildLong();
+			virtual System::Int32 GetChildInt(String ^strElementName);
+			virtual System::Int32 GetChildInt(String ^strElementName, System::Int32 iDefault);
+			virtual System::Int32 GetChildInt();
+			virtual double GetChildDouble(String ^strElementName);
+			virtual double GetChildDouble(String ^strElementName, double dblDefault);
+			virtual double GetChildDouble();
+			virtual float GetChildFloat(String ^strElementName);
+			virtual float GetChildFloat(String ^strElementName, float fltDefault);
+			virtual float GetChildFloat();
+			virtual bool GetChildBool(String ^strElementName);
+			virtual bool GetChildBool(String ^strElementName, bool bDefault);
+			virtual bool GetChildBool();
+			virtual array<System::Byte>^ GetChildByteArray(String ^strElementName);
 
-			void AddChildElement(String ^strElementName);
-			void AddChildElement(String ^strElementName, String ^strVal);
-			void AddChildElement(String ^strElementName, char cVal);
-			void AddChildElement(String ^strElementName, unsigned char cVal);
-			void AddChildElement(String ^strElementName, Int32 lVal);
-			void AddChildElement(String ^strElementName, Int16 iVal);
-			void AddChildElement(String ^strElementName, double dblVal);
-			void AddChildElement(String ^strElementName, float fltVal);
-			void AddChildElement(String ^strElementName, bool bVal);
-			void AddChildElement(String ^strElementName, array<System::Byte>^ aryData);
+			virtual void AddElement(String ^strElementName);
+			virtual void AddElement(String ^strElementName, String ^strData);
 
-			void AddChildCData(String ^strElementName, String ^strCData);
+			virtual void AddChildElement(String ^strElementName);
+			virtual void AddChildElement(String ^strElementName, String ^strVal);
+			virtual void AddChildElement(String ^strElementName, char cVal);
+			virtual void AddChildElement(String ^strElementName, unsigned char cVal);
+			virtual void AddChildElement(String ^strElementName, System::Int64 lVal);
+			virtual void AddChildElement(String ^strElementName, System::Int32 iVal);
+			virtual void AddChildElement(String ^strElementName, double dblVal);
+			virtual void AddChildElement(String ^strElementName, float fltVal);
+			virtual void AddChildElement(String ^strElementName, bool bVal);
+			virtual void AddChildElement(String ^strElementName, array<System::Byte>^ aryData);
 
-			String ^GetAttribString(String ^strAttribName);
-			String ^GetAttribString(String ^strAttribName, bool bCanBeBlank);
-			String ^GetAttribString(String ^strAttribName, bool bCanBeBlank, bool bThrowError);
-			String ^GetAttribString(String ^strAttribName, bool bCanBeBlank, bool bThrowError, String ^strDefault);
+			virtual void AddChildCData(String ^strElementName, String ^strCData);
 
-			long GetAttribLong(String ^strAttribName);
-			long GetAttribLong(String ^strAttribName, bool bThrowError);
-			long GetAttribLong(String ^strAttribName, bool bThrowError, long lDefault);
+			virtual String ^GetAttribString(String ^strAttribName);
+			virtual String ^GetAttribString(String ^strAttribName, bool bCanBeBlank);
+			virtual String ^GetAttribString(String ^strAttribName, bool bCanBeBlank, bool bThrowError);
+			virtual String ^GetAttribString(String ^strAttribName, bool bCanBeBlank, bool bThrowError, String ^strDefault);
 
-			int GetAttribInt(String ^strAttribName);
-			int GetAttribInt(String ^strAttribName, bool bThrowError);
-			int GetAttribInt(String ^strAttribName, bool bThrowError, int iDefault);
+			virtual System::Int64 GetAttribLong(String ^strAttribName);
+			virtual System::Int64 GetAttribLong(String ^strAttribName, bool bThrowError);
+			virtual System::Int64 GetAttribLong(String ^strAttribName, bool bThrowError, System::Int64 lDefault);
 
-			double GetAttribDouble(String ^strAttribName);
-			double GetAttribDouble(String ^strAttribName, bool bThrowError);
-			double GetAttribDouble(String ^strAttribName, bool bThrowError, double dblDefault);
+			virtual System::Int32 GetAttribInt(String ^strAttribName);
+			virtual System::Int32 GetAttribInt(String ^strAttribName, bool bThrowError);
+			virtual System::Int32 GetAttribInt(String ^strAttribName, bool bThrowError, System::Int32 iDefault);
 
-			float GetAttribFloat(String ^strAttribName);
-			float GetAttribFloat(String ^strAttribName, bool bThrowError);
-			float GetAttribFloat(String ^strAttribName, bool bThrowError, float fltDefault);
+			virtual double GetAttribDouble(String ^strAttribName);
+			virtual double GetAttribDouble(String ^strAttribName, bool bThrowError);
+			virtual double GetAttribDouble(String ^strAttribName, bool bThrowError, double dblDefault);
 
-			bool GetAttribBool(String ^strAttribName);
-			bool GetAttribBool(String ^strAttribName, bool bThrowError);
-			bool GetAttribBool(String ^strAttribName, bool bThrowError, bool bDefault);
+			virtual float GetAttribFloat(String ^strAttribName);
+			virtual float GetAttribFloat(String ^strAttribName, bool bThrowError);
+			virtual float GetAttribFloat(String ^strAttribName, bool bThrowError, float fltDefault);
 
-			void SetAttrib(String ^strAttribName, String ^strVal);
-			void SetAttrib(String ^strAttribName, char cVal);
-			void SetAttrib(String ^strAttribName, unsigned char cVal);
-			void SetAttrib(String ^strAttribName, Int32 lVal);
-			void SetAttrib(String ^strAttribName, Int16 iVal);
-			void SetAttrib(String ^strAttribName, double dblVal);
-			void SetAttrib(String ^strAttribName, float fltVal);
-			void SetAttrib(String ^strAttribName, bool bVal);
+			virtual bool GetAttribBool(String ^strAttribName);
+			virtual bool GetAttribBool(String ^strAttribName, bool bThrowError);
+			virtual bool GetAttribBool(String ^strAttribName, bool bThrowError, bool bDefault);
 
-			String ^GetChildAttribString(String ^strAttribName);
-			String ^GetChildAttribString(String ^strAttribName, bool bCanBeBlank);
-			String ^GetChildAttribString(String ^strAttribName, bool bCanBeBlank, bool bThrowError);
-			String ^GetChildAttribString(String ^strAttribName, bool bCanBeBlank, bool bThrowError, String ^strDefault);
+			virtual void SetAttrib(String ^strAttribName, String ^strVal);
+			virtual void SetAttrib(String ^strAttribName, char cVal);
+			virtual void SetAttrib(String ^strAttribName, unsigned char cVal);
+			virtual void SetAttrib(String ^strAttribName, System::Int64 lVal);
+			virtual void SetAttrib(String ^strAttribName, System::Int32 iVal);
+			virtual void SetAttrib(String ^strAttribName, double dblVal);
+			virtual void SetAttrib(String ^strAttribName, float fltVal);
+			virtual void SetAttrib(String ^strAttribName, bool bVal);
 
-			long GetChildAttribLong(String ^strAttribName);
-			long GetChildAttribLong(String ^strAttribName, bool bThrowError);
-			long GetChildAttribLong(String ^strAttribName, bool bThrowError, long lDefault);
+			virtual String ^GetChildAttribString(String ^strAttribName);
+			virtual String ^GetChildAttribString(String ^strAttribName, bool bCanBeBlank);
+			virtual String ^GetChildAttribString(String ^strAttribName, bool bCanBeBlank, bool bThrowError);
+			virtual String ^GetChildAttribString(String ^strAttribName, bool bCanBeBlank, bool bThrowError, String ^strDefault);
 
-			int GetChildAttribInt(String ^strAttribName);
-			int GetChildAttribInt(String ^strAttribName, bool bThrowError);
-			int GetChildAttribInt(String ^strAttribName, bool bThrowError, int iDefault);
+			virtual System::Int64 GetChildAttribLong(String ^strAttribName);
+			virtual System::Int64 GetChildAttribLong(String ^strAttribName, bool bThrowError);
+			virtual System::Int64 GetChildAttribLong(String ^strAttribName, bool bThrowError, System::Int64 lDefault);
 
-			double GetChildAttribDouble(String ^strAttribName);
-			double GetChildAttribDouble(String ^strAttribName, bool bThrowError);
-			double GetChildAttribDouble(String ^strAttribName, bool bThrowError, double dblDefault);
+			virtual System::Int32 GetChildAttribInt(String ^strAttribName);
+			virtual System::Int32 GetChildAttribInt(String ^strAttribName, bool bThrowError);
+			virtual System::Int32 GetChildAttribInt(String ^strAttribName, bool bThrowError, System::Int32 iDefault);
 
-			float GetChildAttribFloat(String ^strAttribName);
-			float GetChildAttribFloat(String ^strAttribName, bool bThrowError);
-			float GetChildAttribFloat(String ^strAttribName, bool bThrowError, float fltDefault);
+			virtual double GetChildAttribDouble(String ^strAttribName);
+			virtual double GetChildAttribDouble(String ^strAttribName, bool bThrowError);
+			virtual double GetChildAttribDouble(String ^strAttribName, bool bThrowError, double dblDefault);
 
-			bool GetChildAttribBool(String ^strAttribName);
-			bool GetChildAttribBool(String ^strAttribName, bool bThrowError);
-			bool GetChildAttribBool(String ^strAttribName, bool bThrowError, bool bDefault);
+			virtual float GetChildAttribFloat(String ^strAttribName);
+			virtual float GetChildAttribFloat(String ^strAttribName, bool bThrowError);
+			virtual float GetChildAttribFloat(String ^strAttribName, bool bThrowError, float fltDefault);
 
-			void SetChildAttrib(String ^strAttribName, String ^strVal);
-			void SetChildAttrib(String ^strAttribName, char cVal);
-			void SetChildAttrib(String ^strAttribName, unsigned char cVal);
-			void SetChildAttrib(String ^strAttribName, Int32 lVal);
-			void SetChildAttrib(String ^strAttribName, Int16 iVal);
-			void SetChildAttrib(String ^strAttribName, double dblVal);
-			void SetChildAttrib(String ^strAttribName, float fltVal);
-			void SetChildAttrib(String ^strAttribName, bool bVal);
+			virtual bool GetChildAttribBool(String ^strAttribName);
+			virtual bool GetChildAttribBool(String ^strAttribName, bool bThrowError);
+			virtual bool GetChildAttribBool(String ^strAttribName, bool bThrowError, bool bDefault);
 
-			void AddChildDoc(String ^Doc);	
-			String ^StdXml::GetChildDoc();
-			String ^GetParentTagName();
+			virtual void SetChildAttrib(String ^strAttribName, String ^strVal);
+			virtual void SetChildAttrib(String ^strAttribName, char cVal);
+			virtual void SetChildAttrib(String ^strAttribName, unsigned char cVal);
+			virtual void SetChildAttrib(String ^strAttribName, System::Int64 lVal);
+			virtual void SetChildAttrib(String ^strAttribName, System::Int32 iVal);
+			virtual void SetChildAttrib(String ^strAttribName, double dblVal);
+			virtual void SetChildAttrib(String ^strAttribName, float fltVal);
+			virtual void SetChildAttrib(String ^strAttribName, bool bVal);
 
-			void Load(String ^strFilename);
-			void Save(String ^strFilename);
+			virtual void AddChildDoc(String ^Doc);	
+			virtual String ^GetChildDoc();
+			virtual String ^GetParentTagName();
+
+			virtual void Load(String ^strFilename);
+			virtual void Save(String ^strFilename);
 		};
 	}
 }

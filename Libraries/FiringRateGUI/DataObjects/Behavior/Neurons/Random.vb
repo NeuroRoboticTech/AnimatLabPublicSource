@@ -171,7 +171,7 @@ Namespace DataObjects.Behavior.Neurons
             m_gnInterburstLengthDistribution = DirectCast(bnOrig.m_gnInterburstLengthDistribution.Clone(Me, bCutData, doRoot), AnimatGUI.DataObjects.Gain)
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
             MyBase.SaveSimulationXml(oXml, nmParentControl)
 
             oXml.IntoElem() 'Into Neuron element
@@ -225,7 +225,7 @@ Namespace DataObjects.Behavior.Neurons
             If Not m_gnInterburstLengthDistribution Is Nothing Then m_gnInterburstLengthDistribution.ClearIsDirty()
         End Sub
 
-        Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(oXml)
 
             oXml.IntoElem()
@@ -266,7 +266,7 @@ Namespace DataObjects.Behavior.Neurons
 
         End Sub
 
-        Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.SaveData(oXml)
 
             oXml.IntoElem() 'Into Node Element

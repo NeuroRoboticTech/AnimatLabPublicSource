@@ -170,7 +170,7 @@ Namespace Forms
                 If Not m_exError Is Nothing Then
                     Me.txtErrorMsg.Text = m_exError.Message
                     Me.txtErrorDetails.Text = Util.GetErrorDetails("", m_exError)
-                    Util.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Error, m_exError.Message & vbCrLf & Me.txtErrorDetails.Text)
+                    Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.ErrorType, m_exError.Message & vbCrLf & Me.txtErrorDetails.Text)
                 End If
             End Set
         End Property

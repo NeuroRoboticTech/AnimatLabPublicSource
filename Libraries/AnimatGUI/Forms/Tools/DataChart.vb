@@ -568,7 +568,7 @@ Namespace Forms.Tools
 
         End Function
 
-        Protected Overrides Sub LoadExternalData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Protected Overrides Sub LoadExternalData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadExternalData(oXml)
 
             oXml.IntoElem() 'Into Form Element
@@ -609,7 +609,7 @@ Namespace Forms.Tools
 
         End Sub
 
-        Protected Overrides Sub SaveExternalData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Protected Overrides Sub SaveExternalData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.SaveExternalData(oXml)
 
             oXml.IntoElem()

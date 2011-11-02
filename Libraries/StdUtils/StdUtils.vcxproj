@@ -65,6 +65,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)StdUtils_vc10D.dll</OutputFile>
@@ -93,6 +94,8 @@ Copy "$(TargetPath)" ..\..\bin
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)StdUtils_vc10.dll</OutputFile>

@@ -316,7 +316,7 @@ Namespace DataObjects
         Public Overridable Sub RecalculuateLimits()
         End Sub
 
-        Protected Overridable Sub SetAllSimData(ByVal doInterface As Interfaces.IDataObjectInterface)
+        Protected Overridable Sub SetAllSimData(ByVal doInterface As ManagedAnimatInterfaces.IDataObjectInterface)
             m_doInterface = doInterface
             SetSimData("UseLimits", m_bUseLimits.ToString, True)
             SetSimData("LowerLimit", m_snLowerLimit.ActualValue.ToString, True)
@@ -383,7 +383,7 @@ Namespace DataObjects
 
         End Sub
 
-        Public Overridable Overloads Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String, ByVal strGainPropertyName As String)
+        Public Overridable Overloads Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String, ByVal strGainPropertyName As String)
 
             m_strGainPropertyName = strGainPropertyName
 
@@ -412,7 +412,7 @@ Namespace DataObjects
         End Sub
 
 
-        Public Overridable Overloads Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String)
+        Public Overridable Overloads Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String)
 
             oXml.AddChildElement(strName)
             oXml.IntoElem()
@@ -440,7 +440,7 @@ Namespace DataObjects
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             oXml.AddChildElement(strName)
             oXml.IntoElem()

@@ -574,7 +574,7 @@ Namespace DataObjects.Physical
             End If
         End Sub
 
-        Public Overridable Overloads Sub LoadData(ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(oXml)
 
             Try
@@ -624,7 +624,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overridable Overloads Sub SaveData(ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.SaveData(oXml, Me.TypeName)
 
             Try
@@ -653,7 +653,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
             MyBase.SaveSimulationXml(oXml, nmParentControl, strName)
 
             Try
@@ -685,7 +685,7 @@ Namespace DataObjects.Physical
         'Public Overridable Sub CreateFiles()
 
         '    'Save the nervous system file
-        '    Dim oXml As New Interfaces.StdXml
+        '    Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
         '    If Util.Application.ProjectPath.Length > 0 Then
         '        If Not System.IO.File.Exists(Util.GetFilePath(Util.Application.ProjectPath, Me.BodyPlanFile)) Then

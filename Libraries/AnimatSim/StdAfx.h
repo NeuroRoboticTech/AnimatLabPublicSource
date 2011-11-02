@@ -20,6 +20,12 @@
 
 #define STD_TRACING_ON
 
+//#ifdef _DEBUG
+	#define STD_TRACE_DETAIL
+//#else
+//	#define STD_TRACE_DETAIL
+//#endif
+
 //#include "NeuralLibrary.h"
 #include "StdUtils.h"
 #include "AnimatConstants.h"

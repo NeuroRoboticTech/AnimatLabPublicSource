@@ -251,7 +251,7 @@ Namespace DataObjects
 
         End Sub
 
-        Public Overrides Sub LoadData(ByRef oXml As Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.IntoElem()
             m_strName = oXml.GetChildString("Name")
@@ -264,7 +264,7 @@ Namespace DataObjects
 
         End Sub
 
-        Public Overrides Sub SaveData(ByRef oXml As Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.AddChildElement("ToolHolder")
             oXml.IntoElem()
@@ -285,7 +285,7 @@ Namespace DataObjects
 
         End Function
 
-        Public Overrides Sub SaveDataColumnToXml(ByRef oXml As Interfaces.StdXml)
+        Public Overrides Sub SaveDataColumnToXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
         End Sub
 

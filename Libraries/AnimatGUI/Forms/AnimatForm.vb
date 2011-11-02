@@ -34,7 +34,7 @@ Namespace Forms
         Protected m_bUndoRedoInProgress As Boolean = False
         Protected m_bSetValueInProgress As Boolean = False
 
-        Protected m_doInterface As Interfaces.IDataObjectInterface = Nothing
+        Protected m_doInterface As ManagedAnimatInterfaces.IDataObjectInterface = Nothing
 
         Protected m_WorkspaceImage As System.Drawing.Image
         Protected m_TabImage As System.Drawing.Image
@@ -357,7 +357,7 @@ Namespace Forms
 
         End Sub
 
-        Public Overridable Overloads Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overridable Overloads Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.IntoElem() 'Into Form Element
             m_strID = Util.LoadID(oXml, "")
@@ -367,7 +367,7 @@ Namespace Forms
 
         End Sub
 
-        Public Overridable Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overridable Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.AddChildElement("Form")
             oXml.IntoElem() 'Into Form Element
@@ -386,7 +386,7 @@ Namespace Forms
         End Sub
 
         Public Overridable Function SaveDataXml(Optional ByVal strRoot As String = "Root") As String
-            Dim oXml As New AnimatGUI.Interfaces.StdXml()
+            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
             oXml.AddElement(strRoot)
             SaveData(oXml)
@@ -394,13 +394,13 @@ Namespace Forms
             Return oXml.Serialize()
         End Function
 
-        Public Overridable Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overridable Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
         End Sub
 
         Public Overridable Function GetSimulationXml(ByVal strName As String, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing) As String
 
-            Dim oXml As New AnimatGUI.Interfaces.StdXml
+            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
             oXml.AddElement("Root")
             SaveSimulationXml(oXml, nmParentControl, strName)
 

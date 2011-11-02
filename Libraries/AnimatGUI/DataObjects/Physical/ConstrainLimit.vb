@@ -238,7 +238,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overloads Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strPropName As String)
+        Public Overloads Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strPropName As String)
 
             If oXml.FindChildElement(strPropName, False) Then
                 oXml.IntoElem() 'Into Constraint Element
@@ -264,7 +264,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overloads Sub SaveData(ByRef oXml As Interfaces.StdXml, ByVal strPropName As String)
+        Public Overloads Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strPropName As String)
 
             oXml.AddChildElement(strPropName)
             oXml.IntoElem() 'Into Child Elemement
@@ -280,7 +280,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             oXml.AddChildElement(strName)
             oXml.IntoElem() 'Into Child Elemement

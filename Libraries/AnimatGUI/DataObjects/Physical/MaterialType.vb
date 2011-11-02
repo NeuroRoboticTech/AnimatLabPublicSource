@@ -64,7 +64,7 @@ Namespace DataObjects.Physical
 
 #End Region
 
-        Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.IntoElem()
 
@@ -75,7 +75,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub SaveData(ByRef oXml As Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.AddChildElement("MaterialType")
             oXml.IntoElem()
@@ -90,7 +90,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             oXml.AddChildElement("MaterialType")
             oXml.IntoElem()

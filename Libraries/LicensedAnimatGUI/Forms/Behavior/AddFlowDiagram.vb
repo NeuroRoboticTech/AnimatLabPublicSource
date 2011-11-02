@@ -1986,7 +1986,7 @@ Namespace Forms.Behavior
         Public Overrides Sub CopySelected()
 
             Try
-                Dim oXml As New AnimatGUI.Interfaces.StdXml
+                Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
                 Dim bSave As Boolean = SaveSelected(oXml, True)
 
@@ -2014,7 +2014,7 @@ Namespace Forms.Behavior
                     ' We first unselect the selected items
                     m_ctrlAddFlow.SelectedItems.Clear()
 
-                    Dim oXml As AnimatGUI.Interfaces.StdXml = Util.GetXmlForPaste(data, "AnimatLab.Behavior.XMLFormat", "Diagram")
+                    Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.GetXmlForPaste(data, "AnimatLab.Behavior.XMLFormat", "Diagram")
 
                     If Not oXml Is Nothing Then
                         LoadPasted(oXml, bInPlace)
@@ -2475,7 +2475,7 @@ Namespace Forms.Behavior
 
         End Sub
 
-        Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(oXml)
 
             'Now find the organism and subsystem we need to load the rest of the chart.
@@ -2494,7 +2494,7 @@ Namespace Forms.Behavior
             InitializeAfterLoad()
         End Sub
 
-        Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.SaveData(oXml)
 
             oXml.IntoElem()
@@ -2511,7 +2511,7 @@ Namespace Forms.Behavior
         Public Overrides Sub LoadDiagramXml(ByVal strXml As String)
             'Only attempt to load this if there is something in the string.
             If strXml.Trim.Length > 0 Then
-                Dim oXml As New AnimatGUI.Interfaces.StdXml()
+                Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
                 oXml.Deserialize(strXml)
 
                 oXml.FindElement("Root")
@@ -2565,7 +2565,7 @@ Namespace Forms.Behavior
         End Sub
 
         Public Overrides Function SaveDiagramXml() As String
-            Dim oXml As New AnimatGUI.Interfaces.StdXml()
+            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
             oXml.AddElement("Root")
             oXml.AddChildElement("Diagram")
@@ -2610,7 +2610,7 @@ Namespace Forms.Behavior
             mfFile.Save(strFilename, eFormat)
         End Sub
 
-        Public Overrides Function SaveSelected(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal bCopy As Boolean) As Boolean
+        Public Overrides Function SaveSelected(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal bCopy As Boolean) As Boolean
 
             If m_ctrlAddFlow.SelectedItems.Count = 0 Then Return False
 
@@ -2715,7 +2715,7 @@ Namespace Forms.Behavior
             Return True
         End Function
 
-        Public Overrides Sub LoadPasted(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal bInPlace As Boolean)
+        Public Overrides Sub LoadPasted(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal bInPlace As Boolean)
 
             Dim ptClient As Point = m_ctrlAddFlow.PointToClient(Cursor.Position)
             Dim ptBase As Point = m_ctrlAddFlow.PointToAddFlow(ptClient)
@@ -2754,7 +2754,7 @@ Namespace Forms.Behavior
 
         End Sub
 
-        Protected Sub LoadPastedNodes(ByRef oXml As AnimatGUI.Interfaces.StdXml, _
+        Protected Sub LoadPastedNodes(ByVal oXml As ManagedAnimatInterfaces.IStdXml, _
                                       ByVal aryItems As ArrayList, _
                                       ByVal aryNodes As ArrayList)
 
@@ -2786,7 +2786,7 @@ Namespace Forms.Behavior
 
         End Sub
 
-        Protected Sub LoadPastedLinks(ByRef oXml As AnimatGUI.Interfaces.StdXml, _
+        Protected Sub LoadPastedLinks(ByVal oXml As ManagedAnimatInterfaces.IStdXml, _
                                       ByVal aryItems As ArrayList, _
                                       ByVal aryLinks As ArrayList)
 
@@ -2825,7 +2825,7 @@ Namespace Forms.Behavior
             Next
         End Sub
 
-        Protected Sub ProcessPastedAddFlowData(ByRef oXml As AnimatGUI.Interfaces.StdXml, _
+        Protected Sub ProcessPastedAddFlowData(ByVal oXml As ManagedAnimatInterfaces.IStdXml, _
                                                ByVal aryItems As ArrayList, _
                                                ByRef fltMinX As Single, ByRef fltMinY As Single)
 

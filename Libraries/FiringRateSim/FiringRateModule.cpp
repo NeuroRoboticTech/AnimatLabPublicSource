@@ -331,7 +331,7 @@ void FiringRateModule::Load(CStdXml &oXml)
 
 	//GenerateAutoSeed();
 
-	TRACE_DEBUG("Finished loading nervous system config file.");
+	//TRACE_DEBUG("Finished loading nervous system config file.");
 }
 
 /**

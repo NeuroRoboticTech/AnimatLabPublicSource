@@ -159,7 +159,7 @@ Namespace DataObjects.Gains.MuscleGains
 
         End Sub
 
-        Public Overloads Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String, ByVal strGainPropertyName As String)
+        Public Overloads Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String, ByVal strGainPropertyName As String)
             MyBase.LoadData(oXml, strName, strGainPropertyName)
 
             m_strIndependentUnits = "Membrane Voltage (V)"

@@ -53,11 +53,7 @@ Namespace DataObjects.Physical.Joints
         <Browsable(False)> _
         Public Overrides ReadOnly Property ModuleName() As String
             Get
-#If Not Debug Then
-                Return "VortexAnimatPrivateSim_VC10.dll"
-#Else
-                Return "VortexAnimatPrivateSim_VC10D.dll"
-#End If
+                Return "VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll"
             End Get
         End Property
 

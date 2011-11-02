@@ -266,7 +266,7 @@ void PhysicsNeuralModule::Load(CStdXml &oXml)
 
 	oXml.OutOfElem(); //OutOf NeuralModule Element
 
-	TRACE_DEBUG("Finished loading nervous system config file.");
+	//TRACE_DEBUG(("Finished loading nervous system config file.");
 }
 
 /**

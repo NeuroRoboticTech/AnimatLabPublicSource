@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+//#include "ILogger.h"
 #include "Util.h"
 #include "MStdXml.h"
 
@@ -20,10 +21,23 @@ namespace AnimatGUI
 				delete m_lpXml;
 		}
 
+		
+		void StdXml::SetLogger(ManagedAnimatInterfaces::ILogger ^lpLog)
+		{
+			m_lpLogger = lpLog;
+		}
+		
+		void StdXml::LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel eLevel, System::String ^sMessage)
+		{
+			if(m_lpLogger)
+				m_lpLogger->LogMsg(eLevel, sMessage);
+		}
+
 		System::String ^StdXml::Serialize()
 		{
 			try
 			{
+				//TRACE_DETAIL("StdXml::Serializing xml");
 				return gcnew String(m_lpXml->Serialize().c_str());
 			}
 			catch(CStdErrorInfo oError)
@@ -43,8 +57,11 @@ namespace AnimatGUI
 		{
 			try
 			{
+				//TRACE_DETAIL("StdXml::Deserializing xml");
 				string strData = Util::StringToStd(strXml);
+				//TRACE_DETAIL("StdXml::Xml: " + strData);
 				m_lpXml->Deserialize(strData);
+				//TRACE_DETAIL("StdXml::Finished Deserializing");
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -61,6 +78,7 @@ namespace AnimatGUI
 		{
 			try
 			{
+				//TRACE_DETAIL("StdXml::Into xml element");
 				return m_lpXml->IntoElem();
 			}
 			catch(CStdErrorInfo oError)
@@ -80,6 +98,7 @@ namespace AnimatGUI
 		{
 			try
 			{
+				//TRACE_DETAIL("StdXml::Outof xml element");
 				return m_lpXml->OutOfElem();
 			}
 			catch(CStdErrorInfo oError)
@@ -102,6 +121,7 @@ namespace AnimatGUI
 		{
 			try
 			{
+				//TRACE_DETAIL("StdXml::FullTagPath");
 				return gcnew String(m_lpXml->FullTagPath(bAddChildName).c_str());
 			}
 			catch(CStdErrorInfo oError)
@@ -122,6 +142,7 @@ namespace AnimatGUI
 			try
 			{
 				string strVal = m_lpXml->GetTagName();
+				//TRACE_DETAIL("StdXml::TagName: " + strVal);
 				return gcnew String(strVal.c_str());
 			}
 			catch(CStdErrorInfo oError)
@@ -142,6 +163,7 @@ namespace AnimatGUI
 			try
 			{
 				string strVal = m_lpXml->GetChildTagName();
+				//TRACE_DETAIL("StdXml::ChildTagName: " + strVal);
 				return gcnew String(strVal.c_str());
 			}
 			catch(CStdErrorInfo oError)
@@ -161,7 +183,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return m_lpXml->NumberOfChildren();
+				int iNum = m_lpXml->NumberOfChildren();
+				//TRACE_DETAIL("StdXml::NumberOfChildren: " + STR(iNum));
+				return iNum;
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -183,7 +207,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return m_lpXml->FindElement(Util::StringToStd(strElementName), bThrowError);
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::FindElement: " + strName);
+				return m_lpXml->FindElement(strName, bThrowError);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -205,6 +231,7 @@ namespace AnimatGUI
 		{
 			try
 			{
+				//TRACE_DETAIL("StdXml::FindChildByIndex: " + STR(iIndex));
 				return m_lpXml->FindChildByIndex(iIndex, bThrowError);
 			}
 			catch(CStdErrorInfo oError)
@@ -227,7 +254,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return m_lpXml->FindChildElement(Util::StringToStd(strElementName), bThrowError);
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::FindChildElement: " + strName);
+				return m_lpXml->FindChildElement(strName, bThrowError);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -249,7 +278,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return m_lpXml->IntoChildElement(Util::StringToStd(strElementName), bThrowError);
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::IntoChildElement: " + strName);
+				return m_lpXml->IntoChildElement(strName, bThrowError);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -268,7 +299,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return gcnew String(m_lpXml->GetChildString(Util::StringToStd(strElementName)).c_str());
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::GetChildString: " + strName);
+				return gcnew String(m_lpXml->GetChildString(strName).c_str());
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -287,7 +320,10 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return gcnew String(m_lpXml->GetChildString(Util::StringToStd(strElementName), Util::StringToStd(strDefault)).c_str());
+				string strName = Util::StringToStd(strElementName);
+				string strDef = Util::StringToStd(strDefault);
+				//TRACE_DETAIL("StdXml::GetChildString: " + strName = ", Default: " + strDef);
+				return gcnew String(m_lpXml->GetChildString(strName, strDef).c_str());
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -306,6 +342,7 @@ namespace AnimatGUI
 		{
 			try
 			{
+				//TRACE_DETAIL("StdXml::GetChildString");
 				return gcnew String(m_lpXml->GetChildString().c_str());
 			}
 			catch(CStdErrorInfo oError)
@@ -321,11 +358,13 @@ namespace AnimatGUI
 			}
 		}
 
-		long StdXml::GetChildLong(System::String ^strElementName)
+		System::Int64 StdXml::GetChildLong(System::String ^strElementName)
 		{
 			try
 			{
-				return m_lpXml->GetChildLong(Util::StringToStd(strElementName));
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::GetChildLong: " + strName);
+				return m_lpXml->GetChildLong(strName);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -340,11 +379,13 @@ namespace AnimatGUI
 			}
 		}
 		
-		long StdXml::GetChildLong(System::String ^strElementName, long lDefault)
+		System::Int64 StdXml::GetChildLong(System::String ^strElementName, System::Int64 lDefault)
 		{
 			try
 			{
-				return m_lpXml->GetChildLong(Util::StringToStd(strElementName), lDefault);
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::GetChildLong: " + strName);
+				return m_lpXml->GetChildLong(strName, lDefault);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -359,10 +400,11 @@ namespace AnimatGUI
 			}
 		}
 
-		long StdXml::GetChildLong()
+		System::Int64 StdXml::GetChildLong()
 		{
 			try
 			{
+				//TRACE_DETAIL("StdXml::GetChildLong");
 				return m_lpXml->GetChildLong();
 			}
 			catch(CStdErrorInfo oError)
@@ -378,11 +420,13 @@ namespace AnimatGUI
 			}
 		}
 
-		int StdXml::GetChildInt(System::String ^strElementName)
+		System::Int32 StdXml::GetChildInt(System::String ^strElementName)
 		{
 			try
 			{
-				return m_lpXml->GetChildInt(Util::StringToStd(strElementName));
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::GetChildInt: " + strName);
+				return m_lpXml->GetChildInt(strName);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -397,11 +441,13 @@ namespace AnimatGUI
 			}
 		}
 
-		int StdXml::GetChildInt(System::String ^strElementName, int iDefault)
+		System::Int32 StdXml::GetChildInt(System::String ^strElementName, System::Int32 iDefault)
 		{
 			try
 			{
-				return m_lpXml->GetChildInt(Util::StringToStd(strElementName), iDefault);
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::GetChildInt: " + strName + ", Default: " + STR(iDefault));
+				return m_lpXml->GetChildInt(strName, iDefault);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -416,10 +462,11 @@ namespace AnimatGUI
 			}
 		}
 
-		int StdXml::GetChildInt()
+		System::Int32 StdXml::GetChildInt()
 		{
 			try
 			{
+				//TRACE_DETAIL("StdXml::GetChildInt");
 				return m_lpXml->GetChildInt();
 			}
 			catch(CStdErrorInfo oError)
@@ -439,7 +486,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return m_lpXml->GetChildDouble(Util::StringToStd(strElementName));
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::GetChildDouble: " + strName);
+				return m_lpXml->GetChildDouble(strName);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -458,7 +507,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return m_lpXml->GetChildDouble(Util::StringToStd(strElementName), dblDefault);
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::GetChildDouble: " + strName + ", Default: " + STR(dblDefault));
+				return m_lpXml->GetChildDouble(strName, dblDefault);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -477,6 +528,7 @@ namespace AnimatGUI
 		{
 			try
 			{
+				//TRACE_DETAIL("StdXml::GetChildDouble");
 				return m_lpXml->GetChildDouble();
 			}
 			catch(CStdErrorInfo oError)
@@ -496,7 +548,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return m_lpXml->GetChildFloat(Util::StringToStd(strElementName));
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::GetChildFloat: " + strName);
+				return m_lpXml->GetChildFloat(strName);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -515,7 +569,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return m_lpXml->GetChildFloat(Util::StringToStd(strElementName), fltDefault);
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::GetChildFloat: " + strName + ", Default: " + STR(fltDefault));
+				return m_lpXml->GetChildFloat(strName, fltDefault);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -534,6 +590,7 @@ namespace AnimatGUI
 		{
 			try
 			{
+				//TRACE_DETAIL("StdXml::GetChildFloat");
 				return m_lpXml->GetChildFloat();
 			}
 			catch(CStdErrorInfo oError)
@@ -553,6 +610,8 @@ namespace AnimatGUI
 		{
 			try
 			{
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::GetChildBool: " + strName);
 				return m_lpXml->GetChildBool(Util::StringToStd(strElementName));
 			}
 			catch(CStdErrorInfo oError)
@@ -572,7 +631,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return m_lpXml->GetChildBool(Util::StringToStd(strElementName), bDefault);
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::GetChildBool: " + strName + ", Default: " + STR(bDefault));
+				return m_lpXml->GetChildBool(strName, bDefault);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -591,6 +652,7 @@ namespace AnimatGUI
 		{
 			try
 			{
+				//TRACE_DETAIL("StdXml::GetChildBool");
 				return m_lpXml->GetChildBool();
 			}
 			catch(CStdErrorInfo oError)
@@ -611,8 +673,10 @@ namespace AnimatGUI
 
 			try
 			{
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::GetChildByteArray: " + strName);
 				CStdArray<unsigned char> aryBytes;
-				string strHex = m_lpXml->GetChildString(Util::StringToStd(strElementName));
+				string strHex = m_lpXml->GetChildString();
 				long lByteCount = m_lpXml->GetChildAttribLong("ByteCount");
 
 				if(strHex.length() == 0)
@@ -629,6 +693,7 @@ namespace AnimatGUI
 					for(lIndex=0; lIndex<lByteCount; lIndex++)
 						aryData[lIndex] = (System::Byte) aryBytes[lIndex];
 
+					//TRACE_DETAIL("StdXml::GetChildByteArray Finished");
 					return aryData;
 				}
 			}
@@ -652,7 +717,10 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->AddElement(Util::StringToStd(strElementName), Util::StringToStd(strData));
+				string strName = Util::StringToStd(strElementName);
+				string strD = Util::StringToStd(strData);
+				//TRACE_DETAIL("StdXml::AddElement: " + strName + ", Data: " + strD);
+				m_lpXml->AddElement(strName, strD);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -669,7 +737,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->AddChildElement(Util::StringToStd(strElementName));
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::AddChildElement: " + strName);
+				m_lpXml->AddChildElement(strName);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -686,7 +756,10 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->AddChildElement(Util::StringToStd(strElementName), Util::StringToStd(strVal));
+				string strName = Util::StringToStd(strElementName);
+				string strV = Util::StringToStd(strVal);
+				//TRACE_DETAIL("StdXml::AddChildElement: " + strName + ", Value: " + strV);
+				m_lpXml->AddChildElement(strName, strV);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -703,7 +776,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->AddChildElement(Util::StringToStd(strElementName), cVal);
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::AddChildElement: " + strName + ", Value: " + cVal);
+				m_lpXml->AddChildElement(strName, cVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -720,7 +795,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->AddChildElement(Util::StringToStd(strElementName), cVal);
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::AddChildElement: " + strName + ", Value: " + STR(cVal));
+				m_lpXml->AddChildElement(strName, cVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -733,11 +810,13 @@ namespace AnimatGUI
 			}
 		}
 
-		void StdXml::AddChildElement(System::String ^strElementName, Int32 lVal)
+		void StdXml::AddChildElement(System::String ^strElementName, System::Int64 lVal)
 		{
 			try
 			{
-				m_lpXml->AddChildElement(Util::StringToStd(strElementName), lVal);
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::AddChildElement: " + strName + ", Value: " + STR(lVal));
+				m_lpXml->AddChildElement(strName, (long) lVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -750,11 +829,13 @@ namespace AnimatGUI
 			}
 		}
 
-		void StdXml::AddChildElement(System::String ^strElementName, Int16 iVal)
+		void StdXml::AddChildElement(System::String ^strElementName, System::Int32 iVal)
 		{
 			try
 			{
-				m_lpXml->AddChildElement(Util::StringToStd(strElementName), iVal);
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::AddChildElement: " + strName + ", Value: " + STR(iVal));
+				m_lpXml->AddChildElement(strName, (int) iVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -771,7 +852,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->AddChildElement(Util::StringToStd(strElementName), dblVal);
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::AddChildElement: " + strName + ", Value: " + STR(dblVal));
+				m_lpXml->AddChildElement(strName, dblVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -788,7 +871,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->AddChildElement(Util::StringToStd(strElementName), fltVal);
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::AddChildElement: " + strName + ", Value: " + STR(fltVal));
+				m_lpXml->AddChildElement(strName, fltVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -805,7 +890,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->AddChildElement(Util::StringToStd(strElementName), bVal);
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::AddChildElement: " + strName + ", Value: " + STR(bVal));
+				m_lpXml->AddChildElement(strName, bVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -823,6 +910,9 @@ namespace AnimatGUI
 
 			try
 			{
+				string strName = Util::StringToStd(strElementName);
+				//TRACE_DETAIL("StdXml::AddChildElement: " + strName);
+
 				CStdArray<unsigned char> aryBytes;
 
 				long lIndex;
@@ -835,7 +925,9 @@ namespace AnimatGUI
 
 				string strHex = Std_ByteArrayToHexString(aryBytes);
 
-				m_lpXml->AddChildElement(Util::StringToStd(strElementName), strHex);
+				//TRACE_DETAIL("StdXml::ByteArray: " + strHex);
+
+				m_lpXml->AddChildElement(strName, strHex);
 				m_lpXml->SetChildAttrib("ByteCount", lLength);
 			}
 			catch(CStdErrorInfo oError)
@@ -853,7 +945,10 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->AddChildCData(Util::StringToStd(strElementName), Util::StringToStd(strCData));
+				string strName = Util::StringToStd(strElementName);
+				string strC = Util::StringToStd(strCData);
+				//TRACE_DETAIL("StdXml::AddChildCData: " + strName + ", CData: " + strC);
+				m_lpXml->AddChildCData(strName, strC);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -879,7 +974,10 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return gcnew String(m_lpXml->GetAttribString(Util::StringToStd(strAttribName), bCanBeBlank, bThrowError, Util::StringToStd(strDefault)).c_str());
+				string strName = Util::StringToStd(strAttribName);
+				string strD = Util::StringToStd(strDefault);
+				//TRACE_DETAIL("StdXml::GetAttribString: " + strName + ", Default: " + strD);
+				return gcnew String(m_lpXml->GetAttribString(strName, bCanBeBlank, bThrowError, strD).c_str());
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -894,17 +992,19 @@ namespace AnimatGUI
 			}
 		}
 
-		long StdXml::GetAttribLong(System::String ^strAttribName)
+		System::Int64 StdXml::GetAttribLong(System::String ^strAttribName)
 		{return GetAttribLong(strAttribName, true, 0);}
 
-		long StdXml::GetAttribLong(System::String ^strAttribName, bool bThrowError)
+		System::Int64 StdXml::GetAttribLong(System::String ^strAttribName, bool bThrowError)
 		{return GetAttribLong(strAttribName, bThrowError, 0);}
 
-		long StdXml::GetAttribLong(System::String ^strAttribName, bool bThrowError, long lDefault)
+		System::Int64 StdXml::GetAttribLong(System::String ^strAttribName, bool bThrowError, System::Int64 lDefault)
 		{
 			try
 			{
-				return m_lpXml->GetAttribLong(Util::StringToStd(strAttribName), bThrowError, lDefault);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::GetAttribLong: " + strName + ", Default: " + STR(lDefault));
+				return m_lpXml->GetAttribLong(strName, bThrowError, lDefault);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -919,17 +1019,19 @@ namespace AnimatGUI
 			}
 		}
 
-		int StdXml::GetAttribInt(System::String ^strAttribName)
+		System::Int32 StdXml::GetAttribInt(System::String ^strAttribName)
 		{return GetAttribInt(strAttribName, true, 0);}
 
-		int StdXml::GetAttribInt(System::String ^strAttribName, bool bThrowError)
+		System::Int32 StdXml::GetAttribInt(System::String ^strAttribName, bool bThrowError)
 		{return GetAttribInt(strAttribName, bThrowError, 0);}
 
-		int StdXml::GetAttribInt(System::String ^strAttribName, bool bThrowError, int iDefault)
+		System::Int32 StdXml::GetAttribInt(System::String ^strAttribName, bool bThrowError, System::Int32 iDefault)
 		{
 			try
 			{
-				return m_lpXml->GetAttribInt(Util::StringToStd(strAttribName), bThrowError, iDefault);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::GetAttribInt: " + strName + ", Default: " + STR(iDefault));
+				return m_lpXml->GetAttribInt(strName, bThrowError, iDefault);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -954,7 +1056,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return m_lpXml->GetAttribDouble(Util::StringToStd(strAttribName), bThrowError, dblDefault);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::GetAttribDouble: " + strName + ", Default: " + STR(dblDefault));
+				return m_lpXml->GetAttribDouble(strName, bThrowError, dblDefault);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -979,7 +1083,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return m_lpXml->GetAttribFloat(Util::StringToStd(strAttribName), bThrowError, fltDefault);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::GetAttribFloat: " + strName + ", Default: " + STR(fltDefault));
+				return m_lpXml->GetAttribFloat(strName, bThrowError, fltDefault);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1004,7 +1110,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return m_lpXml->GetAttribBool(Util::StringToStd(strAttribName), bThrowError, bDefault);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::GetAttribBool: " + strName + ", Default: " + STR(bDefault));
+				return m_lpXml->GetAttribBool(strName, bThrowError, bDefault);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1023,7 +1131,10 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->SetAttrib(Util::StringToStd(strAttribName), Util::StringToStd(strVal));
+				string strName = Util::StringToStd(strAttribName);
+				string strV = Util::StringToStd(strVal);
+				//TRACE_DETAIL("StdXml::SetAttrib: " + strName + ", Value: " + strV);
+				m_lpXml->SetAttrib(strName, strV);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1040,7 +1151,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->SetAttrib(Util::StringToStd(strAttribName), cVal);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::SetAttrib: " + strName + ", Value: " + cVal);
+				m_lpXml->SetAttrib(strName, cVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1057,7 +1170,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->SetAttrib(Util::StringToStd(strAttribName), cVal);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::SetAttrib: " + strName + ", Value: " + STR(cVal));
+				m_lpXml->SetAttrib(strName, cVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1070,11 +1185,13 @@ namespace AnimatGUI
 			}
 		}
 
-		void StdXml::SetAttrib(System::String ^strAttribName, Int32 lVal)
+		void StdXml::SetAttrib(System::String ^strAttribName, System::Int64 lVal)
 		{
 			try
 			{
-				m_lpXml->SetAttrib(Util::StringToStd(strAttribName), lVal);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::SetAttrib: " + strName + ", Value: " + STR(lVal));
+				m_lpXml->SetAttrib(strName, (long) lVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1087,11 +1204,13 @@ namespace AnimatGUI
 			}
 		}
 
-		void StdXml::SetAttrib(System::String ^strAttribName, Int16 iVal)
+		void StdXml::SetAttrib(System::String ^strAttribName, System::Int32 iVal)
 		{
 			try
 			{
-				m_lpXml->SetAttrib(Util::StringToStd(strAttribName), iVal);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::SetAttrib: " + strName + ", Value: " + STR(iVal));
+				m_lpXml->SetAttrib(strName, (int) iVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1108,7 +1227,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->SetAttrib(Util::StringToStd(strAttribName), dblVal);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::SetAttrib: " + strName + ", Value: " + STR(dblVal));
+				m_lpXml->SetAttrib(strName, dblVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1125,7 +1246,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->SetAttrib(Util::StringToStd(strAttribName), fltVal);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::SetAttrib: " + strName + ", Value: " + STR(fltVal));
+				m_lpXml->SetAttrib(strName, fltVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1142,7 +1265,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->SetAttrib(Util::StringToStd(strAttribName), bVal);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::SetAttrib: " + strName + ", Value: " + STR(bVal));
+				m_lpXml->SetAttrib(strName, bVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1168,7 +1293,10 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return gcnew String(m_lpXml->GetChildAttribString(Util::StringToStd(strAttribName), bCanBeBlank, bThrowError, Util::StringToStd(strDefault)).c_str());
+				string strName = Util::StringToStd(strAttribName);
+				string strD = Util::StringToStd(strDefault);
+				//TRACE_DETAIL("StdXml::GetChildAttribString: " + strName + ", Default: " +strD);
+				return gcnew String(m_lpXml->GetChildAttribString(strName, bCanBeBlank, bThrowError, strD).c_str());
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1183,17 +1311,19 @@ namespace AnimatGUI
 			}
 		}
 
-		long StdXml::GetChildAttribLong(System::String ^strAttribName)
+		System::Int64 StdXml::GetChildAttribLong(System::String ^strAttribName)
 		{return GetChildAttribLong(strAttribName, true, 0);}
 
-		long StdXml::GetChildAttribLong(System::String ^strAttribName, bool bThrowError)
+		System::Int64 StdXml::GetChildAttribLong(System::String ^strAttribName, bool bThrowError)
 		{return GetChildAttribLong(strAttribName, bThrowError, 0);}
 
-		long StdXml::GetChildAttribLong(System::String ^strAttribName, bool bThrowError, long lDefault)
+		System::Int64 StdXml::GetChildAttribLong(System::String ^strAttribName, bool bThrowError, System::Int64 lDefault)
 		{
 			try
 			{
-				return m_lpXml->GetChildAttribLong(Util::StringToStd(strAttribName), bThrowError, lDefault);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::GetChildAttribLong: " + strName + ", Default: " +STR(lDefault));
+				return m_lpXml->GetChildAttribLong(strName, bThrowError, lDefault);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1208,17 +1338,19 @@ namespace AnimatGUI
 			}
 		}
 
-		int StdXml::GetChildAttribInt(System::String ^strAttribName)
+		System::Int32 StdXml::GetChildAttribInt(System::String ^strAttribName)
 		{return GetChildAttribInt(strAttribName, true, 0);}
 
-		int StdXml::GetChildAttribInt(System::String ^strAttribName, bool bThrowError)
+		System::Int32 StdXml::GetChildAttribInt(System::String ^strAttribName, bool bThrowError)
 		{return GetChildAttribInt(strAttribName, bThrowError, 0);}
 
-		int StdXml::GetChildAttribInt(System::String ^strAttribName, bool bThrowError, int iDefault)
+		System::Int32 StdXml::GetChildAttribInt(System::String ^strAttribName, bool bThrowError, System::Int32 iDefault)
 		{
 			try
 			{
-				return m_lpXml->GetChildAttribInt(Util::StringToStd(strAttribName), bThrowError, iDefault);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::GetChildAttribInt: " + strName + ", Default: " +STR(iDefault));
+				return m_lpXml->GetChildAttribInt(strName, bThrowError, iDefault);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1243,7 +1375,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return m_lpXml->GetChildAttribDouble(Util::StringToStd(strAttribName), bThrowError, dblDefault);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::GetChildAttribDouble: " + strName + ", Default: " +STR(dblDefault));
+				return m_lpXml->GetChildAttribDouble(strName, bThrowError, dblDefault);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1268,7 +1402,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return m_lpXml->GetChildAttribFloat(Util::StringToStd(strAttribName), bThrowError, fltDefault);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::GetChildAttribFloat: " + strName + ", Default: " +STR(fltDefault));
+				return m_lpXml->GetChildAttribFloat(strName, bThrowError, fltDefault);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1293,7 +1429,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return m_lpXml->GetChildAttribBool(Util::StringToStd(strAttribName), bThrowError, bDefault);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::GetChildAttribBool: " + strName + ", Default: " +STR(bDefault));
+				return m_lpXml->GetChildAttribBool(strName, bThrowError, bDefault);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1312,7 +1450,10 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->SetChildAttrib(Util::StringToStd(strAttribName), Util::StringToStd(strVal));
+				string strName = Util::StringToStd(strAttribName);
+				string strV = Util::StringToStd(strVal);
+				//TRACE_DETAIL("StdXml::SetChildAttrib: " + strName + ", Value: " + strV);
+				m_lpXml->SetChildAttrib(strName, strV);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1329,7 +1470,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->SetChildAttrib(Util::StringToStd(strAttribName), cVal);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::SetChildAttrib: " + strName + ", Value: " + cVal);
+				m_lpXml->SetChildAttrib(strName, cVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1346,7 +1489,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->SetChildAttrib(Util::StringToStd(strAttribName), cVal);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::SetChildAttrib: " + strName + ", Value: " + STR(cVal));
+				m_lpXml->SetChildAttrib(strName, cVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1359,11 +1504,13 @@ namespace AnimatGUI
 			}
 		}
 
-		void StdXml::SetChildAttrib(System::String ^strAttribName, Int32 lVal)
+		void StdXml::SetChildAttrib(System::String ^strAttribName, System::Int64 lVal)
 		{
 			try
 			{
-				m_lpXml->SetChildAttrib(Util::StringToStd(strAttribName), lVal);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::SetChildAttrib: " + strName + ", Value: " + STR(lVal));
+				m_lpXml->SetChildAttrib(strName, (long) lVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1376,11 +1523,13 @@ namespace AnimatGUI
 			}
 		}
 
-		void StdXml::SetChildAttrib(System::String ^strAttribName, Int16 iVal)
+		void StdXml::SetChildAttrib(System::String ^strAttribName, System::Int32 iVal)
 		{
 			try
 			{
-				m_lpXml->SetChildAttrib(Util::StringToStd(strAttribName), iVal);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::SetChildAttrib: " + strName + ", Value: " + STR(iVal));
+				m_lpXml->SetChildAttrib(strName, (int) iVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1397,7 +1546,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->SetChildAttrib(Util::StringToStd(strAttribName), dblVal);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::SetChildAttrib: " + strName + ", Value: " + STR(dblVal));
+				m_lpXml->SetChildAttrib(strName, dblVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1414,7 +1565,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->SetChildAttrib(Util::StringToStd(strAttribName), fltVal);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::SetChildAttrib: " + strName + ", Value: " + STR(fltVal));
+				m_lpXml->SetChildAttrib(strName, fltVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1431,7 +1584,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->SetChildAttrib(Util::StringToStd(strAttribName), bVal);
+				string strName = Util::StringToStd(strAttribName);
+				//TRACE_DETAIL("StdXml::SetChildAttrib: " + strName + ", Value: " + STR(bVal));
+				m_lpXml->SetChildAttrib(strName, bVal);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1449,6 +1604,7 @@ namespace AnimatGUI
 			try
 			{
 				string strDoc = Util::StringToStd(Doc);
+				//TRACE_DETAIL("StdXml::AddChildDoc: " + strDoc);
 				m_lpXml->AddChildDoc(strDoc);
 				Doc = gcnew String(strDoc.c_str());
 			}
@@ -1468,6 +1624,7 @@ namespace AnimatGUI
 			try
 			{
 				string strDoc = m_lpXml->GetChildDoc();
+				//TRACE_DETAIL("StdXml::GetChildDoc: " + strDoc);
 				System::String ^strVal = gcnew String(strDoc.c_str());
 				return strVal;
 			}
@@ -1488,6 +1645,7 @@ namespace AnimatGUI
 		{
 			try
 			{
+				//TRACE_DETAIL("StdXml::GetParentTagName");
 				return gcnew String(m_lpXml->GetParentTagName().c_str());
 			}
 			catch(CStdErrorInfo oError)
@@ -1507,7 +1665,17 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->Load(Util::StringToStd(strFilename));
+				LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Detail, "Starting Load of " + strFilename);
+
+				string strFile = Util::StringToStd(strFilename, m_lpLogger);
+
+				//TRACE_DETAIL("StdXml::Load: " + strFile);
+
+				LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Detail, "Calling Sim::Xml::Load ");
+
+				m_lpXml->Load(strFile);
+
+				LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Detail, "Finished Load of " + strFilename);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -1524,7 +1692,16 @@ namespace AnimatGUI
 		{
 			try
 			{
-				m_lpXml->Save(Util::StringToStd(strFilename));
+				LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Detail, "Starting Save of " + strFilename);
+
+				string strFile = Util::StringToStd(strFilename, m_lpLogger);
+				//TRACE_DETAIL("StdXml::Save: " + strFile);
+
+				LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Detail, "Calling Sim::Xml::Save ");
+
+				m_lpXml->Save(strFile);
+
+				LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Detail, "Finished Save of " + strFilename);
 			}
 			catch(CStdErrorInfo oError)
 			{

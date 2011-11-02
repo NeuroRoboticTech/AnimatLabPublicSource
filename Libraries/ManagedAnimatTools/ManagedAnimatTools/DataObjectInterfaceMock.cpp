@@ -1,8 +1,8 @@
 #include "stdafx.h"
+//#include "ILogger.h"
 #include "Util.h"
-#include "Logger.h"
 #include "PropertyUpdateException.h"
-#include "ISimulatorInterface.h"
+//#include "ISimulatorInterface.h"
 #include "SimulatorInterface.h"
 #include "SimGUICallback.h"
 #include "IDataObjectInterface.h"
@@ -14,7 +14,7 @@ namespace AnimatGUI
 	namespace Interfaces
 	{
 
-DataObjectInterfaceMock::DataObjectInterfaceMock(Interfaces::ISimulatorInterface ^SimInt, String ^strID)
+DataObjectInterfaceMock::DataObjectInterfaceMock(ManagedAnimatInterfaces::ISimulatorInterface ^SimInt, String ^strID)
 {
 	//try
 	//{

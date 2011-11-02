@@ -46,7 +46,7 @@ namespace AnimatGUI
 			virtual System::Boolean Loaded();
 			virtual System::Boolean SimOpen();
 			virtual void SetProjectPath(System::String ^strPath); 
-			virtual void SetLogger(AnimatGUI::Interfaces::Logger ^lpLog);
+			virtual void SetLogger(ManagedAnimatInterfaces::ILogger ^lpLog);
 
 #pragma endregion
 

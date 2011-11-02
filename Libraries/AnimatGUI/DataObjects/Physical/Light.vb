@@ -270,14 +270,14 @@ Namespace DataObjects.Physical
 
 #Region " Load/Save Methods "
 
-        Public Overridable Overloads Sub LoadData(ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(oXml)
 
             Try
                 oXml.IntoElem()
 
                 m_snRadius.LoadData(oXml, "Radius")
-                
+
                 m_fltConstantAttenuation = oXml.GetChildFloat("ConstantAttenuation", m_fltConstantAttenuation)
                 m_snLinearAttenuationDistance.LoadData(oXml, "LinearAttenuationDistance", False)
                 m_snQuadraticAttenuationDistance.LoadData(oXml, "QuadraticAttenuationDistance", False)
@@ -293,7 +293,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overridable Overloads Sub SaveData(ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.SaveData(oXml, "Light")
 
             Try
@@ -316,7 +316,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
             MyBase.SaveSimulationXml(oXml, nmParentControl, "Light")
 
             Try

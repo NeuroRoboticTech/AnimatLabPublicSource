@@ -1,11 +1,11 @@
 #include "stdafx.h"
+//#include "ILogger.h"
 #include "Util.h"
-#include "Logger.h"
 #include "PropertyUpdateException.h"
-#include "ISimulatorInterface.h"
+//#include "ISimulatorInterface.h"
 #include "SimulatorInterface.h"
 #include "SimGUICallback.h"
-#include "IDataObjectInterface.h"
+//#include "IDataObjectInterface.h"
 #include "DataObjectInterface.h"
 #include "MovableItemCallback.h"
 
@@ -14,25 +14,30 @@ namespace AnimatGUI
 	namespace Interfaces
 	{
 
-DataObjectInterface::DataObjectInterface(Interfaces::ISimulatorInterface ^SimInt, String ^strID)
+DataObjectInterface::DataObjectInterface(ManagedAnimatInterfaces::ISimulatorInterface ^SimInt, String ^strID)
 {
 	try
 	{
-		m_aryDataPointers = NULL;
-		m_Sim = SimInt;
-		m_lpSim = m_Sim->Sim();
-		string strSID = Util::StringToStd(strID);
-		m_lpBase = m_lpSim->FindByID(strSID);
-		m_lpMovable = dynamic_cast<MovableItem *>(m_lpBase);
+		AnimatGUI::Interfaces::SimulatorInterface ^RealSimInt = dynamic_cast<AnimatGUI::Interfaces::SimulatorInterface ^>(SimInt);
 
-		//If this is a bodypart or struture type then lets add the callbacks to it so those
-		//classes can fire managed events back up to the gui.
-		if(m_lpMovable)
+		if(RealSimInt != nullptr)
 		{
-			MovableItemCallback *lpCallback = NULL;
-			lpCallback = new MovableItemCallback(this);
-			m_lpMovable->Callback(lpCallback);
-			GetPointers();
+			m_aryDataPointers = NULL;
+			m_Sim = RealSimInt;
+			m_lpSim = RealSimInt->Sim();
+			string strSID = Util::StringToStd(strID);
+			m_lpBase = m_lpSim->FindByID(strSID);
+			m_lpMovable = dynamic_cast<MovableItem *>(m_lpBase);
+
+			//If this is a bodypart or struture type then lets add the callbacks to it so those
+			//classes can fire managed events back up to the gui.
+			if(m_lpMovable)
+			{
+				MovableItemCallback *lpCallback = NULL;
+				lpCallback = new MovableItemCallback(this);
+				m_lpMovable->Callback(lpCallback);
+				GetPointers();
+			}
 		}
 	}
 	catch(CStdErrorInfo oError)

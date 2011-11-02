@@ -775,7 +775,7 @@ void TracePointArray(CStdPtrArray< CStdPoint<T> > &aryPoints, const char* Descri
 	if(Description)
 	{
 		oss << Description;
-		Std_TraceMsg(StdLogDebug, oss.str(), "", -1, STD_TRACE_TO_FILE, false);
+		//Std_TraceMsg(StdLogDebug, oss.str(), "", -1, STD_TRACE_TO_FILE, false);
 	}
 
 	iCount = aryPoints.GetSize();
@@ -786,7 +786,7 @@ void TracePointArray(CStdPtrArray< CStdPoint<T> > &aryPoints, const char* Descri
 		if(lpPoint)
 		{
 			sprintf(strText, "(%f, %f, %f)", lpPoint->x, lpPoint->y, lpPoint->z);
-			Std_TraceMsg(StdLogDebug, strText, "", -1, STD_TRACE_TO_FILE, false);
+			//Std_TraceMsg(StdLogDebug, strText, "", -1, STD_TRACE_TO_FILE, false);
 		}
 	}
 }
@@ -802,7 +802,7 @@ void TracePointArray(CStdArray< CStdPoint<T> > &aryPoints, const char* Descripti
 	if(Description)
 	{
 		oss << Description;
-		Std_TraceMsg(StdLogDebug, oss.str(), "", -1, STD_TRACE_TO_FILE, false);
+		//Std_TraceMsg(30, oss.str(), "", -1, STD_TRACE_TO_FILE, false);
 	}
 
 	iCount = aryPoints.GetSize();
@@ -811,7 +811,7 @@ void TracePointArray(CStdArray< CStdPoint<T> > &aryPoints, const char* Descripti
 	{
 		oPoint = aryPoints[iIndex];
 		sprintf(strText, "(%f, %f, %f)", oPoint.x, oPoint.y, oPoint.z);
-		Std_TraceMsg(StdLogDebug, strText, "", -1, STD_TRACE_TO_FILE, false);
+		//Std_TraceMsg(30, strText, "", -1, STD_TRACE_TO_FILE, false);
 	}
 }
 
@@ -826,7 +826,7 @@ void TracePointArray(CStdArray< CStdPoint<T> > &aryPoints, const char* Descripti
 #define DoubleVector vector<float>
 
 
-#ifdef STD_TRACING_ON
+#ifdef NOTDEFINEDNOW
 	template<typename T>
 	void TraceSTL_Obj(const char* SourceFileName, int SourceLineNum, const char* ObjectName, T t, int Index = -1, bool bShowSource = true)
 	{
@@ -836,10 +836,10 @@ void TracePointArray(CStdArray< CStdPoint<T> > &aryPoints, const char* Descripti
 		if (Index > -1) oss << "[" << Index << "]";
 		oss << " = " << t;
 
-		if(bShowSource)
+		/*if(bShowSource)
 			Std_TraceMsg(StdLogDebug, oss.str(), SourceFileName, SourceLineNum, STD_TRACE_TO_FILE, false);
 		else
-			Std_TraceMsg(StdLogDebug, oss.str(), "", -1, STD_TRACE_TO_FILE, false);
+			Std_TraceMsg(StdLogDebug, oss.str(), "", -1, STD_TRACE_TO_FILE, false);*/
 	}
 
 	template<typename T>

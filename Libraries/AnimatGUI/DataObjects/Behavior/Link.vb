@@ -213,7 +213,7 @@ Namespace DataObjects.Behavior
 
             End Sub
 
-            Public Overloads Sub LoadData(ByVal strName As String, ByRef oXml As AnimatGUI.Interfaces.StdXml)
+            Public Overloads Sub LoadData(ByVal strName As String, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
                 oXml.IntoChildElement(strName)
 
@@ -225,7 +225,7 @@ Namespace DataObjects.Behavior
                 oXml.OutOfElem()
             End Sub
 
-            Public Overloads Sub SaveData(ByVal strName As String, ByRef oXml As AnimatGUI.Interfaces.StdXml)
+            Public Overloads Sub SaveData(ByVal strName As String, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
                 oXml.AddChildElement(strName)
                 oXml.IntoElem()
 
@@ -237,7 +237,7 @@ Namespace DataObjects.Behavior
                 oXml.OutOfElem()
             End Sub
 
-            Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+            Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
                 MyBase.SaveSimulationXml(oXml, nmParentControl, Util.GetName(strName, "Link"))
             End Sub
 
@@ -1016,7 +1016,7 @@ Namespace DataObjects.Behavior
             Return False
         End Function
 
-        Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             MyBase.LoadData(oXml)
 
@@ -1071,7 +1071,7 @@ Namespace DataObjects.Behavior
 
             Catch ex As System.Exception
                 m_bIsInitialized = False
-             End Try
+            End Try
 
         End Sub
 
@@ -1087,7 +1087,7 @@ Namespace DataObjects.Behavior
             End Try
         End Sub
 
-        Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             If Not m_bnDestination Is Nothing AndAlso Not m_bnOrigin Is Nothing Then
                 oXml.AddChildElement("Link")

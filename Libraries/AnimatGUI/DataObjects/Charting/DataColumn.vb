@@ -428,7 +428,7 @@ Namespace DataObjects.Charting
         End Function
 
         Public Overridable Function SaveDataColumnToXml() As String
-            Dim oXml As New AnimatGUI.Interfaces.StdXml
+            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
             oXml.AddElement("Data")
             oXml.AddChildElement("DataColumn")
@@ -437,14 +437,14 @@ Namespace DataObjects.Charting
             Return oXml.Serialize()
         End Function
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             oXml.AddChildElement("DataColumn")
             SaveDataColumnXml(oXml)
 
         End Sub
 
-        Public Overridable Sub SaveDataColumnXml(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overridable Sub SaveDataColumnXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             Dim doItem As AnimatGUI.DataObjects.DragObject = Me.DataItem
 
             If doItem Is Nothing Then
@@ -602,7 +602,7 @@ Namespace DataObjects.Charting
             Me.DataItem = FindDataItem(m_strDataItemID)
         End Sub
 
-        Public Overridable Overloads Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overridable Overloads Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.IntoElem()
 
@@ -627,11 +627,11 @@ Namespace DataObjects.Charting
 
         End Sub
 
-        Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             SaveDataWithName(oXml, "DataColumn")
         End Sub
 
-        Public Overridable Sub SaveDataWithName(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strDataName As String)
+        Public Overridable Sub SaveDataWithName(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strDataName As String)
 
             oXml.AddChildElement(strDataName)
             oXml.IntoElem()

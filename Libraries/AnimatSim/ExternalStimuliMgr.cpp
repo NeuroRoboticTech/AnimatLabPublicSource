@@ -108,7 +108,7 @@ void ExternalStimuliMgr::Load(string strProjectPath, string strFileName)
 {
 	CStdXml oXml;
 
-	TRACE_DEBUG("Loading external stimuli config file.\r\n" + strProjectPath + "\r\nFileName: " + strFileName);
+	//TRACE_DEBUG(("Loading external stimuli config file.\r\n" + strProjectPath + "\r\nFileName: " + strFileName);
 
 	oXml.Load(AnimatSim::GetFilePath(strProjectPath, strFileName));
 
@@ -117,7 +117,7 @@ void ExternalStimuliMgr::Load(string strProjectPath, string strFileName)
 
 	Load(oXml);
 
-	TRACE_DEBUG("Finished loading external stimuli config file.");
+	//TRACE_DEBUG(("Finished loading external stimuli config file.");
 }
 */
 

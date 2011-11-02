@@ -715,7 +715,7 @@ Namespace Forms
          End Sub
 
 
-        Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(oXml)
 
             oXml.IntoElem() 'Into Form Element
@@ -734,8 +734,8 @@ Namespace Forms
             Me.ctrlTimeRuler.StartMillisecond = CLng(m_snStartingBarTime.ValueFromDefaultScale)
             Me.ctrlTimeRuler.EndMillisecond = CLng(m_snEndingBarTime.ValueFromDefaultScale)
 
-            Me.ctrlTimeRuler.ActualTimeColor = Color.FromArgb(oXml.GetChildLong("ActualTimeColor", Me.ctrlTimeRuler.ActualTimeColor.ToArgb))
-            Me.ctrlTimeRuler.CurrentTimeColor = Color.FromArgb(oXml.GetChildLong("CurrentTimeColor", Me.ctrlTimeRuler.CurrentTimeColor.ToArgb))
+            Me.ctrlTimeRuler.ActualTimeColor = Color.FromArgb(oXml.GetChildInt("ActualTimeColor", Me.ctrlTimeRuler.ActualTimeColor.ToArgb))
+            Me.ctrlTimeRuler.CurrentTimeColor = Color.FromArgb(oXml.GetChildInt("CurrentTimeColor", Me.ctrlTimeRuler.CurrentTimeColor.ToArgb))
             Me.ctrlTimeRuler.AutomaticTimeScale = oXml.GetChildBool("AutomaticTimeScale", Me.ctrlTimeRuler.AutomaticTimeScale)
             Me.ctrlTimeRuler.DivisionMarkFactor = oXml.GetChildInt("DivisionMarkFactor", Me.ctrlTimeRuler.DivisionMarkFactor)
             Me.ctrlTimeRuler.Divisions = oXml.GetChildInt("Divisions", Me.ctrlTimeRuler.Divisions)
@@ -748,7 +748,7 @@ Namespace Forms
 
         End Sub
 
-        Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.SaveData(oXml)
 
             oXml.IntoElem()

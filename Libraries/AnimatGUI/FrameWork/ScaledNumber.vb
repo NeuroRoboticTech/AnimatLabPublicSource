@@ -482,7 +482,7 @@ Namespace Framework
             Return oNew
         End Function
 
-        Public Overloads Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String, Optional ByVal bThrowError As Boolean = True)
+        Public Overloads Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String, Optional ByVal bThrowError As Boolean = True)
             If oXml.FindChildElement(strName, False) Then
                 oXml.IntoChildElement(strName)
                 m_fltValue = oXml.GetAttribFloat("Value")
@@ -503,7 +503,7 @@ Namespace Framework
             End If
         End Sub
 
-        Public Overloads Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String)
+        Public Overloads Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String)
             oXml.AddChildElement(strName)
             oXml.IntoElem()
             oXml.SetAttrib("Value", m_fltValue)
@@ -512,11 +512,11 @@ Namespace Framework
             oXml.OutOfElem()
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As DataObject = Nothing, Optional ByVal strName As String = "")
             oXml.AddChildElement(strName, Me.ActualValue)
         End Sub
 
-        Public Shared Function IsValidXml(ByVal oXml As AnimatGUI.Interfaces.StdXml, ByVal strName As String) As Boolean
+        Public Shared Function IsValidXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String) As Boolean
             Dim bRetVal As Boolean = False
 
             If oXml.FindChildElement(strName, False) Then

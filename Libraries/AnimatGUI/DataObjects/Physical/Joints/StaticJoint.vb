@@ -113,7 +113,7 @@ Namespace DataObjects.Physical.Joints
         ''' \param [in,out] oXml    The xml to save to.
         ''' \param  nmParentControl (optional) [in,out] The parent control.
         ''' \param  strName         (optional) name of the element.
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
         End Sub
 
     End Class

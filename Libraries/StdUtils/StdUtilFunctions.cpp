@@ -3020,12 +3020,12 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	{
 		string strFinalMessage;
 
-		if(iSourceLine>=0)
+	/*	if(iSourceLine>=0)
 			strFinalMessage = STR(strSourceFile) + " (" + STR(iSourceLine) + ") \r\n" + STR(strMessage) + "\r\n";
 		else
-			strFinalMessage = strMessage;
+			strFinalMessage = strMessage;*/
 
-		Std_Log(iLevel, bPrintHeader, strFinalMessage.c_str());
+		//Std_Log(iLevel, bPrintHeader, strFinalMessage.c_str());
 	}
 
 	/**
@@ -3044,6 +3044,9 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 	**/
 	void STD_UTILS_PORT Std_TraceMsg(const int iLevel, string strMessage, string strSourceFile, int iSourceLine, bool bLogToFile, bool bPrintHeader)
 	{
+		int iLogLevel = GetTraceLevel();
+		if(iLogLevel==0||iLevel>iLogLevel) return;
+
 		string strTemp = strMessage + "\r\n";
 
 		#ifdef STD_TRACE_TO_DEBUGGER

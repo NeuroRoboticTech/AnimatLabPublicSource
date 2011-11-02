@@ -152,7 +152,7 @@ Namespace DataObjects.Physical
 
 #End Region
 
-        Public Overridable Overloads Sub LoadData(ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             Try
                 oXml.FindChildElement("Odor")
@@ -181,7 +181,7 @@ Namespace DataObjects.Physical
             End Try
         End Sub
 
-        Public Overridable Overloads Sub SaveData(ByRef oXml As Interfaces.StdXml)
+        Public Overridable Overloads Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             If Not m_doOdorType Is Nothing Then
                 oXml.AddChildElement("Odor")
@@ -198,7 +198,7 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As Interfaces.StdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As Framework.DataObject = Nothing, Optional ByVal strName As String = "")
             If Not m_doOdorType Is Nothing Then
                 oXml.AddChildElement("Odor")
                 oXml.IntoElem()

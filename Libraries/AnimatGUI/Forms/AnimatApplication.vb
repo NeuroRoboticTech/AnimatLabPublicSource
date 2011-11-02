@@ -1028,6 +1028,11 @@ Namespace Forms
             Monthly
         End Enum
 
+        Public Enum enumRuntimeMode
+            Release
+            Debug
+        End Enum
+
 #End Region
 
 #Region " Attributes "
@@ -1035,8 +1040,10 @@ Namespace Forms
         Private Declare Function WebUpdate Lib "wuw4.dll" (ByVal URL As String) As Long
 
         Protected m_strAppVersion As String = "2.0"
-        Protected m_bUseMockSimInterface As Boolean = True
-        Protected m_bUseMockDataObjectInterface As Boolean = True
+        Protected m_bUseMockSimInterface As Boolean = False
+        Protected m_bUseMockDataObjectInterface As Boolean = False
+        Protected m_bUseMockStdXml As Boolean = False
+        Protected m_bUseNetLogger As Boolean = True
 
         Protected m_mgrToolStripImages As AnimatGUI.Framework.ImageManager
         Protected m_mgrLargeImages As AnimatGUI.Framework.ImageManager
@@ -1065,7 +1072,7 @@ Namespace Forms
         Protected m_arySortedChildForms As New Collections.SortedAnimatForms(Nothing)
 
         Protected m_doSimulation As DataObjects.Simulation
-        Protected m_doSimInterface As AnimatGUI.Interfaces.ISimulatorInterface
+        Protected m_doSimInterface As ManagedAnimatInterfaces.ISimulatorInterface
 
         Protected m_aryAllDataTypes As New Collections.DataObjects(Nothing)
         Protected m_aryNeuralModules As New Collections.SortedNeuralModules(Nothing)
@@ -1129,7 +1136,7 @@ Namespace Forms
 
         Protected m_strDefaultNewFolder As String = ""
 
-        Protected m_Logger As New AnimatGUI.Interfaces.Logger
+        Protected m_Logger As ManagedAnimatInterfaces.ILogger
         Protected m_ModificationHistory As New AnimatGUI.Framework.UndoSystem.ModificationHistory
 
         Protected m_eAutoUpdateInterval As enumAutoUpdateInterval = enumAutoUpdateInterval.Daily
@@ -1138,6 +1145,9 @@ Namespace Forms
         Protected m_bAnnouceUpdates As Boolean = False
 
         Protected m_SecurityMgr As New AnimatGuiCtrls.Security.SecurityManager
+
+        Protected m_eDefaultRuntimeMode As enumRuntimeMode = enumRuntimeMode.Release
+        Protected m_strSimVCVersion As String = "10"
 
 #End Region
 
@@ -1187,13 +1197,38 @@ Namespace Forms
             Set(ByVal Value As String)
                 m_strLogDirectory = Value
 
-                m_Logger.LogPrefix = m_strLogDirectory & "\AnimatLab"
+                m_Logger.LogPrefix = m_strLogDirectory & "AnimatLab"
             End Set
         End Property
 
-        Public ReadOnly Property Logger() As AnimatGUI.Interfaces.Logger
+        Public ReadOnly Property Logger() As ManagedAnimatInterfaces.ILogger
             Get
                 Return m_Logger
+            End Get
+        End Property
+
+        Public Overridable Property DefaultRuntimeMode() As enumRuntimeMode
+            Get
+                Return m_eDefaultRuntimeMode
+            End Get
+            Set(ByVal Value As enumRuntimeMode)
+                m_eDefaultRuntimeMode = Value
+            End Set
+        End Property
+
+        Public Overridable ReadOnly Property RuntimeModePrefix() As String
+            Get
+                If m_eDefaultRuntimeMode = enumRuntimeMode.Debug Then
+                    Return "D"
+                Else
+                    Return ""
+                End If
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property SimVCVersion() As String
+            Get
+                Return m_strSimVCVersion
             End Get
         End Property
 
@@ -1382,7 +1417,7 @@ Namespace Forms
             End Set
         End Property
 
-        Public Overridable ReadOnly Property SimulationInterface() As AnimatGUI.Interfaces.ISimulatorInterface
+        Public Overridable ReadOnly Property SimulationInterface() As ManagedAnimatInterfaces.ISimulatorInterface
             Get
                 Return m_doSimInterface
             End Get
@@ -1573,30 +1608,65 @@ Namespace Forms
 
         End Sub
 
-        Protected Function CreateSimInterface() As AnimatGUI.Interfaces.ISimulatorInterface
-            If Not m_bUseMockSimInterface Then
-                Return New AnimatGUI.Interfaces.SimulatorInterface()
+        Protected Function CreateSimInterface() As ManagedAnimatInterfaces.ISimulatorInterface
+            Dim iSim As ManagedAnimatInterfaces.ISimulatorInterface
+
+            If m_bUseMockSimInterface Then
+                iSim = New ManagedAnimatInterfaces.SimulatorInterfaceMock()
             Else
-                Return New AnimatGUI.Interfaces.SimulatorInterfaceMock()
+                iSim = DirectCast(Util.LoadClass("ManagedAnimatTools.dll", "AnimatGUI.Interfaces.SimulatorInterface"), ManagedAnimatInterfaces.ISimulatorInterface)
             End If
+
+            iSim.SetLogger(Util.Logger)
+
+            Return iSim
         End Function
 
-        Public Function CreateDataObjectInterface(ByVal strID As String) As Interfaces.IDataObjectInterface
-            If Not m_bUseMockDataObjectInterface Then
-                Return New AnimatGUI.Interfaces.DataObjectInterface(Me.SimulationInterface, strID)
+        Public Function CreateDataObjectInterface(ByVal strID As String) As ManagedAnimatInterfaces.IDataObjectInterface
+            Dim iDataObject As ManagedAnimatInterfaces.IDataObjectInterface
+
+            If m_bUseMockDataObjectInterface Then
+                iDataObject = New ManagedAnimatInterfaces.DataObjectInterfaceMock(Me.SimulationInterface, strID)
             Else
-                Return New AnimatGUI.Interfaces.DataObjectInterfaceMock(Me.SimulationInterface, strID)
+                iDataObject = DirectCast(Util.LoadClass("ManagedAnimatTools.dll", "AnimatGUI.Interfaces.DataObjectInterface", New Object() {Me.SimulationInterface, strID}), ManagedAnimatInterfaces.IDataObjectInterface)
             End If
+
+            Return iDataObject
+        End Function
+
+        Public Function CreateStdXml() As ManagedAnimatInterfaces.IStdXml
+            Dim iXml As ManagedAnimatInterfaces.IStdXml
+
+            If m_bUseMockStdXml Then
+                iXml = New ManagedAnimatInterfaces.StdXmlMock
+            Else
+                iXml = DirectCast(Util.LoadClass("ManagedAnimatTools.dll", "AnimatGUI.Interfaces.StdXml"), ManagedAnimatInterfaces.IStdXml)
+            End If
+
+            iXml.SetLogger(Util.Logger)
+
+            Return iXml
+        End Function
+
+        Public Function CreateLogger() As ManagedAnimatInterfaces.ILogger
+            Dim iLog As ManagedAnimatInterfaces.ILogger
+
+            If m_bUseNetLogger Then
+                iLog = New AnimatGUI.Framework.Logger()
+            Else
+                'iLog = New Interfaces.Logger()
+            End If
+
+            Return iLog
         End Function
 
         Public Overrides Sub Initialize(Optional ByVal frmParent As AnimatForm = Nothing)
 
             Try
-                m_doSimInterface = CreateSimInterface()
-
                 Util.DisableDirtyFlags = True
                 Util.Application = Me
-                m_doSimInterface.SetLogger(Util.Logger)
+
+                m_doSimInterface = CreateSimInterface()
 
                 Me.AnimatToolStrip.ToolName = "AnimatGUI.Forms.AnimatApplication"
                 Me.AnimatToolStrip.SecurityMgr = Me.SecurityMgr
@@ -1607,13 +1677,13 @@ Namespace Forms
                 'Reset the culture info to be invariant english. I was getting problems 
                 'with foriegn culture infos not parsing the xml files correctly.
                 Thread.CurrentThread.CurrentCulture = New CultureInfo("")
- 
+
+                LoadUserConfig()
                 InitLogging()
                 FindMdiClient()
                 CatalogPluginModules()
                 CheckSimRegistryEntry()
                 ResetProject(False)
-                LoadUserConfig()
                 AutoUpdate()
                 UpdateToolstrips()
 
@@ -1706,6 +1776,8 @@ Namespace Forms
 
                 m_eAutoUpdateInterval = DirectCast([Enum].Parse(GetType(enumAutoUpdateInterval), System.Configuration.ConfigurationManager.AppSettings("UpdateFrequency"), True), enumAutoUpdateInterval)
 
+                m_eDefaultRuntimeMode = DirectCast([Enum].Parse(GetType(enumRuntimeMode), System.Configuration.ConfigurationManager.AppSettings("DefaultRuntimeMode"), True), enumRuntimeMode)
+
                 Try
                     Dim strDate As String = System.Configuration.ConfigurationManager.AppSettings("UpdateTime")
                     m_dtLastAutoUpdateTime = Date.Parse(strDate)
@@ -1730,17 +1802,15 @@ Namespace Forms
 
         Protected Overridable Sub InitLogging()
             Try
-                If Me.Logger Is Nothing Then
-                    Throw New System.Exception("Logger is null")
-                End If
+                m_Logger = CreateLogger()
 
                 If Not Directory.Exists(Me.ApplicationDirectory & "Logs") Then
                     Directory.CreateDirectory(Me.ApplicationDirectory & "Logs")
                 End If
                 Me.LogDirectory = Me.ApplicationDirectory & "Logs\"
 
-                Me.Logger.TraceLevel = Interfaces.Logger.enumLogLevel.Error
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Initialized Logging")
+                Me.Logger.TraceLevel = ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Initialized Logging")
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -1758,7 +1828,7 @@ Namespace Forms
 
             AddHandler m_mdiClient.Click, AddressOf Me.OnMdiClientClicked
 
-            Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Found Mdi Client Window")
+            Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Found Mdi Client Window")
         End Sub
 
         Public Overridable Sub CheckSimRegistryEntry()
@@ -1903,7 +1973,7 @@ Namespace Forms
             Dim bDebugOutput As Boolean = False
 
             Try
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "Beginning to catalog plugin modules")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "Beginning to catalog plugin modules")
 
                 Dim aryExcludeDlls As Hashtable = DirectCast(System.Configuration.ConfigurationManager.GetSection("DllExclusionList/Dlls"), Hashtable)
 
@@ -1928,7 +1998,7 @@ Namespace Forms
                 'First find a list of all possible assemblies. It may be one or it may be a standard win32 dll. We will have to see later.
                 Util.FindAssemblies(Me.ApplicationDirectory(), aryFileNames)
 
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "Util.FindAssemblies")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "Util.FindAssemblies")
 
                 For Each oFile As Object In aryFileNames
                     strFile = DirectCast(oFile, String)
@@ -1939,23 +2009,23 @@ Namespace Forms
                     End If
                 Next
 
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "Initialize dataobjects after Application Start")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "Initialize dataobjects after Application Start")
 
                 InitializeDataObjectsAfterAppStart()
 
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "Finished Looping through assemblies")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "Finished Looping through assemblies")
 
                 CreateBehavioralPanels()
 
                 SetupPartsExclusionsList()
 
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Finished cataloging plugin modules")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Finished cataloging plugin modules")
 
             Catch ex As System.Exception
                 If Not tpClass Is Nothing Then
-                    Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "Error in CatalogPluginModules " & tpClass.FullName)
+                    Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "Error in CatalogPluginModules " & tpClass.FullName)
                 Else
-                    Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "Error in CatalogPluginModules. Type is nothing")
+                    Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "Error in CatalogPluginModules. Type is nothing")
                 End If
 
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -1990,7 +2060,7 @@ Namespace Forms
                 Dim assemModule As System.Reflection.Assembly = Util.LoadAssembly(Util.GetFilePath(Me.ApplicationDirectory, strFile), False)
                 If Not assemModule Is Nothing Then
 
-                    Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "About to get types: " & assemModule.FullName)
+                    Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "About to get types: " & assemModule.FullName)
 
                     Dim aryTypes() As Type
                     Try
@@ -2001,7 +2071,7 @@ Namespace Forms
                         ReDim aryTypes(0)
                     End Try
 
-                    Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "Starting to loop through: " & assemModule.FullName)
+                    Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "Starting to loop through: " & assemModule.FullName)
 
                     If assemModule.GetName().Name <> "UI Components" Then
 
@@ -2092,7 +2162,7 @@ Namespace Forms
                         tpClass = Nothing
                     End If
 
-                    Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "Finished looping through: " & assemModule.FullName)
+                    Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "Finished looping through: " & assemModule.FullName)
                 End If
 
                 If bAddModule Then
@@ -2587,6 +2657,8 @@ Namespace Forms
         Public Overridable Sub ResetProject(ByVal bNewProject As Boolean)
             CloseProject(bNewProject)
 
+            Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Starting Reset Project")
+
             Dim afForm As AnimatForm
 
             m_wcWorkspaceContent = Nothing
@@ -2654,7 +2726,7 @@ Namespace Forms
 
             RaiseEvent ProjectClosed()
 
-            Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Reset Project")
+            Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Finished Reset Project")
         End Sub
 
 
@@ -2751,6 +2823,8 @@ Namespace Forms
                 Return
             End If
 
+            Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Closing project")
+
             m_bProjectIsOpen = bOpeningProject
 
             If Not m_dockManager Is Nothing Then
@@ -2785,10 +2859,10 @@ Namespace Forms
 
             Me.ClearIsDirty()
 
-            Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Closed current project")
+            Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Closed current project")
         End Sub
 
-        Public Overridable Function SaveStandAlone(ByVal bSaveCharts As Boolean, ByVal bSaveStims As Boolean, ByVal bSaveChartsToFile As Boolean) As AnimatGUI.Interfaces.StdXml
+        Public Overridable Function SaveStandAlone(ByVal bSaveCharts As Boolean, ByVal bSaveStims As Boolean, ByVal bSaveChartsToFile As Boolean) As ManagedAnimatInterfaces.IStdXml
 
             Try
                 Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
@@ -2799,13 +2873,13 @@ Namespace Forms
                 Util.ExportChartsInStandAloneSim = bSaveCharts
                 Util.ExportStimsInStandAloneSim = bSaveStims
 
-                Dim oXml As New AnimatGUI.Interfaces.StdXml
+                Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
                 Util.Simulation.SaveSimulationXml(oXml, Nothing)
 
                 Return oXml
             Catch ex As System.Exception
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Unable to save project:")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Unable to save project:")
                 Throw ex
             Finally
                 Util.DisableDirtyFlags = False
@@ -2820,7 +2894,7 @@ Namespace Forms
         Public Overridable Sub SaveProject(ByVal strFilename As String)
 
             Try
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Starting Save of project: '" & Util.Application.ProjectPath & "\" & strFilename & "'")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Starting Save of project: '" & Util.Application.ProjectPath & "\" & strFilename & "'")
 
                 If Not m_bProjectIsOpen Then
                     Throw New System.Exception("You must have an open project before you can save it.")
@@ -2828,7 +2902,7 @@ Namespace Forms
 
                 Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-                Dim oXml As New AnimatGUI.Interfaces.StdXml
+                Dim oXml As ManagedAnimatInterfaces.IStdXml = CreateStdXml()
 
                 Me.ClearIsDirty()
 
@@ -2847,10 +2921,10 @@ Namespace Forms
 
                 RaiseEvent ProjectSaved()
 
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Finished successful save of project: '" & Util.Application.ProjectPath & "\" & strFilename & "'")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Finished successful save of project: '" & Util.Application.ProjectPath & "\" & strFilename & "'")
 
             Catch ex As System.Exception
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Unable to save project: '" & Util.Application.ProjectPath & "\" & strFilename & "'")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Unable to save project: '" & Util.Application.ProjectPath & "\" & strFilename & "'")
                 Throw ex
             Finally
                 Util.DisableDirtyFlags = False
@@ -2861,11 +2935,12 @@ Namespace Forms
         Public Overridable Sub LoadProject(ByVal strFilename As String)
 
             Try
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Starting load of project: '" & strFilename & "'")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Starting load of project: '" & strFilename & "'")
 
                 Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-                Dim oXml As New AnimatGUI.Interfaces.StdXml
+                ' Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
+                Dim oXml As ManagedAnimatInterfaces.IStdXml = CreateStdXml()
 
                 Dim strProjPath As String
                 Dim strProjFile As String
@@ -2875,7 +2950,9 @@ Namespace Forms
 
                 Directory.SetCurrentDirectory(m_strProjectPath)
 
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Loading xml")
                 oXml.Load(strFilename)
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Loaded xml")
 
                 oXml.FindElement("Project")
                 oXml.FindChildElement("")
@@ -2889,13 +2966,13 @@ Namespace Forms
 
                 Me.Title = Me.ProjectName & " Project"
 
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Finished successful load of project: '" & strFilename & "'")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Finished successful load of project: '" & strFilename & "'")
 
                 UpdateToolstrips()
                 RaiseEvent ProjectLoaded()
 
             Catch ex As System.Exception
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Unable to load project: '" & strFilename & "'")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Unable to load project: '" & strFilename & "'")
                 Throw ex
             Finally
                 Util.DisableDirtyFlags = False
@@ -2906,7 +2983,7 @@ Namespace Forms
         Protected Overridable Sub OnExportStandaloneSim(ByVal sender As Object, ByVal e As EventArgs) Handles ExportStandaloneToolStripMenuItem.Click
 
             Try
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Starting Save of stand alone config file.")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Starting Save of stand alone config file.")
 
                 If Not m_bProjectIsOpen Then
                     Throw New System.Exception("You must have an open project before you can save it.")
@@ -2929,10 +3006,10 @@ Namespace Forms
 
                 Util.ShowMessage("Standalone Control Files Created")
 
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Finished successful save of standalone config file")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Finished successful save of standalone config file")
 
             Catch ex As System.Exception
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Unable to save standalone config file.")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Unable to save standalone config file.")
                 Throw ex
             Finally
                 Util.ExportForStandAloneSim = False
@@ -2947,7 +3024,7 @@ Namespace Forms
 
 
             Try
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Starting Save of stand alone config file.")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Starting Save of stand alone config file.")
 
                 If Not m_bProjectIsOpen Then
                     Throw New System.Exception("You must have an open project before you can save it.")
@@ -2970,10 +3047,10 @@ Namespace Forms
 
                 'Util.ShowMessage("Standalone Control Files Created")
 
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Finished successful save of standalone config file")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Finished successful save of standalone config file")
 
             Catch ex As System.Exception
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Unable to save standalone config file.")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Unable to save standalone config file.")
                 Throw ex
             Finally
                 Util.ExportForStandAloneSim = False
@@ -3027,9 +3104,11 @@ Namespace Forms
 
 #Region " Load/Save Methods "
 
-        Public Overloads Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overloads Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             CloseProject(True)
+
+            Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "LoadData starting")
 
             Try
                 Util.LoadInProgress = True
@@ -3037,7 +3116,7 @@ Namespace Forms
 
                 m_strProjectName = oXml.GetChildString("ProjectName")
                 m_strSimulationFile = oXml.GetChildString("SimulationFile", "")
-                Dim eLogLevel As AnimatGUI.Interfaces.Logger.enumLogLevel = DirectCast([Enum].Parse(GetType(AnimatGUI.Interfaces.Logger.enumLogLevel), oXml.GetChildString("LogLevel", "None"), True), AnimatGUI.Interfaces.Logger.enumLogLevel)
+                Dim eLogLevel As ManagedAnimatInterfaces.ILogger.enumLogLevel = DirectCast([Enum].Parse(GetType(ManagedAnimatInterfaces.ILogger.enumLogLevel), oXml.GetChildString("LogLevel", "None"), True), ManagedAnimatInterfaces.ILogger.enumLogLevel)
 
                 If eLogLevel <> Me.Logger.TraceLevel Then
                     Me.Logger.TraceLevel = eLogLevel
@@ -3081,7 +3160,7 @@ Namespace Forms
         End Sub
 
         Public Overridable Sub LoadDockingConfig(ByRef dockManager As Crownwood.DotNetMagic.Docking.DockingManager, _
-                                                 ByRef oXml As AnimatGUI.Interfaces.StdXml)
+                                                 ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             Try
                 Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
@@ -3111,7 +3190,7 @@ Namespace Forms
         End Sub
 
         Public Overridable Sub LoadDockingForm(ByRef dockManager As DockingManager, _
-                                               ByRef oXml As AnimatGUI.Interfaces.StdXml)
+                                               ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             Try
                 Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
@@ -3156,7 +3235,7 @@ Namespace Forms
 
         End Sub
 
-        Public Overloads Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overloads Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             Try
                 Util.SaveInProgress = True
@@ -3206,7 +3285,7 @@ Namespace Forms
         End Sub
 
         Public Overridable Sub SaveDockingConfig(ByRef dockManager As DockingManager, _
-                                                 ByRef oXml As AnimatGUI.Interfaces.StdXml)
+                                                 ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             'Save the docking manager configuration
             Dim ascii As Encoding = Encoding.ASCII
             Dim aryBytes As Byte() = dockManager.SaveConfigToArray(ascii)
@@ -3718,7 +3797,7 @@ Namespace Forms
                     Me.RunSimulationToolStripMenuItem.Text = "Pause Simulation"
                 End If
 
-                Util.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Simulation was started or resumed.")
+                Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Simulation was started or resumed.")
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -3737,7 +3816,7 @@ Namespace Forms
                 RaiseEvent SimulationStopped()
                 Me.SimulationInterface.StopSimulation()
 
-                Util.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Simulation was stopped.")
+                Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Simulation was stopped.")
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -4325,6 +4404,8 @@ Namespace Forms
         Protected Overridable Sub OnNewProject(ByVal sender As Object, ByVal e As EventArgs) Handles NewToolStripMenuItem.Click, NewToolStripButton.Click
 
             Try
+                Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Creating new project")
+
                 If SaveIfDirty() = DialogResult.Cancel Then
                     Return
                 End If
@@ -4333,16 +4414,23 @@ Namespace Forms
 
                 Util.DisableDirtyFlags = True
 
+                Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Showing new project dialog")
+
                 frmNewProject.txtProjectName.Text = "NewProject"
                 If frmNewProject.ShowDialog = DialogResult.OK Then
+                    Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "User hit ok on new project dialog. Creating sim object.")
+
                     m_doSimulation = New DataObjects.Simulation(Me.FormHelper)
+
+                    Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "sim object created.")
+
                     Util.Application.ProjectPath = frmNewProject.txtLocation.Text & "\" & frmNewProject.txtProjectName.Text & "\"
                     Util.Application.ProjectName = frmNewProject.txtProjectName.Text
                     Util.Application.ProjectFile = Util.Application.ProjectName & ".aproj"
                     Util.Application.SimulationFile = Util.Application.ProjectName & ".asim"
                     Me.Title = Me.ProjectName & " Project"
 
-                    Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Creating a new Project: '" & Util.Application.ProjectPath & "\" & Util.Application.ProjectFile)
+                    Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Creating a new Project: '" & Util.Application.ProjectPath & "\" & Util.Application.ProjectFile)
 
                     Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
@@ -4350,6 +4438,8 @@ Namespace Forms
                     System.IO.Directory.CreateDirectory(Util.Application.ProjectPath)
 
                     ResetProject(True)
+
+                    Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "About to call SaveProject")
 
                     SaveProject(Util.Application.ProjectFile)
 
@@ -4419,7 +4509,7 @@ Namespace Forms
 
                     strNewPath = strNewPath.Replace("\\", "\")
 
-                    Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Saving project: '" & Util.Application.ProjectPath & "\" & Util.Application.ProjectFile & "' as '" & strNewPath)
+                    Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Saving project: '" & Util.Application.ProjectPath & "\" & Util.Application.ProjectFile & "' as '" & strNewPath)
 
                     Util.CopyDirectory(Util.Application.ProjectPath, strNewPath)
 
@@ -4468,7 +4558,7 @@ Namespace Forms
         End Sub
 
         Protected Overridable Sub OnCreateSimulation(ByRef strXml As String)
-            Dim oXml As AnimatGUI.Interfaces.StdXml = Util.Application.SaveStandAlone(False, False, False)
+            Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.SaveStandAlone(False, False, False)
             strXml = oXml.Serialize()
         End Sub
 
@@ -5056,7 +5146,7 @@ Namespace Forms
         Protected Sub AnimatApplication_Closing(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles MyBase.Closing
 
             Try
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Info, "Exiting the application. Project: '" & Util.Application.ProjectPath & "\" & Util.Application.ProjectFile)
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Exiting the application. Project: '" & Util.Application.ProjectPath & "\" & Util.Application.ProjectFile)
 
                 'First check to see if the application is dirty. If it is then ask to save the project
                 SaveIfDirty(e)
@@ -5120,7 +5210,7 @@ Namespace Forms
 
                 m_dockManager.Dispose()
 
-                Me.Logger.LogMsg(Interfaces.Logger.enumLogLevel.Debug, "Finished cleanup for application exit.")
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "Finished cleanup for application exit.")
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -5175,7 +5265,7 @@ Namespace Forms
                 If e.XmlIn.Read() AndAlso e.XmlIn.NodeType = Xml.XmlNodeType.CDATA Then
                     Dim strXml As String = e.XmlIn.Value
 
-                    Dim oXml As New Interfaces.StdXml
+                    Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
                     oXml.Deserialize(strXml)
 
                     oXml.FindElement("TabPage")
@@ -5204,7 +5294,7 @@ Namespace Forms
             Try
                 If Not e.TabPage.Control Is Nothing AndAlso Util.IsTypeOf(e.TabPage.Control.GetType(), GetType(Forms.AnimatForm), False) Then
                     Dim frmAnimat As Forms.AnimatForm = DirectCast(e.TabPage.Control, Forms.AnimatForm)
-                    Dim oXml As New AnimatGUI.Interfaces.StdXml()
+                    Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
                     oXml.AddElement("TabPage")
 

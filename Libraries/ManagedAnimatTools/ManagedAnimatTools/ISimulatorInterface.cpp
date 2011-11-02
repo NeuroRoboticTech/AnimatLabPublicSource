@@ -1,6 +1,6 @@
 #include "stdafx.h"
+//#include "ILogger.h"
 #include "Util.h"
-#include "Logger.h"
 #include "PropertyUpdateException.h"
 #include "ISimulatorInterface.h"
 #include "SimGUICallback.h"

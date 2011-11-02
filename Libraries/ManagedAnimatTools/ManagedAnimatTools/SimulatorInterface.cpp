@@ -1,8 +1,8 @@
 #include "stdafx.h"
+//#include "ILogger.h"
 #include "Util.h"
-#include "Logger.h"
 #include "PropertyUpdateException.h"
-#include "ISimulatorInterface.h"
+//#include "ISimulatorInterface.h"
 #include "SimulatorInterface.h"
 #include "SimGUICallback.h"
 
@@ -75,7 +75,7 @@ namespace AnimatGUI
 
 			Simulator *SimulatorInterface::Sim() {return m_lpSim;};
 
-			long SimulatorInterface::CurrentMillisecond()
+			System::Int64 SimulatorInterface::CurrentMillisecond()
 			{
 				if(m_lpSim) 
 					return m_lpSim->Millisecond();
@@ -109,7 +109,7 @@ namespace AnimatGUI
 				return m_bSimOpen;
 			}
 
-			void SimulatorInterface::SetLogger(AnimatGUI::Interfaces::Logger ^lpLog)
+			void SimulatorInterface::SetLogger(ManagedAnimatInterfaces::ILogger ^lpLog)
 			{
 				m_lpLogger = lpLog;
 			}
@@ -154,7 +154,7 @@ namespace AnimatGUI
 					if(m_lpSim)
 						return;
 
-					LogMsg(AnimatGUI::Interfaces::Logger::enumLogLevel::Info, "Starting CreateSimulation");
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "Starting CreateSimulation");
 
 					CStdXml oXml;
 					oXml.Deserialize(Util::StringToStd(sXml));
@@ -162,11 +162,11 @@ namespace AnimatGUI
 					if(m_newThread)
 						throw gcnew System::Exception("A thread is already running. You can not create a new simulation while one is currently running.");
 
-					LogMsg(AnimatGUI::Interfaces::Logger::enumLogLevel::Debug, "About to create the simulation.");	
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Debug, "About to create the simulation.");	
 	
 					m_lpSim = AnimatSim::Simulator::CreateSimulator(oXml);					
 
-					LogMsg(AnimatGUI::Interfaces::Logger::enumLogLevel::Debug, "About to load the simulation.");
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Debug, "About to load the simulation.");
 					string strProjectPath = Util::StringToStd(m_strProjectPath);
 					m_lpSim->ProjectPath(strProjectPath);
 					m_lpSim->Load(oXml);
@@ -176,7 +176,7 @@ namespace AnimatGUI
 					m_lpSimGUICallback = new AnimatGUI::Interfaces::SimGUICallback(this);
 					m_lpSim->SimCallBack(m_lpSimGUICallback);					
 
-					LogMsg(AnimatGUI::Interfaces::Logger::enumLogLevel::Info, "Finished CreateSimulation");
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "Finished CreateSimulation");
 				}
 				catch(CStdErrorInfo oError)
 				{
@@ -197,7 +197,7 @@ namespace AnimatGUI
 			{
 				try
 				{
-					LogMsg(AnimatGUI::Interfaces::Logger::enumLogLevel::Info, "Starting Simulate");
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "Starting Simulate");
 
 					//if(strProjectFile->Length() == 0)
 					//	throw new System::Exception("No project file was specified for the simulator to run.");
@@ -219,7 +219,7 @@ namespace AnimatGUI
 						iCount++;
 					}
 
-					LogMsg(AnimatGUI::Interfaces::Logger::enumLogLevel::Info, "Finished Simulate");
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "Finished Simulate");
 				}
 				catch(CStdErrorInfo oError)
 				{
@@ -642,7 +642,7 @@ namespace AnimatGUI
 
 #pragma region VideoPlayback
 
-			String ^SimulatorInterface::AddKeyFrame(String ^strType, long lStartMillisecond, long lEndMillisecond)
+			String ^SimulatorInterface::AddKeyFrame(String ^strType, System::Int64 lStartMillisecond, System::Int64 lEndMillisecond)
 			{
 				try
 				{
@@ -699,7 +699,7 @@ namespace AnimatGUI
 				}
 			}
 
-			String ^SimulatorInterface::MoveKeyFrame(String ^strID, long lStartMillisecond, long lEndMillisecond)
+			String ^SimulatorInterface::MoveKeyFrame(String ^strID, System::Int64 lStartMillisecond, System::Int64 lEndMillisecond)
 			{
 				try
 				{
@@ -923,7 +923,7 @@ namespace AnimatGUI
 				}
 			}
 
-			System::Int32 SimulatorInterface::RetrieveChartData(String ^sChartKey, cli::array<System::Single, 2> ^%aryTimeData, cli::array<System::Single, 2> ^%aryData)
+			int SimulatorInterface::RetrieveChartData(String ^sChartKey, cli::array<System::Single, 2> ^%aryTimeData, cli::array<System::Single, 2> ^%aryData)
 			{
 				try
 				{
@@ -1260,7 +1260,7 @@ namespace AnimatGUI
 
 				try
 				{
-					LogMsg(AnimatGUI::Interfaces::Logger::enumLogLevel::Info, "Starting RunSimulator");
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "Starting RunSimulator");
 
 					if(!m_lpSim)
 						throw gcnew System::Exception("You must first create a simulation before you can run it.");
@@ -1276,7 +1276,7 @@ namespace AnimatGUI
 //System::Windows::Forms::MessageBox::Show("About to Initialize.");     
 //#pragma pop_macro("MessageBox")
 
-					LogMsg(AnimatGUI::Interfaces::Logger::enumLogLevel::Debug, "About to initialize the simulator");
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Debug, "About to initialize the simulator");
 
 					//HWND hWnd = (HWND) m_hParentWnd.ToInt32();
 					//m_lpSim->WindowMgr()->AddSimulationWindow(m_lpSim, "", "Basic", FALSE, hWnd,  Util::StringToStd(m_strWindowXml));
@@ -1284,7 +1284,7 @@ namespace AnimatGUI
 					m_lpSim->Paused(m_bPaused);
 					m_lpSim->Initialize(0, NULL);
 
-					LogMsg(AnimatGUI::Interfaces::Logger::enumLogLevel::Debug, "Finished initializing the simulator");
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Debug, "Finished initializing the simulator");
 
 //#pragma push_macro("MessageBox")
 //#undef MessageBox     
@@ -1297,14 +1297,14 @@ namespace AnimatGUI
 //System::Windows::Forms::MessageBox::Show("Set Callbacks.");     
 //#pragma pop_macro("MessageBox")
 
-					LogMsg(AnimatGUI::Interfaces::Logger::enumLogLevel::Debug, "About to start simulation processing loop");
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Debug, "About to start simulation processing loop");
 
 					m_bSimOpen = true;
 					SimulationRunning();
 
 					m_lpSim->Simulate();
 
-					LogMsg(AnimatGUI::Interfaces::Logger::enumLogLevel::Debug, "Finished simulation processing loop");
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Debug, "Finished simulation processing loop");
 
 					//#pragma push_macro("MessageBox")
 //#undef MessageBox     
@@ -1324,7 +1324,7 @@ namespace AnimatGUI
 					//	m_lpSim = NULL;
 					//}
 
-					LogMsg(AnimatGUI::Interfaces::Logger::enumLogLevel::Info, "Finished RunSimulator");
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "Finished RunSimulator");
 
 					m_bSimOpen = false;
 				}
@@ -1368,7 +1368,7 @@ namespace AnimatGUI
 				}
 			}
 
-			void SimulatorInterface::LogMsg(AnimatGUI::Interfaces::Logger::enumLogLevel eLevel, System::String ^sMessage)
+			void SimulatorInterface::LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel eLevel, System::String ^sMessage)
 			{
 				if(m_lpLogger)
 					m_lpLogger->LogMsg(eLevel, sMessage);

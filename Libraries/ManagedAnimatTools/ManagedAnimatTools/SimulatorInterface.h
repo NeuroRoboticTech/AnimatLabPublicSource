@@ -15,7 +15,7 @@ namespace AnimatGUI
 		/// <summary> 
 		/// Summary for SimulatorInterface
 		/// </summary>
-		public ref class SimulatorInterface : public ISimulatorInterface
+		public ref class SimulatorInterface : public ManagedAnimatInterfaces::ISimulatorInterface
 		{
 		public:
 			SimulatorInterface(void);
@@ -23,11 +23,11 @@ namespace AnimatGUI
 
 #pragma region EventSystems
 
-			virtual event CreateSimHandler^ OnSimulationCreate;
-			virtual event VoidHandler^ SimulationRunning;
-			virtual event VoidHandler^ NeedToStopSimulation;
-			virtual event ErrorHandler^ HandleNonCriticalError;
-			virtual event ErrorHandler^ HandleCriticalError;
+			virtual event ManagedAnimatInterfaces::ISimulatorInterface::CreateSimHandler^ OnSimulationCreate;
+			virtual event ManagedAnimatInterfaces::ISimulatorInterface::VoidHandler^ SimulationRunning;
+			virtual event ManagedAnimatInterfaces::ISimulatorInterface::VoidHandler^ NeedToStopSimulation;
+			virtual event ManagedAnimatInterfaces::ISimulatorInterface::ErrorHandler^ HandleNonCriticalError;
+			virtual event ManagedAnimatInterfaces::ISimulatorInterface::ErrorHandler^ HandleCriticalError;
 
 			virtual void FireNeedToStopSimulationEvent();
 			virtual void FireHandleNonCriticalErrorEvent(System::String ^strError);
@@ -40,13 +40,13 @@ namespace AnimatGUI
 			//virtual property AnimatGUI::Interfaces::Logger^ Logger;		
 
 			virtual Simulator *Sim();
-			virtual long CurrentMillisecond();
+			virtual System::Int64 CurrentMillisecond();
 			virtual bool Paused();
 			virtual bool SimRunning();
 			virtual System::Boolean Loaded();
 			virtual System::Boolean SimOpen();
 			virtual void SetProjectPath(System::String ^strPath); 
-			virtual void SetLogger(AnimatGUI::Interfaces::Logger ^lpLog);
+			virtual void SetLogger(ManagedAnimatInterfaces::ILogger ^lpLog);
 
 #pragma endregion
 
@@ -75,9 +75,9 @@ namespace AnimatGUI
 
 #pragma region VideoPlayback
 
-			virtual String ^AddKeyFrame(String ^strType, long lStartMillisecond, long lEndMillisecond);
+			virtual System::String ^AddKeyFrame(String ^strType, System::Int64 lStartMillisecond, System::Int64 lEndMillisecond);
 			virtual void RemoveKeyFrame(String ^strID);
-			virtual String ^MoveKeyFrame(String ^strID, long lStartMillisecond, long lEndMillisecond);
+			virtual String ^MoveKeyFrame(String ^strID, System::Int64 lStartMillisecond, System::Int64 lEndMillisecond);
 			virtual void EnableVideoPlayback(String ^strID);
 			virtual void DisableVideoPlayback();
 			virtual void StartVideoPlayback();
@@ -91,7 +91,7 @@ namespace AnimatGUI
 #pragma region HelperMethods
 
 			virtual void ReInitializeSimulation();
-			virtual System::Int32 RetrieveChartData(String ^sChartKey, cli::array<System::Single, 2> ^%aryTimeData, cli::array<System::Single, 2> ^%aryData);
+			virtual int RetrieveChartData(String ^sChartKey, cli::array<System::Single, 2> ^%aryTimeData, cli::array<System::Single, 2> ^%aryData);
 			virtual void GenerateCollisionMeshFile(String ^sOriginalMeshFile, String ^sCollisionMeshFile);
 
 #pragma endregion
@@ -117,14 +117,14 @@ namespace AnimatGUI
 			System::String ^m_strProjectPath;
 			System::Threading::Thread ^m_newThread;
 			System::String ^m_strErrorMessage;
-			AnimatGUI::Interfaces::Logger ^m_lpLogger;
+			ManagedAnimatInterfaces::ILogger ^m_lpLogger;
 
 #pragma region SimulationThreading
 
 
 			virtual void RunSimulator();
 
-			virtual void LogMsg(AnimatGUI::Interfaces::Logger::enumLogLevel eLevel, System::String ^sMessage);
+			virtual void LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel eLevel, System::String ^sMessage);
 			virtual void AddSimWindow(System::String ^sWindowXml, BOOL bInit, HWND hWnd);
 			virtual void RemoveSimWindow(HWND hWnd);
 

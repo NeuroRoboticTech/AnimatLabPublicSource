@@ -1179,7 +1179,7 @@ Namespace DataObjects.Behavior
             Return 0
         End Function
 
-        Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             Dim iColor As Integer
 
             Try
@@ -1302,7 +1302,7 @@ Namespace DataObjects.Behavior
 
             Catch ex As System.Exception
                 m_bIsInitialized = False
-             End Try
+            End Try
 
         End Sub
 
@@ -1337,7 +1337,7 @@ Namespace DataObjects.Behavior
         Public Overrides Sub FailedToInitialize()
         End Sub
 
-        Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             Try
                 oXml.AddChildElement("Node")
@@ -1413,7 +1413,7 @@ Namespace DataObjects.Behavior
 
         End Sub
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
             MyBase.SaveSimulationXml(oXml, nmParentControl, Util.GetName(strName, "Node"))
         End Sub
 

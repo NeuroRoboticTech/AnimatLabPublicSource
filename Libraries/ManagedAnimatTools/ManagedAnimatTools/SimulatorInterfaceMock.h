@@ -15,7 +15,7 @@ namespace AnimatGUI
 		/// <summary> 
 		/// Summary for SimulatorInterface
 		/// </summary>
-		public ref class SimulatorInterfaceMock : public ISimulatorInterface
+		public ref class SimulatorInterfaceMock : public ManagedAnimatInterfaces::ISimulatorInterface
 		{
 		public:
 			SimulatorInterfaceMock(void);
@@ -37,8 +37,6 @@ namespace AnimatGUI
 
 #pragma region Properties
 
-			//virtual property AnimatGUI::Interfaces::Logger^ Logger;		
-
 			virtual Simulator *Sim();
 			virtual long CurrentMillisecond();
 			virtual bool Paused();
@@ -46,7 +44,7 @@ namespace AnimatGUI
 			virtual System::Boolean Loaded();
 			virtual System::Boolean SimOpen();
 			virtual void SetProjectPath(System::String ^strPath); 
-			virtual void SetLogger(AnimatGUI::Interfaces::Logger ^lpLog);
+			virtual void SetLogger(ManagedAnimatInterfaces::ILogger ^lpLog);
 
 #pragma endregion
 
@@ -117,14 +115,14 @@ namespace AnimatGUI
 			//System::String ^m_strProjectPath;
 			//System::Threading::Thread ^m_newThread;
 			//System::String ^m_strErrorMessage;
-			//AnimatGUI::Interfaces::Logger ^m_lpLogger;
+			//AnimatGUI::Interfaces::ILogger ^m_lpLogger;
 
 #pragma region SimulationThreading
 
 
 			virtual void RunSimulator();
 
-			virtual void LogMsg(AnimatGUI::Interfaces::Logger::enumLogLevel eLevel, System::String ^sMessage);
+			virtual void LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel eLevel, System::String ^sMessage);
 			virtual void AddSimWindow(System::String ^sWindowXml, BOOL bInit, HWND hWnd);
 			virtual void RemoveSimWindow(HWND hWnd);
 

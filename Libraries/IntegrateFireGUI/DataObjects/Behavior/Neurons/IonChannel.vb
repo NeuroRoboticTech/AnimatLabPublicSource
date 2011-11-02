@@ -514,7 +514,7 @@ Namespace DataObjects.Behavior.Neurons
 
 #End Region
 
-        Public Overrides Sub SaveSimulationXml(ByRef oXml As AnimatGUI.Interfaces.StdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
+        Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
             oXml.AddChildElement("IonChannel")
             oXml.IntoElem()
@@ -542,7 +542,7 @@ Namespace DataObjects.Behavior.Neurons
 
         End Sub
 
-        'Public Overrides Sub SaveDataColumnToXml(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        'Public Overrides Sub SaveDataColumnToXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
         '    If Not Me.Parent Is Nothing AndAlso TypeOf Me.Parent Is DataObjects.Behavior.Neurons.Spiking Then
         '        Dim doNeuron As DataObjects.Behavior.Neurons.Spiking = DirectCast(Me.Parent, DataObjects.Behavior.Neurons.Spiking)
@@ -561,7 +561,7 @@ Namespace DataObjects.Behavior.Neurons
 
         'End Sub
 
-        Public Overrides Sub LoadData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.IntoElem()
 
@@ -589,7 +589,7 @@ Namespace DataObjects.Behavior.Neurons
 
         End Sub
 
-        Public Overrides Sub SaveData(ByRef oXml As AnimatGUI.Interfaces.StdXml)
+        Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.AddChildElement("IonChannel")
             oXml.IntoElem()  'Into IonChannel Element

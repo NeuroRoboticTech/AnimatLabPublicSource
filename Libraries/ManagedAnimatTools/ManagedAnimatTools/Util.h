@@ -11,6 +11,7 @@ namespace AnimatGUI
 			virtual ~Util(void);
 
 			static std::string StringToStd( System::String ^s);
+			static std::string StringToStd( System::String ^s, ManagedAnimatInterfaces::ILogger ^lpLogger);
 		};
 	}
 }

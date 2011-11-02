@@ -184,8 +184,8 @@ Namespace Forms.Behavior
         End Function
 
         Public MustOverride Sub ExportDiagram(ByVal strFilename As String, ByVal eFormat As System.Drawing.Imaging.ImageFormat)
-        Public MustOverride Function SaveSelected(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal bCopy As Boolean) As Boolean
-        Public MustOverride Sub LoadPasted(ByRef oXml As AnimatGUI.Interfaces.StdXml, ByVal bInPlace As Boolean)
+        Public MustOverride Function SaveSelected(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal bCopy As Boolean) As Boolean
+        Public MustOverride Sub LoadPasted(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal bInPlace As Boolean)
 
         Public Overridable Sub RetrieveChildren(ByVal bThisDiagramOnly As Boolean, ByRef aryChildren As ArrayList)
 

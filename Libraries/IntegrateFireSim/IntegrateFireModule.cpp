@@ -1745,7 +1745,7 @@ void IntegrateFireNeuralModule::Load(CStdXml &oXml)
 
 	m_strNeuralNetworkFile = oXml.GetChildString("NeuralNetFile", "");
 
-	TRACE_DEBUG("Loading nervous system config file.\r\nProjectPath: " + m_strProjectPath + "\r\nFile: " + m_strNeuralNetworkFile);
+	//TRACE_DEBUG("Loading nervous system config file.\r\nProjectPath: " + m_strProjectPath + "\r\nFile: " + m_strNeuralNetworkFile);
 
 	if(!Std_IsBlank(m_strNeuralNetworkFile)) 
 	{
@@ -1761,7 +1761,7 @@ void IntegrateFireNeuralModule::Load(CStdXml &oXml)
 
 	oXml.OutOfElem(); //OutOf NeuralModule Element
 
-	TRACE_DEBUG("Finished loading nervous system config file.");
+	//TRACE_DEBUG("Finished loading nervous system config file.");
 }
 
 
