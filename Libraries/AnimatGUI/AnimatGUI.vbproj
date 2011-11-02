@@ -349,6 +349,8 @@
     <Compile Include="DataObjects\ExternalStimuli\VoltageClamp.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataObjects\FileConverter.vb" />
+    <Compile Include="DataObjects\FileConverters\Convert_V1ToV2.vb" />
     <Compile Include="DataObjects\FormHelper.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -683,6 +685,7 @@
     <Compile Include="FrameWork\Vector.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FrameWork\XmlDom.vb" />
     <Compile Include="ModuleInformation.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

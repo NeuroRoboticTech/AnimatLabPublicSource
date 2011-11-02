@@ -66,4 +66,36 @@ Public Class Util
 
     End Sub
 
+    Public Shared Function IsBlank(ByVal strVal As String) As Boolean
+        If strVal.Trim.Length > 0 Then
+            Return False
+        Else
+            Return True
+        End If
+    End Function
+
+    Public Shared Sub SplitPathAndFile(ByVal strFullPath As String, _
+                                       ByRef strPath As String, _
+                                       ByRef strFile As String)
+        Dim aryParts() As String = Split(strFullPath, "\")
+
+        Dim iCount As Integer = aryParts.GetUpperBound(0)
+        If iCount <= 0 Then
+            strPath = ""
+            strFile = strFullPath
+        Else
+            strFile = aryParts(iCount)
+            ReDim Preserve aryParts(iCount - 1)
+        End If
+
+        strPath = Join(aryParts, "\")
+        If Not IsBlank(strPath) Then strPath += "\"
+    End Sub
+
+    Public Shared Function ExtractFilename(ByVal strFullPath As String) As String
+        Dim strPath As String = "", strFile As String = ""
+        SplitPathAndFile(strFullPath, strPath, strFile)
+        Return strFile
+    End Function
+
 End Class

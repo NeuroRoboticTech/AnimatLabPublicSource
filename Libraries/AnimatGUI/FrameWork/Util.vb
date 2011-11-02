@@ -5,6 +5,7 @@ Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports System.Diagnostics
 Imports System.IO
+Imports System.Xml
 Imports System.Text.RegularExpressions
 
 Namespace Framework
@@ -1442,6 +1443,7 @@ Namespace Framework
 
             Return rbPart
         End Function
+
 
     End Class
 

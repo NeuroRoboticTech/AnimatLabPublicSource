@@ -51,6 +51,9 @@
     <Reference Include="AnimatServer">
       <HintPath>..\..\bin\AnimatServer.dll</HintPath>
     </Reference>
+    <Reference Include="DotNetMagic">
+      <HintPath>..\..\bin\DotNetMagic.DLL</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
@@ -70,6 +73,9 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
+    <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -77,6 +83,7 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Windows.Forms" />
@@ -105,7 +112,6 @@
     <Compile Include="AnimatUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\BodyPartUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\JointTests\BallSocketUITest.vb" />
-    <Compile Include="BodyEditorTests\BodyPartTests\JointTests\StaticUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\JointTests\UniversialUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\JointTests\PrismaticUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\JointUITest.vb" />
@@ -120,6 +126,7 @@
     <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\CylinderUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\EllipsoidUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\ConeUITest.vb" />
+    <Compile Include="Convert_V1ToV2Test.vb" />
     <Compile Include="CreationTests\NewProjectUITest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="UIMap.Designer.vb">
@@ -136,7 +143,15 @@
     </None>
     <None Include="UIMap.uitest" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\AnimatGUI\AnimatGUI.vbproj">
+      <Project>{45227561-EC56-46E0-9395-E1D86A7F3464}</Project>
+      <Name>AnimatGUI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UnitTests\FileConversions\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
