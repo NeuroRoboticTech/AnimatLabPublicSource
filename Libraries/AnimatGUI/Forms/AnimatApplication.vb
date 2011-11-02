@@ -3138,15 +3138,7 @@ Namespace Forms
                 'Start the simulation running
                 Me.CreateSimulation(True)
 
-                'Then create the forms. They will create their own sim references as they are loaded
-                oXml.IntoChildElement("DockingForms") 'Into DockingForms Element
-                Dim iCount As Integer = oXml.NumberOfChildren() - 1
-                For iIndex As Integer = 0 To iCount
-                    oXml.FindChildByIndex(iIndex)
-                    LoadDockingForm(m_dockManager, oXml)
-                Next
-                oXml.OutOfElem()   'Outof DockingForms Element
-
+                LoadDockingForms(m_dockManager, oXml)
                 LoadDockingConfig(m_dockManager, oXml)
 
                 Util.Simulation.NewToolHolderIndex = Util.ExtractIDCount("DataTool", Util.Simulation.ToolHolders)
@@ -3157,6 +3149,24 @@ Namespace Forms
                 Util.LoadInProgress = False
             End Try
 
+        End Sub
+
+        Public Overridable Sub LoadDockingForms(ByRef dockManager As Crownwood.DotNetMagic.Docking.DockingManager, _
+                                                 ByVal oXml As ManagedAnimatInterfaces.IStdXml)
+            Try
+                'Then create the forms. They will create their own sim references as they are loaded
+                If oXml.FindChildElement("DockingForms", False) Then
+                    oXml.IntoChildElement("DockingForms") 'Into DockingForms Element
+                    Dim iCount As Integer = oXml.NumberOfChildren() - 1
+                    For iIndex As Integer = 0 To iCount
+                        oXml.FindChildByIndex(iIndex)
+                        LoadDockingForm(m_dockManager, oXml)
+                    Next
+                    oXml.OutOfElem()   'Outof DockingForms Element
+                End If
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
         End Sub
 
         Public Overridable Sub LoadDockingConfig(ByRef dockManager As Crownwood.DotNetMagic.Docking.DockingManager, _

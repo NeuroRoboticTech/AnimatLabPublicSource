@@ -197,7 +197,7 @@ Namespace Framework
 
             dblX = Double.Parse(xnXAttrib.InnerText)
             dblY = Double.Parse(xnYAttrib.InnerText)
-            dblZ = Double.Parse(xnXAttrib.InnerText)
+            dblZ = Double.Parse(xnZAttrib.InnerText)
 
         End Sub
 
@@ -213,17 +213,17 @@ Namespace Framework
 
         End Sub
 
-        Public Overridable Function ConvertScaledNumberToScaledVector(ByVal xnRootNode As XmlNode, ByVal strOldName As String, _
-                                                                      ByVal strNewName As String, Optional ByVal dblScaleX As Double = 1, _
-                                                                      Optional ByVal dblScaleY As Double = 1, Optional ByVal dblScaleZ As Double = 1) As XmlNode
+        Public Overridable Function ConvertScaledNumberToScaledVector(ByVal xnRootNode As XmlNode, ByVal strOldName As String, ByVal strNewName As String, _
+                                                                      Optional ByVal dblScaleX As Double = 1, Optional ByVal dblScaleY As Double = 1, Optional ByVal dblScaleZ As Double = 1, _
+                                                                      Optional ByVal dblAddX As Double = 0, Optional ByVal dblAddY As Double = 0, Optional ByVal dblAddZ As Double = 0) As XmlNode
             Dim xnFound As XmlNode = GetNode(xnRootNode, strOldName)
             Dim xnXAttrib As XmlAttribute = xnFound.Attributes("x")
             Dim xnYAttrib As XmlAttribute = xnFound.Attributes("y")
             Dim xnZAttrib As XmlAttribute = xnFound.Attributes("z")
 
-            Dim dblX As Double = Double.Parse(xnXAttrib.InnerText) * dblScaleX
-            Dim dblY As Double = Double.Parse(xnYAttrib.InnerText) * dblScaleY
-            Dim dblZ As Double = Double.Parse(xnZAttrib.InnerText) * dblScaleZ
+            Dim dblX As Double = (Single.Parse(xnXAttrib.InnerText) * dblScaleX) + dblAddX
+            Dim dblY As Double = (Single.Parse(xnYAttrib.InnerText) * dblScaleY) + dblAddY
+            Dim dblZ As Double = (Single.Parse(xnZAttrib.InnerText) * dblScaleZ) + dblAddZ
 
             RemoveNode(xnRootNode, strOldName)
 

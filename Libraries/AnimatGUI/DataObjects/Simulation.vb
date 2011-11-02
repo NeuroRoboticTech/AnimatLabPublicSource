@@ -343,12 +343,14 @@ Namespace DataObjects
             Return frmObject
         End Function
 
-        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node)
+        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
+                                                      ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                      Optional ByVal bRootObject As Boolean = False)
 
             Util.Application.WorkspaceImages.ImageList.ImageSize = New Size(25, 25)
             Util.ProjectWorkspace.TreeView.ImageList = Util.Application.WorkspaceImages.ImageList
 
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, True)
 
             m_doEnvironment.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
 

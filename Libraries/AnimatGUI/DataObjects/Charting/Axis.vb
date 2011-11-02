@@ -270,8 +270,10 @@ Namespace DataObjects.Charting
 
 #Region " TreeView Methods "
 
-        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode)
+        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
+                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       Optional ByVal bRootObject As Boolean = False)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject)
 
             Dim doColumn As DataObjects.Charting.DataColumn
             For Each deEntry As DictionaryEntry In m_aryDataColumns

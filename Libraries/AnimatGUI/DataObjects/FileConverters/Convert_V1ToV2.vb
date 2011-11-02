@@ -41,6 +41,11 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnProject, "SimWindowLocation", False)
                 m_xnProjectXml.RemoveNode(xnProject, "SimWindowSize", False)
 
+                Dim strLogLevel As String = m_xnProjectXml.GetSingleNodeValue(xnProject, "LogLevel", False, "None")
+                If strLogLevel.ToUpper = "ERROR" Then
+                    m_xnProjectXml.UpdateSingleNodeValue(xnProject, "LogLevel", "ErrorType")
+                End If
+
                 CreateSimulationNode(xnProject)
 
             End Sub
@@ -96,6 +101,8 @@ Namespace DataObjects
 
             End Sub
 
+#Region "Modify Structure"
+
             Protected Overridable Sub ModifyStructure(ByVal xnStructure As XmlNode)
 
                 m_xnProjectXml.AddNodeValue(xnStructure, "Description", "")
@@ -113,6 +120,8 @@ Namespace DataObjects
                 CreateRigidBodyRootNode(xnStructure)
 
             End Sub
+
+#Region "Rigid Body Modifiers"
 
             Protected Overridable Sub CreateRigidBodyRootNode(ByVal xnStructure As XmlNode)
 
@@ -154,7 +163,8 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnRigidBody, "RelativePosition", False)
 
                 m_xnProjectXml.ConvertScaledNumberToScaledVector(xnRigidBody, "LocalPosition", "LocalPosition", 1, 1, -1)
-                m_xnProjectXml.ConvertScaledNumberToScaledVector(xnRigidBody, "LocalRotation", "Rotation", -1, 1, -1)
+                m_xnProjectXml.ConvertScaledNumberToScaledVector(xnRigidBody, "LocalRotation", "Rotation", -1, 1, -1, _
+                                                                 Util.RadiansToDegreesRatio, Util.RadiansToDegreesRatio, Util.RadiansToDegreesRatio)
 
                 Dim strType As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "Type").ToUpper
 
@@ -162,7 +172,27 @@ Namespace DataObjects
                     Case "BOX"
                         ModifyRigidBodyBox(xnRigidBody)
                     Case "CONE"
-
+                        ModifyRigidBodyCone(xnRigidBody)
+                    Case "CYLINDER"
+                        ModifyRigidBodyCylinder(xnRigidBody)
+                    Case "MUSCLEATTACHMENT"
+                        ModifyRigidBodyAttachment(xnRigidBody)
+                    Case "LINEARHILLMUSCLE"
+                        ModifyRigidBodyMuscle(xnRigidBody)
+                    Case "LINEARHILLSTRETCHRECEPTOR"
+                        ModifyRigidBodyStretchReceptor(xnRigidBody)
+                    Case "MESH"
+                        ModifyRigidBodyMesh(xnRigidBody)
+                    Case "MOUTH"
+                        ModifyRigidBodyMouth(xnRigidBody)
+                    Case "ODORSENSOR"
+                        ModifyRigidBodyOdorSensor(xnRigidBody)
+                    Case "SPHERE"
+                        ModifyRigidBodySphere(xnRigidBody)
+                    Case "SPRING"
+                        ModifyRigidBodySpring(xnRigidBody)
+                    Case "STOMACH"
+                        ModifyRigidBodyStomach(xnRigidBody)
                 End Select
 
                 'Modify the joint if it exists.
@@ -230,6 +260,8 @@ Namespace DataObjects
 
             End Sub
 
+#Region "Rigid Body Part Type Modifiers"
+
             Protected Overridable Sub ModifyRigidBodyBox(ByVal xnRigidBody As XmlNode)
 
                 Dim dblX As Double = 0
@@ -252,6 +284,56 @@ Namespace DataObjects
 
             End Sub
 
+            Protected Overridable Sub ModifyRigidBodyCone(ByVal xnRigidBody As XmlNode)
+
+            End Sub
+
+            Protected Overridable Sub ModifyRigidBodyCylinder(ByVal xnRigidBody As XmlNode)
+
+            End Sub
+
+            Protected Overridable Sub ModifyRigidBodyAttachment(ByVal xnRigidBody As XmlNode)
+
+            End Sub
+
+            Protected Overridable Sub ModifyRigidBodyMuscle(ByVal xnRigidBody As XmlNode)
+
+            End Sub
+
+            Protected Overridable Sub ModifyRigidBodyStretchReceptor(ByVal xnRigidBody As XmlNode)
+
+            End Sub
+
+            Protected Overridable Sub ModifyRigidBodyMesh(ByVal xnRigidBody As XmlNode)
+
+            End Sub
+
+            Protected Overridable Sub ModifyRigidBodyMouth(ByVal xnRigidBody As XmlNode)
+
+            End Sub
+
+            Protected Overridable Sub ModifyRigidBodyOdorSensor(ByVal xnRigidBody As XmlNode)
+
+            End Sub
+
+            Protected Overridable Sub ModifyRigidBodySphere(ByVal xnRigidBody As XmlNode)
+
+            End Sub
+
+            Protected Overridable Sub ModifyRigidBodySpring(ByVal xnRigidBody As XmlNode)
+
+            End Sub
+
+            Protected Overridable Sub ModifyRigidBodyStomach(ByVal xnRigidBody As XmlNode)
+
+            End Sub
+
+#End Region
+
+#End Region
+
+#Region "Joint Modifiers"
+
             Protected Overridable Sub ModifyJoint(ByVal xnJoint As XmlNode)
 
                 m_xnProjectXml.AddTransparency(xnJoint, 50, 50, 0, 50, 50)
@@ -264,7 +346,9 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnJoint, "RotationAxis", False)
 
                 m_xnProjectXml.ConvertScaledNumberToScaledVector(xnJoint, "RelativePosition", "LocalPosition", 1, 1, -1)
-                m_xnProjectXml.ConvertScaledNumberToScaledVector(xnJoint, "Rotation", "Rotation", -1, 1, -1)
+                m_xnProjectXml.ConvertScaledNumberToScaledVector(xnJoint, "Rotation", "Rotation", _
+                                                                 Util.RadiansToDegreesRatio, Util.RadiansToDegreesRatio, Util.RadiansToDegreesRatio, _
+                                                                 90, 0, -90)
 
                 m_xnProjectXml.AddScaledNumber(xnJoint, "Size", 0.02, "None", 0.02)
 
@@ -273,12 +357,18 @@ Namespace DataObjects
                 Select Case strType
                     Case "HINGE"
                         ModifyJointHinge(xnJoint)
-                    Case "CONE"
-
+                    Case "BALLSOCKET"
+                        ModifyJointBallSocket(xnJoint)
+                    Case "PRISMATIC"
+                        ModifyJointPrismatic(xnJoint)
+                    Case "STATIC"
+                        ModifyJointStatic(xnJoint)
                 End Select
 
 
             End Sub
+
+#Region "Joint Type Modifiers"
 
             Protected Overridable Sub ModifyJointHinge(ByVal xnJoint As XmlNode)
 
@@ -289,6 +379,21 @@ Namespace DataObjects
                 m_xnProjectXml.AddScaledNumber(xnJoint, "MaxForce", dblMaxTorque, "None", dblMaxTorque)
 
             End Sub
+
+            Protected Overridable Sub ModifyJointBallSocket(ByVal xnJoint As XmlNode)
+
+            End Sub
+
+            Protected Overridable Sub ModifyJointPrismatic(ByVal xnJoint As XmlNode)
+
+            End Sub
+
+            Protected Overridable Sub ModifyJointStatic(ByVal xnJoint As XmlNode)
+
+            End Sub
+#End Region
+
+#End Region
 
             Protected Overridable Sub AddLight(ByVal xnEnvironment As XmlNode)
 
@@ -330,6 +435,16 @@ Namespace DataObjects
                 Dim xmlLights As XmlNode = m_xnProjectXml.AddNodeXml(xnEnvironment, "Lights", strXml)
 
             End Sub
+
+#End Region
+
+#Region "Modify Nervous System"
+
+            Protected Overridable Sub ModifyNervousSystem(ByVal xnOrganism As XmlNode)
+
+            End Sub
+
+#End Region
 
         End Class
 

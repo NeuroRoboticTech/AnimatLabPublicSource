@@ -60,7 +60,6 @@ Namespace Forms
 
 #End Region
 
-
 #Region " Properties "
 
         Public Overrides ReadOnly Property IconName() As String
@@ -118,16 +117,8 @@ Namespace Forms
             Util.Application.WorkspaceImages.ImageList.ImageSize = New Size(25, 25)
             ctrlTreeView.ImageList = Util.Application.WorkspaceImages.ImageList
 
-        End Sub
+            AddHandler Util.Application.ProjectLoaded, AddressOf Me.OnProjectLoaded
 
-        Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
-            MyBase.LoadData(oXml)
-
-            If Not Util.Application.Simulation Is Nothing Then
-                Util.Application.Simulation.CreateWorkspaceTreeView(DirectCast(m_doFormHelper, AnimatGUI.Framework.DataObject), Nothing)
-            End If
-
-            ctrlTreeView.ExpandAll()
         End Sub
 
         Public Overloads Sub CreateWorkspaceTreeView()
@@ -236,6 +227,27 @@ Namespace Forms
 #End Region
 
 #Region " Events "
+
+        Protected Overrides Sub AnimatForm_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+            Try
+                RemoveHandler Util.Application.ProjectLoaded, AddressOf Me.OnProjectLoaded
+            Catch ex As Exception
+            End Try
+
+        End Sub
+
+        Private Sub OnProjectLoaded()
+            Try
+                If Not Util.Application.Simulation Is Nothing Then
+                    Util.Application.Simulation.CreateWorkspaceTreeView(DirectCast(m_doFormHelper, AnimatGUI.Framework.DataObject), Nothing)
+                End If
+
+                ctrlTreeView.ExpandAll()
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
 
         Private Sub ctrlTreeView_BeforeDeselect(ByVal tc As Crownwood.DotNetMagic.Controls.TreeControl, ByVal e As Crownwood.DotNetMagic.Controls.NodeEventArgs) Handles ctrlTreeView.BeforeDeselect
             Try

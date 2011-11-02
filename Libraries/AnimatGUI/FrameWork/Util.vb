@@ -73,6 +73,9 @@ Namespace Framework
 
         Protected Shared m_frmMessage As AnimatGUI.Forms.AnimatMessageBox
 
+        Protected Shared m_dblRadiansToDegreeRatio As Double = (180 / Math.PI)
+        Protected Shared m_dblDegreeToRadiansRatio As Double = (Math.PI / 180)
+
         Public Shared Property Application() As Forms.AnimatApplication
             Get
                 Return m_frmApplication
@@ -985,6 +988,18 @@ Namespace Framework
                 End If
             End If
         End Function
+
+        Public Shared ReadOnly Property RadiansToDegreesRatio() As Double
+            Get
+                Return m_dblRadiansToDegreeRatio
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property DegreesToRadiansRatio() As Double
+            Get
+                Return m_dblDegreeToRadiansRatio
+            End Get
+        End Property
 
         Public Shared Function DegreesToRadians(ByVal fltDegrees As Single) As Single
 

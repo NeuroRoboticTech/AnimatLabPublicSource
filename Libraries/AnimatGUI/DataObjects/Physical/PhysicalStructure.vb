@@ -489,8 +489,10 @@ Namespace DataObjects.Physical
 
 #Region " Workspace TreeView "
 
-        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode)
+        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
+                                                      ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                      Optional ByVal bRootObject As Boolean = False)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject)
 
             If m_tnBodyPlanNode Is Nothing Then
                 m_tnBodyPlanNode = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Body Plan", "AnimatGUI.Joint.gif")

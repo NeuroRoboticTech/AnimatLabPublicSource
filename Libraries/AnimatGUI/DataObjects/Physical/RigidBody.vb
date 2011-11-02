@@ -620,7 +620,9 @@ Namespace DataObjects.Physical
 
         End Function
 
-        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node)
+        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
+                                                      ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                      Optional ByVal bRootObject As Boolean = False)
 
             Dim tnParent As Crownwood.DotNetMagic.Controls.Node = doParentNode
             If Not m_JointToParent Is Nothing Then
@@ -628,7 +630,7 @@ Namespace DataObjects.Physical
                 tnParent = m_JointToParent.WorkspaceNode
             End If
 
-            MyBase.CreateWorkspaceTreeView(doParent, tnParent)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject)
 
             Dim dbChild As AnimatGUI.DataObjects.Physical.RigidBody
             For Each deEntry As DictionaryEntry In m_aryChildBodies

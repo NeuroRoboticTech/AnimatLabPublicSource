@@ -676,10 +676,12 @@ Namespace Forms
 
 #Region " Workspace Methods "
 
-        Public Overridable Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node)
+        Public Overridable Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
+                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       Optional ByVal bRootObject As Boolean = False)
             'Me.RemoveWorksapceTreeView()
 
-            If m_tnWorkspaceNode Is Nothing Then
+            If m_tnWorkspaceNode Is Nothing AndAlso (bRootObject OrElse (Not bRootObject AndAlso Not doParentNode Is Nothing)) Then
                 m_tnWorkspaceNode = Util.ProjectWorkspace.AddTreeNode(doParentNode, Me.Name, Me.WorkspaceImageName)
                 m_tnWorkspaceNode.Tag = Me
 
