@@ -126,7 +126,6 @@
     <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\CylinderUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\EllipsoidUITest.vb" />
     <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\ConeUITest.vb" />
-    <Compile Include="Convert_V1ToV2Test.vb" />
     <Compile Include="CreationTests\NewProjectUITest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="UIMap.Designer.vb">
@@ -135,6 +134,7 @@
     <Compile Include="UIMap.vb">
       <DependentUpon>UIMap.uitest</DependentUpon>
     </Compile>
+    <Compile Include="UnitTests\FileConversions\Convert_V1ToV2Test.vb" />
     <Compile Include="Util.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -149,9 +149,7 @@
       <Name>AnimatGUI</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UnitTests\FileConversions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

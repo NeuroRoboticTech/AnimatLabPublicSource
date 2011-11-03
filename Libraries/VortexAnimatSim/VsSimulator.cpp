@@ -370,6 +370,27 @@ void VsSimulator::GenerateCollisionMeshFile(string strOriginalMeshFile, string s
 //	return ncv.MinVertexDistance();
 //}
 
+void VsSimulator::GetPositionAndRotationFromMatrix(float *aryMatrix, CStdFPoint &vPos, CStdFPoint &vRot)
+{
+	osg::Matrix osgMT(aryMatrix);
+
+	//Lets get the current world coordinates for this body part and then recalculate the 
+	//new local position for the part and then finally reset its new local position.
+	osg::Vec3 vL = osgMT.getTrans();
+	vPos.Set(vL.x(), vL.y(), vL.z());
+	vPos.ClearNearZero();
+		
+	//Now lets get the euler angle rotation
+	Vx::VxReal44 vxTM;
+	VxOSG::copyOsgMatrix_to_VxReal44(osgMT, vxTM);
+	Vx::VxTransform vTrans(vxTM);
+	Vx::VxReal3 vEuler;
+	vTrans.getRotationEulerAngles(vEuler);
+	vRot.Set(vEuler[0], vEuler[1] ,vEuler[2]);
+	vRot.ClearNearZero();
+}
+
+
 void VsSimulator::Initialize(int argc, const char **argv)
 {
 	InitializeVortex(argc, argv);

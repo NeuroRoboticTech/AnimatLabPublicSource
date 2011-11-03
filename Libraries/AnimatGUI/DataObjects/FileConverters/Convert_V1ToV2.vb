@@ -33,7 +33,7 @@ Namespace DataObjects
 
                 m_xnProjectXml.RemoveNode(xnProject, "PhysicsClassName", False)
                 m_xnProjectXml.RemoveNode(xnProject, "PhysicsAssemblyName", False)
-                m_xnProjectXml.UpdateSingleNodeValue(xnProject, "Version", ConvertTo())
+                m_xnProjectXml.UpdateSingleNodeValue(xnProject, "Version", ConvertTo(), False)
 
                 m_xnProjectXml.RemoveNode(xnProject, "DockingForms", False)
                 m_xnProjectXml.RemoveNode(xnProject, "ChildForms", False)
@@ -163,8 +163,7 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnRigidBody, "RelativePosition", False)
 
                 m_xnProjectXml.ConvertScaledNumberToScaledVector(xnRigidBody, "LocalPosition", "LocalPosition", 1, 1, -1)
-                m_xnProjectXml.ConvertScaledNumberToScaledVector(xnRigidBody, "LocalRotation", "Rotation", -1, 1, -1, _
-                                                                 Util.RadiansToDegreesRatio, Util.RadiansToDegreesRatio, Util.RadiansToDegreesRatio)
+                m_xnProjectXml.ConvertScaledNumberToScaledVector(xnRigidBody, "LocalRotation", "Rotation", Util.RadiansToDegreesRatio, Util.RadiansToDegreesRatio, Util.RadiansToDegreesRatio)
 
                 Dim strType As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "Type").ToUpper
 
@@ -341,16 +340,20 @@ Namespace DataObjects
                 ModifyRigidBodyColor(xnJoint)
 
                 m_xnProjectXml.RemoveNode(xnJoint, "PartType")
-                m_xnProjectXml.RemoveNode(xnJoint, "OrientationMatrix", False)
-                m_xnProjectXml.RemoveNode(xnJoint, "TranslationMatrix", False)
-                m_xnProjectXml.RemoveNode(xnJoint, "RotationAxis", False)
+                m_xnProjectXml.RemoveNode(xnJoint, "Rotation", False)
+
+                Dim aryMatrix(,) As Double = m_xnProjectXml.LoadMatrix(xnJoint, "OrientationMatrix")
 
                 m_xnProjectXml.ConvertScaledNumberToScaledVector(xnJoint, "RelativePosition", "LocalPosition", 1, 1, -1)
-                m_xnProjectXml.ConvertScaledNumberToScaledVector(xnJoint, "Rotation", "Rotation", _
-                                                                 Util.RadiansToDegreesRatio, Util.RadiansToDegreesRatio, Util.RadiansToDegreesRatio, _
-                                                                 90, 0, -90)
+                'm_xnProjectXml.ConvertJointRotation(xnJoint, "Rotation", "Rotation", _
+                '                                    Util.RadiansToDegreesRatio, -Util.RadiansToDegreesRatio, Util.RadiansToDegreesRatio, _
+                '                                    90, 0, -90)
+                m_xnProjectXml.ConvertJointRotation(xnJoint, "RotationAxis", "Rotation", 180, 180, -180, 90, 0, 90)
 
-                m_xnProjectXml.AddScaledNumber(xnJoint, "Size", 0.02, "None", 0.02)
+                m_xnProjectXml.AddScaledNumber(xnJoint, "Size", 0.2, "None", 0.2)
+
+                m_xnProjectXml.RemoveNode(xnJoint, "OrientationMatrix", False)
+                m_xnProjectXml.RemoveNode(xnJoint, "TranslationMatrix", False)
 
                 Dim strType As String = m_xnProjectXml.GetSingleNodeValue(xnJoint, "Type").ToUpper
 

@@ -12,7 +12,6 @@ Public Interface IDataObjectInterface
 
 #End Region
 
-
 #Region "Properties"
 
     Property Position(ByVal iIndex As Integer) As Single
@@ -37,7 +36,6 @@ Public Interface IDataObjectInterface
                                           ByVal aryLocalPos As System.Collections.ArrayList) As Boolean
 
 #End Region
-
 
 #Region "Events"
 

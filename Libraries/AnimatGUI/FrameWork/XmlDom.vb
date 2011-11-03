@@ -45,6 +45,8 @@ Namespace Framework
                 xnFound.InnerText = oVal.ToString()
             ElseIf bThrowError Then
                 Throw New System.Exception("No node named '" & strNode & "' was found to remove.")
+            Else
+                AddNodeValue(xnRootNode, strNode, oVal.ToString)
             End If
         End Sub
 
@@ -228,6 +230,64 @@ Namespace Framework
             RemoveNode(xnRootNode, strOldName)
 
             Return AddScaledVector(xnRootNode, strNewName, dblX, dblY, dblZ)
+        End Function
+
+        Public Overridable Function ConvertJointRotation(ByVal xnRootNode As XmlNode, ByVal strOldName As String, ByVal strNewName As String, _
+                                                         Optional ByVal dblScaleX As Double = 1, Optional ByVal dblScaleY As Double = 1, Optional ByVal dblScaleZ As Double = 1, _
+                                                         Optional ByVal dblAddX As Double = 0, Optional ByVal dblAddY As Double = 0, Optional ByVal dblAddZ As Double = 0) As XmlNode
+            Dim xnFound As XmlNode = GetNode(xnRootNode, strOldName)
+            Dim xnXAttrib As XmlAttribute = xnFound.Attributes("x")
+            Dim xnYAttrib As XmlAttribute = xnFound.Attributes("y")
+            Dim xnZAttrib As XmlAttribute = xnFound.Attributes("z")
+
+            Dim dblX As Double = (Single.Parse(xnXAttrib.InnerText) * dblScaleX) + dblAddX
+            Dim dblY As Double = (Single.Parse(xnYAttrib.InnerText) * dblScaleY) + dblAddY
+            Dim dblZ As Double = (Single.Parse(xnZAttrib.InnerText) * dblScaleZ) + dblAddZ
+
+            RemoveNode(xnRootNode, strOldName)
+
+            Return AddScaledVector(xnRootNode, strNewName, dblX, dblY, dblZ)
+        End Function
+
+        Public Overridable Function LoadMatrix(ByVal xnRootNode As XmlNode, ByVal strNode As String) As Double(,)
+            Dim strMatrix As String = GetSingleNodeValue(xnRootNode, strNode)
+            Dim aryMatrixS As String() = Split(strMatrix, ",")
+            Dim aryMatrixD(3, 3) As Double
+
+            Dim iIndex As Integer = 0
+            For iRow As Integer = 0 To 3
+                For iCol As Integer = 0 To 3
+                    aryMatrixD(iRow, iCol) = CDbl(aryMatrixS(iIndex))
+                    iIndex = iIndex + 1
+                Next
+            Next
+
+            Return aryMatrixD
+            'string str = oXml.GetChildString(strName);
+            'string[] strMtxElem = str.Split(',');
+
+            'Matrix mtx = new Matrix();
+            'mtx.M11 = float.Parse(strMtxElem[0]);
+            'mtx.M12 = float.Parse(strMtxElem[1]);
+            'mtx.M13 = float.Parse(strMtxElem[2]);
+            'mtx.M14 = float.Parse(strMtxElem[3]);
+
+            'mtx.M21 = float.Parse(strMtxElem[4]);
+            'mtx.M22 = float.Parse(strMtxElem[5]);
+            'mtx.M23 = float.Parse(strMtxElem[6]);
+            'mtx.M24 = float.Parse(strMtxElem[7]);
+
+            'mtx.M31 = float.Parse(strMtxElem[8]);
+            'mtx.M32 = float.Parse(strMtxElem[9]);
+            'mtx.M33 = float.Parse(strMtxElem[10]);
+            'mtx.M34 = float.Parse(strMtxElem[11]);
+
+            'mtx.M41 = float.Parse(strMtxElem[12]);
+            'mtx.M42 = float.Parse(strMtxElem[13]);
+            'mtx.M43 = float.Parse(strMtxElem[14]);
+            'mtx.M44 = float.Parse(strMtxElem[15]);
+
+            'return mtx;
         End Function
 
         'Public Overridable Sub ReplaceModuleNames(ByVal xnRootNode As XmlNode, ByVal strNode As String)

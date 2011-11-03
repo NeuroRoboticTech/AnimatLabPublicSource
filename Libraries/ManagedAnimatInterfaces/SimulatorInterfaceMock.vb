@@ -179,4 +179,9 @@ Public Class SimulatorInterfaceMock
     Public Sub TrackCamera(bTrackCamera As Boolean, sLookAtStructureID As String, sLookAtBodyID As String) Implements ISimulatorInterface.TrackCamera
 
     End Sub
+
+    Public Sub GetPositionAndRotationFromMatrix(ByVal aryMatrix(,) As Single, ByRef fltPosX As Single, ByRef fltPosY As Single, ByRef fltPosZ As Single, _
+                                         ByRef fltRotX As Single, ByRef fltRotY As Single, ByRef fltRotZ As Single, ByVal bTranspose As Boolean) Implements ISimulatorInterface.GetPositionAndRotationFromMatrix
+    End Sub
+
 End Class

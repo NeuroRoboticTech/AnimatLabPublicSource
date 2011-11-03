@@ -1030,6 +1030,70 @@ namespace AnimatGUI
 				}
 			}
 
+			void SimulatorInterface::GetPositionAndRotationFromMatrix(cli::array<System::Single, 2> ^aryMatrix, 
+														  float %fltXPos, float %fltYPos, float %fltZPos, 
+														  float %fltXRot, float %fltYRot, float %fltZRot, bool bTranspose)
+			{
+				//AnimatSim::Simulator *lpSim = NULL;
+
+				//try
+				//{
+				//	if(m_lpSim) 
+				//		lpSim = m_lpSim;
+				//	else
+				//		lpSim = new AnimatSim::Simulator;
+
+				//	float fPosX=0, fPosY=0; fPosZ=0;
+				//	float fRotX=0, fRotY=0l fRotZ=0;
+				//	float aM[4][4];
+
+				//	//Copy and transpose the matrix
+				//	for(int iRow=0; iRow<4; iRow++)
+				//		for(int iCol=0; iCol<4; iCol++)
+				//		{
+				//			if(bTranspose)
+				//				aM[iRow][iCol] = aryMatrix[iCol][iRow];
+				//			else
+				//				aM[iRow][iCol] = aryMatrix[iRow][iCol];
+				//		}
+
+				//	lpSim->GetPositionAndRotationFromMatrix(aM, fPosX, fPosY, fPosZ, fRotX, fRotY, fRotZ);
+
+				//	fltXPos = fPosX;
+				//	fltYPos = fPosY;
+				//	fltXPos = fPosX;
+
+				//	fltXRot = fRotX;
+				//	fltYRot = fRotY;
+				//	fltZRot = fRotX;
+
+				//	if(!m_lpSim && lpSim)
+				//		delete lpSim;
+			/*	}
+				catch(CStdErrorInfo oError)
+				{
+					string strError = "An error occurred while attempting to generate a collision mesh file.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew String(strError.c_str());
+					if(!m_lpSim && lpSim)
+						delete lpSim;
+					throw gcnew System::Exception(m_strErrorMessage);
+				}
+				catch(System::Exception ^ex)
+				{
+					if(!m_lpSim && lpSim)
+						delete lpSim;
+					throw ex;
+				}
+				catch(...)
+				{
+					m_strErrorMessage = "An unknown error occurred while attempting to generate a collision mesh file.";
+					if(!m_lpSim && lpSim)
+						delete lpSim;
+					throw gcnew System::Exception(m_strErrorMessage);
+				}*/
+			}
+
+
 #pragma endregion
 
 #pragma region DataAccess

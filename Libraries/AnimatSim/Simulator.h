@@ -476,6 +476,12 @@ namespace AnimatSim
 
 #pragma endregion
 
+#pragma region HelperMethods
+
+		virtual void GetPositionAndRotationFromMatrix(float *aryMatrix, CStdFPoint &vPos, CStdFPoint &vRot) = 0;
+
+#pragma endregion
+
 #pragma endregion
 
 		public:

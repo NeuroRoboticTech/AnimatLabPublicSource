@@ -51,6 +51,8 @@ namespace VortexAnimatSim
 		virtual void StepVideoFrame();
 		virtual void SimulateEnd();
 
+		virtual void GetPositionAndRotationFromMatrix(float *aryMatrix, CStdFPoint &vPos, CStdFPoint &vRot);
+
 	public:
 		VsSimulator();
 		virtual ~VsSimulator();
