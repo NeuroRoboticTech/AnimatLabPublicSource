@@ -62,10 +62,12 @@ Namespace UnitTests
                 Dim target As Convert_V1ToV2 = New Convert_V1ToV2() ' TODO: Initialize to an appropriate value
                 'Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\SimpleTest"
                 'Dim strProjectName As String = "SimpleTest"
-                'Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\ConeNN"
+                Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\ConeNN"
                 'Dim strProjectName As String = "ConeNN"
-                Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\HingeTest"
+                'Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\HingeTest"
                 Dim strProjectName As String = "HingeTest"
+
+                AnimatGUI.Framework.Util.Application = New AnimatGUI.Forms.AnimatApplication
 
                 target.ConvertFiles(strProjectPath, strProjectName)
                 'Assert.Inconclusive("A method that does not return a value cannot be verified.")

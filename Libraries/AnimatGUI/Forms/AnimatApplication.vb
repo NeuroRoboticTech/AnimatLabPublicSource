@@ -1608,7 +1608,7 @@ Namespace Forms
 
         End Sub
 
-        Protected Function CreateSimInterface() As ManagedAnimatInterfaces.ISimulatorInterface
+        Public Function CreateSimInterface() As ManagedAnimatInterfaces.ISimulatorInterface
             Dim iSim As ManagedAnimatInterfaces.ISimulatorInterface
 
             If m_bUseMockSimInterface Then

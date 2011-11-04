@@ -249,15 +249,15 @@ Namespace Framework
             Return AddScaledVector(xnRootNode, strNewName, dblX, dblY, dblZ)
         End Function
 
-        Public Overridable Function LoadMatrix(ByVal xnRootNode As XmlNode, ByVal strNode As String) As Double(,)
+        Public Overridable Function LoadMatrix(ByVal xnRootNode As XmlNode, ByVal strNode As String) As Single(,)
             Dim strMatrix As String = GetSingleNodeValue(xnRootNode, strNode)
             Dim aryMatrixS As String() = Split(strMatrix, ",")
-            Dim aryMatrixD(3, 3) As Double
+            Dim aryMatrixD(3, 3) As Single
 
             Dim iIndex As Integer = 0
             For iRow As Integer = 0 To 3
                 For iCol As Integer = 0 To 3
-                    aryMatrixD(iRow, iCol) = CDbl(aryMatrixS(iIndex))
+                    aryMatrixD(iRow, iCol) = CSng(aryMatrixS(iIndex))
                     iIndex = iIndex + 1
                 Next
             Next

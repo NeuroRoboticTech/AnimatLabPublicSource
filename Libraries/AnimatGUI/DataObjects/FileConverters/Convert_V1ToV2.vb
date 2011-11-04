@@ -16,6 +16,7 @@ Namespace DataObjects
             Inherits FileConverter
 
             Protected m_dblFluidDensity As Double = 1.0
+            Protected m_iSimInterface As ManagedAnimatInterfaces.ISimulatorInterface
 
             Public Overrides ReadOnly Property ConvertFrom As String
                 Get
@@ -30,6 +31,10 @@ Namespace DataObjects
             End Property
 
             Protected Overrides Sub ConvertProjectNode(ByVal xnProject As XmlNode)
+
+                m_iSimInterface = Util.Application.CreateSimInterface
+                m_iSimInterface.CreateStandAloneSim("VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll",
+                                                    Application.ExecutablePath)
 
                 m_xnProjectXml.RemoveNode(xnProject, "PhysicsClassName", False)
                 m_xnProjectXml.RemoveNode(xnProject, "PhysicsAssemblyName", False)
@@ -342,13 +347,23 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnJoint, "PartType")
                 m_xnProjectXml.RemoveNode(xnJoint, "Rotation", False)
 
-                Dim aryMatrix(,) As Double = m_xnProjectXml.LoadMatrix(xnJoint, "OrientationMatrix")
-
                 m_xnProjectXml.ConvertScaledNumberToScaledVector(xnJoint, "RelativePosition", "LocalPosition", 1, 1, -1)
                 'm_xnProjectXml.ConvertJointRotation(xnJoint, "Rotation", "Rotation", _
                 '                                    Util.RadiansToDegreesRatio, -Util.RadiansToDegreesRatio, Util.RadiansToDegreesRatio, _
                 '                                    90, 0, -90)
-                m_xnProjectXml.ConvertJointRotation(xnJoint, "RotationAxis", "Rotation", 180, 180, -180, 90, 0, 90)
+                'm_xnProjectXml.ConvertJointRotation(xnJoint, "RotationAxis", "Rotation", 180, 180, -180, 90, 0, 90)
+
+                Dim aryOrientation(,) As Single = m_xnProjectXml.LoadMatrix(xnJoint, "OrientationMatrix")
+                Dim fltXPos As Single = 0
+                Dim fltYPos As Single = 0
+                Dim fltZPos As Single = 0
+                Dim fltXRot As Single = 0
+                Dim fltYRot As Single = 0
+                Dim fltZRot As Single = 0
+                'm_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation, fltXPos, fltYPos, fltZPos, fltXRot, fltYRot, fltZRot)
+
+                'm_xnProjectXml.AddScaledVector(xnJoint, "Position", fltXPos, fltYPos, fltZPos)
+                m_xnProjectXml.AddScaledVector(xnJoint, "Rotation", fltXRot, fltYRot, fltZRot)
 
                 m_xnProjectXml.AddScaledNumber(xnJoint, "Size", 0.2, "None", 0.2)
 

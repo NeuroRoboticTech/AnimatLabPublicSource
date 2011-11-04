@@ -22,7 +22,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\bin\</OutputPath>
     <DocumentationFile>AnimatTesting.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
@@ -31,7 +31,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\bin\</OutputPath>
     <DocumentationFile>AnimatTesting.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
@@ -147,6 +147,26 @@
     <ProjectReference Include="..\AnimatGUI\AnimatGUI.vbproj">
       <Project>{45227561-EC56-46E0-9395-E1D86A7F3464}</Project>
       <Name>AnimatGUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FiringRateGUI\FiringRateGUI.vbproj">
+      <Project>{CE6F1806-6605-4C11-A70E-38130C9DB3E7}</Project>
+      <Name>FiringRateGUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IntegrateFireGUI\IntegrateFireGUI.vbproj">
+      <Project>{CA9FC172-4481-43DC-8F8F-1506643B65EB}</Project>
+      <Name>IntegrateFireGUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LicensedAnimatGUI\LicensedAnimatGUI.vbproj">
+      <Project>{058DF82A-3C95-41B6-BF81-F30EE747515C}</Project>
+      <Name>LicensedAnimatGUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ManagedAnimatInterfaces\ManagedAnimatInterfaces.vbproj">
+      <Project>{EBC9D7C3-EB4A-4515-9426-AD41E0BBEBFC}</Project>
+      <Name>ManagedAnimatInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ManagedAnimatTools\ManagedAnimatTools\ManagedAnimatTools.vcxproj">
+      <Project>{C4F78ED0-5777-47E1-8D4C-2FDD548FCE79}</Project>
+      <Name>ManagedAnimatTools</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
