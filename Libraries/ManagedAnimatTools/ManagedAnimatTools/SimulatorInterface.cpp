@@ -236,6 +236,46 @@ namespace AnimatGUI
 				}
 
 			}
+			
+			void SimulatorInterface::CreateStandAloneSim(System::String ^sModuleName, System::String ^sExePath)
+			{
+				AnimatSim::Simulator *lpSim = NULL;
+
+				try
+				{
+					if(!m_lpSim) 
+					{
+						string strModuleName = Util::StringToStd(sModuleName);
+						string strExePath = Util::StringToStd(sExePath);
+
+						m_lpSim =  AnimatSim::Simulator::CreateSimulator(strModuleName, "", strExePath);
+
+						if(!m_lpSim)
+							throw gcnew System::Exception("Unable to create the simulation.");
+					}
+				}
+				catch(CStdErrorInfo oError)
+				{
+					string strError = "An error occurred while attempting to generate a collision mesh file.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew String(strError.c_str());
+					if(!m_lpSim && lpSim)
+						delete lpSim;
+					throw gcnew System::Exception(m_strErrorMessage);
+				}
+				catch(System::Exception ^ex)
+				{
+					if(!m_lpSim && lpSim)
+						delete lpSim;
+					throw ex;
+				}
+				catch(...)
+				{
+					m_strErrorMessage = "An unknown error occurred while attempting to generate a collision mesh file.";
+					if(!m_lpSim && lpSim)
+						delete lpSim;
+					throw gcnew System::Exception(m_strErrorMessage);
+				}
+			}
 
 			void SimulatorInterface::AddSimWindow(System::String ^sWindowXml, BOOL bInit, HWND hWnd)
 			{
@@ -1030,67 +1070,52 @@ namespace AnimatGUI
 				}
 			}
 
-			void SimulatorInterface::GetPositionAndRotationFromMatrix(cli::array<System::Single, 2> ^aryMatrix, 
+
+			void SimulatorInterface::GetPositionAndRotationFromD3DMatrix(cli::array<System::Single, 2> ^aryMatrix, 
 														  float %fltXPos, float %fltYPos, float %fltZPos, 
-														  float %fltXRot, float %fltYRot, float %fltZRot, bool bTranspose)
+														  float %fltXRot, float %fltYRot, float %fltZRot)
 			{
-				//AnimatSim::Simulator *lpSim = NULL;
 
-				//try
-				//{
-				//	if(m_lpSim) 
-				//		lpSim = m_lpSim;
-				//	else
-				//		lpSim = new AnimatSim::Simulator;
+				try
+				{
+					if(!m_lpSim)
+						throw gcnew System::Exception("Simulation has not been defined.");
 
-				//	float fPosX=0, fPosY=0; fPosZ=0;
-				//	float fRotX=0, fRotY=0l fRotZ=0;
-				//	float aM[4][4];
+					float fPosX=0, fPosY=0, fPosZ=0;
+					float fRotX=0, fRotY=0, fRotZ=0;
+					float aM[4][4];
 
-				//	//Copy and transpose the matrix
-				//	for(int iRow=0; iRow<4; iRow++)
-				//		for(int iCol=0; iCol<4; iCol++)
-				//		{
-				//			if(bTranspose)
-				//				aM[iRow][iCol] = aryMatrix[iCol][iRow];
-				//			else
-				//				aM[iRow][iCol] = aryMatrix[iRow][iCol];
-				//		}
+					//Copy and transpose the matrix
+					for(int iRow=0; iRow<4; iRow++)
+						for(int iCol=0; iCol<4; iCol++)
+							aM[iRow][iCol] = aryMatrix[iCol, iRow];
 
-				//	lpSim->GetPositionAndRotationFromMatrix(aM, fPosX, fPosY, fPosZ, fRotX, fRotY, fRotZ);
+					CStdFPoint vPos, vRot;
+					m_lpSim->GetPositionAndRotationFromD3DMatrix(aM, vPos, vRot);
 
-				//	fltXPos = fPosX;
-				//	fltYPos = fPosY;
-				//	fltXPos = fPosX;
+					fltXPos = vPos.x;
+					fltYPos = vPos.y;
+					fltXPos = vPos.z;
 
-				//	fltXRot = fRotX;
-				//	fltYRot = fRotY;
-				//	fltZRot = fRotX;
-
-				//	if(!m_lpSim && lpSim)
-				//		delete lpSim;
-			/*	}
+					fltXRot = vRot.x;
+					fltYRot = vRot.y;
+					fltZRot = vRot.z;
+				}
 				catch(CStdErrorInfo oError)
 				{
 					string strError = "An error occurred while attempting to generate a collision mesh file.\nError: " + oError.m_strError;
 					m_strErrorMessage = gcnew String(strError.c_str());
-					if(!m_lpSim && lpSim)
-						delete lpSim;
 					throw gcnew System::Exception(m_strErrorMessage);
 				}
 				catch(System::Exception ^ex)
 				{
-					if(!m_lpSim && lpSim)
-						delete lpSim;
 					throw ex;
 				}
 				catch(...)
 				{
 					m_strErrorMessage = "An unknown error occurred while attempting to generate a collision mesh file.";
-					if(!m_lpSim && lpSim)
-						delete lpSim;
 					throw gcnew System::Exception(m_strErrorMessage);
-				}*/
+				}
 			}
 
 

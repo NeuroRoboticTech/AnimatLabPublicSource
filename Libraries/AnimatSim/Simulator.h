@@ -476,12 +476,6 @@ namespace AnimatSim
 
 #pragma endregion
 
-#pragma region HelperMethods
-
-		virtual void GetPositionAndRotationFromMatrix(float *aryMatrix, CStdFPoint &vPos, CStdFPoint &vRot) = 0;
-
-#pragma endregion
-
 #pragma endregion
 
 		public:
@@ -639,6 +633,12 @@ namespace AnimatSim
 
 #pragma endregion
 			
+#pragma region HelperMethods
+
+		virtual void GetPositionAndRotationFromD3DMatrix(float (&aryMatrix)[4][4], CStdFPoint &vPos, CStdFPoint &vRot) = 0;
+
+#pragma endregion
+
 #pragma region RecordingVariables
 			
 			virtual long VideoSliceCount();
@@ -807,6 +807,7 @@ namespace AnimatSim
 			virtual CStdSerialize *CreateObject(string strModule, string strClassName, string strType, BOOL bThrowError = TRUE);
 			static Simulator *CreateSimulator(string strSimulationFile);
 			static Simulator *CreateSimulator(CStdXml &oXml);
+			static Simulator *CreateSimulator(string strAnimatModule, string strProjectPath, string strExecutablePath);
 			static Simulator *CreateSimulator(int argc, const char **argv);
 			virtual void GenerateCollisionMeshFile(string strOriginalMeshFile, string strCollisionMeshFile) = 0;
 

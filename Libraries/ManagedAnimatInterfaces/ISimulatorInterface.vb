@@ -48,6 +48,8 @@ Public Interface ISimulatorInterface
     Function PauseSimulation() As Boolean
     Sub StopSimulation()
 
+    Sub CreateStandAloneSim(ByVal sModuleName As String, ByVal sExePath As String)
+
     Function ErrorMessage() As String
 
     Sub SaveSimulationFile(ByVal sFile As String)
@@ -75,8 +77,8 @@ Public Interface ISimulatorInterface
     Sub ReInitializeSimulation()
     Function RetrieveChartData(ByVal sChartKey As String, ByRef aryTimeData As Single(,), ByRef aryData As Single(,)) As Int32
     Sub GenerateCollisionMeshFile(ByVal sOriginalMeshFile As String, ByVal sCollisionMeshFile As String)
-    Sub GetPositionAndRotationFromMatrix(ByVal aryMatrix(,) As Single, ByRef fltPosX As Single, ByRef fltPosY As Single, ByRef fltPosZ As Single, _
-                                         ByRef fltRotX As Single, ByRef fltRotY As Single, ByRef fltRotZ As Single, ByVal bTranspose As Boolean)
+    Sub GetPositionAndRotationFromD3DMatrix(ByVal aryMatrix(,) As Single, ByRef fltPosX As Single, ByRef fltPosY As Single, ByRef fltPosZ As Single, _
+                                         ByRef fltRotX As Single, ByRef fltRotY As Single, ByRef fltRotZ As Single)
 
 #End Region
 

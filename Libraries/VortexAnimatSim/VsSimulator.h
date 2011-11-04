@@ -51,8 +51,6 @@ namespace VortexAnimatSim
 		virtual void StepVideoFrame();
 		virtual void SimulateEnd();
 
-		virtual void GetPositionAndRotationFromMatrix(float *aryMatrix, CStdFPoint &vPos, CStdFPoint &vRot);
-
 	public:
 		VsSimulator();
 		virtual ~VsSimulator();
@@ -82,6 +80,12 @@ namespace VortexAnimatSim
 		virtual void PhysicsTimeStep(float fltVal);
 		virtual void Gravity(float fltVal, BOOL bUseScaling = TRUE);
 		virtual int GetMaterialID(string strID);
+
+#pragma endregion
+		
+#pragma region HelperMethods
+
+		virtual void GetPositionAndRotationFromD3DMatrix(float (&aryMatrix)[4][4], CStdFPoint &vPos, CStdFPoint &vRot);
 
 #pragma endregion
 

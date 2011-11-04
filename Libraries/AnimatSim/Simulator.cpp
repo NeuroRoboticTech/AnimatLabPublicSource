@@ -2840,6 +2840,62 @@ catch(...)
 }
 }
 
+/**
+\brief	Creates a simulator from passed in settings..
+
+\author	dcofer
+\date	3/28/2011
+
+\param	strAnimatModule  	name of the dll module to load for the class factory.
+\param	strProjectPath   	Full pathname of the string project file.
+\param	strExecutablePath	Full pathname of the string executable file.
+
+\return	Pointer to the new simulator.
+**/
+Simulator *Simulator::CreateSimulator(string strAnimatModule, string strProjectPath, string strExecutablePath)
+{
+	Simulator *lpSim = NULL;
+	IStdClassFactory *lpAnimatFactory=NULL;
+
+
+try
+{ 
+	lpAnimatFactory = LoadClassFactory(strAnimatModule);
+
+	//Now we need to get the simulation application itself. This ALWAYS
+	//comes from the animat engine because the animat engine uses the
+	//neural engine it is higher up the food chain and it decides the
+	//actual simulator that needs to be used.
+	lpSim = dynamic_cast<Simulator *>(lpAnimatFactory->CreateObject("Simulator", ""));
+	if(!lpSim)
+		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "Simulator");
+
+	lpSim->ProjectPath(strProjectPath);
+	lpSim->ExecutablePath(strExecutablePath);
+
+	if(lpAnimatFactory) 
+		{delete lpAnimatFactory; lpAnimatFactory = NULL;}
+
+	g_lpSimulator = lpSim;
+	return lpSim;
+}
+catch(CStdErrorInfo oError)
+{
+	if(lpSim) delete lpSim;
+	if(lpAnimatFactory) delete lpAnimatFactory;
+	RELAY_ERROR(oError);
+	return NULL;
+}
+catch(...)
+{
+	if(lpSim) delete lpSim;
+	if(lpAnimatFactory) delete lpAnimatFactory;
+	THROW_ERROR(Std_Err_lUnspecifiedError, Std_Err_strUnspecifiedError);
+	return NULL;
+}
+}
+
+
 #pragma endregion
 	
 #pragma region FindMethods

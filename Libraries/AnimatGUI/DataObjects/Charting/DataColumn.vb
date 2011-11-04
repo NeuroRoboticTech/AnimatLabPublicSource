@@ -656,7 +656,6 @@ Namespace DataObjects.Charting
 
 #End Region
 
-
 #Region "Events"
 
         Private Sub OnAfterRemoveItem(ByRef doObject As Framework.DataObject)
