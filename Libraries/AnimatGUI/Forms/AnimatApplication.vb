@@ -4227,6 +4227,24 @@ Namespace Forms
             Util.ClearActiveDialogs(True)
         End Sub
 
+        Private Delegate Sub ExecuteObjectMethodDelegate(ByVal strAssembly As String, ByVal strClassName As String, ByVal strMethodName As String, ByVal aryParams() As Object)
+
+        Public Function ExecuteObjectMethod(ByVal strAssembly As String, ByVal strClassName As String, ByVal strMethodName As String, ByVal aryParams() As Object) As Object
+            If Me.InvokeRequired Then
+                Return Me.Invoke(New ExecuteObjectMethodDelegate(AddressOf ExecuteObjectMethod), New Object() {strAssembly, strClassName, strMethodName, aryParams})
+            End If
+
+            Dim doParent As Framework.DataObject = Nothing
+            Dim oObj As Object = Util.LoadClass(strAssembly, strClassName, doParent)
+
+            Dim oMethod As MethodInfo = oObj.GetType().GetMethod(strMethodName)
+
+            If oMethod Is Nothing Then
+                Throw New System.Exception("Method name '" & strMethodName & "' not found.")
+            End If
+            Return oMethod.Invoke(oObj, aryParams)
+
+        End Function
 #End Region
 
 #Region "Toolstrip Handlers "
@@ -4283,14 +4301,6 @@ Namespace Forms
 
         Public Overridable Sub Relabel()
             Try
-                'Util.Application.ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root", "Freeze", "True"})
-                'Util.Application.ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1", "LocalPosition.X", "1"})
-                'Util.Application.ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1"})
-                'Set the name of the data chart item to root_x.
-                'Util.Application.ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root", "Name", "Root_Y"})
-                'Util.Application.ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root_Y", "DataTypeID", "WorldPositionY"})
-                'Util.Application.ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectEndTime", "45"})
-
                 Dim frmRelabel As New AnimatGUI.Forms.BodyPlan.Relabel
 
                 frmRelabel.SelectedItem = Util.ProjectWorkspace.SelectedDataObject

@@ -48,11 +48,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AnimatServer">
+    <Reference Include="AnimatServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\AnimatServer.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetMagic">
-      <HintPath>..\..\bin\DotNetMagic.DLL</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -109,24 +107,9 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnimatUITest.vb" />
-    <Compile Include="BodyEditorTests\BodyPartTests\BodyPartUITest.vb" />
-    <Compile Include="BodyEditorTests\BodyPartTests\JointTests\BallSocketUITest.vb" />
-    <Compile Include="BodyEditorTests\BodyPartTests\JointTests\UniversialUITest.vb" />
-    <Compile Include="BodyEditorTests\BodyPartTests\JointTests\PrismaticUITest.vb" />
-    <Compile Include="BodyEditorTests\BodyPartTests\JointUITest.vb" />
-    <Compile Include="BodyEditorTests\BodyPartTests\JointTests\HingeUITest.vb" />
-    <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\BoxUITest.vb" />
-    <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\FluidPlaneUITest.vb" />
-    <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\TerrainUITest.vb" />
-    <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\PlaneUITest.vb" />
-    <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\TorusUITest.vb" />
-    <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\MeshUITest.vb" />
-    <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\SphereUITest.vb" />
-    <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\CylinderUITest.vb" />
-    <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\EllipsoidUITest.vb" />
-    <Compile Include="BodyEditorTests\BodyPartTests\RigidBodyTests\ConeUITest.vb" />
-    <Compile Include="CreationTests\NewProjectUITest.vb" />
+    <Compile Include="Framework\AnimatTest.vb" />
+    <Compile Include="Framework\AnimatUITest.vb" />
+    <Compile Include="Framework\AnimatUnitTest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="UIMap.Designer.vb">
       <DependentUpon>UIMap.uitest</DependentUpon>
@@ -134,6 +117,23 @@
     <Compile Include="UIMap.vb">
       <DependentUpon>UIMap.uitest</DependentUpon>
     </Compile>
+    <Compile Include="UITests\BodyEditorTests\BodyPartTests\BodyPartUITest.vb" />
+    <Compile Include="UITests\BodyEditorTests\BodyPartTests\JointTests\BallSocketUITest.vb" />
+    <Compile Include="UITests\BodyEditorTests\BodyPartTests\JointTests\HingeUITest.vb" />
+    <Compile Include="UITests\BodyEditorTests\BodyPartTests\JointTests\PrismaticUITest.vb" />
+    <Compile Include="UITests\BodyEditorTests\BodyPartTests\JointTests\UniversialUITest.vb" />
+    <Compile Include="UITests\BodyEditorTests\BodyPartTests\JointUITest.vb" />
+    <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\BoxUITest.vb" />
+    <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\ConeUITest.vb" />
+    <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\CylinderUITest.vb" />
+    <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\EllipsoidUITest.vb" />
+    <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\FluidPlaneUITest.vb" />
+    <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\MeshUITest.vb" />
+    <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\PlaneUITest.vb" />
+    <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\SphereUITest.vb" />
+    <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\TerrainUITest.vb" />
+    <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\TorusUITest.vb" />
+    <Compile Include="UITests\CreationTests\NewProjectUITest.vb" />
     <Compile Include="UnitTests\FileConversions\Convert_V1ToV2Test.vb" />
     <Compile Include="Util.vb" />
   </ItemGroup>
@@ -142,32 +142,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="UIMap.uitest" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AnimatGUI\AnimatGUI.vbproj">
-      <Project>{45227561-EC56-46E0-9395-E1D86A7F3464}</Project>
-      <Name>AnimatGUI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FiringRateGUI\FiringRateGUI.vbproj">
-      <Project>{CE6F1806-6605-4C11-A70E-38130C9DB3E7}</Project>
-      <Name>FiringRateGUI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\IntegrateFireGUI\IntegrateFireGUI.vbproj">
-      <Project>{CA9FC172-4481-43DC-8F8F-1506643B65EB}</Project>
-      <Name>IntegrateFireGUI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LicensedAnimatGUI\LicensedAnimatGUI.vbproj">
-      <Project>{058DF82A-3C95-41B6-BF81-F30EE747515C}</Project>
-      <Name>LicensedAnimatGUI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ManagedAnimatInterfaces\ManagedAnimatInterfaces.vbproj">
-      <Project>{EBC9D7C3-EB4A-4515-9426-AD41E0BBEBFC}</Project>
-      <Name>ManagedAnimatInterfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ManagedAnimatTools\ManagedAnimatTools\ManagedAnimatTools.vcxproj">
-      <Project>{C4F78ED0-5777-47E1-8D4C-2FDD548FCE79}</Project>
-      <Name>ManagedAnimatTools</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />

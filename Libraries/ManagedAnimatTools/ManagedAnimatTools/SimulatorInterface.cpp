@@ -1088,7 +1088,8 @@ namespace AnimatGUI
 					//Copy and transpose the matrix
 					for(int iRow=0; iRow<4; iRow++)
 						for(int iCol=0; iCol<4; iCol++)
-							aM[iRow][iCol] = aryMatrix[iCol, iRow];
+							aM[iRow][iCol] = aryMatrix[iRow, iCol];
+							//aM[iRow][iCol] = aryMatrix[iCol, iRow];
 
 					CStdFPoint vPos, vRot;
 					m_lpSim->GetPositionAndRotationFromD3DMatrix(aM, vPos, vRot);

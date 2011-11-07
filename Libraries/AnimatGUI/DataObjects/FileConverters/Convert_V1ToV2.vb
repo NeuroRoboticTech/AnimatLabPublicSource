@@ -30,6 +30,11 @@ Namespace DataObjects
                 End Get
             End Property
 
+            Sub New(ByVal doParent As Framework.DataObject)
+                MyBase.New()
+
+            End Sub
+
             Protected Overrides Sub ConvertProjectNode(ByVal xnProject As XmlNode)
 
                 m_iSimInterface = Util.Application.CreateSimInterface
@@ -360,10 +365,10 @@ Namespace DataObjects
                 Dim fltXRot As Single = 0
                 Dim fltYRot As Single = 0
                 Dim fltZRot As Single = 0
-                'm_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation, fltXPos, fltYPos, fltZPos, fltXRot, fltYRot, fltZRot)
+                m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation, fltXPos, fltYPos, fltZPos, fltXRot, fltYRot, fltZRot)
 
                 'm_xnProjectXml.AddScaledVector(xnJoint, "Position", fltXPos, fltYPos, fltZPos)
-                m_xnProjectXml.AddScaledVector(xnJoint, "Rotation", fltXRot, fltYRot, fltZRot)
+                m_xnProjectXml.AddScaledVector(xnJoint, "Rotation", Util.RadiansToDegrees(fltXRot), Util.RadiansToDegrees(fltYRot), Util.RadiansToDegrees(fltZRot))
 
                 m_xnProjectXml.AddScaledNumber(xnJoint, "Size", 0.2, "None", 0.2)
 

@@ -372,20 +372,27 @@ void VsSimulator::GenerateCollisionMeshFile(string strOriginalMeshFile, string s
 
 void VsSimulator::GetPositionAndRotationFromD3DMatrix(float (&aryMatrix)[4][4], CStdFPoint &vPos, CStdFPoint &vRot)
 {
+	osg::Matrix osgBase(-0.00020365317653499665f, 0.00020365317231177792f, -0.99999995852538359f,   0, 
+					    0.99999997926269157f,     0,                       -0.00020365317231177792, 0, 
+					    0,                        -0.99999997926269157,    -0.00020365317653499665, 0, 
+					    0,                        0,                       0,                       1);
+
 	osg::Matrix osgMT(aryMatrix[0][0], aryMatrix[0][1], aryMatrix[0][2], aryMatrix[0][3], 
 					  aryMatrix[1][0], aryMatrix[1][1], aryMatrix[1][2], aryMatrix[1][3], 
 					  aryMatrix[2][0], aryMatrix[2][1], aryMatrix[2][2], aryMatrix[2][3], 
 					  aryMatrix[3][0], aryMatrix[3][1], aryMatrix[3][2], aryMatrix[3][3]);
 
+	osg::Matrix osgFinal = osgBase * osgMT;
+
 	//Lets get the current world coordinates for this body part and then recalculate the 
 	//new local position for the part and then finally reset its new local position.
-	osg::Vec3 vL = osgMT.getTrans();
+	osg::Vec3 vL = osgFinal.getTrans();
 	vPos.Set(vL.x(), vL.y(), vL.z());
 	vPos.ClearNearZero();
 		
 	//Now lets get the euler angle rotation
 	Vx::VxReal44 vxTM;
-	VxOSG::copyOsgMatrix_to_VxReal44(osgMT, vxTM);
+	VxOSG::copyOsgMatrix_to_VxReal44(osgFinal, vxTM);
 	Vx::VxTransform vTrans(vxTM);
 	Vx::VxReal3 vEuler;
 	vTrans.getRotationEulerAngles(vEuler);

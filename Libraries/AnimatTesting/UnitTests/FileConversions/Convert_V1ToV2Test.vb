@@ -1,5 +1,5 @@
 ﻿Imports Microsoft.VisualStudio.TestTools.UnitTesting
-Imports AnimatGUI.DataObjects.FileConverters
+Imports AnimatTesting.Framework
 
 Namespace UnitTests
     Namespace FileConversions
@@ -10,7 +10,7 @@ Namespace UnitTests
         '''</summary>
         <TestClass()> _
         Public Class Convert_V1ToV2Test
-
+            Inherits AnimatUnitTest
 
             Private testContextInstance As TestContext
 
@@ -27,49 +27,32 @@ Namespace UnitTests
                 End Set
             End Property
 
-#Region "Additional test attributes"
-            '
-            'You can use the following additional attributes as you write your tests:
-            '
-            'Use ClassInitialize to run code before running the first test in the class
-            '<ClassInitialize()>  _
-            'Public Shared Sub MyClassInitialize(ByVal testContext As TestContext)
-            'End Sub
-            '
-            'Use ClassCleanup to run code after all tests in a class have run
-            '<ClassCleanup()>  _
-            'Public Shared Sub MyClassCleanup()
-            'End Sub
-            '
-            'Use TestInitialize to run code before running each test
-            '<TestInitialize()>  _
-            'Public Sub MyTestInitialize()
-            'End Sub
-            '
-            'Use TestCleanup to run code after each test has run
-            '<TestCleanup()>  _
-            'Public Sub MyTestCleanup()
-            'End Sub
-            '
-#End Region
+            <ClassInitialize()> _
+            Public Shared Sub MyClassInitialize(ByVal testContext As TestContext)
+                InitializeConfiguration()
+            End Sub
 
+            'Use ClassCleanup to run code after all tests in a class have run
+            <ClassCleanup()> _
+            Public Shared Sub MyClassCleanup()
+                Dim iVal As Integer = 5
+            End Sub
 
             '''<summary>
             '''A test for ConvertFiles
             '''</summary>
             <TestMethod()> _
             Public Sub ConvertFilesTest()
-                Dim target As Convert_V1ToV2 = New Convert_V1ToV2() ' TODO: Initialize to an appropriate value
+                'Dim target As Convert_V1ToV2 = New Convert_V1ToV2()
                 'Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\SimpleTest"
                 'Dim strProjectName As String = "SimpleTest"
-                Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\ConeNN"
+                'Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\ConeNN"
                 'Dim strProjectName As String = "ConeNN"
-                'Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\HingeTest"
+                Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\HingeTest"
                 Dim strProjectName As String = "HingeTest"
 
-                AnimatGUI.Framework.Util.Application = New AnimatGUI.Forms.AnimatApplication
+                UnitTest("AnimatGUI.dll", "AnimatGUI.DataObjects.FileConverters.Convert_V1ToV2", "ConvertFiles", New Object() {strProjectPath, strProjectName})
 
-                target.ConvertFiles(strProjectPath, strProjectName)
                 'Assert.Inconclusive("A method that does not return a value cannot be verified.")
             End Sub
         End Class
