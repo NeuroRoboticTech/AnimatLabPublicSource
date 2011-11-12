@@ -635,7 +635,7 @@ namespace AnimatSim
 			
 #pragma region HelperMethods
 
-		virtual void GetPositionAndRotationFromD3DMatrix(float (&aryMatrix)[4][4], CStdFPoint &vPos, CStdFPoint &vRot) = 0;
+		virtual void GetPositionAndRotationFromD3DMatrix(float (&aryMatrix)[4][4], CStdFPoint &vPos, CStdFPoint &vRot, bool bIsJoint) = 0;
 
 #pragma endregion
 

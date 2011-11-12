@@ -478,7 +478,8 @@ void VsMovableItem::UpdatePositionAndRotationFromMatrix(osg::Matrix osgMT)
 	vRot.ClearNearZero();
 	m_lpThisMI->Rotation(vRot, TRUE, FALSE);
 
-	m_osgDragger->SetupMatrix();
+	if(m_osgDragger.valid())
+		m_osgDragger->SetupMatrix();
 
 	//Test the matrix to make sure they match. I will probably get rid of this code after full testing.
 	osg::Matrix osgTest = SetupMatrix(vLocal, vRot);
@@ -548,6 +549,30 @@ void VsMovableItem::BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, s
 	
 		CreateSelectedGraphics(strName);
 	}
+}
+
+void VsMovableItem::Physics_LoadTransformMatrix(CStdXml &oXml) 
+{
+	string strMatrix = oXml.GetChildString("TransformMatrix");
+	
+	CStdArray<string> aryElements;
+	int iCount = Std_Split(strMatrix, ",", aryElements);
+
+	if(iCount != 16)
+		THROW_PARAM_ERROR(Al_Err_lMatrixElementCountInvalid, Al_Err_strMatrixElementCountInvalid, "Matrix count", iCount);
+	
+	float aryMT[4][4];
+	int iIndex=0;
+	for(int iX=0; iX<4; iX++)
+		for(int iY=0; iY<4; iY++, iIndex++)
+			aryMT[iX][iY] = atof(aryElements[iIndex].c_str());
+		
+	osg::Matrix osgMT(aryMT[0][0], aryMT[0][1], aryMT[0][2], aryMT[0][3], 
+					  aryMT[1][0], aryMT[1][1], aryMT[1][2], aryMT[1][3], 
+					  aryMT[2][0], aryMT[2][1], aryMT[2][2], aryMT[2][3], 
+					  aryMT[3][0], aryMT[3][1], aryMT[3][2], aryMT[3][3]);
+	
+	UpdatePositionAndRotationFromMatrix(osgMT);
 }
 
 void VsMovableItem::Physics_ResetGraphicsAndPhysics()

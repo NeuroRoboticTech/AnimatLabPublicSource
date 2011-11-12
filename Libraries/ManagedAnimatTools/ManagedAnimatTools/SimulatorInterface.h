@@ -97,7 +97,7 @@ namespace AnimatGUI
 			virtual void GenerateCollisionMeshFile(String ^sOriginalMeshFile, String ^sCollisionMeshFile);
 			virtual void GetPositionAndRotationFromD3DMatrix(cli::array<System::Single, 2> ^aryMatrix, 
 														  float %fltXPos, float %fltYPos, float %fltZPos, 
-														  float %fltXRot, float %fltYRot, float %fltZRot);
+														  float %fltXRot, float %fltYRot, float %fltZRot, bool bIsJoint);
 
 #pragma endregion
 

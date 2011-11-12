@@ -1073,7 +1073,7 @@ namespace AnimatGUI
 
 			void SimulatorInterface::GetPositionAndRotationFromD3DMatrix(cli::array<System::Single, 2> ^aryMatrix, 
 														  float %fltXPos, float %fltYPos, float %fltZPos, 
-														  float %fltXRot, float %fltYRot, float %fltZRot)
+														  float %fltXRot, float %fltYRot, float %fltZRot, bool bIsJoint)
 			{
 
 				try
@@ -1092,11 +1092,11 @@ namespace AnimatGUI
 							//aM[iRow][iCol] = aryMatrix[iCol, iRow];
 
 					CStdFPoint vPos, vRot;
-					m_lpSim->GetPositionAndRotationFromD3DMatrix(aM, vPos, vRot);
+					m_lpSim->GetPositionAndRotationFromD3DMatrix(aM, vPos, vRot, bIsJoint);
 
 					fltXPos = vPos.x;
 					fltYPos = vPos.y;
-					fltXPos = vPos.z;
+					fltZPos = vPos.z;
 
 					fltXRot = vRot.x;
 					fltYRot = vRot.y;

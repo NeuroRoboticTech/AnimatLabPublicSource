@@ -17,6 +17,7 @@ Namespace DataObjects
 
             Protected m_dblFluidDensity As Double = 1.0
             Protected m_iSimInterface As ManagedAnimatInterfaces.ISimulatorInterface
+            Protected m_fltDistanceUnits As Single
 
             Public Overrides ReadOnly Property ConvertFrom As String
                 Get
@@ -91,6 +92,8 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnEnvironment, "UseAlphaBlending", False)
                 m_xnProjectXml.RemoveNode(xnEnvironment, "Camera", False)
 
+                m_fltDistanceUnits = Util.ConvertDistanceUnits(m_xnProjectXml.GetSingleNodeValue(xnEnvironment, "DistanceUnits"))
+
                 Dim xnOrganisms As XmlNode = m_xnProjectXml.GetNode(xnEnvironment, "Organisms")
                 For Each xnNode As XmlNode In xnOrganisms.ChildNodes
                     ModifyOrganism(xnNode)
@@ -163,17 +166,29 @@ Namespace DataObjects
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "IsCollisionObject", "True")
 
                 m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
-                m_xnProjectXml.RemoveNode(xnRigidBody, "OrientationMatrix", False)
-                m_xnProjectXml.RemoveNode(xnRigidBody, "TranslationMatrix", False)
-                m_xnProjectXml.RemoveNode(xnRigidBody, "CombinedTransformationMatrix", False)
                 m_xnProjectXml.RemoveNode(xnRigidBody, "Direction", False)
                 m_xnProjectXml.RemoveNode(xnRigidBody, "CenterOfMass", False)
 
-                m_xnProjectXml.RemoveNode(xnRigidBody, "Rotation", False)
                 m_xnProjectXml.RemoveNode(xnRigidBody, "RelativePosition", False)
+                m_xnProjectXml.RemoveNode(xnRigidBody, "LocalPosition", False)
+                m_xnProjectXml.RemoveNode(xnRigidBody, "Rotation", False)
+                m_xnProjectXml.RemoveNode(xnRigidBody, "LocalRotation", False)
 
-                m_xnProjectXml.ConvertScaledNumberToScaledVector(xnRigidBody, "LocalPosition", "LocalPosition", 1, 1, -1)
-                m_xnProjectXml.ConvertScaledNumberToScaledVector(xnRigidBody, "LocalRotation", "Rotation", Util.RadiansToDegreesRatio, Util.RadiansToDegreesRatio, Util.RadiansToDegreesRatio)
+                Dim aryOrientation(,) As Single = m_xnProjectXml.LoadOrientationPositionMatrix(xnRigidBody, "TranslationMatrix", "OrientationMatrix")
+                Dim fltXPos As Single = 0
+                Dim fltYPos As Single = 0
+                Dim fltZPos As Single = 0
+                Dim fltXRot As Single = 0
+                Dim fltYRot As Single = 0
+                Dim fltZRot As Single = 0
+                m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation, fltXPos, fltYPos, fltZPos, fltXRot, fltYRot, fltZRot, False)
+
+                m_xnProjectXml.AddScaledVector(xnRigidBody, "LocalPosition", fltXPos * m_fltDistanceUnits, fltYPos * m_fltDistanceUnits, fltZPos * m_fltDistanceUnits)
+                m_xnProjectXml.AddScaledVector(xnRigidBody, "Rotation", Util.RadiansToDegrees(fltXRot), Util.RadiansToDegrees(fltYRot), Util.RadiansToDegrees(fltZRot))
+
+                m_xnProjectXml.RemoveNode(xnRigidBody, "OrientationMatrix", False)
+                m_xnProjectXml.RemoveNode(xnRigidBody, "TranslationMatrix", False)
+                m_xnProjectXml.RemoveNode(xnRigidBody, "CombinedTransformationMatrix", False)
 
                 Dim strType As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "Type").ToUpper
 
@@ -280,6 +295,10 @@ Namespace DataObjects
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Box")
                 m_xnProjectXml.ReadVector(xnRigidBody, "CollisionBoxSize", dblX, dblY, dblZ)
 
+                dblX = dblX * m_fltDistanceUnits
+                dblY = dblY * m_fltDistanceUnits
+                dblZ = dblZ * m_fltDistanceUnits
+
                 m_xnProjectXml.RemoveNode(xnRigidBody, "CollisionBoxSize", False)
                 m_xnProjectXml.RemoveNode(xnRigidBody, "GraphicsBoxSize", False)
 
@@ -351,29 +370,44 @@ Namespace DataObjects
 
                 m_xnProjectXml.RemoveNode(xnJoint, "PartType")
                 m_xnProjectXml.RemoveNode(xnJoint, "Rotation", False)
+                m_xnProjectXml.RemoveNode(xnJoint, "RelativePosition", False)
+                m_xnProjectXml.RemoveNode(xnJoint, "RotationAxis", False)
 
-                m_xnProjectXml.ConvertScaledNumberToScaledVector(xnJoint, "RelativePosition", "LocalPosition", 1, 1, -1)
-                'm_xnProjectXml.ConvertJointRotation(xnJoint, "Rotation", "Rotation", _
-                '                                    Util.RadiansToDegreesRatio, -Util.RadiansToDegreesRatio, Util.RadiansToDegreesRatio, _
-                '                                    90, 0, -90)
-                'm_xnProjectXml.ConvertJointRotation(xnJoint, "RotationAxis", "Rotation", 180, 180, -180, 90, 0, 90)
-
-                Dim aryOrientation(,) As Single = m_xnProjectXml.LoadMatrix(xnJoint, "OrientationMatrix")
+                Dim aryOrientation(,) As Single = m_xnProjectXml.LoadOrientationPositionMatrix(xnJoint, "TranslationMatrix", "OrientationMatrix")
                 Dim fltXPos As Single = 0
                 Dim fltYPos As Single = 0
                 Dim fltZPos As Single = 0
                 Dim fltXRot As Single = 0
                 Dim fltYRot As Single = 0
                 Dim fltZRot As Single = 0
-                m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation, fltXPos, fltYPos, fltZPos, fltXRot, fltYRot, fltZRot)
+                m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation, fltXPos, fltYPos, fltZPos, fltXRot, fltYRot, fltZRot, True)
 
-                'm_xnProjectXml.AddScaledVector(xnJoint, "Position", fltXPos, fltYPos, fltZPos)
+                m_xnProjectXml.AddScaledVector(xnJoint, "LocalPosition", fltXPos * m_fltDistanceUnits, fltYPos * m_fltDistanceUnits, fltZPos * m_fltDistanceUnits)
                 m_xnProjectXml.AddScaledVector(xnJoint, "Rotation", Util.RadiansToDegrees(fltXRot), Util.RadiansToDegrees(fltYRot), Util.RadiansToDegrees(fltZRot))
-
-                m_xnProjectXml.AddScaledNumber(xnJoint, "Size", 0.2, "None", 0.2)
 
                 m_xnProjectXml.RemoveNode(xnJoint, "OrientationMatrix", False)
                 m_xnProjectXml.RemoveNode(xnJoint, "TranslationMatrix", False)
+                m_xnProjectXml.RemoveNode(xnJoint, "CombinedTransformationMatrix", False)
+
+                'm_xnProjectXml.ConvertScaledNumberToScaledVector(xnJoint, "RelativePosition", "LocalPosition", 1, 1, -1)
+                ''m_xnProjectXml.ConvertJointRotation(xnJoint, "Rotation", "Rotation", _
+                ''                                    Util.RadiansToDegreesRatio, -Util.RadiansToDegreesRatio, Util.RadiansToDegreesRatio, _
+                ''                                    90, 0, -90)
+                ''m_xnProjectXml.ConvertJointRotation(xnJoint, "RotationAxis", "Rotation", 180, 180, -180, 90, 0, 90)
+
+                'Dim aryOrientation(,) As Single = m_xnProjectXml.LoadMatrix(xnJoint, "OrientationMatrix")
+                'Dim fltXPos As Single = 0
+                'Dim fltYPos As Single = 0
+                'Dim fltZPos As Single = 0
+                'Dim fltXRot As Single = 0
+                'Dim fltYRot As Single = 0
+                'Dim fltZRot As Single = 0
+                'm_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation, fltXPos, fltYPos, fltZPos, fltXRot, fltYRot, fltZRot, "")
+
+                ''m_xnProjectXml.AddScaledVector(xnJoint, "Position", fltXPos, fltYPos, fltZPos)
+                'm_xnProjectXml.AddScaledVector(xnJoint, "Rotation", Util.RadiansToDegrees(fltXRot), Util.RadiansToDegrees(fltYRot), Util.RadiansToDegrees(fltZRot))
+
+                m_xnProjectXml.AddScaledNumber(xnJoint, "Size", 0.2 * m_fltDistanceUnits, "None", 0.2 * m_fltDistanceUnits)
 
                 Dim strType As String = m_xnProjectXml.GetSingleNodeValue(xnJoint, "Type").ToUpper
 

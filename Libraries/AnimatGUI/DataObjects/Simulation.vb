@@ -313,15 +313,13 @@ Namespace DataObjects
 
             'If we have a partype listed then it gives the complete assemblyname and classname that we 
             'can use to load with the Util.LoadClass function. Otherwise load things the old, non-modular way.
-            If oXml.FindChildElement("PartType", False) Then
-                Dim strClass As String = oXml.GetChildString("PartType")
-                Dim aryClassName() As String = Split(strClass, ".")
-                Dim strAssembly As String = aryClassName(0)
-                oXml.OutOfElem()
+            Dim strClass As String = oXml.GetChildString("PartType")
+            Dim aryClassName() As String = Split(strClass, ".")
+            Dim strAssembly As String = aryClassName(0)
+            oXml.OutOfElem()
 
-                Dim doObject As Framework.DataObject = DirectCast(Util.LoadClass(strAssembly, strClass, doParent), Framework.DataObject)
-                Return doObject
-            End If
+            Dim doObject As Framework.DataObject = DirectCast(Util.LoadClass(strAssembly, strClass, doParent), Framework.DataObject)
+            Return doObject
 
         End Function
 

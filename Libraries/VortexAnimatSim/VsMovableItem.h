@@ -113,6 +113,7 @@ namespace VortexAnimatSim
 			virtual void Physics_OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm);
 			virtual void Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos) {};
 			virtual BOOL Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);
+			virtual void Physics_LoadTransformMatrix(CStdXml &oXml);
 
 			virtual void SetTexture(string strTexture);
 			virtual void SetCulling();
@@ -135,6 +136,7 @@ namespace VortexAnimatSim
 			virtual void BuildLocalMatrix();
 			virtual void BuildLocalMatrix(CStdFPoint localPos, CStdFPoint localRot, string strName);
 			virtual void WorldToBodyCoords(VxReal3 vWorldPos, StdVector3 &vLocalPos);
+
 		};
 
 	}			// Environment

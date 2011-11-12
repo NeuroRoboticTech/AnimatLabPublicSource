@@ -406,6 +406,9 @@
 #define Al_Err_lMaterialPairIDNotFound -4058
 #define Al_Err_strMaterialPairIDNotFound "The material pair ID was not found."
 
+#define Al_Err_lMatrixElementCountInvalid -4059
+#define Al_Err_strMatrixElementCountInvalid "The element count for the loaded transformation matrix is incorrect."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 #define PI 3.14159

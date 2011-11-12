@@ -263,31 +263,26 @@ Namespace Framework
             Next
 
             Return aryMatrixD
-            'string str = oXml.GetChildString(strName);
-            'string[] strMtxElem = str.Split(',');
+        
+        End Function
 
-            'Matrix mtx = new Matrix();
-            'mtx.M11 = float.Parse(strMtxElem[0]);
-            'mtx.M12 = float.Parse(strMtxElem[1]);
-            'mtx.M13 = float.Parse(strMtxElem[2]);
-            'mtx.M14 = float.Parse(strMtxElem[3]);
+        Public Overridable Function LoadOrientationPositionMatrix(ByVal xnRootNode As XmlNode, ByVal strTranslationNode As String, ByVal strOrientationNode As String) As Single(,)
+            Dim aryTranslation(,) As Single = LoadMatrix(xnRootNode, strTranslationNode)
+            Dim aryOrientation(,) As Single = LoadMatrix(xnRootNode, strOrientationNode)
 
-            'mtx.M21 = float.Parse(strMtxElem[4]);
-            'mtx.M22 = float.Parse(strMtxElem[5]);
-            'mtx.M23 = float.Parse(strMtxElem[6]);
-            'mtx.M24 = float.Parse(strMtxElem[7]);
+            Dim aryCombined(3, 3) As Single
 
-            'mtx.M31 = float.Parse(strMtxElem[8]);
-            'mtx.M32 = float.Parse(strMtxElem[9]);
-            'mtx.M33 = float.Parse(strMtxElem[10]);
-            'mtx.M34 = float.Parse(strMtxElem[11]);
+            For iRow As Integer = 0 To 3
+                For iCol As Integer = 0 To 3
+                    If iRow > 2 OrElse iCol > 2 Then
+                        aryCombined(iRow, iCol) = aryTranslation(iRow, iCol)
+                    Else
+                        aryCombined(iRow, iCol) = aryOrientation(iRow, iCol)
+                    End If
+                Next
+            Next
 
-            'mtx.M41 = float.Parse(strMtxElem[12]);
-            'mtx.M42 = float.Parse(strMtxElem[13]);
-            'mtx.M43 = float.Parse(strMtxElem[14]);
-            'mtx.M44 = float.Parse(strMtxElem[15]);
-
-            'return mtx;
+            Return aryCombined
         End Function
 
         'Public Overridable Sub ReplaceModuleNames(ByVal xnRootNode As XmlNode, ByVal strNode As String)

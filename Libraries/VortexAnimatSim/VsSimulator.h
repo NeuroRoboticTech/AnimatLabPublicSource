@@ -85,7 +85,7 @@ namespace VortexAnimatSim
 		
 #pragma region HelperMethods
 
-		virtual void GetPositionAndRotationFromD3DMatrix(float (&aryMatrix)[4][4], CStdFPoint &vPos, CStdFPoint &vRot);
+		virtual void GetPositionAndRotationFromD3DMatrix(float (&aryMatrix)[4][4], CStdFPoint &vPos, CStdFPoint &vRot, bool bIsJoint);
 
 #pragma endregion
 

@@ -1459,6 +1459,21 @@ Namespace Framework
             Return rbPart
         End Function
 
+        Public Shared Function ConvertDistanceUnits(ByVal strUnits As String) As Single
+
+            strUnits = strUnits.ToUpper
+
+            If strUnits = "KILOMETERS" OrElse strUnits = "KILOMETER" Then Return 1000
+            If strUnits = "CENTAMETERS" OrElse strUnits = "CENTAMETER" Then Return 100
+            If strUnits = "DECAMETERS" OrElse strUnits = "DECAMETER" Then Return 10
+            If strUnits = "METERS" OrElse strUnits = "METER" Then Return 1
+            If strUnits = "DECIMETERS" OrElse strUnits = "DECIMETER" Then Return 0.1
+            If strUnits = "CENTIMETERS" OrElse strUnits = "CENTIMETER" Then Return 0.01
+            If strUnits = "MILLIMETERS" OrElse strUnits = "MILLIMETER" Then Return 0.001
+
+            Throw New System.Exception("Invalid distance units: " & strUnits)
+        End Function
+
     End Class
 
 End Namespace

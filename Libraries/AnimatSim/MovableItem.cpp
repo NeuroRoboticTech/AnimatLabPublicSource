@@ -1333,8 +1333,13 @@ void MovableItem::Load(CStdXml &oXml)
 {
 	oXml.IntoElem();  //Into Element
 	
-	LoadPosition(oXml);
-	LoadRotation(oXml);
+	if(oXml.FindChildElement("TransformMatrix", false) && m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->Physics_LoadTransformMatrix(oXml);
+	else
+	{
+		LoadPosition(oXml);
+		LoadRotation(oXml);
+	}
 
 	IsVisible(oXml.GetChildBool("IsVisible", m_bIsVisible));
 	GraphicsAlpha(oXml.GetChildFloat("GraphicsAlpha", m_fltGraphicsAlpha));
