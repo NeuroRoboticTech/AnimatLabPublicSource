@@ -77,8 +77,7 @@ Public Interface ISimulatorInterface
     Sub ReInitializeSimulation()
     Function RetrieveChartData(ByVal sChartKey As String, ByRef aryTimeData As Single(,), ByRef aryData As Single(,)) As Int32
     Sub GenerateCollisionMeshFile(ByVal sOriginalMeshFile As String, ByVal sCollisionMeshFile As String)
-    Sub GetPositionAndRotationFromD3DMatrix(ByVal aryMatrix(,) As Single, ByRef fltPosX As Single, ByRef fltPosY As Single, ByRef fltPosZ As Single, _
-                                         ByRef fltRotX As Single, ByRef fltRotY As Single, ByRef fltRotZ As Single, ByVal bIsJoint As Boolean)
+    Function GetPositionAndRotationFromD3DMatrix(ByVal aryTransform(,) As Double, ByVal aryConversion(,) As Double) As PositionRotationInfo
 
 #End Region
 

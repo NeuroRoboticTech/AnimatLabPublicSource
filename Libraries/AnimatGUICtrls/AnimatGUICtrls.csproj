@@ -120,6 +120,7 @@
     <Compile Include="Forms\Spalsh.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MatrixLibrary\cMatrixLib.cs" />
     <Compile Include="Network\Constants.cs" />
     <Compile Include="Network\EventArgs\InternetConnectionStateType.cs" />
     <Compile Include="Network\EventArgs\PingCompletedEventArgs.cs" />

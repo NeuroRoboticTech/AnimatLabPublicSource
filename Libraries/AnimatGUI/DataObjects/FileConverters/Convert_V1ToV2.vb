@@ -174,21 +174,14 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnRigidBody, "Rotation", False)
                 m_xnProjectXml.RemoveNode(xnRigidBody, "LocalRotation", False)
 
-                Dim aryOrientation(,) As Single = m_xnProjectXml.LoadOrientationPositionMatrix(xnRigidBody, "TranslationMatrix", "OrientationMatrix")
-                Dim fltXPos As Single = 0
-                Dim fltYPos As Single = 0
-                Dim fltZPos As Single = 0
-                Dim fltXRot As Single = 0
-                Dim fltYRot As Single = 0
-                Dim fltZRot As Single = 0
-                m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation, fltXPos, fltYPos, fltZPos, fltXRot, fltYRot, fltZRot, False)
+                Dim aryOrientation As AnimatGuiCtrls.MatrixLibrary.Matrix = m_xnProjectXml.LoadOrientationPositionMatrix(xnRigidBody, "TranslationMatrix", "OrientationMatrix")
+                Dim aryIdentity As New AnimatGuiCtrls.MatrixLibrary.Matrix(AnimatGuiCtrls.MatrixLibrary.Matrix.Identity(4))
 
-                m_xnProjectXml.AddScaledVector(xnRigidBody, "LocalPosition", fltXPos * m_fltDistanceUnits, fltYPos * m_fltDistanceUnits, fltZPos * m_fltDistanceUnits)
-                m_xnProjectXml.AddScaledVector(xnRigidBody, "Rotation", Util.RadiansToDegrees(fltXRot), Util.RadiansToDegrees(fltYRot), Util.RadiansToDegrees(fltZRot))
+                Dim oPosRot As ManagedAnimatInterfaces.PositionRotationInfo
+                oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation.toArray(), aryIdentity.toArray())
 
-                m_xnProjectXml.RemoveNode(xnRigidBody, "OrientationMatrix", False)
-                m_xnProjectXml.RemoveNode(xnRigidBody, "TranslationMatrix", False)
-                m_xnProjectXml.RemoveNode(xnRigidBody, "CombinedTransformationMatrix", False)
+                m_xnProjectXml.AddScaledVector(xnRigidBody, "LocalPosition", oPosRot.m_fltXPos * m_fltDistanceUnits, oPosRot.m_fltYPos * m_fltDistanceUnits, oPosRot.m_fltZPos * m_fltDistanceUnits)
+                m_xnProjectXml.AddScaledVector(xnRigidBody, "Rotation", Util.RadiansToDegrees(oPosRot.m_fltXRot), Util.RadiansToDegrees(oPosRot.m_fltYRot), Util.RadiansToDegrees(oPosRot.m_fltZRot))
 
                 Dim strType As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "Type").ToUpper
 
@@ -232,6 +225,10 @@ Namespace DataObjects
                         ModifyRigidBody(xnChild)
                     Next
                 End If
+
+                m_xnProjectXml.RemoveNode(xnRigidBody, "OrientationMatrix", False)
+                m_xnProjectXml.RemoveNode(xnRigidBody, "TranslationMatrix", False)
+                m_xnProjectXml.RemoveNode(xnRigidBody, "CombinedTransformationMatrix", False)
 
             End Sub
 
@@ -313,6 +310,38 @@ Namespace DataObjects
             End Sub
 
             Protected Overridable Sub ModifyRigidBodyCone(ByVal xnRigidBody As XmlNode)
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Cone")
+
+                Dim fltLowerRadius As Single = CSng(m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "CollisionLowerRadius")) * m_fltDistanceUnits
+                Dim fltUpperRadius As Single = CSng(m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "CollisionUpperRadius")) * m_fltDistanceUnits
+                Dim fltHeight As Single = CSng(m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "CollisionHeight")) * m_fltDistanceUnits
+
+                m_xnProjectXml.RemoveNode(xnRigidBody, "LowerRadius")
+                m_xnProjectXml.RemoveNode(xnRigidBody, "UpperRadius")
+                m_xnProjectXml.RemoveNode(xnRigidBody, "Height")
+                m_xnProjectXml.RemoveNode(xnRigidBody, "CollisionLowerRadius")
+                m_xnProjectXml.RemoveNode(xnRigidBody, "CollisionUpperRadius")
+                m_xnProjectXml.RemoveNode(xnRigidBody, "CollisionHeight")
+
+                m_xnProjectXml.AddScaledNumber(xnRigidBody, "LowerRadius", fltLowerRadius, "None", fltLowerRadius)
+                m_xnProjectXml.AddScaledNumber(xnRigidBody, "UpperRadius", fltUpperRadius, "None", fltUpperRadius)
+                m_xnProjectXml.AddScaledNumber(xnRigidBody, "Height", fltHeight, "None", fltHeight)
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "Sides", "30")
+
+                'Have to redo the rotation on the cone to make it match up.
+                m_xnProjectXml.RemoveNode(xnRigidBody, "LocalPosition", False)
+                m_xnProjectXml.RemoveNode(xnRigidBody, "Rotation", False)
+
+                Dim aryOrientation As AnimatGuiCtrls.MatrixLibrary.Matrix = m_xnProjectXml.LoadOrientationPositionMatrix(xnRigidBody, "TranslationMatrix", "OrientationMatrix")
+                Dim aryConversion As AnimatGuiCtrls.MatrixLibrary.Matrix = MakeConeConversionMatrix()
+                Dim aryTransform As AnimatGuiCtrls.MatrixLibrary.Matrix = AnimatGuiCtrls.MatrixLibrary.Matrix.Multiply(aryConversion, aryOrientation)
+
+                Dim oPosRot As ManagedAnimatInterfaces.PositionRotationInfo
+                oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation.toArray, aryConversion.toArray)
+
+                m_xnProjectXml.AddScaledVector(xnRigidBody, "LocalPosition", oPosRot.m_fltXPos * m_fltDistanceUnits, oPosRot.m_fltYPos * m_fltDistanceUnits, oPosRot.m_fltZPos * m_fltDistanceUnits)
+                m_xnProjectXml.AddScaledVector(xnRigidBody, "Rotation", Util.RadiansToDegrees(oPosRot.m_fltXRot), Util.RadiansToDegrees(oPosRot.m_fltYRot), Util.RadiansToDegrees(oPosRot.m_fltZRot))
+
 
             End Sub
 
@@ -322,6 +351,10 @@ Namespace DataObjects
 
             Protected Overridable Sub ModifyRigidBodyAttachment(ByVal xnRigidBody As XmlNode)
 
+                ModifyRigidBodySphere(xnRigidBody)
+
+                m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Attachment")
             End Sub
 
             Protected Overridable Sub ModifyRigidBodyMuscle(ByVal xnRigidBody As XmlNode)
@@ -345,6 +378,16 @@ Namespace DataObjects
             End Sub
 
             Protected Overridable Sub ModifyRigidBodySphere(ByVal xnRigidBody As XmlNode)
+
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Sphere")
+
+                Dim fltRadius As Single = CSng(m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "Radius")) * m_fltDistanceUnits
+
+                m_xnProjectXml.RemoveNode(xnRigidBody, "Radius", False)
+                m_xnProjectXml.AddScaledNumber(xnRigidBody, "Radius", fltRadius, "None", fltRadius)
+
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "LatitudeSegments", "20")
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "LongtitudeSegments", "20")
 
             End Sub
 
@@ -373,39 +416,20 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnJoint, "RelativePosition", False)
                 m_xnProjectXml.RemoveNode(xnJoint, "RotationAxis", False)
 
-                Dim aryOrientation(,) As Single = m_xnProjectXml.LoadOrientationPositionMatrix(xnJoint, "TranslationMatrix", "OrientationMatrix")
-                Dim fltXPos As Single = 0
-                Dim fltYPos As Single = 0
-                Dim fltZPos As Single = 0
-                Dim fltXRot As Single = 0
-                Dim fltYRot As Single = 0
-                Dim fltZRot As Single = 0
-                m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation, fltXPos, fltYPos, fltZPos, fltXRot, fltYRot, fltZRot, True)
+                Dim aryOrientation As AnimatGuiCtrls.MatrixLibrary.Matrix = m_xnProjectXml.LoadOrientationPositionMatrix(xnJoint, "TranslationMatrix", "OrientationMatrix")
+                Dim aryJointConv As AnimatGuiCtrls.MatrixLibrary.Matrix = MakeJointConversionMatrix()
+                Dim aryTransform As AnimatGuiCtrls.MatrixLibrary.Matrix = AnimatGuiCtrls.MatrixLibrary.Matrix.Multiply(aryJointConv, aryOrientation)
+                Dim aryData(,) As Double = aryTransform.toArray
 
-                m_xnProjectXml.AddScaledVector(xnJoint, "LocalPosition", fltXPos * m_fltDistanceUnits, fltYPos * m_fltDistanceUnits, fltZPos * m_fltDistanceUnits)
-                m_xnProjectXml.AddScaledVector(xnJoint, "Rotation", Util.RadiansToDegrees(fltXRot), Util.RadiansToDegrees(fltYRot), Util.RadiansToDegrees(fltZRot))
+                Dim oPosRot As ManagedAnimatInterfaces.PositionRotationInfo
+                oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation.toArray, aryJointConv.toArray)
+
+                m_xnProjectXml.AddScaledVector(xnJoint, "LocalPosition", oPosRot.m_fltXPos * m_fltDistanceUnits, oPosRot.m_fltYPos * m_fltDistanceUnits, oPosRot.m_fltZPos * m_fltDistanceUnits)
+                m_xnProjectXml.AddScaledVector(xnJoint, "Rotation", Util.RadiansToDegrees(oPosRot.m_fltXRot), Util.RadiansToDegrees(oPosRot.m_fltYRot), Util.RadiansToDegrees(oPosRot.m_fltZRot))
 
                 m_xnProjectXml.RemoveNode(xnJoint, "OrientationMatrix", False)
                 m_xnProjectXml.RemoveNode(xnJoint, "TranslationMatrix", False)
                 m_xnProjectXml.RemoveNode(xnJoint, "CombinedTransformationMatrix", False)
-
-                'm_xnProjectXml.ConvertScaledNumberToScaledVector(xnJoint, "RelativePosition", "LocalPosition", 1, 1, -1)
-                ''m_xnProjectXml.ConvertJointRotation(xnJoint, "Rotation", "Rotation", _
-                ''                                    Util.RadiansToDegreesRatio, -Util.RadiansToDegreesRatio, Util.RadiansToDegreesRatio, _
-                ''                                    90, 0, -90)
-                ''m_xnProjectXml.ConvertJointRotation(xnJoint, "RotationAxis", "Rotation", 180, 180, -180, 90, 0, 90)
-
-                'Dim aryOrientation(,) As Single = m_xnProjectXml.LoadMatrix(xnJoint, "OrientationMatrix")
-                'Dim fltXPos As Single = 0
-                'Dim fltYPos As Single = 0
-                'Dim fltZPos As Single = 0
-                'Dim fltXRot As Single = 0
-                'Dim fltYRot As Single = 0
-                'Dim fltZRot As Single = 0
-                'm_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation, fltXPos, fltYPos, fltZPos, fltXRot, fltYRot, fltZRot, "")
-
-                ''m_xnProjectXml.AddScaledVector(xnJoint, "Position", fltXPos, fltYPos, fltZPos)
-                'm_xnProjectXml.AddScaledVector(xnJoint, "Rotation", Util.RadiansToDegrees(fltXRot), Util.RadiansToDegrees(fltYRot), Util.RadiansToDegrees(fltZRot))
 
                 m_xnProjectXml.AddScaledNumber(xnJoint, "Size", 0.2 * m_fltDistanceUnits, "None", 0.2 * m_fltDistanceUnits)
 
@@ -500,6 +524,89 @@ Namespace DataObjects
             Protected Overridable Sub ModifyNervousSystem(ByVal xnOrganism As XmlNode)
 
             End Sub
+
+#End Region
+
+
+#Region "Helper Methods"
+
+            'Public Overridable Function MakeIdentityMatrix() As AnimatGuiCtrls.MatrixLibrary.Matrix
+            '    Dim aryIdentity(3, 3) As Single
+
+            '    aryIdentity(0, 0) = 1
+            '    aryIdentity(1, 1) = 1
+            '    aryIdentity(2, 2) = 1
+            '    aryIdentity(3, 3) = 1
+
+            '    Return aryIdentity
+            'End Function
+
+            Public Overridable Function MakeJointConversionMatrix() As AnimatGuiCtrls.MatrixLibrary.Matrix
+                Dim aryM(3, 3) As Double
+
+                aryM(0, 0) = -0.00020365317653499665
+                aryM(0, 1) = 0.00020365317231177792
+                aryM(0, 2) = 0.99999995852538359
+                aryM(0, 3) = 0
+
+                aryM(1, 0) = 0.99999997926269157
+                aryM(1, 1) = 0
+                aryM(1, 2) = 0.00020365317231177792
+                aryM(1, 3) = 0
+
+                aryM(2, 0) = 0
+                aryM(2, 1) = 0.99999997926269157
+                aryM(2, 2) = -0.00020365317653499665
+                aryM(2, 3) = 0
+
+                aryM(3, 0) = 0
+                aryM(3, 1) = 0
+                aryM(3, 2) = 0
+                aryM(3, 3) = 1
+
+                ' 	//osg::Matrix osgBase(-0.00020365317653499665f, 0.00020365317231177792f, 0.99999995852538359f,   0, 
+                '//					 0.99999997926269157f,     0,                       0.00020365317231177792, 0, 
+                '//					 0,                        0.99999997926269157,    -0.00020365317653499665, 0, 
+                '//					 0,                        0,                       0,                       1);
+
+                Dim aryRetVal As New AnimatGuiCtrls.MatrixLibrary.Matrix(aryM)
+
+                Return aryRetVal
+            End Function
+
+
+            Public Overridable Function MakeConeConversionMatrix() As AnimatGuiCtrls.MatrixLibrary.Matrix
+                Dim aryM(3, 3) As Double
+
+                aryM(0, 0) = 1
+                aryM(0, 1) = 0
+                aryM(0, 2) = 0
+                aryM(0, 3) = 0
+
+                aryM(1, 0) = 0
+                aryM(1, 1) = -0.00020365317653499665
+                aryM(1, 2) = -0.99999997926269157
+                aryM(1, 3) = 0
+
+                aryM(2, 0) = 0
+                aryM(2, 1) = 0.99999997926269157
+                aryM(2, 2) = -0.00020365317653499665
+                aryM(2, 3) = 0
+
+                aryM(3, 0) = 0
+                aryM(3, 1) = 0
+                aryM(3, 2) = 0
+                aryM(3, 3) = 1
+
+                '1, 0, 0, 0
+                '0, -0.00020365317653499665, -0.99999997926269157, 0
+                '0, 0.99999997926269157, -0.00020365317653499665, 0
+                '0, 0, 0, 1
+
+                Dim aryRetVal As New AnimatGuiCtrls.MatrixLibrary.Matrix(aryM)
+
+                Return aryRetVal
+            End Function
 
 #End Region
 

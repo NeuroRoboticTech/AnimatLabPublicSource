@@ -84,6 +84,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="PositionRotationInfo.vb" />
     <Compile Include="SimulatorInterfaceMock.vb" />
     <Compile Include="StdXmlMock.vb" />
   </ItemGroup>

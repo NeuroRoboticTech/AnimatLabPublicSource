@@ -1071,9 +1071,7 @@ namespace AnimatGUI
 			}
 
 
-			void SimulatorInterface::GetPositionAndRotationFromD3DMatrix(cli::array<System::Single, 2> ^aryMatrix, 
-														  float %fltXPos, float %fltYPos, float %fltZPos, 
-														  float %fltXRot, float %fltYRot, float %fltZRot, bool bIsJoint)
+			ManagedAnimatInterfaces::PositionRotationInfo ^SimulatorInterface::GetPositionAndRotationFromD3DMatrix(cli::array<System::Double, 2> ^aryTransform, cli::array<System::Double, 2> ^aryConversion)
 			{
 
 				try
@@ -1081,26 +1079,22 @@ namespace AnimatGUI
 					if(!m_lpSim)
 						throw gcnew System::Exception("Simulation has not been defined.");
 
-					float fPosX=0, fPosY=0, fPosZ=0;
-					float fRotX=0, fRotY=0, fRotZ=0;
 					float aM[4][4];
+					float aC[4][4];
 
 					//Copy and transpose the matrix
 					for(int iRow=0; iRow<4; iRow++)
 						for(int iCol=0; iCol<4; iCol++)
-							aM[iRow][iCol] = aryMatrix[iRow, iCol];
-							//aM[iRow][iCol] = aryMatrix[iCol, iRow];
+						{
+							aM[iRow][iCol] = aryTransform[iRow, iCol];
+							aC[iRow][iCol] = aryConversion[iRow, iCol];
+						}
 
 					CStdFPoint vPos, vRot;
-					m_lpSim->GetPositionAndRotationFromD3DMatrix(aM, vPos, vRot, bIsJoint);
+					m_lpSim->GetPositionAndRotationFromD3DMatrix(aM, aC, vPos, vRot);
 
-					fltXPos = vPos.x;
-					fltYPos = vPos.y;
-					fltZPos = vPos.z;
-
-					fltXRot = vRot.x;
-					fltYRot = vRot.y;
-					fltZRot = vRot.z;
+					ManagedAnimatInterfaces::PositionRotationInfo ^oPos = gcnew ManagedAnimatInterfaces::PositionRotationInfo(vPos.x, vPos.y, vPos.z, vRot.x, vRot.y, vRot.z);
+					return oPos;
 				}
 				catch(CStdErrorInfo oError)
 				{

@@ -180,9 +180,9 @@ Public Class SimulatorInterfaceMock
 
     End Sub
 
-    Public Sub GetPositionAndRotationFromD3DMatrix(ByVal aryMatrix(,) As Single, ByRef fltPosX As Single, ByRef fltPosY As Single, ByRef fltPosZ As Single, _
-                                         ByRef fltRotX As Single, ByRef fltRotY As Single, ByRef fltRotZ As Single, ByVal bIsJoint As Boolean) Implements ISimulatorInterface.GetPositionAndRotationFromD3DMatrix
-    End Sub
+    Public Function GetPositionAndRotationFromD3DMatrix(ByVal aryTransform(,) As Double, ByVal aryConversion(,) As Double) As PositionRotationInfo Implements ISimulatorInterface.GetPositionAndRotationFromD3DMatrix
+        Return Nothing
+    End Function
 
     Public Sub CreateStandAloneSim(sModuleName As String, sExePath As String) Implements ISimulatorInterface.CreateStandAloneSim
 

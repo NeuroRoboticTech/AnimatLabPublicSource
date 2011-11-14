@@ -249,38 +249,42 @@ Namespace Framework
             Return AddScaledVector(xnRootNode, strNewName, dblX, dblY, dblZ)
         End Function
 
-        Public Overridable Function LoadMatrix(ByVal xnRootNode As XmlNode, ByVal strNode As String) As Single(,)
+        Public Overridable Function LoadMatrix(ByVal xnRootNode As XmlNode, ByVal strNode As String) As AnimatGuiCtrls.MatrixLibrary.Matrix
             Dim strMatrix As String = GetSingleNodeValue(xnRootNode, strNode)
             Dim aryMatrixS As String() = Split(strMatrix, ",")
-            Dim aryMatrixD(3, 3) As Single
+            Dim aryMatrixD(3, 3) As Double
 
             Dim iIndex As Integer = 0
             For iRow As Integer = 0 To 3
                 For iCol As Integer = 0 To 3
-                    aryMatrixD(iRow, iCol) = CSng(aryMatrixS(iIndex))
+                    aryMatrixD(iRow, iCol) = CDbl(aryMatrixS(iIndex))
                     iIndex = iIndex + 1
                 Next
             Next
 
-            Return aryMatrixD
-        
+            Dim aryM As New AnimatGuiCtrls.MatrixLibrary.Matrix(aryMatrixD)
+
+            Return aryM
+
         End Function
 
-        Public Overridable Function LoadOrientationPositionMatrix(ByVal xnRootNode As XmlNode, ByVal strTranslationNode As String, ByVal strOrientationNode As String) As Single(,)
-            Dim aryTranslation(,) As Single = LoadMatrix(xnRootNode, strTranslationNode)
-            Dim aryOrientation(,) As Single = LoadMatrix(xnRootNode, strOrientationNode)
+        Public Overridable Function LoadOrientationPositionMatrix(ByVal xnRootNode As XmlNode, ByVal strTranslationNode As String, ByVal strOrientationNode As String) As AnimatGuiCtrls.MatrixLibrary.Matrix
+            Dim aryTranslation As AnimatGuiCtrls.MatrixLibrary.Matrix = LoadMatrix(xnRootNode, strTranslationNode)
+            Dim aryOrientation As AnimatGuiCtrls.MatrixLibrary.Matrix = LoadMatrix(xnRootNode, strOrientationNode)
 
-            Dim aryCombined(3, 3) As Single
+            Dim aryCombined As AnimatGuiCtrls.MatrixLibrary.Matrix = AnimatGuiCtrls.MatrixLibrary.Matrix.Add(aryTranslation, aryOrientation)
 
-            For iRow As Integer = 0 To 3
-                For iCol As Integer = 0 To 3
-                    If iRow > 2 OrElse iCol > 2 Then
-                        aryCombined(iRow, iCol) = aryTranslation(iRow, iCol)
-                    Else
-                        aryCombined(iRow, iCol) = aryOrientation(iRow, iCol)
-                    End If
-                Next
-            Next
+            'Dim aryCombined(3, 3) As Single
+
+            'For iRow As Integer = 0 To 3
+            '    For iCol As Integer = 0 To 3
+            '        If iRow > 2 OrElse iCol > 2 Then
+            '            aryCombined(iRow, iCol) = aryTranslation(iRow, iCol)
+            '        Else
+            '            aryCombined(iRow, iCol) = aryOrientation(iRow, iCol)
+            '        End If
+            '    Next
+            'Next
 
             Return aryCombined
         End Function

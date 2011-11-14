@@ -370,24 +370,23 @@ void VsSimulator::GenerateCollisionMeshFile(string strOriginalMeshFile, string s
 //	return ncv.MinVertexDistance();
 //}
 
-void VsSimulator::GetPositionAndRotationFromD3DMatrix(float (&aryMatrix)[4][4], CStdFPoint &vPos, CStdFPoint &vRot, bool bIsJoint)
+//void VsSimulator::GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4], float (&aryConversion)[4][4], CStdFPoint &vPos, CStdFPoint &vRot)
+void VsSimulator::GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4], float (&aryConversion)[4][4], CStdFPoint &vPos, CStdFPoint &vRot)
 {
-	osg::Matrix osgBase(-0.00020365317653499665f, 0.00020365317231177792f, 0.99999995852538359f,   0, 
-						 0.99999997926269157f,     0,                       0.00020365317231177792, 0, 
-						 0,                        0.99999997926269157,    -0.00020365317653499665, 0, 
-						 0,                        0,                       0,                       1);
+	osg::Matrix osgMT(aryTransform[0][0], aryTransform[0][1], aryTransform[0][2], aryTransform[0][3], 
+					  aryTransform[1][0], aryTransform[1][1], aryTransform[1][2], aryTransform[1][3], 
+					  aryTransform[2][0], aryTransform[2][1], aryTransform[2][2], aryTransform[2][3], 
+					  aryTransform[3][0], aryTransform[3][1], aryTransform[3][2], aryTransform[3][3]);
 
-	osg::Matrix osgMT(aryMatrix[0][0], aryMatrix[0][1], aryMatrix[0][2], aryMatrix[0][3], 
-					  aryMatrix[1][0], aryMatrix[1][1], aryMatrix[1][2], aryMatrix[1][3], 
-					  aryMatrix[2][0], aryMatrix[2][1], aryMatrix[2][2], aryMatrix[2][3], 
-					  aryMatrix[3][0], aryMatrix[3][1], aryMatrix[3][2], aryMatrix[3][3]);
+	osg::Matrix osgConv(aryConversion[0][0], aryConversion[0][1], aryConversion[0][2], aryConversion[0][3], 
+					    aryConversion[1][0], aryConversion[1][1], aryConversion[1][2], aryConversion[1][3], 
+					    aryConversion[2][0], aryConversion[2][1], aryConversion[2][2], aryConversion[2][3], 
+					    aryConversion[3][0], aryConversion[3][1], aryConversion[3][2], aryConversion[3][3]);
 
 	osg::Matrix osgFinal;
 	
-	if(bIsJoint)
-		osgFinal = osgBase * osgMT;
-	else
-		osgFinal = osgMT; 
+	//osgFinal = osgMT;
+	osgFinal = osgConv * osgMT;
 
 	//Lets get the current world coordinates for this body part and then recalculate the 
 	//new local position for the part and then finally reset its new local position.
