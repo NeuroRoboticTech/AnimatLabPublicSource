@@ -93,11 +93,11 @@ Namespace Framework
             Return xnProjectNode
         End Function
 
-        Public Overridable Function ApppendNode(ByVal xnNewRoot As XmlNode, ByVal OldNode As XmlNode, ByVal strNode As String, Optional ByVal aryReplaceText As Hashtable = Nothing) As XmlNode
-            Return ApppendNode(xnNewRoot, OldNode.InnerXml, strNode, aryReplaceText)
+        Public Overridable Function AppendNode(ByVal xnNewRoot As XmlNode, ByVal OldNode As XmlNode, ByVal strNode As String, Optional ByVal aryReplaceText As Hashtable = Nothing) As XmlNode
+            Return AppendNode(xnNewRoot, OldNode.InnerXml, strNode, aryReplaceText)
         End Function
 
-        Public Overridable Function ApppendNode(ByVal xnNewRoot As XmlNode, ByVal strNodeXml As String, ByVal strNode As String, Optional ByVal aryReplaceText As Hashtable = Nothing) As XmlNode
+        Public Overridable Function AppendNode(ByVal xnNewRoot As XmlNode, ByVal strNodeXml As String, ByVal strNode As String, Optional ByVal aryReplaceText As Hashtable = Nothing) As XmlNode
 
             If Not aryReplaceText Is Nothing Then
                 For Each de As DictionaryEntry In aryReplaceText

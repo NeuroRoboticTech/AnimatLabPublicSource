@@ -72,11 +72,13 @@ Namespace DataObjects
                 xnAST_File.Load(strAsimFile)
 
                 Dim xnSimNodeOld As XmlNode = xnAST_File.GetRootNode("Simulation")
-                Dim xnSimNode As XmlNode = m_xnProjectXml.ApppendNode(xnProject, xnSimNodeOld, "Simulation")
+                Dim xnSimNode As XmlNode = m_xnProjectXml.AppendNode(xnProject, xnSimNodeOld, "Simulation")
 
                 m_xnProjectXml.RemoveNode(xnSimNode, "APIFile", False)
 
                 ModifySimNode(xnSimNode)
+                ModifyStimuli(xnProject, xnSimNode)
+
             End Sub
 
             Protected Overridable Sub ModifySimNode(ByVal xnSimulation As XmlNode)
@@ -150,10 +152,10 @@ Namespace DataObjects
 
                 Dim xnRigidBodyNodeOld As XmlNode = xnASTL_File.GetNode(xnStruct, "RigidBody", False)
                 If Not xnRigidBodyNodeOld Is Nothing Then
-                    Dim xnRigidBody As XmlNode = m_xnProjectXml.ApppendNode(xnStructure, xnRigidBodyNodeOld, "RigidBody")
+                    Dim xnRigidBody As XmlNode = m_xnProjectXml.AppendNode(xnStructure, xnRigidBodyNodeOld, "RigidBody")
 
                     Dim xnCollisionsOld As XmlNode = xnASTL_File.GetNode(xnStruct, "CollisionExclusionPairs")
-                    Dim xnCollisions As XmlNode = m_xnProjectXml.ApppendNode(xnStructure, xnCollisionsOld, "CollisionExclusionPairs")
+                    Dim xnCollisions As XmlNode = m_xnProjectXml.AppendNode(xnStructure, xnCollisionsOld, "CollisionExclusionPairs")
 
                     ModifyRigidBody(xnRigidBody, m_aryIdentity)
                 End If
@@ -624,7 +626,7 @@ Namespace DataObjects
                 Dim aryReplaceText As New Hashtable
                 aryReplaceText.Add("RealisticNeuralNetTools", "IntegrateFireGUI")
 
-                Dim xnNewNeuralMod As XmlNode = m_xnProjectXml.ApppendNode(xnNewNeuralMods, xnOldMod, "Node", aryReplaceText)
+                Dim xnNewNeuralMod As XmlNode = m_xnProjectXml.AppendNode(xnNewNeuralMods, xnOldMod, "Node", aryReplaceText)
                 m_xnProjectXml.AddNodeValue(xnNewNeuralMod, "ID", System.Guid.NewGuid.ToString)
 
             End Sub
@@ -684,7 +686,7 @@ Namespace DataObjects
                                      "<OutLinks/>" & _
                                      "<SubsystemID>" & strDiagramID & "</SubsystemID>"
 
-                Return m_xnProjectXml.ApppendNode(xnNervousSys, strXml, "Node")
+                Return m_xnProjectXml.AppendNode(xnNervousSys, strXml, "Node")
 
             End Function
 
@@ -712,11 +714,11 @@ Namespace DataObjects
 
                 'Copy nodes
                 Dim xnOldNodes As XmlNode = xnBodyFile.GetNode(xnOldDiagram, "Nodes")
-                Dim xnNewNodes As XmlNode = m_xnProjectXml.ApppendNode(xnSubSystem, xnOldNodes, "Nodes", aryReplaceText)
+                Dim xnNewNodes As XmlNode = m_xnProjectXml.AppendNode(xnSubSystem, xnOldNodes, "Nodes", aryReplaceText)
 
                 'Copy Liniks
                 Dim xnOldLinks As XmlNode = xnBodyFile.GetNode(xnOldDiagram, "Links")
-                Dim xnNewLinks As XmlNode = m_xnProjectXml.ApppendNode(xnSubSystem, xnOldLinks, "Links", aryReplaceText)
+                Dim xnNewLinks As XmlNode = m_xnProjectXml.AppendNode(xnSubSystem, xnOldLinks, "Links", aryReplaceText)
 
                 'Copy the diagram xml
                 ModifySubsystemDiagramXml(xnBodyFile, xnOldDiagram, xnSubSystem)
@@ -761,28 +763,29 @@ Namespace DataObjects
 
             End Sub
 
-            '            <DiagramXml>
-            '<![CDATA[<Root>
-            '<Diagram>
-            '<ID>cc85cf1b-4c88-4c0c-8b95-e7454b65e6b8</ID>
-            '<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
-            '<ClassName>LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram</ClassName>
-            '<PageName>Page 1</PageName>
-            '<ZoomX>1</ZoomX>
-            '<ZoomY>1</ZoomY>
-            '<BackColor Red="1" Green="1" Blue="1" Alpha="1"/>
-            '<ShowGrid>True</ShowGrid>
-            '<GridColor Red="0.427451" Green="0.427451" Blue="0.427451" Alpha="1"/>
-            '<GridSize Width="16" Height="16"/>
-            '<GridStyle>DottedLines</GridStyle>
-            '<JumpSize>Medium</JumpSize>
-            '<SnapToGrid>False</SnapToGrid>
-            '<AddFlow Nodes="9" Links="2">
-
 #End Region
 
 #End Region
 
+#Region "Stimuli Modifiers"
+
+            Protected Overridable Sub ModifyStimuli(ByVal xnProjectNode As XmlNode, ByVal xnSimNode As XmlNode)
+
+                Dim xnStimuli As XmlNode = m_xnProjectXml.GetNode(xnProjectNode, "Stimuli")
+
+                Dim aryReplaceText As New Hashtable()
+                aryReplaceText.Add("LicensedAnimatTools", "LicensedAnimatGUI")
+                aryReplaceText.Add("FastNeuralNetTools", "FiringRateGUI")
+                aryReplaceText.Add("RealisticNeuralNetTools", "IntegrateFireGUI")
+                aryReplaceText.Add("AnimatTools", "AnimatGUI")
+
+                m_xnProjectXml.AppendNode(xnSimNode, xnStimuli, "Stimuli", aryReplaceText)
+
+                m_xnProjectXml.RemoveNode(xnProjectNode, "Stimuli")
+
+            End Sub
+
+#End Region
 
 #Region "Helper Methods"
 
