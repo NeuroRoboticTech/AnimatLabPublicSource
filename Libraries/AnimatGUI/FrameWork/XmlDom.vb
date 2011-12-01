@@ -19,14 +19,22 @@ Namespace Framework
         Public Function AddNodeValue(ByVal xnRootNode As XmlNode, ByVal strNode As String, ByVal strValue As String) As XmlNode
             Dim XnNode As XmlNode = Me.CreateElement(strNode)
             XnNode.InnerText = strValue
-            xnRootNode.AppendChild(XnNode)
+            If Not xnRootNode Is Nothing Then
+                xnRootNode.AppendChild(XnNode)
+            Else
+                Me.AppendChild(XnNode)
+            End If
             Return XnNode
         End Function
 
         Public Function AddNodeXml(ByVal xnRootNode As XmlNode, ByVal strNode As String, ByVal strXml As String) As XmlNode
             Dim XnNode As XmlNode = Me.CreateElement(strNode)
             XnNode.InnerXml = strXml
-            xnRootNode.AppendChild(XnNode)
+            If Not xnRootNode Is Nothing Then
+                xnRootNode.AppendChild(XnNode)
+            Else
+                Me.AppendChild(XnNode)
+            End If
             Return XnNode
         End Function
 

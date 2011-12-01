@@ -78,6 +78,7 @@ Namespace DataObjects
 
                 ModifySimNode(xnSimNode)
                 ModifyStimuli(xnProject, xnSimNode)
+                ModifyToolViewers(xnProject, xnSimNode)
 
             End Sub
 
@@ -784,6 +785,58 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnProjectNode, "Stimuli")
 
             End Sub
+
+#End Region
+
+#Region "Data Tool Modifiers"
+
+            Protected Overridable Sub ModifyToolViewers(ByVal xnProjectNode As XmlNode, ByVal xnSimNode As XmlNode)
+
+                Dim xnViewersOld As XmlNode = m_xnProjectXml.GetNode(xnProjectNode, "ToolViewers")
+
+                Dim aryReplaceText As New Hashtable()
+                aryReplaceText.Add("LicensedAnimatTools", "LicensedAnimatGUI")
+                aryReplaceText.Add("FastNeuralNetTools", "FiringRateGUI")
+                aryReplaceText.Add("RealisticNeuralNetTools", "IntegrateFireGUI")
+                aryReplaceText.Add("AnimatTools", "AnimatGUI")
+
+                Dim xnToolHolders As XmlNode = m_xnProjectXml.AppendNode(xnSimNode, xnViewersOld, "ToolViewers", aryReplaceText)
+
+                m_xnProjectXml.RemoveNode(xnProjectNode, "ToolViewers")
+
+                For Each xnHolder As XmlNode In xnToolHolders.ChildNodes
+                    ModifyToolViewer(xnHolder, aryReplaceText)
+                Next
+
+            End Sub
+
+            Protected Overridable Sub ModifyToolViewer(ByVal xnHolder As XmlNode, ByVal aryReplaceText As Hashtable)
+
+                Dim strTitle As String = m_xnProjectXml.GetSingleNodeValue(xnHolder, "Name")
+
+                Dim strOldFile As String = m_strProjectPath & "\" & strTitle.Replace(" ", "_") & ".atvf"
+
+                Dim xnOldToolFile As New Framework.XmlDom
+
+                xnOldToolFile.Load(strOldFile)
+
+                Dim xnEditorOld As XmlNode = xnOldToolFile.GetRootNode("Editor")
+                Dim xnFormOld As XmlNode = xnOldToolFile.GetNode(xnEditorOld, "Form")
+
+                'Now create a new xml file.
+                Dim strNewFile As String = m_strProjectPath & "\" & strTitle.Replace(" ", "_") & ".aform"
+
+                Dim xnNewToolFile As New Framework.XmlDom
+
+                Dim xnNewRoot As XmlNode = xnNewToolFile.AddNodeValue(Nothing, "Form", "")
+
+                Dim xnNewForm As XmlNode = xnNewToolFile.AppendNode(xnNewRoot, xnFormOld, "Form", aryReplaceText)
+
+                xnNewToolFile.Save(strNewFile)
+
+                'File.Delete(strOldToolFile)
+            End Sub
+
 
 #End Region
 

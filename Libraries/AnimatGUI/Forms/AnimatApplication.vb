@@ -3747,11 +3747,15 @@ Namespace Forms
                 End If
 
                 'If there is not already an open window then lets create it.
-                Dim frmAnimat As Forms.ExternalFileForm = DirectCast(CreateForm(doTool.BaseAssemblyFile, doTool.BaseClassName, doTool.Name, False), Forms.ExternalFileForm)
+                Dim frmAnimat As Forms.Tools.ToolForm = DirectCast(CreateForm(doTool.BaseAssemblyFile, doTool.BaseClassName, doTool.Name, False), Forms.Tools.ToolForm)
                 frmAnimat.Initialize(Me)
                 frmAnimat.LoadExternalFile(frmAnimat.ExternalFilename)
 
                 AddChildForm(frmAnimat)
+
+                doTool.ToolForm = frmAnimat
+
+                doTool.CreateWorkspaceTreeView(Me.Simulation, Me.Simulation.ToolViewersTreeNode)
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
