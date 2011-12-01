@@ -387,6 +387,10 @@ Namespace DataObjects
             End Sub
 
             Protected Overridable Sub ModifyRigidBodyOdorSensor(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform)
+
+                m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.OdorSensor")
 
             End Sub
 
@@ -834,7 +838,7 @@ Namespace DataObjects
 
                 xnNewToolFile.Save(strNewFile)
 
-                'File.Delete(strOldToolFile)
+                'TODO File.Delete(strOldToolFile)
             End Sub
 
 
