@@ -543,9 +543,12 @@ VsSimulator *VsSimulator::ConvertSimulator(Simulator *lpSim)
 
 void VsSimulator::Save(string strFile) 
 {
+	string strOsgFile = strFile + ".osg";
+	//string strVxFile = strFile + ".vxf";
+
 	//Temp code. Lets save it out and make sure the collision stuff is actually correct.
-	//VxPersistence::saveFrame(strFile.c_str(), VxPersistence::kAutoGenerateGraphics);
-	osgDB::writeNodeFile(*OSGRoot(), strFile.c_str());
+	//VxPersistence::saveFrame(strVxFile.c_str(), VxPersistence::kAutoGenerateGraphics);
+	osgDB::writeNodeFile(*OSGRoot(), strOsgFile.c_str());
 }
 
 

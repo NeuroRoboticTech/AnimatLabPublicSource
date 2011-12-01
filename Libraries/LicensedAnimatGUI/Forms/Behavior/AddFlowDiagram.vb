@@ -2561,6 +2561,8 @@ Namespace Forms.Behavior
                 Next
 
                 oXml.OutOfElem()  'Outof Diagram Element
+
+                InitializeAfterLoad()
             End If
         End Sub
 

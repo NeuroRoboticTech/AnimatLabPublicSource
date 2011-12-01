@@ -48,8 +48,10 @@ Namespace UnitTests
                 'Dim strProjectName As String = "SimpleTest"
                 'Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\ConeNN"
                 'Dim strProjectName As String = "ConeNN"
-                Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\HingeTest"
-                Dim strProjectName As String = "HingeTest"
+                'Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\ConeTest"
+                'Dim strProjectName As String = "ConeTest"
+                Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\NeuralTest"
+                Dim strProjectName As String = "NeuralTest"
 
                 UnitTest("AnimatGUI.dll", "AnimatGUI.DataObjects.FileConverters.Convert_V1ToV2", "ConvertFiles", New Object() {strProjectPath, strProjectName})
 

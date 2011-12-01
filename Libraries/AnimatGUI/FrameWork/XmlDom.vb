@@ -62,6 +62,23 @@ Namespace Framework
             End If
         End Function
 
+        Public Function GetSingleNodeAttributes(ByVal xnRootNode As XmlNode, ByVal strNode As String, Optional ByVal bThrowError As Boolean = True, Optional strDefault As String = "") As String
+            Dim xnFound As XmlNode = xnRootNode.SelectSingleNode(strNode)
+            If Not xnFound Is Nothing Then
+                Dim strAttribs As String
+                For Each xnAttrib As XmlAttribute In xnFound.Attributes
+                    strAttribs = strAttribs & xnAttrib.Name & "=""" & xnAttrib.InnerText & """ "
+                Next
+
+                Return strAttribs
+            ElseIf bThrowError Then
+                Throw New System.Exception("No node named '" & strNode & "' was found to remove.")
+                Return strDefault
+            Else
+                Return strDefault
+            End If
+        End Function
+
         Public Function GetRootNode(ByVal strNode As String) As XmlNode
             If Me.ChildNodes.Count <> 1 Then
                 Throw New System.Exception("Invlalid number of child nodes in the root.")
@@ -76,8 +93,17 @@ Namespace Framework
             Return xnProjectNode
         End Function
 
-        Public Overridable Function ApppendNode(ByVal xnNewRoot As XmlNode, ByVal OldNode As XmlNode, ByVal strNode As String) As XmlNode
-            Dim strNodeXml As String = OldNode.InnerXml
+        Public Overridable Function ApppendNode(ByVal xnNewRoot As XmlNode, ByVal OldNode As XmlNode, ByVal strNode As String, Optional ByVal aryReplaceText As Hashtable = Nothing) As XmlNode
+            Return ApppendNode(xnNewRoot, OldNode.InnerXml, strNode, aryReplaceText)
+        End Function
+
+        Public Overridable Function ApppendNode(ByVal xnNewRoot As XmlNode, ByVal strNodeXml As String, ByVal strNode As String, Optional ByVal aryReplaceText As Hashtable = Nothing) As XmlNode
+
+            If Not aryReplaceText Is Nothing Then
+                For Each de As DictionaryEntry In aryReplaceText
+                    strNodeXml = strNodeXml.Replace(de.Key.ToString, de.Value.ToString)
+                Next
+            End If
 
             Dim xnNewNode As XmlNode = Me.CreateElement(strNode)
             xnNewNode.InnerXml = strNodeXml
@@ -108,6 +134,29 @@ Namespace Framework
 
                 Return dblDefault
             End Try
+        End Function
+
+        Public Overridable Sub LoadScaleNumber(ByVal xnRootNode As XmlNode, ByVal strNode As String, ByRef dblVal As Double, ByRef strScale As String, ByRef dblActualVal As Double)
+            Dim xnFound As XmlNode = GetNode(xnRootNode, strNode)
+
+            Dim xnAttrib As XmlAttribute = xnFound.Attributes("Value")
+            dblVal = CDbl(xnAttrib.InnerText)
+
+            xnAttrib = xnFound.Attributes("Scale")
+            strScale = xnAttrib.InnerText
+
+            xnAttrib = xnFound.Attributes("Actual")
+            dblActualVal = CDbl(xnAttrib.InnerText)
+
+        End Sub
+
+        Public Overridable Function CopyScaledNumber(ByVal OrigFile As Framework.XmlDom, ByVal xnOldNode As XmlNode, ByVal xnNewNode As XmlNode, ByVal strNode As String) As XmlNode
+            Dim dblVal As Double
+            Dim dblActual As Double
+            Dim strScale As String
+
+            OrigFile.LoadScaleNumber(xnOldNode, "TimeStep", dblVal, strScale, dblActual)
+            Return Me.AddScaledNumber(xnNewNode, "TimeStep", dblVal, strScale, dblActual)
         End Function
 
         Public Overridable Function AddScaledVector(ByVal xnRootNode As XmlNode, ByVal strNode As String, _

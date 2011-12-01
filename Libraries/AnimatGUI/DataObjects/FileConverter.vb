@@ -98,7 +98,8 @@ Namespace DataObjects
 
             ConvertProjectNode(xnProjectNode)
 
-            m_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\HingeTest\Test_HingeTest.aproj")
+            m_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\NeuralTest\Test_NeuralTest.aproj")
+            'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\ConeTest\Test_ConeTest.aproj")
             'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\ConeNN\Test_ConeNN.aproj")
             'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\SimpleTest\Test_SimpleTest.aproj")
             'm_xnProjectXml.Save(m_strProjectPath & "\Test_" & m_strProjectName & ".aproj")

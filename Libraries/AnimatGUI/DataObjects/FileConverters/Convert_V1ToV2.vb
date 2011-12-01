@@ -18,6 +18,7 @@ Namespace DataObjects
             Protected m_dblFluidDensity As Double = 1.0
             Protected m_iSimInterface As ManagedAnimatInterfaces.ISimulatorInterface
             Protected m_fltDistanceUnits As Single
+            Protected m_aryIdentity As New AnimatGuiCtrls.MatrixLibrary.Matrix(AnimatGuiCtrls.MatrixLibrary.Matrix.Identity(4))
 
             Public Overrides ReadOnly Property ConvertFrom As String
                 Get
@@ -111,6 +112,7 @@ Namespace DataObjects
             Protected Overridable Sub ModifyOrganism(ByVal xnOrganism As XmlNode)
 
                 ModifyStructure(xnOrganism)
+                ModifyNervousSystem(xnOrganism)
 
             End Sub
 
@@ -146,16 +148,18 @@ Namespace DataObjects
 
                 Dim xnStruct As XmlNode = xnASTL_File.GetRootNode("Structure")
 
-                Dim xnRigidBodyNodeOld As XmlNode = xnASTL_File.GetNode(xnStruct, "RigidBody")
-                Dim xnRigidBody As XmlNode = m_xnProjectXml.ApppendNode(xnStructure, xnRigidBodyNodeOld, "RigidBody")
+                Dim xnRigidBodyNodeOld As XmlNode = xnASTL_File.GetNode(xnStruct, "RigidBody", False)
+                If Not xnRigidBodyNodeOld Is Nothing Then
+                    Dim xnRigidBody As XmlNode = m_xnProjectXml.ApppendNode(xnStructure, xnRigidBodyNodeOld, "RigidBody")
 
-                Dim xnCollisionsOld As XmlNode = xnASTL_File.GetNode(xnStruct, "CollisionExclusionPairs")
-                Dim xnCollisions As XmlNode = m_xnProjectXml.ApppendNode(xnStructure, xnCollisionsOld, "CollisionExclusionPairs")
+                    Dim xnCollisionsOld As XmlNode = xnASTL_File.GetNode(xnStruct, "CollisionExclusionPairs")
+                    Dim xnCollisions As XmlNode = m_xnProjectXml.ApppendNode(xnStructure, xnCollisionsOld, "CollisionExclusionPairs")
 
-                ModifyRigidBody(xnRigidBody)
+                    ModifyRigidBody(xnRigidBody, m_aryIdentity)
+                End If
             End Sub
 
-            Protected Overridable Sub ModifyRigidBody(ByVal xnRigidBody As XmlNode)
+            Protected Overridable Sub ModifyRigidBody(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
                 m_xnProjectXml.AddTransparency(xnRigidBody, 0, 0, 50, 50, 0)
 
@@ -175,41 +179,41 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnRigidBody, "LocalRotation", False)
 
                 Dim aryOrientation As AnimatGuiCtrls.MatrixLibrary.Matrix = m_xnProjectXml.LoadOrientationPositionMatrix(xnRigidBody, "TranslationMatrix", "OrientationMatrix")
-                Dim aryIdentity As New AnimatGuiCtrls.MatrixLibrary.Matrix(AnimatGuiCtrls.MatrixLibrary.Matrix.Identity(4))
 
                 Dim oPosRot As ManagedAnimatInterfaces.PositionRotationInfo
-                oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation.toArray(), aryIdentity.toArray())
+                oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation.toArray(), aryParentTrasform.toArray())
 
                 m_xnProjectXml.AddScaledVector(xnRigidBody, "LocalPosition", oPosRot.m_fltXPos * m_fltDistanceUnits, oPosRot.m_fltYPos * m_fltDistanceUnits, oPosRot.m_fltZPos * m_fltDistanceUnits)
                 m_xnProjectXml.AddScaledVector(xnRigidBody, "Rotation", Util.RadiansToDegrees(oPosRot.m_fltXRot), Util.RadiansToDegrees(oPosRot.m_fltYRot), Util.RadiansToDegrees(oPosRot.m_fltZRot))
 
                 Dim strType As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "Type").ToUpper
+                Dim aryChildTransform As New AnimatGuiCtrls.MatrixLibrary.Matrix(AnimatGuiCtrls.MatrixLibrary.Matrix.Identity(4))
 
                 Select Case strType
                     Case "BOX"
-                        ModifyRigidBodyBox(xnRigidBody)
+                        ModifyRigidBodyBox(xnRigidBody, aryChildTransform)
                     Case "CONE"
-                        ModifyRigidBodyCone(xnRigidBody)
+                        ModifyRigidBodyCone(xnRigidBody, aryChildTransform)
                     Case "CYLINDER"
-                        ModifyRigidBodyCylinder(xnRigidBody)
+                        ModifyRigidBodyCylinder(xnRigidBody, aryChildTransform)
                     Case "MUSCLEATTACHMENT"
-                        ModifyRigidBodyAttachment(xnRigidBody)
+                        ModifyRigidBodyAttachment(xnRigidBody, aryChildTransform)
                     Case "LINEARHILLMUSCLE"
-                        ModifyRigidBodyMuscle(xnRigidBody)
+                        ModifyRigidBodyMuscle(xnRigidBody, aryChildTransform)
                     Case "LINEARHILLSTRETCHRECEPTOR"
-                        ModifyRigidBodyStretchReceptor(xnRigidBody)
+                        ModifyRigidBodyStretchReceptor(xnRigidBody, aryChildTransform)
                     Case "MESH"
-                        ModifyRigidBodyMesh(xnRigidBody)
+                        ModifyRigidBodyMesh(xnRigidBody, aryChildTransform)
                     Case "MOUTH"
-                        ModifyRigidBodyMouth(xnRigidBody)
+                        ModifyRigidBodyMouth(xnRigidBody, aryChildTransform)
                     Case "ODORSENSOR"
-                        ModifyRigidBodyOdorSensor(xnRigidBody)
+                        ModifyRigidBodyOdorSensor(xnRigidBody, aryChildTransform)
                     Case "SPHERE"
-                        ModifyRigidBodySphere(xnRigidBody)
+                        ModifyRigidBodySphere(xnRigidBody, aryChildTransform)
                     Case "SPRING"
-                        ModifyRigidBodySpring(xnRigidBody)
+                        ModifyRigidBodySpring(xnRigidBody, aryChildTransform)
                     Case "STOMACH"
-                        ModifyRigidBodyStomach(xnRigidBody)
+                        ModifyRigidBodyStomach(xnRigidBody, aryChildTransform)
                 End Select
 
                 'Modify the joint if it exists.
@@ -222,7 +226,7 @@ Namespace DataObjects
                 Dim xnChildren As XmlNode = m_xnProjectXml.GetNode(xnRigidBody, "ChildBodies", False)
                 If Not xnChildren Is Nothing Then
                     For Each xnChild As XmlNode In xnChildren.ChildNodes
-                        ModifyRigidBody(xnChild)
+                        ModifyRigidBody(xnChild, aryChildTransform)
                     Next
                 End If
 
@@ -283,7 +287,7 @@ Namespace DataObjects
 
 #Region "Rigid Body Part Type Modifiers"
 
-            Protected Overridable Sub ModifyRigidBodyBox(ByVal xnRigidBody As XmlNode)
+            Protected Overridable Sub ModifyRigidBodyBox(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
                 Dim dblX As Double = 0
                 Dim dblY As Double = 0
@@ -309,7 +313,7 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyCone(ByVal xnRigidBody As XmlNode)
+            Protected Overridable Sub ModifyRigidBodyCone(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Cone")
 
                 Dim fltLowerRadius As Single = CSng(m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "CollisionLowerRadius")) * m_fltDistanceUnits
@@ -337,47 +341,53 @@ Namespace DataObjects
                 Dim aryTransform As AnimatGuiCtrls.MatrixLibrary.Matrix = AnimatGuiCtrls.MatrixLibrary.Matrix.Multiply(aryConversion, aryOrientation)
 
                 Dim oPosRot As ManagedAnimatInterfaces.PositionRotationInfo
-                oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation.toArray, aryConversion.toArray)
+                'oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation.toArray, aryConversion.toArray)
+                oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryTransform.toArray, m_aryIdentity.toArray)
 
                 m_xnProjectXml.AddScaledVector(xnRigidBody, "LocalPosition", oPosRot.m_fltXPos * m_fltDistanceUnits, oPosRot.m_fltYPos * m_fltDistanceUnits, oPosRot.m_fltZPos * m_fltDistanceUnits)
                 m_xnProjectXml.AddScaledVector(xnRigidBody, "Rotation", Util.RadiansToDegrees(oPosRot.m_fltXRot), Util.RadiansToDegrees(oPosRot.m_fltYRot), Util.RadiansToDegrees(oPosRot.m_fltZRot))
 
+                'aryParentTrasform = AnimatGuiCtrls.MatrixLibrary.Matrix.Inverse(aryTransform)
+                'aryParentTrasform(3, 0) = 0
+                'aryParentTrasform(3, 1) = 0
+                'aryParentTrasform(3, 2) = 0
+                'aryParentTrasform(3, 3) = 1
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyCylinder(ByVal xnRigidBody As XmlNode)
+            Protected Overridable Sub ModifyRigidBodyCylinder(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyAttachment(ByVal xnRigidBody As XmlNode)
+            Protected Overridable Sub ModifyRigidBodyAttachment(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
-                ModifyRigidBodySphere(xnRigidBody)
+                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform)
 
                 m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Attachment")
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyMuscle(ByVal xnRigidBody As XmlNode)
+            Protected Overridable Sub ModifyRigidBodyMuscle(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyStretchReceptor(ByVal xnRigidBody As XmlNode)
+            Protected Overridable Sub ModifyRigidBodyStretchReceptor(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyMesh(ByVal xnRigidBody As XmlNode)
+            Protected Overridable Sub ModifyRigidBodyMesh(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyMouth(ByVal xnRigidBody As XmlNode)
+            Protected Overridable Sub ModifyRigidBodyMouth(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyOdorSensor(ByVal xnRigidBody As XmlNode)
+            Protected Overridable Sub ModifyRigidBodyOdorSensor(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodySphere(ByVal xnRigidBody As XmlNode)
+            Protected Overridable Sub ModifyRigidBodySphere(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Sphere")
 
@@ -391,11 +401,11 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodySpring(ByVal xnRigidBody As XmlNode)
+            Protected Overridable Sub ModifyRigidBodySpring(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyStomach(ByVal xnRigidBody As XmlNode)
+            Protected Overridable Sub ModifyRigidBodyStomach(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
             End Sub
 
@@ -422,7 +432,8 @@ Namespace DataObjects
                 Dim aryData(,) As Double = aryTransform.toArray
 
                 Dim oPosRot As ManagedAnimatInterfaces.PositionRotationInfo
-                oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation.toArray, aryJointConv.toArray)
+                'oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation.toArray, aryJointConv.toArray)
+                oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryTransform.toArray, m_aryIdentity.toArray)
 
                 m_xnProjectXml.AddScaledVector(xnJoint, "LocalPosition", oPosRot.m_fltXPos * m_fltDistanceUnits, oPosRot.m_fltYPos * m_fltDistanceUnits, oPosRot.m_fltZPos * m_fltDistanceUnits)
                 m_xnProjectXml.AddScaledVector(xnJoint, "Rotation", Util.RadiansToDegrees(oPosRot.m_fltXRot), Util.RadiansToDegrees(oPosRot.m_fltYRot), Util.RadiansToDegrees(oPosRot.m_fltZRot))
@@ -523,7 +534,252 @@ Namespace DataObjects
 
             Protected Overridable Sub ModifyNervousSystem(ByVal xnOrganism As XmlNode)
 
+                Dim xnNervousSys As XmlNode = m_xnProjectXml.AddNodeValue(xnOrganism, "NervousSystem", "")
+
+                Dim xnBodyFile As Framework.XmlDom = LoadBehavioralFile(xnOrganism)
+
+                If Not xnBodyFile Is Nothing Then
+                    Dim xnOldRoot As XmlNode = xnBodyFile.GetRootNode("Editor")
+                    Dim xnOldNeuralMods As XmlNode = xnBodyFile.GetNode(xnOldRoot, "NeuralModules")
+
+                    CreateNeuralModules(xnNervousSys, xnBodyFile, xnOldNeuralMods)
+
+                    Dim xnOldDiagrams As XmlNode = m_xnProjectXml.GetNode(xnOldRoot, "Diagrams")
+                    Dim xnOldDiagram As XmlNode = m_xnProjectXml.GetNode(xnOldDiagrams, "Diagram")
+                    ConvertRootDiagramToSubsystem(xnBodyFile, xnNervousSys, xnOldDiagram)
+                End If
+
             End Sub
+
+            Protected Overridable Function LoadBehavioralFile(ByVal xnOrganism As XmlNode) As Framework.XmlDom
+
+                'We need to get the simulation node from the asim file. We will then modify it.
+                Dim strBodyFile As String = m_strProjectPath & "\" & m_xnProjectXml.GetSingleNodeValue(xnOrganism, "Name") & ".abef"
+
+                Dim xnBodyFile As Framework.XmlDom = Nothing
+
+                If File.Exists(strBodyFile) Then
+                    xnBodyFile = New Framework.XmlDom
+                    xnBodyFile.Load(strBodyFile)
+
+                    m_xnProjectXml.RemoveNode(xnOrganism, "BodyPlan")
+                    m_xnProjectXml.RemoveNode(xnOrganism, "BehavioralSystem")
+                End If
+
+                Return xnBodyFile
+            End Function
+
+#Region "NeuralModules"
+
+            Protected Overridable Sub CreateNeuralModules(ByVal xnNervousSystem As XmlNode, ByVal xnBodyFile As Framework.XmlDom, ByVal xnOldNeuralMods As XmlNode)
+
+
+                Dim xnNewNeuralMods As XmlNode = m_xnProjectXml.AddNodeValue(xnNervousSystem, "NeuralModules", "")
+
+                For Each xnOldMod As XmlNode In xnOldNeuralMods.ChildNodes
+                    CreateNeuralModule(xnBodyFile, xnOldMod, xnNewNeuralMods)
+                Next
+
+            End Sub
+
+            Protected Overridable Sub CreateNeuralModule(ByVal xnBodyFile As Framework.XmlDom, ByVal xnOldMod As XmlNode, ByVal xnNewNeuralMods As XmlNode)
+
+                'Get the mod type and create based on that.
+                Dim strType As String = xnBodyFile.GetSingleNodeValue(xnOldMod, "AssemblyFile").ToUpper
+
+                Select Case strType
+                    Case "ANIMATTOOLS.DLL"
+                        CreateAnimatToolsNeuralModule(xnBodyFile, xnOldMod, xnNewNeuralMods)
+                    Case "FASTNEURALNETTOOLS.DLL"
+                        CreateFastNeuralModule(xnBodyFile, xnOldMod, xnNewNeuralMods)
+                    Case "REALISTICNEURALNETTOOLS.DLL"
+                        CreateRealisticToolsNeuralModule(xnBodyFile, xnOldMod, xnNewNeuralMods)
+                    Case "FPGANEURALNETTOOLS.DLL"
+                        'Do nothing.
+                End Select
+
+            End Sub
+
+            Protected Overridable Sub CreateAnimatToolsNeuralModule(ByVal xnBodyFile As Framework.XmlDom, ByVal xnOldMod As XmlNode, ByVal xnNewNeuralMods As XmlNode)
+                Dim xnNewNeuralMod As XmlNode = m_xnProjectXml.AddNodeValue(xnNewNeuralMods, "Node", "")
+
+                m_xnProjectXml.AddNodeValue(xnNewNeuralMod, "ID", System.Guid.NewGuid.ToString)
+                m_xnProjectXml.AddNodeValue(xnNewNeuralMod, "AssemblyFile", "AnimatGUI.dll")
+                m_xnProjectXml.AddNodeValue(xnNewNeuralMod, "ClassName", "AnimatGUI.DataObjects.Behavior.PhysicsModule")
+                m_xnProjectXml.CopyScaledNumber(xnBodyFile, xnOldMod, xnNewNeuralMod, "TimeStep")
+            End Sub
+
+            Protected Overridable Sub CreateFastNeuralModule(ByVal xnBodyFile As Framework.XmlDom, ByVal xnOldMod As XmlNode, ByVal xnNewNeuralMods As XmlNode)
+                Dim xnNewNeuralMod As XmlNode = m_xnProjectXml.AddNodeValue(xnNewNeuralMods, "Node", "")
+
+                m_xnProjectXml.AddNodeValue(xnNewNeuralMod, "ID", System.Guid.NewGuid.ToString)
+                m_xnProjectXml.AddNodeValue(xnNewNeuralMod, "AssemblyFile", "FiringRateGUI.dll")
+                m_xnProjectXml.AddNodeValue(xnNewNeuralMod, "ClassName", "FiringRateGUI.DataObjects.Behavior.NeuralModule")
+                m_xnProjectXml.CopyScaledNumber(xnBodyFile, xnOldMod, xnNewNeuralMod, "TimeStep")
+
+            End Sub
+
+            Protected Overridable Sub CreateRealisticToolsNeuralModule(ByVal xnBodyFile As Framework.XmlDom, ByVal xnOldMod As XmlNode, ByVal xnNewNeuralMods As XmlNode)
+
+                Dim aryReplaceText As New Hashtable
+                aryReplaceText.Add("RealisticNeuralNetTools", "IntegrateFireGUI")
+
+                Dim xnNewNeuralMod As XmlNode = m_xnProjectXml.ApppendNode(xnNewNeuralMods, xnOldMod, "Node", aryReplaceText)
+                m_xnProjectXml.AddNodeValue(xnNewNeuralMod, "ID", System.Guid.NewGuid.ToString)
+
+            End Sub
+#End Region
+
+#Region "Diagrams"
+
+            Protected Overridable Sub ConvertRootDiagramToSubsystem(ByVal xnBodyFile As Framework.XmlDom, ByVal xnNervousSys As XmlNode, ByVal xnOldDiagram As XmlNode)
+                Dim xnRootSubSystem As XmlNode = CreateRootSubsystem(xnNervousSys, xnBodyFile, xnOldDiagram)
+                ModifySubSystem(xnBodyFile, xnRootSubSystem)
+            End Sub
+
+            Protected Overridable Function CreateRootSubsystem(ByVal xnNervousSys As XmlNode, ByVal xnBodyFile As Framework.XmlDom, ByVal xnOldDiagram As XmlNode) As XmlNode
+
+                Dim strDiagramID As String = xnBodyFile.GetSingleNodeValue(xnOldDiagram, "ID")
+
+                Dim strXml As String = "<AssemblyFile>AnimatGUI.dll</AssemblyFile>" & _
+                                    "<ClassName>AnimatGUI.DataObjects.Behavior.Nodes.Subsystem</ClassName>" & _
+                                    "<ID>" & System.Guid.NewGuid.ToString & "</ID>" & _
+                                    "<Alignment>CenterMiddle</Alignment>" & _
+                                    "<AutoSize>None</AutoSize>" & _
+                                    "<BackMode>Transparent</BackMode>" & _
+                                    "<DashStyle>Solid</DashStyle>" & _
+                                    "<DrawColor>-16777216</DrawColor>" & _
+                                    "<DrawWidth>1</DrawWidth>" & _
+                                    "<FillColor>-8586240</FillColor>" & _
+                                    "<Font Family=""Arial"" Size=""12"" Bold=""True"" Underline=""False"" Strikeout=""False"" Italic=""False""/>" & _
+                                    "<Gradient>False</Gradient>" & _
+                                    "<GradientColor>0</GradientColor>" & _
+                                    "<GradientMode>BackwardDiagonal</GradientMode>" & _
+                                     "<DiagramImageName/>" & _
+                                     "<ImageName/>" & _
+                                     "<ImageLocation x=""0"" y=""0""/>" & _
+                                     "<ImagePosition>RelativeToText</ImagePosition>" & _
+                                     "<InLinkable>True</InLinkable>" & _
+                                     "<LabelEdit>True</LabelEdit>" & _
+                                     "<Location x=""0"" y=""0""/>" & _
+                                     "<OutLinkable>True</OutLinkable>" & _
+                                     "<ShadowStyle>None</ShadowStyle>" & _
+                                     "<ShadowColor>-16777216</ShadowColor>" & _
+                                     "<ShadowSize Width=""0"" Height=""0""/>" & _
+                                     "<Shape>Rectangle</Shape>" & _
+                                     "<ShapeOrientation>Angle0</ShapeOrientation>" & _
+                                     "<Size Width=""40"" Height=""40""/>" & _
+                                     "<Text>Neural Subsystem</Text>" & _
+                                     "<TextColor>-16777216</TextColor>" & _
+                                     "<TextMargin Width=""0"" Height=""0""/>" & _
+                                     "<ToolTip/>" & _
+                                     "<Transparent>False</Transparent>" & _
+                                     "<Url/>" & _
+                                     "<XMoveable>True</XMoveable>" & _
+                                     "<XSizeable>True</XSizeable>" & _
+                                     "<YMoveable>True</YMoveable>" & _
+                                     "<YSizeable>True</YSizeable>" & _
+                                     "<ZOrder>0</ZOrder>" & _
+                                     "<InLinks/>" & _
+                                     "<OutLinks/>" & _
+                                     "<SubsystemID>" & strDiagramID & "</SubsystemID>"
+
+                Return m_xnProjectXml.ApppendNode(xnNervousSys, strXml, "Node")
+
+            End Function
+
+            Protected Overridable Sub ModifySubSystem(ByVal xnBodyFile As Framework.XmlDom, ByVal xnSubSystem As XmlNode)
+
+                Dim strSubSystemID As String = m_xnProjectXml.GetSingleNodeValue(xnSubSystem, "SubsystemID")
+
+                Dim xnRoot As XmlNode = xnBodyFile.GetRootNode("Editor")
+                Dim xnOldDiagramID As XmlNode = xnBodyFile.GetNode(xnRoot, "//ID[text()=""" & strSubSystemID & """]")
+
+                If xnOldDiagramID Is Nothing Then
+                    Throw New System.Exception("No diagram was found with the ID '" & strSubSystemID & "'")
+                End If
+
+                Dim xnOldDiagram As XmlNode = xnOldDiagramID.ParentNode
+                m_xnProjectXml.RemoveNode(xnSubSystem, "SubsystemID")
+
+                Dim aryReplaceText As New Hashtable()
+                aryReplaceText.Add("LicensedAnimatTools", "LicensedAnimatGUI")
+                aryReplaceText.Add("FastNeuralNetTools", "FiringRateGUI")
+                aryReplaceText.Add("RealisticNeuralNetTools", "IntegrateFireGUI")
+                aryReplaceText.Add("AnimatTools", "AnimatGUI")
+                aryReplaceText.Add("AHPConductance", "AHP_Conductance")
+                aryReplaceText.Add("AHPTimeConstant", "AHP_TimeConstant")
+
+                'Copy nodes
+                Dim xnOldNodes As XmlNode = xnBodyFile.GetNode(xnOldDiagram, "Nodes")
+                Dim xnNewNodes As XmlNode = m_xnProjectXml.ApppendNode(xnSubSystem, xnOldNodes, "Nodes", aryReplaceText)
+
+                'Copy Liniks
+                Dim xnOldLinks As XmlNode = xnBodyFile.GetNode(xnOldDiagram, "Links")
+                Dim xnNewLinks As XmlNode = m_xnProjectXml.ApppendNode(xnSubSystem, xnOldLinks, "Links", aryReplaceText)
+
+                'Copy the diagram xml
+                ModifySubsystemDiagramXml(xnBodyFile, xnOldDiagram, xnSubSystem)
+
+                'Loop through the xmlnodes and any that are a subsystem lets process them as well.
+                For Each xnNode As XmlNode In xnNewNodes.ChildNodes
+                    If m_xnProjectXml.GetSingleNodeValue(xnNode, "ClassName").ToUpper = "ANIMATGUI.DATAOBJECTS.BEHAVIOR.NODES.SUBSYSTEM" Then
+                        ModifySubSystem(xnBodyFile, xnNode)
+                    End If
+                Next
+
+            End Sub
+
+            Protected Overridable Sub ModifySubsystemDiagramXml(ByVal xnBodyFile As Framework.XmlDom, ByVal xnOldDiagram As XmlNode, ByVal xnSubSystem As XmlNode)
+
+                Dim strXml As String = "<Root>" & _
+                    "<Diagram>" & _
+                    "<ID>" & System.Guid.NewGuid.ToString & "</ID>" & vbCrLf & _
+                    "<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>" & vbCrLf & _
+                    "<ClassName>LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram</ClassName>" & vbCrLf & _
+                    "<PageName>" & xnBodyFile.GetSingleNodeValue(xnOldDiagram, "PageName", False, "Page 1") & "</PageName>" & vbCrLf & _
+                    "<ZoomX>" & xnBodyFile.GetSingleNodeValue(xnOldDiagram, "ZoomX", False, "1") & "</ZoomX>" & vbCrLf & _
+                    "<ZoomY>" & xnBodyFile.GetSingleNodeValue(xnOldDiagram, "ZoomY", False, "1") & "</ZoomY>" & vbCrLf & _
+                    "<BackColor " & xnBodyFile.GetSingleNodeAttributes(xnOldDiagram, "BackColor", False, "Red=""1"" Green=""1"" Blue=""1"" Alpha=""1""") & "/>" & vbCrLf & _
+                    "<ShowGrid>" & xnBodyFile.GetSingleNodeValue(xnOldDiagram, "ShowGrid", False, "True") & "</ShowGrid>" & vbCrLf & _
+                    "<GridColor" & xnBodyFile.GetSingleNodeAttributes(xnOldDiagram, "BackColor", False, "Red=""0.427451"" Green=""0.427451"" Blue=""0.427451"" Alpha=""1""") & "/>" & vbCrLf & _
+                    "<GridSize " & xnBodyFile.GetSingleNodeAttributes(xnOldDiagram, "GridSize", False, "Width=""16"" Height=""16""") & "/>" & vbCrLf & _
+                    "<GridStyle>" & xnBodyFile.GetSingleNodeValue(xnOldDiagram, "GridStyle", False, "DottedLines") & "</GridStyle>" & vbCrLf & _
+                    "<JumpSize>" & xnBodyFile.GetSingleNodeValue(xnOldDiagram, "JumpSize", False, "Medium") & "</JumpSize>" & vbCrLf & _
+                    "<SnapToGrid>" & xnBodyFile.GetSingleNodeValue(xnOldDiagram, "SnapToGrid", False, "False") & "</SnapToGrid>" & vbCrLf
+
+                'Find the addflow node.
+                Dim xnAddFlow As XmlNode = xnBodyFile.GetNode(xnOldDiagram, "AddFlow")
+                strXml = strXml & "<AddFlow " & xnBodyFile.GetSingleNodeAttributes(xnOldDiagram, "AddFlow") & ">" & _
+                                  xnAddFlow.InnerXml() & "</AddFlow></Diagram></Root>"
+
+                Dim xnDiagramXml As XmlNode = m_xnProjectXml.CreateElement("DiagramXml")
+                Dim xnDiagramCData As XmlNode = m_xnProjectXml.CreateCDataSection(strXml)
+
+                xnDiagramXml.AppendChild(xnDiagramCData)
+                xnSubSystem.AppendChild(xnDiagramXml)
+
+            End Sub
+
+            '            <DiagramXml>
+            '<![CDATA[<Root>
+            '<Diagram>
+            '<ID>cc85cf1b-4c88-4c0c-8b95-e7454b65e6b8</ID>
+            '<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+            '<ClassName>LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram</ClassName>
+            '<PageName>Page 1</PageName>
+            '<ZoomX>1</ZoomX>
+            '<ZoomY>1</ZoomY>
+            '<BackColor Red="1" Green="1" Blue="1" Alpha="1"/>
+            '<ShowGrid>True</ShowGrid>
+            '<GridColor Red="0.427451" Green="0.427451" Blue="0.427451" Alpha="1"/>
+            '<GridSize Width="16" Height="16"/>
+            '<GridStyle>DottedLines</GridStyle>
+            '<JumpSize>Medium</JumpSize>
+            '<SnapToGrid>False</SnapToGrid>
+            '<AddFlow Nodes="9" Links="2">
+
+#End Region
 
 #End Region
 
