@@ -158,13 +158,13 @@ Namespace Framework
 
         End Sub
 
-        Public Overridable Function CopyScaledNumber(ByVal OrigFile As Framework.XmlDom, ByVal xnOldNode As XmlNode, ByVal xnNewNode As XmlNode, ByVal strNode As String) As XmlNode
+        Public Overridable Function CopyScaledNumber(ByVal OrigFile As Framework.XmlDom, ByVal xnOldNode As XmlNode, ByVal xnNewNode As XmlNode, ByVal strOldNode As String, ByVal strNewNode As String) As XmlNode
             Dim dblVal As Double
             Dim dblActual As Double
             Dim strScale As String
 
-            OrigFile.LoadScaleNumber(xnOldNode, "TimeStep", dblVal, strScale, dblActual)
-            Return Me.AddScaledNumber(xnNewNode, "TimeStep", dblVal, strScale, dblActual)
+            OrigFile.LoadScaleNumber(xnOldNode, strOldNode, dblVal, strScale, dblActual)
+            Return Me.AddScaledNumber(xnNewNode, strNewNode, dblVal, strScale, dblActual)
         End Function
 
         Public Overridable Function AddScaledVector(ByVal xnRootNode As XmlNode, ByVal strNode As String, _

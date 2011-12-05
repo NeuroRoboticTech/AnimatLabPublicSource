@@ -105,23 +105,32 @@ Namespace DataObjects
 
                 Dim xnStructures As XmlNode = m_xnProjectXml.GetNode(xnEnvironment, "Structures")
                 For Each xnNode As XmlNode In xnStructures.ChildNodes
-                    ModifyStructure(xnNode)
+                    ModifyStructure(xnNode, False)
                 Next
 
                 AddLight(xnEnvironment)
+
+                Dim aryReplaceText As New Hashtable
+                aryReplaceText.Add("LicensedAnimatTools", "LicensedAnimatGUI")
+                aryReplaceText.Add("FastNeuralNetTools", "FiringRateGUI")
+                aryReplaceText.Add("RealisticNeuralNetTools", "IntegrateFireGUI")
+                aryReplaceText.Add("AnimatTools", "AnimatGUI")
+
+                ModifySurface("Ground", xnEnvironment, xnStructures, aryReplaceText, False)
+                ModifySurface("Water", xnEnvironment, xnStructures, aryReplaceText, True)
 
             End Sub
 
             Protected Overridable Sub ModifyOrganism(ByVal xnOrganism As XmlNode)
 
-                ModifyStructure(xnOrganism)
+                ModifyStructure(xnOrganism, False)
                 ModifyNervousSystem(xnOrganism)
 
             End Sub
 
 #Region "Modify Structure"
 
-            Protected Overridable Sub ModifyStructure(ByVal xnStructure As XmlNode)
+            Protected Overridable Sub ModifyStructure(ByVal xnStructure As XmlNode, ByVal bIsFluidPlane As Boolean)
 
                 m_xnProjectXml.AddNodeValue(xnStructure, "Description", "")
                 m_xnProjectXml.AddTransparency(xnStructure, 50, 50, 50, 50, 100)
@@ -135,13 +144,13 @@ Namespace DataObjects
                 m_xnProjectXml.AddColor(xnStructure, "Diffuse", 1, 0, 0, 1)
                 m_xnProjectXml.AddColor(xnStructure, "Specular", 1, 0, 0, 1)
 
-                CreateRigidBodyRootNode(xnStructure)
+                CreateRigidBodyRootNode(xnStructure, bIsFluidPlane)
 
             End Sub
 
 #Region "Rigid Body Modifiers"
 
-            Protected Overridable Sub CreateRigidBodyRootNode(ByVal xnStructure As XmlNode)
+            Protected Overridable Sub CreateRigidBodyRootNode(ByVal xnStructure As XmlNode, ByVal bIsFluidPlane As Boolean)
 
                 'We need to get the simulation node from the asim file. We will then modify it.
                 Dim strBodyPlanFile As String = m_strProjectPath & "\" & m_xnProjectXml.GetSingleNodeValue(xnStructure, "BodyPlan")
@@ -158,11 +167,11 @@ Namespace DataObjects
                     Dim xnCollisionsOld As XmlNode = xnASTL_File.GetNode(xnStruct, "CollisionExclusionPairs")
                     Dim xnCollisions As XmlNode = m_xnProjectXml.AppendNode(xnStructure, xnCollisionsOld, "CollisionExclusionPairs")
 
-                    ModifyRigidBody(xnRigidBody, m_aryIdentity)
+                    ModifyRigidBody(xnRigidBody, m_aryIdentity, bIsFluidPlane)
                 End If
             End Sub
 
-            Protected Overridable Sub ModifyRigidBody(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBody(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByVal bIsFluidPlane As Boolean)
 
                 m_xnProjectXml.AddTransparency(xnRigidBody, 0, 0, 50, 50, 0)
 
@@ -181,13 +190,15 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnRigidBody, "Rotation", False)
                 m_xnProjectXml.RemoveNode(xnRigidBody, "LocalRotation", False)
 
-                Dim aryOrientation As AnimatGuiCtrls.MatrixLibrary.Matrix = m_xnProjectXml.LoadOrientationPositionMatrix(xnRigidBody, "TranslationMatrix", "OrientationMatrix")
+                If Not m_xnProjectXml.GetNode(xnRigidBody, "OrientationMatrix", False) Is Nothing Then
+                    Dim aryOrientation As AnimatGuiCtrls.MatrixLibrary.Matrix = m_xnProjectXml.LoadOrientationPositionMatrix(xnRigidBody, "TranslationMatrix", "OrientationMatrix")
 
-                Dim oPosRot As ManagedAnimatInterfaces.PositionRotationInfo
-                oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation.toArray(), aryParentTrasform.toArray())
+                    Dim oPosRot As ManagedAnimatInterfaces.PositionRotationInfo
+                    oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation.toArray(), aryParentTrasform.toArray())
 
-                m_xnProjectXml.AddScaledVector(xnRigidBody, "LocalPosition", oPosRot.m_fltXPos * m_fltDistanceUnits, oPosRot.m_fltYPos * m_fltDistanceUnits, oPosRot.m_fltZPos * m_fltDistanceUnits)
-                m_xnProjectXml.AddScaledVector(xnRigidBody, "Rotation", Util.RadiansToDegrees(oPosRot.m_fltXRot), Util.RadiansToDegrees(oPosRot.m_fltYRot), Util.RadiansToDegrees(oPosRot.m_fltZRot))
+                    m_xnProjectXml.AddScaledVector(xnRigidBody, "LocalPosition", oPosRot.m_fltXPos * m_fltDistanceUnits, oPosRot.m_fltYPos * m_fltDistanceUnits, oPosRot.m_fltZPos * m_fltDistanceUnits)
+                    m_xnProjectXml.AddScaledVector(xnRigidBody, "Rotation", Util.RadiansToDegrees(oPosRot.m_fltXRot), Util.RadiansToDegrees(oPosRot.m_fltYRot), Util.RadiansToDegrees(oPosRot.m_fltZRot))
+                End If
 
                 Dim strType As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "Type").ToUpper
                 Dim aryChildTransform As New AnimatGuiCtrls.MatrixLibrary.Matrix(AnimatGuiCtrls.MatrixLibrary.Matrix.Identity(4))
@@ -217,6 +228,10 @@ Namespace DataObjects
                         ModifyRigidBodySpring(xnRigidBody, aryChildTransform)
                     Case "STOMACH"
                         ModifyRigidBodyStomach(xnRigidBody, aryChildTransform)
+                    Case "PLANE"
+                            ModifyRigidBodyPlane(xnRigidBody, aryChildTransform, bIsFluidPlane)
+                    Case Else
+                        Throw New System.Exception("Invalid body part type defined. '" & strType & "'")
                 End Select
 
                 'Modify the joint if it exists.
@@ -229,7 +244,7 @@ Namespace DataObjects
                 Dim xnChildren As XmlNode = m_xnProjectXml.GetNode(xnRigidBody, "ChildBodies", False)
                 If Not xnChildren Is Nothing Then
                     For Each xnChild As XmlNode In xnChildren.ChildNodes
-                        ModifyRigidBody(xnChild, aryChildTransform)
+                        ModifyRigidBody(xnChild, aryChildTransform, False)
                     Next
                 End If
 
@@ -372,9 +387,55 @@ Namespace DataObjects
 
             Protected Overridable Sub ModifyRigidBodyMuscle(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.LinearHillMuscle")
+
+                'Rename the muscle attachments to attachments.
+                Dim xnMuscleAttachs As XmlNode = m_xnProjectXml.GetNode(xnRigidBody, "MuscleAttachments")
+                m_xnProjectXml.AppendNode(xnRigidBody, xnMuscleAttachs, "Attachments")
+                m_xnProjectXml.RemoveNode(xnRigidBody, "MuscleAttachments")
+
+                'Move the Pe data from the muscle to the length-tension node
+                Dim xnLengthTen As XmlNode = m_xnProjectXml.GetNode(xnRigidBody, "LengthTension")
+                m_xnProjectXml.CopyScaledNumber(m_xnProjectXml, xnRigidBody, xnLengthTen, "PeLength", "PeLength")
+                m_xnProjectXml.CopyScaledNumber(m_xnProjectXml, xnRigidBody, xnLengthTen, "MinPeLength", "MinPeLength")
+                m_xnProjectXml.RemoveNode(xnRigidBody, "PeLength")
+                m_xnProjectXml.RemoveNode(xnRigidBody, "MinPeLength")
+
+                'Convert the stim-tension A1 to A,B,C,D
+                Dim nxStimTen As XmlNode = m_xnProjectXml.GetNode(xnRigidBody, "StimulusTension")
+                m_xnProjectXml.CopyScaledNumber(m_xnProjectXml, nxStimTen, nxStimTen, "A1", "A")
+                m_xnProjectXml.CopyScaledNumber(m_xnProjectXml, nxStimTen, nxStimTen, "A2", "B")
+                m_xnProjectXml.CopyScaledNumber(m_xnProjectXml, nxStimTen, nxStimTen, "A3", "C")
+                m_xnProjectXml.CopyScaledNumber(m_xnProjectXml, nxStimTen, nxStimTen, "A4", "D")
+                m_xnProjectXml.RemoveNode(nxStimTen, "A1")
+                m_xnProjectXml.RemoveNode(nxStimTen, "A2")
+                m_xnProjectXml.RemoveNode(nxStimTen, "A3")
+                m_xnProjectXml.RemoveNode(nxStimTen, "A4")
+
             End Sub
 
             Protected Overridable Sub ModifyRigidBodyStretchReceptor(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+
+                ModifyRigidBodyMuscle(xnRigidBody, aryParentTrasform)
+
+                m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.LinearHillStretchReceptor")
+
+            End Sub
+
+            Protected Overridable Sub ModifyRigidBodySpring(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Spring")
+
+                Dim strPrimID As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "PrimaryAttachmentID")
+                Dim strSecID As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "SecondaryAttachmentID")
+
+                Dim xnAttachments As XmlNode = m_xnProjectXml.AddNodeValue(xnRigidBody, "Attachments", "")
+                Dim xnPrimAttach As XmlNode = m_xnProjectXml.AddNodeValue(xnAttachments, "AttachID", strPrimID)
+                Dim xnSecAttach As XmlNode = m_xnProjectXml.AddNodeValue(xnAttachments, "AttachID", strSecID)
+
+                m_xnProjectXml.RemoveNode(xnRigidBody, "PrimaryAttachmentID")
+                m_xnProjectXml.RemoveNode(xnRigidBody, "SecondaryAttachmentID")
 
             End Sub
 
@@ -383,6 +444,19 @@ Namespace DataObjects
             End Sub
 
             Protected Overridable Sub ModifyRigidBodyMouth(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform)
+
+                m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Mouth")
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "ModuleName", "VortexAnimatPrivateSim_VC10D.dll")
+            End Sub
+
+            Protected Overridable Sub ModifyRigidBodyStomach(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform)
+
+                m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Stomach")
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "ModuleName", "VortexAnimatPrivateSim_VC10D.dll")
 
             End Sub
 
@@ -408,14 +482,29 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodySpring(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodyPlane(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByVal bIsFluidPlane As Boolean)
+
+                If bIsFluidPlane Then
+                    m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.FluidPlane")
+
+                    'Set the density of the fluid plane to be the fluid density from the old sim.
+                    m_xnProjectXml.RemoveNode(xnRigidBody, "Density")
+                    m_xnProjectXml.AddScaledNumber(xnRigidBody, "Density", m_dblFluidDensity, "None", m_dblFluidDensity)
+
+                    'Add fluid velocity
+                    m_xnProjectXml.AddScaledVector(xnRigidBody, "Velocity", 0, 0, 0)
+                Else
+                    m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Plane")
+                End If
+
+                m_xnProjectXml.RemoveNode(xnRigidBody, "Rotation")
+                m_xnProjectXml.AddScaledVector(xnRigidBody, "Rotation", -90, 0, 0)
+
+                m_xnProjectXml.AddScaledVector(xnRigidBody, "Size", 10, 10, 0)
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "WidthSegments", "1")
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "LengthSegments", "1")
 
             End Sub
-
-            Protected Overridable Sub ModifyRigidBodyStomach(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
-
-            End Sub
-
 #End Region
 
 #End Region
@@ -535,6 +624,18 @@ Namespace DataObjects
 
             End Sub
 
+            Protected Overridable Sub ModifySurface(ByVal strType As String, ByVal xnEnvironment As XmlNode, ByVal xnStructs As XmlNode, ByVal aryReplaceText As Hashtable, ByVal bIsFluidPlane As Boolean)
+
+                Dim xnGround As XmlNode = m_xnProjectXml.GetNode(xnEnvironment, strType & "Surface", False)
+                If Not xnGround Is Nothing Then
+
+                    Dim xnStruct As XmlNode = m_xnProjectXml.AppendNode(xnStructs, xnGround.InnerXml, "Structure", aryReplaceText)
+
+                    ModifyStructure(xnStruct, bIsFluidPlane)
+                End If
+
+            End Sub
+
 #End Region
 
 #Region "Modify Nervous System"
@@ -554,6 +655,8 @@ Namespace DataObjects
                     Dim xnOldDiagrams As XmlNode = m_xnProjectXml.GetNode(xnOldRoot, "Diagrams")
                     Dim xnOldDiagram As XmlNode = m_xnProjectXml.GetNode(xnOldDiagrams, "Diagram")
                     ConvertRootDiagramToSubsystem(xnBodyFile, xnNervousSys, xnOldDiagram)
+                Else
+                    CreateDefaultNervousSystem(xnNervousSys)
                 End If
 
             End Sub
@@ -575,6 +678,63 @@ Namespace DataObjects
 
                 Return xnBodyFile
             End Function
+
+            Protected Overridable Sub CreateDefaultNervousSystem(ByVal xnNervousSys As XmlNode)
+
+                Dim strXml As String = "<NeuralModules/>" & vbCrLf & _
+                                "<Node>" & vbCrLf & _
+                                "<AssemblyFile>AnimatGUI.dll</AssemblyFile>" & vbCrLf & _
+                                "<ClassName>AnimatGUI.DataObjects.Behavior.Nodes.Subsystem</ClassName>" & vbCrLf & _
+                                "<ID>" & System.Guid.NewGuid.ToString & "</ID>" & vbCrLf & _
+                                "<Alignment>CenterMiddle</Alignment>" & vbCrLf & _
+                                "<AutoSize>None</AutoSize>" & vbCrLf & _
+                                "<BackMode>Transparent</BackMode>" & vbCrLf & _
+                                "<DashStyle>Solid</DashStyle>" & vbCrLf & _
+                                "<DrawColor>-16777216</DrawColor>" & vbCrLf & _
+                                "<DrawWidth>1</DrawWidth>" & vbCrLf & _
+                                "<FillColor>-8586240</FillColor>" & vbCrLf & _
+                                "<Font Family=""Arial"" Size=""12"" Bold=""True"" Underline=""False"" Strikeout=""False"" Italic=""False""/>" & vbCrLf & _
+                                "<Gradient>False</Gradient>" & vbCrLf & _
+                                "<GradientColor>0</GradientColor>" & vbCrLf & _
+                                "<GradientMode>BackwardDiagonal</GradientMode>" & vbCrLf & _
+                                "<DiagramImageName/>" & vbCrLf & _
+                                "<ImageName/>" & vbCrLf & _
+                                "<ImageLocation x=""0"" y=""0""/>" & vbCrLf & _
+                                "<ImagePosition>RelativeToText</ImagePosition>" & vbCrLf & _
+                                "<InLinkable>True</InLinkable>" & vbCrLf & _
+                                "<LabelEdit>True</LabelEdit>" & vbCrLf & _
+                                "<Location x=""0"" y=""0""/>" & vbCrLf & _
+                                "<OutLinkable>True</OutLinkable>" & vbCrLf & _
+                                "<ShadowStyle>None</ShadowStyle>" & vbCrLf & _
+                                "<ShadowColor>-16777216</ShadowColor>" & vbCrLf & _
+                                "<ShadowSize Width=""0"" Height=""0""/>" & vbCrLf & _
+                                "<Shape>Rectangle</Shape>" & vbCrLf & _
+                                "<ShapeOrientation>Angle0</ShapeOrientation>" & vbCrLf & _
+                                "<Size Width=""40"" Height=""40""/>" & vbCrLf & _
+                                "<Text>Neural Subsystem</Text>" & vbCrLf & _
+                                "<TextColor>-16777216</TextColor>" & vbCrLf & _
+                                "<TextMargin Width=""0"" Height=""0""/>" & vbCrLf & _
+                                "<ToolTip/>" & vbCrLf & _
+                                "<Transparent>False</Transparent>" & vbCrLf & _
+                                "<Url/>" & vbCrLf & _
+                                "<XMoveable>True</XMoveable>" & vbCrLf & _
+                                "<XSizeable>True</XSizeable>" & vbCrLf & _
+                                "<YMoveable>True</YMoveable>" & vbCrLf & _
+                                "<YSizeable>True</YSizeable>" & vbCrLf & _
+                                "<ZOrder>0</ZOrder>" & vbCrLf & _
+                                "<InLinks/>" & vbCrLf & _
+                                "<OutLinks/>" & vbCrLf & _
+                                "<Nodes/>" & vbCrLf & _
+                                "<Links/>" & vbCrLf & _
+                                "<DiagramXml>" & vbCrLf & _
+                                "<![CDATA[]]>" & vbCrLf & _
+                                "</DiagramXml>" & vbCrLf & _
+                                "</Node>"
+
+                xnNervousSys.InnerXml = strXml
+
+            End Sub
+
 
 #Region "NeuralModules"
 
@@ -613,7 +773,7 @@ Namespace DataObjects
                 m_xnProjectXml.AddNodeValue(xnNewNeuralMod, "ID", System.Guid.NewGuid.ToString)
                 m_xnProjectXml.AddNodeValue(xnNewNeuralMod, "AssemblyFile", "AnimatGUI.dll")
                 m_xnProjectXml.AddNodeValue(xnNewNeuralMod, "ClassName", "AnimatGUI.DataObjects.Behavior.PhysicsModule")
-                m_xnProjectXml.CopyScaledNumber(xnBodyFile, xnOldMod, xnNewNeuralMod, "TimeStep")
+                m_xnProjectXml.CopyScaledNumber(xnBodyFile, xnOldMod, xnNewNeuralMod, "TimeStep", "TimeStep")
             End Sub
 
             Protected Overridable Sub CreateFastNeuralModule(ByVal xnBodyFile As Framework.XmlDom, ByVal xnOldMod As XmlNode, ByVal xnNewNeuralMods As XmlNode)
@@ -622,7 +782,7 @@ Namespace DataObjects
                 m_xnProjectXml.AddNodeValue(xnNewNeuralMod, "ID", System.Guid.NewGuid.ToString)
                 m_xnProjectXml.AddNodeValue(xnNewNeuralMod, "AssemblyFile", "FiringRateGUI.dll")
                 m_xnProjectXml.AddNodeValue(xnNewNeuralMod, "ClassName", "FiringRateGUI.DataObjects.Behavior.NeuralModule")
-                m_xnProjectXml.CopyScaledNumber(xnBodyFile, xnOldMod, xnNewNeuralMod, "TimeStep")
+                m_xnProjectXml.CopyScaledNumber(xnBodyFile, xnOldMod, xnNewNeuralMod, "TimeStep", "TimeStep")
 
             End Sub
 
@@ -635,6 +795,7 @@ Namespace DataObjects
                 m_xnProjectXml.AddNodeValue(xnNewNeuralMod, "ID", System.Guid.NewGuid.ToString)
 
             End Sub
+
 #End Region
 
 #Region "Diagrams"
