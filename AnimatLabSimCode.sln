@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VortexAnimatSim", "Librarie
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BootstrapLoader", "Libraries\BootstrapLoader\BootstrapLoader.vcxproj", "{A79592E1-88E3-44CE-8FBC-7B7CE7180E4A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VortexAnimatPrivateSim", "..\AnimatLabPrivateSource\Libraries\VortexAnimatPrivateSim\VortexAnimatPrivateSim.vcxproj", "{10578310-463D-43A6-816B-B4BD4C8670AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -43,6 +45,10 @@ Global
 		{A79592E1-88E3-44CE-8FBC-7B7CE7180E4A}.Debug|Win32.Build.0 = Debug|Win32
 		{A79592E1-88E3-44CE-8FBC-7B7CE7180E4A}.Release|Win32.ActiveCfg = Release|Win32
 		{A79592E1-88E3-44CE-8FBC-7B7CE7180E4A}.Release|Win32.Build.0 = Release|Win32
+		{10578310-463D-43A6-816B-B4BD4C8670AF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{10578310-463D-43A6-816B-B4BD4C8670AF}.Debug|Win32.Build.0 = Debug|Win32
+		{10578310-463D-43A6-816B-B4BD4C8670AF}.Release|Win32.ActiveCfg = Release|Win32
+		{10578310-463D-43A6-816B-B4BD4C8670AF}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

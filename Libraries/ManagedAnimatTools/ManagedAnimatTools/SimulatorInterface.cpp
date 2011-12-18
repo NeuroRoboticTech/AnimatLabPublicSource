@@ -164,7 +164,7 @@ namespace AnimatGUI
 
 					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Debug, "About to create the simulation.");	
 	
-					m_lpSim = AnimatSim::Simulator::CreateSimulator(oXml);					
+					m_lpSim = AnimatSim::Simulator::CreateSimulator("", oXml);					
 
 					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Debug, "About to load the simulation.");
 					string strProjectPath = Util::StringToStd(m_strProjectPath);

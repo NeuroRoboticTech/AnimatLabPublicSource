@@ -188,39 +188,6 @@ void VsSimulator::StopSimulation()
 		ToggleSimulation();
 	m_bSimRunning = FALSE;
 }
-//
-//void VsSimulator::CreateLights()
-//{
-//    osg::StateSet* rootStateSet = m_grpScene->getOrCreateStateSet();
-//	//rootStateSet->setMode( GL_LIGHTING, osg::StateAttribute::ON );
-//
-//// create sun light
-//	osg::ref_ptr<osg::Group> osgLightGroup = new osg::Group;
-//
-//    // Set up lighting.
-//    osg::Vec4 ambient(1.0, 1.0, 1.0, 1.0);
-//    osg::Vec4 diffuse(1.0, 1.0, 1.0, 1.0);
-//    osg::Vec4 specular(1.0, 1.0, 1.0, 1.0);
-//    osg::Vec4 position(10, 30, 0, 1);
-//    //osg::Vec3 direction(0, -1, 0);
-//    //direction.normalize();
-//
-//    osg::ref_ptr<osg::Light> light = new osg::Light;
-//    light->setAmbient(ambient);
-//    light->setDiffuse(diffuse);
-//    light->setSpecular(specular);
-//    light->setPosition(position);
-//    //light->setDirection(direction);
-//
-//    osg::ref_ptr<osg::LightSource> lightSource = new osg::LightSource;
-//    lightSource->setLight(light.get());
-//	osgLightGroup->addChild(lightSource.get());
-//    osg::StateSet *groupStateSet = osgLightGroup->getOrCreateStateSet();
-//	lightSource->setStateSetModes(*groupStateSet, osg::StateAttribute::ON); 
-//
-//	m_grpScene->addChild(osgLightGroup.get());
-//}
-
 
 void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
 {
@@ -258,18 +225,25 @@ void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
 	//rootStateSet->setMode( GL_LIGHT1, osg::StateAttribute::ON );
 
 	m_oLightMgr.Initialize();
-    //CreateLights();
+
+  /*  VxSolverParameters *sp = m_uUniverse->getSolverParameters();
+	float fltAC = sp->getConstraintAngularCompliance();
+	float fltAK = sp->getConstraintAngularKineticLoss();
+	float fltLC = sp->getConstraintLinearCompliance();
+	float fltLK = sp->getConstraintLinearDamping();
+	float fltLD = sp->getConstraintLinearKineticLoss();*/
+	//float fltC = sp->setConstraintAngularDamping();
+
+ /*   sp->setConstraintAngularCompliance(c);
+    sp->setConstraintAngularDamping(b);
+    sp->setConstraintAngularKineticLoss(1e-8);
+    sp->setConstraintLinearCompliance(c);
+    sp->setConstraintLinearDamping(b);
+    sp->setConstraintLinearKineticLoss(1e-8);
+    sp->setLcpParam(20, 10, 1.e-4);*/
+
 }
 
-	//TODO Add to sim
-    //VxSolverParameters* sp = universe->getSolverParameters();
-    //sp->setConstraintAngularCompliance(c);
-    //sp->setConstraintAngularDamping(b);
-    //sp->setConstraintAngularKineticLoss(1e-8);
-    //sp->setConstraintLinearCompliance(c);
-    //sp->setConstraintLinearDamping(b);
-    //sp->setConstraintLinearKineticLoss(1e-8);
-    //sp->setLcpParam(20, 10, 1.e-4);
 //This function initializes the Vortex related
 //classes and the vortex viewer.
 void VsSimulator::InitializeVortex(int argc, const char **argv)
@@ -544,7 +518,7 @@ VsSimulator *VsSimulator::ConvertSimulator(Simulator *lpSim)
 void VsSimulator::Save(string strFile) 
 {
 	string strOsgFile = strFile + ".osg";
-	//string strVxFile = strFile + ".vxf";
+	string strVxFile = strFile + ".vxf";
 
 	//Temp code. Lets save it out and make sure the collision stuff is actually correct.
 	//VxPersistence::saveFrame(strVxFile.c_str(), VxPersistence::kAutoGenerateGraphics);

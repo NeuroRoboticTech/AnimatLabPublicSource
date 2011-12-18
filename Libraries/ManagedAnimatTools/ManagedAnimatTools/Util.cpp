@@ -43,8 +43,7 @@ namespace AnimatGUI
 
 			if(lpLogger != nullptr) lpLogger->LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Detail, "StringToHGlobalAnsi");     
 
-			const char* chars = 
-				(const char*)(Marshal::StringToHGlobalAnsi(s)).ToPointer();
+			const char* chars = (const char*)(Marshal::StringToHGlobalAnsi(s)).ToPointer();
 			std::string os = chars;
 
 			if(lpLogger != nullptr) lpLogger->LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Detail, "FreeHGlobal");     

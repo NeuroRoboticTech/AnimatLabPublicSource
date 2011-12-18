@@ -175,6 +175,8 @@
 #define Std_Err_lSettingEquation -2020
 #define Std_Err_strSettingEquation "An unexpected error occured while setting an equation."
 
+#define Std_Err_lNoProjectParamOnCommandLine -2021
+#define Std_Err_strNoProjectParamOnCommandLine "There was no project parameter defined on the command line."
 
 //*** PostFixEval Errors ****
 

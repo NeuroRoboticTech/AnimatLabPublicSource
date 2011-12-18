@@ -154,6 +154,7 @@ bool STD_UTILS_PORT Std_IsAboveMin(double dblMinVal, double dblVal, bool bThrowE
 string STD_UTILS_PORT Std_CheckString(string strVal);
 bool STD_UTILS_PORT Std_IsBlank(string strVal);
 
+string STD_UTILS_PORT Std_RetrieveParam(int argc, const char **argv, string strParamName, bool bThrowError = true);
 
 //***************************************************************************************************************
 // Byte Array Functions

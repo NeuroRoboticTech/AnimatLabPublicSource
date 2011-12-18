@@ -1781,6 +1781,33 @@ bool STD_UTILS_PORT Std_IsBlank(string strVal)
 }
 
 
+string STD_UTILS_PORT Std_RetrieveParam(int argc, const char **argv, string strParamName, bool bThrowError)
+{
+	int iParam=0;
+	bool bRetrieved=false, bFound = false;
+	string strParam="", strFound ="";
+	while(!bRetrieved && iParam<argc)
+	{
+		strParam = Std_ToUpper(Std_Trim(argv[iParam]));
+
+		if(bFound)
+		{
+			strFound = strParam;
+			bRetrieved = true;
+		}
+
+		if(strParam == strParamName)
+			bFound = true;
+
+		iParam++;
+	}
+
+	if(bThrowError && !bRetrieved)
+		THROW_PARAM_ERROR(Std_Err_lNoProjectParamOnCommandLine, Std_Err_strNoProjectParamOnCommandLine, "Param", strParamName);
+
+	return strFound;
+}
+
 //***************************************************************************************************************
 // Byte Array Functions
 

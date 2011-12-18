@@ -2629,29 +2629,16 @@ Simulator *Simulator::CreateSimulator(int argc, const char **argv)
 		Std_SetLogFilePrefix(strExecutablePath + "AnimatSimulator");
 #endif
 
-	int iParam=0;
-	BOOL bRetrieved=FALSE, bFound = FALSE;
-	string strParam, strProject;
-	while(!bRetrieved && iParam<argc)
-	{
-		strParam = Std_ToUpper(Std_Trim(argv[iParam]));
-
-		if(bFound)
-		{
-			strProject = strParam;
-			bRetrieved = TRUE;
-		}
-
-		if(strParam == "-PROJECT")
-			bFound = TRUE;
-
-		iParam++;
-	}
+	string strProject = Std_RetrieveParam(argc, argv, "-PROJECT", false);
+	string strAnimatModule = Std_RetrieveParam(argc, argv, "-LIBRARY", true);
 
 	if(Std_IsBlank(strProject))
 		THROW_ERROR(Al_Err_lNoProjectParamOnCommandLine, Al_Err_strNoProjectParamOnCommandLine);
 
-	return CreateSimulator(strProject);
+	if(Std_IsBlank(strAnimatModule))
+		THROW_ERROR(Al_Err_lNoModuleParamOnCommandLine, Al_Err_strNoModuleParamOnCommandLine);
+
+	return CreateSimulator(strAnimatModule, strProject);
 }
 
 /**
@@ -2664,10 +2651,9 @@ Simulator *Simulator::CreateSimulator(int argc, const char **argv)
 
 \return	Pointer to the new simulator.
 **/
-Simulator *Simulator::CreateSimulator(string strSimulationFile)
+Simulator *Simulator::CreateSimulator(string strAnimatModule, string strSimulationFile)
 {
 	Simulator *lpSim = NULL;
-	string strAnimatModule;
 	IStdClassFactory *lpAnimatFactory=NULL;
 
 #ifdef _ANIMAT_VC8
@@ -2715,7 +2701,8 @@ try
 		strSimulationFile = strProjectPath + strSimulationFile;
 	}
 
-	LoadAnimatModuleName(strSimulationFile, strAnimatModule);
+	if(Std_IsBlank(strAnimatModule))
+		LoadAnimatModuleName(strSimulationFile, strAnimatModule);
 
 	lpAnimatFactory = LoadClassFactory(strAnimatModule);
 
@@ -2763,10 +2750,9 @@ catch(...)
 
 \return	Pointer to the new simulator.
 **/
-Simulator *Simulator::CreateSimulator(CStdXml &oXml)
+Simulator *Simulator::CreateSimulator(string strAnimatModule, CStdXml &oXml)
 {
 	Simulator *lpSim = NULL;
-	string strAnimatModule;
 	IStdClassFactory *lpAnimatFactory=NULL;
 
 #ifdef _ANIMAT_VC8
@@ -2803,7 +2789,8 @@ try
 
 	Std_SplitPathAndFile(strBuffer, strExecutablePath, strExeFile);
 
-	LoadAnimatModuleName(oXml, strAnimatModule);
+	if(Std_IsBlank(strAnimatModule))
+		LoadAnimatModuleName(oXml, strAnimatModule);
 
 	lpAnimatFactory = LoadClassFactory(strAnimatModule);
 

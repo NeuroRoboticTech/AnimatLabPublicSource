@@ -63,7 +63,7 @@ int BOOTSTRAP_LOADER_PORT BootStrap_RunLibrary(int argc, const char **argv)
 	}
 
 	RunLibrary lpRunLibrary = NULL;
-  lpRunLibrary = (RunLibrary) GetProcAddress(hMod, "BootstrapRunLibrary"); 
+	lpRunLibrary = (RunLibrary) GetProcAddress(hMod, "BootstrapRunLibrary"); 
 
 	if(!lpRunLibrary)
 	{

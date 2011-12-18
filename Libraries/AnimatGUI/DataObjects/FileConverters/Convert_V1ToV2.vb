@@ -374,6 +374,19 @@ Namespace DataObjects
             End Sub
 
             Protected Overridable Sub ModifyRigidBodyCylinder(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Cylinder")
+
+                Dim fltRadius As Single = CSng(m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "CollisionRadius")) * m_fltDistanceUnits
+                Dim fltHeight As Single = CSng(m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "CollisionHeight")) * m_fltDistanceUnits
+
+                m_xnProjectXml.RemoveNode(xnRigidBody, "Radius")
+                m_xnProjectXml.RemoveNode(xnRigidBody, "Height")
+                m_xnProjectXml.RemoveNode(xnRigidBody, "CollisionRadius")
+                m_xnProjectXml.RemoveNode(xnRigidBody, "CollisionHeight")
+
+                m_xnProjectXml.AddScaledNumber(xnRigidBody, "Radius", fltRadius, "None", fltRadius)
+                m_xnProjectXml.AddScaledNumber(xnRigidBody, "Height", fltHeight, "None", fltHeight)
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "Sides", "30")
 
             End Sub
 

@@ -60,6 +60,7 @@
 #include "Vx/VxDynamicsResponseInput.h"
 #include "Vx/VxIntersectResult.h"
 #include "Vx/VxFluidInteraction.h"
+#include "Vx/VxSolverParameters.h"
 
 #include "VxVehicle/VxVehicleBase.h"
 #include "VxVehicle/VxCommonVehicleSub.h"

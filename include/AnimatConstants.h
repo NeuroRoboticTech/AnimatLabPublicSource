@@ -409,6 +409,13 @@
 #define Al_Err_lMatrixElementCountInvalid -4059
 #define Al_Err_strMatrixElementCountInvalid "The element count for the loaded transformation matrix is incorrect."
 
+#define Al_Err_lMatrixElementCountInvalid -4059
+#define Al_Err_strMatrixElementCountInvalid "The element count for the loaded transformation matrix is incorrect."
+
+#define Al_Err_lNoModuleParamOnCommandLine -4060
+#define Al_Err_strNoModuleParamOnCommandLine "There was no module parameter defined on the command line."
+
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 #define PI 3.14159

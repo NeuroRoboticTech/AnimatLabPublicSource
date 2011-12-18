@@ -805,8 +805,8 @@ namespace AnimatSim
 #pragma region CreateMethods
 
 			virtual CStdSerialize *CreateObject(string strModule, string strClassName, string strType, BOOL bThrowError = TRUE);
-			static Simulator *CreateSimulator(string strSimulationFile);
-			static Simulator *CreateSimulator(CStdXml &oXml);
+			static Simulator *CreateSimulator(string strAnimatModule, string strSimulationFile);
+			static Simulator *CreateSimulator(string strAnimatModule, CStdXml &oXml);
 			static Simulator *CreateSimulator(string strAnimatModule, string strProjectPath, string strExecutablePath);
 			static Simulator *CreateSimulator(int argc, const char **argv);
 			virtual void GenerateCollisionMeshFile(string strOriginalMeshFile, string strCollisionMeshFile) = 0;
