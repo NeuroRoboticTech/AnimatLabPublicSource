@@ -1,11 +1,8 @@
 #include "stdafx.h"
-//#include "ILogger.h"
 #include "Util.h"
 #include "PropertyUpdateException.h"
-//#include "ISimulatorInterface.h"
 #include "SimulatorInterface.h"
 #include "SimGUICallback.h"
-//#include "IDataObjectInterface.h"
 #include "DataObjectInterface.h"
 #include "MovableItemCallback.h"
 
@@ -79,6 +76,8 @@ void DataObjectInterface::GetPointers()
 {
 	try
 	{
+		TRACE_DEBUG("Getting Dataobject position pointers.\r\n");
+
 		m_lpPositionX = m_lpBase->GetDataPointer("POSITIONX");
 		m_lpPositionY = m_lpBase->GetDataPointer("POSITIONY");
 		m_lpPositionZ = m_lpBase->GetDataPointer("POSITIONZ");
@@ -90,6 +89,8 @@ void DataObjectInterface::GetPointers()
 		m_lpRotationX = m_lpBase->GetDataPointer("ROTATIONX");
 		m_lpRotationY = m_lpBase->GetDataPointer("ROTATIONY");
 		m_lpRotationZ = m_lpBase->GetDataPointer("ROTATIONZ");
+
+		TRACE_DEBUG("Got Dataobject position pointers.\r\n");
 	}
 	catch(...)
 	{
@@ -117,6 +118,9 @@ System::Boolean DataObjectInterface::SetData(String ^sDataType, String ^sValue, 
 			{
 				string strDataType = Std_Trim(Std_ToUpper(Util::StringToStd(sDataType)));
 				string strValue = Util::StringToStd(sValue);
+
+				TRACE_DEBUG("Setting data. Object ID: " + m_lpBase->ID() + ", DataType: " + strDataType + ", Value: " + strValue + "\r\n");
+
 				BOOL bVal = m_lpBase->SetData(strDataType, strValue, bThrowError);
 
 				m_lpSim->UnblockSimulation();
@@ -153,6 +157,8 @@ void DataObjectInterface::SelectItem(bool bVal, bool bSelectMultiple)
 	{
 		if(m_lpSim->WaitForSimulationBlock())
 		{
+			TRACE_DEBUG("Selecting Item. Object ID: " + m_lpBase->ID() + ", Val: " + STR(bVal) + ", Select Multiple: " + STR(bSelectMultiple) + "\r\n");
+
 			if(m_lpBase && ((BOOL) bVal) != m_lpBase->Selected())
 				m_lpBase->Selected( (BOOL) bVal, (BOOL) bSelectMultiple);
 
@@ -183,6 +189,9 @@ void DataObjectInterface::GetDataPointer(String ^sData)
 		if(m_lpBase) 
 		{
 			string strData = Util::StringToStd(sData);
+
+			TRACE_DEBUG("Getting Data pointer Item. Object ID: " + m_lpBase->ID() + ", Data: " + strData+ "\r\n");
+
 			float *lpData = m_lpBase->GetDataPointer(strData);
 
 			if(!lpData) 
@@ -217,6 +226,9 @@ float *DataObjectInterface::FindDataPointer(string strData, BOOL bThrowError)
 	if(m_aryDataPointers)
 	{
 		CStdMap<string, float *>::iterator oPos;
+	
+		TRACE_DEBUG("FindDataPointer. Object ID: " + m_lpBase->ID() + ", Data: " + strData+ "\r\n");
+
 		oPos = m_aryDataPointers->find(Std_CheckString(strData));
 
 		if(oPos != m_aryDataPointers->end())
@@ -240,6 +252,8 @@ float DataObjectInterface::GetDataValue(String ^sData)
 	{
 		string strData = Util::StringToStd(sData);
 		float *lpData = NULL;
+
+		TRACE_DEBUG("GetDataValue. Object ID: " + m_lpBase->ID() + ", Data: " + strData + "\r\n");
 
 		CStdMap<string, float *>::iterator oPos;
 		oPos = m_aryDataPointers->find(Std_CheckString(strData));

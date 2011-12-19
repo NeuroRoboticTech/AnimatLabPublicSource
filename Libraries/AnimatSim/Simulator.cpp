@@ -2154,7 +2154,7 @@ void Simulator::Load(string strFileName)
 {
 	CStdXml oXml;
 
-	//TRACE_DEBUG(("Loading simulator config file.\r\nFileName: " + strFileName);
+	TRACE_DEBUG("Loading simulator config file.\r\nFileName: " + strFileName);
 
 	if(Std_IsBlank(strFileName))
 	{
@@ -2171,7 +2171,7 @@ void Simulator::Load(string strFileName)
 
 	Load(oXml);
 
-	//TRACE_DEBUG(("Finished loading simulator config file.");
+	TRACE_DEBUG("Finished loading simulator config file.");
 }
 
 /**
@@ -2187,7 +2187,7 @@ void Simulator::Save(string strFilename) {};
 
 void Simulator::Load(CStdXml &oXml)
 {
-	//TRACE_DEBUG(("Loading simulator config from Xml.");
+	TRACE_DEBUG("Loading simulator config from Xml.");
 
 	Reset();
 
@@ -2219,7 +2219,7 @@ void Simulator::Load(CStdXml &oXml)
 	if(m_lpSimRecorder && oXml.FindChildElement("RecorderKeyFrames", FALSE))
 		m_lpSimRecorder->Load(oXml);
 
-	//TRACE_DEBUG(("Finished loading simulator config from Xml.");
+	TRACE_DEBUG("Finished loading simulator config from Xml.");
 }
 
 /**
@@ -2267,7 +2267,7 @@ catch(...)
 **/
 void Simulator::LoadEnvironment(CStdXml &oXml)
 {
-	//TRACE_DEBUG(("Loading structures from Xml.");
+	TRACE_DEBUG("Loading structures from Xml.");
 
 	if(!m_lpAnimatClassFactory)
 		THROW_ERROR(Al_Err_lClassFactoryNotDefined, Al_Err_strClassFactoryNotDefined);
@@ -2352,7 +2352,7 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 
 	oXml.OutOfElem(); //OutOf Environment Element
 
-	//TRACE_DEBUG(("Finished loading structures from Xml.");
+	TRACE_DEBUG("Finished loading structures from Xml.");
 }
 
 /**
@@ -2494,7 +2494,7 @@ void Simulator::LoadAnimatModuleName(string strFile, string &strAnimatModule)
 {
 	CStdXml oXml;
 
-	//TRACE_DEBUG(("Loading simulator module name file.\r\nFileName: " + strFile);
+	TRACE_DEBUG("Loading simulator module name file.\r\nFileName: " + strFile);
 
 	if(Std_IsBlank(strFile))
 		THROW_ERROR(Al_Err_lSimFileBlank, Al_Err_strSimFileBlank);
@@ -2503,7 +2503,7 @@ void Simulator::LoadAnimatModuleName(string strFile, string &strAnimatModule)
 
 	LoadAnimatModuleName(oXml, strAnimatModule);
 
-	//TRACE_DEBUG(("Finished loading simulator module name.");
+	TRACE_DEBUG("Finished loading simulator module name.");
 }
 
 /**

@@ -12,10 +12,9 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return "";
-				/*string strPrefix = Std_GetLogFilePrefix();
+				string strPrefix = Std_GetLogFilePrefix();
 				System::String ^strVal = gcnew System::String(strPrefix.c_str());
-				return strVal;*/
+				return strVal;
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -30,11 +29,11 @@ namespace AnimatGUI
 		{
 			try
 			{ 
-			/*	string strLogFile = Util::StringToStd(sLogFile);
+				string strLogFile = Util::StringToStd(sLogFile);
 	 
 				Std_TraceMsg(0, ("LogFile: " + strLogFile), __FILE__, __LINE__, STD_TRACE_TO_FILE, true);
 						 
-				Std_SetLogFilePrefix(strLogFile);*/
+				Std_SetLogFilePrefix(strLogFile);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -49,8 +48,8 @@ namespace AnimatGUI
 		{
 			try
 			{
-				return ManagedAnimatInterfaces::ILogger::enumLogLevel::None;
-					//return (Logger::enumLogLevel) Std_GetTraceLevel();
+				//return ManagedAnimatInterfaces::ILogger::enumLogLevel::None;
+				return (Logger::enumLogLevel) Std_GetTraceLevel();
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -65,7 +64,7 @@ namespace AnimatGUI
 		{
 			try
 			{
-				//Std_SetTraceLevel((int) eLevel);
+				Std_SetTraceLevel((int) eLevel);
 			}
 			catch(CStdErrorInfo oError)
 			{
@@ -80,8 +79,8 @@ namespace AnimatGUI
 		{
 			try
 			{
-				//string strMessage = Util::StringToStd(sMessage);
-				//Std_LogMsg((int)eLevel, strMessage, "", -1, FALSE);
+				string strMessage = Util::StringToStd(sMessage);
+				Std_LogMsg((int)eLevel, strMessage, "", -1, TRUE);
 			}
 			catch(CStdErrorInfo oError)
 			{

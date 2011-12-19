@@ -1028,11 +1028,6 @@ Namespace Forms
             Monthly
         End Enum
 
-        Public Enum enumRuntimeMode
-            Release
-            Debug
-        End Enum
-
 #End Region
 
 #Region " Attributes "
@@ -1043,7 +1038,7 @@ Namespace Forms
         Protected m_bUseMockSimInterface As Boolean = False
         Protected m_bUseMockDataObjectInterface As Boolean = False
         Protected m_bUseMockStdXml As Boolean = False
-        Protected m_bUseNetLogger As Boolean = True
+        Protected m_bUseNetLogger As Boolean = False
 
         Protected m_mgrToolStripImages As AnimatGUI.Framework.ImageManager
         Protected m_mgrLargeImages As AnimatGUI.Framework.ImageManager
@@ -1146,7 +1141,7 @@ Namespace Forms
 
         Protected m_SecurityMgr As New AnimatGuiCtrls.Security.SecurityManager
 
-        Protected m_eDefaultRuntimeMode As enumRuntimeMode = enumRuntimeMode.Release
+        Protected m_eDefaultLogLevel As ManagedAnimatInterfaces.ILogger.enumLogLevel = ManagedAnimatInterfaces.ILogger.enumLogLevel.ErrorType
         Protected m_strSimVCVersion As String = "10"
 
 #End Region
@@ -1207,22 +1202,13 @@ Namespace Forms
             End Get
         End Property
 
-        Public Overridable Property DefaultRuntimeMode() As enumRuntimeMode
-            Get
-                Return m_eDefaultRuntimeMode
-            End Get
-            Set(ByVal Value As enumRuntimeMode)
-                m_eDefaultRuntimeMode = Value
-            End Set
-        End Property
-
         Public Overridable ReadOnly Property RuntimeModePrefix() As String
             Get
-                If m_eDefaultRuntimeMode = enumRuntimeMode.Debug Then
-                    Return "D"
-                Else
-                    Return ""
-                End If
+#If Debug Then
+                Return "D"
+#Else
+                Return ""
+#End If
             End Get
         End Property
 
@@ -1654,7 +1640,7 @@ Namespace Forms
             If m_bUseNetLogger Then
                 iLog = New AnimatGUI.Framework.Logger()
             Else
-                'iLog = New Interfaces.Logger()
+                iLog = DirectCast(Util.LoadClass("ManagedAnimatTools.dll", "AnimatGUI.Interfaces.Logger"), ManagedAnimatInterfaces.ILogger)
             End If
 
             Return iLog
@@ -1776,7 +1762,7 @@ Namespace Forms
 
                 m_eAutoUpdateInterval = DirectCast([Enum].Parse(GetType(enumAutoUpdateInterval), System.Configuration.ConfigurationManager.AppSettings("UpdateFrequency"), True), enumAutoUpdateInterval)
 
-                m_eDefaultRuntimeMode = DirectCast([Enum].Parse(GetType(enumRuntimeMode), System.Configuration.ConfigurationManager.AppSettings("DefaultRuntimeMode"), True), enumRuntimeMode)
+                m_eDefaultLogLevel = DirectCast([Enum].Parse(GetType(ManagedAnimatInterfaces.ILogger.enumLogLevel), System.Configuration.ConfigurationManager.AppSettings("DefaultLogLevel"), True), ManagedAnimatInterfaces.ILogger.enumLogLevel)
 
                 Try
                     Dim strDate As String = System.Configuration.ConfigurationManager.AppSettings("UpdateTime")
@@ -1809,7 +1795,7 @@ Namespace Forms
                 End If
                 Me.LogDirectory = Me.ApplicationDirectory & "Logs\"
 
-                Me.Logger.TraceLevel = ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail
+                Me.Logger.TraceLevel = m_eDefaultLogLevel
                 Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Initialized Logging")
 
             Catch ex As System.Exception

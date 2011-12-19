@@ -481,8 +481,11 @@ Namespace Framework
                         Dim lModificationCount As Long = Util.ModificationHistory.ModificationCount
                         origValue = GetOriginalValueForHistory(propInfo)
 
-                        SignalBeforePropertyChanged(Me, propInfo)
+                        Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Setting property. Object ID: " & Me.ID & _
+                                           ", Object Name: " & Me.Name & ", Prop name: " & propInfo.Name & ", Old Value: " & _
+                                           propInfo.GetValue(Me, Nothing).ToString & ", New Value: " & e.Value.ToString)
 
+                        SignalBeforePropertyChanged(Me, propInfo)
 
                         m_bSetValueInProgress = True
                         propInfo.SetValue(Me, e.Value, Nothing)

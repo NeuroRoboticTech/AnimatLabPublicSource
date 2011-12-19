@@ -126,6 +126,8 @@ namespace AnimatGUI
 
 			void SimulatorInterface::CreateAndRunSimulation(System::Boolean bPaused)
 			{
+				LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "Starting CreateAndRunSimulation");
+
 				//If the sim is already running then do not attempt to start it again.
 				if(m_lpSim) return;
 
@@ -135,6 +137,8 @@ namespace AnimatGUI
 
 			void SimulatorInterface::CreateSimulation()
 			{
+				LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "Starting CreateSimulation()");
+
 				//If the sim is already running then do not attempt to start it again.
 				if(m_lpSim) return;
 
@@ -154,7 +158,7 @@ namespace AnimatGUI
 					if(m_lpSim)
 						return;
 
-					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "Starting CreateSimulation");
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "Starting CreateSimulation(xml)");
 
 					CStdXml oXml;
 					oXml.Deserialize(Util::StringToStd(sXml));
@@ -243,6 +247,8 @@ namespace AnimatGUI
 
 				try
 				{
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "Starting CreateStandAloneSim");
+
 					if(!m_lpSim) 
 					{
 						string strModuleName = Util::StringToStd(sModuleName);
@@ -281,6 +287,8 @@ namespace AnimatGUI
 			{
 				try
 				{
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "Starting AddSimWindow: " + sWindowXml);
+
 					if(m_lpSim->WaitForSimulationBlock())
 					{
 						m_lpSim->WindowMgr()->AddSimulationWindow("", "Basic", bInit, hWnd, Util::StringToStd(sWindowXml));
@@ -351,6 +359,8 @@ namespace AnimatGUI
 			{
 				try
 				{
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "Starting RemoveSimWindow");
+
 					if(m_lpSim->WaitForSimulationBlock())
 					{
 						m_lpSim->WindowMgr()->RemoveSimulationWindow(hWnd);
@@ -408,6 +418,8 @@ namespace AnimatGUI
 			{
 				try
 				{
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "OnWindowGetFocus ID: " + sID);
+					
 					if(m_lpSim) 
 					{
 						string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
@@ -452,6 +464,8 @@ namespace AnimatGUI
 			{
 				try
 				{
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "OnWindowLoseFocus ID: " + sID);
+					
 					if(m_lpSim) 
 					{
 						string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
@@ -939,6 +953,8 @@ namespace AnimatGUI
 			{
 				try
 				{
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "ReInitializeSimulation");
+
 					if(m_lpSim) 
 					{
 						AnimatSim::Charting::DataChartMgr *lpChartMgr = m_lpSim->DataChartMgr();
@@ -1047,6 +1063,8 @@ namespace AnimatGUI
 			{
 				try
 				{
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "GenerateCollisionMeshFile Orig: " + sOriginalMeshFile + ", New: " + sCollisionMeshFile);
+					
 					if(m_lpSim) 
 					{
 						string strOriginalMeshFile = Util::StringToStd(sOriginalMeshFile);
@@ -1122,6 +1140,8 @@ namespace AnimatGUI
 			{
 				try
 				{
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "AddItem ID: " + sID + ", Parent ID: " + sParentID + ", Item Type: " + sItemType + ", Xml: " + sXml);
+
 					if(m_lpSim) 
 					{
 						string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
@@ -1186,6 +1206,8 @@ namespace AnimatGUI
 			{
 				try
 				{
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "RemoveItem ID: " + sID + ", Parent ID: " + sParentID + ", Item Type: " + sItemType);
+
 					if(m_lpSim) 
 					{
 						string strParentID = Std_Trim(Std_ToUpper(Util::StringToStd(sParentID)));
@@ -1243,6 +1265,8 @@ namespace AnimatGUI
 			{
 				try
 				{
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "SetData ID: " + sID + ", Data Type: " + sDataType + ", Value: " + sValue);
+
 					if(m_lpSim) 
 					{
 						string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
@@ -1298,6 +1322,8 @@ namespace AnimatGUI
 			{
 				try
 				{
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "FindItem ID: " + sID);
+
 					if(m_lpSim) 
 					{
 						string strID = Std_Trim(Std_ToUpper(Util::StringToStd(sID)));
