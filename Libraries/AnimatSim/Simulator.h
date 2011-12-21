@@ -635,7 +635,7 @@ namespace AnimatSim
 			
 #pragma region HelperMethods
 
-		virtual void GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4], float (&aryConversion)[4][4], CStdFPoint &vPos, CStdFPoint &vRot) = 0;
+		virtual void GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4], CStdFPoint &vPos, CStdFPoint &vRot) = 0;
 
 #pragma endregion
 
@@ -810,6 +810,7 @@ namespace AnimatSim
 			static Simulator *CreateSimulator(string strAnimatModule, string strProjectPath, string strExecutablePath);
 			static Simulator *CreateSimulator(int argc, const char **argv);
 			virtual void GenerateCollisionMeshFile(string strOriginalMeshFile, string strCollisionMeshFile) = 0;
+			virtual void ConvertV1MeshFile(string strOriginalMeshFile, string strNewMeshFile, string strTexture) = 0;
 
 #pragma endregion
 		 

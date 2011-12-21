@@ -66,6 +66,7 @@ namespace VortexAnimatSim
 		virtual Vx::VxTriangleMesh *CreatTriangleMeshFromOsg(osg::Node *osgNode);
 		virtual Vx::VxConvexMesh *CreateConvexMeshFromOsg(osg::Node *osgNode);
 		virtual void GenerateCollisionMeshFile(string strOriginalMeshFile, string strCollisionMeshFile);
+		virtual void ConvertV1MeshFile(string strOriginalMeshFile, string strNewMeshFile, string strTexture);
 
 #pragma endregion
 
@@ -85,7 +86,7 @@ namespace VortexAnimatSim
 		
 #pragma region HelperMethods
 
-		virtual void GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4], float (&aryConversion)[4][4], CStdFPoint &vPos, CStdFPoint &vRot);
+		virtual void GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4], CStdFPoint &vPos, CStdFPoint &vRot);
 
 #pragma endregion
 

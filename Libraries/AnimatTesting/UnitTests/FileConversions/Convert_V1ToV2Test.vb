@@ -44,8 +44,8 @@ Namespace UnitTests
             <TestMethod()> _
             Public Sub ConvertFilesTest()
                 'Dim target As Convert_V1ToV2 = New Convert_V1ToV2()
-                'Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\SimpleTest"
-                'Dim strProjectName As String = "SimpleTest"
+                'Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\HingeTest"
+                'Dim strProjectName As String = "HingeTest"
                 'Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\ConeNN"
                 'Dim strProjectName As String = "ConeNN"
                 'Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\ConeTest"
@@ -56,8 +56,10 @@ Namespace UnitTests
                 'Dim strProjectName As String = "SphereTest"
                 'Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\MuscleTest"
                 'Dim strProjectName As String = "MuscleTest"
-                Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\CylinderTest"
-                Dim strProjectName As String = "CylinderTest"
+                'Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\CylinderTest"
+                'Dim strProjectName As String = "CylinderTest"
+                Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\MeshTest"
+                Dim strProjectName As String = "MeshTest"
 
                 UnitTest("AnimatGUI.dll", "AnimatGUI.DataObjects.FileConverters.Convert_V1ToV2", "ConvertFiles", New Object() {strProjectPath, strProjectName})
 

@@ -21,6 +21,7 @@
 #include "VsDragger.h"
 #include "MeshMinVertexDistanceVisitor.h"
 
+
 namespace VortexAnimatSim
 {
 
@@ -336,6 +337,38 @@ void VsSimulator::GenerateCollisionMeshFile(string strOriginalMeshFile, string s
 	//Now save out the new collision mesh.
 	osgDB::writeNodeFile(*osgNewNode, strNewFile.c_str());
 }
+
+void VsSimulator::ConvertV1MeshFile(string strOriginalMeshFile, string strNewMeshFile, string strTexture)
+{
+	//First load the original mesh in.
+	string strPath = this->ProjectPath();
+	string strOrigFile = AnimatSim::GetFilePath(strPath, strOriginalMeshFile);
+	string strNewFile = AnimatSim::GetFilePath(strPath, strNewMeshFile);
+	string strTextFile = "";
+	
+	if(!Std_IsBlank(strTexture))
+		strTextFile = AnimatSim::GetFilePath(strPath, strTexture);
+
+	osg::ref_ptr<osg::Node> osgNode = osgDB::readNodeFile(strOrigFile.c_str());
+
+	//Make sure the mesh loaded is valid.
+	if(!osgNode.valid())
+		THROW_PARAM_ERROR(Vs_Err_lErrorLoadingMesh, Vs_Err_strErrorLoadingMesh, "Original Mesh file", strOriginalMeshFile);
+	
+	//Now add a matrix tranform to rotate about the x axis by -90 degrees.
+	osg::ref_ptr<osg::MatrixTransform> m_osgRotateMT = new osg::MatrixTransform;
+	CStdFPoint vPos(0, 0, 0), vRot( -(osg::PI/2), 0, 0);
+	m_osgRotateMT->setMatrix(SetupMatrix(vPos, vRot));
+
+	m_osgRotateMT->addChild(osgNode.get());
+
+	AddNodeTexture(m_osgRotateMT.get(), strTextFile, GL_TEXTURE_2D);
+
+	//Now save out the new collision mesh.
+	osgDB::writeNodeFile(*m_osgRotateMT, strNewFile.c_str());
+}
+
+
 //
 //float VsSimulator::FindMinMeshVertexDistance(osg::Node *osgNode)
 //{
@@ -344,23 +377,25 @@ void VsSimulator::GenerateCollisionMeshFile(string strOriginalMeshFile, string s
 //	return ncv.MinVertexDistance();
 //}
 
-//void VsSimulator::GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4], float (&aryConversion)[4][4], CStdFPoint &vPos, CStdFPoint &vRot)
-void VsSimulator::GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4], float (&aryConversion)[4][4], CStdFPoint &vPos, CStdFPoint &vRot)
+void VsSimulator::GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4], CStdFPoint &vPos, CStdFPoint &vRot)
 {
 	osg::Matrix osgMT(aryTransform[0][0], aryTransform[0][1], aryTransform[0][2], aryTransform[0][3], 
 					  aryTransform[1][0], aryTransform[1][1], aryTransform[1][2], aryTransform[1][3], 
 					  aryTransform[2][0], aryTransform[2][1], aryTransform[2][2], aryTransform[2][3], 
 					  aryTransform[3][0], aryTransform[3][1], aryTransform[3][2], aryTransform[3][3]);
 
-	osg::Matrix osgConv(aryConversion[0][0], aryConversion[0][1], aryConversion[0][2], aryConversion[0][3], 
-					    aryConversion[1][0], aryConversion[1][1], aryConversion[1][2], aryConversion[1][3], 
-					    aryConversion[2][0], aryConversion[2][1], aryConversion[2][2], aryConversion[2][3], 
-					    aryConversion[3][0], aryConversion[3][1], aryConversion[3][2], aryConversion[3][3]);
+	//osg::Matrix osgConv(aryConversion[0][0], aryConversion[0][1], aryConversion[0][2], aryConversion[0][3], 
+	//				    aryConversion[1][0], aryConversion[1][1], aryConversion[1][2], aryConversion[1][3], 
+	//				    aryConversion[2][0], aryConversion[2][1], aryConversion[2][2], aryConversion[2][3], 
+	//				    aryConversion[3][0], aryConversion[3][1], aryConversion[3][2], aryConversion[3][3]);
 
 	osg::Matrix osgFinal;
 	
-	//osgFinal = osgMT;
-	osgFinal = osgConv * osgMT;
+	osgFinal = osgMT;
+	//if(bPreMultConv)
+	//	osgFinal = osgConv * osgMT;
+	//else
+	//	osgFinal = osgMT * osgConv;
 
 	//Lets get the current world coordinates for this body part and then recalculate the 
 	//new local position for the part and then finally reset its new local position.

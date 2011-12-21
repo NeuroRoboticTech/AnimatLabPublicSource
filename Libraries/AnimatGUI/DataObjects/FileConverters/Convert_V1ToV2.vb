@@ -42,6 +42,7 @@ Namespace DataObjects
                 m_iSimInterface = Util.Application.CreateSimInterface
                 m_iSimInterface.CreateStandAloneSim("VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll",
                                                     Application.ExecutablePath)
+                m_iSimInterface.SetProjectPath(m_strProjectPath & "\")
 
                 m_xnProjectXml.RemoveNode(xnProject, "PhysicsClassName", False)
                 m_xnProjectXml.RemoveNode(xnProject, "PhysicsAssemblyName", False)
@@ -57,6 +58,9 @@ Namespace DataObjects
                 If strLogLevel.ToUpper = "ERROR" Then
                     m_xnProjectXml.UpdateSingleNodeValue(xnProject, "LogLevel", "ErrorType")
                 End If
+
+                m_xnProjectXml.RemoveNode(xnProject, "Version", False)
+                m_xnProjectXml.AddNodeValue(xnProject, "Version", "2.0")
 
                 CreateSimulationNode(xnProject)
 
@@ -135,7 +139,7 @@ Namespace DataObjects
                 m_xnProjectXml.AddNodeValue(xnStructure, "Description", "")
                 m_xnProjectXml.AddTransparency(xnStructure, 50, 50, 50, 50, 100)
                 m_xnProjectXml.RemoveNode(xnStructure, "Reference", False)
-                m_xnProjectXml.ConvertScaledNumberToScaledVector(xnStructure, "Position", "LocalPosition")
+                m_xnProjectXml.ConvertScaledNumberToScaledVector(xnStructure, "Position", "LocalPosition", m_fltDistanceUnits, m_fltDistanceUnits, m_fltDistanceUnits)
                 m_xnProjectXml.AddNodeValue(xnStructure, "IsVisible", "True")
                 m_xnProjectXml.AddNodeValue(xnStructure, "Shininess", "64")
                 m_xnProjectXml.AddNodeValue(xnStructure, "Texture", "")
@@ -173,6 +177,11 @@ Namespace DataObjects
 
             Protected Overridable Sub ModifyRigidBody(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByVal bIsFluidPlane As Boolean)
 
+                'First check to see if this is a rigid body that was added by the converter process. If it was then skip it and do not processes it further.
+                If Not m_xnProjectXml.GetNode(xnRigidBody, "Converter", False) Is Nothing Then
+                    Return
+                End If
+
                 m_xnProjectXml.AddTransparency(xnRigidBody, 0, 0, 50, 50, 0)
 
                 ModifyRigidBodyDrag(xnRigidBody)
@@ -193,8 +202,10 @@ Namespace DataObjects
                 If Not m_xnProjectXml.GetNode(xnRigidBody, "OrientationMatrix", False) Is Nothing Then
                     Dim aryOrientation As AnimatGuiCtrls.MatrixLibrary.Matrix = m_xnProjectXml.LoadOrientationPositionMatrix(xnRigidBody, "TranslationMatrix", "OrientationMatrix")
 
+                    Dim aryTransform As AnimatGuiCtrls.MatrixLibrary.Matrix = AnimatGuiCtrls.MatrixLibrary.Matrix.Multiply(aryOrientation, aryParentTrasform)
+
                     Dim oPosRot As ManagedAnimatInterfaces.PositionRotationInfo
-                    oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation.toArray(), aryParentTrasform.toArray())
+                    oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryTransform.toArray())
 
                     m_xnProjectXml.AddScaledVector(xnRigidBody, "LocalPosition", oPosRot.m_fltXPos * m_fltDistanceUnits, oPosRot.m_fltYPos * m_fltDistanceUnits, oPosRot.m_fltZPos * m_fltDistanceUnits)
                     m_xnProjectXml.AddScaledVector(xnRigidBody, "Rotation", Util.RadiansToDegrees(oPosRot.m_fltXRot), Util.RadiansToDegrees(oPosRot.m_fltYRot), Util.RadiansToDegrees(oPosRot.m_fltZRot))
@@ -205,31 +216,31 @@ Namespace DataObjects
 
                 Select Case strType
                     Case "BOX"
-                        ModifyRigidBodyBox(xnRigidBody, aryChildTransform)
+                        ModifyRigidBodyBox(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "CONE"
-                        ModifyRigidBodyCone(xnRigidBody, aryChildTransform)
+                        ModifyRigidBodyCone(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "CYLINDER"
-                        ModifyRigidBodyCylinder(xnRigidBody, aryChildTransform)
+                        ModifyRigidBodyCylinder(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "MUSCLEATTACHMENT"
-                        ModifyRigidBodyAttachment(xnRigidBody, aryChildTransform)
+                        ModifyRigidBodyAttachment(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "LINEARHILLMUSCLE"
-                        ModifyRigidBodyMuscle(xnRigidBody, aryChildTransform)
+                        ModifyRigidBodyMuscle(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "LINEARHILLSTRETCHRECEPTOR"
-                        ModifyRigidBodyStretchReceptor(xnRigidBody, aryChildTransform)
+                        ModifyRigidBodyStretchReceptor(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "MESH"
-                        ModifyRigidBodyMesh(xnRigidBody, aryChildTransform)
+                        ModifyRigidBodyMesh(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "MOUTH"
-                        ModifyRigidBodyMouth(xnRigidBody, aryChildTransform)
+                        ModifyRigidBodyMouth(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "ODORSENSOR"
-                        ModifyRigidBodyOdorSensor(xnRigidBody, aryChildTransform)
+                        ModifyRigidBodyOdorSensor(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "SPHERE"
-                        ModifyRigidBodySphere(xnRigidBody, aryChildTransform)
+                        ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "SPRING"
-                        ModifyRigidBodySpring(xnRigidBody, aryChildTransform)
+                        ModifyRigidBodySpring(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "STOMACH"
-                        ModifyRigidBodyStomach(xnRigidBody, aryChildTransform)
+                        ModifyRigidBodyStomach(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "PLANE"
-                            ModifyRigidBodyPlane(xnRigidBody, aryChildTransform, bIsFluidPlane)
+                        ModifyRigidBodyPlane(xnRigidBody, aryParentTrasform, aryChildTransform, bIsFluidPlane)
                     Case Else
                         Throw New System.Exception("Invalid body part type defined. '" & strType & "'")
                 End Select
@@ -237,7 +248,7 @@ Namespace DataObjects
                 'Modify the joint if it exists.
                 Dim xnJoint As XmlNode = m_xnProjectXml.GetNode(xnRigidBody, "Joint", False)
                 If Not xnJoint Is Nothing Then
-                    ModifyJoint(xnJoint)
+                    ModifyJoint(xnJoint, aryChildTransform)
                 End If
 
                 'Now modify all the child nodes.
@@ -305,7 +316,7 @@ Namespace DataObjects
 
 #Region "Rigid Body Part Type Modifiers"
 
-            Protected Overridable Sub ModifyRigidBodyBox(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodyBox(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
                 Dim dblX As Double = 0
                 Dim dblY As Double = 0
@@ -331,7 +342,7 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyCone(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodyCone(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Cone")
 
                 Dim fltLowerRadius As Single = CSng(m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "CollisionLowerRadius")) * m_fltDistanceUnits
@@ -356,24 +367,20 @@ Namespace DataObjects
 
                 Dim aryOrientation As AnimatGuiCtrls.MatrixLibrary.Matrix = m_xnProjectXml.LoadOrientationPositionMatrix(xnRigidBody, "TranslationMatrix", "OrientationMatrix")
                 Dim aryConversion As AnimatGuiCtrls.MatrixLibrary.Matrix = MakeConeConversionMatrix()
-                Dim aryTransform As AnimatGuiCtrls.MatrixLibrary.Matrix = AnimatGuiCtrls.MatrixLibrary.Matrix.Multiply(aryConversion, aryOrientation)
+                Dim aryPreTrans As AnimatGuiCtrls.MatrixLibrary.Matrix = AnimatGuiCtrls.MatrixLibrary.Matrix.Multiply(aryConversion, aryOrientation)
+                Dim aryTransform As AnimatGuiCtrls.MatrixLibrary.Matrix = AnimatGuiCtrls.MatrixLibrary.Matrix.Multiply(aryPreTrans, aryParentTrasform)
 
                 Dim oPosRot As ManagedAnimatInterfaces.PositionRotationInfo
-                'oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation.toArray, aryConversion.toArray)
-                oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryTransform.toArray, m_aryIdentity.toArray)
+                oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryTransform.toArray)
 
                 m_xnProjectXml.AddScaledVector(xnRigidBody, "LocalPosition", oPosRot.m_fltXPos * m_fltDistanceUnits, oPosRot.m_fltYPos * m_fltDistanceUnits, oPosRot.m_fltZPos * m_fltDistanceUnits)
                 m_xnProjectXml.AddScaledVector(xnRigidBody, "Rotation", Util.RadiansToDegrees(oPosRot.m_fltXRot), Util.RadiansToDegrees(oPosRot.m_fltYRot), Util.RadiansToDegrees(oPosRot.m_fltZRot))
 
-                'aryParentTrasform = AnimatGuiCtrls.MatrixLibrary.Matrix.Inverse(aryTransform)
-                'aryParentTrasform(3, 0) = 0
-                'aryParentTrasform(3, 1) = 0
-                'aryParentTrasform(3, 2) = 0
-                'aryParentTrasform(3, 3) = 1
+                aryChildTrasform = AnimatGuiCtrls.MatrixLibrary.Matrix.Inverse(aryConversion)
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyCylinder(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodyCylinder(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Cylinder")
 
                 Dim fltRadius As Single = CSng(m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "CollisionRadius")) * m_fltDistanceUnits
@@ -390,15 +397,15 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyAttachment(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodyAttachment(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
-                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform)
+                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTrasform)
 
                 m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Attachment")
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyMuscle(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodyMuscle(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.LinearHillMuscle")
 
@@ -427,16 +434,16 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyStretchReceptor(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodyStretchReceptor(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
-                ModifyRigidBodyMuscle(xnRigidBody, aryParentTrasform)
+                ModifyRigidBodyMuscle(xnRigidBody, aryParentTrasform, aryChildTrasform)
 
                 m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.LinearHillStretchReceptor")
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodySpring(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodySpring(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Spring")
 
@@ -452,20 +459,171 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyMesh(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodyMesh(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+
+                m_xnProjectXml.RemoveNode(xnRigidBody, "Transparencies")
+                m_xnProjectXml.AddTransparency(xnRigidBody, 50, 0, 50, 50, 100)
+
+                Dim strMeshFileOld As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "MeshFile", False, "")
+                Dim strExt As String = Util.GetFileExtension(strMeshFileOld)
+                Dim strMeshFile As String = strMeshFileOld.Replace("." & strExt, ".osg")
+                Dim strCollisionMeshFileOld As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "CollisionMeshFile", False, "")
+                strExt = Util.GetFileExtension(strCollisionMeshFileOld)
+                Dim strCollisionMeshFile As String = strCollisionMeshFileOld.Replace("." & strExt, ".osg")
+                Dim strCollisionMeshType As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "CollisionMeshType", False, "Convex")
+                Dim strTexture As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "Texture", False, "")
+
+                m_xnProjectXml.RemoveNode(xnRigidBody, "MeshFile", False)
+                m_xnProjectXml.RemoveNode(xnRigidBody, "CollisionMeshFile", False)
+                m_xnProjectXml.RemoveNode(xnRigidBody, "CollisionMeshType", False)
+                m_xnProjectXml.RemoveNode(xnRigidBody, "Texture", False)
+
+                'If we have a texture image then we need to flip it first.
+                If strTexture.Length > 0 Then
+                    Dim bm As New Bitmap(m_strProjectPath & "\" & strTexture)
+                    bm.RotateFlip(RotateFlipType.Rotate180FlipX)
+                    strTexture = strTexture.Replace(".", "_Converted.")
+                    bm.Save(m_strProjectPath & "\" & strTexture, System.Drawing.Imaging.ImageFormat.Bmp)
+                End If
+
+                'convert the mesh file to the new work with the new system.
+                ConvertV1MeshFile(strMeshFileOld, strMeshFile, strTexture)
+
+                'First create the collision mesh object out of this one.
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Mesh")
+
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "MeshFile", strCollisionMeshFile)
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "MeshType", strCollisionMeshType)
+
+                If strCollisionMeshType.ToUpper() = "CONVEX" Then
+                    strExt = Util.GetFileExtension(strCollisionMeshFileOld)
+                    Dim strConvexMeshFile As String = strCollisionMeshFileOld.Replace("." & strExt, "_Convex.osg")
+                    m_iSimInterface.GenerateCollisionMeshFile(strCollisionMeshFileOld, strConvexMeshFile)
+                    ConvertV1MeshFile(strConvexMeshFile, strCollisionMeshFile, "")
+
+                    m_xnProjectXml.AddNodeValue(xnRigidBody, "ConvexMeshFile", strCollisionMeshFile)
+                Else
+                    ConvertV1MeshFile(strCollisionMeshFileOld, strCollisionMeshFile, strTexture)
+                End If
+
+                AddGraphicsMesh(xnRigidBody, strMeshFile, strTexture)
+
+                Dim strAseMeshFile As String = strMeshFileOld.Replace(".obj", ".ase")
+                Dim strMtlMeshFile As String = strMeshFileOld.Replace(".obj", ".mtl")
+                Dim strMtlCollisionMeshFile As String = strCollisionMeshFileOld.Replace(".obj", ".mtl")
+
+                'If File.Exists(m_strProjectPath & "\" & strMeshFile) Then File.Delete(m_strProjectPath & "\" & strMeshFile)
+                'If File.Exists(m_strProjectPath & "\" & strAseMeshFile) Then File.Delete(m_strProjectPath & "\" & strAseMeshFile)
+                'If File.Exists(m_strProjectPath & "\" & strMtlMeshFile) Then File.Delete(m_strProjectPath & "\" & strMtlMeshFile)
+                'If File.Exists(m_strProjectPath & "\" & strCollisionMeshFileOld) Then File.Delete(m_strProjectPath & "\" & strCollisionMeshFileOld)
+                'If File.Exists(m_strProjectPath & "\" & strMtlCollisionMeshFile) Then File.Delete(m_strProjectPath & "\" & strMtlCollisionMeshFile)
+                'If File.Exists(m_strProjectPath & "\" & strConvexMeshFile) Then File.Delete(m_strProjectPath & "\" & strConvexMeshFile)
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyMouth(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
-                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform)
+            Protected Sub ConvertV1MeshFile(ByVal strOldFile As String, ByVal strNewFile As String, ByVal strTexture As String)
+
+                m_iSimInterface.ConvertV1MeshFile(strOldFile, strNewFile, strTexture)
+
+                'We need to use relative paths to the image here. So lets replace the absolute path that osg saves in it.
+                If strTexture.Length > 0 Then
+                    ReplaceFileText(m_strProjectPath & "\" & strNewFile, (m_strProjectPath.Replace("\", "\\") & "\\"), "")
+                End If
+
+            End Sub
+
+            Protected Sub ReplaceFileText(ByVal strFilename As String, ByVal strFind As String, ByVal strReplace As String)
+                ' Open a file for reading
+                Dim srReader As StreamReader
+                srReader = File.OpenText(strFilename)
+                ' Now, read the entire file into a strin
+                Dim contents As String = srReader.ReadToEnd()
+                srReader.Close()
+
+                ' Write the modification into the same fil
+                Dim swWriter As StreamWriter = File.CreateText(strFilename)
+
+                swWriter.Write(contents.Replace(strFind, strReplace))
+                swWriter.Close()
+            End Sub
+
+            Protected Overridable Sub AddGraphicsMesh(ByVal xnRigidBody As XmlNode, ByVal strMeshFile As String, ByVal strTexture As String)
+
+                Dim strXml As String = "<Name>" & m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "Name", False, "Root") & "_Graphics</Name>" & vbCrLf & _
+                                        "<ID>" & System.Guid.NewGuid.ToString & "</ID>" & vbCrLf & _
+                                        "<Converter>Added</Converter>" & vbCrLf & _
+                                        "<Description/>" & vbCrLf & _
+                                        "<Transparencies>" & vbCrLf & _
+                                        "<Graphics>0</Graphics>" & vbCrLf & _
+                                        "<Collisions>50</Collisions>" & vbCrLf & _
+                                        "<Joints>50</Joints>" & vbCrLf & _
+                                        "<RecFields>50</RecFields>" & vbCrLf & _
+                                        "<Simulation>0</Simulation>" & vbCrLf & _
+                                        "</Transparencies>" & vbCrLf & _
+                                        "<IsVisible>True</IsVisible>" & vbCrLf & _
+                                        "<Diffuse " & m_xnProjectXml.GetSingleNodeAttributes(xnRigidBody, "Diffuse", False, "Red=""1"" Green=""1"" Blue=""1"" Alpha=""1""") & "/>" & vbCrLf & _
+                                        "<Ambient Red=""0.0980392"" Green=""0.0980392"" Blue=""0.0980392"" Alpha=""1""/>" & vbCrLf & _
+                                        "<Specular Red=""0.25098"" Green=""0.25098"" Blue=""0.25098"" Alpha=""1""/>" & vbCrLf & _
+                                        "<Shininess>64</Shininess>" & vbCrLf & _
+                                        "<Texture/>" & _
+                                        "<ModuleName>VortexAnimatPrivateSim_VC10D.dll</ModuleName>" & vbCrLf & _
+                                        "<LocalPosition>" & vbCrLf & _
+                                        "<X Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                                        "<Y Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                                        "<Z Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                                        "</LocalPosition>" & vbCrLf & _
+                                        "<Rotation>" & vbCrLf & _
+                                        "<X Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                                        "<Y Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                                        "<Z Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                                        "</Rotation>" & vbCrLf & _
+                                        "<Type>Mesh</Type>" & vbCrLf & _
+                                        "<PartType>AnimatGUI.DataObjects.Physical.Bodies.Mesh</PartType>" & vbCrLf & _
+                                        "<IsContactSensor>False</IsContactSensor>" & vbCrLf & _
+                                        "<IsCollisionObject>False</IsCollisionObject>" & vbCrLf & _
+                                        "<BuoyancyCenter>" & vbCrLf & _
+                                        "<X Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                                        "<Y Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                                        "<Z Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                                        "</BuoyancyCenter>" & vbCrLf & _
+                                        "<BuoyancyScale>1</BuoyancyScale>" & vbCrLf & _
+                                        "<Drag>" & vbCrLf & _
+                                        "<X Value=""1"" Scale=""None"" Actual=""1""/>" & vbCrLf & _
+                                        "<Y Value=""1"" Scale=""None"" Actual=""1""/>" & vbCrLf & _
+                                        "<Z Value=""1"" Scale=""None"" Actual=""1""/>" & vbCrLf & _
+                                        "</Drag>" & vbCrLf & _
+                                        "<Magnus>0</Magnus>" & vbCrLf & _
+                                        "<EnableFluids>False</EnableFluids>" & vbCrLf & _
+                                        "<Density Value=""1"" Scale=""None"" Actual=""1""/>" & vbCrLf & _
+                                        "<COM>" & vbCrLf & _
+                                        "<X Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                                        "<Y Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                                        "<Z Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
+                                        "</COM>" & vbCrLf & _
+                                        "<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>" & vbCrLf & _
+                                        "<FoodSource>False</FoodSource>" & vbCrLf & _
+                                        "<MeshFile>" & strMeshFile & "</MeshFile>" & vbCrLf & _
+                                        "<MeshType>Triangular</MeshType>" & vbCrLf
+
+                Dim xnChildBodies As XmlNode = m_xnProjectXml.GetNode(xnRigidBody, "ChildBodies", False)
+                If xnChildBodies Is Nothing Then
+                    xnChildBodies = m_xnProjectXml.AddNodeValue(xnRigidBody, "ChildBodies", "")
+                End If
+
+                Dim xnGraphics As XmlNode = m_xnProjectXml.AddNodeXml(xnChildBodies, "RigidBody", strXml)
+
+            End Sub
+
+            Protected Overridable Sub ModifyRigidBodyMouth(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTrasform)
 
                 m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Mouth")
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "ModuleName", "VortexAnimatPrivateSim_VC10D.dll")
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyStomach(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
-                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform)
+            Protected Overridable Sub ModifyRigidBodyStomach(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTrasform)
 
                 m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Stomach")
@@ -473,15 +631,15 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyOdorSensor(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
-                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform)
+            Protected Overridable Sub ModifyRigidBodyOdorSensor(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTrasform)
 
                 m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.OdorSensor")
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodySphere(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodySphere(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Sphere")
 
@@ -495,7 +653,7 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyPlane(ByVal xnRigidBody As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByVal bIsFluidPlane As Boolean)
+            Protected Overridable Sub ModifyRigidBodyPlane(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByVal bIsFluidPlane As Boolean)
 
                 If bIsFluidPlane Then
                     m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.FluidPlane")
@@ -524,7 +682,7 @@ Namespace DataObjects
 
 #Region "Joint Modifiers"
 
-            Protected Overridable Sub ModifyJoint(ByVal xnJoint As XmlNode)
+            Protected Overridable Sub ModifyJoint(ByVal xnJoint As XmlNode, ByRef aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
                 m_xnProjectXml.AddTransparency(xnJoint, 50, 50, 0, 50, 50)
 
@@ -537,12 +695,12 @@ Namespace DataObjects
 
                 Dim aryOrientation As AnimatGuiCtrls.MatrixLibrary.Matrix = m_xnProjectXml.LoadOrientationPositionMatrix(xnJoint, "TranslationMatrix", "OrientationMatrix")
                 Dim aryJointConv As AnimatGuiCtrls.MatrixLibrary.Matrix = MakeJointConversionMatrix()
-                Dim aryTransform As AnimatGuiCtrls.MatrixLibrary.Matrix = AnimatGuiCtrls.MatrixLibrary.Matrix.Multiply(aryJointConv, aryOrientation)
+                Dim aryPreTrans As AnimatGuiCtrls.MatrixLibrary.Matrix = AnimatGuiCtrls.MatrixLibrary.Matrix.Multiply(aryJointConv, aryOrientation)
+                Dim aryTransform As AnimatGuiCtrls.MatrixLibrary.Matrix = AnimatGuiCtrls.MatrixLibrary.Matrix.Multiply(aryPreTrans, aryParentTrasform)
                 Dim aryData(,) As Double = aryTransform.toArray
 
                 Dim oPosRot As ManagedAnimatInterfaces.PositionRotationInfo
-                'oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryOrientation.toArray, aryJointConv.toArray)
-                oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryTransform.toArray, m_aryIdentity.toArray)
+                oPosRot = m_iSimInterface.GetPositionAndRotationFromD3DMatrix(aryTransform.toArray)
 
                 m_xnProjectXml.AddScaledVector(xnJoint, "LocalPosition", oPosRot.m_fltXPos * m_fltDistanceUnits, oPosRot.m_fltYPos * m_fltDistanceUnits, oPosRot.m_fltZPos * m_fltDistanceUnits)
                 m_xnProjectXml.AddScaledVector(xnJoint, "Rotation", Util.RadiansToDegrees(oPosRot.m_fltXRot), Util.RadiansToDegrees(oPosRot.m_fltYRot), Util.RadiansToDegrees(oPosRot.m_fltZRot))

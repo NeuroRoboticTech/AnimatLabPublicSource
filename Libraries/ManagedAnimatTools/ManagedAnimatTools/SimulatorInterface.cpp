@@ -122,6 +122,10 @@ namespace AnimatGUI
 			void SimulatorInterface::SetProjectPath(System::String ^strPath)
 			{
 				m_strProjectPath = strPath;
+
+				string strProjPath = Util::StringToStd(strPath);
+				if(m_lpSim)
+					m_lpSim->ProjectPath(strProjPath);
 			}
 
 			void SimulatorInterface::CreateAndRunSimulation(System::Boolean bPaused)
@@ -262,7 +266,7 @@ namespace AnimatGUI
 				}
 				catch(CStdErrorInfo oError)
 				{
-					string strError = "An error occurred while attempting to generate a collision mesh file.\nError: " + oError.m_strError;
+					string strError = "An error occurred while attempting to CreateStandAloneSim.\nError: " + oError.m_strError;
 					m_strErrorMessage = gcnew String(strError.c_str());
 					if(!m_lpSim && lpSim)
 						delete lpSim;
@@ -276,7 +280,7 @@ namespace AnimatGUI
 				}
 				catch(...)
 				{
-					m_strErrorMessage = "An unknown error occurred while attempting to generate a collision mesh file.";
+					m_strErrorMessage = "An unknown error occurred while attempting to CreateStandAloneSim.";
 					if(!m_lpSim && lpSim)
 						delete lpSim;
 					throw gcnew System::Exception(m_strErrorMessage);
@@ -1088,8 +1092,37 @@ namespace AnimatGUI
 				}
 			}
 
+			void SimulatorInterface::ConvertV1MeshFile(String ^sOriginalMeshFile, String ^sNewMeshFile, String ^sTexture)
+			{
+				try
+				{
+					LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel::Info, "ConvertV1MeshFile Orig: " + sOriginalMeshFile + ", New: " + sNewMeshFile + ", Texture: " + sTexture);
+					
+					if(m_lpSim) 
+					{
+						string strOriginalMeshFile = Util::StringToStd(sOriginalMeshFile);
+						string strNewMeshFile = Util::StringToStd(sNewMeshFile);
+						string strTexture = Util::StringToStd(sTexture);
 
-			ManagedAnimatInterfaces::PositionRotationInfo ^SimulatorInterface::GetPositionAndRotationFromD3DMatrix(cli::array<System::Double, 2> ^aryTransform, cli::array<System::Double, 2> ^aryConversion)
+						m_lpSim->ConvertV1MeshFile(strOriginalMeshFile, strNewMeshFile, strTexture);
+					}
+				}
+				catch(CStdErrorInfo oError)
+				{
+					string strError = "An error occurred while attempting to ConvertV1MeshFile.\nError: " + oError.m_strError;
+					m_strErrorMessage = gcnew String(strError.c_str());
+					throw gcnew System::Exception(m_strErrorMessage);
+				}
+				catch(System::Exception ^ex)
+				{throw ex;}
+				catch(...)
+				{
+					m_strErrorMessage = "An unknown error occurred while attempting toConvertV1MeshFile.";
+					throw gcnew System::Exception(m_strErrorMessage);
+				}
+			}
+
+			ManagedAnimatInterfaces::PositionRotationInfo ^SimulatorInterface::GetPositionAndRotationFromD3DMatrix(cli::array<System::Double, 2> ^aryTransform)
 			{
 
 				try
@@ -1098,18 +1131,18 @@ namespace AnimatGUI
 						throw gcnew System::Exception("Simulation has not been defined.");
 
 					float aM[4][4];
-					float aC[4][4];
+					//float aC[4][4];
 
 					//Copy and transpose the matrix
 					for(int iRow=0; iRow<4; iRow++)
 						for(int iCol=0; iCol<4; iCol++)
 						{
 							aM[iRow][iCol] = aryTransform[iRow, iCol];
-							aC[iRow][iCol] = aryConversion[iRow, iCol];
+							//aC[iRow][iCol] = aryConversion[iRow, iCol];
 						}
 
 					CStdFPoint vPos, vRot;
-					m_lpSim->GetPositionAndRotationFromD3DMatrix(aM, aC, vPos, vRot);
+					m_lpSim->GetPositionAndRotationFromD3DMatrix(aM, vPos, vRot);
 
 					ManagedAnimatInterfaces::PositionRotationInfo ^oPos = gcnew ManagedAnimatInterfaces::PositionRotationInfo(vPos.x, vPos.y, vPos.z, vRot.x, vRot.y, vRot.z);
 					return oPos;

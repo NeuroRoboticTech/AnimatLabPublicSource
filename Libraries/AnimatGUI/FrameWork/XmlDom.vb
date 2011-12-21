@@ -329,19 +329,21 @@ Namespace Framework
             Dim aryTranslation As AnimatGuiCtrls.MatrixLibrary.Matrix = LoadMatrix(xnRootNode, strTranslationNode)
             Dim aryOrientation As AnimatGuiCtrls.MatrixLibrary.Matrix = LoadMatrix(xnRootNode, strOrientationNode)
 
-            Dim aryCombined As AnimatGuiCtrls.MatrixLibrary.Matrix = AnimatGuiCtrls.MatrixLibrary.Matrix.Add(aryTranslation, aryOrientation)
+            Dim aryComb(3, 3) As Double
+            Dim aryTrans(,) As Double = aryTranslation.toArray
+            Dim aryOrient(,) As Double = aryOrientation.toArray
 
-            'Dim aryCombined(3, 3) As Single
+            For iRow As Integer = 0 To 3
+                For iCol As Integer = 0 To 3
+                    If iRow > 2 OrElse iCol > 2 Then
+                        aryComb(iRow, iCol) = aryTrans(iRow, iCol)
+                    Else
+                        aryComb(iRow, iCol) = aryOrient(iRow, iCol)
+                    End If
+                Next
+            Next
 
-            'For iRow As Integer = 0 To 3
-            '    For iCol As Integer = 0 To 3
-            '        If iRow > 2 OrElse iCol > 2 Then
-            '            aryCombined(iRow, iCol) = aryTranslation(iRow, iCol)
-            '        Else
-            '            aryCombined(iRow, iCol) = aryOrientation(iRow, iCol)
-            '        End If
-            '    Next
-            'Next
+            Dim aryCombined As New AnimatGuiCtrls.MatrixLibrary.Matrix(aryComb)
 
             Return aryCombined
         End Function

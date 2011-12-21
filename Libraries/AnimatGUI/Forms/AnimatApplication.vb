@@ -3100,6 +3100,12 @@ Namespace Forms
                 Util.LoadInProgress = True
                 Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
+                Dim fltVersion As Single = oXml.GetChildFloat("Version", 1)
+
+                If fltVersion < CSng(Me.AppVersion) Then
+                    Throw New System.Exception("You cannot open project files from previous versions of the application.")
+                End If
+
                 m_strProjectName = oXml.GetChildString("ProjectName")
                 m_strSimulationFile = oXml.GetChildString("SimulationFile", "")
                 Dim eLogLevel As ManagedAnimatInterfaces.ILogger.enumLogLevel = DirectCast([Enum].Parse(GetType(ManagedAnimatInterfaces.ILogger.enumLogLevel), oXml.GetChildString("LogLevel", "None"), True), ManagedAnimatInterfaces.ILogger.enumLogLevel)
@@ -3245,6 +3251,7 @@ Namespace Forms
                 oXml.AddChildElement("ProjectName", m_strProjectName)
                 oXml.AddChildElement("SimulationFile", Me.SimulationFile)
                 oXml.AddChildElement("LogLevel", Me.Logger.TraceLevel.ToString)
+                oXml.AddChildElement("Version", Me.AppVersion)
 
                 m_doSimulation.SaveData(oXml)
 

@@ -855,6 +855,53 @@ osg::Matrix VORTEX_PORT SetupMatrix(CStdFPoint &localPos, osg::Quat qRot)
 
 	return osgLocalMatrix;
 }
+
+void VORTEX_PORT AddNodeTexture(osg::Node *osgNode, string strTexture, osg::StateAttribute::GLMode eTextureMode)
+{
+	if(osgNode)
+	{
+		if(!Std_IsBlank(strTexture))
+		{
+			osg::ref_ptr<osg::Image> image = osgDB::readImageFile(strTexture);
+			if(!image)
+				THROW_PARAM_ERROR(Vs_Err_lTextureLoad, Vs_Err_strTextureLoad, "Image File", strTexture);
+
+			osg::StateSet* state = osgNode->getOrCreateStateSet();
+			osg::ref_ptr<osg::Texture2D> osgTexture = new osg::Texture2D(image.get());
+		    osgTexture->setDataVariance(osg::Object::DYNAMIC); // protect from being optimized away as static state.
+
+			osgTexture->setWrap(osg::Texture2D::WRAP_S, osg::Texture2D::REPEAT);
+			osgTexture->setWrap(osg::Texture2D::WRAP_T, osg::Texture2D::REPEAT);
+			
+			state->setTextureAttributeAndModes(0, osgTexture.get());
+			state->setTextureMode(0, eTextureMode, osg::StateAttribute::ON);
+			state->setMode(GL_BLEND,osg::StateAttribute::ON);
+		}
+	}
+}
+
+void VORTEX_PORT SetNodeColor(osg::Node *osgNode, CStdColor &vAmbient, CStdColor &vDiffuse, CStdColor &vSpecular, float fltShininess)
+{
+	if(osgNode)
+	{
+		//create a material to use with this node
+		osg::ref_ptr<osg::Material> osgMaterial = new osg::Material();		
+
+		//create a stateset for this node
+		osg::StateSet *osgStateSet = osgNode->getOrCreateStateSet();
+
+		//set the diffuse property of this node to the color of this body	
+		osgMaterial->setAmbient(osg::Material::FRONT_AND_BACK, osg::Vec4(vAmbient[0], vAmbient[1], vAmbient[2], 1));
+		osgMaterial->setDiffuse(osg::Material::FRONT_AND_BACK, osg::Vec4(vDiffuse[0], vDiffuse[1], vDiffuse[2], vDiffuse[3]));
+		osgMaterial->setSpecular(osg::Material::FRONT_AND_BACK, osg::Vec4(vSpecular[0], vSpecular[1], vSpecular[2], 1));
+		osgMaterial->setShininess(osg::Material::FRONT_AND_BACK, fltShininess);
+		osgStateSet->setMode(GL_BLEND, osg::StateAttribute::OVERRIDE | osg::StateAttribute::ON); 
+
+		//apply the material
+		osgStateSet->setAttribute(osgMaterial.get(), osg::StateAttribute::ON);
+	}
+}
+
 osg::MatrixTransform VORTEX_PORT *CreateLinearAxis(float fltGripScale, CStdFPoint vRotAxis)
 {
 	CStdFPoint vPos(0, 0, 0), vRot(0, 0, 0); 

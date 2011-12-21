@@ -95,7 +95,8 @@ namespace AnimatGUI
 			virtual void ReInitializeSimulation();
 			virtual int RetrieveChartData(String ^sChartKey, cli::array<System::Single, 2> ^%aryTimeData, cli::array<System::Single, 2> ^%aryData);
 			virtual void GenerateCollisionMeshFile(String ^sOriginalMeshFile, String ^sCollisionMeshFile);
-			virtual ManagedAnimatInterfaces::PositionRotationInfo ^GetPositionAndRotationFromD3DMatrix(cli::array<System::Double, 2> ^aryTransform, cli::array<System::Double, 2> ^aryConversion);
+			virtual void ConvertV1MeshFile(String ^sOriginalMeshFile, String ^sNewMeshFile, String ^sTexture);
+			virtual ManagedAnimatInterfaces::PositionRotationInfo ^GetPositionAndRotationFromD3DMatrix(cli::array<System::Double, 2> ^aryTransform);
 
 #pragma endregion
 

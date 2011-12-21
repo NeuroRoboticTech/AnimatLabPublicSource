@@ -98,13 +98,14 @@ Namespace DataObjects
 
             ConvertProjectNode(xnProjectNode)
 
-            m_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\CylinderTest\Test_CylinderTest.aproj")
+            'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\CylinderTest\Test_CylinderTest.aproj")
             'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\MuscleTest\Test_MuscleTest.aproj")
             'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\SphereTest\Test_SphereTest.aproj")
             'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\NeuralTest\Test_NeuralTest.aproj")
             'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\ConeTest\Test_ConeTest.aproj")
             'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\ConeNN\Test_ConeNN.aproj")
-            'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\SimpleTest\Test_SimpleTest.aproj")
+            'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\HingeTest\Test_HingeTest.aproj")
+            m_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\MeshTest\Test_MeshTest.aproj")
             'm_xnProjectXml.Save(m_strProjectPath & "\Test_" & m_strProjectName & ".aproj")
         End Sub
 

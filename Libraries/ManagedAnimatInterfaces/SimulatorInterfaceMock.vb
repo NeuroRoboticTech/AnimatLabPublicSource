@@ -58,6 +58,10 @@ Public Class SimulatorInterfaceMock
 
     End Sub
 
+    Public Sub ConvertV1MeshFile(ByVal sOriginalMeshFile As String, ByVal NewMeshFile As String, ByVal strTexture As String) Implements ISimulatorInterface.ConvertV1MeshFile
+
+    End Sub
+
     Public Sub GenerateCollisionMeshFile(sOriginalMeshFile As String, sCollisionMeshFile As String) Implements ISimulatorInterface.GenerateCollisionMeshFile
 
     End Sub
@@ -180,7 +184,7 @@ Public Class SimulatorInterfaceMock
 
     End Sub
 
-    Public Function GetPositionAndRotationFromD3DMatrix(ByVal aryTransform(,) As Double, ByVal aryConversion(,) As Double) As PositionRotationInfo Implements ISimulatorInterface.GetPositionAndRotationFromD3DMatrix
+    Public Function GetPositionAndRotationFromD3DMatrix(ByVal aryTransform(,) As Double) As PositionRotationInfo Implements ISimulatorInterface.GetPositionAndRotationFromD3DMatrix
         Return Nothing
     End Function
 
