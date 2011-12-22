@@ -21,11 +21,14 @@ Namespace DataObjects
         Protected m_aryABSYS_Files() As String
         Protected m_aryABPE_Files() As String
         Protected m_aryASIM_Files() As String
+        Protected m_aryOBJ_Files() As String
+        Protected m_aryMTL_Files() As String
+        Protected m_aryASE_Files() As String
 
         Protected m_xnProjectXml As New Framework.XmlDom
 
-        Public MustOverride ReadOnly Property ConvertFrom() As String
-        Public MustOverride ReadOnly Property ConvertTo() As String
+        Public MustOverride ReadOnly Property ConvertFrom() As Single
+        Public MustOverride ReadOnly Property ConvertTo() As Single
 
         Sub New()
 
@@ -37,10 +40,14 @@ Namespace DataObjects
 
         End Sub
 
-        Public Overridable Sub ConvertFiles(ByVal strProjectPath As String, ByVal strProjectName As String)
+        Public Overridable Sub ConvertFiles(ByVal strProjectFile As String)
 
-            m_strProjectPath = strProjectPath
-            m_strProjectName = strProjectName
+            Dim strProjectFilename As String
+            Util.SplitPathAndFile(strProjectFile, m_strProjectPath, strProjectFilename)
+            m_strProjectName = strProjectFilename.Replace(".aproj", "")
+
+            'Remove the last \ if it is there.
+            If m_strProjectPath(m_strProjectPath.Length - 1) = "\" Then m_strProjectPath = m_strProjectPath.Remove(m_strProjectPath.Length - 1, 1)
 
             If File.Exists(m_strProjectPath & "\Test_" & m_strProjectName & ".aproj") Then
                 File.Delete(m_strProjectPath & "\Test_" & m_strProjectName & ".aproj")
@@ -51,6 +58,8 @@ Namespace DataObjects
             For Each strProjFile As String In m_aryAPROJ_Files
                 ConvertProject(strProjFile)
             Next
+
+            RemoveOldFiles()
 
         End Sub
 
@@ -65,6 +74,9 @@ Namespace DataObjects
             m_aryABPE_Files = Directory.GetFiles(m_strProjectPath, "*.abpe")
             m_aryABSYS_Files = Directory.GetFiles(m_strProjectPath, "*.absys")
             m_aryASIM_Files = Directory.GetFiles(m_strProjectPath, "*.asim")
+            m_aryOBJ_Files = Directory.GetFiles(m_strProjectPath, "*.obj")
+            m_aryMTL_Files = Directory.GetFiles(m_strProjectPath, "*.mtl")
+            m_aryASE_Files = Directory.GetFiles(m_strProjectPath, "*.ase")
 
             If Not Directory.Exists(m_strProjectPath & "\Backup") Then
                 Directory.CreateDirectory(m_strProjectPath & "\Backup")
@@ -75,6 +87,9 @@ Namespace DataObjects
             CopyFiles(m_aryABPE_Files)
             CopyFiles(m_aryABSYS_Files)
             CopyFiles(m_aryASIM_Files)
+            CopyFiles(m_aryOBJ_Files)
+            CopyFiles(m_aryMTL_Files)
+            CopyFiles(m_aryASE_Files)
 
         End Sub
 
@@ -89,14 +104,33 @@ Namespace DataObjects
 
         End Sub
 
+        Protected Sub RemoveOldFiles()
+            RemoveFiles(m_aryASTL_Files)
+            RemoveFiles(m_aryABPE_Files)
+            RemoveFiles(m_aryABSYS_Files)
+            RemoveFiles(m_aryASIM_Files)
+            RemoveFiles(m_aryOBJ_Files)
+            RemoveFiles(m_aryMTL_Files)
+            RemoveFiles(m_aryASE_Files)
+        End Sub
+
+        Protected Sub RemoveFiles(ByVal aryFiles() As String)
+
+            For Each strFile As String In aryFiles
+                If File.Exists(strFile) Then File.Delete(strFile)
+            Next
+
+        End Sub
+
         Protected Overridable Sub ConvertProject(ByVal strProjFile As String)
 
             m_xnProjectXml.Load(strProjFile)
 
-
             Dim xnProjectNode As XmlNode = m_xnProjectXml.GetRootNode("Project")
 
             ConvertProjectNode(xnProjectNode)
+
+            m_xnProjectXml.Save(strProjFile)
 
             'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\CylinderTest\Test_CylinderTest.aproj")
             'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\MuscleTest\Test_MuscleTest.aproj")
@@ -105,7 +139,8 @@ Namespace DataObjects
             'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\ConeTest\Test_ConeTest.aproj")
             'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\ConeNN\Test_ConeNN.aproj")
             'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\HingeTest\Test_HingeTest.aproj")
-            m_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\MeshTest\Test_MeshTest.aproj")
+            'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\MeshTest\Test_MeshTest.aproj")
+            'm_xnProjectXml.Save("C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\PrismaticTest\Test_PrismaticTest.aproj")
             'm_xnProjectXml.Save(m_strProjectPath & "\Test_" & m_strProjectName & ".aproj")
         End Sub
 

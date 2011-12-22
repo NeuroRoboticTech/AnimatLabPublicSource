@@ -20,19 +20,19 @@ Namespace DataObjects
             Protected m_fltDistanceUnits As Single
             Protected m_aryIdentity As New AnimatGuiCtrls.MatrixLibrary.Matrix(AnimatGuiCtrls.MatrixLibrary.Matrix.Identity(4))
 
-            Public Overrides ReadOnly Property ConvertFrom As String
+            Public Overrides ReadOnly Property ConvertFrom As Single
                 Get
-                    Return "1.0"
+                    Return 1.0
                 End Get
             End Property
 
-            Public Overrides ReadOnly Property ConvertTo As String
+            Public Overrides ReadOnly Property ConvertTo As Single
                 Get
-                    Return "2.0"
+                    Return 2.0
                 End Get
             End Property
 
-            Sub New(ByVal doParent As Framework.DataObject)
+            Sub New()
                 MyBase.New()
 
             End Sub
@@ -508,16 +508,16 @@ Namespace DataObjects
 
                 AddGraphicsMesh(xnRigidBody, strMeshFile, strTexture)
 
-                Dim strAseMeshFile As String = strMeshFileOld.Replace(".obj", ".ase")
-                Dim strMtlMeshFile As String = strMeshFileOld.Replace(".obj", ".mtl")
-                Dim strMtlCollisionMeshFile As String = strCollisionMeshFileOld.Replace(".obj", ".mtl")
+                'Dim strAseMeshFile As String = strMeshFileOld.Replace(".obj", ".ase")
+                'Dim strMtlMeshFile As String = strMeshFileOld.Replace(".obj", ".mtl")
+                'Dim strMtlCollisionMeshFile As String = strCollisionMeshFileOld.Replace(".obj", ".mtl")
 
-                'If File.Exists(m_strProjectPath & "\" & strMeshFile) Then File.Delete(m_strProjectPath & "\" & strMeshFile)
-                'If File.Exists(m_strProjectPath & "\" & strAseMeshFile) Then File.Delete(m_strProjectPath & "\" & strAseMeshFile)
-                'If File.Exists(m_strProjectPath & "\" & strMtlMeshFile) Then File.Delete(m_strProjectPath & "\" & strMtlMeshFile)
-                'If File.Exists(m_strProjectPath & "\" & strCollisionMeshFileOld) Then File.Delete(m_strProjectPath & "\" & strCollisionMeshFileOld)
-                'If File.Exists(m_strProjectPath & "\" & strMtlCollisionMeshFile) Then File.Delete(m_strProjectPath & "\" & strMtlCollisionMeshFile)
-                'If File.Exists(m_strProjectPath & "\" & strConvexMeshFile) Then File.Delete(m_strProjectPath & "\" & strConvexMeshFile)
+                ''If File.Exists(m_strProjectPath & "\" & strMeshFile) Then File.Delete(m_strProjectPath & "\" & strMeshFile)
+                ''If File.Exists(m_strProjectPath & "\" & strAseMeshFile) Then File.Delete(m_strProjectPath & "\" & strAseMeshFile)
+                ''If File.Exists(m_strProjectPath & "\" & strMtlMeshFile) Then File.Delete(m_strProjectPath & "\" & strMtlMeshFile)
+                ''If File.Exists(m_strProjectPath & "\" & strCollisionMeshFileOld) Then File.Delete(m_strProjectPath & "\" & strCollisionMeshFileOld)
+                ''If File.Exists(m_strProjectPath & "\" & strMtlCollisionMeshFile) Then File.Delete(m_strProjectPath & "\" & strMtlCollisionMeshFile)
+                ''If File.Exists(m_strProjectPath & "\" & strConvexMeshFile) Then File.Delete(m_strProjectPath & "\" & strConvexMeshFile)
 
             End Sub
 
@@ -709,7 +709,9 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnJoint, "TranslationMatrix", False)
                 m_xnProjectXml.RemoveNode(xnJoint, "CombinedTransformationMatrix", False)
 
-                m_xnProjectXml.AddScaledNumber(xnJoint, "Size", 0.2 * m_fltDistanceUnits, "None", 0.2 * m_fltDistanceUnits)
+                Dim dblRadius As Double = CDbl(m_xnProjectXml.GetSingleNodeValue(xnJoint, "Radius", False, "0.02")) * m_fltDistanceUnits
+                m_xnProjectXml.RemoveNode(xnJoint, "Radius", False)
+                m_xnProjectXml.AddScaledNumber(xnJoint, "Size", dblRadius, "None", dblRadius)
 
                 Dim strType As String = m_xnProjectXml.GetSingleNodeValue(xnJoint, "Type").ToUpper
 
@@ -733,23 +735,79 @@ Namespace DataObjects
 
                 m_xnProjectXml.AddNodeValue(xnJoint, "PartType", "AnimatGUI.DataObjects.Physical.Joints.Hinge")
 
-                Dim dblMaxTorque As Double = m_xnProjectXml.GetScaleNumberValue(xnJoint, "MaxTorque", False, 100)
-                m_xnProjectXml.RemoveNode(xnJoint, "MaxTorque", False)
-                m_xnProjectXml.AddScaledNumber(xnJoint, "MaxForce", dblMaxTorque, "None", dblMaxTorque)
-
+                ModifyJointConstraints(xnJoint, "-0.785398", "0.785398", True)
             End Sub
 
             Protected Overridable Sub ModifyJointBallSocket(ByVal xnJoint As XmlNode)
+
+                m_xnProjectXml.AddNodeValue(xnJoint, "PartType", "AnimatGUI.DataObjects.Physical.Joints.BallSocket")
 
             End Sub
 
             Protected Overridable Sub ModifyJointPrismatic(ByVal xnJoint As XmlNode)
 
+                m_xnProjectXml.AddNodeValue(xnJoint, "PartType", "AnimatGUI.DataObjects.Physical.Joints.Prismatic")
+
+                ModifyJointConstraints(xnJoint, "-10", "10", False)
             End Sub
 
             Protected Overridable Sub ModifyJointStatic(ByVal xnJoint As XmlNode)
 
+                m_xnProjectXml.AddNodeValue(xnJoint, "PartType", "AnimatGUI.DataObjects.Physical.Joints.StaticJoint")
+
             End Sub
+
+            Protected Overridable Sub ModifyJointConstraints(ByVal xnJoint As XmlNode, ByVal strLowDefault As String, ByVal strHighDefault As String, ByVal bRotational As Boolean)
+
+                Dim xnConstraint As XmlNode = m_xnProjectXml.GetNode(xnJoint, "Constraint", False)
+
+                If Not xnConstraint Is Nothing Then
+                    Dim fltLow As Single = CSng(m_xnProjectXml.GetSingleNodeAttribute(xnConstraint, "Low", False, strLowDefault))
+                    Dim fltHigh As Single = CSng(m_xnProjectXml.GetSingleNodeAttribute(xnConstraint, "High", False, strHighDefault))
+
+                    If Not bRotational Then
+                        fltLow = fltLow * m_fltDistanceUnits
+                        fltHigh = fltHigh * m_fltDistanceUnits
+                    Else
+                        fltLow = Util.RadiansToDegrees(fltLow)
+                        fltHigh = Util.RadiansToDegrees(fltHigh)
+                    End If
+
+                    Dim bEnableLimits As Boolean = CBool(m_xnProjectXml.GetSingleNodeValue(xnConstraint, "EnableLimits", False, "True"))
+
+                    'Create Lower Constraint Limit
+                    Dim strID As String = System.Guid.NewGuid.ToString()
+                    Dim strLowerXml As String = "<Name>" & strID & "</Name>" & vbCrLf & _
+                     "<ID>" & strID & "</ID>" & vbCrLf & _
+                     "<LimitPos Value=""" & fltLow & """ Scale=""None"" Actual=""" & fltLow & """/>" & vbCrLf & _
+                     "<Damping " & m_xnProjectXml.GetSingleNodeAttributes(xnConstraint, "Damping", False, "Value=""0"" Scale=""Kilo"" Actual=""0""") & "/>" & vbCrLf & _
+                     "<Restitution " & m_xnProjectXml.GetSingleNodeAttributes(xnConstraint, "Restitution", False, "Value=""0"" Scale=""Kilo"" Actual=""0""") & "/>" & vbCrLf & _
+                     "<Stiffness " & m_xnProjectXml.GetSingleNodeAttributes(xnConstraint, "Stiffness", False, "Value=""5"" Scale=""Mega"" Actual=""5e+006""") & "/>" & vbCrLf
+                    Dim xnLowerLimit As XmlNode = m_xnProjectXml.AddNodeXml(xnJoint, "LowerLimit", strLowerXml)
+
+                    'Create Upper Constraint Limit
+                    strID = System.Guid.NewGuid.ToString()
+                    Dim strUpperXml As String = "<Name>" & strID & "</Name>" & vbCrLf & _
+                     "<ID>" & strID & "</ID>" & vbCrLf & _
+                     "<LimitPos Value=""" & fltHigh & """ Scale=""None"" Actual=""" & fltHigh & """/>" & vbCrLf & _
+                     "<Damping " & m_xnProjectXml.GetSingleNodeAttributes(xnConstraint, "Damping", False, "Value=""0"" Scale=""Kilo"" Actual=""0""") & "/>" & vbCrLf & _
+                     "<Restitution " & m_xnProjectXml.GetSingleNodeAttributes(xnConstraint, "Restitution", False, "Value=""0"" Scale=""Kilo"" Actual=""0""") & "/>" & vbCrLf & _
+                     "<Stiffness " & m_xnProjectXml.GetSingleNodeAttributes(xnConstraint, "Stiffness", False, "Value=""5"" Scale=""Mega"" Actual=""5e+006""") & "/>" & vbCrLf
+                    Dim xnUpperLimit As XmlNode = m_xnProjectXml.AddNodeXml(xnJoint, "UpperLimit", strUpperXml)
+
+                    'Add the enable limits
+                    m_xnProjectXml.AddNodeValue(xnJoint, "EnableLimits", bEnableLimits.ToString)
+
+                    'Remove the constraint.
+                    m_xnProjectXml.RemoveNode(xnJoint, "Constraint")
+                End If
+
+                Dim dblMaxTorque As Double = CDbl(m_xnProjectXml.GetSingleNodeValue(xnJoint, "MaxTorque", False, "100"))
+                m_xnProjectXml.RemoveNode(xnJoint, "MaxTorque", False)
+                m_xnProjectXml.AddScaledNumber(xnJoint, "MaxForce", dblMaxTorque, "None", dblMaxTorque)
+
+            End Sub
+
 #End Region
 
 #End Region

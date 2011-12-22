@@ -630,7 +630,7 @@ Namespace DataObjects.Physical
                 tnParent = m_JointToParent.WorkspaceNode
             End If
 
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject)
+            MyBase.CreateWorkspaceTreeView(doParent, tnParent, bRootObject)
 
             Dim dbChild As AnimatGUI.DataObjects.Physical.RigidBody
             For Each deEntry As DictionaryEntry In m_aryChildBodies

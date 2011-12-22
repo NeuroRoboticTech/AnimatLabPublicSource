@@ -45,9 +45,9 @@ VsPrismatic::VsPrismatic()
 	m_lpPosFlap->LimitPos(Prismatic::JointPosition(), FALSE);
 	m_lpPosFlap->IsShowPosition(TRUE);
 
-	m_lpUpperLimit->Color(1, 1, 1, 1);
-	m_lpLowerLimit->Color(1, 0, 0, 1);
-	m_lpPosFlap->Color(0, 0, 1, 1);
+	m_lpUpperLimit->Color(0, 0, 1, 1);
+	m_lpLowerLimit->Color(1, 1, 0.333, 1);
+	m_lpPosFlap->Color(1, 0, 1, 1);
 
 	m_lpLowerLimit->IsLowerLimit(TRUE);
 	m_lpUpperLimit->IsLowerLimit(FALSE);

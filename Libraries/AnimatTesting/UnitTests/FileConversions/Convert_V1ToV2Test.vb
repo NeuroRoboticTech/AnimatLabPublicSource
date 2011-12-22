@@ -58,10 +58,11 @@ Namespace UnitTests
                 'Dim strProjectName As String = "MuscleTest"
                 'Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\CylinderTest"
                 'Dim strProjectName As String = "CylinderTest"
-                Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\MeshTest"
-                Dim strProjectName As String = "MeshTest"
+                'Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\MeshTest"
+                'Dim strProjectName As String = "MeshTest"
+                Dim strProject As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\PrismaticTest\PrismaticTest.aproj"
 
-                UnitTest("AnimatGUI.dll", "AnimatGUI.DataObjects.FileConverters.Convert_V1ToV2", "ConvertFiles", New Object() {strProjectPath, strProjectName})
+                UnitTest("AnimatGUI.dll", "AnimatGUI.DataObjects.FileConverters.Convert_V1ToV2", "ConvertFiles", New Object() {strProject})
 
                 'Assert.Inconclusive("A method that does not return a value cannot be verified.")
             End Sub

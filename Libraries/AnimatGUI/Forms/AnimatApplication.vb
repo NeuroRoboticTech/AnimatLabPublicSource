@@ -1034,7 +1034,7 @@ Namespace Forms
 
         Private Declare Function WebUpdate Lib "wuw4.dll" (ByVal URL As String) As Long
 
-        Protected m_strAppVersion As String = "2.0"
+        Protected m_fltAppVersion As Single = 2.0
         Protected m_bUseMockSimInterface As Boolean = False
         Protected m_bUseMockDataObjectInterface As Boolean = False
         Protected m_bUseMockStdXml As Boolean = False
@@ -1083,6 +1083,7 @@ Namespace Forms
         Protected m_aryGainTypes As New Collections.Gains(Nothing)
         Protected m_aryProgramModules As New Collections.ProgramModules(Nothing)
         Protected m_aryExternalStimuli As New Collections.Stimuli(Nothing)
+        Protected m_aryFileConverters As New Hashtable()
 
         Protected m_wcWorkspaceContent As Crownwood.DotNetMagic.Docking.WindowContent
         Protected m_wcPropertiesContent As Crownwood.DotNetMagic.Docking.WindowContent
@@ -1382,9 +1383,9 @@ Namespace Forms
             End Set
         End Property
 
-        Public ReadOnly Property AppVersion() As String
+        Public ReadOnly Property AppVersion() As Single
             Get
-                Return m_strAppVersion
+                Return m_fltAppVersion
             End Get
         End Property
 
@@ -2142,6 +2143,12 @@ Namespace Forms
                                     m_aryExternalStimuli.Add(doStim, False)
                                     m_aryAllDataTypes.Add(doStim)
                                 End If
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.FileConverter), True) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.FileConverter")
+                                Dim doConv As DataObjects.FileConverter = CreateFileConverter(assemModule, tpClass, Nothing)
+                                If Not doConv Is Nothing Then
+                                    m_aryFileConverters.Add(doConv.ConvertFrom, doConv)
+                                End If
                             End If
                         Next
 
@@ -2321,6 +2328,22 @@ Namespace Forms
             Catch ex As System.Exception
                 If ex.Message <> "Cannot create an abstract class." Then
                     Util.ShowMessage("CreateExternalStimuli: " & tpClass.FullName)
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                End If
+            End Try
+
+        End Function
+
+        Protected Overridable Function CreateFileConverter(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.FileConverter
+
+            Try
+                If Not tpClass.IsAbstract Then
+                    Dim doConv As DataObjects.FileConverter = DirectCast(Util.LoadClass(assemModule, tpClass.FullName), DataObjects.FileConverter)
+                    Return doConv
+                End If
+            Catch ex As System.Exception
+                If ex.Message <> "Cannot create an abstract class." Then
+                    Util.ShowMessage("CreateFileConverter: " & tpClass.FullName)
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End If
             End Try
@@ -2957,6 +2980,16 @@ Namespace Forms
                 UpdateToolstrips()
                 RaiseEvent ProjectLoaded()
 
+            Catch exOldVersion As OldProjectVersion
+                Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Attempted to load an old project version file: '" & strFilename & "', Old Version: " & exOldVersion.OldVersion)
+                Me.CloseProject(False)
+
+                If Util.ShowMessage("The project you are attempting to load was built with a previous version of AnimatLab. Would you like to convert it to " & _
+                                 "be able to run in this version of the application? A backup of all old files will be made in a seperate folder of the project. ", "Convert Project", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    RaiseEvent ConvertFileVersion(strFilename, exOldVersion.OldVersion)
+                Else
+                    Throw exOldVersion
+                End If
             Catch ex As System.Exception
                 Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Unable to load project: '" & strFilename & "'")
                 Throw ex
@@ -3102,8 +3135,8 @@ Namespace Forms
 
                 Dim fltVersion As Single = oXml.GetChildFloat("Version", 1)
 
-                If fltVersion < CSng(Me.AppVersion) Then
-                    Throw New System.Exception("You cannot open project files from previous versions of the application.")
+                If fltVersion < Me.AppVersion Then
+                    Throw New OldProjectVersion("You cannot open project files from previous versions of the application.", fltVersion)
                 End If
 
                 m_strProjectName = oXml.GetChildString("ProjectName")
@@ -4414,6 +4447,8 @@ Namespace Forms
             RaiseEvent TimeStepChanged(doObject)
         End Sub
 
+        Protected Event ConvertFileVersion(ByVal strProjectFile As String, ByVal fltOldVersion As Single)
+
 #End Region
 
 #Region " Event Handlers "
@@ -5495,6 +5530,44 @@ Namespace Forms
 
 #End Region
 
+#Region "File Conversion Event Handlers"
+
+        Protected Overridable Sub ConvertProjectFile(ByVal strProjectFile As String, ByVal fltOldVersion As Single) Handles Me.ConvertFileVersion
+            Try
+                Application.DoEvents()
+
+                Dim fltVersion As Single = fltOldVersion
+                Dim fltCurrentVersion As Single = Me.AppVersion
+
+                'Keep running the file converter until we convert all the way up to the latest version.
+                While fltVersion < fltCurrentVersion
+                    fltVersion = ConvertProjectVersion(strProjectFile, fltVersion)
+                End While
+
+                If Util.ShowMessage("The project conversion was successful. Would you like to load this project now?", "Project Conversion", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Me.LoadProject(strProjectFile)
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Protected Overridable Function ConvertProjectVersion(ByVal strProjectFile As String, ByVal fltVersion As Single) As Single
+
+            'Find a converter that will convert this file type to a newer version.
+            If Not m_aryFileConverters.ContainsKey(fltVersion) Then
+                Throw New System.Exception("No file converter was found that can convert a project version '" & fltVersion & "'")
+            End If
+
+            Dim doConv As DataObjects.FileConverter = DirectCast(m_aryFileConverters(fltVersion), DataObjects.FileConverter)
+
+            doConv.ConvertFiles(strProjectFile)
+
+            Return doConv.ConvertTo
+        End Function
+
+#End Region
 
 #End Region
 
@@ -5513,6 +5586,32 @@ Namespace Forms
                 Return doX.DeleteSortCompare(doY)
 
             End Function 'IComparer.Compare
+
+        End Class
+
+#End Region
+
+#Region "Exceptions"
+
+        Public Class OldProjectVersion
+            Inherits System.Exception
+
+            Protected m_fltOldVersion As Single
+
+            Public Property OldVersion() As Single
+                Get
+                    Return m_fltOldVersion
+                End Get
+                Set(ByVal Value As Single)
+                    m_fltOldVersion = Value
+                End Set
+            End Property
+
+            Public Sub New(ByVal strMessage As String, ByVal fltOldVersion As Single)
+                MyBase.New(strMessage)
+
+                m_fltOldVersion = fltOldVersion
+            End Sub
 
         End Class
 
