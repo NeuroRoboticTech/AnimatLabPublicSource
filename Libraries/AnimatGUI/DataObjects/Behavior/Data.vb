@@ -412,6 +412,8 @@ Namespace DataObjects.Behavior
 
         Protected Overridable Sub ConnectOrganismEvents()
 
+            DisconnectOrganismEvents()
+
             If Not m_doOrganism Is Nothing Then
                 AddHandler m_doOrganism.AfterPropertyChanged, AddressOf Me.OnOrganismModified
 
@@ -436,6 +438,8 @@ Namespace DataObjects.Behavior
         End Sub
 
         Protected Overridable Sub ConnectDiagramEvents()
+
+            DisconnectDiagramEvents()
 
             If Not Me.ParentDiagram Is Nothing Then
                 AddHandler Me.ItemSelected, AddressOf Me.ParentDiagram.OnItemSelected

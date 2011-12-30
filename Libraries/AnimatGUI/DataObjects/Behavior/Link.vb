@@ -1165,6 +1165,8 @@ Namespace DataObjects.Behavior
 
         Protected Overridable Sub ConnectNodeEvents()
 
+            DisconnectNodeEvents()
+
             If Not m_bnDestination Is Nothing Then
                 If Util.IsTypeOf(m_bnDestination.GetType(), GetType(Behavior.Nodes.OffPage), False) Then
                     Dim doOffpage As Behavior.Nodes.OffPage = DirectCast(m_bnDestination, Behavior.Nodes.OffPage)

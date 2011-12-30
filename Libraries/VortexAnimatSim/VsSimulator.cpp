@@ -74,37 +74,13 @@ Vx::VxFrame* VsSimulator::Frame()
 void VsSimulator::LinearCompliance(float fltVal, BOOL bUseScaling)
 {
 	Simulator::LinearCompliance(fltVal, bUseScaling);
-	//TODO Add to sim
+	SetSimulationStabilityParams();
 }
 
 void VsSimulator::AngularCompliance(float fltVal, BOOL bUseScaling)
 {
 	Simulator::AngularCompliance(fltVal, bUseScaling);
-	//TODO Add to sim
-}
-
-void VsSimulator::LinearDamping(float fltVal, BOOL bUseScaling)
-{
-	Simulator::LinearDamping(fltVal, bUseScaling);
-	//TODO Add to sim
-}
-
-void VsSimulator::AngularDamping(float fltVal, BOOL bUseScaling)
-{
-	Simulator::AngularDamping(fltVal, bUseScaling);
-	//TODO Add to sim
-}
-
-void VsSimulator::LinearKineticLoss(float fltVal)
-{
-	Simulator::LinearKineticLoss(fltVal);
-	//TODO Add to sim
-}
-
-void VsSimulator::AngularKineticLoss(float fltVal)
-{
-	Simulator::AngularKineticLoss(fltVal);
-	//TODO Add to sim
+	SetSimulationStabilityParams();
 }
 
 void VsSimulator::PhysicsTimeStep(float fltVal)
@@ -226,23 +202,23 @@ void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
 	//rootStateSet->setMode( GL_LIGHT1, osg::StateAttribute::ON );
 
 	m_oLightMgr.Initialize();
+ }
 
-  /*  VxSolverParameters *sp = m_uUniverse->getSolverParameters();
-	float fltAC = sp->getConstraintAngularCompliance();
-	float fltAK = sp->getConstraintAngularKineticLoss();
-	float fltLC = sp->getConstraintLinearCompliance();
-	float fltLK = sp->getConstraintLinearDamping();
-	float fltLD = sp->getConstraintLinearKineticLoss();*/
-	//float fltC = sp->setConstraintAngularDamping();
+void VsSimulator::SetSimulationStabilityParams()
+{
+	if(m_uUniverse)
+	{
+		VxReal halflife = 5;
+		m_uUniverse->getSolverParameters(0)->setConstraintLinearCompliance(m_fltLinearCompliance);
+		m_uUniverse->getSolverParameters(0)->setConstraintAngularCompliance(m_fltAngularCompliance);
+		m_uUniverse->setCriticalConstraintParameters(0, halflife);
 
- /*   sp->setConstraintAngularCompliance(c);
-    sp->setConstraintAngularDamping(b);
-    sp->setConstraintAngularKineticLoss(1e-8);
-    sp->setConstraintLinearCompliance(c);
-    sp->setConstraintLinearDamping(b);
-    sp->setConstraintLinearKineticLoss(1e-8);
-    sp->setLcpParam(20, 10, 1.e-4);*/
-
+		//float fltAC = m_uUniverse->getSolverParameters(0)->getConstraintAngularCompliance();
+		//float fltAK = m_uUniverse->getSolverParameters(0)->getConstraintAngularKineticLoss();
+		//float fltLC = m_uUniverse->getSolverParameters(0)->getConstraintLinearCompliance();
+		//float fltLD = m_uUniverse->getSolverParameters(0)->getConstraintLinearDamping();
+		//float fltLK = m_uUniverse->getSolverParameters(0)->getConstraintLinearKineticLoss();
+	}
 }
 
 //This function initializes the Vortex related
@@ -264,17 +240,8 @@ void VsSimulator::InitializeVortex(int argc, const char **argv)
 	m_vxFrame->setTimeStep(m_fltPhysicsTimeStep);		
 
 	VxFrameRegisterAllInteractions(m_vxFrame);
-	
-    //VxContactProperties *pM;
-    //pM = materialTable->getContactProperties("groundMaterial", "boxMaterial");
-    //pM->setFrictionType(VxContactProperties::kFrictionTypeTwoDirection);
-    //pM->setFrictionModel(VxContactProperties::kFrictionModelScaledBox);
-    //pM->setFrictionCoefficientPrimary(1.0f);
-    //pM->setFrictionCoefficientSecondary(1.3f);
-    //pM->setCompliance(5.0e-7f);
-    //pM->setDamping(2.0e5f);
-    //pM->setSlipPrimary(0.00001f);   // some slip is necessary to allow the vehicle to turn
-    //pM->setSlipSecondary(0.00001f); // some slip is necessary to allow the vehicle to turn
+
+	SetSimulationStabilityParams();
 
     // Register the simple callback to be notified at beginning and end of the interaction between parts and sensors.
     m_uUniverse->addIntersectSubscriber(VxUniverse::kResponsePart, VxUniverse::kResponsePart, VxUniverse::kEventFirst, &m_vsIntersect, 0);

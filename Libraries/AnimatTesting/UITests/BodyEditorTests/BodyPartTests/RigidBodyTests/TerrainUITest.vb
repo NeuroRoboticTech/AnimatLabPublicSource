@@ -45,42 +45,42 @@ Namespace UITests
                         TestSettingHeightMap(strStructure, strPart)
 
                         'Set the SegmentWidth to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "SegmentWidth", "0.2"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "SegmentWidth", "0.2"})
 
                         'Set the SegmentWidth to zero
-                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "SegmentWidth", "0"}, "The segment width must be greater than zero.")
+                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "SegmentWidth", "0"}, "The segment width must be greater than zero.")
 
                         'Set the SegmentWidth to a negative value
-                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "SegmentWidth", "-0.2"}, "The segment width must be greater than zero.")
+                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "SegmentWidth", "-0.2"}, "The segment width must be greater than zero.")
 
                         'Set the SegmentWidth to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "SegmentWidth", "0.1"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "SegmentWidth", "0.1"})
 
 
                         'Set the SegmentLength to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "SegmentLength", "0.2"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "SegmentLength", "0.2"})
 
                         'Set the SegmentLength to zero
-                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "SegmentLength", "0"}, "The segment length must be greater than zero.")
+                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "SegmentLength", "0"}, "The segment length must be greater than zero.")
 
                         'Set the SegmentLength to a negative value
-                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "SegmentLength", "-0.2"}, "The segment length must be greater than zero.")
+                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "SegmentLength", "-0.2"}, "The segment length must be greater than zero.")
 
                         'Set the SegmentLengthto a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "SegmentLength", "0.1"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "SegmentLength", "0.1"})
 
 
                         'Set the MaxHeight to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "MaxHeight", "1"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MaxHeight", "1"})
 
                         'Set the MaxHeight to zero
-                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "MaxHeight", "0"}, "The maximum height must be greater than zero.")
+                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MaxHeight", "0"}, "The maximum height must be greater than zero.")
 
                         'Set the MaxHeight to a negative value
-                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "MaxHeight", "-0.2"}, "The maximum height must be greater than zero.")
+                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MaxHeight", "-0.2"}, "The maximum height must be greater than zero.")
 
                         'Set the MaxHeight a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "MaxHeight", "0.5"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MaxHeight", "0.5"})
 
 
                         'For the terrain part we need to do an additional rotation so we can see the axis.
@@ -102,17 +102,17 @@ Namespace UITests
                     Protected Overrides Sub RepositionChildPart()
 
                         'Reposition the child part relative to the landscape part
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_1", "LocalPosition.X", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_1", "LocalPosition.Y", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_1", "LocalPosition.Z", "0.5"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1", "LocalPosition.X", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1", "LocalPosition.Y", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1", "LocalPosition.Z", "0.5"})
 
                     End Sub
 
                     Protected Overrides Sub RepositionStruct1BeforeSim()
                         'Reposition the structure
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1", "WorldPosition.X", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1", "WorldPosition.Y", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1", "WorldPosition.Z", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.X", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.Y", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.Z", "0"})
                     End Sub
 
                     Protected Overrides Sub RepositionStruct2BeforeSim()

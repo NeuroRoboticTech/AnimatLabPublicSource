@@ -33,6 +33,10 @@ Namespace Framework
         Protected m_szCurrrentResoution As New Size(0, 0)
         Protected m_dblResScaleWidth As Double = 1
         Protected m_dblResScaleHeight As Double = 1
+        Protected m_bCreateStructure As Boolean = True
+        Protected m_strStructureGroup As String = "Structures"
+        Protected m_strStruct1Name As String = "Structure_1"
+        Protected m_strRootNeuralSystem As String = "Neural Subsystem"
 
         Protected m_strAmbient As String = "#1E1E1E"
         Protected m_strDiffuse As String = "#FFFFFF"
@@ -97,18 +101,20 @@ Namespace Framework
         '<TestMethod()>
         'Public Sub CodedUITestMethod1()
 
-        '    Me.UIMap.MoveChartWindowToSideBySideView()
+        '    Me.UIMap.OpenProject()
 
-        '    Me.UIMap.AssertNewProjectAlreadyExists()
-        '    Me.UIMap.CloseNewProjectErrorWindow()
+        '    'Me.UIMap.MoveChartWindowToSideBySideView()
 
-        '    Me.UIMap.AddRootPartToChart()
+        '    'Me.UIMap.AssertNewProjectAlreadyExists()
+        '    'Me.UIMap.CloseNewProjectErrorWindow()
 
-        '    Me.UIMap.AddLineChart()
+        '    'Me.UIMap.AddRootPartToChart()
 
-        '    Me.UIMap.NewProjectDlg_EnterNameAndPath()
-        '    Me.UIMap.AddRootPartType()
-        '    Me.UIMap.AddChildPartTypeWithJoint()
+        '    'Me.UIMap.AddLineChart()
+
+        '    'Me.UIMap.NewProjectDlg_EnterNameAndPath()
+        '    'Me.UIMap.AddRootPartType()
+        '    'Me.UIMap.AddChildPartTypeWithJoint()
         'End Sub
 
 #Region "Additional test attributes"
@@ -120,12 +126,20 @@ Namespace Framework
             InitializeConfiguration()
         End Sub
 
-        Protected Overridable Sub StartProject()
+        Protected Overridable Sub StartNewProject()
             'Start the application.
             StartApplication("", m_bAttachServerOnly)
 
-            CreateNewProject(m_strProjectName, m_strProjectPath, m_dblSimEndTime)
+            CreateNewProject(m_strProjectName, m_strProjectPath, m_dblSimEndTime, m_bCreateStructure)
         End Sub
+
+        Protected Overridable Sub StartExistingProject()
+            'Start the application.
+            StartApplication("", m_bAttachServerOnly)
+
+            ExecuteIndirectMethod("LoadProject", New Object() {m_strRootFolder & m_strProjectPath & "\" & m_strProjectName & "\" & m_strProjectName & ".aproj"})
+
+         End Sub
 
         ' Use TestCleanup to run code after each test has run
         <TestCleanup()> Public Overridable Sub MyTestCleanup()
@@ -257,7 +271,17 @@ Namespace Framework
 
         End Sub
 
-        Protected Overridable Sub CreateNewProject(ByVal strProjectName As String, ByVal strProjectPath As String, ByVal dblSimEnd As Double)
+        Protected Sub SetStructureNames(ByVal strPostFix As String, ByVal bIsStructure As Boolean)
+            If bIsStructure Then
+                m_strStructureGroup = "Structures"
+                m_strStruct1Name = "Structure_" & strPostFix
+            Else
+                m_strStructureGroup = "Organisms"
+                m_strStruct1Name = "Organism_" & strPostFix
+            End If
+        End Sub
+
+        Protected Overridable Sub CreateNewProject(ByVal strProjectName As String, ByVal strProjectPath As String, ByVal dblSimEnd As Double, ByVal bCreateStructure As Boolean)
 
             OpenDialogAndWait("NewProject", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"NewToolStripButton"})
 
@@ -271,24 +295,29 @@ Namespace Framework
             'Set simulation end time.
             ExecuteMethod("SetObjectProperty", New Object() {"Simulation", "SimulationEndTime", dblSimEnd.ToString})
 
-            CreateStructure("Structure_1", "Structure_1")
+            SetStructureNames("1", bCreateStructure)
+            CreateStructure(m_strStructureGroup, m_strStruct1Name, m_strStruct1Name, bCreateStructure)
 
             Threading.Thread.Sleep(2000)
 
         End Sub
 
-        Protected Overridable Sub CreateStructure(ByVal strOrigStructureName As String, ByVal strNewStructureName As String)
+        Protected Overridable Sub CreateStructure(ByVal strStructGroup As String, ByVal strOrigStructureName As String, ByVal strNewStructureName As String, ByVal bCreateStructure As Boolean)
 
             'Click the add structure button.
-            ExecuteMethod("ClickToolbarItem", New Object() {"AddStructureToolStripButton"})
+            If bCreateStructure Then
+                ExecuteMethod("ClickToolbarItem", New Object() {"AddStructureToolStripButton"})
+            Else
+                ExecuteMethod("ClickToolbarItem", New Object() {"AddOrganismStripButton"})
+            End If
 
             'Set the name of the structure
             If strOrigStructureName <> strNewStructureName Then
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strOrigStructureName, "Name", strNewStructureName})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & strStructGroup & "\" & strOrigStructureName, "Name", strNewStructureName})
             End If
 
             'Open the Structure_1 body plan editor window
-            ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Structures\" & strNewStructureName & "\Body Plan"}, 2000)
+            ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\" & strStructGroup & "\" & strNewStructureName & "\Body Plan"}, 2000)
 
         End Sub
 
@@ -305,7 +334,7 @@ Namespace Framework
 
             'Now add items to the chart to plot the y position of the root, child part, and joint.
             'Add root part.
-            AddItemToChart("Structure_1\Root")
+            AddItemToChart(m_strStruct1Name & "\Body Plan\Root")
 
             'Set the name of the data chart item to root_y.
             ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root", "Name", "Root_Y"})
@@ -315,7 +344,7 @@ Namespace Framework
 
             If Me.HasChildPart Then
                 'Add child body part
-                AddItemToChart("Structure_1\Root\Joint_1\Body_1")
+                AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1")
 
                 'Set the name of the data chart item to root_y.
                 ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Body_1", "Name", "Child_Y"})
@@ -324,7 +353,7 @@ Namespace Framework
                 ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Child_Y", "DataTypeID", "WorldPositionY"})
 
                 'Add joint body part
-                AddItemToChart("Structure_1\Root\Joint_1")
+                AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1")
 
                 'Set the name of the data chart item to root_y.
                 ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Joint_1", "Name", "Joint_Y"})
@@ -334,7 +363,7 @@ Namespace Framework
             End If
 
             'Select the simulation window tab so it is visible now.
-            ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Simulation\Environment\Structures\Structure_1"}, 1000)
+            ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name}, 1000)
         End Sub
 
 
@@ -355,9 +384,9 @@ Namespace Framework
                                                ByVal dblMinLocalRange As Double, ByVal dblMaxLocalRange As Double)
 
             'Get the part and structure x position before movement
-            Dim dblBeforePartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis & ".ActualValue"), Double)
-            Dim dblBeforeStructPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure, "LocalPosition." & strWorldAxis & ".ActualValue"), Double)
-            Dim dblBeforeLocalPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis & ".ActualValue"), Double)
+            Dim dblBeforePartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis & ".ActualValue"), Double)
+            Dim dblBeforeStructPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure, "LocalPosition." & strWorldAxis & ".ActualValue"), Double)
+            Dim dblBeforeLocalPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis & ".ActualValue"), Double)
 
             'Move axis
             DragMouse(ptAxisStart, ptAxisEnd, MouseButtons.Left)
@@ -365,9 +394,9 @@ Namespace Framework
             Threading.Thread.Sleep(200)
 
             'Get the part and structure x position after movement
-            Dim dblAfterPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis & ".ActualValue"), Double)
-            Dim dblAfterStructPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure, "LocalPosition." & strWorldAxis & ".ActualValue"), Double)
-            Dim dblAfterLocalPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis & ".ActualValue"), Double)
+            Dim dblAfterPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis & ".ActualValue"), Double)
+            Dim dblAfterStructPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure, "LocalPosition." & strWorldAxis & ".ActualValue"), Double)
+            Dim dblAfterLocalPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis & ".ActualValue"), Double)
 
             AssertInRange("Part", strWorldAxis, "position", (dblAfterPartPos - dblBeforePartPos), dblMinPartRange, dblMaxPartRange)
             AssertInRange("Structure", strWorldAxis, "position", (dblAfterStructPos - dblBeforeStructPos), dblMinStructRange, dblMaxStructRange)
@@ -380,7 +409,7 @@ Namespace Framework
                                                 ByVal dblMinRange As Double, ByVal dblMaxRange As Double, Optional ByVal bResetPos As Boolean = True)
 
             'Get the part rotation before movement
-            Dim dblBeforePartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis & ".ActualValue"), Double)
+            Dim dblBeforePartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis & ".ActualValue"), Double)
 
             'Move axis
             DragMouse(ptAxisStart, ptAxisEnd, MouseButtons.Left)
@@ -388,13 +417,13 @@ Namespace Framework
             Threading.Thread.Sleep(200)
 
             'Get the part and structure x position before movement
-            Dim dblAfterPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis & ".ActualValue"), Double)
+            Dim dblAfterPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis & ".ActualValue"), Double)
 
             AssertInRange("Part", strAxis, "rotation", (dblAfterPartPos - dblBeforePartPos), dblMinRange, dblMaxRange)
 
             'Reset the rotation to 0.
             If bResetPos Then
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis, dblBeforePartPos.ToString})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis, dblBeforePartPos.ToString})
             End If
 
         End Sub
@@ -404,16 +433,16 @@ Namespace Framework
                                                          Optional ByVal bVerifyRoot As Boolean = True, Optional ByVal dblMaxError As Double = 0.001)
 
             'Reset the position of the Structure.
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure, "LocalPosition.X", dblPosX.ToString})
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure, "LocalPosition.Y", dblPosY.ToString})
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure, "LocalPosition.Z", dblPosZ.ToString})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure, "LocalPosition.X", dblPosX.ToString})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure, "LocalPosition.Y", dblPosY.ToString})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure, "LocalPosition.Z", dblPosZ.ToString})
 
             Threading.Thread.Sleep(50)
 
             'Verify that the structure position is correct now.
-            Dim dblStructPosX As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure, "LocalPosition.X.ActualValue"), Double)
-            Dim dblStructPosY As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure, "LocalPosition.Y.ActualValue"), Double)
-            Dim dblStructPosZ As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure, "LocalPosition.Z.ActualValue"), Double)
+            Dim dblStructPosX As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure, "LocalPosition.X.ActualValue"), Double)
+            Dim dblStructPosY As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure, "LocalPosition.Y.ActualValue"), Double)
+            Dim dblStructPosZ As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure, "LocalPosition.Z.ActualValue"), Double)
 
             If Math.Abs(dblPosX - dblStructPosX) > dblMaxError Then
                 Throw New System.Exception("Structure position does not match the target value: " & dblPosX & ", recorded value: " & dblStructPosX)
@@ -429,9 +458,9 @@ Namespace Framework
 
             'Verify that the root position is correct now.
             If bVerifyRoot Then
-                Dim dblRootPosX As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition.X.ActualValue"), Double)
-                Dim dblRootPosY As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition.Y.ActualValue"), Double)
-                Dim dblRootPosZ As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition.Z.ActualValue"), Double)
+                Dim dblRootPosX As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WorldPosition.X.ActualValue"), Double)
+                Dim dblRootPosY As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WorldPosition.Y.ActualValue"), Double)
+                Dim dblRootPosZ As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WorldPosition.Z.ActualValue"), Double)
 
                 If Math.Abs(dblPosX - dblRootPosX) > dblMaxError Then
                     Throw New System.Exception("Structure position does not match the target value: " & dblPosX & ", recorded value: " & dblRootPosX)
@@ -455,11 +484,11 @@ Namespace Framework
                                                      ByVal dblLocalTest As Double, ByVal dblLocalWorldTest As Double, Optional ByVal dblMaxError As Double = 0.001)
 
             'Move the root part along the axis using world coordinates.
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis, dblWorldPos.ToString})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis, dblWorldPos.ToString})
 
             'Now get the world position and verify it.
-            Dim dblPosWorld As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis & ".ActualValue"), Double)
-            Dim dblPosLocal As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis & ".ActualValue"), Double)
+            Dim dblPosWorld As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis & ".ActualValue"), Double)
+            Dim dblPosLocal As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis & ".ActualValue"), Double)
 
             Threading.Thread.Sleep(50)
 
@@ -473,11 +502,11 @@ Namespace Framework
 
             'Move the root part along the axis using local coordinates.
             If bTestLocal Then
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis, dblLocalPos.ToString})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis, dblLocalPos.ToString})
 
                 'Now get the world position and verify it.
-                dblPosWorld = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis & ".ActualValue"), Double)
-                dblPosLocal = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis & ".ActualValue"), Double)
+                dblPosWorld = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis & ".ActualValue"), Double)
+                dblPosLocal = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis & ".ActualValue"), Double)
 
                 If Math.Abs(dblPosLocal - dblLocalTest) > dblMaxError Then
                     Throw New System.Exception("Body part position does not match the local target value: " & dblPosLocal & ", recorded value: " & dblLocalTest)
@@ -494,15 +523,15 @@ Namespace Framework
                                                        ByVal dblRotation As Double, Optional ByVal bReset As Boolean = True, Optional ByVal dblMaxError As Double = 0.001) As Double
 
             'Now beginning rotation
-            Dim dblOrigRot As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis & ".ActualValue"), Double)
+            Dim dblOrigRot As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis & ".ActualValue"), Double)
 
             'Move the root part along the axis using world coordinates.
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis, dblRotation.ToString})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis, dblRotation.ToString})
 
             Threading.Thread.Sleep(50)
 
             'Now get the world position and verify it.
-            Dim dblRealRot As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis & ".ActualValue"), Double)
+            Dim dblRealRot As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis & ".ActualValue"), Double)
 
             If Math.Abs(dblRealRot - dblRotation) > dblMaxError Then
                 Throw New System.Exception("Body part rotation does not match the target value: " & dblRealRot & ", recorded value: " & dblRotation)
@@ -510,14 +539,14 @@ Namespace Framework
 
             If bReset Then
                 'Reset the rotation
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis, dblOrigRot.ToString})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis, dblOrigRot.ToString})
             End If
 
             Return dblOrigRot
         End Function
 
         Protected Overridable Sub RecalculatePositionsUsingResolution()
-            Dim uIStructure_1BodyClient As WinClient = Me.UIProjectWindow(m_strProjectName).UIStructure_1BodyWindow.UIStructure_1BodyClient
+            Dim uIStructure_1BodyClient As WinClient = Me.UIProjectWindow(m_strProjectName).UIStructure_1BodyWindow.UIStructure_1BodyClient(m_strStruct1Name)
 
             m_szCurrrentResoution = New Size(uIStructure_1BodyClient.BoundingRectangle.Width, uIStructure_1BodyClient.BoundingRectangle.Height)
 
@@ -534,9 +563,9 @@ Namespace Framework
             'rotate the root and verify the child position.
             Dim dblOrigRot As Double = ManualRotatePartAxis(strStructure, "Root", strAxis, dblRotation, False)
 
-            Dim dblWorldX As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition.X.ActualValue"), Double)
-            Dim dblWorldY As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition.Y.ActualValue"), Double)
-            Dim dblWorldZ As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "WorldPosition.Z.ActualValue"), Double)
+            Dim dblWorldX As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WorldPosition.X.ActualValue"), Double)
+            Dim dblWorldY As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WorldPosition.Y.ActualValue"), Double)
+            Dim dblWorldZ As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WorldPosition.Z.ActualValue"), Double)
 
             If Math.Abs(dblWorldX - dblWorldXTest) > dblMaxError Then
                 Throw New System.Exception("Body part rotation does not match the target value: " & dblWorldXTest & ", recorded value: " & dblWorldX)
@@ -565,51 +594,51 @@ Namespace Framework
             TestSettingBodyVisibility(strStructure, strPart)
 
             'Set the Description to a valid value.
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Description", "Test"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Description", "Test"})
 
             'Set the Name to a valid value.
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Name", "Test"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Name", "Test"})
 
             'Set the Name to an valid value.
-            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\Test", "Name", ""}, "The name property can not be blank.")
+            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\Test", "Name", ""}, "The name property can not be blank.")
 
             'Reset the name to root.
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\Test", "Name", strPart})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\Test", "Name", strPart})
 
         End Sub
 
         Protected Overridable Sub TestSettingBodyColors(ByVal strStructure As String, ByVal strPart As String)
             'Set the ambient to a valid value.
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Ambient", m_strAmbient})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Ambient", m_strAmbient})
 
             'Set the diffuse to a valid value.
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Diffuse", m_strDiffuse})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Diffuse", m_strDiffuse})
 
             'Set the specular to a valid value.
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Specular", m_strSpecular})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Specular", m_strSpecular})
 
             'Set the shininess to a valid value.
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Shininess", m_iShininess.ToString})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Shininess", m_iShininess.ToString})
 
             'Set the shininess to an valid value.
-            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Shininess", "-1"}, "Shininess must be greater than or equal to zero.")
+            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Shininess", "-1"}, "Shininess must be greater than or equal to zero.")
 
             'Set the shininess to an valid value.
-            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Shininess", "129"}, "Shininess must be less than 128.")
+            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Shininess", "129"}, "Shininess must be less than 128.")
         End Sub
 
         Protected Overridable Sub TestSettingBodyTexture(ByVal strStructure As String, ByVal strPart As String)
 
             If m_bTestTexture Then
                 'Set the texture to an valid value.
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Texture", _
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Texture", _
                                                                             (m_strRootFolder & "\bin\Resources\" & m_strTextureFile)})
                 'Set the texture to an invalid value.
-                ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Texture", _
+                ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Texture", _
                                                                             (m_strRootFolder & "\bin\Resources\Bricks.gif")}, "The specified file does not exist: ", enumErrorTextType.BeginsWith)
 
                 'Set the texture to an invalid value.
-                ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Texture", _
+                ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Texture", _
                                                                             (m_strRootFolder & "\bin\Resources\Test.txt")}, "Unable to load the texture file. This does not appear to be a vaild image file.", enumErrorTextType.BeginsWith)
             End If
 
@@ -618,14 +647,14 @@ Namespace Framework
         Protected Overridable Sub TestSettingHeightMap(ByVal strStructure As String, ByVal strPart As String)
 
             'Set the texture to an valid value.
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "MeshFile", _
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MeshFile", _
                                                                         (m_strRootFolder & "\bin\Resources\" & m_strMeshFile)})
             'Set the texture to an invalid value.
-            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "MeshFile", _
+            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MeshFile", _
                                                                         (m_strRootFolder & "\bin\Resources\Bricks.gif")}, "The specified file does not exist: ", enumErrorTextType.BeginsWith)
 
             'Set the texture to an invalid value.
-            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "MeshFile", _
+            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MeshFile", _
                                                                         (m_strRootFolder & "\bin\Resources\Test.txt")}, "Unable to load the height map file. This does not appear to be a vaild image file.", enumErrorTextType.BeginsWith)
 
         End Sub
@@ -633,10 +662,10 @@ Namespace Framework
         Protected Overridable Sub TestSettingBodyVisibility(ByVal strStructure As String, ByVal strPart As String)
 
             'Set the visible to a valid value.
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Visible", "False"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Visible", "False"})
 
             'Turn visible back on.
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Visible", "True"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Visible", "True"})
 
             TestSettingTransparency(strStructure, strPart, "Transparencies.GraphicsTransparency")
             TestSettingTransparency(strStructure, strPart, "Transparencies.CollisionsTransparency")
@@ -646,26 +675,26 @@ Namespace Framework
 
             'If this is the root part then set its child graphics object to be clear for the rest of the tests so it does not look funky.
             If strPart = "Root" AndAlso HasRootGraphic() Then
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart & "\Root_Graphics", "Transparencies.CollisionsTransparency", "100"})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart & "\Root_Graphics", "Transparencies.CollisionsTransparency", "100"})
             End If
         End Sub
 
         Protected Overridable Sub TestSettingTransparency(ByVal strStructure As String, ByVal strPart As String, ByVal strTransparency As String)
 
             'Get original value
-            Dim fltOrigRot As Single = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, strTransparency), Single)
+            Dim fltOrigRot As Single = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, strTransparency), Single)
 
             'Set the Transparencies.GraphicsTransparency to a valid value.
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, strTransparency, "50"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, strTransparency, "50"})
 
             'Set the Transparencies.GraphicsTransparency to high.
-            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, strTransparency, "150"}, "Transparency values cannot be greater than 100%.")
+            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, strTransparency, "150"}, "Transparency values cannot be greater than 100%.")
 
             'Set the Transparencies.GraphicsTransparency too low
-            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, strTransparency, "-50"}, "Transparency values cannont be less than 0%.")
+            ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, strTransparency, "-50"}, "Transparency values cannont be less than 0%.")
 
             'reset original value
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, strTransparency, fltOrigRot.ToString})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, strTransparency, fltOrigRot.ToString})
 
         End Sub
 
@@ -679,7 +708,7 @@ Namespace Framework
         '''<summary>
         '''AddRootPartType - Use 'AddRootPartTypeParams' to pass parameters into this method.
         '''</summary>
-        Protected Overridable Sub AddRootPartType(ByVal strStructure As String, ByVal strPartType As String, Optional ByVal strName As String = "")
+        Protected Overridable Sub AddRootPartType(ByVal strStructGroup As String, ByVal strStructure As String, ByVal strPartType As String, Optional ByVal strName As String = "")
 
             OpenDialogAndWait("SelectPartType", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddPartToolStripButton"})
 
@@ -698,15 +727,15 @@ Namespace Framework
             ' manually, so I am using this trick to get it to work in the test.
             ExecuteMethod("ClickToolbarItem", New Object() {"SelGraphicsToolStripButton"})
             ExecuteMethod("ClickToolbarItem", New Object() {"SelCollisionToolStripButton"})
-            ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\Root"})
+            ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & strStructGroup & "\" & strStructure & "\Body Plan\Root"})
 
             If strName.Length > 0 Then
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Root", "Name", strName})
+                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & strStructGroup & "\" & strStructure & "\Body Plan\Root", "Name", strName})
             End If
         End Sub
 
         Public Overridable Sub ClickToAddBody(ByVal ptClick As Point)
-            Dim uIStructure_1BodyClient As WinClient = Me.UIProjectWindow(m_strProjectName).UIStructure_1BodyWindow.UIStructure_1BodyClient
+            Dim uIStructure_1BodyClient As WinClient = Me.UIProjectWindow(m_strProjectName).UIStructure_1BodyWindow.UIStructure_1BodyClient(m_strStruct1Name)
             Mouse.Click(uIStructure_1BodyClient, ptClick)
         End Sub
 
@@ -836,7 +865,7 @@ Namespace Framework
         Protected Overridable Sub AddStimulus(ByVal strStimulusType As String, ByVal strStructure As String, ByVal strPart As String, _
                                               Optional ByVal strName As String = "", Optional ByVal strOldName As String = "Stimulus_1")
 
-            ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart})
+            ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart})
 
             OpenDialogAndWait("SelectStimulusType", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddStimulusToolStripButton"})
 
@@ -913,7 +942,7 @@ Namespace Framework
                                                  ByVal ptRootAttach As Point, ByVal ptArmAttach As Point)
 
             'Add a root part.
-            AddRootPartType("Structure_1", strPartType)
+            AddRootPartType(m_strStructureGroup, m_strStruct1Name, strPartType)
 
             RecalculatePositionsUsingResolution()
 
@@ -927,8 +956,8 @@ Namespace Framework
             'We have tested moving/rotating the root part, now test doing it on a child part.
             AddChildPartTypeWithJoint(strSecondaryPartType, strJointType, ptClickToAddChild)
 
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_1\Body_1_Graphics", "Name", "Arm_Graphics"})
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_1", "Name", "Arm"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1\Body_1_Graphics", "Name", "Arm_Graphics"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1", "Name", "Arm"})
 
             RepositionChildPart()
 
@@ -943,34 +972,34 @@ Namespace Framework
 
             AddChildPartTypeWithJoint("Box", "Hinge", ptRootAttach)
 
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2\Body_" & iBlockerIndex & "\Body_" & iBlockerIndex & "_Graphics", "Name", "Blocker_Graphics"})
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2\Body_" & iBlockerIndex, "Name", "Blocker"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Body_" & iBlockerIndex & "\Body_" & iBlockerIndex & "_Graphics", "Name", "Blocker_Graphics"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Body_" & iBlockerIndex, "Name", "Blocker"})
 
             RepositionBlockerPart()
 
             'Add motor velocity to joint. Set it to no velocity and always enabled. We want to lock this joint. 
             'We cannot use a static part here because it is part of the geometry of the root, so collisions between it and arm will be disabled.
-            AddStimulus("Motor Velocity", "Structure_1", "Root\Joint_2", "BlockLock", "Stimulus_1")
+            AddStimulus("Motor Velocity", m_strStruct1Name, "Root\Joint_2", "BlockLock", "Stimulus_1")
             SetMotorVelocityStimulus("BlockLock", True, True, 0, 5, False, True, 0, "")
         End Sub
 
         Protected Overridable Sub RepositionArmatureAttachments()
             'First rename the attachments.
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Body_2", "Name", "RootAttach1"})
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Body_3", "Name", "RootAttach2"})
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Arm\Body_4", "Name", "ArmAttach"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Body_2", "Name", "RootAttach1"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Body_3", "Name", "RootAttach2"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\Body_4", "Name", "ArmAttach"})
 
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\RootAttach1", "LocalPosition.X", "0.025"})
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\RootAttach1", "LocalPosition.Y", "0.06"})
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\RootAttach1", "LocalPosition.Z", "0"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\RootAttach1", "LocalPosition.X", "0.025"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\RootAttach1", "LocalPosition.Y", "0.06"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\RootAttach1", "LocalPosition.Z", "0"})
 
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\RootAttach2", "LocalPosition.X", "0.070"})
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\RootAttach2", "LocalPosition.Y", "0.06"})
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\RootAttach2", "LocalPosition.Z", "0"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\RootAttach2", "LocalPosition.X", "0.070"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\RootAttach2", "LocalPosition.Y", "0.06"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\RootAttach2", "LocalPosition.Z", "0"})
 
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Arm\ArmAttach", "LocalPosition.X", "0.075"})
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Arm\ArmAttach", "LocalPosition.Y", "0.025"})
-            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Arm\ArmAttach", "LocalPosition.Z", "0"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\ArmAttach", "LocalPosition.X", "0.075"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\ArmAttach", "LocalPosition.Y", "0.025"})
+            ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\ArmAttach", "LocalPosition.Z", "0"})
         End Sub
 
         Protected Overridable Sub RepositionRootArmatureAttach1()
@@ -992,28 +1021,28 @@ Namespace Framework
             'Change the end time of the data chart to 45 seconds.
             ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectEndTime", m_dblChartEndTime.ToString})
 
-            AddItemToChart("Structure_1\Root\Joint_1\Arm")
+            AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm")
             ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Arm", "Name", "Arm_X"})
             ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Arm_X", "DataTypeID", "WorldPositionX"})
 
-            AddItemToChart("Structure_1\Root\Joint_1\Arm")
+            AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm")
             ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Arm", "Name", "Arm_Y"})
             ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Arm_Y", "DataTypeID", "WorldPositionY"})
 
-            AddItemToChart("Structure_1\Root\Joint_1\Arm")
+            AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm")
             ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Arm", "Name", "Arm_Z"})
             ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Arm_Z", "DataTypeID", "WorldPositionZ"})
 
             If bChartAttachments Then
-                AddItemToChart("Structure_1\Root\Joint_1\Arm\ArmAttach")
+                AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\ArmAttach")
                 ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\ArmAttach", "Name", "ArmAttach_X"})
                 ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\ArmAttach_X", "DataTypeID", "WorldPositionX"})
 
-                AddItemToChart("Structure_1\Root\Joint_1\Arm\ArmAttach")
+                AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\ArmAttach")
                 ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\ArmAttach", "Name", "ArmAttach_Y"})
                 ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\ArmAttach_Y", "DataTypeID", "WorldPositionY"})
 
-                AddItemToChart("Structure_1\Root\Joint_1\Arm\ArmAttach")
+                AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\ArmAttach")
                 ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\ArmAttach", "Name", "ArmAttach_Z"})
                 ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\ArmAttach_Z", "DataTypeID", "WorldPositionZ"})
             End If
@@ -1022,7 +1051,7 @@ Namespace Framework
                 'Add a new axis to chart the joint rotation.
                 ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
 
-                AddItemToChart("Structure_1\Root\Joint_1")
+                AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1")
                 ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 2\Joint_1", "Name", m_strJointChartMovementName})
                 ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 2\" & m_strJointChartMovementName, "DataTypeID", m_strJointChartMovementType})
             End If
@@ -1031,13 +1060,13 @@ Namespace Framework
                 'Add a new axis to chart the joint velocity.
                 ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
 
-                AddItemToChart("Structure_1\Root\Joint_1")
+                AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1")
                 ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 3\Joint_1", "Name", m_strJointChartVelocityName})
                 ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 3\" & m_strJointChartVelocityName, "DataTypeID", m_strJointChartVelocityType})
             End If
 
             'Select the simulation window tab so it is visible now.
-            ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Simulation\Environment\Structures\Structure_1"}, 1000)
+            ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name}, 1000)
         End Sub
 
         Protected Overridable Sub RepositionChildPart()
@@ -1057,7 +1086,7 @@ Namespace Framework
         Public Sub ZoomInOnPart(ByVal ptStart As Point, ByVal iAmount1 As Integer, Optional ByVal iAmount2 As Integer = 0, _
                                 Optional ByVal bVertical As Boolean = True, Optional ByVal eButton As System.Windows.Forms.MouseButtons = MouseButtons.Right, _
                                 Optional ByVal eKeys As System.Windows.Input.ModifierKeys = ModifierKeys.None)
-            Dim uIStructure_1BodyClient As WinClient = Me.UIProjectWindow(m_strProjectName).UIStructure_1BodyWindow.UIStructure_1BodyClient
+            Dim uIStructure_1BodyClient As WinClient = Me.UIProjectWindow(m_strProjectName).UIStructure_1BodyWindow.UIStructure_1BodyClient(m_strStruct1Name)
 
             If Math.Abs(iAmount1) > 0 Then
                 'Move using Right button 'Structure_1 Body' client
@@ -1088,7 +1117,7 @@ Namespace Framework
         Public Sub DragMouse(ByVal ptStart As Point, ByVal ptEnd As Point, ByVal mButton As MouseButtons, _
                              Optional ByVal mModifiers As ModifierKeys = ModifierKeys.None, _
                              Optional ByVal bEndClick As Boolean = False)
-            Dim uIStructure_1BodyClient As WinClient = Me.UIProjectWindow(m_strProjectName).UIStructure_1BodyWindow.UIStructure_1BodyClient
+            Dim uIStructure_1BodyClient As WinClient = Me.UIProjectWindow(m_strProjectName).UIStructure_1BodyWindow.UIStructure_1BodyClient(m_strStruct1Name)
 
             Mouse.StartDragging(uIStructure_1BodyClient, ptStart, mButton, mModifiers)
             Mouse.StopDragging(uIStructure_1BodyClient, ptEnd)
@@ -1127,6 +1156,68 @@ Namespace Framework
             'Verify that 'txtErrorMsg' text box's property 'Text' ends with '' already exists. Please choose a different name or location for the project.'
             StringAssert.EndsWith(uITxtErrorMsgEdit.Text, strEndError)
         End Sub
+
+
+        '''<summary>
+        '''OpenProject - Use 'OpenProjectParams' to pass parameters into this method.
+        '''</summary>
+        Public Sub OpenProject()
+            Dim uIOpenButton As WinButton = Me.UIMap.UIToolStripContainer1Window.UIAnimatToolStripWindow.UIOpenButton
+            Dim uIAddressCProjectsAnimToolBar As WinToolBar = Me.UIMap.UIOpenanAnimatLabProjeWindow.UIAddressCProjectsAnimWindow.UIAddressCProjectsAnimToolBar
+            Dim uIAddressComboBox As WinComboBox = Me.UIMap.UIOpenanAnimatLabProjeWindow.UIItemWindow.UIAddressComboBox
+            Dim uIGotoCProjectsAnimatLButton As WinButton = Me.UIMap.UIOpenanAnimatLabProjeWindow.UIItemWindow2.UIItemToolBar.UIGotoCProjectsAnimatLButton
+            Dim uIFilenameComboBox As WinComboBox = Me.UIMap.UIOpenanAnimatLabProjeWindow.UIItemWindow3.UIFilenameComboBox
+            Dim uIOpenSplitButton As WinSplitButton = Me.UIMap.UIOpenanAnimatLabProjeWindow.UIOpenWindow.UIOpenSplitButton
+
+            'Click 'Open' button
+            Mouse.Click(uIOpenButton, New Point(13, 12))
+
+            'Click 'Address: C:\Projects\AnimatLabSDK\Experiments\Conv...' tool bar
+            Mouse.Click(uIAddressCProjectsAnimToolBar, New Point(285, 9))
+
+            'Select 'C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\JointTests\HingeTest' in 'Address' combo box
+            uIAddressComboBox.EditableItem = Me.UIMap.OpenProjectParams.UIAddressComboBoxEditableItem
+
+            'Click 'Go to "C:\Projects\AnimatLabSDK\AnimatLabPublicSou...' button
+            Mouse.Click(uIGotoCProjectsAnimatLButton, New Point(13, 10))
+
+            'Select 'HingeTest.aproj' in 'File name:' combo box
+            uIFilenameComboBox.EditableItem = Me.UIMap.OpenProjectParams.UIFilenameComboBoxEditableItem
+
+            'Click '&Open' split button
+            Mouse.Click(uIOpenSplitButton, New Point(53, 12))
+        End Sub
+
+#Region "Neural Methods"
+
+        Protected Overridable Sub OpenRootBehavioralSubsystem()
+            'Open the Structure_1 body plan editor window
+            ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem}, 2000)
+        End Sub
+
+        Protected Overridable Sub AddBehavioralNode(ByVal strSubsystem As String, ByVal strClassName As String, ByVal ptPosition As Point, ByVal strName As String)
+
+            ExecuteMethod("AddBehavioralNode", New Object() {strSubsystem, strClassName, ptPosition, strName}, 2000)
+
+        End Sub
+
+        Protected Overridable Sub AddBehavioralLink(ByVal strOrigin As String, ByVal strDestination As String, ByVal strName As String, _
+                                                    ByVal strSynapseType As String, ByVal bInTree As Boolean)
+
+            ExecuteMethod("AddBehavioralLink", New Object() {strOrigin, strDestination, strName}, 2000)
+
+            If strSynapseType.Length > 0 Then
+                If bInTree Then
+                    ExecuteActiveDialogMethod("SelectItemInTreeView", New Object() {strSynapseType})
+                Else
+                    ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strSynapseType})
+                End If
+
+                ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+            End If
+
+        End Sub
+#End Region
 
 #End Region
 
@@ -1214,11 +1305,11 @@ Namespace Framework
         End Sub
 
 #Region "Properties"
-        Public ReadOnly Property UIStructure_1BodyClient() As WinClient
+        Public ReadOnly Property UIStructure_1BodyClient(ByVal strStructName As String) As WinClient
             Get
                 If (Me.mUIStructure_1BodyClient Is Nothing) Then
                     Me.mUIStructure_1BodyClient = New WinClient(Me)
-                    Me.mUIStructure_1BodyClient.SearchProperties(WinControl.PropertyNames.Name) = "Structure_1 Body"
+                    Me.mUIStructure_1BodyClient.SearchProperties(WinControl.PropertyNames.Name) = strStructName & " Body"
                     Me.mUIStructure_1BodyClient.WindowTitles.Add(m_strProjectName & " Project *")
                 End If
                 Return Me.mUIStructure_1BodyClient

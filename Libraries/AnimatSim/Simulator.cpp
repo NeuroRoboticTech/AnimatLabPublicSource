@@ -91,10 +91,6 @@ Simulator::Simulator()
 	m_ftlMouseSpringDamping = 2.8f;
 	m_fltLinearCompliance = 1e-6f;
 	m_fltAngularCompliance = 1e-6f;
-	m_fltLinearDamping = 1e6f;
-	m_fltAngularDamping = 1e6f;
-	m_fltLinearKineticLoss = 1e6f;
-	m_fltAngularKineticLoss = 1e6f;
 	m_bForceFastMoving = TRUE;
 	m_iSelectionMode = GRAPHICS_SELECTION_MODE;
 	m_bAddBodiesMode = FALSE;
@@ -732,115 +728,9 @@ void Simulator::AngularCompliance(float fltVal, BOOL bUseScaling)
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "AngularCompliance");
 	
 	if(bUseScaling)
-		fltVal *= m_fltMassUnits;
+		fltVal *= m_fltMassUnits*m_fltDistanceUnits*m_fltDistanceUnits;
 
 	m_fltAngularCompliance = fltVal;
-}
-
-/**
-\brief	Gets the linear damping of the simulation.
-
-\author	dcofer
-\date	3/28/2011
-
-\return	Linear damping of the simulation.
-**/
-float Simulator::LinearDamping() {return m_fltLinearDamping;}
-
-/**
-\brief	Sets the linear damping of the simulation.
-
-\author	dcofer
-\date	3/28/2011
-
-\param	fltVal	   	The new value. 
-\param	bUseScaling	true to use unit scaling. 
-**/
-void Simulator::LinearDamping(float fltVal, BOOL bUseScaling) 
-{
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "LinearDamping");
-	
-	if(bUseScaling)
-		fltVal *= m_fltInverseMassUnits;
-
-	m_fltLinearDamping = fltVal;
-}
-
-/**
-\brief	Gets the angular damping of the simulation.
-
-\author	dcofer
-\date	3/28/2011
-
-\return	Angular damping of the simulation.
-**/
-float Simulator::AngularDamping() {return m_fltAngularDamping;}
-
-/**
-\brief	Sets the angular damping of the simulation.
-
-\author	dcofer
-\date	3/28/2011
-
-\param	fltVal	   	The new value. 
-\param	bUseScaling	true to use unit scaling. 
-**/
-void Simulator::AngularDamping(float fltVal, BOOL bUseScaling) 
-{
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "AngularDamping");
-	
-	if(bUseScaling)
-		fltVal *= m_fltInverseMassUnits;
-
-	m_fltAngularDamping = fltVal;
-}
-
-/**
-\brief	Gets the linear kinetic loss of the simulation.
-
-\author	dcofer
-\date	3/28/2011
-
-\return	Linear kinetic loss.
-**/
-float Simulator::LinearKineticLoss() {return m_fltLinearKineticLoss;}
-
-/**
-\brief	Sets the linear kinetic loss of the simulation.
-
-\author	dcofer
-\date	3/28/2011
-
-\param	fltVal	The new value. 
-**/
-void Simulator::LinearKineticLoss(float fltVal) 
-{
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "LinearKineticLoss");
-	m_fltLinearKineticLoss = fltVal;
-}
-
-/**
-\brief	Gets the angular kinetic loss of teh simulation.
-
-\author	dcofer
-\date	3/28/2011
-
-\return	angular kinetic loss.
-**/
-float Simulator::AngularKineticLoss() {return m_fltAngularKineticLoss;}
-
-/**
-\brief	Sets the angular kinetic loss of the simulation.
-
-\author	dcofer
-\date	3/28/2011
-
-\param	fltVal	The new value. 
-**/
-void Simulator::AngularKineticLoss(float fltVal) 
-{
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "AngularKineticLoss");
-	m_fltAngularKineticLoss = fltVal;
 }
 
 /**
@@ -1697,12 +1587,8 @@ void Simulator::Reset()
 	m_fltDensityMassUnits = 0.01f;
 	m_fltMouseSpringStiffness = 25;
 	m_ftlMouseSpringDamping = 2.8f;
-	m_fltLinearCompliance = 1e-6f;
-	m_fltAngularCompliance = 1e-6f;
-	m_fltLinearDamping = 1e6f;
-	m_fltAngularDamping = 1e6f;
-	m_fltLinearKineticLoss = 1e6f;
-	m_fltAngularKineticLoss = 1e6f;
+	m_fltLinearCompliance = 1e-10f;
+	m_fltAngularCompliance = 1e-10f;
 	m_bForceFastMoving = TRUE;
 	m_bSteppingSim = FALSE;
 
@@ -2298,10 +2184,6 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 
 	LinearCompliance(oXml.GetChildFloat("LinearCompliance", m_fltLinearCompliance));
 	AngularCompliance(oXml.GetChildFloat("AngularCompliance", m_fltAngularCompliance));
-	LinearDamping(oXml.GetChildFloat("LinearDamping", m_fltLinearDamping));
-	AngularDamping(oXml.GetChildFloat("AngularDamping", m_fltAngularDamping));
-	LinearKineticLoss(oXml.GetChildFloat("LinearKineticLoss", m_fltLinearKineticLoss));
-	AngularKineticLoss(oXml.GetChildFloat("AngularKineticLoss", m_fltAngularKineticLoss));
 	RecFieldSelRadius(oXml.GetChildFloat("RecFieldSelRadius", m_fltRecFieldSelRadius));
 	
 	m_vBackgroundColor.Load(oXml, "BackgroundColor", false);
@@ -3608,26 +3490,6 @@ BOOL Simulator::SetData(string strDataType, string strValue, BOOL bThrowError)
 	else if(strType == "ANGULARCOMPLIANCE")
 	{
 		AngularCompliance(atof(strValue.c_str()));
-		return TRUE;
-	}
-	else if(strType == "LINEARDAMPING")
-	{
-		LinearDamping(atof(strValue.c_str()));
-		return TRUE;
-	}
-	else if(strType == "ANGULARDAMPING")
-	{
-		AngularDamping(atof(strValue.c_str()));
-		return TRUE;
-	}
-	else if(strType == "LINEARKINETICLOSS")
-	{
-		LinearKineticLoss(atof(strValue.c_str()));
-		return TRUE;
-	}
-	else if(strType == "ANGULARKINETICLOSS")
-	{
-		AngularKineticLoss(atof(strValue.c_str()));
 		return TRUE;
 	}
 	else if(strType == "SETENDSIMTIME")

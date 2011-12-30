@@ -469,6 +469,9 @@ Namespace DataObjects.Behavior.Nodes
         End Sub
 
         Protected Sub ConnectOriginEvents()
+
+            DisconnectOriginEvents()
+
             If Not m_bnOrigin Is Nothing Then
                 AddHandler m_bnOrigin.AfterPropertyChanged, AddressOf Me.OnOriginPropertyChanged
             End If
@@ -502,6 +505,9 @@ Namespace DataObjects.Behavior.Nodes
         End Sub
 
         Protected Sub ConnectDestinationEvents()
+
+            DisconnectDestinationEvents()
+
             If Not m_bnDestination Is Nothing Then
                 AddHandler m_bnDestination.AfterPropertyChanged, AddressOf Me.OnDestinationPropertyChanged
             End If

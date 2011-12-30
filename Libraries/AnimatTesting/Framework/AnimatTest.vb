@@ -144,6 +144,12 @@ Namespace Framework
             Return oRet
         End Function
 
+        Protected Overridable Function ExecuteIndirectMethod(ByVal strMethodName As String, ByVal aryParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200) As Object
+            Dim oRet As Object = m_oServer.ExecuteIndirectMethod(strMethodName, aryParams)
+            Threading.Thread.Sleep(iWaitMilliseconds)
+            Return oRet
+        End Function
+
         Protected Overridable Sub ExecuteMethodAssertError(ByVal strMethodName As String, ByVal aryParams() As Object, ByVal strErrorText As String, _
                                                            Optional ByVal eErrorTextType As enumErrorTextType = enumErrorTextType.EndsWith, _
                                                            Optional ByVal iWaitMilliseconds As Integer = 200)
@@ -220,7 +226,6 @@ Namespace Framework
                 System.IO.Directory.Delete(strPath, True)
             End If
         End Sub
-
 
 #End Region
 

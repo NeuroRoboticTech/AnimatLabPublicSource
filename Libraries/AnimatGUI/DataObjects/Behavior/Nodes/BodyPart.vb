@@ -281,6 +281,21 @@ Namespace DataObjects.Behavior.Nodes
 
         End Sub
 
+        Public Overrides Sub Automation_SetLinkedItem(ByVal strItemPath As String, ByVal strLinkedItemPath As String)
+
+            Dim tnLinkedNode As Crownwood.DotNetMagic.Controls.Node = Util.FindTreeNodeByPath(strLinkedItemPath, Util.ProjectWorkspace.TreeView.Nodes)
+
+            If tnLinkedNode Is Nothing OrElse tnLinkedNode.Tag Is Nothing OrElse Not Util.IsTypeOf(tnLinkedNode.Tag.GetType, GetType(DataObjects.Physical.BodyPart), False) Then
+                Throw New System.Exception("The path to the specified linked node was not the correct node type.")
+            End If
+
+            Dim bpLinkedPart As DataObjects.Physical.BodyPart = DirectCast(tnLinkedNode.Tag, DataObjects.Physical.BodyPart)
+
+            Me.LinkedPart = CreateBodyPartList(m_doOrganism, bpLinkedPart, m_tpBodyPartType)
+
+            Util.ProjectWorkspace.RefreshProperties()
+        End Sub
+
         Public Overrides Sub InitializeAfterLoad()
 
             Try
@@ -333,6 +348,8 @@ Namespace DataObjects.Behavior.Nodes
         End Function
 
         Protected Overridable Sub ConnectLinkedPartEvents()
+            DiconnectLinkedPartEvents()
+
             If Not m_thLinkedPart Is Nothing AndAlso Not m_thLinkedPart.BodyPart Is Nothing Then
                 AddHandler m_thLinkedPart.BodyPart.AfterRemoveItem, AddressOf Me.OnAfterRemoveLinkedPart
             End If

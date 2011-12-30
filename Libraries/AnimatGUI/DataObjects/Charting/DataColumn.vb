@@ -347,6 +347,13 @@ Namespace DataObjects.Charting
             End Get
         End Property
 
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property WorkspaceImageName() As String
+            Get
+                Return Me.DataItemImageName
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -400,6 +407,8 @@ Namespace DataObjects.Charting
         End Function
 
         Protected Overridable Sub ConnectItemEvents()
+            DisconnectItemEvents()
+
             If Not m_doItem Is Nothing Then
                 AddHandler m_doItem.AfterRemoveItem, AddressOf Me.OnAfterRemoveItem
             End If

@@ -27,42 +27,42 @@ Namespace UITests
                         MyBase.TestMovableRigidBodyProperties(strStructure, strPart)
 
                         'Set the radius to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Radius", "0.2"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Radius", "0.2"})
 
                         'Set the radius to zero
-                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Radius", "0"}, "The radius of the cylinder cannot be less than or equal to zero.")
+                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Radius", "0"}, "The radius of the cylinder cannot be less than or equal to zero.")
 
                         'Set the radius to a negative value
-                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Radius", "-0.2"}, "The radius of the cylinder cannot be less than or equal to zero.")
+                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Radius", "-0.2"}, "The radius of the cylinder cannot be less than or equal to zero.")
 
                         'Set the radius to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Radius", "0.1"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Radius", "0.1"})
 
 
                         'Set the height to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Height", "0.2"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Height", "0.2"})
 
                         'Set the height to zero
-                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Height", "0"}, "The height of the cylinder cannot be less than or equal to zero.")
+                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Height", "0"}, "The height of the cylinder cannot be less than or equal to zero.")
 
                         'Set the height to a negative value
-                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Height", "-0.2"}, "The height of the cylinder cannot be less than or equal to zero.")
+                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Height", "-0.2"}, "The height of the cylinder cannot be less than or equal to zero.")
 
                         'Set the height to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Height", "0.1"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Height", "0.1"})
 
 
                         'Set the Sides to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Sides", "20"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Sides", "20"})
 
                         'Set the Sides to zero
-                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Sides", "5"}, "The number of sides for the cylinder cannot be less than ten.")
+                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Sides", "5"}, "The number of sides for the cylinder cannot be less than ten.")
 
                         'Set the Sides to a negative value
-                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Sides", "-2"}, "The number of sides for the cylinder cannot be less than ten.")
+                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Sides", "-2"}, "The number of sides for the cylinder cannot be less than ten.")
 
                         'Set the Sides to original value
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Sides", "30"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Sides", "30"})
 
                     End Sub
 

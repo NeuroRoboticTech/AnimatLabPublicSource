@@ -64,6 +64,16 @@ Public Class Server
         Return oMethod.Invoke(m_doApp, New Object() {strMethodName, aryParams})
     End Function
 
+    Public Function ExecuteIndirectMethod(ByVal strMethodName As String, ByVal aryParams() As Object) As Object
+        Dim oMethod As MethodInfo = m_doApp.GetType().GetMethod("ExecuteIndirectMethod")
+
+        If oMethod Is Nothing Then
+            Throw New System.Exception("Method name '" & strMethodName & "' not found.")
+        End If
+
+        Return oMethod.Invoke(m_doApp, New Object() {strMethodName, aryParams})
+    End Function
+
     Public Function ExecuteDirectMethod(ByVal strMethodName As String, ByVal aryParams() As Object) As Object
         Dim oMethod As MethodInfo = m_doApp.GetType().GetMethod(strMethodName)
 

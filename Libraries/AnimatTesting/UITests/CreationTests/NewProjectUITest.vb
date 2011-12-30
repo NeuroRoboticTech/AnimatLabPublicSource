@@ -31,7 +31,7 @@ Namespace UITests
                 ExecuteMethod("ClickToolbarItem", New Object() {"AddStructureToolStripButton"})
 
                 'Open the Structure_1 body plan editor window
-                ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan"}, 2000)
+                ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan"}, 2000)
 
                 'Set simulation to automatically end at a specified time.
                 ExecuteMethod("SetObjectProperty", New Object() {"Simulation", "SetSimulationEnd", "True"})
@@ -40,7 +40,7 @@ Namespace UITests
                 ExecuteMethod("SetObjectProperty", New Object() {"Simulation", "SimulationEndTime", "50"})
 
                 'Add a root cylinder part.
-                AddRootPartType("Structure_1", "Box")
+                AddRootPartType(m_strStructureGroup, m_strStruct1Name, "Box")
 
                 'Select the LineChart to add.
                 AddChart("Line Chart")
@@ -49,7 +49,7 @@ Namespace UITests
                 ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1"})
 
                 'Add root to chart
-                AddItemToChart("Structure_1\Root")
+                AddItemToChart(m_strStruct1Name & "Body Plan\Root")
 
                 'Set the name of the data chart item to root_y.
                 ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root", "Name", "Root_Y"})

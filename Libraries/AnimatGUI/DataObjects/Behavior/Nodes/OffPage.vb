@@ -20,7 +20,7 @@ Namespace DataObjects.Behavior.Nodes
 
         'Only used during loading
         Protected m_strLinkedNodeID As String
-        Protected m_strLinkedDiagramID As String
+        'Protected m_strLinkedDiagramID As String
 
 #End Region
 
@@ -261,6 +261,8 @@ Namespace DataObjects.Behavior.Nodes
         End Sub
 
         Protected Sub ConnectLinkedNodeEvents()
+            DisconnectLinkedNodeEvents()
+
             If Not m_thLinkedNode Is Nothing AndAlso Not m_thLinkedNode.Node Is Nothing Then
                 Me.Text = m_thLinkedNode.Node.Text
                 AddHandler m_thLinkedNode.Node.AfterRemoveItem, AddressOf Me.OnAfterRemoveLinkedNode
@@ -272,6 +274,22 @@ Namespace DataObjects.Behavior.Nodes
             If Not m_thLinkedNode Is Nothing AndAlso Not m_thLinkedNode.Node Is Nothing Then
                 RemoveHandler m_thLinkedNode.Node.AfterRemoveItem, AddressOf Me.OnAfterRemoveLinkedNode
             End If
+        End Sub
+
+        Public Overrides Sub Automation_SetLinkedItem(ByVal strItemPath As String, ByVal strLinkedItemPath As String)
+
+            Dim tnLinkedNode As Crownwood.DotNetMagic.Controls.Node = Util.FindTreeNodeByPath(strLinkedItemPath, Util.ProjectWorkspace.TreeView.Nodes)
+
+            If tnLinkedNode Is Nothing OrElse tnLinkedNode.Tag Is Nothing OrElse Not Util.IsTypeOf(tnLinkedNode.Tag.GetType, GetType(DataObjects.Behavior.Node), False) Then
+                Throw New System.Exception("The path to the specified linked node was not the correct node type.")
+            End If
+
+            Dim bnLinkedNode As DataObjects.Behavior.Node = DirectCast(tnLinkedNode.Tag, DataObjects.Behavior.Node)
+
+            Dim lnNode As New TypeHelpers.LinkedNode(bnLinkedNode.Organism, bnLinkedNode)
+
+            Me.LinkedNode = lnNode
+            Util.ProjectWorkspace.RefreshProperties()
         End Sub
 
 #Region " DataObject Methods "
@@ -298,7 +316,7 @@ Namespace DataObjects.Behavior.Nodes
             oXml.IntoElem()
 
             m_strLinkedNodeID = Util.LoadID(oXml, "LinkedNode", True, "")
-            m_strLinkedDiagramID = Util.LoadID(oXml, "LinkedDiagram", True, "")
+            'm_strLinkedDiagramID = Util.LoadID(oXml, "LinkedDiagram", True, "")
 
             oXml.OutOfElem()
 
@@ -316,9 +334,7 @@ Namespace DataObjects.Behavior.Nodes
                     End If
                 End If
 
-                If Not m_thLinkedNode Is Nothing AndAlso Not m_thLinkedNode.Node Is Nothing Then
-                    AddHandler m_thLinkedNode.Node.AfterRemoveItem, AddressOf Me.OnAfterRemoveLinkedNode
-                End If
+                ConnectLinkedNodeEvents()
 
                 Dim strID As String = ""
 
@@ -382,7 +398,7 @@ Namespace DataObjects.Behavior.Nodes
             oXml.IntoElem() 'Into Node Element
 
             If Not m_thLinkedNode Is Nothing AndAlso Not m_thLinkedNode.Node Is Nothing Then
-                oXml.AddChildElement("LinkedDiagramID", m_thLinkedNode.Node.ParentDiagram.ID)
+                'oXml.AddChildElement("LinkedDiagramID", m_thLinkedNode.Node.ParentDiagram.ID)
                 oXml.AddChildElement("LinkedNodeID", m_thLinkedNode.Node.ID)
             End If
 

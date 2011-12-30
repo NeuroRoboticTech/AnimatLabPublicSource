@@ -16,6 +16,7 @@ Namespace Forms
         Protected m_btnCancel As Button
         Protected m_btnIgnore As Button
         Protected m_lvItems As ListView
+        Protected m_tvItems As Crownwood.DotNetMagic.Controls.TreeControl
 
         Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
             MyBase.OnLoad(e)
@@ -66,6 +67,18 @@ Namespace Forms
 
             'If we got here then we did not find what we were looking for.
             Throw New System.Exception("No item named '" & strItemName & "' was found in the list view.")
+        End Sub
+
+        Public Overridable Sub SelectItemInTreeView(ByVal strPath As String)
+
+            If m_tvItems Is Nothing Then
+                Throw New System.Exception("No tree view was setup for the form '" & Me.Name & "'")
+            End If
+
+            Dim tnSelected As Crownwood.DotNetMagic.Controls.Node = Util.FindTreeNodeByPath(strPath, m_tvItems.Nodes)
+
+            tnSelected.Select()
+
         End Sub
 
     End Class

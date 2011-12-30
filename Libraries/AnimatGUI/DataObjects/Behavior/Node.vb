@@ -1431,6 +1431,8 @@ Namespace DataObjects.Behavior
 
         Protected Overridable Sub ConnectLinkEvents()
 
+            DisconnectLinkEvents()
+
             Dim blLink As Link
             For Each deEntry As DictionaryEntry In Me.Links
                 blLink = DirectCast(deEntry.Value, Link)

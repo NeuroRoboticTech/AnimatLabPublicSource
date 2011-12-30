@@ -773,7 +773,6 @@ Namespace Framework
 
 #End Region
 
-
 #Region " Workspace Methods "
 
         Public Overridable Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
@@ -811,17 +810,19 @@ Namespace Framework
         Public Overridable Sub SelectItem(Optional ByVal bSelectMultiple As Boolean = False)
 
             Try
-                If m_tnWorkspaceNode Is Nothing Then
-                    Throw New System.Exception("Attempting to select an item before its workspace node is defined.")
-                End If
+                If Not Util.ProjectWorkspace Is Nothing AndAlso Not Util.ProjectWorkspace.TreeView Is Nothing Then
+                    If m_tnWorkspaceNode Is Nothing Then
+                        Throw New System.Exception("Attempting to select an item before its workspace node is defined.")
+                    End If
 
-                If Not Util.ProjectWorkspace.TreeView.SelectedNodes.Contains(m_tnWorkspaceNode) Then
-                    Util.ProjectWorkspace.TreeView.SelectNode(m_tnWorkspaceNode, False, bSelectMultiple)
-                ElseIf Not m_doInterface Is Nothing Then
-                    m_doInterface.SelectItem(True, bSelectMultiple)
-                End If
+                    If Not Util.ProjectWorkspace.TreeView.SelectedNodes.Contains(m_tnWorkspaceNode) Then
+                        Util.ProjectWorkspace.TreeView.SelectNode(m_tnWorkspaceNode, False, bSelectMultiple)
+                    ElseIf Not m_doInterface Is Nothing Then
+                        m_doInterface.SelectItem(True, bSelectMultiple)
+                    End If
 
-                SignalItemSelected(Me, bSelectMultiple)
+                    SignalItemSelected(Me, bSelectMultiple)
+                End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -830,19 +831,21 @@ Namespace Framework
 
         Public Overridable Sub DeselectItem()
             Try
-                If m_tnWorkspaceNode Is Nothing Then
-                    Throw New System.Exception("Attempting to select an item before its workspace node is defined.")
-                End If
+                If Not Util.ProjectWorkspace Is Nothing AndAlso Not Util.ProjectWorkspace.TreeView Is Nothing Then
+                    If m_tnWorkspaceNode Is Nothing Then
+                        Throw New System.Exception("Attempting to select an item before its workspace node is defined.")
+                    End If
 
-                If Util.ProjectWorkspace.TreeView.SelectedNodes.Contains(m_tnWorkspaceNode) Then
-                    Util.ProjectWorkspace.TreeView.DeselectNode(m_tnWorkspaceNode, True)
-                End If
+                    If Util.ProjectWorkspace.TreeView.SelectedNodes.Contains(m_tnWorkspaceNode) Then
+                        Util.ProjectWorkspace.TreeView.DeselectNode(m_tnWorkspaceNode, True)
+                    End If
 
-                If Not m_doInterface Is Nothing Then
-                    m_doInterface.SelectItem(False, False)
-                End If
+                    If Not m_doInterface Is Nothing Then
+                        m_doInterface.SelectItem(False, False)
+                    End If
 
-                SignalItemDeselected(Me)
+                    SignalItemDeselected(Me)
+                End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -862,7 +865,6 @@ Namespace Framework
         End Sub
 
 #End Region
-
 
 #Region " Add-Remove to List Methods "
 
@@ -889,6 +891,14 @@ Namespace Framework
 
         Public Overridable Sub AfterRemoveFromList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
             Me.SignalAfterRemoveItem(Me)
+        End Sub
+
+#End Region
+
+#Region "Automation Methods"
+
+        Public Overridable Sub Automation_SetLinkedItem(ByVal strItemPath As String, ByVal strLinkedItemPath As String)
+            Throw New System.Exception("SetLinkedItem has not been defined for this part type: " & Me.GetType.ToString())
         End Sub
 
 #End Region

@@ -117,12 +117,21 @@ Namespace Framework
             Return AppendNode(xnNewRoot, OldNode.InnerXml, strNode, aryReplaceText)
         End Function
 
+        Protected Overridable Function ReplaceXmlText(ByVal strXml As String, ByVal aryReplaceText As Hashtable) As String
+
+            Dim oRep As DataObjects.FileConverter.ReplaceText
+            For Each de As DictionaryEntry In aryReplaceText
+                oRep = DirectCast(de.Value, DataObjects.FileConverter.ReplaceText)
+                strXml = strXml.Replace(oRep.m_strFind, oRep.m_strReplace)
+            Next
+
+            Return strXml
+        End Function
+
         Public Overridable Function AppendNode(ByVal xnNewRoot As XmlNode, ByVal strNodeXml As String, ByVal strNode As String, Optional ByVal aryReplaceText As Hashtable = Nothing) As XmlNode
 
             If Not aryReplaceText Is Nothing Then
-                For Each de As DictionaryEntry In aryReplaceText
-                    strNodeXml = strNodeXml.Replace(de.Key.ToString, de.Value.ToString)
-                Next
+                strNodeXml = ReplaceXmlText(strNodeXml, aryReplaceText)
             End If
 
             Dim xnNewNode As XmlNode = Me.CreateElement(strNode)

@@ -23,26 +23,6 @@ Namespace UITests
                         TestJoint()
                     End Sub
 
-                    'Protected Overrides Sub TestMovableRigidBodyProperties(ByVal strStructure As String, ByVal strPart As String)
-                    '    MyBase.TestMovableRigidBodyProperties(strStructure, strPart)
-
-
-                    'End Sub
-
-                    'Protected Overrides Sub RepositionChildPart()
-                    '    MyBase.RepositionChildPart()
-
-                    '    'Reposition the joint relative to the parent part
-                    '    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "LocalPosition.X", "0"})
-                    '    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "LocalPosition.Y", "0"})
-                    '    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "LocalPosition.Z", "0"})
-
-                    '    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "Rotation.X", "0"})
-                    '    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "Rotation.Y", "0"})
-                    '    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "Rotation.Z", "90"})
-
-                    'End Sub
-
 #Region "Additional test attributes"
                     '
                     ' You can use the following additional attributes as you write your tests:

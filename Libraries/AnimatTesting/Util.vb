@@ -98,4 +98,31 @@ Public Class Util
         Return strFile
     End Function
 
+    Public Shared Sub CopyDirectory(ByVal strOrigFolder As String, ByVal strNewFolder As String)
+
+        If Not Directory.Exists(strNewFolder) Then
+            Directory.CreateDirectory(strNewFolder)
+
+            Dim aryFiles As String() = Directory.GetFiles(strOrigFolder)
+
+            Dim strFilePath As String
+            Dim strFile As String
+            For Each strFilePath In aryFiles
+                strFile = Util.ExtractFilename(strFilePath)
+                File.Copy((strOrigFolder & "\" & strFile), (strNewFolder & "\" & strFile))
+            Next
+
+            'Now copy any directories that exist in that folder also.
+            Dim aryDirs As String() = Directory.GetDirectories(strOrigFolder)
+            For Each strDir As String In aryDirs
+                Dim aryDirNames As String() = Split(strDir, "\")
+                CopyDirectory(strDir, strNewFolder & "\" & aryDirNames(UBound(aryDirNames)))
+            Next
+        Else
+            Throw New System.Exception("The folder '" & strOrigFolder & "' can not be copied to a new directory '" & _
+                                       strNewFolder & "' becuase a directory with that name already exists.")
+        End If
+
+    End Sub
+
 End Class

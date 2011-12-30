@@ -334,6 +334,8 @@ Namespace DataObjects.ExternalStimuli
         End Sub
 
         Protected Overridable Sub ConnectItemEvents()
+            DisconnectItemEvents()
+
             If Not m_doStimulatedItem Is Nothing Then
                 AddHandler m_doStimulatedItem.AfterRemoveItem, AddressOf Me.OnAfterRemoveItem
             End If

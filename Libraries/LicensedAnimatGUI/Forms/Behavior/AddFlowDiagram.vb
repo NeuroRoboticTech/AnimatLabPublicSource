@@ -3812,24 +3812,7 @@ Namespace Forms.Behavior
                     Dim pnlIcon As AnimatGuiCtrls.Controls.PanelIcon = DirectCast(e.Data.GetData(GetType(AnimatGuiCtrls.Controls.PanelIcon)), AnimatGuiCtrls.Controls.PanelIcon)
                     Dim bdDropData As AnimatGUI.DataObjects.Behavior.Data = DirectCast(pnlIcon.Data, AnimatGUI.DataObjects.Behavior.Data)
 
-                    If Not bdDropData Is Nothing And TypeOf (bdDropData) Is AnimatGUI.DataObjects.Behavior.Node Then
-                        Dim bdData As AnimatGUI.DataObjects.Behavior.Node = DirectCast(bdDropData.Clone(Me.Subsystem.Organism, False, Nothing), AnimatGUI.DataObjects.Behavior.Node)
-
-                        ptAddFlow.X = ptAddFlow.X - CInt(bdData.Size.Width / 2)
-                        ptAddFlow.Y = ptAddFlow.Y - CInt(bdData.Size.Height / 2)
-
-                        If ptAddFlow.X < 0 Then ptAddFlow.X = 0
-                        If ptAddFlow.Y < 0 Then ptAddFlow.Y = 0
-
-                        bdData.Location = New PointF(ptAddFlow.X, ptAddFlow.Y)
-
-                        Me.Subsystem.Organism.MaxNodeCount = Me.Subsystem.Organism.MaxNodeCount + 1
-                        bdData.Text = Me.Subsystem.Organism.MaxNodeCount.ToString
-                        Me.Subsystem.AddNode(bdData)
-
-                        Me.IsDirty = True
-                        Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me))
-                    End If
+                    Automation_DropNode(bdDropData, ptAddFlow)
 
                     'Debug.WriteLine("Finishing DragDrop")
                     pnlIcon.DraggingIcon = False
@@ -3840,6 +3823,34 @@ Namespace Forms.Behavior
             End Try
 
         End Sub
+
+        Public Overrides Function Automation_DropNode(ByVal bdDropData As AnimatGUI.DataObjects.Behavior.Data, ByVal ptAddFlow As Point) As AnimatGUI.DataObjects.Behavior.Node
+
+            If Not bdDropData Is Nothing And TypeOf (bdDropData) Is AnimatGUI.DataObjects.Behavior.Node Then
+                Dim bdData As AnimatGUI.DataObjects.Behavior.Node = DirectCast(bdDropData.Clone(Me.Subsystem.Organism, False, Nothing), AnimatGUI.DataObjects.Behavior.Node)
+
+                ptAddFlow.X = ptAddFlow.X - CInt(bdData.Size.Width / 2)
+                ptAddFlow.Y = ptAddFlow.Y - CInt(bdData.Size.Height / 2)
+
+                If ptAddFlow.X < 0 Then ptAddFlow.X = 0
+                If ptAddFlow.Y < 0 Then ptAddFlow.Y = 0
+
+                bdData.Location = New PointF(ptAddFlow.X, ptAddFlow.Y)
+
+                Me.Subsystem.Organism.MaxNodeCount = Me.Subsystem.Organism.MaxNodeCount + 1
+                bdData.Text = Me.Subsystem.Organism.MaxNodeCount.ToString
+                Me.Subsystem.AddNode(bdData)
+
+                Me.IsDirty = True
+                Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me))
+
+                Return bdData
+            Else
+                Return Nothing
+            End If
+
+        End Function
+
 
         Private Sub m_ctrlAddFlow_AfterAddLink(ByVal sender As Object, ByVal e As Lassalle.Flow.AfterAddLinkEventArgs) Handles m_ctrlAddFlow.AfterAddLink
 
@@ -3852,64 +3863,72 @@ Namespace Forms.Behavior
 
                 Dim bnOrigin As AnimatGUI.DataObjects.Behavior.Node = FindNode(DirectCast(e.Link.Org.Tag, String))
                 Dim bnDestination As AnimatGUI.DataObjects.Behavior.Node = FindNode(DirectCast(e.Link.Dst.Tag, String))
-                Dim blLink As AnimatGUI.DataObjects.Behavior.Link
-                Dim bRequiresAdapter As Boolean
 
-                'Only do this If the user decides to not cancel
-                If SelectLinkType(bnOrigin, bnDestination, blLink, bRequiresAdapter) Then
-                    If Not bRequiresAdapter Then
-                        'If it does not require an adapter then just add the link directly.
-                        Me.Subsystem.AddLink(bnOrigin, bnDestination, blLink)
-                    Else
-
-                        ''If it does require an adapter then lets add the pieces.
-                        Dim bnAdapter As AnimatGUI.DataObjects.Behavior.Node = bnDestination.CreateNewAdapter(bnOrigin, Me.FormHelper)
-
-                        bnAdapter.Location = FindHalfwayLocation(bnOrigin, bnDestination, bnAdapter.Size)
-                        Me.Subsystem.Organism.MaxNodeCount = Me.Subsystem.Organism.MaxNodeCount + 1
-                        bnAdapter.Text = Me.Subsystem.Organism.MaxNodeCount.ToString
-
-                        Me.Subsystem.AddNode(bnAdapter)
-
-                        Try
-                            'Connect the origin to the new adapter using the adapter link.
-                            Me.Subsystem.AddLink(bnOrigin, bnAdapter, blLink)
-
-                            'Now we need a new link to go from the adapter to the destination.
-                            blLink = DirectCast(blLink.Clone(Me.Subsystem.Organism, False, Nothing), AnimatGUI.DataObjects.Behavior.Link)
-
-                            blLink.BeginBatchUpdate()
-                            blLink.ArrowDestination = New AnimatGUI.DataObjects.Behavior.Link.Arrow(blLink, AnimatGUI.DataObjects.Behavior.Link.enumArrowStyle.Arrow, _
-                                                                                          AnimatGUI.DataObjects.Behavior.Link.enumArrowSize.Small, _
-                                                                                          AnimatGUI.DataObjects.Behavior.Link.enumArrowAngle.deg15, False)
-                            blLink.EndBatchUpdate(False)
-
-                            Me.Subsystem.AddLink(bnAdapter, bnDestination, blLink)
-
-
-                            Dim baAdapter As AnimatGUI.DataObjects.Behavior.Nodes.Adapter = DirectCast(bnAdapter, AnimatGUI.DataObjects.Behavior.Nodes.Adapter)
-                            baAdapter.InitializeAfterLoad()
-                            baAdapter.AddToSim(True)
-
-                        Catch ex As Exception
-                            bnAdapter.Delete(False)
-                            Throw ex
-                        End Try
-
-                        bnAdapter.SelectItem()
-                    End If
-                End If
+                Automation_DrawLink(bnOrigin, bnDestination)
 
                 m_ctrlAddFlow.EndAction()
-
-                Me.IsDirty = True
-                Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me))
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
 
         End Sub
+
+        Public Overrides Function Automation_DrawLink(ByVal bnOrigin As AnimatGUI.DataObjects.Behavior.Node, ByVal bnDestination As AnimatGUI.DataObjects.Behavior.Node) As AnimatGUI.DataObjects.Behavior.Link
+
+            Dim blLink As AnimatGUI.DataObjects.Behavior.Link
+            Dim bRequiresAdapter As Boolean
+
+            'Only do this If the user decides to not cancel
+            If SelectLinkType(bnOrigin, bnDestination, blLink, bRequiresAdapter) Then
+                If Not bRequiresAdapter Then
+                    'If it does not require an adapter then just add the link directly.
+                    Me.Subsystem.AddLink(bnOrigin, bnDestination, blLink)
+                Else
+
+                    ''If it does require an adapter then lets add the pieces.
+                    Dim bnAdapter As AnimatGUI.DataObjects.Behavior.Node = bnDestination.CreateNewAdapter(bnOrigin, Me.FormHelper)
+
+                    bnAdapter.Location = FindHalfwayLocation(bnOrigin, bnDestination, bnAdapter.Size)
+                    Me.Subsystem.Organism.MaxNodeCount = Me.Subsystem.Organism.MaxNodeCount + 1
+                    bnAdapter.Text = Me.Subsystem.Organism.MaxNodeCount.ToString
+
+                    Me.Subsystem.AddNode(bnAdapter)
+
+                    Try
+                        'Connect the origin to the new adapter using the adapter link.
+                        Me.Subsystem.AddLink(bnOrigin, bnAdapter, blLink)
+
+                        'Now we need a new link to go from the adapter to the destination.
+                        blLink = DirectCast(blLink.Clone(Me.Subsystem.Organism, False, Nothing), AnimatGUI.DataObjects.Behavior.Link)
+
+                        blLink.BeginBatchUpdate()
+                        blLink.ArrowDestination = New AnimatGUI.DataObjects.Behavior.Link.Arrow(blLink, AnimatGUI.DataObjects.Behavior.Link.enumArrowStyle.Arrow, _
+                                                                                      AnimatGUI.DataObjects.Behavior.Link.enumArrowSize.Small, _
+                                                                                      AnimatGUI.DataObjects.Behavior.Link.enumArrowAngle.deg15, False)
+                        blLink.EndBatchUpdate(False)
+
+                        Me.Subsystem.AddLink(bnAdapter, bnDestination, blLink)
+
+
+                        Dim baAdapter As AnimatGUI.DataObjects.Behavior.Nodes.Adapter = DirectCast(bnAdapter, AnimatGUI.DataObjects.Behavior.Nodes.Adapter)
+                        baAdapter.InitializeAfterLoad()
+                        baAdapter.AddToSim(True)
+
+                    Catch ex As Exception
+                        bnAdapter.Delete(False)
+                        Throw ex
+                    End Try
+
+                    bnAdapter.SelectItem()
+                End If
+            End If
+
+            Me.IsDirty = True
+            Util.ModificationHistory.AddHistoryEvent(New DiagramChangedEvent(Me))
+
+            Return blLink
+        End Function
 
         Private Sub m_ctrlAddFlow_BeforeEdit(ByVal sender As Object, ByVal e As Lassalle.Flow.BeforeEditEventArgs) Handles m_ctrlAddFlow.BeforeEdit
             Try

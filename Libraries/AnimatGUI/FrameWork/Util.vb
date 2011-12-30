@@ -7,6 +7,7 @@ Imports System.Diagnostics
 Imports System.IO
 Imports System.Xml
 Imports System.Text.RegularExpressions
+Imports System.Reflection
 
 Namespace Framework
 
@@ -393,13 +394,15 @@ Namespace Framework
         Public Shared Sub DisplayError(ByVal exError As System.Exception)
 
             Try
+                Util.Application.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.ErrorType, "Display Error: " & exError.Message & ", Displaying: " & m_bDisplayingError)
+
                 If Not m_bDisplayingError Then
                     m_bDisplayingError = True
                     m_frmError = New AnimatGUI.Forms.ErrorDisplay
                     m_frmError.DisplayErrorDetails = m_bDisplayErrorDetails
                     m_frmError.Size = m_szErrorFormSize
                     m_frmError.Exception = exError
-                    m_frmError.ShowDialog()
+                    m_frmError.ShowDialog(Util.Application)
 
                     m_bDisplayErrorDetails = m_frmError.DisplayErrorDetails
                     m_szErrorFormSize = m_frmError.Size
@@ -422,14 +425,16 @@ Namespace Framework
             End Try
         End Sub
 
-        Public Shared Function ShowMessage(ByVal strMessage As String, Optional ByVal strCaption As String = "Message", _
+        Public Shared Function ShowMessage(ByVal strMessage As String, Optional ByVal strCaption As String = "", _
                                            Optional ByVal eButtons As System.Windows.Forms.MessageBoxButtons = MessageBoxButtons.OK) As System.Windows.Forms.DialogResult
+
+            Util.Application.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Starting ShowMessage: '" & strMessage & "'")
+
             m_frmMessage = New Forms.AnimatMessageBox
-            m_frmMessage.Text = strCaption
-            m_frmMessage.SetMessage(strMessage, eButtons)
+            m_frmMessage.SetMessage(strMessage, eButtons, strCaption)
             m_frmMessage.StartPosition = FormStartPosition.CenterScreen
 
-            Return m_frmMessage.ShowDialog()
+            Return m_frmMessage.ShowDialog(Util.Application)
         End Function
 
         Public Shared Sub AddActiveDialog(ByVal frmDialog As System.Windows.Forms.Form)
@@ -583,6 +588,14 @@ Namespace Framework
                                          ByVal doParent As AnimatGUI.Framework.DataObject, Optional ByVal bThrowError As Boolean = True) As Object
             Dim aryArgs() As Object = {doParent}
             Return LoadClass(assemModule, strClassName, aryArgs, bThrowError)
+        End Function
+
+        Public Shared Function LoadClass(ByVal strClassName As String, ByVal doParent As AnimatGUI.Framework.DataObject, Optional ByVal bThrowError As Boolean = True) As Object
+            Dim aryNames() As String = Split(strClassName, ".")
+            Dim strAssembly As String = aryNames(0)
+
+            Dim aryArgs() As Object = {doParent}
+            Return LoadClass(strAssembly, strClassName, aryArgs, bThrowError)
         End Function
 
         Public Shared Function LoadClass(ByRef assemModule As System.Reflection.Assembly, ByVal strClassName As String, _
@@ -1214,7 +1227,8 @@ Namespace Framework
                 End If
 
                 aryColumns = aryLines(0).Split(vbTab.ToCharArray)
-                ReDim Preserve aryColumns(aryColumns.Length - 2)
+                Dim iChop As Integer = FindEndingBlanks(aryColumns)
+                ReDim Preserve aryColumns(aryColumns.Length - (1 + iChop))
 
                 'Remove one for the header and one to make the index work.
                 num_rows = aryLines.Length - 1 - 1
@@ -1234,6 +1248,18 @@ Namespace Framework
             End If
 
         End Sub
+
+        Protected Shared Function FindEndingBlanks(ByVal aryColumns() As String) As Integer
+
+            Dim iBlank As Integer = 0
+            Dim iIdx As Integer = aryColumns.Length - 1
+            While iIdx >= 0 AndAlso aryColumns(iIdx).Trim.Length = 0
+                iBlank = iBlank + 1
+                iIdx = iIdx - 1
+            End While
+
+            Return iBlank
+        End Function
 
         Public Shared Function GetValidationBoundsString(ByVal bCheckLowBound As Boolean, ByVal dblLowBound As Double, _
                                              ByVal bCheckUpperBound As Boolean, ByVal dblUpperBound As Double, ByVal bInclusiveLimit As Boolean) As String
@@ -1319,6 +1345,26 @@ Namespace Framework
 
             Return tnNode
         End Function
+
+        Public Shared Sub GetObjectProperty(ByVal strPropertyName As String, ByRef piAutomationPropInfo As PropertyInfo, ByRef oObj As Object)
+
+            Dim aryPropPath() As String = Split(strPropertyName, ".")
+            Dim iIdx As Integer = 0
+            For Each strPropName As String In aryPropPath
+                piAutomationPropInfo = oObj.GetType().GetProperty(strPropName)
+
+                If piAutomationPropInfo Is Nothing Then
+                    Throw New System.Exception("Property name '" & strPropName & "' not found in Path '" & strPropertyName & "'.")
+                End If
+
+                iIdx = iIdx + 1
+                'Dont get the obj on the last one.
+                If iIdx < aryPropPath.Length Then
+                    oObj = piAutomationPropInfo.GetValue(oObj, Nothing)
+                End If
+            Next
+
+        End Sub
 
         Public Shared Sub LoadClassModuleName(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal iIndex As Integer, _
                                               ByRef strAssemblyFile As String, ByRef strClassName As String, Optional ByVal bThrowError As Boolean = True)
@@ -1472,6 +1518,36 @@ Namespace Framework
             If strUnits = "MILLIMETERS" OrElse strUnits = "MILLIMETER" Then Return 0.001
 
             Throw New System.Exception("Invalid distance units: " & strUnits)
+        End Function
+
+        Public Shared Function ConvertMassUnits(ByVal strUnits As String) As Single
+
+            strUnits = strUnits.ToUpper
+
+            If strUnits = "KILOGRAMS" OrElse strUnits = "KILOGRAM" Then Return 1
+            If strUnits = "CENTAGRAMS" OrElse strUnits = "CENTAGRAM" Then Return 0.1
+            If strUnits = "DECAGRAMS" OrElse strUnits = "DECAGRAMS" Then Return 0.01
+            If strUnits = "GRAMS" OrElse strUnits = "GRAM" Then Return 0.001
+            If strUnits = "DECIGRAMS" OrElse strUnits = "DECIGRAM" Then Return 0.0001
+            If strUnits = "CENTIGRAMS" OrElse strUnits = "CENTIGRAM" Then Return 0.00001
+            If strUnits = "MILLIGRAMS" OrElse strUnits = "MILLIGRAM" Then Return 0.000001
+
+            Throw New System.Exception("Invalid mass units: " & strUnits)
+        End Function
+
+        Public Shared Function ConvertDensityMassUnits(ByVal strUnits As String) As Single
+
+            strUnits = strUnits.ToUpper
+
+            If strUnits = "KILOGRAMS" OrElse strUnits = "KILOGRAM" Then Return 1000
+            If strUnits = "CENTAGRAMS" OrElse strUnits = "CENTAGRAM" Then Return 100
+            If strUnits = "DECAGRAMS" OrElse strUnits = "DECAGRAMS" Then Return 10
+            If strUnits = "GRAMS" OrElse strUnits = "GRAM" Then Return 1
+            If strUnits = "DECIGRAMS" OrElse strUnits = "DECIGRAM" Then Return 0.1
+            If strUnits = "CENTIGRAMS" OrElse strUnits = "CENTIGRAM" Then Return 0.01
+            If strUnits = "MILLIGRAMS" OrElse strUnits = "MILLIGRAM" Then Return 0.001
+
+            Throw New System.Exception("Invalid mass units: " & strUnits)
         End Function
 
     End Class

@@ -47,11 +47,7 @@ Namespace DataObjects.Physical
         Protected m_snMouseSpringDamping As ScaledNumber
 
         Protected m_snLinearCompliance As ScaledNumber
-        Protected m_snLinearDamping As ScaledNumber
         Protected m_snAngularCompliance As ScaledNumber
-        Protected m_snAngularDamping As ScaledNumber
-        Protected m_snLinearKineticLoss As ScaledNumber
-        Protected m_snAngularKineticLoss As ScaledNumber
 
         Protected m_eDistanceUnits As enumDistanceUnits = enumDistanceUnits.Decimeters
         Protected m_eMassUnits As enumMassUnits = enumMassUnits.Grams
@@ -210,20 +206,6 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
-        Public Property LinearDamping() As ScaledNumber
-            Get
-                Return m_snLinearDamping
-            End Get
-            Set(ByVal Value As ScaledNumber)
-                If Value.ActualValue < 0 Then
-                    Throw New System.Exception("You can not set the linear damping to be less than zero!")
-                End If
-
-                Me.SetSimData("LinearDamping", Value.ActualValue.ToString, True)
-                m_snLinearDamping.CopyData(Value)
-            End Set
-        End Property
-
         Public Property AngularCompliance() As ScaledNumber
             Get
                 Return m_snAngularCompliance
@@ -235,48 +217,6 @@ Namespace DataObjects.Physical
 
                 Me.SetSimData("AngularCompliance", Value.ActualValue.ToString, True)
                 m_snAngularCompliance.CopyData(Value)
-            End Set
-        End Property
-
-        Public Property AngularDamping() As ScaledNumber
-            Get
-                Return m_snAngularDamping
-            End Get
-            Set(ByVal Value As ScaledNumber)
-                If Value.ActualValue < 0 Then
-                    Throw New System.Exception("You can not set the angular damping to be less than zero!")
-                End If
-
-                Me.SetSimData("AngularDamping", Value.ActualValue.ToString, True)
-                m_snAngularDamping.CopyData(Value)
-            End Set
-        End Property
-
-        Public Property LinearKineticLoss() As ScaledNumber
-            Get
-                Return m_snLinearKineticLoss
-            End Get
-            Set(ByVal Value As ScaledNumber)
-                If Value.ActualValue < 0 Then
-                    Throw New System.Exception("You can not set the linear kinetic loss to be less than zero!")
-                End If
-
-                Me.SetSimData("LinearKineticLoss", Value.ActualValue.ToString, True)
-                m_snLinearKineticLoss.CopyData(Value)
-            End Set
-        End Property
-
-        Public Property AngularKineticLoss() As ScaledNumber
-            Get
-                Return m_snAngularKineticLoss
-            End Get
-            Set(ByVal Value As ScaledNumber)
-                If Value.ActualValue < 0 Then
-                    Throw New System.Exception("You can not set the angular kinetic loss to be less than zero!")
-                End If
-
-                Me.SetSimData("AngularKineticLoss", Value.ActualValue.ToString, True)
-                m_snAngularKineticLoss.CopyData(Value)
             End Set
         End Property
 
@@ -552,14 +492,8 @@ Namespace DataObjects.Physical
             m_snMouseSpringStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "MouseSpringStiffness", 0.5, ScaledNumber.enumNumericScale.None, "N/m", "N/m")
             m_snMouseSpringDamping = New AnimatGUI.Framework.ScaledNumber(Me, "MouseSpringDamping", 200, ScaledNumber.enumNumericScale.None, "g/s", "g/s")
 
-            m_snLinearCompliance = New ScaledNumber(Me, "LinearCompliance", 0.1, ScaledNumber.enumNumericScale.micro, "m/N", "m/N")
-            m_snLinearDamping = New ScaledNumber(Me, "LinearDamping", 200, ScaledNumber.enumNumericScale.Kilo, "g/s", "g/s")
-
-            m_snAngularCompliance = New ScaledNumber(Me, "AngularCompliance", 0.1, ScaledNumber.enumNumericScale.micro, "m/N", "m/N")
-            m_snAngularDamping = New ScaledNumber(Me, "AngularDamping", 50, ScaledNumber.enumNumericScale.Kilo, "g/s", "g/s")
-
-            m_snLinearKineticLoss = New ScaledNumber(Me, "LinearKineticLoss", 1, ScaledNumber.enumNumericScale.micro, "g/s", "g/s")
-            m_snAngularKineticLoss = New ScaledNumber(Me, "AngularKineticLoss", 1, ScaledNumber.enumNumericScale.micro, "g/s", "g/s")
+            m_snLinearCompliance = New ScaledNumber(Me, "LinearCompliance", 0.1, ScaledNumber.enumNumericScale.nano, "m/N", "m/N")
+            m_snAngularCompliance = New ScaledNumber(Me, "AngularCompliance", 0.1, ScaledNumber.enumNumericScale.nano, "s^2/(Kg*m^2)", "s^2/(Kg*m^2)")
 
             m_snRecFieldSelRadius = New ScaledNumber(Me, "RecFieldSelRadius", 5, ScaledNumber.enumNumericScale.milli, "Meters", "m")
 
@@ -971,30 +905,11 @@ Namespace DataObjects.Physical
                                         "World Stability", "The compliance value of the spring used in linear collisions within the simulator.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            pbNumberBag = m_snLinearDamping.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Linear Damping", pbNumberBag.GetType(), "LinearDamping", _
-                                        "World Stability", "The damping value of the spring used in linear collisions within the simulator.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
-
             pbNumberBag = m_snAngularCompliance.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Angular Compliance", pbNumberBag.GetType(), "AngularCompliance", _
                                         "World Stability", "The compliance value of the spring used in angular collisions within the simulator.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            pbNumberBag = m_snAngularDamping.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Angular Damping", pbNumberBag.GetType(), "AngularDamping", _
-                                        "World Stability", "The damping value of the spring used in angular collisions within the simulator.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
-
-            pbNumberBag = m_snLinearKineticLoss.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Linear Kinetic Loss", pbNumberBag.GetType(), "LinearKineticLoss", _
-                                        "World Stability", "The amount of kinetic loss for linear collisions within the simulator.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
-
-            pbNumberBag = m_snAngularKineticLoss.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Angular Kinetic Loss", pbNumberBag.GetType(), "AngularKineticLoss", _
-                                        "World Stability", "The amount of kinetic loss for angular collisions within the simulator.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
         End Sub
 
@@ -1013,11 +928,7 @@ Namespace DataObjects.Physical
             If Not m_snMouseSpringDamping Is Nothing Then m_snMouseSpringDamping.ClearIsDirty()
 
             If Not m_snLinearCompliance Is Nothing Then m_snLinearCompliance.ClearIsDirty()
-            If Not m_snLinearDamping Is Nothing Then m_snLinearDamping.ClearIsDirty()
             If Not m_snAngularCompliance Is Nothing Then m_snAngularCompliance.ClearIsDirty()
-            If Not m_snAngularDamping Is Nothing Then m_snAngularDamping.ClearIsDirty()
-            If Not m_snLinearKineticLoss Is Nothing Then m_snLinearKineticLoss.ClearIsDirty()
-            If Not m_snAngularKineticLoss Is Nothing Then m_snAngularKineticLoss.ClearIsDirty()
             If Not m_snRecFieldSelRadius Is Nothing Then m_snRecFieldSelRadius.ClearIsDirty()
 
         End Sub
@@ -1034,11 +945,7 @@ Namespace DataObjects.Physical
             m_snMouseSpringDamping = DirectCast(doOrig.m_snMouseSpringDamping.Clone(Me, bCutData, doRoot), ScaledNumber)
 
             m_snLinearCompliance = DirectCast(doOrig.m_snLinearCompliance.Clone(Me, bCutData, doRoot), ScaledNumber)
-            m_snLinearDamping = DirectCast(doOrig.m_snLinearDamping.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_snAngularCompliance = DirectCast(doOrig.m_snAngularCompliance.Clone(Me, bCutData, doRoot), ScaledNumber)
-            m_snAngularDamping = DirectCast(doOrig.m_snAngularDamping.Clone(Me, bCutData, doRoot), ScaledNumber)
-            m_snLinearKineticLoss = DirectCast(doOrig.m_snLinearKineticLoss.Clone(Me, bCutData, doRoot), ScaledNumber)
-            m_snAngularKineticLoss = DirectCast(doOrig.m_snAngularKineticLoss.Clone(Me, bCutData, doRoot), ScaledNumber)
 
             m_snRecFieldSelRadius = DirectCast(doOrig.m_snRecFieldSelRadius.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_clBackgroundcolor = doOrig.m_clBackgroundcolor
@@ -1073,15 +980,6 @@ Namespace DataObjects.Physical
 
             Dim iDistDiff As Integer = CInt(Me.DisplayDistanceUnits) - CInt(Util.Environment.DisplayDistanceUnits(ePrevDistance))
             Dim fltDensityDistChange As Single = CSng(10 ^ iDistDiff)
-
-            m_snMouseSpringStiffness.ActualValue = m_snMouseSpringStiffness.ActualValue / fltDistanceChange
-            m_snMouseSpringDamping.ActualValue = m_snMouseSpringStiffness.ActualValue / fltMassChange
-
-            m_snLinearCompliance.ActualValue = m_snLinearCompliance.ActualValue * fltDistanceChange
-            m_snLinearDamping.ActualValue = m_snLinearDamping.ActualValue / fltDistanceChange
-
-            m_snAngularCompliance.ActualValue = m_snAngularCompliance.ActualValue * fltDistanceChange
-            m_snAngularDamping.ActualValue = m_snAngularDamping.ActualValue / fltDistanceChange
 
             Dim doStruct As PhysicalStructure
             For Each deEntry As DictionaryEntry In m_aryOrganisms
@@ -1129,11 +1027,7 @@ Namespace DataObjects.Physical
             m_snMouseSpringStiffness.LoadData(oXml, "MouseSpringStiffness")
             m_snMouseSpringDamping.LoadData(oXml, "MouseSpringDamping")
             m_snLinearCompliance.LoadData(oXml, "LinearCompliance")
-            m_snLinearDamping.LoadData(oXml, "LinearDamping")
             m_snAngularCompliance.LoadData(oXml, "AngularCompliance")
-            m_snAngularDamping.LoadData(oXml, "AngularDamping")
-            m_snLinearKineticLoss.LoadData(oXml, "LinearKineticLoss")
-            m_snAngularKineticLoss.LoadData(oXml, "AngularKineticLoss")
 
             Me.SimulateHydrodynamics = oXml.GetChildBool("SimulateHydrodynamics", m_bSimulateHydrodynamics)
 
@@ -1319,11 +1213,7 @@ Namespace DataObjects.Physical
             m_snMouseSpringDamping.SaveData(oXml, "MouseSpringDamping")
 
             m_snLinearCompliance.SaveData(oXml, "LinearCompliance")
-            m_snLinearDamping.SaveData(oXml, "LinearDamping")
             m_snAngularCompliance.SaveData(oXml, "AngularCompliance")
-            m_snAngularDamping.SaveData(oXml, "AngularDamping")
-            m_snLinearKineticLoss.SaveData(oXml, "LinearKineticLoss")
-            m_snAngularKineticLoss.SaveData(oXml, "AngularKineticLoss")
 
             m_snRecFieldSelRadius.SaveData(oXml, "RecFieldSelRadius")
             Util.SaveColor(oXml, "BackgroundColor", m_clBackgroundcolor)
@@ -1420,11 +1310,7 @@ Namespace DataObjects.Physical
             oXml.AddChildElement("MouseSpringDamping", m_snMouseSpringDamping.ActualValue)
 
             oXml.AddChildElement("LinearCompliance", m_snLinearCompliance.ActualValue)
-            oXml.AddChildElement("LinearDamping", m_snLinearDamping.ActualValue)
             oXml.AddChildElement("AngularCompliance", m_snAngularCompliance.ActualValue)
-            oXml.AddChildElement("AngularDamping", m_snAngularDamping.ActualValue)
-            oXml.AddChildElement("LinearKineticLoss", m_snLinearKineticLoss.ActualValue)
-            oXml.AddChildElement("AngularKineticLoss", m_snAngularKineticLoss.ActualValue)
 
             m_snRecFieldSelRadius.SaveSimulationXml(oXml, Nothing, "RecFieldSelRadius")
             Util.SaveColor(oXml, "BackgroundColor", m_clBackgroundcolor)

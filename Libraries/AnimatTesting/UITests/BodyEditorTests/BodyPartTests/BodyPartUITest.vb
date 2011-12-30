@@ -184,8 +184,8 @@ Namespace UITests
                 Protected m_ptChildTranslateXAxisStart As Point = New Point(878, 426)
                 Protected m_ptChildTranslateXAxisEnd As Point = New Point(1307, 490)
 
-                Protected m_ptChildTranslateYAxisStart As Point = New Point(712, 226)
-                Protected m_ptChildTranslateYAxisEnd As Point = New Point(711, 8)
+                Protected m_ptChildTranslateYAxisStart As Point = New Point(712, 210)
+                Protected m_ptChildTranslateYAxisEnd As Point = New Point(711, 2)
 
                 Protected m_ptChildTranslateZAxisStart As Point = New Point(534, 394)
                 Protected m_ptChildTranslateZAxisEnd As Point = New Point(186, 394)
@@ -269,7 +269,7 @@ Namespace UITests
 
                 Protected Overridable Sub TestPart()
 
-                    StartProject()
+                    StartNewProject()
                     CreateAndTestRoot()
                     CreateAndTestChild()
                     CreateChartAndAddBodies()
@@ -381,35 +381,35 @@ Namespace UITests
                 Protected Overridable Sub CreateAndTestRoot()
 
                     'Add a root part.
-                    AddRootPartType("Structure_1", m_strPartType)
+                    AddRootPartType(m_strStructureGroup, m_strStruct1Name, m_strPartType)
 
                     'Select the simulation window tab so it is visible.
-                    ExecuteMethod("SelectTrackItems", New Object() {"Simulation\Environment\Structures\Structure_1", "Structure_1", "Root"})
+                    ExecuteMethod("SelectTrackItems", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, m_strStruct1Name, "Root"})
 
-                    TestMovableRigidBodyProperties("Structure_1", "Root")
+                    TestMovableRigidBodyProperties(m_strStruct1Name, "Root")
 
                     RecalculatePositionsUsingResolution()
 
                     'Zoom in on the part so we can try and move it with the mouse.
                     ZoomInOnPart(m_ptInitialZoomStart, m_iInitialZoomDist1, m_iInitialZoomDist2)
 
-                    MouseMoveRoot()
+                    'MouseMoveRoot()
 
-                    MouseRotateRoot()
+                    'MouseRotateRoot()
 
-                    ResetStructurePosition("Structure_1", "Root", m_dblResetStructXPos, m_dblResetStructYPos, m_dblResetStructZPos, True, 0.001)
+                    ResetStructurePosition(m_strStruct1Name, "Root", m_dblResetStructXPos, m_dblResetStructYPos, m_dblResetStructZPos, True, 0.001)
 
                     ManualMoveRoot()
 
                     ManualRotateRoot()
 
-                    ResetStructurePosition("Structure_1", "Root", m_dblResetStructXPos, m_dblResetStructYPos, m_dblResetStructZPos, True, 0.001)
+                    ResetStructurePosition(m_strStruct1Name, "Root", m_dblResetStructXPos, m_dblResetStructYPos, m_dblResetStructZPos, True, 0.001)
                 End Sub
 
 
                 Protected Overridable Sub MouseMoveRoot()
                     'Move the z axis and verify position.
-                    MovePartAxis("Structure_1", "Root", _
+                    MovePartAxis(m_strStruct1Name, "Root", _
                                  m_strMoveRootWorldZAxis, m_strMoveRootLocalZAxis, _
                                  m_ptTranslateZAxisStart, m_ptTranslateZAxisEnd, _
                                  m_dblMinTranRootWorldZ, m_dblMaxTranRootWorldZ, _
@@ -417,7 +417,7 @@ Namespace UITests
                                  m_dblMinTranRootLocalZ, m_dblMaxTranRootLocalZ)
 
                     'Move the z axis and verify position.
-                    MovePartAxis("Structure_1", "Root", _
+                    MovePartAxis(m_strStruct1Name, "Root", _
                                  m_strMoveRootWorldYAxis, m_strMoveRootLocalYAxis, _
                                  m_ptTranslateYAxisStart, m_ptTranslateYAxisEnd, _
                                  m_dblMinTranRootWorldY, m_dblMaxTranRootWorldY, _
@@ -428,7 +428,7 @@ Namespace UITests
                     DragMouse(m_ptRotatePartForTranslateStart, m_ptRotatePartForTranslateEnd, MouseButtons.Left, ModifierKeys.None, True)
 
                     'Move the x axis and verify position.
-                    MovePartAxis("Structure_1", "Root", _
+                    MovePartAxis(m_strStruct1Name, "Root", _
                                  m_strMoveRootWorldXAxis, m_strMoveRootLocalXAxis, _
                                  m_ptTranslateXAxisStart, m_ptTranslateXAxisEnd, _
                                  m_dblMinTranRootWorldX, m_dblMaxTranRootWorldX, _
@@ -440,28 +440,28 @@ Namespace UITests
                 Protected Overridable Sub MouseRotateRoot()
                     If Me.AllowRootRotations Then
                         'Rotate the x axis
-                        RotatePartAxis("Structure_1", "Root", "X", m_ptRotateXAxisStart, m_ptRotateXAxisEnd, m_dblMinRotRootX, m_dblMaxRotRootX, True)
+                        RotatePartAxis(m_strStruct1Name, "Root", "X", m_ptRotateXAxisStart, m_ptRotateXAxisEnd, m_dblMinRotRootX, m_dblMaxRotRootX, True)
 
                         'Rotate the y axis
-                        RotatePartAxis("Structure_1", "Root", "Y", m_ptRotateYAxisStart, m_ptRotateYAxisEnd, m_dblMinRotRootY, m_dblMaxRotRootY, True)
+                        RotatePartAxis(m_strStruct1Name, "Root", "Y", m_ptRotateYAxisStart, m_ptRotateYAxisEnd, m_dblMinRotRootY, m_dblMaxRotRootY, True)
 
                         'Rotate the z axis
-                        RotatePartAxis("Structure_1", "Root", "Z", m_ptRotateZAxisStart, m_ptRotateZAxisEnd, m_dblMinRotRootZ, m_dblMaxRotRootZ, True)
+                        RotatePartAxis(m_strStruct1Name, "Root", "Z", m_ptRotateZAxisStart, m_ptRotateZAxisEnd, m_dblMinRotRootZ, m_dblMaxRotRootZ, True)
                     End If
                 End Sub
 
                 Protected Overridable Sub ManualMoveRoot()
-                    ManualMovePartAxis("Structure_1", "Root", _
+                    ManualMovePartAxis(m_strStruct1Name, "Root", _
                                        m_strMoveRootWorldXAxis, m_strMoveRootLocalXAxis, _
                                        m_dblManWorldXPos, m_dblManWorldXTest, m_dblManWorldLocalXTest, _
                                        False, m_dblManLocalXPos, m_dblManLocalXTest, m_dblManLocalWorldXTest, 0.01)
 
-                    ManualMovePartAxis("Structure_1", "Root", _
+                    ManualMovePartAxis(m_strStruct1Name, "Root", _
                                        m_strMoveRootWorldYAxis, m_strMoveRootLocalYAxis, _
                                        m_dblManWorldYPos, m_dblManWorldYTest, m_dblManWorldLocalYTest, _
                                        False, m_dblManLocalYPos, m_dblManLocalYTest, m_dblManLocalWorldYTest, 0.01)
 
-                    ManualMovePartAxis("Structure_1", "Root", _
+                    ManualMovePartAxis(m_strStruct1Name, "Root", _
                                        m_strMoveRootWorldZAxis, m_strMoveRootLocalZAxis, _
                                        m_dblManWorldZPos, m_dblManWorldZTest, m_dblManWorldLocalZTest, _
                                        False, m_dblManLocalZPos, m_dblManLocalZTest, m_dblManLocalWorldZTest, 0.01)
@@ -469,9 +469,9 @@ Namespace UITests
 
                 Protected Overridable Sub ManualRotateRoot()
                     If Me.AllowRootRotations Then
-                        ManualRotatePartAxis("Structure_1", "Root", "X", m_dblManXRot, True, 0.001)
-                        ManualRotatePartAxis("Structure_1", "Root", "Y", m_dblManYRot, True, 0.001)
-                        ManualRotatePartAxis("Structure_1", "Root", "Z", m_dblManZRot, True, 0.001)
+                        ManualRotatePartAxis(m_strStruct1Name, "Root", "X", m_dblManXRot, True, 0.001)
+                        ManualRotatePartAxis(m_strStruct1Name, "Root", "Y", m_dblManYRot, True, 0.001)
+                        ManualRotatePartAxis(m_strStruct1Name, "Root", "Z", m_dblManZRot, True, 0.001)
                     End If
                 End Sub
 
@@ -487,14 +487,14 @@ Namespace UITests
                     RepositionChildPart()
 
                     'Select the simulation window tab so it is visible.
-                    ExecuteMethod("SelectTrackItems", New Object() {"Simulation\Environment\Structures\Structure_1", "Structure_1", "Body_1"})
+                    ExecuteMethod("SelectTrackItems", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, m_strStruct1Name, "Body_1"})
 
                     'Zoom in on the part so we can try and move it with the mouse.
                     ZoomInOnPart(m_ptInitialZoomStart, m_iSecondaryZoomDist1, m_iSecondaryZoomDist2)
 
-                    MouseMoveChild()
+                    'MouseMoveChild()
 
-                    MouseRotateChild()
+                    ' MouseRotateChild()
 
                     ManualMoveChild()
 
@@ -510,15 +510,15 @@ Namespace UITests
 
                 Protected Overridable Sub MouseMoveChild()
                     'Move the z axis and verify position.
-                    MovePartAxis("Structure_1", "Root\Joint_1\Body_1", _
+                    MovePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", _
                                  m_strMoveChildWorldZAxis, m_strMoveChildLocalZAxis, _
                                  m_ptChildTranslateZAxisStart, m_ptChildTranslateZAxisEnd, _
                                  m_dblMinTranChildWorldZ, m_dblMaxTranChildWorldZ, _
                                  m_dblMinTranChildStructZ, m_dblMaxTranChildStructZ, _
                                  m_dblMinTranChildLocalZ, m_dblMaxTranChildLocalZ)
 
-                    'Move the z axis and verify position.
-                    MovePartAxis("Structure_1", "Root\Joint_1\Body_1", _
+                    'Move the y axis and verify position.
+                    MovePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", _
                                  m_strMoveChildWorldYAxis, m_strMoveChildLocalYAxis, _
                                  m_ptChildTranslateYAxisStart, m_ptChildTranslateYAxisEnd, _
                                  m_dblMinTranChildWorldY, m_dblMaxTranChildWorldY, _
@@ -529,7 +529,7 @@ Namespace UITests
                     DragMouse(m_ptChildRotatePartForTranslateStart, m_ptChildRotatePartForTranslateEnd, MouseButtons.Left, ModifierKeys.None, True)
 
                     'Move the x axis and verify position.
-                    MovePartAxis("Structure_1", "Root\Joint_1\Body_1", _
+                    MovePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", _
                                  m_strMoveChildWorldXAxis, m_strMoveChildLocalXAxis, _
                                  m_ptChildTranslateXAxisStart, m_ptChildTranslateXAxisEnd, _
                                  m_dblMinTranChildWorldX, m_dblMaxTranChildWorldX, _
@@ -541,28 +541,28 @@ Namespace UITests
                 Protected Overridable Sub MouseRotateChild()
                     If Me.AllowChildRotations Then
                         'Rotate the x axis
-                        RotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "X", m_ptChildRotateXAxisStart, m_ptChildRotateXAxisEnd, m_dblMinRotChildX, m_dblMaxRotChildX, True)
+                        RotatePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", "X", m_ptChildRotateXAxisStart, m_ptChildRotateXAxisEnd, m_dblMinRotChildX, m_dblMaxRotChildX, True)
 
                         'Rotate the y axis
-                        RotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "Y", m_ptChildRotateYAxisStart, m_ptChildRotateYAxisEnd, m_dblMinRotChildY, m_dblMaxRotChildY, True)
+                        RotatePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", "Y", m_ptChildRotateYAxisStart, m_ptChildRotateYAxisEnd, m_dblMinRotChildY, m_dblMaxRotChildY, True)
 
                         'Rotate the z axis
-                        RotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "Z", m_ptChildRotateZAxisStart, m_ptChildRotateZAxisEnd, m_dblMinRotChildZ, m_dblMaxRotChildZ, True)
+                        RotatePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", "Z", m_ptChildRotateZAxisStart, m_ptChildRotateZAxisEnd, m_dblMinRotChildZ, m_dblMaxRotChildZ, True)
                     End If
                 End Sub
 
                 Protected Overridable Sub ManualMoveChild()
-                    ManualMovePartAxis("Structure_1", "Root\Joint_1\Body_1", _
+                    ManualMovePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", _
                                        m_strMoveChildWorldXAxis, m_strMoveChildLocalXAxis, _
                                        m_dblManWorldXPos, m_dblManWorldXTest, m_dblManChildWorldLocalXTest, _
                                        True, m_dblManLocalXPos, m_dblManLocalXTest, m_dblManChildLocalWorldXTest, 0.01)
 
-                    ManualMovePartAxis("Structure_1", "Root\Joint_1\Body_1", _
+                    ManualMovePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", _
                                        m_strMoveChildWorldYAxis, m_strMoveChildLocalYAxis, _
                                        m_dblManWorldYPos, m_dblManWorldYTest, m_dblManChildWorldLocalYTest, _
                                        True, m_dblManLocalYPos, m_dblManLocalYTest, m_dblManChildLocalWorldYTest, 0.01)
 
-                    ManualMovePartAxis("Structure_1", "Root\Joint_1\Body_1", _
+                    ManualMovePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", _
                                        m_strMoveChildWorldZAxis, m_strMoveChildLocalZAxis, _
                                        m_dblManWorldZPos, m_dblManWorldZTest, m_dblManChildWorldLocalZTest, _
                                        True, m_dblManLocalZPos, m_dblManLocalZTest, m_dblManChildLocalWorldZTest, 0.01)
@@ -571,33 +571,33 @@ Namespace UITests
 
                 Protected Overridable Sub ManualRotateChild()
                     If Me.AllowChildRotations Then
-                        ManualRotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "X", m_dblManXRot, True, 0.001)
-                        ManualRotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "Y", m_dblManYRot, True, 0.001)
-                        ManualRotatePartAxis("Structure_1", "Root\Joint_1\Body_1", "Z", m_dblManZRot, True, 0.001)
+                        ManualRotatePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", "X", m_dblManXRot, True, 0.001)
+                        ManualRotatePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", "Y", m_dblManYRot, True, 0.001)
+                        ManualRotatePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", "Z", m_dblManZRot, True, 0.001)
                     End If
                 End Sub
 
                 Protected Overridable Sub VerifyChildPositionAfterRotateStructure()
                     If Me.AllowRootRotations Then
                         'Verify the child part position after rotating the structure.
-                        VerifyChildPosAfterRotate("Structure_1", "X", "Root\Joint_1\Body_1", m_dblRootChildRotation, m_dblStructChildRotateTestXX, m_dblStructChildRotateTestXY, m_dblStructChildRotateTestXZ)
-                        VerifyChildPosAfterRotate("Structure_1", "Y", "Root\Joint_1\Body_1", m_dblRootChildRotation, m_dblStructChildRotateTestYX, m_dblStructChildRotateTestYY, m_dblStructChildRotateTestYZ)
-                        VerifyChildPosAfterRotate("Structure_1", "Z", "Root\Joint_1\Body_1", m_dblRootChildRotation, m_dblStructChildRotateTestZX, m_dblStructChildRotateTestZY, m_dblStructChildRotateTestZZ)
+                        VerifyChildPosAfterRotate(m_strStruct1Name, "X", "Root\Joint_1\Body_1", m_dblRootChildRotation, m_dblStructChildRotateTestXX, m_dblStructChildRotateTestXY, m_dblStructChildRotateTestXZ)
+                        VerifyChildPosAfterRotate(m_strStruct1Name, "Y", "Root\Joint_1\Body_1", m_dblRootChildRotation, m_dblStructChildRotateTestYX, m_dblStructChildRotateTestYY, m_dblStructChildRotateTestYZ)
+                        VerifyChildPosAfterRotate(m_strStruct1Name, "Z", "Root\Joint_1\Body_1", m_dblRootChildRotation, m_dblStructChildRotateTestZX, m_dblStructChildRotateTestZY, m_dblStructChildRotateTestZZ)
                     End If
                 End Sub
 
                 Protected Overridable Sub VerifyJointPositionAfterRotateStructure()
                     If Me.AllowRootRotations Then
                         'Verify the joint position after rotating the structure.
-                        VerifyChildPosAfterRotate("Structure_1", "X", "Root\Joint_1", m_dblRootChildRotation, m_dblStructJointRotateTestXX, m_dblStructJointRotateTestXY, m_dblStructJointRotateTestXZ)
-                        VerifyChildPosAfterRotate("Structure_1", "Y", "Root\Joint_1", m_dblRootChildRotation, m_dblStructJointRotateTestYX, m_dblStructJointRotateTestYY, m_dblStructJointRotateTestYZ)
-                        VerifyChildPosAfterRotate("Structure_1", "Z", "Root\Joint_1", m_dblRootChildRotation, m_dblStructJointRotateTestZX, m_dblStructJointRotateTestZY, m_dblStructJointRotateTestZZ)
+                        VerifyChildPosAfterRotate(m_strStruct1Name, "X", "Root\Joint_1", m_dblRootChildRotation, m_dblStructJointRotateTestXX, m_dblStructJointRotateTestXY, m_dblStructJointRotateTestXZ)
+                        VerifyChildPosAfterRotate(m_strStruct1Name, "Y", "Root\Joint_1", m_dblRootChildRotation, m_dblStructJointRotateTestYX, m_dblStructJointRotateTestYY, m_dblStructJointRotateTestYZ)
+                        VerifyChildPosAfterRotate(m_strStruct1Name, "Z", "Root\Joint_1", m_dblRootChildRotation, m_dblStructJointRotateTestZX, m_dblStructJointRotateTestZY, m_dblStructJointRotateTestZZ)
                     End If
                 End Sub
 
                 Protected Overridable Sub RepositionStruct1BeforeSim()
                     'Move the structure up.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1", "WorldPosition.Y", "1"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.Y", "1"})
                 End Sub
 
                 Protected Overridable Sub RepositionStruct2BeforeSim()
@@ -607,10 +607,10 @@ Namespace UITests
                 Protected Overridable Sub CreateStruct2AndRoot()
 
                     'Create a new structure
-                    CreateStructure("Structure_2", "Structure_2")
+                    CreateStructure("Structures", "Structure_2", "Structure_2", m_bCreateStructure)
 
                     'Add a plane part.
-                    AddRootPartType("Structure_2", m_strStruct2RootPart)
+                    AddRootPartType(m_strStructureGroup, "Structure_2", m_strStruct2RootPart)
 
                     RepositionStruct2BeforeSim()
 
@@ -619,7 +619,7 @@ Namespace UITests
 
                     'Now add the new part to the chart.
                     'Now add items to the chart to plot the y position of the root of structure 2
-                    AddItemToChart("Structure_2\Root")
+                    AddItemToChart("Structure_2\Body Plan\Root")
 
                     'Set the name of the data chart item to root_y.
                     ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root", "Name", "Root2_Y"})
@@ -655,7 +655,7 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "AfterStruct_")
 
                     'Now lets remove the child body of the falling part.
-                    DeletePart("Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_1")
+                    DeletePart("Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1")
 
                     'Run the simulation and wait for it to end.
                     RunSimulationWaitToEnd()
@@ -676,10 +676,10 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "AfterS2_")
 
                     'Now lets remove the root of the structure 1, and that structure.
-                    DeletePart("Simulation\Environment\Structures\Structure_1\Body Plan\Root")
+                    DeletePart("Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root")
 
                     'Now lets remove structure 1, and that structure.
-                    DeletePart("Simulation\Environment\Structures\Structure_1")
+                    DeletePart("Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name)
 
                     'Make sure simulation can still run.
                     RunSimulationWaitToEnd()
@@ -691,19 +691,19 @@ Namespace UITests
 
                     If m_bTestDensity Then
                         'Set the density to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Density", m_dblTestDensity.ToString})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Density", m_dblTestDensity.ToString})
 
-                        Dim dblTest As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Density.ActualValue"), Double)
+                        Dim dblTest As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Density.ActualValue"), Double)
 
                         If dblTest <> m_dblTestDensity Then
                             Throw New System.Exception("Body part density does not match the target value: " & m_dblTestDensity & ", recorded value: " & dblTest)
                         End If
 
                         'Check for error when density is zero.
-                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Density", "0"}, "The density can not be less than or equal to zero.")
+                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Density", "0"}, "The density can not be less than or equal to zero.")
 
                         'Check for error when density is less than zero.
-                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Structures\" & strStructure & "\Body Plan\" & strPart, "Density", "-1"}, "The density can not be less than or equal to zero.")
+                        ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Density", "-1"}, "The density can not be less than or equal to zero.")
                     End If
 
                 End Sub
@@ -716,9 +716,9 @@ Namespace UITests
                 '    CreateAndTestChild()
 
                 '    'Reposition the structure
-                '    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1", "WorldPosition.X", "0"})
-                '    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1", "WorldPosition.Y", "0"})
-                '    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1", "WorldPosition.Z", "0"})
+                '    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.X", "0"})
+                '    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.Y", "0"})
+                '    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.Z", "0"})
 
                 '    'Reposition the Child
                 '    RepositionChildPart()
@@ -746,7 +746,7 @@ Namespace UITests
                 '    CompareSimulation(m_strRootFolder & m_strTestDataPath, "AfterStruct_")
 
                 '    ''Now lets remove the child body of the falling part.
-                '    'DeletePart("Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_1")
+                '    'DeletePart("Simulation\Environment\" &m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1")
 
                 '    ''Run the simulation and wait for it to end.
                 '    'RunSimulationWaitToEnd()
@@ -767,10 +767,10 @@ Namespace UITests
                 '    'CompareSimulation(m_strRootFolder & m_strTestDataPath, "AfterS2_")
 
                 '    ''Now lets remove the root of the structure 1, and that structure.
-                '    'DeletePart("Simulation\Environment\Structures\Structure_1\Body Plan\Root")
+                '    'DeletePart("Simulation\Environment\" &m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root")
 
                 '    ''Now lets remove structure 1, and that structure.
-                '    'DeletePart("Simulation\Environment\Structures\Structure_1")
+                '    'DeletePart("Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name)
 
                 '    ''Make sure simulation can still run.
                 '    'RunSimulationWaitToEnd()

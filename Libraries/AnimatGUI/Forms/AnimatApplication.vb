@@ -1125,6 +1125,12 @@ Namespace Forms
         Protected m_oAutomationPropertyValue As Object
         Protected m_doAutomationStructure As DataObjects.Physical.PhysicalStructure
         Protected m_doAutomationBodyPart As DataObjects.Physical.BodyPart
+        Protected m_bnAutomationNodeOrigin As DataObjects.Behavior.Node
+        Protected m_bnAutomationNodeDestination As DataObjects.Behavior.Node
+        Protected m_ptAutomationPosition As Point
+        Protected m_strAutomationName As String = ""
+        Protected m_strAutomationMethodName As String = ""
+        Protected m_aryAutomationParams() As Object
 
         Protected m_bBodyPartPasteInProgress As Boolean = False
 
@@ -2985,7 +2991,8 @@ Namespace Forms
                 Me.CloseProject(False)
 
                 If Util.ShowMessage("The project you are attempting to load was built with a previous version of AnimatLab. Would you like to convert it to " & _
-                                 "be able to run in this version of the application? A backup of all old files will be made in a seperate folder of the project. ", "Convert Project", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                                 "be able to run in this version of the application? A backup of all old files will be made in a seperate folder of the project. ", _
+                                 "Convert Project", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
                     RaiseEvent ConvertFileVersion(strFilename, exOldVersion.OldVersion)
                 Else
                     Throw exOldVersion
@@ -3898,6 +3905,38 @@ Namespace Forms
 
         End Function
 
+        Public Sub ExecuteIndirectMethod(ByVal strMethodName As String, ByVal aryParams() As Object)
+
+            m_strAutomationMethodName = strMethodName
+            m_aryAutomationParams = aryParams
+
+            m_timerAutomation = New System.Timers.Timer(10)
+            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnExecuteIndirectMethodTimer
+            m_timerAutomation.Enabled = True
+        End Sub
+
+        Private Delegate Sub OnExecuteIndirectMethodTimerDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        Protected Overridable Sub OnExecuteIndirectMethodTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+            m_timerAutomation.Enabled = False
+
+            If Me.InvokeRequired Then
+                Me.Invoke(New OnExecuteIndirectMethodTimerDelegate(AddressOf OnExecuteIndirectMethodTimer), New Object() {sender, eProps})
+                Return
+            End If
+
+            Try
+                RemoveHandler m_timerAutomation.Elapsed, AddressOf OnExecuteIndirectMethodTimer
+                m_timerAutomation = Nothing
+
+                ExecuteMethod(m_strAutomationMethodName, m_aryAutomationParams)
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
         Public Sub SelectWorkspaceItem(ByVal strPath As String)
             If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
                 Throw New System.Exception("No project is currently loaded.")
@@ -3960,7 +3999,18 @@ Namespace Forms
                 RemoveHandler m_timerAutomation.Elapsed, AddressOf OnDblClickWorkspaceItemTimer
                 m_timerAutomation = Nothing
 
-                Util.Application.Simulation.WorkspaceTreeviewDoubleClick(m_tnAutomationTreeNode)
+                If Not m_tnAutomationTreeNode Is Nothing AndAlso Not m_tnAutomationTreeNode.Tag Is Nothing Then
+                    If Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(Framework.DataObjectTreeViewRef), False) Then
+                        Dim doRef As DataObjectTreeViewRef = DirectCast(m_tnAutomationTreeNode.Tag, DataObjectTreeViewRef)
+                        If Not doRef.m_doObject Is Nothing AndAlso Util.IsTypeOf(doRef.m_doObject.GetType, GetType(Framework.DataObject), False) Then
+                            Dim doNode As Framework.DataObject = DirectCast(doRef.m_doObject, Framework.DataObject)
+                            doNode.WorkspaceTreeviewDoubleClick(m_tnAutomationTreeNode)
+                        End If
+                    ElseIf Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(Framework.DataObject), True) Then
+                        Dim doData As Framework.DataObject = DirectCast(m_tnAutomationTreeNode.Tag, Framework.DataObject)
+                        doData.WorkspaceTreeviewDoubleClick(m_tnAutomationTreeNode)
+                    End If
+                End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -4019,6 +4069,182 @@ Namespace Forms
             End Try
         End Sub
 
+        Public Sub AddBehavioralNode(ByVal strSubsystem As String, ByVal strClassName As String, ByVal ptPosition As Point, ByVal strName As String)
+            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
+                Throw New System.Exception("No project is currently loaded.")
+            End If
+
+            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strSubsystem, Util.ProjectWorkspace.TreeView.Nodes)
+
+            If m_tnAutomationTreeNode Is Nothing OrElse m_tnAutomationTreeNode.Tag Is Nothing OrElse Not Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(DataObjects.Behavior.Nodes.Subsystem), False) Then
+                Throw New System.Exception("The path to the specified subsystem was not the correct object type.")
+            End If
+
+            Dim doSubsystem As Framework.DataObject = DirectCast(m_tnAutomationTreeNode.Tag, Framework.DataObject)
+
+            Dim bnSubsystem As DataObjects.Behavior.Nodes.Subsystem = DirectCast(doSubsystem, DataObjects.Behavior.Nodes.Subsystem)
+
+            If bnSubsystem.SubsystemDiagram Is Nothing Then
+                Throw New System.Exception("The diagram for the specified subsystem is not open")
+            End If
+
+            m_bnAutomationNodeOrigin = DirectCast(Util.LoadClass(strClassName, doSubsystem), DataObjects.Behavior.Node)
+            m_strAutomationName = strName
+            m_ptAutomationPosition = ptPosition
+
+            m_timerAutomation = New System.Timers.Timer(10)
+            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnAddBehavioralNodeTimer
+            m_timerAutomation.Enabled = True
+        End Sub
+
+        Private Delegate Sub OnAddBehavioralNodeTimerDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        Protected Overridable Sub OnAddBehavioralNodeTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+            m_timerAutomation.Enabled = False
+
+            If Me.InvokeRequired Then
+                Me.Invoke(New OnDblClickWorkspaceItemTimerDelegate(AddressOf OnAddBehavioralNodeTimer), New Object() {sender, eProps})
+                Return
+            End If
+
+            Try
+                RemoveHandler m_timerAutomation.Elapsed, AddressOf OnAddBehavioralNodeTimer
+                m_timerAutomation = Nothing
+
+                Dim bnSubsystem As DataObjects.Behavior.Nodes.Subsystem = DirectCast(m_tnAutomationTreeNode.Tag, DataObjects.Behavior.Nodes.Subsystem)
+
+                If bnSubsystem.SubsystemDiagram Is Nothing Then
+                    Throw New System.Exception("The diagram for the specified subsystem is not open")
+                End If
+
+                Dim bnNode As DataObjects.Behavior.Node = bnSubsystem.SubsystemDiagram.Automation_DropNode(m_bnAutomationNodeOrigin, m_ptAutomationPosition)
+                bnNode.Name = m_strAutomationName
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+
+        Public Sub AddBehavioralLink(ByVal strNodeOrigin As String, ByVal strNodeDestination As String, ByVal strName As String)
+            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
+                Throw New System.Exception("No project is currently loaded.")
+            End If
+
+            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strNodeOrigin, Util.ProjectWorkspace.TreeView.Nodes)
+
+            If m_tnAutomationTreeNode Is Nothing OrElse m_tnAutomationTreeNode.Tag Is Nothing OrElse Not Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(DataObjects.Behavior.Node), False) Then
+                Throw New System.Exception("The path to the origin node was not the correct object type.")
+            End If
+
+            m_bnAutomationNodeOrigin = DirectCast(m_tnAutomationTreeNode.Tag, DataObjects.Behavior.Node)
+
+            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strNodeDestination, Util.ProjectWorkspace.TreeView.Nodes)
+
+            If m_tnAutomationTreeNode Is Nothing OrElse m_tnAutomationTreeNode.Tag Is Nothing OrElse Not Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(DataObjects.Behavior.Node), False) Then
+                Throw New System.Exception("The path to the destination node was not the correct object type.")
+            End If
+
+            m_bnAutomationNodeDestination = DirectCast(m_tnAutomationTreeNode.Tag, DataObjects.Behavior.Node)
+
+            If m_bnAutomationNodeDestination.ParentDiagram Is Nothing OrElse m_bnAutomationNodeOrigin.ParentDiagram Is Nothing Then
+                Throw New System.Exception("The parent diagram for either the origin or destination is not shown.")
+            End If
+
+            If Not m_bnAutomationNodeDestination.ParentDiagram Is m_bnAutomationNodeOrigin.ParentDiagram Then
+                Throw New System.Exception("The parent diagram for the origin and destination are different. They must be the same to add a link.")
+            End If
+
+            m_tnAutomationTreeNode = Nothing
+            m_strAutomationName = strName
+
+            m_timerAutomation = New System.Timers.Timer(10)
+            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnAddBehavioralLinkTimer
+            m_timerAutomation.Enabled = True
+        End Sub
+
+        Private Delegate Sub OnAddBehavioralLinkTimerDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        Protected Overridable Sub OnAddBehavioralLinkTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+            m_timerAutomation.Enabled = False
+
+            If Me.InvokeRequired Then
+                Me.Invoke(New OnDblClickWorkspaceItemTimerDelegate(AddressOf OnAddBehavioralLinkTimer), New Object() {sender, eProps})
+                Return
+            End If
+
+            Try
+                RemoveHandler m_timerAutomation.Elapsed, AddressOf OnAddBehavioralLinkTimer
+                m_timerAutomation = Nothing
+
+                If m_bnAutomationNodeOrigin Is Nothing OrElse m_bnAutomationNodeDestination Is Nothing Then
+                    Throw New System.Exception("Origin or destination node is not defined.")
+                End If
+
+                If m_bnAutomationNodeDestination.ParentDiagram Is Nothing OrElse m_bnAutomationNodeOrigin.ParentDiagram Is Nothing Then
+                    Throw New System.Exception("The parent diagram for either the origin or destination is not shown.")
+                End If
+
+                If Not m_bnAutomationNodeDestination.ParentDiagram Is m_bnAutomationNodeOrigin.ParentDiagram Then
+                    Throw New System.Exception("The parent diagram for the origin and destination are different. They must be the same to add a link.")
+                End If
+
+                Dim blLink As DataObjects.Behavior.Link = m_bnAutomationNodeDestination.ParentDiagram.Automation_DrawLink(m_bnAutomationNodeOrigin, m_bnAutomationNodeDestination)
+                blLink.Text = m_strAutomationName
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Public Sub SetLinkedItem(ByVal strItemPath As String, ByVal strLinkedItemPath As String)
+            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
+                Throw New System.Exception("No project is currently loaded.")
+            End If
+
+            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strItemPath, Util.ProjectWorkspace.TreeView.Nodes)
+
+            If m_tnAutomationTreeNode Is Nothing OrElse m_tnAutomationTreeNode.Tag Is Nothing OrElse Not Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(Framework.DataObject), False) Then
+                Throw New System.Exception("The path to the specified subsystem was not the correct object type.")
+            End If
+
+            Dim doSel As Framework.DataObject = DirectCast(m_tnAutomationTreeNode.Tag, Framework.DataObject)
+            doSel.Automation_SetLinkedItem(strItemPath, strLinkedItemPath)
+
+        End Sub
+
+        'Public Sub SetLinkedBodyPart(ByVal strItemPath As String, ByVal strPropertyName As String, ByVal strLinkedPartPath As String)
+        '    If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
+        '        Throw New System.Exception("No project is currently loaded.")
+        '    End If
+
+        '    m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strItemPath, Util.ProjectWorkspace.TreeView.Nodes)
+
+        '    If m_tnAutomationTreeNode Is Nothing OrElse m_tnAutomationTreeNode.Tag Is Nothing OrElse Not Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(Framework.DataObject), False) Then
+        '        Throw New System.Exception("The path to the specified subsystem was not the correct object type.")
+        '    End If
+
+        '    Dim doSel As Framework.DataObject = DirectCast(m_tnAutomationTreeNode.Tag, Framework.DataObject)
+
+        '    Dim tnLinkedPart As Crownwood.DotNetMagic.Controls.Node = Util.FindTreeNodeByPath(strLinkedPartPath, Util.ProjectWorkspace.TreeView.Nodes)
+
+        '    If tnLinkedPart Is Nothing OrElse tnLinkedPart.Tag Is Nothing OrElse Not Util.IsTypeOf(tnLinkedPart.Tag.GetType, GetType(DataObjects.Physical.BodyPart), False) Then
+        '        Throw New System.Exception("The path to the specified linked node was not the correct node type.")
+        '    End If
+
+        '    Dim bnLinkedPart As DataObjects.Physical.BodyPart = DirectCast(tnLinkedPart.Tag, DataObjects.Physical.BodyPart)
+
+        '    'Dim lnNode As New TypeHelpers.LinkedBodyPartList(bnLinkedNode.Organism, bnLinkedNode)
+
+        '    Dim oObj As Object = m_tnAutomationTreeNode.Tag
+        '    Util.GetObjectProperty(strPropertyName, m_piAutomationPropInfo, oObj)
+
+        '    m_piAutomationPropInfo.SetValue(oObj, lnNode, Nothing)
+        '    Util.ProjectWorkspace.RefreshProperties()
+        'End Sub
+
         Public Sub SetObjectProperty(ByVal strPath As String, ByVal strPropertyName As String, ByVal strValue As String)
             If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
                 Throw New System.Exception("No project is currently loaded.")
@@ -4030,22 +4256,8 @@ Namespace Forms
                 Throw New System.Exception("No object was found in the tree node path '" & strPath & "'.")
             End If
 
-            Dim aryPropPath() As String = Split(strPropertyName, ".")
-            Dim iIdx As Integer = 0
             Dim oObj As Object = m_tnAutomationTreeNode.Tag
-            For Each strPropName As String In aryPropPath
-                m_piAutomationPropInfo = oObj.GetType().GetProperty(strPropName)
-
-                If m_piAutomationPropInfo Is Nothing Then
-                    Throw New System.Exception("Property name '" & strPropName & "' not found in Path '" & strPropertyName & "'.")
-                End If
-
-                iIdx = iIdx + 1
-                'Dont get the obj on the last one.
-                If iIdx < aryPropPath.Length Then
-                    oObj = m_piAutomationPropInfo.GetValue(oObj, Nothing)
-                End If
-            Next
+            Util.GetObjectProperty(strPropertyName, m_piAutomationPropInfo, oObj)
 
             m_oAutomationPropertyValue = TypeDescriptor.GetConverter(m_piAutomationPropInfo.PropertyType).ConvertFromString(strValue)
             m_piAutomationPropInfo.SetValue(oObj, m_oAutomationPropertyValue, Nothing)
@@ -4240,7 +4452,7 @@ Namespace Forms
         Public Overridable Function ActiveDialogName() As String
             If Util.ActiveDialogs.Count > 0 Then
                 Dim frmDlg As System.Windows.Forms.Form = DirectCast(Util.ActiveDialogs(0), System.Windows.Forms.Form)
-                Return frmDlg.Name
+                Return frmDlg.Text
             End If
 
             Return "<No Dialog>"
@@ -5532,9 +5744,8 @@ Namespace Forms
 
 #Region "File Conversion Event Handlers"
 
-        Protected Overridable Sub ConvertProjectFile(ByVal strProjectFile As String, ByVal fltOldVersion As Single) Handles Me.ConvertFileVersion
+        Public Overridable Sub ConvertProjectFile(ByVal strProjectFile As String, ByVal fltOldVersion As Single) Handles Me.ConvertFileVersion
             Try
-                Application.DoEvents()
 
                 Dim fltVersion As Single = fltOldVersion
                 Dim fltCurrentVersion As Single = Me.AppVersion

@@ -184,18 +184,6 @@ namespace AnimatSim
 			/// The angular compliance of the simulation environment.
 			float m_fltAngularCompliance;
 
-			/// The linear damping of the simulation environment.
-			float m_fltLinearDamping;
-
-			/// The angular damping of the simulation environment.
-			float m_fltAngularDamping;
-
-			/// The linear kinetic loss of the simulation environment.
-			float m_fltLinearKineticLoss;
-
-			/// The angular kinetic loss of the simulation environment.
-			float m_fltAngularKineticLoss;
-
 			///Tells whether or not we will be doing hydrodynamic simulations.
 			///If you are not doing stuff underwater then be sure this is set to
 			///FALSE. The hydrodynamics adds extra overhead that can slow the
@@ -568,18 +556,6 @@ namespace AnimatSim
 
 			virtual float AngularCompliance();
 			virtual void AngularCompliance(float fltVal, BOOL bUseScaling = TRUE);
-
-			virtual float LinearDamping();
-			virtual void LinearDamping(float fltVal, BOOL bUseScaling = TRUE);
-
-			virtual float AngularDamping();
-			virtual void AngularDamping(float fltVal, BOOL bUseScaling = TRUE);
-
-			virtual float LinearKineticLoss();
-			virtual void LinearKineticLoss(float fltVal);
-
-			virtual float AngularKineticLoss();
-			virtual void AngularKineticLoss(float fltVal);
 
 			virtual BOOL Stopped();
 

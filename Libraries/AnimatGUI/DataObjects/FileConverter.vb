@@ -24,6 +24,7 @@ Namespace DataObjects
         Protected m_aryOBJ_Files() As String
         Protected m_aryMTL_Files() As String
         Protected m_aryASE_Files() As String
+        Protected m_aryATVF_Files() As String
 
         Protected m_xnProjectXml As New Framework.XmlDom
 
@@ -77,6 +78,7 @@ Namespace DataObjects
             m_aryOBJ_Files = Directory.GetFiles(m_strProjectPath, "*.obj")
             m_aryMTL_Files = Directory.GetFiles(m_strProjectPath, "*.mtl")
             m_aryASE_Files = Directory.GetFiles(m_strProjectPath, "*.ase")
+            m_aryATVF_Files = Directory.GetFiles(m_strProjectPath, "*.atvf")
 
             If Not Directory.Exists(m_strProjectPath & "\Backup") Then
                 Directory.CreateDirectory(m_strProjectPath & "\Backup")
@@ -90,6 +92,7 @@ Namespace DataObjects
             CopyFiles(m_aryOBJ_Files)
             CopyFiles(m_aryMTL_Files)
             CopyFiles(m_aryASE_Files)
+            CopyFiles(m_aryATVF_Files)
 
         End Sub
 
@@ -112,6 +115,7 @@ Namespace DataObjects
             RemoveFiles(m_aryOBJ_Files)
             RemoveFiles(m_aryMTL_Files)
             RemoveFiles(m_aryASE_Files)
+            RemoveFiles(m_aryATVF_Files)
         End Sub
 
         Protected Sub RemoveFiles(ByVal aryFiles() As String)
@@ -147,6 +151,38 @@ Namespace DataObjects
         Protected Overridable Sub ConvertProjectNode(ByVal xnProject As XmlNode)
 
         End Sub
+
+        Protected Overridable Function CreateReplaceStringList() As Hashtable
+
+            Dim aryReplaceText As New Hashtable()
+            aryReplaceText.Add(15, New ReplaceText("LicensedAnimatTools", "LicensedAnimatGUI"))
+            aryReplaceText.Add(14, New ReplaceText("FastNeuralNetTools", "FiringRateGUI"))
+            aryReplaceText.Add(13, New ReplaceText("RealisticNeuralNetTools", "IntegrateFireGUI"))
+            aryReplaceText.Add(12, New ReplaceText("VortexAnimatTools.DataObjects.Physical.RigidBodies", "AnimatGUI.DataObjects.Physical.Bodies"))
+            aryReplaceText.Add(11, New ReplaceText("VortexAnimatTools.DataObjects.Physical.Joints", "AnimatGUI.DataObjects.Physical.Joints"))
+            aryReplaceText.Add(10, New ReplaceText("VortexAnimatTools", "AnimatGUI"))
+            aryReplaceText.Add(9, New ReplaceText("AnimatTools", "AnimatGUI"))
+            aryReplaceText.Add(8, New ReplaceText("AHPConductance", "AHP_Conductance"))
+            aryReplaceText.Add(7, New ReplaceText("AHPTimeConstant", "AHP_TimeConstant"))
+            aryReplaceText.Add(6, New ReplaceText("BodyPositionX", "WorldPositionX"))
+            aryReplaceText.Add(5, New ReplaceText("BodyPositionY", "WorldPositionY"))
+            aryReplaceText.Add(4, New ReplaceText("BodyPositionZ", "WorldPositionZ"))
+            aryReplaceText.Add(3, New ReplaceText("BodyRotationX", "RotationX"))
+            aryReplaceText.Add(2, New ReplaceText("BodyRotationY", "RotationY"))
+            aryReplaceText.Add(1, New ReplaceText("BodyRotationZ", "RotationZ"))
+
+            Return aryReplaceText
+        End Function
+
+        Public Class ReplaceText
+            Public m_strFind As String
+            Public m_strReplace As String
+
+            Public Sub New(ByVal strFind As String, ByVal strReplace As String)
+                m_strFind = strFind
+                m_strReplace = strReplace
+            End Sub
+        End Class
 
     End Class
 

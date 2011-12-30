@@ -175,6 +175,7 @@ Namespace Forms.Behavior
 
 #Region " Methods "
 
+
 #End Region
 
 #Region " Events "
@@ -185,6 +186,7 @@ Namespace Forms.Behavior
             Try
                 m_btnOk = Me.btnOk
                 m_btnCancel = Me.btnCancel
+                m_lvItems = ctrlLinkTypes
 
                 If m_aryCompatibleLinks Is Nothing Then
                     Throw New System.Exception("The list of compatible links is not defined.")

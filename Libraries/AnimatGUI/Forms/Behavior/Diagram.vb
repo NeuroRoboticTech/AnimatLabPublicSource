@@ -90,6 +90,9 @@ Namespace Forms.Behavior
         Public MustOverride Sub OnItemSelected(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal bSelectMultiple As Boolean)
         Public MustOverride Sub OnItemDeselected(ByRef doObject As AnimatGUI.Framework.DataObject)
 
+        Public MustOverride Function Automation_DropNode(ByVal bdDropData As AnimatGUI.DataObjects.Behavior.Data, ByVal ptAddFlow As Point) As DataObjects.Behavior.Node
+        Public MustOverride Function Automation_DrawLink(ByVal bnOrigin As AnimatGUI.DataObjects.Behavior.Node, ByVal bnDestination As AnimatGUI.DataObjects.Behavior.Node) As DataObjects.Behavior.Link
+
         'Printing
         Public MustOverride Sub GenerateMetafiles(ByVal aryMetaFiles As Collections.MetaDocuments)
 

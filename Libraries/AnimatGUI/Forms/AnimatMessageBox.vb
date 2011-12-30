@@ -82,23 +82,32 @@ Namespace Forms
 
         Protected m_eDialogButtons As System.Windows.Forms.MessageBoxButtons
         Protected m_strMessage As String = ""
+        Protected m_strCaption As String = "Animat Message Box"
 
-        Public Overridable Sub SetMessage(ByVal strMessage As String, ByVal eButtons As System.Windows.Forms.MessageBoxButtons)
+        Public Overridable Sub SetMessage(ByVal strMessage As String, ByVal eButtons As System.Windows.Forms.MessageBoxButtons, Optional ByVal strCaption As String = "")
             m_strMessage = strMessage
             m_eDialogButtons = eButtons
+            If strCaption.Length > 0 Then
+                m_strCaption = strCaption
+            End If
         End Sub
 
         Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
             MyBase.OnLoad(e)
 
             Try
+                Util.Application.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Starting OnLoad of AnimatMessageBox")
+
                 InitializeComponent()
+
+                Util.Application.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "AnimatMessageBox::InitializeComponent")
 
                 m_btnOk = Me.btnYes
                 m_btnCancel = Me.btnCancel
                 m_btnIgnore = Me.btnNo
 
                 lblMessage.Text = m_strMessage
+                Me.Text = m_strCaption
 
                 Select Case m_eDialogButtons
                     Case MessageBoxButtons.AbortRetryIgnore
@@ -141,6 +150,9 @@ Namespace Forms
                     Case Else
                         Throw New System.Exception("Invalid message buttons. '" & m_eDialogButtons.ToString & "'")
                 End Select
+
+                Util.Application.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "AnimatMessageBox Finished")
+
             Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

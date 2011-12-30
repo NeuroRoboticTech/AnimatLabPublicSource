@@ -542,7 +542,12 @@ Namespace DataObjects.Physical
 
             Dim myAssembly As System.Reflection.Assembly
             myAssembly = System.Reflection.Assembly.Load(Me.AssemblyModuleName)
+
             frmDataItem.ImageManager.AddImage(myAssembly, Me.WorkspaceImageName)
+            frmDataItem.ImageManager.AddImage(myAssembly, "AnimatGUI.Neuron.gif")
+            frmDataItem.ImageManager.AddImage(myAssembly, "AnimatGUI.Joint.gif")
+            frmDataItem.ImageManager.AddImage(myAssembly, "AnimatGUI.DefaultObject.gif")
+            frmDataItem.ImageManager.AddImage(myAssembly, "AnimatGUI.DefaultLink.gif")
 
             Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(Me.Name)
             frmDataItem.TreeView.Nodes.Add(tnNode)
@@ -550,8 +555,13 @@ Namespace DataObjects.Physical
             tnNode.SelectedImageIndex = frmDataItem.ImageManager.GetImageIndex(Me.WorkspaceImageName)
             tnNode.Tag = Me
 
+            Dim tnBodyplanNode As New Crownwood.DotNetMagic.Controls.Node("Body Plan")
+            tnBodyplanNode = tnNode.Nodes.Add(tnBodyplanNode)
+            tnBodyplanNode.ImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.Joint.gif")
+            tnBodyplanNode.SelectedImageIndex = frmDataItem.ImageManager.GetImageIndex("AnimatGUI.Joint.gif")
+
             If Not m_dbRoot Is Nothing Then
-                m_dbRoot.CreateDataItemTreeView(frmDataItem, tnNode, tpTemplatePartType)
+                m_dbRoot.CreateDataItemTreeView(frmDataItem, tnBodyplanNode, tpTemplatePartType)
             End If
 
         End Function

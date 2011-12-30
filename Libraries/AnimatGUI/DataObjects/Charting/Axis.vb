@@ -47,7 +47,8 @@ Namespace DataObjects.Charting
 
                 m_frmParentChart.AxisList.Add(m_strName, Me)
 
-                If Not m_doParent Is Nothing AndAlso Not m_doParent.WorkspaceNode Is Nothing Then Me.CreateWorkspaceTreeView(m_doParent, m_doParent.WorkspaceNode)
+                If Not m_tnWorkspaceNode Is Nothing Then m_tnWorkspaceNode.Text = m_strName
+
             End Set
         End Property
 
@@ -280,6 +281,17 @@ Namespace DataObjects.Charting
                 doColumn = DirectCast(deEntry.Value, DataObjects.Charting.DataColumn)
                 doColumn.CreateWorkspaceTreeView(Me, Me.WorkspaceNode)
             Next
+        End Sub
+
+        Public Overrides Sub RemoveWorksapceTreeView()
+
+            Dim doColumn As DataObjects.Charting.DataColumn
+            For Each deEntry As DictionaryEntry In m_aryDataColumns
+                doColumn = DirectCast(deEntry.Value, DataObjects.Charting.DataColumn)
+                doColumn.RemoveWorksapceTreeView()
+            Next
+
+            MyBase.RemoveWorksapceTreeView()
         End Sub
 
         Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As System.Drawing.Point) As Boolean

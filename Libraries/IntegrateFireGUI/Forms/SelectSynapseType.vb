@@ -12,7 +12,7 @@ Imports AnimatGUI.DataObjects
 Namespace Forms
 
     Public Class SelectSynapseType
-        Inherits System.Windows.Forms.Form
+        Inherits AnimatGUI.Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -231,6 +231,10 @@ Namespace Forms
             MyBase.OnLoad(e)
 
             Try
+                m_btnOk = Me.btnOk
+                m_btnCancel = Me.btnCancel
+                m_tvItems = tvSynapseTypes
+
                 'tvSynapseTypes.Sorted = True
 
                 'Lets fill in the tree view with the different types

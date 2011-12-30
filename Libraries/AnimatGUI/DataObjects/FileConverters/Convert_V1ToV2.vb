@@ -18,6 +18,8 @@ Namespace DataObjects
             Protected m_dblFluidDensity As Double = 1.0
             Protected m_iSimInterface As ManagedAnimatInterfaces.ISimulatorInterface
             Protected m_fltDistanceUnits As Single
+            Protected m_fltMassUnits As Single
+            Protected m_fltDensityMassUnits As Single
             Protected m_aryIdentity As New AnimatGuiCtrls.MatrixLibrary.Matrix(AnimatGuiCtrls.MatrixLibrary.Matrix.Identity(4))
 
             Public Overrides ReadOnly Property ConvertFrom As Single
@@ -100,7 +102,35 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnEnvironment, "UseAlphaBlending", False)
                 m_xnProjectXml.RemoveNode(xnEnvironment, "Camera", False)
 
+                'Replace simulation stability properties
+                m_xnProjectXml.RemoveNode(xnEnvironment, "LinearCompliance", False)
+                m_xnProjectXml.RemoveNode(xnEnvironment, "LinearDamping", False)
+                m_xnProjectXml.RemoveNode(xnEnvironment, "LinearKineticLoss", False)
+                m_xnProjectXml.RemoveNode(xnEnvironment, "AngularCompliance", False)
+                m_xnProjectXml.RemoveNode(xnEnvironment, "AngularDamping", False)
+                m_xnProjectXml.RemoveNode(xnEnvironment, "AngularKineticLoss", False)
+
                 m_fltDistanceUnits = Util.ConvertDistanceUnits(m_xnProjectXml.GetSingleNodeValue(xnEnvironment, "DistanceUnits"))
+                m_fltMassUnits = Util.ConvertMassUnits(m_xnProjectXml.GetSingleNodeValue(xnEnvironment, "MassUnits"))
+                m_fltDensityMassUnits = Util.ConvertDensityMassUnits(m_xnProjectXml.GetSingleNodeValue(xnEnvironment, "MassUnits"))
+
+                'Now put back the defaults for linear and angular compliance.
+                m_xnProjectXml.AddScaledNumber(xnEnvironment, "LinearCompliance", 0.1, "Nano", 0.0000000001)
+                m_xnProjectXml.AddScaledNumber(xnEnvironment, "AngularCompliance", 0.1, "Nano", 0.0000000001)
+
+                'Now convert the mouse spring. The mouse spring was not converted correctly in the old version, so we need to downgrade
+                'its numbers first.
+                Dim dblMouseStiff As Double = m_xnProjectXml.GetScaleNumberValue(xnEnvironment, "MouseSpringStiffness", False, 300)
+                Dim dblMouseDamp As Double = m_xnProjectXml.GetScaleNumberValue(xnEnvironment, "MouseSpringDamping", False, 100000)
+
+                dblMouseStiff = dblMouseStiff * m_fltMassUnits
+                dblMouseDamp = dblMouseDamp * m_fltMassUnits
+
+                m_xnProjectXml.RemoveNode(xnEnvironment, "MouseSpringStiffness", False)
+                m_xnProjectXml.RemoveNode(xnEnvironment, "MouseSpringDamping", False)
+
+                m_xnProjectXml.AddScaledNumber(xnEnvironment, "MouseSpringStiffness", dblMouseStiff, "None", dblMouseStiff)
+                m_xnProjectXml.AddScaledNumber(xnEnvironment, "MouseSpringDamping", dblMouseDamp, "None", dblMouseDamp)
 
                 Dim xnOrganisms As XmlNode = m_xnProjectXml.GetNode(xnEnvironment, "Organisms")
                 For Each xnNode As XmlNode In xnOrganisms.ChildNodes
@@ -114,11 +144,7 @@ Namespace DataObjects
 
                 AddLight(xnEnvironment)
 
-                Dim aryReplaceText As New Hashtable
-                aryReplaceText.Add("LicensedAnimatTools", "LicensedAnimatGUI")
-                aryReplaceText.Add("FastNeuralNetTools", "FiringRateGUI")
-                aryReplaceText.Add("RealisticNeuralNetTools", "IntegrateFireGUI")
-                aryReplaceText.Add("AnimatTools", "AnimatGUI")
+                Dim aryReplaceText As Hashtable = CreateReplaceStringList()
 
                 ModifySurface("Ground", xnEnvironment, xnStructures, aryReplaceText, False)
                 ModifySurface("Water", xnEnvironment, xnStructures, aryReplaceText, True)
@@ -802,7 +828,7 @@ Namespace DataObjects
                     m_xnProjectXml.RemoveNode(xnJoint, "Constraint")
                 End If
 
-                Dim dblMaxTorque As Double = CDbl(m_xnProjectXml.GetSingleNodeValue(xnJoint, "MaxTorque", False, "100"))
+                Dim dblMaxTorque As Double = CDbl(m_xnProjectXml.GetScaleNumberValue(xnJoint, "MaxTorque", False, 100))
                 m_xnProjectXml.RemoveNode(xnJoint, "MaxTorque", False)
                 m_xnProjectXml.AddScaledNumber(xnJoint, "MaxForce", dblMaxTorque, "None", dblMaxTorque)
 
@@ -1017,8 +1043,7 @@ Namespace DataObjects
 
             Protected Overridable Sub CreateRealisticToolsNeuralModule(ByVal xnBodyFile As Framework.XmlDom, ByVal xnOldMod As XmlNode, ByVal xnNewNeuralMods As XmlNode)
 
-                Dim aryReplaceText As New Hashtable
-                aryReplaceText.Add("RealisticNeuralNetTools", "IntegrateFireGUI")
+                Dim aryReplaceText As Hashtable = CreateReplaceStringList()
 
                 Dim xnNewNeuralMod As XmlNode = m_xnProjectXml.AppendNode(xnNewNeuralMods, xnOldMod, "Node", aryReplaceText)
                 m_xnProjectXml.AddNodeValue(xnNewNeuralMod, "ID", System.Guid.NewGuid.ToString)
@@ -1099,13 +1124,7 @@ Namespace DataObjects
                 Dim xnOldDiagram As XmlNode = xnOldDiagramID.ParentNode
                 m_xnProjectXml.RemoveNode(xnSubSystem, "SubsystemID")
 
-                Dim aryReplaceText As New Hashtable()
-                aryReplaceText.Add("LicensedAnimatTools", "LicensedAnimatGUI")
-                aryReplaceText.Add("FastNeuralNetTools", "FiringRateGUI")
-                aryReplaceText.Add("RealisticNeuralNetTools", "IntegrateFireGUI")
-                aryReplaceText.Add("AnimatTools", "AnimatGUI")
-                aryReplaceText.Add("AHPConductance", "AHP_Conductance")
-                aryReplaceText.Add("AHPTimeConstant", "AHP_TimeConstant")
+                Dim aryReplaceText As Hashtable = CreateReplaceStringList()
 
                 'Copy nodes
                 Dim xnOldNodes As XmlNode = xnBodyFile.GetNode(xnOldDiagram, "Nodes")
@@ -1168,11 +1187,7 @@ Namespace DataObjects
 
                 Dim xnStimuli As XmlNode = m_xnProjectXml.GetNode(xnProjectNode, "Stimuli")
 
-                Dim aryReplaceText As New Hashtable()
-                aryReplaceText.Add("LicensedAnimatTools", "LicensedAnimatGUI")
-                aryReplaceText.Add("FastNeuralNetTools", "FiringRateGUI")
-                aryReplaceText.Add("RealisticNeuralNetTools", "IntegrateFireGUI")
-                aryReplaceText.Add("AnimatTools", "AnimatGUI")
+                Dim aryReplaceText As Hashtable = CreateReplaceStringList()
 
                 m_xnProjectXml.AppendNode(xnSimNode, xnStimuli, "Stimuli", aryReplaceText)
 
@@ -1188,11 +1203,7 @@ Namespace DataObjects
 
                 Dim xnViewersOld As XmlNode = m_xnProjectXml.GetNode(xnProjectNode, "ToolViewers")
 
-                Dim aryReplaceText As New Hashtable()
-                aryReplaceText.Add("LicensedAnimatTools", "LicensedAnimatGUI")
-                aryReplaceText.Add("FastNeuralNetTools", "FiringRateGUI")
-                aryReplaceText.Add("RealisticNeuralNetTools", "IntegrateFireGUI")
-                aryReplaceText.Add("AnimatTools", "AnimatGUI")
+                Dim aryReplaceText As Hashtable = CreateReplaceStringList()
 
                 Dim xnToolHolders As XmlNode = m_xnProjectXml.AppendNode(xnSimNode, xnViewersOld, "ToolViewers", aryReplaceText)
 

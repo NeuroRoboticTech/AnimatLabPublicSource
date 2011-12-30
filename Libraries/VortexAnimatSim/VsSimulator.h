@@ -46,7 +46,8 @@ namespace VortexAnimatSim
 		//helper functions
 		void InitializeVortex(int argc, const char **argv);
 		void InitializeVortexViewer(int argc, const char **argv);
-
+		void SetSimulationStabilityParams();
+		
 		virtual void StepSimulation();
 		virtual void StepVideoFrame();
 		virtual void SimulateEnd();
@@ -74,10 +75,6 @@ namespace VortexAnimatSim
 
 		virtual void LinearCompliance(float fltVal, BOOL bUseScaling = TRUE);
 		virtual void AngularCompliance(float fltVal, BOOL bUseScaling = TRUE);
-		virtual void LinearDamping(float fltVal, BOOL bUseScaling = TRUE);
-		virtual void AngularDamping(float fltVal, BOOL bUseScaling = TRUE);
-		virtual void LinearKineticLoss(float fltVal);
-		virtual void AngularKineticLoss(float fltVal);
 		virtual void PhysicsTimeStep(float fltVal);
 		virtual void Gravity(float fltVal, BOOL bUseScaling = TRUE);
 		virtual int GetMaterialID(string strID);

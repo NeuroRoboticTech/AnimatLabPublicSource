@@ -117,6 +117,8 @@
     <Compile Include="UIMap.vb">
       <DependentUpon>UIMap.uitest</DependentUpon>
     </Compile>
+    <Compile Include="UITests\BehavioralEditorTests\IntegrateFireTests\SpikingNeuronUITest.vb" />
+    <Compile Include="UITests\BehavioralEditorTests\NeuralUITest.vb" />
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\BodyPartUITest.vb" />
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\JointTests\BallSocketUITest.vb" />
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\JointTests\HingeUITest.vb" />
@@ -133,6 +135,8 @@
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\SphereUITest.vb" />
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\TerrainUITest.vb" />
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\TorusUITest.vb" />
+    <Compile Include="UITests\ConversionTests\BodyPartTests\JointTests\HingeConversionUITest.vb" />
+    <Compile Include="UITests\ConversionTests\ConversionUITest.vb" />
     <Compile Include="UITests\CreationTests\NewProjectUITest.vb" />
     <Compile Include="UnitTests\FileConversions\Convert_V1ToV2Test.vb" />
     <Compile Include="Util.vb" />
