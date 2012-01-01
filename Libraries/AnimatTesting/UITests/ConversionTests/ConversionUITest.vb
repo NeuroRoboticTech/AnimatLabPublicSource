@@ -41,7 +41,12 @@ Namespace UITests
 
 #Region "Methods"
 
-            Protected Overridable Sub StartConversionProject()
+            Protected Overridable Sub TestConversionProject()
+
+                m_aryWindowsToOpen.Add("Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan")
+                m_aryWindowsToOpen.Add("Tool Viewers\JointData")
+
+                CleanupProjectDirectory()
 
                 StartExistingProject()
 
@@ -67,6 +72,12 @@ Namespace UITests
                 Next
 
                 Threading.Thread.Sleep(3000)
+
+                'Run the simulation and wait for it to end.
+                RunSimulationWaitToEnd()
+
+                ''Compare chart data to verify simulation results.
+                CompareSimulation(m_strRootFolder & m_strTestDataPath, "Convert_", 0.05)
 
             End Sub
 

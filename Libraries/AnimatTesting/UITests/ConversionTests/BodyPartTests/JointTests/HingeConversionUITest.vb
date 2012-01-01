@@ -41,14 +41,24 @@ Namespace UITests
 #Region "Methods"
 
                     <TestMethod()>
-                    Public Sub TestHingeConversion()
-                        StartConversionProject()
+                    Public Sub Test_Joint_Loc_100_0_0_Rot_0_0_0_NEn()
+                        m_strProjectName = "Joint_Loc_100_0_0_Rot_0_0_0_NEn"
+                        m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\JointTests\HingeTests"
+                        m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\JointTests\HingeTests\" & m_strProjectName
+                        m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\HingeTests\" & m_strProjectName
 
-                        'Run the simulation and wait for it to end.
-                        RunSimulationWaitToEnd()
+                        TestConversionProject()
 
-                        'Compare chart data to verify simulation results.
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, "Load_", 0.05)
+                    End Sub
+
+                    <TestMethod()>
+                    Public Sub Test_Joint_Loc_0_0_5_Rot_0_90_0_NEn()
+                        m_strProjectName = "Joint_Loc_0_0_5_Rot_0_90_0_NEn"
+                        m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\JointTests\HingeTests"
+                        m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\JointTests\HingeTests\" & m_strProjectName
+                        m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\HingeTests\" & m_strProjectName
+
+                        TestConversionProject()
 
                     End Sub
 
@@ -60,19 +70,10 @@ Namespace UITests
                     <TestInitialize()> Public Overrides Sub MyTestInitialize()
                         MyBase.MyTestInitialize()
 
-                        m_strProjectName = "HingeTest"
-                        m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\JointTests"
-                        m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\JointTests\" & m_strProjectName
-                        m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\" & m_strProjectName
-
-                        m_aryWindowsToOpen.Add("Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan")
-                        m_aryWindowsToOpen.Add("Tool Viewers\JointData")
-
                         'This test compares data to that generated from the old version. We never re-generate the data in V2, so this should always be false 
                         'regardless of the setting in app.config.
                         m_bGenerateTempates = False
 
-                        CleanupProjectDirectory()
                     End Sub
 
 #End Region

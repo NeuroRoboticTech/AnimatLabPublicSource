@@ -3113,14 +3113,14 @@ Namespace Forms
             Next
         End Sub
 
-        Public Overridable Sub CompareExportedDataCharts(ByVal strPrefix As String, ByVal strTemplatePath As String, ByVal dblMaxError As Double)
+        Public Overridable Sub CompareExportedDataCharts(ByVal strPrefix As String, ByVal strTemplatePath As String, ByVal dblMaxError As Double, ByVal iMaxRows As Integer)
 
             Dim frmChart As Tools.DataChart
             For Each frmAnimat As AnimatForm In Me.ChildForms
 
                 If Util.IsTypeOf(frmAnimat.GetType(), GetType(Tools.DataChart), False) Then
                     frmChart = DirectCast(frmAnimat, Tools.DataChart)
-                    frmChart.CompareExportedData(strPrefix, strTemplatePath, dblMaxError)
+                    frmChart.CompareExportedData(strPrefix, strTemplatePath, dblMaxError, iMaxRows)
                 End If
             Next
 

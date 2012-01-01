@@ -482,7 +482,7 @@ Namespace Forms.Tools
             System.IO.File.Copy(strFrom, strTo, True)
         End Sub
 
-        Public Overridable Sub CompareExportedData(ByVal strPrefix As String, ByVal strTemplatePath As String, ByVal dblMaxError As Double)
+        Public Overridable Sub CompareExportedData(ByVal strPrefix As String, ByVal strTemplatePath As String, ByVal dblMaxError As Double, ByVal iMaxRows As Integer)
 
             'Lets try and load the original file and then the new test file.
             Dim aryTemplateColumns() As String
@@ -511,7 +511,7 @@ Namespace Forms.Tools
 
             'Then Compare data itself. It should be the same amount of data and each entry should be within the 
             'maximum error when comparing between template and test.
-            CompareExportedDataRows(aryTemplateColumns, aryTemplateData, aryTestData, dblMaxError)
+            CompareExportedDataRows(aryTemplateColumns, aryTemplateData, aryTestData, dblMaxError, iMaxRows)
 
         End Sub
 
@@ -532,7 +532,7 @@ Namespace Forms.Tools
 
         End Sub
 
-        Protected Overridable Sub CompareExportedDataRows(ByVal aryTemplateColumns() As String, ByVal aryTemplateData(,) As Double, ByVal aryTestData(,) As Double, ByVal dblMaxError As Double)
+        Protected Overridable Sub CompareExportedDataRows(ByVal aryTemplateColumns() As String, ByVal aryTemplateData(,) As Double, ByVal aryTestData(,) As Double, ByVal dblMaxError As Double, ByVal iMaxRows As Integer)
 
             'First check to make sure the number of rows match.
 
@@ -542,6 +542,8 @@ Namespace Forms.Tools
 
             Dim iCols As Integer = UBound(aryTemplateData, 1)
             Dim iRows As Integer = UBound(aryTemplateData, 2)
+            If iMaxRows > 0 Then iRows = Math.Max(iRows, iMaxRows)
+
             For iCol As Integer = 0 To iCols
 
                 For iRow As Integer = 0 To iRows

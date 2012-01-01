@@ -180,7 +180,7 @@ Namespace Framework
 
 
         Protected Overridable Sub CompareSimulation(ByVal strTestDataPath As String, Optional ByVal strPrefix As String = "", _
-                                                    Optional ByVal dblMaxError As Double = 0.1)
+                                                    Optional ByVal dblMaxError As Double = 0.1, Optional ByVal iMaxRows As Integer = -1)
 
             'No prefix on the exported chart.
             ExecuteMethod("ExportDataCharts", New Object() {"", ""})
@@ -189,7 +189,7 @@ Namespace Framework
             If m_bGenerateTempates Then
                 ExecuteMethod("CopyChartData", New Object() {strTestDataPath, strPrefix})
             Else
-                ExecuteMethod("CompareExportedDataCharts", New Object() {strPrefix, strTestDataPath, dblMaxError})
+                ExecuteMethod("CompareExportedDataCharts", New Object() {strPrefix, strTestDataPath, dblMaxError, iMaxRows})
             End If
 
         End Sub
