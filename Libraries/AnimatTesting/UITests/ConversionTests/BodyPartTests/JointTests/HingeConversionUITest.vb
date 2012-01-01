@@ -48,7 +48,7 @@ Namespace UITests
                         m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\HingeTests\" & m_strProjectName
 
                         TestConversionProject()
-
+                        TestConversionProject()
                     End Sub
 
                     <TestMethod()>
