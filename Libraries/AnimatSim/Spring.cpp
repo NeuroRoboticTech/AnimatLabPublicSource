@@ -113,7 +113,7 @@ void Spring::Damping(float fltVal, BOOL bUseScaling)
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "Spring.Damping", TRUE);
 
 	if(bUseScaling)
-		m_fltDamping = fltVal/m_lpSim->DensityMassUnits();
+		m_fltDamping = fltVal/m_lpSim->DisplayMassUnits();
 	else
 		m_fltDamping = fltVal;
 }

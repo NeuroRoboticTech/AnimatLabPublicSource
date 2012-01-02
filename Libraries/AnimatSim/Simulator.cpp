@@ -86,11 +86,17 @@ Simulator::Simulator()
 	m_fltDenominatorDistanceUnits = 1;
 	m_fltMassUnits = (float) 0.001;    //use grams
 	m_fltInverseMassUnits = 1/m_fltMassUnits;
-	m_fltDensityMassUnits = 0.01f;
+	m_fltDisplayMassUnits = 0.01f;
 	m_fltMouseSpringStiffness = 25;
 	m_ftlMouseSpringDamping = 2.8f;
-	m_fltLinearCompliance = 1e-6f;
-	m_fltAngularCompliance = 1e-6f;
+	m_bCalcCriticalSimParams = TRUE;
+	m_fltLinearCompliance = 0.1e-9f;
+	m_fltAngularCompliance = 0.1e-9f;
+	m_fltLinearDamping = 50e9f;
+	m_fltAngularDamping = 5e12f;
+	m_fltLinearKineticLoss = 0.1e-9f;
+	m_fltAngularKineticLoss = 1e-12f;
+
 	m_bForceFastMoving = TRUE;
 	m_iSelectionMode = GRAPHICS_SELECTION_MODE;
 	m_bAddBodiesMode = FALSE;
@@ -676,6 +682,29 @@ int Simulator::ManualRandomSeed() {return m_iManualRandomSeed;}
 void Simulator::ManualRandomSeed(int iSeed) {m_iManualRandomSeed = iSeed;}
 
 /**
+\brief	If true then the crtical simulation params (linear/angular damping, and kinetic loss) are calculated
+using the linear/angular compliance and the time step. If false, then those values are set manually by the user.
+
+\author	dcofer
+\date	1/2/2012
+
+\return	true if it is calculated, false if set manually.
+**/
+BOOL Simulator::CalcCriticalSimParams() {return m_bCalcCriticalSimParams;}
+
+/**
+\brief	If true then the crtical simulation params (linear/angular damping, and kinetic loss) are calculated
+using the linear/angular compliance and the time step. If false, then those values are set manually by the user.
+
+\author	dcofer
+\date	1/2/2012
+
+\param	bVal	true to calculate.
+**/
+void Simulator::CalcCriticalSimParams(BOOL bVal) {m_bCalcCriticalSimParams = bVal;} 
+
+
+/**
 \brief	Gets the linear compliance of the simulation.
 
 \author	dcofer
@@ -732,6 +761,121 @@ void Simulator::AngularCompliance(float fltVal, BOOL bUseScaling)
 
 	m_fltAngularCompliance = fltVal;
 }
+
+/**
+\brief	Gets the linear damping of the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Linear damping of the simulation.
+**/
+float Simulator::LinearDamping() {return m_fltLinearDamping;}
+
+/**
+\brief	Sets the linear damping of the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	fltVal	   	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
+void Simulator::LinearDamping(float fltVal, BOOL bUseScaling) 
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "LinearDamping");
+	
+	if(bUseScaling)
+		fltVal = fltVal/this->DisplayMassUnits();
+
+	m_fltLinearDamping = fltVal;
+}
+
+/**
+\brief	Gets the angular damping of the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Angular damping of the simulation.
+**/
+float Simulator::AngularDamping() {return m_fltAngularDamping;}
+
+/**
+\brief	Sets the angular damping of the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	fltVal	   	The new value. 
+\param	bUseScaling	true to use unit scaling. 
+**/
+void Simulator::AngularDamping(float fltVal, BOOL bUseScaling) 
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "AngularDamping");
+	
+	if(bUseScaling)
+		fltVal = fltVal/this->DisplayMassUnits();
+
+	m_fltAngularDamping = fltVal;
+}
+
+/**
+\brief	Gets the linear kinetic loss of the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	Linear kinetic loss.
+**/
+float Simulator::LinearKineticLoss() {return m_fltLinearKineticLoss;}
+
+/**
+\brief	Sets the linear kinetic loss of the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	fltVal	The new value. 
+**/
+void Simulator::LinearKineticLoss(float fltVal, BOOL bUseScaling) 
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "LinearKineticLoss");
+	
+	if(bUseScaling)
+		fltVal = fltVal * this->DisplayMassUnits();
+
+	m_fltLinearKineticLoss = fltVal;
+}
+
+/**
+\brief	Gets the angular kinetic loss of teh simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\return	angular kinetic loss.
+**/
+float Simulator::AngularKineticLoss() {return m_fltAngularKineticLoss;}
+
+/**
+\brief	Sets the angular kinetic loss of the simulation.
+
+\author	dcofer
+\date	3/28/2011
+
+\param	fltVal	The new value. 
+**/
+void Simulator::AngularKineticLoss(float fltVal, BOOL bUseScaling) 
+{
+	Std_IsAboveMin((float) 0, fltVal, TRUE, "AngularKineticLoss");
+	
+	if(bUseScaling)
+		fltVal = fltVal * this->DisplayMassUnits();
+
+	m_fltAngularKineticLoss = fltVal;
+}
+
 
 /**
 \brief	Gets the smallest integration time step used within the simulation.
@@ -1038,7 +1182,7 @@ void Simulator::MouseSpringDamping(float fltVal, BOOL bUseScaling)
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "MouseSpringDamping", TRUE);
 
 	if(bUseScaling)
-		fltVal = fltVal/this->DensityMassUnits();
+		fltVal = fltVal/this->DisplayMassUnits();
 	m_ftlMouseSpringDamping = fltVal;
 }
 
@@ -1260,7 +1404,7 @@ void Simulator::MassUnits(string strUnits)
 {
 	m_fltMassUnits = ConvertMassUnits(strUnits);
 	m_fltInverseMassUnits = 1/m_fltMassUnits;
-	m_fltDensityMassUnits = ConvertDensityMassUnits(strUnits);
+	m_fltDisplayMassUnits = ConvertDisplayMassUnits(strUnits);
 }
 
 /**
@@ -1294,7 +1438,7 @@ density mass unit value to do this.
 
 \return	Density mass units.
 **/
-float Simulator::DensityMassUnits() {return m_fltDensityMassUnits;}
+float Simulator::DisplayMassUnits() {return m_fltDisplayMassUnits;}
 
 #pragma endregion
 			
@@ -1584,11 +1728,17 @@ void Simulator::Reset()
 	m_fltDenominatorDistanceUnits = 1;
 	m_fltMassUnits = (float) 0.001;    //use grams
 	m_fltInverseMassUnits = 1/m_fltMassUnits;
-	m_fltDensityMassUnits = 0.01f;
+	m_fltDisplayMassUnits = 0.01f;
 	m_fltMouseSpringStiffness = 25;
 	m_ftlMouseSpringDamping = 2.8f;
-	m_fltLinearCompliance = 1e-10f;
-	m_fltAngularCompliance = 1e-10f;
+	m_bCalcCriticalSimParams = TRUE;
+	m_fltLinearCompliance = 0.1e-9f;
+	m_fltAngularCompliance = 0.1e-9f;
+	m_fltLinearDamping = 50e9f;
+	m_fltAngularDamping = 5e12f;
+	m_fltLinearKineticLoss = 0.1e-9f;
+	m_fltAngularKineticLoss = 1e-12f;
+
 	m_bForceFastMoving = TRUE;
 	m_bSteppingSim = FALSE;
 
@@ -2182,8 +2332,18 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 	MouseSpringStiffness(oXml.GetChildFloat("MouseSpringStiffness", m_fltMouseSpringStiffness));
 	MouseSpringDamping(oXml.GetChildFloat("MouseSpringDamping", m_ftlMouseSpringDamping));
 
+	CalcCriticalSimParams(oXml.GetChildBool("CalcCriticalSimParams", m_bCalcCriticalSimParams));
 	LinearCompliance(oXml.GetChildFloat("LinearCompliance", m_fltLinearCompliance));
 	AngularCompliance(oXml.GetChildFloat("AngularCompliance", m_fltAngularCompliance));
+
+	if(!m_bCalcCriticalSimParams)
+	{
+		LinearDamping(oXml.GetChildFloat("LinearDamping", m_fltLinearDamping));
+		AngularDamping(oXml.GetChildFloat("AngularDamping", m_fltAngularDamping));
+		LinearKineticLoss(oXml.GetChildFloat("LinearKineticLoss", m_fltLinearKineticLoss));
+		AngularKineticLoss(oXml.GetChildFloat("AngularKineticLoss", m_fltAngularKineticLoss));
+	}
+
 	RecFieldSelRadius(oXml.GetChildFloat("RecFieldSelRadius", m_fltRecFieldSelRadius));
 	
 	m_vBackgroundColor.Load(oXml, "BackgroundColor", false);
@@ -3482,6 +3642,11 @@ BOOL Simulator::SetData(string strDataType, string strValue, BOOL bThrowError)
 		MouseSpringDamping(atof(strValue.c_str()));
 		return TRUE;
 	}
+	else if(strType == "CALCCRITICALSIMPARAMS")
+	{
+		CalcCriticalSimParams(Std_ToBool(strValue));
+		return TRUE;
+	}
 	else if(strType == "LINEARCOMPLIANCE")
 	{
 		LinearCompliance(atof(strValue.c_str()));
@@ -3490,6 +3655,26 @@ BOOL Simulator::SetData(string strDataType, string strValue, BOOL bThrowError)
 	else if(strType == "ANGULARCOMPLIANCE")
 	{
 		AngularCompliance(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "LINEARDAMPING")
+	{
+		LinearDamping(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "ANGULARDAMPING")
+	{
+		AngularDamping(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "LINEARKINETICLOSS")
+	{
+		LinearKineticLoss(atof(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strType == "ANGULARKINETICLOSS")
+	{
+		AngularKineticLoss(atof(strValue.c_str()));
 		return TRUE;
 	}
 	else if(strType == "SETENDSIMTIME")
@@ -4095,19 +4280,21 @@ float Simulator::ConvertMassUnits(string strUnits)
 }
 
 /**
-\brief	Convert the string ID of the density units to a conversion factor.
+\brief	Convert the string ID of the display units to a conversion factor.
 
-\details This determines the scaling factor that is used within the simulation to scale the arbitrary units
-to the density units chosen by the user.
+\details Withing the GUI we sometimes have to use grams as the display unit. Then they can select Kg or mg, etc.. However, 
+the standard units are usually 1 Kg, not 1 g. So we need to do a special conversion for these display units. So for example,
+Lets say the Mass units chosen is Kg, and they have a mass of 1 kg, then this would be 1000 grams/1000 = 1 Kg. However, if they
+set the units to be grams and had a 1 Kg mass then they would have 1000 grams/1 = 1 Kg.
 
 \author	dcofer
 \date	3/28/2011
 
-\param	strUnits	The string ID the density units. 
+\param	strUnits	The string ID the display units. 
 
 \return	conversion factor for the units chosen.
 **/
-float Simulator::ConvertDensityMassUnits(string strUnits)
+float Simulator::ConvertDisplayMassUnits(string strUnits)
 {
 	strUnits = Std_CheckString(strUnits);
 

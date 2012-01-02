@@ -41,7 +41,7 @@ Namespace UITests
 
 #Region "Methods"
 
-            Protected Overridable Sub TestConversionProject()
+            Protected Overridable Sub TestConversionProject(Optional iMaxRows As Integer = -1)
 
                 m_aryWindowsToOpen.Add("Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan")
                 m_aryWindowsToOpen.Add("Tool Viewers\JointData")
@@ -77,7 +77,7 @@ Namespace UITests
                 RunSimulationWaitToEnd()
 
                 ''Compare chart data to verify simulation results.
-                CompareSimulation(m_strRootFolder & m_strTestDataPath, "Convert_", 0.05)
+                CompareSimulation(m_strRootFolder & m_strTestDataPath, "Convert_", 0.05, iMaxRows)
 
             End Sub
 

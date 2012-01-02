@@ -169,7 +169,7 @@ namespace AnimatSim
 			float m_fltInverseMassUnits;
 
 			/// Tells how many kilograms/m^3 each unit of density is worth within the simulation environment.
-			float m_fltDensityMassUnits;
+			float m_fltDisplayMassUnits;
 
 #pragma endregion
 
@@ -178,11 +178,26 @@ namespace AnimatSim
 			///The acceleration of gravity to use in the simulation.
 			float m_fltGravity;
 
+			/// Determines whether the critical simulation params are calculated or set manually.
+			BOOL m_bCalcCriticalSimParams;
+
 			/// The linear compliance of the simulation environment.
 			float m_fltLinearCompliance;
 
 			/// The angular compliance of the simulation environment.
 			float m_fltAngularCompliance;
+
+			/// The linear damping of the simulation environment.
+			float m_fltLinearDamping;
+
+			/// The angular damping of the simulation environment.
+			float m_fltAngularDamping;
+
+			/// The linear kinetic loss of the simulation environment.
+			float m_fltLinearKineticLoss;
+
+			/// The angular kinetic loss of the simulation environment.
+			float m_fltAngularKineticLoss;
 
 			///Tells whether or not we will be doing hydrodynamic simulations.
 			///If you are not doing stuff underwater then be sure this is set to
@@ -405,7 +420,7 @@ namespace AnimatSim
 			float ConvertDistanceUnits(string strUnits);
 			float ConvertDenominatorDistanceUnits(string strUnits);
 			float ConvertMassUnits(string strUnits);
-			float ConvertDensityMassUnits(string strUnits);
+			float ConvertDisplayMassUnits(string strUnits);
 
 #pragma endregion
 
@@ -551,11 +566,26 @@ namespace AnimatSim
 			virtual int ManualRandomSeed();
 			virtual void ManualRandomSeed(int iSeed);
 
+			virtual BOOL CalcCriticalSimParams();
+			virtual void CalcCriticalSimParams(BOOL bVal);
+
 			virtual float LinearCompliance();
 			virtual void LinearCompliance(float fltVal, BOOL bUseScaling = TRUE);
 
 			virtual float AngularCompliance();
 			virtual void AngularCompliance(float fltVal, BOOL bUseScaling = TRUE);
+
+			virtual float LinearDamping();
+			virtual void LinearDamping(float fltVal, BOOL bUseScaling = TRUE);
+
+			virtual float AngularDamping();
+			virtual void AngularDamping(float fltVal, BOOL bUseScaling = TRUE);
+
+			virtual float LinearKineticLoss();
+			virtual void LinearKineticLoss(float fltVal, BOOL bUseScaling = TRUE);
+
+			virtual float AngularKineticLoss();
+			virtual void AngularKineticLoss(float fltVal, BOOL bUseScaling = TRUE);
 
 			virtual BOOL Stopped();
 
@@ -605,7 +635,7 @@ namespace AnimatSim
 			virtual void MassUnits(string strUnits);
 			virtual float MassUnits();
 			virtual float InverseMassUnits();
-			virtual float DensityMassUnits();
+			virtual float DisplayMassUnits();
 
 #pragma endregion
 			

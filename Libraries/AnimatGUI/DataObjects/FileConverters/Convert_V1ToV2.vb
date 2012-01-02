@@ -19,7 +19,7 @@ Namespace DataObjects
             Protected m_iSimInterface As ManagedAnimatInterfaces.ISimulatorInterface
             Protected m_fltDistanceUnits As Single
             Protected m_fltMassUnits As Single
-            Protected m_fltDensityMassUnits As Single
+            Protected m_fltDisplayMassUnits As Single
             Protected m_aryIdentity As New AnimatGuiCtrls.MatrixLibrary.Matrix(AnimatGuiCtrls.MatrixLibrary.Matrix.Identity(4))
 
             Public Overrides ReadOnly Property ConvertFrom As Single
@@ -102,21 +102,31 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnEnvironment, "UseAlphaBlending", False)
                 m_xnProjectXml.RemoveNode(xnEnvironment, "Camera", False)
 
-                'Replace simulation stability properties
-                m_xnProjectXml.RemoveNode(xnEnvironment, "LinearCompliance", False)
-                m_xnProjectXml.RemoveNode(xnEnvironment, "LinearDamping", False)
-                m_xnProjectXml.RemoveNode(xnEnvironment, "LinearKineticLoss", False)
-                m_xnProjectXml.RemoveNode(xnEnvironment, "AngularCompliance", False)
-                m_xnProjectXml.RemoveNode(xnEnvironment, "AngularDamping", False)
-                m_xnProjectXml.RemoveNode(xnEnvironment, "AngularKineticLoss", False)
-
                 m_fltDistanceUnits = Util.ConvertDistanceUnits(m_xnProjectXml.GetSingleNodeValue(xnEnvironment, "DistanceUnits"))
                 m_fltMassUnits = Util.ConvertMassUnits(m_xnProjectXml.GetSingleNodeValue(xnEnvironment, "MassUnits"))
-                m_fltDensityMassUnits = Util.ConvertDensityMassUnits(m_xnProjectXml.GetSingleNodeValue(xnEnvironment, "MassUnits"))
+                m_fltDisplayMassUnits = Util.ConvertDisplayMassUnits(m_xnProjectXml.GetSingleNodeValue(xnEnvironment, "MassUnits"))
 
-                'Now put back the defaults for linear and angular compliance.
-                m_xnProjectXml.AddScaledNumber(xnEnvironment, "LinearCompliance", 0.1, "Nano", 0.0000000001)
-                m_xnProjectXml.AddScaledNumber(xnEnvironment, "AngularCompliance", 0.1, "Nano", 0.0000000001)
+                ''Now put back the defaults for linear and angular compliance.
+                'm_xnProjectXml.RemoveNode(xnEnvironment, "LinearDamping", False)
+                'm_xnProjectXml.RemoveNode(xnEnvironment, "LinearKineticLoss", False)
+                'm_xnProjectXml.RemoveNode(xnEnvironment, "AngularDamping", False)
+                'm_xnProjectXml.RemoveNode(xnEnvironment, "AngularKineticLoss", False)
+
+                'Within V1 we are not correctly scaling these values based on the mass and distance units. In order to make the values be the same as the
+                'original simulation I need to rescale them so they will match when loaded.
+                Dim dblLinearCompliance As Double = m_xnProjectXml.GetScaleNumberValue(xnEnvironment, "LinearCompliance")
+                Dim dblAngularCompliance As Double = m_xnProjectXml.GetScaleNumberValue(xnEnvironment, "AngularCompliance")
+
+                dblLinearCompliance = dblLinearCompliance * (1 / m_fltMassUnits)
+                dblAngularCompliance = dblAngularCompliance * ((1 / m_fltMassUnits) * (1 / m_fltDistanceUnits) * (1 / m_fltDistanceUnits))
+
+                m_xnProjectXml.RemoveNode(xnEnvironment, "LinearCompliance", False)
+                m_xnProjectXml.RemoveNode(xnEnvironment, "AngularCompliance", False)
+                m_xnProjectXml.AddScaledNumber(xnEnvironment, "LinearCompliance", dblLinearCompliance, "None", dblLinearCompliance)
+                m_xnProjectXml.AddScaledNumber(xnEnvironment, "AngularCompliance", dblAngularCompliance, "None", dblAngularCompliance)
+
+                'Set it so that it will not calculate the other sim params, but use the values specified in the file.
+                m_xnProjectXml.AddNodeValue(xnEnvironment, "CalcCriticalSimParams", "False")
 
                 'Now convert the mouse spring. The mouse spring was not converted correctly in the old version, so we need to downgrade
                 'its numbers first.

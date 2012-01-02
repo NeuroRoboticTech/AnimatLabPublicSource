@@ -1,7 +1,7 @@
 <Editor>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.Forms.BodyPlan.Editor</ClassName>
-<NormalLocation x="-9" y="189"/>
+<NormalLocation x="206" y="49"/>
 <NormalSize Width="1217" Height="791"/>
 <WindowState>Normal</WindowState>
 <Structure>569750b3-f76a-424a-a19f-770985fcf2f0</Structure>

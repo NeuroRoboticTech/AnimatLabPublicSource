@@ -92,7 +92,7 @@ void ConstraintLimit::Damping(float fltVal, BOOL bUseScaling)
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "Constraint::Damping", TRUE);
 
 	if(bUseScaling)
-		fltVal = fltVal/m_lpSim->DensityMassUnits();
+		fltVal = fltVal/m_lpSim->DisplayMassUnits();
 	m_fltDamping = fltVal;
 }
 

@@ -267,7 +267,7 @@ void RigidBody::Density(float fltVal, BOOL bUseScaling)
 	m_fltDensity = fltVal;
 	if(bUseScaling)
 	{
-		m_fltDensity /= m_lpSim->DensityMassUnits();	//Scale the mass units down to one. If we are using Kg then the editor will save it out as 1000. We need this to be 1 Kg though.
+		m_fltDensity /= m_lpSim->DisplayMassUnits();	//Scale the mass units down to one. If we are using Kg then the editor will save it out as 1000. We need this to be 1 Kg though.
 		m_fltDensity *=  pow(m_lpSim->DenominatorDistanceUnits(), 3); //Perform a conversion if necessary because we may be using different units in the denominator.
 	}
 
@@ -539,7 +539,7 @@ void RigidBody::LinearVelocityDamping(float fltVal, BOOL bUseScaling)
 	Std_InValidRange((float) 0, (float) 1000, fltVal, TRUE, "RigidBody::LinearVelocityDamping");
 
 	if(bUseScaling)
-		fltVal = fltVal/m_lpSim->DensityMassUnits();
+		fltVal = fltVal/m_lpSim->DisplayMassUnits();
 	m_fltLinearVelocityDamping = fltVal;
 
 	if(m_lpPhysicsBody)
@@ -570,7 +570,7 @@ void RigidBody::AngularVelocityDamping(float fltVal, BOOL bUseScaling)
 	Std_InValidRange((float) 0, (float) 1000, fltVal, TRUE, "RigidBody::AngularVelocityDamping");
 
 	if(bUseScaling)
-		fltVal = fltVal/m_lpSim->DensityMassUnits();
+		fltVal = fltVal/m_lpSim->DisplayMassUnits();
 	m_fltAngularVelocityDamping = fltVal;
 
 	if(m_lpPhysicsBody)

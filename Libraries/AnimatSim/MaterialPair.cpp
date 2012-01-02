@@ -440,7 +440,7 @@ void MaterialPair::Damping(float fltVal, BOOL bUseScaling)
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "Damping", TRUE);
 
 	if(bUseScaling)
-		fltVal *= m_lpSim->InverseMassUnits();
+		fltVal = fltVal/m_lpSim->DisplayMassUnits();
 
 	m_fltDamping = fltVal;
 	SetMaterialProperties();

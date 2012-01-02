@@ -71,6 +71,12 @@ Vx::VxFrame* VsSimulator::Frame()
 
 #pragma region MutatorOverrides
 
+void VsSimulator::CalcCriticalSimParams(BOOL bVal)
+{
+	Simulator::CalcCriticalSimParams(bVal);
+	SetSimulationStabilityParams();
+}
+
 void VsSimulator::LinearCompliance(float fltVal, BOOL bUseScaling)
 {
 	Simulator::LinearCompliance(fltVal, bUseScaling);
@@ -81,6 +87,34 @@ void VsSimulator::AngularCompliance(float fltVal, BOOL bUseScaling)
 {
 	Simulator::AngularCompliance(fltVal, bUseScaling);
 	SetSimulationStabilityParams();
+}
+
+void VsSimulator::LinearDamping(float fltVal, BOOL bUseScaling)
+{
+	Simulator::LinearDamping(fltVal, bUseScaling);
+	if(!m_bCalcCriticalSimParams)
+		SetSimulationStabilityParams();
+}
+
+void VsSimulator::AngularDamping(float fltVal, BOOL bUseScaling)
+{
+	Simulator::AngularDamping(fltVal, bUseScaling);
+	if(!m_bCalcCriticalSimParams)
+		SetSimulationStabilityParams();
+}
+
+void VsSimulator::LinearKineticLoss(float fltVal, BOOL bUseScaling)
+{
+	Simulator::LinearKineticLoss(fltVal, bUseScaling);
+	if(!m_bCalcCriticalSimParams)
+		SetSimulationStabilityParams();
+}
+
+void VsSimulator::AngularKineticLoss(float fltVal, BOOL bUseScaling)
+{
+	Simulator::AngularKineticLoss(fltVal, bUseScaling);
+	if(!m_bCalcCriticalSimParams)
+		SetSimulationStabilityParams();
 }
 
 void VsSimulator::PhysicsTimeStep(float fltVal)
@@ -208,16 +242,30 @@ void VsSimulator::SetSimulationStabilityParams()
 {
 	if(m_uUniverse)
 	{
-		VxReal halflife = 5;
-		m_uUniverse->getSolverParameters(0)->setConstraintLinearCompliance(m_fltLinearCompliance);
-		m_uUniverse->getSolverParameters(0)->setConstraintAngularCompliance(m_fltAngularCompliance);
-		m_uUniverse->setCriticalConstraintParameters(0, halflife);
+		if(m_bCalcCriticalSimParams)
+		{
+			VxReal halflife = 5;
+			m_uUniverse->getSolverParameters(0)->setConstraintLinearCompliance(m_fltLinearCompliance);
+			m_uUniverse->getSolverParameters(0)->setConstraintAngularCompliance(m_fltAngularCompliance);
+			m_uUniverse->setCriticalConstraintParameters(0, halflife);
+		}
+		else
+		{
+			m_uUniverse->getSolverParameters(0)->setConstraintLinearCompliance(m_fltLinearCompliance);
+			m_uUniverse->getSolverParameters(0)->setConstraintLinearDamping(m_fltLinearDamping);
+			m_uUniverse->getSolverParameters(0)->setConstraintLinearKineticLoss(m_fltLinearKineticLoss);
+			m_uUniverse->getSolverParameters(0)->setConstraintAngularCompliance(m_fltAngularCompliance);
+			m_uUniverse->getSolverParameters(0)->setConstraintAngularDamping(m_fltAngularDamping);
+			m_uUniverse->getSolverParameters(0)->setConstraintAngularKineticLoss(m_fltAngularKineticLoss);
+		}
 
-		//float fltAC = m_uUniverse->getSolverParameters(0)->getConstraintAngularCompliance();
-		//float fltAK = m_uUniverse->getSolverParameters(0)->getConstraintAngularKineticLoss();
-		//float fltLC = m_uUniverse->getSolverParameters(0)->getConstraintLinearCompliance();
-		//float fltLD = m_uUniverse->getSolverParameters(0)->getConstraintLinearDamping();
-		//float fltLK = m_uUniverse->getSolverParameters(0)->getConstraintLinearKineticLoss();
+		TRACE_DETAIL("Reset simulation stability params\r\n");
+		TRACE_DETAIL("Angular Compliance: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintAngularCompliance()) + "\r\n");
+		TRACE_DETAIL("Angular Damping: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintAngularDamping()) + "\r\n");
+		TRACE_DETAIL("Angular Kinetic Loss: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintAngularKineticLoss()) + "\r\n");
+		TRACE_DETAIL("Linear Compliance: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintLinearCompliance()) + "\r\n");
+		TRACE_DETAIL("Linear Damping: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintLinearDamping()) + "\r\n");
+		TRACE_DETAIL("Linear Kinetic Loss: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintLinearKineticLoss()) + "\r\n");
 	}
 }
 

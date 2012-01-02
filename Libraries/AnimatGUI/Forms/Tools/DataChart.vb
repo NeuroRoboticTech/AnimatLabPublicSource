@@ -542,7 +542,7 @@ Namespace Forms.Tools
 
             Dim iCols As Integer = UBound(aryTemplateData, 1)
             Dim iRows As Integer = UBound(aryTemplateData, 2)
-            If iMaxRows > 0 Then iRows = Math.Max(iRows, iMaxRows)
+            If iMaxRows > 0 Then iRows = Math.Min(iRows, iMaxRows)
 
             For iCol As Integer = 0 To iCols
 

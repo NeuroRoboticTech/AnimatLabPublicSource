@@ -1535,7 +1535,7 @@ Namespace Framework
             Throw New System.Exception("Invalid mass units: " & strUnits)
         End Function
 
-        Public Shared Function ConvertDensityMassUnits(ByVal strUnits As String) As Single
+        Public Shared Function ConvertDisplayMassUnits(ByVal strUnits As String) As Single
 
             strUnits = strUnits.ToUpper
 

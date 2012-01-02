@@ -116,7 +116,10 @@ Public Class Util
             Dim aryDirs As String() = Directory.GetDirectories(strOrigFolder)
             For Each strDir As String In aryDirs
                 Dim aryDirNames As String() = Split(strDir, "\")
-                CopyDirectory(strDir, strNewFolder & "\" & aryDirNames(UBound(aryDirNames)))
+                Dim strActualDir As String = aryDirNames(UBound(aryDirNames))
+                If strActualDir.ToUpper.Trim <> ".SVN" Then
+                    CopyDirectory(strDir, strNewFolder & "\" & strActualDir)
+                End If
             Next
         Else
             Throw New System.Exception("The folder '" & strOrigFolder & "' can not be copied to a new directory '" & _
