@@ -1249,6 +1249,82 @@ Namespace Framework
 
         End Sub
 
+        Public Shared Sub ReadCSVFileToArrayUsingTemplate(ByVal strFilename As String, ByVal aryTemplateColumns() As String, ByRef aryColumns() As String, ByRef aryData(,) As Double)
+            Dim num_rows As Integer
+            Dim num_cols As Integer
+            Dim iCol As Integer
+            Dim iRow As Integer
+
+            ' Load the file.
+            'Check if file exist
+            If File.Exists(strFilename) Then
+                Dim tmpstream As StreamReader = File.OpenText(strFilename)
+                Dim aryLines() As String
+                Dim aryLine() As String
+
+                'Load content of file to strLines array
+                Dim strData As String = tmpstream.ReadToEnd()
+                aryLines = strData.Split(vbLf.ToCharArray())
+
+                If (aryLines.Length < 2) Then
+                    Throw New System.Exception("No data in file: " & strFilename)
+                End If
+
+                aryColumns = aryLines(0).Split(vbTab.ToCharArray)
+                Dim iChop As Integer = FindEndingBlanks(aryColumns)
+                ReDim Preserve aryColumns(aryColumns.Length - (1 + iChop))
+
+                Dim aryColMapping As ArrayList = GetColumnMapping(aryTemplateColumns, aryColumns)
+
+                'Remove one for the header and one to make the index work.
+                num_rows = aryLines.Length - 1 - 1
+                num_cols = aryColumns.Length - 1
+
+                ReDim aryData(aryTemplateColumns.Length - 1, num_rows)
+
+                Dim iInsertIdx As Integer = -1
+                ' Copy the data into the array. Skip the header row.
+                For iRow = 1 To num_rows
+                    aryLine = aryLines(iRow).Split(vbTab.ToCharArray)
+
+                    For iCol = 0 To num_cols
+                        iInsertIdx = CInt(aryColMapping(iCol))
+                        If iInsertIdx >= 0 Then
+                            aryData(iInsertIdx, iRow) = CDbl(aryLine(iCol))
+                        End If
+                    Next
+                Next
+
+                aryColumns = aryTemplateColumns
+            End If
+
+        End Sub
+
+        Protected Shared Function GetColumnMapping(ByVal aryTempCols() As String, ByVal aryCols() As String) As ArrayList
+
+            Dim aryList As New ArrayList
+            Dim iTotal As Integer = aryCols.Length - 1
+            Dim iTempIdx As Integer = -1
+            For iColIdx As Integer = 0 To iTotal
+                iTempIdx = FindTemplateColumnIndex(aryTempCols, aryCols(iColIdx))
+                aryList.Add(iTempIdx)
+            Next
+
+            Return aryList
+        End Function
+
+        Protected Shared Function FindTemplateColumnIndex(ByVal aryTempCols() As String, ByVal strColName As String) As Integer
+            Dim iIdx As Integer = -1
+            For Each strCol As String In aryTempCols
+                iIdx = iIdx + 1
+                If strCol.Trim.ToUpper = strColName.Trim.ToUpper Then
+                    Return iIdx
+                End If
+            Next
+
+            Return -1
+        End Function
+
         Protected Shared Function FindEndingBlanks(ByVal aryColumns() As String) As Integer
 
             Dim iBlank As Integer = 0

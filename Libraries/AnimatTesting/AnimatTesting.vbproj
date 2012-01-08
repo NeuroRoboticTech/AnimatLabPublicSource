@@ -135,11 +135,13 @@
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\SphereUITest.vb" />
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\TerrainUITest.vb" />
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\TorusUITest.vb" />
+    <Compile Include="UITests\ConversionTests\BodyPartTests\JointTests\PrismaticConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\BodyPartTests\JointTests\HingeConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\ConversionUITest.vb" />
     <Compile Include="UITests\CreationTests\NewProjectUITest.vb" />
     <Compile Include="UnitTests\FileConversions\Convert_V1ToV2Test.vb" />
     <Compile Include="Util.vb" />
+    <Compile Include="XmlDom.vb" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -147,7 +149,11 @@
     </None>
     <None Include="UIMap.uitest" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="TestCases.accdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -19,6 +19,7 @@ Imports Keyboard = Microsoft.VisualStudio.TestTools.UITesting.Keyboard
 Imports Mouse = Microsoft.VisualStudio.TestTools.UITesting.Mouse
 Imports MouseButtons = System.Windows.Forms.MouseButtons
 Imports AnimatTesting.Framework
+Imports System.Xml
 
 Namespace UITests
     Namespace ConversionTests
@@ -41,7 +42,7 @@ Namespace UITests
 
 #Region "Methods"
 
-            Protected Overridable Sub TestConversionProject(Optional iMaxRows As Integer = -1)
+            Protected Overridable Sub TestConversionProject(ByVal strDataPrefix As String, Optional iMaxRows As Integer = -1)
 
                 m_aryWindowsToOpen.Add("Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan")
                 m_aryWindowsToOpen.Add("Tool Viewers\JointData")
@@ -77,7 +78,7 @@ Namespace UITests
                 RunSimulationWaitToEnd()
 
                 ''Compare chart data to verify simulation results.
-                CompareSimulation(m_strRootFolder & m_strTestDataPath, "Convert_", 0.05, iMaxRows)
+                CompareSimulation(m_strRootFolder & m_strTestDataPath, strDataPrefix, 0.05, iMaxRows)
 
             End Sub
 
@@ -91,6 +92,28 @@ Namespace UITests
                 If m_strOldProjectFolder.Length > 0 Then
                     Util.CopyDirectory(m_strRootFolder & m_strOldProjectFolder, m_strRootFolder & m_strProjectPath & "\" & m_strProjectName)
                 End If
+            End Sub
+
+
+            Protected Overridable Sub ModifyJointRotationInProjectFile(ByVal strPath As String, _
+                                                                       ByVal dblJointRotX As Double, _
+                                                                       ByVal dblJointRotY As Double, _
+                                                                       ByVal dblJointRotZ As Double, _
+                                                                       ByVal strOrientation As String)
+
+                Dim strFile As String = m_strRootFolder & strPath & "\Structure_1.astl"
+                Dim xnProject As New XmlDom()
+                xnProject.Load(strFile)
+
+                Dim xnStruct As XmlNode = xnProject.GetRootNode("Structure")
+                Dim xnRoot As XmlNode = xnProject.GetNode(xnStruct, "RigidBody")
+                Dim xnChildren As XmlNode = xnProject.GetNode(xnRoot, "ChildBodies")
+                Dim xnChild As XmlNode = xnChildren.FirstChild
+                Dim xnJoint As XmlNode = xnProject.GetNode(xnChild, "Joint")
+                xnProject.UpdateSingleNodeValue(xnJoint, "OrientationMatrix", strOrientation)
+
+                xnProject.Save(strFile)
+
             End Sub
 
 #End Region

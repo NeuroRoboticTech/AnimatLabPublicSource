@@ -122,9 +122,10 @@ Namespace Framework
             Dim oRep As DataObjects.FileConverter.ReplaceText
             For Each de As DictionaryEntry In aryReplaceText
                 oRep = DirectCast(de.Value, DataObjects.FileConverter.ReplaceText)
-                strXml = strXml.Replace(oRep.m_strFind, oRep.m_strReplace)
+                strXml = Replace(strXml, oRep.m_strFind, oRep.m_strReplace, Compare:=CompareMethod.Text)
             Next
 
+            If strXml Is Nothing Then strXml = ""
             Return strXml
         End Function
 

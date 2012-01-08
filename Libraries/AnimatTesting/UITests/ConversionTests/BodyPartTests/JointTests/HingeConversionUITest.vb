@@ -19,6 +19,7 @@ Imports Keyboard = Microsoft.VisualStudio.TestTools.UITesting.Keyboard
 Imports Mouse = Microsoft.VisualStudio.TestTools.UITesting.Mouse
 Imports MouseButtons = System.Windows.Forms.MouseButtons
 Imports AnimatTesting.Framework
+Imports System.Xml
 
 Namespace UITests
     Namespace ConversionTests
@@ -39,28 +40,32 @@ Namespace UITests
 #End Region
 
 #Region "Methods"
+                    '
 
-                    <TestMethod()>
-                    Public Sub Test_Joint_Loc_100_0_0_Rot_0_0_0_NEn()
-                        m_strProjectName = "Joint_Loc_100_0_0_Rot_0_0_0_NEn"
+                    <TestMethod(), _
+                    DataSource("System.Data.OleDb", _
+                               "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
+                               "HingeRotationTestData_Full", _
+                               DataAccessMethod.Sequential), _
+                    DeploymentItem("TestCases.accdb")>
+                    Public Sub Test_HingeJointRotations()
+                        m_strProjectName = TestContext.DataRow("TestName").ToString
+                        Dim dblJointRotX As Double = CDbl(TestContext.DataRow("X"))
+                        Dim dblJointRotY As Double = CDbl(TestContext.DataRow("Y"))
+                        Dim dblJointRotZ As Double = CDbl(TestContext.DataRow("Z"))
+                        Dim strOrientation As String = CStr(TestContext.DataRow("Orientation"))
+                        Dim strDataPrefix As String = CStr(TestContext.DataRow("DataPrefix"))
+
                         m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\JointTests\HingeTests"
                         m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\JointTests\HingeTests\" & m_strProjectName
                         m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\HingeTests\" & m_strProjectName
 
-                        TestConversionProject()
+                        ModifyJointRotationInProjectFile(m_strOldProjectFolder, dblJointRotX, dblJointRotY, dblJointRotZ, strOrientation)
+
+                        TestConversionProject(strDataPrefix, 2000)
 
                     End Sub
 
-                    <TestMethod()>
-                    Public Sub Test_Joint_Loc_0_0_5_Rot_0_90_0_NEn()
-                        m_strProjectName = "Joint_Loc_0_0_5_Rot_0_90_0_NEn"
-                        m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\JointTests\HingeTests"
-                        m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\JointTests\HingeTests\" & m_strProjectName
-                        m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\HingeTests\" & m_strProjectName
-
-                        TestConversionProject()
-
-                    End Sub
 
 #Region "Additional test attributes"
                     '
@@ -76,6 +81,9 @@ Namespace UITests
 
                     End Sub
 
+                    <TestCleanup()> Public Overrides Sub MyTestCleanup()
+                        MyBase.MyTestCleanup()
+                    End Sub
 #End Region
 
 #End Region

@@ -1,0 +1,204 @@
+<Simulation>
+<ProjectPath/>
+<AnimatModule>VortexAnimatLibrary_vc7D.dll</AnimatModule>
+<UpdateDataInterval>250</UpdateDataInterval>
+<StartPaused>False</StartPaused>
+<EnableSimRecording>True</EnableSimRecording>
+<SetSimEnd>True</SetSimEnd>
+<APIFile/>
+<SimEndTime Value="12" Scale="None" Actual="12"/>
+<Environment>
+<PhysicsTimeStep Value="1" Scale="milli" Actual="0.001"/>
+<FluidDensity Value="1" Scale="None" Actual="1"/>
+<MaxSurfaceFriction Value="15" Scale="Kilo" Actual="15000"/>
+<Gravity Value="-9.81" Scale="None" Actual="-9.81"/>
+<MouseSpringStiffness Value="300" Scale="None" Actual="300"/>
+<MouseSpringDamping Value="100" Scale="Kilo" Actual="100000"/>
+<LinearCompliance Value="0.1" Scale="micro" Actual="1e-07"/>
+<LinearDamping Value="200" Scale="Kilo" Actual="200000"/>
+<AngularCompliance Value="0.1" Scale="micro" Actual="1e-07"/>
+<AngularDamping Value="50" Scale="Kilo" Actual="50000"/>
+<LinearKineticLoss Value="1" Scale="micro" Actual="1e-06"/>
+<AngularKineticLoss Value="1" Scale="micro" Actual="1e-06"/>
+<MaxHydroForce Value="100" Scale="None" Actual="100"/>
+<MaxHydroTorque Value="100" Scale="None" Actual="100"/>
+<PlaybackRate>1</PlaybackRate>
+<SimulateHydrodynamics>False</SimulateHydrodynamics>
+<MassUnits>Grams</MassUnits>
+<DistanceUnits>Decimeters</DistanceUnits>
+<UseAlphaBlending>False</UseAlphaBlending>
+<AutoGenerateRandomSeed>True</AutoGenerateRandomSeed>
+<ManualRandomSeed>12345</ManualRandomSeed>
+<CollisionObjects>2</CollisionObjects>
+<Camera>
+<Rotation>0.785398</Rotation>
+<Elevation>0</Elevation>
+<Offset>3</Offset>
+<TrackCamera>True</TrackCamera>
+<RecordVideo>False</RecordVideo>
+<SaveFrameImages>False</SaveFrameImages>
+<VideoFilename/>
+<VideoWidth>512</VideoWidth>
+<VideoHeight>580</VideoHeight>
+<RecordFrameTime Value="1" Scale="milli" Actual="0.001"/>
+<PlaybackFrameTime Value="100" Scale="milli" Actual="0.1"/>
+<VideoStartTime Value="0" Scale="None" Actual="0"/>
+<VideoEndTime Value="1" Scale="None" Actual="1"/>
+<cbFormat>0</cbFormat>
+<cbParms>4</cbParms>
+<dwBytesPerSecond>0</dwBytesPerSecond>
+<dwFlags>8</dwFlags>
+<dwInterleaveEvery>0</dwInterleaveEvery>
+<dwKeyFrameEvery>0</dwKeyFrameEvery>
+<dwQuality>7500</dwQuality>
+<fccHandler>1668707181</fccHandler>
+<fccType>0</fccType>
+<LookAtStructureID>a5029db8-e14a-40fb-9da9-f961f76737d7</LookAtStructureID>
+<LookAtBodyID>a05364a5-2630-4c59-b4ef-52abd8fa4f1e</LookAtBodyID>
+</Camera>
+<Organisms/>
+<Structures>
+<Structure>
+<ID>a5029db8-e14a-40fb-9da9-f961f76737d7</ID>
+<Name>Structure_1</Name>
+<Type>Basic</Type>
+<Reference>False</Reference>
+<RigidBody>
+<Name>Root</Name>
+<ID>a05364a5-2630-4c59-b4ef-52abd8fa4f1e</ID>
+<Type>Box</Type>
+<PartType>VortexAnimatTools.DataObjects.Physical.RigidBodies.Box</PartType>
+<Description/>
+<IsVisible>True</IsVisible>
+<IsContactSensor>False</IsContactSensor>
+<Cd>1</Cd>
+<Cdr>0.5</Cdr>
+<Ca>1</Ca>
+<Car>1</Car>
+<Texture/>
+<Density Value="1" Scale="None" Actual="1"/>
+<XCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<YCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<ZCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<Freeze>True</Freeze>
+<ChildBodies>
+<RigidBody>
+<Name>Body_2</Name>
+<ID>be17c4bd-21e4-4be7-b74c-24b94d335dcc</ID>
+<Type>Box</Type>
+<PartType>VortexAnimatTools.DataObjects.Physical.RigidBodies.Box</PartType>
+<Description/>
+<IsVisible>True</IsVisible>
+<IsContactSensor>False</IsContactSensor>
+<Cd>1</Cd>
+<Cdr>0.5</Cdr>
+<Ca>1</Ca>
+<Car>1</Car>
+<Texture/>
+<Density Value="1" Scale="None" Actual="1"/>
+<XCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<YCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<ZCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<Joint>
+<Name>Joint_1</Name>
+<ID>1a15e16b-b371-45a7-a468-457d11a64cb3</ID>
+<Type>Prismatic</Type>
+<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Prismatic</PartType>
+<Description/>
+<Constraint Low="-4" High="4">
+<EnableLimits>False</EnableLimits>
+<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Restitution Value="0" Scale="None" Actual="0"/>
+<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+</Constraint>
+<Length>5</Length>
+<EnableMotor>False</EnableMotor>
+<ServoMotor>False</ServoMotor>
+<ServoGain>100</ServoGain>
+<MaxForce Value="100" Scale="None" Actual="100"/>
+<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<RotationAxis x="0.418989" y="0.211471" z="0.883022"/>
+<Radius>0.05</Radius>
+<RelativePosition x="0.5" y="0.5" z="0.5"/>
+<Rotation x="0.349066" y="0.349066" z="0.349066"/>
+<OrientationMatrix>0.8830222,-0.3213939,-0.3420202,0,0.2114707,0.923031,-0.3213939,0,0.4189893,0.2114707,0.8830222,0,0,0,0,1</OrientationMatrix>
+<TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0.5,0.5,0.5,1</TranslationMatrix>
+</Joint>
+<FoodSource>False</FoodSource>
+<CenterOfMass x="0" y="0" z="0"/>
+<RelativePosition x="0" y="0" z="2"/>
+<LocalPosition x="0" y="0" z="2"/>
+<Rotation x="0" y="0" z="0"/>
+<LocalRotation x="0" y="0" z="0"/>
+<Direction x="0" y="1" z="0"/>
+<Color Red="1" Green="0" Blue="0" Alpha="1"/>
+<OrientationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</OrientationMatrix>
+<TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,2,1</TranslationMatrix>
+<CombinedTransformationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,2,1</CombinedTransformationMatrix>
+<CollisionBoxSize x="1" y="1" z="1"/>
+<GraphicsBoxSize x="1" y="1" z="1"/>
+</RigidBody>
+</ChildBodies>
+<FoodSource>False</FoodSource>
+<CenterOfMass x="0" y="0" z="0"/>
+<RelativePosition x="0" y="0" z="0"/>
+<LocalPosition x="0" y="0" z="0"/>
+<Rotation x="0" y="0" z="0"/>
+<LocalRotation x="0" y="0" z="0"/>
+<Direction x="0" y="0" z="0"/>
+<Color Red="0" Green="0" Blue="1" Alpha="1"/>
+<OrientationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</OrientationMatrix>
+<TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</TranslationMatrix>
+<CombinedTransformationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</CombinedTransformationMatrix>
+<CollisionBoxSize x="1" y="1" z="1"/>
+<GraphicsBoxSize x="1" y="1" z="1"/>
+</RigidBody>
+<CollisionExclusionPairs/>
+<Position x="0" y="0" z="0"/>
+</Structure>
+</Structures>
+</Environment>
+<DataCharts>
+<DataChart>
+<ID>3a671987-d332-4c3a-94a2-6eba5ae44425</ID>
+<Type>FileChart</Type>
+<OutputFilename>JointData.txt</OutputFilename>
+<Name>JointData</Name>
+<SetStartTime>True</SetStartTime>
+<CollectTimeWindow>-1</CollectTimeWindow>
+<AlwaysActive>False</AlwaysActive>
+<StartTime>0</StartTime>
+<EndTime>10</EndTime>
+<CollectInterval>0.001</CollectInterval>
+<DataColumns>
+<DataColumn>
+<ModuleName/>
+<Type>RigidBodyData</Type>
+<ID>79f76078-7d5b-40ab-b57f-f0f491263e3a</ID>
+<ColumnName>Body_2 Y</ColumnName>
+<DataType>BodyPositionY</DataType>
+<StructureID>a5029db8-e14a-40fb-9da9-f961f76737d7</StructureID>
+<RigidBodyID>be17c4bd-21e4-4be7-b74c-24b94d335dcc</RigidBodyID>
+</DataColumn>
+<DataColumn>
+<ModuleName/>
+<Type>RigidBodyData</Type>
+<ID>7b846ad7-4001-4de3-8395-7d9ee493e32c</ID>
+<ColumnName>Body_2 X</ColumnName>
+<DataType>BodyPositionX</DataType>
+<StructureID>a5029db8-e14a-40fb-9da9-f961f76737d7</StructureID>
+<RigidBodyID>be17c4bd-21e4-4be7-b74c-24b94d335dcc</RigidBodyID>
+</DataColumn>
+<DataColumn>
+<ModuleName/>
+<Type>RigidBodyData</Type>
+<ID>9fc8249d-a7f8-4ff1-94fd-fbe316b94ef3</ID>
+<ColumnName>Body_2 Z</ColumnName>
+<DataType>BodyPositionZ</DataType>
+<StructureID>a5029db8-e14a-40fb-9da9-f961f76737d7</StructureID>
+<RigidBodyID>be17c4bd-21e4-4be7-b74c-24b94d335dcc</RigidBodyID>
+</DataColumn>
+</DataColumns>
+</DataChart>
+</DataCharts>
+</Simulation>
