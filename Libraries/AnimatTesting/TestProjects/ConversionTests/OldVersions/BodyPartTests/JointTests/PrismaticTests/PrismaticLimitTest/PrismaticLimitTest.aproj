@@ -5,7 +5,7 @@
 <SimulationFile>PrismaticLimitTest.asim</SimulationFile>
 <LogLevel>Error</LogLevel>
 <Version>1</Version>
-<SimWindowLocation x="539" y="185"/>
+<SimWindowLocation x="44" y="58"/>
 <SimWindowSize Width="640" Height="480"/>
 <DockingForms>
 <Form>
@@ -67,7 +67,7 @@
 </ChildForms>
 <ToolViewers>
 <ToolHolder>
-<ID>615e1f96-2e53-42f8-9886-b415de9bfb40</ID>
+<ID>dbfa6c8d-335c-4d23-8a6f-034ae8447880</ID>
 <Name>JointData</Name>
 <BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>

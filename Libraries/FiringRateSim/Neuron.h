@@ -169,11 +169,11 @@ namespace FiringRateSim
 			virtual BOOL UseAccom();
 			virtual void UseAccom(BOOL bVal);
 
-			virtual float RelativeAccomodation();
-			virtual void RelativeAccomodation(float fltVal);
+			virtual float RelativeAccommodation();
+			virtual void RelativeAccommodation(float fltVal);
 
-			virtual float AccomodationTimeConstant();
-			virtual void AccomodationTimeConstant(float fltVal);
+			virtual float AccommodationTimeConstant();
+			virtual void AccommodationTimeConstant(float fltVal);
 
 			virtual BOOL GainType();
 			virtual void GainType(BOOL bVal);

@@ -569,9 +569,24 @@ void VsSimulator::Save(string strFile)
 {
 	string strOsgFile = strFile + ".osg";
 	string strVxFile = strFile + ".vxf";
+	std::string strUcon = strFile + ".ucon";
 
 	//Temp code. Lets save it out and make sure the collision stuff is actually correct.
-	//VxPersistence::saveFrame(strVxFile.c_str(), VxPersistence::kAutoGenerateGraphics);
+	try
+	{
+		VxPersistence::saveFrame(strVxFile.c_str(), VxPersistence::kStandard);
+	}
+	catch(std::exception ex)
+	{
+		int i= 5;
+	}
+	catch(...)
+	{
+		int i= 5;
+	}
+
+	m_uUniverse->printContent(strUcon.c_str());
+
 	osgDB::writeNodeFile(*OSGRoot(), strOsgFile.c_str());
 }
 

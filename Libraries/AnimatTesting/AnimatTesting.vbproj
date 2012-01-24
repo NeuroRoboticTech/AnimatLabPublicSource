@@ -137,7 +137,9 @@
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\TorusUITest.vb" />
     <Compile Include="UITests\ConversionTests\BodyPartTests\JointTests\PrismaticConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\BodyPartTests\JointTests\HingeConversionUITest.vb" />
+    <Compile Include="UITests\ConversionTests\BodyPartTests\RigidBodyTests\RigidBodyConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\ConversionUITest.vb" />
+    <Compile Include="UITests\ConversionTests\NeuralTests\NeuralUIConversionTest.vb" />
     <Compile Include="UITests\CreationTests\NewProjectUITest.vb" />
     <Compile Include="UnitTests\FileConversions\Convert_V1ToV2Test.vb" />
     <Compile Include="Util.vb" />

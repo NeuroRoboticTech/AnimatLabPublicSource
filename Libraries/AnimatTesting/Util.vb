@@ -11,6 +11,9 @@ Public Class Util
 
     Protected Shared m_iLastPort As Integer = 8079
 
+    Protected Shared m_dblRadiansToDegreeRatio As Double = (180 / Math.PI)
+    Protected Shared m_dblDegreeToRadiansRatio As Double = (Math.PI / 180)
+
     Public Shared ReadOnly Property LastPort() As Integer
         Get
             Return m_iLastPort
@@ -22,6 +25,33 @@ Public Class Util
         Return m_iLastPort
     End Function
 
+    Public Shared ReadOnly Property RadiansToDegreesRatio() As Double
+        Get
+            Return m_dblRadiansToDegreeRatio
+        End Get
+    End Property
+
+    Public Shared ReadOnly Property DegreesToRadiansRatio() As Double
+        Get
+            Return m_dblDegreeToRadiansRatio
+        End Get
+    End Property
+
+    Public Shared Function DegreesToRadians(ByVal fltDegrees As Single) As Single
+
+        If fltDegrees > 360 OrElse fltDegrees < -360 Then
+            Dim iMod As Integer = CInt(Math.Abs(fltDegrees / 360))
+            fltDegrees = fltDegrees / iMod
+        End If
+
+        If fltDegrees = -360 OrElse fltDegrees = 360 Then fltDegrees = 0
+
+        Return CSng((fltDegrees / 180.0) * Math.PI)
+    End Function
+
+    Public Shared Function RadiansToDegrees(ByVal fltRadians As Single) As Single
+        Return CSng((fltRadians / Math.PI) * 180.0)
+    End Function
 
     Public Shared Sub ReadCSVFileToArray(ByVal strFilename As String, ByRef aryColumns() As String, ByRef aryData(,) As Double)
         Dim num_rows As Integer

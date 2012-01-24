@@ -66,6 +66,30 @@ Namespace UITests
 
                     End Sub
 
+                    <TestMethod(), _
+                      DataSource("System.Data.OleDb", _
+                                 "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
+                                 "HingeLimitTestData", _
+                                 DataAccessMethod.Sequential), _
+                      DeploymentItem("TestCases.accdb")>
+                    Public Sub Test_HingeLimits()
+                        m_strProjectName = TestContext.DataRow("TestName").ToString
+                        Dim dblMin As Single = CSng(TestContext.DataRow("Min"))
+                        Dim dblMax As Single = CSng(TestContext.DataRow("Max"))
+                        Dim dblDamping As Single = CSng(TestContext.DataRow("Damping"))
+                        Dim strRestitution As Single = CSng(TestContext.DataRow("Restitution"))
+                        Dim strStiffness As Single = CSng(TestContext.DataRow("Stiffness"))
+                        Dim strDataPrefix As String = CStr(TestContext.DataRow("DataPrefix"))
+
+                        m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\JointTests\HingeTests"
+                        m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\JointTests\HingeTests\" & m_strProjectName
+                        m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\HingeTests\" & m_strProjectName
+
+                        ModifyJointConstraintsInProjectFile(m_strOldProjectFolder, dblMin, dblMax, True, dblDamping, strRestitution, strStiffness)
+
+                        TestConversionProject(strDataPrefix, 2000)
+
+                    End Sub
 
 #Region "Additional test attributes"
                     '
@@ -83,6 +107,11 @@ Namespace UITests
 
                     <TestCleanup()> Public Overrides Sub MyTestCleanup()
                         MyBase.MyTestCleanup()
+                    End Sub
+
+                    Protected Overrides Sub SetWindowsToOpen()
+                        m_aryWindowsToOpen.Add("Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan")
+                        m_aryWindowsToOpen.Add("Tool Viewers\JointData")
                     End Sub
 #End Region
 

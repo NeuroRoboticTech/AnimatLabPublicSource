@@ -1,0 +1,24 @@
+<NeuralModule>
+<TimeStep>0.0025</TimeStep>
+<NetworkSize x="1" y="1" z="1"/>
+<Neurons>
+<Neuron>
+<Position x="0" y="0" z="0"/>
+<Name>1</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>3e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>15</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.2</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+</Neurons>
+</NeuralModule>

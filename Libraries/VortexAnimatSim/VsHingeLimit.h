@@ -20,6 +20,8 @@ namespace VortexAnimatSim
 				osg::ref_ptr<osg::Material> m_osgFlapMat;
 				osg::ref_ptr<osg::StateSet> m_osgFlapSS;
 
+				virtual void SetLimitValues();
+
 			public:
 				VsHingeLimit();
 				virtual ~VsHingeLimit();
@@ -28,7 +30,7 @@ namespace VortexAnimatSim
 
 				virtual void Alpha(float fltA);
 				virtual void SetLimitPos();
-
+				
 				osg::Geometry *FlapGeometry() {return m_osgFlap.get();};
 				osg::MatrixTransform *FlapTranslateMT() {return m_osgFlapTranslateMT.get();};
 				osg::MatrixTransform *FlapRotateMT() {return m_osgFlapRotateMT.get();};

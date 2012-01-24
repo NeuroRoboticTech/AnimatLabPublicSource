@@ -110,7 +110,7 @@ Namespace DataObjects.Physical
                     Throw New System.Exception("The damping can not be less than zero.")
                 End If
 
-                SetSimData("Damping", m_snDamping.ActualValue.ToString, True)
+                SetSimData("Damping", Value.ActualValue.ToString, True)
                 m_snDamping.CopyData(Value)
             End Set
         End Property
@@ -124,7 +124,7 @@ Namespace DataObjects.Physical
                     Throw New System.Exception("The restitution must be between 0 and 1.")
                 End If
 
-                SetSimData("Restitution", m_snRestitution.ActualValue.ToString, True)
+                SetSimData("Restitution", Value.ActualValue.ToString, True)
                 m_snRestitution.CopyData(Value)
             End Set
         End Property
@@ -138,7 +138,7 @@ Namespace DataObjects.Physical
                     Throw New System.Exception("The stiffness can not be less than or equal to zero.")
                 End If
 
-                SetSimData("Stiffness", m_snStiffness.ActualValue.ToString, True)
+                SetSimData("Stiffness", Value.ActualValue.ToString, True)
                 m_snStiffness.CopyData(Value)
             End Set
         End Property

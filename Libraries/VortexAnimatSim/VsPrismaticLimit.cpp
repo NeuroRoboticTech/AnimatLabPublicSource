@@ -104,6 +104,11 @@ void VsPrismaticLimit::SetLimitPos()
 	}
 
 	//Set the limit on the physics Prismatic object.
+	SetLimitValues();
+}
+
+void VsPrismaticLimit::SetLimitValues()
+{
 	if(m_vxPrismatic)
 	{
 		if(m_bIsLowerLimit)

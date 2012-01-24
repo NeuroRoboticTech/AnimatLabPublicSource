@@ -35,7 +35,7 @@ Neuron::Neuron()
 	m_fltCn = (float) 75e-6;	//Membrane capacitance
 	m_fltInvCn = 1/m_fltCn;
 	m_fltGn = (float) 0.1e-6;	//Membrane conductance
-	m_fltVth = (float) -3e-3;	//Firing frequency voltage threshold
+	m_fltVth = (float) 0;	//Firing frequency voltage threshold
 	m_fltVthi = m_fltVth;
 	m_fltFmin = (float) 0.25;	//Minimum Firing frequency
 	m_fltGain = (float) 0.1e-3;	//Firing frequency gain
@@ -154,10 +154,13 @@ float Neuron::Vth()
 **/
 void Neuron::Vth(float fltVal)
 {
-	float fltDiff = fltVal - m_fltVthi;
+	float fltDiff = fltVal - m_fltVrest;
 
-	m_fltVthi=fltVal;
-	m_fltVth += fltDiff;
+	m_fltVthi = fltDiff;
+	m_fltVth = fltDiff;
+	m_fltVthdisp = m_fltVrest + m_fltVth;
+	m_aryVth[0] = fltDiff;
+	m_aryVth[1] = fltDiff;
 }
 
 /**
@@ -253,7 +256,13 @@ float Neuron::Vrest()
 \param	fltVal	The new value. 
 **/
 void Neuron::Vrest(float fltVal)
-{m_fltVrest = fltVal;}
+{
+	m_fltVrest = fltVal;
+	Vth(m_fltVthi);
+
+	if(!m_lpSim->SimRunning())
+		m_fltVndisp = m_fltVrest;
+}
 
 /**
 \brief	Gets the maximum noise voltage.
@@ -332,7 +341,7 @@ void Neuron::VNoiseMax(float fltVal)
 
 \return	relative accomodation.
 **/
-float Neuron::RelativeAccomodation()
+float Neuron::RelativeAccommodation()
 {return m_fltRelativeAccom;}
 
 /**
@@ -343,7 +352,7 @@ float Neuron::RelativeAccomodation()
 
 \param	fltVal	The new value. 
 **/
-void Neuron::RelativeAccomodation(float fltVal)
+void Neuron::RelativeAccommodation(float fltVal)
 {
 	Std_InValidRange((float) 0, (float) 1, fltVal, TRUE, "RelativeAccomodation");
 
@@ -368,7 +377,7 @@ void Neuron::RelativeAccomodation(float fltVal)
 
 \return	accomodation time constant.
 **/
-float Neuron::AccomodationTimeConstant()
+float Neuron::AccommodationTimeConstant()
 {return m_fltAccomTimeConst;}
 
 /**
@@ -379,7 +388,7 @@ float Neuron::AccomodationTimeConstant()
 
 \param	fltVal	The new value. 
 **/
-void Neuron::AccomodationTimeConstant(float fltVal)
+void Neuron::AccommodationTimeConstant(float fltVal)
 {
 	m_fltAccomTimeConst = fltVal;
 
@@ -781,9 +790,9 @@ void Neuron::ResetSimulation()
 	m_fltFiringFreq = 0;
 	m_fltVNoise = 0;
 	m_fltDCTH = 0;
-	m_aryVn[0]=0.0;
-	m_aryVn[1]=0.0;
-	m_fltVn = m_fltVrest;
+	m_aryVn[0]=0;
+	m_aryVn[1]=0;
+	m_fltVn = 0;
 	m_fltVth = m_fltVthi;
 	m_fltVndisp = m_fltVrest;
 	m_fltVthdisp = m_fltVrest + m_fltVth;
@@ -876,15 +885,15 @@ BOOL Neuron::SetData(string strDataType, string strValue, BOOL bThrowError)
 		return TRUE;
 	}
 
-	if(strType == "RELATIVEACCOMODATION")
+	if(strType == "RELATIVEACCOMMODATION")
 	{
-		RelativeAccomodation(atof(strValue.c_str()));
+		RelativeAccommodation(atof(strValue.c_str()));
 		return TRUE;
 	}
 
-	if(strType == "ACCOMODATIONTIMECONST")
+	if(strType == "ACCOMMODATIONTIMECONSTANT")
 	{
-		AccomodationTimeConstant(atof(strValue.c_str()));
+		AccommodationTimeConstant(atof(strValue.c_str()));
 		return TRUE;
 	}
 
@@ -1037,8 +1046,8 @@ void Neuron::Load(CStdXml &oXml)
 	else
 		UseNoise(FALSE);
 
-	RelativeAccomodation(fabs(oXml.GetChildFloat("RelativeAccom", m_fltRelativeAccom)));
-	AccomodationTimeConstant(fabs(oXml.GetChildFloat("AccomTimeConst", m_fltAccomTimeConst)));
+	RelativeAccommodation(fabs(oXml.GetChildFloat("RelativeAccom", m_fltRelativeAccom)));
+	AccommodationTimeConstant(fabs(oXml.GetChildFloat("AccomTimeConst", m_fltAccomTimeConst)));
 
 	if(m_fltRelativeAccom != 0)
 		UseAccom(TRUE);

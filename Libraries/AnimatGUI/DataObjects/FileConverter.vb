@@ -25,6 +25,8 @@ Namespace DataObjects
         Protected m_aryMTL_Files() As String
         Protected m_aryASE_Files() As String
         Protected m_aryATVF_Files() As String
+        Protected m_aryABEF_Files() As String
+        Protected m_aryAFNN_Files() As String
 
         Protected m_xnProjectXml As New Framework.XmlDom
 
@@ -79,6 +81,8 @@ Namespace DataObjects
             m_aryMTL_Files = Directory.GetFiles(m_strProjectPath, "*.mtl")
             m_aryASE_Files = Directory.GetFiles(m_strProjectPath, "*.ase")
             m_aryATVF_Files = Directory.GetFiles(m_strProjectPath, "*.atvf")
+            m_aryABEF_Files = Directory.GetFiles(m_strProjectPath, "*.abef")
+            m_aryAFNN_Files = Directory.GetFiles(m_strProjectPath, "*.afnn")
 
             If Not Directory.Exists(m_strProjectPath & "\Backup") Then
                 Directory.CreateDirectory(m_strProjectPath & "\Backup")
@@ -93,6 +97,8 @@ Namespace DataObjects
             CopyFiles(m_aryMTL_Files)
             CopyFiles(m_aryASE_Files)
             CopyFiles(m_aryATVF_Files)
+            CopyFiles(m_aryABEF_Files)
+            CopyFiles(m_aryAFNN_Files)
 
         End Sub
 
@@ -116,6 +122,8 @@ Namespace DataObjects
             RemoveFiles(m_aryMTL_Files)
             RemoveFiles(m_aryASE_Files)
             RemoveFiles(m_aryATVF_Files)
+            RemoveFiles(m_aryABEF_Files)
+            RemoveFiles(m_aryAFNN_Files)
         End Sub
 
         Protected Sub RemoveFiles(ByVal aryFiles() As String)

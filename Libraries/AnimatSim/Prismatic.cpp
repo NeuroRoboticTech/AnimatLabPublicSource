@@ -178,7 +178,7 @@ BOOL Prismatic::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
-	if(Joint::SetData(strType, strValue, FALSE))
+	if(MotorizedJoint::SetData(strType, strValue, FALSE))
 		return TRUE;
 
 	//If it was not one of those above then we have a problem.

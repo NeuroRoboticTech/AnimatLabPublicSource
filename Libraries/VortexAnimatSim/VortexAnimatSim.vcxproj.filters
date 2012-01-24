@@ -75,9 +75,6 @@
     <ClCompile Include="VsIntersectionEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VsInverseMuscleCurrent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="VsJoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -218,9 +215,6 @@
     <ClInclude Include="VsIntersectionEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VsInverseMuscleCurrent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="VsJoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -302,5 +296,8 @@
     <ClInclude Include="VsAutoTransform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

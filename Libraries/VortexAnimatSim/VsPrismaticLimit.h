@@ -24,6 +24,8 @@ namespace VortexAnimatSim
 				osg::ref_ptr<osg::Material> m_osgBoxMat;
 				osg::ref_ptr<osg::StateSet> m_osgBoxSS;
 
+				virtual void SetLimitValues();
+
 			public:
 				VsPrismaticLimit();
 				virtual ~VsPrismaticLimit();

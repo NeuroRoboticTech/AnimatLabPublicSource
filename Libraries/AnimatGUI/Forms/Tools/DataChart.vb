@@ -512,7 +512,7 @@ Namespace Forms.Tools
 
             'Then Compare data itself. It should be the same amount of data and each entry should be within the 
             'maximum error when comparing between template and test.
-            CompareExportedDataRows(aryTemplateColumns, aryTemplateData, aryTestData, dblMaxError, iMaxRows)
+            CompareExportedDataRows(strPrefix, aryTemplateColumns, aryTemplateData, aryTestData, dblMaxError, iMaxRows)
 
         End Sub
 
@@ -533,7 +533,7 @@ Namespace Forms.Tools
 
         End Sub
 
-        Protected Overridable Sub CompareExportedDataRows(ByVal aryTemplateColumns() As String, ByVal aryTemplateData(,) As Double, ByVal aryTestData(,) As Double, ByVal dblMaxError As Double, ByVal iMaxRows As Integer)
+        Protected Overridable Sub CompareExportedDataRows(ByVal strPrefix As String, ByVal aryTemplateColumns() As String, ByVal aryTemplateData(,) As Double, ByVal aryTestData(,) As Double, ByVal dblMaxError As Double, ByVal iMaxRows As Integer)
 
             'First check to make sure the number of rows match.
 
@@ -549,7 +549,7 @@ Namespace Forms.Tools
 
                 For iRow As Integer = 0 To iRows
                     If Math.Abs(aryTemplateData(iCol, iRow) - aryTestData(iCol, iRow)) > dblMaxError Then
-                        Throw New System.Exception("Data mismatch for file: '" & Me.ExportDataFilename & _
+                        Throw New System.Exception("Data mismatch for test: " & strPrefix & " file: '" & Me.ExportDataFilename & _
                                                    "', Column: '" & aryTemplateColumns(iCol) & "', row: " & iRow & ", Template Value: '" & _
                                                    aryTemplateData(iCol, iRow) & "', Test Data: '" & aryTestData(iCol, iRow) & "'")
                     End If

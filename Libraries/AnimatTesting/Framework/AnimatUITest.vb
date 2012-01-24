@@ -555,6 +555,15 @@ Namespace Framework
 
         End Sub
 
+        Protected Sub VerifyPropertyValue(ByVal strPath As String, ByVal strProperty As String, ByVal dblValue As Double, Optional ByVal dblMaxError As Double = 0.001)
+            Dim dblPosX As Double = DirectCast(GetSimObjectProperty(strPath, strProperty), Double)
+
+            If Math.Abs(dblPosX - dblValue) > dblMaxError Then
+                Throw New System.Exception("Property does not match the target value: Path: " & strPath & ", Property: " & strProperty & ", Actual Val: " & dblPosX & ", Test value: " & dblValue)
+            End If
+
+        End Sub
+
         Protected Overridable Sub VerifyChildPosAfterRotate(ByVal strStructure As String, ByVal strAxis As String, ByVal strPart As String, _
                                                             ByVal dblRotation As Double, ByVal dblWorldXTest As Double, _
                                                             ByVal dblWorldYTest As Double, ByVal dblWorldZTest As Double, _

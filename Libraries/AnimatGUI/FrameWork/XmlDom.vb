@@ -99,6 +99,17 @@ Namespace Framework
             End If
         End Function
 
+        Public Sub UpdateSingleNodeAttribute(ByVal xnRootNode As XmlNode, ByVal strAttribute As String, ByVal strValue As String, Optional ByVal bThrowError As Boolean = True)
+            Dim xnAttrib As XmlAttribute = xnRootNode.Attributes(strAttribute)
+
+            If Not xnAttrib Is Nothing Then
+                xnAttrib.InnerText = strValue
+            ElseIf bThrowError Then
+                Throw New System.Exception("No attribute was found named '" & strAttribute & "'")
+            End If
+
+        End Sub
+
         Public Function GetRootNode(ByVal strNode As String) As XmlNode
             If Me.ChildNodes.Count <> 1 Then
                 Throw New System.Exception("Invlalid number of child nodes in the root.")

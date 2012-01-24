@@ -38,7 +38,7 @@
 
 #include "VsMotorVelocityStimulus.h"
 #include "VsForceStimulus.h"
-#include "VsInverseMuscleCurrent.h"
+//#include "VsInverseMuscleCurrent.h"
 
 #include "VsHudText.h"
 #include "VsHud.h"
@@ -490,8 +490,8 @@ try
 		lpStimulus = new ExternalInputStimulus;
 	else if(strType == "ENABLERINPUT")
 		lpStimulus = new EnablerStimulus;
-	else if(strType == "INVERSEMUSCLECURRENT")
-		lpStimulus = new VsInverseMuscleCurrent;
+	//else if(strType == "INVERSEMUSCLECURRENT")
+	//	lpStimulus = new VsInverseMuscleCurrent;
 	else if(strType == "CURRENT")
 		lpStimulus = new AnimatSim::ExternalStimuli::CurrentStimulus;
 	else

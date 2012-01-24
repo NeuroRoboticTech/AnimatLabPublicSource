@@ -175,21 +175,23 @@ void MotorizedJoint::MaxForce(float fltVal, BOOL bUseScaling)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "MaxTorque");
 
-	if(bUseScaling)
+	//If max torque is over 1000 N then assume we mean infinity.
+	if(fltVal >= 5000)
+		fltVal = 1e35f;
+	else
 	{
-		//If it uses radians then this is really a torque and not a force, so we have to scale appropriately.
-		if(this->UsesRadians())
-			fltVal *= m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits() * m_lpSim->InverseDistanceUnits();
-		else
-			fltVal *=  m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits();
+		if(bUseScaling)
+		{
+			//If it uses radians then this is really a torque and not a force, so we have to scale appropriately.
+			if(this->UsesRadians())
+				fltVal *= m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits() * m_lpSim->InverseDistanceUnits();
+			else
+				fltVal *=  m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits();
+		}
 	}
 
 	m_fltMaxForce = fltVal;
-
-	//If max torque is over 1000 N then assume we mean infinity.
-	if(m_fltMaxForce >= 1000)
-		m_fltMaxForce = 1e35f;
-
+	
 	if(m_lpPhysicsMotorJoint)
 		m_lpPhysicsMotorJoint->Physics_MaxForce(m_fltMaxForce);
 }
@@ -334,6 +336,49 @@ void MotorizedJoint::EnableLock(BOOL bOn, float fltPosition, float fltMaxLockFor
 		m_lpPhysicsMotorJoint->Physics_EnableLock(bOn, fltPosition, fltMaxLockForce);
 }
 
+BOOL MotorizedJoint::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(Joint::SetData(strType, strValue, FALSE))
+		return TRUE;
+
+	if(strType == "ENABLEMOTOR")
+	{
+		EnableMotor(Std_ToBool(strValue));
+		return true;
+	}
+
+	if(strType == "SERVOMOTOR")
+	{
+		Size(Std_ToBool(strValue));
+		return true;
+	}
+	
+	if(strType == "SERVOGAIN")
+	{
+		ServoGain(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "MAXFORCE")
+	{
+		MaxForce(atof(strValue.c_str()));
+		return true;
+	}
+
+	if(strType == "MAXVELOCITY")
+	{
+		MaxVelocity(atof(strValue.c_str()));
+		return true;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
 void MotorizedJoint::Load(CStdXml &oXml)
 {
 	Joint::Load(oXml);

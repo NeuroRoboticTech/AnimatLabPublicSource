@@ -143,7 +143,6 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClCompile Include="VsHud.cpp" />
     <ClCompile Include="VsHudText.cpp" />
     <ClCompile Include="VsIntersectionEvent.cpp" />
-    <ClCompile Include="VsInverseMuscleCurrent.cpp" />
     <ClCompile Include="VsJoint.cpp" />
     <ClCompile Include="VsLight.cpp" />
     <ClCompile Include="VsLine.cpp" />
@@ -192,7 +191,6 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClInclude Include="VsHud.h" />
     <ClInclude Include="VsHudText.h" />
     <ClInclude Include="VsIntersectionEvent.h" />
-    <ClInclude Include="VsInverseMuscleCurrent.h" />
     <ClInclude Include="VsJoint.h" />
     <ClInclude Include="VsLight.h" />
     <ClInclude Include="VsLine.h" />
@@ -229,6 +227,9 @@ Copy "$(TargetPath)" ..\..\bin</Command>
       <Project>{d1b49952-2999-4336-ae54-525373aa6251}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

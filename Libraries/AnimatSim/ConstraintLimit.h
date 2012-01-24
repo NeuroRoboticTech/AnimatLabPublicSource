@@ -47,6 +47,9 @@ namespace AnimatSim
 			/// as opposed to being used to show the limit of a constraint.
 			BOOL m_bIsShowPosition;
 
+			/// Sets the limit values of the joint in the child object.
+			virtual void SetLimitValues() = 0;
+
 		public:
 			ConstraintLimit();
 			virtual ~ConstraintLimit();

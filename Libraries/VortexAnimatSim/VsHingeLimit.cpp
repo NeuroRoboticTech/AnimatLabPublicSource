@@ -69,6 +69,11 @@ void VsHingeLimit::SetLimitPos()
 	}
 
 	//Set the limit on the physics hinge object.
+	SetLimitValues();
+}
+
+void VsHingeLimit::SetLimitValues()
+{
 	if(m_vxHinge)
 	{
 		if(m_bIsLowerLimit)

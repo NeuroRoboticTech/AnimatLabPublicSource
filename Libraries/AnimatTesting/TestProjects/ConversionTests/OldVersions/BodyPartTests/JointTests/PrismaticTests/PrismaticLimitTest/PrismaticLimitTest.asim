@@ -6,7 +6,7 @@
 <EnableSimRecording>True</EnableSimRecording>
 <SetSimEnd>True</SetSimEnd>
 <APIFile/>
-<SimEndTime Value="3" Scale="None" Actual="3"/>
+<SimEndTime Value="2" Scale="None" Actual="2"/>
 <Environment>
 <PhysicsTimeStep Value="1" Scale="milli" Actual="0.001"/>
 <FluidDensity Value="1" Scale="None" Actual="1"/>
@@ -53,13 +53,13 @@
 <dwQuality>7500</dwQuality>
 <fccHandler>1668707181</fccHandler>
 <fccType>0</fccType>
-<LookAtStructureID>a5029db8-e14a-40fb-9da9-f961f76737d7</LookAtStructureID>
-<LookAtBodyID>a05364a5-2630-4c59-b4ef-52abd8fa4f1e</LookAtBodyID>
+<LookAtStructureID>c331bca6-56d3-4cfa-bbc0-c73c58fe85a6</LookAtStructureID>
+<LookAtBodyID>1e649e1a-4147-463c-8c5c-82aa31532a77</LookAtBodyID>
 </Camera>
 <Organisms/>
 <Structures>
 <Structure>
-<ID>a5029db8-e14a-40fb-9da9-f961f76737d7</ID>
+<ID>c331bca6-56d3-4cfa-bbc0-c73c58fe85a6</ID>
 <Name>Structure_1</Name>
 <Type>Basic</Type>
 <Reference>False</Reference>

@@ -92,8 +92,10 @@ void ConstraintLimit::Damping(float fltVal, BOOL bUseScaling)
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "Constraint::Damping", TRUE);
 
 	if(bUseScaling)
-		fltVal = fltVal/m_lpSim->DisplayMassUnits();
+		fltVal *= m_lpSim->InverseMassUnits();
+		//fltVal = fltVal/m_lpSim->DisplayMassUnits();
 	m_fltDamping = fltVal;
+	SetLimitValues();
 }
 
 float ConstraintLimit::Restitution() {return m_fltRestitution;};
@@ -102,6 +104,7 @@ void ConstraintLimit::Restitution(float fltVal)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "Constraint::Restitution", TRUE);
 	m_fltRestitution = fltVal;
+	SetLimitValues();
 }
 
 float ConstraintLimit::Stiffness() {return m_fltStiffness;};
@@ -114,6 +117,7 @@ void ConstraintLimit::Stiffness(float fltVal, BOOL bUseScaling)
 		fltVal *= m_lpSim->InverseMassUnits();
 
 	m_fltStiffness = fltVal;
+	SetLimitValues();
 }
 
 /**
