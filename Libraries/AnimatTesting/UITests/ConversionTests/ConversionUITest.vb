@@ -47,6 +47,14 @@ Namespace UITests
 
             Protected Overridable Sub TestConversionProject(ByVal strDataPrefix As String, Optional iMaxRows As Integer = -1, Optional ByVal dblMaxError As Double = 0.05)
 
+                Dim aryMaxErrors As New Hashtable
+                aryMaxErrors.Add("default", dblMaxError)
+
+                TestConversionProject(strDataPrefix, aryMaxErrors, iMaxRows)
+            End Sub
+
+            Protected Overridable Sub TestConversionProject(ByVal strDataPrefix As String, ByVal aryMaxErrors As Hashtable, Optional iMaxRows As Integer = -1)
+
                 SetWindowsToOpen()
 
                 ConvertProject()
@@ -63,7 +71,7 @@ Namespace UITests
                 RunSimulationWaitToEnd()
 
                 ''Compare chart data to verify simulation results.
-                CompareSimulation(m_strRootFolder & m_strTestDataPath, strDataPrefix, dblMaxError, iMaxRows)
+                CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, strDataPrefix, iMaxRows)
 
             End Sub
 

@@ -363,6 +363,12 @@ BOOL PacemakerNeuron::SetData(string strDataType, string strValue, BOOL bThrowEr
 		Btl(atof(strValue.c_str()));
 		return TRUE;
 	}
+
+	if(strType == "MTL")
+	{
+		Mtl(atof(strValue.c_str()));
+		return TRUE;
+	}
 	
 	if(strType == "TH")
 	{

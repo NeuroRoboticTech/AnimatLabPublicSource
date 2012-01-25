@@ -1942,7 +1942,7 @@ void Simulator::Step()
 		m_lpSimRecorder->StepSimulation();
 
 	m_lTimeSlice++;
-	m_fltTime += m_fltTimeStep;
+	m_fltTime = m_lTimeSlice*m_fltTimeStep;
 }
 
 /**

@@ -207,12 +207,14 @@ namespace AnimatSim
 
 			///This is the minimum integration time step taken for all neural modules and the physics engine.
 			float m_fltTimeStep;
+			double m_dblTimeStep;
 
 			///The current time slice. This a long value.
 			long m_lTimeSlice;
 
 			///The current simulation time.
 			float m_fltTime;
+			double m_dblTime;
 
 			/// true if we the user has manually set the simulation end time.
 			BOOL m_bSetEndSim;

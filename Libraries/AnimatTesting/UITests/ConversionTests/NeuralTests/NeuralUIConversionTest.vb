@@ -41,10 +41,17 @@ Namespace UITests
 #Region "Methods"
                 '
 
+#Region "Firing Rate Methods"
+
                 <TestMethod()>
                 Public Sub Test_FiringRate_NormalNeuron()
 
-                    Dim dblMaxError As Double = 0.0001
+                    Dim aryMaxErrors As New Hashtable
+                    aryMaxErrors.Add("Time", 0.001)
+                    aryMaxErrors.Add("Ie", 0.0000000001)
+                    aryMaxErrors.Add("FF", 0.01)
+                    aryMaxErrors.Add("Vm", 0.0001)
+                    aryMaxErrors.Add("default", 0.0001)
 
                     m_strProjectName = "FiringRate_NormalNeuron"
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
@@ -52,63 +59,116 @@ Namespace UITests
                     m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
 
                     'Load and convert the project.
-                    TestConversionProject("AfterConversion_", , dblMaxError)
+                    TestConversionProject("AfterConversion_", aryMaxErrors)
 
                     'Now decrease Cm from 3nf to 1nf
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Cm", "1 n"})
                     RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "Cm1nf_", dblMaxError)
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Cm1nf_")
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Cm", "3 n"})
 
                     'Now increase Gm from 100nS to 200nS
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Gm", "200 n"})
                     RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "Gm200ns_", dblMaxError)
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Gm200ns_")
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Gm", "100 n"})
 
                     'Now increase Vth from 0 to 20mV
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vth", "20 m"})
                     RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "Vth20mv_", dblMaxError)
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vth20mv_")
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vth", "0 m"})
 
                     'Now increase FMin from 0 to 0.2 Hz
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Fmin", "0.2"})
                     RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "Fmin2_", dblMaxError)
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Fmin2_")
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Fmin", "0"})
 
                     'Now increase Gain from 15 to 20
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Gain", "20"})
                     RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "Gain20_", dblMaxError)
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Gain20_")
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Gain", "15"})
 
                     'Now decrease Vrest from 0 to -70 mv and Vth
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vrest", "-70 m"})
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vth", "-70 m"})
                     RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "Vrest-70mv_", dblMaxError)
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vrest-70mv_")
 
                     'Now increase accomodation from 0 to 1
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeAccommodation", "1"})
                     RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "Accom1_", dblMaxError)
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Accom1_")
 
                     'Now decrease accomodation tc from 200 ms to 100 ms
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AccommodationTimeConstant", "100 m"})
                     RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "AccomTc100ms_", dblMaxError)
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AccomTc100ms_")
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeAccommodation", "0"})
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AccommodationTimeConstant", "200 m"})
 
                     'Change Vnoise to 5 mv
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "VNoiseMax", "5 m"})
                     RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, "Vnoise5mv_", dblMaxError)
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vnoise5mv_")
 
                 End Sub
 
+                <TestMethod()>
+                Public Sub Test_FiringRate_PacemakerNeuron()
+
+                    Dim aryMaxErrors As New Hashtable
+                    aryMaxErrors.Add("Time", 0.001)
+                    aryMaxErrors.Add("FF", 0.01)
+                    aryMaxErrors.Add("Vm", 0.0001)
+                    aryMaxErrors.Add("Intrinsic", 0.0000000001)
+                    aryMaxErrors.Add("External", 0.0000000001)
+                    aryMaxErrors.Add("default", 0.0001)
+
+                    m_strProjectName = "FiringRate_PacemakerNeuron"
+                    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
+                    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
+                    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+
+                    'Load and convert the project.
+                    TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                    'Now decrease Cm from 3nf to 1nf
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Ih", "2.5 n"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Il", "-2.5 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IhIl_2_5_")
+
+                    'Now increase Gm from 100nS to 200nS
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Th", "0.5"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Th_0_5_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Th", "1"})
+
+                    'Now increase Vth from 0 to 20mV
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Mtl", "-50"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Mtl_-50_")
+
+                    'Now increase FMin from 0 to 0.2 Hz
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Btl", "1"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Btl_1_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Mtl", "-100"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Btl", "2"})
+
+                    'Now increase Gain from 15 to 20
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vssm", "0.5 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\C", "CurrentOn", "-2 n"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\D", "CurrentOn", "2 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vsm_0_5_")
+
+                End Sub
+
+#End Region
 
 #Region "Additional test attributes"
                 '

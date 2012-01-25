@@ -482,7 +482,7 @@ Namespace Forms.Tools
             System.IO.File.Copy(strFrom, strTo, True)
         End Sub
 
-        Public Overridable Sub CompareExportedData(ByVal strPrefix As String, ByVal strTemplatePath As String, ByVal dblMaxError As Double, ByVal iMaxRows As Integer)
+        Public Overridable Sub CompareExportedData(ByVal strPrefix As String, ByVal strTemplatePath As String, ByVal aryMaxErrors As Hashtable, ByVal iMaxRows As Integer)
 
             'Lets try and load the original file and then the new test file.
             Dim aryTemplateColumns() As String
@@ -512,7 +512,7 @@ Namespace Forms.Tools
 
             'Then Compare data itself. It should be the same amount of data and each entry should be within the 
             'maximum error when comparing between template and test.
-            CompareExportedDataRows(strPrefix, aryTemplateColumns, aryTemplateData, aryTestData, dblMaxError, iMaxRows)
+            CompareExportedDataRows(strPrefix, aryTemplateColumns, aryTemplateData, aryTestData, aryMaxErrors, iMaxRows)
 
         End Sub
 
@@ -533,7 +533,7 @@ Namespace Forms.Tools
 
         End Sub
 
-        Protected Overridable Sub CompareExportedDataRows(ByVal strPrefix As String, ByVal aryTemplateColumns() As String, ByVal aryTemplateData(,) As Double, ByVal aryTestData(,) As Double, ByVal dblMaxError As Double, ByVal iMaxRows As Integer)
+        Protected Overridable Sub CompareExportedDataRows(ByVal strPrefix As String, ByVal aryTemplateColumns() As String, ByVal aryTemplateData(,) As Double, ByVal aryTestData(,) As Double, ByVal aryMaxErrors As Hashtable, ByVal iMaxRows As Integer)
 
             'First check to make sure the number of rows match.
 
@@ -545,7 +545,11 @@ Namespace Forms.Tools
             Dim iRows As Integer = UBound(aryTemplateData, 2)
             If iMaxRows > 0 Then iRows = Math.Min(iRows, iMaxRows)
 
+            Dim dblMaxError As Double = 0.01
+
             For iCol As Integer = 0 To iCols
+
+                dblMaxError = GetMaxError(aryTemplateColumns(iCol), aryMaxErrors)
 
                 For iRow As Integer = 0 To iRows
                     If Math.Abs(aryTemplateData(iCol, iRow) - aryTestData(iCol, iRow)) > dblMaxError Then
@@ -558,6 +562,18 @@ Namespace Forms.Tools
 
             Next
         End Sub
+
+        Protected Function GetMaxError(ByVal strColName As String, ByVal aryMaxErrors As Hashtable) As Double
+            Dim dblMaxError As Double = 0.05
+
+            If aryMaxErrors.ContainsKey(strColName) Then
+                dblMaxError = CDbl(aryMaxErrors(strColName))
+            ElseIf aryMaxErrors.ContainsKey("default") Then
+                dblMaxError = CDbl(aryMaxErrors("default"))
+            End If
+
+            Return dblMaxError
+        End Function
 
         Public Overridable Sub UpdateChartConfiguration(ByVal bReconfigureData As Boolean)
 

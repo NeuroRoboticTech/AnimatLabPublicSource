@@ -185,11 +185,30 @@ Namespace Framework
             'No prefix on the exported chart.
             ExecuteMethod("ExportDataCharts", New Object() {"", ""})
 
+            'Prep the hashchart
+            Dim aryMaxErrors As New Hashtable
+            aryMaxErrors.Add("default", dblMaxError)
+
             'If we are flagged as needing to generate the template files then lets do that. Otherwise, lets compare the charts to the templates.
             If m_bGenerateTempates Then
                 ExecuteMethod("CopyChartData", New Object() {strTestDataPath, strPrefix})
             Else
-                ExecuteMethod("CompareExportedDataCharts", New Object() {strPrefix, strTestDataPath, dblMaxError, iMaxRows})
+                ExecuteMethod("CompareExportedDataCharts", New Object() {strPrefix, strTestDataPath, aryMaxErrors, iMaxRows})
+            End If
+
+        End Sub
+
+        Protected Overridable Sub CompareSimulation(ByVal strTestDataPath As String, ByVal aryMaxErrors As Hashtable, _
+                                                    Optional ByVal strPrefix As String = "", Optional ByVal iMaxRows As Integer = -1)
+
+            'No prefix on the exported chart.
+            ExecuteMethod("ExportDataCharts", New Object() {"", ""})
+
+            'If we are flagged as needing to generate the template files then lets do that. Otherwise, lets compare the charts to the templates.
+            If m_bGenerateTempates Then
+                ExecuteMethod("CopyChartData", New Object() {strTestDataPath, strPrefix})
+            Else
+                ExecuteMethod("CompareExportedDataCharts", New Object() {strPrefix, strTestDataPath, aryMaxErrors, iMaxRows})
             End If
 
         End Sub
