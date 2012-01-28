@@ -772,7 +772,7 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overrides Sub UpdateTreeNode()
-            If Not m_ParentDiagram Is Nothing AndAlso Not Me.WorkspaceNode Is Nothing Then
+            If Not Me.WorkspaceNode Is Nothing Then
                 Me.WorkspaceNode.Text = Me.ItemName
             End If
         End Sub

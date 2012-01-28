@@ -1390,8 +1390,12 @@ Namespace Framework
         Public Shared Function FindTreeNodeByName(ByVal strName As String, ByVal aryNodes As Crownwood.DotNetMagic.Controls.NodeCollection, Optional ByVal bRecursive As Boolean = True) As Crownwood.DotNetMagic.Controls.Node
             Dim tnFound As Crownwood.DotNetMagic.Controls.Node
 
+            Dim strNodeText As String
+            Dim strReturn As String = vbCrLf
             For Each tnNode As Crownwood.DotNetMagic.Controls.Node In aryNodes
-                If tnNode.Text = strName Then
+                'Remove any returns before comparing.
+                strNodeText = tnNode.Text.Replace(strReturn, "")
+                If strNodeText = strName Then
                     Return tnNode
                 End If
 

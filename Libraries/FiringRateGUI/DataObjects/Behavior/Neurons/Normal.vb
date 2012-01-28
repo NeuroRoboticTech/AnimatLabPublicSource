@@ -464,8 +464,7 @@ Namespace DataObjects.Behavior.Neurons
             oXml.AddChildElement("Cn", m_snCm.ActualValue)
             oXml.AddChildElement("Gn", m_snGm.ActualValue)
 
-            Dim dblVth As Double = (m_snVth.ActualValue - m_snVrest.ActualValue)
-            oXml.AddChildElement("Vth", dblVth)
+            oXml.AddChildElement("Vth", m_snVth.ActualValue)
             oXml.AddChildElement("Vrest", m_snVrest.ActualValue)
             oXml.AddChildElement("Fmin", m_snFmin.ActualValue)
             oXml.AddChildElement("Gain", m_snGain.ActualValue)

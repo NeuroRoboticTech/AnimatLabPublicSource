@@ -1,0 +1,11 @@
+<NervousSystem>
+<NeuralModules>
+<NeuralModule>
+<ModuleName>FastNeuralNet</ModuleName>
+<ModuleFileName>FastNeuralNet_vc7D.dll</ModuleFileName>
+<Type>FastNeuralModule</Type>
+<NeuralNetFile>Organism_1.afnn</NeuralNetFile>
+</NeuralModule>
+</NeuralModules>
+<Adapters/>
+</NervousSystem>
