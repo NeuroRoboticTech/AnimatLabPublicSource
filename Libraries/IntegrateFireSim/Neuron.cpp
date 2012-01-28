@@ -851,7 +851,7 @@ void Neuron::PreCalc(IntegrateFireNeuralModule *lpNS)
 		if (m_aryTonicInputPeriodType[i]==0)
 			m_aryNextSponSynTime[i]=0.;
 		else
-			m_aryNextSponSynTime[i]=(-m_aryTonicInputPeriod[i]*log(double (rand())/double(RAND_MAX))+1);
+			m_aryNextSponSynTime[i]=(-m_aryTonicInputPeriod[i]*log(double (Std_LRand(0, RAND_MAX))/double(RAND_MAX))+1);
 		m_aryFacilSponSynG[i]=lpNS->GetSpikingChemSynAt(i)->m_dSynAmp;
 
 		m_aryDG[i]=exp(-m_dDT/lpNS->GetSpikingChemSynAt(i)->m_dDecay);
@@ -1024,7 +1024,7 @@ void Neuron::CalcUpdate(IntegrateFireNeuralModule *lpNS)
 						if (m_pNetworkData->m_bBlockedList[i])
 						{
 							//ASSERT(m_pNetworkData->GetPartialBlockInUse());
-							double noise =double (rand())/ RAND_MAX;
+							double noise =double (Std_LRand(0, RAND_MAX))/ RAND_MAX;
 							float top=m_pNetworkData->GetPartialBlockTop();
 							float bottom=m_pNetworkData->GetPartialBlockBottom();
 							block=bottom/100+noise*(top-bottom)/100;
@@ -1040,7 +1040,7 @@ void Neuron::CalcUpdate(IntegrateFireNeuralModule *lpNS)
 					if (m_aryTonicInputPeriodType[i]==0)
 						m_aryNextSponSynTime[i]=m_aryTonicInputPeriod[i];
 					else
-						m_aryNextSponSynTime[i]=(-m_aryTonicInputPeriod[i]*log(double (rand())/double(RAND_MAX))+1);
+						m_aryNextSponSynTime[i]=(-m_aryTonicInputPeriod[i]*log(double (Std_LRand(0, RAND_MAX))/double(RAND_MAX))+1);
 				}
 			m_aryNextSponSynTime[i]-=m_dDT;
 			}
@@ -1157,7 +1157,7 @@ void Neuron::CalcUpdate(IntegrateFireNeuralModule *lpNS)
 // add noise as mempot fluctuation
 	if (m_dNoise!=0)
 	{
-		double noise =(double) rand()/ RAND_MAX;
+		double noise =(double) Std_LRand(0, RAND_MAX)/ RAND_MAX;
 		noise-=0.5;
 		noise*=m_dNoise;
 		m_dNewMemPot+=noise;

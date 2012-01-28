@@ -781,6 +781,8 @@ void Neuron::VerifySystemPointers()
 
 void Neuron::ResetSimulation()
 {
+	AnimatSim::Node::ResetSimulation();
+
 	m_fltExternalI = 0;
 	m_fltIntrinsicI = 0;
 	m_fltSynapticI = 0;

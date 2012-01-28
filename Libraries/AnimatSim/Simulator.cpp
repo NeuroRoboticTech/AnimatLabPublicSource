@@ -1530,6 +1530,24 @@ long Simulator::SnapshotByteSize() {return m_lSnapshotByteSize;}
 #pragma region SimulationMethods
 
 /**
+\brief	Initializes the random number generation system.
+
+\author	dcofer
+\date	1/27/2012
+**/
+void Simulator::InitializeRandomNumbers()
+{
+	//Set the random number generator seed
+	if(m_bAutoGenerateRandomSeed)
+		GenerateAutoSeed();
+	else
+	{
+		Std_SRand(m_iManualRandomSeed);
+		srand(m_iManualRandomSeed);
+	}
+}
+
+/**
 \brief	Initializes all of the structures of this simulation.
 
 \details This method runs through all of the "static" structures and organisms
@@ -1540,6 +1558,8 @@ and calls their Initialize method.
 **/
 void Simulator::InitializeStructures()
 {
+	InitializeRandomNumbers();
+
 	m_oMaterialMgr.Initialize();
 
 	//We need to rerun the code to set the physics time step here in initialize. The reason is that we set this when 
@@ -1839,6 +1859,8 @@ void Simulator::ResetSimulation()
 	m_iPhysicsStepCount = 0;
 	m_bPaused = TRUE;
 	m_bSimRunning = FALSE;
+
+	InitializeRandomNumbers();
 
 	CStdMap<string, Structure *>::iterator oPos;
 	Structure *lpStructure = NULL;

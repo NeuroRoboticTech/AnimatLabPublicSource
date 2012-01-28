@@ -43,8 +43,6 @@ namespace FiringRateSim
 		Neuron *LoadNeuron(CStdXml &oXml);
 		void LoadNetworkXml(CStdXml &oXml);
 
-		void GenerateAutoSeed();
-
 	public:
 		FiringRateModule();
 		virtual ~FiringRateModule();

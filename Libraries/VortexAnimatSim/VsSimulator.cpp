@@ -122,7 +122,10 @@ void VsSimulator::PhysicsTimeStep(float fltVal)
 	Simulator::PhysicsTimeStep(fltVal);
 
 	if(m_vxFrame)
+	{
 		m_vxFrame->setTimeStep(m_fltPhysicsTimeStep);		
+		SetSimulationStabilityParams();
+	}
 }
 
 void VsSimulator::Gravity(float fltVal, BOOL bUseScaling)
@@ -432,15 +435,6 @@ void VsSimulator::GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4
 void VsSimulator::Initialize(int argc, const char **argv)
 {
 	InitializeVortex(argc, argv);
-
-	//Set the random number generator seed
-	if(m_bAutoGenerateRandomSeed)
-		GenerateAutoSeed();
-	else
-	{
-		Std_SRand(m_iManualRandomSeed);
-		srand(m_iManualRandomSeed);
-	}
 
 	InitializeStructures();
 

@@ -268,21 +268,6 @@ BOOL FiringRateModule::RemoveItem(string strItemType, string strID, BOOL bThrowE
 
 #pragma endregion
 
-/**
-\brief	Generates an automatic seed value.
-
-\author	dcofer
-\date	3/29/2011
-**/
-void FiringRateModule::GenerateAutoSeed()
-{
-	SYSTEMTIME st;
-	GetLocalTime(&st);
-
-	int iSeed = (unsigned) (st.wSecond + st.wMilliseconds + Std_IRand(0, 1000));
-	Std_SRand(iSeed);
-}
-
 long FiringRateModule::CalculateSnapshotByteSize()
 {
 	long lByteSize = 0;
@@ -328,8 +313,6 @@ void FiringRateModule::Load(CStdXml &oXml)
 	LoadNetworkXml(oXml);
 
 	oXml.OutOfElem(); //OutOf NeuralModule Element
-
-	//GenerateAutoSeed();
 
 	TRACE_DEBUG("Finished loading nervous system config file.");
 }

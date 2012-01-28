@@ -27,11 +27,18 @@ namespace FiringRateSim
 			/// Duration of the current mode (HI or LOW)
 			float m_fltITime;
 
+			/// Default Type of the intrinsic current that is active (HI or LOW). 
+			/// Used to reset the intrinsic type at the beginning of each run.
+			unsigned char m_iIntrinsicTypeDefault;
+
 			/// Type of the intrinsic current that is active (HI or LOW)
 			unsigned char m_iIntrinsicType;
 
 			/// The active intrinsic current.
 			float m_fltIntrinsic;
+
+			/// The low intrinsic current init value
+			float m_fltIlinit;
 
 			/// The low intrinsic current
 			float m_fltIl;
@@ -66,6 +73,9 @@ namespace FiringRateSim
 			float Il();
 			void Il(float fltVal);
 
+			float Ilinit();
+			void Ilinit(float fltVal);
+
 			virtual unsigned char NeuronType();
 
 			AnimatSim::Gains::Gain *CurrentDistribution() {return m_lpCurrentGraph;};
@@ -87,6 +97,7 @@ namespace FiringRateSim
 #pragma endregion
 
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+			virtual void ResetSimulation();
 
 			virtual void Load(CStdXml &oXml);
 		};

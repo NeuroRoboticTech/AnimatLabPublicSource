@@ -24,16 +24,17 @@ namespace FiringRateSim
 **/
 RandomNeuron::RandomNeuron()
 {
-	m_fltITime=0;
-
 	//decide randomly whether it starts high or low.
 	if(Std_IRand(0, 100) > 50) 
-		m_iIntrinsicType=IH_CURRENT;
+		m_iIntrinsicTypeDefault=IH_CURRENT;
 	else
-		m_iIntrinsicType=IL_CURRENT;
+		m_iIntrinsicTypeDefault=IL_CURRENT;
 
+	m_fltITime=0;
+	m_iIntrinsicType = m_iIntrinsicTypeDefault;
 	m_fltIntrinsic=0;
 	m_fltIl=0;
+	m_fltIlinit = 0;
 
 	m_lpCurrentGraph = NULL;
 	m_lpBurstGraph = NULL;
@@ -146,6 +147,31 @@ float RandomNeuron::Il()
 **/
 void RandomNeuron::Il(float fltVal)
 {m_fltIl=fltVal;}
+
+/**
+\brief	Gets the low current init value.
+
+\author	dcofer
+\date	3/29/2011
+
+\return	low current init value.
+**/
+float RandomNeuron::Ilinit()
+{return m_fltIlinit;}
+
+/**
+\brief	Sets the low current init value.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value. 
+**/
+void RandomNeuron::Ilinit(float fltVal)
+{
+	m_fltIlinit=fltVal;
+	m_fltIl = m_fltIlinit;
+}
 
 /**
 \brief	Gets the neuron type.
@@ -308,6 +334,16 @@ void RandomNeuron::LowCurrentOn()
 	m_fltITime = m_lpIBurstGraph->CalculateGain((float) dblRand); 
 }
 
+void RandomNeuron::ResetSimulation()
+{
+	Neuron::ResetSimulation();
+
+	m_fltITime=0;
+	m_iIntrinsicType = m_iIntrinsicTypeDefault;
+	m_fltIntrinsic=0;
+	m_fltIl=m_fltIlinit;
+}
+
 float RandomNeuron::CalculateIntrinsicCurrent(FiringRateModule *lpModule, float fltInputCurrent)
 {
 
@@ -363,7 +399,7 @@ BOOL RandomNeuron::SetData(string strDataType, string strValue, BOOL bThrowError
 
 	if(strType == "IL")
 	{
-		Il(atof(strValue.c_str()));
+		Ilinit(atof(strValue.c_str()));
 		return TRUE;
 	}
 
@@ -402,7 +438,7 @@ void RandomNeuron::Load(CStdXml &oXml)
 
 	oXml.IntoElem();  //Into Neuron Element
 
-	Il(oXml.GetChildFloat("Il"));
+	Ilinit(oXml.GetChildFloat("Il"));
 
 	CurrentDistribution(AnimatSim::Gains::LoadGain(m_lpSim, "CurrentGraph", oXml));
 	BurstLengthDistribution(AnimatSim::Gains::LoadGain(m_lpSim, "BurstGraph", oXml));

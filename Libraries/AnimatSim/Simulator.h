@@ -428,6 +428,7 @@ namespace AnimatSim
 
 #pragma region SimulationMethods
 
+			virtual void InitializeRandomNumbers();
 			virtual void InitializeStructures();
 
 			virtual BOOL CheckSimulationBlock();
