@@ -1402,7 +1402,7 @@ Namespace Forms.Charts
             'The simulation is starting so we need to go through and add this chart and all of its
             'data columns so we can recieve data during the simulation run.
 
-            If Me.RequiresAutoDataCollectInterval Then ResetCollectDataInterval()
+            If Me.AutoCollectDataInterval Then ResetCollectDataInterval()
 
             'If we are updating the chart at the end of the collection interval then
             'we need to setup a few variables.

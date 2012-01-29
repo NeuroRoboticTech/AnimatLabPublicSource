@@ -296,7 +296,7 @@ Namespace Forms.Tools
             m_aryAutoFillColors(19) = System.Drawing.Color.Navy
             m_aryAutoFillColors(20) = System.Drawing.Color.OliveDrab
 
-            'AddHandler Util.Application.TimeStepChanged, AddressOf Me.OnTimeStepChanged
+            AddHandler Util.Application.TimeStepChanged, AddressOf Me.OnTimeStepChanged
 
         End Sub
 
@@ -442,7 +442,7 @@ Namespace Forms.Tools
 
         Protected Overridable Function CalculateCollectDataInterval() As Double
 
-            Dim dblTimeStep As Double = Util.Environment.PhysicsTimeStep.Value
+            Dim dblTimeStep As Double = -1
             Dim dblTemp As Double
 
             Dim doAxis As AnimatGUI.DataObjects.Charting.Axis
@@ -450,7 +450,7 @@ Namespace Forms.Tools
                 doAxis = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Charting.Axis)
 
                 dblTemp = doAxis.TimeStep()
-                If dblTemp < dblTimeStep Then
+                If dblTimeStep <= 0 OrElse dblTemp < dblTimeStep Then
                     dblTimeStep = dblTemp
                 End If
             Next
@@ -706,7 +706,7 @@ Namespace Forms.Tools
         End Sub
 
         Protected Sub OnTimeStepChanged(ByVal doObject As Framework.DataObject)
-            If Me.RequiresAutoDataCollectInterval Then ResetCollectDataInterval()
+            If Me.AutoCollectDataInterval Then ResetCollectDataInterval()
         End Sub
 
 #End Region

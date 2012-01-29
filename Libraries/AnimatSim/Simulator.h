@@ -431,6 +431,8 @@ namespace AnimatSim
 			virtual void InitializeRandomNumbers();
 			virtual void InitializeStructures();
 
+			virtual void NotifyTimeStepModified();
+
 			virtual BOOL CheckSimulationBlock();
 			virtual void CheckEndSimulationTime();
 

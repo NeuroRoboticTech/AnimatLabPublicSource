@@ -382,11 +382,6 @@ void CurrentStimulus::Initialize()
 {
 	ExternalStimulus::Initialize();
 
-	m_lCycleOnDuration = (long) (m_fltCycleOnDuration / m_lpSim->TimeStep() + 0.5);
-	m_lCycleOffDuration = (long) (m_fltCycleOffDuration / m_lpSim->TimeStep() + 0.5);
-	m_lBurstOnDuration = (long) (m_fltBurstOnDuration / m_lpSim->TimeStep() + 0.5);
-	m_lBurstOffDuration = (long) (m_fltBurstOffDuration / m_lpSim->TimeStep() + 0.5);
-
 	//Lets try and get the node we will dealing with.
 	m_lpNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strTargetNodeID));
 	if(!m_lpNode)
@@ -417,6 +412,16 @@ float CurrentStimulus::GetCurrentOn()
 	else
 		return m_fltCurrentOn;
 
+}
+
+void CurrentStimulus::SetSliceData()
+{
+	ActivatedItem::SetSliceData();
+
+	m_lCycleOnDuration = (long) (m_fltCycleOnDuration / m_lpSim->TimeStep() + 0.5);
+	m_lCycleOffDuration = (long) (m_fltCycleOffDuration / m_lpSim->TimeStep() + 0.5);
+	m_lBurstOnDuration = (long) (m_fltBurstOnDuration / m_lpSim->TimeStep() + 0.5);
+	m_lBurstOffDuration = (long) (m_fltBurstOffDuration / m_lpSim->TimeStep() + 0.5);
 }
 
 void CurrentStimulus::Activate()

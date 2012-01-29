@@ -128,6 +128,8 @@ namespace AnimatSim
 		virtual void SimPausing();
 		virtual void SimStopping();
 
+		virtual void TimeStepModified();
+
 #pragma endregion
 
 #pragma region SnapshotMethods

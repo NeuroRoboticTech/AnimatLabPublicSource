@@ -303,6 +303,15 @@ void PacemakerNeuron::LowCurrentOn(float fltVss)
 	}
 }
 
+void PacemakerNeuron::ResetSimulation()
+{
+	Neuron::ResetSimulation();
+
+	m_fltVss = 0;
+	m_fltITime=0;
+	m_iIntrinsicType=IH_CURRENT;
+	m_fltInterburstInterval = 0;
+}
 
 void PacemakerNeuron::StepSimulation()
 {

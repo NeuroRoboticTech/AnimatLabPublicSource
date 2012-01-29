@@ -155,6 +155,13 @@ float BistableNeuron::CalculateIntrinsicCurrent(FiringRateModule *lpModule, floa
 	return m_fltIntrinsic;
 }
 
+void BistableNeuron::ResetSimulation()
+{
+	Neuron::ResetSimulation();
+
+	m_fltIntrinsic=0;
+}
+
 #pragma region DataAccesMethods
 
 BOOL BistableNeuron::SetData(string strDataType, string strValue, BOOL bThrowError)

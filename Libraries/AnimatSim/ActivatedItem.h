@@ -66,6 +66,8 @@ namespace AnimatSim
 		/// true if item has been activated
 		BOOL m_bIsActivated;
 
+		virtual void SetSliceData();
+
 	public:
 		ActivatedItem();
 		virtual ~ActivatedItem();
@@ -126,6 +128,7 @@ namespace AnimatSim
 		virtual void ResetSimulation();
 		virtual void Activate();
 		virtual void Deactivate();
+		virtual void TimeStepModified();
 
 		virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 		virtual BOOL Overlaps(ActivatedItem *lpItem);

@@ -1612,6 +1612,25 @@ void Simulator::InitializeStructures()
 }
 
 /**
+\brief	Notifies the objects that time step has been modified.
+
+\author	dcofer
+\date	1/28/2012
+**/
+void Simulator::NotifyTimeStepModified()
+{
+	//Go through and call TimeStepModified for all objects.
+	CStdMap<string, AnimatBase *>::iterator oPos;
+	AnimatBase *lpBase = NULL;
+	for(oPos=m_aryObjectList.begin(); oPos!=m_aryObjectList.end(); ++oPos)
+	{
+		lpBase = oPos->second;
+		if(lpBase && lpBase != this)
+			lpBase->TimeStepModified();
+	}
+}
+
+/**
 \brief	Blocks the simulation from stepping.
 
 \details The simulation and GUI are running in multi-threaded environment. When we make changes to the simulation
@@ -3719,7 +3738,11 @@ BOOL Simulator::SetData(string strDataType, string strValue, BOOL bThrowError)
 		BackgroundColor(strValue);
 		return TRUE;
 	}
-
+	else if(strDataType == "TIMESTEPMODIFIED")
+	{
+		NotifyTimeStepModified();
+		return TRUE;
+	}
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);

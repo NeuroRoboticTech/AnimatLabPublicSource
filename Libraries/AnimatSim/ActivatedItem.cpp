@@ -164,6 +164,7 @@ void ActivatedItem::StartSlice(long lVal, BOOL bReInit)
 	Std_IsBelowMax(m_lEndSlice, lVal, TRUE, "StartSlice");
 
 	m_lStartSlice = lVal;
+	m_fltStartTime = m_lStartSlice* m_lpSim->TimeStep();
 }
 
 /**
@@ -196,6 +197,7 @@ void ActivatedItem::EndSlice(long lVal, BOOL bReInit)
 	Std_IsAboveMin(m_lStartSlice, lVal, TRUE, "EndSlice");
 
 	m_lEndSlice = lVal;
+	m_fltEndTime = m_lEndSlice* m_lpSim->TimeStep();
 }
 
 /**
@@ -473,7 +475,12 @@ BOOL ActivatedItem::Overlaps(ActivatedItem *lpItem)
 void ActivatedItem::Initialize()
 {
 	AnimatBase::Initialize();
+	SetSliceData();
+	m_bInitialized = TRUE;
+}
 
+void ActivatedItem::SetSliceData()
+{
 	if(m_bLoadedTime)
 	{
 		m_lStartSlice = (long) (m_fltStartTime / m_lpSim->TimeStep() + 0.5);
@@ -487,14 +494,19 @@ void ActivatedItem::Initialize()
 		m_fltStartTime = m_lStartSlice * m_lpSim->TimeStep();
 		m_fltEndTime = m_lEndSlice * m_lpSim->TimeStep();
 	}
-
-	m_bInitialized = TRUE;
 }
 
 void ActivatedItem::ReInitialize()
 {
 	if(!m_bInitialized)
 		Initialize();
+	else
+		SetSliceData();
+}
+
+void ActivatedItem::TimeStepModified()
+{
+	ReInitialize();
 }
 
 /**

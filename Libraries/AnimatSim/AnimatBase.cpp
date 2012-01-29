@@ -527,6 +527,15 @@ to perform any intialization prior to the stop of the simulation that is needed.
 **/
 void AnimatBase::SimStopping() {};
 
+/**
+\brief	Notification method that the time step modified has been modified. 
+Objects should recalculate any slice times as needed.
+
+\author	dcofer
+\date	1/28/2012
+**/
+void AnimatBase::TimeStepModified() {};
+
 #pragma endregion
 
 #pragma region SnapshotMethods

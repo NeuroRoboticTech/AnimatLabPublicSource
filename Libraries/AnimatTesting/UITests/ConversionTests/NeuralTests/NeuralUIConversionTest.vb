@@ -44,6 +44,60 @@ Namespace UITests
 #Region "Firing Rate Methods"
 
                 <TestMethod()>
+                Public Sub Test_FiringRate_BistableNeuron()
+
+                    Dim aryMaxErrors As New Hashtable
+                    aryMaxErrors.Add("Time", 0.001)
+                    aryMaxErrors.Add("FF", 0.01)
+                    aryMaxErrors.Add("Vm", 0.0001)
+                    aryMaxErrors.Add("Il", 0.0000000001)
+                    aryMaxErrors.Add("default", 0.0001)
+
+                    m_strProjectName = "FiringRate_BistableNeuron"
+                    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
+                    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
+                    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+
+                    'Load and convert the project.
+                    TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                    'Run the same sim a second time to check for changes between sims.
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
+                    'Change the time step of the firing rate neural sim to 0.5 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_0_5ms_")
+
+                    'Change the time step of the firing rate neural sim to 1 ms, physics time step to 0.5 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_1ms_PhysicsTimeStep_0_5ms_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+
+                    'Set Vth to 12 mv
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vsth", "12 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vsth_12mv_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vsth", "10 m"})
+
+                    'Set ih to 4na, Il to -1 na
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Ih", "4 n"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Il", "-1 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Ih_4na_Il_-1na_")
+
+                    'Set stim_3 to -5 nA
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_3", "CurrentOn", "-5 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Stim3_-5na_")
+
+                End Sub
+
+                <TestMethod()>
                 Public Sub Test_FiringRate_NormalNeuron()
 
                     Dim aryMaxErrors As New Hashtable
@@ -60,6 +114,23 @@ Namespace UITests
 
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                    'Run the same sim a second time to check for changes between sims.
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
+                    'Change the time step of the firing rate neural sim to 0.5 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_0_5ms_")
+
+                    'Change the time step of the firing rate neural sim to 1 ms, physics time step to 0.5 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_1ms_PhysicsTimeStep_0_5ms_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
 
                     'Now decrease Cm from 3nf to 1nf
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Cm", "1 n"})
@@ -117,6 +188,67 @@ Namespace UITests
                 End Sub
 
                 <TestMethod()>
+                Public Sub Test_FiringRate_NormalSynapse()
+
+                    Dim aryMaxErrors As New Hashtable
+                    aryMaxErrors.Add("Time", 0.001)
+                    aryMaxErrors.Add("FF_1", 0.01)
+                    aryMaxErrors.Add("FF_2", 0.01)
+                    aryMaxErrors.Add("Vm_1", 0.0001)
+                    aryMaxErrors.Add("Vm_2", 0.0001)
+                    aryMaxErrors.Add("Ie_1", 0.0000000001)
+                    aryMaxErrors.Add("Ii_1", 0.0000000001)
+                    aryMaxErrors.Add("default", 0.0001)
+
+                    m_strProjectName = "FiringRate_NormalSynapse"
+                    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
+                    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
+                    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+
+                    'Load and convert the project.
+                    TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                    'Run the same sim a second time to check for changes between sims.
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
+                    'Change the time step of the firing rate neural sim to 0.5 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_0_5ms_")
+
+                    'Change the time step of the firing rate neural sim to 1 ms, physics time step to 0.5 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_1ms_PhysicsTimeStep_0_5ms_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 ( -10 nAA ) ", "Weight", "-5 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "W_-5na_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 ( -5 nAA ) ", "Weight", "-15 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "W_-15na_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 ( -15 nAA ) ", "Weight", "10 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "W_10na_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Vth", "-50 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Vrest", "-70 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "2_Vrest_-70mv_Vth_-50mv_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Ih", "-1 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Ih_-1na_")
+
+                End Sub
+
+                <TestMethod()>
                 Public Sub Test_FiringRate_PacemakerNeuron()
 
                     Dim aryMaxErrors As New Hashtable
@@ -134,6 +266,23 @@ Namespace UITests
 
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                    'Run the same sim a second time to check for changes between sims.
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
+                    'Change the time step of the firing rate neural sim to 0.5 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_0_5ms_")
+
+                    'Change the time step of the firing rate neural sim to 1 ms, physics time step to 0.5 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_1ms_PhysicsTimeStep_0_5ms_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
 
                     'Now decrease Cm from 3nf to 1nf
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Ih", "2.5 n"})
@@ -187,6 +336,23 @@ Namespace UITests
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
 
+                    'Run the same sim a second time to check for changes between sims.
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
+                    'Change the time step of the firing rate neural sim to 0.5 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_0_5ms_")
+
+                    'Change the time step of the firing rate neural sim to 1 ms, physics time step to 0.5 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_1ms_PhysicsTimeStep_0_5ms_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+
                     'Set Il to -5 na
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Il", "-5 n"})
                     RunSimulationWaitToEnd()
@@ -214,42 +380,6 @@ Namespace UITests
 
                 End Sub
 
-                <TestMethod()>
-                Public Sub Test_FiringRate_BistableNeuron()
-
-                    Dim aryMaxErrors As New Hashtable
-                    aryMaxErrors.Add("Time", 0.001)
-                    aryMaxErrors.Add("FF", 0.01)
-                    aryMaxErrors.Add("Vm", 0.0001)
-                    aryMaxErrors.Add("Il", 0.0000000001)
-                    aryMaxErrors.Add("default", 0.0001)
-
-                    m_strProjectName = "FiringRate_BistableNeuron"
-                    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
-                    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
-                    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
-
-                    'Load and convert the project.
-                    TestConversionProject("AfterConversion_", aryMaxErrors)
-
-                    'Set Vth to 12 mv
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vsth", "12 m"})
-                    RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vsth_12mv_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vsth", "10 m"})
-
-                    'Set ih to 4na, Il to -1 na
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Ih", "4 n"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Il", "-1 n"})
-                    RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Ih_4na_Il_-1na_")
-
-                    'Set stim_3 to -5 nA
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_3", "CurrentOn", "-5 n"})
-                    RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Stim3_-5na_")
-
-                End Sub
 
                 <TestMethod()>
                 Public Sub Test_FiringRate_TonicNeuron()
@@ -269,53 +399,13 @@ Namespace UITests
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
 
+                    'Run the same sim a second time to check for changes between sims.
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Ih", "5 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Ih_5na_")
-
-                End Sub
-
-                <TestMethod()>
-                Public Sub Test_FiringRate_NormalSynapse()
-
-                    Dim aryMaxErrors As New Hashtable
-                    aryMaxErrors.Add("Time", 0.001)
-                    aryMaxErrors.Add("FF_1", 0.01)
-                    aryMaxErrors.Add("FF_2", 0.01)
-                    aryMaxErrors.Add("Vm_1", 0.0001)
-                    aryMaxErrors.Add("Vm_2", 0.0001)
-                    aryMaxErrors.Add("Ie_1", 0.0000000001)
-                    aryMaxErrors.Add("Ii_1", 0.0000000001)
-                    aryMaxErrors.Add("default", 0.0001)
-
-                    m_strProjectName = "FiringRate_NormalSynapse"
-                    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
-                    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
-                    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
-
-                    'Load and convert the project.
-                    TestConversionProject("AfterConversion_", aryMaxErrors)
-
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 ( -10 nAA ) ", "Weight", "-5 n"})
-                    RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "W_-5na_")
-
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 ( -5 nAA ) ", "Weight", "-15 n"})
-                    RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "W_-15na_")
-
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 ( -15 nAA ) ", "Weight", "10 n"})
-                    RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "W_10na_")
-
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Vth", "-50 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Vrest", "-70 m"})
-                    RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "2_Vrest_-70mv_Vth_-50mv_")
-
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Ih", "-1 n"})
-                    RunSimulationWaitToEnd()
-                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Ih_-1na_")
 
                 End Sub
 

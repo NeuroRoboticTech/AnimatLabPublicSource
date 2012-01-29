@@ -55,6 +55,7 @@ DataChart::DataChart()
 	m_lCollectTimeWindow = -1;
 	m_fltCollectTimeWindow = -1;
 	m_iCollectInterval = 0;
+	m_fltCollectInterval = 0;
 	m_aryDataBuffer = NULL;
 	m_aryTimeBuffer = NULL;
 	m_lRowCount = 0;
@@ -229,10 +230,13 @@ int DataChart::CollectInterval() {return m_iCollectInterval;};
 
 \param	iVal	The new interval. 
 **/
-void DataChart::CollectInterval(int iVal)
+void DataChart::CollectInterval(int iVal, BOOL bReInit)
 {
 	m_iCollectInterval = iVal;
-	ReInitialize();
+	m_fltCollectInterval = m_iCollectInterval*m_lpSim->TimeStep();
+
+	if(bReInit)
+		ReInitialize();
 }
 
 /**
@@ -246,15 +250,17 @@ It then calculates the number of time slices for the collect interval.
 
 \param	fltVal	The new time value. 
 **/
-void DataChart::CollectInterval(float fltVal)
+void DataChart::CollectInterval(float fltVal, BOOL bReInit)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "CollectInterval");
 
 	//Lets calculate the number of slices for the collect interval.
 	m_iCollectInterval = (int) (fltVal/m_lpSim->TimeStep());
 	if(m_iCollectInterval<=0) m_iCollectInterval = 1;
+	m_fltCollectInterval = m_iCollectInterval*m_lpSim->TimeStep();
 
-	ReInitialize();
+	if(bReInit)
+		ReInitialize();
 }
 
 /**
@@ -275,10 +281,12 @@ long DataChart::CollectTimeWindow() {return m_lCollectTimeWindow;}
 
 \param	lVal	The new value in time slices. 
 **/
-void DataChart::CollectTimeWindow(long lVal)
+void DataChart::CollectTimeWindow(long lVal, BOOL bReInit)
 {
 	m_lCollectTimeWindow = lVal;
-	ReInitialize();
+
+	if(bReInit)
+		ReInitialize();
 }
 
 /**
@@ -289,7 +297,7 @@ void DataChart::CollectTimeWindow(long lVal)
 
 \param	fltVal	The new time value. 
 **/
-void DataChart::CollectTimeWindow(float fltVal)
+void DataChart::CollectTimeWindow(float fltVal, BOOL bReInit)
 {
 	m_fltCollectTimeWindow = fltVal;
 
@@ -298,7 +306,8 @@ void DataChart::CollectTimeWindow(float fltVal)
 	else
 		m_lCollectTimeWindow = (long) (m_fltCollectTimeWindow / m_lpSim->TimeStep() + 0.5);
 
-	ReInitialize();
+	if(bReInit)
+		ReInitialize();
 }
 
 /**
@@ -422,6 +431,11 @@ void DataChart::ReInitialize()
 		Initialize();
 	else
 	{
+		//Re-init the end and start and collect interval slices based on the time and current timestep values.
+		StartTime(m_fltStartTime, FALSE);
+		EndTime(m_fltEndTime, FALSE);
+		CollectInterval(m_fltCollectInterval, FALSE);
+
 		if(m_fltCollectTimeWindow <= 0)
 			m_lCollectTimeWindow = m_lEndSlice - m_lStartSlice;
 		else

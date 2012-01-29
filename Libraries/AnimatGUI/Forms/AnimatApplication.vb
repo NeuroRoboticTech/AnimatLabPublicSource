@@ -4657,6 +4657,7 @@ Namespace Forms
 
         Public Overridable Sub SignalTimeStepChanged(ByVal doObject As Framework.DataObject)
             RaiseEvent TimeStepChanged(doObject)
+            m_doSimulation.NotifySimTimeStepChanged()
         End Sub
 
         Protected Event ConvertFileVersion(ByVal strProjectFile As String, ByVal fltOldVersion As Single)

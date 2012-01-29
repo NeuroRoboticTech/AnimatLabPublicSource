@@ -1070,6 +1070,9 @@ Namespace DataObjects
             End Try
         End Sub
 
+        Public Sub NotifySimTimeStepChanged()
+            SetSimData("TimeStepModified", "", True)
+        End Sub
 
 #End Region
 

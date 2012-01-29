@@ -43,6 +43,9 @@ namespace AnimatSim
 			/// Tells what the time slice step interval to use when collecting data. This is 
 			short m_iCollectInterval;
 
+			/// Tells what the time slice step interval to use when collecting data. This is 
+			float m_fltCollectInterval;
+
 			/// The number of time slices where we will collect data
 			long m_lCollectTimeWindow;
 
@@ -100,12 +103,12 @@ namespace AnimatSim
 			virtual float *DataBuffer();
 
 			virtual int CollectInterval();
-			virtual void CollectInterval(int iVal);
-			virtual void CollectInterval(float fltVal);
+			virtual void CollectInterval(int iVal, BOOL bReInit = TRUE);
+			virtual void CollectInterval(float fltVal, BOOL bReInit = TRUE);
 
 			virtual long CollectTimeWindow();
-			virtual void CollectTimeWindow(long lVal);
-			virtual void CollectTimeWindow(float fltVal);
+			virtual void CollectTimeWindow(long lVal, BOOL bReInit = TRUE);
+			virtual void CollectTimeWindow(float fltVal, BOOL bReInit = TRUE);
 
 			virtual string ProjectPath();
 			virtual void ProjectPath(string strVal);

@@ -98,7 +98,8 @@ namespace AnimatSim
 			/// Tells whether a burst is on or not.
 			BOOL m_bBurstOn;
 
-			float GetCurrentOn();
+			virtual float GetCurrentOn();
+			virtual void SetSliceData();
 
 		public:
 			CurrentStimulus();
