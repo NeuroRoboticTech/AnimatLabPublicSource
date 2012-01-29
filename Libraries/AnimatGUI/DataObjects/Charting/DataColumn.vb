@@ -590,7 +590,7 @@ Namespace DataObjects.Charting
             Try
                 Dim bDelete As Boolean = True
                 If bAskToDelete AndAlso Util.ShowMessage("Are you certain that you want to delete this " & _
-                                    "data column?", "Delete Axis", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
+                                    "data column?", "Delete Data Column", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
                     bDelete = False
                 End If
 

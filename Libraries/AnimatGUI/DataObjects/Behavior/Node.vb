@@ -1161,7 +1161,7 @@ Namespace DataObjects.Behavior
 
             Try
                 If bAskToDelete AndAlso Util.ShowMessage("Are you certain that you want to delete this " & _
-                                    "node and all of its links?", "Delete Axis", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
+                                    "node and all of its links?", "Delete Node", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
                     Return False
                 End If
 

@@ -628,7 +628,7 @@ Namespace DataObjects.Behavior
                     If Me.Text.Trim.Length = 0 Then
                         strName = Me.Origin.Text
                     Else
-                        strName = Me.Origin.Text.Trim & " ( " & Me.Text.Trim & " ) "
+                        strName = Me.Origin.Text.Trim & " (" & Me.Text.Trim & ")"
                     End If
                 Else
                     strName = Me.Text
@@ -978,7 +978,7 @@ Namespace DataObjects.Behavior
 
             Try
                 If bAskToDelete AndAlso Util.ShowMessage("Are you certain that you want to delete this " & _
-                                    "link?", "Delete Axis", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
+                                    "link?", "Delete Link", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
                     Return False
                 End If
 

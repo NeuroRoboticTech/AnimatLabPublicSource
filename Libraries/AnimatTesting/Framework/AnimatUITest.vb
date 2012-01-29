@@ -302,7 +302,7 @@ Namespace Framework
 
         Protected Overridable Sub CreateNewProject(ByVal strProjectName As String, ByVal strProjectPath As String, ByVal dblSimEnd As Double, ByVal bCreateStructure As Boolean)
 
-            OpenDialogAndWait("NewProject", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"NewToolStripButton"})
+            OpenDialogAndWait("New Project", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"NewToolStripButton"})
 
             'Set params and hit ok button
             ExecuteActiveDialogMethod("SetProjectParams", New Object() {strProjectName, m_strRootFolder & strProjectPath})
@@ -1101,10 +1101,10 @@ Namespace Framework
 
         End Sub
 
-        Protected Overridable Sub DeletePart(ByVal strPath As String)
+        Protected Overridable Sub DeletePart(ByVal strPath As String, Optional ByVal strDlgName As String = "AnimatMessageBox")
             ExecuteMethod("SelectWorkspaceItem", New Object() {strPath})
             ExecuteMethod("ClickToolbarItem", New Object() {"DeleteToolStripButton"})
-            OpenDialogAndWait("AnimatMessageBox", Nothing, Nothing)
+            OpenDialogAndWait(strDlgName, Nothing, Nothing)
             ExecuteActiveDialogMethod("ClickOkButton", Nothing)
         End Sub
 

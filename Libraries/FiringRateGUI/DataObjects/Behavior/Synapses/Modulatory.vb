@@ -142,6 +142,35 @@ Namespace DataObjects.Behavior.Synapses
                     m_lsModulatedSynapse.Link = Nothing
                     Throw ex
                 End Try
+
+                UpdateChart()
+                UpdateTreeNode()
+                CheckForErrors()
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overrides Property ItemName() As String
+            Get
+                Dim strName As String = ""
+                If Not Me.Origin Is Nothing Then
+                    Dim strModulated As String = ""
+                    If Not ModulatedSynapse Is Nothing Then
+                        strModulated = ModulatedSynapse.Link.ItemName
+                    End If
+                    If Me.Text.Trim.Length = 0 Then
+                        strName = Me.Origin.Text & strModulated
+                    Else
+                        strName = Me.Origin.Text.Trim & " ([W " & Me.Text.Trim & "] " & strModulated & ")"
+                    End If
+                Else
+                    strName = Me.Text
+                End If
+
+                Return strName
+            End Get
+            Set(ByVal Value As String)
+                Me.Text = Value
             End Set
         End Property
 
@@ -366,6 +395,22 @@ Namespace DataObjects.Behavior.Synapses
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
 
+        End Sub
+
+        Public Overrides Sub Automation_SetLinkedItem(ByVal strItemPath As String, ByVal strLinkedItemPath As String)
+
+            Dim tnLinkedNode As Crownwood.DotNetMagic.Controls.Node = Util.FindTreeNodeByPath(strLinkedItemPath, Util.ProjectWorkspace.TreeView.Nodes)
+
+            If tnLinkedNode Is Nothing OrElse tnLinkedNode.Tag Is Nothing OrElse Not Util.IsTypeOf(tnLinkedNode.Tag.GetType, GetType(DataObjects.Behavior.Synapses.Normal), False) Then
+                Throw New System.Exception("The path to the specified linked node was not the correct link type.")
+            End If
+
+            Dim blLinkedSynapse As AnimatGUI.DataObjects.Behavior.Link = DirectCast(tnLinkedNode.Tag, AnimatGUI.DataObjects.Behavior.Link)
+
+            Dim lsModuledSynapse As LinkedSynapse = New FiringRateGUI.DataObjects.Behavior.LinkedSynapse(blLinkedSynapse.Origin, blLinkedSynapse)
+
+            Me.ModulatedSynapse = lsModuledSynapse
+            Util.ProjectWorkspace.RefreshProperties()
         End Sub
 
 #End Region
