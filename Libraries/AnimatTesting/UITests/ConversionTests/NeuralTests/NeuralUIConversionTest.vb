@@ -148,6 +148,13 @@ Namespace UITests
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "W_0_5_")
 
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 0.5] 1 (5 nA))", "Enabled", "False"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -0.5] 1 (5 nA))", "Enabled", "False"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Disabled_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 0.5] 1 (5 nA))", "Enabled", "True"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -0.5] 1 (5 nA))", "Enabled", "True"})
+
                     'swap settings.
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 0.5] 1 (5 nA))", "Weight", "-1"})
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W -1] 1 (5 nA))", "GateInitiallyOn", "True"})
@@ -172,6 +179,90 @@ Namespace UITests
                     DeletePart("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W 1] 6 (1 nA))", "Delete Link")
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DeletedGates_")
+
+                End Sub
+
+                <TestMethod()>
+                Public Sub Test_FiringRate_ModulatedSynapse()
+
+                    Dim aryMaxErrors As New Hashtable
+                    aryMaxErrors.Add("Time", 0.001)
+                    aryMaxErrors.Add("FF_1a", 0.01)
+                    aryMaxErrors.Add("FF_1b", 0.01)
+                    aryMaxErrors.Add("FF_2", 0.01)
+                    aryMaxErrors.Add("FF_3", 0.01)
+                    aryMaxErrors.Add("FF_4", 0.01)
+                    aryMaxErrors.Add("FF_5", 0.01)
+                    aryMaxErrors.Add("FF_6b", 0.01)
+                    aryMaxErrors.Add("External_1a", 0.0000000001)
+                    aryMaxErrors.Add("External_3", 0.0000000001)
+                    aryMaxErrors.Add("Synaptic_2", 0.0000000001)
+                    aryMaxErrors.Add("External_1b", 0.0000000001)
+                    aryMaxErrors.Add("External_5", 0.0000000001)
+                    aryMaxErrors.Add("Synaptic_4", 0.0000000001)
+                    aryMaxErrors.Add("External_6b", 0.0000000001)
+                    aryMaxErrors.Add("default", 0.0001)
+
+                    m_strProjectName = "FiringRate_ModulatedSynapse"
+                    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
+                    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
+                    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+
+                    'Load and convert the project.
+                    TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                    'Run the same sim a second time to check for changes between sims.
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
+                    'Change the time step of the firing rate neural sim to 0.5 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_0_5ms_")
+
+                    'Change the time step of the firing rate neural sim to 1 ms, physics time step to 0.5 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_1ms_PhysicsTimeStep_0_5ms_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 2] 1 (5 nA))", "Enabled", "False"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -2] 1 (5 nA))", "Enabled", "False"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Disabled_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 2] 1 (5 nA))", "Enabled", "True"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -2] 1 (5 nA))", "Enabled", "True"})
+
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 2] 1 (5 nA))", "Gain", "2.5"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -2] 1 (5 nA))", "Gain", "-2.5"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "W_2_5_")
+
+                    'swap settings.
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 2.5] 1 (5 nA))", "Gain", "-2"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -2.5] 1 (5 nA))", "Gain", "2"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "SwapGates_")
+
+
+                    ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W -2] 1 (5 nA))", _
+                                                                 "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\6 (1 nA)"})
+                    ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W 2] 1 (5 nA))", _
+                                                                 "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\6 (1 nA)"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 (5 nA)", "Enabled", "False"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\1 (5 nA)", "Enabled", "False"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_9", "Enabled", "True"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "SwapLinkedSynapses_")
+
+                    DeletePart("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W -2] 6 (1 nA))", "Delete Link")
+                    DeletePart("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W 2] 6 (1 nA))", "Delete Link")
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DeletedSynapses_")
 
                 End Sub
 
