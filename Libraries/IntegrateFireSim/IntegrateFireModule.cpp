@@ -223,14 +223,7 @@ void IntegrateFireNeuralModule::TimeStep(float fltVal)
 	m_dTimeStep = m_fltTimeStep * 1000;
 	Neuron::m_dDT=m_dTimeStep;
 
-	//We must update the facilitation decay constant when we change the timestep.
-	SpikingChemicalSynapse *lpSyn;
-	int iCount = m_arySpikingChemSyn.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-	{
-		lpSyn = m_arySpikingChemSyn[iIndex];
-		lpSyn->m_dFacilD = exp(-m_dTimeStep/lpSyn->m_dFacilDecay);
-	}
+	PreCalc();
 }
 
 /**
@@ -411,7 +404,11 @@ double IntegrateFireNeuralModule::CaEquilPot() {return Neuron::m_dCaEquilPot;}
 
 \param	dVal	The new value. 
 **/
-void IntegrateFireNeuralModule::AbsoluteRefr(double dVal) {Neuron::m_dAbsoluteRefr = dVal;}
+void IntegrateFireNeuralModule::AbsoluteRefr(double dVal) 
+{
+	Neuron::m_dAbsoluteRefr = dVal;
+	Neuron::m_lAbsoluteRefr = (long) (dVal/m_dTimeStep);
+}
 
 /**
 \brief	Gets the absolute refractory period.
@@ -422,6 +419,26 @@ void IntegrateFireNeuralModule::AbsoluteRefr(double dVal) {Neuron::m_dAbsoluteRe
 \return	refractory period.
 **/
 double IntegrateFireNeuralModule::AbsoluteRefr() {return Neuron::m_dAbsoluteRefr;}
+
+/**
+\brief	Sets the after-hyperpolarizing equil potential for all neurons in the IGF module.
+
+\author	dcofer
+\date	2/1/2012
+
+\param	dVal	Sets the value.
+**/
+void IntegrateFireNeuralModule::AHPEquilPot(double dVal) {Neuron::m_dAHPEquilPot = dVal;}
+
+/**
+\brief	Gets the after-hyperpolarizing equil potential for all neurons in the IGF module.
+
+\author	dcofer
+\date	2/1/2012
+
+\return	Gets the value.
+**/
+double IntegrateFireNeuralModule::AHPEquilPot() {return Neuron::m_dAHPEquilPot;}
 
 /**
 \brief	Gets the spiking chemical synapse count.
@@ -545,6 +562,7 @@ void IntegrateFireNeuralModule::LoadInternal(CStdXml &oXml)
 	Neuron::m_dAHPEquilPot=oXml.GetChildDouble("AHPEquilPot");
 	Neuron::m_dCaEquilPot=oXml.GetChildDouble("CaEquilPot");
 	Neuron::m_dAbsoluteRefr=oXml.GetChildDouble("AbsoluteRefr");
+	Neuron::m_lAbsoluteRefr = (long) (Neuron::m_dAbsoluteRefr/m_dTimeStep);
 
 	oXml.IntoChildElement("Synapses");
 
@@ -1027,6 +1045,11 @@ void IntegrateFireNeuralModule::InitSynapse(Connexion *pCx)
 	}
 }
 
+void IntegrateFireNeuralModule::TimeStepModified()
+{
+	PreCalc();
+}
+
 /**
 \brief	Performs pre-step calculations.
 
@@ -1040,11 +1063,21 @@ void IntegrateFireNeuralModule::PreCalc()
 
 	m_dCurrentTime=0;
 	Neuron::m_dDT=m_dTimeStep;
+	Neuron::m_lAbsoluteRefr = (long) (Neuron::m_dAbsoluteRefr/m_dTimeStep);
+
 	for (i=0; i<GetNeuronCount(); i++)
 	{
 		GetNeuronAt(i)->PreCalc(this);
 	}
 
+	//We must update the facilitation decay constant when we change the timestep.
+	SpikingChemicalSynapse *lpSyn;
+	int iCount = m_arySpikingChemSyn.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+	{
+		lpSyn = m_arySpikingChemSyn[iIndex];
+		lpSyn->m_dFacilD = exp(-m_dTimeStep/lpSyn->m_dFacilDecay);
+	}
 
 /*
 FOLLOWING COMMENTS ARE FROM NEUROSIM - I don't really understand them any more!!!!
@@ -1494,6 +1527,12 @@ BOOL IntegrateFireNeuralModule::SetData(string strDataType, string strValue, BOO
 		return TRUE;
 	}
 
+	if(strType == "AHPEQUILPOT")
+	{
+		AHPEquilPot(atof(strValue.c_str()));
+		return TRUE;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -1715,7 +1754,7 @@ void IntegrateFireNeuralModule::ResetSimulation()
 
 void IntegrateFireNeuralModule::Initialize()
 {
-	srand(m_lpSim->ManualRandomSeed());
+	//srand(m_lpSim->ManualRandomSeed());
 
 	NeuralModule::Initialize();
 	PreCalc();

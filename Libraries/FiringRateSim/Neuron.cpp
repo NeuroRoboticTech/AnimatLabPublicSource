@@ -610,6 +610,13 @@ int Neuron::TotalSynapses()
 void Neuron::ClearSynapses()
 {m_arySynapses.RemoveAll();}
 
+void Neuron::TimeStepModified()
+{
+	if(m_bUseAccom && m_lpFRModule)
+		m_fltDCTH = exp(-m_lpFRModule->TimeStep()/m_fltAccomTimeConst);
+	else
+		m_fltDCTH = 0;
+}
 
 void Neuron::StepSimulation()
 {

@@ -50,7 +50,8 @@ Namespace Forms.Tools
 #Region " Attributes "
 
         Protected m_gnGain As AnimatGUI.DataObjects.Gain
-        'protected m_dcChart as 
+
+        Protected m_bAddedHandlers As Boolean = False
 
         Protected m_bAutoCollectDataInterval As Boolean = True
 
@@ -296,7 +297,7 @@ Namespace Forms.Tools
             m_aryAutoFillColors(19) = System.Drawing.Color.Navy
             m_aryAutoFillColors(20) = System.Drawing.Color.OliveDrab
 
-            AddHandler Util.Application.TimeStepChanged, AddressOf Me.OnTimeStepChanged
+            AddHandlers()
 
         End Sub
 
@@ -681,6 +682,24 @@ Namespace Forms.Tools
 
         End Sub
 
+        Protected Overridable Sub AddHandlers()
+
+            If Not m_bAddedHandlers Then
+                AddHandler Util.Application.TimeStepChanged, AddressOf Me.OnTimeStepChanged
+                m_bAddedHandlers = True
+            End If
+
+        End Sub
+
+        Protected Overridable Sub RemoveHandlers()
+
+            If m_bAddedHandlers Then
+                RemoveHandler Util.Application.TimeStepChanged, AddressOf Me.OnTimeStepChanged
+                m_bAddedHandlers = False
+            End If
+
+        End Sub
+
 #End Region
 
 #Region " Events "
@@ -707,6 +726,18 @@ Namespace Forms.Tools
 
         Protected Sub OnTimeStepChanged(ByVal doObject As Framework.DataObject)
             If Me.AutoCollectDataInterval Then ResetCollectDataInterval()
+        End Sub
+
+        Protected Overrides Sub OnFormClosing(e As System.Windows.Forms.FormClosingEventArgs)
+            MyBase.OnFormClosing(e)
+
+            If Not e.Cancel Then
+                RemoveHandlers()
+
+                If Util.Application.SimulationInterface.FindItem(m_strID, False) Then
+                    Util.Application.SimulationInterface.RemoveItem("Simulator", "DataChart", m_strID, True)
+                End If
+            End If
         End Sub
 
 #End Region

@@ -135,8 +135,6 @@ Namespace DataObjects.Behavior
             End If
 
             m_snTimeStep = New AnimatGUI.Framework.ScaledNumber(Me, "TimeStep", 2.5, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
-
-            AddHandler Util.Application.TimeStepChanged, AddressOf Me.OnTimeStepChanged
         End Sub
 
         Protected Overrides Sub CloneInternal(ByVal doOriginal As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
@@ -167,6 +165,19 @@ Namespace DataObjects.Behavior
             MyBase.InitializeSimulationReferences()
 
             'Get the actual physics time step after initialization of the sim object.
+            If Not m_doInterface Is Nothing Then
+                m_snTimeStep.ActualValue = m_doInterface.GetDataValueImmediate("TimeStep")
+                AddHandler Util.Application.TimeStepChanged, AddressOf Me.OnTimeStepChanged
+            End If
+        End Sub
+
+        Public Overrides Sub RemoveFromSim(bThrowError As Boolean)
+            If Not m_doInterface Is Nothing Then
+                RemoveHandler Util.Application.TimeStepChanged, AddressOf Me.OnTimeStepChanged
+            End If
+
+            MyBase.RemoveFromSim(bThrowError)
+
             If Not m_doInterface Is Nothing Then
                 m_snTimeStep.ActualValue = m_doInterface.GetDataValueImmediate("TimeStep")
             End If

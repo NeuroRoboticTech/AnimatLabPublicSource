@@ -769,7 +769,7 @@ Namespace DataObjects.Behavior.Neurons
                         End If
                     End If
 
-                    SetSimData("MidPoint", Value.ActualValue.ToString, True)
+                    SetSimData("MidPoint", Value.ValueFromDefaultScale.ToString, True)
                     m_snMidPoint.CopyData(Value)
                     UpdateChart()
                 End Set
@@ -791,7 +791,7 @@ Namespace DataObjects.Behavior.Neurons
                         End If
                     End If
 
-                    SetSimData("Slope", Value.ActualValue.ToString, True)
+                    SetSimData("Slope", Value.ValueFromDefaultScale.ToString, True)
                     m_snSlope.CopyData(Value)
                     UpdateChart()
                 End Set
@@ -811,7 +811,7 @@ Namespace DataObjects.Behavior.Neurons
                         End If
                     End If
 
-                    SetSimData("TimeConstant", Value.ActualValue.ToString, True)
+                    SetSimData("TimeConstant", Value.ValueFromDefaultScale.ToString, True)
                     m_snTimeConstant.CopyData(Value)
                     UpdateChart()
                 End Set
@@ -955,9 +955,9 @@ Namespace DataObjects.Behavior.Neurons
                 oXml.IntoElem()
 
                 oXml.AddChildElement("ID", m_strID)
-                oXml.AddChildElement("MidPoint", m_snMidPoint.ActualValue)
-                oXml.AddChildElement("Slope", m_snSlope.ActualValue)
-                oXml.AddChildElement("TimeConstant", m_snTimeConstant.ActualValue)
+                oXml.AddChildElement("MidPoint", m_snMidPoint.ValueFromDefaultScale)
+                oXml.AddChildElement("Slope", m_snSlope.ValueFromDefaultScale)
+                oXml.AddChildElement("TimeConstant", m_snTimeConstant.ValueFromDefaultScale)
                 oXml.AddChildElement("ActivationType", m_bActivationType)
 
                 oXml.OutOfElem()

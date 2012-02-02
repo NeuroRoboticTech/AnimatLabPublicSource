@@ -229,6 +229,7 @@ namespace FiringRateSim
 			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
 			virtual void VerifySystemPointers();
 			virtual void Initialize();
+			virtual void TimeStepModified();
 			virtual void ResetSimulation();
 			virtual void StepSimulation();
 

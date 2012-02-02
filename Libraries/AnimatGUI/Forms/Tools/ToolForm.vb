@@ -191,7 +191,10 @@ Namespace Forms.Tools
             MyBase.OnFormClosing(e)
 
             Try
-                Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, "DataChart", Me.ID, True)
+                If Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
+                    Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, "DataChart", Me.ID, True)
+                End If
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

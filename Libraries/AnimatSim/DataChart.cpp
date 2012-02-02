@@ -254,8 +254,12 @@ void DataChart::CollectInterval(float fltVal, BOOL bReInit)
 {
 	Std_IsAboveMin((float) 0, fltVal, TRUE, "CollectInterval");
 
+	//Find min time step.
+	float fltMin = m_lpSim->MinTimeStep();
+
+	m_iCollectInterval = (int) ((fltVal / fltMin) + 0.5f);
+
 	//Lets calculate the number of slices for the collect interval.
-	m_iCollectInterval = (int) (fltVal/m_lpSim->TimeStep());
 	if(m_iCollectInterval<=0) m_iCollectInterval = 1;
 	m_fltCollectInterval = m_iCollectInterval*m_lpSim->TimeStep();
 

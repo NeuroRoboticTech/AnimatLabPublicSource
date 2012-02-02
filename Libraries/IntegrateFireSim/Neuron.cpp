@@ -24,6 +24,7 @@ double Neuron::m_dSpikeStrength=1;
 double Neuron::m_dAHPEquilPot=-70;		// equil pot for K
 double Neuron::m_dCaEquilPot=200;
 double Neuron::m_dAbsoluteRefr=2;
+long Neuron::m_lAbsoluteRefr=0;
 double Neuron::m_dDT=0.5;
 
 /**
@@ -65,7 +66,7 @@ Neuron::Neuron()
 	m_dElecSynCond = 0;
 	m_dNonSpikingSynCur = 0;
 	m_dNonSpikingSynCond = 0;
-	m_dRefrCountDown = 0;
+	m_lRefrCountDown = 0;
  	m_dDCTH = 0;	
 	m_dDGK = 0;	
 	m_dGK = 0;
@@ -338,7 +339,12 @@ double Neuron::TimeConstant() {return m_dTimeConst;}
 
 \param	dVal	The new value. 
 **/
-void Neuron::InitialThreshold(double dVal) {m_dInitialThresh = dVal;}
+void Neuron::InitialThreshold(double dVal) 
+{
+	m_dInitialThresh = dVal;
+	m_dThresh=m_dInitialThresh;
+	m_fltThresholdMemory = (float) m_dThresh * 0.001;
+}
 
 /**
 \brief	Gets the initial threshold.
@@ -577,7 +583,37 @@ void Neuron::BurstHTimeConstant(double dVal) {m_dHTimeConst = dVal;}
 \return	time constant.
 **/
 double Neuron::BurstHTimeConstant() {return m_dHTimeConst;}
-		
+
+/**
+\brief	Sets the neurons tonic stimulus current.
+
+\author	dcofer
+\date	2/2/2012
+
+\param	dblVal	The stimulus value.
+**/
+void Neuron::TonicStimulus(double dblVal)
+{
+	m_dToniCurrentStimulusulus = dblVal;
+}
+
+/**
+\brief	Gets the tonic stimulus current of the neuron.
+
+\author	dcofer
+\date	2/2/2012
+
+\return	Tonic stimulus current.
+**/
+double Neuron::TonicStimulus() {return m_dToniCurrentStimulusulus;}
+
+void Neuron::TonicNoise(double dblVal)
+{
+	m_dNoise = dblVal;
+}
+
+double Neuron::TonicNoise() {return m_dNoise;}
+
 #pragma endregion
 
 
@@ -862,7 +898,7 @@ void Neuron::PreCalc(IntegrateFireNeuralModule *lpNS)
 	m_bSpike=FALSE;
 	m_dDCTH=exp(-m_dDT/m_dAccomTimeConst);
 	m_dDGK=exp(-m_dDT/m_dAHPTimeConst);
-	m_dRefrCountDown=0;
+	m_lRefrCountDown=0;
 	
 	m_dMemPot=m_dNewMemPot=m_dRestingPot;
 	m_dThresh=m_dInitialThresh;
@@ -908,9 +944,9 @@ void Neuron::CalcUpdateFinal(IntegrateFireNeuralModule *lpNS)
 	int i;
 	m_dMemPot=m_dNewMemPot;
 
-	if (m_dRefrCountDown>0)
+	if (m_lRefrCountDown>0)
 	{
-		m_dRefrCountDown-=lpNS->GetTimeStep();
+		m_lRefrCountDown--;
 		m_bSpike=FALSE;
 	}
 	else if (lpNS->TTX() || lpNS->HH())
@@ -919,7 +955,7 @@ void Neuron::CalcUpdateFinal(IntegrateFireNeuralModule *lpNS)
 		m_bSpike=(m_dMemPot>m_dThresh) ? TRUE : FALSE;
 	
 	if (m_bSpike)
-		m_dRefrCountDown=m_dAbsoluteRefr;
+		m_lRefrCountDown=m_lAbsoluteRefr;
 
 	m_fltSpike = (float) m_bSpike;
 	CalculateFiringFreq(lpNS);
@@ -1252,7 +1288,7 @@ void Neuron::ResetSimulation()
 	m_bSpike=FALSE;
 	m_dDCTH=exp(-m_dDT/m_dAccomTimeConst);
 	m_dDGK=exp(-m_dDT/m_dAHPTimeConst);
-	m_dRefrCountDown=0;
+	m_lRefrCountDown=0;
 	
 	m_dMemPot=m_dNewMemPot=m_dRestingPot;
 	m_dThresh=m_dInitialThresh;
@@ -1387,19 +1423,19 @@ BOOL Neuron::SetData(string strDataType, string strValue, BOOL bThrowError)
 		return TRUE;
 	}
 
-	if(strType == "ACCOMODATIONTIMECONST")
+	if(strType == "ACCOMODATIONTIMECONSTANT")
 	{
 		AccomodationTimeConstant(atof(strValue.c_str()));
 		return TRUE;
 	}
 
-	if(strType == "AHPCONDUCTANCE")
+	if(strType == "AHP_CONDUCTANCE")
 	{
 		AHPAmplitude(atof(strValue.c_str()));
 		return TRUE;
 	}
 
-	if(strType == "AHPTIMECONSTANT")
+	if(strType == "AHP_TIMECONSTANT")
 	{
 		AHPTimeConstant(atof(strValue.c_str()));
 		return TRUE;
@@ -1408,6 +1444,18 @@ BOOL Neuron::SetData(string strDataType, string strValue, BOOL bThrowError)
 	if(strType == "MAXCACONDUCTANCE")
 	{
 		BurstGMaxCa(atof(strValue.c_str()));
+		return TRUE;
+	}
+	
+	if(strType == "TONICSTIMULUS")
+	{
+		TonicStimulus(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "TONICNOISE")
+	{
+		TonicNoise(atof(strValue.c_str()));
 		return TRUE;
 	}
 

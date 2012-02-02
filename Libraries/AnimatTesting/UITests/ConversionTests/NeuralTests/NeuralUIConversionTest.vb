@@ -584,6 +584,149 @@ Namespace UITests
 
 #End Region
 
+#Region "IGF Methods"
+
+
+                <TestMethod()>
+                Public Sub Test_IGF_SpikingNeuron()
+
+                    Dim aryMaxErrors As New Hashtable
+                    aryMaxErrors.Add("Time", 0.001)
+                    aryMaxErrors.Add("Vm", 0.0001)
+                    aryMaxErrors.Add("default", 0.0001)
+
+                    m_strProjectName = "IGF_SpikingNeuron"
+                    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
+                    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
+                    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+
+                    'Load and convert the project.
+                    TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                    'Run the same sim a second time to check for changes between sims.
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
+                    'Change the time step of the firing rate neural sim to 0.1 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.1 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_1ms_")
+
+                    'Change the time step of the firing rate neural sim to 0.5 ms, physics time step to 0.1 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.5 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.1 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_5ms_PhysicsTimeStep_0_1ms_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.2 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+
+                    ''Change AHP Eq Pot to -90 mv: AHP_EqPot_-90mv_
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "AHPEquilibriumPotential", "-90 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AHP_EqPot_-90mv_")
+
+                    ''Change AHP Eq Pot to -70 mv, Vth=-55mv, Refractory Period=5ms: Vth_-55mv_Refr_5ms_
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "InitialThreshold", "-55 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "AHPEquilibriumPotential", "-70 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "RefractoryPeriod", "5 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vth_-55mv_Refr_5ms_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "RefractoryPeriod", "2 m"})
+
+                    ''Change spike peak to 10 mv: SpikePeak_10mv_
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "SpikePeak", "10 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "SpikePeak_10mv_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "SpikePeak", "0 m"})
+
+                    ''Apply TTX: TTX_
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "ApplyTTX", "True"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "TTX_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "ApplyTTX", "False"})
+
+                    ''Change Vth to -50 mv: Vth_-50mv_
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "InitialThreshold", "-50 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vth_-50mv_")
+
+                    'Vth=-50mv, Tc=50ms: Vth_-50_Tc_50ms_
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "TimeConstant", "50 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vth_-50_Tc_50ms_")
+
+                    'Vth=-50mv, Tc=50ms, Size: 0.5: Vth_-50mv_Tc_5ms_Size_0_5_
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "TimeConstant", "5 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeSize", "0.5"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vth_-50mv_Tc_5ms_Size_0_5_")
+
+                    'Vth=-50mv, Tc=50ms, Size: 1.5: Vth_-50mv_Tc_5ms_Size_1_5
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeSize", "1.5"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vth_-50mv_Tc_5ms_Size_1_5_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeSize", "1"})
+
+                    'Vth=-50mv, Tc=5ms, Accom=0,7: Tc_5ms_Accom_7_
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeAccomodation", "0.7"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Tc_5ms_Accom_7_")
+
+                    'Accom=0.7, Accom Tc=5ms: Accom_7_ATc_5ms_
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AccomodationTimeConstant", "5 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Accom_7_ATc_5ms_")
+
+                    'Accom=0.7, Accom Tc=15ms: Accom_7_ATc_15ms_
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AccomodationTimeConstant", "15 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Accom_7_ATc_15ms_")
+
+                    'Accom=0.3, Accom Tc=10ms, AHP G=10uS: Accom_3_ATc_10ms_AHPG_10uS_
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeAccomodation", "0.3"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AccomodationTimeConstant", "10 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AHP_Conductance", "10 u"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Accom_3_ATc_10ms_AHPG_10uS_")
+
+                    'AHP G=10uS, AHP Tc=10ms: AHPG_10uS_AHPTc_10ms_
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AHP_TimeConstant", "10 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AHPG_10uS_AHPTc_10ms_")
+
+                    'AHP G=10uS, AHP Tc=10ms, Vrest=-55mv: AHPG_10uS_AHPTc_10ms_Vrest_-55mv_
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RestingPotential", "-55 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AHPG_10uS_AHPTc_10ms_Vrest_-55mv_")
+
+                    'AHP G=1uS, AHP Tc=3ms, Vrest=-45mv: AHPG_1uS_AHPTc_3ms_Vrest_-45mv_
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AHP_Conductance", "1 u"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AHP_TimeConstant", "3 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RestingPotential", "-45 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AHPG_1uS_AHPTc_3ms_Vrest_-45mv_")
+
+                    'Vrest=-70mv: Vrest_-70mv_
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RestingPotential", "-70 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vrest_-70mv_")
+
+                    'ITonic=10nA: Itonic_10na_
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "TonicStimulus", "10 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Itonic_10na_")
+
+                    'ITonic=0nA, INoise=5mV, Stim disabled: Itonic_10na_INoise_5mv_NoStim_
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "TonicStimulus", "0 n"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "TonicNoise", "5 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_1", "Enabled", "False"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Itonic_10na_INoise_5mv_NoStim_")
+
+                End Sub
+
+#End Region
+
 #Region "Additional test attributes"
                 '
                 ' You can use the following additional attributes as you write your tests:

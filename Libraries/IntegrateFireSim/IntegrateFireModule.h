@@ -150,6 +150,9 @@ namespace IntegrateFireSim
 		void AbsoluteRefr(double dVal); 
 		double AbsoluteRefr();
 
+		void AHPEquilPot(double dVal); 
+		double AHPEquilPot();
+
 		// Synapse stuff
 		int GetSpikingChemSynCount();
 		SpikingChemicalSynapse *GetSpikingChemSynAt(int i);
@@ -202,6 +205,7 @@ namespace IntegrateFireSim
 		virtual void ResetSimulation();
 		virtual void Initialize();
 		virtual void StepSimulation();
+		virtual void TimeStepModified();
 		virtual void Load(CStdXml &oXml);
 		//NeuralModule Overrides
 

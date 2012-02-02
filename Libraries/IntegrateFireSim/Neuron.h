@@ -48,6 +48,9 @@ namespace IntegrateFireSim
 		/// The static absolute refractory period after an action potential
 		static double m_dAbsoluteRefr;
 
+		/// The static absolute refractory period in timeslices after an action potential
+		static long m_lAbsoluteRefr;
+
 		/// Integer ID for the neuron. This is its index in the array of neruons in the neural module.
 		int m_iNeuronID;
 
@@ -158,7 +161,7 @@ namespace IntegrateFireSim
 
 		// calculation stuff
 		/// The refractory count down
-		double m_dRefrCountDown;
+		long m_lRefrCountDown;
 
 		/// exponential decline working factor for threshold accommodation
 		double m_dDCTH;	
@@ -339,6 +342,12 @@ namespace IntegrateFireSim
 		void BurstHTimeConstant(double dVal);
 		double BurstHTimeConstant();
 		
+		void TonicStimulus(double dblVal);
+		double TonicStimulus();
+		
+		void TonicNoise(double dblVal);
+		double TonicNoise();
+
 #pragma endregion
 
 		void PreCalc(IntegrateFireNeuralModule *lpNS);

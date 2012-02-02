@@ -199,7 +199,6 @@ Namespace Forms.Charts
         'Protected m_xmlDataAs ManagedAnimatInterfaces.IStdXml
 
         Protected m_Image As System.Drawing.Image
-        Protected m_bAddedHandlers As Boolean = False
 
         Protected m_iSubsets As Integer = 0
         Protected m_iPrevSubsets As Integer = -1
@@ -1025,21 +1024,39 @@ Namespace Forms.Charts
             'Me.ctrlGraph.PointsToGraph = 20
             'Me.ctrlGraph.PointsToGraphInit = PEPTGI_LASTPOINTS 'Show Last Points Initially
 
-            If Not m_bAddedHandlers Then
-                AddHandler Util.Application.SimulationStarting, AddressOf Me.OnSimulationStarting
-                AddHandler Util.Application.SimulationResuming, AddressOf Me.OnSimulationResuming
-                AddHandler Util.Application.SimulationStarted, AddressOf Me.OnSimulationStarted
-                AddHandler Util.Application.SimulationPaused, AddressOf Me.OnSimulationPaused
-                AddHandler Util.Application.SimulationStopped, AddressOf Me.OnSimulationStopped
-                m_bAddedHandlers = True
-            End If
-
             m_aryAxisList.Clear()
             Dim doAxis As New DataObjects.Charting.Pro2DAxis(Me)
             doAxis.WorkingAxis = 0
             doAxis.Name = "Y Axis 1"
             'Setting the name on the axis adds it to the axis list
 
+        End Sub
+
+        Protected Overrides Sub AddHandlers()
+
+            If Not m_bAddedHandlers Then
+                AddHandler Util.Application.SimulationStarting, AddressOf Me.OnSimulationStarting
+                AddHandler Util.Application.SimulationResuming, AddressOf Me.OnSimulationResuming
+                AddHandler Util.Application.SimulationStarted, AddressOf Me.OnSimulationStarted
+                AddHandler Util.Application.SimulationPaused, AddressOf Me.OnSimulationPaused
+                AddHandler Util.Application.SimulationStopped, AddressOf Me.OnSimulationStopped
+            End If
+
+            MyBase.AddHandlers()
+        End Sub
+
+        Protected Overrides Sub RemoveHandlers()
+
+            If m_bAddedHandlers Then
+                'Remove the simulationhandlers
+                RemoveHandler Util.Application.SimulationStarting, AddressOf Me.OnSimulationStarting
+                RemoveHandler Util.Application.SimulationResuming, AddressOf Me.OnSimulationResuming
+                RemoveHandler Util.Application.SimulationStarted, AddressOf Me.OnSimulationStarted
+                RemoveHandler Util.Application.SimulationPaused, AddressOf Me.OnSimulationPaused
+                RemoveHandler Util.Application.SimulationStopped, AddressOf Me.OnSimulationStopped
+            End If
+
+            MyBase.RemoveHandlers()
         End Sub
 
         Protected Overridable Sub CreateImageManager()
@@ -1652,9 +1669,9 @@ Namespace Forms.Charts
                                             pbNumberBag, "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), Me.UpdateChartAtEnd))
             End If
 
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Auto CollectInterval", GetType(Boolean), "AutoCollectDataInterval", _
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Auto CollectInterval", GetType(Boolean), "AutoCollectDataInterval", _
                                         "Data Properties", "If this is true then the collect data interval is automatically calculated from the data items added." & _
-                                        "The smallest timestep for the items added is used.", Me.AutoCollectDataInterval, Me.RequiresAutoDataCollectInterval))
+                                        "The smallest timestep for the items added is used.", Me.AutoCollectDataInterval))
 
             pbNumberBag = m_snCollectDataInterval.Properties
             propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Collect Data Interval", pbNumberBag.GetType(), "CollectDataInterval", _
@@ -1931,22 +1948,22 @@ Namespace Forms.Charts
 
         End Sub
 
-        Protected Overrides Sub AnimatForm_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
-            MyBase.AnimatForm_FormClosing(sender, e)
+        'Protected Overrides Sub AnimatForm_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+        '    MyBase.AnimatForm_FormClosing(sender, e)
 
-            If e.Cancel AndAlso m_bAddedHandlers Then
-                RemoveHandler Util.Application.SimulationStarting, AddressOf Me.OnSimulationStarting
-                RemoveHandler Util.Application.SimulationResuming, AddressOf Me.OnSimulationResuming
-                RemoveHandler Util.Application.SimulationStarted, AddressOf Me.OnSimulationStarted
-                RemoveHandler Util.Application.SimulationPaused, AddressOf Me.OnSimulationPaused
-                RemoveHandler Util.Application.SimulationStopped, AddressOf Me.OnSimulationStopped
-                m_bAddedHandlers = False
+        '    If e.Cancel AndAlso m_bAddedHandlers Then
+        '        RemoveHandler Util.Application.SimulationStarting, AddressOf Me.OnSimulationStarting
+        '        RemoveHandler Util.Application.SimulationResuming, AddressOf Me.OnSimulationResuming
+        '        RemoveHandler Util.Application.SimulationStarted, AddressOf Me.OnSimulationStarted
+        '        RemoveHandler Util.Application.SimulationPaused, AddressOf Me.OnSimulationPaused
+        '        RemoveHandler Util.Application.SimulationStopped, AddressOf Me.OnSimulationStopped
+        '        m_bAddedHandlers = False
 
-                If Util.Application.SimulationInterface.FindItem(m_strID, False) Then
-                    Util.Application.SimulationInterface.RemoveItem("Simulator", m_strID, "DataChart", True)
-                End If
-            End If
-        End Sub
+        '        If Util.Application.SimulationInterface.FindItem(m_strID, False) Then
+        '            Util.Application.SimulationInterface.RemoveItem("Simulator", m_strID, "DataChart", True)
+        '        End If
+        '    End If
+        'End Sub
 
 #Region " ToolStrips Code "
 
@@ -2409,19 +2426,6 @@ Namespace Forms.Charts
 
 #End Region
 
-
-        Protected Overrides Sub OnFormClosed(ByVal e As System.Windows.Forms.FormClosedEventArgs)
-            MyBase.OnFormClosed(e)
-
-            'Remove the simulationhandlers
-            RemoveHandler Util.Application.SimulationStarting, AddressOf Me.OnSimulationStarting
-            RemoveHandler Util.Application.SimulationResuming, AddressOf Me.OnSimulationResuming
-            RemoveHandler Util.Application.SimulationStarted, AddressOf Me.OnSimulationStarted
-            RemoveHandler Util.Application.SimulationPaused, AddressOf Me.OnSimulationPaused
-            RemoveHandler Util.Application.SimulationStopped, AddressOf Me.OnSimulationStopped
-            m_bAddedHandlers = False
-
-        End Sub
 
         Protected Overrides Sub OnAddAxis(ByVal sender As Object, ByVal e As System.EventArgs)
 

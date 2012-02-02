@@ -27,6 +27,8 @@ Namespace DataObjects.Behavior
         Protected m_bTTX As Boolean
         Protected m_bCd As Boolean
         Protected m_bHodgkinHuxley As Boolean
+        Protected m_bFreezeHebb As Boolean
+        Protected m_bRetainHebbMemory As Boolean
 
         Protected m_arySynapseTypes As New Collections.SynapseTypes(Me)
 
@@ -44,22 +46,6 @@ Namespace DataObjects.Behavior
         End Property
 
         <Browsable(False)> _
-        Public Overrides Property TimeStep() As ScaledNumber
-            Get
-                Return m_snTimeStep
-            End Get
-            Set(ByVal Value As ScaledNumber)
-                If Value.ActualValue < 0.0000001 OrElse Value.ActualValue > 0.05 Then
-                    Throw New System.Exception("The time step must be between the range 0.0001 to 50 ms.")
-                End If
-
-                SetSimData("TimeStep", Value.ActualValue.ToString, True)
-                m_snTimeStep.CopyData(Value)
-                Util.Application.SignalTimeStepChanged(Me)
-            End Set
-        End Property
-
-        <Browsable(False)> _
         Public Overridable Property AHPEquilibriumPotential() As AnimatGUI.Framework.ScaledNumber
             Get
                 Return m_snAHPEquilibriumPotential
@@ -69,7 +55,7 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The after-hyperpolarizing equilibrium potential must be between the range -150 to -10 mV.")
                 End If
 
-                'TODO
+                SetSimData("AHPEquilPot", Value.ValueFromDefaultScale.ToString, True)
                 m_snAHPEquilibriumPotential.CopyData(Value)
             End Set
         End Property
@@ -84,7 +70,7 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The spike peak must be between the range -30 to 50 mV.")
                 End If
 
-                'TODO
+                SetSimData("SpikePeak", Value.ValueFromDefaultScale.ToString, True)
                 m_snSpikePeak.CopyData(Value)
             End Set
         End Property
@@ -99,7 +85,7 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The spike strength must be between the range 1 to 1000.")
                 End If
 
-                'TODO
+                SetSimData("SpikeStrength", Value.ToString, True)
                 m_fltSpikeStrength = Value
             End Set
         End Property
@@ -114,7 +100,7 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The calcium equilibrium potential must be between the range -100 to 500 mV.")
                 End If
 
-                'TODO
+                SetSimData("CaEquilPot", Value.ValueFromDefaultScale.ToString, True)
                 m_snCaEquilibriumPotential.CopyData(Value)
             End Set
         End Property
@@ -129,7 +115,7 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The absolute refractory period must be between the range 1 to 50 ms.")
                 End If
 
-                'TODO
+                SetSimData("AbsoluteRefr", Value.ValueFromDefaultScale.ToString, True)
                 m_snRefractoryPeriod.CopyData(Value)
             End Set
         End Property
@@ -140,7 +126,7 @@ Namespace DataObjects.Behavior
                 Return m_bUseCriticalPeriod
             End Get
             Set(ByVal Value As Boolean)
-                'TODO
+                SetSimData("UseCriticalPeriod", Value.ToString, True)
                 m_bUseCriticalPeriod = Value
             End Set
         End Property
@@ -151,7 +137,7 @@ Namespace DataObjects.Behavior
                 Return m_bTTX
             End Get
             Set(ByVal Value As Boolean)
-                'TODO
+                SetSimData("TTX", Value.ToString, True)
                 m_bTTX = Value
             End Set
         End Property
@@ -162,7 +148,7 @@ Namespace DataObjects.Behavior
                 Return m_bCd
             End Get
             Set(ByVal Value As Boolean)
-                'TODO
+                SetSimData("Cd", Value.ToString, True)
                 m_bCd = Value
             End Set
         End Property
@@ -173,7 +159,7 @@ Namespace DataObjects.Behavior
                 Return m_bHodgkinHuxley
             End Get
             Set(ByVal Value As Boolean)
-                'TODO
+                SetSimData("HH", Value.ToString, True)
                 m_bHodgkinHuxley = Value
             End Set
         End Property
@@ -192,7 +178,7 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The critical period start time must be less than the end time.")
                 End If
 
-                'TODO
+                SetSimData("StartCriticalPeriod", Value.ToString, True)
                 m_snStartCriticalPeriod.CopyData(Value)
             End Set
         End Property
@@ -211,8 +197,30 @@ Namespace DataObjects.Behavior
                     Throw New System.Exception("The critical period end time must be greater than the start time.")
                 End If
 
-                'TODO
+                SetSimData("EndCriticalPeriod", Value.ToString, True)
                 m_snEndCriticalPeriod.CopyData(Value)
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property FreezeHebb() As Boolean
+            Get
+                Return m_bFreezeHebb
+            End Get
+            Set(ByVal Value As Boolean)
+                SetSimData("FreezeHebb", Value.ToString, True)
+                m_bFreezeHebb = Value
+            End Set
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable Property RetainHebbMemory() As Boolean
+            Get
+                Return m_bRetainHebbMemory
+            End Get
+            Set(ByVal Value As Boolean)
+                SetSimData("RetainHebbMemory", Value.ToString, True)
+                m_bRetainHebbMemory = Value
             End Set
         End Property
 
@@ -252,6 +260,8 @@ Namespace DataObjects.Behavior
             m_bTTX = False
             m_bCd = False
             m_bHodgkinHuxley = False
+            m_bFreezeHebb = False
+            m_bRetainHebbMemory = False
 
             'Now lets create the default link types.
             Dim slSynapse As DataObjects.Behavior.SynapseType
@@ -383,7 +393,8 @@ Namespace DataObjects.Behavior
             m_bTTX = nmOrig.m_bTTX
             m_bCd = nmOrig.m_bCd
             m_bHodgkinHuxley = nmOrig.m_bHodgkinHuxley
-
+            m_bFreezeHebb = nmOrig.m_bFreezeHebb
+            m_bRetainHebbMemory = nmOrig.m_bRetainHebbMemory
         End Sub
 
         Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
@@ -404,6 +415,8 @@ Namespace DataObjects.Behavior
             oXml.AddChildElement("TTX", m_bTTX)
             oXml.AddChildElement("Cd", m_bCd)
             oXml.AddChildElement("HH", m_bHodgkinHuxley)
+            oXml.AddChildElement("FreezeHebb", m_bFreezeHebb)
+            oXml.AddChildElement("RetainHebbMemory", m_bRetainHebbMemory)
 
             'First we need to get lists of the different types of synaptic types.
             Dim iIndex As Integer = 0
@@ -532,6 +545,15 @@ Namespace DataObjects.Behavior
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Hodgkin Huxley", m_bHodgkinHuxley.GetType(), "HodgkinHuxley", _
                                         "Global Neural Properties", "If this is true the integrate-and-fire DE is replaced with a standard HH DE.", m_bHodgkinHuxley))
 
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Hodgkin Huxley", m_bHodgkinHuxley.GetType(), "HodgkinHuxley", _
+                                        "Global Neural Properties", "If this is true the integrate-and-fire DE is replaced with a standard HH DE.", m_bHodgkinHuxley))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Freeze Hebb", m_bFreezeHebb.GetType(), "FreezeHebb", _
+                                        "Global Neural Properties", "Freezes the Hebbian learning.", m_bFreezeHebb))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Retain Hebb Memory", m_bRetainHebbMemory.GetType(), "RetainHebbMemory", _
+                                        "Global Neural Properties", "Retains the Hebbian memory learned from previous runs.", m_bRetainHebbMemory))
+
             pbNumberBag = m_snStartCriticalPeriod.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Critical Period Start", pbNumberBag.GetType(), "StartCriticalPeriod", _
                                         "Global Neural Properties", "Sets the start time of the critical period in seconds. " & _
@@ -578,6 +600,8 @@ Namespace DataObjects.Behavior
             m_bTTX = oXml.GetChildBool("TTX", m_bTTX)
             m_bCd = oXml.GetChildBool("Cd", m_bCd)
             m_bHodgkinHuxley = oXml.GetChildBool("HH", m_bHodgkinHuxley)
+            m_bFreezeHebb = oXml.GetChildBool("FreezeHeb", m_bFreezeHebb)
+            m_bRetainHebbMemory = oXml.GetChildBool("RetainHebbMemory", m_bRetainHebbMemory)
 
             m_arySynapseTypes.Clear()
             oXml.IntoChildElement("SynapseTypes")
@@ -615,6 +639,8 @@ Namespace DataObjects.Behavior
             oXml.AddChildElement("TTX", m_bTTX)
             oXml.AddChildElement("Cd", m_bCd)
             oXml.AddChildElement("HH", m_bHodgkinHuxley)
+            oXml.AddChildElement("FreezeHebb", m_bFreezeHebb)
+            oXml.AddChildElement("RetainHebbMemory", m_bRetainHebbMemory)
 
             oXml.AddChildElement("SynapseTypes")
             oXml.IntoElem()

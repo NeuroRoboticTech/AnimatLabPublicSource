@@ -599,8 +599,6 @@ Namespace DataObjects.Physical
 
             m_clBackgroundcolor = Color.FromArgb(255, 51, 51, 153)
 
-            AddHandler Util.Application.TimeStepChanged, AddressOf Me.OnTimeStepChanged
-
             AddDefaultMaterialType(False)
             AddDefaultMaterialPair(False)
 
@@ -1588,7 +1586,16 @@ Namespace DataObjects.Physical
             'Get the actual physics time step after initialization of the sim object.
             If Not m_doInterface Is Nothing Then
                 m_snPhysicsTimeStep.ActualValue = m_doInterface.GetDataValueImmediate("PhysicsTimeStep")
+                AddHandler Util.Application.TimeStepChanged, AddressOf Me.OnTimeStepChanged
             End If
+        End Sub
+
+        Public Overrides Sub RemoveFromSim(bThrowError As Boolean)
+            If Not m_doInterface Is Nothing Then
+                RemoveHandler Util.Application.TimeStepChanged, AddressOf Me.OnTimeStepChanged
+            End If
+
+            MyBase.RemoveFromSim(bThrowError)
         End Sub
 
 #End Region
