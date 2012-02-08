@@ -81,6 +81,36 @@ Namespace Forms
 
         End Sub
 
+        Public Sub SetTreeNodeObjectProperty(ByVal strPath As String, ByVal strPropertyName As String, ByVal strValue As String)
+            If m_tvItems Is Nothing Then
+                Throw New System.Exception("No tree view was setup for the form '" & Me.Name & "'")
+            End If
+
+            Dim tnSelected As Crownwood.DotNetMagic.Controls.Node = Util.FindTreeNodeByPath(strPath, m_tvItems.Nodes)
+
+            If tnSelected.Tag Is Nothing Then
+                Throw New System.Exception("No object was found in the tree node path '" & strPath & "'.")
+            End If
+
+            Util.SetTreeNodeObjectProperty(tnSelected, strPropertyName, strValue)
+            tnSelected.Select()
+
+        End Sub
+
+        Public Function GetTreeNodeObjectProperty(ByVal strPath As String, ByVal strPropertyName As String) As Object
+            If m_tvItems Is Nothing Then
+                Throw New System.Exception("No tree view was setup for the form '" & Me.Name & "'")
+            End If
+
+            Dim tnSelected As Crownwood.DotNetMagic.Controls.Node = Util.FindTreeNodeByPath(strPath, m_tvItems.Nodes)
+
+            If tnSelected.Tag Is Nothing Then
+                Throw New System.Exception("No object was found in the tree node path '" & strPath & "'.")
+            End If
+
+            Return Util.GetTreeNodeObjectProperty(tnSelected, strPropertyName)
+        End Function
+
     End Class
 
 End Namespace

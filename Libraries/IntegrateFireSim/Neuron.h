@@ -230,6 +230,9 @@ namespace IntegrateFireSim
 		/// The inactivation variable.
 		double m_dH;
 
+		/// The Reporting variable for E
+		float m_fltEMemory;
+
 		//Vars to calculate the firing frequency of this neuron.
 		/// Time of the last spike
 		double m_fltLastSpikeTime;

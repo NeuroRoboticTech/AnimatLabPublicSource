@@ -14,29 +14,25 @@ Namespace TypeHelpers
         Public Overloads Overrides Function EditValue(ByVal context As ITypeDescriptorContext, ByVal provider As IServiceProvider, ByVal value As Object) As Object
 
             Try
+                If Not value Is Nothing AndAlso Util.IsTypeOf(value.GetType(), GetType(DataObjects.Behavior.SynapseType)) Then
 
-                If (Not context Is Nothing And Not context.Instance Is Nothing And Not provider Is Nothing) Then
-                    service = CType(provider.GetService(GetType(IWindowsFormsEditorService)), IWindowsFormsEditorService)
-                    If (Not service Is Nothing) AndAlso Util.IsTypeOf(value.GetType(), GetType(DataObjects.Behavior.SynapseType)) Then
+                    Dim stType As DataObjects.Behavior.SynapseType = DirectCast(value, DataObjects.Behavior.SynapseType)
 
-                        Dim stType As DataObjects.Behavior.SynapseType = DirectCast(value, DataObjects.Behavior.SynapseType)
-
-                        Dim frmSynapseType As New Forms.SelectSynapseType
-                        frmSynapseType.Origin = Nothing
-                        frmSynapseType.Destination = Nothing
-                        frmSynapseType.CompatibleLinks = Nothing
-                        frmSynapseType.SelectedSynapseType = stType
-                        If Not stType Is Nothing Then
-                            frmSynapseType.NeuralModule = DirectCast(stType.NeuralModule, DataObjects.Behavior.NeuralModule)
-                        End If
-
-                        If frmSynapseType.ShowDialog() = DialogResult.OK Then
-                            Return frmSynapseType.SelectedSynapseType
-                        Else
-                            Return stType
-                        End If
-
+                    Dim frmSynapseType As New Forms.SelectSynapseType
+                    frmSynapseType.Origin = Nothing
+                    frmSynapseType.Destination = Nothing
+                    frmSynapseType.CompatibleLinks = Nothing
+                    frmSynapseType.SelectedSynapseType = stType
+                    If Not stType Is Nothing Then
+                        frmSynapseType.NeuralModule = DirectCast(stType.NeuralModule, DataObjects.Behavior.NeuralModule)
                     End If
+
+                    If frmSynapseType.ShowDialog() = DialogResult.OK Then
+                        Return frmSynapseType.SelectedSynapseType
+                    Else
+                        Return stType
+                    End If
+
                 End If
 
                 Return value

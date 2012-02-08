@@ -41,6 +41,8 @@ Connexion::Connexion()
 	m_dTimeSincePrevHebbEvent = 0;
 	m_dPreviousSpikeLatency = 0;
 	m_dPartialBlockHold = 0;
+	m_fltGFailCxReport = m_dGFacilCx;
+	m_fltGReport = m_dG;
 }
 
 /**
@@ -72,6 +74,8 @@ Connexion::Connexion(int type, int ID, double delay,float topBlock,float botBloc
 	m_dTimeSincePrevHebbEvent = 0;
 	m_dPreviousSpikeLatency = 0;
 	m_dPartialBlockHold = 0;
+	m_fltGFailCxReport = m_dGFacilCx;
+	m_fltGReport = m_dG;
 }
 
 /**
@@ -104,6 +108,9 @@ void Connexion::BaseConductance(double dVal)
 	m_dBaseG = dVal;
 	m_dG += dDiff;
 	m_dGFacilCx += dDiff;
+
+	m_fltGFailCxReport = m_dGFacilCx;
+	m_fltGReport = m_dG;
 }
 
 /**
@@ -273,7 +280,10 @@ void Connexion::DecrementFacilitation()
 	if (RelFacil()==1) 
 		return;
 	else 
+	{
 		m_dGFacilCx=m_dG+(m_dGFacilCx-m_dG)*FacilD();
+		m_fltGFailCxReport = m_dGFacilCx;
+	}
 }
 
 /**
@@ -574,6 +584,9 @@ void Connexion::IncrementHebbian()
 // increment current facilitation state by same percentage as base conductance
 			m_dGFacilCx=m_dGFacilCx*newG/m_dG;
 			m_dG=newG;
+			m_fltGFailCxReport = m_dGFacilCx;
+			m_fltGReport = m_dG;
+
 //TRACE("time left in Hebb window = %lf, increment factor = %lf\n",*pTimeLeftInHebbWindow,m_HebbIncrement*((*pTimeLeftInHebbWindow)/m_HebbTimeWindow));
 //TRACE("and now m_G is %lf, facil G is %lf\n",m_G, m_GFacilCx);
 			m_dTimeSincePrevHebbEvent=0;
@@ -625,6 +638,10 @@ double Connexion::ProcessOutput(BOOL bFreezeHebb)
 //TRACE("appending Hebbian time window to Hebb list\n");
 
 	}
+
+	m_fltGFailCxReport = m_dGFacilCx;
+	m_fltGReport = m_dG;
+
 	return G;
 }
 
@@ -657,6 +674,7 @@ double Connexion::GetProspectiveCond(BOOL bFreezeHebb)
 // decrease current facilitation state by same percentage as base conductance
 		G=m_dGFacilCx*newG/m_dG;
 	}
+
 //TRACE("GetProspectiveCond = %lf\n",G);
 	return(max(0,G));	// get conductance, if not facil below 0
 }
@@ -687,6 +705,22 @@ void Connexion::VerifySystemPointers()
 }
 
 #pragma region DataAccesMethods
+
+float *Connexion::GetDataPointer(string strDataType)
+{
+	string strType = Std_CheckString(strDataType);
+
+	if(strType == "CONDUCTANCE")
+		return &m_fltGReport;
+
+	if(strType == "FACILITATION")
+		return &m_fltGFailCxReport;
+
+	//If it was not one of those above then we have a problem.
+	THROW_PARAM_ERROR(Rn_Err_lInvalidNeuronDataType, Rn_Err_strInvalidNeuronDataType, "Neuron Data Type", strDataType);
+
+	return NULL;
+}
 
 BOOL Connexion::SetData(string strDataType, string strValue, BOOL bThrowError)
 {

@@ -407,7 +407,7 @@ double IntegrateFireNeuralModule::CaEquilPot() {return Neuron::m_dCaEquilPot;}
 void IntegrateFireNeuralModule::AbsoluteRefr(double dVal) 
 {
 	Neuron::m_dAbsoluteRefr = dVal;
-	Neuron::m_lAbsoluteRefr = (long) (dVal/m_dTimeStep);
+	Neuron::m_lAbsoluteRefr = (long) ((dVal/m_dTimeStep)+0.5f);
 }
 
 /**
@@ -562,7 +562,7 @@ void IntegrateFireNeuralModule::LoadInternal(CStdXml &oXml)
 	Neuron::m_dAHPEquilPot=oXml.GetChildDouble("AHPEquilPot");
 	Neuron::m_dCaEquilPot=oXml.GetChildDouble("CaEquilPot");
 	Neuron::m_dAbsoluteRefr=oXml.GetChildDouble("AbsoluteRefr");
-	Neuron::m_lAbsoluteRefr = (long) (Neuron::m_dAbsoluteRefr/m_dTimeStep);
+	Neuron::m_lAbsoluteRefr = (long) ((Neuron::m_dAbsoluteRefr/m_dTimeStep)+0.5f);
 
 	oXml.IntoChildElement("Synapses");
 
@@ -1039,6 +1039,8 @@ void IntegrateFireNeuralModule::InitSynapse(Connexion *pCx)
 		pCx->m_dPreviousSpikeLatency=-1;
 		pCx->m_dGFacilCx = pCx->m_dBaseG;
 		pCx->m_dG = pCx->m_dBaseG;
+		pCx->m_fltGFailCxReport = pCx->m_dGFacilCx;
+		pCx->m_fltGReport = pCx->m_dG;
 
 		if (pCx->Hebbian())
 			pCx->m_dTimeSincePrevHebbEvent=0;
@@ -1063,7 +1065,7 @@ void IntegrateFireNeuralModule::PreCalc()
 
 	m_dCurrentTime=0;
 	Neuron::m_dDT=m_dTimeStep;
-	Neuron::m_lAbsoluteRefr = (long) (Neuron::m_dAbsoluteRefr/m_dTimeStep);
+	Neuron::m_lAbsoluteRefr = (long) ((Neuron::m_dAbsoluteRefr/m_dTimeStep)+0.5f);
 
 	for (i=0; i<GetNeuronCount(); i++)
 	{

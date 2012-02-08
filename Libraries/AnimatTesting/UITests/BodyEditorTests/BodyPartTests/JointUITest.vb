@@ -389,7 +389,7 @@ Namespace UITests
                     If Not Me.IsMotorizedJoint Then Return
 
                     'Add motor velocity to joint. 
-                    AddStimulus("Motor Velocity", m_strStruct1Name, "Root\Joint_1", "JointVelocity", "Stimulus_2")
+                    AddStimulus("Motor Velocity", m_strStruct1Name, "\Body Plan\Root\Joint_1", "JointVelocity", "Stimulus_2")
                     SetMotorVelocityStimulus("JointVelocity", False, True, 0, 5, True, True, 1, "")
 
                     RunSimulationWaitToEnd()
@@ -431,7 +431,7 @@ Namespace UITests
 
                 Protected Overridable Sub TestConstraintLimitsWithForce()
                     'Add force stimulus to child part. 
-                    AddStimulus("Force", m_strStruct1Name, "Root\Joint_1\Arm", "ArmForce", "Stimulus_3")
+                    AddStimulus("Force", m_strStruct1Name, "\Body Plan\Root\Joint_1\Arm", "ArmForce", "Stimulus_3")
                     SetForceStimulus("ArmForce", False, True, 1, 2, 0, 0, 0, 0, 10, 0, 0, 0, 0)
 
                     RunSimulationWaitToEnd()

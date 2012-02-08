@@ -1446,6 +1446,43 @@ Namespace Framework
 
         End Sub
 
+        Public Shared Sub SetTreeNodeObjectProperty(ByVal tnNode As Crownwood.DotNetMagic.Controls.Node, ByVal strPropertyName As String, ByVal strValue As String)
+            Dim oObj As Object = tnNode.Tag
+
+            Dim piAutomationPropInfo As PropertyInfo
+            Dim oAutomationPropertyValue As Object
+
+            Util.GetObjectProperty(strPropertyName, piAutomationPropInfo, oObj)
+
+            oAutomationPropertyValue = TypeDescriptor.GetConverter(piAutomationPropInfo.PropertyType).ConvertFromString(strValue)
+            piAutomationPropInfo.SetValue(oObj, oAutomationPropertyValue, Nothing)
+            Util.ProjectWorkspace.RefreshProperties()
+        End Sub
+
+        Public Shared Function GetTreeNodeObjectProperty(ByVal tnNode As Crownwood.DotNetMagic.Controls.Node, ByVal strPropertyName As String) As Object
+
+            Dim aryPropPath() As String = Split(strPropertyName, ".")
+            Dim iIdx As Integer = 0
+            Dim oObj As Object = tnNode.Tag
+            Dim piAutomationPropInfo As PropertyInfo
+            For Each strPropName As String In aryPropPath
+                piAutomationPropInfo = oObj.GetType().GetProperty(strPropName)
+
+                If piAutomationPropInfo Is Nothing Then
+                    Throw New System.Exception("Property name '" & strPropName & "' not found in Path '" & strPropertyName & "'.")
+                End If
+
+                iIdx = iIdx + 1
+                'Dont get the obj on the last one.
+                If iIdx < aryPropPath.Length Then
+                    oObj = piAutomationPropInfo.GetValue(oObj, Nothing)
+                End If
+            Next
+
+            Dim obj As Object = piAutomationPropInfo.GetValue(oObj, Nothing)
+            Return obj
+        End Function
+
         Public Shared Sub LoadClassModuleName(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal iIndex As Integer, _
                                               ByRef strAssemblyFile As String, ByRef strClassName As String, Optional ByVal bThrowError As Boolean = True)
 

@@ -82,7 +82,7 @@ Namespace Framework
                 End If
                 strArgs = strArgs & "-Port " & iPort.ToString
 
-                Process.Start(m_strRootFolder & "\bin\AnimatLab.exe", strArgs)
+                Process.Start(m_strRootFolder & "\bin\AnimatLab2.exe", strArgs)
 
                 Threading.Thread.Sleep(3000)
             End If

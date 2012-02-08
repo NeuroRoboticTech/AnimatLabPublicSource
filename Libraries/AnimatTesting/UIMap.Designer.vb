@@ -181,6 +181,20 @@ Namespace AnimatTesting
             Mouse.Click(uIOpenSplitButton, New Point(53, 12))
         End Sub
         
+        '''<summary>
+        '''OpenUIEditor
+        '''</summary>
+        Public Sub OpenUIEditor()
+            Dim uISynapseTypeRow As WinRow = Me.UIIGF_SpikingChemicalSWindow.UIPropertyGridViewWindow.UIPropertyGridViewTable.UISynapseTypeRow
+            Dim uIBrowseButton As WinButton = Me.UIIGF_SpikingChemicalSWindow.UIPropertyGridViewWindow.UIPropertyGridViewTable.UIBrowseButton
+
+            'Click 'Synapse Type' row
+            Mouse.Click(uISynapseTypeRow, New Point(107, 4))
+
+            'Click 'Browse...' button
+            Mouse.Click(uIBrowseButton, New Point(7, 4))
+        End Sub
+        
         #Region "Properties"
         Public Overridable ReadOnly Property NewProjectDlg_EnterNameAndPathParams() As NewProjectDlg_EnterNameAndPathParams
             Get
@@ -307,6 +321,15 @@ Namespace AnimatTesting
                 Return Me.mUIOpenanAnimatLabProjeWindow
             End Get
         End Property
+        
+        Public ReadOnly Property UIIGF_SpikingChemicalSWindow() As UIIGF_SpikingChemicalSWindow
+            Get
+                If (Me.mUIIGF_SpikingChemicalSWindow Is Nothing) Then
+                    Me.mUIIGF_SpikingChemicalSWindow = New UIIGF_SpikingChemicalSWindow()
+                End If
+                Return Me.mUIIGF_SpikingChemicalSWindow
+            End Get
+        End Property
         #End Region
         
         #Region "Fields"
@@ -337,6 +360,8 @@ Namespace AnimatTesting
         Private mUIToolStripContainer1Window As UIToolStripContainer1Window
         
         Private mUIOpenanAnimatLabProjeWindow As UIOpenanAnimatLabProjeWindow
+        
+        Private mUIIGF_SpikingChemicalSWindow As UIIGF_SpikingChemicalSWindow
         #End Region
     End Class
     
@@ -1401,6 +1426,102 @@ Namespace AnimatTesting
         
         #Region "Fields"
         Private mUIOpenSplitButton As WinSplitButton
+        #End Region
+    End Class
+    
+    <GeneratedCode("Coded UITest Builder", "10.0.40219.1")>  _
+    Public Class UIIGF_SpikingChemicalSWindow
+        Inherits WinWindow
+        
+        Public Sub New()
+            MyBase.New
+            Me.SearchProperties(WinWindow.PropertyNames.Name) = "IGF_SpikingChemicalSynapses Project"
+            Me.SearchProperties.Add(New PropertyExpression(WinWindow.PropertyNames.ClassName, "WindowsForms10.Window", PropertyExpressionOperator.Contains))
+            Me.WindowTitles.Add("IGF_SpikingChemicalSynapses Project")
+        End Sub
+        
+        #Region "Properties"
+        Public ReadOnly Property UIPropertyGridViewWindow() As UIPropertyGridViewWindow
+            Get
+                If (Me.mUIPropertyGridViewWindow Is Nothing) Then
+                    Me.mUIPropertyGridViewWindow = New UIPropertyGridViewWindow(Me)
+                End If
+                Return Me.mUIPropertyGridViewWindow
+            End Get
+        End Property
+        #End Region
+        
+        #Region "Fields"
+        Private mUIPropertyGridViewWindow As UIPropertyGridViewWindow
+        #End Region
+    End Class
+    
+    <GeneratedCode("Coded UITest Builder", "10.0.40219.1")>  _
+    Public Class UIPropertyGridViewWindow
+        Inherits WinWindow
+        
+        Public Sub New(ByVal searchLimitContainer As UITestControl)
+            MyBase.New(searchLimitContainer)
+            Me.SearchProperties(WinWindow.PropertyNames.Name) = "PropertyGridView"
+            Me.SearchProperties.Add(New PropertyExpression(WinWindow.PropertyNames.ClassName, "WindowsForms10.Window", PropertyExpressionOperator.Contains))
+            Me.WindowTitles.Add("IGF_SpikingChemicalSynapses Project")
+        End Sub
+        
+        #Region "Properties"
+        Public ReadOnly Property UIPropertyGridViewTable() As UIPropertyGridViewTable
+            Get
+                If (Me.mUIPropertyGridViewTable Is Nothing) Then
+                    Me.mUIPropertyGridViewTable = New UIPropertyGridViewTable(Me)
+                End If
+                Return Me.mUIPropertyGridViewTable
+            End Get
+        End Property
+        #End Region
+        
+        #Region "Fields"
+        Private mUIPropertyGridViewTable As UIPropertyGridViewTable
+        #End Region
+    End Class
+    
+    <GeneratedCode("Coded UITest Builder", "10.0.40219.1")>  _
+    Public Class UIPropertyGridViewTable
+        Inherits WinTable
+        
+        Public Sub New(ByVal searchLimitContainer As UITestControl)
+            MyBase.New(searchLimitContainer)
+            Me.SearchProperties(WinTable.PropertyNames.Name) = "Properties Window"
+            Me.WindowTitles.Add("IGF_SpikingChemicalSynapses Project")
+        End Sub
+        
+        #Region "Properties"
+        Public ReadOnly Property UISynapseTypeRow() As WinRow
+            Get
+                If (Me.mUISynapseTypeRow Is Nothing) Then
+                    Me.mUISynapseTypeRow = New WinRow(Me)
+                    Me.mUISynapseTypeRow.SearchProperties(WinRow.PropertyNames.Name) = "Synapse Type"
+                    Me.mUISynapseTypeRow.SearchConfigurations.Add(SearchConfiguration.AlwaysSearch)
+                    Me.mUISynapseTypeRow.WindowTitles.Add("IGF_SpikingChemicalSynapses Project")
+                End If
+                Return Me.mUISynapseTypeRow
+            End Get
+        End Property
+        
+        Public ReadOnly Property UIBrowseButton() As WinButton
+            Get
+                If (Me.mUIBrowseButton Is Nothing) Then
+                    Me.mUIBrowseButton = New WinButton(Me)
+                    Me.mUIBrowseButton.SearchProperties(WinButton.PropertyNames.Name) = "Browse..."
+                    Me.mUIBrowseButton.WindowTitles.Add("IGF_SpikingChemicalSynapses Project")
+                End If
+                Return Me.mUIBrowseButton
+            End Get
+        End Property
+        #End Region
+        
+        #Region "Fields"
+        Private mUISynapseTypeRow As WinRow
+        
+        Private mUIBrowseButton As WinButton
         #End Region
     End Class
 End Namespace

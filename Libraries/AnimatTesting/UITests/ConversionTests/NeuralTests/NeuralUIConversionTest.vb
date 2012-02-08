@@ -586,6 +586,289 @@ Namespace UITests
 
 #Region "IGF Methods"
 
+                <TestMethod()>
+                Public Sub Test_IGF_SpikingChemicalSynapses()
+
+                    Dim aryMaxErrors As New Hashtable
+                    aryMaxErrors.Add("Time", 0.001)
+                    aryMaxErrors.Add("1", 0.0001)
+                    aryMaxErrors.Add("2", 0.0001)
+                    aryMaxErrors.Add("3", 0.0001)
+                    aryMaxErrors.Add("default", 0.0001)
+
+                    m_strProjectName = "IGF_SpikingChemicalSynapses"
+                    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
+                    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
+                    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+
+                    'Load and convert the project.
+                    TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                    'Run the same sim a second time to check for changes between sims.
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
+                    'Change the time step of the firing rate neural sim to 0.1 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.1 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_1ms_")
+
+                    'Change the time step of the firing rate neural sim to 0.5 ms, physics time step to 0.1 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.5 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.1 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_5ms_PhysicsTimeStep_0_1ms_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.2 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapticConductance", "2 u"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_2uS_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (2 uS)", "SynapticConductance", "1.5 u"})
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\2 (0.5 uS)", "SynapticConductance", "2 u"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S2_2uS_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\2 (2 uS)", "SynapticConductance", "0.5 u"})
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "ConductionDelay", "1.5 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "1_Delay_1_5_ms_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\2 (0.5 uS)", "ConductionDelay", "1.5 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "2_Delay_1_5_ms_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "ConductionDelay", "0"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\2 (0.5 uS)", "ConductionDelay", "0"})
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Nicotinic ACh", "DecayRate", "5 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_Decay_5ms_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Nicotinic ACh", "DecayRate", "30 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_Decay_30ms_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Nicotinic ACh", "DecayRate", "15 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\2 (0.5 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hyperpolarizing IPSP", "DecayRate", "2 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S2_Decay_2ms_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\2 (0.5 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hyperpolarizing IPSP", "DecayRate", "50 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S2_Decay_50ms_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Nicotinic ACh", "EquilibriumPotential", "-30 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\2 (0.5 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hyperpolarizing IPSP", "DecayRate", "10 m"})
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hyperpolarizing IPSP", "EquilibriumPotential", "-90 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_EqPot_-30mv_S2_EqPot_-90mv_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Nicotinic ACh", "EquilibriumPotential", "-10 m"})
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Nicotinic ACh", "FacilitationDecay", "20 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\2 (0.5 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hyperpolarizing IPSP", "EquilibriumPotential", "-70 m"})
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hyperpolarizing IPSP", "FacilitationDecay", "300 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_FacilDecay_20ms_S2_FacilDecay_300ms_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Nicotinic ACh", "FacilitationDecay", "300 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\2 (0.5 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hyperpolarizing IPSP", "FacilitationDecay", "20 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_FacilDecay_300ms_S2_FacilDecay_20ms_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Nicotinic ACh", "FacilitationDecay", "100 m"})
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Nicotinic ACh", "RelativeFacilitation", "5"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\2 (0.5 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hyperpolarizing IPSP", "FacilitationDecay", "100 m"})
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hyperpolarizing IPSP", "RelativeFacilitation", "5"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1S2_Facil_5_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Nicotinic ACh", "RelativeFacilitation", "0.9"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\2 (0.5 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hyperpolarizing IPSP", "RelativeFacilitation", "0.9"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1S2_Facil_0_9_")
+
+                    'Voltage dependent tests
+                    'Disabled Neuron 2, switch synapse 1 to NMDA type, REset stim to go from 50-60ms at 30 nA, reset chart to 0 to 200 ms.
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Enabled", "False"})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SelectItemInTreeView", New Object() {"Synapses Classes\Spiking Chemical Synapses\NMDA type"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "Enabled", "False"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "StartTime", "50 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "EndTime", "60 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "CurrentOn", "30 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "N2_Disabled_S1_NMDA_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.1 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\NMDA type", "SaturatePotential", "-40 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_SatPot_-40mv_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.1 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\NMDA type", "MaxRelativeConductance", "15 u"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_MaxCond_15us_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.1 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\NMDA type", "MaxRelativeConductance", "10 u"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\Neural Subsystem\3", "Stimulus_C", "Stimulus_1")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "StartTime", "20 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "EndTime", "170 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "CurrentOn", "5 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Stim3_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "CurrentOn", "-5 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Stim3_-5nA_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.1 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\NMDA type", "ThresholdPotential", "-80 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_Thresh_-80mv_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.1 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\NMDA type", "VoltageDependent", "False"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_NoVoltageDep_")
+
+                    ''Only used if commenting out upper portion to test hebbian.
+                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Enabled", "False"})
+                    'ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapseType"}, 500)
+                    'ExecuteActiveDialogMethod("SelectItemInTreeView", New Object() {"Synapses Classes\Spiking Chemical Synapses\NMDA type"})
+                    'ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    'AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\Neural Subsystem\3", "Stimulus_C", "Stimulus_1")
+                    ''Only used if commenting out upper portion to test hebbian.
+
+
+                    'Hebbian tests
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeAccomodation", "0"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3", "AHP_Conductance", "1.5 u"})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.1 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SelectItemInTreeView", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hebbian ACh type"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "StartTime", "10 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "EndTime", "260 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "CurrentOn", "21 n"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "Enabled", "False"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_Hebbian_")
+
+                    AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\Neural Subsystem\1", "Stimulus_D", "Stimulus_2")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_D", "StartTime", "110 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_D", "EndTime", "160 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_D", "CurrentOn", "10 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_LowFreq_Increase_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_D", "Enabled", "False"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "Enabled", "True"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "StartTime", "110 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "EndTime", "160 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "CurrentOn", "10 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_N2_10nA_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "CurrentOn", "30 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_N2_30nA_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "CurrentOn", "50 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_N2_50nA_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "CurrentOn", "10 n"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.4 uS)", "SynapticConductance", "0.6 u"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_Cond_0_6uS_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.6 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hebbian ACh type", "MaxAugmentedConductance", "1.5 u"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_MaxAugCond_1_5uS_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.6 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hebbian ACh type", "MaxAugmentedConductance", "2 u"})
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hebbian ACh type", "LearningTimeWindow", "4 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_LearnWindow_4ms_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.6 uS)", "SynapticConductance", "0.4 u"})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.4 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hebbian ACh type", "MaxAugmentedConductance", "2 u"})
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hebbian ACh type", "LearningTimeWindow", "30 m"})
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hebbian ACh type", "LearningIncrement", "0.8"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_LearnIncr_0_8_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.4 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hebbian ACh type", "ForgettingTimeWindow", "10 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_ForgetWindow_10ms_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.4 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hebbian ACh type", "ConsolidationFactor", "1"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_Consolidation_1_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.4 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hebbian ACh type", "ForgettingTimeWindow", "10 m"})
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hebbian ACh type", "ConsolidationFactor", "20"})
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hebbian ACh type", "AllowForgetting", "False"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_NoForgetting_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.4 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hebbian ACh type", "Hebbian", "False"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_NotHebbian_")
+
+
+                End Sub
 
                 <TestMethod()>
                 Public Sub Test_IGF_SpikingNeuron()
@@ -738,6 +1021,7 @@ Namespace UITests
                     'This test compares data to that generated from the old version. We never re-generate the data in V2, so this should always be false 
                     'regardless of the setting in app.config.
                     m_bGenerateTempates = False
+                    SetStructureNames("1", False)
 
                 End Sub
 

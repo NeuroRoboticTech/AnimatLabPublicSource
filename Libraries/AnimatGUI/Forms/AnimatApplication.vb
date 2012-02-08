@@ -1591,14 +1591,21 @@ Namespace Forms
 
         Protected Overridable Sub ProcessArguments()
             Dim args() As String = System.Environment.GetCommandLineArgs()
+            Dim bProjectFound As Boolean = False
 
             Dim iCount As Integer = args.Length
             For iIdx As Integer = 0 To iCount - 1
                 If args(iIdx).Trim.ToUpper = "-PROJECT" AndAlso iIdx < (iCount - 1) Then
                     m_strCmdLineProject = args(iIdx + 1)
+                    bProjectFound = True
                 End If
             Next
 
+            'If we did not specify the project explicitly and there is only one param and it does not start with dash, then assume it is project file name.
+            If Not bProjectFound And iCount = 2 And Not args(1).StartsWith("-") Then
+                m_strCmdLineProject = args(1)
+                bProjectFound = True
+            End If
         End Sub
 
         Public Function CreateSimInterface() As ManagedAnimatInterfaces.ISimulatorInterface
@@ -4104,7 +4111,7 @@ Namespace Forms
             m_timerAutomation.Enabled = False
 
             If Me.InvokeRequired Then
-                Me.Invoke(New OnDblClickWorkspaceItemTimerDelegate(AddressOf OnAddBehavioralNodeTimer), New Object() {sender, eProps})
+                Me.Invoke(New OnAddBehavioralNodeTimerDelegate(AddressOf OnAddBehavioralNodeTimer), New Object() {sender, eProps})
                 Return
             End If
 
@@ -4171,7 +4178,7 @@ Namespace Forms
             m_timerAutomation.Enabled = False
 
             If Me.InvokeRequired Then
-                Me.Invoke(New OnDblClickWorkspaceItemTimerDelegate(AddressOf OnAddBehavioralLinkTimer), New Object() {sender, eProps})
+                Me.Invoke(New OnAddBehavioralLinkTimerDelegate(AddressOf OnAddBehavioralLinkTimer), New Object() {sender, eProps})
                 Return
             End If
 
@@ -4215,36 +4222,6 @@ Namespace Forms
 
         End Sub
 
-        'Public Sub SetLinkedBodyPart(ByVal strItemPath As String, ByVal strPropertyName As String, ByVal strLinkedPartPath As String)
-        '    If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
-        '        Throw New System.Exception("No project is currently loaded.")
-        '    End If
-
-        '    m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strItemPath, Util.ProjectWorkspace.TreeView.Nodes)
-
-        '    If m_tnAutomationTreeNode Is Nothing OrElse m_tnAutomationTreeNode.Tag Is Nothing OrElse Not Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(Framework.DataObject), False) Then
-        '        Throw New System.Exception("The path to the specified subsystem was not the correct object type.")
-        '    End If
-
-        '    Dim doSel As Framework.DataObject = DirectCast(m_tnAutomationTreeNode.Tag, Framework.DataObject)
-
-        '    Dim tnLinkedPart As Crownwood.DotNetMagic.Controls.Node = Util.FindTreeNodeByPath(strLinkedPartPath, Util.ProjectWorkspace.TreeView.Nodes)
-
-        '    If tnLinkedPart Is Nothing OrElse tnLinkedPart.Tag Is Nothing OrElse Not Util.IsTypeOf(tnLinkedPart.Tag.GetType, GetType(DataObjects.Physical.BodyPart), False) Then
-        '        Throw New System.Exception("The path to the specified linked node was not the correct node type.")
-        '    End If
-
-        '    Dim bnLinkedPart As DataObjects.Physical.BodyPart = DirectCast(tnLinkedPart.Tag, DataObjects.Physical.BodyPart)
-
-        '    'Dim lnNode As New TypeHelpers.LinkedBodyPartList(bnLinkedNode.Organism, bnLinkedNode)
-
-        '    Dim oObj As Object = m_tnAutomationTreeNode.Tag
-        '    Util.GetObjectProperty(strPropertyName, m_piAutomationPropInfo, oObj)
-
-        '    m_piAutomationPropInfo.SetValue(oObj, lnNode, Nothing)
-        '    Util.ProjectWorkspace.RefreshProperties()
-        'End Sub
-
         Public Sub SetObjectProperty(ByVal strPath As String, ByVal strPropertyName As String, ByVal strValue As String)
             If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
                 Throw New System.Exception("No project is currently loaded.")
@@ -4256,12 +4233,8 @@ Namespace Forms
                 Throw New System.Exception("No object was found in the tree node path '" & strPath & "'.")
             End If
 
-            Dim oObj As Object = m_tnAutomationTreeNode.Tag
-            Util.GetObjectProperty(strPropertyName, m_piAutomationPropInfo, oObj)
+            Util.SetTreeNodeObjectProperty(m_tnAutomationTreeNode, strPropertyName, strValue)
 
-            m_oAutomationPropertyValue = TypeDescriptor.GetConverter(m_piAutomationPropInfo.PropertyType).ConvertFromString(strValue)
-            m_piAutomationPropInfo.SetValue(oObj, m_oAutomationPropertyValue, Nothing)
-            Util.ProjectWorkspace.RefreshProperties()
         End Sub
 
         Public Function GetObjectProperty(ByVal strPath As String, ByVal strPropertyName As String) As Object
@@ -4275,46 +4248,72 @@ Namespace Forms
                 Throw New System.Exception("No object was found in the tree node path '" & strPath & "'.")
             End If
 
-            Dim aryPropPath() As String = Split(strPropertyName, ".")
-            Dim iIdx As Integer = 0
-            Dim oObj As Object = m_tnAutomationTreeNode.Tag
-            For Each strPropName As String In aryPropPath
-                m_piAutomationPropInfo = oObj.GetType().GetProperty(strPropName)
-
-                If m_piAutomationPropInfo Is Nothing Then
-                    Throw New System.Exception("Property name '" & strPropName & "' not found in Path '" & strPropertyName & "'.")
-                End If
-
-                iIdx = iIdx + 1
-                'Dont get the obj on the last one.
-                If iIdx < aryPropPath.Length Then
-                    oObj = m_piAutomationPropInfo.GetValue(oObj, Nothing)
-                End If
-            Next
-
-            Dim obj As Object = m_piAutomationPropInfo.GetValue(oObj, Nothing)
-            Return obj
+            Return Util.GetTreeNodeObjectProperty(m_tnAutomationTreeNode, strPropertyName)
         End Function
 
-        'Private Delegate Sub OnSetObjectPropertyDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+        Public Sub OpenUITypeEditor(ByVal strPath As String, ByVal strPropertyName As String)
+            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
+                Throw New System.Exception("No project is currently loaded.")
+            End If
 
-        'Protected Overridable Sub OnSetObjectPropertyTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
 
-        '    m_timerAutomation.Enabled = False
+            If m_tnAutomationTreeNode.Tag Is Nothing Then
+                Throw New System.Exception("No object was found in the tree node path '" & strPath & "'.")
+            End If
 
-        '    If Me.InvokeRequired Then
-        '        Me.Invoke(New OnSetObjectPropertyDelegate(AddressOf OnSetObjectPropertyTimer), New Object() {sender, eProps})
-        '        Return
-        '    End If
+            Dim oObj As Object = m_tnAutomationTreeNode.Tag
+            Util.GetObjectProperty(strPropertyName, m_piAutomationPropInfo, oObj)
 
-        '    Try
-        '        RemoveHandler m_timerAutomation.Elapsed, AddressOf OnSelectWorkspaceItemTimer
-        '        m_timerAutomation = Nothing
+            'Get the property object.
+            Dim oObjProp As Object = m_piAutomationPropInfo.GetValue(oObj, Nothing)
 
-        '    Catch ex As System.Exception
-        '        AnimatGUI.Framework.Util.DisplayError(ex)
-        '    End Try
-        'End Sub
+            Dim tpProps As PropertyDescriptorCollection = TypeDescriptor.GetProperties(oObj)
+            Dim tpProp As PropertyDescriptor = tpProps(strPropertyName)
+            Dim oPropEdit As Object = tpProp.GetEditor(GetType(System.Drawing.Design.UITypeEditor))
+
+            m_strAutomationName = strPropertyName
+
+            m_timerAutomation = New System.Timers.Timer(10)
+            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnOpenUITypeEditorTimer
+            m_timerAutomation.Enabled = True
+        End Sub
+
+        Private Delegate Sub OnOpenUITypeEditorDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        Protected Overridable Sub OnOpenUITypeEditorTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+            m_timerAutomation.Enabled = False
+
+            If Me.InvokeRequired Then
+                Me.Invoke(New OnOpenUITypeEditorDelegate(AddressOf OnOpenUITypeEditorTimer), New Object() {sender, eProps})
+                Return
+            End If
+
+            Try
+                RemoveHandler m_timerAutomation.Elapsed, AddressOf OnAddBehavioralLinkTimer
+                m_timerAutomation = Nothing
+
+                Dim oObj As Object = m_tnAutomationTreeNode.Tag
+                Util.GetObjectProperty(m_strAutomationName, m_piAutomationPropInfo, oObj)
+
+                'Get the property object.
+                Dim oObjProp As Object = m_piAutomationPropInfo.GetValue(oObj, Nothing)
+
+                Dim tpProps As PropertyDescriptorCollection = TypeDescriptor.GetProperties(oObj)
+                Dim tpProp As PropertyDescriptor = tpProps(m_strAutomationName)
+                Dim oPropEdit As Object = tpProp.GetEditor(GetType(System.Drawing.Design.UITypeEditor))
+
+                If Not oPropEdit Is Nothing Then
+                    Dim edEdit As System.Drawing.Design.UITypeEditor = DirectCast(oPropEdit, System.Drawing.Design.UITypeEditor)
+                    Dim doRetVal As Object = edEdit.EditValue(Nothing, Nothing, oObjProp)
+                    m_piAutomationPropInfo.SetValue(oObj, doRetVal, Nothing)
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
 
         Public Sub SelectWorkspaceTabPage(ByVal strPath As String)
             If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
@@ -5734,8 +5733,11 @@ Namespace Forms
 
         Private Sub SnapshotSimToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SnapshotSimToolStripMenuItem.Click
             Try
-                Me.SimulationInterface.SaveSimulationFile(Me.ProjectPath & "Snapshot")
-                'Me.SimulationInterface.SaveSimulationFile(Me.ProjectPath & "Snapshot.osg")
+                'Me.SimulationInterface.SaveSimulationFile(Me.ProjectPath & "Snapshot")
+
+                'Me.OpenUITypeEditor("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapseType")
+                Me.SetObjectProperty("Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.1 m")
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

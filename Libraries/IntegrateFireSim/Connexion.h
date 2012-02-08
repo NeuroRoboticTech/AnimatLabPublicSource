@@ -36,6 +36,7 @@ namespace IntegrateFireSim
 
 			virtual void ResetSimulation();
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+			virtual float *GetDataPointer(string strDataType);
 			
 			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure,  AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
 			virtual void VerifySystemPointers();
@@ -102,8 +103,14 @@ namespace IntegrateFireSim
 			/// facilitated increase in g when input occurs
 			double m_dGFacilCx;		
 
+			/// reported variable for facilitated increase in g when input occurs
+			float m_fltGFailCxReport;
+
 			/// The synaptic conductance.
 			double m_dG;
+
+			/// The reported variable for synaptic conductance.
+			float m_fltGReport;
 
 			/// Sets whether there is a partial block hold
 			double m_dPartialBlockHold;

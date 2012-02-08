@@ -61,6 +61,7 @@ Neuron::Neuron()
 	m_dNewMemPot = 0;
 	m_dThresh = 0;
 	m_bSpike = FALSE;
+	m_fltEMemory = 0;
 
 	m_dElecSynCur = 0;
 	m_dElecSynCond = 0;
@@ -76,6 +77,7 @@ Neuron::Neuron()
 
 	m_dM = 0;
 	m_dH = 0;
+	m_fltEMemory = 0;
 
 	m_iNeuronID = 0;
 	m_fltAdapterI = 0;
@@ -141,7 +143,11 @@ void Neuron::NeuronID(int iID) {m_iNeuronID = iID;}
 
 BOOL Neuron::Enabled() {return m_bZapped;}
 
-void Neuron::Enabled(BOOL bValue) {m_bZapped = bValue;}
+void Neuron::Enabled(BOOL bValue) 
+{
+	Node::Enabled(bValue);
+	m_bZapped = !bValue;
+}
 
 /**
 \brief	Gets the resting potential.
@@ -619,7 +625,7 @@ double Neuron::TonicNoise() {return m_dNoise;}
 
 void Neuron::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, BOOL bVerify)
 {
-	AnimatBase::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
+	Node::SetSystemPointers(lpSim, lpStructure, lpModule, lpNode, FALSE);
 	
 	m_lpIGFModule = dynamic_cast<IntegrateFireNeuralModule *>(lpModule);
 
@@ -628,7 +634,7 @@ void Neuron::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, AnimatS
 
 void Neuron::VerifySystemPointers()
 {
-	AnimatBase::VerifySystemPointers();
+	Node::VerifySystemPointers();
 
 	if(!m_lpIGFModule)
 		THROW_PARAM_ERROR(Al_Err_lStructureNotDefined, Al_Err_strStructureNotDefined, "IGFModule: ", m_strID);
@@ -643,10 +649,10 @@ void Neuron::Load(CStdXml &oXml)
 	m_aryTonicInputPeriod.RemoveAll();
 	m_aryTonicInputPeriodType.RemoveAll();
 
-	AnimatBase::Load(oXml);
+	Node::Load(oXml);
 
 	oXml.IntoElem();  //Into Neuron Element
-	m_bZapped=oXml.GetChildBool("Zapped");
+	Enabled(oXml.GetChildBool("Enabled", TRUE));
 	m_dToniCurrentStimulusulus=oXml.GetChildDouble("TonicStimulus");
 	m_dNoise=oXml.GetChildDouble("Noise");
 	m_dRestingPot=oXml.GetChildDouble("RestingPot");
@@ -879,19 +885,23 @@ void Neuron::PreCalc(IntegrateFireNeuralModule *lpNS)
 	m_aryTonicInputPeriodType.SetSize(iSpikingChemSynCount);
 	m_aryTonicInputPeriod.SetSize(iSpikingChemSynCount);
 
+	SpikingChemicalSynapse *lpSCSyn=NULL;
 	for (i=0; i<iSpikingChemSynCount; i++) 
 	{
-		if (lpNS->GetSpikingChemSynAt(i)->m_dSynAmp==0)
+		lpSCSyn = lpNS->GetSpikingChemSynAt(i);
+		if (lpSCSyn->m_dSynAmp==0)
 			continue;
 		m_arySynG[i]=0.;
 		if (m_aryTonicInputPeriodType[i]==0)
 			m_aryNextSponSynTime[i]=0.;
 		else
 			m_aryNextSponSynTime[i]=(-m_aryTonicInputPeriod[i]*log(double (Std_LRand(0, RAND_MAX))/double(RAND_MAX))+1);
-		m_aryFacilSponSynG[i]=lpNS->GetSpikingChemSynAt(i)->m_dSynAmp;
+		m_aryFacilSponSynG[i]=lpSCSyn->m_dSynAmp;
 
-		m_aryDG[i]=exp(-m_dDT/lpNS->GetSpikingChemSynAt(i)->m_dDecay);
-		m_aryFacilD[i]=exp(-m_dDT/lpNS->GetSpikingChemSynAt(i)->m_dFacilDecay);
+		m_aryDG[i]=exp(-m_dDT/lpSCSyn->m_dDecay);
+		m_aryFacilD[i]=exp(-m_dDT/lpSCSyn->m_dFacilDecay);
+		
+        Std_TraceMsg(0, "I: " + STR(i) + "  SynG: " + STR(m_arySynG[i]) + "  NextSyn: " + STR(m_aryNextSponSynTime[i]) + "  FacilG: " + STR(m_aryFacilSponSynG[i]) + "  DG: " + STR(m_aryDG[i]) + "  FacilD: " + STR(m_aryFacilD[i]));
 	}
 
 	m_dGK=0;
@@ -967,7 +977,7 @@ void Neuron::CalcUpdateFinal(IntegrateFireNeuralModule *lpNS)
 	}
 
 	m_fltMemPot = (m_bZapped?0:(m_bSpike?m_dSpikePeak:m_dMemPot)) * 0.001;
-	m_fltThresholdMemory = (float) m_dThresh;
+	m_fltThresholdMemory = (float) m_dThresh * 0.001;
 
 	//ASSERT(m_dStim==0.);	// ready for next iteration
 }
@@ -1189,6 +1199,7 @@ void Neuron::CalcUpdate(IntegrateFireNeuralModule *lpNS)
 	m_dThresh=m_dInitialThresh + (m_dThresh-m_dInitialThresh)*m_dDCTH + m_dRelativeAccom*E*(1-m_dDCTH);
 	// do spike
 	m_dNewMemPot=E+m_dRestingPot;
+	m_fltEMemory = m_dNewMemPot;
 
 // add noise as mempot fluctuation
 	if (m_dNoise!=0)
@@ -1283,6 +1294,7 @@ void Neuron::ResetSimulation()
 	m_dCm = m_dTimeConst*m_dSize;
 	m_fltGm = (float) (1/(m_dSize*1e6));
 	m_fltVrest = (float) (m_dRestingPot*1e-3);
+	m_fltEMemory = 0;
 
 	m_dGK=0;
 	m_bSpike=FALSE;
@@ -1379,6 +1391,9 @@ float *Neuron::GetDataPointer(string strDataType)
 
 	if(strType == "GTOTAL")
 		return &m_fltGTotal;
+
+	if(strType == "E")
+		return &m_fltEMemory;
 
 	//If it was not one of those above then we have a problem.
 	THROW_PARAM_ERROR(Rn_Err_lInvalidNeuronDataType, Rn_Err_strInvalidNeuronDataType, "Neuron Data Type", strDataType);

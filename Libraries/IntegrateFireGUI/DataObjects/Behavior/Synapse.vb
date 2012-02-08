@@ -46,12 +46,15 @@ Namespace DataObjects.Behavior
             End Get
         End Property
 
+        <EditorAttribute(GetType(TypeHelpers.SynapseTypeEditor), GetType(System.Drawing.Design.UITypeEditor))> _
         Public Overridable Property SynapseType() As SynapseType
             Get
                 Return m_stSynapseType
             End Get
             Set(ByVal Value As SynapseType)
                 Dim bReselect As Boolean = False
+
+                Dim stOldSynapse As SynapseType = m_stSynapseType
 
                 SetSimData("SynapseTypeID", Value.ID, True)
 
@@ -67,7 +70,8 @@ Namespace DataObjects.Behavior
 
                 m_stSynapseType = Value
 
-                If Not m_stSynapseType Is Nothing AndAlso m_stSynapseType.GetType() Is GetType(SynapseTypes.SpikingChemical) Then
+                If Not m_stSynapseType Is Nothing AndAlso m_stSynapseType.GetType() Is GetType(SynapseTypes.SpikingChemical) _
+                    AndAlso m_stSynapseType.Name <> stOldSynapse.Name Then
                     Dim scType As SynapseTypes.SpikingChemical = DirectCast(m_stSynapseType, SynapseTypes.SpikingChemical)
                     Me.SynapticConductance = DirectCast(scType.SynapticConductance.Clone(Me, False, Nothing), ScaledNumber)
                 End If
@@ -260,6 +264,11 @@ Namespace DataObjects.Behavior
 
             m_snSynapticConductance = New AnimatGUI.Framework.ScaledNumber(Me, "SynapticConductance", 0.5, AnimatGUI.Framework.ScaledNumber.enumNumericScale.micro, "Siemens", "S")
             m_snConductionDelay = New AnimatGUI.Framework.ScaledNumber(Me, "ConductionDelay", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
+
+            'Lets add the data types that this node understands.
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Conductance", "Conductance", "Siemens", "S", 10, 0, ScaledNumber.enumNumericScale.micro, ScaledNumber.enumNumericScale.micro))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Facilitation", "Facilitation", "Siemens", "S", 10, 0, ScaledNumber.enumNumericScale.micro, ScaledNumber.enumNumericScale.micro))
+            m_thDataTypes.ID = "Conductance"
 
         End Sub
 

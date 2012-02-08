@@ -101,6 +101,8 @@ Namespace Framework
         '<TestMethod()>
         'Public Sub CodedUITestMethod1()
 
+        '    Me.UIMap.OpenUIEditor()
+
         '    Me.UIMap.OpenProject()
 
         '    'Me.UIMap.MoveChartWindowToSideBySideView()
@@ -164,7 +166,7 @@ Namespace Framework
                     Threading.Thread.Sleep(1000)
 
                     'Now check to see if the process is still running. If it is then we need to kill it.
-                    Dim aryProcesses() As System.Diagnostics.Process = System.Diagnostics.Process.GetProcessesByName("AnimatLab")
+                    Dim aryProcesses() As System.Diagnostics.Process = System.Diagnostics.Process.GetProcessesByName("AnimatLab2")
                     If aryProcesses.Length > 0 Then
                         For Each oProc As System.Diagnostics.Process In aryProcesses
                             oProc.Kill()
@@ -893,9 +895,9 @@ Namespace Framework
         Protected Overridable Sub AddStimulus(ByVal strStimulusType As String, ByVal strStructure As String, ByVal strPart As String, _
                                               Optional ByVal strName As String = "", Optional ByVal strOldName As String = "Stimulus_1")
 
-            ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart})
+            ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & strPart})
 
-            OpenDialogAndWait("SelectStimulusType", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddStimulusToolStripButton"})
+            OpenDialogAndWait("Select Stimulus Type", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddStimulusToolStripButton"})
 
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strStimulusType})
 
@@ -1007,7 +1009,7 @@ Namespace Framework
 
             'Add motor velocity to joint. Set it to no velocity and always enabled. We want to lock this joint. 
             'We cannot use a static part here because it is part of the geometry of the root, so collisions between it and arm will be disabled.
-            AddStimulus("Motor Velocity", m_strStruct1Name, "Root\Joint_2", "BlockLock", "Stimulus_1")
+            AddStimulus("Motor Velocity", m_strStruct1Name, "\Body Plan\Root\Joint_2", "BlockLock", "Stimulus_1")
             SetMotorVelocityStimulus("BlockLock", True, True, 0, 5, False, True, 0, "")
         End Sub
 
