@@ -260,7 +260,7 @@ double Connexion::RelFacil()
 	{
 		SpikingChemicalSynapse *lpSyn = dynamic_cast<SpikingChemicalSynapse *>(m_lpSynType);
 		if(!lpSyn)
-			THROW_TEXT_ERROR(Rn_Err_lNotChemSpikeSyn, Rn_Err_strNotChemSpikeSyn, "ID: " + m_strID + ": FacilD");
+			THROW_TEXT_ERROR(Rn_Err_lNotChemSpikeSyn, Rn_Err_strNotChemSpikeSyn, "ID: " + m_strID + ": RelFacil");
 
 		return lpSyn->RelFacil();
 	}
@@ -299,10 +299,10 @@ BOOL Connexion::VoltDep()
 	if(m_lpSynType)
 	{
 		SpikingChemicalSynapse *lpSyn = dynamic_cast<SpikingChemicalSynapse *>(m_lpSynType);
-		if(!lpSyn)
-			THROW_TEXT_ERROR(Rn_Err_lNotChemSpikeSyn, Rn_Err_strNotChemSpikeSyn, "ID: " + m_strID + ": FacilD");
-
-		return lpSyn->VoltDep();
+		if(lpSyn)
+			return lpSyn->VoltDep();
+		else
+			return FALSE;
 	}
 	else
 		THROW_TEXT_ERROR(Rn_Err_lSynpaseTypeNotDefined, Rn_Err_strSynpaseTypeNotDefined, "ID: " + m_strID + ": VoltDep");
@@ -322,10 +322,10 @@ BOOL Connexion::Hebbian()
 	if(m_lpSynType)
 	{
 		SpikingChemicalSynapse *lpSyn = dynamic_cast<SpikingChemicalSynapse *>(m_lpSynType);
-		if(!lpSyn)
-			THROW_TEXT_ERROR(Rn_Err_lNotChemSpikeSyn, Rn_Err_strNotChemSpikeSyn, "ID: " + m_strID + ": FacilD");
-
-		return lpSyn->Hebbian();
+		if(lpSyn)
+			return lpSyn->Hebbian();
+		else
+			return FALSE;
 	}
 	else
 		THROW_TEXT_ERROR(Rn_Err_lSynpaseTypeNotDefined, Rn_Err_strSynpaseTypeNotDefined, "ID: " + m_strID + ": Hebbian");
@@ -346,7 +346,7 @@ double Connexion::HebbIncrement()
 	{
 		SpikingChemicalSynapse *lpSyn = dynamic_cast<SpikingChemicalSynapse *>(m_lpSynType);
 		if(!lpSyn)
-			THROW_TEXT_ERROR(Rn_Err_lNotChemSpikeSyn, Rn_Err_strNotChemSpikeSyn, "ID: " + m_strID + ": FacilD");
+			THROW_TEXT_ERROR(Rn_Err_lNotChemSpikeSyn, Rn_Err_strNotChemSpikeSyn, "ID: " + m_strID + ": HebbIncrement");
 
 		return lpSyn->HebbIncrement();
 	}
@@ -369,7 +369,7 @@ double Connexion::HebbTimeWindow()
 	{
 		SpikingChemicalSynapse *lpSyn = dynamic_cast<SpikingChemicalSynapse *>(m_lpSynType);
 		if(!lpSyn)
-			THROW_TEXT_ERROR(Rn_Err_lNotChemSpikeSyn, Rn_Err_strNotChemSpikeSyn, "ID: " + m_strID + ": FacilD");
+			THROW_TEXT_ERROR(Rn_Err_lNotChemSpikeSyn, Rn_Err_strNotChemSpikeSyn, "ID: " + m_strID + ": HebbTimeWindow");
 
 		return lpSyn->HebbTimeWindow();
 	}
@@ -392,7 +392,7 @@ double Connexion::MaxGHebb()
 	{
 		SpikingChemicalSynapse *lpSyn = dynamic_cast<SpikingChemicalSynapse *>(m_lpSynType);
 		if(!lpSyn)
-			THROW_TEXT_ERROR(Rn_Err_lNotChemSpikeSyn, Rn_Err_strNotChemSpikeSyn, "ID: " + m_strID + ": FacilD");
+			THROW_TEXT_ERROR(Rn_Err_lNotChemSpikeSyn, Rn_Err_strNotChemSpikeSyn, "ID: " + m_strID + ": MaxGHebb");
 
 		return lpSyn->MaxGHebb();
 	}
@@ -414,10 +414,10 @@ BOOL Connexion::AllowForgetting()
 	if(m_lpSynType)
 	{
 		SpikingChemicalSynapse *lpSyn = dynamic_cast<SpikingChemicalSynapse *>(m_lpSynType);
-		if(!lpSyn)
-			THROW_TEXT_ERROR(Rn_Err_lNotChemSpikeSyn, Rn_Err_strNotChemSpikeSyn, "ID: " + m_strID + ": FacilD");
-
-		return lpSyn->AllowForgetting();
+		if(lpSyn)
+			return lpSyn->AllowForgetting();
+		else
+			return FALSE;
 	}
 	else
 		THROW_TEXT_ERROR(Rn_Err_lSynpaseTypeNotDefined, Rn_Err_strSynpaseTypeNotDefined, "ID: " + m_strID + ": AllowForgetting");
@@ -438,7 +438,7 @@ double Connexion::ForgettingWindow()
 	{
 		SpikingChemicalSynapse *lpSyn = dynamic_cast<SpikingChemicalSynapse *>(m_lpSynType);
 		if(!lpSyn)
-			THROW_TEXT_ERROR(Rn_Err_lNotChemSpikeSyn, Rn_Err_strNotChemSpikeSyn, "ID: " + m_strID + ": FacilD");
+			THROW_TEXT_ERROR(Rn_Err_lNotChemSpikeSyn, Rn_Err_strNotChemSpikeSyn, "ID: " + m_strID + ": ForgettingWindow");
 
 		return lpSyn->ForgettingWindow();
 	}
@@ -461,7 +461,7 @@ double Connexion::Consolidation()
 	{
 		SpikingChemicalSynapse *lpSyn = dynamic_cast<SpikingChemicalSynapse *>(m_lpSynType);
 		if(!lpSyn)
-			THROW_TEXT_ERROR(Rn_Err_lNotChemSpikeSyn, Rn_Err_strNotChemSpikeSyn, "ID: " + m_strID + ": FacilD");
+			THROW_TEXT_ERROR(Rn_Err_lNotChemSpikeSyn, Rn_Err_strNotChemSpikeSyn, "ID: " + m_strID + ": Consolidation");
 
 		return lpSyn->Consolidation();
 	}
@@ -484,7 +484,7 @@ double Connexion::MaxGVoltDepRel()
 	{
 		SpikingChemicalSynapse *lpSyn = dynamic_cast<SpikingChemicalSynapse *>(m_lpSynType);
 		if(!lpSyn)
-			THROW_TEXT_ERROR(Rn_Err_lNotChemSpikeSyn, Rn_Err_strNotChemSpikeSyn, "ID: " + m_strID + ": FacilD");
+			THROW_TEXT_ERROR(Rn_Err_lNotChemSpikeSyn, Rn_Err_strNotChemSpikeSyn, "ID: " + m_strID + ": MaxGVoltDepRel");
 
 		return lpSyn->MaxGVoltDepRel();
 	}
