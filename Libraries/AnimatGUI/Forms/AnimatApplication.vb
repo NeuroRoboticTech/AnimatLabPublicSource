@@ -1590,22 +1590,27 @@ Namespace Forms
         End Sub
 
         Protected Overridable Sub ProcessArguments()
-            Dim args() As String = System.Environment.GetCommandLineArgs()
-            Dim bProjectFound As Boolean = False
+            Try
+                Dim args() As String = System.Environment.GetCommandLineArgs()
+                Dim bProjectFound As Boolean = False
 
-            Dim iCount As Integer = args.Length
-            For iIdx As Integer = 0 To iCount - 1
-                If args(iIdx).Trim.ToUpper = "-PROJECT" AndAlso iIdx < (iCount - 1) Then
-                    m_strCmdLineProject = args(iIdx + 1)
+                Dim iCount As Integer = args.Length
+                For iIdx As Integer = 0 To iCount - 1
+                    If args(iIdx).Trim.ToUpper = "-PROJECT" AndAlso iIdx < (iCount - 1) Then
+                        m_strCmdLineProject = args(iIdx + 1)
+                        bProjectFound = True
+                    End If
+                Next
+
+                'If we did not specify the project explicitly and there is only one param and it does not start with dash, then assume it is project file name.
+                If Not bProjectFound AndAlso iCount = 2 AndAlso Not args(1).StartsWith("-") Then
+                    m_strCmdLineProject = args(1)
                     bProjectFound = True
                 End If
-            Next
 
-            'If we did not specify the project explicitly and there is only one param and it does not start with dash, then assume it is project file name.
-            If Not bProjectFound And iCount = 2 And Not args(1).StartsWith("-") Then
-                m_strCmdLineProject = args(1)
-                bProjectFound = True
-            End If
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
         End Sub
 
         Public Function CreateSimInterface() As ManagedAnimatInterfaces.ISimulatorInterface

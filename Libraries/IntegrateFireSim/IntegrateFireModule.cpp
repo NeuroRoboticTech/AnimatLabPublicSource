@@ -1199,7 +1199,7 @@ void IntegrateFireNeuralModule::CalcUpdate()
 				if ((pTimeToNext=pCx->GetTimeToNextSpikePtr())!=NULL) // got spike in transit
 				{
 					if ((*pTimeToNext)<0) 	// spike has arrived
-						pTargetN->m_arySynG[pCx->m_iID]+=(pCx->m_dPartialBlock*pCx->ProcessOutput(m_bFreezeLearning));
+						pTargetN->m_arySynG[pCx->m_iID]+=(pCx->ProcessOutput(m_bFreezeLearning));  //pCx->m_dPartialBlock*
 				}
 			}
 		}
@@ -1207,7 +1207,7 @@ void IntegrateFireNeuralModule::CalcUpdate()
 		{
 			if (!m_bCd)			// Cadmium blocks all chemical synapses
 			{
-				G=pCx->m_dPartialBlock*m_aryNonSpikingChemSyn[pCx->m_iID]->m_dSynAmp;
+				G=m_aryNonSpikingChemSyn[pCx->m_iID]->m_dSynAmp; //pCx->m_dPartialBlock*
 	//ASSERT(G>=0);
 				ScaleCondForNonSpiking(G,sourceV,
 					m_aryNonSpikingChemSyn[pCx->m_iID]->m_dThreshV,
@@ -1238,10 +1238,10 @@ void IntegrateFireNeuralModule::CalcUpdate()
 						pCx->m_TransitCx.Del();				// remove spike from list
 						targetV=pTargetN->GetMemPot();
 						junctV=sourceV-targetV;
-						junctG=pCx->m_dPartialBlock*GetScaleElecCond(m_aryElecSyn[pCx->m_iID]->m_dLowCoup,
+						junctG=GetScaleElecCond(m_aryElecSyn[pCx->m_iID]->m_dLowCoup,
 							m_aryElecSyn[pCx->m_iID]->m_dHiCoup,
 							junctV,m_aryElecSyn[pCx->m_iID]->m_dTurnOnV,
-							m_aryElecSyn[pCx->m_iID]->m_dSaturateV);
+							m_aryElecSyn[pCx->m_iID]->m_dSaturateV);  //pCx->m_dPartialBlock*
 
 						tG=junctG/pTargetN->m_dSize;
 						pTargetN->InElectricalSynapseCond(tG);
@@ -1254,10 +1254,10 @@ void IntegrateFireNeuralModule::CalcUpdate()
 				
 				targetV=pTargetN->GetMemPot();
 				junctV=sourceV-targetV;
-				junctG=pCx->m_dPartialBlock*GetScaleElecCond(m_aryElecSyn[pCx->m_iID]->m_dLowCoup,
+				junctG=GetScaleElecCond(m_aryElecSyn[pCx->m_iID]->m_dLowCoup,
 					m_aryElecSyn[pCx->m_iID]->m_dHiCoup,
 					junctV,m_aryElecSyn[pCx->m_iID]->m_dTurnOnV,
-					m_aryElecSyn[pCx->m_iID]->m_dSaturateV);
+					m_aryElecSyn[pCx->m_iID]->m_dSaturateV);  //pCx->m_dPartialBlock*
 	// adjust for size of cell
 	// for small cells, the electrical conductance is relatively bigger
 				sG=junctG/pSourceN->m_dSize;

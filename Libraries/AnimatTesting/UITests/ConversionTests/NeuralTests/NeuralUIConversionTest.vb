@@ -655,6 +655,64 @@ Namespace UITests
 
                 End Sub
 
+
+                <TestMethod()>
+                Public Sub Test_IGF_ElectricalSynapses()
+
+                    Dim aryMaxErrors As New Hashtable
+                    aryMaxErrors.Add("Time", 0.001)
+                    aryMaxErrors.Add("1", 0.0001)
+                    aryMaxErrors.Add("2", 0.0001)
+                    aryMaxErrors.Add("default", 0.0001)
+
+                    m_strProjectName = "IGF_ElectricalSynapses"
+                    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
+                    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
+                    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+
+                    'Load and convert the project.
+                    TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                    'Run the same sim a second time to check for changes between sims.
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
+                    'Change the time step of the firing rate neural sim to 0.1 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.1 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_1ms_")
+
+                    'Change the time step of the firing rate neural sim to 0.5 ms, physics time step to 0.1 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.5 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.1 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_5ms_PhysicsTimeStep_0_1ms_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.2 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "CurrentOn", "-30 n"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "CurrentOn", "-30 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Stim_-30nA_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "CurrentOn", "30 n"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "CurrentOn", "30 n"})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 (A)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Electrical Synapses\Non-Rectifying Synapse", "HighCoupling", "0.3 u"})
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Electrical Synapses\Non-Rectifying Synapse", "LowCoupling", "0.05 u"})
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Electrical Synapses\Non-Rectifying Synapse", "TurnOnThreshold", "0 m"})
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Electrical Synapses\Non-Rectifying Synapse", "TurnOnSaturate", "30 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Rectifying_Stim_30nA_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "CurrentOn", "-30 n"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "CurrentOn", "-30 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Rectifying_Stim_-30nA_")
+
+                End Sub
+
                 <TestMethod()>
                 Public Sub Test_IGF_SpikingChemicalSynapses()
 

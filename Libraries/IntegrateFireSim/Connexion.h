@@ -113,7 +113,7 @@ namespace IntegrateFireSim
 			float m_fltGReport;
 
 			/// Sets whether there is a partial block hold
-			double m_dPartialBlockHold;
+			//double m_dPartialBlockHold;
 
 		// WORKING
 		// stuff for spiking chemical synapses
@@ -142,7 +142,7 @@ namespace IntegrateFireSim
 			double m_dTimeSincePrevHebbEvent;
 
 			/// The partial block
-			double m_dPartialBlock;
+			//double m_dPartialBlock;
 
 			/// The previous spike latency
 			double m_dPreviousSpikeLatency;

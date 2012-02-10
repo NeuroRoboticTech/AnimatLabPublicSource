@@ -30,7 +30,7 @@ Connexion::Connexion()
 {
 	m_iSource = -1;
 	m_iTarget = -1;
-	m_dPartialBlock=1.0;
+	//m_dPartialBlock=1.0;
 	m_lpSynType = NULL;
 
 	m_dDelay = 0;
@@ -40,7 +40,7 @@ Connexion::Connexion()
 	m_dGFacilCx = m_dBaseG;
 	m_dTimeSincePrevHebbEvent = 0;
 	m_dPreviousSpikeLatency = 0;
-	m_dPartialBlockHold = 0;
+	//m_dPartialBlockHold = 0;
 	m_fltGFailCxReport = m_dGFacilCx;
 	m_fltGReport = m_dG;
 }
@@ -65,7 +65,7 @@ Connexion::Connexion(int type, int ID, double delay,float topBlock,float botBloc
 	m_iID=ID;
 	m_dDelay=delay;
 
-	m_dPartialBlock=1.0;
+	//m_dPartialBlock=1.0;
 	m_lpSynType = NULL;
 
 	m_dBaseG = 0.5f;
@@ -73,7 +73,7 @@ Connexion::Connexion(int type, int ID, double delay,float topBlock,float botBloc
 	m_dGFacilCx = m_dBaseG;
 	m_dTimeSincePrevHebbEvent = 0;
 	m_dPreviousSpikeLatency = 0;
-	m_dPartialBlockHold = 0;
+	//m_dPartialBlockHold = 0;
 	m_fltGFailCxReport = m_dGFacilCx;
 	m_fltGReport = m_dG;
 }
@@ -507,7 +507,7 @@ void Connexion::Load(CStdXml &oXml)
 	m_iType=oXml.GetChildInt("Type");
 	//m_iID=oXml.GetChildInt("SynapseID");
 	m_strSynapseTypeID = oXml.GetChildString("SynapseTypeID");
-	m_dPartialBlockHold=oXml.GetChildDouble("PartialBlockHold", 0);
+	//m_dPartialBlockHold=oXml.GetChildDouble("PartialBlockHold", 0);
 
 	BaseConductance(oXml.GetChildDouble("G"));
 	Delay(oXml.GetChildDouble("Delay"));
