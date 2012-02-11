@@ -202,6 +202,9 @@ namespace IntegrateFireSim
 		/// The total current memory. This is used to allow datacharts to track current input from ion channels.
 		float m_fltTotalMemoryI;
 
+		/// The ca current memory
+		float m_fltICaMemory;
+		
 		/// The memory potential. This is for reporting purposes.
 		float m_fltMemPot;
 

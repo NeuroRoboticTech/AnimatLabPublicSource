@@ -774,6 +774,8 @@ Namespace DataObjects.Behavior
         Public Overrides Sub UpdateTreeNode()
             If Not Me.WorkspaceNode Is Nothing Then
                 Me.WorkspaceNode.Text = Me.ItemName
+            Else
+                AddWorkspaceTreeNode()
             End If
         End Sub
 

@@ -85,6 +85,7 @@ Neuron::Neuron()
 	m_fltExternalI = 0;
 	m_fltChannelI = 0;
 	m_fltChannelMemoryI = 0;
+	m_fltICaMemory = 0;
 	m_fltMemPot = 0;
 	m_fltThresholdMemory = 0;
 	m_fltLastSpikeTime = 0;
@@ -1134,6 +1135,7 @@ void Neuron::CalcUpdate(IntegrateFireNeuralModule *lpNS)
 			//ASSERT(m_dM>=0 && m_dM <=1 && m_dH>=0 && m_dH<=1);
 	// again, looks wrong but is right
 			iCa=gCa*(m_dCaEquilPot-m_dRestingPot);
+			m_fltICaMemory = iCa*1e-9;
 	// update M & H variables
 			z=exp(-m_dSM*(m_dMemPot-m_dVM));
 			Minf=1/(1+z);
@@ -1150,10 +1152,10 @@ void Neuron::CalcUpdate(IntegrateFireNeuralModule *lpNS)
 	//TRACE("M= %lf\t\tH=%lf\tpot = %lf\n",m_M,m_H,m_MemPot);
 		}
 		else
-			gCa=iCa=0;
+			m_fltICaMemory=gCa=iCa=0;
 	}
 	else		// cadmium applied, no chem input or g/iCa
-		gCa=iCa=GS=GSI=0;
+		m_fltICaMemory=gCa=iCa=GS=GSI=0;
 
 	// do membrane potential
 	//If the HH flag is not set then calculate E in standard way outlined by Heitler.
@@ -1279,6 +1281,7 @@ void Neuron::ResetSimulation()
 	m_fltExternalI = 0;
 	m_fltChannelI = 0;
 	m_fltChannelMemoryI = 0;
+	m_fltICaMemory = 0;
 	m_fltMemPot = 0;
 	m_fltThresholdMemory = 0;
 	m_fltLastSpikeTime = 0;
@@ -1376,6 +1379,9 @@ float *Neuron::GetDataPointer(string strDataType)
 
 	if(strType == "IONCHANNELCURRENT")
 		return &m_fltChannelMemoryI;
+
+	if(strType == "CACURRENT")
+		return &m_fltICaMemory;
 
 	if(strType == "TOTALCURRENT")
 		return &m_fltTotalMemoryI;

@@ -326,6 +326,7 @@ Namespace DataObjects.Behavior.Neurons
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ElectricalSynapticCurrent", "Electrical Synaptic Current", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("SpikingSynapticCurrent", "Spiking Synaptic Current", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("NonSpikingSynapticCurrent", "NonSpiking Synaptic Current", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano))
+                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("CaCurrent", "Calcium Current", "Amps", "A", -100, 100, ScaledNumber.enumNumericScale.nano, ScaledNumber.enumNumericScale.nano))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("MembraneVoltage", "Membrane Voltage", "Volts", "V", -100, 100, ScaledNumber.enumNumericScale.milli, ScaledNumber.enumNumericScale.milli))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("FiringFrequency", "Firing Frequency", "Hertz", "Hz", 0, 1000))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Threshold", "Threshold", "Volts", "V", -100, 100, ScaledNumber.enumNumericScale.milli, ScaledNumber.enumNumericScale.milli))
@@ -467,7 +468,23 @@ Namespace DataObjects.Behavior.Neurons
                     doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
                     doObject.InitializeSimulationReferences()
                 Next
+
+                m_atCaActivation.InitializeSimulationReferences()
+                m_atCaDeactivation.InitializeSimulationReferences()
             End If
+        End Sub
+
+        Public Overrides Sub InitializeAfterLoad()
+            MyBase.InitializeAfterLoad()
+
+            Dim doObject As AnimatGUI.Framework.DataObject
+            For Each deEntry As DictionaryEntry In m_aryIonChannels
+                doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                doObject.InitializeAfterLoad()
+            Next
+
+            m_atCaActivation.InitializeAfterLoad()
+            m_atCaDeactivation.InitializeAfterLoad()
         End Sub
 
         'Public Overrides Sub SaveDataColumnToXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
