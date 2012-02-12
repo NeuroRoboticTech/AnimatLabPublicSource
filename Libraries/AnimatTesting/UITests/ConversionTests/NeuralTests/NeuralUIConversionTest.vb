@@ -667,6 +667,102 @@ Namespace UITests
 
                 End Sub
 
+
+                <TestMethod()>
+                Public Sub Test_IGF_IonChannels()
+
+                    Dim aryMaxErrors As New Hashtable
+                    aryMaxErrors.Add("Time", 0.001)
+                    aryMaxErrors.Add("1Vm", 0.0001)
+                    aryMaxErrors.Add("Delayed_Rect_K", 0.0000000001)
+                    aryMaxErrors.Add("Fast_Na", 0.0000000001)
+                    aryMaxErrors.Add("1It", 0.0000000001)
+                    aryMaxErrors.Add("default", 0.0001)
+
+                    m_strProjectName = "IGF_IonChannels"
+                    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
+                    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
+                    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+
+                    'Load and convert the project.
+                    TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                    'Run the same sim a second time to check for changes between sims.
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "IonChannels"}, 500)
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Delayed Rect K", "Minit", "0.35"})
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Delayed Rect K", "Nm", "2"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Nm_2_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "IonChannels"}, 500)
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Delayed Rect K", "Nm", "1"})
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Fast Na", "Minf.D", "40 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Minf_D_40mv_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "IonChannels"}, 500)
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Fast Na", "Minf.D", "44 m"})
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Delayed Rect K", "Tm.B", "5 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Tm_B_5m_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "IonChannels"}, 500)
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Delayed Rect K", "Tm.B", "4 m"})
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Fast Na", "Hinit", "0.25"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Hinit_0_25_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "IonChannels"}, 500)
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Fast Na", "Hinit", "0.65"})
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Fast Na", "Hinf.D", "70 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Hinf_D_70m_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "IonChannels"}, 500)
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Fast Na", "Hinf.D", "68 m"})
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Fast Na", "Th.B", "15 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Th_B_15m_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "IonChannels"}, 500)
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Fast Na", "Th.B", "25 m"})
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Fast Na", "EquilibriumPotential", "65 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "EqPot_65m_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "IonChannels"}, 500)
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Fast Na", "EquilibriumPotential", "45 m"})
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Delayed Rect K", "Gmax", "50 n"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Gmax_50n_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "IonChannels"}, 500)
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Delayed Rect K", "Gmax", "300 n"})
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Delayed Rect K", "MPower", "5"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "MPow_5_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "IonChannels"}, 500)
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Delayed Rect K", "MPower", "4"})
+                    ExecuteActiveDialogMethod("SetListItemObjectProperty", New Object() {"Fast Na", "HPower", "2"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "HPow_2_")
+
+                End Sub
+
                 <TestMethod()>
                 Public Sub Test_IGF_NonspikingChemicalSynapses()
 

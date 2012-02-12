@@ -55,6 +55,66 @@ float IonChannelSigmoid::CalculateGain(float fltInput)
 		return CalculateLimitOutput(fltInput);
 }
 
+BOOL IonChannelSigmoid::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	if(Gain::SetData(strDataType, strValue, false))
+		return true;
+
+	if(strDataType == "A")
+	{
+		m_fltA = atof(strValue.c_str());
+		return true;
+	}
+
+	if(strDataType == "B")
+	{
+		m_fltB = atof(strValue.c_str());
+		return true;
+	}
+
+	if(strDataType == "C")
+	{
+		m_fltC = atof(strValue.c_str());
+		return true;
+	}
+
+	if(strDataType == "D")
+	{
+		m_fltD = atof(strValue.c_str());
+		return true;
+	}
+
+	if(strDataType == "E")
+	{
+		m_fltE = atof(strValue.c_str());
+		return true;
+	}
+
+	if(strDataType == "F")
+	{
+		m_fltF = atof(strValue.c_str());
+		return true;
+	}
+
+	if(strDataType == "G")
+	{
+		m_fltG = atof(strValue.c_str());
+		return true;
+	}
+
+	if(strDataType == "H")
+	{
+		m_fltH = atof(strValue.c_str());
+		return true;
+	}
+
+	//If it was not one of those above then we have a problem.
+	if(bThrowError)
+		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
+
+	return FALSE;
+}
+
 void IonChannelSigmoid::Load(CStdXml &oXml)
 {
 	Gain::Load(oXml);

@@ -240,7 +240,7 @@ Namespace DataObjects.Behavior.Neurons
             End Set
         End Property
 
-        <Browsable(False)> _
+        <Browsable(False), EditorAttribute(GetType(TypeHelpers.IonChannelTypeEditor), GetType(System.Drawing.Design.UITypeEditor))> _
         Public Overridable Property IonChannels() As Collections.IonChannels
             Get
                 Return m_aryIonChannels
@@ -486,6 +486,17 @@ Namespace DataObjects.Behavior.Neurons
             m_atCaActivation.InitializeAfterLoad()
             m_atCaDeactivation.InitializeAfterLoad()
         End Sub
+
+        Public Overrides Function FindObjectByID(ByVal strID As String) As AnimatGUI.Framework.DataObject
+
+            Dim doObject As AnimatGUI.Framework.DataObject = MyBase.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_atCaActivation Is Nothing Then doObject = m_atCaActivation.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_atCaDeactivation Is Nothing Then doObject = m_atCaDeactivation.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_aryIonChannels Is Nothing Then doObject = m_aryIonChannels.FindObjectByID(strID)
+
+            Return doObject
+
+        End Function
 
         'Public Overrides Sub SaveDataColumnToXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 

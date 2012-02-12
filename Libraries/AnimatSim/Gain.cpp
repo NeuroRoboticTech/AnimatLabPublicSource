@@ -235,10 +235,12 @@ void Gain::Load(CStdXml &oXml)
 
 	if(m_bUseLimits)
 	{
-		UpperLimit(oXml.GetChildFloat("UpperLimit"));
-		LowerLimit(oXml.GetChildFloat("LowerLimit"));
-		UpperOutput(oXml.GetChildFloat("UpperOutput"));
-		LowerOutput(oXml.GetChildFloat("LowerOutput"));
+		m_fltLowerLimit = oXml.GetChildFloat("LowerLimit");
+		m_fltUpperLimit = oXml.GetChildFloat("UpperLimit");
+		m_fltLowerOutput = oXml.GetChildFloat("LowerOutput");
+		m_fltUpperOutput = oXml.GetChildFloat("UpperOutput");
+		
+		Std_IsAboveMin(m_fltLowerLimit, m_fltUpperLimit, TRUE, "UpperLimit");
 	}
 
 	oXml.OutOfElem(); //OutOf Adapter Element

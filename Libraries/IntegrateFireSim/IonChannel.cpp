@@ -525,6 +525,20 @@ float IonChannel::CalculateCurrent(float fltStep, float fltVm)
 	return m_fltI;
 }
 
+
+void IonChannel::ResetSimulation()
+{
+	m_fltMinf = 0;
+	m_fltTm = 0;
+	m_fltM = m_fltMInit;
+	m_fltHinf = 0;
+	m_fltTh = 0;
+	m_fltH = m_fltHInit;
+	m_fltI = 0;
+	m_fltTotalAct = 0;
+	m_fltG = 0;
+}
+
 #pragma region DataAccesMethods
 
 float *IonChannel::GetDataPointer(string strDataType)
@@ -737,11 +751,6 @@ void IonChannel::Load(CStdXml &oXml)
 
 	oXml.OutOfElem(); //OutOf IonChannel Element
 }
-
-void IonChannel::ResetSimulation()
-{
-}
-
 
 
 }			//IntegrateFireSim

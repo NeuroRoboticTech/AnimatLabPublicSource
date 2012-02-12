@@ -1289,7 +1289,6 @@ void Neuron::ResetSimulation()
 	m_fltElecSynCurMemory = 0;
 	m_fltSpikingSynCurMemory = 0;
 	m_fltNonSpikingSynCurMemory = 0;
-	m_iIonChannels = 0;
 	m_fltSpike = 0;
 	m_fltTotalI = 0;
 	m_fltTotalMemoryI = 0;
@@ -1342,8 +1341,8 @@ void Neuron::ResetSimulation()
 		m_aryTonicInputPeriodType[iIndex] = 0;
 	}
 
-	iSize = m_aryIonChannels.GetSize();
-	for(int iIndex = 0; iIndex<iSize; iIndex++)
+	m_iIonChannels = m_aryIonChannels.GetSize();
+	for(int iIndex = 0; iIndex<m_iIonChannels; iIndex++)
 		m_aryIonChannels[iIndex]->ResetSimulation();
 }
 

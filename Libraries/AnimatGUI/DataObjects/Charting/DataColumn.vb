@@ -399,7 +399,7 @@ Namespace DataObjects.Charting
 
         Protected Overridable Function FindDataItem(ByVal strID As String) As DragObject
             Dim doObj As Framework.DataObject = Util.Simulation.FindObjectByID(strID)
-            If Not doObj Is Nothing And Util.IsTypeOf(doObj.GetType, GetType(DragObject)) Then
+            If Not doObj Is Nothing AndAlso Util.IsTypeOf(doObj.GetType, GetType(DragObject)) Then
                 Return DirectCast(doObj, DragObject)
             Else
                 Return Nothing

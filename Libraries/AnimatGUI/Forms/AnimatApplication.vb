@@ -4238,7 +4238,7 @@ Namespace Forms
                 Throw New System.Exception("No object was found in the tree node path '" & strPath & "'.")
             End If
 
-            Util.SetTreeNodeObjectProperty(m_tnAutomationTreeNode, strPropertyName, strValue)
+            Util.SetObjectProperty(m_tnAutomationTreeNode.Tag, strPropertyName, strValue)
 
         End Sub
 
@@ -4253,7 +4253,7 @@ Namespace Forms
                 Throw New System.Exception("No object was found in the tree node path '" & strPath & "'.")
             End If
 
-            Return Util.GetTreeNodeObjectProperty(m_tnAutomationTreeNode, strPropertyName)
+            Return Util.GetObjectProperty(m_tnAutomationTreeNode.Tag, strPropertyName)
         End Function
 
         Public Sub OpenUITypeEditor(ByVal strPath As String, ByVal strPropertyName As String)

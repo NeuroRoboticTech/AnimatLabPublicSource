@@ -12,7 +12,7 @@ Imports AnimatGUI.DataObjects
 Namespace Forms
 
     Public Class EditIonChannels
-        Inherits System.Windows.Forms.Form
+        Inherits AnimatGUI.Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -186,8 +186,12 @@ Namespace Forms
 #Region " Events "
 
         Protected Overrides Sub OnLoad(ByVal e As System.EventArgs)
+            MyBase.OnLoad(e)
 
             Try
+                m_btnOk = Me.btnOk
+                m_btnCancel = Me.btnCancel
+                m_lvItems = lvIonChannels
 
                 lvIonChannels.Items.Clear()
 

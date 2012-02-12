@@ -1426,6 +1426,21 @@ Namespace Framework
             Return tnNode
         End Function
 
+        Public Shared Function FindListItemByName(ByVal strName As String, ByVal aryItems As Windows.Forms.ListView.ListViewItemCollection, Optional ByVal bThrowError As Boolean = True) As ListViewItem
+
+            For Each liItem As ListViewItem In aryItems
+                If liItem.Text = strName Then
+                    Return liItem
+                End If
+            Next
+
+            If bThrowError Then
+                Throw New System.Exception("No listview item with the name '" & strName & "' was found.")
+            End If
+
+            Return Nothing
+        End Function
+
         Public Shared Sub GetObjectProperty(ByVal strPropertyName As String, ByRef piAutomationPropInfo As PropertyInfo, ByRef oObj As Object)
 
             Dim aryPropPath() As String = Split(strPropertyName, ".")
@@ -1446,9 +1461,7 @@ Namespace Framework
 
         End Sub
 
-        Public Shared Sub SetTreeNodeObjectProperty(ByVal tnNode As Crownwood.DotNetMagic.Controls.Node, ByVal strPropertyName As String, ByVal strValue As String)
-            Dim oObj As Object = tnNode.Tag
-
+        Public Shared Sub SetObjectProperty(ByVal oObj As Object, ByVal strPropertyName As String, ByVal strValue As String)
             Dim piAutomationPropInfo As PropertyInfo
             Dim oAutomationPropertyValue As Object
 
@@ -1459,11 +1472,10 @@ Namespace Framework
             Util.ProjectWorkspace.RefreshProperties()
         End Sub
 
-        Public Shared Function GetTreeNodeObjectProperty(ByVal tnNode As Crownwood.DotNetMagic.Controls.Node, ByVal strPropertyName As String) As Object
+        Public Shared Function GetObjectProperty(ByVal oObj As Object, ByVal strPropertyName As String) As Object
 
             Dim aryPropPath() As String = Split(strPropertyName, ".")
             Dim iIdx As Integer = 0
-            Dim oObj As Object = tnNode.Tag
             Dim piAutomationPropInfo As PropertyInfo
             For Each strPropName As String In aryPropPath
                 piAutomationPropInfo = oObj.GetType().GetProperty(strPropName)

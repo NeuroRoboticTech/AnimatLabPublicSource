@@ -183,6 +183,16 @@ Namespace DataObjects.Behavior
             End If
         End Sub
 
+        Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject
+
+            Dim doObject As AnimatGUI.Framework.DataObject = MyBase.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_aryNodes Is Nothing Then doObject = m_aryNodes.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_aryLinks Is Nothing Then doObject = m_aryLinks.FindObjectByID(strID)
+
+            Return doObject
+
+        End Function
+
 #Region " DataObject Methods "
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)

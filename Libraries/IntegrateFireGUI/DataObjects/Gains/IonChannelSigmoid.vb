@@ -46,7 +46,7 @@ Namespace DataObjects.Gains
         <Browsable(False)> _
         Public Overrides ReadOnly Property ModuleName() As String
             Get
-                Return "RealisticNeuralNet"
+                Return "IntegrateFireSim"
             End Get
         End Property
 
@@ -64,7 +64,10 @@ Namespace DataObjects.Gains
                 Return m_snA
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
+                SetSimData("A", Value.ActualValue.ToString, True)
+
                 Dim snOrig As ScaledNumber = DirectCast(m_snA.Clone(m_snA.Parent, False, Nothing), ScaledNumber)
+
                 If Not Value Is Nothing Then m_snA.CopyData(Value)
 
                 Dim snNew As ScaledNumber = DirectCast(m_snA.Clone(m_snA.Parent, False, Nothing), ScaledNumber)
@@ -81,6 +84,8 @@ Namespace DataObjects.Gains
                 Return m_snB
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
+                SetSimData("B", Value.ActualValue.ToString, True)
+
                 Dim snOrig As ScaledNumber = DirectCast(m_snB.Clone(m_snB.Parent, False, Nothing), ScaledNumber)
                 If Not Value Is Nothing Then m_snB.CopyData(Value)
 
@@ -98,6 +103,8 @@ Namespace DataObjects.Gains
                 Return m_snC
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
+                SetSimData("C", Value.ActualValue.ToString, True)
+
                 Dim snOrig As ScaledNumber = DirectCast(m_snC.Clone(m_snC.Parent, False, Nothing), ScaledNumber)
                 If Not Value Is Nothing Then m_snC.CopyData(Value)
 
@@ -115,6 +122,8 @@ Namespace DataObjects.Gains
                 Return m_snD
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
+                SetSimData("D", Value.ActualValue.ToString, True)
+
                 Dim snOrig As ScaledNumber = DirectCast(m_snD.Clone(m_snD.Parent, False, Nothing), ScaledNumber)
                 If Not Value Is Nothing Then m_snD.CopyData(Value)
 
@@ -132,6 +141,8 @@ Namespace DataObjects.Gains
                 Return m_snE
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
+                SetSimData("E", Value.ActualValue.ToString, True)
+
                 Dim snOrig As ScaledNumber = DirectCast(m_snE.Clone(m_snE.Parent, False, Nothing), ScaledNumber)
                 If Not Value Is Nothing Then m_snE.CopyData(Value)
 
@@ -150,6 +161,8 @@ Namespace DataObjects.Gains
                 Return m_snF
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
+                SetSimData("F", Value.ActualValue.ToString, True)
+
                 Dim snOrig As ScaledNumber = DirectCast(m_snF.Clone(m_snF.Parent, False, Nothing), ScaledNumber)
                 If Not Value Is Nothing Then m_snF.CopyData(Value)
 
@@ -168,6 +181,8 @@ Namespace DataObjects.Gains
                 Return m_snG
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
+                SetSimData("G", Value.ActualValue.ToString, True)
+
                 Dim snOrig As ScaledNumber = DirectCast(m_snG.Clone(m_snG.Parent, False, Nothing), ScaledNumber)
                 If Not Value Is Nothing Then m_snG.CopyData(Value)
 
@@ -186,6 +201,8 @@ Namespace DataObjects.Gains
                 Return m_snH
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
+                SetSimData("H", Value.ActualValue.ToString, True)
+
                 Dim snOrig As ScaledNumber = DirectCast(m_snH.Clone(m_snG.Parent, False, Nothing), ScaledNumber)
                 If Not Value Is Nothing Then m_snH.CopyData(Value)
 
@@ -365,6 +382,19 @@ Namespace DataObjects.Gains
             m_snG = DirectCast(gnOrig.m_snG.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_snH = DirectCast(gnOrig.m_snH.Clone(Me, bCutData, doRoot), ScaledNumber)
 
+        End Sub
+
+        Protected Overrides Sub SetAllSimData(ByVal doInterface As ManagedAnimatInterfaces.IDataObjectInterface)
+            MyBase.SetAllSimData(doInterface)
+
+            SetSimData("A", m_snA.ActualValue.ToString, True)
+            SetSimData("B", m_snB.ActualValue.ToString, True)
+            SetSimData("C", m_snC.ActualValue.ToString, True)
+            SetSimData("D", m_snD.ActualValue.ToString, True)
+            SetSimData("E", m_snD.ActualValue.ToString, True)
+            SetSimData("F", m_snD.ActualValue.ToString, True)
+            SetSimData("G", m_snD.ActualValue.ToString, True)
+            SetSimData("H", m_snD.ActualValue.ToString, True)
         End Sub
 
         Public Overloads Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal strName As String, ByVal strGainPropertyName As String)

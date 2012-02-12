@@ -356,6 +356,26 @@ Namespace DataObjects.Behavior.Neurons
 
         End Function
 
+        Public Overrides Sub InitializeSimulationReferences()
+            If Me.IsInitialized Then
+                MyBase.InitializeSimulationReferences()
+
+                m_gnMinf.InitializeSimulationReferences()
+                m_gnTm.InitializeSimulationReferences()
+                m_gnHinf.InitializeSimulationReferences()
+                m_gnTh.InitializeSimulationReferences()
+            End If
+        End Sub
+
+        Public Overrides Sub InitializeAfterLoad()
+            MyBase.InitializeAfterLoad()
+
+            m_gnMinf.InitializeAfterLoad()
+            m_gnTm.InitializeAfterLoad()
+            m_gnHinf.InitializeAfterLoad()
+            m_gnTh.InitializeAfterLoad()
+        End Sub
+
 #Region " DataObject Methods "
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
@@ -511,6 +531,18 @@ Namespace DataObjects.Behavior.Neurons
             End If
             m_doInterface = Nothing
         End Sub
+
+        Public Overrides Function FindObjectByID(ByVal strID As String) As AnimatGUI.Framework.DataObject
+
+            Dim doObject As AnimatGUI.Framework.DataObject = MyBase.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_gnMinf Is Nothing Then doObject = m_gnMinf.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_gnTm Is Nothing Then doObject = m_gnTm.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_gnHinf Is Nothing Then doObject = m_gnHinf.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_gnTh Is Nothing Then doObject = m_gnTh.FindObjectByID(strID)
+
+            Return doObject
+
+        End Function
 
 #End Region
 

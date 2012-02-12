@@ -55,19 +55,43 @@ Namespace Forms
                 Throw New System.Exception("No list view was setup for the form '" & Me.Name & "'")
             End If
 
+            Dim liItem As ListViewItem = Util.FindListItemByName(strItemName, m_lvItems.Items)
+            'Clear selected items.
+            m_lvItems.SelectedItems.Clear()
+            liItem.Selected = True
 
-            For Each liItem As ListViewItem In m_lvItems.Items
-                If liItem.Text = strItemName Then
-                    'Clear selected items.
-                    m_lvItems.SelectedItems.Clear()
-                    liItem.Selected = True
-                    Return
-                End If
-            Next
-
-            'If we got here then we did not find what we were looking for.
-            Throw New System.Exception("No item named '" & strItemName & "' was found in the list view.")
         End Sub
+
+        Public Sub SetListItemObjectProperty(ByVal strName As String, ByVal strPropertyName As String, ByVal strValue As String)
+            If m_lvItems Is Nothing Then
+                Throw New System.Exception("No list view was setup for the form '" & Me.Name & "'")
+            End If
+
+            Dim lvSelected As ListViewItem = Util.FindListItemByName(strName, m_lvItems.Items)
+
+            If lvSelected.Tag Is Nothing Then
+                Throw New System.Exception("No object was found in the list view item '" & strName & "'.")
+            End If
+
+            Util.SetObjectProperty(lvSelected.Tag, strPropertyName, strValue)
+            m_lvItems.SelectedItems.Clear()
+            lvSelected.Selected = True
+
+        End Sub
+
+        Public Function GetListItemObjectProperty(ByVal strName As String, ByVal strPropertyName As String) As Object
+            If m_lvItems Is Nothing Then
+                Throw New System.Exception("No list view was setup for the form '" & Me.Name & "'")
+            End If
+
+            Dim lvSelected As ListViewItem = Util.FindListItemByName(strName, m_lvItems.Items)
+
+            If lvSelected.Tag Is Nothing Then
+                Throw New System.Exception("No object was found in the list view item '" & strName & "'.")
+            End If
+
+            Return Util.GetObjectProperty(lvSelected.Tag, strPropertyName)
+        End Function
 
         Public Overridable Sub SelectItemInTreeView(ByVal strPath As String)
 
@@ -92,7 +116,7 @@ Namespace Forms
                 Throw New System.Exception("No object was found in the tree node path '" & strPath & "'.")
             End If
 
-            Util.SetTreeNodeObjectProperty(tnSelected, strPropertyName, strValue)
+            Util.SetObjectProperty(tnSelected.Tag, strPropertyName, strValue)
             tnSelected.Select()
 
         End Sub
@@ -108,7 +132,7 @@ Namespace Forms
                 Throw New System.Exception("No object was found in the tree node path '" & strPath & "'.")
             End If
 
-            Return Util.GetTreeNodeObjectProperty(tnSelected, strPropertyName)
+            Return Util.GetObjectProperty(tnSelected.Tag, strPropertyName)
         End Function
 
     End Class
