@@ -1326,6 +1326,31 @@ Namespace UITests
 
                 End Sub
 
+                <TestMethod()>
+                Public Sub Test_IGF_LateralInhibition()
+
+                    Dim aryMaxErrors As New Hashtable
+                    aryMaxErrors.Add("Time", 0.001)
+                    aryMaxErrors.Add("7", 0.0001)
+                    aryMaxErrors.Add("8", 0.0001)
+                    aryMaxErrors.Add("9", 0.0001)
+                    aryMaxErrors.Add("10", 0.0001)
+                    aryMaxErrors.Add("default", 0.0001)
+
+                    m_strProjectName = "IGF_LateralInhibition"
+                    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
+                    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
+                    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
+
+                    'Load and convert the project.
+                    TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                    'Run the same sim a second time to check for changes between sims.
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
+                End Sub
 #End Region
 
 #Region "Mixed Methods"

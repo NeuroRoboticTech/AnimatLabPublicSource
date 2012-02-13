@@ -1,0 +1,4302 @@
+<Editor>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.Behavior.Editor</ClassName>
+<NormalLocation x="4" y="-1"/>
+<NormalSize Width="649" Height="542"/>
+<WindowState>Normal</WindowState>
+<Organism>fab3b4b6-6d09-4bfa-a75e-5b28c983c677</Organism>
+<NeuralModules>
+<Node>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.Behavior.PhysicsModule</ClassName>
+<TimeStep Value="10" Scale="milli" Actual="0.01"/>
+</Node>
+<Node>
+<AssemblyFile>FastNeuralNetTools.dll</AssemblyFile>
+<ClassName>FastNeuralNetTools.DataObjects.Behavior.NeuralModule</ClassName>
+<TimeStep Value="2.5" Scale="milli" Actual="0.0025"/>
+</Node>
+<Node>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.NeuralModule</ClassName>
+<TimeStep Value="0.2" Scale="milli" Actual="0.0002"/>
+<AHPEquilibriumPotential Value="-70" Scale="milli" Actual="-0.07"/>
+<SpikePeak Value="0" Scale="milli" Actual="0"/>
+<SpikeStrength>1</SpikeStrength>
+<CaEquilibriumPotential Value="200" Scale="milli" Actual="0.2"/>
+<RefractoryPeriod Value="2" Scale="milli" Actual="0.002"/>
+<UseCriticalPeriod>False</UseCriticalPeriod>
+<StartCriticalPeriod Value="0" Scale="None" Actual="0"/>
+<EndCriticalPeriod Value="5" Scale="None" Actual="5"/>
+<TTX>False</TTX>
+<Cd>False</Cd>
+<HH>False</HH>
+<SynapseTypes>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.Electrical</ClassName>
+<ID>b3697345-773a-4b8f-9611-5711e58d30ff</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID/>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID/>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<Name>Non-Rectifying Synapse</Name>
+<LowCoupling Value="0.2" Scale="micro" Actual="2e-07"/>
+<HighCoupling Value="0.2" Scale="micro" Actual="2e-07"/>
+<TurnOnThreshold Value="0" Scale="milli" Actual="0"/>
+<TurnOnSaturate Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
+<ID>9e50072e-29fd-411a-92a2-a886c1e8ae73</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Fork</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID/>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID/>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<Name>Nicotinic ACh</Name>
+<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<DecayRate Value="3" Scale="milli" Actual="0.003"/>
+<RelativeFacilitation Value="1.5" Scale="None" Actual="1.5"/>
+<FacilitationDecay Value="100" Scale="milli" Actual="0.1"/>
+<VoltageDependent>False</VoltageDependent>
+<MaxRelativeConductance Value="5" Scale="micro" Actual="5e-06"/>
+<SaturatePotential Value="-30" Scale="milli" Actual="-0.03"/>
+<ThresholdPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<Hebbian>False</Hebbian>
+<MaxAugmentedConductance Value="1" Scale="micro" Actual="1e-06"/>
+<LearningIncrement>0.1</LearningIncrement>
+<LearningTimeWindow Value="20" Scale="milli" Actual="0.02"/>
+<AllowForgetting>True</AllowForgetting>
+<ForgettingTimeWindow Value="10000" Scale="milli" Actual="10"/>
+<ConsolidationFactor>1</ConsolidationFactor>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
+<ID>875df99c-b24d-4dfd-9b06-bf90b8eb7e54</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Circle</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID/>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID/>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<Name>Depolarizing IPSP</Name>
+<EquilibriumPotential Value="-55" Scale="milli" Actual="-0.055"/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<DecayRate Value="3" Scale="milli" Actual="0.003"/>
+<RelativeFacilitation Value="1" Scale="None" Actual="1"/>
+<FacilitationDecay Value="100" Scale="milli" Actual="0.1"/>
+<VoltageDependent>False</VoltageDependent>
+<MaxRelativeConductance Value="5" Scale="micro" Actual="5e-06"/>
+<SaturatePotential Value="-30" Scale="milli" Actual="-0.03"/>
+<ThresholdPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<Hebbian>False</Hebbian>
+<MaxAugmentedConductance Value="1" Scale="micro" Actual="1e-06"/>
+<LearningIncrement>0.1</LearningIncrement>
+<LearningTimeWindow Value="20" Scale="milli" Actual="0.02"/>
+<AllowForgetting>True</AllowForgetting>
+<ForgettingTimeWindow Value="10000" Scale="milli" Actual="10"/>
+<ConsolidationFactor>1</ConsolidationFactor>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
+<ID>22006c02-0145-4c41-ac37-1298d7e0ab4a</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Circle</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>True</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID/>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID/>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<Name>Hyperpolarizing IPSP</Name>
+<EquilibriumPotential Value="-70" Scale="milli" Actual="-0.07"/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<DecayRate Value="10" Scale="milli" Actual="0.01"/>
+<RelativeFacilitation Value="1.5" Scale="None" Actual="1.5"/>
+<FacilitationDecay Value="100" Scale="milli" Actual="0.1"/>
+<VoltageDependent>False</VoltageDependent>
+<MaxRelativeConductance Value="5" Scale="micro" Actual="5e-06"/>
+<SaturatePotential Value="-30" Scale="milli" Actual="-0.03"/>
+<ThresholdPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<Hebbian>False</Hebbian>
+<MaxAugmentedConductance Value="1" Scale="micro" Actual="1e-06"/>
+<LearningIncrement>0.1</LearningIncrement>
+<LearningTimeWindow Value="20" Scale="milli" Actual="0.02"/>
+<AllowForgetting>True</AllowForgetting>
+<ForgettingTimeWindow Value="10000" Scale="milli" Actual="10"/>
+<ConsolidationFactor>1</ConsolidationFactor>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.Electrical</ClassName>
+<ID>63ea6386-f14c-49cf-beab-dc17beab4f6b</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID/>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID/>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<Name>Rectifying Synapse</Name>
+<LowCoupling Value="0.1" Scale="micro" Actual="1e-07"/>
+<HighCoupling Value="0.3" Scale="micro" Actual="3e-07"/>
+<TurnOnThreshold Value="10" Scale="milli" Actual="0.01"/>
+<TurnOnSaturate Value="30" Scale="milli" Actual="0.03"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
+<ID>1d5bfb11-7d48-497d-bb1d-6c3d264bf674</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Circle</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID/>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID/>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<Name>NMDA type</Name>
+<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
+<SynapticConductance Value="0.1" Scale="micro" Actual="1e-07"/>
+<DecayRate Value="50" Scale="milli" Actual="0.05"/>
+<RelativeFacilitation Value="1" Scale="None" Actual="1"/>
+<FacilitationDecay Value="1" Scale="milli" Actual="0.001"/>
+<VoltageDependent>True</VoltageDependent>
+<MaxRelativeConductance Value="10" Scale="micro" Actual="1e-05"/>
+<SaturatePotential Value="-30" Scale="milli" Actual="-0.03"/>
+<ThresholdPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<Hebbian>False</Hebbian>
+<MaxAugmentedConductance Value="1" Scale="micro" Actual="1e-06"/>
+<LearningIncrement>0.1</LearningIncrement>
+<LearningTimeWindow Value="20" Scale="milli" Actual="0.02"/>
+<AllowForgetting>True</AllowForgetting>
+<ForgettingTimeWindow Value="10000" Scale="milli" Actual="10"/>
+<ConsolidationFactor>1</ConsolidationFactor>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.NonSpikingChemical</ClassName>
+<ID>9f0af3c4-a524-494f-ac45-7b0f9efeb478</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Circle</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>True</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>One</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID/>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID/>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<Name>Depolarising IPSP</Name>
+<EquilibriumPotential Value="-55" Scale="milli" Actual="-0.055"/>
+<MaxSynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<PreSynapticThreshold Value="-60" Scale="milli" Actual="-0.06"/>
+<PreSynapticSaturationLevel Value="-40" Scale="milli" Actual="-0.04"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.NonSpikingChemical</ClassName>
+<ID>8d9275f1-098f-4a71-9c4b-8355d7c06b04</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID/>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID/>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<Name>Nicotinic ACh type</Name>
+<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
+<MaxSynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<PreSynapticThreshold Value="-65" Scale="milli" Actual="-0.065"/>
+<PreSynapticSaturationLevel Value="-20" Scale="milli" Actual="-0.02"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.NonSpikingChemical</ClassName>
+<ID>b00b375e-86a2-4987-a079-7ae3630b0ac2</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Circle</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>True</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>One</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID/>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID/>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<Name>Hyperpolarising IPSP</Name>
+<EquilibriumPotential Value="-70" Scale="milli" Actual="-0.07"/>
+<MaxSynapticConductance Value="0.1" Scale="micro" Actual="1e-07"/>
+<PreSynapticThreshold Value="-60" Scale="milli" Actual="-0.06"/>
+<PreSynapticSaturationLevel Value="-30" Scale="milli" Actual="-0.03"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
+<ID>dc0c9818-28aa-4b84-975a-8a5504ee2311</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Circle</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID/>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID/>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<Name>Hebbian ACh type</Name>
+<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
+<SynapticConductance Value="0.4" Scale="micro" Actual="4e-07"/>
+<DecayRate Value="3" Scale="milli" Actual="0.003"/>
+<RelativeFacilitation Value="1" Scale="None" Actual="1"/>
+<FacilitationDecay Value="1" Scale="milli" Actual="0.001"/>
+<VoltageDependent>True</VoltageDependent>
+<MaxRelativeConductance Value="5" Scale="micro" Actual="5e-06"/>
+<SaturatePotential Value="-30" Scale="milli" Actual="-0.03"/>
+<ThresholdPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<Hebbian>True</Hebbian>
+<MaxAugmentedConductance Value="2" Scale="micro" Actual="2e-06"/>
+<LearningIncrement>0.02</LearningIncrement>
+<LearningTimeWindow Value="40" Scale="milli" Actual="0.04"/>
+<AllowForgetting>True</AllowForgetting>
+<ForgettingTimeWindow Value="10000" Scale="milli" Actual="10"/>
+<ConsolidationFactor>20</ConsolidationFactor>
+</Link>
+</SynapseTypes>
+</Node>
+<Node>
+<AssemblyFile>FPGANeuralNetTools.dll</AssemblyFile>
+<ClassName>FPGANeuralNetTools.DataObjects.Behavior.NeuralModule</ClassName>
+<TimeStep Value="0.2" Scale="milli" Actual="0.0002"/>
+<ClockFrequency Value="50" Scale="Mega" Actual="5e+07"/>
+<SpikePeak Value="0" Scale="milli" Actual="0"/>
+<RefractoryPeriod Value="2" Scale="milli" Actual="0.002"/>
+<SynapseTypes>
+<Link>
+<AssemblyFile>FPGANeuralNetTools.dll</AssemblyFile>
+<ClassName>FPGANeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
+<ID>98057565-7b2f-4aa2-af60-ce0d4355f8c3</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Circle</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>True</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID/>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID/>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<Name>Hyperpolarizing IPSP</Name>
+<EquilibriumPotential Value="-70" Scale="milli" Actual="-0.07"/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<DecayRate Value="10" Scale="milli" Actual="0.01"/>
+</Link>
+<Link>
+<AssemblyFile>FPGANeuralNetTools.dll</AssemblyFile>
+<ClassName>FPGANeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
+<ID>6108af0d-7a44-434e-8174-b15d2a7885c5</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Fork</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID/>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID/>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<Name>Nicotinic ACh</Name>
+<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<DecayRate Value="3" Scale="milli" Actual="0.003"/>
+</Link>
+<Link>
+<AssemblyFile>FPGANeuralNetTools.dll</AssemblyFile>
+<ClassName>FPGANeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
+<ID>3424c716-d516-4350-9c30-c73b12d122ba</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Circle</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID/>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID/>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<Name>Depolarizing IPSP</Name>
+<EquilibriumPotential Value="-55" Scale="milli" Actual="-0.055"/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<DecayRate Value="3" Scale="milli" Actual="0.003"/>
+</Link>
+<Link>
+<AssemblyFile>FPGANeuralNetTools.dll</AssemblyFile>
+<ClassName>FPGANeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
+<ID>c3ba0568-d7b0-4f3e-b01a-787cc9a1e5a1</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Circle</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID/>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID/>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<Name>NMDA type</Name>
+<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
+<SynapticConductance Value="0.1" Scale="micro" Actual="1e-07"/>
+<DecayRate Value="50" Scale="milli" Actual="0.05"/>
+</Link>
+<Link>
+<AssemblyFile>FPGANeuralNetTools.dll</AssemblyFile>
+<ClassName>FPGANeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
+<ID>405e0bad-a67e-4360-a12b-61c3053c2f80</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Circle</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID/>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID/>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<Name>Hebbian ACh type</Name>
+<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
+<SynapticConductance Value="0.4" Scale="micro" Actual="4e-07"/>
+<DecayRate Value="3" Scale="milli" Actual="0.003"/>
+</Link>
+</SynapseTypes>
+</Node>
+</NeuralModules>
+<Diagrams>
+<Diagram>
+<ID>f92d0016-4969-48c1-8922-4ff8a64d5d46</ID>
+<AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.Forms.Behavior.AddFlowDiagram</ClassName>
+<PageName>Page 1</PageName>
+<Nodes>
+<Node>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>0f7ecb97-bdaf-4111-bacd-1836cd3aec63</ID>
+<NodeIndex>15</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="0" y="0"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>15</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>18d8ac64-93ca-4880-8654-75a313f8eda3</ID>
+<ID>14dc1b8a-66b1-48e0-98d1-cb823bbc0aaf</ID>
+</InLinks>
+<OutLinks>
+<ID>19e8824f-ef1b-4510-ad6f-ab4ab449dcf5</ID>
+<ID>29a512fb-c8ff-4b4d-86dc-ed75c5295bb4</ID>
+</OutLinks>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHPConductance Value="1" Scale="micro" Actual="1e-06"/>
+<AHPTimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<TonicStimulus Value="10" Scale="nano" Actual="1e-08"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>1361487e-a4bd-41e6-b3d5-2f90bc3e99d6</ID>
+<NodeIndex>12</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="0" y="0"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>11</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>45b3b410-d2eb-480a-98fc-ac21fae7c8dd</ID>
+<ID>5a4cee3f-a242-418d-9d29-56cbec93b18c</ID>
+</InLinks>
+<OutLinks>
+<ID>7a3a40c8-93f8-4b9b-b3ed-b96e6ff5dfab</ID>
+<ID>ce612f36-efeb-4c08-953c-c074d17b3ad9</ID>
+</OutLinks>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHPConductance Value="1" Scale="micro" Actual="1e-06"/>
+<AHPTimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<TonicStimulus Value="10" Scale="nano" Actual="1e-08"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>76a1ea42-69ee-4810-9aed-718266e0c63a</ID>
+<NodeIndex>1</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="0" y="0"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>4</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>f0819610-47b2-4b5e-852a-9ffa0cdf2c8c</ID>
+<ID>51ce0cc8-8592-44a1-a308-bbde5ead59bd</ID>
+</InLinks>
+<OutLinks>
+<ID>0bdde161-61eb-46db-8f6f-366fcc623789</ID>
+<ID>6cdec9f3-4ab2-4c2f-9a94-9eb5c45b29c6</ID>
+</OutLinks>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHPConductance Value="1" Scale="micro" Actual="1e-06"/>
+<AHPTimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<TonicStimulus Value="25" Scale="nano" Actual="2.5e-08"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>78114439-cab9-4f1a-90ad-4c9324df4f55</ID>
+<NodeIndex>3</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="0" y="0"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>9</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>17cef075-59e5-4074-80dd-8ca9a75814a5</ID>
+<ID>47880fe0-3f6a-4808-bd62-367f5c302fdf</ID>
+</InLinks>
+<OutLinks>
+<ID>a3187b05-b3b3-4a48-a625-1a626df96593</ID>
+<ID>cae1ee93-8399-4112-8b89-044c95f91a1f</ID>
+</OutLinks>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHPConductance Value="1" Scale="micro" Actual="1e-06"/>
+<AHPTimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<TonicStimulus Value="10" Scale="nano" Actual="1e-08"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>84136968-e487-4c43-ba46-0f011a66fcc6</ID>
+<NodeIndex>8</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="0" y="0"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>14</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>8eeaee8d-e3f8-4eae-a249-f028ff3ad7bb</ID>
+<ID>29a512fb-c8ff-4b4d-86dc-ed75c5295bb4</ID>
+</InLinks>
+<OutLinks>
+<ID>3721e96f-e5ad-48fe-9d5c-2bdc1ebc23ee</ID>
+<ID>14dc1b8a-66b1-48e0-98d1-cb823bbc0aaf</ID>
+</OutLinks>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHPConductance Value="1" Scale="micro" Actual="1e-06"/>
+<AHPTimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<TonicStimulus Value="10" Scale="nano" Actual="1e-08"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>894f2785-20d5-4007-9b67-f1c7bf1a283c</ID>
+<NodeIndex>4</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="0" y="0"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>2</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>306550f5-a051-40b1-9ade-546df2604821</ID>
+<ID>acd09430-6605-4f5b-af11-f919db230763</ID>
+</InLinks>
+<OutLinks>
+<ID>67a1a194-2854-4a1b-9443-c8a1cc9ee6c9</ID>
+<ID>fc4f9c0b-cd17-4086-a4b0-5106c9ad974c</ID>
+</OutLinks>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHPConductance Value="1" Scale="micro" Actual="1e-06"/>
+<AHPTimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<TonicStimulus Value="25" Scale="nano" Actual="2.5e-08"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>8aba9076-171b-4cb0-9eae-e60c9775082b</ID>
+<NodeIndex>2</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="0" y="0"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>10</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>ce612f36-efeb-4c08-953c-c074d17b3ad9</ID>
+<ID>cae1ee93-8399-4112-8b89-044c95f91a1f</ID>
+</InLinks>
+<OutLinks>
+<ID>17cef075-59e5-4074-80dd-8ca9a75814a5</ID>
+<ID>45b3b410-d2eb-480a-98fc-ac21fae7c8dd</ID>
+</OutLinks>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHPConductance Value="1" Scale="micro" Actual="1e-06"/>
+<AHPTimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<TonicStimulus Value="10" Scale="nano" Actual="1e-08"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>8f827ba6-7795-45ab-9384-679eb54d24fe</ID>
+<NodeIndex>0</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="0" y="0"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>16</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>19e8824f-ef1b-4510-ad6f-ab4ab449dcf5</ID>
+</InLinks>
+<OutLinks>
+<ID>18d8ac64-93ca-4880-8654-75a313f8eda3</ID>
+</OutLinks>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHPConductance Value="1" Scale="micro" Actual="1e-06"/>
+<AHPTimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<TonicStimulus Value="10" Scale="nano" Actual="1e-08"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>91e0ef44-410e-496a-ae43-d047140341c1</ID>
+<NodeIndex>9</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="0" y="0"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>1</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>67a1a194-2854-4a1b-9443-c8a1cc9ee6c9</ID>
+</InLinks>
+<OutLinks>
+<ID>acd09430-6605-4f5b-af11-f919db230763</ID>
+</OutLinks>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHPConductance Value="1" Scale="micro" Actual="1e-06"/>
+<AHPTimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<TonicStimulus Value="25" Scale="nano" Actual="2.5e-08"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>981c9158-7d4c-48b0-a498-d4ba14fa3a1c</ID>
+<NodeIndex>7</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="0" y="0"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>13</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>3721e96f-e5ad-48fe-9d5c-2bdc1ebc23ee</ID>
+<ID>c5a4d78d-a42a-4b01-9124-c0275b6b6bd4</ID>
+</InLinks>
+<OutLinks>
+<ID>8eeaee8d-e3f8-4eae-a249-f028ff3ad7bb</ID>
+<ID>04d49dd1-e08e-4a6f-b72a-7abd0270fc12</ID>
+</OutLinks>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHPConductance Value="1" Scale="micro" Actual="1e-06"/>
+<AHPTimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<TonicStimulus Value="10" Scale="nano" Actual="1e-08"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>a97c7144-301b-4dfd-af8d-85e3cd1e4e48</ID>
+<NodeIndex>5</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="0" y="0"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>7</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>5fc38c12-e397-441e-8747-6c8f53ae3965</ID>
+<ID>d39355cb-a61a-471a-bfba-d46e35efeeeb</ID>
+</InLinks>
+<OutLinks>
+<ID>b3725ef2-7afc-4690-8c52-df2dd46960d3</ID>
+<ID>eb6b6cab-ae79-4332-a813-2132ac81a86f</ID>
+</OutLinks>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHPConductance Value="1" Scale="micro" Actual="1e-06"/>
+<AHPTimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<TonicStimulus Value="25" Scale="nano" Actual="2.5e-08"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>ac3f39fb-94ac-4d25-9e13-e81219356994</ID>
+<NodeIndex>14</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="0" y="0"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>12</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>7a3a40c8-93f8-4b9b-b3ed-b96e6ff5dfab</ID>
+<ID>04d49dd1-e08e-4a6f-b72a-7abd0270fc12</ID>
+</InLinks>
+<OutLinks>
+<ID>5a4cee3f-a242-418d-9d29-56cbec93b18c</ID>
+<ID>c5a4d78d-a42a-4b01-9124-c0275b6b6bd4</ID>
+</OutLinks>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHPConductance Value="1" Scale="micro" Actual="1e-06"/>
+<AHPTimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<TonicStimulus Value="10" Scale="nano" Actual="1e-08"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>be6b4ae4-98a2-4470-a156-4d60176a8660</ID>
+<NodeIndex>13</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="0" y="0"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>5</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>0bdde161-61eb-46db-8f6f-366fcc623789</ID>
+<ID>cb51263b-2321-450f-af21-280901bd6adf</ID>
+</InLinks>
+<OutLinks>
+<ID>ce4c3217-e3b4-4a1a-85fe-92ddd72674d4</ID>
+<ID>51ce0cc8-8592-44a1-a308-bbde5ead59bd</ID>
+</OutLinks>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHPConductance Value="1" Scale="micro" Actual="1e-06"/>
+<AHPTimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<TonicStimulus Value="25" Scale="nano" Actual="2.5e-08"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>c8c419bc-5154-43a2-b7ee-5de5b8a37bc7</ID>
+<NodeIndex>6</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="0" y="0"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>3</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>fc4f9c0b-cd17-4086-a4b0-5106c9ad974c</ID>
+<ID>6cdec9f3-4ab2-4c2f-9a94-9eb5c45b29c6</ID>
+</InLinks>
+<OutLinks>
+<ID>f0819610-47b2-4b5e-852a-9ffa0cdf2c8c</ID>
+<ID>306550f5-a051-40b1-9ade-546df2604821</ID>
+</OutLinks>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHPConductance Value="1" Scale="micro" Actual="1e-06"/>
+<AHPTimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<TonicStimulus Value="25" Scale="nano" Actual="2.5e-08"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>ce0f0070-e280-4390-b178-332e0e81b768</ID>
+<NodeIndex>11</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="0" y="0"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>6</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>ce4c3217-e3b4-4a1a-85fe-92ddd72674d4</ID>
+<ID>eb6b6cab-ae79-4332-a813-2132ac81a86f</ID>
+</InLinks>
+<OutLinks>
+<ID>5fc38c12-e397-441e-8747-6c8f53ae3965</ID>
+<ID>cb51263b-2321-450f-af21-280901bd6adf</ID>
+</OutLinks>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHPConductance Value="1" Scale="micro" Actual="1e-06"/>
+<AHPTimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<TonicStimulus Value="25" Scale="nano" Actual="2.5e-08"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>f7d3ccdf-cc8b-4858-82ca-3dfad885b457</ID>
+<NodeIndex>10</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="0" y="0"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>8</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>b3725ef2-7afc-4690-8c52-df2dd46960d3</ID>
+<ID>a3187b05-b3b3-4a48-a625-1a626df96593</ID>
+</InLinks>
+<OutLinks>
+<ID>d39355cb-a61a-471a-bfba-d46e35efeeeb</ID>
+<ID>47880fe0-3f6a-4808-bd62-367f5c302fdf</ID>
+</OutLinks>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHPConductance Value="1" Scale="micro" Actual="1e-06"/>
+<AHPTimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<TonicStimulus Value="25" Scale="nano" Actual="2.5e-08"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+</Nodes>
+<Links>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>04d49dd1-e08e-4a6f-b72a-7abd0270fc12</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>ac3f39fb-94ac-4d25-9e13-e81219356994</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>981c9158-7d4c-48b0-a498-d4ba14fa3a1c</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>0bdde161-61eb-46db-8f6f-366fcc623789</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>be6b4ae4-98a2-4470-a156-4d60176a8660</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>76a1ea42-69ee-4810-9aed-718266e0c63a</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>14dc1b8a-66b1-48e0-98d1-cb823bbc0aaf</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>0f7ecb97-bdaf-4111-bacd-1836cd3aec63</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>84136968-e487-4c43-ba46-0f011a66fcc6</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>17cef075-59e5-4074-80dd-8ca9a75814a5</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>78114439-cab9-4f1a-90ad-4c9324df4f55</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>8aba9076-171b-4cb0-9eae-e60c9775082b</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>18d8ac64-93ca-4880-8654-75a313f8eda3</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>0f7ecb97-bdaf-4111-bacd-1836cd3aec63</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>8f827ba6-7795-45ab-9384-679eb54d24fe</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>19e8824f-ef1b-4510-ad6f-ab4ab449dcf5</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>8f827ba6-7795-45ab-9384-679eb54d24fe</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>0f7ecb97-bdaf-4111-bacd-1836cd3aec63</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>29a512fb-c8ff-4b4d-86dc-ed75c5295bb4</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>84136968-e487-4c43-ba46-0f011a66fcc6</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>0f7ecb97-bdaf-4111-bacd-1836cd3aec63</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>306550f5-a051-40b1-9ade-546df2604821</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>894f2785-20d5-4007-9b67-f1c7bf1a283c</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>c8c419bc-5154-43a2-b7ee-5de5b8a37bc7</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>3721e96f-e5ad-48fe-9d5c-2bdc1ebc23ee</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>981c9158-7d4c-48b0-a498-d4ba14fa3a1c</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>84136968-e487-4c43-ba46-0f011a66fcc6</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>45b3b410-d2eb-480a-98fc-ac21fae7c8dd</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>1361487e-a4bd-41e6-b3d5-2f90bc3e99d6</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>8aba9076-171b-4cb0-9eae-e60c9775082b</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>47880fe0-3f6a-4808-bd62-367f5c302fdf</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>78114439-cab9-4f1a-90ad-4c9324df4f55</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>f7d3ccdf-cc8b-4858-82ca-3dfad885b457</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>51ce0cc8-8592-44a1-a308-bbde5ead59bd</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>76a1ea42-69ee-4810-9aed-718266e0c63a</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>be6b4ae4-98a2-4470-a156-4d60176a8660</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>5a4cee3f-a242-418d-9d29-56cbec93b18c</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>1361487e-a4bd-41e6-b3d5-2f90bc3e99d6</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>ac3f39fb-94ac-4d25-9e13-e81219356994</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>5fc38c12-e397-441e-8747-6c8f53ae3965</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>a97c7144-301b-4dfd-af8d-85e3cd1e4e48</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>ce0f0070-e280-4390-b178-332e0e81b768</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>67a1a194-2854-4a1b-9443-c8a1cc9ee6c9</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>91e0ef44-410e-496a-ae43-d047140341c1</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>894f2785-20d5-4007-9b67-f1c7bf1a283c</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>6cdec9f3-4ab2-4c2f-9a94-9eb5c45b29c6</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>c8c419bc-5154-43a2-b7ee-5de5b8a37bc7</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>76a1ea42-69ee-4810-9aed-718266e0c63a</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>7a3a40c8-93f8-4b9b-b3ed-b96e6ff5dfab</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>ac3f39fb-94ac-4d25-9e13-e81219356994</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>1361487e-a4bd-41e6-b3d5-2f90bc3e99d6</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>8eeaee8d-e3f8-4eae-a249-f028ff3ad7bb</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>84136968-e487-4c43-ba46-0f011a66fcc6</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>981c9158-7d4c-48b0-a498-d4ba14fa3a1c</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>a3187b05-b3b3-4a48-a625-1a626df96593</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>f7d3ccdf-cc8b-4858-82ca-3dfad885b457</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>78114439-cab9-4f1a-90ad-4c9324df4f55</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>acd09430-6605-4f5b-af11-f919db230763</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>894f2785-20d5-4007-9b67-f1c7bf1a283c</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>91e0ef44-410e-496a-ae43-d047140341c1</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>b3725ef2-7afc-4690-8c52-df2dd46960d3</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>f7d3ccdf-cc8b-4858-82ca-3dfad885b457</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>a97c7144-301b-4dfd-af8d-85e3cd1e4e48</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>c5a4d78d-a42a-4b01-9124-c0275b6b6bd4</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>981c9158-7d4c-48b0-a498-d4ba14fa3a1c</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>ac3f39fb-94ac-4d25-9e13-e81219356994</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>cae1ee93-8399-4112-8b89-044c95f91a1f</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>8aba9076-171b-4cb0-9eae-e60c9775082b</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>78114439-cab9-4f1a-90ad-4c9324df4f55</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>cb51263b-2321-450f-af21-280901bd6adf</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>be6b4ae4-98a2-4470-a156-4d60176a8660</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>ce0f0070-e280-4390-b178-332e0e81b768</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>ce4c3217-e3b4-4a1a-85fe-92ddd72674d4</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>ce0f0070-e280-4390-b178-332e0e81b768</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>be6b4ae4-98a2-4470-a156-4d60176a8660</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>ce612f36-efeb-4c08-953c-c074d17b3ad9</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>8aba9076-171b-4cb0-9eae-e60c9775082b</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>1361487e-a4bd-41e6-b3d5-2f90bc3e99d6</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>d39355cb-a61a-471a-bfba-d46e35efeeeb</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>a97c7144-301b-4dfd-af8d-85e3cd1e4e48</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>f7d3ccdf-cc8b-4858-82ca-3dfad885b457</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>eb6b6cab-ae79-4332-a813-2132ac81a86f</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>ce0f0070-e280-4390-b178-332e0e81b768</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>a97c7144-301b-4dfd-af8d-85e3cd1e4e48</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>f0819610-47b2-4b5e-852a-9ffa0cdf2c8c</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>76a1ea42-69ee-4810-9aed-718266e0c63a</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>c8c419bc-5154-43a2-b7ee-5de5b8a37bc7</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.Synapse</ClassName>
+<ID>fc4f9c0b-cd17-4086-a4b0-5106c9ad974c</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>c8c419bc-5154-43a2-b7ee-5de5b8a37bc7</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>894f2785-20d5-4007-9b67-f1c7bf1a283c</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>b00b375e-86a2-4987-a079-7ae3630b0ac2</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+</Links>
+<Diagrams/>
+<DiagramIndex>1</DiagramIndex>
+<ZoomX>1</ZoomX>
+<ZoomY>1</ZoomY>
+<BackColor Red="1" Green="1" Blue="1" Alpha="1"/>
+<ShowGrid>True</ShowGrid>
+<GridColor Red="0.67451" Green="0.658824" Blue="0.6" Alpha="1"/>
+<GridSize Width="16" Height="16"/>
+<GridStyle>DottedLines</GridStyle>
+<JumpSize>Medium</JumpSize>
+<SnapToGrid>False</SnapToGrid>
+<AddFlow Nodes="16" Links="30">
+  <Version>1.5.0.1</Version>
+  <Node Left="311.25" Top="260.5" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>13</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>981c9158-7d4c-48b0-a498-d4ba14fa3a1c</Tag>
+  </Node>
+  <Node Left="228.583328" Top="260.5" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>14</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>84136968-e487-4c43-ba46-0f011a66fcc6</Tag>
+  </Node>
+  <Link Org="0" Dst="1">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="287.25" Y="297.25" />
+    <Tag>8eeaee8d-e3f8-4eae-a249-f028ff3ad7bb</Tag>
+  </Link>
+  <Node Left="145.916656" Top="260.5" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>15</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>0f7ecb97-bdaf-4111-bacd-1836cd3aec63</Tag>
+  </Node>
+  <Node Left="63.25" Top="260.5" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>16</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>8f827ba6-7795-45ab-9384-679eb54d24fe</Tag>
+  </Node>
+  <Link Org="4" Dst="3">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="122.75" Y="254" />
+    <Tag>18d8ac64-93ca-4880-8654-75a313f8eda3</Tag>
+  </Link>
+  <Link Org="3" Dst="4">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="124.25" Y="307.25" />
+    <Tag>19e8824f-ef1b-4510-ad6f-ab4ab449dcf5</Tag>
+  </Link>
+  <Link Org="3" Dst="1">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="206" Y="255.5" />
+    <Tag>29a512fb-c8ff-4b4d-86dc-ed75c5295bb4</Tag>
+  </Link>
+  <Link Org="1" Dst="3">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="209" Y="306.5" />
+    <Tag>14dc1b8a-66b1-48e0-98d1-cb823bbc0aaf</Tag>
+  </Link>
+  <Node Left="310.25" Top="184" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>12</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>ac3f39fb-94ac-4d25-9e13-e81219356994</Tag>
+  </Node>
+  <Node Left="227.583328" Top="184" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>11</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>1361487e-a4bd-41e6-b3d5-2f90bc3e99d6</Tag>
+  </Node>
+  <Link Org="10" Dst="9">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="288.25" Y="176.75" />
+    <Tag>7a3a40c8-93f8-4b9b-b3ed-b96e6ff5dfab</Tag>
+  </Link>
+  <Link Org="9" Dst="10">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="286.25" Y="220.75" />
+    <Tag>5a4cee3f-a242-418d-9d29-56cbec93b18c</Tag>
+  </Link>
+  <Node Left="144.916656" Top="184" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>10</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>8aba9076-171b-4cb0-9eae-e60c9775082b</Tag>
+  </Node>
+  <Node Left="62.25" Top="184" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>9</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>78114439-cab9-4f1a-90ad-4c9324df4f55</Tag>
+  </Node>
+  <Link Org="14" Dst="13">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="121.75" Y="177.5" />
+    <Tag>cae1ee93-8399-4112-8b89-044c95f91a1f</Tag>
+  </Link>
+  <Link Org="13" Dst="14">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="123.25" Y="230.75" />
+    <Tag>17cef075-59e5-4074-80dd-8ca9a75814a5</Tag>
+  </Link>
+  <Link Org="13" Dst="10">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="205" Y="179" />
+    <Tag>45b3b410-d2eb-480a-98fc-ac21fae7c8dd</Tag>
+  </Link>
+  <Link Org="10" Dst="13">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="208" Y="230" />
+    <Tag>ce612f36-efeb-4c08-953c-c074d17b3ad9</Tag>
+  </Link>
+  <Link Org="9" Dst="0">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="354.25" Y="242" />
+    <Tag>c5a4d78d-a42a-4b01-9124-c0275b6b6bd4</Tag>
+  </Link>
+  <Link Org="0" Dst="9">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="306.25" Y="241.25" />
+    <Tag>04d49dd1-e08e-4a6f-b72a-7abd0270fc12</Tag>
+  </Link>
+  <Link Org="1" Dst="0">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="287.5" Y="256.25" />
+    <Tag>3721e96f-e5ad-48fe-9d5c-2bdc1ebc23ee</Tag>
+  </Link>
+  <Node Left="308" Top="108.5" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>5</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>be6b4ae4-98a2-4470-a156-4d60176a8660</Tag>
+  </Node>
+  <Node Left="225.333328" Top="108.5" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>6</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>ce0f0070-e280-4390-b178-332e0e81b768</Tag>
+  </Node>
+  <Link Org="22" Dst="23">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="284" Y="145.25" />
+    <Tag>ce4c3217-e3b4-4a1a-85fe-92ddd72674d4</Tag>
+  </Link>
+  <Node Left="142.666656" Top="108.5" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>7</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>a97c7144-301b-4dfd-af8d-85e3cd1e4e48</Tag>
+  </Node>
+  <Node Left="60" Top="108.5" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>8</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>f7d3ccdf-cc8b-4858-82ca-3dfad885b457</Tag>
+  </Node>
+  <Link Org="26" Dst="25">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="119.5" Y="102" />
+    <Tag>d39355cb-a61a-471a-bfba-d46e35efeeeb</Tag>
+  </Link>
+  <Link Org="25" Dst="26">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="121" Y="155.25" />
+    <Tag>b3725ef2-7afc-4690-8c52-df2dd46960d3</Tag>
+  </Link>
+  <Link Org="25" Dst="23">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="202.75" Y="103.5" />
+    <Tag>eb6b6cab-ae79-4332-a813-2132ac81a86f</Tag>
+  </Link>
+  <Link Org="23" Dst="25">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="205.75" Y="154.5" />
+    <Tag>5fc38c12-e397-441e-8747-6c8f53ae3965</Tag>
+  </Link>
+  <Node Left="307" Top="32" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>4</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>76a1ea42-69ee-4810-9aed-718266e0c63a</Tag>
+  </Node>
+  <Node Left="224.333328" Top="32" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>3</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>c8c419bc-5154-43a2-b7ee-5de5b8a37bc7</Tag>
+  </Node>
+  <Link Org="32" Dst="31">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="285" Y="24.75" />
+    <Tag>f0819610-47b2-4b5e-852a-9ffa0cdf2c8c</Tag>
+  </Link>
+  <Link Org="31" Dst="32">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="283" Y="68.75" />
+    <Tag>6cdec9f3-4ab2-4c2f-9a94-9eb5c45b29c6</Tag>
+  </Link>
+  <Node Left="141.666656" Top="32" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>2</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>894f2785-20d5-4007-9b67-f1c7bf1a283c</Tag>
+  </Node>
+  <Node Left="59" Top="32" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>1</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>91e0ef44-410e-496a-ae43-d047140341c1</Tag>
+  </Node>
+  <Link Org="36" Dst="35">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="118.5" Y="25.5" />
+    <Tag>acd09430-6605-4f5b-af11-f919db230763</Tag>
+  </Link>
+  <Link Org="35" Dst="36">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="120" Y="78.75" />
+    <Tag>67a1a194-2854-4a1b-9443-c8a1cc9ee6c9</Tag>
+  </Link>
+  <Link Org="35" Dst="32">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="201.75" Y="27" />
+    <Tag>fc4f9c0b-cd17-4086-a4b0-5106c9ad974c</Tag>
+  </Link>
+  <Link Org="32" Dst="35">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="204.75" Y="78" />
+    <Tag>306550f5-a051-40b1-9ade-546df2604821</Tag>
+  </Link>
+  <Link Org="31" Dst="22">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="351" Y="90" />
+    <Tag>0bdde161-61eb-46db-8f6f-366fcc623789</Tag>
+  </Link>
+  <Link Org="22" Dst="31">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="303" Y="89.25" />
+    <Tag>51ce0cc8-8592-44a1-a308-bbde5ead59bd</Tag>
+  </Link>
+  <Link Org="23" Dst="22">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="284.25" Y="104.25" />
+    <Tag>cb51263b-2321-450f-af21-280901bd6adf</Tag>
+  </Link>
+  <Link Org="26" Dst="14">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="107.25" Y="166.5" />
+    <Tag>47880fe0-3f6a-4808-bd62-367f5c302fdf</Tag>
+  </Link>
+  <Link Org="14" Dst="26">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="57.75" Y="166.5" />
+    <Tag>a3187b05-b3b3-4a48-a625-1a626df96593</Tag>
+  </Link>
+</AddFlow>
+</Diagram>
+</Diagrams>
+<DiagramImages>
+<DiagramImage>
+<ID>VortexAnimatTools.Graphics.OdorSensor.gif</ID>
+<FilePath/>
+<UserImage>False</UserImage>
+</DiagramImage>
+<DiagramImage>
+<ID>VortexAnimatTools.Graphics.BoneNodeImage.gif</ID>
+<FilePath/>
+<UserImage>False</UserImage>
+</DiagramImage>
+<DiagramImage>
+<ID>VortexAnimatTools.Graphics.Muscle.gif</ID>
+<FilePath/>
+<UserImage>False</UserImage>
+</DiagramImage>
+<DiagramImage>
+<ID>VortexAnimatTools.Graphics.MuscleSpindle.gif</ID>
+<FilePath/>
+<UserImage>False</UserImage>
+</DiagramImage>
+<DiagramImage>
+<ID>VortexAnimatTools.Graphics.HingeNodeImage.gif</ID>
+<FilePath/>
+<UserImage>False</UserImage>
+</DiagramImage>
+</DiagramImages>
+<DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">
+  <Content Name="Toolbox" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Toolbox">
+    <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Toolbox" />
+      <State Value="DockLeft" />
+      <Child Type="null" />
+    </DefaultRestore>
+    <AutoHideRestore Type="Crownwood.Magic.Docking.RestoreAutoHideAffinity">
+      <Content Name="Toolbox" />
+      <State Value="DockLeft" />
+      <Next Count="3">
+        <Item Name="Properties" />
+        <Item Name="Hierarchy" />
+        <Item Name="Modules" />
+      </Next>
+      <Previous Count="0" />
+      <NextAll Count="0" />
+      <PreviousAll Count="0" />
+      <Child Type="null" />
+    </AutoHideRestore>
+    <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
+      <Content Name="Toolbox" />
+      <State Value="DockLeft" />
+      <Position Size="250, 150" Location="150, 150" />
+      <Best Count="4">
+        <Item Name="Modules" />
+        <Item Name="Hierarchy" />
+        <Item Name="Properties" />
+        <Item Name="Toolbox" />
+      </Best>
+      <Next Count="0" />
+      <Previous Count="0" />
+      <NextAll Count="0" />
+      <PreviousAll Count="0" />
+      <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
+        <Content Name="Toolbox" />
+        <Space Value="100" />
+        <Best Count="4">
+          <Item Name="Toolbox" />
+          <Item Name="Properties" />
+          <Item Name="Hierarchy" />
+          <Item Name="Modules" />
+        </Best>
+        <Next Count="0" />
+        <Previous Count="0" />
+        <Child Type="Crownwood.Magic.Docking.RestoreWindowContent">
+          <Content Name="Toolbox" />
+          <Next Count="3">
+            <Item Name="Properties" />
+            <Item Name="Hierarchy" />
+            <Item Name="Modules" />
+          </Next>
+          <Previous Count="0" />
+          <Selected Value="False" />
+          <Child Type="null" />
+        </Child>
+      </Child>
+    </DockingRestore>
+    <FloatingRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Toolbox" />
+      <State Value="Floating" />
+      <Child Type="null" />
+    </FloatingRestore>
+  </Content>
+  <Content Name="Properties" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Properties">
+    <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Properties" />
+      <State Value="DockLeft" />
+      <Child Type="null" />
+    </DefaultRestore>
+    <AutoHideRestore Type="Crownwood.Magic.Docking.RestoreAutoHideAffinity">
+      <Content Name="Properties" />
+      <State Value="DockLeft" />
+      <Next Count="2">
+        <Item Name="Hierarchy" />
+        <Item Name="Modules" />
+      </Next>
+      <Previous Count="1">
+        <Item Name="Toolbox" />
+      </Previous>
+      <NextAll Count="0" />
+      <PreviousAll Count="0" />
+      <Child Type="null" />
+    </AutoHideRestore>
+    <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
+      <Content Name="Properties" />
+      <State Value="DockLeft" />
+      <Position Size="250, 150" Location="150, 150" />
+      <Best Count="3">
+        <Item Name="Modules" />
+        <Item Name="Hierarchy" />
+        <Item Name="Properties" />
+      </Best>
+      <Next Count="0" />
+      <Previous Count="0" />
+      <NextAll Count="0" />
+      <PreviousAll Count="0" />
+      <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
+        <Content Name="Properties" />
+        <Space Value="100" />
+        <Best Count="3">
+          <Item Name="Properties" />
+          <Item Name="Hierarchy" />
+          <Item Name="Modules" />
+        </Best>
+        <Next Count="0" />
+        <Previous Count="0" />
+        <Child Type="Crownwood.Magic.Docking.RestoreWindowContent">
+          <Content Name="Properties" />
+          <Next Count="2">
+            <Item Name="Hierarchy" />
+            <Item Name="Modules" />
+          </Next>
+          <Previous Count="0" />
+          <Selected Value="True" />
+          <Child Type="null" />
+        </Child>
+      </Child>
+    </DockingRestore>
+    <FloatingRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Properties" />
+      <State Value="Floating" />
+      <Child Type="null" />
+    </FloatingRestore>
+  </Content>
+  <Content Name="Hierarchy" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Hierarchy">
+    <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Hierarchy" />
+      <State Value="DockLeft" />
+      <Child Type="null" />
+    </DefaultRestore>
+    <AutoHideRestore Type="Crownwood.Magic.Docking.RestoreAutoHideAffinity">
+      <Content Name="Hierarchy" />
+      <State Value="DockLeft" />
+      <Next Count="1">
+        <Item Name="Modules" />
+      </Next>
+      <Previous Count="2">
+        <Item Name="Toolbox" />
+        <Item Name="Properties" />
+      </Previous>
+      <NextAll Count="0" />
+      <PreviousAll Count="0" />
+      <Child Type="null" />
+    </AutoHideRestore>
+    <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
+      <Content Name="Hierarchy" />
+      <State Value="DockLeft" />
+      <Position Size="250, 150" Location="150, 150" />
+      <Best Count="2">
+        <Item Name="Modules" />
+        <Item Name="Hierarchy" />
+      </Best>
+      <Next Count="0" />
+      <Previous Count="0" />
+      <NextAll Count="0" />
+      <PreviousAll Count="0" />
+      <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
+        <Content Name="Hierarchy" />
+        <Space Value="100" />
+        <Best Count="2">
+          <Item Name="Hierarchy" />
+          <Item Name="Modules" />
+        </Best>
+        <Next Count="0" />
+        <Previous Count="0" />
+        <Child Type="Crownwood.Magic.Docking.RestoreWindowContent">
+          <Content Name="Hierarchy" />
+          <Next Count="1">
+            <Item Name="Modules" />
+          </Next>
+          <Previous Count="0" />
+          <Selected Value="True" />
+          <Child Type="null" />
+        </Child>
+      </Child>
+    </DockingRestore>
+    <FloatingRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Hierarchy" />
+      <State Value="Floating" />
+      <Child Type="null" />
+    </FloatingRestore>
+  </Content>
+  <Content Name="Modules" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Modules">
+    <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Modules" />
+      <State Value="DockLeft" />
+      <Child Type="null" />
+    </DefaultRestore>
+    <AutoHideRestore Type="Crownwood.Magic.Docking.RestoreAutoHideAffinity">
+      <Content Name="Modules" />
+      <State Value="DockLeft" />
+      <Next Count="0" />
+      <Previous Count="3">
+        <Item Name="Toolbox" />
+        <Item Name="Properties" />
+        <Item Name="Hierarchy" />
+      </Previous>
+      <NextAll Count="0" />
+      <PreviousAll Count="0" />
+      <Child Type="null" />
+    </AutoHideRestore>
+    <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
+      <Content Name="Modules" />
+      <State Value="DockLeft" />
+      <Position Size="250, 150" Location="150, 150" />
+      <Best Count="1">
+        <Item Name="Modules" />
+      </Best>
+      <Next Count="0" />
+      <Previous Count="0" />
+      <NextAll Count="0" />
+      <PreviousAll Count="0" />
+      <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
+        <Content Name="Modules" />
+        <Space Value="100" />
+        <Best Count="1">
+          <Item Name="Modules" />
+        </Best>
+        <Next Count="0" />
+        <Previous Count="0" />
+        <Child Type="Crownwood.Magic.Docking.RestoreWindowContent">
+          <Content Name="Modules" />
+          <Next Count="0" />
+          <Previous Count="0" />
+          <Selected Value="True" />
+          <Child Type="null" />
+        </Child>
+      </Child>
+    </DockingRestore>
+    <FloatingRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Modules" />
+      <State Value="Floating" />
+      <Child Type="null" />
+    </FloatingRestore>
+  </Content>
+  <Content Name="Neural Network Errors" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Neural Network Errors">
+    <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Neural Network Errors" />
+      <State Value="DockLeft" />
+      <Child Type="null" />
+    </DefaultRestore>
+    <AutoHideRestore Type="Crownwood.Magic.Docking.RestoreAutoHideAffinity">
+      <Content Name="Neural Network Errors" />
+      <State Value="DockBottom" />
+      <Next Count="0" />
+      <Previous Count="0" />
+      <NextAll Count="0" />
+      <PreviousAll Count="0" />
+      <Child Type="null" />
+    </AutoHideRestore>
+    <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
+      <Content Name="Neural Network Errors" />
+      <State Value="DockBottom" />
+      <Position Size="250, 150" Location="150, 150" />
+      <Best Count="1">
+        <Item Name="Neural Network Errors" />
+      </Best>
+      <Next Count="0" />
+      <Previous Count="0" />
+      <NextAll Count="0" />
+      <PreviousAll Count="0" />
+      <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
+        <Content Name="Neural Network Errors" />
+        <Space Value="100" />
+        <Best Count="1">
+          <Item Name="Neural Network Errors" />
+        </Best>
+        <Next Count="0" />
+        <Previous Count="0" />
+        <Child Type="Crownwood.Magic.Docking.RestoreWindowContent">
+          <Content Name="Neural Network Errors" />
+          <Next Count="0" />
+          <Previous Count="0" />
+          <Selected Value="True" />
+          <Child Type="null" />
+        </Child>
+      </Child>
+    </DockingRestore>
+    <FloatingRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Neural Network Errors" />
+      <State Value="Floating" />
+      <Child Type="null" />
+    </FloatingRestore>
+  </Content>
+</DockingConfig>
+</Editor>
