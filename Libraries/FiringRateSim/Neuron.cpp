@@ -313,7 +313,15 @@ BOOL Neuron::UseAccom() {return m_bUseAccom;}
 
 \param	bVal	true to use accommodation, false else.
 **/
-void Neuron::UseAccom(BOOL bVal) {m_bUseAccom = bVal;}
+void Neuron::UseAccom(BOOL bVal)
+{
+	m_bUseAccom = bVal;
+
+	if(m_bUseAccom && m_lpFRModule)
+		m_fltDCTH = exp(-m_lpFRModule->TimeStep()/m_fltAccomTimeConst);
+	else
+		m_fltDCTH = 0;
+}
 
 /**
 \brief	Sets the maximum noise voltage.
@@ -798,7 +806,6 @@ void Neuron::ResetSimulation()
 	m_fltTotalMemoryI = 0;
 	m_fltFiringFreq = 0;
 	m_fltVNoise = 0;
-	m_fltDCTH = 0;
 	m_aryVn[0]=0;
 	m_aryVn[1]=0;
 	m_fltVn = 0;

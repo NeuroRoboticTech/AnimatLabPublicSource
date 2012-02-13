@@ -57,6 +57,7 @@ Namespace UITests
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
                     m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
                     m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
 
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
@@ -122,6 +123,7 @@ Namespace UITests
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
                     m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
                     m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
 
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
@@ -207,6 +209,7 @@ Namespace UITests
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
                     m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
                     m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
 
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
@@ -280,6 +283,7 @@ Namespace UITests
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
                     m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
                     m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
 
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
@@ -373,6 +377,7 @@ Namespace UITests
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
                     m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
                     m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
 
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
@@ -436,6 +441,7 @@ Namespace UITests
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
                     m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
                     m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
 
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
@@ -505,6 +511,7 @@ Namespace UITests
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
                     m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
                     m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
 
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
@@ -568,6 +575,7 @@ Namespace UITests
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
                     m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
                     m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
 
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
@@ -599,6 +607,7 @@ Namespace UITests
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
                     m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
                     m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
 
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
@@ -683,6 +692,7 @@ Namespace UITests
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
                     m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
                     m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
 
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
@@ -776,6 +786,7 @@ Namespace UITests
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
                     m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
                     m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
 
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
@@ -846,6 +857,7 @@ Namespace UITests
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
                     m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
                     m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
 
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
@@ -904,6 +916,7 @@ Namespace UITests
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
                     m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
                     m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
 
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
@@ -1186,6 +1199,7 @@ Namespace UITests
                     m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
                     m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
                     m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
 
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
@@ -1314,6 +1328,41 @@ Namespace UITests
 
 #End Region
 
+#Region "Mixed Methods"
+
+
+                <TestMethod()>
+                Public Sub Test_NetworkOscillators()
+
+                    Dim aryMaxErrors As New Hashtable
+                    aryMaxErrors.Add("Time", 0.001)
+                    aryMaxErrors.Add("1", 0.0001)
+                    aryMaxErrors.Add("2", 0.0001)
+                    aryMaxErrors.Add("3", 0.0001)
+                    aryMaxErrors.Add("A", 0.01)
+                    aryMaxErrors.Add("B", 0.01)
+                    aryMaxErrors.Add("default", 0.0001)
+
+                    m_strProjectName = "NetworkOscillators"
+                    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
+                    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
+                    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+
+                    m_aryWindowsToOpen.Clear()
+                    m_aryWindowsToOpen.Add("Tool Viewers\IGF_NeuralData")
+                    'm_aryWindowsToOpen.Add("Tool Viewers\FF_NeuralData")
+
+                    'Load and convert the project.
+                    TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                    'Run the same sim a second time to check for changes between sims.
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
+                End Sub
+
+#End Region
+
 #Region "Additional test attributes"
                 '
                 ' You can use the following additional attributes as you write your tests:
@@ -1334,7 +1383,6 @@ Namespace UITests
                 End Sub
 
                 Protected Overrides Sub SetWindowsToOpen()
-                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
                 End Sub
 
 #End Region
