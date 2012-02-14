@@ -336,24 +336,39 @@ Namespace Forms
             End Try
         End Sub
 
+        Public Sub CloneSynapseType(ByVal strPath As String, ByVal strNewName As String)
+            Me.SelectItemInTreeView(strPath)
+
+            Dim tnNewType As DataObjects.Behavior.SynapseType = CloneSelectedSynapseType()
+            If tnNewType Is Nothing Then
+                Throw New System.Exception("Synapse type '" & strNewName & "' was not created.")
+            End If
+
+            tnNewType.Name = strNewName
+        End Sub
+
+        Protected Function CloneSelectedSynapseType() As DataObjects.Behavior.SynapseType
+            Dim tnSelected As Crownwood.DotNetMagic.Controls.Node = tvSynapseTypes.SelectedNode
+            If tnSelected Is Nothing Then
+                Return Nothing
+            ElseIf tnSelected.Tag Is Nothing Then
+                Return Nothing
+            End If
+
+            Dim stType As DataObjects.Behavior.SynapseType = DirectCast(tnSelected.Tag, DataObjects.Behavior.SynapseType)
+
+            Dim stNewType As DataObjects.Behavior.SynapseType = DirectCast(stType.Clone(m_nmNeuralModule, False, Nothing), DataObjects.Behavior.SynapseType)
+            stNewType.Name = "New Synapse Type"
+
+            m_nmNeuralModule.SynapseTypes.Add(stNewType.ID, stNewType, True)
+            tvSynapseTypes.SelectedNode = AddSynapseType(stNewType)
+            Return stNewType
+        End Function
+
         Protected Sub OnCloneSynapseType(ByVal sender As Object, ByVal e As System.EventArgs)
 
             Try
-                Dim tnSelected As Crownwood.DotNetMagic.Controls.Node = tvSynapseTypes.SelectedNode
-                If tnSelected Is Nothing Then
-                    Return
-                ElseIf tnSelected.Tag Is Nothing Then
-                    Return
-                End If
-
-                Dim stType As DataObjects.Behavior.SynapseType = DirectCast(tnSelected.Tag, DataObjects.Behavior.SynapseType)
-
-                Dim stNewType As DataObjects.Behavior.SynapseType = DirectCast(stType.Clone(m_nmNeuralModule, False, Nothing), DataObjects.Behavior.SynapseType)
-                stNewType.Name = "New Synapse Type"
-
-                m_nmNeuralModule.SynapseTypes.Add(stNewType.ID, stNewType, True)
-                tvSynapseTypes.SelectedNode = AddSynapseType(stNewType)
-
+                CloneSelectedSynapseType()
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

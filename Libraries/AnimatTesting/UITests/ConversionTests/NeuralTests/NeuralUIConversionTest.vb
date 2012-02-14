@@ -595,6 +595,72 @@ Namespace UITests
 #Region "IGF Methods"
 
                 <TestMethod()>
+                Public Sub Test_IGF_ClassicalConditioning()
+
+                    Dim aryMaxErrors As New Hashtable
+                    aryMaxErrors.Add("Time", 0.001)
+                    aryMaxErrors.Add("1", 0.0001)
+                    aryMaxErrors.Add("2", 0.0001)
+                    aryMaxErrors.Add("3", 0.0001)
+                    aryMaxErrors.Add("default", 0.0001)
+
+                    m_strProjectName = "IGF_ClassicalConditioning"
+                    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
+                    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
+                    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
+
+                    'Load and convert the project.
+                    TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                    'Run the same sim a second time to check for changes between sims.
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 (0.5 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("CloneSynapseType", New Object() {"Synapses Classes\Spiking Chemical Synapses\Nicotinic ACh", "Excitatory Ach"})
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Excitatory Ach", "EquilibriumPotential", "0 m"})
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Excitatory Ach", "SynapticConductance", "2 u"})
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Excitatory Ach", "RelativeFacilitation", "1"})
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Excitatory Ach", "FacilitationDecay", "1 m"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Excitatory_Ach_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "EndTime", "140 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "StartTime", "130 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FoodAfterBell_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "StartTime", "120 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "EndTime", "130 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FoodAfterBellB_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "StartTime", "110 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "EndTime", "120 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FoodAfterBellC_")
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 (0.1 uS)", "SynapseType"}, 500)
+                    ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hebbian ACh type", "LearningIncrement", "0.2"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "LearnIncr_0_2_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "Enabled", "False"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_D", "Enabled", "True"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "StimD_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\NeuralData\LineChart", "CollectEndTime", "2.5"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "Enabled", "True"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "StimC_")
+
+                End Sub
+
+                <TestMethod()>
                 Public Sub Test_IGF_EndogenousBurster()
 
                     Dim aryMaxErrors As New Hashtable
