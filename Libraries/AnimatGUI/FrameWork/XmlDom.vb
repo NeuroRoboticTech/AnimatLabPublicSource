@@ -52,7 +52,7 @@ Namespace Framework
             If Not xnFound Is Nothing Then
                 xnFound.InnerText = oVal.ToString()
             ElseIf bThrowError Then
-                Throw New System.Exception("No node named '" & strNode & "' was found to remove.")
+                Throw New System.Exception("No node named '" & strNode & "' was found to update.")
             Else
                 AddNodeValue(xnRootNode, strNode, oVal.ToString)
             End If
@@ -63,7 +63,7 @@ Namespace Framework
             If Not xnFound Is Nothing Then
                 Return xnFound.InnerText
             ElseIf bThrowError Then
-                Throw New System.Exception("No node named '" & strNode & "' was found to remove.")
+                Throw New System.Exception("No node named '" & strNode & "' was found.")
                 Return strDefault
             Else
                 Return strDefault
@@ -80,7 +80,7 @@ Namespace Framework
 
                 Return strAttribs
             ElseIf bThrowError Then
-                Throw New System.Exception("No node named '" & strNode & "' was found to remove.")
+                Throw New System.Exception("No node named '" & strNode & "' was found.")
                 Return strDefault
             Else
                 Return strDefault
