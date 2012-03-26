@@ -7,6 +7,7 @@ Imports System.Diagnostics
 Imports System.IO
 Imports System.Xml
 Imports AnimatGuiCtrls.Controls
+Imports AnimatGUI.Framework
 
 Namespace DataObjects.Behavior.Links
 
@@ -43,6 +44,20 @@ Namespace DataObjects.Behavior.Links
                 Return False
             End Get
         End Property
+
+        'Public Overrides Property ActualOrigin As Node
+        '    Get
+        '        Return MyBase.ActualOrigin
+        '    End Get
+        '    Set(value As Node)
+        '        MyBase.ActualOrigin = value
+
+        '        If Util.IsTypeOf(Me.Origin.GetType, GetType(Nodes.Adapter), False) Then
+        '            Dim bdNode As Nodes.Adapter = DirectCast(Me.Origin, Nodes.Adapter)
+        '            bdNode.Origin = value
+        '        End If
+        '    End Set
+        'End Property
 
 #End Region
 
@@ -90,7 +105,7 @@ Namespace DataObjects.Behavior.Links
             'If this adpater is in a subsystem that is deleted, then I can no longer click on items
             'in that parent diagram and select them???? No idea why. But if I do not make this call
             'then everything appears to work fine???
-            If bnAdapter.Links.Count > 0 AndAlso Not Me.ParentDiagram.DeletingDiagram Then
+            If bnAdapter.Links.Count > 0 AndAlso Not (Not Me.ParentDiagram Is Nothing AndAlso Me.ParentDiagram.DeletingDiagram) Then
                 Me.ParentSubsystem.RemoveNode(bnAdapter)
             End If
 
@@ -104,6 +119,31 @@ Namespace DataObjects.Behavior.Links
             'The adapter link is in the editor only. It has nothing to initialize.
             Dim iVal As Integer = 5
         End Sub
+
+
+        '#Region " Add-Remove to List Methods "
+
+        '        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+
+        '            If Util.IsTypeOf(Me.Origin.GetType, GetType(Nodes.Adapter), False) Then
+        '                Me.Origin.AddToSim(bThrowError)
+        '            ElseIf Util.IsTypeOf(Me.Destination.GetType, GetType(Nodes.Adapter), False) Then
+        '                Me.Destination.AddToSim(bThrowError)
+        '            End If
+
+        '        End Sub
+
+        '        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
+
+        '            If Util.IsTypeOf(Me.Origin.GetType, GetType(Nodes.Adapter), False) Then
+        '                Me.Origin.RemoveFromSim(bThrowError)
+        '            ElseIf Util.IsTypeOf(Me.Destination.GetType, GetType(Nodes.Adapter), False) Then
+        '                Me.Destination.RemoveFromSim(bThrowError)
+        '            End If
+
+        '        End Sub
+
+        '#End Region
 
 #End Region
 

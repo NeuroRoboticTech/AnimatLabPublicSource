@@ -128,7 +128,7 @@ Namespace DataObjects.Gains.MuscleGains
         End Property
 
         <Browsable(False)> _
-        Public Overrides ReadOnly Property WorkspaceImageName() As String
+        Public Overrides ReadOnly Property GainImageName() As String
             Get
                 Return "AnimatGUI.VelocityTension.gif"
             End Get

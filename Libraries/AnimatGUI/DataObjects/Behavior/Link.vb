@@ -433,7 +433,10 @@ Namespace DataObjects.Behavior
             Set(ByVal Value As Behavior.Node)
                 m_bnDestination = Value
                 UpdateChart()
+
+                'If Not m_doInterface Is Nothing Then
                 RaiseEvent DestinationModified(Me)
+                'End If
             End Set
         End Property
 
@@ -455,7 +458,10 @@ Namespace DataObjects.Behavior
             Set(ByVal Value As Behavior.Node)
                 m_bnDestination = Value
                 UpdateChart()
+
+                'If Not m_doInterface Is Nothing Then
                 RaiseEvent DestinationModified(Me)
+                'End If
             End Set
         End Property
 
@@ -533,7 +539,10 @@ Namespace DataObjects.Behavior
             Set(ByVal Value As Behavior.Node)
                 m_bnOrigin = Value
                 UpdateChart()
+
+                'If Not m_doInterface Is Nothing Then
                 RaiseEvent OriginModified(Me)
+                'End If
             End Set
         End Property
 
@@ -555,7 +564,10 @@ Namespace DataObjects.Behavior
             Set(ByVal Value As Behavior.Node)
                 m_bnOrigin = Value
                 UpdateChart()
+
+                'If Not m_doInterface Is Nothing Then
                 RaiseEvent OriginModified(Me)
+                'End If
             End Set
         End Property
 

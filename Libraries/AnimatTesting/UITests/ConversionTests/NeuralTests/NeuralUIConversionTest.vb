@@ -1416,7 +1416,6 @@ Namespace UITests
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
-
                 End Sub
 
                 <TestMethod()>
@@ -1484,6 +1483,247 @@ Namespace UITests
                     'Run the same sim a second time to check for changes between sims.
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
+                End Sub
+
+                <TestMethod()>
+                Public Sub Test_Adapters()
+
+                    Dim aryMaxErrors As New Hashtable
+                    aryMaxErrors.Add("Time", 0.001)
+                    aryMaxErrors.Add("Avm", 0.0001)
+                    aryMaxErrors.Add("Bvm", 0.0001)
+                    aryMaxErrors.Add("1vm", 0.0001)
+                    aryMaxErrors.Add("2vm", 0.0001)
+                    aryMaxErrors.Add("1FF", 0.01)
+                    aryMaxErrors.Add("2FF", 0.01)
+                    aryMaxErrors.Add("1Ia", 0.0000000001)
+                    aryMaxErrors.Add("BIa", 0.0000000001)
+                    aryMaxErrors.Add("default", 0.0001)
+
+                    m_strProjectName = "Adapters"
+                    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
+                    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
+                    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+
+                    m_aryWindowsToOpen.Clear()
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
+
+                    'Load and convert the project.
+                    TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                    'Run the same sim a second time to check for changes between sims.
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
+                    'Change the time step of the firing rate neural sim to 0.1 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.1 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_1ms_")
+
+                    'Change the time step of the firing rate neural sim to 0.5 ms, physics time step to 0.1 ms
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.5 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.1 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_5ms_PhysicsTimeStep_0_1ms_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.2 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+
+                    'Change poly gains.
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1", "Gain"}, 500)
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"A", "0"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"B", "2 u"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"C", "0.1 u"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"D", "-10 n"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2_B", "Gain"}, 500)
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"A", "0"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"B", "15 n"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"C", "0.001 n"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"D", "-1 n"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "PolyGain_")
+
+
+                    'Change bell gains.
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1", "Gain"}, 500)
+                    ExecuteActiveDialogMethod("SelectGainType", New Object() {"AnimatGUI.DataObjects.Gains.Bell"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"Amplitude", "10 n"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"Width", "1000 "})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"XOffset", "-30 m"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"YOffset", "0"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2_B", "Gain"}, 500)
+                    ExecuteActiveDialogMethod("SelectGainType", New Object() {"AnimatGUI.DataObjects.Gains.Bell"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"Amplitude", "10 n"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"Width", "10 "})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"XOffset", "500 m"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"YOffset", "0"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "BellGain_")
+
+
+                    'Change Sigmoid gains.
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1", "Gain"}, 500)
+                    ExecuteActiveDialogMethod("SelectGainType", New Object() {"AnimatGUI.DataObjects.Gains.Sigmoid"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"Amplitude", "10 n"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"Steepness", "100 "})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"XOffset", "-40 m"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"YOffset", "-0.1 n"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2_B", "Gain"}, 500)
+                    ExecuteActiveDialogMethod("SelectGainType", New Object() {"AnimatGUI.DataObjects.Gains.Sigmoid"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"Amplitude", "10 n"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"Steepness", "25 "})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"XOffset", "0.5 "})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"YOffset", "0"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "SigmoidGain_")
+
+                    'Disabled adapters
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1", "Enabled", "False"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2_B", "Enabled", "False"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Disabled_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1", "Enabled", "True"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1", "DataTypes", "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking.DataTypes.ExternalCurrent"})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1", "Gain"}, 500)
+                    ExecuteActiveDialogMethod("SelectGainType", New Object() {"AnimatGUI.DataObjects.Gains.Sigmoid"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"Amplitude", "10 n"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"Steepness", "50 M"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"XOffset", "0 "})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"YOffset", "-5 n"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DataSourceType_")
+
+                    DeletePart("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1\A", "Delete Link")
+                    DeletePart("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2_B\F2", "Delete Link")
+
+                    If CBool(ExecuteMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1"})) Then
+                        Throw New System.Exception("A_1 adapter was not deleted")
+                    End If
+
+                    If CBool(ExecuteMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2_B"})) Then
+                        Throw New System.Exception("2_B adapter was not deleted")
+                    End If
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DeleteAdapters_")
+
+                    ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem"}, 2000)
+                    AddBehavioralNode("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem", _
+                                      "AnimatGUI.DataObjects.Behavior.Nodes.OffPage", New Point(316, 114), "OP")
+
+                    AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F1", _
+                                      "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\OP", "A", "", False)
+
+                    AssertErrorDialogShown("The off-page connector node 'OP' must be associated with another node before you can connect it with a link.", enumMatchType.Equals)
+
+
+                    ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\OP", _
+                                                                 "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B"})
+
+                    AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F1", _
+                                      "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\OP", "", "", False)
+
+                    If CBool(ExecuteMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2"})) Then
+                        Throw New System.Exception("2 adapter was not deleted")
+                    End If
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Name", "1_B"})
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1_B", "DataTypes", "FiringRateGUI.DataObjects.Behavior.Neurons.Normal.DataTypes.FiringFrequency"})
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1_B", "Gain"}, 500)
+                    ExecuteActiveDialogMethod("SelectGainType", New Object() {"AnimatGUI.DataObjects.Gains.Sigmoid"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"Amplitude", "10 n"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"Steepness", "10 "})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"XOffset", "0.5 "})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"YOffset", "0"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+
+                    AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F2", _
+                                      "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F1", "S_F2_F1", "Normal Synapse", False)
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F1\F2 (S_F2_F1)", "Weight", "100 n"})
+
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Adapter1B_")
+
+                    ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\OP", _
+                                                                 "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1_B", "Name", "1_A"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_A", "Enabled", "False"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Adapter1A_")
+
+
+                    DeletePart("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F1\F2 (100 nA)", "Delete Link")
+                    DeletePart("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1_A", "Delete Node")
+                    ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\OP", _
+                                                                 "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F1"})
+                    AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F2", _
+                                      "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\OP", "S_F2_F1", "Normal Synapse", False)
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F1\F2 (S_F2_F1)", "Weight", "100 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "F2ToOPtoF1_")
+
+                    ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\OP", _
+                                                                 "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F2"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F2\F2 (100 nA)", "Weight", "5 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "F2ToOPtoF2_")
+
+                    'Change linked item to neuron in different module. Verify synapse deleted.
+                    ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\OP", _
+                                                                  "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A"})
+                    If CBool(ExecuteMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F2\F2 (100 nA)"})) Then
+                        Throw New System.Exception("2 adapter was not deleted")
+                    End If
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "InvalidLinkNeuron_")
+
+                End Sub
+
+                <TestMethod()>
+                Public Sub Test_CopyPasteCut()
+
+                    Dim aryMaxErrors As New Hashtable
+                    aryMaxErrors.Add("Time", 0.001)
+                    aryMaxErrors.Add("Avm", 0.0001)
+                    aryMaxErrors.Add("Bvm", 0.0001)
+                    aryMaxErrors.Add("1vm", 0.0001)
+                    aryMaxErrors.Add("2vm", 0.0001)
+                    aryMaxErrors.Add("1FF", 0.01)
+                    aryMaxErrors.Add("2FF", 0.01)
+                    aryMaxErrors.Add("1Ia", 0.0000000001)
+                    aryMaxErrors.Add("BIa", 0.0000000001)
+                    aryMaxErrors.Add("default", 0.0001)
+
+                    m_strProjectName = "TestCopyPasteCut"
+                    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
+                    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
+                    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+
+                    m_aryWindowsToOpen.Clear()
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
+
+                    'Load and convert the project.
+                    TestConversionProject("AfterConversion_", aryMaxErrors)
+
+
+                    'Copy tests
+                    '1. copy B, OP, F1, F2, 1_B and liks to new subsystem. Veryify that new B gets stim from new F1/F2 by disabling adapters. Add some params to data file.
+                    '2. Delete sub. Veryify everything deleted and removed from system and chart.
+                    '3. Create new sub, Copy OP, F1, F2, 1_B and links to new subsystem. Verify that old B gets stim from both old F1/F2 and new ones by disabling adapters. Add some params to data file.
+                    '4. delete sub. Verif new nodes input gone, but old node input remains.
+                    '5. Cut B, OP, F1, F2, 1_B and links to new subsystem. Verify old system still works and charts correctly.
+                    '6. Copy B, OP, F1, F2 and 1_B back to old subsystem without links. Verify that they do not affect old system, and are not interconnected now. Also, verify adapter not copied over.
+
+                    'Add subsystem.
+                    AddBehavioralNode("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem", _
+                                      "AnimatGUI.DataObjects.Behavior.Nodes.Subsystem", New Point(316, 30), "Sub")
 
                 End Sub
 

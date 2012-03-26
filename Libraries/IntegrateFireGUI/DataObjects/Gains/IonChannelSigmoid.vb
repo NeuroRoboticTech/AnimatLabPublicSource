@@ -241,7 +241,7 @@ Namespace DataObjects.Gains
         <Browsable(False)> _
         Public Overrides ReadOnly Property SelectableGain() As Boolean
             Get
-                Return True
+                Return False
             End Get
         End Property
 
@@ -260,7 +260,7 @@ Namespace DataObjects.Gains
         End Property
 
         <Browsable(False)> _
-        Public Overrides ReadOnly Property WorkspaceImageName() As String
+        Public Overrides ReadOnly Property GainImageName() As String
             Get
                 Return "IntegrateFireGUI.IonChannelGain.gif"
             End Get

@@ -32,6 +32,8 @@ Namespace DataObjects
         Protected m_bdParentData As Behavior.Data
         Protected m_strGainPropertyName As String = ""
 
+        Protected m_imgGain As Image
+
 #End Region
 
 #Region " Properties "
@@ -262,6 +264,24 @@ Namespace DataObjects
                 Else
                     Return Nothing
                 End If
+            End Get
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable ReadOnly Property GainImage() As Image
+            Get
+                If m_imgGain Is Nothing AndAlso Me.GainImageName <> "" Then
+                    m_imgGain = ImageManager.LoadImage(Me.GainImageName)
+                End If
+
+                Return m_imgGain
+            End Get
+        End Property
+
+        <Browsable(False)> _
+        Public Overridable ReadOnly Property GainImageName() As String
+            Get
+                Return ""
             End Get
         End Property
 

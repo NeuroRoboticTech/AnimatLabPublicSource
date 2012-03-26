@@ -178,8 +178,12 @@ Namespace DataObjects.ExternalStimuli
             End Get
             Set(ByVal Value As enumValueType)
 
-                SetSimData("ValueType", Value.ToString, True)
                 m_eValueType = Value
+
+                If m_eValueType = enumValueType.Equation Then
+                    'If we are using a constant then make sure the equation is blanked in the sim so it will not be used.
+                    SetSimData("Equation", "", True)
+                End If
 
                 If Not Util.ProjectWorkspace Is Nothing Then
                     Util.ProjectWorkspace.RefreshProperties()

@@ -250,6 +250,12 @@ void NervousSystem::MinTimeStep(float &fltMin)
 
 void NervousSystem::StepSimulation()
 {
+	StepSim();
+	StepAdapters();
+}
+
+void NervousSystem::StepSim()
+{
 	NeuralModule *lpModule = NULL;
 	CStdPtrMap<string, NeuralModule>::iterator oPos;
 	
@@ -257,8 +263,25 @@ void NervousSystem::StepSimulation()
 	{
 		lpModule = oPos->second;
 
-		if(lpModule->NeedToStep())
+		if(lpModule->NeedToStep(TRUE))
 			lpModule->StepSimulation();
+	}
+}
+
+void NervousSystem::StepAdapters()
+{
+	NeuralModule *lpModule = NULL;
+	CStdPtrMap<string, NeuralModule>::iterator oPos;
+	
+	for(oPos=m_aryNeuralModules.begin(); oPos!=m_aryNeuralModules.end(); ++oPos)
+	{
+		lpModule = oPos->second;
+
+		if(lpModule->NeedToStep(FALSE))
+		{
+			lpModule->StepAdapters();
+			lpModule->ResetStepCounter();
+		}
 	}
 }
 

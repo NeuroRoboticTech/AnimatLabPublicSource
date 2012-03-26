@@ -165,8 +165,17 @@ namespace AnimatSim
 			virtual float *GetDataPointer(string strDataType);
 
 			virtual void Initialize();
-			virtual BOOL NeedToStep();
+			virtual BOOL NeedToStep(BOOL bIncrement);
+			virtual void ResetStepCounter();
 			virtual void StepSimulation();
+
+			/**
+			\brief	Step adapters.
+			
+			\author	dcofer
+			\date	2/25/2012
+			**/
+			virtual void StepAdapters();
 		};
 
 	}			//Behavior

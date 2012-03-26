@@ -204,8 +204,8 @@ Namespace Forms.Gain
                 Dim oAssembly As System.Reflection.Assembly = System.Reflection.Assembly.LoadFrom(Util.GetFilePath(Util.Application.ApplicationDirectory, "LicensedAnimatGUI.dll"))
                 m_ctrlGainChart = DirectCast(oAssembly.CreateInstance("LicensedAnimatGUI.Forms.Charts.GainControl"), AnimatGUI.Forms.Gain.GainControl)
 
-                If Not Me.Gain Is Nothing AndAlso Not Me.Gain.WorkspaceImage Is Nothing Then
-                    ctrlDiagram.Image = Me.Gain.WorkspaceImage
+                If Not Me.Gain Is Nothing AndAlso Not Me.Gain.GainImage Is Nothing Then
+                    ctrlDiagram.Image = Me.Gain.GainImage
                 Else
                     ctrlDiagram.Image = Nothing
                 End If
@@ -343,6 +343,41 @@ Namespace Forms.Gain
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
         End Sub
+
+#Region "Automation"
+
+        Public Overridable Sub SelectGainType(ByVal strType As String)
+
+            For Each gnType As AnimatGUI.DataObjects.Gain In cboGainType.Items
+                If gnType.GetType.FullName = strType Then
+                    cboGainType.SelectedItem = gnType
+                    Return
+                End If
+            Next
+
+            Throw New System.Exception("No gain type was found with the following type:'" & strType & "'")
+        End Sub
+
+        Public Sub SetGainProperty(ByVal strPropertyName As String, ByVal strValue As String)
+            If m_Gain Is Nothing Then
+                Throw New System.Exception("No gain is currently selected")
+            End If
+
+            Util.SetObjectProperty(m_Gain, strPropertyName, strValue)
+            Me.pgGainProperties.SelectedObject = m_Gain.Properties
+            Me.m_ctrlGainChart.DrawGainChart()
+
+        End Sub
+
+        Public Function GetGainProperty(ByVal strPropertyName As String) As Object
+            If m_Gain Is Nothing Then
+                Throw New System.Exception("No gain is currently selected")
+            End If
+
+            Return Util.GetObjectProperty(m_Gain, strPropertyName)
+        End Function
+
+#End Region
 
     End Class
 

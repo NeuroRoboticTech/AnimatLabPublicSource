@@ -37,6 +37,9 @@ namespace AnimatSim
 			NeuralModule *LoadNeuralModule(CStdXml &oXml);
 			void AddNeuralModule(NeuralModule *lpModule);
 
+			virtual void StepSim();
+			virtual void StepAdapters();
+
 		public:
 			NervousSystem();
 			virtual ~NervousSystem();

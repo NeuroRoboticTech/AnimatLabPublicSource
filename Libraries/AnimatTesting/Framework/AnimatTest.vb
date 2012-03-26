@@ -201,6 +201,14 @@ Namespace Framework
             Return oRet
         End Function
 
+        Protected Overridable Function GetApplicationProperty(ByVal strPropertyName As String) As Object
+            Return m_oServer.GetProperty(strPropertyName)
+        End Function
+
+        Protected Overridable Sub SetApplicationProperty(ByVal strPropertyName As String, ByVal oData As Object)
+            m_oServer.SetProperty(strPropertyName, oData)
+        End Sub
+
         Protected Overridable Sub RunSimulationWaitToEnd()
 
             Threading.Thread.Sleep(1000)

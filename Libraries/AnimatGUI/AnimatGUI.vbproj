@@ -363,9 +363,6 @@
     <Compile Include="DataObjects\Gains\MuscleGains\LengthTension.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataObjects\Gains\MuscleGains\SpringTension.vb">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DataObjects\Gains\MuscleGains\StimulusTension.vb">
       <SubType>Code</SubType>
     </Compile>

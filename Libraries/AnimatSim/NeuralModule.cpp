@@ -242,17 +242,20 @@ void NeuralModule::Initialize()
 
 \return	true if it succeeds, false if it fails.
 **/
-BOOL NeuralModule::NeedToStep()
+BOOL NeuralModule::NeedToStep(BOOL bIncrement)
 {
-	m_iTimeStepCount++;
+	if(bIncrement)
+		m_iTimeStepCount++;
 
 	if(m_iTimeStepInterval == m_iTimeStepCount)
-	{
-		m_iTimeStepCount = 0;
 		return TRUE;
-	}
 	else
 		return FALSE;
+}
+
+void NeuralModule::ResetStepCounter()
+{
+	m_iTimeStepCount = 0;
 }
 
 int NeuralModule::FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, BOOL bThrowError)
@@ -332,6 +335,10 @@ float *NeuralModule::GetDataPointer(string strDataType)
 }
 
 void NeuralModule::StepSimulation()
+{
+}
+
+void NeuralModule::StepAdapters()
 {
 	for(int iIndex=0; iIndex<m_iTargetAdapterCount; iIndex++)
 		if(m_aryTargetAdapters[iIndex]->Enabled())

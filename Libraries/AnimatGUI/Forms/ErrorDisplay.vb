@@ -10,7 +10,7 @@ Imports AnimatGUI.Framework
 Namespace Forms
 
 	Public Class ErrorDisplay
-        Inherits System.Windows.Forms.Form
+        Inherits AnimatDialog
 
 #Region " Windows Form Designer generated code "
 
@@ -274,6 +274,9 @@ Namespace Forms
             MyBase.OnLoad(e)
 
             Try
+                m_btnOk = btnOk
+                m_btnCancel = btnOk
+
                 Util.AddActiveDialog(Me)
 
                 ResizeForm()
@@ -282,16 +285,13 @@ Namespace Forms
             End Try
         End Sub
 
-        Protected Overridable Sub AnimatDialog_Closing(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles MyBase.Closing
-            Util.RemoveActiveDialog(Me)
-        End Sub
-
-        Public Overridable Sub ClickOkButton()
-            If Me.btnOk Is Nothing Then
-                Throw New System.Exception("Ok Button is not defined.")
+        Public Overridable Function GetErrorMessage() As String
+            If Not m_exError Is Nothing Then
+                Return m_exError.Message
+            Else
+                Return ""
             End If
-            Me.btnOk.PerformClick()
-        End Sub
+        End Function
 
     End Class
 

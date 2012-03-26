@@ -187,7 +187,7 @@ Namespace DataObjects.Behavior.Nodes
 
                     If bdLink.IsLinkCompatibleWithNodes(bdLink.ActualOrigin, doNewNode) Then
                         If thOldLink.Node.InLinks.Contains(bdLink.ID) Then thOldLink.Node.InLinks.Remove(bdLink.ID)
-                        If Not thOldLink.Node.InLinks.Contains(bdLink.ID) Then thOldLink.Node.InLinks.Add(bdLink.ID, bdLink)
+                        If Not thNewLink.Node.InLinks.Contains(bdLink.ID) Then thNewLink.Node.InLinks.Add(bdLink.ID, bdLink)
 
                         bdLink.RemoveFromSim(True)
                     Else
@@ -201,7 +201,7 @@ Namespace DataObjects.Behavior.Nodes
 
                     If bdLink.IsLinkCompatibleWithNodes(doNewNode, bdLink.ActualDestination) Then
                         If thOldLink.Node.OutLinks.Contains(bdLink.ID) Then thOldLink.Node.OutLinks.Remove(bdLink.ID)
-                        If Not thOldLink.Node.OutLinks.Contains(bdLink.ID) Then thOldLink.Node.OutLinks.Add(bdLink.ID, bdLink)
+                        If Not thNewLink.Node.OutLinks.Contains(bdLink.ID) Then thNewLink.Node.OutLinks.Add(bdLink.ID, bdLink)
 
                         bdLink.RemoveFromSim(True)
                     Else
@@ -227,6 +227,8 @@ Namespace DataObjects.Behavior.Nodes
                 For Each deEntry As DictionaryEntry In Me.InLinks
                     bdLink = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
                     bdLink.ActualDestination = Me
+                    bdLink.RemoveWorksapceTreeView()
+                    bdLink.AddWorkspaceTreeNode()
                     bdLink.AddToSim(True)
                 Next
 
@@ -234,6 +236,8 @@ Namespace DataObjects.Behavior.Nodes
                 For Each deEntry As DictionaryEntry In Me.OutLinks
                     bdLink = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
                     bdLink.ActualOrigin = Me
+                    bdLink.RemoveWorksapceTreeView()
+                    bdLink.AddWorkspaceTreeNode()
                     bdLink.AddToSim(True)
                 Next
             End If
@@ -288,7 +292,12 @@ Namespace DataObjects.Behavior.Nodes
 
             Dim lnNode As New TypeHelpers.LinkedNode(bnLinkedNode.Organism, bnLinkedNode)
 
+            Dim strOriginalName As String = Me.Name
             Me.LinkedNode = lnNode
+
+            'Reset the original name while doing automation tests so that each object can maintain a unique name.
+            Me.Name = strOriginalName
+
             Util.ProjectWorkspace.RefreshProperties()
         End Sub
 

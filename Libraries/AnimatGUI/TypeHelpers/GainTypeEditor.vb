@@ -16,30 +16,33 @@ Namespace TypeHelpers
 
             Try
 
-                If (Not context Is Nothing And Not context.Instance Is Nothing And Not provider Is Nothing) Then
-                    service = CType(provider.GetService(GetType(IWindowsFormsEditorService)), IWindowsFormsEditorService)
-                    If (Not service Is Nothing) AndAlso ((TypeOf (value) Is AnimatGUI.DataObjects.Gain) OrElse value Is Nothing) Then
-                        Dim oGain As AnimatGUI.DataObjects.Gain
-                        If Not value Is Nothing Then
-                            oGain = DirectCast(value, AnimatGUI.DataObjects.Gain)
-                        Else
-                            oGain = New AnimatGUI.DataObjects.Gains.Polynomial(Nothing, "Gain", "Input Variable", "Output Variable", False, False)
-                        End If
-
-                        frmGainEditor.Gain = DirectCast(oGain.Clone(oGain.Parent, False, Nothing), AnimatGUI.DataObjects.Gain)
-                        frmGainEditor.PropertyName = context.PropertyDescriptor.Name
-                        frmGainEditor.BarAssemblyFile = oGain.BarAssemblyFile
-                        frmGainEditor.BarClassName = oGain.BarClassName
-                        frmGainEditor.MdiParent = Nothing
-                        frmGainEditor.Text = "Edit " & context.PropertyDescriptor.Name
-
-                        Util.ModificationHistory.AllowAddHistory = False
-                        If frmGainEditor.ShowDialog() = Windows.Forms.DialogResult.OK Then
-                            oGain = frmGainEditor.Gain
-                        End If
-
-                        Return oGain
+                If ((TypeOf (value) Is AnimatGUI.DataObjects.Gain) OrElse value Is Nothing) Then
+                    Dim oGain As AnimatGUI.DataObjects.Gain
+                    If Not value Is Nothing Then
+                        oGain = DirectCast(value, AnimatGUI.DataObjects.Gain)
+                    Else
+                        oGain = New AnimatGUI.DataObjects.Gains.Polynomial(Nothing, "Gain", "Input Variable", "Output Variable", False, False)
                     End If
+
+                    frmGainEditor.Gain = DirectCast(oGain.Clone(oGain.Parent, False, Nothing), AnimatGUI.DataObjects.Gain)
+                    frmGainEditor.BarAssemblyFile = oGain.BarAssemblyFile
+                    frmGainEditor.BarClassName = oGain.BarClassName
+                    frmGainEditor.MdiParent = Nothing
+
+                    If Not context Is Nothing Then
+                        frmGainEditor.PropertyName = context.PropertyDescriptor.Name
+                        frmGainEditor.Text = "Edit " & context.PropertyDescriptor.Name
+                    Else
+                        frmGainEditor.PropertyName = "Gain"
+                        frmGainEditor.Text = "Edit Gain"
+                    End If
+
+                    Util.ModificationHistory.AllowAddHistory = False
+                    If frmGainEditor.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                        oGain = frmGainEditor.Gain
+                    End If
+
+                    Return oGain
                 End If
 
                 Return value

@@ -10,6 +10,7 @@ Imports AnimatGuiCtrls.Controls
 
 Namespace TypeHelpers
 
+    <TypeConverter(GetType(AnimatGUI.TypeHelpers.DataTypeIDTypeConverter))> _
     Public Class DataTypeID
         Inherits Framework.DataObject
 

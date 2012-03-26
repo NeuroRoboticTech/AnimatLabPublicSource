@@ -1,6 +1,6 @@
 <Simulation>
 <ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\HingeTests\HingeLimitTest_M_Kg\</ProjectPath>
-<AnimatModule>VortexAnimatLibrary_vc7D.dll</AnimatModule>
+<AnimatModule>VortexAnimatLibrary_vc7.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
 <EnableSimRecording>True</EnableSimRecording>
@@ -8,7 +8,7 @@
 <APIFile/>
 <SimEndTime Value="3" Scale="None" Actual="3"/>
 <Environment>
-<PhysicsTimeStep Value="0.2" Scale="milli" Actual="0.0002"/>
+<PhysicsTimeStep Value="0.4" Scale="milli" Actual="0.0004"/>
 <FluidDensity Value="1000" Scale="Kilo" Actual="1e+06"/>
 <MaxSurfaceFriction Value="15" Scale="Kilo" Actual="15000"/>
 <Gravity Value="-9.81" Scale="None" Actual="-9.81"/>

@@ -1566,6 +1566,16 @@ Namespace Forms
             End Set
         End Property
 
+        Public Overridable ReadOnly Property ErrorDialogMessage() As String
+            Get
+                If Not Util.ErrorForm Is Nothing AndAlso Util.ErrorForm.Visible Then
+                    Return Util.ErrorForm.GetErrorMessage
+                Else
+                    Return ""
+                End If
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -4256,6 +4266,24 @@ Namespace Forms
             Return Util.GetObjectProperty(m_tnAutomationTreeNode.Tag, strPropertyName)
         End Function
 
+        Public Function DoesObjectExist(ByVal strPath As String) As Object
+            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
+                Throw New System.Exception("No project is currently loaded.")
+            End If
+
+            Dim oVal As Object
+            Try
+                oVal = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
+            Catch ex As Exception
+            End Try
+
+            If oVal Is Nothing Then
+                Return False
+            Else
+                Return True
+            End If
+        End Function
+
         Public Sub OpenUITypeEditor(ByVal strPath As String, ByVal strPropertyName As String)
             If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
                 Throw New System.Exception("No project is currently loaded.")
@@ -4450,7 +4478,6 @@ Namespace Forms
                 Throw New System.Exception("Method name '" & strMethodName & "' not found.")
             End If
             Return oMethod.Invoke(Util.ActiveDialogs(0), aryParams)
-
         End Function
 
         Public Overridable Function ActiveDialogName() As String
@@ -5741,7 +5768,7 @@ Namespace Forms
                 'Me.SimulationInterface.SaveSimulationFile(Me.ProjectPath & "Snapshot")
 
                 'Me.OpenUITypeEditor("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapseType")
-                Me.SetObjectProperty("Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.1 m")
+                Me.SetObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1", "DataTypes", "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking.DataTypes.ExternalCurrent")
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

@@ -26,6 +26,17 @@ Namespace Framework
     Public MustInherit Class AnimatUITest
         Inherits AnimatTest
 
+#Region "enums"
+
+        Public Enum enumMatchType
+            Equals
+            Contains
+            BeginsWith
+            EndsWith
+        End Enum
+
+#End Region
+
 #Region "Attributes"
 
         Protected m_UIBoxTestProjectWindow As UIProjectWindow
@@ -792,6 +803,49 @@ Namespace Framework
             End While
         End Sub
 
+        Protected Overridable Sub AssertErrorDialogShown(ByVal strErrorMsg As String, ByVal eMatchType As enumMatchType)
+
+            OpenDialogAndWait("Error", Nothing, Nothing)
+            Threading.Thread.Sleep(1000)
+            Dim oVal As Object = GetApplicationProperty("ErrorDialogMessage")
+            Threading.Thread.Sleep(1000)
+            ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+            Threading.Thread.Sleep(1000)
+            If Not TypeOf oVal Is System.String Then
+                Throw New System.Exception("String not returned from error dialog box.")
+            End If
+            Dim strError As String = CStr(oVal)
+            If strError.Trim.Length = 0 Then
+                Throw New System.Exception("Error dialog box was not displayed.")
+            End If
+
+            Select Case eMatchType
+                Case enumMatchType.Equals
+                    If strError <> strErrorMsg Then
+                        Throw New System.Exception("Error did not match.")
+                    End If
+
+                Case enumMatchType.Contains
+                    If Not strError.Contains(strErrorMsg) Then
+                        Throw New System.Exception("Error did not match.")
+                    End If
+
+                Case enumMatchType.BeginsWith
+                    If Not strError.StartsWith(strErrorMsg) Then
+                        Throw New System.Exception("Error did not match.")
+                    End If
+
+                Case enumMatchType.EndsWith
+                    If Not strError.EndsWith(strErrorMsg) Then
+                        Throw New System.Exception("Error did not match.")
+                    End If
+
+                Case Else
+                    Throw New System.Exception("Inavlid match type provided: " & eMatchType.ToString)
+            End Select
+
+        End Sub
+
         Protected Overridable Sub ProcessExtraChildMethods(ByVal strPartType As String, ByVal strJointType As String)
 
         End Sub
@@ -1238,12 +1292,12 @@ Namespace Framework
 
             If strSynapseType.Length > 0 Then
                 If bInTree Then
-                    ExecuteActiveDialogMethod("SelectItemInTreeView", New Object() {strSynapseType})
+                    ExecuteActiveDialogMethod("SelectItemInTreeView", New Object() {strSynapseType}, 2000)
                 Else
-                    ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strSynapseType})
+                    ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strSynapseType}, 2000)
                 End If
 
-                ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                ExecuteActiveDialogMethod("ClickOkButton", Nothing, 1000)
             End If
 
         End Sub

@@ -44,6 +44,7 @@ Namespace DataObjects.Behavior.Nodes
             End Get
         End Property
 
+        <EditorAttribute(GetType(TypeHelpers.GainTypeEditor), GetType(System.Drawing.Design.UITypeEditor))> _
         Public Overridable Property Gain() As AnimatGUI.DataObjects.Gain
             Get
                 Return m_gnGain
@@ -334,7 +335,7 @@ Namespace DataObjects.Behavior.Nodes
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
-            If Not NeuralModule Is Nothing Then
+            If m_bIsInitialized AndAlso Not NeuralModule Is Nothing Then
                 NeuralModule.VerifyExistsInSim()
                 If Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
                     'If we just created this neuralmodule in the sim then this object might already exist now. We should only add it if it does not exist.

@@ -246,10 +246,15 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides Sub DoubleClicked()
             If m_bdSubsystemDiagram Is Nothing Then
-                m_bdSubsystemDiagram = CreateDiagram()
-                m_bdSubsystemDiagram.Subsystem = Me
-                m_bdSubsystemDiagram.LoadDiagramXml(Me.DiagramXml)
-                Util.Application.AddChildForm(m_bdSubsystemDiagram)
+                Try
+                    m_bdSubsystemDiagram = CreateDiagram()
+                    m_bdSubsystemDiagram.Subsystem = Me
+                    m_bdSubsystemDiagram.LoadDiagramXml(Me.DiagramXml)
+                    Util.Application.AddChildForm(m_bdSubsystemDiagram)
+                Catch ex As Exception
+                    m_bdSubsystemDiagram = Nothing
+                    Throw ex
+                End Try
             ElseIf Not m_bdSubsystemDiagram.TabPage Is Nothing Then
                 m_bdSubsystemDiagram.TabPage.Selected = True
             End If

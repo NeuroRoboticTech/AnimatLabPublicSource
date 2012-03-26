@@ -1651,6 +1651,8 @@ Namespace Forms.Behavior
 
         Protected Overrides Function GetDiagramImageIndex(ByVal bnNode As AnimatGUI.DataObjects.Behavior.Node) As Integer
 
+            If bnNode Is Nothing Then Return -1
+
             'First check to see if there is an image name. If not then return -1
             If bnNode.DiagramImageName.Trim.Length = 0 AndAlso bnNode.ImageName.Trim.Length = 0 Then
                 Return -1
@@ -2354,24 +2356,25 @@ Namespace Forms.Behavior
                     bnNode.Delete(False)
                 Next
 
-                ''We need to re-initialize the image indices for the addflow nodes in case the indices were changed.
-                'Dim doNode As AnimatGUI.DataObjects.Behavior.Node
-                'For Each deEntry As DictionaryEntry In Me.Subsystem.BehavioralNodes
-                '    doNode = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Node)
-                '    If doNode.DiagramImageName.Length > 0 Then
-                '        Dim afNode As Lassalle.Flow.Node = Me.FindAddFlowNode(doNode.ID)
-                '        Dim iIndex As Integer = FindDiagramImageIndex(Me.Subsystem.Organism.DiagramImages.FindImageByID(doNode.DiagramImageName), False)
-                '        If iIndex > -1 Then
-                '            afNode.ImageIndex = iIndex
-                '        Else
-                '            Dim doImg As AnimatGUI.DataObjects.Behavior.DiagramImage = Me.Subsystem.Organism.DiagramImages.FindDiagramImageByID(doNode.DiagramImageName)
-                '            If Not doImg Is Nothing Then
-                '                Me.AddImage(doImg)
-                '            End If
-                '            afNode.ImageIndex = FindDiagramImageIndex(Me.Subsystem.Organism.DiagramImages.FindImageByID(doNode.DiagramImageName), False)
-                '        End If
-                '    End If
-                'Next
+                aryDeleteNodes.Clear()
+                aryDeleteLinks.Clear()
+
+                'Now go through each adflow node and link and find any that do not have an associated tag and delete them.
+                For Each afNode As Lassalle.Flow.Node In m_ctrlAddFlow.Nodes
+                    If afNode.Tag Is Nothing OrElse FindNode(afNode.Tag.ToString, False) Is Nothing Then aryDeleteNodes.Add(afNode)
+
+                    For Each afLink As Lassalle.Flow.Link In afNode.InLinks
+                        If afLink.Tag Is Nothing OrElse FindLink(afLink.Tag.ToString, False) Is Nothing Then aryDeleteLinks.Add(afLink)
+                    Next
+                Next
+
+                For Each afLink As Lassalle.Flow.Link In aryDeleteLinks
+                    afLink.Remove()
+                Next
+
+                For Each afNode As Lassalle.Flow.Node In aryDeleteNodes
+                    afNode.Remove()
+                Next
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
