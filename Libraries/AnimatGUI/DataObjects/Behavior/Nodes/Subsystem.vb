@@ -658,20 +658,35 @@ Namespace DataObjects.Behavior.Nodes
 
         End Sub
 
+        Public Overrides Sub InitPastedInSim()
+            MyBase.InitPastedInSim()
+
+            Dim bdItem As AnimatGUI.DataObjects.Behavior.Data
+            For Each deEntry As DictionaryEntry In Me.BehavioralNodes
+                bdItem = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                bdItem.InitPastedInSim()
+            Next
+
+            For Each deEntry As DictionaryEntry In Me.BehavioralLinks
+                bdItem = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                bdItem.InitPastedInSim()
+            Next
+        End Sub
+
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
             MyBase.AddToSim(bThrowError)
 
             Dim doData As AnimatGUI.DataObjects.Behavior.Data
             For Each deEntry As DictionaryEntry In Me.BehavioralNodes
                 doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
-                doData.AddToSim(bThrowError)
+                doData.AddToSim(bThrowError, bDoNotInit)
             Next
 
             For Each deEntry As DictionaryEntry In Me.BehavioralLinks
                 doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
-                doData.AddToSim(bThrowError)
+                doData.AddToSim(bThrowError, bDoNotInit)
             Next
         End Sub
 

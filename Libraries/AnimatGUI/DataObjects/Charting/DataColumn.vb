@@ -507,9 +507,9 @@ Namespace DataObjects.Charting
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
             If Not Me.ParentAxis Is Nothing AndAlso Not Me.ParentAxis.ParentChart Is Nothing Then
-                Util.Application.SimulationInterface.AddItem(Me.ParentAxis.ParentChart.ID, "DataColumn", Me.ID, Me.GetSimulationXml("DataColumn"), bThrowError)
+                Util.Application.SimulationInterface.AddItem(Me.ParentAxis.ParentChart.ID, "DataColumn", Me.ID, Me.GetSimulationXml("DataColumn"), bThrowError, bDoNotInit)
                 InitializeSimulationReferences()
             End If
         End Sub

@@ -850,9 +850,26 @@ Namespace DataObjects.Behavior
             'Now add back any links as children
             For Each deEntry As DictionaryEntry In Me.InLinks
                 Dim blLink As Behavior.Link = DirectCast(deEntry.Value, Behavior.Link)
-                blLink.AddWorkspaceTreeNode()
+                blLink.UpdateTreeNode()
             Next
 
+            For Each deEntry As DictionaryEntry In Me.OutLinks
+                Dim blLink As Behavior.Link = DirectCast(deEntry.Value, Behavior.Link)
+                blLink.UpdateTreeNode()
+            Next
+
+        End Sub
+
+        Public Overrides Sub RemoveWorksapceTreeView()
+
+            'First remove the inlinks to this node.
+            For Each deEntry As DictionaryEntry In Me.InLinks
+                Dim blLink As Behavior.Link = DirectCast(deEntry.Value, Behavior.Link)
+                blLink.RemoveWorksapceTreeView()
+            Next
+
+            'now call the base class functionality
+            MyBase.RemoveWorksapceTreeView()
         End Sub
 
         Public Overridable Sub AddInLink(ByRef blLink As Behavior.Link)

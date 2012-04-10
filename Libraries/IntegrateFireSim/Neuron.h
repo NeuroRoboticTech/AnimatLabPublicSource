@@ -272,7 +272,7 @@ namespace IntegrateFireSim
 		//void ClearSpikeTimes();
 		//void StoreSpikeForFreqAnalysis(IntegrateFireNeuralModule *lpNS);
 		void CalculateFiringFreq(IntegrateFireNeuralModule *lpNS);
-		virtual void AddIonChannel(string strXml);
+		virtual void AddIonChannel(string strXml, BOOL bDoNotInit);
 		virtual void RemoveIonChannel(string strID, BOOL bThrowError = TRUE);
 	
 	public:
@@ -367,7 +367,7 @@ namespace IntegrateFireSim
 #pragma region DataAccesMethods
 		virtual float *GetDataPointer(string strDataType);
 		virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
-		virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE);
+		virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
 		virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
 #pragma endregion
 

@@ -573,6 +573,12 @@ BOOL CurrentStimulus::SetData(string strDataType, string strValue, BOOL bThrowEr
 		return TRUE;
 	}
 
+	if(strType == "EQUATION")
+	{
+		CurrentEquation(strValue);
+		return TRUE;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);

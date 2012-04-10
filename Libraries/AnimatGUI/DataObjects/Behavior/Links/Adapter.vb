@@ -123,7 +123,7 @@ Namespace DataObjects.Behavior.Links
 
         '#Region " Add-Remove to List Methods "
 
-        '        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+        '        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
 
         '            If Util.IsTypeOf(Me.Origin.GetType, GetType(Nodes.Adapter), False) Then
         '                Me.Origin.AddToSim(bThrowError)

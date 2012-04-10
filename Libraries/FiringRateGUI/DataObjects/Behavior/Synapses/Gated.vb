@@ -327,9 +327,9 @@ Namespace DataObjects.Behavior.Synapses
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
             If Not m_lsGatedSynapse Is Nothing AndAlso Not m_lsGatedSynapse.Link Is Nothing Then
-                Util.Application.SimulationInterface.AddItem(m_lsGatedSynapse.Link.ID, "Synapse", Me.ID, Me.GetSimulationXml("Synapse"), True)
+                Util.Application.SimulationInterface.AddItem(m_lsGatedSynapse.Link.ID, "Synapse", Me.ID, Me.GetSimulationXml("Synapse"), True, bDoNotInit)
                 InitializeSimulationReferences()
             End If
         End Sub

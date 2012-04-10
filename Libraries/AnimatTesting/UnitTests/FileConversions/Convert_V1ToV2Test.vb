@@ -63,7 +63,7 @@ Namespace UnitTests
                 Dim strProject As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\PrismaticTest\PrismaticTest.aproj"
 
                 UnitTest("AnimatGUI.dll", "AnimatGUI.DataObjects.FileConverters.Convert_V1ToV2", "ConvertFiles", New Object() {strProject})
-
+                'This is a test.
                 'Assert.Inconclusive("A method that does not return a value cannot be verified.")
             End Sub
         End Class

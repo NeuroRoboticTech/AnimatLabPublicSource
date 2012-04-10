@@ -109,7 +109,7 @@ namespace AnimatSim
 		virtual void VerifySystemPointers();
 		virtual float *GetDataPointer(string strDataType);
 		virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
-		virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE);
+		virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
 		virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
 
 #pragma endregion

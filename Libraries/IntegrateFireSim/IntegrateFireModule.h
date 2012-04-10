@@ -178,19 +178,19 @@ namespace IntegrateFireSim
 
 #pragma region DataAccesMethods
 		virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
-		virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE);
+		virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
 		virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
 #pragma endregion
 
-		virtual void AddNeuron(string strXml);
+		virtual void AddNeuron(string strXml, BOOL bDoNotInit);
 		virtual void RemoveNeuron(string strID, BOOL bThrowError = TRUE);
 		virtual int FindNeuronListPos(string strID, BOOL bThrowError = TRUE);
 
-		virtual void AddSynapse(string strXml);
+		virtual void AddSynapse(string strXml, BOOL bDoNotInit);
 		virtual void RemoveSynapse(string strID, BOOL bThrowError = TRUE);
 		virtual int FindSynapseListPos(string strID, BOOL bThrowError = TRUE);
 
-		virtual void AddSynapseType(string strXml);
+		virtual void AddSynapseType(string strXml, BOOL bDoNotInit);
 		virtual void RemoveSynapseType(string strID, BOOL bThrowError = TRUE);
 		virtual int FindSpikingChemListPos(string strID, BOOL bThrowError = TRUE);
 		virtual int FindNonSpikingChemListPos(string strID, BOOL bThrowError = TRUE);

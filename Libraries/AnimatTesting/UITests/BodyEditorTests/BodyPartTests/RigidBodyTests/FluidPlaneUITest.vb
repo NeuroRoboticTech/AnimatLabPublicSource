@@ -150,7 +150,7 @@ Namespace UITests
                         'Select the simulation window tab so it is visible now.
                         ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name}, 1000)
 
-                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root"})
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", False})
 
                         'Set it to track the root of structure 2.
                         ExecuteMethod("SelectTrackItems", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, m_strStruct1Name, "Root"})

@@ -68,6 +68,8 @@ Namespace Framework
         Protected m_strJointChartVelocityName As String = "JointVelocity"
         Protected m_strJointChartVelocityType As String = "JointActualVelocity"
 
+        Protected m_iStimCounter As Integer = 1
+
 #End Region
 
 #Region "Properties"
@@ -140,6 +142,9 @@ Namespace Framework
         End Sub
 
         Protected Overridable Sub StartNewProject()
+            'Delete the project directory
+            CleanupProjectDirectory()
+
             'Start the application.
             StartApplication("", m_bAttachServerOnly)
 
@@ -157,8 +162,19 @@ Namespace Framework
         ' Use TestCleanup to run code after each test has run
         <TestCleanup()> Public Overridable Sub MyTestCleanup()
             Try
+                Debug.WriteLine("Starting test cleanup.")
+
+                System.Threading.Thread.Sleep(1000)
+
                 'Close any active dialog boxes before closing app.
-                ExecuteDirectMethod("CloseActiveDialogs", Nothing)
+                Try
+                    ExecuteDirectMethod("CloseActiveDialogs", Nothing)
+                Catch ex As Exception
+                    Debug.WriteLine("Error: " & ex.Message)
+                    If Not ex.InnerException Is Nothing Then
+                        Debug.WriteLine("Inner error: " & ex.InnerException.Message)
+                    End If
+                End Try
 
                 'Save the project
                 ExecuteMethod("ClickToolbarItem", New Object() {"SaveToolStripButton"})
@@ -174,17 +190,19 @@ Namespace Framework
             Catch ex As Exception
             Finally
                 Try
+                    Debug.WriteLine("Caught exception while doing cleanup.")
                     Threading.Thread.Sleep(1000)
 
                     'Now check to see if the process is still running. If it is then we need to kill it.
                     Dim aryProcesses() As System.Diagnostics.Process = System.Diagnostics.Process.GetProcessesByName("AnimatLab2")
                     If aryProcesses.Length > 0 Then
                         For Each oProc As System.Diagnostics.Process In aryProcesses
+                            Debug.WriteLine("Directly killing process AnimatLab2.")
                             oProc.Kill()
                         Next
                     End If
                 Catch ex As Exception
-
+                    Debug.WriteLine("Caught exception within exception handling for cleanup code. Eating it and going on.")
                 End Try
             End Try
         End Sub
@@ -194,6 +212,7 @@ Namespace Framework
 
         Protected Overridable Sub CompareSimulation(ByVal strTestDataPath As String, Optional ByVal strPrefix As String = "", _
                                                     Optional ByVal dblMaxError As Double = 0.1, Optional ByVal iMaxRows As Integer = -1)
+            Debug.WriteLine("Comparing simulation output. Test Data Path: '" & strTestDataPath & "', Prefix: '" & strPrefix & "', MaxError: " & dblMaxError & ", MaxRows: " & iMaxRows)
 
             'No prefix on the exported chart.
             ExecuteMethod("ExportDataCharts", New Object() {"", ""})
@@ -213,6 +232,7 @@ Namespace Framework
 
         Protected Overridable Sub CompareSimulation(ByVal strTestDataPath As String, ByVal aryMaxErrors As Hashtable, _
                                                     Optional ByVal strPrefix As String = "", Optional ByVal iMaxRows As Integer = -1)
+            Debug.WriteLine("Comparing simulation output. Test Data Path: '" & strTestDataPath & "', Prefix: '" & strPrefix & "', MaxError: '" & Util.ParamsToString(aryMaxErrors) & "', MaxRows: " & iMaxRows)
 
             'No prefix on the exported chart.
             ExecuteMethod("ExportDataCharts", New Object() {"", ""})
@@ -227,6 +247,7 @@ Namespace Framework
         End Sub
 
         Protected Overridable Sub LoadDataChart(ByVal strTestDataPath As String, ByVal strChartFileName As String, Optional ByVal strPrefix As String = "")
+            Debug.WriteLine("Load Data Chartt. Test Data Path: '" & strTestDataPath & "', Prefix: '" & strPrefix & "', ChartFileName: '" & strChartFileName & "'")
 
             'Export all charts.
             ExecuteMethod("ExportDataCharts", New Object() {"", ""})
@@ -245,6 +266,8 @@ Namespace Framework
 
         Protected Overridable Sub CompareColummData(ByVal iColumn As Integer, ByVal iRowStart As Integer, ByVal iRowEnd As Integer, ByVal eCompareType As enumDataComparisonType, _
                                                     ByVal dblRange1 As Double, Optional ByVal dblRange2 As Double = 0, Optional ByVal dblMaxError As Double = 0.05)
+            Debug.WriteLine("Compare Columm Data. iColumn: " & iColumn & ", iRowStart: " & iRowStart & ", iRowEnd: " & iRowEnd & ", eCompareType: '" & eCompareType.ToString & _
+                            "', dblRange1: " & dblRange1 & ", dblRange2: " & dblRange2 & ", dblMaxError: " & dblMaxError)
 
             If m_aryChartData Is Nothing OrElse m_aryChartData.Length <= 0 Then
                 Throw New System.Exception("The chart data has not been loaded.")
@@ -301,6 +324,7 @@ Namespace Framework
                 End If
             End If
 
+            Debug.WriteLine("Compare Successful.")
         End Sub
 
         Protected Sub SetStructureNames(ByVal strPostFix As String, ByVal bIsStructure As Boolean)
@@ -311,9 +335,13 @@ Namespace Framework
                 m_strStructureGroup = "Organisms"
                 m_strStruct1Name = "Organism_" & strPostFix
             End If
+
+            Debug.WriteLine("Set structure names. Struct Group: '" & m_strStructureGroup & "', Struct1 Name: '" & m_strStruct1Name & "'")
         End Sub
 
         Protected Overridable Sub CreateNewProject(ByVal strProjectName As String, ByVal strProjectPath As String, ByVal dblSimEnd As Double, ByVal bCreateStructure As Boolean)
+
+            Debug.WriteLine("Creating a new project. Project name: '" & strProjectName & "', Project Path: '" & m_strProjectPath & "', Sim End: " & dblSimEnd & ", CreateStructure: " & bCreateStructure)
 
             OpenDialogAndWait("New Project", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"NewToolStripButton"})
 
@@ -336,6 +364,8 @@ Namespace Framework
 
         Protected Overridable Sub CreateStructure(ByVal strStructGroup As String, ByVal strOrigStructureName As String, ByVal strNewStructureName As String, ByVal bCreateStructure As Boolean)
 
+            Debug.WriteLine("Creating structure. Struct Group: '" & strStructGroup & "', Orig Name: '" & strOrigStructureName & "', New Name: '" & strNewStructureName & "', Create Struct: " & bCreateStructure)
+
             'Click the add structure button.
             If bCreateStructure Then
                 ExecuteMethod("ClickToolbarItem", New Object() {"AddStructureToolStripButton"})
@@ -354,12 +384,13 @@ Namespace Framework
         End Sub
 
         Protected Overridable Sub CreateChartAndAddBodies()
+            Debug.WriteLine("Create Chart And Add Bodies")
 
             'Select the LineChart to add.
             AddChart("Line Chart")
 
             'Select the Chart axis
-            ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1"})
+            ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1", False})
 
             'Change the end time of the data chart to 45 seconds.
             ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectEndTime", m_dblChartEndTime.ToString})
@@ -414,6 +445,9 @@ Namespace Framework
                                                ByVal dblMinPartRange As Double, ByVal dblMaxPartRange As Double, _
                                                ByVal dblMinStructRange As Double, ByVal dblMaxStructRange As Double, _
                                                ByVal dblMinLocalRange As Double, ByVal dblMaxLocalRange As Double)
+            Debug.WriteLine("MovePartAxis. Structure: " & strStructure & ", Part: " & strPart & ", World Axis: " & strWorldAxis & ", Local Axis: " & strLocalAxis & _
+                            "Axis Start: " & ptAxisStart.ToString & ", Axis End: " & ptAxisEnd.ToString & " dblMinPartRange: " & dblMinPartRange & ", dblMaxPartRange" & dblMaxPartRange & _
+                            ", dblMinStructRange: " & dblMinStructRange & ", dblMaxStructRange: " & dblMaxStructRange & ", dblMinLocalRange: " & dblMinLocalRange & ", dblMaxLocalRange: " & dblMaxLocalRange)
 
             'Get the part and structure x position before movement
             Dim dblBeforePartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis & ".ActualValue"), Double)
@@ -439,6 +473,9 @@ Namespace Framework
         Protected Overridable Sub RotatePartAxis(ByVal strStructure As String, ByVal strPart As String, _
                                                  ByVal strAxis As String, ByVal ptAxisStart As Point, ByVal ptAxisEnd As Point, _
                                                 ByVal dblMinRange As Double, ByVal dblMaxRange As Double, Optional ByVal bResetPos As Boolean = True)
+            Debug.WriteLine("RotatePartAxis. Structure: " & strStructure & ", Part: " & strPart & ", Axis: " & strAxis & _
+                "Axis Start: " & ptAxisStart.ToString & ", Axis End: " & ptAxisEnd.ToString & " dblMinRange: " & dblMinRange & ", dblMaxRange" & dblMaxRange & _
+                ", bResetPos: " & bResetPos)
 
             'Get the part rotation before movement
             Dim dblBeforePartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis & ".ActualValue"), Double)
@@ -463,6 +500,8 @@ Namespace Framework
         Protected Overridable Sub ResetStructurePosition(ByVal strStructure As String, ByVal strPart As String, _
                                                          ByVal dblPosX As Double, ByVal dblPosY As Double, ByVal dblPosZ As Double, _
                                                          Optional ByVal bVerifyRoot As Boolean = True, Optional ByVal dblMaxError As Double = 0.001)
+            Debug.WriteLine("ResetStructurePosition. Structure: " & strStructure & ", Part: " & strPart & ", dblPosX: " & dblPosX & ", dblPosY: " & dblPosY & _
+                            "dblPosZ: " & dblPosZ & ", bVerifyRoot: " & bVerifyRoot & " dblMaxError: " & dblMaxError)
 
             'Reset the position of the Structure.
             ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure, "LocalPosition.X", dblPosX.ToString})
@@ -514,6 +553,9 @@ Namespace Framework
                                                      ByVal dblWorldPos As Double, ByVal dblWorldTest As Double, _
                                                      ByVal dblWorldLocalTest As Double, ByVal bTestLocal As Boolean, ByVal dblLocalPos As Double, _
                                                      ByVal dblLocalTest As Double, ByVal dblLocalWorldTest As Double, Optional ByVal dblMaxError As Double = 0.001)
+            Debug.WriteLine("ManualMovePartAxis. Structure: " & strStructure & ", Part: " & strPart & ", World Axis: " & strWorldAxis & ", Local Axis: " & strLocalAxis & _
+                             "dblWorldPos: " & dblWorldPos & ", dblWorldTest: " & dblWorldTest & " dblWorldLocalTest: " & dblWorldLocalTest & ", bTestLocal" & bTestLocal & _
+                             ", dblLocalPos: " & dblLocalPos & ", dblLocalTest: " & dblLocalTest & ", dblLocalWorldTest: " & dblLocalWorldTest & ", dblMaxError: " & dblMaxError)
 
             'Move the root part along the axis using world coordinates.
             ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis, dblWorldPos.ToString})
@@ -553,6 +595,8 @@ Namespace Framework
 
         Protected Overridable Function ManualRotatePartAxis(ByVal strStructure As String, ByVal strPart As String, ByVal strAxis As String, _
                                                        ByVal dblRotation As Double, Optional ByVal bReset As Boolean = True, Optional ByVal dblMaxError As Double = 0.001) As Double
+            Debug.WriteLine("ManualRotatePartAxis. Structure: " & strStructure & ", Part: " & strPart & ", Axis: " & strAxis & ", dblRotation: " & dblRotation & _
+                 "bReset: " & bReset & ", dblMaxError: " & dblMaxError)
 
             'Now beginning rotation
             Dim dblOrigRot As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis & ".ActualValue"), Double)
@@ -585,6 +629,7 @@ Namespace Framework
             m_dblResScaleWidth = m_szCurrrentResoution.Width / m_szOriginalResoution.Width
             m_dblResScaleHeight = m_szCurrrentResoution.Height / m_szOriginalResoution.Height
 
+            Debug.WriteLine("RecalculatePositionsUsingResolution. m_dblResScaleWidth: " & m_dblResScaleWidth & ", m_dblResScaleHeight: " & m_dblResScaleHeight)
         End Sub
 
         Protected Sub VerifyPropertyValue(ByVal strPath As String, ByVal strProperty As String, ByVal dblValue As Double, Optional ByVal dblMaxError As Double = 0.001)
@@ -600,6 +645,8 @@ Namespace Framework
                                                             ByVal dblRotation As Double, ByVal dblWorldXTest As Double, _
                                                             ByVal dblWorldYTest As Double, ByVal dblWorldZTest As Double, _
                                                             Optional ByVal dblMaxError As Double = 0.001)
+            Debug.WriteLine("VerifyChildPosAfterRotate. Structure: " & strStructure & ", Part: " & strPart & ", Axis: " & strAxis & ", dblRotation: " & dblRotation & _
+                 "dblWorldXTest: " & dblWorldXTest & ", dblWorldYTest: " & dblWorldYTest & " dblWorldZTest: " & dblWorldZTest & ", dblMaxError: " & dblMaxError)
 
             'rotate the root and verify the child position.
             Dim dblOrigRot As Double = ManualRotatePartAxis(strStructure, "Root", strAxis, dblRotation, False)
@@ -627,6 +674,7 @@ Namespace Framework
 
 
         Protected Overridable Sub TestMovableItemProperties(ByVal strStructure As String, ByVal strPart As String)
+            Debug.WriteLine("TestMovableItemProperties. Structure: " & strStructure & ", Part: " & strPart)
 
             TestSettingBodyColors(strStructure, strPart)
 
@@ -649,6 +697,8 @@ Namespace Framework
         End Sub
 
         Protected Overridable Sub TestSettingBodyColors(ByVal strStructure As String, ByVal strPart As String)
+            Debug.WriteLine("TestSettingBodyColors. Structure: " & strStructure & ", Part: " & strPart)
+
             'Set the ambient to a valid value.
             ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Ambient", m_strAmbient})
 
@@ -669,6 +719,7 @@ Namespace Framework
         End Sub
 
         Protected Overridable Sub TestSettingBodyTexture(ByVal strStructure As String, ByVal strPart As String)
+            Debug.WriteLine("TestSettingBodyTexture. Structure: " & strStructure & ", Part: " & strPart)
 
             If m_bTestTexture Then
                 'Set the texture to an valid value.
@@ -686,6 +737,7 @@ Namespace Framework
         End Sub
 
         Protected Overridable Sub TestSettingHeightMap(ByVal strStructure As String, ByVal strPart As String)
+            Debug.WriteLine("TestSettingHeightMap. Structure: " & strStructure & ", Part: " & strPart)
 
             'Set the texture to an valid value.
             ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MeshFile", _
@@ -701,6 +753,7 @@ Namespace Framework
         End Sub
 
         Protected Overridable Sub TestSettingBodyVisibility(ByVal strStructure As String, ByVal strPart As String)
+            Debug.WriteLine("TestSettingBodyVisibility. Structure: " & strStructure & ", Part: " & strPart)
 
             'Set the visible to a valid value.
             ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Visible", "False"})
@@ -721,6 +774,7 @@ Namespace Framework
         End Sub
 
         Protected Overridable Sub TestSettingTransparency(ByVal strStructure As String, ByVal strPart As String, ByVal strTransparency As String)
+            Debug.WriteLine("TestSettingTransparency. Structure: " & strStructure & ", Part: " & strPart)
 
             'Get original value
             Dim fltOrigRot As Single = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, strTransparency), Single)
@@ -750,8 +804,9 @@ Namespace Framework
         '''AddRootPartType - Use 'AddRootPartTypeParams' to pass parameters into this method.
         '''</summary>
         Protected Overridable Sub AddRootPartType(ByVal strStructGroup As String, ByVal strStructure As String, ByVal strPartType As String, Optional ByVal strName As String = "")
+            Debug.WriteLine("AddRootPartType. Structure Group:, " & strStructGroup & ", Structure: " & strStructure & ", PartType: " & strPartType & ", Name: " & strName)
 
-            OpenDialogAndWait("SelectPartType", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddPartToolStripButton"})
+            OpenDialogAndWait("Select Part Type", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddPartToolStripButton"})
 
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strPartType})
 
@@ -768,7 +823,7 @@ Namespace Framework
             ' manually, so I am using this trick to get it to work in the test.
             ExecuteMethod("ClickToolbarItem", New Object() {"SelGraphicsToolStripButton"})
             ExecuteMethod("ClickToolbarItem", New Object() {"SelCollisionToolStripButton"})
-            ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & strStructGroup & "\" & strStructure & "\Body Plan\Root"})
+            ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & strStructGroup & "\" & strStructure & "\Body Plan\Root", False})
 
             If strName.Length > 0 Then
                 ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & strStructGroup & "\" & strStructure & "\Body Plan\Root", "Name", strName})
@@ -776,11 +831,15 @@ Namespace Framework
         End Sub
 
         Public Overridable Sub ClickToAddBody(ByVal ptClick As Point)
+            Debug.WriteLine("ClickToAddBody. ptClick:, " & ptClick.ToString)
+
             Dim uIStructure_1BodyClient As WinClient = Me.UIProjectWindow(m_strProjectName).UIStructure_1BodyWindow.UIStructure_1BodyClient(m_strStruct1Name)
             Mouse.Click(uIStructure_1BodyClient, ptClick)
         End Sub
 
         Protected Overridable Sub OpenDialogAndWait(ByVal strDlgName As String, ByVal oActionMethod As MethodInfo, ByVal aryParams() As Object)
+
+            Debug.WriteLine("OpenDialogAndWait for '" & strDlgName & "'")
 
             Dim bDlgUp As Boolean = False
             Dim iCount As Integer = 0
@@ -788,6 +847,7 @@ Namespace Framework
                 If Not oActionMethod Is Nothing Then
                     'Perform the action method
                     oActionMethod.Invoke(Me, aryParams)
+                    Debug.WriteLine("Calling actionmethod '" & oActionMethod.ToString & "'")
                 End If
 
                 Threading.Thread.Sleep(1000)
@@ -795,8 +855,15 @@ Namespace Framework
                 Dim strFormName As String = DirectCast(ExecuteDirectMethod("ActiveDialogName", Nothing), String)
                 If strFormName = strDlgName Then
                     bDlgUp = True
+                    Debug.WriteLine("Opened '" & strDlgName & "'")
+                ElseIf strFormName = "<No Dialog>" Then
+                    bDlgUp = False
+                    Debug.WriteLine("Dialog was not opened, trying again.")
+                Else
+                    Throw New System.Exception("The active dialog name does not match the name we are waiting for. Active: '" & strFormName & "', Waiting: '" & strDlgName & "'")
                 End If
                 iCount = iCount + 1
+
                 If iCount > 5 Then
                     Throw New System.Exception(strDlgName & " dialog would not open.")
                 End If
@@ -804,6 +871,7 @@ Namespace Framework
         End Sub
 
         Protected Overridable Sub AssertErrorDialogShown(ByVal strErrorMsg As String, ByVal eMatchType As enumMatchType)
+            Debug.WriteLine("AssertErrorDialogShown. strErrorMsg:, " & strErrorMsg & ", Math Type: " & eMatchType.ToString)
 
             OpenDialogAndWait("Error", Nothing, Nothing)
             Threading.Thread.Sleep(1000)
@@ -844,13 +912,19 @@ Namespace Framework
                     Throw New System.Exception("Inavlid match type provided: " & eMatchType.ToString)
             End Select
 
+            Threading.Thread.Sleep(1000)
+            Debug.WriteLine("Error dialog shown correctly.")
         End Sub
 
-        Protected Overridable Sub ProcessExtraChildMethods(ByVal strPartType As String, ByVal strJointType As String)
+        Protected Overridable Sub BeforeAddChildPart(ByVal strPartType As String, ByVal strJointType As String)
 
         End Sub
 
-        Protected Overridable Sub ProcessExtraChildJointMethods(ByVal strPartType As String, ByVal strJointType As String)
+        Protected Overridable Sub AfterAddChildPart(ByVal strPartType As String, ByVal strJointType As String)
+
+        End Sub
+
+        Protected Overridable Sub AfterAddChildPartJoint(ByVal strPartType As String, ByVal strJointType As String)
 
         End Sub
 
@@ -858,27 +932,30 @@ Namespace Framework
         '''AddChildPartTypeWithJoint - Use 'AddChildPartTypeWithJointParams' to pass parameters into this method.
         '''</summary>
         Protected Overridable Sub AddChildPartTypeWithJoint(ByVal strPartType As String, ByVal strJointType As String, ByVal ptAddClick As Point)
+            Debug.WriteLine("AddChildPartTypeWithJoint. Part type: " & strPartType & ", Joint Type: " & strJointType & ", AddClick: " & ptAddClick.ToString)
+
+            BeforeAddChildPart(strPartType, strJointType)
 
             'Click 'Add Part' button
             ExecuteMethod("ClickToolbarItem", New Object() {"AddPartToolStripButton"}, 2000)
 
-            OpenDialogAndWait("SelectPartType", Me.GetType.GetMethod("ClickToAddBody"), New Object() {ptAddClick})
+            OpenDialogAndWait("Select Part Type", Me.GetType.GetMethod("ClickToAddBody"), New Object() {ptAddClick})
 
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strPartType})
 
             'Click 'Ok' button
             ExecuteActiveDialogMethod("ClickOkButton", Nothing)
 
-            ProcessExtraChildMethods(strPartType, strJointType)
+            AfterAddChildPart(strPartType, strJointType)
 
-            OpenDialogAndWait("SelectPartType", Nothing, Nothing)
+            OpenDialogAndWait("Select Part Type", Nothing, Nothing)
 
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strJointType})
 
             'Click 'Ok' button
             ExecuteActiveDialogMethod("ClickOkButton", Nothing)
 
-            ProcessExtraChildJointMethods(strPartType, strJointType)
+            AfterAddChildPartJoint(strPartType, strJointType)
 
             Threading.Thread.Sleep(1000)
         End Sub
@@ -887,18 +964,21 @@ Namespace Framework
         '''AddChildPartTypeWithJoint - Use 'AddChildPartTypeWithJointParams' to pass parameters into this method.
         '''</summary>
         Protected Overridable Sub AddChildPartTypeWithoutJoint(ByVal strPartType As String, ByVal ptAddClick As Point)
+            Debug.WriteLine("AddChildPartTypeWithJoint. Part type: " & strPartType & ", AddClick: " & ptAddClick.ToString)
+
+            BeforeAddChildPart(strPartType, "")
 
             'Click 'Add Part' button
             ExecuteMethod("ClickToolbarItem", New Object() {"AddPartToolStripButton"}, 2000)
 
-            OpenDialogAndWait("SelectPartType", Me.GetType.GetMethod("ClickToAddBody"), New Object() {ptAddClick})
+            OpenDialogAndWait("Select Part Type", Me.GetType.GetMethod("ClickToAddBody"), New Object() {ptAddClick})
 
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strPartType})
 
             'Click 'Ok' button
             ExecuteActiveDialogMethod("ClickOkButton", Nothing)
 
-            ProcessExtraChildMethods(strPartType, "")
+            AfterAddChildPart(strPartType, "")
 
             Threading.Thread.Sleep(1000)
         End Sub
@@ -907,16 +987,11 @@ Namespace Framework
         '''AddLineChart - Use 'AddLineChartParams' to pass parameters into this method.
         '''</summary>
         Protected Overridable Sub AddChart(ByVal strChartType As String)
+            Debug.WriteLine("Adding chart: '" & strChartType & "'")
 
-            OpenDialogAndWait("SelectToolType", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddToolToolStripButton"})
+            OpenDialogAndWait("Select Data Tool Type", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddToolToolStripButton"})
 
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strChartType})
-
-            'Dim uICtrlToolTypesList As WinList = Me.UIMap.UISelectDataToolTypeWindow.UICtrlToolTypesWindow.UICtrlToolTypesList
-            'Dim uIOKButton As WinButton = Me.UIMap.UISelectDataToolTypeWindow.UIOKWindow.UIOKButton
-
-            ''Select 'Line Chart' in 'ctrlToolTypes' list box
-            'uICtrlToolTypesList.SelectedItemsAsString = strChartType
 
             'Click 'Ok' button
             ExecuteActiveDialogMethod("ClickOkButton", Nothing)
@@ -933,9 +1008,10 @@ Namespace Framework
         '''AddRootPartToChart
         '''</summary>
         Protected Overridable Sub AddItemToChart(ByVal strPath As String)
+            Debug.WriteLine("Adding item to chart: '" & strPath & "'")
 
             'Click 'Add Chart Item' button
-            OpenDialogAndWait("SelectDataItem", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddDataItemToolStripButton"})
+            OpenDialogAndWait("Select Data Item", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddDataItemToolStripButton"})
 
             ExecuteActiveDialogMethod("SelectItem", New Object() {strPath})
             ExecuteActiveDialogMethod("ClickOkButton", Nothing)
@@ -943,13 +1019,29 @@ Namespace Framework
             Threading.Thread.Sleep(2000)
         End Sub
 
+        Protected Overridable Sub AddItemToChart(ByVal strAxisPath As String, ByVal strChartPath As String, ByVal strOldName As String, ByVal strNewName As String, Optional ByVal strDataType As String = "")
+            ExecuteMethod("SelectWorkspaceItem", New Object() {strAxisPath, False})
+            AddItemToChart(strChartPath)
+            ExecuteMethod("SetObjectProperty", New Object() {strAxisPath & "\" & strOldName, "Name", strNewName})
+
+            If strDataType.Trim.Length > 0 Then
+                ExecuteMethod("SetObjectProperty", New Object() {strAxisPath & "\" & strNewName, "DataType", strDataType})
+            End If
+        End Sub
+
         '''<summary>
         '''AddLineChart - Use 'AddLineChartParams' to pass parameters into this method.
         '''</summary>
         Protected Overridable Sub AddStimulus(ByVal strStimulusType As String, ByVal strStructure As String, ByVal strPart As String, _
-                                              Optional ByVal strName As String = "", Optional ByVal strOldName As String = "Stimulus_1")
+                                              Optional ByVal strName As String = "", Optional ByVal strOldName As String = "")
+            Debug.WriteLine("AddStimulus. StimulusType: " & strStimulusType & ", Structure: " & strStructure & ", Name: " & strName & ", Old Name: " & strOldName)
 
-            ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & strPart})
+            If strOldName.Trim.Length = 0 Then
+                strOldName = "Stimulus_" & m_iStimCounter
+            End If
+            m_iStimCounter = m_iStimCounter + 1
+
+            ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & strPart, False})
 
             OpenDialogAndWait("Select Stimulus Type", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddStimulusToolStripButton"})
 
@@ -970,6 +1062,10 @@ Namespace Framework
                                                    ByVal dblPosX As Double, ByVal dblPosY As Double, ByVal dblPosZ As Double, _
                                                    ByVal dblForceX As Double, ByVal dblForceY As Double, ByVal dblForceZ As Double, _
                                                    ByVal dblTorqueX As Double, ByVal dblTorqueY As Double, ByVal dblTorqueZ As Double)
+            Debug.WriteLine("SetForceStimulus. strStimName: " & strStimName & ", bAlwaysActive: " & bAlwaysActive & ", bEnabled: " & bEnabled & ", dblStartTime: " & dblStartTime & _
+                             "dblEndTime: " & dblEndTime & ", dblPosX: " & dblPosX & " dblPosY: " & dblPosY & ", dblPosZ" & dblPosZ & _
+                             ", dblForceX: " & dblForceX & ", dblForceY: " & dblForceY & ", dblForceZ: " & dblForceZ & _
+                             ", dblTorqueX: " & dblTorqueX & ", dblTorqueY: " & dblTorqueY & ", dblTorqueZ: " & dblTorqueZ)
 
             SetBaseStimulusProperties(strStimName, bAlwaysActive, bEnabled, dblStartTime, dblEndTime)
 
@@ -993,6 +1089,9 @@ Namespace Framework
         Protected Overridable Sub SetMotorVelocityStimulus(ByVal strStimName As String, ByVal bAlwaysActive As Boolean, ByVal bEnabled As Boolean, _
                                                  ByVal dblStartTime As Double, ByVal dblEndTime As Double, ByVal bDisableWhenDone As Boolean, _
                                                  ByVal bConstantValueType As Boolean, ByVal dblVelocity As Double, ByVal strEquation As String)
+            Debug.WriteLine("SetMotorVelocityStimulus. strStimName: " & strStimName & ", bAlwaysActive: " & bAlwaysActive & ", bEnabled: " & bEnabled & ", dblStartTime: " & dblStartTime & _
+                            "dblEndTime: " & dblEndTime & ", bDisableWhenDone: " & bDisableWhenDone & " bConstantValueType: " & bConstantValueType & ", dblVelocity" & dblVelocity & _
+                            ", strEquation: " & strEquation)
 
             SetBaseStimulusProperties(strStimName, bAlwaysActive, bEnabled, dblStartTime, dblEndTime)
 
@@ -1024,6 +1123,7 @@ Namespace Framework
                                                  ByVal ptZoomStart As Point, ByVal iZoom1 As Integer, ByVal iZoom2 As Integer, _
                                                  ByVal bAddAttachments As Boolean, ByVal strAttachType As String, _
                                                  ByVal ptRootAttach As Point, ByVal ptArmAttach As Point)
+            Debug.WriteLine("CreateArmature")
 
             'Add a root part.
             AddRootPartType(m_strStructureGroup, m_strStruct1Name, strPartType)
@@ -1063,11 +1163,13 @@ Namespace Framework
 
             'Add motor velocity to joint. Set it to no velocity and always enabled. We want to lock this joint. 
             'We cannot use a static part here because it is part of the geometry of the root, so collisions between it and arm will be disabled.
-            AddStimulus("Motor Velocity", m_strStruct1Name, "\Body Plan\Root\Joint_2", "BlockLock", "Stimulus_1")
+            AddStimulus("Motor Velocity", m_strStruct1Name, "\Body Plan\Root\Joint_2", "BlockLock") ', "Stimulus_1"
             SetMotorVelocityStimulus("BlockLock", True, True, 0, 5, False, True, 0, "")
         End Sub
 
         Protected Overridable Sub RepositionArmatureAttachments()
+            Debug.WriteLine("RepositionArmatureAttachments")
+
             'First rename the attachments.
             ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Body_2", "Name", "RootAttach1"})
             ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Body_3", "Name", "RootAttach2"})
@@ -1095,12 +1197,13 @@ Namespace Framework
         End Sub
 
         Protected Overridable Sub CreateArmatureChart(ByVal bChartAttachments As Boolean)
+            Debug.WriteLine("CreateArmatureChart")
 
             'Select the LineChart to add.
             AddChart("Line Chart")
 
             'Select the Chart axis
-            ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1"})
+            ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1", False})
 
             'Change the end time of the data chart to 45 seconds.
             ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectEndTime", m_dblChartEndTime.ToString})
@@ -1157,9 +1260,23 @@ Namespace Framework
 
         End Sub
 
-        Protected Overridable Sub DeletePart(ByVal strPath As String, Optional ByVal strDlgName As String = "AnimatMessageBox")
-            ExecuteMethod("SelectWorkspaceItem", New Object() {strPath})
-            ExecuteMethod("ClickToolbarItem", New Object() {"DeleteToolStripButton"})
+        Protected Overridable Sub DeletePart(ByVal strPath As String, ByVal strDlgName As String, Optional ByVal bCut As Boolean = False)
+            Debug.WriteLine("DeletePart. Path: '" & strPath & "', DlgName: " & strDlgName & ", Cut: " & bCut)
+
+            ExecuteMethod("SelectWorkspaceItem", New Object() {strPath, False})
+
+            DeleteSelectedParts(strDlgName, bCut)
+        End Sub
+
+        Protected Overridable Sub DeleteSelectedParts(ByVal strDlgName As String, Optional ByVal bCut As Boolean = False)
+            Debug.WriteLine("DeleteSelectedParts. DlgName: " & strDlgName & ", Cut: " & bCut)
+
+            If bCut Then
+                ExecuteMethod("ClickMenuItem", New Object() {"CutToolStripMenuItem"})
+            Else
+                ExecuteMethod("ClickToolbarItem", New Object() {"DeleteToolStripButton"})
+            End If
+
             OpenDialogAndWait(strDlgName, Nothing, Nothing)
             ExecuteActiveDialogMethod("ClickOkButton", Nothing)
         End Sub
@@ -1201,6 +1318,9 @@ Namespace Framework
         Public Sub DragMouse(ByVal ptStart As Point, ByVal ptEnd As Point, ByVal mButton As MouseButtons, _
                              Optional ByVal mModifiers As ModifierKeys = ModifierKeys.None, _
                              Optional ByVal bEndClick As Boolean = False)
+            Debug.WriteLine("Draggin Mouse. ptStart: " & ptStart.ToString & ", ptEnd: " & ptEnd.ToString & ", mButton: " & mButton.ToString & _
+                            "mModifiers: " & mModifiers.ToString & ", bEndClick: " & bEndClick)
+
             Dim uIStructure_1BodyClient As WinClient = Me.UIProjectWindow(m_strProjectName).UIStructure_1BodyWindow.UIStructure_1BodyClient(m_strStruct1Name)
 
             Mouse.StartDragging(uIStructure_1BodyClient, ptStart, mButton, mModifiers)
@@ -1216,6 +1336,8 @@ Namespace Framework
         '''NewProjectDlg_EnterNameAndPath - Use 'NewProjectDlg_EnterNameAndPathParams' to pass parameters into this method.
         '''</summary>
         Protected Overridable Sub CheckForErrorDialog(ByVal strEndError As String)
+            Debug.WriteLine("CheckForErrorDialog. EndError: " & strEndError)
+
             Dim uITxtProjectNameEdit As WinEdit = Me.UIMap.UINewProjectWindow.UINewProjectWindow1.UITxtProjectNameEdit
             Dim uITxtLocationEdit As WinEdit = Me.UIMap.UINewProjectWindow.UITxtLocationWindow.UITxtLocationEdit
             Dim uIOKButton As WinButton = Me.UIMap.UINewProjectWindow.UIOKWindow.UIOKButton
@@ -1287,6 +1409,7 @@ Namespace Framework
 
         Protected Overridable Sub AddBehavioralLink(ByVal strOrigin As String, ByVal strDestination As String, ByVal strName As String, _
                                                     ByVal strSynapseType As String, ByVal bInTree As Boolean)
+            Debug.WriteLine("AddBehavioralLink")
 
             ExecuteMethod("AddBehavioralLink", New Object() {strOrigin, strDestination, strName}, 2000)
 

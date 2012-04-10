@@ -134,7 +134,7 @@ Synapse *Synapse::GetCompoundSynapse(short iCompoundIndex)
 
 \param	strXml	The xml packet to load. 
 **/
-void Synapse::AddSynapse(string strXml)
+void Synapse::AddSynapse(string strXml, BOOL bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -142,7 +142,9 @@ void Synapse::AddSynapse(string strXml)
 	oXml.FindChildElement("CompoundSynapse");
 
 	Synapse *lpSynapse = LoadSynapse(oXml);
-	lpSynapse->Initialize();
+
+	if(!bDoNotInit)
+		lpSynapse->Initialize();
 }
 
 /**
@@ -280,13 +282,13 @@ BOOL Synapse::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
-BOOL Synapse::AddItem(string strItemType, string strXml, BOOL bThrowError)
+BOOL Synapse::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "SYNAPSE")
 	{
-		AddSynapse(strXml);
+		AddSynapse(strXml, bDoNotInit);
 		return TRUE;
 	}
 

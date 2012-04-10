@@ -434,9 +434,9 @@ Namespace DataObjects.Behavior
                 m_bnDestination = Value
                 UpdateChart()
 
-                'If Not m_doInterface Is Nothing Then
-                RaiseEvent DestinationModified(Me)
-                'End If
+                If m_bIsInitialized Then
+                    RaiseEvent DestinationModified(Me)
+                End If
             End Set
         End Property
 
@@ -459,9 +459,9 @@ Namespace DataObjects.Behavior
                 m_bnDestination = Value
                 UpdateChart()
 
-                'If Not m_doInterface Is Nothing Then
-                RaiseEvent DestinationModified(Me)
-                'End If
+                If m_bIsInitialized Then
+                    RaiseEvent DestinationModified(Me)
+                End If
             End Set
         End Property
 
@@ -565,9 +565,9 @@ Namespace DataObjects.Behavior
                 m_bnOrigin = Value
                 UpdateChart()
 
-                'If Not m_doInterface Is Nothing Then
-                RaiseEvent OriginModified(Me)
-                'End If
+                If m_bIsInitialized Then
+                    RaiseEvent OriginModified(Me)
+                End If
             End Set
         End Property
 

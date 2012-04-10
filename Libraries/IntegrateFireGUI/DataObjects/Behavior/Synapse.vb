@@ -462,11 +462,11 @@ Namespace DataObjects.Behavior
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
             'Synpases are stored in the destination neuron object.
             'Synapses are handled different for this model type. They are stored in the neural module, not in the destination neuron.
             If Not Me.NeuralModule Is Nothing Then
-                Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID, "Synapse", Me.ID, Me.GetSimulationXml("Synapse"), bThrowError)
+                Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID, "Synapse", Me.ID, Me.GetSimulationXml("Synapse"), bThrowError, bDoNotInit)
                 InitializeSimulationReferences()
             End If
         End Sub

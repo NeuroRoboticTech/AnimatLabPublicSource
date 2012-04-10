@@ -89,7 +89,7 @@ Namespace Forms.Tools
             'If the simulator is loaded and paused then we need to add this chart to the simulation.
             If Not Util.Application.SimulationInterface.FindItem(m_strID, False) Then
                 Dim strXml As String = Me.GetSimulationXml("DataChart")
-                Util.Application.SimulationInterface.AddItem("Simulator", "DataChart", Me.ID, strXml, True)
+                Util.Application.SimulationInterface.AddItem("Simulator", "DataChart", Me.ID, strXml, True, False)
             End If
 
         End Sub
@@ -142,7 +142,7 @@ Namespace Forms.Tools
             MyBase.LoadExternalFile(strFilename)
             InitializeAfterLoad()
 
-            Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "DataChart", Me.ID, Me.GetSimulationXml("DataChart"), True)
+            Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "DataChart", Me.ID, Me.GetSimulationXml("DataChart"), True, False)
             InitializeSimulationReferences()
 
         End Sub
@@ -178,7 +178,7 @@ Namespace Forms.Tools
                 'If we do not find a datachart with this id then add one.
                 If Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
                     Dim strXml As String = Me.GetSimulationXml("DataChart")
-                    Util.Application.SimulationInterface.AddItem("Simulator", "DataChart", Me.ID, strXml, True)
+                    Util.Application.SimulationInterface.AddItem("Simulator", "DataChart", Me.ID, strXml, True, False)
                     InitializeSimulationReferences()
                 End If
             Catch ex As System.Exception

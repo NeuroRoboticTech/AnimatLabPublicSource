@@ -202,7 +202,7 @@ BOOL FiringRateModule::SetData(string strDataType, string strValue, BOOL bThrowE
 
 \param	strXml	The xml to use when loading the neuron. 
 **/
-void FiringRateModule::AddNeuron(string strXml)
+void FiringRateModule::AddNeuron(string strXml, BOOL bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -210,7 +210,8 @@ void FiringRateModule::AddNeuron(string strXml)
 	oXml.FindChildElement("Neuron");
 
 	Neuron *lpNeuron = LoadNeuron(oXml);
-	lpNeuron->Initialize();
+	if(!bDoNotInit)
+		lpNeuron->Initialize();
 }
 
 /**
@@ -228,13 +229,13 @@ void FiringRateModule::RemoveNeuron(string strID, BOOL bThrowError)
 	m_aryNeurons.RemoveAt(iPos);
 }
 
-BOOL FiringRateModule::AddItem(string strItemType, string strXml, BOOL bThrowError)
+BOOL FiringRateModule::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "NEURON")
 	{
-		AddNeuron(strXml);
+		AddNeuron(strXml, bDoNotInit);
 		return TRUE;
 	}
 	//Synapses are stored in the destination neuron. They will be added there.

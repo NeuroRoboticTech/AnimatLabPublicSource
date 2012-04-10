@@ -71,7 +71,7 @@ void Materials::Reset()
 
 \param	strXml	The xml data packet for loading the type. 
 **/
-void Materials::AddMaterialType(string strXml)
+void Materials::AddMaterialType(string strXml, BOOL bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -83,9 +83,10 @@ void Materials::AddMaterialType(string strXml)
 	//Get the first matieralpair so we can use it to register the material types.
 	MaterialPair *lpPair = m_aryMaterialPairs[0];
 
-	lpType->Initialize();
-	lpPair->RegisterMaterialType(lpType->ID());
+	if(!bDoNotInit)
+		lpType->Initialize();
 
+	lpPair->RegisterMaterialType(lpType->ID());
 	m_aryMaterialTypes.Add(lpType);
 }
 
@@ -113,7 +114,7 @@ void Materials::RemoveMaterialType(string strID, BOOL bThrowError)
 
 \param	strXml	The xml data packet for loading the pair. 
 **/
-void Materials::AddMaterialPair(string strXml)
+void Materials::AddMaterialPair(string strXml, BOOL bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -122,7 +123,9 @@ void Materials::AddMaterialPair(string strXml)
 
 	MaterialPair *lpPair = LoadMaterialPair(oXml);
 
-	lpPair->Initialize();
+	if(!bDoNotInit)
+		lpPair->Initialize();
+
 	m_aryMaterialPairs.Add(lpPair);
 }
 
@@ -222,19 +225,19 @@ void Materials::Initialize()
 	}
 }
 
-BOOL Materials::AddItem(string strItemType, string strXml, BOOL bThrowError)
+BOOL Materials::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "MATERIALTYPE")
 	{
-		AddMaterialType(strXml);
+		AddMaterialType(strXml, bDoNotInit);
 		return TRUE;
 	}
 
 	if(strType == "MATERIALPAIR")
 	{
-		AddMaterialPair(strXml);
+		AddMaterialPair(strXml, bDoNotInit);
 		return TRUE;
 	}
 

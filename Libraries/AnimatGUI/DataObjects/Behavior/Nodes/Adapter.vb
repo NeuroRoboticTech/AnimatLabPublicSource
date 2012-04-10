@@ -246,7 +246,7 @@ Namespace DataObjects.Behavior.Nodes
             For Each deEntry As DictionaryEntry In m_aryLinks
                 blLink = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
                 If Not blLink.Selected Then
-                    blLink.SelectItem(False)
+                    blLink.SelectItem(True)
                 End If
             Next
 
@@ -321,25 +321,33 @@ Namespace DataObjects.Behavior.Nodes
                 Return False
             End If
 
-            If Not Util.FindIDInList(aryItems, m_bnOrigin.ID) Then
-                Return False
-            End If
+            'Check to make sure my inlinks are in the list
+            For Each deItem As DictionaryEntry In Me.InLinks
+                Dim blIn As Link = DirectCast(deItem.Value, Link)
+                If Not Util.FindIDInList(aryItems, blIn.ActualOrigin.ID) Then
+                    Return False
+                End If
+            Next
 
-            If Not Util.FindIDInList(aryItems, m_bnDestination.ID) Then
-                Return False
-            End If
+            'Check to make sure my outlinks are in the list
+            For Each deItem As DictionaryEntry In Me.OutLinks
+                Dim blOut As Link = DirectCast(deItem.Value, Link)
+                If Not Util.FindIDInList(aryItems, blOut.ActualDestination.ID) Then
+                    Return False
+                End If
+            Next
 
             Return True
         End Function
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
             If m_bIsInitialized AndAlso Not NeuralModule Is Nothing Then
                 NeuralModule.VerifyExistsInSim()
                 If Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
                     'If we just created this neuralmodule in the sim then this object might already exist now. We should only add it if it does not exist.
-                    Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID(), "Adapter", Me.ID, Me.GetSimulationXml("Adapter"), bThrowError)
+                    Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID(), "Adapter", Me.ID, Me.GetSimulationXml("Adapter"), bThrowError, bDoNotInit)
                 End If
             End If
             InitializeSimulationReferences()
@@ -585,7 +593,7 @@ Namespace DataObjects.Behavior.Nodes
 
         Protected Overrides Sub OnOriginModified(ByVal blLink As Link)
             Try
-                If Not Util.IsTypeOf(blLink.Origin.GetType, GetType(Behavior.Nodes.Adapter), False) Then
+                If m_bIsInitialized AndAlso Not Util.IsTypeOf(blLink.Origin.GetType, GetType(Behavior.Nodes.Adapter), False) Then
                     SetOrigin(blLink.Origin, True)
                 End If
             Catch ex As Exception
@@ -595,7 +603,7 @@ Namespace DataObjects.Behavior.Nodes
 
         Protected Overrides Sub OnDestinationModified(ByVal blLink As Link)
             Try
-                If Not Util.IsTypeOf(blLink.Destination.GetType, GetType(Behavior.Nodes.Adapter), False) Then
+                If m_bIsInitialized AndAlso Not Util.IsTypeOf(blLink.Destination.GetType, GetType(Behavior.Nodes.Adapter), False) Then
                     SetDestination(blLink.Destination, True)
                 End If
             Catch ex As Exception

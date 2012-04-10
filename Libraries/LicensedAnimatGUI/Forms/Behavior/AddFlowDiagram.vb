@@ -2200,9 +2200,9 @@ Namespace Forms.Behavior
             Dim tsPopupMenu As New AnimatContextMenuStrip("AddFlowDiagramMenu", Nothing)
 
             'TODO
-            'Dim mcCut As New System.Windows.Forms.ToolStripMenuItem("Cut", Util.Application.ToolStripImages.GetImage("AnimatGUI.Cut.gif"), New EventHandler(AddressOf Util.Application.OnCutFromWorkspace))
-            'Dim mcCopy As New System.Windows.Forms.ToolStripMenuItem("Copy", Util.Application.ToolStripImages.GetImage("AnimatGUI.Copy.gif"), New EventHandler(AddressOf Util.Application.OnCopyFromWorkspace))
-            'Dim mcPaste As New System.Windows.Forms.ToolStripMenuItem("Paste", Util.Application.ToolStripImages.GetImage("AnimatGUI.CopyClipboard.gif"), New EventHandler(AddressOf Util.Application.OnPasteFromWorkspace))
+            Dim mcCut As New System.Windows.Forms.ToolStripMenuItem("Cut", Util.Application.ToolStripImages.GetImage("AnimatGUI.Cut.gif"), New EventHandler(AddressOf Me.CutToolStripButton_Click))
+            Dim mcCopy As New System.Windows.Forms.ToolStripMenuItem("Copy", Util.Application.ToolStripImages.GetImage("AnimatGUI.Copy.gif"), New EventHandler(AddressOf Me.CopyToolStripButton_Click))
+            Dim mcPaste As New System.Windows.Forms.ToolStripMenuItem("Paste", Util.Application.ToolStripImages.GetImage("AnimatGUI.CopyClipboard.gif"), New EventHandler(AddressOf Me.PasteInPlaceMenuItem_Click))
             Dim mcPasteInPlace As New System.Windows.Forms.ToolStripMenuItem("Paste in Place", Nothing, New EventHandler(AddressOf Me.PasteInPlaceMenuItem_Click))
             Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
             'mcCut.ImageScaling = ToolStripItemImageScaling.SizeToFit
@@ -2255,15 +2255,14 @@ Namespace Forms.Behavior
             Dim toolStripSeparator2 As New ToolStripSeparator()
 
             If m_ctrlAddFlow.SelectedItems.Count > 0 Then
-                'TODO
-                'tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcCut, mcCopy, mcDelete})
-
-                If bPaste Then
-                    'TODO
-                    'tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcPaste, mcPasteInPlace})
-                End If
+                tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcCut, mcCopy, mcDelete})
 
                 tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {toolStripSeparator2})
+            Else
+                If bPaste Then
+                    tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcPaste, mcPasteInPlace})
+                    tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {toolStripSeparator2})
+                End If
             End If
 
 
@@ -2743,6 +2742,7 @@ Namespace Forms.Behavior
             'we need to go through and initialize all the nodes/links after loading.
             Me.Subsystem.InitializeAfterPasted()
             AddPastedToSim(aryNodes, aryLinks)
+            InitPastedInSim(aryNodes, aryLinks)
 
             Util.ProjectWorkspace.ClearSelections()
             For Each bdItem As AnimatGUI.DataObjects.Behavior.Data In aryItems
@@ -2753,7 +2753,7 @@ Namespace Forms.Behavior
             'Now lets move the addflow items so that they are positioned near the mouse.
             ' We move a little each pasted node and link so that they do not recover
             ' the original items.
-            If bInPlace Then
+            If Not bInPlace Then
                 PositionPastedToInPlace(aryItems, ptBase, fltMinX, fltMinY)
             End If
 
@@ -2893,13 +2893,25 @@ Namespace Forms.Behavior
         Protected Sub AddPastedToSim(ByVal aryNodes As ArrayList, ByVal aryLinks As ArrayList)
 
             For Each bdNode As AnimatGUI.DataObjects.Behavior.Data In aryNodes
-                bdNode.AddToSim(True)
+                bdNode.AddToSim(True, True)
                 bdNode.AddWorkspaceTreeNode()
             Next
 
             For Each bdLink As AnimatGUI.DataObjects.Behavior.Data In aryLinks
-                bdLink.AddToSim(True)
+                bdLink.AddToSim(True, True)
                 bdLink.AddWorkspaceTreeNode()
+            Next
+
+        End Sub
+
+        Protected Sub InitPastedInSim(ByVal aryNodes As ArrayList, ByVal aryLinks As ArrayList)
+
+            For Each bdNode As AnimatGUI.DataObjects.Behavior.Data In aryNodes
+                bdNode.InitPastedInSim()
+            Next
+
+            For Each bdLink As AnimatGUI.DataObjects.Behavior.Data In aryLinks
+                bdLink.InitPastedInSim()
             Next
 
         End Sub
@@ -3027,10 +3039,6 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub PasteInPlaceMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles PasteInPlaceMenuItem.Click
-
-        End Sub
-
         Private Sub ExportToolStripMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ExportToolStripMenuItem.Click
 
         End Sub
@@ -3053,6 +3061,10 @@ Namespace Forms.Behavior
 
         Private Sub PasteToolStripButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles PasteToolStripButton.Click, PasteToolStripMenuItem.Click
             PasteSelected(False)
+        End Sub
+
+        Private Sub PasteInPlaceMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles PasteInPlaceMenuItem.Click
+            PasteSelected(True)
         End Sub
 
 #End Region

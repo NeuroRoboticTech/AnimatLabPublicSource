@@ -1131,6 +1131,7 @@ Namespace Forms
         Protected m_strAutomationName As String = ""
         Protected m_strAutomationMethodName As String = ""
         Protected m_aryAutomationParams() As Object
+        Protected m_bAutomationPropBoolValue As Boolean = False
 
         Protected m_bBodyPartPasteInProgress As Boolean = False
 
@@ -3959,12 +3960,13 @@ Namespace Forms
             End Try
         End Sub
 
-        Public Sub SelectWorkspaceItem(ByVal strPath As String)
+        Public Sub SelectWorkspaceItem(ByVal strPath As String, ByVal bSelectMultiple As Boolean)
             If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
                 Throw New System.Exception("No project is currently loaded.")
             End If
 
             m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
+            m_bAutomationPropBoolValue = bSelectMultiple
 
             m_timerAutomation = New System.Timers.Timer(10)
             AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnSelectWorkspaceItemTimer
@@ -3986,7 +3988,7 @@ Namespace Forms
                 RemoveHandler m_timerAutomation.Elapsed, AddressOf OnSelectWorkspaceItemTimer
                 m_timerAutomation = Nothing
 
-                Util.ProjectWorkspace.TreeView.SelectNode(m_tnAutomationTreeNode, False, False)
+                Util.ProjectWorkspace.TreeView.SelectNode(m_tnAutomationTreeNode, False, m_bAutomationPropBoolValue)
                 Util.ProjectWorkspace.TreeView.EnsureDisplayed(m_tnAutomationTreeNode)
 
             Catch ex As System.Exception
@@ -4389,6 +4391,11 @@ Namespace Forms
                     Dim doToolHolder As DataObjects.ToolHolder = DirectCast(m_tnAutomationTreeNode.Tag, DataObjects.ToolHolder)
                     If Not doToolHolder.ToolForm Is Nothing AndAlso Not doToolHolder.ToolForm.TabPage Is Nothing Then
                         oTab = doToolHolder.ToolForm.TabPage
+                    End If
+                ElseIf Not m_tnAutomationTreeNode.Tag Is Nothing AndAlso Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(DataObjects.Behavior.Nodes.Subsystem), False) Then
+                    Dim doSub As DataObjects.Behavior.Nodes.Subsystem = DirectCast(m_tnAutomationTreeNode.Tag, DataObjects.Behavior.Nodes.Subsystem)
+                    If Not doSub.SubsystemDiagram Is Nothing Then
+                        oTab = doSub.SubsystemDiagram.TabPage
                     End If
                 End If
 
@@ -5246,7 +5253,7 @@ Namespace Forms
         Protected Overridable Sub DeleteMultipleItems()
             Try
                 If Util.ShowMessage("Are you certain that you want to delete the currently selected group of objects?", _
-                                    "Delete group", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
+                                    "Delete Group", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
                     Return
                 End If
 

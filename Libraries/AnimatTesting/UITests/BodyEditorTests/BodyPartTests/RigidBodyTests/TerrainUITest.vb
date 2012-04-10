@@ -92,7 +92,7 @@ Namespace UITests
 
                         If strPartType = m_strPartType Then
                             'Wait for the collision mesh dialog to show, fill it in and hit ok
-                            OpenDialogAndWait("SelectTerrain", Nothing, Nothing)
+                            OpenDialogAndWait("Select Terrain", Nothing, Nothing)
                             ExecuteActiveDialogMethod("SetTerrainParameters", New Object() {(m_strRootFolder & "\bin\Resources\TerrainTest_HeightMap.jpg"), (m_strRootFolder & "\bin\Resources\Bricks.bmp"), 0.1, 0.1, 0.5})
                             ExecuteActiveDialogMethod("ClickOkButton", Nothing)
                         End If
@@ -191,6 +191,8 @@ Namespace UITests
                         m_dblStructJointRotateTestZX = -0.070716
                         m_dblStructJointRotateTestZY = 1.999
                         m_dblStructJointRotateTestZZ = -2.9
+
+                        m_ptClickToAddChild = New Point(800, 200)
 
                         CleanupProjectDirectory()
                     End Sub

@@ -45,7 +45,7 @@ Namespace UITests
                     <TestMethod(), _
                     DataSource("System.Data.OleDb", _
                                "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
-                               "PrismaticRotationTestData_Full", _
+                               "PrismaticRotationTestData", _
                                DataAccessMethod.Sequential), _
                     DeploymentItem("TestCases.accdb")>
                     Public Sub Test_PrismaticJointRotations()

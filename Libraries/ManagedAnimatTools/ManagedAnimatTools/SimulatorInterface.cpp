@@ -1169,7 +1169,7 @@ namespace AnimatGUI
 
 #pragma region DataAccess
 
-			System::Boolean SimulatorInterface::AddItem(String ^sParentID, String ^sItemType, String ^sID, String ^sXml, System::Boolean bThrowError)
+			System::Boolean SimulatorInterface::AddItem(String ^sParentID, String ^sItemType, String ^sID, String ^sXml, System::Boolean bThrowError, System::Boolean bDoNotInit)
 			{
 				try
 				{
@@ -1181,6 +1181,8 @@ namespace AnimatGUI
 						string strParentID = Std_Trim(Std_ToUpper(Util::StringToStd(sParentID)));
 						string strItemType = Std_Trim(Std_ToUpper(Util::StringToStd(sItemType)));
 						string strXml = Util::StringToStd(sXml);
+						BOOL bNoInit = FALSE;
+						if(bDoNotInit) bNoInit=TRUE;
 
 						//First check to see if this item already exists. If it does then do not attempt to add it again.
 						AnimatBase *lpItem = m_lpSim->FindByID(strID, FALSE);
@@ -1193,7 +1195,7 @@ namespace AnimatGUI
 						{
 							if(m_lpSim->WaitForSimulationBlock())
 							{
-								BOOL bVal = lpParent->AddItem(strItemType, strXml, bThrowError);
+								BOOL bVal = lpParent->AddItem(strItemType, strXml, bThrowError, bNoInit);
 
 								m_lpSim->UnblockSimulation();
 

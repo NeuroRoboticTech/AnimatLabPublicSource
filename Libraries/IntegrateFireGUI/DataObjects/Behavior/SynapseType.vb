@@ -147,9 +147,9 @@ Namespace DataObjects.Behavior
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
             If Not Me.NeuralModule Is Nothing Then
-                Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID, "SynapseType", Me.ID, Me.GetSimulationXml("SynapseType"), bThrowError)
+                Util.Application.SimulationInterface.AddItem(Me.NeuralModule.ID, "SynapseType", Me.ID, Me.GetSimulationXml("SynapseType"), bThrowError, bDoNotInit)
                 InitializeSimulationReferences()
             End If
         End Sub

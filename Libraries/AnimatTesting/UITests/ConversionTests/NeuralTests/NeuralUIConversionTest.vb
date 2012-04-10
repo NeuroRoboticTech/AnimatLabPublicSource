@@ -1129,7 +1129,7 @@ Namespace UITests
                     ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.1 uS)", "SynapseType"}, 500)
                     ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\NMDA type", "MaxRelativeConductance", "10 u"})
                     ExecuteActiveDialogMethod("ClickOkButton", Nothing)
-                    AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\Neural Subsystem\3", "Stimulus_C", "Stimulus_1")
+                    AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\Neural Subsystem\3", "Stimulus_C") ', "Stimulus_1"
                     ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "StartTime", "20 m"})
                     ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "EndTime", "170 m"})
                     ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "CurrentOn", "5 n"})
@@ -1174,7 +1174,7 @@ Namespace UITests
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_Hebbian_")
 
-                    AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\Neural Subsystem\1", "Stimulus_D", "Stimulus_2")
+                    AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\Neural Subsystem\1", "Stimulus_D") ', "Stimulus_2"
                     ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_D", "StartTime", "110 m"})
                     ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_D", "EndTime", "160 m"})
                     ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_D", "CurrentOn", "10 n"})
@@ -1520,6 +1520,7 @@ Namespace UITests
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.1 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_1ms_")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.2 m"})
 
                     'Change the time step of the firing rate neural sim to 0.5 ms, physics time step to 0.1 ms
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.5 m"})
@@ -1604,11 +1605,11 @@ Namespace UITests
                     DeletePart("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1\A", "Delete Link")
                     DeletePart("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2_B\F2", "Delete Link")
 
-                    If CBool(ExecuteMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1"})) Then
+                    If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1"})) Then
                         Throw New System.Exception("A_1 adapter was not deleted")
                     End If
 
-                    If CBool(ExecuteMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2_B"})) Then
+                    If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2_B"})) Then
                         Throw New System.Exception("2_B adapter was not deleted")
                     End If
                     RunSimulationWaitToEnd()
@@ -1630,8 +1631,8 @@ Namespace UITests
                     AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F1", _
                                       "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\OP", "", "", False)
 
-                    If CBool(ExecuteMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2"})) Then
-                        Throw New System.Exception("2 adapter was not deleted")
+                    If Not CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2"})) Then
+                        Throw New System.Exception("2 adapter was not added")
                     End If
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Name", "1_B"})
 
@@ -1678,7 +1679,7 @@ Namespace UITests
                     'Change linked item to neuron in different module. Verify synapse deleted.
                     ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\OP", _
                                                                   "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A"})
-                    If CBool(ExecuteMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F2\F2 (100 nA)"})) Then
+                    If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F2\F2 (100 nA)"})) Then
                         Throw New System.Exception("2 adapter was not deleted")
                     End If
                     RunSimulationWaitToEnd()
@@ -1691,14 +1692,18 @@ Namespace UITests
 
                     Dim aryMaxErrors As New Hashtable
                     aryMaxErrors.Add("Time", 0.001)
-                    aryMaxErrors.Add("Avm", 0.0001)
-                    aryMaxErrors.Add("Bvm", 0.0001)
-                    aryMaxErrors.Add("1vm", 0.0001)
-                    aryMaxErrors.Add("2vm", 0.0001)
-                    aryMaxErrors.Add("1FF", 0.01)
-                    aryMaxErrors.Add("2FF", 0.01)
-                    aryMaxErrors.Add("1Ia", 0.0000000001)
-                    aryMaxErrors.Add("BIa", 0.0000000001)
+                    aryMaxErrors.Add("S1I1Vm", 0.0001)
+                    aryMaxErrors.Add("S1I2Vm", 0.0001)
+                    aryMaxErrors.Add("S1F1Vm", 0.0001)
+                    aryMaxErrors.Add("S1F2Vm", 0.0001)
+                    aryMaxErrors.Add("S1F1FF", 0.01)
+                    aryMaxErrors.Add("S1F2FF", 0.01)
+                    aryMaxErrors.Add("S2F4", 0.01)
+                    aryMaxErrors.Add("S2F1", 0.01)
+                    aryMaxErrors.Add("S3F1", 0.01)
+                    aryMaxErrors.Add("S1F1Ia", 0.0000000001)
+                    aryMaxErrors.Add("S1I2Ia", 0.0000000001)
+                    aryMaxErrors.Add("S2I2", 0.0001)
                     aryMaxErrors.Add("default", 0.0001)
 
                     m_strProjectName = "TestCopyPasteCut"
@@ -1712,18 +1717,324 @@ Namespace UITests
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
 
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem", "Name", "S1"})
+                    ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1"}, 2000)
+                    AddBehavioralNode("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1", _
+                                      "AnimatGUI.DataObjects.Behavior.Nodes.OffPage", New Point(316, 114), "S1OP1")
+                    ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1OP1", _
+                                                                  "Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I2"})
+                    AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1", _
+                                       "Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1OP1", "", "", False)
 
-                    'Copy tests
-                    '1. copy B, OP, F1, F2, 1_B and liks to new subsystem. Veryify that new B gets stim from new F1/F2 by disabling adapters. Add some params to data file.
-                    '2. Delete sub. Veryify everything deleted and removed from system and chart.
-                    '3. Create new sub, Copy OP, F1, F2, 1_B and links to new subsystem. Verify that old B gets stim from both old F1/F2 and new ones by disabling adapters. Add some params to data file.
-                    '4. delete sub. Verif new nodes input gone, but old node input remains.
-                    '5. Cut B, OP, F1, F2, 1_B and links to new subsystem. Verify old system still works and charts correctly.
-                    '6. Copy B, OP, F1, F2 and 1_B back to old subsystem without links. Verify that they do not affect old system, and are not interconnected now. Also, verify adapter not copied over.
+                    If Not CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\2"})) Then
+                        Throw New System.Exception("2 adapter was not added")
+                    End If
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\2", "Name", "S1F1_S1I2"})
+
+                    If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\2"})) Then
+                        Throw New System.Exception("S1F1_S1I2 adapter was not renamed correctly. 2 node still found")
+                    End If
+                    If Not CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1_S1I2"})) Then
+                        Throw New System.Exception("S1F1_S1I2 adapter was not renamed correctly.")
+                    End If
+                    If Not CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1_S1I2\S1F1"})) Then
+                        Throw New System.Exception("S1F1 link for the S1F1_S1I2 adapter was not found.")
+                    End If
+                    If Not CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I2\S1F1_S1I2"})) Then
+                        Throw New System.Exception("S1F1_S1I2 link for the S1I2 node was not found.")
+                    End If
+
+                    'Now change the name of the S1F2 neuron to S1F4 and verify that the names changed correctly in the treeview.
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F2", "Name", "S1F4"})
+
+                    If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F2"})) Then
+                        Throw New System.Exception("S1F4 node was not renamed correctly. S1F2 node still found")
+                    End If
+                    If Not CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F4"})) Then
+                        Throw New System.Exception("S1F4 node was not renamed correctly.")
+                    End If
+                    If Not CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1\S1F4 (100 nA)"})) Then
+                        Throw New System.Exception("S1F4->S1F1 link was not renamed correctly.")
+                    End If
+
+
+                    'Change poly gains.
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1_S1I2", "Gain"}, 500)
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"A", "0 "})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"B", "0 "})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"C", "10 n"})
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"D", "0 "})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterOffpageAdded_")
+
+                    '1. copy S1F1, S1F4 and liks to new subsystem. Veryify that new S1F4 gets stim different than S2F4.
+                    TestCCP_CopyF1F4(aryMaxErrors)
+
+                    '2. copy S1I2, S1OP1, S1F1, S1F4, S1F1_S1I2 and liks to new subsystem. Veryify that new S1I2 gets stim from new S1F1/S1F2 by disabling adapters. Add some params to data file.
+                    TestCCP_CopyF1F4OPI2(aryMaxErrors)
+
+                    '3. Copy S2 subsystem as S3 and verify everything connect correctly.
+                    TestCCP_CopyS2ToS3(aryMaxErrors)
+
+                    '4. Cut B, S1OP1, S1F1, S1F2, S1F1_S1I2 and links to new subsystem. Verify old system still works and charts correctly. Verify charts and stims deleted and then readd.
+                    TestCCP_CutAllToS2(aryMaxErrors)
+
+                End Sub
+
+                Protected Sub TestCCP_CopyF1F4(ByVal aryMaxErrors As Hashtable)
 
                     'Add subsystem.
-                    AddBehavioralNode("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem", _
-                                      "AnimatGUI.DataObjects.Behavior.Nodes.Subsystem", New Point(316, 30), "Sub")
+                    AddBehavioralNode("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1", _
+                                      "AnimatGUI.DataObjects.Behavior.Nodes.Subsystem", New Point(316, 30), "S2")
+
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1", False})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F4", True})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1\S1F4 (100 nA)", True})
+                    ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"})
+                    ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2"}, 2000)
+                    ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F1", "Name", "S2F1"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F4", "Name", "S2F4"})
+
+                    'Verify that the pasted nodes have the same locations on the page as the copied ones since we did a paste in place.
+                    Dim ptF1ALoc As PointF = DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1", "Location"), PointF)
+                    Dim ptF4ALoc As PointF = DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F4", "Location"), PointF)
+                    Dim ptF1BLoc As PointF = DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2F1", "Location"), PointF)
+                    Dim ptF4BLoc As PointF = DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2F4", "Location"), PointF)
+
+                    If ptF1ALoc <> ptF1BLoc OrElse ptF4ALoc <> ptF4BLoc Then
+                        Throw New System.Exception("Locations did not match after paste in place.")
+                    End If
+
+                    'Add these neurons to the chart.
+                    ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\NeuralData"}, 2000)
+                    ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+                    AddItemToChart("Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S2F1")
+                    AddItemToChart("Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S2F4")
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "PasteF1F4_")
+
+                    AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\S1\S2\S2F4", "Stim_S2F4")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S2F4", "EndTime", "0.1 "})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S2F4", "CurrentOn", "1 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "StimS2F4_")
+
+                    'Delete pasted items and make sure they are gone.
+                    DeletePart("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2F1", "Delete Node")
+                    Threading.Thread.Sleep(1000)
+                    If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2F1"})) Then
+                        Throw New System.Exception("S2F1 node was not removed correctly.")
+                    End If
+                    If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2F1\S2F4 (100 nA)"})) Then
+                        Throw New System.Exception("S2F4->S2F1 link was not removed correctly.")
+                    End If
+                    If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Tool Viewers\NeuralData\LineChart\Y Axis 6\S2F1"})) Then
+                        Throw New System.Exception("S2F1 chart node was not removed correctly.")
+                    End If
+
+                    DeletePart("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2F4", "Delete Node")
+                    Threading.Thread.Sleep(200)
+                    If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2F4"})) Then
+                        Throw New System.Exception("S2F4 node was not removed correctly.")
+                    End If
+                    If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Tool Viewers\NeuralData\LineChart\Y Axis 6\S2F4"})) Then
+                        Throw New System.Exception("S2F4 chart node was not removed correctly.")
+                    End If
+                    If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Stimuli\Stim_S2F4"})) Then
+                        Throw New System.Exception("Stim_S2F4 stimulus was not removed correctly.")
+                    End If
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterOffpageAdded_")
+
+                End Sub
+
+                Protected Sub TestCCP_CopyF1F4OPI2(ByVal aryMaxErrors As Hashtable)
+
+                    ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1"}, 2000)
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1", False})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F4", True})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1\S1F4 (100 nA)", True})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1OP1", True})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1_S1I2", True})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I2\S1F1_S1I2", True})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1_S1I2\S1F1", True})
+                    ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"})
+                    ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2"}, 2000)
+                    ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F1", "Name", "S2F1"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F4", "Name", "S2F4"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2", "Name", "S2OP1"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F1_S1I2", "Name", "S2F1_S1I2"})
+
+                    'Add these neurons to the chart.
+                    ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\NeuralData"}, 2000)
+                    ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+                    AddItemToChart("Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S2F1")
+
+                    AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\S1\S2\S2F4", "Stim_S2F4")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S2F4", "EndTime", "0.1 "})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S2F4", "CurrentOn", "10 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "StimS2F4_2_")
+
+                    'Switch S2OP1 to point to S1I1 instead.
+                    ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2OP1", _
+                                               "Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I1"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "SwitchS2OP1ToS1I1_")
+
+                End Sub
+
+                Protected Sub TestCCP_CopyS2ToS3(ByVal aryMaxErrors As Hashtable)
+
+                    ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1"}, 2000)
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2", False})
+                    ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"})
+                    ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2"}, 2000)
+                    ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2", "Name", "S3"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S3\S2F1", "Name", "S3F1"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S3\S2F4", "Name", "S3F4"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S3\S1I1", "Name", "S3OP1"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S3\S2F1_S1I2", "Name", "S3F1_S1I2"})
+
+                    'Add these neurons to the chart.
+                    ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\NeuralData"}, 2000)
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\NeuralData\LineChart\Y Axis 6", False})
+                    AddItemToChart("Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S3\Nodes\S3F1")
+
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "CopyS3_")
+
+                    AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\S1\S2\S3\S3F4", "Stim_S3F4")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S3F4", "StartTime", "0.1 "})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S3F4", "EndTime", "0.2 "})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S3F4", "CurrentOn", "10 n"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "StimS3F4_")
+
+                    ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S3"}, 2000)
+                    'Switch S3OP1 to point to S2F1 instead.
+                    ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S3\S3OP1", _
+                                               "Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2F1"})
+
+                    ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S3\S3F1_S1I2", "Gain"}, 500)
+                    ExecuteActiveDialogMethod("SetGainProperty", New Object() {"C", "20 n"})
+                    ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S3_S3OP1_To_S2F1_")
+
+                    'Delete S2 and verify output.
+                    ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1"}, 2000)
+                    DeletePart("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2", "Delete Node")
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DeleteS2_")
+
+                End Sub
+
+                Protected Sub TestCCP_CutAllToS2(ByVal aryMaxErrors As Hashtable)
+
+                    'Add subsystem.
+                    AddBehavioralNode("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1", _
+                                      "AnimatGUI.DataObjects.Behavior.Nodes.Subsystem", New Point(316, 30), "S2")
+
+                    ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1"}, 2000)
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1", False})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F4", True})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1\S1F4 (100 nA)", True})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1OP1", True})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1_S1I2", True})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I2\S1F1_S1I2", True})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1_S1I2\S1F1", True})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I1", True})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I2", True})
+                    DeleteSelectedParts("Delete Group", True)
+                    ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2"}, 2000)
+                    ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2", "Name", "S1I2_Temp"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2", "Name", "S1OP1"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2_Temp", "Name", "S1I2"})
+
+                    If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Tool Viewers\NeuralData\LineChart\Y Axis 1\S1I1Vm"})) Then
+                        Throw New System.Exception("S1I1Vm chart node was not removed correctly.")
+                    End If
+                    If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Tool Viewers\NeuralData\LineChart\Y Axis 2\S1F1Vm"})) Then
+                        Throw New System.Exception("S1F1Vm chart node was not removed correctly.")
+                    End If
+                    If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Tool Viewers\NeuralData\LineChart\Y Axis 6\S2F1"})) Then
+                        Throw New System.Exception("S2F1 chart node was not removed correctly.")
+                    End If
+                    If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Stimuli\Stim_S1F2"})) Then
+                        Throw New System.Exception("Stim_S1F2 stimulus was not removed correctly.")
+                    End If
+                    If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Stimuli\Stim_S1I1"})) Then
+                        Throw New System.Exception("Stim_S1I1 stimulus was not removed correctly.")
+                    End If
+
+                    'Add these neurons to the chart.
+                    ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\NeuralData"}, 2000)
+                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 1", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1I1", "S1I1", "S1I1Vm")
+                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 1", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1I2", "S1I2", "S1I2Vm")
+
+                    ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 2", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F1", "S1F1", "S1F1Vm", "FiringRateGUI.DataObjects.Behavior.Neurons.Normal.DataTypes.MembraneVoltage")
+                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 2", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F4", "S1F4", "S1F2Vm", "FiringRateGUI.DataObjects.Behavior.Neurons.Normal.DataTypes.MembraneVoltage")
+
+                    ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 3", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F1", "S1F1", "S1F1Ia", "FiringRateGUI.DataObjects.Behavior.Neurons.Normal.DataTypes.AdapterCurrent")
+                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 3", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1I2", "S1I2", "S1I2Ia", "IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking.DataTypes.AdapterCurrent")
+
+                    ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 4", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F1", "S1F1", "S1F1FF")
+                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 4", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F4", "S1F4", "S1F2FF")
+
+                    AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\S1\S2\S1F4", "Stim_S1F4")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F4", "StartTime", "0 "})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F4", "EndTime", "1 "})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F4", "ValueType", "Equation"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F4", "Equation", "20*t"})
+
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterOffpageAdded_")
+
+                    'Copy a bunch of the nodes back without links. Ensure that the adapter does not get copied, and that none of the new nodes interact with the old ones.
+                    ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2"}, 2000)
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F1", False})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F4", True})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F1_S1I2", True})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I1", True})
+                    ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2", True})
+                    ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"})
+                    ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1"}, 2000)
+                    ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"})
+
+                    If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1_S1I2"})) Then
+                        Throw New System.Exception("S1F1_S1I2 node was incorrectly copied over to S1.")
+                    End If
+
+                    AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\S1\S1F1", "Stim_S1F1")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F1", "StartTime", "0.1 "})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F1", "EndTime", "0.2 "})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F1", "CurrentOn", "10 n"})
+                    AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\S1\S1F4", "StimB_S1F4")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\StimB_S1F4", "StartTime", "0.1 "})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\StimB_S1F4", "EndTime", "0.2 "})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\StimB_S1F4", "CurrentOn", "10 n"})
+                    AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\S1\S1I1", "Stim_S1I1")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1I1", "StartTime", "0.1 "})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1I1", "EndTime", "0.2 "})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1I1", "CurrentOn", "10 n"})
+                    AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\S1\S1I2", "Stim_S1I2")
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1I2", "StartTime", "0.1 "})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1I2", "EndTime", "0.2 "})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1I2", "CurrentOn", "10 n"})
+
+                    'This should have no effect on the old neurons.
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterOffpageAdded_")
 
                 End Sub
 

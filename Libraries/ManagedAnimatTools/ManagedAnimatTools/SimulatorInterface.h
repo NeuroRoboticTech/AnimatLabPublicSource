@@ -103,7 +103,7 @@ namespace AnimatGUI
 
 #pragma region DataAccess
 
-			virtual System::Boolean AddItem(String ^sParentID, String ^sItemType, String ^sID, String ^sXml, System::Boolean bThrowError);
+			virtual System::Boolean AddItem(String ^sParentID, String ^sItemType, String ^sID, String ^sXml, System::Boolean bThrowError, System::Boolean bDoNotInit);
 			virtual System::Boolean RemoveItem(String ^sParentID, String ^sItemType, String ^sID, System::Boolean bThrowError);
 			virtual System::Boolean SetData(String ^sID, String ^sDataType, String ^sValue, System::Boolean bThrowError);
 			virtual System::Boolean FindItem(String ^sID, System::Boolean bThrowError);

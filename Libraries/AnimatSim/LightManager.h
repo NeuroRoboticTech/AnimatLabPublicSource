@@ -55,7 +55,7 @@ namespace AnimatSim
 
 #pragma region DataAccesMethods
 
-			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE);
+			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
 			virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
 			virtual int FindChildListPos(string strID, BOOL bThrowError = TRUE);
 

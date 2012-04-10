@@ -31,17 +31,20 @@ namespace AnimatSim
 			PhysicsNeuralModule();
 			virtual ~PhysicsNeuralModule();
 
+			virtual float TimeStep();
+			virtual void TimeStep(float fltVal);
+
 			/**
 			\brief	Gets the module name.
 		
 			\author	dcofer
 			\date	3/29/2011
 		
-			\return	.
+			\return	module name.
 			**/
 			virtual string ModuleName() {return "PhysicsNeuralModule";};
 
-			virtual void AddAdapter(string strXml);
+			virtual void AddAdapter(string strXml, BOOL bDoNotInit);
 			virtual void RemoveAdapter(string strID);
 			virtual int FindAdapterListPos(string strID, BOOL bThrowError = TRUE);
 
@@ -52,7 +55,7 @@ namespace AnimatSim
 
 	#pragma region DataAccesMethods
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
-			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE);
+			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
 			virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
 	#pragma endregion
 

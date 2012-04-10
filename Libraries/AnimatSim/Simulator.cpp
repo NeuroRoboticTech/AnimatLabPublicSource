@@ -3579,7 +3579,7 @@ void Simulator::AddOdorType(OdorType *lpOdorType)
 	}
 }
 
-void Simulator::AddOdorType(string strXml)
+void Simulator::AddOdorType(string strXml, BOOL bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -3587,7 +3587,9 @@ void Simulator::AddOdorType(string strXml)
 	oXml.FindChildElement("OdorType");
 
 	OdorType *lpType = LoadOdorType(oXml);
-	lpType->Initialize();
+
+	if(!bDoNotInit)
+		lpType->Initialize();
 }
 
 void Simulator::RemoveOdorType(string strID, BOOL bThrowError)
@@ -3750,7 +3752,7 @@ BOOL Simulator::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
-BOOL Simulator::AddItem(string strItemType, string strXml, BOOL bThrowError)
+BOOL Simulator::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
@@ -3778,11 +3780,11 @@ BOOL Simulator::AddItem(string strItemType, string strXml, BOOL bThrowError)
 	}
 	else if(strType == "ODORTYPE")
 	{
-		AddOdorType(strXml);
+		AddOdorType(strXml, bDoNotInit);
 		return TRUE;
 	}
 	else if(strType == "MATERIALTYPE" || strType == "MATERIALPAIR")
-		return m_oMaterialMgr.AddItem(strItemType, strXml, bThrowError);
+		return m_oMaterialMgr.AddItem(strItemType, strXml, bThrowError, bDoNotInit);
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)

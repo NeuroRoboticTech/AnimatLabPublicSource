@@ -54,6 +54,7 @@ Namespace UITests
             End Sub
 
             Protected Overridable Sub TestConversionProject(ByVal strDataPrefix As String, ByVal aryMaxErrors As Hashtable, Optional iMaxRows As Integer = -1)
+                Debug.WriteLine("TestConversionProject. DataPrefix: " & strDataPrefix & ", MaxErrors: " & Util.ParamsToString(aryMaxErrors) & ", MaxRows: " & iMaxRows)
 
                 SetWindowsToOpen()
 
@@ -76,7 +77,9 @@ Namespace UITests
             End Sub
 
             Protected Overridable Sub ConvertProject()
-                CleanupProjectDirectory()
+                Debug.WriteLine("ConvertProject")
+
+                CleanupConversionProjectDirectory()
 
                 StartExistingProject()
 
@@ -96,7 +99,7 @@ Namespace UITests
                 Threading.Thread.Sleep(3000)
             End Sub
 
-            Protected Overrides Sub CleanupProjectDirectory()
+            Protected Overridable Sub CleanupConversionProjectDirectory()
                 'Make sure any left over project directory is cleaned up before starting the test.
                 If m_strRootFolder.Length > 0 AndAlso m_strProjectPath.Length > 0 AndAlso m_strProjectName.Length > 0 Then
                     DeleteDirectory(m_strRootFolder & m_strProjectPath & "\" & m_strProjectName)
@@ -114,6 +117,7 @@ Namespace UITests
                                                                        ByVal dblJointRotY As Double, _
                                                                        ByVal dblJointRotZ As Double, _
                                                                        ByVal strOrientation As String)
+                Debug.WriteLine("ModifyJointRotationInProjectFile. Path: '" & strPath & "', dblJointRotX: " & dblJointRotX & ", dblJointRotY: " & dblJointRotY & ", dblJointRotZ: " & dblJointRotZ & ", strOrientation: " & strOrientation)
 
                 Dim strFile As String = m_strRootFolder & strPath & "\Structure_1.astl"
                 Dim xnProject As New XmlDom()
@@ -137,6 +141,7 @@ Namespace UITests
                                                                         ByVal dblDamping As Single, _
                                                                         ByVal dblRestitution As Single, _
                                                                         ByVal dblStiffness As Single)
+                Debug.WriteLine("ModifyJointConstraintsInProjectFile. Path: '" & strPath & "', dblMin: " & dblMin & ", dblMax: " & dblMax & ", bRotational: " & bRotational & ", dblDamping: " & dblDamping & ", dblRestitution: " & dblRestitution & ", dblStiffness: " & dblStiffness)
 
                 Dim strFile As String = m_strRootFolder & strPath & "\Structure_1.astl"
                 Dim xnProject As New XmlDom()
@@ -174,6 +179,7 @@ Namespace UITests
                                                                        ByVal dblJointRotY As Double, _
                                                                        ByVal dblJointRotZ As Double, _
                                                                        ByVal strOrientation As String)
+                Debug.WriteLine("ModifyRootRotationInProjectFile. Path: '" & strPath & "', dblJointRotX: " & dblJointRotX & ", dblJointRotY: " & dblJointRotY & ", dblJointRotZ: " & dblJointRotZ & ", strOrientation: " & strOrientation)
 
                 Dim strFile As String = m_strRootFolder & strPath & "\Structure_1.astl"
                 Dim xnProject As New XmlDom()
@@ -193,6 +199,7 @@ Namespace UITests
                                                                        ByVal dblJointRotY As Double, _
                                                                        ByVal dblJointRotZ As Double, _
                                                                        ByVal strOrientation As String)
+                Debug.WriteLine("ModifyRootRotationInProjectFile. Path: '" & strPath & "', strChild1ID: " & strChild1ID & ", dblJointRotY: " & dblJointRotX & ", dblJointRotY: " & dblJointRotY & ", dblJointRotZ: " & dblJointRotZ & ", strOrientation: " & strOrientation)
 
                 Dim strFile As String = m_strRootFolder & strPath & "\Structure_1.astl"
                 Dim xnProject As New XmlDom()

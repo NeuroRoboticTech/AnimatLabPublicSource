@@ -129,6 +129,7 @@ Public Class Util
     End Function
 
     Public Shared Sub CopyDirectory(ByVal strOrigFolder As String, ByVal strNewFolder As String)
+        Debug.WriteLine("Attempting to copy directory. Orig: " & strOrigFolder & ", New: " & strNewFolder)
 
         If Not Directory.Exists(strNewFolder) Then
             Directory.CreateDirectory(strNewFolder)
@@ -157,5 +158,35 @@ Public Class Util
         End If
 
     End Sub
+
+    Public Shared Function ParamsToString(ByVal aryParams() As Object) As String
+
+        Dim strParams As String = ""
+        If Not aryParams Is Nothing Then
+            For Each oParam In aryParams
+                strParams = oParam.ToString & ", "
+            Next
+            If strParams.Length >= 2 Then
+                strParams = strParams.Substring(0, strParams.Length - 2)
+            End If
+        End If
+
+        Return strParams
+    End Function
+
+    Public Shared Function ParamsToString(ByVal aryParams As Hashtable) As String
+
+        Dim strParams As String = ""
+        If Not aryParams Is Nothing Then
+            For Each oParam In aryParams
+                strParams = oParam.ToString & ", "
+            Next
+            If strParams.Length >= 2 Then
+                strParams = strParams.Substring(0, strParams.Length - 2)
+            End If
+        End If
+
+        Return strParams
+    End Function
 
 End Class

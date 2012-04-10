@@ -46,7 +46,7 @@ Namespace UITests
                 AddChart("Line Chart")
 
                 'Select the Chart axis
-                ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1"})
+                ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1", False})
 
                 'Add root to chart
                 AddItemToChart(m_strStruct1Name & "Body Plan\Root")

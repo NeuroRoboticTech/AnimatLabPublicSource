@@ -2,7 +2,7 @@
 Public Class SimulatorInterfaceMock
     Implements ISimulatorInterface
 
-    Public Function AddItem(sParentID As String, sItemType As String, sID As String, sXml As String, bThrowError As Boolean) As Boolean Implements ISimulatorInterface.AddItem
+    Public Function AddItem(sParentID As String, sItemType As String, sID As String, sXml As String, bThrowError As Boolean, ByVal bDoNotInit As Boolean) As Boolean Implements ISimulatorInterface.AddItem
         Return True
     End Function
 

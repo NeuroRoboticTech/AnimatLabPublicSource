@@ -127,13 +127,13 @@ namespace AnimatSim
 			virtual void Load(CStdXml &oXml);
 
 			virtual void AddColumn(DataColumn *lpColumn);
-			virtual void AddColumn(string strXml);
+			virtual void AddColumn(string strXml, BOOL bDoNotInit);
 			virtual void RemoveColumn(string strID, BOOL bThrowError = TRUE);
 			virtual DataColumn *FindColumn(string strID, BOOL bThrowError = TRUE);
 
 #pragma region DataAccesMethods
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
-			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE);
+			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
 			virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
 #pragma endregion
 

@@ -70,6 +70,19 @@ catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of PhysicsNeuralModule\r\n", "", -1, FALSE, TRUE);}
 }
 
+//The physics neural module should always return and be set to the physics time step of the simulation.
+float PhysicsNeuralModule::TimeStep()
+{
+	if(m_lpSim)
+		return m_lpSim->PhysicsTimeStep();
+	return 0;
+}
+
+void PhysicsNeuralModule::TimeStep(float fltVal)
+{
+	if(m_lpSim)
+		NeuralModule::TimeStep(m_lpSim->PhysicsTimeStep());
+}
 
 void PhysicsNeuralModule::Kill(BOOL bState)
 {
@@ -123,7 +136,7 @@ BOOL PhysicsNeuralModule::SetData(string strDataType, string strValue, BOOL bThr
 	return FALSE;
 }
 
-void PhysicsNeuralModule::AddAdapter(string strXml)
+void PhysicsNeuralModule::AddAdapter(string strXml, BOOL bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -131,7 +144,8 @@ void PhysicsNeuralModule::AddAdapter(string strXml)
 	oXml.FindChildElement("Adapter");
 
 	Adapter *lpAdapter = LoadAdapter(oXml);
-	lpAdapter->Initialize();
+	if(!bDoNotInit)
+		lpAdapter->Initialize();
 }
 
 void PhysicsNeuralModule::RemoveAdapter(string strID)
@@ -156,7 +170,7 @@ int PhysicsNeuralModule::FindAdapterListPos(string strID, BOOL bThrowError)
 	return -1;
 }
 
-BOOL PhysicsNeuralModule::AddItem(string strItemType, string strXml, BOOL bThrowError)
+BOOL PhysicsNeuralModule::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
@@ -164,7 +178,7 @@ BOOL PhysicsNeuralModule::AddItem(string strItemType, string strXml, BOOL bThrow
 	{
 		try
 		{
-			AddAdapter(strXml);
+			AddAdapter(strXml, bDoNotInit);
 			return TRUE;
 		}
 		catch(CStdErrorInfo oError)

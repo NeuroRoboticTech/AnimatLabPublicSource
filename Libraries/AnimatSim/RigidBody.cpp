@@ -1194,7 +1194,7 @@ BOOL RigidBody::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
-BOOL RigidBody::AddItem(string strItemType, string strXml, BOOL bThrowError)
+BOOL RigidBody::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
@@ -1212,7 +1212,7 @@ BOOL RigidBody::AddItem(string strItemType, string strXml, BOOL bThrowError)
 
 	if(strType == "ODOR")
 	{
-		AddOdor(strXml);
+		AddOdor(strXml, bDoNotInit);
 		return TRUE;
 	}
 
@@ -1622,7 +1622,7 @@ void RigidBody::AddOdor(Odor *lpOdor)
 }
 
 
-void RigidBody::AddOdor(string strXml)
+void RigidBody::AddOdor(string strXml, BOOL bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1630,7 +1630,9 @@ void RigidBody::AddOdor(string strXml)
 	oXml.FindChildElement("Odor");
 
 	Odor *lpOdor = LoadOdor(oXml);
-	lpOdor->Initialize();
+
+	if(!bDoNotInit)
+		lpOdor->Initialize();
 }
 
 void RigidBody::RemoveOdor(string strID, BOOL bThrowError)

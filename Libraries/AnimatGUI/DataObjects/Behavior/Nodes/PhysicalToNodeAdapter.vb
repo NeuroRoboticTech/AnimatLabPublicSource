@@ -52,7 +52,7 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 
-            If Not m_bEnabled OrElse Not m_bIsInitialized Then
+            If Not m_bIsInitialized Then
                 Return
             End If
 

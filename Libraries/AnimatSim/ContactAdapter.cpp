@@ -118,7 +118,7 @@ void ContactAdapter::TargetModule(string strModule)
 }
 
 
-void ContactAdapter::AddFieldPair(string strXml)
+void ContactAdapter::AddFieldPair(string strXml, BOOL bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -126,7 +126,8 @@ void ContactAdapter::AddFieldPair(string strXml)
 	oXml.FindChildElement("FieldPair");
 
 	ReceptiveFieldPair *lpPair = LoadFieldPair(oXml);
-	lpPair->Initialize();
+	if(!bDoNotInit)
+		lpPair->Initialize();
 }
 
 void ContactAdapter::RemoveFieldPair(string strID, BOOL bThrowError)
@@ -170,13 +171,13 @@ void ContactAdapter::Initialize()
 	}
 }
 
-BOOL ContactAdapter::AddItem(string strItemType, string strXml, BOOL bThrowError)
+BOOL ContactAdapter::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "FIELDPAIR")
 	{
-		AddFieldPair(strXml);
+		AddFieldPair(strXml, bDoNotInit);
 		return TRUE;
 	}
 	

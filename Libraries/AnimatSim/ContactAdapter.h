@@ -34,7 +34,7 @@ namespace AnimatSim
 
 			ReceptiveFieldPair *LoadFieldPair(CStdXml &oXml);
 
-			virtual void ContactAdapter::AddFieldPair(string strXml);
+			virtual void ContactAdapter::AddFieldPair(string strXml, BOOL bDoNotInit);
 			virtual void ContactAdapter::RemoveFieldPair(string strID, BOOL bThrowError = TRUE);
 			virtual int ContactAdapter::FindFieldPairListPos(string strID, BOOL bThrowError = TRUE);
 
@@ -52,7 +52,7 @@ namespace AnimatSim
 			
 #pragma region DataAccesMethods
 
-			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE);
+			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
 			virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
 
 #pragma endregion

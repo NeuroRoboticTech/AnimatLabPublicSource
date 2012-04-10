@@ -1162,8 +1162,10 @@ void Neuron::CalcUpdate(IntegrateFireNeuralModule *lpNS)
 	//If HH flag is set then do not do integrate and fire portion, but instead just use basic equation of dividing
 	//currents by capacitance.
 	m_dGK=m_dGK*m_dDGK+m_bSpike*m_dAHPAmp;		// cummulative AHP cond
-	m_dGTot=1+GS+m_dGK+gCa+m_dElecSynCond+m_dNonSpikingSynCond; m_fltGTotal = m_dGTot;	// total membrane cond
+	m_dGTot=1+GS+m_dGK+gCa+m_dElecSynCond+m_dNonSpikingSynCond; // total membrane cond
 	DCE=exp(-m_dGTot*m_dDT/m_dTimeConst);
+	m_fltGTotal = m_dGTot/(1-DCE);
+
 	if(!lpNS->HH())
 	{
 		//E=(m_dMemPot-m_dRestingPot)*DCE+
@@ -1494,7 +1496,7 @@ BOOL Neuron::SetData(string strDataType, string strValue, BOOL bThrowError)
 
 \param	strXml	The xml to load. 
 **/
-void Neuron::AddIonChannel(string strXml)
+void Neuron::AddIonChannel(string strXml, BOOL bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1502,7 +1504,9 @@ void Neuron::AddIonChannel(string strXml)
 	oXml.FindChildElement("IonChannel");
 
 	IonChannel *lpChannel = LoadIonChannel(oXml);
-	lpChannel->Initialize();
+
+	if(!bDoNotInit)
+		lpChannel->Initialize();
 }
 
 /**
@@ -1520,13 +1524,13 @@ void Neuron::RemoveIonChannel(string strID, BOOL bThrowError)
 	m_aryIonChannels.RemoveAt(iPos);
 }
 
-BOOL Neuron::AddItem(string strItemType, string strXml, BOOL bThrowError)
+BOOL Neuron::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "IONCHANNEL")
 	{
-		AddIonChannel(strXml);
+		AddIonChannel(strXml, bDoNotInit);
 		return TRUE;
 	}
 

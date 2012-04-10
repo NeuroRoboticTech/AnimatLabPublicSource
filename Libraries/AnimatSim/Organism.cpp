@@ -146,7 +146,7 @@ BOOL Organism::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
-BOOL Organism::AddItem(string strItemType, string strXml, BOOL bThrowError)
+BOOL Organism::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 

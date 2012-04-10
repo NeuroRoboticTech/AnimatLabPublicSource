@@ -64,9 +64,9 @@ Namespace DataObjects.Physical
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
             If Not m_doParent Is Nothing Then
-                Util.Application.SimulationInterface.AddItem(m_doParent.ID, "ReceptiveField", Me.ID, Me.GetSimulationXml("ReceptiveField"), bThrowError)
+                Util.Application.SimulationInterface.AddItem(m_doParent.ID, "ReceptiveField", Me.ID, Me.GetSimulationXml("ReceptiveField"), bThrowError, bDoNotInit)
                 InitializeSimulationReferences()
             End If
         End Sub

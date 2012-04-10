@@ -84,7 +84,7 @@ Public Interface ISimulatorInterface
 
 #Region "DataAccess"
 
-    Function AddItem(ByVal sParentID As String, ByVal sItemType As String, ByVal sID As String, ByVal sXml As String, ByVal bThrowError As Boolean) As Boolean
+    Function AddItem(ByVal sParentID As String, ByVal sItemType As String, ByVal sID As String, ByVal sXml As String, ByVal bThrowError As Boolean, ByVal bDoNotInit As Boolean) As Boolean
     Function RemoveItem(ByVal sParentID As String, ByVal sItemType As String, ByVal sID As String, ByVal bThrowError As Boolean) As Boolean
     Function SetData(ByVal sID As String, ByVal sDataType As String, ByVal sValue As String, ByVal bThrowError As Boolean) As Boolean
     Function FindItem(ByVal sID As String, ByVal bThrowError As Boolean) As Boolean

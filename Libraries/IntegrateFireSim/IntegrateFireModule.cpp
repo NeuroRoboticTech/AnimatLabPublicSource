@@ -1550,7 +1550,7 @@ BOOL IntegrateFireNeuralModule::SetData(string strDataType, string strValue, BOO
 
 \param	strXml	The string xml to load. 
 **/
-void IntegrateFireNeuralModule::AddNeuron(string strXml)
+void IntegrateFireNeuralModule::AddNeuron(string strXml, BOOL bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1585,7 +1585,7 @@ void IntegrateFireNeuralModule::RemoveNeuron(string strID, BOOL bThrowError)
 
 \param	strXml	The xml to load. 
 **/
-void IntegrateFireNeuralModule::AddSynapse(string strXml)
+void IntegrateFireNeuralModule::AddSynapse(string strXml, BOOL bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1604,7 +1604,7 @@ void IntegrateFireNeuralModule::AddSynapse(string strXml)
 
 \param	strXml	The xml to load. 
 **/
-void IntegrateFireNeuralModule::AddSynapseType(string strXml)
+void IntegrateFireNeuralModule::AddSynapseType(string strXml, BOOL bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -1673,23 +1673,23 @@ void IntegrateFireNeuralModule::RemoveSynapseType(string strID, BOOL bThrowError
 	}
 }
 
-BOOL IntegrateFireNeuralModule::AddItem(string strItemType, string strXml, BOOL bThrowError)
+BOOL IntegrateFireNeuralModule::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "NEURON")
 	{
-		AddNeuron(strXml);
+		AddNeuron(strXml, bDoNotInit);
 		return TRUE;
 	}
 	else if(strType == "SYNAPSE")
 	{
-		AddSynapse(strXml);
+		AddSynapse(strXml, bDoNotInit);
 		return TRUE;
 	}
 	else if(strType == "SYNAPSETYPE")
 	{
-		AddSynapseType(strXml);
+		AddSynapseType(strXml, bDoNotInit);
 		return TRUE;
 	}
 

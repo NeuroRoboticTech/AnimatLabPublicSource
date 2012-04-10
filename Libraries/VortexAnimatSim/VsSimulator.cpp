@@ -245,13 +245,13 @@ void VsSimulator::SetSimulationStabilityParams()
 {
 	if(m_uUniverse)
 	{
-		if(m_bCalcCriticalSimParams)
-		{
+	/*	if(m_bCalcCriticalSimParams)
+		{*/
 			VxReal halflife = 5;
 			m_uUniverse->getSolverParameters(0)->setConstraintLinearCompliance(m_fltLinearCompliance);
 			m_uUniverse->getSolverParameters(0)->setConstraintAngularCompliance(m_fltAngularCompliance);
 			m_uUniverse->setCriticalConstraintParameters(0, halflife);
-		}
+		/*}
 		else
 		{
 			m_uUniverse->getSolverParameters(0)->setConstraintLinearCompliance(m_fltLinearCompliance);
@@ -260,7 +260,7 @@ void VsSimulator::SetSimulationStabilityParams()
 			m_uUniverse->getSolverParameters(0)->setConstraintAngularCompliance(m_fltAngularCompliance);
 			m_uUniverse->getSolverParameters(0)->setConstraintAngularDamping(m_fltAngularDamping);
 			m_uUniverse->getSolverParameters(0)->setConstraintAngularKineticLoss(m_fltAngularKineticLoss);
-		}
+		}*/
 
 		TRACE_DETAIL("Reset simulation stability params\r\n");
 		TRACE_DETAIL("Angular Compliance: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintAngularCompliance()) + "\r\n");

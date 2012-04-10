@@ -28,26 +28,26 @@ Namespace UITests
 
                         If strPartType = m_strPartType Then
                             'Wait for the collision mesh dialog to show, fill it in and hit ok
-                            OpenDialogAndWait("SelectMesh", Nothing, Nothing)
+                            OpenDialogAndWait("Select Mesh", Nothing, Nothing)
                             ExecuteActiveDialogMethod("SetMeshParameters", New Object() {(m_strRootFolder & "\bin\Resources\" & m_strMeshFile), "Convex"})
                             ExecuteActiveDialogMethod("ClickOkButton", Nothing)
 
                             'Wait for the graphics mesh to show and hit ok.
-                            OpenDialogAndWait("SelectMesh", Nothing, Nothing)
+                            OpenDialogAndWait("Select Mesh", Nothing, Nothing)
                             ExecuteActiveDialogMethod("ClickOkButton", Nothing)
                         End If
 
                     End Sub
 
-                    Protected Overrides Sub ProcessExtraChildJointMethods(ByVal strPartType As String, ByVal strJointType As String)
+                    Protected Overrides Sub AfterAddChildPartJoint(ByVal strPartType As String, ByVal strJointType As String)
 
                         'Wait for the collision mesh dialog to show, fill it in and hit ok
-                        OpenDialogAndWait("SelectMesh", Nothing, Nothing)
+                        OpenDialogAndWait("Select Mesh", Nothing, Nothing)
                         ExecuteActiveDialogMethod("SetMeshParameters", New Object() {(m_strRootFolder & "\bin\Resources\" & m_strMeshFile), "Triangular"})
                         ExecuteActiveDialogMethod("ClickOkButton", Nothing)
 
                         'Wait for the graphics mesh to show and hit ok.
-                        OpenDialogAndWait("SelectMesh", Nothing, Nothing)
+                        OpenDialogAndWait("Select Mesh", Nothing, Nothing)
                         ExecuteActiveDialogMethod("ClickOkButton", Nothing)
                     End Sub
 

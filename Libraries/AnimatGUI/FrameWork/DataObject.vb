@@ -868,7 +868,7 @@ Namespace Framework
 
 #Region " Add-Remove to List Methods "
 
-        Public Overridable Sub AddToSim(ByVal bThrowError As Boolean)
+        Public Overridable Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
         End Sub
 
         Public Overridable Sub RemoveFromSim(ByVal bThrowError As Boolean)

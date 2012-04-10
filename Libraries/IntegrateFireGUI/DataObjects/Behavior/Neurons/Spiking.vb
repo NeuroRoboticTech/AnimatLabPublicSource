@@ -331,7 +331,7 @@ Namespace DataObjects.Behavior.Neurons
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("FiringFrequency", "Firing Frequency", "Hertz", "Hz", 0, 1000))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Threshold", "Threshold", "Volts", "V", -100, 100, ScaledNumber.enumNumericScale.milli, ScaledNumber.enumNumericScale.milli))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Spike", "Spike", "", "", 1, 0, ScaledNumber.enumNumericScale.None, ScaledNumber.enumNumericScale.None))
-                m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("GTotal", "Total Conductance", "Siemens", "S", 10, 0, ScaledNumber.enumNumericScale.micro, ScaledNumber.enumNumericScale.micro))
+                'm_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("GTotal", "Total Conductance", "Siemens", "S", 10, 0, ScaledNumber.enumNumericScale.micro, ScaledNumber.enumNumericScale.micro))
                 m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("E", "E", "Volts", "V", -100, 100, ScaledNumber.enumNumericScale.milli, ScaledNumber.enumNumericScale.milli))
                 m_thDataTypes.ID = "MembraneVoltage"
 

@@ -194,7 +194,7 @@ namespace FiringRateSim
 			\param [in,out]	lpSynapse	Pointer to the synapse to add. 
 			**/
 			virtual void AddSynapse(Synapse *lpSynapse);
-			virtual void AddSynapse(string strXml);
+			virtual void AddSynapse(string strXml, BOOL bDoNotInit);
 			virtual void RemoveSynapse(int iIndex);
 			virtual void RemoveSynapse(string strID, BOOL bThrowError = TRUE);
 			virtual Synapse *GetSynapse(int iIndex);
@@ -244,7 +244,7 @@ namespace FiringRateSim
 #pragma region DataAccesMethods
 			virtual float *GetDataPointer(string strDataType);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
-			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE);
+			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
 			virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
 #pragma endregion
 

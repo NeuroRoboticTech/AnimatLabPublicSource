@@ -22,12 +22,12 @@ Namespace DataObjects.Behavior.Nodes
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
             If Not NeuralModule Is Nothing Then
                 NeuralModule.VerifyExistsInSim()
                 If Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
                     'If we just created this neuralmodule in the sim then this object might already exist now. We should only add it if it does not exist.
-                    Util.Application.SimulationInterface.AddItem(NeuralModule.ID(), "Neuron", Me.ID, Me.GetSimulationXml("Neuron"), bThrowError)
+                    Util.Application.SimulationInterface.AddItem(NeuralModule.ID(), "Neuron", Me.ID, Me.GetSimulationXml("Neuron"), bThrowError, bDoNotInit)
                 End If
             End If
             InitializeSimulationReferences()

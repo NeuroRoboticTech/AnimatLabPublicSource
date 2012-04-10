@@ -172,7 +172,7 @@ namespace AnimatSim
 
 			virtual Odor *LoadOdor(CStdXml &oXml);
 			virtual void AddOdor(Odor *lpOdor);
-			virtual void AddOdor(string strXml);
+			virtual void AddOdor(string strXml, BOOL bDoNotInit);
 			virtual void RemoveOdor(string strID, BOOL bThrowError = TRUE);
 
 		public:
@@ -283,7 +283,7 @@ namespace AnimatSim
 
 			virtual float *GetDataPointer(string strDataType);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
-			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE);
+			virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
 			virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
 
 #pragma endregion

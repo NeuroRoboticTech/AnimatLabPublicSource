@@ -87,6 +87,21 @@ Namespace UITests
 
                     End Sub
 
+                    Protected Overrides Sub BeforeAddChildPart(ByVal strPartType As String, ByVal strJointType As String)
+                        'Reset the rotation of the torus so it is 90 degrees rotated around Y
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.X", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.Y", "90"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.Z", "0"})
+                    End Sub
+
+                    Protected Overrides Sub AfterAddChildPartJoint(ByVal strPartType As String, ByVal strJointType As String)
+                        'Reset the rotation of the torus so it is 90 degrees rotated around Y
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.X", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.Y", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.Z", "0"})
+                    End Sub
+
+
 #Region "Additional test attributes"
                     '
                     ' You can use the following additional attributes as you write your tests:

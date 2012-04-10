@@ -182,7 +182,7 @@ Namespace DataObjects.ExternalStimuli
 
                 If m_eValueType = enumValueType.Equation Then
                     'If we are using a constant then make sure the equation is blanked in the sim so it will not be used.
-                    SetSimData("Equation", "", True)
+                    SetSimData("ValueType", "Equation", True)
                 End If
 
                 If Not Util.ProjectWorkspace Is Nothing Then
@@ -204,7 +204,7 @@ Namespace DataObjects.ExternalStimuli
                 oMathEval.Equation = Value
                 oMathEval.Parse()
 
-                SetSimData("Equation", Value.ToString, True)
+                SetSimData("Equation", oMathEval.PostFix, True)
                 m_strEquation = Value
             End Set
         End Property
@@ -426,8 +426,8 @@ Namespace DataObjects.ExternalStimuli
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
-            Util.Application.SimulationInterface.AddItem("Simulator", "Stimulus", Me.ID, Me.GetSimulationXml("Stimulus"), bThrowError)
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
+            Util.Application.SimulationInterface.AddItem("Simulator", "Stimulus", Me.ID, Me.GetSimulationXml("Stimulus"), bThrowError, bDoNotInit)
             InitializeSimulationReferences()
         End Sub
 

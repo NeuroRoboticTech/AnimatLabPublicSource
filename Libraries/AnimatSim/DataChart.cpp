@@ -524,7 +524,7 @@ long DataChart::CalculateChartColumnCount()
 
 \param	strXml	The xml packet to load for the data column. 
 **/
-void DataChart::AddColumn(string strXml)
+void DataChart::AddColumn(string strXml, BOOL bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -680,13 +680,13 @@ BOOL DataChart::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
-BOOL DataChart::AddItem(string strItemType, string strXml, BOOL bThrowError)
+BOOL DataChart::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "DATACOLUMN")
 	{
-		AddColumn(strXml);
+		AddColumn(strXml, bDoNotInit);
 		return TRUE;
 	}
 

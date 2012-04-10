@@ -10,7 +10,7 @@ Imports AnimatGUI.Framework
 Namespace Forms
 
 	Public Class ErrorDisplay
-        Inherits AnimatDialog
+        Inherits System.Windows.Forms.Form
 
 #Region " Windows Form Designer generated code "
 
@@ -274,9 +274,6 @@ Namespace Forms
             MyBase.OnLoad(e)
 
             Try
-                m_btnOk = btnOk
-                m_btnCancel = btnOk
-
                 Util.AddActiveDialog(Me)
 
                 ResizeForm()
@@ -292,6 +289,14 @@ Namespace Forms
                 Return ""
             End If
         End Function
+
+        Protected Overridable Sub AnimatDialog_Closing(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles MyBase.Closing
+            Util.RemoveActiveDialog(Me)
+        End Sub
+
+        Public Overridable Sub ClickOkButton()
+            btnOk.PerformClick()
+        End Sub
 
     End Class
 

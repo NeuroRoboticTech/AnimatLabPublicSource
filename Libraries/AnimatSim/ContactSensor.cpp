@@ -320,7 +320,7 @@ void ContactSensor::ProcessContact(StdVector3 vPos, float fltForceMagnitude)
 	}
 }
 
-BOOL ContactSensor::AddItem(string strItemType, string strXml, BOOL bThrowError)
+BOOL ContactSensor::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 

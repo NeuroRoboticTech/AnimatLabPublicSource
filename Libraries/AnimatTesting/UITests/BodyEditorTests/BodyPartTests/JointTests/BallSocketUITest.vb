@@ -82,7 +82,7 @@ Namespace UITests
 
                     Protected Overrides Sub TestConstraintLimitsWithForce()
                         'Add force stimulus to child part. 
-                        AddStimulus("Force", m_strStruct1Name, "\Body Plan\Root\Joint_1\Arm", "ArmForce", "Stimulus_2")
+                        AddStimulus("Force", m_strStruct1Name, "\Body Plan\Root\Joint_1\Arm", "ArmForce") ', "Stimulus_2"
                         SetForceStimulus("ArmForce", False, True, 1, 1.1, 0, 0, 0, 0, 0, 1, 0, 0, 0)
 
                         RunSimulationWaitToEnd()
@@ -97,7 +97,7 @@ Namespace UITests
                         'Compare chart data to verify simulation results.
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, "Force2_")
 
-                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm"})
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", False})
 
                         'Now move the arm over using the mouse.
                         MovePartAxis(m_strStruct1Name, "Root\Joint_1\Arm", _
@@ -111,7 +111,7 @@ Namespace UITests
                         LoadDataChart(m_strRootFolder & m_strTestDataPath, "DataTool_1.txt", "MouseMoveArm_")
                         CompareColummData(3, -1, -1, enumDataComparisonType.WithinRange, 0, 0.3)
 
-                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1"})
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", False})
 
                         'Now move the arm over using the mouse.
                         MovePartAxis(m_strStruct1Name, "Root\Joint_1", _

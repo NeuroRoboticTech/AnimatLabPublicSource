@@ -514,7 +514,7 @@ void Neuron::AddSynapse(Synapse *lpSynapse)
 
 \param	strXml	The xml of the synapse to add. 
 **/
-void Neuron::AddSynapse(string strXml)
+void Neuron::AddSynapse(string strXml, BOOL bDoNotInit)
 {
 	CStdXml oXml;
 	oXml.Deserialize(strXml);
@@ -522,7 +522,8 @@ void Neuron::AddSynapse(string strXml)
 	oXml.FindChildElement("Synapse");
 
 	Synapse *lpSynapse = LoadSynapse(oXml);
-	lpSynapse->Initialize();
+	if(!bDoNotInit)
+		lpSynapse->Initialize();
 }
 
 /**
@@ -944,13 +945,13 @@ BOOL Neuron::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
-BOOL Neuron::AddItem(string strItemType, string strXml, BOOL bThrowError)
+BOOL Neuron::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
 	if(strType == "SYNAPSE")
 	{
-		AddSynapse(strXml);
+		AddSynapse(strXml, bDoNotInit);
 		return TRUE;
 	}
 

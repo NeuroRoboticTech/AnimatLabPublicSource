@@ -655,7 +655,7 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "AfterStruct_")
 
                     'Now lets remove the child body of the falling part.
-                    DeletePart("Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1")
+                    DeletePart("Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1", "Delete Body Part")
 
                     'Run the simulation and wait for it to end.
                     RunSimulationWaitToEnd()
@@ -664,10 +664,10 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "AfterS1Child_")
 
                     'Now lets remove the plane part of the second structure, and that structure.
-                    DeletePart("Simulation\Environment\Structures\Structure_2\Body Plan\Root")
+                    DeletePart("Simulation\Environment\Structures\Structure_2\Body Plan\Root", "Delete Body Part")
 
                     'Remove the structure
-                    DeletePart("Simulation\Environment\Structures\Structure_2")
+                    DeletePart("Simulation\Environment\Structures\Structure_2", "Delete Structure")
 
                     'Run the simulation and wait for it to end.
                     RunSimulationWaitToEnd()
@@ -676,10 +676,10 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "AfterS2_")
 
                     'Now lets remove the root of the structure 1, and that structure.
-                    DeletePart("Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root")
+                    DeletePart("Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Delete Body Part")
 
                     'Now lets remove structure 1, and that structure.
-                    DeletePart("Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name)
+                    DeletePart("Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "Delete Structure")
 
                     'Make sure simulation can still run.
                     RunSimulationWaitToEnd()
@@ -746,7 +746,7 @@ Namespace UITests
                 '    CompareSimulation(m_strRootFolder & m_strTestDataPath, "AfterStruct_")
 
                 '    ''Now lets remove the child body of the falling part.
-                '    'DeletePart("Simulation\Environment\" &m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1")
+                '    'DeletePart("Simulation\Environment\" &m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1", "Delete Body Part")
 
                 '    ''Run the simulation and wait for it to end.
                 '    'RunSimulationWaitToEnd()
@@ -755,10 +755,10 @@ Namespace UITests
                 '    'CompareSimulation(m_strRootFolder & m_strTestDataPath, "AfterS1Child_")
 
                 '    ''Now lets remove the plane part of the second structure, and that structure.
-                '    'DeletePart("Simulation\Environment\Structures\Structure_2\Body Plan\Root")
+                '    'DeletePart("Simulation\Environment\Structures\Structure_2\Body Plan\Root", "Delete Body Part")
 
                 '    ''Remove the structure
-                '    'DeletePart("Simulation\Environment\Structures\Structure_2")
+                '    'DeletePart("Simulation\Environment\Structures\Structure_2", "Delete Structure")
 
                 '    ''Run the simulation and wait for it to end.
                 '    'RunSimulationWaitToEnd()
@@ -767,10 +767,10 @@ Namespace UITests
                 '    'CompareSimulation(m_strRootFolder & m_strTestDataPath, "AfterS2_")
 
                 '    ''Now lets remove the root of the structure 1, and that structure.
-                '    'DeletePart("Simulation\Environment\" &m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root")
+                '    'DeletePart("Simulation\Environment\" &m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Delete Body Part")
 
                 '    ''Now lets remove structure 1, and that structure.
-                '    'DeletePart("Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name)
+                '    'DeletePart("Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "Delete Structure")
 
                 '    ''Make sure simulation can still run.
                 '    'RunSimulationWaitToEnd()

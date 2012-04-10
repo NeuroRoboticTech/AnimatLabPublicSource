@@ -336,6 +336,12 @@ BOOL AnimatBase::SetData(string strDataType, string strValue, BOOL bThrowError)
 		return TRUE;
 	}
 
+	if(strDataType == "CALL_INIT")
+	{
+		this->Initialize();
+		return TRUE;
+	}
+
 	//If we are using the AnimatBase function then there are no data pointer, so throw an error.
 	if(bThrowError)
 		THROW_TEXT_ERROR(Al_Err_lDataPointNotFound, Al_Err_strDataPointNotFound, ("ID: " + m_strID + " Name: " + m_strName));
@@ -362,7 +368,7 @@ needed initialization and adds it to the parent.
 
 \return	true if it succeeds, false if it fails. 
 **/
-BOOL AnimatBase::AddItem(string strItemType, string strXml, BOOL bThrowError)
+BOOL AnimatBase::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	//If we are using the AnimatBase function then there are no data pointer, so throw an error.
 	if(bThrowError)

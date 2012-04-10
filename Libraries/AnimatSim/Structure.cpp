@@ -517,7 +517,7 @@ BOOL Structure::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
-BOOL Structure::AddItem(string strItemType, string strXml, BOOL bThrowError)
+BOOL Structure::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 

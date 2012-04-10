@@ -518,9 +518,9 @@ Namespace DataObjects.Behavior.Neurons
 
 #Region " Add-Remove to List Methods "
 
-        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean)
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
             If Not Me.Parent Is Nothing Then
-                Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "IonChannel", Me.ID, Me.GetSimulationXml("IonChannel"), bThrowError)
+                Util.Application.SimulationInterface.AddItem(Me.Parent.ID, "IonChannel", Me.ID, Me.GetSimulationXml("IonChannel"), bThrowError, bDoNotInit)
                 InitializeSimulationReferences()
             End If
         End Sub
