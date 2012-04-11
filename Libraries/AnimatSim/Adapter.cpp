@@ -408,8 +408,11 @@ void Adapter::Initialize()
 
 void Adapter::StepSimulation()
 {
-	float fltInput = m_lpGain->CalculateGain(*m_lpSourceData);
-	m_lpTargetNode->AddExternalNodeInput(fltInput);
+	if(m_bEnabled)
+	{
+		float fltInput = m_lpGain->CalculateGain(*m_lpSourceData);
+		m_lpTargetNode->AddExternalNodeInput(fltInput);
+	}
 }
 
 void Adapter::Load(CStdXml &oXml)
@@ -428,6 +431,8 @@ void Adapter::Load(CStdXml &oXml)
 	TargetID(oXml.GetChildString("TargetID"));
 
 	SetGain(LoadGain(m_lpSim, "Gain", oXml));
+	
+	Enabled(oXml.GetChildBool("Enabled"));
 
 	oXml.OutOfElem(); //OutOf Adapter Element
 }

@@ -1177,7 +1177,7 @@ Namespace DataObjects
                 'Find the addflow node.
                 Dim xnAddFlow As XmlNode = xnBodyFile.GetNode(xnOldDiagram, "AddFlow")
                 strXml = strXml & "<AddFlow " & xnBodyFile.GetSingleNodeAttributes(xnOldDiagram, "AddFlow") & ">" & _
-                                  xnAddFlow.InnerXml() & "</AddFlow></Diagram></Root>"
+                                  Util.RemoveImageIndexTags(xnAddFlow.InnerXml()) & "</AddFlow></Diagram></Root>"
 
                 Dim xnDiagramXml As XmlNode = m_xnProjectXml.CreateElement("DiagramXml")
                 Dim xnDiagramCData As XmlNode = m_xnProjectXml.CreateCDataSection(strXml)

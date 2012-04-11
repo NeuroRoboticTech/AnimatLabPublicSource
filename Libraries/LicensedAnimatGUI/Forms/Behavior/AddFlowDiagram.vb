@@ -2342,7 +2342,7 @@ Namespace Forms.Behavior
                         blLink.Tag = afLink
                         UpdateAddFlowLink(afLink, blLink)
                     Catch ex As Exception
-                        aryDeleteNodes.Add(blLink)
+                        aryDeleteLinks.Add(blLink)
                     End Try
 
                 Next
@@ -2551,15 +2551,20 @@ Namespace Forms.Behavior
                 'Now we need to go through and add all of the addflow nodes and links into the dictionaries for them.
                 For Each afNode As Lassalle.Flow.Node In m_ctrlAddFlow.Nodes
                     Dim strNodeID As String = DirectCast(afNode.Tag, String)
-                    Dim bnNode As AnimatGUI.DataObjects.Behavior.Node = DirectCast(Me.Subsystem.BehavioralNodes.FindObjectByID(strNodeID), AnimatGUI.DataObjects.Behavior.Node)
+                    If Not strNodeID Is Nothing AndAlso strNodeID.Length > 0 Then
+                        Dim bnNode As AnimatGUI.DataObjects.Behavior.Node = DirectCast(Me.Subsystem.BehavioralNodes.FindObjectByID(strNodeID), AnimatGUI.DataObjects.Behavior.Node)
 
-                    afNode.ImageIndex = GetDiagramImageIndex(bnNode)
+                        afNode.ImageIndex = GetDiagramImageIndex(bnNode)
 
-                    m_aryAddFlowNodes.Add(strNodeID, afNode)
+                        m_aryAddFlowNodes.Add(strNodeID, afNode)
 
-                    For Each afLink As Lassalle.Flow.Link In afNode.InLinks
-                        m_aryAddFlowLinks.Add(DirectCast(afLink.Tag, String), afLink)
-                    Next
+                        For Each afLink As Lassalle.Flow.Link In afNode.InLinks
+                            m_aryAddFlowLinks.Add(DirectCast(afLink.Tag, String), afLink)
+                        Next
+                    Else
+                        Dim ex As New System.Exception("The node '" & afNode.Text & "' did not have an ID associated with its tag. It will be removed from the subsystem.")
+                        Util.DisplayError(ex)
+                    End If
                 Next
 
                 oXml.OutOfElem()  'Outof Diagram Element

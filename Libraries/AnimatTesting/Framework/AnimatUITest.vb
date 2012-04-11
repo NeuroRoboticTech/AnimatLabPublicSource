@@ -195,12 +195,16 @@ Namespace Framework
 
                     'Now check to see if the process is still running. If it is then we need to kill it.
                     Dim aryProcesses() As System.Diagnostics.Process = System.Diagnostics.Process.GetProcessesByName("AnimatLab2")
+                    Debug.WriteLine("Found " & aryProcesses.Length & " animatlab 2 processes to kill.")
+
                     If aryProcesses.Length > 0 Then
                         For Each oProc As System.Diagnostics.Process In aryProcesses
                             Debug.WriteLine("Directly killing process AnimatLab2.")
                             oProc.Kill()
                         Next
                     End If
+
+                    Debug.WriteLine("Exiting test cleanup exeption handling.")
                 Catch ex As Exception
                     Debug.WriteLine("Caught exception within exception handling for cleanup code. Eating it and going on.")
                 End Try

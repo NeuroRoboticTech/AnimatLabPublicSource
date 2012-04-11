@@ -1679,6 +1679,26 @@ Namespace Framework
             Throw New System.Exception("Invalid mass units: " & strUnits)
         End Function
 
+        Public Shared Function RemoveImageIndexTags(ByVal strXml As String) As String
+
+            Dim bFound As Boolean = True
+            Dim iStart As Integer = -1
+            Dim iEnd As Integer = -1
+            Do While bFound
+                iStart = strXml.IndexOf("<ImageIndex>")
+
+                If iStart >= 0 Then
+                    iEnd = strXml.IndexOf("</ImageIndex>", iStart)
+                    strXml = strXml.Remove(iStart, ((iEnd - iStart) + 13))
+                    bFound = True
+                Else
+                    bFound = False
+                End If
+            Loop
+
+            Return strXml
+        End Function
+
     End Class
 
 End Namespace

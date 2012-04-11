@@ -5338,7 +5338,7 @@ Namespace Forms
 
         Public Overrides Sub ValidateEditToolStripItemState()
 
-            If Util.ProjectWorkspace.TreeView.SelectedCount = 0 Then
+            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView.SelectedCount = 0 Then
                 Util.Application.DeleteToolStripMenuItem.Enabled = False
                 'Util.Application.SelectAllToolStripMenu.Enabled = False
                 Util.Application.SelectByTypeToolStripMenuItem.Enabled = False
@@ -5362,7 +5362,7 @@ Namespace Forms
             '    Util.Application.PasteToolStripMenuItem.Enabled = False
             'End If
 
-            If Util.ProjectWorkspace.TreeView.SelectedCount < 2 Then
+            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView.SelectedCount < 2 Then
                 Util.Application.CompareItemsToolStripMenuItem.Enabled = False
             Else
                 Util.Application.CompareItemsToolStripMenuItem.Enabled = True
