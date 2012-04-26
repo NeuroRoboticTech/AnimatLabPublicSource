@@ -226,6 +226,16 @@ Namespace Framework
             Return oRet
         End Function
 
+        Protected Overridable Function ExecuteIndirectActiveDialogMethod(ByVal strMethodName As String, ByVal aryParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200) As Object
+            Debug.WriteLine("ExecuteActiveDialogMethod Method: '" & strMethodName & "', Params: '" & Util.ParamsToString(aryParams) & "', Wait: " & iWaitMilliseconds)
+
+            Dim oRet As Object = m_oServer.ExecuteDirectMethod("ExecuteIndirecActiveDialogtMethod", New Object() {strMethodName, aryParams})
+            Threading.Thread.Sleep(iWaitMilliseconds)
+
+            If Not oRet Is Nothing Then Debug.WriteLine("Return: " & oRet.ToString) Else Debug.WriteLine("Return: Nothing")
+            Return oRet
+        End Function
+
         Protected Overridable Function GetSimObjectProperty(ByVal strPath As String, ByVal strPropName As String, Optional ByVal iWaitMilliseconds As Integer = 200) As Object
             Debug.WriteLine("GetSimObjectProperty Path: '" & strPath & "', PropName: '" & strPropName & "', Wait: " & iWaitMilliseconds)
 

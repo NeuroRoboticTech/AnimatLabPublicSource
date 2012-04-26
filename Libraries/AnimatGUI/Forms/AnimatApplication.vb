@@ -4479,17 +4479,52 @@ Namespace Forms
                 Throw New System.Exception("No dialog is currently active.")
             End If
 
-            Dim oMethod As MethodInfo = Util.ActiveDialogs(0).GetType().GetMethod(strMethodName)
+            Dim oDlg As Object = Util.ActiveDialogs(Util.ActiveDialogs.Count - 1)
+            Dim oMethod As MethodInfo = oDlg.GetType().GetMethod(strMethodName)
 
             If oMethod Is Nothing Then
                 Throw New System.Exception("Method name '" & strMethodName & "' not found.")
             End If
-            Return oMethod.Invoke(Util.ActiveDialogs(0), aryParams)
+            Return oMethod.Invoke(oDlg, aryParams)
         End Function
+
+
+        Public Sub ExecuteIndirecActiveDialogtMethod(ByVal strMethodName As String, ByVal aryParams() As Object)
+
+            m_strAutomationMethodName = strMethodName
+            m_aryAutomationParams = aryParams
+
+            m_timerAutomation = New System.Timers.Timer(10)
+            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnExecuteIndirectActiveDialogMethodTimer
+            m_timerAutomation.Enabled = True
+        End Sub
+
+        Private Delegate Sub OnExecuteIndirecActiveDialogtMethodTimerDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        Protected Overridable Sub OnExecuteIndirectActiveDialogMethodTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+            m_timerAutomation.Enabled = False
+
+            If Me.InvokeRequired Then
+                Me.Invoke(New OnExecuteIndirectMethodTimerDelegate(AddressOf OnExecuteIndirectActiveDialogMethodTimer), New Object() {sender, eProps})
+                Return
+            End If
+
+            Try
+                RemoveHandler m_timerAutomation.Elapsed, AddressOf OnExecuteIndirectActiveDialogMethodTimer
+                m_timerAutomation = Nothing
+
+                ExecuteActiveDialogMethod(m_strAutomationMethodName, m_aryAutomationParams)
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
 
         Public Overridable Function ActiveDialogName() As String
             If Util.ActiveDialogs.Count > 0 Then
-                Dim frmDlg As System.Windows.Forms.Form = DirectCast(Util.ActiveDialogs(0), System.Windows.Forms.Form)
+                Dim frmDlg As System.Windows.Forms.Form = DirectCast(Util.ActiveDialogs(Util.ActiveDialogs.Count - 1), System.Windows.Forms.Form)
                 Return frmDlg.Text
             End If
 

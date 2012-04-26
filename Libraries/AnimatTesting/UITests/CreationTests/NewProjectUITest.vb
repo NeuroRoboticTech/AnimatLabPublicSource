@@ -49,7 +49,7 @@ Namespace UITests
                 ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1", False})
 
                 'Add root to chart
-                AddItemToChart(m_strStruct1Name & "Body Plan\Root")
+                AddItemToChart(m_strStruct1Name & "\Body Plan\Root")
 
                 'Set the name of the data chart item to root_y.
                 ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root", "Name", "Root_Y"})
@@ -75,7 +75,8 @@ Namespace UITests
 
                 'Enter text and verify error. Verify the error.
                 ExecuteActiveDialogMethod("SetProjectParams", New Object() {"TestProject", m_strRootFolder & "\Libraries\AnimatTesting\TestProjects\CreationTests"})
-                ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+                AssertErrorDialogShown(" already exists. Please choose a different name or location for the project.", enumMatchType.EndsWith)
 
             End Sub
 

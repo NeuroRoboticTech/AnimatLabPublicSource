@@ -250,6 +250,38 @@ Namespace Framework
 
         End Sub
 
+        Protected Overridable Sub CompareSimulationAnalysis(ByVal strProjectPath As String, ByVal strFilename As String, ByVal strTestDataPath As String, ByVal strPrefix As String, _
+                                                            ByVal strColName As String, Optional ByVal iStartIdx As Integer = -1, Optional ByVal iEndIdx As Integer = -1)
+            Debug.WriteLine("Comparing simulation analysis. Project Path: '" & strProjectPath & "', Filename: '" & strFilename & "', TestDataPath: '" & _
+                            strTestDataPath & "', Prefix: '" & strPrefix & "', ColName: '" & strColName & "', iStartIdx: '" & iStartIdx & "', iEndIdx: '" & iEndIdx)
+
+            'No prefix on the exported chart.
+            ExecuteMethod("ExportDataCharts", New Object() {"", ""})
+
+            Dim strFile As String = m_strRootFolder & strProjectPath & "\" & strFilename & ".txt"
+            Dim strTemplate As String = strTestDataPath & "\" & strPrefix & strFilename & "_Analysis" & ".txt"
+
+            Dim aryChartColumns() As String = {""}
+            Dim aryChartData As New List(Of List(Of Double))
+            Util.ReadCSVFileToList(strFile, aryChartColumns, aryChartData, True)
+
+            Dim iTimeIdx As Integer = Util.FindColumnNamed(aryChartColumns, "Time")
+            Dim iDataIdx As Integer = Util.FindColumnNamed(aryChartColumns, strColName)
+
+            Dim aryTime As List(Of Double) = aryChartData(iTimeIdx)
+            Dim aryData As List(Of Double) = aryChartData(iDataIdx)
+
+            Dim oAnalysis As New DataAnalyzer()
+            oAnalysis.FindCriticalPoints(aryTime, aryData, iStartIdx, iEndIdx)
+
+            'Now load comparison template.
+            Dim oTemplate As New DataAnalyzer
+            oTemplate = DataAnalyzer.LoadData(strTemplate)
+
+            oTemplate.CompareData(oAnalysis, strFilename)
+
+        End Sub
+
         Protected Overridable Sub LoadDataChart(ByVal strTestDataPath As String, ByVal strChartFileName As String, Optional ByVal strPrefix As String = "")
             Debug.WriteLine("Load Data Chartt. Test Data Path: '" & strTestDataPath & "', Prefix: '" & strPrefix & "', ChartFileName: '" & strChartFileName & "'")
 

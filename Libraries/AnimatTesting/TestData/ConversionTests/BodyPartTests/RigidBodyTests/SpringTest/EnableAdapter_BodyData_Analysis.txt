@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-16"?>
+<DataAnalyzer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <InflectionPoints />
+  <MaximumPoints>
+    <anyType xsi:type="CriticalPoint">
+      <Type>Maximum</Type>
+      <Time>0.993</Time>
+      <Value>1.995061</Value>
+      <Idx>993</Idx>
+      <CompareTime>Fixed</CompareTime>
+      <TimeError>0.005</TimeError>
+      <CompareValue>Fixed</CompareValue>
+      <ValueError>0.005</ValueError>
+    </anyType>
+    <anyType xsi:type="CriticalPoint">
+      <Type>Maximum</Type>
+      <Time>2.98</Time>
+      <Value>1.985212</Value>
+      <Idx>2980</Idx>
+      <CompareTime>Fixed</CompareTime>
+      <TimeError>0.005</TimeError>
+      <CompareValue>Fixed</CompareValue>
+      <ValueError>0.005</ValueError>
+    </anyType>
+    <anyType xsi:type="CriticalPoint">
+      <Type>Maximum</Type>
+      <Time>4.967</Time>
+      <Value>1.975461</Value>
+      <Idx>4967</Idx>
+      <CompareTime>Fixed</CompareTime>
+      <TimeError>0.005</TimeError>
+      <CompareValue>Fixed</CompareValue>
+      <ValueError>0.005</ValueError>
+    </anyType>
+  </MaximumPoints>
+  <MinimumPoints>
+    <anyType xsi:type="CriticalPoint">
+      <Type>Minimum</Type>
+      <Time>1.986</Time>
+      <Value>0.009899192</Value>
+      <Idx>1986</Idx>
+      <CompareTime>Fixed</CompareTime>
+      <TimeError>0.005</TimeError>
+      <CompareValue>Fixed</CompareValue>
+      <ValueError>0.005</ValueError>
+    </anyType>
+    <anyType xsi:type="CriticalPoint">
+      <Type>Minimum</Type>
+      <Time>3.973</Time>
+      <Value>0.01969779</Value>
+      <Idx>3973</Idx>
+      <CompareTime>Fixed</CompareTime>
+      <TimeError>0.005</TimeError>
+      <CompareValue>Fixed</CompareValue>
+      <ValueError>0.005</ValueError>
+    </anyType>
+  </MinimumPoints>
+  <StartPoint>
+    <Type>Endpoint</Type>
+    <Time>0</Time>
+    <Value>0</Value>
+    <Idx>0</Idx>
+    <CompareTime>Fixed</CompareTime>
+    <TimeError>0.005</TimeError>
+    <CompareValue>Fixed</CompareValue>
+    <ValueError>0.005</ValueError>
+  </StartPoint>
+  <EndPoint>
+    <Type>Endpoint</Type>
+    <Time>6</Time>
+    <Value>1.536826</Value>
+    <Idx>6000</Idx>
+    <CompareTime>Fixed</CompareTime>
+    <TimeError>0.005</TimeError>
+    <CompareValue>Fixed</CompareValue>
+    <ValueError>0.005</ValueError>
+  </EndPoint>
+  <IgnoreAdditionalPoints>false</IgnoreAdditionalPoints>
+</DataAnalyzer>

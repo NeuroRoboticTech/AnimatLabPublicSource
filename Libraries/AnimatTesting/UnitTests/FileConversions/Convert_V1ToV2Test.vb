@@ -35,13 +35,10 @@ Namespace UnitTests
             'Use ClassCleanup to run code after all tests in a class have run
             <ClassCleanup()> _
             Public Shared Sub MyClassCleanup()
-                Dim iVal As Integer = 5
             End Sub
 
-            '''<summary>
-            '''A test for ConvertFiles
-            '''</summary>
-            <TestMethod()> _
+           
+            '<TestMethod()> _
             Public Sub ConvertFilesTest()
                 'Dim target As Convert_V1ToV2 = New Convert_V1ToV2()
                 'Dim strProjectPath As String = "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\OldVersion\HingeTest"

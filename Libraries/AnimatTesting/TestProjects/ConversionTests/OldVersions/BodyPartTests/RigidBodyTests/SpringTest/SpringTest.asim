@@ -1,14 +1,14 @@
 <Simulation>
-<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\HingeTests\HingeLimitTest_M_Kg\</ProjectPath>
+<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\RigidBodyTests\SpringTest\</ProjectPath>
 <AnimatModule>VortexAnimatLibrary_vc7.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
 <EnableSimRecording>True</EnableSimRecording>
 <SetSimEnd>True</SetSimEnd>
 <APIFile/>
-<SimEndTime Value="3" Scale="None" Actual="3"/>
+<SimEndTime Value="7" Scale="None" Actual="7"/>
 <Environment>
-<PhysicsTimeStep Value="0.2" Scale="milli" Actual="0.0002"/>
+<PhysicsTimeStep Value="1" Scale="milli" Actual="0.001"/>
 <FluidDensity Value="1000" Scale="Kilo" Actual="1e+06"/>
 <MaxSurfaceFriction Value="15" Scale="Kilo" Actual="15000"/>
 <Gravity Value="-9.81" Scale="None" Actual="-9.81"/>
@@ -29,11 +29,11 @@
 <UseAlphaBlending>False</UseAlphaBlending>
 <AutoGenerateRandomSeed>True</AutoGenerateRandomSeed>
 <ManualRandomSeed>12345</ManualRandomSeed>
-<CollisionObjects>2</CollisionObjects>
+<CollisionObjects>9</CollisionObjects>
 <Camera>
-<Rotation>0.785398</Rotation>
+<Rotation>0</Rotation>
 <Elevation>0</Elevation>
-<Offset>5</Offset>
+<Offset>10</Offset>
 <TrackCamera>True</TrackCamera>
 <RecordVideo>False</RecordVideo>
 <SaveFrameImages>False</SaveFrameImages>
@@ -53,19 +53,27 @@
 <dwQuality>7500</dwQuality>
 <fccHandler>1668707181</fccHandler>
 <fccType>0</fccType>
-<LookAtStructureID>cfc36325-a022-4c9b-8b89-48b00ece563b</LookAtStructureID>
-<LookAtBodyID>be9865e8-e1d0-47dc-a87d-7a9ff447f117</LookAtBodyID>
+<LookAtStructureID>724d67c4-a962-49d9-8545-7bcb1ff5c235</LookAtStructureID>
+<LookAtBodyID/>
 </Camera>
-<Organisms/>
-<Structures>
+<GroundSurface>
+<ID>Ground</ID>
+<Name>Ground</Name>
+<Type>Basic</Type>
+<BodyPlan>Ground.astl</BodyPlan>
+<Position x="0" y="0" z="0"/>
+</GroundSurface>
+<Organisms>
 <Structure>
-<ID>cfc36325-a022-4c9b-8b89-48b00ece563b</ID>
-<Name>Structure_1</Name>
+<ID>724d67c4-a962-49d9-8545-7bcb1ff5c235</ID>
+<Name>Organism_1</Name>
 <Type>Basic</Type>
 <Reference>False</Reference>
-<BodyPlan>Structure_1.astl</BodyPlan>
+<BodyPlan>Organism_1.astl</BodyPlan>
 <Position x="0" y="0" z="0"/>
+<BehavioralSystem>Organism_1.absys</BehavioralSystem>
 </Structure>
-</Structures>
+</Organisms>
+<Structures/>
 </Environment>
 </Simulation>

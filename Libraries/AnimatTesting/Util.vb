@@ -96,6 +96,61 @@ Public Class Util
 
     End Sub
 
+
+    Public Shared Sub ReadCSVFileToList(ByVal strFilename As String, ByRef aryColumns() As String, ByRef aryData As List(Of List(Of Double)), ByVal bIncludesHeader As Boolean)
+        Dim num_rows As Integer
+        Dim num_cols As Integer
+        Dim iCol As Integer
+        Dim iRow As Integer
+
+        ' Load the file.
+        'Check if file exist
+        If File.Exists(strFilename) Then
+            Dim tmpstream As StreamReader = File.OpenText(strFilename)
+            Dim aryLines() As String
+            Dim aryLine() As String
+
+            'Load content of file to strLines array
+            Dim strData As String = tmpstream.ReadToEnd()
+            aryLines = strData.Split(vbLf.ToCharArray())
+
+            If (aryLines.Length < 2) Then
+                Throw New System.Exception("No data in file: " & strFilename)
+            End If
+
+            aryColumns = aryLines(0).Split(vbTab.ToCharArray)
+
+            'Remove one for the header and one to make the index work.
+            Dim iHeaderRow As Integer = 0
+            If bIncludesHeader Then iHeaderRow = 1
+            num_rows = aryLines.Length - 1
+            num_cols = aryColumns.Length - 1
+
+            For iIdx = 0 To num_cols
+                aryData.Add(New List(Of Double))
+            Next
+
+            ' Copy the data into the array. Skip the header row.
+            Dim iStartIdx As Integer
+            If bIncludesHeader Then iStartIdx = 1 Else iStartIdx = 0
+            For iRow = iStartIdx To num_rows
+                If aryLines(iRow).Trim.Length > 0 Then
+                    aryLine = aryLines(iRow).Split(vbTab.ToCharArray)
+
+                    For iCol = 0 To num_cols
+                        If aryLine(iCol).Trim.Length > 0 AndAlso IsNumeric(aryLine(iCol)) Then
+                            aryData(iCol).Add(CDbl(aryLine(iCol)))
+                        Else
+                            Dim iVal As Integer = 4
+                        End If
+                    Next
+                End If
+            Next
+
+        End If
+
+    End Sub
+
     Public Shared Function IsBlank(ByVal strVal As String) As Boolean
         If strVal.Trim.Length > 0 Then
             Return False
@@ -187,6 +242,17 @@ Public Class Util
         End If
 
         Return strParams
+    End Function
+
+    Public Shared Function FindColumnNamed(ByVal aryChartColumns() As String, ByVal strName As String) As Integer
+
+        For iIdx = 0 To aryChartColumns.Length - 1
+            If aryChartColumns(iIdx) = strName Then
+                Return iIdx
+            End If
+        Next
+
+        Throw New System.Exception("No column named '" & strName & "' was found.")
     End Function
 
 End Class

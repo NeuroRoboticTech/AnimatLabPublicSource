@@ -10,18 +10,19 @@ Namespace Framework
      
         'Use TestInitialize to run code before running each test
         <TestInitialize()> _
-        Public Sub MyTestInitialize()
+        Public Overridable Sub MyTestInitialize()
             StartApplication("", m_bAttachServerOnly)
         End Sub
 
         'Use TestCleanup to run code after each test has run
         <TestCleanup()> _
-        Public Sub MyTestCleanup()
+        Public Overridable Sub MyTestCleanup()
             'Detach from the server.
             DetachServer()
         End Sub
 
 #End Region
+
 
     End Class
 

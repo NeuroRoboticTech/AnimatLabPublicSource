@@ -110,6 +110,8 @@
     <Compile Include="Framework\AnimatTest.vb" />
     <Compile Include="Framework\AnimatUITest.vb" />
     <Compile Include="Framework\AnimatUnitTest.vb" />
+    <Compile Include="Framework\DataAnalyzer.vb" />
+    <Compile Include="Framework\CriticalPoint.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="UIMap.Designer.vb">
       <DependentUpon>UIMap.uitest</DependentUpon>
@@ -141,6 +143,7 @@
     <Compile Include="UITests\ConversionTests\ConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\NeuralTests\NeuralUIConversionTest.vb" />
     <Compile Include="UITests\CreationTests\NewProjectUITest.vb" />
+    <Compile Include="UnitTests\DataAnalysis.vb" />
     <Compile Include="UnitTests\FileConversions\Convert_V1ToV2Test.vb" />
     <Compile Include="Util.vb" />
     <Compile Include="XmlDom.vb" />
