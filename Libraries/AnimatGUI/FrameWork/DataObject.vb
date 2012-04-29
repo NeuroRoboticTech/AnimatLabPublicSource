@@ -955,39 +955,39 @@ Namespace Framework
         Public Event ItemSelected(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal bSelectMultiple As Boolean)
         Public Event ItemDeselected(ByRef doObject As AnimatGUI.Framework.DataObject)
 
-        Protected Sub SignalBeforePropertyChanged(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
+        Protected Overridable Sub SignalBeforePropertyChanged(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
             RaiseEvent BeforePropertyChanged(doObject, propInfo)
         End Sub
 
-        Protected Sub SignalAfterPropertyChanged(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
+        Protected Overridable Sub SignalAfterPropertyChanged(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
             RaiseEvent AfterPropertyChanged(doObject, propInfo)
         End Sub
 
-        Protected Sub SignalBeforeAddItem(ByRef doObject As AnimatGUI.Framework.DataObject)
+        Protected Overridable Sub SignalBeforeAddItem(ByRef doObject As AnimatGUI.Framework.DataObject)
             RaiseEvent BeforeAddItem(doObject)
         End Sub
 
-        Protected Sub SignalAfterAddItem(ByRef doObject As AnimatGUI.Framework.DataObject)
+        Protected Overridable Sub SignalAfterAddItem(ByRef doObject As AnimatGUI.Framework.DataObject)
             RaiseEvent AfterAddItem(doObject)
         End Sub
 
-        Protected Sub SignalBeforeRemoveItem(ByRef doObject As AnimatGUI.Framework.DataObject)
+        Protected Overridable Sub SignalBeforeRemoveItem(ByRef doObject As AnimatGUI.Framework.DataObject)
             RaiseEvent BeforeRemoveItem(doObject)
         End Sub
 
-        Protected Sub SignalAfterRemoveItem(ByRef doObject As AnimatGUI.Framework.DataObject)
+        Protected Overridable Sub SignalAfterRemoveItem(ByRef doObject As AnimatGUI.Framework.DataObject)
             RaiseEvent AfterRemoveItem(doObject)
         End Sub
 
-        Protected Sub SignalItemSelected(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal bSelectMultiple As Boolean)
+        Protected Overridable Sub SignalItemSelected(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal bSelectMultiple As Boolean)
             RaiseEvent ItemSelected(doObject, bSelectMultiple)
         End Sub
 
-        Protected Sub SignalItemDeselected(ByRef doObject As AnimatGUI.Framework.DataObject)
+        Protected Overridable Sub SignalItemDeselected(ByRef doObject As AnimatGUI.Framework.DataObject)
             RaiseEvent ItemDeselected(doObject)
         End Sub
 
-        Protected Sub OnApplicationExiting()
+        Protected Overridable Sub OnApplicationExiting()
             Try
                 'Lets clear out the interface pointer becase the simulation will be shutdown and any pointers will no longer be valid.
                 m_doInterface = Nothing

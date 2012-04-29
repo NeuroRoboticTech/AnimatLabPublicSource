@@ -25,7 +25,7 @@ Namespace UITests
 
                 'Set params and hit ok button
                 ExecuteActiveDialogMethod("SetProjectParams", New Object() {"TestProject", m_strRootFolder & "\Libraries\AnimatTesting\TestProjects\CreationTests"})
-                ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
                 'Click the add structure button.
                 ExecuteMethod("ClickToolbarItem", New Object() {"AddStructureToolStripButton"})

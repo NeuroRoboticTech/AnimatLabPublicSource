@@ -1127,6 +1127,7 @@ Namespace Forms
         Protected m_doAutomationBodyPart As DataObjects.Physical.BodyPart
         Protected m_bnAutomationNodeOrigin As DataObjects.Behavior.Node
         Protected m_bnAutomationNodeDestination As DataObjects.Behavior.Node
+        Protected m_strAutomationPath As String = ""
         Protected m_ptAutomationPosition As Point
         Protected m_strAutomationName As String = ""
         Protected m_strAutomationMethodName As String = ""
@@ -3928,6 +3929,28 @@ Namespace Forms
 
         End Function
 
+        Private Delegate Sub ExecuteMethodOnObjectDelegate(ByVal strPath As String, ByVal strMethodName As String, ByVal aryParams() As Object)
+
+        Public Function ExecuteMethodOnObject(ByVal strPath As String, ByVal strMethodName As String, ByVal aryParams() As Object) As Object
+            If Me.InvokeRequired Then
+                Return Me.Invoke(New ExecuteMethodOnObjectDelegate(AddressOf ExecuteMethodOnObject), New Object() {strPath, strMethodName, aryParams})
+            End If
+
+            If Util.ActiveDialogs.Count > 0 Then
+                Throw New System.Exception("You attempted to execute an object method while there was an active dialog.")
+            End If
+
+            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
+
+            Dim oMethod As MethodInfo = m_tnAutomationTreeNode.Tag.GetType().GetMethod(strMethodName)
+
+            If oMethod Is Nothing Then
+                Throw New System.Exception("Method name '" & strMethodName & "' not found.")
+            End If
+            Return oMethod.Invoke(m_tnAutomationTreeNode.Tag, aryParams)
+
+        End Function
+
         Public Sub ExecuteIndirectMethod(ByVal strMethodName As String, ByVal aryParams() As Object)
 
             m_strAutomationMethodName = strMethodName
@@ -3954,6 +3977,40 @@ Namespace Forms
                 m_timerAutomation = Nothing
 
                 ExecuteMethod(m_strAutomationMethodName, m_aryAutomationParams)
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Public Sub ExecuteIndirectMethodOnObject(ByVal strPath As String, ByVal strMethodName As String, ByVal aryParams() As Object)
+
+            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
+            m_strAutomationPath = strPath
+            m_strAutomationMethodName = strMethodName
+            m_aryAutomationParams = aryParams
+
+            m_timerAutomation = New System.Timers.Timer(10)
+            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnExecuteIndirectMethodOnObjectTimer
+            m_timerAutomation.Enabled = True
+        End Sub
+
+        Private Delegate Sub OnExecuteIndirectMethodOnObjectTimerDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        Protected Overridable Sub OnExecuteIndirectMethodOnObjectTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+            m_timerAutomation.Enabled = False
+
+            If Me.InvokeRequired Then
+                Me.Invoke(New OnExecuteIndirectMethodTimerDelegate(AddressOf OnExecuteIndirectMethodOnObjectTimer), New Object() {sender, eProps})
+                Return
+            End If
+
+            Try
+                RemoveHandler m_timerAutomation.Elapsed, AddressOf OnExecuteIndirectMethodTimer
+                m_timerAutomation = Nothing
+
+                ExecuteMethodOnObject(m_strAutomationPath, m_strAutomationMethodName, m_aryAutomationParams)
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -4332,6 +4389,12 @@ Namespace Forms
                 Dim oObj As Object = m_tnAutomationTreeNode.Tag
                 Util.GetObjectProperty(m_strAutomationName, m_piAutomationPropInfo, oObj)
 
+                Dim oPropContext As ObjectPropContext
+                If Util.IsTypeOf(oObj.GetType(), GetType(Framework.DataObject)) Then
+                    Dim doObj As Framework.DataObject = DirectCast(oObj, Framework.DataObject)
+                    oPropContext = New ObjectPropContext(doObj)
+                End If
+
                 'Get the property object.
                 Dim oObjProp As Object = m_piAutomationPropInfo.GetValue(oObj, Nothing)
 
@@ -4341,7 +4404,7 @@ Namespace Forms
 
                 If Not oPropEdit Is Nothing Then
                     Dim edEdit As System.Drawing.Design.UITypeEditor = DirectCast(oPropEdit, System.Drawing.Design.UITypeEditor)
-                    Dim doRetVal As Object = edEdit.EditValue(Nothing, Nothing, oObjProp)
+                    Dim doRetVal As Object = edEdit.EditValue(oPropContext, Nothing, oObjProp)
                     m_piAutomationPropInfo.SetValue(oObj, doRetVal, Nothing)
                 End If
 
@@ -5904,6 +5967,46 @@ Namespace Forms
         End Class
 
 #End Region
+
+        Protected Class ObjectPropContext
+            Implements ITypeDescriptorContext
+
+            Protected m_doObj As Framework.DataObject
+
+            Public Sub New(ByVal doObj As Framework.DataObject)
+                m_doObj = doObj
+            End Sub
+
+            Public ReadOnly Property Container As System.ComponentModel.IContainer Implements System.ComponentModel.ITypeDescriptorContext.Container
+                Get
+
+                End Get
+            End Property
+
+            Public ReadOnly Property Instance As Object Implements System.ComponentModel.ITypeDescriptorContext.Instance
+                Get
+                    Return m_doObj.Properties
+                End Get
+            End Property
+
+            Public Sub OnComponentChanged() Implements System.ComponentModel.ITypeDescriptorContext.OnComponentChanged
+
+            End Sub
+
+            Public Function OnComponentChanging() As Boolean Implements System.ComponentModel.ITypeDescriptorContext.OnComponentChanging
+
+            End Function
+
+            Public ReadOnly Property PropertyDescriptor As System.ComponentModel.PropertyDescriptor Implements System.ComponentModel.ITypeDescriptorContext.PropertyDescriptor
+                Get
+
+                End Get
+            End Property
+
+            Public Function GetService(serviceType As System.Type) As Object Implements System.IServiceProvider.GetService
+
+            End Function
+        End Class
 
     End Class
 

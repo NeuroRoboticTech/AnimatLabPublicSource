@@ -68,6 +68,28 @@ Namespace Forms.BodyPlan
                 End If
             Next
 
+            If bThrowError Then
+                Throw New System.Exception("No attachment was found with the ID: " & strID)
+            End If
+
+            Return Nothing
+        End Function
+
+        Protected Function FindListItemByName(ByVal lView As ListView, ByVal strName As String, ByVal bThrowError As Boolean) As ListViewItem
+
+            For Each liItem As ListViewItem In lView.Items
+                If Not liItem.Tag Is Nothing AndAlso Util.IsTypeOf(liItem.Tag.GetType, GetType(AnimatGUI.Framework.DataObject), True) Then
+                    Dim doObject As AnimatGUI.Framework.DataObject = DirectCast(liItem.Tag, AnimatGUI.Framework.DataObject)
+                    If doObject.Name = strName Then
+                        Return liItem
+                    End If
+                End If
+            Next
+
+            If bThrowError Then
+                Throw New System.Exception("No attachment was found with the name: " & strName)
+            End If
+
             Return Nothing
         End Function
 
@@ -82,6 +104,7 @@ Namespace Forms.BodyPlan
             Try
                 m_btnOk = Me.btnOk
                 m_btnCancel = Me.btnCancel
+                m_lvItems = lvMuscleAttachments
 
                 If m_aryAttachments Is Nothing Then
                     Throw New System.Exception("The attachments array is not defined.")
@@ -266,6 +289,42 @@ Namespace Forms.BodyPlan
             Catch ex As System.Exception
                 Util.DisplayError(ex)
             End Try
+        End Sub
+
+        Public Sub Automation_AddAttachment(ByVal strName As String)
+
+            Dim liItem As ListViewItem = FindListItemByName(Me.lvAttachments, strName, True)
+            lvAttachments.SelectedItems.Clear()
+            liItem.Selected = True
+
+            btnAdd_Click(Nothing, Nothing)
+        End Sub
+
+        Public Sub Automation_RemoveAttachment(ByVal strName As String)
+
+            Dim liItem As ListViewItem = FindListItemByName(Me.lvMuscleAttachments, strName, True)
+            lvMuscleAttachments.SelectedItems.Clear()
+            liItem.Selected = True
+
+            btnDelete_Click(Nothing, Nothing)
+        End Sub
+
+        Public Sub Automation_AttachmentUp(ByVal strName As String)
+
+            Dim liItem As ListViewItem = FindListItemByName(Me.lvMuscleAttachments, strName, True)
+            lvMuscleAttachments.SelectedItems.Clear()
+            liItem.Selected = True
+
+            btnUp_Click(Nothing, Nothing)
+        End Sub
+
+        Public Sub Automation_AttachmentDown(ByVal strName As String)
+
+            Dim liItem As ListViewItem = FindListItemByName(Me.lvMuscleAttachments, strName, True)
+            lvMuscleAttachments.SelectedItems.Clear()
+            liItem.Selected = True
+
+            btnDown_Click(Nothing, Nothing)
         End Sub
 
 #End Region

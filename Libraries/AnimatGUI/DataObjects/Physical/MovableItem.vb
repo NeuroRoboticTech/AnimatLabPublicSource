@@ -102,7 +102,7 @@ Namespace DataObjects.Physical
             Set(ByVal value As Framework.ScaledVector3)
                 Me.SetSimData("Position", value.GetSimulationXml("Position"), True)
                 m_svLocalPosition.CopyData(value)
-                RaiseEvent Moved(Me)
+                RaiseMovedEvent()
             End Set
         End Property
 
@@ -124,7 +124,7 @@ Namespace DataObjects.Physical
                         m_svLocalPosition.CopyData(CDbl(aryLocalPos(0)), CDbl(aryLocalPos(1)), CDbl(aryLocalPos(2)), True)
                         Me.SetSimData("Position", m_svLocalPosition.GetSimulationXml("Position"), True)
                         Util.ProjectProperties.RefreshProperties()
-                        RaiseEvent Moved(Me)
+                        RaiseMovedEvent()
                     Else
                         Util.ProjectProperties.RefreshProperties()
                         Throw New System.Exception("An error occured while attempting to set the local position using the specified world coordinates.")
@@ -513,6 +513,10 @@ Namespace DataObjects.Physical
             Return Nothing
         End Function
 
+        Public Overridable Sub RaiseMovedEvent()
+            RaiseEvent Moved(Me)
+        End Sub
+
 #End Region
 
 #Region " Events "
@@ -528,7 +532,7 @@ Namespace DataObjects.Physical
             Try
                 Me.SetSimData("Position", m_svLocalPosition.GetSimulationXml("Position"), True)
                 Util.ProjectProperties.RefreshProperties()
-                RaiseEvent Moved(Me)
+                RaiseMovedEvent()
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -585,7 +589,7 @@ Namespace DataObjects.Physical
                     m_svLocalPosition.CopyData(m_doInterface.Position(0), m_doInterface.Position(1), m_doInterface.Position(2))
                     m_svWorldPosition.CopyData(m_doInterface.WorldPosition(0), m_doInterface.WorldPosition(1), m_doInterface.WorldPosition(2))
 
-                    RaiseEvent Moved(Me)
+                    RaiseMovedEvent()
 
                     Util.Application.ProjectProperties.RefreshProperties()
                 End If

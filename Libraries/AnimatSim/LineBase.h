@@ -31,6 +31,9 @@ namespace AnimatSim
 				///Length of the line in the previous timestep
 				float m_fltPrevLength;
 
+				/// Keeps track of the enabled state at sim startup.
+				BOOL m_bEnabledAtSimStart;
+
 				///The ID's of the attachment points for this muscle. This is used during the load/initialization process.
 				CStdArray<string> m_aryAttachmentPointIDs;
 
@@ -45,6 +48,8 @@ namespace AnimatSim
 				LineBase();
 				virtual ~LineBase();
 
+				virtual void Enabled(BOOL bValue);
+
 				virtual float Length();
 				virtual float PrevLength();
 
@@ -58,6 +63,8 @@ namespace AnimatSim
 
 				virtual void Resize();
 				virtual float CalculateLength();
+				virtual void ResetSimulation();
+				virtual void AfterResetSimulation();
 
 				virtual float *GetDataPointer(string strDataType);
 				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);

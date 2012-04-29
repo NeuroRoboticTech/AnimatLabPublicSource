@@ -61,6 +61,8 @@ LineBase::LineBase()
 
 	m_fltLength = 0;
 	m_fltPrevLength = 0;
+
+	m_bEnabledAtSimStart = m_bEnabled;
 }
 
 /**
@@ -78,6 +80,19 @@ LineBase::~LineBase()
 	}
 	catch(...)
 	{Std_TraceMsg(0, "Caught Error in desctructor of LineBase\r\n", "", -1, FALSE, TRUE);}
+}
+
+void  LineBase::Enabled(BOOL bValue)
+{
+	RigidBody::Enabled(bValue);
+
+	//If the sim is running then we do not set the history flag. Only set it if changed while the sim is not running.
+	if(!m_lpSim->SimRunning())
+		m_bEnabledAtSimStart = m_bEnabled;
+
+	//Get the current length of the muscle.
+	m_fltLength = CalculateLength();
+	m_fltPrevLength = m_fltLength;
 }
 
 /**
@@ -161,6 +176,9 @@ float LineBase::CalculateLength()
 {
 	float fltLength=0;
 
+	if(!m_bEnabled)
+		return 0;
+
 	int iCount = m_aryAttachmentPoints.GetSize();
 
 	if(iCount<2)
@@ -188,6 +206,22 @@ void LineBase::Resize()
 	RigidBody::Resize();
 
 	//Get the current length of the muscle.
+	m_fltLength = CalculateLength();
+	m_fltPrevLength = m_fltLength;
+}
+
+void LineBase::ResetSimulation()
+{
+	RigidBody::ResetSimulation();
+
+	//Reset the enabled state to the value that it had before the sim started.
+	//It is possible that stimuli turned off the enabled state during the simulation.
+	Enabled(m_bEnabledAtSimStart);
+}
+
+void LineBase::AfterResetSimulation() 
+{
+	RigidBody::AfterResetSimulation();
 	m_fltLength = CalculateLength();
 	m_fltPrevLength = m_fltLength;
 }

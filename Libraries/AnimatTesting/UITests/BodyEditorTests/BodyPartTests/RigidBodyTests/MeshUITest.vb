@@ -30,11 +30,11 @@ Namespace UITests
                             'Wait for the collision mesh dialog to show, fill it in and hit ok
                             OpenDialogAndWait("Select Mesh", Nothing, Nothing)
                             ExecuteActiveDialogMethod("SetMeshParameters", New Object() {(m_strRootFolder & "\bin\Resources\" & m_strMeshFile), "Convex"})
-                            ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
                             'Wait for the graphics mesh to show and hit ok.
                             OpenDialogAndWait("Select Mesh", Nothing, Nothing)
-                            ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
                         End If
 
                     End Sub
@@ -44,11 +44,11 @@ Namespace UITests
                         'Wait for the collision mesh dialog to show, fill it in and hit ok
                         OpenDialogAndWait("Select Mesh", Nothing, Nothing)
                         ExecuteActiveDialogMethod("SetMeshParameters", New Object() {(m_strRootFolder & "\bin\Resources\" & m_strMeshFile), "Triangular"})
-                        ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                        ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
                         'Wait for the graphics mesh to show and hit ok.
                         OpenDialogAndWait("Select Mesh", Nothing, Nothing)
-                        ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                        ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
                     End Sub
 
 

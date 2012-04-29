@@ -26,6 +26,7 @@ namespace VortexAnimatSim
 			virtual void CreatePhysicsGeometry();
 			virtual int BuildLines(osg::Geometry *linesGeom);
 			virtual void SetThisPointers();
+			virtual void DeleteGraphics();
 
 		public:
 			VsLine();

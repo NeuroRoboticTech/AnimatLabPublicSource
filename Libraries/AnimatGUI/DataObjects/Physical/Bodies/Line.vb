@@ -76,12 +76,15 @@ Namespace DataObjects.Physical.Bodies
             End Get
         End Property
 
+        <EditorAttribute(GetType(TypeHelpers.AttachmentsTypeEditor), GetType(System.Drawing.Design.UITypeEditor))> _
         Public Overridable Property AttachmentPoints() As Collections.Attachments
             Get
                 Return m_aryAttachmentPoints
             End Get
             Set(ByVal value As Collections.Attachments)
                 If Not value Is Nothing Then
+                    Dim iStartAttachCount As Integer = m_aryAttachmentPoints.Count
+
                     If Me.MaxAttachmentsAllowed > 0 AndAlso value.Count > Me.MaxAttachmentsAllowed Then
                         Throw New System.Exception("The maximum attachments allowed for this part type is " & Me.MaxAttachmentsAllowed & ".")
                     End If
@@ -89,12 +92,21 @@ Namespace DataObjects.Physical.Bodies
                     SetSimData("AttachmentPoints", value.GetSimulationXml("Attachments", Me.ParentStructure), True)
 
                     'Remove the event handlers for attached part moved or rotated for the current attachments.
-                    RemoveMoveHandlers(m_aryAttachmentPoints)
+                    RemoveAttachmentHandlers(m_aryAttachmentPoints)
 
                     m_aryAttachmentPoints = value
 
                     'add back the event handlers for attached part moved or rotated for the new attachments.
-                    AddMoveHandlers(m_aryAttachmentPoints)
+                    AddAttachmentHandlers(m_aryAttachmentPoints)
+
+                    If m_aryAttachmentPoints.Count < 2 Then
+                        Me.Enabled = False
+                    End If
+
+                    'If they had less than 2 and added more than 2 then enable the muscle
+                    If iStartAttachCount < 2 AndAlso m_aryAttachmentPoints.Count >= 2 Then
+                        Me.Enabled = True
+                    End If
 
                     Util.ProjectWorkspace.RefreshProperties()
                 End If
@@ -265,20 +277,22 @@ Namespace DataObjects.Physical.Bodies
 
         End Sub
 
-        Protected Overridable Sub AddMoveHandlers(ByVal aryAttachments As Collections.Attachments)
+        Protected Overridable Sub AddAttachmentHandlers(ByVal aryAttachments As Collections.Attachments)
 
             For Each doAttach As Attachment In aryAttachments
                 AddHandler doAttach.Moved, AddressOf Me.OnAttachmentMoved
                 AddHandler doAttach.Rotated, AddressOf Me.OnAttachmentRotated
+                AddHandler doAttach.AfterRemoveItem, AddressOf Me.OnAttachmentDeleted
             Next
 
         End Sub
 
-        Protected Overridable Sub RemoveMoveHandlers(ByVal aryAttachments As Collections.Attachments)
+        Protected Overridable Sub RemoveAttachmentHandlers(ByVal aryAttachments As Collections.Attachments)
 
             For Each doAttach As Attachment In aryAttachments
                 RemoveHandler doAttach.Moved, AddressOf Me.OnAttachmentMoved
                 RemoveHandler doAttach.Rotated, AddressOf Me.OnAttachmentRotated
+                RemoveHandler doAttach.AfterRemoveItem, AddressOf Me.OnAttachmentDeleted
             Next
 
         End Sub
@@ -355,8 +369,13 @@ Namespace DataObjects.Physical.Bodies
                 m_aryAttachmentPoints.Add(rbAttach)
             Next
 
-            AddMoveHandlers(m_aryAttachmentPoints)
+            AddAttachmentHandlers(m_aryAttachmentPoints)
 
+        End Sub
+
+        Public Overrides Sub BeforeRemoveFromList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
+            MyBase.BeforeRemoveFromList(bCallSimMethods, bThrowError)
+            RemoveAttachmentHandlers(m_aryAttachmentPoints)
         End Sub
 
         Public Overloads Overrides Sub SaveData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
@@ -434,6 +453,23 @@ Namespace DataObjects.Physical.Bodies
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
         End Sub
+
+        Protected Sub OnAttachmentDeleted(ByRef doObject As AnimatGUI.Framework.DataObject)
+            Try
+                Dim aryAttachPoints As Collections.Attachments = Me.AttachmentPoints
+
+                If Not doObject Is Nothing AndAlso Util.IsTypeOf(doObject.GetType, GetType(Physical.Bodies.Attachment), False) Then
+                    Dim bpPart As Physical.Bodies.Attachment = DirectCast(doObject, Physical.Bodies.Attachment)
+                    aryAttachPoints.Remove(bpPart)
+
+                    Me.AttachmentPoints = aryAttachPoints
+                End If
+
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
 
 #End Region
 

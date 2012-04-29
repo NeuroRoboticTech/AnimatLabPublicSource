@@ -113,6 +113,7 @@ Public Class Util
             'Load content of file to strLines array
             Dim strData As String = tmpstream.ReadToEnd()
             aryLines = strData.Split(vbLf.ToCharArray())
+            tmpstream.Close()
 
             If (aryLines.Length < 2) Then
                 Throw New System.Exception("No data in file: " & strFilename)
@@ -146,7 +147,8 @@ Public Class Util
                     Next
                 End If
             Next
-
+        Else
+            Throw New System.Exception("File '" & strFilename & "' was not found.")
         End If
 
     End Sub

@@ -20,6 +20,7 @@ Namespace Framework
         Public InflectionPoints As New ArrayList
         Public MaximumPoints As New ArrayList
         Public MinimumPoints As New ArrayList
+        Public TestPoints As New ArrayList
 
         Public StartPoint As CriticalPoint
         Public EndPoint As CriticalPoint
@@ -197,6 +198,12 @@ Namespace Framework
             Next
 
             For Each oPoint As CriticalPoint In Me.MinimumPoints
+                If oPoint.ShouldCompare Then
+                    oTest.TestPoint(oPoint, strTestname)
+                End If
+            Next
+
+            For Each oPoint As CriticalPoint In Me.TestPoints
                 If oPoint.ShouldCompare Then
                     oTest.TestPoint(oPoint, strTestname)
                 End If

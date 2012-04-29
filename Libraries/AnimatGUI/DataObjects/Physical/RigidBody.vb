@@ -1513,6 +1513,20 @@ Namespace DataObjects.Physical
 
         End Sub
 
+        Public Overrides Sub RaiseMovedEvent()
+            MyBase.RaiseMovedEvent()
+
+            If Not Me.JointToParent Is Nothing Then
+                m_JointToParent.RaiseMovedEvent()
+            End If
+
+            For Each deEntry As DictionaryEntry In Me.ChildBodies
+                Dim doBody As RigidBody = DirectCast(deEntry.Value, RigidBody)
+                doBody.RaiseMovedEvent()
+            Next
+
+        End Sub
+
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
@@ -1693,6 +1707,11 @@ Namespace DataObjects.Physical
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+        End Sub
+
+        Public Overridable Sub Automation_AddBodyClicked(ByVal fltPosX As Single, ByVal fltPosY As Single, ByVal fltPosZ As Single, _
+                                                   ByVal fltNormX As Single, ByVal fltNormY As Single, ByVal fltNormZ As Single)
+            OnAddBodyClicked(fltPosX, fltPosY, fltPosZ, fltNormX, fltNormY, fltNormZ)
         End Sub
 
 #End Region

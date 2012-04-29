@@ -22,6 +22,7 @@ Namespace Framework
             Maximum
             Minimum
             Endpoint
+            Test
         End Enum
 
         Public Enum enumComparisonType
@@ -36,10 +37,10 @@ Namespace Framework
         Public Idx As Integer
 
         Public CompareTime As enumComparisonType = enumComparisonType.Fixed
-        Public TimeError As Double = 0.005
+        Public TimeError As Double = 0.02
 
         Public CompareValue As enumComparisonType = enumComparisonType.Fixed
-        Public ValueError As Double = 0.005
+        Public ValueError As Double = 0.02
 
         Public Overridable ReadOnly Property ShouldCompare() As Boolean
             Get

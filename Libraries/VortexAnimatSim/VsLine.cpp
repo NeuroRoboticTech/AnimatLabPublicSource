@@ -153,6 +153,18 @@ void VsLine::SetupGraphics()
 	SetVisible(m_lpThisMI->IsVisible());
 }
 
+void VsLine::DeleteGraphics()
+{
+	if(m_osgGeometry.valid())
+	{
+		m_osgGeometry->setDataVariance(osg::Object::STATIC);
+		m_osgGeometry->dirtyBound();
+		SetVisible(FALSE);
+	}
+
+	VsRigidBody::DeleteGraphics();
+}
+
 void VsLine::CreateGraphicsGeometry()
 {
 	fltA = 0;

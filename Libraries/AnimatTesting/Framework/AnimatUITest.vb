@@ -383,7 +383,7 @@ Namespace Framework
 
             'Set params and hit ok button
             ExecuteActiveDialogMethod("SetProjectParams", New Object() {strProjectName, m_strRootFolder & strProjectPath})
-            ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
             'Set simulation to automatically end at a specified time.
             ExecuteMethod("SetObjectProperty", New Object() {"Simulation", "SetSimulationEnd", "True"})
@@ -847,7 +847,7 @@ Namespace Framework
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strPartType})
 
             'Click 'Ok' button
-            ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
             ProcessExtraAddRootMethods(strPartType)
 
@@ -871,6 +871,16 @@ Namespace Framework
 
             Dim uIStructure_1BodyClient As WinClient = Me.UIProjectWindow(m_strProjectName).UIStructure_1BodyWindow.UIStructure_1BodyClient(m_strStruct1Name)
             Mouse.Click(uIStructure_1BodyClient, ptClick)
+        End Sub
+
+        Public Overridable Sub AutomatedClickToAddBody(ByVal strPath As String, ByVal fltPosX As Single, ByVal fltPosY As Single, ByVal fltPosZ As Single, _
+                                                   ByVal fltNormX As Single, ByVal fltNormY As Single, ByVal fltNormZ As Single)
+            Debug.WriteLine("AutomatedClickToAddBody. Path: '" & strPath & "', PosX: " & fltPosX & ", PosY: " & fltPosY & ", PosZ: " & fltPosZ & ", NormX: " & fltNormX & ", NormY: " & fltNormY & ", NormZ: " & fltNormZ)
+
+            Dim aryInnerParams As Object() = New Object() {fltPosX, fltPosY, fltPosZ, fltNormX, fltNormY, fltNormZ}
+            Dim aryParams As Object() = New Object() {strPath, "Automation_AddBodyClicked", aryInnerParams}
+
+            ExecuteDirectMethod("ExecuteIndirectMethodOnObject", aryParams)
         End Sub
 
         Protected Overridable Sub OpenDialogAndWait(ByVal strDlgName As String, ByVal oActionMethod As MethodInfo, ByVal aryParams() As Object)
@@ -913,7 +923,7 @@ Namespace Framework
             Threading.Thread.Sleep(1000)
             Dim oVal As Object = GetApplicationProperty("ErrorDialogMessage")
             Threading.Thread.Sleep(1000)
-            ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
             Threading.Thread.Sleep(1000)
             If Not TypeOf oVal Is System.String Then
                 Throw New System.Exception("String not returned from error dialog box.")
@@ -980,7 +990,7 @@ Namespace Framework
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strPartType})
 
             'Click 'Ok' button
-            ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
             AfterAddChildPart(strPartType, strJointType)
 
@@ -989,7 +999,7 @@ Namespace Framework
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strJointType})
 
             'Click 'Ok' button
-            ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
             AfterAddChildPartJoint(strPartType, strJointType)
 
@@ -1012,9 +1022,40 @@ Namespace Framework
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strPartType})
 
             'Click 'Ok' button
-            ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
             AfterAddChildPart(strPartType, "")
+
+            Threading.Thread.Sleep(1000)
+        End Sub
+
+        '''<summary>
+        '''AddChildPartTypeWithJoint - Use 'AddChildPartTypeWithJointParams' to pass parameters into this method.
+        '''</summary>
+        Protected Overridable Sub PasteChildPartTypeWithJoint(ByVal strJointType As String, ByVal strPath As String, ByVal fltPosX As Single, ByVal fltPosY As Single, ByVal fltPosZ As Single, _
+                                                              ByVal fltNormX As Single, ByVal fltNormY As Single, ByVal fltNormZ As Single, ByVal bHasJoint As Boolean)
+            Debug.WriteLine("PasteChildPartTypeWithJoint. Joint Type: " & strJointType & ", Path: '" & strPath & "', PosX: " & fltPosX & ", PosY: " & fltPosY & ", PosZ: " & fltPosZ & _
+                            ", NormX: " & fltNormX & ", NormY: " & fltNormY & ", NormZ: " & fltNormZ & ", bHasJoint: " & bHasJoint)
+
+            BeforeAddChildPart("", strJointType)
+
+            'Click 'Add Part' button
+            ExecuteMethod("ClickToolbarItem", New Object() {"PasteToolStripButton"}, 2000)
+
+            AutomatedClickToAddBody(strPath, fltPosX, fltPosY, fltPosZ, fltNormX, fltNormY, fltNormZ)
+
+            AfterAddChildPart("", strJointType)
+
+            If bHasJoint Then
+                OpenDialogAndWait("Select Part Type", Nothing, Nothing)
+
+                ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strJointType})
+
+                'Click 'Ok' button
+                ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+                AfterAddChildPartJoint("", strJointType)
+            End If
 
             Threading.Thread.Sleep(1000)
         End Sub
@@ -1030,7 +1071,7 @@ Namespace Framework
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strChartType})
 
             'Click 'Ok' button
-            ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
             Threading.Thread.Sleep(1000)
         End Sub
@@ -1050,7 +1091,7 @@ Namespace Framework
             OpenDialogAndWait("Select Data Item", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddDataItemToolStripButton"})
 
             ExecuteActiveDialogMethod("SelectItem", New Object() {strPath})
-            ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
             Threading.Thread.Sleep(2000)
         End Sub
@@ -1084,7 +1125,7 @@ Namespace Framework
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strStimulusType})
 
             'Click 'Ok' button
-            ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
             If strName.Length > 0 Then
                 ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strOldName, "Name", strName})
@@ -1314,7 +1355,7 @@ Namespace Framework
             End If
 
             OpenDialogAndWait(strDlgName, Nothing, Nothing)
-            ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
         End Sub
 
         '''<summary>
@@ -1456,7 +1497,7 @@ Namespace Framework
                     ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strSynapseType}, 2000)
                 End If
 
-                ExecuteActiveDialogMethod("ClickOkButton", Nothing, 1000)
+                ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, 1000)
             End If
 
         End Sub

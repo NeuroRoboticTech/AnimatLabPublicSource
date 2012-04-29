@@ -87,14 +87,14 @@ Namespace UITests
                 OpenDialogAndWait("Convert Project", Nothing, Nothing)
 
                 'Click 'Ok' button
-                ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
                 Threading.Thread.Sleep(3000)
 
                 OpenDialogAndWait("Project Conversion", Nothing, Nothing)
 
                 'Click 'Ok' button
-                ExecuteActiveDialogMethod("ClickOkButton", Nothing)
+                ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
                 Threading.Thread.Sleep(3000)
             End Sub
