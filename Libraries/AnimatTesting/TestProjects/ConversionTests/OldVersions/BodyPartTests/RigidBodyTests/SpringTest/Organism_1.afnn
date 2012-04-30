@@ -4,7 +4,7 @@
 <Neurons>
 <Neuron>
 <Position x="0" y="0" z="0"/>
-<Name>2</Name>
+<Name>A</Name>
 <Type>Regular</Type>
 <Enabled>True</Enabled>
 <Cn>1e-08</Cn>

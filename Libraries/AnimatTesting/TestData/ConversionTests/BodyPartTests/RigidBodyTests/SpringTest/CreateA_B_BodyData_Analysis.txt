@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-16"?>
+<DataAnalyzer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <InflectionPoints />
+  <MaximumPoints>
+    <anyType xsi:type="CriticalPoint">
+      <Type>Maximum</Type>
+      <Time>1.414</Time>
+      <Value>2.899605</Value>
+      <Idx>1414</Idx>
+      <CompareTime>Fixed</CompareTime>
+      <TimeError>0.02</TimeError>
+      <CompareValue>Fixed</CompareValue>
+      <ValueError>0.02</ValueError>
+    </anyType>
+    <anyType xsi:type="CriticalPoint">
+      <Type>Maximum</Type>
+      <Time>4.242</Time>
+      <Value>2.185421</Value>
+      <Idx>4242</Idx>
+      <CompareTime>Fixed</CompareTime>
+      <TimeError>0.02</TimeError>
+      <CompareValue>Fixed</CompareValue>
+      <ValueError>0.02</ValueError>
+    </anyType>
+  </MaximumPoints>
+  <MinimumPoints>
+    <anyType xsi:type="CriticalPoint">
+      <Type>Minimum</Type>
+      <Time>2.828</Time>
+      <Value>0.5205759</Value>
+      <Idx>2828</Idx>
+      <CompareTime>Fixed</CompareTime>
+      <TimeError>0.02</TimeError>
+      <CompareValue>Fixed</CompareValue>
+      <ValueError>0.02</ValueError>
+    </anyType>
+  </MinimumPoints>
+  <TestPoints />
+  <StartPoint>
+    <Type>Endpoint</Type>
+    <Time>0</Time>
+    <Value>-0.5</Value>
+    <Idx>0</Idx>
+    <CompareTime>Fixed</CompareTime>
+    <TimeError>0.02</TimeError>
+    <CompareValue>Fixed</CompareValue>
+    <ValueError>0.02</ValueError>
+  </StartPoint>
+  <EndPoint>
+    <Type>Endpoint</Type>
+    <Time>6</Time>
+    <Value>0.2422314</Value>
+    <Idx>6000</Idx>
+    <CompareTime>Fixed</CompareTime>
+    <TimeError>0.02</TimeError>
+    <CompareValue>Fixed</CompareValue>
+    <ValueError>0.02</ValueError>
+  </EndPoint>
+  <IgnoreAdditionalPoints>false</IgnoreAdditionalPoints>
+</DataAnalyzer>
