@@ -291,8 +291,8 @@ Namespace UITests
                         ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"})
 
                         AddStimulus("Tonic Current", "Organism_1", "\Behavioral System\Neural Subsystem\S2\A", "Stim_A")
-                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_A", "StartTime", "5 "})
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_A", "EndTime", "10 "})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_A", "StartTime", "5 "})
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_A", "CurrentOn", "30 n"})
 
                         'Add these neurons to the chart.
@@ -305,10 +305,10 @@ Namespace UITests
                         CompareSimulationAnalysis(m_strProjectPath & "\" & m_strProjectName, "BodyData", m_strRootFolder & m_strTestDataPath, "CreateA_B_", "Position")
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring2", "Stiffness", "10"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\Disabled", "Enabled", "False"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\A_B", "Enabled", "False"})
 
                         RunSimulationWaitToEnd()
-                        CompareSimulationAnalysis(m_strProjectPath & "\" & m_strProjectName, "BodyData", m_strRootFolder & m_strTestDataPath, "CreateA_B_", "Position")
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Length1Disable_")
 
 
                         DeletePart("Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_2\RightSide\RightAttach", "Delete Body Part")

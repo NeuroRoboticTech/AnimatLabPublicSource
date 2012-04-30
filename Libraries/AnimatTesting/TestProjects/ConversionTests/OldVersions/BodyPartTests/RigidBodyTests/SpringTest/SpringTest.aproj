@@ -87,7 +87,7 @@
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Stimulus_1</Name>
+<Name>Stimulus_A</Name>
 <ID>469e71de-ee47-4a98-9253-5359bc126a71</ID>
 <StartTime Value="5" Scale="None" Actual="5"/>
 <EndTime Value="10" Scale="None" Actual="10"/>
@@ -109,7 +109,7 @@
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.Force</ClassName>
-<Name>Stimulus_1</Name>
+<Name>Stimulus_B</Name>
 <ID>1bcef9a4-b5de-48da-b843-33264c19a153</ID>
 <StartTime Value="5" Scale="None" Actual="5"/>
 <EndTime Value="15" Scale="None" Actual="15"/>
@@ -133,7 +133,7 @@
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
-<Name>Stimulus_1</Name>
+<Name>Stimulus_C</Name>
 <ID>f4505866-8b0c-43a5-8daf-6d209919154c</ID>
 <StartTime Value="1" Scale="None" Actual="1"/>
 <EndTime Value="3" Scale="None" Actual="3"/>
