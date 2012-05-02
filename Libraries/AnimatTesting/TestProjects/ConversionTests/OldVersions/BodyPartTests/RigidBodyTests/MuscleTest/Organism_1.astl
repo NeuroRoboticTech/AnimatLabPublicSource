@@ -19,7 +19,7 @@
 <Freeze>True</Freeze>
 <ChildBodies>
 <RigidBody>
-<Name>Right Side</Name>
+<Name>RightSide</Name>
 <ID>2c063f05-1e4d-43a9-8990-67b931bf5247</ID>
 <Type>Box</Type>
 <PartType>VortexAnimatTools.DataObjects.Physical.RigidBodies.Box</PartType>
@@ -68,7 +68,7 @@
 <GraphicsBoxSize x="0.1" y="0.5" z="0.5"/>
 </RigidBody>
 <RigidBody>
-<Name>Left Side</Name>
+<Name>LeftSide</Name>
 <ID>996ec696-b397-49be-a6d0-b7d9cdea14b5</ID>
 <Type>Box</Type>
 <PartType>VortexAnimatTools.DataObjects.Physical.RigidBodies.Box</PartType>
@@ -104,7 +104,7 @@
 </Joint>
 <ChildBodies>
 <RigidBody>
-<Name>Left Attachment</Name>
+<Name>LeftAttachment</Name>
 <ID>30989b50-8ce6-40e8-868a-650669288f3e</ID>
 <Type>MuscleAttachment</Type>
 <PartType>VortexAnimatTools.DataObjects.Physical.RigidBodies.MuscleAttachment</PartType>
@@ -182,7 +182,7 @@
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxForce Value="100" Scale="None" Actual="100"/>
+<MaxForce Value="10000" Scale="None" Actual="10000"/>
 <MaxVelocity Value="100" Scale="None" Actual="100"/>
 <RotationAxis x="1" y="-8.74228e-08" z="4.37114e-08"/>
 <Radius>0.02</Radius>
@@ -254,7 +254,7 @@
 <IbDischarge Value="100" Scale="None" Actual="100"/>
 </RigidBody>
 <RigidBody>
-<Name>Arm Attachment</Name>
+<Name>ArmAttachment</Name>
 <ID>3af46151-7a61-42d4-99e8-b1e8fb55dc2b</ID>
 <Type>MuscleAttachment</Type>
 <PartType>VortexAnimatTools.DataObjects.Physical.RigidBodies.MuscleAttachment</PartType>

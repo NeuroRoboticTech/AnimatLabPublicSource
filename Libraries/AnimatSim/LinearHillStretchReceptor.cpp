@@ -173,6 +173,14 @@ void LinearHillStretchReceptor::CalculateTension()
 	m_fltIIRate = m_fltIIDischargeConstant*m_fltPeLength;
 }
 
+void LinearHillStretchReceptor::ResetSimulation()
+{
+	LinearHillMuscle::ResetSimulation();
+
+	m_fltIaRate = 0;
+	m_fltIIRate = 0;
+}
+
 float *LinearHillStretchReceptor::GetDataPointer(string strDataType)
 {
 	string strType = Std_CheckString(strDataType);

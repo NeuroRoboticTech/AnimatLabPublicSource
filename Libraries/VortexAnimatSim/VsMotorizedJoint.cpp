@@ -104,7 +104,7 @@ void VsMotorizedJoint::Physics_EnableLock(BOOL bOn, float fltPosition, float flt
 		if(bOn)
 		{
 			//set the lock parameters
-			m_vxJoint->setLockParameters(m_iCoordID, fltPosition, -fltMaxLockForce, fltMaxLockForce);
+			m_vxJoint->setLockParameters(m_iCoordID, fltPosition, fltMaxLockForce);
 			//turn on the lock (disabling motorized or free mode)
 			m_vxJoint->setControl(m_iCoordID, VxConstraint::CoordinateControlEnum::kControlLocked);
 		}

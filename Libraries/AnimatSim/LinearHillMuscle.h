@@ -170,6 +170,9 @@ namespace AnimatSim
 				virtual void Enabled(BOOL bVal);
 
 				virtual void CalculateInverseDynamics(float fltLength, float fltVelocity, float fltT, float &fltVm, float &fltA);
+								
+				virtual void ResetSimulation();
+				virtual void AfterResetSimulation();
 
 				virtual void CreateJoints();
 				virtual float *GetDataPointer(string strDataType);

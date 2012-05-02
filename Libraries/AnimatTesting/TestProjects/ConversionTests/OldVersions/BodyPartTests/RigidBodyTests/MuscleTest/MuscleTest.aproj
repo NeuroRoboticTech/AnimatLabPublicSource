@@ -5,7 +5,7 @@
 <SimulationFile>MuscleTest.asim</SimulationFile>
 <LogLevel>Error</LogLevel>
 <Version>1</Version>
-<SimWindowLocation x="-23" y="7"/>
+<SimWindowLocation x="72" y="78"/>
 <SimWindowSize Width="640" Height="480"/>
 <DockingForms>
 <Form>
@@ -37,7 +37,7 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>2</MajorInterval>
+<MajorInterval>1</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
 <TimeScale>Seconds</TimeScale>
 </Form>

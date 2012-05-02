@@ -14,7 +14,7 @@
 <Node>
 <AssemblyFile>FastNeuralNetTools.dll</AssemblyFile>
 <ClassName>FastNeuralNetTools.DataObjects.Behavior.NeuralModule</ClassName>
-<TimeStep Value="2.5" Scale="milli" Actual="0.0025"/>
+<TimeStep Value="2" Scale="milli" Actual="0.002"/>
 </Node>
 <Node>
 <AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
@@ -856,7 +856,7 @@
 <Shape>Hexagon</Shape>
 <ShapeOrientation>Angle0</ShapeOrientation>
 <Size Width="50" Height="50"/>
-<Text>1</Text>
+<Text>B</Text>
 <TextColor>-16777216</TextColor>
 <TextMargin Width="0" Height="0"/>
 <ToolTip/>
@@ -894,7 +894,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="127" y="151"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -965,7 +965,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="318" y="96"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -1019,7 +1019,7 @@
 <Shape>Ellipse</Shape>
 <ShapeOrientation>Angle0</ShapeOrientation>
 <Size Width="40" Height="40"/>
-<Text>2</Text>
+<Text>A</Text>
 <TextColor>-16777216</TextColor>
 <TextMargin Width="0" Height="0"/>
 <ToolTip/>
@@ -1067,7 +1067,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="226.563" y="151"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -1075,7 +1075,7 @@
 <Shape>Display</Shape>
 <ShapeOrientation>Angle0</ShapeOrientation>
 <Size Width="40" Height="40"/>
-<Text>3</Text>
+<Text>C</Text>
 <TextColor>-16777216</TextColor>
 <TextMargin Width="0" Height="0"/>
 <ToolTip/>
@@ -1215,7 +1215,7 @@
 <Shape>Display</Shape>
 <ShapeOrientation>Angle0</ShapeOrientation>
 <Size Width="40" Height="40"/>
-<Text>3</Text>
+<Text>A_B</Text>
 <TextColor>-16777216</TextColor>
 <TextMargin Width="0" Height="0"/>
 <ToolTip/>
@@ -1501,7 +1501,7 @@
     <DrawColor>16777215</DrawColor>
     <TextColor>-16777216</TextColor>
     <GradientColor>0</GradientColor>
-    <Text>1</Text>
+    <Text>B</Text>
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <ImageIndex>1</ImageIndex>
     <Tag>0814b138-802a-4fcf-aca7-2fd0d1ba2525</Tag>
@@ -1512,7 +1512,7 @@
     <DrawColor>-16777216</DrawColor>
     <TextColor>-16777216</TextColor>
     <GradientColor>0</GradientColor>
-    <Text>2</Text>
+    <Text>A</Text>
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>49f87d3d-e42c-4e68-8572-7158440826aa</Tag>
   </Node>
@@ -1523,7 +1523,7 @@
     <DrawColor>-16777216</DrawColor>
     <TextColor>-16777216</TextColor>
     <GradientColor>0</GradientColor>
-    <Text>3</Text>
+    <Text>A_B</Text>
     <Font Name="Arial" Size="12" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>e1df82fc-a88b-4e16-85e8-464956c64e6f</Tag>
   </Node>
@@ -1580,7 +1580,7 @@
     <DrawColor>-16777216</DrawColor>
     <TextColor>-16777216</TextColor>
     <GradientColor>0</GradientColor>
-    <Text>3</Text>
+    <Text>C</Text>
     <Font Name="Arial" Size="12" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>82c08faf-247f-49dd-8638-dace74c9578b</Tag>
   </Node>
@@ -1780,7 +1780,7 @@
           <Previous Count="1">
             <Item Name="Toolbox" />
           </Previous>
-          <Selected Value="True" />
+          <Selected Value="False" />
           <Child Type="null" />
         </Child>
       </Child>
@@ -1908,7 +1908,7 @@
             <Item Name="Properties" />
             <Item Name="Hierarchy" />
           </Previous>
-          <Selected Value="False" />
+          <Selected Value="True" />
           <Child Type="null" />
         </Child>
       </Child>

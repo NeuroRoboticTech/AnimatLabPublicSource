@@ -73,6 +73,7 @@ LinearHillMuscle::LinearHillMuscle()
 	m_fltTLPerc = 0;
 	m_fltAct = 0;
 	m_fltA = 0;
+	m_fltPrevA = 0;
 	m_fltTdot = 0;
 	m_fltTension = 0;
 	m_fltPrevTension = 0;
@@ -370,6 +371,47 @@ inline float LinearHillMuscle::Fact(float fltStim)
 		fltAct = 0;
 
 	return fltAct;
+}
+
+void LinearHillMuscle::ResetSimulation()
+{
+	MuscleBase::ResetSimulation();
+
+	m_fltDisplacement = 0;
+	m_fltDisplacementRatio = 0;
+	m_fltVmuscle = 0;
+	m_fltPrevTension = 0;
+	m_fltTL = 0;
+	m_fltAct = 0;
+	m_fltA = 0;
+	m_fltPrevA = 0;
+	m_fltTLPerc = 0;
+	m_fltTdot = 0;  
+	m_fltInternalTension = 0;
+	m_fltTension = 0;
+
+	m_fltSeLPrev = m_fltSeLength;
+	m_fltPeLPrev = m_fltPeLength;
+
+	m_fltSeLength = m_gainLengthTension.SeRestLength();
+	m_fltSeDisplacement = 0;
+
+	m_fltVse = 0;
+	m_fltVpe = 0;
+
+	m_fltVm = (float) -0.15;
+
+	m_fltIbRate = 0;
+
+	m_fltAvgMuscleVel = 0;
+	for(int i=0; i<m_iMuscleVelAvgCount; i++)
+		m_aryMuscleVelocities[i] = 0;
+}
+
+void LinearHillMuscle::AfterResetSimulation() 
+{
+	MuscleBase::AfterResetSimulation();
+	m_fltPeLength = m_fltLength - m_fltSeLength;
 }
 
 void LinearHillMuscle::CalculateTension()

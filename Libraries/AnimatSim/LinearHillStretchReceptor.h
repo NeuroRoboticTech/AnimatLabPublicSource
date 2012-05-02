@@ -91,6 +91,8 @@ namespace AnimatSim
 				virtual float *GetDataPointer(string strDataType);
 				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
+				virtual void ResetSimulation();
+
 				virtual void Load(CStdXml &oXml);
 			};
 

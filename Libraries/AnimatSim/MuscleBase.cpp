@@ -238,6 +238,15 @@ void MuscleBase::AddExternalNodeInput(float fltInput)
 	m_fltVm=fltInput;
 }
 
+void MuscleBase::ResetSimulation()
+{
+	LineBase::ResetSimulation();
+
+	m_fltVm = 0;
+	m_fltTdot = 0;
+	m_fltTension = 0;
+	m_fltPrevTension = 0;
+}
 
 #pragma region DataAccesMethods
 
