@@ -84,6 +84,8 @@ namespace AnimatSim
 			virtual void SetVelocityToDesired();
 			virtual void EnableLock(BOOL bOn, float fltPosition, float fltMaxLockForce);
 
+			virtual void ResetSimulation();
+
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
 			virtual void Load(CStdXml &oXml);

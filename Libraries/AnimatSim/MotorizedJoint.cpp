@@ -112,6 +112,10 @@ void MotorizedJoint::EnableMotor(BOOL bVal)
 	if(m_lpPhysicsMotorJoint)
 		m_lpPhysicsMotorJoint->Physics_EnableMotor(bVal, m_fltDesiredVelocity, m_fltMaxForce);
 	m_bEnableMotor = bVal;
+
+	//If the sim is running then we do not set the history flag. Only set it if changed while the sim is not running.
+	if(!m_lpSim->SimRunning())
+		m_bEnableMotorInit = m_bEnableMotor;
 }
 
 
@@ -334,6 +338,16 @@ void MotorizedJoint::EnableLock(BOOL bOn, float fltPosition, float fltMaxLockFor
 {
 	if(m_lpPhysicsMotorJoint)
 		m_lpPhysicsMotorJoint->Physics_EnableLock(bOn, fltPosition, fltMaxLockForce);
+}
+void MotorizedJoint::ResetSimulation()
+{
+	Joint::ResetSimulation();
+
+	m_fltSetVelocity = 0;
+	m_fltDesiredVelocity = 0;
+	m_fltPrevVelocity = 0;
+
+	EnableMotor(m_bEnableMotorInit);
 }
 
 BOOL MotorizedJoint::SetData(string strDataType, string strValue, BOOL bThrowError)

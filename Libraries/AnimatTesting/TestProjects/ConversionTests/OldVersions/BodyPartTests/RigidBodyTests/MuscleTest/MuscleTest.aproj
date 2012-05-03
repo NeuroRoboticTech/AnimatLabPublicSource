@@ -37,9 +37,9 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>5</MajorInterval>
+<MajorInterval>200</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>Seconds</TimeScale>
+<TimeScale>MilliSeconds</TimeScale>
 </Form>
 </DockingForms>
 <ChildForms>
@@ -72,17 +72,6 @@
 <AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
 <ClassName>LicensedAnimatTools.Forms.Charts.LineChart</ClassName>
 <Title>BodyData</Title>
-</Form>
-</Child>
-<Child>
-<AssemblyFile>AnimatTools.dll</AssemblyFile>
-<ClassName>AnimatTools.Forms.Tools.Viewer</ClassName>
-<EditorFile>ToolViewer_5.atvf</EditorFile>
-<TreeViewHeight>168</TreeViewHeight>
-<Form>
-<AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
-<ClassName>LicensedAnimatTools.Forms.Charts.LineChart</ClassName>
-<Title>ToolViewer_5</Title>
 </Form>
 </Child>
 </ChildForms>
@@ -172,7 +161,7 @@
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>MV Stim</Name>
+<Name>MV_Stim</Name>
 <ID>4ebee19a-e2a5-4175-ba6f-839f9962add3</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
 <EndTime Value="20" Scale="None" Actual="20"/>
@@ -194,7 +183,7 @@
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>MN Stim</Name>
+<Name>MN_Stim</Name>
 <ID>96c31025-d0fb-4dc3-bcc2-e77fa99c6865</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
 <EndTime Value="20" Scale="None" Actual="20"/>

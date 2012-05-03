@@ -1,6 +1,6 @@
 <Structure>
 <RigidBody>
-<Name>Root</Name>
+<Name>Base</Name>
 <ID>71e526f6-bb43-4b05-ab73-5db94c81abc1</ID>
 <Type>Box</Type>
 <PartType>VortexAnimatTools.DataObjects.Physical.RigidBodies.Box</PartType>
@@ -85,7 +85,7 @@
 <YCenterOfMass Value="0" Scale="None" Actual="0"/>
 <ZCenterOfMass Value="0" Scale="None" Actual="0"/>
 <Joint>
-<Name>Joint_1</Name>
+<Name>Joint_3</Name>
 <ID>538d9e72-6a02-4d56-8050-7471c992a3d3</ID>
 <Type>Static</Type>
 <PartType>VortexAnimatTools.DataObjects.Physical.Joints.Static</PartType>
@@ -167,7 +167,7 @@
 <YCenterOfMass Value="0" Scale="None" Actual="0"/>
 <ZCenterOfMass Value="0" Scale="None" Actual="0"/>
 <Joint>
-<Name>Joint_3</Name>
+<Name>Joint_1</Name>
 <ID>c4d1aa04-c48d-444b-9cef-a73be90632a7</ID>
 <Type>Prismatic</Type>
 <PartType>VortexAnimatTools.DataObjects.Physical.Joints.Prismatic</PartType>
@@ -182,7 +182,7 @@
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxForce Value="10000" Scale="None" Actual="10000"/>
+<MaxForce Value="100" Scale="None" Actual="100"/>
 <MaxVelocity Value="100" Scale="None" Actual="100"/>
 <RotationAxis x="1" y="-8.74228e-08" z="4.37114e-08"/>
 <Radius>0.02</Radius>

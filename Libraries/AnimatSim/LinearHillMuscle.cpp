@@ -347,8 +347,7 @@ void LinearHillMuscle::Enabled(BOOL bVal)
 **/
 inline float LinearHillMuscle::Ftl(float fltL)
 {
-	float fltLceNorm = fltL - m_gainLengthTension.RestingLength();
-	float fltTl = m_gainLengthTension.CalculateGain(fltLceNorm);
+	float fltTl = m_gainLengthTension.CalculateGain(fltL);
 	if(fltTl<0) fltTl = 0;
 	return fltTl;
 }

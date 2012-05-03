@@ -59,7 +59,6 @@ namespace AnimatSim
 
 				virtual BOOL UsesRadians() {return FALSE;};
 
-				virtual void ResetSimulation();
 				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 				virtual void AddExternalNodeInput(float fltInput);
 

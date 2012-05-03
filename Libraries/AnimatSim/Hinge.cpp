@@ -174,17 +174,6 @@ float Hinge::GetLimitRange()
 		return -1;
 }
 
-void Hinge::ResetSimulation()
-{
-	Joint::ResetSimulation();
-
-	m_fltSetVelocity = 0;
-	m_fltDesiredVelocity = 0;
-	m_fltPrevVelocity = 0;
-
-	EnableMotor(m_bEnableMotorInit);
-}
-
 BOOL Hinge::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);

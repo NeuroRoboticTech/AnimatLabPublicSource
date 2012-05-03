@@ -72,7 +72,6 @@ namespace AnimatSim
 				virtual float GetPositionWithinLimits(float fltPos);
 				virtual float GetLimitRange();
 
-				virtual void ResetSimulation();
 				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 				virtual void AddExternalNodeInput(float fltInput);
 

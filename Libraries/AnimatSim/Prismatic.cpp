@@ -163,17 +163,6 @@ float Prismatic::GetLimitRange()
 		return -1;
 }
 
-void Prismatic::ResetSimulation()
-{
-	Joint::ResetSimulation();
-
-	m_fltSetVelocity = 0;
-	m_fltDesiredVelocity = 0;
-	m_fltPrevVelocity = 0;
-
-	EnableMotor(m_bEnableMotorInit);
-}
-
 BOOL Prismatic::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
