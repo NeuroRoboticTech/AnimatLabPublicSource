@@ -5870,10 +5870,10 @@ Namespace Forms
 
         Private Sub SnapshotSimToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SnapshotSimToolStripMenuItem.Click
             Try
-                'Me.SimulationInterface.SaveSimulationFile(Me.ProjectPath & "Snapshot")
+                Me.SimulationInterface.SaveSimulationFile(Me.ProjectPath & "Snapshot")
 
                 'Me.OpenUITypeEditor("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapseType")
-                Me.SetObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1", "DataTypes", "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking.DataTypes.ExternalCurrent")
+                'Me.SetObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1", "DataTypes", "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking.DataTypes.ExternalCurrent")
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

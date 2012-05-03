@@ -37,7 +37,7 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>1</MajorInterval>
+<MajorInterval>5</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
 <TimeScale>Seconds</TimeScale>
 </Form>
@@ -74,6 +74,17 @@
 <Title>BodyData</Title>
 </Form>
 </Child>
+<Child>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.Tools.Viewer</ClassName>
+<EditorFile>ToolViewer_5.atvf</EditorFile>
+<TreeViewHeight>168</TreeViewHeight>
+<Form>
+<AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.Forms.Charts.LineChart</ClassName>
+<Title>ToolViewer_5</Title>
+</Form>
+</Child>
 </ChildForms>
 <ToolViewers>
 <ToolHolder>
@@ -83,8 +94,8 @@
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
 <ToolHolder>
-<ID>40f0deac-7391-4616-a05a-6d1742e9eb48</ID>
-<Name>ToolViewer_3</Name>
+<ID>662cc98f-1753-48e6-83c7-e9eed8cc2871</ID>
+<Name>BodyData</Name>
 <BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
@@ -95,8 +106,8 @@
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
 <ToolHolder>
-<ID>662cc98f-1753-48e6-83c7-e9eed8cc2871</ID>
-<Name>BodyData</Name>
+<ID>40f0deac-7391-4616-a05a-6d1742e9eb48</ID>
+<Name>ToolViewer_3</Name>
 <BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
@@ -204,7 +215,7 @@
 </Stimulus>
 </Stimuli>
 <DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">
-  <Content Name="Simulation Controller" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 100" DisplayLocation="150, 150" AutoHideSize="150, 100" FloatingSize="150, 150" FullTitle="Simulation Controller">
+  <Content Name="Simulation Controller" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 98" DisplayLocation="150, 150" AutoHideSize="150, 100" FloatingSize="150, 150" FullTitle="Simulation Controller">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Simulation Controller" />
       <State Value="DockLeft" />
@@ -218,7 +229,7 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Simulation Controller" />
       <State Value="DockBottom" />
-      <Position Size="150, 100" Location="150, 150" />
+      <Position Size="150, 98" Location="150, 150" />
       <Best Count="1">
         <Item Name="Simulation Controller" />
       </Best>

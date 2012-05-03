@@ -445,10 +445,16 @@ Namespace UITests
 
                         VerifyPropertyValue("Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle", "Length.ActualValue", 0.5)
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Disabled", "Enabled", "False"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring", "Damping", "1 K"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\MV_Stim", "Enabled", "True"})
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Underdamped_")
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "MV_Stim_")
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\MN_Stim", "Enabled", "True"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\MV_Stim", "Enabled", "False"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stretch", "Enabled", "False"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Relax", "Enabled", "False"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "MN_Stim_")
 
                     End Sub
 
