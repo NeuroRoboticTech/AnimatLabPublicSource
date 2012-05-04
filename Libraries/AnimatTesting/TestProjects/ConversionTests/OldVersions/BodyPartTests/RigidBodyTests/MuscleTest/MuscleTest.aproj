@@ -83,8 +83,8 @@
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
 <ToolHolder>
-<ID>662cc98f-1753-48e6-83c7-e9eed8cc2871</ID>
-<Name>BodyData</Name>
+<ID>40f0deac-7391-4616-a05a-6d1742e9eb48</ID>
+<Name>ToolViewer_3</Name>
 <BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
@@ -95,8 +95,8 @@
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
 <ToolHolder>
-<ID>40f0deac-7391-4616-a05a-6d1742e9eb48</ID>
-<Name>ToolViewer_3</Name>
+<ID>662cc98f-1753-48e6-83c7-e9eed8cc2871</ID>
+<Name>BodyData</Name>
 <BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>

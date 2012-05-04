@@ -29,7 +29,7 @@ Namespace TypeHelpers
                     frmGainEditor.BarClassName = oGain.BarClassName
                     frmGainEditor.MdiParent = Nothing
 
-                    If Not context Is Nothing Then
+                    If Not context Is Nothing AndAlso Not context.PropertyDescriptor Is Nothing Then
                         frmGainEditor.PropertyName = context.PropertyDescriptor.Name
                         frmGainEditor.Text = "Edit " & context.PropertyDescriptor.Name
                     Else

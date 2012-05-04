@@ -585,14 +585,14 @@
 <Link>
 <AssemblyFile>FPGANeuralNetTools.dll</AssemblyFile>
 <ClassName>FPGANeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
-<ID>f2aab4ee-90f9-4ca6-aef5-24c6b051f4d1</ID>
+<ID>c3b7c5e4-b6d3-4341-bf56-2d11e3405915</ID>
 <AdjustDst>False</AdjustDst>
 <AdjustOrg>False</AdjustOrg>
 <ArrowDestination>
-<Style>Circle</Style>
+<Style>Fork</Style>
 <Size>Medium</Size>
 <Angle>deg30</Angle>
-<Filled>True</Filled>
+<Filled>False</Filled>
 </ArrowDestination>
 <ArrowMiddle>
 <Style>None</Style>
@@ -624,10 +624,10 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<Name>Hyperpolarizing IPSP</Name>
-<EquilibriumPotential Value="-70" Scale="milli" Actual="-0.07"/>
+<Name>Nicotinic ACh</Name>
+<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
 <SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
-<DecayRate Value="10" Scale="milli" Actual="0.01"/>
+<DecayRate Value="3" Scale="milli" Actual="0.003"/>
 </Link>
 <Link>
 <AssemblyFile>FPGANeuralNetTools.dll</AssemblyFile>
@@ -679,14 +679,14 @@
 <Link>
 <AssemblyFile>FPGANeuralNetTools.dll</AssemblyFile>
 <ClassName>FPGANeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
-<ID>c3b7c5e4-b6d3-4341-bf56-2d11e3405915</ID>
+<ID>f2aab4ee-90f9-4ca6-aef5-24c6b051f4d1</ID>
 <AdjustDst>False</AdjustDst>
 <AdjustOrg>False</AdjustOrg>
 <ArrowDestination>
-<Style>Fork</Style>
+<Style>Circle</Style>
 <Size>Medium</Size>
 <Angle>deg30</Angle>
-<Filled>False</Filled>
+<Filled>True</Filled>
 </ArrowDestination>
 <ArrowMiddle>
 <Style>None</Style>
@@ -718,10 +718,10 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<Name>Nicotinic ACh</Name>
-<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
+<Name>Hyperpolarizing IPSP</Name>
+<EquilibriumPotential Value="-70" Scale="milli" Actual="-0.07"/>
 <SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
-<DecayRate Value="3" Scale="milli" Actual="0.003"/>
+<DecayRate Value="10" Scale="milli" Actual="0.01"/>
 </Link>
 <Link>
 <AssemblyFile>FPGANeuralNetTools.dll</AssemblyFile>
