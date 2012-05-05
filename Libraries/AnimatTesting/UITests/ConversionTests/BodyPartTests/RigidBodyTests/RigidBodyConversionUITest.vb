@@ -608,48 +608,47 @@ Namespace UITests
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Muscle2_")
 
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring2", "Damping", "0.5 K"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring2", "Stiffness", "10"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring1", "Enabled", "False"})
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Length1Disable_")
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\MN_Stim", "Enabled", "True"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stretch", "Enabled", "True"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Relax", "Enabled", "True"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Stretch_muscle2_")
 
-                        'DeletePart("Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring1", "Delete Body Part")
-                        'Threading.Thread.Sleep(1000)
-                        'If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring1"})) Then
-                        '    Throw New System.Exception("Spring1 node was not removed correctly.")
-                        'End If
-                        'If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1\Length"})) Then
-                        '    Throw New System.Exception("Length chart node was not removed correctly.")
-                        'End If
-                        'If Not GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B", "LinkedPart.BodyPart") Is Nothing Then
-                        '    Throw New System.Exception("Linked body part not removed.")
-                        'End If
-                        'If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Disabled"})) Then
-                        '    Throw New System.Exception("Adapter node was not removed correctly.")
-                        'End If
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Length1Disable_")
+                        DeletePart("Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle1", "Delete Body Part")
+                        Threading.Thread.Sleep(1000)
+                        If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle1"})) Then
+                            Throw New System.Exception("Muscle1 node was not removed correctly.")
+                        End If
+                        If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Tool Viewers\BodyData\LineChart\Tension\Tension"})) Then
+                            Throw New System.Exception("Muscle1 chart node was not removed correctly.")
+                        End If
+                        If Not GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Muscle", "LinkedPart.BodyPart") Is Nothing Then
+                            Throw New System.Exception("Linked body part not removed.")
+                        End If
+                        If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\C"})) Then
+                            Throw New System.Exception("Adapter node was not removed correctly.")
+                        End If
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Delete_Muscle1_")
 
 
-                        'ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem"}, 2000)
+                        ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem"}, 2000)
 
-                        'AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A", _
-                        '                  "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B", "", "", False)
-                        'AssertErrorDialogShown("You must specify a linked body part before you can add an adapter to this node.", enumMatchType.Equals)
+                        AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\MV", _
+                                          "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Muscle", "", "", False)
+                        AssertErrorDialogShown("You must specify a linked body part before you can add an adapter to this node.", enumMatchType.Equals)
 
-                        'ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B", _
-                        '                                             "Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring2"})
+                        ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Muscle", _
+                                                                     "Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle2"})
 
-                        'AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A", _
-                        '                  "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B", "", "", False)
-                        'If Not CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2"})) Then
-                        '    Throw New System.Exception("A_B adapter node was not removed created.")
-                        'End If
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Name", "A_B"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring2", "Stiffness", "5"})
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulationAnalysis(m_strProjectPath & "\" & m_strProjectName, "BodyData", m_strRootFolder & m_strTestDataPath, "CreateA_B_", "Position")
+                        AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\MV", _
+                                          "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Muscle", "", "", False)
+                        If Not CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2"})) Then
+                            Throw New System.Exception("A_B adapter node was not removed created.")
+                        End If
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Name", "A_B"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulationAnalysis(m_strProjectPath & "\" & m_strProjectName, "BodyData", m_strRootFolder & m_strTestDataPath, "CreateA_B_", "Position")
 
                         ''Add subsystem.
                         'AddBehavioralNode("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem", _
