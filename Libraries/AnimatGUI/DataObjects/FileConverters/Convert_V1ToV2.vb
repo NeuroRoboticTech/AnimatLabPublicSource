@@ -869,7 +869,7 @@ Namespace DataObjects
                                        "    <Texture/>" & _
                                        "    <LocalPosition>" & _
                                        "        <X Value=""1"" Scale=""None"" Actual=""1""/>" & _
-                                       "        <Y Value=""10"" Scale=""None"" Actual=""10""/>" & _
+                                       "        <Y Value=""20"" Scale=""None"" Actual=""20""/>" & _
                                        "        <Z Value=""0"" Scale=""None"" Actual=""0""/>" & _
                                        "    </LocalPosition>" & _
                                        "    <Rotation>" & _

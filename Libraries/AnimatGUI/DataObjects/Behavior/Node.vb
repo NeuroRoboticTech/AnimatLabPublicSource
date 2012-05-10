@@ -1221,7 +1221,7 @@ Namespace DataObjects.Behavior
                 iColor = oXml.GetChildInt("GradientColor")
                 m_clGradientColor = Color.FromArgb(iColor)
                 m_eGradientMode = DirectCast([Enum].Parse(GetType(System.Drawing.Drawing2D.LinearGradientMode), oXml.GetChildString("GradientMode"), True), System.Drawing.Drawing2D.LinearGradientMode)
-                m_strDiagramImageName = oXml.GetChildString("DiagramImageName", m_strDiagramImageName)
+                m_strDiagramImageName = DetermineImageNameOnLoad(oXml.GetChildString("DiagramImageName", m_strDiagramImageName))
                 m_strImageName = oXml.GetChildString("ImageName", m_strImageName)
                 m_ptImageLocation = Util.LoadPointF(oXml, "ImageLocation")
                 m_eImagePosition = DirectCast([Enum].Parse(GetType(enumImagePosition), oXml.GetChildString("ImagePosition"), True), enumImagePosition)
@@ -1281,6 +1281,14 @@ Namespace DataObjects.Behavior
             End Try
 
         End Sub
+
+        Protected Overridable Function DetermineImageNameOnLoad(ByVal strLoadedImage As String) As String
+            If strLoadedImage.Trim.Length = 0 AndAlso m_strDiagramImageName.Trim.Length > 0 Then
+                Return m_strDiagramImageName
+            Else
+                Return strLoadedImage
+            End If
+        End Function
 
         Public Overrides Sub InitializeAfterLoad()
             Dim strID As String = ""

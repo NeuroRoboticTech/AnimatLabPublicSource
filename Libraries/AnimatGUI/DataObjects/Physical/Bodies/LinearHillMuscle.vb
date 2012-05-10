@@ -212,6 +212,15 @@ Namespace DataObjects.Physical.Bodies
                    "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
         End Sub
 
+        Public Overridable Sub ShowCalculateStimulusDialog()
+
+            Dim frmCalc As New Forms.BodyPlan.CalculateMuscleStimulus
+
+            frmCalc.Muscle = Me
+            frmCalc.ShowDialog()
+
+        End Sub
+
         Public Overloads Overrides Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(doStructure, oXml)
 

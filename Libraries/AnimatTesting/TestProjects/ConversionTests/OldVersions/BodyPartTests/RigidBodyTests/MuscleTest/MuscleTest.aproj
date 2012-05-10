@@ -37,7 +37,7 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>200</MajorInterval>
+<MajorInterval>500</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
 <TimeScale>MilliSeconds</TimeScale>
 </Form>
@@ -83,8 +83,8 @@
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
 <ToolHolder>
-<ID>40f0deac-7391-4616-a05a-6d1742e9eb48</ID>
-<Name>ToolViewer_3</Name>
+<ID>662cc98f-1753-48e6-83c7-e9eed8cc2871</ID>
+<Name>BodyData</Name>
 <BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
@@ -95,8 +95,8 @@
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
 <ToolHolder>
-<ID>662cc98f-1753-48e6-83c7-e9eed8cc2871</ID>
-<Name>BodyData</Name>
+<ID>40f0deac-7391-4616-a05a-6d1742e9eb48</ID>
+<Name>ToolViewer_3</Name>
 <BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
@@ -126,6 +126,28 @@
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>MV_Stim1</Name>
+<ID>c2965e22-ae43-4425-a00a-016c5ab0c389</ID>
+<StartTime Value="2" Scale="None" Actual="2"/>
+<EndTime Value="4" Scale="None" Actual="4"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>6a4d7d2c-7c95-4944-a0e6-89a7dc1d2ad2</OrganismID>
+<NodeID>356f26ce-f64c-49e3-92d1-1b8b2c6149de</NodeID>
+<CurrentOn Value="15" Scale="nano" Actual="1.5e-08"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="2" Scale="None" Actual="2"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="2" Scale="None" Actual="2"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
 <Name>Relax</Name>
 <ID>2cf6a2e1-398d-4d88-a63d-48cf615bc4f8</ID>
@@ -140,6 +162,28 @@
 <PartID>c4d1aa04-c48d-444b-9cef-a73be90632a7</PartID>
 <Velocity Value="40" Scale="centi" Actual="0.4"/>
 <DisableMotorWhenDone>False</DisableMotorWhenDone>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>MV_Stim2</Name>
+<ID>4171a1f9-67a6-463f-aa92-12be7ff4425b</ID>
+<StartTime Value="6" Scale="None" Actual="6"/>
+<EndTime Value="8" Scale="None" Actual="8"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>6a4d7d2c-7c95-4944-a0e6-89a7dc1d2ad2</OrganismID>
+<NodeID>356f26ce-f64c-49e3-92d1-1b8b2c6149de</NodeID>
+<CurrentOn Value="-18" Scale="nano" Actual="-1.8e-08"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="2" Scale="None" Actual="2"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="2" Scale="None" Actual="2"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>

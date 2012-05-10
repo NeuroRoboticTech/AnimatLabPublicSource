@@ -173,6 +173,15 @@ Namespace Framework
             Return oRet
         End Function
 
+        Public Overridable Function ExecuteIndirectMethodOnObject(ByVal strPath As String, ByVal strMethod As String, ByVal aryInnerParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200) As Object
+            Debug.WriteLine("ExecuteIndirectMethodOnObject: Path: '" & strPath & ", Method: " & strMethod & ", Params: '" & Util.ParamsToString(aryInnerParams) & "', Wait: " & iWaitMilliseconds)
+
+            Dim aryParams As Object() = New Object() {strPath, strMethod, aryInnerParams}
+
+            Return ExecuteDirectMethod("ExecuteIndirectMethodOnObject", aryParams)
+
+        End Function
+
         Protected Overridable Sub ExecuteMethodAssertError(ByVal strMethodName As String, ByVal aryParams() As Object, ByVal strErrorText As String, _
                                                            Optional ByVal eErrorTextType As enumErrorTextType = enumErrorTextType.EndsWith, _
                                                            Optional ByVal iWaitMilliseconds As Integer = 200)

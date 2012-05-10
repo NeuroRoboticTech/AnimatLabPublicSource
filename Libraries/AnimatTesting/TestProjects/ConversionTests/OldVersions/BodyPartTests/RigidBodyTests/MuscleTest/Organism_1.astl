@@ -155,13 +155,13 @@
 <CenterOfMass x="0" y="0" z="0"/>
 <RelativePosition x="0.2" y="0.4" z="0"/>
 <LocalPosition x="0.2" y="0.4" z="0"/>
-<Rotation x="3.14159" y="0" z="3.14159"/>
-<LocalRotation x="3.14159" y="0" z="3.14159"/>
+<Rotation x="-3.14159" y="0" z="-3.14159"/>
+<LocalRotation x="-3.14159" y="0" z="-3.14159"/>
 <Direction x="0" y="0" z="-1"/>
 <Color Red="1" Green="0.647059" Blue="0" Alpha="1"/>
-<OrientationMatrix>-1,-8.742278E-08,0,0,-8.742278E-08,1,-8.742278E-08,0,7.642742E-15,-8.742278E-08,-1,0,0,0,0,1</OrientationMatrix>
+<OrientationMatrix>-1,8.742278E-08,0,0,8.742278E-08,1,8.742278E-08,0,7.642742E-15,8.742278E-08,-1,0,0,0,0,1</OrientationMatrix>
 <TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0.2,0.4,0,1</TranslationMatrix>
-<CombinedTransformationMatrix>-1,-8.742278E-08,0,0,-8.742278E-08,1,-8.742278E-08,0,7.642742E-15,-8.742278E-08,-1,0,-0.3,0.7,0,1</CombinedTransformationMatrix>
+<CombinedTransformationMatrix>-1,8.742278E-08,0,0,8.742278E-08,1,8.742278E-08,0,7.642742E-15,8.742278E-08,-1,0,-0.3,0.7,0,1</CombinedTransformationMatrix>
 <Radius>0.1</Radius>
 <CollisionRadius>0.1</CollisionRadius>
 </RigidBody>
@@ -305,13 +305,13 @@
 <CenterOfMass x="0" y="0" z="0"/>
 <RelativePosition x="0" y="0" z="0"/>
 <LocalPosition x="0" y="0" z="0"/>
-<Rotation x="-3.14159" y="0" z="-3.14159"/>
-<LocalRotation x="-3.14159" y="0" z="-3.14159"/>
+<Rotation x="3.14159" y="0" z="3.14159"/>
+<LocalRotation x="3.14159" y="0" z="3.14159"/>
 <Direction x="0" y="0" z="-1"/>
 <Color Red="1" Green="0.647059" Blue="0" Alpha="1"/>
-<OrientationMatrix>-1,8.742278E-08,0,0,8.742278E-08,1,8.742278E-08,0,7.642742E-15,8.742278E-08,-1,0,0,0,0,1</OrientationMatrix>
+<OrientationMatrix>-1,-8.742278E-08,0,0,-8.742278E-08,1,-8.742278E-08,0,7.642742E-15,-8.742278E-08,-1,0,0,0,0,1</OrientationMatrix>
 <TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</TranslationMatrix>
-<CombinedTransformationMatrix>-1,8.742278E-08,0,0,8.742278E-08,1,8.742278E-08,0,7.642742E-15,8.742278E-08,-1,0,0,0.3,0,1</CombinedTransformationMatrix>
+<CombinedTransformationMatrix>-1,-8.742278E-08,0,0,-8.742278E-08,1,-8.742278E-08,0,7.642742E-15,-8.742278E-08,-1,0,0,0.3,0,1</CombinedTransformationMatrix>
 <Radius>0.1</Radius>
 <CollisionRadius>0.1</CollisionRadius>
 </RigidBody>

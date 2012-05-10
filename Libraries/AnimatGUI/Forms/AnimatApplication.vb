@@ -4548,9 +4548,9 @@ Namespace Forms
             If oMethod Is Nothing Then
                 Throw New System.Exception("Method name '" & strMethodName & "' not found.")
             End If
-            Return oMethod.Invoke(oDlg, aryParams)
+            Dim oRet As Object = oMethod.Invoke(oDlg, aryParams)
+            Return oRet
         End Function
-
 
         Public Sub ExecuteIndirecActiveDialogtMethod(ByVal strMethodName As String, ByVal aryParams() As Object)
 

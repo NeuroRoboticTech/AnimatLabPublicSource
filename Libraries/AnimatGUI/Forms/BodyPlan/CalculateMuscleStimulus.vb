@@ -93,6 +93,35 @@ Namespace Forms.BodyPlan
             End Try
         End Sub
 
+        Public Sub Automation_CalcMuscleStim(ByVal fltDesiredTension As Single, ByVal fltLengthOffset As Single, _
+                                                  ByVal fltTensionDerivitave As Single, ByVal fltVelocity As Single, _
+                                                  ByRef fltVoltage As Single)
+
+            txtTension.Text = fltDesiredTension.ToString
+            txtLengthOffset.Text = fltLengthOffset.ToString
+            txtTdot.Text = fltTensionDerivitave.ToString
+            txtXdot.Text = fltVelocity.ToString
+
+            btnCalculate.PerformClick()
+
+            fltVoltage = CSng(txtVoltage.Text)
+        End Sub
+
+        Public Function Automation_GetCalcValue(ByVal strType As String) As Single
+
+            Select Case strType
+                Case "TensionLength"
+                    Return CSng(txtTl.Text)
+                Case "Activation"
+                    Return CSng(txtActivation.Text)
+                Case "Voltage"
+                    Return CSng(txtVoltage.Text)
+                Case Else
+                    Throw New System.Exception("Inavlid type '" & strType & "' specified")
+            End Select
+
+        End Function
+
 
     End Class
 
