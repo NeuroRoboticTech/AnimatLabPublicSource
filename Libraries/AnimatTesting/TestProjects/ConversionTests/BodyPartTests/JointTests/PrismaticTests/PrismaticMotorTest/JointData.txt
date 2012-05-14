@@ -1,4 +1,4 @@
-Time	AVm	Arm	BIa	BVm	JointPos d	
+Time	AVm	Arm	BIa	BVm	JointPos	
 0	0	0	0	-0.05	0	
 0.0002	0	0	0	-0.05	0	
 0.0004	0	0	0	-0.05	0	

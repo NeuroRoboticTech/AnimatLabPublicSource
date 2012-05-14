@@ -43,6 +43,7 @@ MotorizedJoint::MotorizedJoint(void)
 	m_lpPhysicsMotorJoint = NULL;
 	m_fltSetVelocity = 0;
 	m_fltDesiredVelocity = 0;
+	m_fltReportSetVelocity = 0;
 	m_fltMaxVelocity = 100;
 	m_fltPrevVelocity = -1000000;
 	m_bEnableMotor = FALSE;
@@ -257,7 +258,11 @@ float MotorizedJoint::SetVelocity() {return m_fltSetVelocity;}
 
 \param	fltVal	The new value. 
 **/
-void MotorizedJoint::SetVelocity(float fltVal) {m_fltSetVelocity = fltVal;}
+void MotorizedJoint::SetVelocity(float fltVal) 
+{
+	m_fltSetVelocity = fltVal;
+	m_fltReportSetVelocity = m_fltSetVelocity * m_lpSim->DistanceUnits();
+}
 
 /**
 \brief	Gets the desired velocity.
@@ -344,6 +349,7 @@ void MotorizedJoint::ResetSimulation()
 	Joint::ResetSimulation();
 
 	m_fltSetVelocity = 0;
+	m_fltReportSetVelocity = 0;
 	m_fltDesiredVelocity = 0;
 	m_fltPrevVelocity = 0;
 

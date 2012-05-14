@@ -135,12 +135,12 @@ Namespace UITests
                         'ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Motor_Stim_2", "StartTime", "2"})
                         'ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Motor_Stim_2", "EndTime", "3"})
 
-                        SetMotorVelocityStimulus("Motor_Stim_2", False, True, 2, 3, False, False, 0, "-5*t")
-                        RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Motor_Stim_2_Equation_")
+                        'SetMotorVelocityStimulus("Motor_Stim_2", False, True, 2, 3, False, False, 0, "-5*t")
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Motor_Stim_2_Equation_")
+
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Motor_Stim_1", "Enabled", "False"})
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Motor_Stim_2", "Enabled", "False"})
-
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\A_Stim_1", "Enabled", "True"})
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\A_Stim_2", "Enabled", "True"})
                         RunSimulationWaitToEnd()

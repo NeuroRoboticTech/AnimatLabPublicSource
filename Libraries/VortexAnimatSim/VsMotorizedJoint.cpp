@@ -85,7 +85,12 @@ void VsMotorizedJoint::Physics_SetVelocityToDesired()
 		if(m_vxJoint && fabs(m_lpThisJoint->JointVelocity() - fltSetVelocity) > 1e-4)
 		{
 			if(fabs(fltSetVelocity) > 1e-4 && m_vxJoint)
-				m_vxJoint->setMotorDesiredVelocity(m_iCoordID, fltSetVelocity);
+			{
+				if(m_vxJoint->getControl(m_iCoordID) == Vx::VxConstraint::CoordinateControlEnum::kControlLocked)
+					Physics_EnableMotor(TRUE, fltSetVelocity, fltMaxForce);
+				else
+					m_vxJoint->setMotorDesiredVelocity(m_iCoordID, fltSetVelocity);
+			}
 			else
 			{
 				if(m_vxJoint->getControl(m_iCoordID) != Vx::VxConstraint::CoordinateControlEnum::kControlLocked)
@@ -124,8 +129,7 @@ void VsMotorizedJoint::Physics_EnableMotor(BOOL bOn, float fltDesiredVelocity, f
 			if(m_vxJoint->getControl(m_iCoordID) != Vx::VxConstraint::CoordinateControlEnum::kControlMotorized)
 				m_vxJoint->setControl(m_iCoordID, Vx::VxConstraint::CoordinateControlEnum::kControlMotorized);
 
-			float fltForce = m_lpThisMotorJoint->MaxForce();
-			m_vxJoint->setMotorMaximumForce(m_iCoordID, fltForce);
+			m_vxJoint->setMotorMaximumForce(m_iCoordID, fltMaxForce);
 			m_vxJoint->setMotorDesiredVelocity(m_iCoordID, fltDesiredVelocity);
 		}
 		else

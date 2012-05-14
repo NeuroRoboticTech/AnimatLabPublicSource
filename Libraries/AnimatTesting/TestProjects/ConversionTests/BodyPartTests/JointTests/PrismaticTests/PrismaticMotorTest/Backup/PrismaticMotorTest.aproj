@@ -86,6 +86,28 @@
 <Stimuli>
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>A_Stim_2</Name>
+<ID>389b3af9-e5fc-4619-8e3b-4932e7d8ee5b</ID>
+<StartTime Value="2" Scale="None" Actual="2"/>
+<EndTime Value="3" Scale="None" Actual="3"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>e335342e-0c3b-4bb6-9138-9a4edca4328c</OrganismID>
+<NodeID>81364873-53fa-4c80-a817-89dd09e599f5</NodeID>
+<CurrentOn Value="-20" Scale="nano" Actual="-2e-08"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="1" Scale="None" Actual="1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="1" Scale="None" Actual="1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
 <Name>Motor_Stim_1</Name>
 <ID>8a224799-0ec6-411e-af58-0c071ffaa6db</ID>
@@ -139,28 +161,6 @@
 <PartID>ab48079f-70f9-473a-825d-4fbf8cd9a51a</PartID>
 <Velocity Value="-20" Scale="centi" Actual="-0.2"/>
 <DisableMotorWhenDone>False</DisableMotorWhenDone>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatTools.dll</AssemblyFile>
-<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>A_Stim_2</Name>
-<ID>389b3af9-e5fc-4619-8e3b-4932e7d8ee5b</ID>
-<StartTime Value="2" Scale="None" Actual="2"/>
-<EndTime Value="3" Scale="None" Actual="3"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>False</AlwaysActive>
-<Enabled>False</Enabled>
-<ValueType>Constant</ValueType>
-<Equation/>
-<OrganismID>e335342e-0c3b-4bb6-9138-9a4edca4328c</OrganismID>
-<NodeID>81364873-53fa-4c80-a817-89dd09e599f5</NodeID>
-<CurrentOn Value="-20" Scale="nano" Actual="-2e-08"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="1" Scale="None" Actual="1"/>
-<CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="1" Scale="None" Actual="1"/>
-<BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 </Stimuli>
 <DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">

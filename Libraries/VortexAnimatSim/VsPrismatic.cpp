@@ -230,8 +230,9 @@ void VsPrismatic::SetupPhysics()
 	m_iCoordID = m_vxPrismatic->kLinearCoordinate;
 
 	//If the motor is enabled then it will start out with a velocity of	zero.
-	if(m_bEnableMotor)
-		EnableLock(TRUE, m_fltPosition, m_fltMaxForce);
+	EnableMotor(m_bEnableMotorInit);
+	//if(m_bEnableMotor)
+	//	EnableLock(TRUE, m_fltPosition, m_fltMaxForce);
 }
 
 void VsPrismatic::CreateJoint()
@@ -257,9 +258,9 @@ float *VsPrismatic::GetDataPointer(string strDataType)
 	else if(strType == "JOINTFORCE")
 		return &m_fltForce;
 	else if(strType == "JOINTDESIREDVELOCITY")
-		return &m_fltSetVelocity;
+		return &m_fltReportSetVelocity;
 	else if(strType == "JOINTSETVELOCITY")
-		return &m_fltSetVelocity;
+		return &m_fltReportSetVelocity;
 	else if(strType == "ENABLE")
 		return &m_fltEnabled;
 	else if(strType == "CONTACTCOUNT")

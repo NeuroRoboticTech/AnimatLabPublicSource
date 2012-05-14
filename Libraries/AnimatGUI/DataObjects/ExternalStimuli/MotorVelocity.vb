@@ -35,13 +35,25 @@ Namespace DataObjects.ExternalStimuli
             End Set
         End Property
 
+        Public Overrides Property ValueType() As enumValueType
+            Get
+                Return MyBase.ValueType
+            End Get
+            Set(ByVal Value As enumValueType)
+                MyBase.ValueType = Value
+
+                SetVelocity()
+            End Set
+        End Property
+
+
         Public Overridable Property Velocity() As ScaledNumber
             Get
                 Return m_snVelocity
             End Get
             Set(ByVal Value As ScaledNumber)
                 If Not Value Is Nothing Then
-                    SetSimData("Velocity", Value.ActualValue.ToString, True)
+                    SetVelocity(Value.ActualValue.ToString)
                     m_snVelocity.CopyData(Value)
                 End If
             End Set
@@ -52,16 +64,7 @@ Namespace DataObjects.ExternalStimuli
                 Return m_strEquation
             End Get
             Set(ByVal Value As String)
-                'Lets verify the equation before we use it.
-                'We need to convert the infix equation to postfix
-                Dim oMathEval As New MathStringEval
-                oMathEval.AddVariable("t")
-                oMathEval.AddVariable("p")
-                oMathEval.AddVariable("v")
-                oMathEval.Equation = Value
-                oMathEval.Parse()
-
-                SetSimData("Velocity", Value.ToString, True)
+                SetVelocity(Value)
                 m_strEquation = Value
             End Set
         End Property
@@ -117,6 +120,30 @@ Namespace DataObjects.ExternalStimuli
 
             If Not Util.Environment Is Nothing Then
                 m_snVelocity.SetFromValue(0, Util.Environment.DistanceUnits)
+            End If
+
+        End Sub
+
+        Protected Sub SetVelocity(Optional ByVal strEquation As String = "")
+
+            If m_eValueType = enumValueType.Constant Then
+                If strEquation.Trim.Length = 0 Then strEquation = Me.Velocity.ActualValue.ToString
+                SetSimData("Velocity", strEquation, True)
+            Else
+                If strEquation.Trim.Length = 0 Then strEquation = Me.Equation
+
+                If strEquation.Trim.Length > 0 Then
+                    'Lets verify the equation before we use it.
+                    'We need to convert the infix equation to postfix
+                    Dim oMathEval As New MathStringEval
+                    oMathEval.AddVariable("t")
+                    oMathEval.AddVariable("p")
+                    oMathEval.AddVariable("v")
+                    oMathEval.Equation = strEquation
+                    oMathEval.Parse()
+
+                    SetSimData("Velocity", oMathEval.PostFix, True)
+                End If
             End If
 
         End Sub

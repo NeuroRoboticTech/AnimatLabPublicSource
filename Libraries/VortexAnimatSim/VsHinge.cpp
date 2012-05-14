@@ -306,9 +306,9 @@ float *VsHinge::GetDataPointer(string strDataType)
 	else if(strType == "JOINTROTATIONDEG")
 		return &m_fltRotationDeg;
 	else if(strType == "JOINTDESIREDVELOCITY")
-		return &m_fltSetVelocity;
+		return &m_fltReportSetVelocity;
 	else if(strType == "JOINTSETVELOCITY")
-		return &m_fltSetVelocity;
+		return &m_fltReportSetVelocity;
 	else if(strType == "ENABLE")
 		return &m_fltEnabled;
 	else if(strType == "CONTACTCOUNT")

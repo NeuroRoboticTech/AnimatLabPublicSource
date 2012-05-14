@@ -23,6 +23,9 @@ namespace AnimatSim
 			/// Velocities can be in rad/sec or m/s depending on the type of joint. UsesRadians lets you know whether it is using radians.
 			float m_fltDesiredVelocity;
 
+			/// This is the variable that is reported to AnimatLab on what the set veloicty was. 
+			float m_fltReportSetVelocity;
+
 			/// The maximum velocity that the motorized joint can attain.
 			/// Velocities can be in rad/sec or m/s depending on the type of joint. UsesRadians lets you know whether it is using radians.
 			float m_fltMaxVelocity;

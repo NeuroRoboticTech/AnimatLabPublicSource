@@ -14,11 +14,11 @@
 <Synapses>
 <SpikingSynapses>
 <SpikingSynapse>
-<Name>Nicotinic ACh</Name>
+<Name>Hyperpolarizing IPSP</Name>
 <ID>0</ID>
-<Equil>-10</Equil>
+<Equil>-70</Equil>
 <SynAmp>0.5</SynAmp>
-<Decay>3</Decay>
+<Decay>10</Decay>
 <RelFacil>1.5</RelFacil>
 <FacilDecay>100</FacilDecay>
 <VoltDep>False</VoltDep>
@@ -74,11 +74,11 @@
 <Consolidation>1</Consolidation>
 </SpikingSynapse>
 <SpikingSynapse>
-<Name>Hyperpolarizing IPSP</Name>
+<Name>Nicotinic ACh</Name>
 <ID>3</ID>
-<Equil>-70</Equil>
+<Equil>-10</Equil>
 <SynAmp>0.5</SynAmp>
-<Decay>10</Decay>
+<Decay>3</Decay>
 <RelFacil>1.5</RelFacil>
 <FacilDecay>100</FacilDecay>
 <VoltDep>False</VoltDep>
