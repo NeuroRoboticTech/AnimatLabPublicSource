@@ -1233,23 +1233,24 @@ Namespace DataObjects
 
                 Dim xnOldToolFile As New Framework.XmlDom
 
-                xnOldToolFile.Load(strOldFile)
+                If File.Exists(strOldFile) Then
 
-                Dim xnEditorOld As XmlNode = xnOldToolFile.GetRootNode("Editor")
-                Dim xnFormOld As XmlNode = xnOldToolFile.GetNode(xnEditorOld, "Form")
+                    xnOldToolFile.Load(strOldFile)
 
-                'Now create a new xml file.
-                Dim strNewFile As String = m_strProjectPath & "\" & strTitle.Replace(" ", "_") & ".aform"
+                    Dim xnEditorOld As XmlNode = xnOldToolFile.GetRootNode("Editor")
+                    Dim xnFormOld As XmlNode = xnOldToolFile.GetNode(xnEditorOld, "Form")
 
-                Dim xnNewToolFile As New Framework.XmlDom
+                    'Now create a new xml file.
+                    Dim strNewFile As String = m_strProjectPath & "\" & strTitle.Replace(" ", "_") & ".aform"
 
-                Dim xnNewRoot As XmlNode = xnNewToolFile.AddNodeValue(Nothing, "Form", "")
+                    Dim xnNewToolFile As New Framework.XmlDom
 
-                Dim xnNewForm As XmlNode = xnNewToolFile.AppendNode(xnNewRoot, xnFormOld, "Form", aryReplaceText)
+                    Dim xnNewRoot As XmlNode = xnNewToolFile.AddNodeValue(Nothing, "Form", "")
 
-                xnNewToolFile.Save(strNewFile)
+                    Dim xnNewForm As XmlNode = xnNewToolFile.AppendNode(xnNewRoot, xnFormOld, "Form", aryReplaceText)
 
-                'TODO File.Delete(strOldToolFile)
+                    xnNewToolFile.Save(strNewFile)
+                End If
             End Sub
 
 

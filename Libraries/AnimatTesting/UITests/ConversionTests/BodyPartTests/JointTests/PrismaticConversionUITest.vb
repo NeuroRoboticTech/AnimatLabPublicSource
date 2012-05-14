@@ -91,6 +91,63 @@ Namespace UITests
 
                     End Sub
 
+                    <TestMethod()>
+                    Public Sub Test_PrismaticMotor()
+
+                        Dim aryMaxErrors As New Hashtable
+                        aryMaxErrors.Add("Time", 0.001)
+                        aryMaxErrors.Add("Arm", 0.03)
+                        aryMaxErrors.Add("JointPos", 0.03)
+                        aryMaxErrors.Add("JointVel", 0.03)
+                        aryMaxErrors.Add("AVm", 0.002)
+                        aryMaxErrors.Add("BVm", 0.002)
+                        aryMaxErrors.Add("BIa", 0.000000002)
+                        aryMaxErrors.Add("default", 0.03)
+
+                        m_strProjectName = "PrismaticMotorTest"
+                        m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\JointTests\PrismaticTests"
+                        m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\JointTests\PrismaticTests\" & m_strProjectName
+                        m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\PrismaticTests\" & m_strProjectName
+                        m_strStructureGroup = "Organisms"
+                        m_strStruct1Name = "Organism_1"
+
+                        'Load and convert the project.
+                        TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                        ''Run the same sim a second time to check for changes between sims.
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
+                        'ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Motor_Stim_2", "DisableWhenDone", "True"})
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Motor_Stim_2_DisableWhenDone_")
+                        'ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Motor_Stim_2", "DisableWhenDone", "False"})
+
+                        'ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Motor_Stim_2", "Enabled", "False"})
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Motor_Stim_2_Disabled_")
+                        'ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Motor_Stim_2", "Enabled", "True"})
+
+                        'ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Motor_Stim_2", "StartTime", "2.5"})
+                        'ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Motor_Stim_2", "EndTime", "3.5"})
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Motor_Stim_2_Times_")
+                        'ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Motor_Stim_2", "StartTime", "2"})
+                        'ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Motor_Stim_2", "EndTime", "3"})
+
+                        SetMotorVelocityStimulus("Motor_Stim_2", False, True, 2, 3, False, False, 0, "-5*t")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Motor_Stim_2_Equation_")
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Motor_Stim_1", "Enabled", "False"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Motor_Stim_2", "Enabled", "False"})
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\A_Stim_1", "Enabled", "True"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\A_Stim_2", "Enabled", "True"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Neural_")
+
+                    End Sub
+
 #Region "Additional test attributes"
                     '
                     ' You can use the following additional attributes as you write your tests:

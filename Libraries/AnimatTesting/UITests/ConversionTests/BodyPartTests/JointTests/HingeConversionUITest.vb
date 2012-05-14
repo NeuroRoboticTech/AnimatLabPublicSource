@@ -91,6 +91,36 @@ Namespace UITests
 
                     End Sub
 
+                    '<TestMethod()>
+                    'Public Sub Test_HingeMotor()
+
+                    '    Dim aryMaxErrors As New Hashtable
+                    '    aryMaxErrors.Add("Time", 0.001)
+                    '    aryMaxErrors.Add("Arm", 0.03)
+                    '    aryMaxErrors.Add("JointPos", 0.03)
+                    '    aryMaxErrors.Add("JointVel", 0.03)
+                    '    aryMaxErrors.Add("AVm", 0.0005)
+                    '    aryMaxErrors.Add("BVm", 0.0005)
+                    '    aryMaxErrors.Add("BIa", 0.0005)
+                    '    aryMaxErrors.Add("default", 0.0000000001)
+
+                    '    m_strProjectName = "PrismaticMotorTest"
+                    '    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\JointTests\PrismaticTests"
+                    '    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\JointTests\PrismaticTests\" & m_strProjectName
+                    '    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\PrismaticTests\" & m_strProjectName
+                    '    m_aryWindowsToOpen.Add("Tool Viewers\BodyData")
+
+                    '    'Load and convert the project.
+                    '    TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                    '    'Run the same sim a second time to check for changes between sims.
+                    '    RunSimulationWaitToEnd()
+                    '    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
+                    'End Sub
+
+
+
 #Region "Additional test attributes"
                     '
                     ' You can use the following additional attributes as you write your tests:

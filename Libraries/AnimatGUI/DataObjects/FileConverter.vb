@@ -107,13 +107,18 @@ Namespace DataObjects
 
         Protected Sub CopyFiles(ByVal aryFiles() As String)
 
-            Dim strFilename As String
-            For Each strFile As String In aryFiles
-                strFilename = Util.ExtractFilename(strFile)
+            Try
+                Dim strFilename As String
+                For Each strFile As String In aryFiles
+                    strFilename = Util.ExtractFilename(strFile)
+                    If File.Exists(strFile) Then
+                        File.Copy(strFile, m_strProjectPath & "\Backup\" & strFilename, True)
+                    End If
+                Next
 
-                File.Copy(strFile, m_strProjectPath & "\Backup\" & strFilename, True)
-            Next
-
+            Catch ex As Exception
+                Util.DisplayError(ex)
+            End Try
         End Sub
 
         Protected Sub RemoveOldFiles()
