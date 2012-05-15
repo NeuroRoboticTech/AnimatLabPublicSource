@@ -220,7 +220,7 @@ Namespace UITests
                         AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A", _
                                           "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B", "", "", False)
                         If Not CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2"})) Then
-                            Throw New System.Exception("A_B adapter node was not removed created.")
+                            Throw New System.Exception("A_B adapter node was not created.")
                         End If
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Name", "A_B"})
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring2", "Stiffness", "5"})
