@@ -672,6 +672,18 @@ Namespace DataObjects
             Next
         End Sub
 
+#Region " Add-Remove to List Methods "
+
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
+            If Not m_doEnvironment Is Nothing Then m_doEnvironment.RemoveFromSim(bThrowError)
+            m_aryHudItems.Clear()
+            m_aryProjectStimuli.Clear()
+            m_aryToolHolders.Clear()
+        End Sub
+
+#End Region
+
+
         Public Overridable Overloads Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.IntoChildElement("Simulation")

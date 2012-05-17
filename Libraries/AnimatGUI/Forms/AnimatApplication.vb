@@ -2890,6 +2890,8 @@ Namespace Forms
 
             m_strPhysicsAssemblyName = "AnimatGUI.dll"
             m_strPhysicsClassName = "AnimatGUI.DataObjects.Simulation"
+
+            If Not m_doSimulation Is Nothing Then m_doSimulation.RemoveFromSim(False)
             m_doSimulation = New DataObjects.Simulation(Me.FormHelper)
 
             m_ModificationHistory = New AnimatGUI.Framework.UndoSystem.ModificationHistory

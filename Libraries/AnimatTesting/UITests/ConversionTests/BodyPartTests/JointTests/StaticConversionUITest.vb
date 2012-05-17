@@ -46,20 +46,22 @@ Namespace UITests
 
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
-                        aryMaxErrors.Add("Arm", 0.03)
-                        aryMaxErrors.Add("JointPos", 0.03)
-                        aryMaxErrors.Add("JointVel", 0.03)
-                        aryMaxErrors.Add("AVm", 0.01)
-                        aryMaxErrors.Add("BVm", 0.01)
-                        aryMaxErrors.Add("BIa", 0.000000003)
-                        aryMaxErrors.Add("default", 0.03)
+                        aryMaxErrors.Add("BodyX", 0.01)
+                        aryMaxErrors.Add("BodyY", 0.01)
+                        aryMaxErrors.Add("BodyZ", 0.01)
+                        aryMaxErrors.Add("default", 0.01)
 
-                        m_strProjectName = "PrismaticMotorTest"
-                        m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\JointTests\PrismaticTests"
-                        m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\JointTests\PrismaticTests\" & m_strProjectName
-                        m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\PrismaticTests\" & m_strProjectName
+                        m_strProjectName = "StaticTest"
+                        m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\JointTests"
+                        m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\JointTests\" & m_strProjectName
+                        m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\" & m_strProjectName
+ 
+                        'Load and convert the project.
+                        TestConversionProject("AfterConversion_", aryMaxErrors)
 
-                        Test_JointMotor(aryMaxErrors)
+                        'Run the same sim a second time to check for changes between sims.
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
                     End Sub
 

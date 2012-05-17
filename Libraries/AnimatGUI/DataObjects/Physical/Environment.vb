@@ -134,6 +134,8 @@ Namespace DataObjects.Physical
             Set(ByVal Value As ScaledNumber)
                 If Value.ActualValue <= 0 Then
                     Throw New System.Exception("You can not set the physics time step value to be less than or equal to zero!")
+                ElseIf Value.ActualValue >= 0.1 Then
+                    Throw New System.Exception("You can not set the physics time step value to be greater than or equal to 100 ms!")
                 End If
 
                 Me.SetSimData("PhysicsTimeStep", Value.ActualValue.ToString, True)
