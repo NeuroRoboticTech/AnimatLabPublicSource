@@ -28,7 +28,7 @@ Namespace UITests
 
                 <CodedUITest()>
                 Public Class HingeConversionUITest
-                    Inherits ConversionUITest
+                    Inherits JointConversionUITest
 
 #Region "Attributes"
 
@@ -91,34 +91,27 @@ Namespace UITests
 
                     End Sub
 
-                    '<TestMethod()>
-                    'Public Sub Test_HingeMotor()
+                    <TestMethod()>
+                    Public Sub Test_HingeMotor()
 
-                    '    Dim aryMaxErrors As New Hashtable
-                    '    aryMaxErrors.Add("Time", 0.001)
-                    '    aryMaxErrors.Add("Arm", 0.03)
-                    '    aryMaxErrors.Add("JointPos", 0.03)
-                    '    aryMaxErrors.Add("JointVel", 0.03)
-                    '    aryMaxErrors.Add("AVm", 0.0005)
-                    '    aryMaxErrors.Add("BVm", 0.0005)
-                    '    aryMaxErrors.Add("BIa", 0.0005)
-                    '    aryMaxErrors.Add("default", 0.0000000001)
+                        Dim aryMaxErrors As New Hashtable
+                        aryMaxErrors.Add("Time", 0.001)
+                        aryMaxErrors.Add("Arm", 0.02)
+                        aryMaxErrors.Add("JointPos", 0.02)
+                        aryMaxErrors.Add("JointVel", 0.03)
+                        aryMaxErrors.Add("AVm", 0.01)
+                        aryMaxErrors.Add("BVm", 0.01)
+                        aryMaxErrors.Add("BIa", 0.000000003)
+                        aryMaxErrors.Add("default", 0.03)
 
-                    '    m_strProjectName = "PrismaticMotorTest"
-                    '    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\JointTests\PrismaticTests"
-                    '    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\JointTests\PrismaticTests\" & m_strProjectName
-                    '    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\PrismaticTests\" & m_strProjectName
-                    '    m_aryWindowsToOpen.Add("Tool Viewers\BodyData")
+                        m_strProjectName = "HingeMotorTest"
+                        m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\JointTests\HingeTests"
+                        m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\JointTests\HingeTests\" & m_strProjectName
+                        m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\HingeTests\" & m_strProjectName
 
-                    '    'Load and convert the project.
-                    '    TestConversionProject("AfterConversion_", aryMaxErrors)
+                        Test_JointMotor(aryMaxErrors)
 
-                    '    'Run the same sim a second time to check for changes between sims.
-                    '    RunSimulationWaitToEnd()
-                    '    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
-
-                    'End Sub
-
+                    End Sub
 
 
 #Region "Additional test attributes"
@@ -139,10 +132,6 @@ Namespace UITests
                         MyBase.MyTestCleanup()
                     End Sub
 
-                    Protected Overrides Sub SetWindowsToOpen()
-                        m_aryWindowsToOpen.Add("Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan")
-                        m_aryWindowsToOpen.Add("Tool Viewers\JointData")
-                    End Sub
 #End Region
 
 #End Region

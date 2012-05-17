@@ -138,8 +138,11 @@
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\SphereUITest.vb" />
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\TerrainUITest.vb" />
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\RigidBodyTests\TorusUITest.vb" />
+    <Compile Include="UITests\ConversionTests\BodyPartTests\JointTests\BallSocketConversionUITest.vb" />
+    <Compile Include="UITests\ConversionTests\BodyPartTests\JointTests\JointConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\BodyPartTests\JointTests\PrismaticConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\BodyPartTests\JointTests\HingeConversionUITest.vb" />
+    <Compile Include="UITests\ConversionTests\BodyPartTests\JointTests\StaticConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\BodyPartTests\RigidBodyTests\MuscleBaseConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\BodyPartTests\RigidBodyTests\MuscleConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\BodyPartTests\RigidBodyTests\RigidBodyConversionUITest.vb" />

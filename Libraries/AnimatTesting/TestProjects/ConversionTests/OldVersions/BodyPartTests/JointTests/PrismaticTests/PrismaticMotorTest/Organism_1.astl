@@ -36,7 +36,7 @@
 <YCenterOfMass Value="0" Scale="centi" Actual="0"/>
 <ZCenterOfMass Value="0" Scale="centi" Actual="0"/>
 <Joint>
-<Name>Prismatic</Name>
+<Name>Joint</Name>
 <ID>ab48079f-70f9-473a-825d-4fbf8cd9a51a</ID>
 <Type>Prismatic</Type>
 <PartType>VortexAnimatTools.DataObjects.Physical.Joints.Prismatic</PartType>

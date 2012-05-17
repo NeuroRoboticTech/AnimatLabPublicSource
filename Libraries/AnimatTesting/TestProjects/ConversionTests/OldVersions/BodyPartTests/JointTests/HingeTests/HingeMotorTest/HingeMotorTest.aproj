@@ -1,8 +1,8 @@
 <Project>
-<ProjectName>PrismaticMotorTest</ProjectName>
+<ProjectName>HingeMotorTest</ProjectName>
 <PhysicsAssemblyName>VortexAnimatTools.dll</PhysicsAssemblyName>
 <PhysicsClassName>VortexAnimatTools.DataObjects.Simulation</PhysicsClassName>
-<SimulationFile>PrismaticMotorTest.asim</SimulationFile>
+<SimulationFile>HingeMotorTest.asim</SimulationFile>
 <LogLevel>Error</LogLevel>
 <Version>1</Version>
 <SimWindowLocation x="199" y="56"/>
@@ -21,7 +21,7 @@
 <ClassName>AnimatTools.Forms.ProjectWorkspace</ClassName>
 <TabTitle>Workspace</TabTitle>
 <BackgroundForm>True</BackgroundForm>
-<TreeViewHeight>309</TreeViewHeight>
+<TreeViewHeight>508</TreeViewHeight>
 </Form>
 <Form>
 <Title>Simulation Controller</Title>
@@ -37,9 +37,9 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>200</MajorInterval>
+<MajorInterval>1</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>MilliSeconds</TimeScale>
+<TimeScale>Seconds</TimeScale>
 </Form>
 </DockingForms>
 <ChildForms>
@@ -110,7 +110,7 @@
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
 <Name>Motor_Stim_1</Name>
-<ID>8a224799-0ec6-411e-af58-0c071ffaa6db</ID>
+<ID>1ffd93a0-6135-41b3-bf95-bdadc79f0313</ID>
 <StartTime Value="1" Scale="None" Actual="1"/>
 <EndTime Value="2" Scale="None" Actual="2"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
@@ -119,7 +119,7 @@
 <ValueType>Constant</ValueType>
 <Equation/>
 <StructureID>e335342e-0c3b-4bb6-9138-9a4edca4328c</StructureID>
-<PartID>ab48079f-70f9-473a-825d-4fbf8cd9a51a</PartID>
+<PartID>d6c0d2e3-8c4e-4ce0-bda0-56f97fec2b50</PartID>
 <Velocity Value="10" Scale="centi" Actual="0.1"/>
 <DisableMotorWhenDone>False</DisableMotorWhenDone>
 </Stimulus>
@@ -149,7 +149,7 @@
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
 <Name>Motor_Stim_2</Name>
-<ID>90a849df-cd5c-4696-a99a-0f3665664183</ID>
+<ID>88c2d6ca-f8c2-4269-9c0d-fdea768c0101</ID>
 <StartTime Value="2" Scale="None" Actual="2"/>
 <EndTime Value="3" Scale="None" Actual="3"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
@@ -158,13 +158,13 @@
 <ValueType>Constant</ValueType>
 <Equation/>
 <StructureID>e335342e-0c3b-4bb6-9138-9a4edca4328c</StructureID>
-<PartID>ab48079f-70f9-473a-825d-4fbf8cd9a51a</PartID>
+<PartID>d6c0d2e3-8c4e-4ce0-bda0-56f97fec2b50</PartID>
 <Velocity Value="-20" Scale="centi" Actual="-0.2"/>
 <DisableMotorWhenDone>False</DisableMotorWhenDone>
 </Stimulus>
 </Stimuli>
 <DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">
-  <Content Name="Simulation Controller" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 145" DisplayLocation="150, 150" AutoHideSize="150, 100" FloatingSize="150, 150" FullTitle="Simulation Controller">
+  <Content Name="Simulation Controller" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 102" DisplayLocation="150, 150" AutoHideSize="150, 100" FloatingSize="150, 150" FullTitle="Simulation Controller">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Simulation Controller" />
       <State Value="DockLeft" />
@@ -178,7 +178,7 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Simulation Controller" />
       <State Value="DockBottom" />
-      <Position Size="150, 145" Location="150, 150" />
+      <Position Size="150, 102" Location="150, 150" />
       <Best Count="1">
         <Item Name="Simulation Controller" />
       </Best>
@@ -209,7 +209,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Project Workspace" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="197, 150" DisplayLocation="150, 150" AutoHideSize="197, 150" FloatingSize="150, 150" FullTitle="Project Workspace">
+  <Content Name="Project Workspace" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="244, 150" DisplayLocation="150, 150" AutoHideSize="244, 150" FloatingSize="150, 150" FullTitle="Project Workspace">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Project Workspace" />
       <State Value="DockLeft" />
@@ -266,7 +266,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Project Toolbox" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="197, 150" DisplayLocation="150, 150" AutoHideSize="197, 150" FloatingSize="150, 150" FullTitle="Project Toolbox">
+  <Content Name="Project Toolbox" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="244, 150" DisplayLocation="150, 150" AutoHideSize="244, 150" FloatingSize="150, 150" FullTitle="Project Toolbox">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Project Toolbox" />
       <State Value="DockLeft" />

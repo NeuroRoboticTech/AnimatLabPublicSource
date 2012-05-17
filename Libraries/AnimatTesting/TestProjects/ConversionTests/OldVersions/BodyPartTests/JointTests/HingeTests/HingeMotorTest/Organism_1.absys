@@ -20,7 +20,7 @@
 <SourceNodeID>0</SourceNodeID>
 <SourceDataType>MembraneVoltage</SourceDataType>
 <TargetBodyType>Joint</TargetBodyType>
-<TargetBodyID>ab48079f-70f9-473a-825d-4fbf8cd9a51a</TargetBodyID>
+<TargetBodyID>d6c0d2e3-8c4e-4ce0-bda0-56f97fec2b50</TargetBodyID>
 <Gain>
 <Type>Polynomial</Type>
 <UseLimits>False</UseLimits>
@@ -33,8 +33,8 @@
 <Adapter>
 <Type>PhysicalToNode</Type>
 <SourceBodyType>Joint</SourceBodyType>
-<SourceBodyID>ab48079f-70f9-473a-825d-4fbf8cd9a51a</SourceBodyID>
-<SourceDataType>JointPosition</SourceDataType>
+<SourceBodyID>d6c0d2e3-8c4e-4ce0-bda0-56f97fec2b50</SourceBodyID>
+<SourceDataType>JointRotation</SourceDataType>
 <TargetModule>RealisticNeuralNet</TargetModule>
 <TargetNodeID>0</TargetNodeID>
 <Gain>

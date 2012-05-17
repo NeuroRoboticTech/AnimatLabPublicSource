@@ -241,6 +241,8 @@ Namespace Framework
             'No prefix on the exported chart.
             ExecuteMethod("ExportDataCharts", New Object() {"", ""})
 
+            Threading.Thread.Sleep(500)
+
             'If we are flagged as needing to generate the template files then lets do that. Otherwise, lets compare the charts to the templates.
             If m_bGenerateTempates Then
                 ExecuteMethod("CopyChartData", New Object() {strTestDataPath, strPrefix})
@@ -1355,7 +1357,7 @@ Namespace Framework
             End If
 
             OpenDialogAndWait(strDlgName, Nothing, Nothing)
-            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, 1000)
         End Sub
 
         '''<summary>

@@ -2,7 +2,7 @@
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.Forms.Behavior.Editor</ClassName>
 <NormalLocation x="259" y="20"/>
-<NormalSize Width="1000" Height="456"/>
+<NormalSize Width="1000" Height="466"/>
 <WindowState>Normal</WindowState>
 <Organism>e335342e-0c3b-4bb6-9138-9a4edca4328c</Organism>
 <NeuralModules>
@@ -632,11 +632,11 @@
 <Link>
 <AssemblyFile>FPGANeuralNetTools.dll</AssemblyFile>
 <ClassName>FPGANeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
-<ID>21b43ce8-6401-464d-90cd-a8e1e5f9d8c6</ID>
+<ID>84312246-37c4-494e-a683-a59783da5544</ID>
 <AdjustDst>False</AdjustDst>
 <AdjustOrg>False</AdjustOrg>
 <ArrowDestination>
-<Style>Circle</Style>
+<Style>Fork</Style>
 <Size>Medium</Size>
 <Angle>deg30</Angle>
 <Filled>False</Filled>
@@ -671,8 +671,8 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<Name>Depolarizing IPSP</Name>
-<EquilibriumPotential Value="-55" Scale="milli" Actual="-0.055"/>
+<Name>Nicotinic ACh</Name>
+<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
 <SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
 <DecayRate Value="3" Scale="milli" Actual="0.003"/>
 </Link>
@@ -773,11 +773,11 @@
 <Link>
 <AssemblyFile>FPGANeuralNetTools.dll</AssemblyFile>
 <ClassName>FPGANeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
-<ID>84312246-37c4-494e-a683-a59783da5544</ID>
+<ID>21b43ce8-6401-464d-90cd-a8e1e5f9d8c6</ID>
 <AdjustDst>False</AdjustDst>
 <AdjustOrg>False</AdjustOrg>
 <ArrowDestination>
-<Style>Fork</Style>
+<Style>Circle</Style>
 <Size>Medium</Size>
 <Angle>deg30</Angle>
 <Filled>False</Filled>
@@ -812,8 +812,8 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<Name>Nicotinic ACh</Name>
-<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
+<Name>Depolarizing IPSP</Name>
+<EquilibriumPotential Value="-55" Scale="milli" Actual="-0.055"/>
 <SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
 <DecayRate Value="3" Scale="milli" Actual="0.003"/>
 </Link>
@@ -848,7 +848,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="0" y="0"/>
+<Location x="126.75" y="109.625"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -1071,7 +1071,7 @@
 </OutLinks>
 <OriginID>fadc36e0-1241-4834-a26b-4fe3c9f70164</OriginID>
 <DestinationID>8178631a-ae3f-4b8f-bd2a-4d02494bc3e8</DestinationID>
-<DataTypeID>JointPosition</DataTypeID>
+<DataTypeID>JointRotation</DataTypeID>
 <Gain>
 <ID>4151c4a1-d550-4103-a327-d37db5409880</ID>
 <Type>Polynomial</Type>
@@ -1081,8 +1081,8 @@
 <LimitsReadOnly>False</LimitsReadOnly>
 <LimitOutputsReadOnly>False</LimitOutputsReadOnly>
 <UseParentIncomingDataType>True</UseParentIncomingDataType>
-<LowerLimitScale Value="-10" Scale="centi" Actual="-0.1"/>
-<UpperLimitScale Value="10" Scale="centi" Actual="0.1"/>
+<LowerLimitScale Value="-3.14" Scale="None" Actual="-3.14"/>
+<UpperLimitScale Value="3.14" Scale="None" Actual="3.14"/>
 <LowerOutputScale Value="0" Scale="None" Actual="0"/>
 <UpperOutputScale Value="1" Scale="None" Actual="1"/>
 <IndependentUnits/>
@@ -1115,7 +1115,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="0" y="0"/>
+<Location x="228.25" y="100.75"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -1140,7 +1140,7 @@
 <OutLinks>
 <ID>f75ca0d3-bc46-4a7b-ae44-99fce500250d</ID>
 </OutLinks>
-<LinkedBodyPartID>ab48079f-70f9-473a-825d-4fbf8cd9a51a</LinkedBodyPartID>
+<LinkedBodyPartID>d6c0d2e3-8c4e-4ce0-bda0-56f97fec2b50</LinkedBodyPartID>
 </Node>
 </Nodes>
 <Links>

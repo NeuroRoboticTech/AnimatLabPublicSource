@@ -260,7 +260,6 @@ Namespace UITests
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Stretch_muscle2_")
 
                         DeletePart("Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle1", "Delete Body Part")
-                        Threading.Thread.Sleep(1000)
                         If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle1"})) Then
                             Throw New System.Exception("Muscle1 node was not removed correctly.")
                         End If
