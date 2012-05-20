@@ -87,6 +87,12 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
+        Public Overridable ReadOnly Property AllowAddChildBody() As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "

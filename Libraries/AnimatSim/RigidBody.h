@@ -259,6 +259,8 @@ namespace AnimatSim
 			virtual BOOL EnableFluids();
 			virtual void EnableFluids(BOOL bVal);
 
+			virtual BOOL HasCollisionGeometry();
+
 #pragma endregion
 
 			virtual float SurfaceContactCount();
@@ -272,6 +274,8 @@ namespace AnimatSim
 			virtual float GetMass();
 			virtual float GetVolume();
 			virtual void UpdatePhysicsPosFromGraphics();
+
+			virtual RigidBody *ParentWithCollisionGeometry();
 
 			virtual void EnableCollision(RigidBody *lpBody);
 			virtual void DisableCollision(RigidBody *lpBody);

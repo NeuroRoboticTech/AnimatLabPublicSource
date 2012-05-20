@@ -1008,6 +1008,35 @@ Namespace Framework
             Threading.Thread.Sleep(1000)
         End Sub
 
+        Protected Overridable Sub AddChildPartTypeWithJoint(ByVal strPartType As String, ByVal strJointType As String, ByVal strPath As String)
+            Debug.WriteLine("AddChildPartTypeWithJoint. Part type: " & strPartType & ", Joint Type: " & strJointType & ", Path: " & strPath)
+
+            BeforeAddChildPart(strPartType, strJointType)
+
+            'Click 'Add Part' button
+            ExecuteMethod("ClickToolbarItem", New Object() {"AddPartToolStripButton"}, 2000)
+
+            AutomatedClickToAddBody(strPath, 0.04, 0.55, -0.5, 0.0, 0.0, -1.0)
+
+            ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strPartType})
+
+            'Click 'Ok' button
+            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+            AfterAddChildPart(strPartType, strJointType)
+
+            OpenDialogAndWait("Select Part Type", Nothing, Nothing)
+
+            ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strJointType})
+
+            'Click 'Ok' button
+            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+            AfterAddChildPartJoint(strPartType, strJointType)
+
+            Threading.Thread.Sleep(1000)
+        End Sub
+
         '''<summary>
         '''AddChildPartTypeWithJoint - Use 'AddChildPartTypeWithJointParams' to pass parameters into this method.
         '''</summary>

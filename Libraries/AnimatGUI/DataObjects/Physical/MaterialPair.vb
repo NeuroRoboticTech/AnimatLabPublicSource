@@ -272,7 +272,7 @@ Namespace DataObjects.Physical
             m_snMaxFrictionPrimary = New AnimatGUI.Framework.ScaledNumber(Me, "MaxFrictionPrimary", 500, ScaledNumber.enumNumericScale.None, "Newtons", "N")
             m_snMaxFrictionSecondary = New AnimatGUI.Framework.ScaledNumber(Me, "MaxSecondaryFriction", 500, ScaledNumber.enumNumericScale.None, "Newtons", "N")
             m_snCompliance = New AnimatGUI.Framework.ScaledNumber(Me, "Compliance", 0.1, ScaledNumber.enumNumericScale.micro, "m/N", "m/N")
-            m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 50, ScaledNumber.enumNumericScale.Kilo, "g/s", "g/s")
+            m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 5000, ScaledNumber.enumNumericScale.Kilo, "g/s", "g/s")
             m_snRestitution = New AnimatGUI.Framework.ScaledNumber(Me, "Restitution", 0, ScaledNumber.enumNumericScale.None)
             m_snSlipPrimary = New AnimatGUI.Framework.ScaledNumber(Me, "PrimarySlip", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "s/Kg", "s/Kg")
             m_snSlipSecondary = New AnimatGUI.Framework.ScaledNumber(Me, "SecondarySlip", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "s/Kg", "s/Kg")

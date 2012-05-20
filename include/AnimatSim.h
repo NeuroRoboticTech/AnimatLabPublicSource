@@ -113,6 +113,7 @@ namespace AnimatSim
 			class Hinge;
 			class Prismatic;
 			class LinearJoint;
+			class RPRO;
 		}
 	}
 
@@ -184,6 +185,7 @@ using namespace AnimatSim::Recording;
 #include "Hinge.h"
 #include "Prismatic.h"
 #include "LinearJoint.h"
+#include "RPRO.h"
 #include "ContactSensor.h"
 #include "Odor.h"
 #include "OdorType.h"

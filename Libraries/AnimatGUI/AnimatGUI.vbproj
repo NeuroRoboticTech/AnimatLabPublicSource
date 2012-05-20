@@ -422,6 +422,7 @@
     <Compile Include="DataObjects\Physical\Joints\Hinge.vb" />
     <Compile Include="DataObjects\Physical\Joints\Linear.vb" />
     <Compile Include="DataObjects\Physical\Joints\Prismatic.vb" />
+    <Compile Include="DataObjects\Physical\Joints\RPRO.vb" />
     <Compile Include="DataObjects\Physical\Joints\StaticJoint.vb" />
     <Compile Include="DataObjects\Physical\Joints\Universal.vb" />
     <Compile Include="DataObjects\Physical\Light.vb">
@@ -1329,6 +1330,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Graphics\EditMaterials.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\BodyPlan\RPRO_SelectType.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\RPRO_Treeview.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

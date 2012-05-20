@@ -170,7 +170,7 @@ Namespace DataObjects
 
 #Region "Modify Structure"
 
-            Protected Overridable Sub ModifyStructure(ByVal xnStructure As XmlNode, ByVal bIsFluidPlane As Boolean)
+            Protected Overridable Sub ModifyStructure(ByVal xnStructure As XmlNode, ByVal bIsFluidPlane As Boolean, Optional ByVal bSetAmbientColor As Boolean = False)
 
                 m_xnProjectXml.AddNodeValue(xnStructure, "Description", "")
                 m_xnProjectXml.AddTransparency(xnStructure, 50, 50, 50, 50, 100)
@@ -184,13 +184,13 @@ Namespace DataObjects
                 m_xnProjectXml.AddColor(xnStructure, "Diffuse", 1, 0, 0, 1)
                 m_xnProjectXml.AddColor(xnStructure, "Specular", 1, 0, 0, 1)
 
-                CreateRigidBodyRootNode(xnStructure, bIsFluidPlane)
+                CreateRigidBodyRootNode(xnStructure, bIsFluidPlane, bSetAmbientColor)
 
             End Sub
 
 #Region "Rigid Body Modifiers"
 
-            Protected Overridable Sub CreateRigidBodyRootNode(ByVal xnStructure As XmlNode, ByVal bIsFluidPlane As Boolean)
+            Protected Overridable Sub CreateRigidBodyRootNode(ByVal xnStructure As XmlNode, ByVal bIsFluidPlane As Boolean, Optional ByVal bSetAmbientColor As Boolean = False)
 
                 'We need to get the simulation node from the asim file. We will then modify it.
                 Dim strBodyPlanFile As String = m_strProjectPath & "\" & m_xnProjectXml.GetSingleNodeValue(xnStructure, "BodyPlan")
@@ -207,11 +207,11 @@ Namespace DataObjects
                     Dim xnCollisionsOld As XmlNode = xnASTL_File.GetNode(xnStruct, "CollisionExclusionPairs")
                     Dim xnCollisions As XmlNode = m_xnProjectXml.AppendNode(xnStructure, xnCollisionsOld, "CollisionExclusionPairs")
 
-                    ModifyRigidBody(xnRigidBody, m_aryIdentity, bIsFluidPlane)
+                    ModifyRigidBody(xnRigidBody, m_aryIdentity, bIsFluidPlane, bSetAmbientColor)
                 End If
             End Sub
 
-            Protected Overridable Sub ModifyRigidBody(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByVal bIsFluidPlane As Boolean)
+            Protected Overridable Sub ModifyRigidBody(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByVal bIsFluidPlane As Boolean, Optional ByVal bSetAmbientColor As Boolean = False)
 
                 'First check to see if this is a rigid body that was added by the converter process. If it was then skip it and do not processes it further.
                 If Not m_xnProjectXml.GetNode(xnRigidBody, "Converter", False) Is Nothing Then
@@ -222,7 +222,7 @@ Namespace DataObjects
 
                 ModifyRigidBodyDrag(xnRigidBody)
                 ModifyRigidBodyCOM(xnRigidBody)
-                ModifyRigidBodyColor(xnRigidBody)
+                ModifyRigidBodyColor(xnRigidBody, bSetAmbientColor)
 
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "IsCollisionObject", "True")
 
@@ -333,7 +333,7 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyColor(ByVal xnRigidBody As XmlNode)
+            Protected Overridable Sub ModifyRigidBodyColor(ByVal xnRigidBody As XmlNode, Optional ByVal bSetAmbientColor As Boolean = False)
 
                 Dim dblDiffuseR As Double = 1
                 Dim dblDiffuseG As Double = 0
@@ -345,7 +345,13 @@ Namespace DataObjects
 
                 m_xnProjectXml.AddColor(xnRigidBody, "Diffuse", dblDiffuseR, dblDiffuseG, dblDiffuseB, dblDiffuseA)
                 m_xnProjectXml.AddColor(xnRigidBody, "Specular", 0.25098, 0.25098, 0.25098, 1)
-                m_xnProjectXml.AddColor(xnRigidBody, "Ambient", 0.0980392, 0.0980392, 0.0980392, 1)
+
+                If bSetAmbientColor Then
+                    m_xnProjectXml.AddColor(xnRigidBody, "Ambient", dblDiffuseR, dblDiffuseG, dblDiffuseB, 1)
+                Else
+                    m_xnProjectXml.AddColor(xnRigidBody, "Ambient", 0.0980392, 0.0980392, 0.0980392, 1)
+                End If
+
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "Shininess", "64")
 
             End Sub
@@ -707,9 +713,12 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnRigidBody, "Rotation")
                 m_xnProjectXml.AddScaledVector(xnRigidBody, "Rotation", -90, 0, 0)
 
-                m_xnProjectXml.AddScaledVector(xnRigidBody, "Size", 10, 10, 0)
-                m_xnProjectXml.AddNodeValue(xnRigidBody, "WidthSegments", "1")
-                m_xnProjectXml.AddNodeValue(xnRigidBody, "LengthSegments", "1")
+                Dim fltSize As Single = 100 * m_fltDistanceUnits
+                Dim fltSegSize As Single = 10 * m_fltDistanceUnits
+
+                m_xnProjectXml.AddScaledVector(xnRigidBody, "Size", fltSize, fltSize, 0)
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "WidthSegments", fltSegSize.ToString)
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "LengthSegments", fltSegSize.ToString)
 
             End Sub
 #End Region
@@ -789,7 +798,7 @@ Namespace DataObjects
 
             Protected Overridable Sub ModifyJointStatic(ByVal xnJoint As XmlNode)
 
-                m_xnProjectXml.AddNodeValue(xnJoint, "PartType", "AnimatGUI.DataObjects.Physical.Joints.StaticJoint")
+                m_xnProjectXml.AddNodeValue(xnJoint, "PartType", "AnimatGUI.DataObjects.Physical.Joints.RPRO")
 
             End Sub
 
@@ -850,6 +859,9 @@ Namespace DataObjects
 
             Protected Overridable Sub AddLight(ByVal xnEnvironment As XmlNode)
 
+                Dim fltDist As Single = 20 * m_fltDistanceUnits
+                Dim fltAttenuation As Single = 1000 * m_fltDistanceUnits
+
                 Dim strXml As String = "<Light>" & _
                                        "    <Name>Light_1</Name>" & _
                                        "   <ID>" & System.Guid.NewGuid.ToString & "</ID>" & _
@@ -869,7 +881,7 @@ Namespace DataObjects
                                        "    <Texture/>" & _
                                        "    <LocalPosition>" & _
                                        "        <X Value=""1"" Scale=""None"" Actual=""1""/>" & _
-                                       "        <Y Value=""20"" Scale=""None"" Actual=""20""/>" & _
+                                       "        <Y Value=""" & fltDist & """ Scale=""None"" Actual=""" & fltDist & """/>" & _
                                        "        <Z Value=""0"" Scale=""None"" Actual=""0""/>" & _
                                        "    </LocalPosition>" & _
                                        "    <Rotation>" & _
@@ -880,7 +892,7 @@ Namespace DataObjects
                                        "    <Radius Value=""50"" Scale=""milli"" Actual=""0.05""/>" & _
                                        "    <ConstantAttenuation>0</ConstantAttenuation>" & _
                                        "    <LinearAttenuationDistance Value=""0"" Scale=""None"" Actual=""0""/>" & _
-                                       "    <QuadraticAttenuationDistance Value=""1"" Scale=""Kilo"" Actual=""1000""/>" & _
+                                       "    <QuadraticAttenuationDistance Value=""" & fltAttenuation & """ Scale=""None"" Actual=""" & fltAttenuation & """/>" & _
                                        "    <LatitudeSegments>10</LatitudeSegments>" & _
                                        "    <LongtitudeSegments>10</LongtitudeSegments>" & _
                                        "</Light>"
@@ -896,7 +908,7 @@ Namespace DataObjects
 
                     Dim xnStruct As XmlNode = m_xnProjectXml.AppendNode(xnStructs, xnGround.InnerXml, "Structure", aryReplaceText)
 
-                    ModifyStructure(xnStruct, bIsFluidPlane)
+                    ModifyStructure(xnStruct, bIsFluidPlane, True)
                 End If
 
             End Sub

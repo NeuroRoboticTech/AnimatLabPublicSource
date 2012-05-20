@@ -47,20 +47,53 @@ Namespace UITests
 
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
-                        aryMaxErrors.Add("Arm", 0.03)
-                        aryMaxErrors.Add("JointPos", 0.03)
-                        aryMaxErrors.Add("JointVel", 0.03)
-                        aryMaxErrors.Add("AVm", 0.01)
-                        aryMaxErrors.Add("BVm", 0.01)
-                        aryMaxErrors.Add("BIa", 0.000000003)
+                        aryMaxErrors.Add("BodyX", 0.03)
+                        aryMaxErrors.Add("BodyY", 0.03)
+                        aryMaxErrors.Add("BodyZ", 0.03)
                         aryMaxErrors.Add("default", 0.03)
 
-                        m_strProjectName = "PrismaticMotorTest"
-                        m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\JointTests\PrismaticTests"
-                        m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\JointTests\PrismaticTests\" & m_strProjectName
-                        m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\PrismaticTests\" & m_strProjectName
+                        m_strProjectName = "BallSocketTest"
+                        m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\JointTests"
+                        m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\JointTests\" & m_strProjectName
+                        m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\" & m_strProjectName
 
-                        Test_JointMotor(aryMaxErrors)
+                        'Load and convert the project.
+                        TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                        'Run the same sim a second time to check for changes between sims.
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceY", "1 "})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Y_1N_")
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceY", "0 "})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceZ", "1 "})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Z_1N_")
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceY", "1 "})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceY", "0 "})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceZ", "1 "})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "XZ_1N_")
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "PositionX", "1 c"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "XZ_1_N_X_1cm_")
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "PositionX", "0 "})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "PositionY", "-18 c"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceZ", "0 "})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Joint_-18cmY_X_1N_")
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceZ", "1 "})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "PositionX", "1 c"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Joint_-18cmY_XY_1N_X_1cm_")
+
 
                     End Sub
 

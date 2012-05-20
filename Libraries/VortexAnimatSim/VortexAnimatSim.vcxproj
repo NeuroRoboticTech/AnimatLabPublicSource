@@ -160,6 +160,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClCompile Include="VsPrismatic.cpp" />
     <ClCompile Include="VsPrismaticLimit.cpp" />
     <ClCompile Include="VsRigidBody.cpp" />
+    <ClCompile Include="VsRPRO.cpp" />
     <ClCompile Include="VsSimulationWindow.cpp" />
     <ClCompile Include="VsSimulationWindowMgr.cpp" />
     <ClCompile Include="VsSimulator.cpp" />
@@ -208,6 +209,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClInclude Include="VsPrismatic.h" />
     <ClInclude Include="VsPrismaticLimit.h" />
     <ClInclude Include="VsRigidBody.h" />
+    <ClInclude Include="VsRPRO.h" />
     <ClInclude Include="VsSimulationWindow.h" />
     <ClInclude Include="VsSimulationWindowMgr.h" />
     <ClInclude Include="VsSimulator.h" />

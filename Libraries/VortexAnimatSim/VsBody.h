@@ -38,6 +38,7 @@ namespace VortexAnimatSim
 			virtual void SetBody() = 0;
 
 			virtual void Physics_UpdateNode() {};
+			virtual BOOL Physics_HasCollisionGeometry() {return FALSE;};
 		};
 
 	}			// Environment

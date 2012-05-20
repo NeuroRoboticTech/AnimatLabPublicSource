@@ -1272,7 +1272,11 @@ Namespace DataObjects.Physical
             doPair.Material1 = doMat
             doPair.Material2 = doMat
 
-            'TODO: Need to set default values here.
+            If Not Util.Environment Is Nothing Then
+                doPair.Compliance.ActualValue = 0.000001 * Util.ConvertMassUnits(Util.Environment.MassUnits.ToString)
+                doPair.Damping.ActualValue = 50000000 / Util.ConvertMassUnits(Util.Environment.MassUnits.ToString)
+            End If
+
             m_aryMaterialPairs.Add(doPair.ID, doPair, bCallSimMethods)
 
         End Sub

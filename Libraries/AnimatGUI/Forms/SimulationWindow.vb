@@ -32,32 +32,68 @@ Namespace Forms
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(SimulationWindow))
-            Me.SimWindowToolStrip = New AnimatGuiCtrls.Controls.AnimatToolStrip
-            Me.lbStucture = New System.Windows.Forms.ToolStripLabel()
-            Me.cboStructure = New System.Windows.Forms.ToolStripComboBox()
-            Me.SimWindowMenuStrip = New AnimatGuiCtrls.Controls.AnimatMenuStrip
-            Me.lblBodyPart = New System.Windows.Forms.ToolStripLabel()
-            Me.cboBodyPart = New System.Windows.Forms.ToolStripComboBox()
+            Me.SimWindowToolStrip = New AnimatGuiCtrls.Controls.AnimatToolStrip()
             Me.PasteToolStripButton = New System.Windows.Forms.ToolStripButton()
             Me.CopyToolStripButton = New System.Windows.Forms.ToolStripButton()
             Me.CutToolStripButton = New System.Windows.Forms.ToolStripButton()
-            Me.CutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.CopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.PasteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.lbStucture = New System.Windows.Forms.ToolStripLabel()
+            Me.cboStructure = New System.Windows.Forms.ToolStripComboBox()
+            Me.lblBodyPart = New System.Windows.Forms.ToolStripLabel()
+            Me.cboBodyPart = New System.Windows.Forms.ToolStripComboBox()
+            Me.SimWindowMenuStrip = New AnimatGuiCtrls.Controls.AnimatMenuStrip()
             Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.PasteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.CopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.CutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.SimWindowToolStrip.SuspendLayout()
+            Me.SimWindowMenuStrip.SuspendLayout()
             Me.SuspendLayout()
             '
             'SimWindowToolStrip
             '
-            Me.SimWindowToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteToolStripButton, Me.CopyToolStripButton, _
-                                                                                          Me.CutToolStripButton, Me.lbStucture, Me.cboStructure, Me.lblBodyPart, Me.cboBodyPart})
+            Me.SimWindowToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteToolStripButton, Me.CopyToolStripButton, Me.CutToolStripButton, Me.lbStucture, Me.cboStructure, Me.lblBodyPart, Me.cboBodyPart})
             Me.SimWindowToolStrip.Location = New System.Drawing.Point(0, 0)
             Me.SimWindowToolStrip.Name = "SimWindowToolStrip"
+            Me.SimWindowToolStrip.SecurityMgr = Nothing
             Me.SimWindowToolStrip.Size = New System.Drawing.Size(774, 25)
             Me.SimWindowToolStrip.TabIndex = 0
             Me.SimWindowToolStrip.Text = "ToolStrip1"
+            Me.SimWindowToolStrip.ToolName = ""
             Me.SimWindowToolStrip.Visible = False
+            '
+            'PasteToolStripButton
+            '
+            Me.PasteToolStripButton.CheckOnClick = True
+            Me.PasteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.PasteToolStripButton.Image = CType(resources.GetObject("PasteToolStripButton.Image"), System.Drawing.Image)
+            Me.PasteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.PasteToolStripButton.MergeAction = System.Windows.Forms.MergeAction.Insert
+            Me.PasteToolStripButton.MergeIndex = 4
+            Me.PasteToolStripButton.Name = "PasteToolStripButton"
+            Me.PasteToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.PasteToolStripButton.Text = "&Paste"
+            '
+            'CopyToolStripButton
+            '
+            Me.CopyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.CopyToolStripButton.Image = CType(resources.GetObject("CopyToolStripButton.Image"), System.Drawing.Image)
+            Me.CopyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.CopyToolStripButton.MergeAction = System.Windows.Forms.MergeAction.Insert
+            Me.CopyToolStripButton.MergeIndex = 4
+            Me.CopyToolStripButton.Name = "CopyToolStripButton"
+            Me.CopyToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.CopyToolStripButton.Text = "&Copy"
+            '
+            'CutToolStripButton
+            '
+            Me.CutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.CutToolStripButton.Image = CType(resources.GetObject("CutToolStripButton.Image"), System.Drawing.Image)
+            Me.CutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.CutToolStripButton.MergeAction = System.Windows.Forms.MergeAction.Insert
+            Me.CutToolStripButton.MergeIndex = 4
+            Me.CutToolStripButton.Name = "CutToolStripButton"
+            Me.CutToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.CutToolStripButton.Text = "C&ut"
             '
             'lbStucture
             '
@@ -67,29 +103,9 @@ Namespace Forms
             '
             'cboStructure
             '
+            Me.cboStructure.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
             Me.cboStructure.Name = "cboStructure"
             Me.cboStructure.Size = New System.Drawing.Size(121, 25)
-            Me.cboStructure.ToolTipText = ""
-            Me.cboStructure.ComboBox.DropDownStyle = ComboBoxStyle.DropDownList
-            '
-            'SimWindowMenuStrip
-            '
-            Me.SimWindowMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EditToolStripMenuItem})
-            Me.SimWindowMenuStrip.Location = New System.Drawing.Point(0, 0)
-            Me.SimWindowMenuStrip.Name = "SimWindowMenuStrip"
-            Me.SimWindowMenuStrip.Size = New System.Drawing.Size(284, 24)
-            Me.SimWindowMenuStrip.TabIndex = 1
-            Me.SimWindowMenuStrip.Text = "MenuStrip1"
-            Me.SimWindowMenuStrip.Visible = False
-            '
-            'EditToolStripMenuItem
-            '
-            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteToolStripMenuItem, Me.CopyToolStripMenuItem, Me.CutToolStripMenuItem})
-            Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
-            Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
-            Me.EditToolStripMenuItem.Text = "&Edit"
-            Me.EditToolStripMenuItem.MergeAction = MergeAction.MatchOnly
-
             '
             'lblBodyPart
             '
@@ -99,89 +115,75 @@ Namespace Forms
             '
             'cboBodyPart
             '
+            Me.cboBodyPart.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
             Me.cboBodyPart.Name = "cboBodyPart"
             Me.cboBodyPart.Size = New System.Drawing.Size(121, 25)
-            Me.cboBodyPart.ToolTipText = ""
-            Me.cboBodyPart.ComboBox.DropDownStyle = ComboBoxStyle.DropDownList
             '
-            'CopyToolStripButton
+            'SimWindowMenuStrip
             '
-            Me.CopyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.CopyToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Copy.gif")
-            Me.CopyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.CopyToolStripButton.Name = "CopyToolStripButton"
-            Me.CopyToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.CopyToolStripButton.Text = "&Copy"
-            Me.CopyToolStripButton.MergeAction = MergeAction.Insert
-            Me.CopyToolStripButton.MergeIndex = 4
+            Me.SimWindowMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EditToolStripMenuItem})
+            Me.SimWindowMenuStrip.Location = New System.Drawing.Point(0, 0)
+            Me.SimWindowMenuStrip.Name = "SimWindowMenuStrip"
+            Me.SimWindowMenuStrip.SecurityMgr = Nothing
+            Me.SimWindowMenuStrip.Size = New System.Drawing.Size(284, 24)
+            Me.SimWindowMenuStrip.TabIndex = 1
+            Me.SimWindowMenuStrip.Text = "MenuStrip1"
+            Me.SimWindowMenuStrip.ToolName = ""
+            Me.SimWindowMenuStrip.Visible = False
             '
-            'CutToolStripButton
+            'EditToolStripMenuItem
             '
-            Me.CutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.CutToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Cut.gif")
-            Me.CutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.CutToolStripButton.Name = "CutToolStripButton"
-            Me.CutToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.CutToolStripButton.Text = "C&ut"
-            Me.CutToolStripButton.MergeAction = MergeAction.Insert
-            Me.CutToolStripButton.MergeIndex = 4
-            '
-            'PasteToolStripButton
-            '
-            Me.PasteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.PasteToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.CopyClipboard.gif")
-            Me.PasteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.PasteToolStripButton.Name = "PasteToolStripButton"
-            Me.PasteToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.PasteToolStripButton.Text = "&Paste"
-            Me.PasteToolStripButton.MergeAction = MergeAction.Insert
-            Me.PasteToolStripButton.MergeIndex = 4
-            Me.PasteToolStripButton.CheckOnClick = True
-            '
-            'CopyToolStripMenuItem
-            '
-            Me.CopyToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Copy.gif")
-            Me.CopyToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem"
-            Me.CopyToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
-            Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
-            Me.CopyToolStripMenuItem.Text = "&Copy"
-            Me.CopyToolStripMenuItem.MergeAction = MergeAction.Insert
-            Me.CopyToolStripMenuItem.MergeIndex = 4
-            '
-            'CutToolStripMenuItem
-            '
-            Me.CutToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Cut.gif")
-            Me.CutToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.CutToolStripMenuItem.Name = "CutToolStripMenuItem"
-            Me.CutToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.X), System.Windows.Forms.Keys)
-            Me.CutToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
-            Me.CutToolStripMenuItem.Text = "Cu&t"
-            Me.CutToolStripMenuItem.MergeAction = MergeAction.Insert
-            Me.CutToolStripMenuItem.MergeIndex = 4
+            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteToolStripMenuItem, Me.CopyToolStripMenuItem, Me.CutToolStripMenuItem})
+            Me.EditToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.MatchOnly
+            Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
+            Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
+            Me.EditToolStripMenuItem.Text = "&Edit"
             '
             'PasteToolStripMenuItem
             '
-            Me.PasteToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.CopyClipboard.gif")
+            Me.PasteToolStripMenuItem.CheckOnClick = True
+            Me.PasteToolStripMenuItem.Image = CType(resources.GetObject("PasteToolStripMenuItem.Image"), System.Drawing.Image)
             Me.PasteToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.PasteToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
+            Me.PasteToolStripMenuItem.MergeIndex = 4
             Me.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem"
             Me.PasteToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V), System.Windows.Forms.Keys)
-            Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
+            Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(144, 22)
             Me.PasteToolStripMenuItem.Text = "&Paste"
-            Me.PasteToolStripMenuItem.MergeAction = MergeAction.Insert
-            Me.PasteToolStripMenuItem.MergeIndex = 4
-            Me.PasteToolStripMenuItem.CheckOnClick = True
             '
-            'SimulationWindow_Toolstrips
+            'CopyToolStripMenuItem
+            '
+            Me.CopyToolStripMenuItem.Image = CType(resources.GetObject("CopyToolStripMenuItem.Image"), System.Drawing.Image)
+            Me.CopyToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.CopyToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
+            Me.CopyToolStripMenuItem.MergeIndex = 4
+            Me.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem"
+            Me.CopyToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
+            Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(144, 22)
+            Me.CopyToolStripMenuItem.Text = "&Copy"
+            '
+            'CutToolStripMenuItem
+            '
+            Me.CutToolStripMenuItem.Image = CType(resources.GetObject("CutToolStripMenuItem.Image"), System.Drawing.Image)
+            Me.CutToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.CutToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
+            Me.CutToolStripMenuItem.MergeIndex = 4
+            Me.CutToolStripMenuItem.Name = "CutToolStripMenuItem"
+            Me.CutToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.X), System.Windows.Forms.Keys)
+            Me.CutToolStripMenuItem.Size = New System.Drawing.Size(144, 22)
+            Me.CutToolStripMenuItem.Text = "Cu&t"
+            '
+            'SimulationWindow
             '
             Me.ClientSize = New System.Drawing.Size(774, 262)
             Me.Controls.Add(Me.SimWindowToolStrip)
             Me.Controls.Add(Me.SimWindowMenuStrip)
             Me.MainMenuStrip = Me.SimWindowMenuStrip
-            Me.Name = "SimulationWindow_Toolstrips"
-            Me.Text = "SimulationWindow"
+            Me.Name = "SimulationWindow"
             Me.SimWindowToolStrip.ResumeLayout(False)
             Me.SimWindowToolStrip.PerformLayout()
+            Me.SimWindowMenuStrip.ResumeLayout(False)
+            Me.SimWindowMenuStrip.PerformLayout()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 

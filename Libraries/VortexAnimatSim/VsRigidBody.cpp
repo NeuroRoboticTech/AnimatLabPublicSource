@@ -457,6 +457,15 @@ void VsRigidBody::CreateStaticPart()
 	}
 }
 
+void VsRigidBody::RemoveStaticPart()
+{
+	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisRB->Parent());
+
+	Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
+	if(vxSensor && m_vxCollisionGeometry)
+		vxSensor->removeCollisionGeometry(m_vxCollisionGeometry);
+}
+
 void VsRigidBody::ResetStaticCollisionGeom()
 {
 	if(m_osgMT.valid())
@@ -485,6 +494,8 @@ void VsRigidBody::DeletePhysics()
 		m_vxSensor = NULL;
 		m_vxPart = NULL;
 	}
+	else if(m_lpThisRB->HasStaticJoint())
+		RemoveStaticPart();
 }
 
 void VsRigidBody::SetBody()
@@ -830,6 +841,14 @@ float VsRigidBody::Physics_GetMass()
 		fltMass = m_vxPart->getMass();
 
 	return fltMass;
+}
+
+BOOL VsRigidBody::Physics_HasCollisionGeometry()
+{
+	if(m_vxSensor)
+		return TRUE;
+	else
+		return FALSE;
 }
 
 	}			// Environment

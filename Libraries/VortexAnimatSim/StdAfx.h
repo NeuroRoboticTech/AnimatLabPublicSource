@@ -46,6 +46,7 @@
 #include "Vx/VxLinear2.h"
 #include "Vx/VxLinear3.h"
 #include "Vx/VxSpring.h"
+#include "Vx/VxRPRO.h"
 
 #include "Vx/VxMaterialTable.h"
 #include "Vx/VxContactProperties.h"

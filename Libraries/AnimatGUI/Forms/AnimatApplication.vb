@@ -3764,6 +3764,9 @@ Namespace Forms
                 Dim frmAnimat As Forms.SimulationWindow = DirectCast(CreateForm("AnimatGUI.dll", "AnimatGUI.Forms.SimulationWindow", doStructure.Name & " Body", False), Forms.SimulationWindow)
                 doStructure.BodyEditor = frmAnimat
                 frmAnimat.PhysicalStructure = doStructure
+                If Not doStructure.RootBody Is Nothing Then
+                    frmAnimat.BodyPart = doStructure.RootBody
+                End If
                 frmAnimat.Initialize(Me)
 
                 AddChildForm(frmAnimat)

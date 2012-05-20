@@ -56,6 +56,12 @@ Namespace DataObjects.Physical.Joints
             End Get
         End Property
 
+        Public Overrides ReadOnly Property AllowAddChildBody() As Boolean
+            Get
+                Return False
+            End Get
+        End Property
+
 #End Region
 
         Public Sub New(ByVal doParent As Framework.DataObject)

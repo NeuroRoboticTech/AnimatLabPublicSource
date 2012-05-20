@@ -1285,12 +1285,23 @@ Namespace DataObjects.Physical
             Return rbNew
         End Function
 
+
         Public Overridable Overloads Function AddChildBody(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d) As Boolean
             Dim rbNew As RigidBody
             Dim bAddDefaultGraphics As Boolean = False
             Dim bPastedPart As Boolean = False
 
             Try
+                'If this is a part/joint combo that does not allow you to directly add child parts then we need to add the part to the parent.
+                If Not Me.JointToParent Is Nothing AndAlso Not Me.JointToParent.AllowAddChildBody Then
+                    If Not Me.Parent Is Nothing AndAlso Util.IsTypeOf(Me.Parent.GetType(), GetType(RigidBody)) Then
+                        Dim rbParent As RigidBody = DirectCast(Me.Parent, RigidBody)
+                        Return rbParent.AddChildBody(vPos, vNorm)
+                    Else
+                        Throw New System.Exception("Unable to add the part type.")
+                    End If
+                End If
+
                 rbNew = Util.GetPastedBodyPart(Me.ParentStructure, Me, False)
 
                 If rbNew Is Nothing Then

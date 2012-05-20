@@ -832,6 +832,14 @@ void RigidBody::EnableFluids(BOOL bVal)
 		m_lpPhysicsBody->Physics_FluidDataChanged();
 }
 
+BOOL RigidBody::HasCollisionGeometry()
+{
+	if(m_lpPhysicsBody)
+		return m_lpPhysicsBody->Physics_HasCollisionGeometry();
+	else
+		return FALSE;
+}
+
 /**
 \brief	Gets the surface contact count. 
 
@@ -939,6 +947,27 @@ void RigidBody::DisableCollision(RigidBody *lpBody)
 {
 	if(m_lpPhysicsBody)
 		m_lpPhysicsBody->Physics_DisableCollision(lpBody);
+}
+
+/**
+\brief	Gets a parent that has collision geometry.
+
+\description This is used for static joints. We need to add the new collision
+geometry to a parent part that actually has collision geometry as well.
+
+\author	dcofer
+\date	5/20/2012
+
+\return	null if it fails, else pointer to RigidBody with geometry.
+**/
+RigidBody *RigidBody::ParentWithCollisionGeometry()
+{
+	if(HasCollisionGeometry())
+		return this;
+	else if(m_lpParent)
+		return m_lpParent->ParentWithCollisionGeometry();
+	else
+		return FALSE;
 }
 
 void RigidBody::Kill(BOOL bState)

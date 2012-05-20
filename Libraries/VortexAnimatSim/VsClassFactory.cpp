@@ -19,6 +19,7 @@
 #include "VsHinge.h"
 #include "VsPrismatic.h"
 #include "VsBallSocket.h"
+#include "VsRPRO.h"
 
 #include "VsAttachment.h"
 
@@ -144,6 +145,8 @@ try
 		lpJoint = new VsPrismatic;
 	else if(strType == "BALLSOCKET")
 		lpJoint = new VsBallSocket;
+	else if(strType == "RPRO")
+		lpJoint = new VsRPRO;
 	else if(strType == "STATIC")
 		lpJoint = NULL;
 	else

@@ -96,6 +96,7 @@ namespace VortexAnimatSim
 			virtual void CreateSensorPart();
 			virtual void CreateStaticPart();
 			virtual void CreateDynamicPart();
+			virtual void RemoveStaticPart();
 
 			CStdFPoint Physics_GetCurrentPosition();
 			virtual void GetBaseValues();
@@ -147,6 +148,7 @@ namespace VortexAnimatSim
 			virtual void Physics_AddBodyTorque(float fltTx, float fltTy, float fltTz, BOOL bScaleUnits);
 			virtual CStdFPoint Physics_GetVelocityAtPoint(float x, float y, float z);
 			virtual float Physics_GetMass();
+			virtual BOOL Physics_HasCollisionGeometry();
 		};
 
 	}			// Environment
