@@ -43,7 +43,7 @@ Namespace UITests
                     '
 
                     <TestMethod()>
-                    Public Sub Test_BallSoket()
+                    Public Sub Test_BallSocket()
 
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
@@ -61,39 +61,73 @@ Namespace UITests
                         TestConversionProject("AfterConversion_", aryMaxErrors)
 
                         'Run the same sim a second time to check for changes between sims.
-                        RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceZ", "0 "})
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceY", "1 "})
-                        RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Y_1N_")
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Y_1N_")
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceY", "0 "})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceZ", "1 "})
-                        RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Z_1N_")
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceX", "1 "})
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "X_1N_")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceY", "1 "})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceX", "1 "})
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceY", "0 "})
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceZ", "1 "})
-                        RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "XZ_1N_")
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "XZ_1N_")
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "PositionX", "1 c"})
-                        RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "XZ_1_N_X_1cm_")
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "XZ_1_N_X_1cm_")
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "PositionX", "0 "})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "PositionY", "-18 c"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "LocalPosition.Y", "-18 c"})
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceZ", "0 "})
-                        RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Joint_-18cmY_X_1N_")
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Joint_-18cmY_X_1N_")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceZ", "1 "})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "PositionX", "1 c"})
-                        RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Joint_-18cmY_XY_1N_X_1cm_")
+                        ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan"}, 2000)
+                        DeletePart("Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_2", "Delete Body Part", True)
+                        If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1"})) Then
+                            Throw New System.Exception("Joint was not deleted")
+                        End If
+                        If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Stimuli\ForceStim1"})) Then
+                            Throw New System.Exception("ForceStim1 was not deleted")
+                        End If
+                        If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 1\BodyX"})) Then
+                            Throw New System.Exception("BodyX chart node was not removed correctly.")
+                        End If
 
+                        PasteChildPartTypeWithJoint("BallSocket", "Simulation\Environment\Structures\Structure_1\Body Plan\Root", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0, True)
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2\Body_2", "LocalPosition.X", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2\Body_2", "LocalPosition.Y", "-25 c"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2\Body_2", "LocalPosition.Z", "0"})
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2", "LocalPosition.X", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2", "LocalPosition.Y", "18 c"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2", "LocalPosition.Z", "0"})
+
+                        ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\JointData"}, 2000)
+                        ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+                        AddItemToChart("Structure_1\Body Plan\Root\Joint_2\Body_2")
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 2\Body_2", "Name", "BodyX"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 2\BodyX", "DataTypeID", "WorldPositionX"})
+                        AddItemToChart("Structure_1\Body Plan\Root\Joint_2\Body_2")
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 2\Body_2", "Name", "BodyY"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 2\BodyY", "DataTypeID", "WorldPositionY"})
+                        AddItemToChart("Structure_1\Body Plan\Root\Joint_2\Body_2")
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 2\Body_2", "Name", "BodyZ"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 2\BodyZ", "DataTypeID", "WorldPositionZ"})
+
+                        AddStimulus("Force", "Structure_1", "\Body Plan\Root\Joint_2\Body_2", "ArmForce") ', "Stimulus_3"
+                        SetForceStimulus("ArmForce", False, True, 0, 0.5, 0, 0, 0, 0, 0, 1, 0, 0, 0)
+
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
                     End Sub
 
