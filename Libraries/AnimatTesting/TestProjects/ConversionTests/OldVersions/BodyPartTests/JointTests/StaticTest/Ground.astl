@@ -1,7 +1,7 @@
 <Structure>
 <RigidBody>
 <Name>GroundPlane</Name>
-<ID>d8ddb947-7d68-4937-bab0-105c03663145</ID>
+<ID>75ee48d6-ff4d-4078-b492-6c26be67e738</ID>
 <Type>Plane</Type>
 <PartType>VortexAnimatTools.DataObjects.Physical.RigidBodies.Plane</PartType>
 <Description/>
@@ -12,11 +12,11 @@
 <Ca>1</Ca>
 <Car>1</Car>
 <Texture/>
-<Density Value="1" Scale="None" Actual="1"/>
-<XCenterOfMass Value="0" Scale="centi" Actual="0"/>
-<YCenterOfMass Value="0" Scale="centi" Actual="0"/>
-<ZCenterOfMass Value="0" Scale="centi" Actual="0"/>
-<Freeze>True</Freeze>
+<Density Value="1000" Scale="Kilo" Actual="1e+06"/>
+<XCenterOfMass Value="0" Scale="None" Actual="0"/>
+<YCenterOfMass Value="0" Scale="None" Actual="0"/>
+<ZCenterOfMass Value="0" Scale="None" Actual="0"/>
+<Freeze>False</Freeze>
 <FoodSource>False</FoodSource>
 <CenterOfMass x="0" y="0" z="0"/>
 <RelativePosition x="0" y="0" z="0"/>
@@ -28,7 +28,7 @@
 <OrientationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</OrientationMatrix>
 <TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</TranslationMatrix>
 <CombinedTransformationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</CombinedTransformationMatrix>
-<Height>0</Height>
+<Height>-10</Height>
 <HeightFieldImage/>
 <MapLocation x="0" y="0" z="0"/>
 <MapSize x="100" y="100" z="0"/>

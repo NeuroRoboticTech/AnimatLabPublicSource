@@ -1,20 +1,20 @@
 <Editor>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.Forms.BodyPlan.Editor</ClassName>
-<NormalLocation x="634" y="71"/>
+<NormalLocation x="367" y="-19"/>
 <NormalSize Width="1000" Height="600"/>
 <WindowState>Normal</WindowState>
-<Structure>77dca86c-f8d6-4f3c-91c0-d1aee5fe0fab</Structure>
+<Structure>fd39c73c-3819-454f-af43-3f7bf345579b</Structure>
 <MouseSensitivity>0.005</MouseSensitivity>
-<PanX>0.62</PanX>
-<PanY>-6.63</PanY>
-<Zoom>-21.73</Zoom>
-<RotateX>1.22195e-07</RotateX>
-<RotateY>0.466379</RotateY>
-<RotateZ>3.04237e-07</RotateZ>
+<PanX>0.53</PanX>
+<PanY>-3.625</PanY>
+<Zoom>-17.75</Zoom>
+<RotateX>3.14159</RotateX>
+<RotateY>-0.194779</RotateY>
+<RotateZ>3.14159</RotateZ>
 <BackColor Red="0" Green="0" Blue="0" Alpha="1"/>
 <DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">
-  <Content Name="Command" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 80" DisplayLocation="150, 150" AutoHideSize="150, 80" FloatingSize="150, 150" FullTitle="Command">
+  <Content Name="Command" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 86" DisplayLocation="150, 150" AutoHideSize="150, 80" FloatingSize="150, 150" FullTitle="Command">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Command" />
       <State Value="DockLeft" />
@@ -28,17 +28,17 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Command" />
       <State Value="DockTop" />
-      <Position Size="150, 80" Location="150, 150" />
+      <Position Size="150, 86" Location="150, 150" />
       <Best Count="1">
         <Item Name="Command" />
       </Best>
       <Next Count="0" />
       <Previous Count="0" />
-      <NextAll Count="2">
+      <NextAll Count="0" />
+      <PreviousAll Count="2">
         <Item Name="Hierarchy" />
         <Item Name="Properties" />
-      </NextAll>
-      <PreviousAll Count="0" />
+      </PreviousAll>
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Command" />
         <Space Value="100" />
@@ -83,10 +83,10 @@
       </Best>
       <Next Count="0" />
       <Previous Count="0" />
-      <NextAll Count="0" />
-      <PreviousAll Count="1">
+      <NextAll Count="1">
         <Item Name="Command" />
-      </PreviousAll>
+      </NextAll>
+      <PreviousAll Count="0" />
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Hierarchy" />
         <Space Value="50" />
@@ -133,10 +133,10 @@
       </Best>
       <Next Count="0" />
       <Previous Count="0" />
-      <NextAll Count="0" />
-      <PreviousAll Count="1">
+      <NextAll Count="1">
         <Item Name="Command" />
-      </PreviousAll>
+      </NextAll>
+      <PreviousAll Count="0" />
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Properties" />
         <Space Value="50" />

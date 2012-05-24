@@ -61,34 +61,34 @@ Namespace UITests
                         TestConversionProject("AfterConversion_", aryMaxErrors)
 
                         'Run the same sim a second time to check for changes between sims.
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceZ", "0 "})
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceY", "1 "})
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Y_1N_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Y_1N_")
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceY", "0 "})
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceX", "1 "})
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "X_1N_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "X_1N_")
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceX", "1 "})
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceY", "0 "})
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceZ", "1 "})
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "XZ_1N_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "XZ_1N_")
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "PositionX", "1 c"})
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "XZ_1_N_X_1cm_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "XZ_1_N_X_1cm_")
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "PositionX", "0 "})
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1", "LocalPosition.Y", "-18 c"})
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim1", "ForceZ", "0 "})
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Joint_-18cmY_X_1N_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Joint_-18cmY_X_1N_")
 
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan"}, 2000)
                         DeletePart("Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_2", "Delete Body Part", True)

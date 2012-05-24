@@ -5,8 +5,8 @@
 <SimulationFile>StaticTest.asim</SimulationFile>
 <LogLevel>Error</LogLevel>
 <Version>1</Version>
-<SimWindowLocation x="50" y="50"/>
-<SimWindowSize Width="640" Height="480"/>
+<SimWindowLocation x="-8" y="-30"/>
+<SimWindowSize Width="1224" Height="547"/>
 <DockingForms>
 <Form>
 <Title>Project Toolbox</Title>
@@ -21,7 +21,7 @@
 <ClassName>AnimatTools.Forms.ProjectWorkspace</ClassName>
 <TabTitle>Workspace</TabTitle>
 <BackgroundForm>True</BackgroundForm>
-<TreeViewHeight>272</TreeViewHeight>
+<TreeViewHeight>293</TreeViewHeight>
 </Form>
 <Form>
 <Title>Simulation Controller</Title>
@@ -67,15 +67,33 @@
 </ChildForms>
 <ToolViewers>
 <ToolHolder>
-<ID>b6d4098b-f37e-4764-a60e-ade9e1c600c0</ID>
+<ID>fbdfc875-a0e4-4569-bf00-19aba57a2799</ID>
 <Name>JointData</Name>
 <BaseAssemblyFile>LicensedAnimatTools.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
 </ToolViewers>
-<Stimuli/>
+<Stimuli>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
+<Name>Stimulus_2</Name>
+<ID>edf12a84-8de1-4b39-abd2-ec80fd771da8</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="0.5" Scale="None" Actual="0.5"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<StructureID>fd39c73c-3819-454f-af43-3f7bf345579b</StructureID>
+<PartID>95ae2625-384f-488b-b384-8493be81ff3b</PartID>
+<Velocity Value="1" Scale="None" Actual="1"/>
+<DisableMotorWhenDone>True</DisableMotorWhenDone>
+</Stimulus>
+</Stimuli>
 <DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">
-  <Content Name="Simulation Controller" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 95" DisplayLocation="150, 150" AutoHideSize="150, 100" FloatingSize="150, 150" FullTitle="Simulation Controller">
+  <Content Name="Simulation Controller" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 100" DisplayLocation="150, 150" AutoHideSize="150, 100" FloatingSize="150, 150" FullTitle="Simulation Controller">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Simulation Controller" />
       <State Value="DockLeft" />
@@ -89,7 +107,7 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Simulation Controller" />
       <State Value="DockBottom" />
-      <Position Size="150, 95" Location="150, 150" />
+      <Position Size="150, 100" Location="150, 150" />
       <Best Count="1">
         <Item Name="Simulation Controller" />
       </Best>
@@ -123,7 +141,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Project Workspace" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="207, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Project Workspace">
+  <Content Name="Project Workspace" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Project Workspace">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Project Workspace" />
       <State Value="DockLeft" />
@@ -143,7 +161,7 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Project Workspace" />
       <State Value="DockLeft" />
-      <Position Size="207, 150" Location="150, 150" />
+      <Position Size="150, 150" Location="150, 150" />
       <Best Count="2">
         <Item Name="Project Toolbox" />
         <Item Name="Project Workspace" />
@@ -180,7 +198,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Project Toolbox" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="207, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Project Toolbox">
+  <Content Name="Project Toolbox" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Project Toolbox">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Project Toolbox" />
       <State Value="DockLeft" />
@@ -200,7 +218,7 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Project Toolbox" />
       <State Value="DockLeft" />
-      <Position Size="207, 150" Location="150, 150" />
+      <Position Size="150, 150" Location="150, 150" />
       <Best Count="2">
         <Item Name="Project Toolbox" />
         <Item Name="Project Workspace" />

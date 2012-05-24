@@ -46,13 +46,13 @@ Namespace UITests
 
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
-                        aryMaxErrors.Add("RootX", 0.08)
-                        aryMaxErrors.Add("RootY", 0.08)
-                        aryMaxErrors.Add("RootZ", 0.08)
-                        aryMaxErrors.Add("BodyX", 0.08)
-                        aryMaxErrors.Add("BodyY", 0.08)
-                        aryMaxErrors.Add("BodyZ", 0.08)
-                        aryMaxErrors.Add("default", 0.08)
+                        aryMaxErrors.Add("Body_3X", 0.6)
+                        aryMaxErrors.Add("Body_3Y", 0.6)
+                        aryMaxErrors.Add("Body_3Z", 0.6)
+                        aryMaxErrors.Add("Body_4X", 0.6)
+                        aryMaxErrors.Add("Body_4Y", 0.6)
+                        aryMaxErrors.Add("Body_4Z", 0.6)
+                        aryMaxErrors.Add("default", 0.6)
 
                         m_strProjectName = "StaticTest"
                         m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\JointTests"
@@ -66,39 +66,58 @@ Namespace UITests
                         'RunSimulationWaitToEnd()
                         'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
-                        'ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan"}, 2000)
-                        'DeletePart("Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Arm", "Delete Body Part", True)
-                        ''RunSimulationWaitToEnd()
-                        ''CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DeleteStatic_")
-
-                        'PasteChildPartTypeWithJoint("Static", "Simulation\Environment\Structures\Structure_1\Body Plan\Root", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0, True)
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2\Arm", "LocalPosition.X", "0"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2\Arm", "LocalPosition.Y", "-30 c"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2\Arm", "LocalPosition.Z", "-30 c"})
-
-                        'ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\JointData"}, 2000)
-                        'ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
-                        'AddItemToChart("Structure_1\Body Plan\Root\Joint_2\Arm")
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 4\Arm", "Name", "BodyX"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 4\BodyX", "DataTypeID", "WorldPositionX"})
-                        'AddItemToChart("Structure_1\Body Plan\Root\Joint_2\Arm")
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 4\Arm", "Name", "BodyY"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 4\BodyY", "DataTypeID", "WorldPositionY"})
-                        'AddItemToChart("Structure_1\Body Plan\Root\Joint_2\Arm")
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 4\Arm", "Name", "BodyZ"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 4\BodyZ", "DataTypeID", "WorldPositionZ"})
-
-                        ''RunSimulationWaitToEnd()
-                        ''CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
-
-                        'AddChildPartTypeWithJoint("Box", "Static", "Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2\Arm")
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2\Arm\Joint_3\Body_3", "Name", "Arm2"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2\Arm\Joint_3\Arm2", "LocalPosition.X", "-30 c"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2\Arm\Joint_3\Arm2", "LocalPosition.Y", "-30 c"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2\Arm\Joint_3\Arm2", "LocalPosition.Z", "-30 c"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_4\Blocker", "WorldPosition.Z", "0"})
                         'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Block2_")
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_4\Blocker", "WorldPosition.X", "-3.3"})
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Block1_")
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_2\Joint_2\Body_3", "LocalPosition.Y", "-3.5"})
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Move1_")
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_4\Blocker", "WorldPosition.X", "-4.5"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Block1B_")
+
+                        ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan"}, 2000)
+                        DeletePart("Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_2\Joint_2\Body_3", "Delete Body Part", True)
+
+                        PasteChildPartTypeWithJoint("Static", "Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_2", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0, True)
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_2\Joint_5", "Name", "Joint_2"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_2\Joint_2\Body_3", "LocalPosition.X", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_2\Joint_2\Body_3", "LocalPosition.Y", "-3.5"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_2\Joint_2\Body_3", "LocalPosition.Z", "0"})
+
+                        ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\JointData"}, 2000)
+                        ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+                        AddItemToChart("Structure_1\Body Plan\Root\Root\Joint_1\Body_2\Joint_2\Body_3")
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 3\Body_3", "Name", "Body_3X"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 3\Body_3X", "DataTypeID", "WorldPositionX"})
+                        AddItemToChart("Structure_1\Body Plan\Root\Root\Joint_1\Body_2\Joint_2\Body_3")
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 3\Body_3", "Name", "Body_3Y"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 3\Body_3Y", "DataTypeID", "WorldPositionY"})
+                        AddItemToChart("Structure_1\Body Plan\Root\Root\Joint_1\Body_2\Joint_2\Body_3")
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 3\Body_3", "Name", "Body_3Z"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 3\Body_3Z", "DataTypeID", "WorldPositionZ"})
+                        ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+                        AddItemToChart("Structure_1\Body Plan\Root\Root\Joint_1\Body_2\Joint_2\Body_3\Joint_3\Body_4")
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 4\Body_4", "Name", "Body_4X"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 4\Body_4X", "DataTypeID", "WorldPositionX"})
+                        AddItemToChart("Structure_1\Body Plan\Root\Root\Joint_1\Body_2\Joint_2\Body_3\Joint_3\Body_4")
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 4\Body_4", "Name", "Body_4Y"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 4\Body_4Y", "DataTypeID", "WorldPositionY"})
+                        AddItemToChart("Structure_1\Body Plan\Root\Root\Joint_1\Body_2\Joint_2\Body_3\Joint_3\Body_4")
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 4\Body_4", "Name", "Body_4Z"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 4\Body_4Z", "DataTypeID", "WorldPositionZ"})
+
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Block1B_")
 
                     End Sub
+
 
 #Region "Additional test attributes"
                     '
