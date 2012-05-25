@@ -8,7 +8,7 @@ namespace VortexAnimatSim
 	namespace Visualization
 	{
 
-		class VORTEX_PORT VsIntersectionEvent : public AnimatSim::AnimatBase, public VxUniverse::IntersectSubscriber 
+		class VORTEX_PORT VsIntersectionEvent : public VxUniverse::IntersectSubscriber 
 		{
 		protected:
 			Simulator *m_lpSim;

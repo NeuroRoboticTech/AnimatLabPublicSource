@@ -43,7 +43,7 @@ VsSimulator::VsSimulator()
 	m_lpWinMgr->SetSystemPointers(this, NULL, NULL, NULL, TRUE);
 	m_uUniverse = NULL;
 	m_vxFrame = NULL;
-	m_vsIntersect.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
+	//m_vsIntersect.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
 }
 
 VsSimulator::~VsSimulator()
@@ -295,8 +295,8 @@ void VsSimulator::InitializeVortex(int argc, const char **argv)
 	SetSimulationStabilityParams();
 
     // Register the simple callback to be notified at beginning and end of the interaction between parts and sensors.
-    m_uUniverse->addIntersectSubscriber(VxUniverse::kResponsePart, VxUniverse::kResponsePart, VxUniverse::kEventFirst, &m_vsIntersect, 0);
-    m_uUniverse->addIntersectSubscriber(VxUniverse::kResponsePart, VxUniverse::kResponsePart, VxUniverse::kEventDisjoint, &m_vsIntersect, 0);
+    m_uUniverse->addIntersectSubscriber(VxUniverse::kResponseSensor, VxUniverse::kResponsePart, VxUniverse::kEventFirst, &m_vsIntersect, 0);
+    m_uUniverse->addIntersectSubscriber(VxUniverse::kResponseSensor, VxUniverse::kResponsePart, VxUniverse::kEventDisjoint, &m_vsIntersect, 0);
 }
 
 Vx::VxTriangleMesh *VsSimulator::CreatTriangleMeshFromOsg(osg::Node *osgNode)
@@ -442,7 +442,7 @@ void VsSimulator::Initialize(int argc, const char **argv)
 	m_oExternalStimuliMgr.Initialize();
 	if(m_lpSimRecorder) m_lpSimRecorder->Initialize();
 
-	m_vsIntersect.Initialize();
+	//m_vsIntersect.Initialize();
 
 	//realize the osg viewer
 	m_vsWinMgr->Realize();

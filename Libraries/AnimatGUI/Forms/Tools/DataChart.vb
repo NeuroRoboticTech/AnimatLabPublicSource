@@ -553,7 +553,7 @@ Namespace Forms.Tools
                 dblMaxError = GetMaxError(aryTemplateColumns(iCol), aryMaxErrors)
 
                 For iRow As Integer = 0 To iRows
-                    If Not aryIgnoreRows.Contains(iRow) Then
+                    If Not IgnoreRow(iRow, aryIgnoreRows) Then
                         If Math.Abs(aryTemplateData(iCol, iRow) - aryTestData(iCol, iRow)) > dblMaxError Then
                             Throw New System.Exception("Data mismatch for test: " & strPrefix & " file: '" & Me.ExportDataFilename & _
                                                        "', Column: '" & aryTemplateColumns(iCol) & "', row: " & iRow & ", Template Value: '" & _
@@ -564,6 +564,17 @@ Namespace Forms.Tools
 
             Next
         End Sub
+
+        Protected Overridable Function IgnoreRow(ByVal iRow As Integer, ByVal aryIgnoreRows As ArrayList) As Boolean
+
+            For Each ptPoint As Point In aryIgnoreRows
+                If iRow >= ptPoint.X AndAlso iRow <= ptPoint.Y Then
+                    Return True
+                End If
+            Next
+
+            Return False
+        End Function
 
         Protected Function GetMaxError(ByVal strColName As String, ByVal aryMaxErrors As Hashtable) As Double
             Dim dblMaxError As Double = 0.05

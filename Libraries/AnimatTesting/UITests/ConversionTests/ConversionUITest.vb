@@ -53,7 +53,7 @@ Namespace UITests
                 TestConversionProject(strDataPrefix, aryMaxErrors, iMaxRows)
             End Sub
 
-            Protected Overridable Sub TestConversionProject(ByVal strDataPrefix As String, ByVal aryMaxErrors As Hashtable, Optional iMaxRows As Integer = -1)
+            Protected Overridable Sub TestConversionProject(ByVal strDataPrefix As String, ByVal aryMaxErrors As Hashtable, Optional iMaxRows As Integer = -1, Optional ByVal aryIgnoreRows As ArrayList = Nothing)
                 Debug.WriteLine("TestConversionProject. DataPrefix: " & strDataPrefix & ", MaxErrors: " & Util.ParamsToString(aryMaxErrors) & ", MaxRows: " & iMaxRows)
 
                 SetWindowsToOpen()
@@ -72,7 +72,7 @@ Namespace UITests
                 RunSimulationWaitToEnd()
 
                 ''Compare chart data to verify simulation results.
-                CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, strDataPrefix, iMaxRows)
+                CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, strDataPrefix, iMaxRows, aryIgnoreRows)
 
             End Sub
 

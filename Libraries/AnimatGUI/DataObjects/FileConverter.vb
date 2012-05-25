@@ -172,6 +172,8 @@ Namespace DataObjects
         Protected Overridable Function CreateReplaceStringList() As Hashtable
 
             Dim aryReplaceText As New Hashtable()
+            aryReplaceText.Add(19, New ReplaceText("CylinderContactSensor", "Cylinder"))
+            aryReplaceText.Add(18, New ReplaceText("BoxContactSensor", "Box"))
             aryReplaceText.Add(17, New ReplaceText("InterbusrtLengthDistribution", "InterburstLengthDistribution"))
             aryReplaceText.Add(16, New ReplaceText("LicensedAnimatTools", "LicensedAnimatGUI"))
             aryReplaceText.Add(15, New ReplaceText("FastNeuralNetTools", "FiringRateGUI"))

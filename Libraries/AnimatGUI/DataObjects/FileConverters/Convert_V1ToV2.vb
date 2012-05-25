@@ -253,10 +253,14 @@ Namespace DataObjects
                 Select Case strType
                     Case "BOX"
                         ModifyRigidBodyBox(xnRigidBody, aryParentTrasform, aryChildTransform)
+                    Case "BOXCONTACTSENSOR"
+                        ModifyRigidBodyBoxSensor(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "CONE"
                         ModifyRigidBodyCone(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "CYLINDER"
                         ModifyRigidBodyCylinder(xnRigidBody, aryParentTrasform, aryChildTransform)
+                    Case "CYLINDERCONTACTSENSOR"
+                        ModifyRigidBodyCylinderSensor(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "MUSCLEATTACHMENT"
                         ModifyRigidBodyAttachment(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "LINEARHILLMUSCLE"
@@ -384,6 +388,15 @@ Namespace DataObjects
 
             End Sub
 
+            Protected Overridable Sub ModifyRigidBodyBoxSensor(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+
+                ModifyRigidBodyBox(xnRigidBody, aryParentTrasform, aryChildTrasform)
+
+                m_xnProjectXml.RemoveNode(xnRigidBody, "IsContactSensor", False)
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "IsContactSensor", "True")
+
+            End Sub
+
             Protected Overridable Sub ModifyRigidBodyCone(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Cone")
 
@@ -436,6 +449,15 @@ Namespace DataObjects
                 m_xnProjectXml.AddScaledNumber(xnRigidBody, "Radius", fltRadius, "None", fltRadius)
                 m_xnProjectXml.AddScaledNumber(xnRigidBody, "Height", fltHeight, "None", fltHeight)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "Sides", "30")
+
+            End Sub
+
+            Protected Overridable Sub ModifyRigidBodyCylinderSensor(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+
+                ModifyRigidBodyCylinder(xnRigidBody, aryParentTrasform, aryChildTrasform)
+
+                m_xnProjectXml.RemoveNode(xnRigidBody, "IsContactSensor", False)
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "IsContactSensor", "True")
 
             End Sub
 
