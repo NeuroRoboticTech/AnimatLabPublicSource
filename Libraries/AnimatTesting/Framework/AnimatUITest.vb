@@ -235,7 +235,7 @@ Namespace Framework
         End Sub
 
         Protected Overridable Sub CompareSimulation(ByVal strTestDataPath As String, ByVal aryMaxErrors As Hashtable, _
-                                                    Optional ByVal strPrefix As String = "", Optional ByVal iMaxRows As Integer = -1)
+                                                    Optional ByVal strPrefix As String = "", Optional ByVal iMaxRows As Integer = -1, Optional aryIgnoreRows As ArrayList = Nothing)
             Debug.WriteLine("Comparing simulation output. Test Data Path: '" & strTestDataPath & "', Prefix: '" & strPrefix & "', MaxError: '" & Util.ParamsToString(aryMaxErrors) & "', MaxRows: " & iMaxRows)
 
             'No prefix on the exported chart.
@@ -243,11 +243,16 @@ Namespace Framework
 
             Threading.Thread.Sleep(500)
 
+            If aryIgnoreRows Is Nothing Then
+                'If no arraylist passed in then just create an empty one.
+                aryIgnoreRows = New ArrayList
+            End If
+
             'If we are flagged as needing to generate the template files then lets do that. Otherwise, lets compare the charts to the templates.
             If m_bGenerateTempates Then
                 ExecuteMethod("CopyChartData", New Object() {strTestDataPath, strPrefix})
             Else
-                ExecuteMethod("CompareExportedDataCharts", New Object() {strPrefix, strTestDataPath, aryMaxErrors, iMaxRows})
+                ExecuteMethod("CompareExportedDataCharts", New Object() {strPrefix, strTestDataPath, aryMaxErrors, iMaxRows, aryIgnoreRows})
             End If
 
         End Sub

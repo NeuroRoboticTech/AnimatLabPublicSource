@@ -47,6 +47,47 @@ Namespace UITests
                         MuscleTest()
                     End Sub
 
+                    <TestMethod()>
+                    Public Sub Test_Enabler()
+
+                        Dim aryMaxErrors As New Hashtable
+                        aryMaxErrors.Add("Time", 0.001)
+                        aryMaxErrors.Add("Tension", 0.3)
+                        aryMaxErrors.Add("default", 0.3)
+
+                        m_strProjectName = "EnablerTest"
+                        m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\RigidBodyTests"
+                        m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\RigidBodyTests\" & m_strProjectName
+                        m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\RigidBodyTests\" & m_strProjectName
+                        m_strStructureGroup = "Organisms"
+                        m_strStruct1Name = "Organism_1"
+
+                        m_aryWindowsToOpen.Clear()
+                        m_aryWindowsToOpen.Add("Tool Viewers\BodyData")
+
+                        'Load and convert the project.
+                        TestConversionProject("EnableActive_False_", aryMaxErrors)
+
+                        Dim aryIgnoreRows As New ArrayList
+                        aryIgnoreRows.Add(3001)
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\EnablerStim", "EnableWhenActive", "True"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "EnableActive_True_", -1, aryIgnoreRows)
+
+                        aryIgnoreRows.Clear()
+                        aryIgnoreRows.Add(1501)
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\EnablerStim", "EnableWhenActive", "False"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\EnablerStim", "EndTime", "6.5"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\EnablerStim", "StartTime", "5.5"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Times_")
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Times_", -1, aryIgnoreRows)
+
+                    End Sub
+
+
 #Region "Additional test attributes"
                     '
                     ' You can use the following additional attributes as you write your tests:
