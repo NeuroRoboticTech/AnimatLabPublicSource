@@ -2038,6 +2038,54 @@ Namespace UITests
 
                 End Sub
 
+                <TestMethod()>
+                Public Sub Test_CurrentStimuli()
+
+                    Dim aryMaxErrors As New Hashtable
+                    aryMaxErrors.Add("Time", 0.001)
+                    aryMaxErrors.Add("Iext", 0.0000000001)
+                    aryMaxErrors.Add("default", 0.0000000001)
+
+                    m_strProjectName = "CurrentStimuli"
+                    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\NeuralTests"
+                    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\NeuralTests\" & m_strProjectName
+                    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\NeuralTests\" & m_strProjectName
+
+                    m_aryWindowsToOpen.Clear()
+                    m_aryWindowsToOpen.Add("Tool Viewers\NeuralData")
+
+                    'Load and convert the project.
+                    TestConversionProject("AfterConversion_", aryMaxErrors)
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Constant_Stim", "Enabled", "False"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Repetitive_Stim", "Enabled", "True"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Repetitive_On_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Repetitive_Stim", "CurrentOff", "-5 n"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Repetitive_Stim", "CurrentOn", "5 n"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Repetitive_Stim", "CycleOnDuration", "100 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Repetitive_Stim", "CycleOffDuration", "200 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Repetitive_Set_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Repetitive_Stim", "Enabled", "False"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "Enabled", "True"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Burst_On_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "CurrentOff", "-5 n"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "CurrentOn", "5 n"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "CurrentBurstOff", "-1 n"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "CycleOnDuration", "20 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "CycleOffDuration", "20 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "BurstOnDuration", "200 m"})
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "BurstOffDuration", "200 m"})
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Burst_Set_")
+
+                End Sub
+
 #End Region
 
 #Region "Additional test attributes"

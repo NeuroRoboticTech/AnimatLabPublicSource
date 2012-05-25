@@ -237,6 +237,9 @@ Namespace DataObjects.Physical
 
         End Sub
 
+        Public Overridable Sub VerifyCanBePasted()
+        End Sub
+
         'This is called when creating a new body part. It sets the size of the part to its defaults.
         Public Overridable Sub SetDefaultSizes()
 

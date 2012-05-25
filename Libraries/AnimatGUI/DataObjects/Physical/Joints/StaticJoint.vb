@@ -82,6 +82,16 @@ Namespace DataObjects.Physical.Joints
             Return oNewNode
         End Function
 
+        Public Overrides Sub VerifyCanBePasted()
+
+            If Not m_doParent Is Nothing AndAlso Util.IsTypeOf(m_doParent.GetType, GetType(RigidBody), False) Then
+                Dim doParent As RigidBody = DirectCast(m_doParent, RigidBody)
+                If doParent.ChildBodies.Count > 0 Then
+                    Throw New System.Exception("You cannot paste a rigid body using a static joint when the body has children.")
+                End If
+            End If
+        End Sub
+
         ''' \brief  Initializes the simulation references.
         ''' 		
         ''' \details I am overriding this method and doing nothing because there is no actual static joint class in the simulation code.

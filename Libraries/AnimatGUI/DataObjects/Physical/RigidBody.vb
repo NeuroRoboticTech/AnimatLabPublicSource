@@ -1285,6 +1285,11 @@ Namespace DataObjects.Physical
             Return rbNew
         End Function
 
+        Public Overrides Sub VerifyCanBePasted()
+            If Not Me.JointToParent Is Nothing Then
+                Me.JointToParent.VerifyCanBePasted()
+            End If
+        End Sub
 
         Public Overridable Overloads Function AddChildBody(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d) As Boolean
             Dim rbNew As RigidBody
@@ -1317,6 +1322,8 @@ Namespace DataObjects.Physical
                         Return False
                     End If
                 End If
+
+                rbNew.VerifyCanBePasted()
 
                 'rbNew.LocalPosition.CopyData(0, 0, 0.1, True)
 
