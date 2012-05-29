@@ -201,6 +201,10 @@ Namespace DataObjects.Physical.Bodies
             Throw New System.Exception("You cannot add a child body to a line part type.")
         End Sub
 
+        Public Overrides Sub VerifyCanAddChildren()
+            Throw New System.Exception("You cannot add children to a '" & Me.Type & "' class.")
+        End Sub
+
         Protected Overrides Sub CloneInternal(ByVal doOriginal As Framework.DataObject, ByVal bCutData As Boolean, ByVal doRoot As Framework.DataObject)
             MyBase.CloneInternal(doOriginal, bCutData, doRoot)
 

@@ -112,6 +112,10 @@ Namespace DataObjects.Physical.Bodies
 
         End Sub
 
+        Public Overrides Sub VerifyCanAddChildren()
+            Throw New System.Exception("You cannot add children to a '" & Me.Type & "' class.")
+        End Sub
+
     End Class
 
 

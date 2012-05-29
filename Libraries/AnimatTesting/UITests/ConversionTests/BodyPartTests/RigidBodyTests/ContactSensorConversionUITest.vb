@@ -80,6 +80,110 @@ Namespace UITests
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "BoxY_-55cm_", -1, aryIgnoreRows)
 
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.Y", "-55 c"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "CylinderY_-55cm_", -1, aryIgnoreRows)
+
+                        aryIgnoreRows.Clear()
+                        aryIgnoreRows.Add(New Point(131, 137))
+                        aryIgnoreRows.Add(New Point(323, 324))
+                        aryIgnoreRows.Add(New Point(399, 400))
+                        aryIgnoreRows.Add(New Point(529, 530))
+                        aryIgnoreRows.Add(New Point(2390, 2391))
+                        aryIgnoreRows.Add(New Point(2496, 2497))
+                        aryIgnoreRows.Add(New Point(2548, 2549))
+                        aryIgnoreRows.Add(New Point(2641, 2641))
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "Rotation.X", "-45"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Y", "-10 c"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Z", "-20 c"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "PendulumRotate_", -1, aryIgnoreRows)
+
+                        'Add subsystem.
+                        ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem"}, 2000)
+                        AddBehavioralNode("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem", _
+                                          "AnimatGUI.DataObjects.Behavior.Nodes.Subsystem", New Point(316, 30), "S2")
+
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\BoxSensor", False})
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\BoxContact", True})
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\CylinderSensor", True})
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\CylinderContact", True})
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\BS_BC", True})
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\CS_CC", True})
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\BS_BC\BoxSensor", True})
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\CS_CC\CylinderSensor", True})
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\BoxContact\BS_BC", True})
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\CylinderContact\CS_CC", True})
+                        DeleteSelectedParts("Delete Group", True)
+                        ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2"}, 2000)
+                        ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"})
+
+
+                        ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\BodyData"}, 2000)
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 3", False})
+                        AddItemToChart("Organism_1\Behavioral System\Neural Subsystem\Nodes\S2\Nodes\BoxContact")
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 3\BoxContact", "DataTypeID", "MembraneVoltage"})
+                        AddItemToChart("Organism_1\Behavioral System\Neural Subsystem\Nodes\S2\Nodes\CylinderContact")
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 3\CylinderContact", "DataTypeID", "MembraneVoltage"})
+
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "PendulumRotate_", -1, aryIgnoreRows)
+
+
+                        ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan"}, 2000)
+                        DeletePart("Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "Delete Body Part", True)
+                        If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor"})) Then
+                            Throw New System.Exception("Sensor was not deleted")
+                        End If
+                        If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1\BoxSensor"})) Then
+                            Throw New System.Exception("BoxSensor chart node was not removed correctly.")
+                        End If
+                        If Not GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\BoxSensor", "LinkedPart.BodyPart") Is Nothing Then
+                            Throw New System.Exception("Linked body part not removed.")
+                        End If
+                        If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\BS_BC"})) Then
+                            Throw New System.Exception("BS_BC adapter node was not removed correctly.")
+                        End If
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "Rotation.X", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Y", "-20 c"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Z", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.Y", "-35 c"})
+
+                        aryIgnoreRows.Clear()
+                        aryIgnoreRows.Add(New Point(162, 173))
+                        aryIgnoreRows.Add(New Point(405, 406))
+                        aryIgnoreRows.Add(New Point(512, 515))
+                        aryIgnoreRows.Add(New Point(2405, 2407))
+                        aryIgnoreRows.Add(New Point(2491, 2494))
+                        aryIgnoreRows.Add(New Point(2628, 2632))
+
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DeleteBoxSensor_", -1, aryIgnoreRows)
+
+                        ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan"}, 2000)
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.X", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.Y", "-35 c"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.Z", "0"})
+
+                        PasteChildPartTypeWithJoint("", "Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0, False)
+
+                        ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\BodyData"}, 2000)
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1", False})
+                        AddItemToChart("Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor")
+
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "PasteBoxSensor_", -1, aryIgnoreRows)
+
+                        'Click 'Add Part' button
+                        ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan"}, 2000)
+                        ExecuteMethod("ClickToolbarItem", New Object() {"AddPartToolStripButton"}, 2000)
+                        AutomatedClickToAddBody("Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0)
+                        ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"})
+                        AssertErrorDialogShown("You cannot add children to a contact sensor class.", enumMatchType.Equals)
+
+
                     End Sub
 
 

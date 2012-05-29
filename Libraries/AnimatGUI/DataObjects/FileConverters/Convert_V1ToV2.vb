@@ -21,6 +21,7 @@ Namespace DataObjects
             Protected m_fltMassUnits As Single
             Protected m_fltDisplayMassUnits As Single
             Protected m_aryIdentity As New AnimatGuiCtrls.MatrixLibrary.Matrix(AnimatGuiCtrls.MatrixLibrary.Matrix.Identity(4))
+            Protected m_aryGainIDs As New ArrayList
 
             Public Overrides ReadOnly Property ConvertFrom As Single
                 Get
@@ -1174,6 +1175,10 @@ Namespace DataObjects
                 Dim xnOldNodes As XmlNode = xnBodyFile.GetNode(xnOldDiagram, "Nodes")
                 Dim xnNewNodes As XmlNode = m_xnProjectXml.AppendNode(xnSubSystem, xnOldNodes, "Nodes", aryReplaceText)
 
+                For Each xnNode As XmlNode In xnNewNodes
+                    ModifyNeuralNode(xnSubSystem, xnNode)
+                Next
+
                 'Copy Liniks
                 Dim xnOldLinks As XmlNode = xnBodyFile.GetNode(xnOldDiagram, "Links")
                 Dim xnNewLinks As XmlNode = m_xnProjectXml.AppendNode(xnSubSystem, xnOldLinks, "Links", aryReplaceText)
@@ -1218,6 +1223,25 @@ Namespace DataObjects
 
                 xnDiagramXml.AppendChild(xnDiagramCData)
                 xnSubSystem.AppendChild(xnDiagramXml)
+
+            End Sub
+
+            Protected Sub ModifyNeuralNode(ByVal xnSubSystem As XmlNode, ByVal xnNode As XmlNode)
+
+                Dim strType As String = m_xnProjectXml.GetSingleNodeValue(xnNode, "ClassName").ToUpper
+
+                If strType.Contains("ADAPTER") Then
+                    Dim xnGain As XmlNode = m_xnProjectXml.GetNode(xnNode, "Gain", False)
+                    If Not xnGain Is Nothing Then
+                        Dim strID As String = m_xnProjectXml.GetSingleNodeValue(xnGain, "ID", False, "")
+                        If strID.Trim.Length = 0 OrElse m_aryGainIDs.Contains(strID) Then
+                            strID = Guid.NewGuid.ToString
+                            m_xnProjectXml.RemoveNode(xnGain, "ID", False)
+                            m_xnProjectXml.UpdateSingleNodeValue(xnGain, "ID", strID, False)
+                        End If
+                        m_aryGainIDs.Add(strID)
+                    End If
+                End If
 
             End Sub
 

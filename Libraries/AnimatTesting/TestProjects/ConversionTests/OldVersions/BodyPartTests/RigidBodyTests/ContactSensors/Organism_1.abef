@@ -1,8 +1,8 @@
 <Editor>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.Forms.Behavior.Editor</ClassName>
-<NormalLocation x="662" y="107"/>
-<NormalSize Width="1000" Height="600"/>
+<NormalLocation x="279" y="117"/>
+<NormalSize Width="1000" Height="511"/>
 <WindowState>Normal</WindowState>
 <Organism>ea95992f-e398-4838-bb7e-9e85c75dce95</Organism>
 <NeuralModules>
@@ -826,8 +826,528 @@
 <AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
 <ClassName>LicensedAnimatTools.Forms.Behavior.AddFlowDiagram</ClassName>
 <PageName>Page 1</PageName>
-<Nodes/>
-<Links/>
+<Nodes>
+<Node>
+<AssemblyFile>VortexAnimatTools.dll</AssemblyFile>
+<ClassName>VortexAnimatTools.DataObjects.Behavior.Nodes.RigidBody</ClassName>
+<ID>0172c99e-cba2-48f2-91d9-3a2ea14a6f4f</ID>
+<NodeIndex>0</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>ImageToNode</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>16777215</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-5383962</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="99" y="169"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Hexagon</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="86.75" Height="50"/>
+<Text>CylinderSensor</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks/>
+<OutLinks>
+<ID>b73fb738-4166-4aea-8c05-4c320ff82a57</ID>
+</OutLinks>
+<LinkedBodyPartID>5f9fb13a-a242-4e8e-aad9-34b63f858d3e</LinkedBodyPartID>
+</Node>
+<Node>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter</ClassName>
+<ID>2c2ba594-b443-4d25-8c39-cca31bd48337</ID>
+<NodeIndex>1</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-360334</FillColor>
+<Font Family="Arial" Size="12" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="274.25" y="173"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Display</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>CS_CC</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>b73fb738-4166-4aea-8c05-4c320ff82a57</ID>
+</InLinks>
+<OutLinks>
+<ID>ee99b0ea-8d20-4ff3-923f-e2190f1b7f94</ID>
+</OutLinks>
+<OriginID>0172c99e-cba2-48f2-91d9-3a2ea14a6f4f</OriginID>
+<DestinationID>877f9316-8716-4328-af08-4ea9de093f4d</DestinationID>
+<DataTypeID>ContactCount</DataTypeID>
+<Gain>
+<ID>6e8dfe33-138f-4c6b-ad68-0aed8a887584</ID>
+<Type>Polynomial</Type>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.Gains.Polynomial</ClassName>
+<UseLimits>False</UseLimits>
+<LimitsReadOnly>False</LimitsReadOnly>
+<LimitOutputsReadOnly>False</LimitOutputsReadOnly>
+<UseParentIncomingDataType>True</UseParentIncomingDataType>
+<LowerLimitScale Value="0" Scale="None" Actual="0"/>
+<UpperLimitScale Value="1" Scale="None" Actual="1"/>
+<LowerOutputScale Value="0" Scale="None" Actual="0"/>
+<UpperOutputScale Value="1" Scale="None" Actual="1"/>
+<IndependentUnits/>
+<DependentUnits>Output Variable</DependentUnits>
+<A Value="0" Scale="None" Actual="0"/>
+<B Value="0" Scale="None" Actual="0"/>
+<C Value="10" Scale="nano" Actual="1e-08"/>
+<D Value="0" Scale="None" Actual="0"/>
+</Gain>
+<Enabled>True</Enabled>
+</Node>
+<Node>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter</ClassName>
+<ID>58193178-82e1-45b5-97b0-80548d3fe585</ID>
+<NodeIndex>0</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-360334</FillColor>
+<Font Family="Arial" Size="12" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="269.25" y="81"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Display</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="53.25" Height="40"/>
+<Text>BS_BC</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>9a21478c-96c7-4f8c-96c4-5c83cff0229a</ID>
+</InLinks>
+<OutLinks>
+<ID>c8f73efd-74fb-4b85-b54b-9a4a41e60d84</ID>
+</OutLinks>
+<OriginID>e2a51fc0-e1af-4802-ba9c-8dc842ef53c9</OriginID>
+<DestinationID>fcc711e9-68c9-418d-9bad-543dd396ddb1</DestinationID>
+<DataTypeID>ContactCount</DataTypeID>
+<Gain>
+<ID>6e8dfe33-138f-4c6b-ad68-0aed8a887584</ID>
+<Type>Polynomial</Type>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.Gains.Polynomial</ClassName>
+<UseLimits>False</UseLimits>
+<LimitsReadOnly>False</LimitsReadOnly>
+<LimitOutputsReadOnly>False</LimitOutputsReadOnly>
+<UseParentIncomingDataType>True</UseParentIncomingDataType>
+<LowerLimitScale Value="0" Scale="None" Actual="0"/>
+<UpperLimitScale Value="1" Scale="None" Actual="1"/>
+<LowerOutputScale Value="0" Scale="None" Actual="0"/>
+<UpperOutputScale Value="1" Scale="None" Actual="1"/>
+<IndependentUnits>Input Variable</IndependentUnits>
+<DependentUnits>Output Variable</DependentUnits>
+<A Value="0" Scale="None" Actual="0"/>
+<B Value="0" Scale="None" Actual="0"/>
+<C Value="10" Scale="nano" Actual="1e-08"/>
+<D Value="0" Scale="None" Actual="0"/>
+</Gain>
+<Enabled>True</Enabled>
+</Node>
+<Node>
+<AssemblyFile>FastNeuralNetTools.dll</AssemblyFile>
+<ClassName>FastNeuralNetTools.DataObjects.Behavior.Neurons.Normal</ClassName>
+<ID>877f9316-8716-4328-af08-4ea9de093f4d</ID>
+<NodeIndex>0</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-1</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="399" y="172"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Ellipse</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="94.25" Height="40"/>
+<Text>CylinderContact</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>ee99b0ea-8d20-4ff3-923f-e2190f1b7f94</ID>
+</InLinks>
+<OutLinks/>
+<Enabled>True</Enabled>
+<Cm Value="1" Scale="nano" Actual="1e-09"/>
+<Gm Value="100" Scale="nano" Actual="1e-07"/>
+<Vth Value="-70" Scale="milli" Actual="-0.07"/>
+<Vrest Value="-70" Scale="milli" Actual="-0.07"/>
+<Fmin Value="0" Scale="None" Actual="0"/>
+<Gain Value="10" Scale="None" Actual="10"/>
+<VNoiseMax Value="0" Scale="milli" Actual="0"/>
+<RelativeAccommodation Value="0" Scale="None" Actual="0"/>
+<AccommodationTimeConstant Value="30" Scale="milli" Actual="0.03"/>
+<GainType>False</GainType>
+</Node>
+<Node>
+<AssemblyFile>VortexAnimatTools.dll</AssemblyFile>
+<ClassName>VortexAnimatTools.DataObjects.Behavior.Nodes.RigidBody</ClassName>
+<ID>e2a51fc0-e1af-4802-ba9c-8dc842ef53c9</ID>
+<NodeIndex>0</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>ImageToNode</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>16777215</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-5383962</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="94" y="77"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Hexagon</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="86.75" Height="50"/>
+<Text>BoxSensor</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks/>
+<OutLinks>
+<ID>9a21478c-96c7-4f8c-96c4-5c83cff0229a</ID>
+</OutLinks>
+<LinkedBodyPartID>0d353be0-7dac-4fad-b253-ce9c68d65ff0</LinkedBodyPartID>
+</Node>
+<Node>
+<AssemblyFile>FastNeuralNetTools.dll</AssemblyFile>
+<ClassName>FastNeuralNetTools.DataObjects.Behavior.Neurons.Normal</ClassName>
+<ID>fcc711e9-68c9-418d-9bad-543dd396ddb1</ID>
+<NodeIndex>1</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-1</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="394" y="80"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Ellipse</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="94.25" Height="40"/>
+<Text>BoxContact</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks>
+<ID>c8f73efd-74fb-4b85-b54b-9a4a41e60d84</ID>
+</InLinks>
+<OutLinks/>
+<Enabled>True</Enabled>
+<Cm Value="1" Scale="nano" Actual="1e-09"/>
+<Gm Value="100" Scale="nano" Actual="1e-07"/>
+<Vth Value="-70" Scale="milli" Actual="-0.07"/>
+<Vrest Value="-70" Scale="milli" Actual="-0.07"/>
+<Fmin Value="0" Scale="None" Actual="0"/>
+<Gain Value="10" Scale="None" Actual="10"/>
+<VNoiseMax Value="0" Scale="milli" Actual="0"/>
+<RelativeAccommodation Value="0" Scale="None" Actual="0"/>
+<AccommodationTimeConstant Value="30" Scale="milli" Actual="0.03"/>
+<GainType>False</GainType>
+</Node>
+</Nodes>
+<Links>
+<Link>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.Behavior.Links.Adapter</ClassName>
+<ID>9a21478c-96c7-4f8c-96c4-5c83cff0229a</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg15</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>58193178-82e1-45b5-97b0-80548d3fe585</DestinationID>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>e2a51fc0-e1af-4802-ba9c-8dc842ef53c9</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+</Link>
+<Link>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.Behavior.Links.Adapter</ClassName>
+<ID>b73fb738-4166-4aea-8c05-4c320ff82a57</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg15</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>2c2ba594-b443-4d25-8c39-cca31bd48337</DestinationID>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>0172c99e-cba2-48f2-91d9-3a2ea14a6f4f</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+</Link>
+<Link>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.Behavior.Links.Adapter</ClassName>
+<ID>c8f73efd-74fb-4b85-b54b-9a4a41e60d84</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Small</Size>
+<Angle>deg15</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>fcc711e9-68c9-418d-9bad-543dd396ddb1</DestinationID>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>58193178-82e1-45b5-97b0-80548d3fe585</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+</Link>
+<Link>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.Behavior.Links.Adapter</ClassName>
+<ID>ee99b0ea-8d20-4ff3-923f-e2190f1b7f94</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Small</Size>
+<Angle>deg15</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>877f9316-8716-4328-af08-4ea9de093f4d</DestinationID>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>2c2ba594-b443-4d25-8c39-cca31bd48337</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+</Link>
+</Links>
 <Diagrams/>
 <DiagramIndex>1</DiagramIndex>
 <ZoomX>1</ZoomX>
@@ -839,8 +1359,122 @@
 <GridStyle>DottedLines</GridStyle>
 <JumpSize>Medium</JumpSize>
 <SnapToGrid>False</SnapToGrid>
-<AddFlow Nodes="0" Links="0">
+<AddFlow Nodes="6" Links="4">
   <Version>1.5.0.1</Version>
+  <Node Left="399" Top="172" Width="94.25" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <FillColor>-1</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>CylinderContact</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>877f9316-8716-4328-af08-4ea9de093f4d</Tag>
+  </Node>
+  <Node Left="99" Top="169" Width="86.75" Height="50">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Hexagon" Orientation="so_0" />
+    <AutoSize>ImageToNode</AutoSize>
+    <FillColor>-5383962</FillColor>
+    <DrawColor>16777215</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>CylinderSensor</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <ImageIndex>1</ImageIndex>
+    <Tag>0172c99e-cba2-48f2-91d9-3a2ea14a6f4f</Tag>
+  </Node>
+  <Node Left="274.25" Top="173" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Display" Orientation="so_0" />
+    <FillColor>-360334</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>CS_CC</Text>
+    <Font Name="Arial" Size="12" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>2c2ba594-b443-4d25-8c39-cca31bd48337</Tag>
+  </Node>
+  <Link Org="1" Dst="2">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="None" Size="Small" Angle="deg15" Filled="False" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>b73fb738-4166-4aea-8c05-4c320ff82a57</Tag>
+  </Link>
+  <Link Org="2" Dst="0">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>ee99b0ea-8d20-4ff3-923f-e2190f1b7f94</Tag>
+  </Link>
+  <Node Left="394" Top="80" Width="94.25" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <FillColor>-1</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>BoxContact</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>fcc711e9-68c9-418d-9bad-543dd396ddb1</Tag>
+  </Node>
+  <Node Left="94" Top="77" Width="86.75" Height="50">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Hexagon" Orientation="so_0" />
+    <AutoSize>ImageToNode</AutoSize>
+    <FillColor>-5383962</FillColor>
+    <DrawColor>16777215</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>BoxSensor</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <ImageIndex>1</ImageIndex>
+    <Tag>e2a51fc0-e1af-4802-ba9c-8dc842ef53c9</Tag>
+  </Node>
+  <Node Left="269.25" Top="81" Width="53.25" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Display" Orientation="so_0" />
+    <FillColor>-360334</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>BS_BC</Text>
+    <Font Name="Arial" Size="12" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>58193178-82e1-45b5-97b0-80548d3fe585</Tag>
+  </Node>
+  <Link Org="6" Dst="7">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="None" Size="Small" Angle="deg15" Filled="False" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>9a21478c-96c7-4f8c-96c4-5c83cff0229a</Tag>
+  </Link>
+  <Link Org="7" Dst="5">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>c8f73efd-74fb-4b85-b54b-9a4a41e60d84</Tag>
+  </Link>
 </AddFlow>
 </Diagram>
 </Diagrams>
@@ -872,7 +1506,7 @@
 </DiagramImage>
 </DiagramImages>
 <DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">
-  <Content Name="Toolbox" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Toolbox">
+  <Content Name="Toolbox" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Toolbox">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Toolbox" />
       <State Value="DockLeft" />
@@ -924,7 +1558,7 @@
             <Item Name="Modules" />
           </Next>
           <Previous Count="0" />
-          <Selected Value="True" />
+          <Selected Value="False" />
           <Child Type="null" />
         </Child>
       </Child>
@@ -935,7 +1569,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Properties" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Properties">
+  <Content Name="Properties" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Properties">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Properties" />
       <State Value="DockLeft" />
@@ -959,10 +1593,11 @@
       <Content Name="Properties" />
       <State Value="DockLeft" />
       <Position Size="250, 150" Location="150, 150" />
-      <Best Count="3">
+      <Best Count="4">
         <Item Name="Modules" />
         <Item Name="Hierarchy" />
         <Item Name="Properties" />
+        <Item Name="Toolbox" />
       </Best>
       <Next Count="0" />
       <Previous Count="0" />
@@ -971,7 +1606,8 @@
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Properties" />
         <Space Value="100" />
-        <Best Count="3">
+        <Best Count="4">
+          <Item Name="Toolbox" />
           <Item Name="Properties" />
           <Item Name="Hierarchy" />
           <Item Name="Modules" />
@@ -984,7 +1620,9 @@
             <Item Name="Hierarchy" />
             <Item Name="Modules" />
           </Next>
-          <Previous Count="0" />
+          <Previous Count="1">
+            <Item Name="Toolbox" />
+          </Previous>
           <Selected Value="True" />
           <Child Type="null" />
         </Child>
@@ -996,7 +1634,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Hierarchy" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Hierarchy">
+  <Content Name="Hierarchy" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Hierarchy">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Hierarchy" />
       <State Value="DockLeft" />
@@ -1020,9 +1658,11 @@
       <Content Name="Hierarchy" />
       <State Value="DockLeft" />
       <Position Size="250, 150" Location="150, 150" />
-      <Best Count="2">
+      <Best Count="4">
         <Item Name="Modules" />
         <Item Name="Hierarchy" />
+        <Item Name="Properties" />
+        <Item Name="Toolbox" />
       </Best>
       <Next Count="0" />
       <Previous Count="0" />
@@ -1031,7 +1671,9 @@
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Hierarchy" />
         <Space Value="100" />
-        <Best Count="2">
+        <Best Count="4">
+          <Item Name="Toolbox" />
+          <Item Name="Properties" />
           <Item Name="Hierarchy" />
           <Item Name="Modules" />
         </Best>
@@ -1042,8 +1684,11 @@
           <Next Count="1">
             <Item Name="Modules" />
           </Next>
-          <Previous Count="0" />
-          <Selected Value="True" />
+          <Previous Count="2">
+            <Item Name="Toolbox" />
+            <Item Name="Properties" />
+          </Previous>
+          <Selected Value="False" />
           <Child Type="null" />
         </Child>
       </Child>
@@ -1054,7 +1699,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Modules" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Modules">
+  <Content Name="Modules" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Modules">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Modules" />
       <State Value="DockLeft" />
@@ -1077,8 +1722,11 @@
       <Content Name="Modules" />
       <State Value="DockLeft" />
       <Position Size="250, 150" Location="150, 150" />
-      <Best Count="1">
+      <Best Count="4">
         <Item Name="Modules" />
+        <Item Name="Hierarchy" />
+        <Item Name="Properties" />
+        <Item Name="Toolbox" />
       </Best>
       <Next Count="0" />
       <Previous Count="0" />
@@ -1087,7 +1735,10 @@
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Modules" />
         <Space Value="100" />
-        <Best Count="1">
+        <Best Count="4">
+          <Item Name="Toolbox" />
+          <Item Name="Properties" />
+          <Item Name="Hierarchy" />
           <Item Name="Modules" />
         </Best>
         <Next Count="0" />
@@ -1095,8 +1746,12 @@
         <Child Type="Crownwood.Magic.Docking.RestoreWindowContent">
           <Content Name="Modules" />
           <Next Count="0" />
-          <Previous Count="0" />
-          <Selected Value="True" />
+          <Previous Count="3">
+            <Item Name="Toolbox" />
+            <Item Name="Properties" />
+            <Item Name="Hierarchy" />
+          </Previous>
+          <Selected Value="False" />
           <Child Type="null" />
         </Child>
       </Child>

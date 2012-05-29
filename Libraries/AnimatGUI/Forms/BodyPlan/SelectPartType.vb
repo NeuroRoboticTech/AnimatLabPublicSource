@@ -52,32 +52,31 @@ Namespace Forms.BodyPlan
         Friend WithEvents rdGraphics As System.Windows.Forms.RadioButton
         Friend WithEvents chStimulusDescription As System.Windows.Forms.ColumnHeader
         <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-            Me.ctrlPartTypes = New System.Windows.Forms.ListView
-            Me.chStimulusType = New System.Windows.Forms.ColumnHeader
-            Me.chStimulusDescription = New System.Windows.Forms.ColumnHeader
-            Me.chkIsSensor = New System.Windows.Forms.CheckBox
-            Me.chkAddGraphics = New System.Windows.Forms.CheckBox
-            Me.btnOk = New System.Windows.Forms.Button
-            Me.btnCancel = New System.Windows.Forms.Button
-            Me.rdCollision = New System.Windows.Forms.RadioButton
-            Me.rdGraphics = New System.Windows.Forms.RadioButton
+            Me.ctrlPartTypes = New System.Windows.Forms.ListView()
+            Me.chStimulusType = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+            Me.chStimulusDescription = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+            Me.chkIsSensor = New System.Windows.Forms.CheckBox()
+            Me.chkAddGraphics = New System.Windows.Forms.CheckBox()
+            Me.btnOk = New System.Windows.Forms.Button()
+            Me.btnCancel = New System.Windows.Forms.Button()
+            Me.rdCollision = New System.Windows.Forms.RadioButton()
+            Me.rdGraphics = New System.Windows.Forms.RadioButton()
             Me.SuspendLayout()
             '
             'ctrlPartTypes
             '
             Me.ctrlPartTypes.Activation = System.Windows.Forms.ItemActivation.OneClick
             Me.ctrlPartTypes.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                        Or System.Windows.Forms.AnchorStyles.Left) _
-                        Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+                Or System.Windows.Forms.AnchorStyles.Left) _
+                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.ctrlPartTypes.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.chStimulusType, Me.chStimulusDescription})
             Me.ctrlPartTypes.Location = New System.Drawing.Point(8, 7)
             Me.ctrlPartTypes.MultiSelect = False
             Me.ctrlPartTypes.Name = "ctrlPartTypes"
             Me.ctrlPartTypes.Size = New System.Drawing.Size(418, 166)
+            Me.ctrlPartTypes.Sorting = System.Windows.Forms.SortOrder.Ascending
             Me.ctrlPartTypes.TabIndex = 9
             Me.ctrlPartTypes.UseCompatibleStateImageBehavior = False
-            Me.ctrlPartTypes.Sorting = SortOrder.Ascending
-            Me.ctrlPartTypes.View = View.LargeIcon
             '
             'chStimulusType
             '
@@ -106,7 +105,7 @@ Namespace Forms.BodyPlan
             Me.chkAddGraphics.Name = "chkAddGraphics"
             Me.chkAddGraphics.Size = New System.Drawing.Size(127, 17)
             Me.chkAddGraphics.TabIndex = 13
-            Me.chkAddGraphics.Text = "Add Default Graphcis"
+            Me.chkAddGraphics.Text = "Add Default Graphics"
             Me.chkAddGraphics.UseVisualStyleBackColor = True
             '
             'btnOk
@@ -333,7 +332,7 @@ Namespace Forms.BodyPlan
                 rdCollision.Enabled = m_bHasDynamics
                 rdGraphics.Enabled = m_bHasDynamics
                 chkAddGraphics.Enabled = m_bHasDynamics
-                chkIsSensor.Enabled = m_bHasDynamics
+                chkIsSensor.Enabled = Not rdCollision.Checked
                 If bInit AndAlso m_bHasDynamics Then chkIsSensor.Checked = False
             End If
 
@@ -411,6 +410,24 @@ Namespace Forms.BodyPlan
                         Dim bpBody As Physical.RigidBody = DirectCast(liItem.Tag, Physical.RigidBody)
                         SetOptions(False, bpBody)
                     End If
+                End If
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub chkIsSensor_CheckedChanged(sender As Object, e As System.EventArgs) Handles chkIsSensor.CheckedChanged
+            Try
+                If chkIsSensor.Checked Then
+                    rdGraphics.Checked = True
+                    rdGraphics.Enabled = False
+                    rdCollision.Enabled = False
+                    chkAddGraphics.Enabled = True
+                Else
+                    rdGraphics.Enabled = True
+                    rdCollision.Enabled = True
+                    chkAddGraphics.Enabled = True
                 End If
 
             Catch ex As System.Exception

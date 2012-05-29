@@ -1,12 +1,12 @@
 <Simulation>
-<ProjectPath>C:\Personal\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\RigidBodyTests\ContactSensors\</ProjectPath>
+<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\RigidBodyTests\ContactSensors\</ProjectPath>
 <AnimatModule>VortexAnimatLibrary_vc7.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
 <EnableSimRecording>True</EnableSimRecording>
 <SetSimEnd>True</SetSimEnd>
 <APIFile/>
-<SimEndTime Value="3.5" Scale="None" Actual="3.5"/>
+<SimEndTime Value="2" Scale="None" Actual="2"/>
 <Environment>
 <PhysicsTimeStep Value="0.4" Scale="milli" Actual="0.0004"/>
 <FluidDensity Value="1" Scale="None" Actual="1"/>

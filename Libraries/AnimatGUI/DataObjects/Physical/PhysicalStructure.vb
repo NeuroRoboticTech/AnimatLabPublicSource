@@ -311,8 +311,8 @@ Namespace DataObjects.Physical
 
             rbRootToAdd.Name = "Root"
             rbRootToAdd.IsRoot = True
-            rbRootToAdd.IsCollisionObject = True
             rbRootToAdd.IsContactSensor = False
+            rbRootToAdd.IsCollisionObject = True
             rbRootToAdd.Freeze = False
             rbRootToAdd.BeforeAddBody()
             rbRootToAdd.BeforeAddToList(False, True)

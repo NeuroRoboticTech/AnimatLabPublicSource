@@ -119,10 +119,12 @@ void VsRigidBody::UpdatePositionAndRotationFromMatrix()
 
 void VsRigidBody::Physics_UpdateNode()
 {
-	if(m_vxSensor)
-		m_vxSensor->updateFromNode();
+	if(m_lpThisRB->IsContactSensor())
+		ResetSensorCollisionGeom();
 	else if(m_lpThisRB->HasStaticJoint())
 		ResetStaticCollisionGeom(); //If this body uses a static joint then we need to reset the offest matrix for its collision geometry.
+	else if(m_vxSensor)
+		m_vxSensor->updateFromNode();
 
 	Physics_UpdateAbsolutePosition();
 }
@@ -390,21 +392,34 @@ void VsRigidBody::CreateSensorPart()
 	m_vxSensor->setControl(VxEntity::kControlNode);
 
 	if(lpVsParent)
+		SetFollowEntity(lpVsParent);
+	else
+		m_vxSensor->freeze(m_lpThisRB->Freeze());
+}
+
+void VsRigidBody::SetFollowEntity(VsRigidBody *lpEntity)
+{
+	if(m_vxSensor)
 	{
 		m_vxSensor->setFastMoving(true);
 		Vx::VxReal44 vOffset;
 		VxOSG::copyOsgMatrix_to_VxReal44(m_osgMT->getMatrix(), vOffset);
 		Vx::VxTransform vTM(vOffset);
 
-		Vx::VxCollisionSensor *vxSensor = lpVsParent->Sensor();
+		Vx::VxCollisionSensor *vxSensor = lpEntity->Sensor();
 		if(vxSensor)
-			m_vxSensor->followEntity(vxSensor, false, &vTM);
-	}
-	else
-	{
-		m_vxSensor->freeze(m_lpThisRB->Freeze());
+			m_vxSensor->followEntity(vxSensor, true, &vTM);
 	}
 }
+
+void VsRigidBody::ResetSensorCollisionGeom()
+{
+	VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisRB->Parent());
+
+	if(lpVsParent)
+		SetFollowEntity(lpVsParent);
+}
+
 
 void VsRigidBody::CreateDynamicPart()
 {
@@ -493,6 +508,7 @@ void VsRigidBody::DeletePhysics()
 
 		m_vxSensor = NULL;
 		m_vxPart = NULL;
+		m_vxGeometry = NULL;
 	}
 	else if(m_lpThisRB->HasStaticJoint())
 		RemoveStaticPart();

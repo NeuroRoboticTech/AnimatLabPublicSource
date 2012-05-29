@@ -102,6 +102,8 @@ namespace VortexAnimatSim
 			virtual void GetBaseValues();
 			virtual void UpdatePositionAndRotationFromMatrix();
 			virtual void ResetStaticCollisionGeom();
+			virtual void ResetSensorCollisionGeom();
+			virtual void SetFollowEntity(VsRigidBody *lpEntity);
 
 			virtual void ShowSelectedVertex();
 			virtual void HideSelectedVertex();

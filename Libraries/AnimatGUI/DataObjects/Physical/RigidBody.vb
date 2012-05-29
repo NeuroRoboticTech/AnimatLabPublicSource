@@ -99,6 +99,9 @@ Namespace DataObjects.Physical
                 Return m_bContactSensor
             End Get
             Set(ByVal Value As Boolean)
+                If Me.IsCollisionObject Then
+                    Throw New System.Exception("You cannot set an object to be a contact sensor if it is also set to be a collision object.")
+                End If
                 m_bContactSensor = Value
             End Set
         End Property
@@ -108,6 +111,9 @@ Namespace DataObjects.Physical
                 Return m_bIsCollisionObject
             End Get
             Set(ByVal value As Boolean)
+                If Me.IsContactSensor Then
+                    Throw New System.Exception("You cannot set an object to be a collision object if it is also set to be a contact sensor.")
+                End If
                 m_bIsCollisionObject = value
                 SetupInitialTransparencies()
             End Set
@@ -1018,8 +1024,8 @@ Namespace DataObjects.Physical
 
             oXml.IntoElem() 'Into RigidBody Element
 
-            m_bContactSensor = oXml.GetChildBool("IsContactSensor", m_bContactSensor)
-            m_bIsCollisionObject = oXml.GetChildBool("IsCollisionObject", m_bIsCollisionObject)
+            Me.IsContactSensor = oXml.GetChildBool("IsContactSensor", m_bContactSensor)
+            Me.IsCollisionObject = oXml.GetChildBool("IsCollisionObject", m_bIsCollisionObject)
             m_bFreeze = oXml.GetChildBool("Freeze", m_bFreeze)
 
             m_snDensity.LoadData(oXml, "Density")
@@ -1291,12 +1297,20 @@ Namespace DataObjects.Physical
             End If
         End Sub
 
+        Public Overridable Sub VerifyCanAddChildren()
+            If Me.IsContactSensor Then
+                Throw New System.Exception("You cannot add children to a contact sensor class.")
+            End If
+        End Sub
+
         Public Overridable Overloads Function AddChildBody(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d) As Boolean
             Dim rbNew As RigidBody
             Dim bAddDefaultGraphics As Boolean = False
             Dim bPastedPart As Boolean = False
 
             Try
+                Me.VerifyCanAddChildren()
+
                 'If this is a part/joint combo that does not allow you to directly add child parts then we need to add the part to the parent.
                 If Not Me.JointToParent Is Nothing AndAlso Not Me.JointToParent.AllowAddChildBody Then
                     If Not Me.Parent Is Nothing AndAlso Util.IsTypeOf(Me.Parent.GetType(), GetType(RigidBody)) Then

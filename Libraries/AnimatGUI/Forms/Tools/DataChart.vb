@@ -538,8 +538,10 @@ Namespace Forms.Tools
 
             'First check to make sure the number of rows match.
 
-            If (UBound(aryTemplateData, 2) <> UBound(aryTestData, 2)) Then
-                Throw New System.Exception("The template and test row counts do not match for file: " & Me.ExportDataFilename)
+            Dim iTemplate As Integer = UBound(aryTemplateData, 2)
+            Dim iTest As Integer = UBound(aryTestData, 2)
+            If (iTemplate <> iTest) Then
+                Throw New System.Exception("The template and test row counts do not match for file: " & Me.ExportDataFilename & ". Template: " & iTemplate & ", Test: " & iTest)
             End If
 
             Dim iCols As Integer = UBound(aryTemplateData, 1)

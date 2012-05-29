@@ -21,7 +21,7 @@
 <ClassName>AnimatTools.Forms.ProjectWorkspace</ClassName>
 <TabTitle>Workspace</TabTitle>
 <BackgroundForm>True</BackgroundForm>
-<TreeViewHeight>541</TreeViewHeight>
+<TreeViewHeight>344</TreeViewHeight>
 </Form>
 <Form>
 <Title>Simulation Controller</Title>
@@ -37,9 +37,9 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>1</MajorInterval>
+<MajorInterval>500</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>Seconds</TimeScale>
+<TimeScale>MilliSeconds</TimeScale>
 </Form>
 </DockingForms>
 <ChildForms>
