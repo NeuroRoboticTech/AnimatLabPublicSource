@@ -30,6 +30,9 @@ namespace AnimatSim
 				/// energy into it it will not be allowed to exceed this level. 
 				float m_fltMaxEnergyLevel;
 
+				/// The starting energy level
+				float m_fltInitEnergyLevel;
+
 				/// The current energy level
 				float m_fltEnergyLevel;
 
@@ -78,6 +81,7 @@ namespace AnimatSim
 				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 				virtual float *GetDataPointer(string strDataType);
 				virtual void StepSimulation();
+				virtual void ResetSimulation();
 				virtual void Load(CStdXml &oXml);
 			};
 

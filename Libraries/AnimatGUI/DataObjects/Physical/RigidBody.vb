@@ -99,9 +99,6 @@ Namespace DataObjects.Physical
                 Return m_bContactSensor
             End Get
             Set(ByVal Value As Boolean)
-                If Me.IsCollisionObject Then
-                    Throw New System.Exception("You cannot set an object to be a contact sensor if it is also set to be a collision object.")
-                End If
                 m_bContactSensor = Value
             End Set
         End Property
@@ -111,9 +108,6 @@ Namespace DataObjects.Physical
                 Return m_bIsCollisionObject
             End Get
             Set(ByVal value As Boolean)
-                If Me.IsContactSensor Then
-                    Throw New System.Exception("You cannot set an object to be a collision object if it is also set to be a contact sensor.")
-                End If
                 m_bIsCollisionObject = value
                 SetupInitialTransparencies()
             End Set
@@ -757,7 +751,7 @@ Namespace DataObjects.Physical
                                GetType(AnimatGUI.TypeHelpers.LinkedMaterialTypeConverter)))
             Else
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Contact Sensor", m_bContactSensor.GetType(), "IsContactSensor", _
-                                            "Part Properties", "Sets whether or not this part can detect contacts.", m_bContactSensor))
+                                            "Part Properties", "Sets whether or not this part can detect contacts.", m_bContactSensor, True))
             End If
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Is Collision Object", m_bIsCollisionObject.GetType(), "IsCollisionObject", _
@@ -1024,8 +1018,9 @@ Namespace DataObjects.Physical
 
             oXml.IntoElem() 'Into RigidBody Element
 
-            Me.IsContactSensor = oXml.GetChildBool("IsContactSensor", m_bContactSensor)
-            Me.IsCollisionObject = oXml.GetChildBool("IsCollisionObject", m_bIsCollisionObject)
+            m_bContactSensor = oXml.GetChildBool("IsContactSensor", m_bContactSensor)
+            m_bIsCollisionObject = oXml.GetChildBool("IsCollisionObject", m_bIsCollisionObject)
+
             m_bFreeze = oXml.GetChildBool("Freeze", m_bFreeze)
 
             m_snDensity.LoadData(oXml, "Density")
@@ -1276,7 +1271,6 @@ Namespace DataObjects.Physical
                 rbNew.IsCollisionObject = frmSelectParts.rdCollision.Checked
                 If rbNew.IsCollisionObject Then
                     bAddDefaultGraphics = frmSelectParts.chkAddGraphics.Checked
-                Else
                     rbNew.IsContactSensor = frmSelectParts.chkIsSensor.Checked
                 End If
             Else

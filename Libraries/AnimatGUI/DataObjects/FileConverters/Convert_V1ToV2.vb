@@ -23,6 +23,9 @@ Namespace DataObjects
             Protected m_aryIdentity As New AnimatGuiCtrls.MatrixLibrary.Matrix(AnimatGuiCtrls.MatrixLibrary.Matrix.Identity(4))
             Protected m_aryGainIDs As New ArrayList
 
+            Protected m_xnMouth As XmlNode
+            Protected m_xnStomach As XmlNode
+
             Public Overrides ReadOnly Property ConvertFrom As Single
                 Get
                     Return 1.0
@@ -172,6 +175,10 @@ Namespace DataObjects
 #Region "Modify Structure"
 
             Protected Overridable Sub ModifyStructure(ByVal xnStructure As XmlNode, ByVal bIsFluidPlane As Boolean, Optional ByVal bSetAmbientColor As Boolean = False)
+
+                'Reset the mouth and stomach nodes for this structure.
+                m_xnMouth = Nothing
+                m_xnStomach = Nothing
 
                 m_xnProjectXml.AddNodeValue(xnStructure, "Description", "")
                 m_xnProjectXml.AddTransparency(xnStructure, 50, 50, 50, 50, 100)
@@ -394,7 +401,10 @@ Namespace DataObjects
                 ModifyRigidBodyBox(xnRigidBody, aryParentTrasform, aryChildTrasform)
 
                 m_xnProjectXml.RemoveNode(xnRigidBody, "IsContactSensor", False)
+                m_xnProjectXml.RemoveNode(xnRigidBody, "IsCollisionObject", False)
+
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "IsContactSensor", "True")
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "IsCollisionObject", "True")
 
             End Sub
 
@@ -458,7 +468,11 @@ Namespace DataObjects
                 ModifyRigidBodyCylinder(xnRigidBody, aryParentTrasform, aryChildTrasform)
 
                 m_xnProjectXml.RemoveNode(xnRigidBody, "IsContactSensor", False)
+                m_xnProjectXml.RemoveNode(xnRigidBody, "IsCollisionObject", False)
+
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "IsContactSensor", "True")
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "IsCollisionObject", "True")
+
 
             End Sub
 
@@ -685,6 +699,14 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Mouth")
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "ModuleName", "VortexAnimatPrivateSim_VC10D.dll")
+
+                m_xnMouth = xnRigidBody
+
+                'If stomach is already set then use it.
+                If Not m_xnStomach Is Nothing Then
+                    Dim strStomachID As String = m_xnProjectXml.GetSingleNodeValue(m_xnStomach, "ID")
+                    m_xnProjectXml.AddNodeValue(m_xnMouth, "StomachID", strStomachID)
+                End If
             End Sub
 
             Protected Overridable Sub ModifyRigidBodyStomach(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
@@ -693,6 +715,14 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Stomach")
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "ModuleName", "VortexAnimatPrivateSim_VC10D.dll")
+
+                m_xnStomach = xnRigidBody
+
+                'If mouth is already set then use it.
+                If Not m_xnMouth Is Nothing Then
+                    Dim strStomachID As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "ID")
+                    m_xnProjectXml.AddNodeValue(m_xnMouth, "StomachID", strStomachID)
+                End If
 
             End Sub
 

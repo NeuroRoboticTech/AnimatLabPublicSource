@@ -218,24 +218,49 @@ Namespace DataObjects.Physical
                 Return False
         End Function
 
-        Public Overridable Sub CopyBodyPart(ByVal bCutData As Boolean)
+        Public Overridable Sub CopyBodyPart()
 
-            Dim doClone As AnimatGUI.DataObjects.Physical.RigidBody = DirectCast(Me.Clone(Me.Parent, bCutData, Me), AnimatGUI.DataObjects.Physical.RigidBody)
+            Dim doClone As AnimatGUI.DataObjects.Physical.RigidBody = DirectCast(Me.Clone(Me.Parent, False, Me), AnimatGUI.DataObjects.Physical.RigidBody)
 
-            'Now lets save the xml for this cloned object.
             Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
-            oXml.AddElement("CopyData")
+            SaveSelected(oXml)
 
-            doClone.SaveData(Me.ParentStructure, oXml)
-
+            'oXml.Save("C:\Projects\bin\Experiments\Copy.txt")
             Dim strXml As String = oXml.Serialize()
 
             Dim data As New System.Windows.Forms.DataObject
-            data.SetData("AnimatLab.Body.XMLFormat", strXml)
+            data.SetData("AnimatLab.BodyPlan.XMLFormat", strXml)
             Clipboard.SetDataObject(data, True)
 
         End Sub
+
+        Public Overridable Function SaveSelected(ByVal oXml As ManagedAnimatInterfaces.IStdXml) As Boolean
+
+            oXml.AddElement("BodyPlan")
+
+            'First lets sort the selected items into nodes and links and generate temp selected ids
+            Dim aryReplaceIDs As New ArrayList
+
+            'Call BeforeCopy first
+            BeforeCopy()
+
+            Me.AddToReplaceIDList(aryReplaceIDs)
+
+            'Save the replaceme ID list
+            oXml.AddChildElement("ReplaceIDList")
+            oXml.IntoElem() 'Into ReplaceIDList Element
+            For Each strID As String In aryReplaceIDs
+                oXml.AddChildElement("ID", strID)
+            Next
+            oXml.OutOfElem() 'Outof ReplaceIDList Element
+
+            SaveData(ParentStructure, oXml)
+
+            AfterCopy()
+
+            Return True
+        End Function
 
         Public Overridable Sub VerifyCanBePasted()
         End Sub
@@ -409,7 +434,7 @@ Namespace DataObjects.Physical
         Protected Overridable Sub OnCopyBodyPart(ByVal sender As Object, ByVal e As System.EventArgs)
 
             Try
-                Me.CopyBodyPart(False)
+                Me.CopyBodyPart()
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

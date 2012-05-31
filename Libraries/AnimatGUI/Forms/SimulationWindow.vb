@@ -515,16 +515,7 @@ Namespace Forms
                     Throw New System.Exception("This part cannot be copied.")
                 End If
 
-                Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
-
-                SaveSelected(oXml, rbPart)
-
-                'oXml.Save("C:\Projects\bin\Experiments\Copy.txt")
-                Dim strXml As String = oXml.Serialize()
-
-                Dim data As New System.Windows.Forms.DataObject
-                data.SetData("AnimatLab.BodyPlan.XMLFormat", strXml)
-                Clipboard.SetDataObject(data, True)
+                rbPart.CopyBodyPart()
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -532,32 +523,32 @@ Namespace Forms
 
         End Sub
 
-        Public Overridable Function SaveSelected(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal rbPart As DataObjects.Physical.RigidBody) As Boolean
+        'Public Overridable Function SaveSelected(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal rbPart As DataObjects.Physical.RigidBody) As Boolean
 
-            oXml.AddElement("BodyPlan")
+        '    oXml.AddElement("BodyPlan")
 
-            'First lets sort the selected items into nodes and links and generate temp selected ids
-            Dim aryReplaceIDs As New ArrayList
+        '    'First lets sort the selected items into nodes and links and generate temp selected ids
+        '    Dim aryReplaceIDs As New ArrayList
 
-            'Call BeforeCopy first
-            rbPart.BeforeCopy()
+        '    'Call BeforeCopy first
+        '    rbPart.BeforeCopy()
 
-            rbPart.AddToReplaceIDList(aryReplaceIDs)
+        '    rbPart.AddToReplaceIDList(aryReplaceIDs)
 
-            'Save the replaceme ID list
-            oXml.AddChildElement("ReplaceIDList")
-            oXml.IntoElem() 'Into ReplaceIDList Element
-            For Each strID As String In aryReplaceIDs
-                oXml.AddChildElement("ID", strID)
-            Next
-            oXml.OutOfElem() 'Outof ReplaceIDList Element
+        '    'Save the replaceme ID list
+        '    oXml.AddChildElement("ReplaceIDList")
+        '    oXml.IntoElem() 'Into ReplaceIDList Element
+        '    For Each strID As String In aryReplaceIDs
+        '        oXml.AddChildElement("ID", strID)
+        '    Next
+        '    oXml.OutOfElem() 'Outof ReplaceIDList Element
 
-            rbPart.SaveData(rbPart.ParentStructure, oXml)
+        '    rbPart.SaveData(rbPart.ParentStructure, oXml)
 
-            rbPart.AfterCopy()
+        '    rbPart.AfterCopy()
 
-            Return True
-        End Function
+        '    Return True
+        'End Function
 
         Public Overridable Sub PasteSelected(ByVal bInPlace As Boolean)
 

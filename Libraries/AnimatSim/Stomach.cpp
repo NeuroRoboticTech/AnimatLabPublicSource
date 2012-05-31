@@ -51,6 +51,7 @@ Stomach::Stomach()
 	m_bKilled = FALSE;
 	m_fltMaxEnergyLevel = 100000;
 	m_fltEnergyLevel = 2000;
+	m_fltInitEnergyLevel = m_fltEnergyLevel;
 	m_fltAdapterConsumptionRate = 0;
 	m_fltBaseConsumptionRate = 1;
 	m_fltConsumptionRate = 0;
@@ -102,6 +103,10 @@ void Stomach::EnergyLevel(float fltVal)
 		m_fltEnergyLevel = m_fltMaxEnergyLevel;
 	else
 		m_fltEnergyLevel = fltVal;
+
+	//If the sim is running then we do not set the init level. Only set it if changed while the sim is not running.
+	if(!m_lpSim->SimRunning())
+		m_fltInitEnergyLevel = m_fltEnergyLevel;
 }
 
 /**
@@ -203,6 +208,15 @@ void Stomach::KillOrganism(BOOL bVal) {m_bKillOrganism = bVal;}
 // There are no parts or joints to create for muscle attachment points.
 void Stomach::CreateParts()
 {
+}
+
+void Stomach::ResetSimulation()
+{
+	m_fltEnergyLevel = m_fltInitEnergyLevel;
+	m_fltConsumptionRate = 0;
+	m_fltAdapterConsumptionRate = 0;
+	m_lpOrganism->Kill(FALSE);
+	m_bKilled = FALSE;
 }
 
 void Stomach::StepSimulation()

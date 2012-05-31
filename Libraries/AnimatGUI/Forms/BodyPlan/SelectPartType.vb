@@ -332,7 +332,7 @@ Namespace Forms.BodyPlan
                 rdCollision.Enabled = m_bHasDynamics
                 rdGraphics.Enabled = m_bHasDynamics
                 chkAddGraphics.Enabled = m_bHasDynamics
-                chkIsSensor.Enabled = Not rdCollision.Checked
+                chkIsSensor.Enabled = rdCollision.Checked
                 If bInit AndAlso m_bHasDynamics Then chkIsSensor.Checked = False
             End If
 
@@ -387,12 +387,12 @@ Namespace Forms.BodyPlan
             Try
                 If rdCollision.Checked Then
                     chkIsSensor.Checked = False
-                    chkIsSensor.Enabled = False
+                    chkIsSensor.Enabled = True
                     chkAddGraphics.Enabled = True
                 Else
                     chkAddGraphics.Checked = False
                     chkAddGraphics.Enabled = False
-                    chkIsSensor.Enabled = True
+                    chkIsSensor.Enabled = False
                 End If
 
             Catch ex As System.Exception
@@ -420,9 +420,9 @@ Namespace Forms.BodyPlan
         Private Sub chkIsSensor_CheckedChanged(sender As Object, e As System.EventArgs) Handles chkIsSensor.CheckedChanged
             Try
                 If chkIsSensor.Checked Then
-                    rdGraphics.Checked = True
-                    rdGraphics.Enabled = False
+                    rdCollision.Checked = True
                     rdCollision.Enabled = False
+                    rdGraphics.Enabled = False
                     chkAddGraphics.Enabled = True
                 Else
                     rdGraphics.Enabled = True

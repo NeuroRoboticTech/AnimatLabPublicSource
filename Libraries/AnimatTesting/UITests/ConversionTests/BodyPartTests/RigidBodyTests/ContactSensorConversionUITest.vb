@@ -163,26 +163,43 @@ Namespace UITests
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DeleteBoxSensor_", -1, aryIgnoreRows)
 
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan"}, 2000)
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.X", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.X", "5 c"})
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.Y", "-35 c"})
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.Z", "0"})
 
                         PasteChildPartTypeWithJoint("", "Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0, False)
+                        Threading.Thread.Sleep(1000)
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "WorldPosition.X", "-5 c"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "WorldPosition.Y", "-35 c"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "WorldPosition.Z", "0"})
 
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\BodyData"}, 2000)
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1", False})
                         AddItemToChart("Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor")
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1\BoxSensor", "DataTypeID", "ContactCount"})
+
+                        ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2"}, 2000)
+                        ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\BoxSensor", _
+                                      "Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor"})
+
+                        AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\BoxSensor", _
+                                          "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\BoxContact", "", "", False)
+                        If Not CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\2"})) Then
+                            Throw New System.Exception("2 adapter was not added")
+                        End If
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\2", "Name", "BS_BC"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\BS_BC", "Gain.C", "10 n"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\BS_BC", "DataTypes", "AnimatGUI.DataObjects.Physical.Bodies.Box.DataTypes.ContactCount"})
 
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "PasteBoxSensor_", -1, aryIgnoreRows)
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_", -1, aryIgnoreRows)
 
                         'Click 'Add Part' button
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan"}, 2000)
                         ExecuteMethod("ClickToolbarItem", New Object() {"AddPartToolStripButton"}, 2000)
                         AutomatedClickToAddBody("Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0)
-                        ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"})
                         AssertErrorDialogShown("You cannot add children to a contact sensor class.", enumMatchType.Equals)
-
 
                     End Sub
 

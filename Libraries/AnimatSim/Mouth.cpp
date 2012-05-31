@@ -142,6 +142,11 @@ void Mouth::Initialize()
 	SetStomachPointer(m_strStomachID);
 }
 
+void Mouth::ResetSimulation()
+{
+	m_fltEatingRate = 0;
+}
+
 /**
 \brief	Step the simulation.
 
@@ -238,6 +243,7 @@ void Mouth::Load(CStdXml &oXml)
 	oXml.IntoElem();  //Into RigidBody Element
 
 	MinFoodRadius(oXml.GetChildFloat("MinimumFoodRadius", m_fltMinFoodRadius));
+	m_strStomachID = oXml.GetChildString("StomachID", "");
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
 }
