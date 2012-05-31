@@ -215,7 +215,8 @@ void Stomach::ResetSimulation()
 	m_fltEnergyLevel = m_fltInitEnergyLevel;
 	m_fltConsumptionRate = 0;
 	m_fltAdapterConsumptionRate = 0;
-	m_lpOrganism->Kill(FALSE);
+	//No reason to call this. All nodes will get automatically reset to their state when the sim started.
+	//m_lpOrganism->Kill(FALSE);
 	m_bKilled = FALSE;
 }
 

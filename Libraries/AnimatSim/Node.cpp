@@ -47,9 +47,9 @@ namespace AnimatSim
 **/
 Node::Node()
 {
-	m_lpOrganism = NULL;
-	m_bEnabledMem = TRUE;
+	m_lpOrganism = NULL;	
 	m_bEnabled = TRUE;
+	m_bInitEnabled = m_bEnabled;
 	m_fltEnabled = 0;
 }
 
@@ -96,18 +96,27 @@ void Node::Enabled(BOOL bValue)
 {
 	m_bEnabled = bValue;
 	m_fltEnabled = (float) m_bEnabled;
+
+	//If the sim is running then we do not set the history flag. Only set it if changed while the sim is not running.
+	if(!m_lpSim->SimRunning())
+		m_bInitEnabled = m_bEnabled;
+}
+
+void Node::ResetSimulation()
+{
+	AnimatBase::ResetSimulation();
+
+	//Reset the enabled state to the value that it had before the sim started.
+	//It is possible that stimuli turned off the enabled state during the simulation.
+	Enabled(m_bInitEnabled);
 }
 
 void Node::Kill(BOOL bState)
 {
 	if(bState)
-	{
-		m_bEnabledMem = m_bEnabled;
 		Enabled(FALSE);
-	}
 	else
-		Enabled(m_bEnabledMem);
-
+		Enabled(m_bInitEnabled);
 }
 
 /**

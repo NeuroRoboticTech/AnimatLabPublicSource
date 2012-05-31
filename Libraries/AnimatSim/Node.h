@@ -32,10 +32,8 @@ namespace AnimatSim
 		///The majority of nodes, like rigid bodies, can not be disabled.
 		BOOL m_bEnabled;
 
-		///Keeps track of the enabled state before this node is killed.
-		///If the node is killed and then turned on again we can reset the
-		///enabled state to what it was before it was killed.
-		BOOL m_bEnabledMem;
+		/// Keeps track of the enabled state at sim startup.
+		BOOL m_bInitEnabled;
 
 		///This is used for reporting the enabled state in a GetDataPointer call.
 		float m_fltEnabled;
@@ -65,6 +63,8 @@ namespace AnimatSim
 		\param	fltInput	The new input. 
 		**/
 		virtual void AddExternalNodeInput(float fltInput) = 0;
+
+		virtual void ResetSimulation();
 
 #pragma region DataAccesMethods
 
