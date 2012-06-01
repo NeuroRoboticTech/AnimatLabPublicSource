@@ -243,6 +243,7 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
+        <EditorAttribute(GetType(TypeHelpers.OdorTypeEditor), GetType(System.Drawing.Design.UITypeEditor))> _
         Public Overridable Property OdorSources() As Collections.SortedOdors
             Get
                 Return m_aryOdorSources

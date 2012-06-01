@@ -41,7 +41,7 @@
 <Type>Hinge</Type>
 <PartType>VortexAnimatTools.DataObjects.Physical.Joints.Hinge</PartType>
 <Description/>
-<Constraint Low="-1.57" High="1.57">
+<Constraint Low="-2.0944" High="2.0944">
 <EnableLimits>True</EnableLimits>
 <Damping Value="0" Scale="Kilo" Actual="0"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
@@ -80,13 +80,13 @@
 <FoodSource>False</FoodSource>
 <CenterOfMass x="0" y="0" z="0"/>
 <RelativePosition x="0" y="0" z="0"/>
-<Rotation x="0" y="1.57045" z="0"/>
-<LocalRotation x="0" y="1.57045" z="0"/>
+<Rotation x="0" y="1.57031" z="0"/>
+<LocalRotation x="0" y="1.57031" z="0"/>
 <Direction x="1" y="0" z="0"/>
 <Color Red="0.564706" Green="0.933333" Blue="0.564706" Alpha="1"/>
-<OrientationMatrix>0.0003453056,0,-0.9999999,0,0,1,0,0,0.9999999,0,0.0003453056,0,0,0,0,1</OrientationMatrix>
+<OrientationMatrix>0.0004881183,0,-0.9999999,0,0,1,0,0,0.9999999,0,0.0004881183,0,0,0,0,1</OrientationMatrix>
 <TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</TranslationMatrix>
-<CombinedTransformationMatrix>0.0003453056,0,-0.9999999,0,0,1,0,0,0.9999999,0,0.0003453056,0,0,-2,0,1</CombinedTransformationMatrix>
+<CombinedTransformationMatrix>0.0004881183,0,-0.9999999,0,0,1,0,0,0.9999999,0,0.0004881183,0,0,-2,0,1</CombinedTransformationMatrix>
 <Radius>0.1</Radius>
 <CollisionRadius>0.1</CollisionRadius>
 <OdorTypeID>003232c3-f49e-4279-b91e-d2c5daa2f8c4</OdorTypeID>
@@ -111,20 +111,20 @@
 <FoodSource>False</FoodSource>
 <CenterOfMass x="0" y="0" z="0"/>
 <RelativePosition x="0" y="-0.5" z="0"/>
-<Rotation x="0" y="1.57045" z="0"/>
-<LocalRotation x="0" y="1.57045" z="0"/>
+<Rotation x="0" y="1.57031" z="0"/>
+<LocalRotation x="0" y="1.57031" z="0"/>
 <Direction x="1" y="0" z="0"/>
 <Color Red="0.678431" Green="0.847059" Blue="0.901961" Alpha="1"/>
-<OrientationMatrix>0.0003453056,0,-0.9999999,0,0,1,0,0,0.9999999,0,0.0003453056,0,0,0,0,1</OrientationMatrix>
+<OrientationMatrix>0.0004881183,0,-0.9999999,0,0,1,0,0,0.9999999,0,0.0004881183,0,0,0,0,1</OrientationMatrix>
 <TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,-0.5,0,1</TranslationMatrix>
-<CombinedTransformationMatrix>0.0003453056,0,-0.9999999,0,0,1,0,0,0.9999999,0,0.0003453056,0,0,-2.5,0,1</CombinedTransformationMatrix>
+<CombinedTransformationMatrix>0.0004881183,0,-0.9999999,0,0,1,0,0,0.9999999,0,0.0004881183,0,0,-2.5,0,1</CombinedTransformationMatrix>
 <Radius>0.1</Radius>
 <CollisionRadius>0.1</CollisionRadius>
 <MinimumFoodRadius Value="15" Scale="centi" Actual="0.15"/>
 </RigidBody>
 <RigidBody>
 <Name>Stomach</Name>
-<ID>STOMACH</ID>
+<ID>Stomach</ID>
 <Type>Stomach</Type>
 <PartType>VortexAnimatTools.DataObjects.Physical.RigidBodies.Stomach</PartType>
 <Description/>
@@ -142,13 +142,13 @@
 <FoodSource>False</FoodSource>
 <CenterOfMass x="0" y="0" z="0"/>
 <RelativePosition x="0" y="0" z="0"/>
-<Rotation x="0" y="1.57045" z="0"/>
-<LocalRotation x="0" y="1.57045" z="0"/>
+<Rotation x="0" y="1.57031" z="0"/>
+<LocalRotation x="0" y="1.57031" z="0"/>
 <Direction x="1" y="0" z="0"/>
 <Color Red="0.678431" Green="0.847059" Blue="0.901961" Alpha="1"/>
-<OrientationMatrix>0.0003453056,0,-0.9999999,0,0,1,0,0,0.9999999,0,0.0003453056,0,0,0,0,1</OrientationMatrix>
+<OrientationMatrix>0.0004881183,0,-0.9999999,0,0,1,0,0,0.9999999,0,0.0004881183,0,0,0,0,1</OrientationMatrix>
 <TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</TranslationMatrix>
-<CombinedTransformationMatrix>0.0003453056,0,-0.9999999,0,0,1,0,0,0.9999999,0,0.0003453056,0,0,-2,0,1</CombinedTransformationMatrix>
+<CombinedTransformationMatrix>0.0004881183,0,-0.9999999,0,0,1,0,0,0.9999999,0,0.0004881183,0,0,-2,0,1</CombinedTransformationMatrix>
 <Radius>0.1</Radius>
 <CollisionRadius>0.1</CollisionRadius>
 <KillOrganism>True</KillOrganism>

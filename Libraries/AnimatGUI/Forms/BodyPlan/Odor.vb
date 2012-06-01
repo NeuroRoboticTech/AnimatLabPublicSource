@@ -204,6 +204,7 @@ Namespace Forms.BodyPlan
 #Region " Attributes "
 
         Protected m_aryOdorSources As Collections.SortedOdors
+        Protected m_doSelectedGridItem As Framework.DataObject
 
 #End Region
 
@@ -289,27 +290,60 @@ Namespace Forms.BodyPlan
             Return Nothing
         End Function
 
+        Protected Sub SetSelectedGridObject(ByVal doObject As Framework.DataObject)
+            If Not doObject Is Nothing Then
+                pgOdor.SelectedObject = doObject.Properties
+            Else
+                pgOdor.SelectedObject = Nothing
+            End If
+            m_doSelectedGridItem = doObject
+        End Sub
+
+        Protected Sub AddOdorType(ByVal strName As String)
+            Dim doOdor As New DataObjects.Physical.OdorType(Util.Environment)
+            doOdor.Name = strName
+            Util.Environment.OdorTypes.Add(doOdor.ID, doOdor)
+
+            Dim liItem As ListViewItem
+            liItem = New ListViewItem(doOdor.Name)
+            liItem.Tag = doOdor
+
+            lvOdorTypes.Items.Add(liItem)
+
+            lvOdorTypes.SelectedItems.Clear()
+            liItem.Selected = True
+
+            SetSelectedGridObject(doOdor)
+
+        End Sub
+
+        Protected Sub ClickItem(ByVal lvItems As ListView)
+
+            If lvItems.SelectedItems.Count = 1 Then
+                Dim liItem As ListViewItem = lvItems.SelectedItems(0)
+
+                If Not liItem.Tag Is Nothing AndAlso TypeOf liItem.Tag Is DataObjects.Physical.OdorType Then
+                    Dim doOdor As DataObjects.Physical.OdorType = DirectCast(liItem.Tag, DataObjects.Physical.OdorType)
+                    SetSelectedGridObject(doOdor)
+                ElseIf Not liItem.Tag Is Nothing AndAlso TypeOf liItem.Tag Is DataObjects.Physical.Odor Then
+                    Dim doOdor As DataObjects.Physical.Odor = DirectCast(liItem.Tag, DataObjects.Physical.Odor)
+                    SetSelectedGridObject(doOdor)
+                Else
+                    SetSelectedGridObject(Nothing)
+                End If
+            Else
+                SetSelectedGridObject(Nothing)
+            End If
+
+        End Sub
+
 #End Region
 
 #Region " Events "
 
         Private Sub btnAddOdorType_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAddOdorType.Click
             Try
-                Dim doOdor As New DataObjects.Physical.OdorType(Util.Environment)
-                doOdor.Name = "New Odor"
-                Util.Environment.OdorTypes.Add(doOdor.ID, doOdor)
-
-                Dim liItem As ListViewItem
-                liItem = New ListViewItem(doOdor.Name)
-                liItem.Tag = doOdor
-
-                lvOdorTypes.Items.Add(liItem)
-
-                lvOdorTypes.SelectedItems.Clear()
-                liItem.Selected = True
-
-                pgOdor.SelectedObject = doOdor.Properties
-
+                AddOdorType("New Odor")
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -340,23 +374,11 @@ Namespace Forms.BodyPlan
             End Try
         End Sub
 
+
         Private Sub lvOdorTypes_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lvOdorTypes.Click
 
             Try
-
-                If lvOdorTypes.SelectedItems.Count = 1 Then
-                    Dim liItem As ListViewItem = lvOdorTypes.SelectedItems(0)
-
-                    If Not liItem.Tag Is Nothing AndAlso TypeOf liItem.Tag Is DataObjects.Physical.OdorType Then
-                        Dim doOdor As DataObjects.Physical.OdorType = DirectCast(liItem.Tag, DataObjects.Physical.OdorType)
-                        pgOdor.SelectedObject = doOdor.Properties
-                    Else
-                        pgOdor.SelectedObject = Nothing
-                    End If
-                Else
-                    pgOdor.SelectedObject = Nothing
-                End If
-
+                ClickItem(lvOdorTypes)
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -367,18 +389,7 @@ Namespace Forms.BodyPlan
 
             Try
 
-                If lvOdorSources.SelectedItems.Count = 1 Then
-                    Dim liItem As ListViewItem = lvOdorSources.SelectedItems(0)
-
-                    If Not liItem.Tag Is Nothing AndAlso TypeOf liItem.Tag Is DataObjects.Physical.Odor Then
-                        Dim doOdor As DataObjects.Physical.Odor = DirectCast(liItem.Tag, DataObjects.Physical.Odor)
-                        pgOdor.SelectedObject = doOdor.Properties
-                    Else
-                        pgOdor.SelectedObject = Nothing
-                    End If
-                Else
-                    pgOdor.SelectedObject = Nothing
-                End If
+                ClickItem(lvOdorSources)
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -452,7 +463,7 @@ Namespace Forms.BodyPlan
                         lvOdorSources.SelectedItems.Clear()
                         liOdorItem.Selected = True
 
-                        pgOdor.SelectedObject = doOdor.Properties
+                        SetSelectedGridObject(doOdor)
                     End If
                 End If
 
@@ -480,7 +491,7 @@ Namespace Forms.BodyPlan
                     End If
 
                     lvOdorSources.Items.Remove(liItem)
-                    pgOdor.SelectedObject = Nothing
+                    SetSelectedGridObject(Nothing)
                 End If
 
             Catch ex As System.Exception
@@ -490,6 +501,51 @@ Namespace Forms.BodyPlan
 
 #End Region
 
+#Region "Automation"
+
+        Public Sub Automation_AddOdorType(ByVal strName As String)
+            AddOdorType(strName)
+        End Sub
+
+        Public Sub Automation_RemoveOdorType()
+            btnRemoveOdorType.PerformClick()
+        End Sub
+
+        Public Sub Automation_AddOdorSource()
+            btnMoveOver.PerformClick()
+        End Sub
+
+        Public Sub Automation_RemoveOdorSource()
+            btnMoveBack.PerformClick()
+        End Sub
+
+        Public Sub Automation_SelectOdorType(ByVal strName As String)
+            Dim liItem As ListViewItem = Util.FindListItemByName(strName, lvOdorTypes.Items)
+            lvOdorTypes.SelectedItems.Clear()
+            liItem.Selected = True
+            ClickItem(lvOdorTypes)
+        End Sub
+
+        Public Sub Automation_SelectOdorSource(ByVal strName As String)
+            Dim liItem As ListViewItem = Util.FindListItemByName(strName, lvOdorSources.Items)
+            lvOdorSources.SelectedItems.Clear()
+            liItem.Selected = True
+            ClickItem(lvOdorSources)
+        End Sub
+
+        Public Sub Automat_SetSelectedItemProperty(ByVal strProperty As String, ByVal strValue As String)
+
+            If m_doSelectedGridItem Is Nothing Then
+                Throw New System.Exception("No odor item is currently selected.")
+            End If
+
+            Util.SetObjectProperty(m_doSelectedGridItem, strProperty, strValue)
+
+        End Sub
+
+#End Region
+
+ 
     End Class
 
 End Namespace

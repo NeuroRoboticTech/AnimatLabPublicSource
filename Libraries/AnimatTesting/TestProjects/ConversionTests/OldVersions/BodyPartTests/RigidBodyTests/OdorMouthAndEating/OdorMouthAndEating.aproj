@@ -117,7 +117,7 @@
 <AlwaysActive>False</AlwaysActive>
 <Enabled>True</Enabled>
 <ValueType>Equation</ValueType>
-<Equation>-5*sin(3*t)</Equation>
+<Equation>-2*sin(3*t)</Equation>
 <StructureID>ea95992f-e398-4838-bb7e-9e85c75dce95</StructureID>
 <PartID>aca3efc2-135e-4438-9545-6aa25f367efa</PartID>
 <Velocity Value="1" Scale="None" Actual="1"/>

@@ -15,25 +15,21 @@ Namespace TypeHelpers
             Dim frmOdorEditor As New AnimatGUI.Forms.BodyPlan.Odor
 
             Try
-
-                If (Not context Is Nothing And Not context.Instance Is Nothing And Not provider Is Nothing) Then
-                    service = CType(provider.GetService(GetType(IWindowsFormsEditorService)), IWindowsFormsEditorService)
-                    If (Not service Is Nothing) AndAlso ((TypeOf (value) Is AnimatGUI.Collections.SortedOdors) OrElse value Is Nothing) Then
-                        Dim aryOdors As AnimatGUI.Collections.SortedOdors
-                        If Not value Is Nothing Then
-                            aryOdors = DirectCast(value, AnimatGUI.Collections.SortedOdors)
-                        Else
-                            'It should never pass us in a null reference. If it does then something is screwed up.
-                            Return Nothing
-                        End If
-
-                        frmOdorEditor.OdorSources = aryOdors
-
-                        Util.ModificationHistory.AllowAddHistory = False
-                        frmOdorEditor.ShowDialog()
-
-                        Return aryOdors
+                If ((TypeOf (value) Is AnimatGUI.Collections.SortedOdors) OrElse value Is Nothing) Then
+                    Dim aryOdors As AnimatGUI.Collections.SortedOdors
+                    If Not value Is Nothing Then
+                        aryOdors = DirectCast(value, AnimatGUI.Collections.SortedOdors)
+                    Else
+                        'It should never pass us in a null reference. If it does then something is screwed up.
+                        Return Nothing
                     End If
+
+                    frmOdorEditor.OdorSources = aryOdors
+
+                    Util.ModificationHistory.AllowAddHistory = False
+                    frmOdorEditor.ShowDialog()
+
+                    Return aryOdors
                 End If
 
                 Return value
