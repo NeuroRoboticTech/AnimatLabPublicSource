@@ -69,10 +69,10 @@ Namespace UITests
                 Threading.Thread.Sleep(3000)
 
                 'Run the simulation and wait for it to end.
-                'RunSimulationWaitToEnd()
+                RunSimulationWaitToEnd()
 
-                ''Compare chart data to verify simulation results.
-                'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, strDataPrefix, iMaxRows, aryIgnoreRows)
+                'Compare chart data to verify simulation results.
+                CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, strDataPrefix, iMaxRows, aryIgnoreRows)
 
             End Sub
 
