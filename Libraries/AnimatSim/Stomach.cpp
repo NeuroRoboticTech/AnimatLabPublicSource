@@ -97,16 +97,22 @@ the value is defaulted to m_fltMaxEnergyLevel.
 **/
 void Stomach::EnergyLevel(float fltVal) 
 {
-	Std_IsAboveMin((float) 0, fltVal, TRUE, "EnergyLevel", TRUE);
-
 	if(fltVal > m_fltMaxEnergyLevel)
 		m_fltEnergyLevel = m_fltMaxEnergyLevel;
+	else if(fltVal < 0)
+		m_fltEnergyLevel = 0;
 	else
 		m_fltEnergyLevel = fltVal;
 
 	//If the sim is running then we do not set the init level. Only set it if changed while the sim is not running.
 	if(!m_lpSim->SimRunning())
 		m_fltInitEnergyLevel = m_fltEnergyLevel;
+}
+
+void Stomach::AddEnergy(float fltVal)
+{
+	float fltEnergy = m_fltEnergyLevel + fltVal;
+	EnergyLevel(fltEnergy);
 }
 
 /**
@@ -215,8 +221,6 @@ void Stomach::ResetSimulation()
 	m_fltEnergyLevel = m_fltInitEnergyLevel;
 	m_fltConsumptionRate = 0;
 	m_fltAdapterConsumptionRate = 0;
-	//No reason to call this. All nodes will get automatically reset to their state when the sim started.
-	//m_lpOrganism->Kill(FALSE);
 	m_bKilled = FALSE;
 }
 

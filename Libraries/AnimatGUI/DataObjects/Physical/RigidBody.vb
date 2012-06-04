@@ -1006,6 +1006,12 @@ Namespace DataObjects.Physical
                     doChild.InitializeSimulationReferences()
                 Next
 
+                Dim doOdor As Odor
+                For Each deEntry As DictionaryEntry In m_aryOdorSources
+                    doOdor = DirectCast(deEntry.Value, Odor)
+                    doOdor.InitializeSimulationReferences()
+                Next
+
                 If Not m_doReceptiveFieldSensor Is Nothing Then
                     m_doReceptiveFieldSensor.InitializeSimulationReferences()
                 End If
@@ -1229,12 +1235,10 @@ Namespace DataObjects.Physical
             End If
 
             oXml.AddChildElement("FoodSource", m_bFoodSource)
-            If m_bFoodSource Then
-                m_snFoodQuantity.SaveSimulationXml(oXml, Me, "FoodQuantity")
-                m_snMaxFoodQuantity.SaveSimulationXml(oXml, Me, "MaxFoodQuantity")
-                m_snFoodReplenishRate.SaveSimulationXml(oXml, Me, "FoodReplenishRate")
-                m_snFoodEnergyContent.SaveSimulationXml(oXml, Me, "FoodEnergyContent")
-            End If
+            m_snFoodQuantity.SaveSimulationXml(oXml, Me, "FoodQuantity")
+            m_snMaxFoodQuantity.SaveSimulationXml(oXml, Me, "MaxFoodQuantity")
+            m_snFoodReplenishRate.SaveSimulationXml(oXml, Me, "FoodReplenishRate")
+            m_snFoodEnergyContent.SaveSimulationXml(oXml, Me, "FoodEnergyContent")
 
             If Not m_doReceptiveFieldSensor Is Nothing Then
                 m_doReceptiveFieldSensor.SaveSimulationXml(oXml, Me, "ReceptiveFieldSensor")
@@ -1594,6 +1598,12 @@ Namespace DataObjects.Physical
                 doChild.BeforeAddToList(bCallSimMethods, bThrowError)
             Next
 
+            Dim doOdor As Odor
+            For Each deEntry As DictionaryEntry In m_aryOdorSources
+                doOdor = DirectCast(deEntry.Value, Odor)
+                doOdor.BeforeAddToList(bCallSimMethods, bThrowError)
+            Next
+
         End Sub
 
         Public Overrides Sub AfterAddToList(ByVal bCallSimMethods As Boolean, ByVal bThrowError As Boolean)
@@ -1611,6 +1621,12 @@ Namespace DataObjects.Physical
             For Each deEntry As DictionaryEntry In m_aryChildBodies
                 doChild = DirectCast(deEntry.Value, RigidBody)
                 doChild.AfterAddToList(bCallSimMethods, bThrowError)
+            Next
+
+            Dim doOdor As Odor
+            For Each deEntry As DictionaryEntry In m_aryOdorSources
+                doOdor = DirectCast(deEntry.Value, Odor)
+                doOdor.AfterAddToList(bCallSimMethods, bThrowError)
             Next
 
         End Sub
@@ -1639,6 +1655,12 @@ Namespace DataObjects.Physical
                 doChild.BeforeRemoveFromList(bCallSimMethods, bThrowError)
             Next
 
+            Dim doOdor As Odor
+            For Each deEntry As DictionaryEntry In m_aryOdorSources
+                doOdor = DirectCast(deEntry.Value, Odor)
+                doOdor.BeforeRemoveFromList(bCallSimMethods, bThrowError)
+            Next
+
             If bCallSimMethods Then RemoveFromSim(bThrowError)
         End Sub
 
@@ -1657,6 +1679,12 @@ Namespace DataObjects.Physical
             For Each deEntry As DictionaryEntry In m_aryChildBodies
                 doChild = DirectCast(deEntry.Value, RigidBody)
                 doChild.AfterRemoveFromList(bCallSimMethods, bThrowError)
+            Next
+
+            Dim doOdor As Odor
+            For Each deEntry As DictionaryEntry In m_aryOdorSources
+                doOdor = DirectCast(deEntry.Value, Odor)
+                doOdor.AfterRemoveFromList(bCallSimMethods, bThrowError)
             Next
         End Sub
 

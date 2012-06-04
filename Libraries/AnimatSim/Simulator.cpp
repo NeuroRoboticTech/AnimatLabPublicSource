@@ -3208,7 +3208,7 @@ AnimatBase *Simulator::FindByID(string strID, BOOL bThrowError)
 
 \return	null if it fails, else the found closest food source.
 **/
-RigidBody *Simulator::FindClosestFoodSource(CStdFPoint &oMouthPos, float fltMinRadius)
+RigidBody *Simulator::FindClosestFoodSource(CStdFPoint &oMouthPos, float fltMinRadius, float &fltDistance)
 {
 	RigidBody *lpFood = NULL, *lpMinFood = NULL;
 	float fltDist=0, fltMinDist=0;
@@ -3226,6 +3226,7 @@ RigidBody *Simulator::FindClosestFoodSource(CStdFPoint &oMouthPos, float fltMinR
 		}
 	}
 
+	fltDistance = fltMinDist;
 	return lpMinFood;
 }
 
@@ -3440,9 +3441,45 @@ void Simulator::RemoveTargetAdapter(Structure *lpStructure, Adapter *lpAdapter)
 **/
 void Simulator::AddFoodSource(RigidBody *lpFood)
 {
-	m_aryFoodSources.Add(lpFood);
+	int iIndex = FindFoodSourceIndex(lpFood);
+	if(iIndex < 0)
+		m_aryFoodSources.Add(lpFood);
 }
 
+/**
+\brief	Removes a food source from the list of all simulation food sources.
+
+\author	dcofer
+\date	6/3/2012
+
+\param [in,out]	lpFood	Pointer to a food. 
+**/
+void Simulator::RemoveFoodSource(RigidBody *lpFood)
+{
+	int iIndex = FindFoodSourceIndex(lpFood);
+	if(iIndex >= 0)
+		m_aryFoodSources.RemoveAt(iIndex);
+}
+
+/**
+\brief	Searches for the index of the food source.
+
+\author	dcofer
+\date	6/3/2012
+
+\param [in,out]	lpFood	The pointer to a food source.
+
+\return	The found food source index, or -1.
+**/
+int Simulator::FindFoodSourceIndex(RigidBody *lpFood)
+{
+	int iCount = m_aryFoodSources.GetSize();
+	for(int iIdx=0; iIdx<iCount; iIdx++)
+		if(m_aryFoodSources[iIdx] == lpFood)
+			return iIdx;
+
+	return -1;
+}
 
 void Simulator::AddOrganism(Organism *lpOrganism)
 {

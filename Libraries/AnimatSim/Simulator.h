@@ -410,11 +410,12 @@ namespace AnimatSim
 			virtual void RemoveStructure(string strID, BOOL bThrowError = TRUE);
 
 			virtual int FindAdapterListIndex(CStdArray<Adapter *> aryAdapters, string strID, BOOL bThrowError = TRUE);
-
+			virtual int FindFoodSourceIndex(RigidBody *lpFood);
+			
 			virtual void AddOdorType(OdorType *lpOdorType);
 			virtual void Simulator::AddOdorType(string strXml, BOOL bDoNotInit);
 			virtual void Simulator::RemoveOdorType(string strID, BOOL bThrowError = TRUE);
-
+			
 #pragma endregion
 
 #pragma region UnitScaleMethods
@@ -835,7 +836,7 @@ namespace AnimatSim
 			virtual Joint *FindJoint(string strStructureID, string strJointID, BOOL bThrowError = TRUE);
 			virtual RigidBody *FindRigidBody(string strStructureID, string strBodyID, BOOL bThrowError = TRUE);
 			virtual OdorType *FindOdorType(string strOdorID, BOOL bThrowError = TRUE);
-			virtual RigidBody *FindClosestFoodSource(CStdFPoint &oMouthPos, float fltMinRadius);
+			virtual RigidBody *FindClosestFoodSource(CStdFPoint &oMouthPos, float fltMinRadius, float &fltDistance);
 			virtual AnimatBase *FindByID(string strID, BOOL bThrowError = TRUE);
 
 #pragma endregion
@@ -847,6 +848,7 @@ namespace AnimatSim
 			virtual void AddNeuralModuleFactory(string strModuleName, NeuralModule *lpModule);
 
 			virtual void AddFoodSource(RigidBody *lpFood);
+			virtual void RemoveFoodSource(RigidBody *lpFood);
 
 			virtual void AttachSourceAdapter(Structure *lpStructure, Adapter *lpAdapter);
 			virtual void RemoveSourceAdapter(Structure *lpStructure, Adapter *lpAdapter);

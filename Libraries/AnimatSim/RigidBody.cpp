@@ -63,6 +63,7 @@ RigidBody::RigidBody()
 	m_fltFoodEaten = 0;
 	m_lEatTime = 0;
 	m_fltFoodQuantity = 0;
+	m_fltFoodQuantityInit = 0;
 	m_fltMaxFoodQuantity = 10000;
 	m_fltFoodReplenishRate = 0;
 	m_fltFoodEnergyContent = 0;
@@ -395,7 +396,18 @@ BOOL RigidBody::IsFoodSource() {return m_bFoodSource;}
 
 \param	bVal	true if food source, else false. 
 **/
-void RigidBody::IsFoodSource(BOOL bVal) {m_bFoodSource = bVal;}
+void RigidBody::IsFoodSource(BOOL bVal) 
+{
+	m_bFoodSource = bVal;
+
+	if(m_lpSim)
+	{
+		if(m_bFoodSource)
+			m_lpSim->AddFoodSource(this);
+		else
+			m_lpSim->RemoveFoodSource(this);
+	}
+}
 
 /**
 \brief	Gets the food quantity. 
@@ -420,6 +432,10 @@ void RigidBody::FoodQuantity(float fltVal)
 {
 	Std_InValidRange((float) 0, (float) 100000, fltVal, TRUE, "FoodQuantity");
 	m_fltFoodQuantity = fltVal;
+	
+	//If the sim is running then we do not set the init Qty. Only set it if changed while the sim is not running.
+	if(!m_lpSim->SimRunning())
+		m_fltFoodQuantityInit = m_fltFoodQuantity;
 }
 
 /**
@@ -901,14 +917,14 @@ void RigidBody::RemoveSurfaceContact(RigidBody *lpContactedSurface)
 \param	fltVal		The amount of food to eat. 
 \param	lTimeSlice	The time slice during which the eating is occuring. 
 **/
-void RigidBody::Eat(float fltVal, long lTimeSlice)
+void RigidBody::Eat(float fltBiteSize, long lTimeSlice)
 {
 	if(m_lEatTime != lTimeSlice)
 		m_fltFoodEaten = 0;
 
-	m_fltFoodEaten += fltVal;
+	m_fltFoodQuantity -= fltBiteSize;
+	m_fltFoodEaten += fltBiteSize;
 	m_lEatTime = lTimeSlice;
-	m_fltFoodQuantity = fltVal;
 }
 
 /**
@@ -998,6 +1014,9 @@ void RigidBody::ResetSimulation()
 	int iCount = m_aryChildParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
 		m_aryChildParts[iIndex]->ResetSimulation();
+
+	m_fltFoodQuantity = m_fltFoodQuantityInit;
+	m_fltFoodEaten = 0;
 }
 
 void RigidBody::AfterResetSimulation()
@@ -1030,13 +1049,9 @@ tree and create the parts for its children.
 
 void RigidBody::CreateParts()
 {
+	//We have the replenish rate in Quantity/s, but we need it in Quantity/timeslice. Lets recalculate it here.
 	if(m_bFoodSource)
-	{
-		m_lpSim->AddFoodSource(this);
-
-		//We have the replenish rate in Quantity/s, but we need it in Quantity/timeslice. Lets recalculate it here.
 		m_fltFoodReplenishRate = (m_fltFoodReplenishRate * m_lpSim->PhysicsTimeStep());
-	}
 
 	int iCount = m_aryChildParts.GetSize();
 	for(int iIndex=0; iIndex<iCount; iIndex++)
@@ -1168,7 +1183,7 @@ BOOL RigidBody::SetData(string strDataType, string strValue, BOOL bThrowError)
 		return TRUE;
 	}
 	
-	if(strType == "FOODREPLINISHRATE")
+	if(strType == "FOODREPLENISHRATE")
 	{
 		FoodReplenishRate(atof(strValue.c_str()));
 		return TRUE;

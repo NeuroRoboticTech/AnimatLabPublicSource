@@ -61,6 +61,7 @@ namespace AnimatSim
 
 				virtual float EnergyLevel();
 				virtual void EnergyLevel(float fltVal);
+				virtual void AddEnergy(float fltVal);
 
 				virtual float ConsumptionRate();
 				virtual void ConsumptionRate(float fltVal);

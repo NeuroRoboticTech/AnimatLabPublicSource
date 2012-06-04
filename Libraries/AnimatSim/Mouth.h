@@ -39,6 +39,9 @@ namespace AnimatSim
 				/// Any food source that is further away than this minimum radius will not be available for eating.
 				float m_fltMinFoodRadius;
 
+				/// The current distance between the food and the mouth.
+				float m_fltFoodDistance;
+
 				virtual void SetStomachPointer(string strID);
 
 			public:

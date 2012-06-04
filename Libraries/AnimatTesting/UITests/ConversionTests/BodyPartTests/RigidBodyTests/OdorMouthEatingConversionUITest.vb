@@ -46,10 +46,11 @@ Namespace UITests
                     Public Sub Test_OdorMouthEating()
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
-                        aryMaxErrors.Add("OdorSensor", 25)
+                        aryMaxErrors.Add("OdorSensor", 50)
                         aryMaxErrors.Add("Mouth", 0.001)
                         aryMaxErrors.Add("Eat", 0.05)
                         aryMaxErrors.Add("Food_Near", 0.05)
+                        aryMaxErrors.Add("Energy", 110)
                         aryMaxErrors.Add("default", 0.05)
 
                         m_strProjectName = "OdorMouthAndEating"
@@ -65,15 +66,15 @@ Namespace UITests
                         'Load and convert the project.
                         TestConversionProject("AfterConversion_", aryMaxErrors)
 
-                        RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Odor_ad", "Enabled", "False"})
-                        RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "OdorAd_Off_")
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "OdorAd_Off_")
 
-                        RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "OdorAd_Off_")
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "OdorAd_Off_")
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Odor_ad", "Enabled", "True"})
 
@@ -86,133 +87,69 @@ Namespace UITests
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Odor_ad", "Gain.XOffset", "5000"})
 
-                        RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DiffusionRate_0_75_")
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DiffusionRate_0_75_")
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "WorldPosition.Y", "-31 c"})
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Emitter_-31cm_")
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Mouth", "MinimumFoodRadius", "6.1 c"})
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FoodRadius_6cm_")
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "BaseConsumptionRate", "2000 "})
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "BaseCons_2000_")
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "EnergyLevel", "20 k"})
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "EnergyLevel_20k_")
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "BaseConsumptionRate", "1 "})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "MaxEnergyLevel", "24 k"})
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "MaxEnergy_24k_")
+
+                        aryMaxErrors("OdorSensor") = 1500
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "BaseConsumptionRate", "5000 "})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "EnergyLevel", "5 k"})
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Kill_")
+
+                        'Make sure it gets reset after a kill correctly.
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Kill_")
+
+                        aryMaxErrors("OdorSensor") = 50
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "BaseConsumptionRate", "500 "})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "EnergyLevel", "10 k"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodQuantity", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodReplenishRate", "0"})
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Emitter_-31cm_")
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "NoFood_")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Mouth", "MinimumFoodRadius", "6 c"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodQuantity", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodReplenishRate", "1000"})
                         RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FoodRadius_6cm_")
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FoodReplinish_1k_")
 
-                        'aryIgnoreRows.Clear()
-                        'aryIgnoreRows.Add(New Point(131, 137))
-                        'aryIgnoreRows.Add(New Point(323, 324))
-                        'aryIgnoreRows.Add(New Point(399, 400))
-                        'aryIgnoreRows.Add(New Point(529, 530))
-                        'aryIgnoreRows.Add(New Point(2390, 2391))
-                        'aryIgnoreRows.Add(New Point(2496, 2497))
-                        'aryIgnoreRows.Add(New Point(2548, 2549))
-                        'aryIgnoreRows.Add(New Point(2641, 2641))
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodSource", "False"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Food_Disabled_")
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodSource", "True"})
 
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "Rotation.X", "-45"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Y", "-10 c"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Z", "-20 c"})
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "PendulumRotate_", -1, aryIgnoreRows)
+                        ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "OdorSources"}, 500)
+                        ExecuteActiveDialogMethod("Automation_SelectOdorSource", New Object() {"TestOdor"})
+                        ExecuteActiveDialogMethod("Automat_SetSelectedItemProperty", New Object() {"UseFoodQuantity", "True"})
+                        ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "UseFoodQtyForOdor_")
 
-                        ''Add subsystem.
-                        'ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem"}, 2000)
-                        'AddBehavioralNode("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem", _
-                        '                  "AnimatGUI.DataObjects.Behavior.Nodes.Subsystem", New Point(316, 30), "S2")
-
-                        'ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\BoxSensor", False})
-                        'ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\BoxContact", True})
-                        'ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\CylinderSensor", True})
-                        'ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\CylinderContact", True})
-                        'ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\BS_BC", True})
-                        'ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\CS_CC", True})
-                        'ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\BS_BC\BoxSensor", True})
-                        'ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\CS_CC\CylinderSensor", True})
-                        'ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\BoxContact\BS_BC", True})
-                        'ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\CylinderContact\CS_CC", True})
-                        'DeleteSelectedParts("Delete Group", True)
-                        'ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2"}, 2000)
-                        'ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"})
-
-
-                        'ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\BodyData"}, 2000)
-                        'ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 3", False})
-                        'AddItemToChart("Organism_1\Behavioral System\Neural Subsystem\Nodes\S2\Nodes\BoxContact")
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 3\BoxContact", "DataTypeID", "MembraneVoltage"})
-                        'AddItemToChart("Organism_1\Behavioral System\Neural Subsystem\Nodes\S2\Nodes\CylinderContact")
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 3\CylinderContact", "DataTypeID", "MembraneVoltage"})
-
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "PendulumRotate_", -1, aryIgnoreRows)
-
-
-                        'ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan"}, 2000)
-                        'DeletePart("Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "Delete Body Part", True)
-                        'If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor"})) Then
-                        '    Throw New System.Exception("Sensor was not deleted")
-                        'End If
-                        'If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1\BoxSensor"})) Then
-                        '    Throw New System.Exception("BoxSensor chart node was not removed correctly.")
-                        'End If
-                        'If Not GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\BoxSensor", "LinkedPart.BodyPart") Is Nothing Then
-                        '    Throw New System.Exception("Linked body part not removed.")
-                        'End If
-                        'If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\BS_BC"})) Then
-                        '    Throw New System.Exception("BS_BC adapter node was not removed correctly.")
-                        'End If
-
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "Rotation.X", "0"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Y", "-20 c"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Z", "0"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.Y", "-35 c"})
-
-                        'aryIgnoreRows.Clear()
-                        'aryIgnoreRows.Add(New Point(162, 173))
-                        'aryIgnoreRows.Add(New Point(405, 406))
-                        'aryIgnoreRows.Add(New Point(512, 515))
-                        'aryIgnoreRows.Add(New Point(2405, 2407))
-                        'aryIgnoreRows.Add(New Point(2491, 2494))
-                        'aryIgnoreRows.Add(New Point(2628, 2632))
-
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DeleteBoxSensor_", -1, aryIgnoreRows)
-
-                        'ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan"}, 2000)
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.X", "5 c"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.Y", "-35 c"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.Z", "0"})
-
-                        'PasteChildPartTypeWithJoint("", "Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0, False)
-                        'Threading.Thread.Sleep(1000)
-
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "WorldPosition.X", "-5 c"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "WorldPosition.Y", "-35 c"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "WorldPosition.Z", "0"})
-
-                        'ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\BodyData"}, 2000)
-                        'ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1", False})
-                        'AddItemToChart("Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor")
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1\BoxSensor", "DataTypeID", "ContactCount"})
-
-                        'ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2"}, 2000)
-                        'ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\BoxSensor", _
-                        '              "Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor"})
-
-                        'AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\BoxSensor", _
-                        '                  "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\BoxContact", "", "", False)
-                        'If Not CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\2"})) Then
-                        '    Throw New System.Exception("2 adapter was not added")
-                        'End If
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\2", "Name", "BS_BC"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\BS_BC", "Gain.C", "10 n"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\BS_BC", "DataTypes", "AnimatGUI.DataObjects.Physical.Bodies.Box.DataTypes.ContactCount"})
-
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_", -1, aryIgnoreRows)
-
-                        ''Click 'Add Part' button
-                        'ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan"}, 2000)
-                        'ExecuteMethod("ClickToolbarItem", New Object() {"AddPartToolStripButton"}, 2000)
-                        'AutomatedClickToAddBody("Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0)
-                        'AssertErrorDialogShown("You cannot add children to a contact sensor class.", enumMatchType.Equals)
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodReplenishRate", "1000"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "UseFoodQtyForOdor_NoReplenish_")
 
                     End Sub
 

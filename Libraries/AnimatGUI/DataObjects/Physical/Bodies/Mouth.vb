@@ -95,6 +95,7 @@ Namespace DataObjects.Physical.Bodies
             m_snMinimumFoodRadius = New ScaledNumber(Me, "MinimumFoodRadius", 10, ScaledNumber.enumNumericScale.centi, "meters", "m")
 
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("EatingRate", "Eating Rate", "", "", 0, 100))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("FoodDistance", "Food Distance", "", "", 0, 100))
             m_thDataTypes.ID = "EatingRate"
 
         End Sub

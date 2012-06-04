@@ -121,6 +121,9 @@ namespace AnimatSim
 			/// The quantity of food that this part contains
 			float m_fltFoodQuantity;
 
+			/// The initial food quantity to use when simulation is reset.
+			float m_fltFoodQuantityInit;
+
 			///Tells how much food is being eaten.
 			float m_fltFoodEaten;
 
@@ -265,7 +268,7 @@ namespace AnimatSim
 
 			virtual float SurfaceContactCount();
 
-			virtual void Eat(float fltVal, long lTimeSlice);
+			virtual void Eat(float fltBiteSize, long lTimeSlice);
 			virtual void AddSurfaceContact(RigidBody *lpContactedSurface);
 			virtual void RemoveSurfaceContact(RigidBody *lpContactedSurface);
 			virtual void AddForce(float fltPx, float fltPy, float fltPz, float fltFx, float fltFy, float fltFz, BOOL bScaleUnits);

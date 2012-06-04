@@ -102,6 +102,9 @@ void Organism::ResetSimulation()
 {
 	Structure::ResetSimulation();
 
+	//Make sure to reset us from being killed if it happend during the sim.
+	Kill(FALSE);
+
 	m_lpNervousSystem->ResetSimulation();
 }
 

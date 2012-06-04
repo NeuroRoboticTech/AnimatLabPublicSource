@@ -53,6 +53,7 @@ Mouth::Mouth()
 	m_lpStomach = NULL;
 	m_fltEatingRate = 0;
 	m_fltMinFoodRadius = 10;
+	m_fltFoodDistance = 0;
 }
 
 /**
@@ -162,10 +163,12 @@ content by the new amount.
 **/
 void Mouth::StepSimulation()
 {
+	Sensor::StepSimulation();
+
 	if(m_lpStomach && m_fltEatingRate > 0)
 	{
 		//Now lets find the closest food source.
-		RigidBody *lpFood = m_lpSim->FindClosestFoodSource(this->GetCurrentPosition(), m_fltMinFoodRadius);
+		RigidBody *lpFood = m_lpSim->FindClosestFoodSource(this->GetCurrentPosition(), m_fltMinFoodRadius, m_fltFoodDistance);
 
 		if(lpFood)
 		{
@@ -177,7 +180,6 @@ void Mouth::StepSimulation()
 				fltBiteSize = lpFood->FoodQuantity();
 
 			float fltEnergy = fltBiteSize*lpFood->FoodEnergyContent();
-			fltEnergy += m_lpStomach->EnergyLevel(); //Find new total energy level.
 
 			if(fltEnergy > m_lpStomach->MaxEnergyLevel())
 			{
@@ -185,10 +187,8 @@ void Mouth::StepSimulation()
 				fltBiteSize = fltNeededEnergy/lpFood->FoodEnergyContent();
 			}
 
-			float fltFoodQty = lpFood->FoodQuantity() - fltBiteSize;
-
-			lpFood->Eat(fltFoodQty, m_lpSim->TimeSlice());
-			m_lpStomach->EnergyLevel(fltEnergy);			
+			lpFood->Eat(fltBiteSize, m_lpSim->TimeSlice());
+			m_lpStomach->AddEnergy(fltEnergy);			
 		}
 	}
 }
@@ -225,6 +225,9 @@ float *Mouth::GetDataPointer(string strDataType)
 
 	if(strType == "EATINGRATE")
 		return &m_fltEatingRate;
+
+	if(strType == "FOODDISTANCE")
+		return &m_fltFoodDistance;
 
 	return RigidBody::GetDataPointer(strDataType);
 }
