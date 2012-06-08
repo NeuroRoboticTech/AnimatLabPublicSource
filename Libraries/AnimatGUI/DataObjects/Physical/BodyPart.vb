@@ -434,7 +434,7 @@ Namespace DataObjects.Physical
         Protected Overridable Sub OnCopyBodyPart(ByVal sender As Object, ByVal e As System.EventArgs)
 
             Try
-                Me.CopyBodyPart()
+                Me.ParentStructure.BodyEditor.CopySelected()
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -444,7 +444,7 @@ Namespace DataObjects.Physical
         Protected Overridable Sub OnCutBodyPart(ByVal sender As Object, ByVal e As System.EventArgs)
 
             Try
-                Me.Delete(False)
+                Me.ParentStructure.BodyEditor.CutSelected()
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

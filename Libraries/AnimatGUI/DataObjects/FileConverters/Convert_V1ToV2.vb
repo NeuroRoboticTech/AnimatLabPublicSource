@@ -26,6 +26,9 @@ Namespace DataObjects
             Protected m_xnMouth As XmlNode
             Protected m_xnStomach As XmlNode
 
+            Protected m_strMouthID As String = System.Guid.NewGuid.ToString
+            Protected m_strStomachID As String = System.Guid.NewGuid.ToString
+
             Public Overrides ReadOnly Property ConvertFrom As Single
                 Get
                     Return 1.0
@@ -42,6 +45,44 @@ Namespace DataObjects
                 MyBase.New()
 
             End Sub
+
+            Protected Overrides Function CreateReplaceStringList() As Hashtable
+
+                Dim aryReplaceText As New Hashtable()
+                aryReplaceText.Add(31, New ReplaceText("<ID>MOUTH</ID>", "<ID>" & m_strMouthID & "</ID>"))
+                aryReplaceText.Add(30, New ReplaceText("<LinkedBodyPartID>MOUTH</LinkedBodyPartID>", "<LinkedBodyPartID>" & m_strMouthID & "</LinkedBodyPartID>"))
+                aryReplaceText.Add(29, New ReplaceText("<DataItemID>MOUTH</DataItemID>", "<DataItemID>" & m_strMouthID & "</DataItemID>"))
+                aryReplaceText.Add(28, New ReplaceText("<ID>Mouth</ID>", "<ID>" & m_strMouthID & "</ID>"))
+                aryReplaceText.Add(27, New ReplaceText("<LinkedBodyPartID>Mouth</LinkedBodyPartID>", "<LinkedBodyPartID>" & m_strMouthID & "</LinkedBodyPartID>"))
+                aryReplaceText.Add(26, New ReplaceText("<DataItemID>Mouth</DataItemID>", "<DataItemID>" & m_strMouthID & "</DataItemID>"))
+                aryReplaceText.Add(25, New ReplaceText("<ID>STOMACH</ID>", "<ID>" & m_strStomachID & "</ID>"))
+                aryReplaceText.Add(24, New ReplaceText("<LinkedBodyPartID>STOMACH</LinkedBodyPartID>", "<LinkedBodyPartID>" & m_strStomachID & "</LinkedBodyPartID>"))
+                aryReplaceText.Add(23, New ReplaceText("<DataItemID>STOMACH</DataItemID>", "<DataItemID>" & m_strStomachID & "</DataItemID>"))
+                aryReplaceText.Add(22, New ReplaceText("<ID>Stomach</ID>", "<ID>" & m_strStomachID & "</ID>"))
+                aryReplaceText.Add(21, New ReplaceText("<LinkedBodyPartID>Stomach</LinkedBodyPartID>", "<LinkedBodyPartID>" & m_strStomachID & "</LinkedBodyPartID>"))
+                aryReplaceText.Add(20, New ReplaceText("<DataItemID>Stomach</DataItemID>", "<DataItemID>" & m_strStomachID & "</DataItemID>"))
+                aryReplaceText.Add(19, New ReplaceText("CylinderContactSensor", "Cylinder"))
+                aryReplaceText.Add(18, New ReplaceText("BoxContactSensor", "Box"))
+                aryReplaceText.Add(17, New ReplaceText("InterbusrtLengthDistribution", "InterburstLengthDistribution"))
+                aryReplaceText.Add(16, New ReplaceText("LicensedAnimatTools", "LicensedAnimatGUI"))
+                aryReplaceText.Add(15, New ReplaceText("FastNeuralNetTools", "FiringRateGUI"))
+                aryReplaceText.Add(14, New ReplaceText("RealisticNeuralNetTools", "IntegrateFireGUI"))
+                aryReplaceText.Add(13, New ReplaceText("VortexAnimatTools.DataObjects.Physical.RigidBodies", "AnimatGUI.DataObjects.Physical.Bodies"))
+                aryReplaceText.Add(12, New ReplaceText("VortexAnimatTools.DataObjects.Physical.Joints", "AnimatGUI.DataObjects.Physical.Joints"))
+                aryReplaceText.Add(11, New ReplaceText("VortexAnimatTools.DataObjects.Behavior.Nodes.MuscleSpindle", "AnimatGUI.DataObjects.Behavior.Nodes.StretchReceptor"))
+                aryReplaceText.Add(10, New ReplaceText("VortexAnimatTools", "AnimatGUI"))
+                aryReplaceText.Add(9, New ReplaceText("AnimatTools", "AnimatGUI"))
+                aryReplaceText.Add(8, New ReplaceText("AHPConductance", "AHP_Conductance"))
+                aryReplaceText.Add(7, New ReplaceText("AHPTimeConstant", "AHP_TimeConstant"))
+                aryReplaceText.Add(6, New ReplaceText("BodyPositionX", "WorldPositionX"))
+                aryReplaceText.Add(5, New ReplaceText("BodyPositionY", "WorldPositionY"))
+                aryReplaceText.Add(4, New ReplaceText("BodyPositionZ", "WorldPositionZ"))
+                aryReplaceText.Add(3, New ReplaceText("BodyRotationX", "RotationX"))
+                aryReplaceText.Add(2, New ReplaceText("BodyRotationY", "RotationY"))
+                aryReplaceText.Add(1, New ReplaceText("BodyRotationZ", "RotationZ"))
+
+                Return aryReplaceText
+            End Function
 
             Protected Overrides Sub ConvertProjectNode(ByVal xnProject As XmlNode)
 
@@ -696,7 +737,10 @@ Namespace DataObjects
             Protected Overridable Sub ModifyRigidBodyMouth(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
                 ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTrasform)
 
+                m_xnProjectXml.RemoveNode(xnRigidBody, "ID")
                 m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
+
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "ID", m_strMouthID)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Mouth")
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "ModuleName", "VortexAnimatPrivateSim_VC10D.dll")
 
@@ -704,15 +748,18 @@ Namespace DataObjects
 
                 'If stomach is already set then use it.
                 If Not m_xnStomach Is Nothing Then
-                    Dim strStomachID As String = m_xnProjectXml.GetSingleNodeValue(m_xnStomach, "ID")
-                    m_xnProjectXml.AddNodeValue(m_xnMouth, "StomachID", strStomachID)
+                    'Dim strStomachID As String = m_xnProjectXml.GetSingleNodeValue(m_xnStomach, "ID")
+                    m_xnProjectXml.AddNodeValue(m_xnMouth, "StomachID", m_strStomachID)
                 End If
             End Sub
 
             Protected Overridable Sub ModifyRigidBodyStomach(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
                 ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTrasform)
 
+                m_xnProjectXml.RemoveNode(xnRigidBody, "ID")
                 m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
+
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "ID", m_strStomachID)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Stomach")
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "ModuleName", "VortexAnimatPrivateSim_VC10D.dll")
 
@@ -720,8 +767,8 @@ Namespace DataObjects
 
                 'If mouth is already set then use it.
                 If Not m_xnMouth Is Nothing Then
-                    Dim strStomachID As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "ID")
-                    m_xnProjectXml.AddNodeValue(m_xnMouth, "StomachID", strStomachID)
+                    'Dim strStomachID As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "ID")
+                    m_xnProjectXml.AddNodeValue(m_xnMouth, "StomachID", m_strStomachID)
                 End If
 
             End Sub

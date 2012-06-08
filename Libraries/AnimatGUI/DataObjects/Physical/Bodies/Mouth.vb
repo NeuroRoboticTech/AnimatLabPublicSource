@@ -55,12 +55,16 @@ Namespace DataObjects.Physical.Bodies
                 Return m_thStomach
             End Get
             Set(ByVal Value As AnimatGUI.TypeHelpers.LinkedBodyPart)
+                DisconnectStomachEvents()
+
                 Dim strID As String = ""
                 If Not Value Is Nothing AndAlso Not Value.BodyPart Is Nothing Then
                     strID = Value.BodyPart.ID
                 End If
                 SetSimData("StomachID", strID, True)
                 m_thStomach = Value
+
+                ConnectStomachEvents()
             End Set
         End Property
 
@@ -100,6 +104,20 @@ Namespace DataObjects.Physical.Bodies
 
         End Sub
 
+        Protected Overridable Sub ConnectStomachEvents()
+            DisconnectStomachEvents()
+
+            If Not m_thStomach.BodyPart Is Nothing Then
+                AddHandler m_thStomach.BodyPart.AfterRemoveItem, AddressOf Me.OnAfterRemoveStomach
+            End If
+        End Sub
+
+        Protected Overridable Sub DisconnectStomachEvents()
+            If Not m_thStomach.BodyPart Is Nothing Then
+                RemoveHandler m_thStomach.BodyPart.AfterRemoveItem, AddressOf Me.OnAfterRemoveStomach
+            End If
+        End Sub
+
         Public Overrides Sub ClearIsDirty()
             MyBase.ClearIsDirty()
 
@@ -133,11 +151,15 @@ Namespace DataObjects.Physical.Bodies
             MyBase.InitializeAfterLoad()
 
             If m_strStomachID.Trim.Length > 0 Then
-                Dim doPart As BodyPart = Me.ParentStructure.FindBodyPart(m_strStomachID)
-                m_thStomach = New AnimatGUI.TypeHelpers.LinkedBodyPartList(Me.ParentStructure, doPart, GetType(Bodies.Stomach))
+                Dim doPart As BodyPart = Me.ParentStructure.FindBodyPart(m_strStomachID, False)
+                If Not doPart Is Nothing Then
+                    m_thStomach = New AnimatGUI.TypeHelpers.LinkedBodyPartList(Me.ParentStructure, doPart, GetType(Bodies.Stomach))
+                End If
             Else
                 m_thStomach = New AnimatGUI.TypeHelpers.LinkedBodyPartList(Me.ParentStructure, Nothing, GetType(Bodies.Stomach))
             End If
+
+            ConnectStomachEvents()
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
@@ -196,6 +218,19 @@ Namespace DataObjects.Physical.Bodies
             oXml.OutOfElem()
 
         End Sub
+
+
+#Region "Events"
+
+        Private Sub OnAfterRemoveStomach(ByRef doObject As Framework.DataObject)
+            Try
+                Me.Stomach = New AnimatGUI.TypeHelpers.LinkedBodyPartList(Me.ParentStructure, Nothing, GetType(Bodies.Stomach))
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+#End Region
 
     End Class
 

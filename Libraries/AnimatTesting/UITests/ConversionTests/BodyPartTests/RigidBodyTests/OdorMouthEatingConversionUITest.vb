@@ -140,17 +140,73 @@ Namespace UITests
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Food_Disabled_")
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodSource", "True"})
 
+                        aryMaxErrors("OdorSensor") = 400
+                        aryMaxErrors("Eat") = 0.2
+                        aryMaxErrors("Food_Near") = 0.2
+
                         ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "OdorSources"}, 500)
                         ExecuteActiveDialogMethod("Automation_SelectOdorSource", New Object() {"TestOdor"})
                         ExecuteActiveDialogMethod("Automat_SetSelectedItemProperty", New Object() {"UseFoodQuantity", "True"})
                         ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodQuantity", "100"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodReplenishRate", "0"})
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "UseFoodQtyForOdor_")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodReplenishRate", "1000"})
-                        RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "UseFoodQtyForOdor_NoReplenish_")
+                        'aryMaxErrors("OdorSensor") = 50
+                        'aryMaxErrors("Eat") = 0.05
+                        'aryMaxErrors("Food_Near") = 0.05
 
+                        'Test cut/copy/paste.
+                        ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan"}, 2000)
+
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\OdorSensor", False})
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", True})
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Mouth", True})
+                        ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"})
+                        AssertErrorDialogShown("Only one body part can be selected to be copied at one time.", enumMatchType.Equals)
+
+                        DeletePart("Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\OdorSensor", "Delete Body Part", True)
+                        PasteChildPartTypeWithJoint("", "Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0, False)
+
+                        DeletePart("Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "Delete Body Part", True)
+                        PasteChildPartTypeWithJoint("", "Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0, False)
+
+                        DeletePart("Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Mouth", "Delete Body Part", True)
+                        PasteChildPartTypeWithJoint("", "Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0, False)
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\OdorSensor", "LocalPosition.X", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\OdorSensor", "LocalPosition.Y", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\OdorSensor", "LocalPosition.Z", "0"})
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "LocalPosition.X", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "LocalPosition.Y", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "LocalPosition.Z", "0"})
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Mouth", "LocalPosition.X", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Mouth", "LocalPosition.Y", "0"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Mouth", "LocalPosition.Z", "0"})
+
+                        ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Tool Viewers\BodyData"}, 1000)
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1", False})
+                        AddItemToChart("Organism_1\Body Plan\Root\Hinge1\Head\OdorSensor")
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1\OdorSensor", "DataTypeID", "OdorValue"})
+
+                        ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+                        AddItemToChart("Organism_1\Body Plan\Root\Hinge1\Head\Mouth")
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 5\Mouth", "DataTypeID", "EatingRate"})
+
+                        ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+                        AddItemToChart("Organism_1\Body Plan\Root\Hinge1\Head\Stomach")
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 6\Stomach", "DataTypeID", "EnergyLevel"})
+
+                        ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Mouth", _
+                                      "Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Mouth"})
+                        ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Odor", _
+                                      "Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\OdorSensor"})
+
+                        RunSimulationWaitToEnd()
+ 
                     End Sub
 
 
