@@ -87,8 +87,12 @@ BOOL Organism::IsDead()
 void Organism::Kill(BOOL bState)
 {
 	m_bDead = bState;
-	m_lpBody->Kill(bState);
-	m_lpNervousSystem->Kill(bState);
+	
+	if(m_lpBody)
+		m_lpBody->Kill(bState);
+	
+	if(m_lpNervousSystem)
+		m_lpNervousSystem->Kill(bState);
 }
 
 void Organism::Initialize()
