@@ -129,7 +129,7 @@ float Hinge::FlapWidth()
 
 void Hinge::Enabled(BOOL bValue) 
 {
-	EnableMotor(bValue);
+	EnableMotor(m_bEnableMotorInit);
 	m_bEnabled = bValue;
 }
 

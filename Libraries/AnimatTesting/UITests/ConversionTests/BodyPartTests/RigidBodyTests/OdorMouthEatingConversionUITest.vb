@@ -66,15 +66,15 @@ Namespace UITests
                         'Load and convert the project.
                         TestConversionProject("AfterConversion_", aryMaxErrors)
 
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Odor_ad", "Enabled", "False"})
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "OdorAd_Off_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "OdorAd_Off_")
 
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "OdorAd_Off_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "OdorAd_Off_")
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Odor_ad", "Enabled", "True"})
 
@@ -87,39 +87,39 @@ Namespace UITests
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Odor_ad", "Gain.XOffset", "5000"})
 
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DiffusionRate_0_75_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DiffusionRate_0_75_")
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "WorldPosition.Y", "-31 c"})
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Emitter_-31cm_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Emitter_-31cm_")
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Mouth", "MinimumFoodRadius", "6.1 c"})
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FoodRadius_6cm_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FoodRadius_6cm_")
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "BaseConsumptionRate", "2000 "})
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "BaseCons_2000_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "BaseCons_2000_")
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "EnergyLevel", "20 k"})
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "EnergyLevel_20k_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "EnergyLevel_20k_")
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "BaseConsumptionRate", "1 "})
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "MaxEnergyLevel", "24 k"})
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "MaxEnergy_24k_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "MaxEnergy_24k_")
 
                         aryMaxErrors("OdorSensor") = 1500
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "BaseConsumptionRate", "5000 "})
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", "EnergyLevel", "5 k"})
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Kill_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Kill_")
 
                         'Make sure it gets reset after a kill correctly.
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Kill_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Kill_")
 
                         aryMaxErrors("OdorSensor") = 50
 
@@ -152,10 +152,6 @@ Namespace UITests
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge2\OdorEmitter", "FoodReplenishRate", "0"})
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "UseFoodQtyForOdor_")
-
-                        'aryMaxErrors("OdorSensor") = 50
-                        'aryMaxErrors("Eat") = 0.05
-                        'aryMaxErrors("Food_Near") = 0.05
 
                         'Test cut/copy/paste.
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan"}, 2000)

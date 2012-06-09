@@ -150,6 +150,7 @@
     <Compile Include="UITests\ConversionTests\BodyPartTests\RigidBodyTests\RigidBodyConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\BodyPartTests\RigidBodyTests\SpringConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\BodyPartTests\RigidBodyTests\StretchReceptorConversionUITest.vb" />
+    <Compile Include="UITests\ConversionTests\BodyPartTests\RigidBodyTests\UnitScaleConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\ConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\NeuralTests\NeuralUIConversionTest.vb" />
     <Compile Include="UITests\CreationTests\NewProjectUITest.vb" />
