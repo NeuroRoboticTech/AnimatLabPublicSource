@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-16"?>
+<DataAnalyzer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <InflectionPoints />
+  <MaximumPoints />
+  <MinimumPoints />
+  <TestPoints />
+  <StartPoint>
+    <Type>Endpoint</Type>
+    <Time>0</Time>
+    <Value>-1</Value>
+    <Idx>0</Idx>
+    <CompareTime>Fixed</CompareTime>
+    <TimeError>0.02</TimeError>
+    <CompareValue>Fixed</CompareValue>
+    <ValueError>0.02</ValueError>
+  </StartPoint>
+  <EndPoint>
+    <Type>Endpoint</Type>
+    <Time>2</Time>
+    <Value>1</Value>
+    <Idx>200</Idx>
+    <CompareTime>Fixed</CompareTime>
+    <TimeError>0.02</TimeError>
+    <CompareValue>Fixed</CompareValue>
+    <ValueError>0.02</ValueError>
+  </EndPoint>
+  <IgnoreAdditionalPoints>false</IgnoreAdditionalPoints>
+</DataAnalyzer>

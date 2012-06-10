@@ -118,7 +118,7 @@ float Prismatic::BoxSize()
 
 void Prismatic::Enabled(BOOL bValue) 
 {
-	EnableMotor(bValue);
+	EnableMotor(m_bEnableMotorInit);
 	m_bEnabled = bValue;
 }
 

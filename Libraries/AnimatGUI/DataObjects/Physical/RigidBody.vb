@@ -848,15 +848,15 @@ Namespace DataObjects.Physical
 
             Me.MaterialType = DirectCast(doOrigPart.m_thMaterialType.Clone(Me, bCutData, doRoot), TypeHelpers.LinkedMaterialType)
 
-            m_aryChildBodies.Clear()
+            m_aryChildBodies = DirectCast(doOrigPart.m_aryChildBodies.Clone(Me, bCutData, doRoot), Collections.SortedRigidBodies)
 
-            Dim doOrigChild As RigidBody
-            Dim doNewChild As RigidBody
-            For Each deItem As DictionaryEntry In doOrigPart.m_aryChildBodies
-                doOrigChild = DirectCast(deItem.Value, RigidBody)
-                doNewChild = DirectCast(doOrigChild.Clone(Me, bCutData, doRoot), RigidBody)
-                m_aryChildBodies.Add(doNewChild.ID, doNewChild)
-            Next
+            'Dim doOrigChild As RigidBody
+            'Dim doNewChild As RigidBody
+            'For Each deItem As DictionaryEntry In doOrigPart.m_aryChildBodies
+            '    doOrigChild = DirectCast(deItem.Value, RigidBody)
+            '    doNewChild = DirectCast(doOrigChild.Clone(Me, bCutData, doRoot), RigidBody)
+            '    m_aryChildBodies.Add(doNewChild.ID, doNewChild, False)
+            'Next
 
             m_aryOdorSources = DirectCast(doOrigPart.m_aryOdorSources.Clone(Me, bCutData, doRoot), Collections.SortedOdors)
 

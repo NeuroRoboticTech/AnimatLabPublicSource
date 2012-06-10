@@ -103,6 +103,11 @@ Namespace Forms.Tools
             End Get
             Set(ByVal Value As AnimatGUI.Framework.ScaledNumber)
 
+                'If we are attempting to set it to -1 then this means there are no axis/data values and we are setting to a default value, so do not set it.
+                If Value.ActualValue = -1 Then
+                    Return
+                End If
+
                 If Value.ActualValue <= 0 Then
                     Throw New System.Exception("The collect data interval must be greater than zero.")
                 End If

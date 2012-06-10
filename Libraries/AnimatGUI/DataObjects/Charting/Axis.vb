@@ -478,7 +478,7 @@ Namespace DataObjects.Charting
             m_frmParentChart = doOrigAxis.m_frmParentChart
             m_strName = doOrigAxis.m_strName
             m_iWorkingAxis = doOrigAxis.m_iWorkingAxis
-            m_aryDataColumns = DirectCast(doOrigAxis.m_aryDataColumns.Clone(), Collections.SortedDataColumns)
+            m_aryDataColumns = DirectCast(doOrigAxis.m_aryDataColumns.Clone(Me, bCutData, doRoot), Collections.SortedDataColumns)
             m_WorkspaceImage = DirectCast(doOrigAxis.m_WorkspaceImage.Clone, Image)
         End Sub
 

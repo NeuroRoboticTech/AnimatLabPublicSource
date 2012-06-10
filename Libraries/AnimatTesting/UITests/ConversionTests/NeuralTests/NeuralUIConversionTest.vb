@@ -2083,7 +2083,7 @@ Namespace UITests
                     ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "BurstOffDuration", "200 m"})
 
                     Dim aryIgnoreRows As New ArrayList
-                    aryIgnoreRows.Add(451)
+                    aryIgnoreRows.Add(New Point(451, 451))
 
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Burst_Set_", -1, aryIgnoreRows)

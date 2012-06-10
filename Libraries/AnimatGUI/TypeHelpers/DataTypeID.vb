@@ -71,7 +71,7 @@ Namespace TypeHelpers
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
                                         ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatGUI.Framework.DataObject
             Dim dtNew As New DataTypeID(doParent)
-            dtNew.m_aryDataTypes = DirectCast(Me.m_aryDataTypes.Clone(), AnimatGUI.Collections.DataTypes)
+            dtNew.m_aryDataTypes = DirectCast(Me.m_aryDataTypes.CloneList(), AnimatGUI.Collections.DataTypes)
             dtNew.m_strSelectedID = m_strSelectedID
             Return dtNew
         End Function

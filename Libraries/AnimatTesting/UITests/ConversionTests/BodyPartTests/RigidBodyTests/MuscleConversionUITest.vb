@@ -69,14 +69,14 @@ Namespace UITests
                         TestConversionProject("EnableActive_False_", aryMaxErrors)
 
                         Dim aryIgnoreRows As New ArrayList
-                        aryIgnoreRows.Add(3001)
+                        aryIgnoreRows.Add(New Point(3001, 3001))
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\EnablerStim", "EnableWhenActive", "True"})
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "EnableActive_True_", -1, aryIgnoreRows)
 
                         aryIgnoreRows.Clear()
-                        aryIgnoreRows.Add(1501)
+                        aryIgnoreRows.Add(New Point(1501, 1501))
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\EnablerStim", "EnableWhenActive", "False"})
                         ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\EnablerStim", "EndTime", "6.5"})

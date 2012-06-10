@@ -146,9 +146,16 @@ Namespace Collections
             Return aryList
         End Function
 
+        Public Overloads Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
+                                           ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatSortedList
+            Dim aryList As New SortedReceptiveFields(m_doParent)
+            aryList.CloneInternal(Me, doParent, bCutData, doRoot)
+            Return aryList
+        End Function
+
         Public Overrides Function CloneList() As AnimatSortedList
             Dim aryList As New SortedReceptiveFields(m_doParent)
-            aryList.CloneInternal(Me)
+            aryList.CloneInternal(Me, Me.Parent, False, Nothing)
             Return aryList
         End Function
 

@@ -1078,8 +1078,8 @@ Namespace DataObjects.Physical
             m_snRecFieldSelRadius = DirectCast(doOrig.m_snRecFieldSelRadius.Clone(Me, bCutData, doRoot), ScaledNumber)
             m_clBackgroundcolor = doOrig.m_clBackgroundcolor
 
-            m_aryMaterialTypes = DirectCast(doOrig.m_aryMaterialTypes.CloneList(), Collections.SortedMaterialTypes)
-            m_aryMaterialPairs = DirectCast(doOrig.m_aryMaterialPairs.CloneList(), Collections.SortedMaterialPairs)
+            m_aryMaterialTypes = DirectCast(doOrig.m_aryMaterialTypes.Clone(Me, bCutData, doRoot), Collections.SortedMaterialTypes)
+            m_aryMaterialPairs = DirectCast(doOrig.m_aryMaterialPairs.Clone(Me, bCutData, doRoot), Collections.SortedMaterialPairs)
 
             m_eDistanceUnits = doOrig.m_eDistanceUnits
             m_eMassUnits = doOrig.m_eMassUnits

@@ -225,11 +225,13 @@ Namespace Framework
             Dim aryMaxErrors As New Hashtable
             aryMaxErrors.Add("default", dblMaxError)
 
+            Dim aryIgnoreRows As New ArrayList
+
             'If we are flagged as needing to generate the template files then lets do that. Otherwise, lets compare the charts to the templates.
             If m_bGenerateTempates Then
                 ExecuteMethod("CopyChartData", New Object() {strTestDataPath, strPrefix})
             Else
-                ExecuteMethod("CompareExportedDataCharts", New Object() {strPrefix, strTestDataPath, aryMaxErrors, iMaxRows})
+                ExecuteMethod("CompareExportedDataCharts", New Object() {strPrefix, strTestDataPath, aryMaxErrors, iMaxRows, aryIgnoreRows})
             End If
 
         End Sub
@@ -1212,7 +1214,7 @@ Namespace Framework
 
             If bConstantValueType Then
                 ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "ValueType", "Constant"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "Velocity", dblVelocity.ToString})
+                ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "Velocity", dblVelocity.ToString + " "})
             Else
                 ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "ValueType", "Equation"})
                 ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "Equation", strEquation})

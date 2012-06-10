@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-16"?>
+<DataAnalyzer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <InflectionPoints>
+    <anyType xsi:type="CriticalPoint">
+      <Type>Inflection</Type>
+      <Time>0.6</Time>
+      <Value>0.12419</Value>
+      <Idx>60</Idx>
+      <CompareTime>Fixed</CompareTime>
+      <TimeError>0.04</TimeError>
+      <CompareValue>Fixed</CompareValue>
+      <ValueError>0.2</ValueError>
+    </anyType>
+    <anyType xsi:type="CriticalPoint">
+      <Type>Inflection</Type>
+      <Time>1.23</Time>
+      <Value>-0.10013</Value>
+      <Idx>123</Idx>
+      <CompareTime>Fixed</CompareTime>
+      <TimeError>0.04</TimeError>
+      <CompareValue>Fixed</CompareValue>
+      <ValueError>0.2</ValueError>
+    </anyType>
+    <anyType xsi:type="CriticalPoint">
+      <Type>Inflection</Type>
+      <Time>1.85</Time>
+      <Value>0.10955</Value>
+      <Idx>185</Idx>
+      <CompareTime>Fixed</CompareTime>
+      <TimeError>0.04</TimeError>
+      <CompareValue>Fixed</CompareValue>
+      <ValueError>0.2</ValueError>
+    </anyType>
+  </InflectionPoints>
+  <MaximumPoints>
+    <anyType xsi:type="CriticalPoint">
+      <Type>Maximum</Type>
+      <Time>0.31</Time>
+      <Value>0.9378</Value>
+      <Idx>31</Idx>
+      <CompareTime>Fixed</CompareTime>
+      <TimeError>0.04</TimeError>
+      <CompareValue>Percentage</CompareValue>
+      <ValueError>0.2</ValueError>
+    </anyType>
+    <anyType xsi:type="CriticalPoint">
+      <Type>Maximum</Type>
+      <Time>1.56</Time>
+      <Value>0.687</Value>
+      <Idx>156</Idx>
+      <CompareTime>Fixed</CompareTime>
+      <TimeError>0.04</TimeError>
+      <CompareValue>Percentage</CompareValue>
+      <ValueError>0.2</ValueError>
+    </anyType>
+  </MaximumPoints>
+  <MinimumPoints>
+    <anyType xsi:type="CriticalPoint">
+      <Type>Minimum</Type>
+      <Time>0.93</Time>
+      <Value>-0.81242</Value>
+      <Idx>93</Idx>
+      <CompareTime>Fixed</CompareTime>
+      <TimeError>0.04</TimeError>
+      <CompareValue>Percentage</CompareValue>
+      <ValueError>0.2</ValueError>
+    </anyType>
+  </MinimumPoints>
+  <StartPoint>
+    <Type>Endpoint</Type>
+    <Time>0</Time>
+    <Value>0</Value>
+    <Idx>0</Idx>
+    <CompareTime>Fixed</CompareTime>
+    <TimeError>0.005</TimeError>
+    <CompareValue>Fixed</CompareValue>
+    <ValueError>0.005</ValueError>
+  </StartPoint>
+  <EndPoint>
+    <Type>Endpoint</Type>
+    <Time>2</Time>
+    <Value>-0.32641</Value>
+    <Idx>200</Idx>
+    <CompareTime>Fixed</CompareTime>
+    <TimeError>0.005</TimeError>
+    <CompareValue>Fixed</CompareValue>
+    <ValueError>0.005</ValueError>
+  </EndPoint>
+  <IgnoreAdditionalPoints>false</IgnoreAdditionalPoints>
+</DataAnalyzer>

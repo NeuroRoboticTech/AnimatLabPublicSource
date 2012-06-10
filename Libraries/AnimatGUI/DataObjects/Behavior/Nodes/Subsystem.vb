@@ -172,8 +172,8 @@ Namespace DataObjects.Behavior.Nodes
 
             Dim bnOrig As Subsystem = DirectCast(doOriginal, Subsystem)
 
-            m_aryBehavioralNodes = DirectCast(bnOrig.m_aryBehavioralNodes.Clone(), AnimatGUI.Collections.SortedNodeList)
-            m_aryBehavioralLinks = DirectCast(bnOrig.m_aryBehavioralLinks.Clone(), AnimatGUI.Collections.SortedLinkList)
+            m_aryBehavioralNodes = DirectCast(bnOrig.m_aryBehavioralNodes.Clone(Me, bCutData, doRoot), AnimatGUI.Collections.SortedNodeList)
+            m_aryBehavioralLinks = DirectCast(bnOrig.m_aryBehavioralLinks.Clone(Me, bCutData, doRoot), AnimatGUI.Collections.SortedLinkList)
             m_strDiagramXml = bnOrig.m_strDiagramXml
 
         End Sub

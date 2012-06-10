@@ -37,9 +37,9 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>1</MajorInterval>
+<MajorInterval>500</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>Seconds</TimeScale>
+<TimeScale>MilliSeconds</TimeScale>
 </Form>
 </DockingForms>
 <ChildForms>
@@ -80,7 +80,7 @@
 <Name>ForceStim</Name>
 <ID>68b15ed3-e536-4713-9142-fef976d2afaa</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="0.5" Scale="None" Actual="0.5"/>
+<EndTime Value="0.1" Scale="None" Actual="0.1"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
 <Enabled>False</Enabled>
@@ -91,7 +91,7 @@
 <PositionX Value="0" Scale="centi" Actual="0"/>
 <PositionY Value="0" Scale="centi" Actual="0"/>
 <PositionZ Value="0" Scale="centi" Actual="0"/>
-<ForceX Value="5" Scale="None" Actual="5"/>
+<ForceX Value="10" Scale="milli" Actual="0.01"/>
 <ForceY Value="0" Scale="None" Actual="0"/>
 <ForceZ Value="0" Scale="None" Actual="0"/>
 <TorqueX Value="0" Scale="None" Actual="0"/>

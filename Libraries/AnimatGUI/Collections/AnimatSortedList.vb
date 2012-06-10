@@ -105,7 +105,7 @@ Namespace Collections
 
         End Sub
 
-        Protected Overridable Sub CloneInternal(ByVal aryOrig As AnimatSortedList)
+        Protected Overridable Sub CloneInternal(ByVal aryOrig As AnimatSortedList, ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, ByVal doRoot As AnimatGUI.Framework.DataObject)
 
             Me.Clear()
 
@@ -114,15 +114,16 @@ Namespace Collections
             For Each deItem As DictionaryEntry In aryOrig
                 If TypeOf deItem.Value Is AnimatGUI.Framework.DataObject Then
                     doOrig = DirectCast(deItem.Value, AnimatGUI.Framework.DataObject)
-                    doItem = doOrig.Clone(doOrig.Parent, False, Nothing)
+                    doItem = doOrig.Clone(doParent, bCutData, doRoot)
                     Me.Add(doItem.ID, doItem)
                 End If
             Next
 
         End Sub
 
-        Public Overrides Function Clone() As Object
-            Return Me.CloneList()
+        Public Overridable Overloads Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
+                                           ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatSortedList
+            Throw New System.Exception("You should not be using the base class Clone Method.")
         End Function
 
         Public Overridable Function Copy() As AnimatSortedList
@@ -133,7 +134,7 @@ Namespace Collections
 
         Public Overridable Function CloneList() As AnimatSortedList
             Dim aryList As New AnimatSortedList(m_doParent)
-            aryList.CloneInternal(Me)
+            aryList.CloneInternal(Me, Me.Parent, False, Nothing)
             Return aryList
         End Function
 

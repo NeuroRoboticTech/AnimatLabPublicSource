@@ -124,6 +124,7 @@
     <Compile Include="UITests\BehavioralEditorTests\NeuralUITest.vb" />
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\BodyPartUITest.vb" />
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\JointTests\BallSocketUITest.vb" />
+    <Compile Include="UITests\BodyEditorTests\BodyPartTests\JointTests\DistanceUITest.vb" />
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\JointTests\HingeUITest.vb" />
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\JointTests\PrismaticUITest.vb" />
     <Compile Include="UITests\BodyEditorTests\BodyPartTests\JointTests\UniversialUITest.vb" />

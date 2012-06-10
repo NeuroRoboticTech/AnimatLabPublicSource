@@ -270,8 +270,9 @@ void VsHinge::SetupPhysics()
 	m_iCoordID = m_vxHinge->kAngularCoordinate;
 
 	//If the motor is enabled then it will start out with a velocity of	zero.
-	if(m_bEnableMotor)
-		EnableLock(TRUE, m_fltPosition, m_fltMaxForce);
+	EnableMotor(m_bEnableMotorInit);
+	//if(m_bEnableMotor)
+	//	EnableLock(TRUE, m_fltPosition, m_fltMaxForce);
 
 	/*VxConstraintFriction *lpFriction = m_vxHinge->getCoordinateFriction(m_iCoordID);
 	int iCount = m_vxHinge->getConstraintEquationCount();

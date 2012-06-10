@@ -139,8 +139,8 @@ Namespace DataObjects.Physical
 
             Dim doOrig As ContactSensor = DirectCast(doOriginal, ContactSensor)
 
-            m_aryFields = DirectCast(doOrig.Fields.CloneList(), Collections.SortedReceptiveFields)
-            m_aryFieldPairs = DirectCast(doOrig.FieldPairs.CloneList(), Collections.SortedReceptiveFieldPairs)
+            m_aryFields = DirectCast(doOrig.Fields.Clone(Me, bCutData, doRoot), Collections.SortedReceptiveFields)
+            m_aryFieldPairs = DirectCast(doOrig.FieldPairs.Clone(Me, bCutData, doRoot), Collections.SortedReceptiveFieldPairs)
 
             m_gnReceptiveFieldGain = DirectCast(doOrig.m_gnReceptiveFieldGain.Clone(Me, bCutData, doRoot), Gain)
             m_gnReceptiveCurrentGain = DirectCast(doOrig.m_gnReceptiveCurrentGain.Clone(Me, bCutData, doRoot), Gain)

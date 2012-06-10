@@ -117,7 +117,7 @@ Namespace DataObjects.Behavior.Nodes
             m_doRigidBody = doAdapter.m_doRigidBody
             m_nmTargetModule = doAdapter.m_nmTargetModule
             m_doSensor = doAdapter.m_doSensor
-            m_aryFieldPairs = DirectCast(doAdapter.FieldPairs.CloneList(), Collections.SortedReceptiveFieldPairs)
+            m_aryFieldPairs = DirectCast(doAdapter.FieldPairs.Clone(Me, bCutData, doRoot), Collections.SortedReceptiveFieldPairs)
 
         End Sub
 
