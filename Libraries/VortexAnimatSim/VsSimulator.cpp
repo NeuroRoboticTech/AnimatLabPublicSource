@@ -372,18 +372,22 @@ void VsSimulator::ConvertV1MeshFile(string strOriginalMeshFile, string strNewMes
 	//Make sure the mesh loaded is valid.
 	if(!osgNode.valid())
 		THROW_PARAM_ERROR(Vs_Err_lErrorLoadingMesh, Vs_Err_strErrorLoadingMesh, "Original Mesh file", strOriginalMeshFile);
-	
-	//Now add a matrix tranform to rotate about the x axis by -90 degrees.
-	osg::ref_ptr<osg::MatrixTransform> m_osgRotateMT = new osg::MatrixTransform;
+
 	CStdFPoint vPos(0, 0, 0), vRot( -(osg::PI/2), 0, 0);
-	m_osgRotateMT->setMatrix(SetupMatrix(vPos, vRot));
+	ApplyVertexTransform(osgNode, SetupMatrix(vPos, vRot));
 
-	m_osgRotateMT->addChild(osgNode.get());
+	////Now add a matrix tranform to rotate about the x axis by -90 degrees.
+	//osg::ref_ptr<osg::MatrixTransform> m_osgRotateMT = new osg::MatrixTransform;
+	////CStdFPoint vPos(0, 0, 0), vRot( -(osg::PI/2), 0, 0);
+	//CStdFPoint vPos(0, 0, 0), vRot( 0, 0, 0);
+	//m_osgRotateMT->setMatrix(SetupMatrix(vPos, vRot));
 
-	AddNodeTexture(m_osgRotateMT.get(), strTextFile, GL_TEXTURE_2D);
+	//m_osgRotateMT->addChild(osgNode.get());
+
+	AddNodeTexture(osgNode, strTextFile, GL_TEXTURE_2D);
 
 	//Now save out the new collision mesh.
-	osgDB::writeNodeFile(*m_osgRotateMT, strNewFile.c_str());
+	osgDB::writeNodeFile(*osgNode, strNewFile.c_str());
 }
 
 

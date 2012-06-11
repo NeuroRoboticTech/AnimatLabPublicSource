@@ -1,0 +1,51 @@
+Name,Effort,Time Spent,Time Remain,Project,Epic,Sprint,Priority,Entity State,ID,Description
+Car Wheel joint,13,0,10,AnimatLab V2 Upgrade,Build new Body plan editor,"",Nice To Have,Open,39,As a user I need to be able to use a Car Wheel joint
+Cylindrical joint,5,0,7,AnimatLab V2 Upgrade,Build new Body plan editor,"",Nice To Have,Open,40,"As a user I need to be able to use a Cylindrical joint
+"
+Differential joint,5,0,6,AnimatLab V2 Upgrade,Build new Body plan editor,"",Nice To Have,Open,41,As a user I need to be able to use a Differential joint
+Gear Ratio joint,8,0,8,AnimatLab V2 Upgrade,Build new Body plan editor,"",Nice To Have,Open,44,As a user I need to be able to use a Gear Ratio joint
+Angular 3-D joint,5,0,6,AnimatLab V2 Upgrade,Build new Body plan editor,"",Nice To Have,Open,48,As a user I need to be able to use a Angular 3-D joint
+Screw joint,8,0,8,AnimatLab V2 Upgrade,Build new Body plan editor,"",Nice To Have,Open,49,As a user I need to be able to use a Screw joint
+Wheel joint,13,0,10,AnimatLab V2 Upgrade,Build new Body plan editor,"",Nice To Have,Open,50,As a user I need to be able to use a Wheel joint
+Setup google analytics for new website,2,1,1,Convert AnimatLab website to ASP.Net,Shopping cart/Purchasing/Licensing,"",Great,Open,202,"I need to test the integration with google analytics in the new site to make sure it is functioning correctly.
+"
+Create new artwork for the website,3,0,2,Convert AnimatLab website to ASP.Net,Shopping cart/Purchasing/Licensing,"",Good,Open,210,"I need to create any new artwork that is necessary
+"
+Cone Constraint,3,0,3.50,AnimatLab V2 Upgrade,Build new Body plan editor,"",Nice To Have,Open,275,"On ball & socket add a cone constraint to allow the user to limit the movement.
+"
+Add playback control,2,0,1.50,AnimatLab V2 Upgrade,Build new Body plan editor,"",Good,Open,288,"Need the ability to specify a sleep millisecond period between time steps for the simulation. This will let the user control how fast the simulation plays back. However, we need to do this in a way that does not affect the graphics playback rate. In other words, the graphics screen rate needs to be fairly constant while the simulation slows down.
+"
+Linear joint...(Split),5,4.78,1.90,AnimatLab V2 Upgrade,Build new Body plan editor,"",Good,Open,306,"As a user I need to be able to use a Linear joint. I will have a setting on the joint that specifies if this is a 1,2, or 3-D linear joint.
+"
+Free moving joint,2,0,1.50,AnimatLab V2 Upgrade,Build new Body plan editor,"",Great,Open,316,"Need a way to add parts together without having an actual joint constraint. An example of this would be a chain. The interaction between the collision geometries is all that is needed as a joint. I need to add a new joint type (FreeMoving). When created in the simulation it will simply not add a constraint between the parts.
+"
+Test simulation/environment objects,2,0,3,AnimatLab V2 Upgrade,nUnit tests,Sprint #8.1,Must Have,Open,478,"Test simulation/environment objects
+"
+Convert NN Errors view to be Project Errors,5,0,6,AnimatLab V2 Upgrade,"","",Great,Open,494,"Convert NN Errors view to be Project Errors. For the moment only the existing code will add errors to it. Eventually, I will add errors/warnings for the body editor as well.
+"
+Test for Cone,2,0,1,AnimatLab V2 Upgrade,nUnit tests,Sprint #8.1,Must Have,Open,540,"Test for Cone
+"
+Hinge Limit conversion test,8,0,4,AnimatLab V2 Upgrade,nUnit tests,"",Must Have,Open,708,"I need a comprehensive test of hinge constraint limits. All variables involved need to be tested . Create an example project and run a program module to systematically adjust params and create a DB table of changes for use in the test and generate sim files for output comparison.
+"
+Prismatic limit conversion test,5,0,4,AnimatLab V2 Upgrade,nUnit tests,"",Must Have,Open,711,"I need a comprehensive test of prismatic constraint limits. All variables involved need to be tested . Create an example project and run a program module to systematically adjust params and create a DB table of changes for use in the test and generate sim files for output comparison.
+"
+Test receptive field system,8,0,11,AnimatLab V2 Upgrade,nUnit tests,Sprint #8.1,Must Have,Open,720,"Need a test project in V1 that can be converted to compare output.
+"
+Test data chart Conversion,3,0,4,AnimatLab V2 Upgrade,nUnit tests,Sprint #8.1,Must Have,Open,753,"Convert a old V1 project with a chart and compare the chart output when changing the values on the chart.
+"
+Build out biomechanical editor user interface section,3,0,5,AnimatLab V2 Upgrade,Setup new AnimatLab.com e-commerce website,"",Must Have,Open,816,"Build out biomechanical editor user interface section
+"
+Build out Body parts sections in website,8,4.60,7,AnimatLab V2 Upgrade,Setup new AnimatLab.com e-commerce website,"",Nice To Have,Open,818,"Build out Body parts sections in website
+"
+Add shopping cart to website,3,3.80,2,AnimatLab V2 Upgrade,Setup new AnimatLab.com e-commerce website,"",Must Have,Open,839,"Add shopping cart to website
+"
+Test Mesh conversion,3,0,5,AnimatLab V2 Upgrade,nUnit tests,Sprint #8.1,Must Have,Open,885,""
+Test Material interactions,3,0,5,AnimatLab V2 Upgrade,nUnit tests,"",Must Have,Open,898,""
+Test hydrodynamics,3,0,5,AnimatLab V2 Upgrade,nUnit tests,"",Must Have,Open,900,"Test hydrodynamics
+"
+Distance Joint Bug,2,0,3,AnimatLab V2 Upgrade,nUnit tests,"",Must Have,Open,903,"Found two bugs when building the test for the distance joint. I need to submit them to cm-labs to look at.
+1. When starting a sim, if a block is over the top of its parent with a distance joint, then it initially falls straight down through the parent till it hits the joint limit. It then behaves normally.
+2. When I charted the positions of the attached body it did not keep a consistent distance from the parent part.
+"
+Change default joint limit damping param.,1,0,1,AnimatLab V2 Upgrade,"","",Must Have,Open,905,""
+"",133,14.18,132.40,"","","","","",(28 Items),""

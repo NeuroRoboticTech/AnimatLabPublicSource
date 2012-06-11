@@ -145,6 +145,7 @@
     <Compile Include="UITests\ConversionTests\BodyPartTests\JointTests\HingeConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\BodyPartTests\JointTests\StaticConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\BodyPartTests\RigidBodyTests\ContactSensorConversionUITest.vb" />
+    <Compile Include="UITests\ConversionTests\BodyPartTests\RigidBodyTests\MeshConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\BodyPartTests\RigidBodyTests\MuscleBaseConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\BodyPartTests\RigidBodyTests\MuscleConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\BodyPartTests\RigidBodyTests\OdorMouthEatingConversionUITest.vb" />

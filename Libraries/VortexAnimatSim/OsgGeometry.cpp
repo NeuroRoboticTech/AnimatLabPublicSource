@@ -26,6 +26,45 @@ namespace VortexAnimatSim
 #pragma region CreateGeometry_Code
 
 
+void VORTEX_PORT ApplyVertexTransform(osg::Node *node, osg::Matrix omat)
+{
+	if (!node)
+		return;
+
+	//// Remember the parent (TODO: beware possible case of multiple parents)
+	////  We must remove the node from the parent temporarily in order for the
+	////  optimization below to work, but we don't want to de-ref the node, so
+	////  order is important.
+	//osg::Node *parent = node->getParent(0);
+
+	//// Put it under a temporary parent instead
+	//osg::Node *temp = new vtGroup;
+
+	//osg::Matrix omat;
+	//ConvertMatrix4(&mat, &omat);
+
+	osg::MatrixTransform *transform = new osg::MatrixTransform;
+	transform->setMatrix(omat);
+	// Tell OSG that it can be optimized
+	transform->setDataVariance(osg::Object::STATIC);
+
+    //temp->addChild(transform);
+	transform->addChild(node);
+
+	//// carefully remove from the true parent
+	//parent->removeChild(node);
+
+	// Now do some OSG voodoo, which should spread the transform downward
+	//  through the loaded model, and delete the transform.
+	osgUtil::Optimizer optimizer;
+	optimizer.optimize(transform, osgUtil::Optimizer::FLATTEN_STATIC_TRANSFORMS);
+
+	//// now carefully add back again, whatever remains after the optimization,
+	////  to the true parent. Hopefully, our corrective transform has been applied.
+	//// Our original node may have been optimized away too.
+	//parent->addChild(temp->getChild(0));
+}
+
 osg::Geometry VORTEX_PORT *CreateBoxGeometry(float xsize, float ysize, float zsize, float fltXSegWidth, float fltYSegWidth, float fltZSegWidth)
 {
     //if(! hor || ! vert || ! depth)

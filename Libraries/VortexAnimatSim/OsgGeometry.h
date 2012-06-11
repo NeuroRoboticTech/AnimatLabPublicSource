@@ -5,6 +5,7 @@ namespace VortexAnimatSim
 {
 	namespace Environment
 	{
+		void VORTEX_PORT ApplyVertexTransform(osg::Node *node, osg::Matrix omat);
 		BOOL VORTEX_PORT OsgMatricesEqual(osg::Matrix v1, osg::Matrix v2);
 		osg::Quat VORTEX_PORT EulerToQuaternion(float fX, float fY, float fZ);
 		CStdFPoint VORTEX_PORT QuaterionToEuler(osg::Quat vQuat);

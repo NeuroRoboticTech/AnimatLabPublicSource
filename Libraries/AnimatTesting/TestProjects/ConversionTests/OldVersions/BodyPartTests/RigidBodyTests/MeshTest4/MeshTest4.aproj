@@ -1,8 +1,8 @@
 <Project>
-<ProjectName>MeshTest</ProjectName>
+<ProjectName>MeshTest4</ProjectName>
 <PhysicsAssemblyName>VortexAnimatTools.dll</PhysicsAssemblyName>
 <PhysicsClassName>VortexAnimatTools.DataObjects.Simulation</PhysicsClassName>
-<SimulationFile>MeshTest.asim</SimulationFile>
+<SimulationFile>MeshTest4.asim</SimulationFile>
 <LogLevel>Error</LogLevel>
 <Version>1</Version>
 <SimWindowLocation x="-8" y="2"/>
@@ -80,16 +80,16 @@
 <Name>Sin_Stim</Name>
 <ID>4991282e-9cbe-40c1-918f-69bac106b00c</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="1.5" Scale="None" Actual="1.5"/>
+<EndTime Value="0.5" Scale="None" Actual="0.5"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>False</Enabled>
+<Enabled>True</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>sin(t)</Equation>
 <StructureID>e59a0446-0e07-44b7-adda-a9c5be67fb26</StructureID>
 <PartID>a40d14a4-5690-42d1-9a56-d6f8f1566a26</PartID>
 <Velocity Value="2" Scale="None" Actual="2"/>
-<DisableMotorWhenDone>False</DisableMotorWhenDone>
+<DisableMotorWhenDone>True</DisableMotorWhenDone>
 </Stimulus>
 </Stimuli>
 <DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">

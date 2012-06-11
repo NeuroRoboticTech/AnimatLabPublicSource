@@ -101,24 +101,24 @@
 <ServoGain>100</ServoGain>
 <MaxTorque Value="100" Scale="None" Actual="100"/>
 <MaxVelocity Value="100" Scale="None" Actual="100"/>
-<RotationAxis x="-8.74228e-08" y="4.37114e-08" z="-1"/>
+<RotationAxis x="0" y="0" z="1"/>
 <Radius>0.05</Radius>
-<RelativePosition x="3" y="0" z="-1.42109e-14"/>
-<Rotation x="3.14159" y="-4.37112e-08" z="-1.5708"/>
-<OrientationMatrix>-4.371139E-08,1,0,0,4.371139E-08,1.910685E-15,1,0,1,4.371139E-08,-4.371139E-08,0,0,0,0,1</OrientationMatrix>
-<TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,-1.311348E-07,0,3.000015,1</TranslationMatrix>
+<RelativePosition x="0" y="3" z="0"/>
+<Rotation x="0" y="0" z="0"/>
+<OrientationMatrix>1,0,0,0,0,0.7071068,-0.7071068,0,0,0.7071068,0.7071068,0,0,0,0,1</OrientationMatrix>
+<TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,2.12133,-2.12133,1</TranslationMatrix>
 </Joint>
 <FoodSource>False</FoodSource>
 <CenterOfMass x="0" y="0" z="0"/>
-<RelativePosition x="-3" y="0" z="0"/>
-<LocalPosition x="-3" y="0" z="0"/>
-<Rotation x="3.14159" y="1.56773" z="3.14159"/>
-<LocalRotation x="0" y="1.5708" z="0"/>
+<RelativePosition x="0" y="-3" z="0"/>
+<LocalPosition x="0" y="-3" z="0"/>
+<Rotation x="-0.785398" y="0" z="0"/>
+<LocalRotation x="0.785398" y="0" z="0"/>
 <Direction x="1" y="0" z="0"/>
 <Color Red="1" Green="1" Blue="1" Alpha="1"/>
-<OrientationMatrix>-4.371139E-08,0,-1,0,0,1,0,0,1,0,-4.371139E-08,0,0,0,0,1</OrientationMatrix>
-<TranslationMatrix>0.9999953,0,0,0,0,0.9999953,0,0,0,0,0.9999953,0,-3,0,0,0.9999953</TranslationMatrix>
-<CombinedTransformationMatrix>-4.371118E-08,0,-0.9999953,0,0,0.9999953,0,0,0.9999953,0,-4.371118E-08,0,-3,0,0,0.9999953</CombinedTransformationMatrix>
+<OrientationMatrix>1,0,0,0,0,0.7071068,0.7071068,0,0,-0.7071068,0.7071068,0,0,0,0,1</OrientationMatrix>
+<TranslationMatrix>0.9999953,0,0,0,0,0.9999953,0,0,0,0,0.9999953,0,0,-3,0,0.9999953</TranslationMatrix>
+<CombinedTransformationMatrix>0.9999953,0,0,0,0,0.7071035,0.7071035,0,0,-0.7071035,0.7071035,0,0,-3,0,0.9999953</CombinedTransformationMatrix>
 <CollisionBoxSize x="0.506657" y="0.303034" z="2.61299"/>
 <GraphicsBoxSize x="0.506657" y="0.303034" z="2.61299"/>
 <Scale x="1" y="1" z="1"/>

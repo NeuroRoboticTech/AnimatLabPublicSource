@@ -1,8 +1,8 @@
 <Project>
-<ProjectName>MeshTest</ProjectName>
+<ProjectName>MeshTest2</ProjectName>
 <PhysicsAssemblyName>VortexAnimatTools.dll</PhysicsAssemblyName>
 <PhysicsClassName>VortexAnimatTools.DataObjects.Simulation</PhysicsClassName>
-<SimulationFile>MeshTest.asim</SimulationFile>
+<SimulationFile>MeshTest2.asim</SimulationFile>
 <LogLevel>Error</LogLevel>
 <Version>1</Version>
 <SimWindowLocation x="-8" y="2"/>

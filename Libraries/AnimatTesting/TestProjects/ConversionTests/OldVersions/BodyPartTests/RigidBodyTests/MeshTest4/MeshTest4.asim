@@ -1,5 +1,5 @@
 <Simulation>
-<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\RigidBodyTests\MeshTest\</ProjectPath>
+<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\RigidBodyTests\MeshTest4\</ProjectPath>
 <AnimatModule>VortexAnimatLibrary_vc7.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
@@ -31,9 +31,9 @@
 <ManualRandomSeed>12345</ManualRandomSeed>
 <CollisionObjects>4</CollisionObjects>
 <Camera>
-<Rotation>0</Rotation>
+<Rotation>0.785398</Rotation>
 <Elevation>0</Elevation>
-<Offset>5</Offset>
+<Offset>12</Offset>
 <TrackCamera>True</TrackCamera>
 <RecordVideo>False</RecordVideo>
 <SaveFrameImages>False</SaveFrameImages>

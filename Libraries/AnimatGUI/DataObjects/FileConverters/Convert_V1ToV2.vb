@@ -49,24 +49,25 @@ Namespace DataObjects
             Protected Overrides Function CreateReplaceStringList() As Hashtable
 
                 Dim aryReplaceText As New Hashtable()
-                aryReplaceText.Add(31, New ReplaceText("<ID>MOUTH</ID>", "<ID>" & m_strMouthID & "</ID>"))
-                aryReplaceText.Add(30, New ReplaceText("<LinkedBodyPartID>MOUTH</LinkedBodyPartID>", "<LinkedBodyPartID>" & m_strMouthID & "</LinkedBodyPartID>"))
-                aryReplaceText.Add(29, New ReplaceText("<DataItemID>MOUTH</DataItemID>", "<DataItemID>" & m_strMouthID & "</DataItemID>"))
-                aryReplaceText.Add(28, New ReplaceText("<ID>Mouth</ID>", "<ID>" & m_strMouthID & "</ID>"))
-                aryReplaceText.Add(27, New ReplaceText("<LinkedBodyPartID>Mouth</LinkedBodyPartID>", "<LinkedBodyPartID>" & m_strMouthID & "</LinkedBodyPartID>"))
-                aryReplaceText.Add(26, New ReplaceText("<DataItemID>Mouth</DataItemID>", "<DataItemID>" & m_strMouthID & "</DataItemID>"))
-                aryReplaceText.Add(25, New ReplaceText("<ID>STOMACH</ID>", "<ID>" & m_strStomachID & "</ID>"))
-                aryReplaceText.Add(24, New ReplaceText("<LinkedBodyPartID>STOMACH</LinkedBodyPartID>", "<LinkedBodyPartID>" & m_strStomachID & "</LinkedBodyPartID>"))
-                aryReplaceText.Add(23, New ReplaceText("<DataItemID>STOMACH</DataItemID>", "<DataItemID>" & m_strStomachID & "</DataItemID>"))
-                aryReplaceText.Add(22, New ReplaceText("<ID>Stomach</ID>", "<ID>" & m_strStomachID & "</ID>"))
-                aryReplaceText.Add(21, New ReplaceText("<LinkedBodyPartID>Stomach</LinkedBodyPartID>", "<LinkedBodyPartID>" & m_strStomachID & "</LinkedBodyPartID>"))
-                aryReplaceText.Add(20, New ReplaceText("<DataItemID>Stomach</DataItemID>", "<DataItemID>" & m_strStomachID & "</DataItemID>"))
-                aryReplaceText.Add(19, New ReplaceText("CylinderContactSensor", "Cylinder"))
-                aryReplaceText.Add(18, New ReplaceText("BoxContactSensor", "Box"))
-                aryReplaceText.Add(17, New ReplaceText("InterbusrtLengthDistribution", "InterburstLengthDistribution"))
-                aryReplaceText.Add(16, New ReplaceText("LicensedAnimatTools", "LicensedAnimatGUI"))
-                aryReplaceText.Add(15, New ReplaceText("FastNeuralNetTools", "FiringRateGUI"))
-                aryReplaceText.Add(14, New ReplaceText("RealisticNeuralNetTools", "IntegrateFireGUI"))
+                aryReplaceText.Add(32, New ReplaceText("<ID>MOUTH</ID>", "<ID>" & m_strMouthID & "</ID>"))
+                aryReplaceText.Add(31, New ReplaceText("<LinkedBodyPartID>MOUTH</LinkedBodyPartID>", "<LinkedBodyPartID>" & m_strMouthID & "</LinkedBodyPartID>"))
+                aryReplaceText.Add(30, New ReplaceText("<DataItemID>MOUTH</DataItemID>", "<DataItemID>" & m_strMouthID & "</DataItemID>"))
+                aryReplaceText.Add(29, New ReplaceText("<ID>Mouth</ID>", "<ID>" & m_strMouthID & "</ID>"))
+                aryReplaceText.Add(28, New ReplaceText("<LinkedBodyPartID>Mouth</LinkedBodyPartID>", "<LinkedBodyPartID>" & m_strMouthID & "</LinkedBodyPartID>"))
+                aryReplaceText.Add(27, New ReplaceText("<DataItemID>Mouth</DataItemID>", "<DataItemID>" & m_strMouthID & "</DataItemID>"))
+                aryReplaceText.Add(26, New ReplaceText("<ID>STOMACH</ID>", "<ID>" & m_strStomachID & "</ID>"))
+                aryReplaceText.Add(25, New ReplaceText("<LinkedBodyPartID>STOMACH</LinkedBodyPartID>", "<LinkedBodyPartID>" & m_strStomachID & "</LinkedBodyPartID>"))
+                aryReplaceText.Add(24, New ReplaceText("<DataItemID>STOMACH</DataItemID>", "<DataItemID>" & m_strStomachID & "</DataItemID>"))
+                aryReplaceText.Add(23, New ReplaceText("<ID>Stomach</ID>", "<ID>" & m_strStomachID & "</ID>"))
+                aryReplaceText.Add(22, New ReplaceText("<LinkedBodyPartID>Stomach</LinkedBodyPartID>", "<LinkedBodyPartID>" & m_strStomachID & "</LinkedBodyPartID>"))
+                aryReplaceText.Add(21, New ReplaceText("<DataItemID>Stomach</DataItemID>", "<DataItemID>" & m_strStomachID & "</DataItemID>"))
+                aryReplaceText.Add(20, New ReplaceText("CylinderContactSensor", "Cylinder"))
+                aryReplaceText.Add(19, New ReplaceText("BoxContactSensor", "Box"))
+                aryReplaceText.Add(18, New ReplaceText("InterbusrtLengthDistribution", "InterburstLengthDistribution"))
+                aryReplaceText.Add(17, New ReplaceText("LicensedAnimatTools", "LicensedAnimatGUI"))
+                aryReplaceText.Add(16, New ReplaceText("FastNeuralNetTools", "FiringRateGUI"))
+                aryReplaceText.Add(15, New ReplaceText("RealisticNeuralNetTools", "IntegrateFireGUI"))
+                aryReplaceText.Add(14, New ReplaceText("VortexAnimatTools.DataObjects.Physical.RigidBodies.BodyMesh", "AnimatGUI.DataObjects.Physical.Bodies.Mesh"))
                 aryReplaceText.Add(13, New ReplaceText("VortexAnimatTools.DataObjects.Physical.RigidBodies", "AnimatGUI.DataObjects.Physical.Bodies"))
                 aryReplaceText.Add(12, New ReplaceText("VortexAnimatTools.DataObjects.Physical.Joints", "AnimatGUI.DataObjects.Physical.Joints"))
                 aryReplaceText.Add(11, New ReplaceText("VortexAnimatTools.DataObjects.Behavior.Nodes.MuscleSpindle", "AnimatGUI.DataObjects.Behavior.Nodes.StretchReceptor"))
@@ -593,6 +594,10 @@ Namespace DataObjects
                 Dim strCollisionMeshType As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "CollisionMeshType", False, "Convex")
                 Dim strTexture As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "Texture", False, "")
 
+                If strCollisionMeshType = "Regular" Then
+                    strCollisionMeshType = "Triangular"
+                End If
+
                 m_xnProjectXml.RemoveNode(xnRigidBody, "MeshFile", False)
                 m_xnProjectXml.RemoveNode(xnRigidBody, "CollisionMeshFile", False)
                 m_xnProjectXml.RemoveNode(xnRigidBody, "CollisionMeshType", False)
@@ -728,9 +733,14 @@ Namespace DataObjects
                 Dim xnChildBodies As XmlNode = m_xnProjectXml.GetNode(xnRigidBody, "ChildBodies", False)
                 If xnChildBodies Is Nothing Then
                     xnChildBodies = m_xnProjectXml.AddNodeValue(xnRigidBody, "ChildBodies", "")
+                    xnChildBodies.RemoveAll() 'Remove any automatically added child nodes.
                 End If
 
                 Dim xnGraphics As XmlNode = m_xnProjectXml.AddNodeXml(xnChildBodies, "RigidBody", strXml)
+
+                'For some reason it is adding a blank node to the child bodies.
+
+                Debug.WriteLine("ChildBodies: " & xnChildBodies.ChildNodes.Count & vbCrLf)
 
             End Sub
 

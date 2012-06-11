@@ -57,6 +57,16 @@ Namespace DataObjects.Physical.Bodies
             End Get
         End Property
 
+        Protected Overridable ReadOnly Property ActiveMeshFile() As String
+            Get
+                If m_eMeshType = enumMeshType.Triangular Then
+                    Return m_strMeshFile
+                Else
+                    Return m_strConvexMeshFile
+                End If
+            End Get
+        End Property
+
         Public Overridable Property MeshFile() As String
             Get
                 Return m_strMeshFile
@@ -73,7 +83,7 @@ Namespace DataObjects.Physical.Bodies
                     'If this is a convex mesh then we need to create the convex mesh within the project
                     CreateConvexMeshFile(value, m_eMeshType)
 
-                    SetSimData("SetMeshFile", CreateMeshFileXml(value, m_eMeshType, m_strConvexMeshFile), True)
+                    SetSimData("SetMeshFile", CreateMeshFileXml(value, m_eMeshType, Me.ActiveMeshFile), True)
                     m_strMeshFile = value
                 Catch ex As Exception
                     Try
@@ -102,7 +112,7 @@ Namespace DataObjects.Physical.Bodies
                     'If this is a convex mesh then we need to create the convex mesh within the project
                     CreateConvexMeshFile(m_strMeshFile, value)
 
-                    SetSimData("SetMeshFile", CreateMeshFileXml(m_strMeshFile, value, m_strConvexMeshFile), True)
+                    SetSimData("SetMeshFile", CreateMeshFileXml(m_strMeshFile, value, Me.ActiveMeshFile), True)
                     m_eMeshType = value
                 Catch ex As Exception
                     Try
@@ -214,7 +224,7 @@ Namespace DataObjects.Physical.Bodies
             m_strMeshFile = oXml.GetChildString("MeshFile", m_strMeshFile)
             m_eMeshType = DirectCast([Enum].Parse(GetType(enumMeshType), oXml.GetChildString("MeshType"), True), enumMeshType)
 
-            If Me.IsCollisionObject Then
+            If Me.IsCollisionObject AndAlso m_eMeshType = enumMeshType.Convex Then
                 m_strConvexMeshFile = oXml.GetChildString("ConvexMeshFile")
             End If
 
@@ -230,7 +240,7 @@ Namespace DataObjects.Physical.Bodies
             oXml.AddChildElement("MeshFile", m_strMeshFile)
             oXml.AddChildElement("MeshType", m_eMeshType.ToString)
 
-            If Me.IsCollisionObject Then
+            If Me.IsCollisionObject AndAlso m_eMeshType = enumMeshType.Convex Then
                 oXml.AddChildElement("ConvexMeshFile", m_strConvexMeshFile)
             End If
 
@@ -246,7 +256,7 @@ Namespace DataObjects.Physical.Bodies
             oXml.AddChildElement("MeshFile", m_strMeshFile)
             oXml.AddChildElement("MeshType", m_eMeshType.ToString)
 
-            If Me.IsCollisionObject Then
+            If Me.IsCollisionObject AndAlso m_eMeshType = enumMeshType.Convex Then
                 oXml.AddChildElement("ConvexMeshFile", m_strConvexMeshFile)
             End If
 
