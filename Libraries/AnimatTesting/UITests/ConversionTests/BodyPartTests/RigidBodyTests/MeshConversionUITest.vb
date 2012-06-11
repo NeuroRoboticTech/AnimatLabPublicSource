@@ -62,6 +62,7 @@ Namespace UITests
                         Dim strBlock3X As String = TestContext.DataRow("Block3X").ToString
                         Dim strBlock3Y As String = TestContext.DataRow("Block3Y").ToString
                         Dim strBlock3Z As String = TestContext.DataRow("Block3Z").ToString
+                        Dim strMeshType As String = TestContext.DataRow("MeshType").ToString
 
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
@@ -78,11 +79,13 @@ Namespace UITests
                         m_aryWindowsToOpen.Clear()
                         m_aryWindowsToOpen.Add("Tool Viewers\BodyData")
 
+                        ModifyMeshType(m_strOldProjectFolder, strMeshType)
+
                         'Load and convert the project.
                         TestConversionProject("AfterConversion_", aryMaxErrors)
 
-                        aryMaxErrors("MeshX") = 0.025
-                        aryMaxErrors("MeshY") = 0.025
+                        aryMaxErrors("MeshX") = 0.03
+                        aryMaxErrors("MeshY") = 0.03
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.X", strBlock1X})
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.Y", strBlock1Y})
@@ -108,8 +111,8 @@ Namespace UITests
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Mesh1_")
 
-                        aryMaxErrors("MeshX") = 0.025
-                        aryMaxErrors("MeshY") = 0.025
+                        aryMaxErrors("MeshX") = 0.03
+                        aryMaxErrors("MeshY") = 0.03
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.X", strBlock3X})
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.Y", strBlock3Y})
@@ -120,6 +123,31 @@ Namespace UITests
 
                     End Sub
 
+
+                    Protected Overridable Sub ModifyMeshType(ByVal strPath As String, _
+                                                             ByVal strType As String)
+                        Debug.WriteLine("ModifyMeshType. Path: '" & strPath & "', strType: " & strType)
+
+                        Dim strFile As String = m_strRootFolder & strPath & "\Organism_1.astl"
+                        Dim xnProject As New XmlDom()
+                        xnProject.Load(strFile)
+
+                        Dim xnStruct As XmlNode = xnProject.GetRootNode("Structure")
+                        Dim xnRoot As XmlNode = xnProject.GetNode(xnStruct, "RigidBody")
+
+                        Dim xnChild As XmlNode = xnProject.FindChildDataObject(xnRoot, "4177e00d-e941-45ee-b62a-f01f0ba16ef9")
+
+                        xnProject.UpdateSingleNodeValue(xnChild, "CollisionMeshType", strType)
+
+                        xnChild = xnProject.FindChildDataObject(xnChild, "6227ee72-b294-4e1b-ba5f-b4b47cd2ff85", False)
+
+                        If Not xnChild Is Nothing Then
+                            xnProject.UpdateSingleNodeValue(xnChild, "CollisionMeshType", strType)
+                        End If
+
+                        xnProject.Save(strFile)
+
+                    End Sub
 
 #Region "Additional test attributes"
                     '

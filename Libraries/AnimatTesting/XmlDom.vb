@@ -347,19 +347,24 @@ Public Class XmlDom
 
     Public Overridable Function FindChildDataObject(ByVal xnRoot As XmlNode, ByVal strID As String, Optional ByVal bThrowError As Boolean = True) As XmlNode
 
-        Dim xnChildren As XmlNode = Me.GetNode(xnRoot, "ChildBodies")
+        Dim xnChildren As XmlNode
 
-        Dim strTestID As String = ""
-        For Each xnNode As XmlNode In xnChildren.ChildNodes
-            strTestID = Me.GetSingleNodeValue(xnNode, "ID", False)
-            If strTestID.ToUpper = strID.ToUpper Then
-                Return xnNode
+        Try
+            xnChildren = Me.GetNode(xnRoot, "ChildBodies")
+
+            Dim strTestID As String = ""
+            For Each xnNode As XmlNode In xnChildren.ChildNodes
+                strTestID = Me.GetSingleNodeValue(xnNode, "ID", False)
+                If strTestID.ToUpper = strID.ToUpper Then
+                    Return xnNode
+                End If
+            Next
+        Catch ex As Exception
+            If bThrowError Then
+                Throw New System.Exception("No child data object was found with the ID '" & strID & "'")
             End If
-        Next
+        End Try
 
-        If bThrowError Then
-            Throw New System.Exception("No child data object was found with the ID '" & strID & "'")
-        End If
         Return Nothing
     End Function
 
