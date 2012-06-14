@@ -40,11 +40,16 @@ Namespace UITests
 #End Region
 
 #Region "Methods"
-                    '
 
-                    <TestMethod()>
+                    <TestMethod(), _
+                    DataSource("System.Data.OleDb", _
+                               "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
+                               "ConeTestData", _
+                               DataAccessMethod.Sequential), _
+                    DeploymentItem("TestCases.accdb")>
                     Public Sub Test_Cone()
-                   
+                        m_strProjectName = TestContext.DataRow("TestName").ToString
+
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
                         aryMaxErrors.Add("ConeX", 0.04)
@@ -52,7 +57,6 @@ Namespace UITests
                         aryMaxErrors.Add("ConeZ", 0.04)
                         aryMaxErrors.Add("default", 0.04)
 
-                        m_strProjectName = "ConeTest"
                         m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\RigidBodyTests"
                         m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\RigidBodyTests\" & m_strProjectName
                         m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\RigidBodyTests\" & m_strProjectName
@@ -66,7 +70,7 @@ Namespace UITests
                         TestConversionProject("AfterConversion_", aryMaxErrors)
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_5\Cone", "Height", "20 c"})
-  
+
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Height_20cm_")
 
@@ -87,7 +91,7 @@ Namespace UITests
 
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_5\Cone", "UpperRadius", "1 c"})
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_5\Cone", "LowerRadius", "0 c"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_5\Cone", "Height", "20 c"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_5\Cone", "Height", "25 c"})
 
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "UpperRadius_1cm_")
