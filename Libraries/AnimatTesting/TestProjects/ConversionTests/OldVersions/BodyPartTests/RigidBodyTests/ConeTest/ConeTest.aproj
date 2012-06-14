@@ -21,7 +21,7 @@
 <ClassName>AnimatTools.Forms.ProjectWorkspace</ClassName>
 <TabTitle>Workspace</TabTitle>
 <BackgroundForm>True</BackgroundForm>
-<TreeViewHeight>484</TreeViewHeight>
+<TreeViewHeight>432</TreeViewHeight>
 </Form>
 <Form>
 <Title>Simulation Controller</Title>
