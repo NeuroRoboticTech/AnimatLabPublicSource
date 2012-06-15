@@ -149,6 +149,10 @@ Namespace DataObjects.Behavior.Nodes
 
         End Sub
 
+        Public Overrides Sub InitializeAfterLoad()
+            m_bIsInitialized = True
+        End Sub
+
         Public Overridable Overloads Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(oXml)
 

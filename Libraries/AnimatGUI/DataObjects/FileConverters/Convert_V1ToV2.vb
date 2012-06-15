@@ -300,15 +300,17 @@ Namespace DataObjects
                 Dim strType As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "Type").ToUpper
                 Dim aryChildTransform As New AnimatGuiCtrls.MatrixLibrary.Matrix(AnimatGuiCtrls.MatrixLibrary.Matrix.Identity(4))
 
+                Dim fltReceptiveFieldDistance As Single = ModifyReceptiveFields(xnRigidBody)
+
                 Select Case strType
                     Case "BOX"
-                        ModifyRigidBodyBox(xnRigidBody, aryParentTrasform, aryChildTransform)
+                        ModifyRigidBodyBox(xnRigidBody, aryParentTrasform, aryChildTransform, fltReceptiveFieldDistance)
                     Case "BOXCONTACTSENSOR"
                         ModifyRigidBodyBoxSensor(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "CONE"
-                        ModifyRigidBodyCone(xnRigidBody, aryParentTrasform, aryChildTransform)
+                        ModifyRigidBodyCone(xnRigidBody, aryParentTrasform, aryChildTransform, fltReceptiveFieldDistance)
                     Case "CYLINDER"
-                        ModifyRigidBodyCylinder(xnRigidBody, aryParentTrasform, aryChildTransform)
+                        ModifyRigidBodyCylinder(xnRigidBody, aryParentTrasform, aryChildTransform, fltReceptiveFieldDistance)
                     Case "CYLINDERCONTACTSENSOR"
                         ModifyRigidBodyCylinderSensor(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "MUSCLEATTACHMENT"
@@ -324,7 +326,7 @@ Namespace DataObjects
                     Case "ODORSENSOR"
                         ModifyRigidBodyOdorSensor(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "SPHERE"
-                        ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTransform)
+                        ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTransform, fltReceptiveFieldDistance)
                     Case "SPRING"
                         ModifyRigidBodySpring(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "STOMACH"
@@ -410,9 +412,29 @@ Namespace DataObjects
 
             End Sub
 
+            Protected Overridable Function ModifyReceptiveFields(ByVal xnRigidBody As XmlNode) As Single
+
+                Dim xnReceptiveField As XmlNode = m_xnProjectXml.GetNode(xnRigidBody, "ContactSensor", False)
+                If Not xnReceptiveField Is Nothing Then
+                    Dim aryReplaceText As Hashtable = CreateReplaceStringList()
+
+                    Dim xnReceptiveFieldSensor As XmlNode = m_xnProjectXml.AppendNode(xnRigidBody, xnReceptiveField.InnerXml, "ReceptiveFieldSensor", aryReplaceText)
+                    m_xnProjectXml.RemoveNode(xnRigidBody, "ContactSensor")
+
+                    m_xnProjectXml.AddNodeValue(xnReceptiveFieldSensor, "ID", Guid.NewGuid.ToString)
+                    m_xnProjectXml.AddNodeValue(xnReceptiveFieldSensor, "AssemblyFile", "AnimatGUI.dll")
+                    m_xnProjectXml.AddNodeValue(xnReceptiveFieldSensor, "ClassName", "AnimatGUI.DataObjects.Physical.ContactSensor")
+
+                    Return CSng(m_xnProjectXml.GetScaleNumberValue(xnReceptiveField, "ReceptiveFieldDistance"))
+                End If
+
+                Return -1
+            End Function
+
 #Region "Rigid Body Part Type Modifiers"
 
-            Protected Overridable Sub ModifyRigidBodyBox(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodyBox(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, _
+                                                         ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByVal fltReceptiveFieldDistance As Single)
 
                 Dim dblX As Double = 0
                 Dim dblY As Double = 0
@@ -432,15 +454,31 @@ Namespace DataObjects
                 m_xnProjectXml.AddScaledNumber(xnRigidBody, "Height", dblY, "None", dblY)
                 m_xnProjectXml.AddScaledNumber(xnRigidBody, "Width", dblZ, "None", dblZ)
 
-                m_xnProjectXml.AddNodeValue(xnRigidBody, "LengthSections", "1")
-                m_xnProjectXml.AddNodeValue(xnRigidBody, "HeightSections", "1")
-                m_xnProjectXml.AddNodeValue(xnRigidBody, "WidthSections", "1")
+                Dim iLengthSections As Integer = 1
+                Dim iWidthhSections As Integer = 1
+                Dim iHeightSections As Integer = 1
+
+                'If a receptive field distance is specified then we need to use the correct number of sections.
+                If fltReceptiveFieldDistance > -1 Then
+                    iLengthSections = CInt(Math.Ceiling(dblX / fltReceptiveFieldDistance))
+                    iHeightSections = CInt(Math.Ceiling(dblY / fltReceptiveFieldDistance))
+                    iWidthhSections = CInt(Math.Ceiling(dblZ / fltReceptiveFieldDistance))
+
+                    If iLengthSections <= 0 Then iLengthSections = 1
+                    If iHeightSections <= 0 Then iHeightSections = 1
+                    If iWidthhSections <= 0 Then iWidthhSections = 1
+                End If
+
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "LengthSections", iLengthSections.ToString)
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "HeightSections", iHeightSections.ToString)
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "WidthSections", iWidthhSections.ToString)
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyBoxSensor(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodyBoxSensor(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, _
+                                                               ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
-                ModifyRigidBodyBox(xnRigidBody, aryParentTrasform, aryChildTrasform)
+                ModifyRigidBodyBox(xnRigidBody, aryParentTrasform, aryChildTrasform, -1)
 
                 m_xnProjectXml.RemoveNode(xnRigidBody, "IsContactSensor", False)
                 m_xnProjectXml.RemoveNode(xnRigidBody, "IsCollisionObject", False)
@@ -450,7 +488,8 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyCone(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodyCone(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, _
+                                                          ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByVal fltReceptiveFieldDistance As Single)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Cone")
 
                 Dim fltLowerRadius As Single = CSng(m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "CollisionLowerRadius")) * m_fltDistanceUnits
@@ -488,7 +527,8 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyCylinder(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodyCylinder(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, _
+                                                              ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByVal fltReceptiveFieldDistance As Single)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Cylinder")
 
                 Dim fltRadius As Single = CSng(m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "CollisionRadius")) * m_fltDistanceUnits
@@ -505,9 +545,10 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyCylinderSensor(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodyCylinderSensor(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, _
+                                                                    ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
-                ModifyRigidBodyCylinder(xnRigidBody, aryParentTrasform, aryChildTrasform)
+                ModifyRigidBodyCylinder(xnRigidBody, aryParentTrasform, aryChildTrasform, -1)
 
                 m_xnProjectXml.RemoveNode(xnRigidBody, "IsContactSensor", False)
                 m_xnProjectXml.RemoveNode(xnRigidBody, "IsCollisionObject", False)
@@ -518,15 +559,17 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyAttachment(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodyAttachment(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, _
+                                                                ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
-                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTrasform)
+                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTrasform, -1)
 
                 m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Attachment")
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyMuscle(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodyMuscle(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, _
+                                                            ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.LinearHillMuscle")
 
@@ -555,7 +598,8 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyStretchReceptor(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodyStretchReceptor(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, _
+                                                                     ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
                 ModifyRigidBodyMuscle(xnRigidBody, aryParentTrasform, aryChildTrasform)
 
@@ -564,7 +608,8 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodySpring(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodySpring(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, _
+                                                            ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Spring")
 
@@ -580,7 +625,8 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyMesh(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodyMesh(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, _
+                                                          ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
                 m_xnProjectXml.RemoveNode(xnRigidBody, "Transparencies")
                 m_xnProjectXml.AddTransparency(xnRigidBody, 50, 0, 50, 50, 100)
@@ -744,8 +790,9 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyMouth(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
-                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTrasform)
+            Protected Overridable Sub ModifyRigidBodyMouth(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, _
+                                                           ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTrasform, -1)
 
                 m_xnProjectXml.RemoveNode(xnRigidBody, "ID")
                 m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
@@ -763,8 +810,9 @@ Namespace DataObjects
                 End If
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyStomach(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
-                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTrasform)
+            Protected Overridable Sub ModifyRigidBodyStomach(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, _
+                                                             ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTrasform, -1)
 
                 m_xnProjectXml.RemoveNode(xnRigidBody, "ID")
                 m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
@@ -783,15 +831,17 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyOdorSensor(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
-                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTrasform)
+            Protected Overridable Sub ModifyRigidBodyOdorSensor(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, _
+                                                                ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+                ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTrasform, -1)
 
                 m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.OdorSensor")
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodySphere(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
+            Protected Overridable Sub ModifyRigidBodySphere(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, _
+                                                            ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByVal fltReceptiveFieldDistance As Single)
 
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Sphere")
 
@@ -805,7 +855,8 @@ Namespace DataObjects
 
             End Sub
 
-            Protected Overridable Sub ModifyRigidBodyPlane(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByVal bIsFluidPlane As Boolean)
+            Protected Overridable Sub ModifyRigidBodyPlane(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, _
+                                                           ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByVal bIsFluidPlane As Boolean)
 
                 If bIsFluidPlane Then
                     m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.FluidPlane")

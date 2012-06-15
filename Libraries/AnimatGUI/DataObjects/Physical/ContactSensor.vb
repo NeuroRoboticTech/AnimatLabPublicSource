@@ -232,6 +232,7 @@ Namespace DataObjects.Physical
                 doAdapter = New DataObjects.Behavior.Nodes.ContactAdapter(doNeuron.NeuralModule, m_doPart, Me)
                 m_aryAdapters.Add(strModuleName, doAdapter)
 
+                doAdapter.InitializeAfterLoad()
                 doAdapter.AddToSim(True)
             End If
 
