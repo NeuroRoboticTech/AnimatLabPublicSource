@@ -1,0 +1,96 @@
+<Structure>
+<RigidBody>
+<Name>Root</Name>
+<ID>967b5aa5-c0d4-4641-a018-9b006273bbdb</ID>
+<Type>Box</Type>
+<PartType>VortexAnimatTools.DataObjects.Physical.RigidBodies.Box</PartType>
+<Description/>
+<IsVisible>True</IsVisible>
+<IsContactSensor>False</IsContactSensor>
+<Cd>1</Cd>
+<Cdr>0.5</Cdr>
+<Ca>1</Ca>
+<Car>1</Car>
+<Texture/>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<XCenterOfMass Value="0" Scale="None" Actual="0"/>
+<YCenterOfMass Value="0" Scale="None" Actual="0"/>
+<ZCenterOfMass Value="0" Scale="None" Actual="0"/>
+<ContactSensor>
+<ReceptiveFieldDistance Value="25" Scale="centi" Actual="0.25"/>
+<FieldGain>
+<ID>c7aebfeb-aa9d-42af-aa19-dd05c1095187</ID>
+<Type>Bell</Type>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.Gains.Bell</ClassName>
+<UseLimits>False</UseLimits>
+<LimitsReadOnly>False</LimitsReadOnly>
+<LimitOutputsReadOnly>False</LimitOutputsReadOnly>
+<UseParentIncomingDataType>True</UseParentIncomingDataType>
+<LowerLimitScale Value="-1" Scale="None" Actual="-1"/>
+<UpperLimitScale Value="1" Scale="None" Actual="1"/>
+<LowerOutputScale Value="0" Scale="None" Actual="0"/>
+<UpperOutputScale Value="1" Scale="None" Actual="1"/>
+<IndependentUnits>Meters</IndependentUnits>
+<DependentUnits>Gain</DependentUnits>
+<A Value="0" Scale="None" Actual="0"/>
+<B Value="1" Scale="None" Actual="1"/>
+<C Value="15" Scale="None" Actual="15"/>
+<D Value="0" Scale="None" Actual="0"/>
+</FieldGain>
+<CurrentGain>
+<ID>9e24b306-c3ae-4e36-a8b0-003c72291217</ID>
+<Type>Polynomial</Type>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.Gains.Polynomial</ClassName>
+<UseLimits>True</UseLimits>
+<LimitsReadOnly>False</LimitsReadOnly>
+<LimitOutputsReadOnly>False</LimitOutputsReadOnly>
+<UseParentIncomingDataType>True</UseParentIncomingDataType>
+<LowerLimitScale Value="0" Scale="None" Actual="0"/>
+<UpperLimitScale Value="10" Scale="None" Actual="10"/>
+<LowerOutputScale Value="0" Scale="None" Actual="0"/>
+<UpperOutputScale Value="70" Scale="nano" Actual="7e-08"/>
+<IndependentUnits>Force</IndependentUnits>
+<DependentUnits>Current</DependentUnits>
+<A Value="0" Scale="None" Actual="0"/>
+<B Value="0" Scale="None" Actual="0"/>
+<C Value="1" Scale="nano" Actual="1e-09"/>
+<D Value="0" Scale="None" Actual="0"/>
+</CurrentGain>
+<FieldPairs>
+<Pair>
+<Vertex x="0.5" y="-0.5" z="0.5"/>
+<NeuronID>2143a526-a8bf-478f-bd2b-3e27d367b969</NeuronID>
+</Pair>
+<Pair>
+<Vertex x="-0.5" y="-0.5" z="0.5"/>
+<NeuronID>2143a526-a8bf-478f-bd2b-3e27d367b969</NeuronID>
+</Pair>
+<Pair>
+<Vertex x="0.5" y="-0.5" z="-0.5"/>
+<NeuronID>2143a526-a8bf-478f-bd2b-3e27d367b969</NeuronID>
+</Pair>
+<Pair>
+<Vertex x="-0.5" y="-0.5" z="-0.5"/>
+<NeuronID>2143a526-a8bf-478f-bd2b-3e27d367b969</NeuronID>
+</Pair>
+</FieldPairs>
+</ContactSensor>
+<Freeze>False</Freeze>
+<FoodSource>False</FoodSource>
+<CenterOfMass x="0" y="0" z="0"/>
+<RelativePosition x="0" y="0" z="0"/>
+<LocalPosition x="0" y="0" z="0"/>
+<Rotation x="0" y="0" z="0"/>
+<LocalRotation x="0" y="0" z="0"/>
+<Direction x="0" y="0" z="0"/>
+<Color Red="1" Green="0" Blue="0" Alpha="1"/>
+<OrientationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</OrientationMatrix>
+<TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</TranslationMatrix>
+<CombinedTransformationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</CombinedTransformationMatrix>
+<CollisionBoxSize x="1" y="1" z="1"/>
+<GraphicsBoxSize x="1" y="1" z="1"/>
+</RigidBody>
+<CollisionExclusionPairs/>
+</Structure>

@@ -1,20 +1,20 @@
 <Editor>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.Forms.BodyPlan.Editor</ClassName>
-<NormalLocation x="193" y="31"/>
-<NormalSize Width="1163" Height="730"/>
+<NormalLocation x="68" y="-1"/>
+<NormalSize Width="1000" Height="457"/>
 <WindowState>Normal</WindowState>
-<Structure>21ef29d6-9044-41c4-91d1-1fdd8b5d1ef1</Structure>
+<Structure>e6eadb3a-5d1b-4b78-a53b-b83b26549bc6</Structure>
 <MouseSensitivity>0.005</MouseSensitivity>
-<PanX>-0.105</PanX>
-<PanY>-0.545</PanY>
-<Zoom>7.5</Zoom>
-<RotateX>-2.05</RotateX>
-<RotateY>1.28159</RotateY>
-<RotateZ>3.14159</RotateZ>
+<PanX>0.0250002</PanX>
+<PanY>-1.12</PanY>
+<Zoom>-5.17501</Zoom>
+<RotateX>9.4545e-07</RotateX>
+<RotateY>0.758186</RotateY>
+<RotateZ>2.59389e-06</RotateZ>
 <BackColor Red="0" Green="0" Blue="0" Alpha="1"/>
 <DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">
-  <Content Name="Command" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 80" DisplayLocation="150, 150" AutoHideSize="150, 80" FloatingSize="150, 150" FullTitle="Command">
+  <Content Name="Command" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 76" DisplayLocation="150, 150" AutoHideSize="150, 80" FloatingSize="150, 150" FullTitle="Command">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Command" />
       <State Value="DockLeft" />
@@ -28,7 +28,7 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Command" />
       <State Value="DockTop" />
-      <Position Size="150, 80" Location="150, 150" />
+      <Position Size="150, 76" Location="150, 150" />
       <Best Count="1">
         <Item Name="Command" />
       </Best>
@@ -63,7 +63,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Receptive Fields" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="355, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Receptive Fields">
+  <Content Name="Receptive Fields" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="285, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Receptive Fields">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Receptive Fields" />
       <State Value="DockLeft" />
@@ -76,31 +76,36 @@
     </AutoHideRestore>
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Receptive Fields" />
-      <State Value="DockRight" />
-      <Position Size="355, 150" Location="150, 150" />
-      <Best Count="1">
+      <State Value="DockLeft" />
+      <Position Size="285, 150" Location="150, 150" />
+      <Best Count="3">
         <Item Name="Receptive Fields" />
+        <Item Name="Properties" />
+        <Item Name="Hierarchy" />
       </Best>
       <Next Count="0" />
       <Previous Count="0" />
       <NextAll Count="0" />
-      <PreviousAll Count="3">
+      <PreviousAll Count="1">
         <Item Name="Command" />
-        <Item Name="Hierarchy" />
-        <Item Name="Properties" />
       </PreviousAll>
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Receptive Fields" />
-        <Space Value="100" />
-        <Best Count="1">
+        <Space Value="50" />
+        <Best Count="2">
+          <Item Name="Properties" />
           <Item Name="Receptive Fields" />
         </Best>
         <Next Count="0" />
-        <Previous Count="0" />
+        <Previous Count="1">
+          <Item Name="Hierarchy" />
+        </Previous>
         <Child Type="Crownwood.Magic.Docking.RestoreWindowContent">
           <Content Name="Receptive Fields" />
           <Next Count="0" />
-          <Previous Count="0" />
+          <Previous Count="1">
+            <Item Name="Properties" />
+          </Previous>
           <Selected Value="True" />
           <Child Type="null" />
         </Child>
@@ -112,7 +117,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Hierarchy" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Hierarchy">
+  <Content Name="Hierarchy" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="285, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Hierarchy">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Hierarchy" />
       <State Value="DockLeft" />
@@ -126,16 +131,15 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Hierarchy" />
       <State Value="DockLeft" />
-      <Position Size="200, 150" Location="150, 150" />
-      <Best Count="2">
+      <Position Size="285, 150" Location="150, 150" />
+      <Best Count="3">
         <Item Name="Hierarchy" />
         <Item Name="Properties" />
+        <Item Name="Receptive Fields" />
       </Best>
       <Next Count="0" />
       <Previous Count="0" />
-      <NextAll Count="1">
-        <Item Name="Receptive Fields" />
-      </NextAll>
+      <NextAll Count="0" />
       <PreviousAll Count="1">
         <Item Name="Command" />
       </PreviousAll>
@@ -145,8 +149,9 @@
         <Best Count="1">
           <Item Name="Hierarchy" />
         </Best>
-        <Next Count="1">
+        <Next Count="2">
           <Item Name="Properties" />
+          <Item Name="Receptive Fields" />
         </Next>
         <Previous Count="0" />
         <Child Type="Crownwood.Magic.Docking.RestoreWindowContent">
@@ -164,7 +169,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Properties" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Properties">
+  <Content Name="Properties" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="285, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Properties">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Properties" />
       <State Value="DockLeft" />
@@ -178,24 +183,24 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Properties" />
       <State Value="DockLeft" />
-      <Position Size="200, 150" Location="150, 150" />
-      <Best Count="2">
+      <Position Size="285, 150" Location="150, 150" />
+      <Best Count="3">
+        <Item Name="Receptive Fields" />
         <Item Name="Properties" />
         <Item Name="Hierarchy" />
       </Best>
       <Next Count="0" />
       <Previous Count="0" />
-      <NextAll Count="1">
-        <Item Name="Receptive Fields" />
-      </NextAll>
+      <NextAll Count="0" />
       <PreviousAll Count="1">
         <Item Name="Command" />
       </PreviousAll>
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Properties" />
         <Space Value="50" />
-        <Best Count="1">
+        <Best Count="2">
           <Item Name="Properties" />
+          <Item Name="Receptive Fields" />
         </Best>
         <Next Count="0" />
         <Previous Count="1">
@@ -203,9 +208,11 @@
         </Previous>
         <Child Type="Crownwood.Magic.Docking.RestoreWindowContent">
           <Content Name="Properties" />
-          <Next Count="0" />
+          <Next Count="1">
+            <Item Name="Receptive Fields" />
+          </Next>
           <Previous Count="0" />
-          <Selected Value="True" />
+          <Selected Value="False" />
           <Child Type="null" />
         </Child>
       </Child>

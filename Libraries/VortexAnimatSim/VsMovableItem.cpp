@@ -418,7 +418,7 @@ void VsMovableItem::WorldToBodyCoords(VxReal3 vWorld, StdVector3 &vLocalPos)
 	{
 	  osg::NodePathList paths = m_osgNode->getParentalNodePaths(); 
 	  osg::Matrix worldToLocal = osg::computeWorldToLocal(paths.at(0)); 
-	  vLocal = worldToLocal * vWorldPos;
+	  vLocal = vWorldPos * worldToLocal;
 	}
 
 	vLocalPos[0] = vLocal[0]; vLocalPos[1] = vLocal[1]; vLocalPos[2] = vLocal[2];

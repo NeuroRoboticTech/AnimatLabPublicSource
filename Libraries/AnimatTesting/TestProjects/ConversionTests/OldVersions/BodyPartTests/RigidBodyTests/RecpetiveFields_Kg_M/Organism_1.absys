@@ -1,0 +1,35 @@
+<NervousSystem>
+<NeuralModules>
+<NeuralModule>
+<ModuleName>FastNeuralNet</ModuleName>
+<ModuleFileName>FastNeuralNet_vc7.dll</ModuleFileName>
+<Type>FastNeuralModule</Type>
+<NeuralNetFile>Organism_1.afnn</NeuralNetFile>
+</NeuralModule>
+</NeuralModules>
+<Adapters>
+<Adapter>
+<Type>Contact</Type>
+<SourceBodyID>967b5aa5-c0d4-4641-a018-9b006273bbdb</SourceBodyID>
+<TargetModule>FastNeuralNet</TargetModule>
+<FieldPairs>
+<Pair>
+<Vertex x="0.5" y="-0.5" z="0.5"/>
+<TargetNodeID>0</TargetNodeID>
+</Pair>
+<Pair>
+<Vertex x="-0.5" y="-0.5" z="0.5"/>
+<TargetNodeID>0</TargetNodeID>
+</Pair>
+<Pair>
+<Vertex x="0.5" y="-0.5" z="-0.5"/>
+<TargetNodeID>0</TargetNodeID>
+</Pair>
+<Pair>
+<Vertex x="-0.5" y="-0.5" z="-0.5"/>
+<TargetNodeID>0</TargetNodeID>
+</Pair>
+</FieldPairs>
+</Adapter>
+</Adapters>
+</NervousSystem>

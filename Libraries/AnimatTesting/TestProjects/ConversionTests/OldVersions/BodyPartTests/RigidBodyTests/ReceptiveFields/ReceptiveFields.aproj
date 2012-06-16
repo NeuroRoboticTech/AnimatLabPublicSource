@@ -22,9 +22,9 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>5</MajorInterval>
+<MajorInterval>200</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>Seconds</TimeScale>
+<TimeScale>MilliSeconds</TimeScale>
 </Form>
 <Form>
 <Title>Project Toolbox</Title>
@@ -93,7 +93,7 @@
 <EndTime Value="5" Scale="None" Actual="5"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation/>
 <StructureID>21ef29d6-9044-41c4-91d1-1fdd8b5d1ef1</StructureID>
@@ -110,7 +110,7 @@
 <EndTime Value="6" Scale="None" Actual="6"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation/>
 <StructureID>21ef29d6-9044-41c4-91d1-1fdd8b5d1ef1</StructureID>
@@ -127,7 +127,7 @@
 <EndTime Value="10" Scale="None" Actual="10"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation/>
 <StructureID>21ef29d6-9044-41c4-91d1-1fdd8b5d1ef1</StructureID>
@@ -144,7 +144,7 @@
 <EndTime Value="7" Scale="None" Actual="7"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation/>
 <StructureID>21ef29d6-9044-41c4-91d1-1fdd8b5d1ef1</StructureID>
@@ -161,7 +161,7 @@
 <EndTime Value="8" Scale="None" Actual="8"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation/>
 <StructureID>21ef29d6-9044-41c4-91d1-1fdd8b5d1ef1</StructureID>
@@ -178,7 +178,7 @@
 <EndTime Value="10" Scale="None" Actual="10"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation/>
 <StructureID>21ef29d6-9044-41c4-91d1-1fdd8b5d1ef1</StructureID>
@@ -195,7 +195,7 @@
 <EndTime Value="12" Scale="None" Actual="12"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation/>
 <StructureID>21ef29d6-9044-41c4-91d1-1fdd8b5d1ef1</StructureID>
@@ -240,18 +240,18 @@
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
-<Name>Down6</Name>
-<ID>ca883e29-b079-4b8a-babd-b2b1c32f4c4c</ID>
-<StartTime Value="10" Scale="None" Actual="10"/>
-<EndTime Value="11" Scale="None" Actual="11"/>
+<Name>Up2</Name>
+<ID>fcf49d5c-6777-4bcf-9376-d3559c79aae7</ID>
+<StartTime Value="3" Scale="None" Actual="3"/>
+<EndTime Value="4" Scale="None" Actual="4"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation/>
 <StructureID>21ef29d6-9044-41c4-91d1-1fdd8b5d1ef1</StructureID>
 <PartID>ac713859-ac66-4129-83da-0069899b6eed</PartID>
-<Velocity Value="5" Scale="centi" Actual="0.05"/>
+<Velocity Value="-5" Scale="centi" Actual="-0.05"/>
 <DisableMotorWhenDone>False</DisableMotorWhenDone>
 </Stimulus>
 <Stimulus>
@@ -263,7 +263,7 @@
 <EndTime Value="2" Scale="None" Actual="2"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation/>
 <StructureID>21ef29d6-9044-41c4-91d1-1fdd8b5d1ef1</StructureID>
@@ -280,7 +280,7 @@
 <EndTime Value="3" Scale="None" Actual="3"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation/>
 <StructureID>21ef29d6-9044-41c4-91d1-1fdd8b5d1ef1</StructureID>
@@ -297,7 +297,7 @@
 <EndTime Value="8" Scale="None" Actual="8"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation/>
 <StructureID>21ef29d6-9044-41c4-91d1-1fdd8b5d1ef1</StructureID>
@@ -314,7 +314,7 @@
 <EndTime Value="6" Scale="None" Actual="6"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation/>
 <StructureID>21ef29d6-9044-41c4-91d1-1fdd8b5d1ef1</StructureID>
@@ -325,18 +325,18 @@
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
-<Name>Up2</Name>
-<ID>fcf49d5c-6777-4bcf-9376-d3559c79aae7</ID>
-<StartTime Value="3" Scale="None" Actual="3"/>
-<EndTime Value="4" Scale="None" Actual="4"/>
+<Name>Down6</Name>
+<ID>ca883e29-b079-4b8a-babd-b2b1c32f4c4c</ID>
+<StartTime Value="10" Scale="None" Actual="10"/>
+<EndTime Value="11" Scale="None" Actual="11"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation/>
 <StructureID>21ef29d6-9044-41c4-91d1-1fdd8b5d1ef1</StructureID>
 <PartID>ac713859-ac66-4129-83da-0069899b6eed</PartID>
-<Velocity Value="-5" Scale="centi" Actual="-0.05"/>
+<Velocity Value="5" Scale="centi" Actual="0.05"/>
 <DisableMotorWhenDone>False</DisableMotorWhenDone>
 </Stimulus>
 <Stimulus>
@@ -348,7 +348,7 @@
 <EndTime Value="4" Scale="None" Actual="4"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation/>
 <StructureID>21ef29d6-9044-41c4-91d1-1fdd8b5d1ef1</StructureID>
@@ -365,7 +365,7 @@
 <EndTime Value="9" Scale="None" Actual="9"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation/>
 <StructureID>21ef29d6-9044-41c4-91d1-1fdd8b5d1ef1</StructureID>
