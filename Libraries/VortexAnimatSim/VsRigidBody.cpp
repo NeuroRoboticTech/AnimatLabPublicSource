@@ -556,8 +556,12 @@ void VsRigidBody::ProcessContacts()
 		VxReal3 vForce;
 		float fltForceMag = 0;
 
-		for(; itd != m_vxPart->dynamicsContactEnd(); ++itd)
+		int iCount=0;
+		for(; itd != m_vxPart->dynamicsContactEnd(); ++itd, iCount++)
 		{
+			if(iCount == 4)
+				iCount=0;
+
 			VxDynamicsContact *vxDyn = *itd;
 			vxDyn->getPartPair(p, p+1);
 
@@ -568,7 +572,8 @@ void VsRigidBody::ProcessContacts()
 			vxDyn->getForce(iPartIdx, vForce);
 			fltForceMag = V3_MAG(vForce) * (fMassUnits * fDisUnits);
 
-			lpSensor->ProcessContact(vBodyPos, fltForceMag);
+			if(fltForceMag > 0)
+				lpSensor->ProcessContact(vBodyPos, fltForceMag);
 		}
 	}
 }

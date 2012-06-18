@@ -298,8 +298,8 @@ contact adapter that actually
 **/
 void ContactSensor::ProcessContact(StdVector3 vPos, float fltForceMagnitude)
 {
-	if(fltForceMagnitude > m_fltMaxForce)
-		fltForceMagnitude = m_fltMaxForce;
+	//if(fltForceMagnitude > m_fltMaxForce)
+	//	fltForceMagnitude = m_fltMaxForce;
 
 	float fltDist, fltFieldGain, fltForce, fltCurrent;
 	int iSize = m_aryFields.GetSize();

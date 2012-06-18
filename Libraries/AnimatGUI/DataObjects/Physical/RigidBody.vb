@@ -1769,6 +1769,10 @@ Namespace DataObjects.Physical
             OnAddBodyClicked(fltPosX, fltPosY, fltPosZ, fltNormX, fltNormY, fltNormZ)
         End Sub
 
+        Public Overridable Sub Automation_SelectedVertexChanged(ByVal fltX As Single, ByVal fltY As Single, ByVal fltZ As Single)
+            OnSelectedVertexChanged(fltX, fltY, fltZ)
+        End Sub
+
 #End Region
 
 #End Region

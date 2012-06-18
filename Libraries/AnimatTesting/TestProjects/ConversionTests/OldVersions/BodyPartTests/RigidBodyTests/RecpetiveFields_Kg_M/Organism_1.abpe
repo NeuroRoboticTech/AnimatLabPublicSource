@@ -1,7 +1,7 @@
 <Editor>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.Forms.BodyPlan.Editor</ClassName>
-<NormalLocation x="68" y="-1"/>
+<NormalLocation x="214" y="137"/>
 <NormalSize Width="1000" Height="457"/>
 <WindowState>Normal</WindowState>
 <Structure>e6eadb3a-5d1b-4b78-a53b-b83b26549bc6</Structure>
@@ -9,9 +9,9 @@
 <PanX>0.0250002</PanX>
 <PanY>-1.12</PanY>
 <Zoom>-5.17501</Zoom>
-<RotateX>9.4545e-07</RotateX>
-<RotateY>0.758186</RotateY>
-<RotateZ>2.59389e-06</RotateZ>
+<RotateX>1.15295e-06</RotateX>
+<RotateY>0.813185</RotateY>
+<RotateZ>2.74071e-06</RotateZ>
 <BackColor Red="0" Green="0" Blue="0" Alpha="1"/>
 <DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">
   <Content Name="Command" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 76" DisplayLocation="150, 150" AutoHideSize="150, 80" FloatingSize="150, 150" FullTitle="Command">

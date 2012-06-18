@@ -5,8 +5,8 @@
 <SimulationFile>RecpetiveFields_Kg_M.asim</SimulationFile>
 <LogLevel>Error</LogLevel>
 <Version>1</Version>
-<SimWindowLocation x="25" y="25"/>
-<SimWindowSize Width="640" Height="480"/>
+<SimWindowLocation x="84" y="146"/>
+<SimWindowSize Width="1190" Height="547"/>
 <DockingForms>
 <Form>
 <Title>Project Toolbox</Title>
@@ -21,7 +21,7 @@
 <ClassName>AnimatTools.Forms.ProjectWorkspace</ClassName>
 <TabTitle>Workspace</TabTitle>
 <BackgroundForm>True</BackgroundForm>
-<TreeViewHeight>362</TreeViewHeight>
+<TreeViewHeight>301</TreeViewHeight>
 </Form>
 <Form>
 <Title>Simulation Controller</Title>

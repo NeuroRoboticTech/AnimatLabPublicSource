@@ -1,8 +1,8 @@
 <Editor>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.Forms.Behavior.Editor</ClassName>
-<NormalLocation x="100" y="100"/>
-<NormalSize Width="1000" Height="600"/>
+<NormalLocation x="610" y="286"/>
+<NormalSize Width="747" Height="415"/>
 <WindowState>Normal</WindowState>
 <Organism>e6eadb3a-5d1b-4b78-a53b-b83b26549bc6</Organism>
 <NeuralModules>
@@ -875,7 +875,61 @@
 <Vth Value="-70" Scale="milli" Actual="-0.07"/>
 <Vrest Value="-70" Scale="milli" Actual="-0.07"/>
 <Fmin Value="0" Scale="None" Actual="0"/>
-<Gain Value="10" Scale="None" Actual="10"/>
+<Gain Value="20" Scale="None" Actual="20"/>
+<VNoiseMax Value="0" Scale="milli" Actual="0"/>
+<RelativeAccommodation Value="0" Scale="None" Actual="0"/>
+<AccommodationTimeConstant Value="30" Scale="milli" Actual="0.03"/>
+<GainType>False</GainType>
+</Node>
+<Node>
+<AssemblyFile>FastNeuralNetTools.dll</AssemblyFile>
+<ClassName>FastNeuralNetTools.DataObjects.Behavior.Neurons.Normal</ClassName>
+<ID>39943dfa-9963-4ab7-aaa8-d4859b65ac5e</ID>
+<NodeIndex>1</NodeIndex>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-1</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="0" y="0"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Ellipse</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>2</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks/>
+<OutLinks/>
+<Enabled>True</Enabled>
+<Cm Value="10" Scale="nano" Actual="1e-08"/>
+<Gm Value="100" Scale="nano" Actual="1e-07"/>
+<Vth Value="-70" Scale="milli" Actual="-0.07"/>
+<Vrest Value="-70" Scale="milli" Actual="-0.07"/>
+<Fmin Value="0" Scale="None" Actual="0"/>
+<Gain Value="20" Scale="None" Actual="20"/>
 <VNoiseMax Value="0" Scale="milli" Actual="0"/>
 <RelativeAccommodation Value="0" Scale="None" Actual="0"/>
 <AccommodationTimeConstant Value="30" Scale="milli" Actual="0.03"/>
@@ -894,7 +948,7 @@
 <GridStyle>DottedLines</GridStyle>
 <JumpSize>Medium</JumpSize>
 <SnapToGrid>False</SnapToGrid>
-<AddFlow Nodes="1" Links="0">
+<AddFlow Nodes="2" Links="0">
   <Version>1.5.0.1</Version>
   <Node Left="214" Top="86" Width="40" Height="40">
     <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
@@ -905,6 +959,16 @@
     <Text>1</Text>
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>2143a526-a8bf-478f-bd2b-3e27d367b969</Tag>
+  </Node>
+  <Node Left="286" Top="89" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <FillColor>-1</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>2</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>39943dfa-9963-4ab7-aaa8-d4859b65ac5e</Tag>
   </Node>
 </AddFlow>
 </Diagram>
@@ -937,7 +1001,7 @@
 </DiagramImage>
 </DiagramImages>
 <DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">
-  <Content Name="Toolbox" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Toolbox">
+  <Content Name="Toolbox" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Toolbox">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Toolbox" />
       <State Value="DockLeft" />
@@ -989,7 +1053,7 @@
             <Item Name="Modules" />
           </Next>
           <Previous Count="0" />
-          <Selected Value="True" />
+          <Selected Value="False" />
           <Child Type="null" />
         </Child>
       </Child>
@@ -1000,7 +1064,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Properties" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Properties">
+  <Content Name="Properties" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Properties">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Properties" />
       <State Value="DockLeft" />
@@ -1024,10 +1088,11 @@
       <Content Name="Properties" />
       <State Value="DockLeft" />
       <Position Size="250, 150" Location="150, 150" />
-      <Best Count="3">
+      <Best Count="4">
         <Item Name="Modules" />
         <Item Name="Hierarchy" />
         <Item Name="Properties" />
+        <Item Name="Toolbox" />
       </Best>
       <Next Count="0" />
       <Previous Count="0" />
@@ -1036,7 +1101,8 @@
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Properties" />
         <Space Value="100" />
-        <Best Count="3">
+        <Best Count="4">
+          <Item Name="Toolbox" />
           <Item Name="Properties" />
           <Item Name="Hierarchy" />
           <Item Name="Modules" />
@@ -1049,7 +1115,9 @@
             <Item Name="Hierarchy" />
             <Item Name="Modules" />
           </Next>
-          <Previous Count="0" />
+          <Previous Count="1">
+            <Item Name="Toolbox" />
+          </Previous>
           <Selected Value="True" />
           <Child Type="null" />
         </Child>
@@ -1061,7 +1129,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Hierarchy" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Hierarchy">
+  <Content Name="Hierarchy" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Hierarchy">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Hierarchy" />
       <State Value="DockLeft" />
@@ -1085,9 +1153,11 @@
       <Content Name="Hierarchy" />
       <State Value="DockLeft" />
       <Position Size="250, 150" Location="150, 150" />
-      <Best Count="2">
+      <Best Count="4">
         <Item Name="Modules" />
         <Item Name="Hierarchy" />
+        <Item Name="Properties" />
+        <Item Name="Toolbox" />
       </Best>
       <Next Count="0" />
       <Previous Count="0" />
@@ -1096,7 +1166,9 @@
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Hierarchy" />
         <Space Value="100" />
-        <Best Count="2">
+        <Best Count="4">
+          <Item Name="Toolbox" />
+          <Item Name="Properties" />
           <Item Name="Hierarchy" />
           <Item Name="Modules" />
         </Best>
@@ -1107,8 +1179,11 @@
           <Next Count="1">
             <Item Name="Modules" />
           </Next>
-          <Previous Count="0" />
-          <Selected Value="True" />
+          <Previous Count="2">
+            <Item Name="Toolbox" />
+            <Item Name="Properties" />
+          </Previous>
+          <Selected Value="False" />
           <Child Type="null" />
         </Child>
       </Child>
@@ -1119,7 +1194,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Modules" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Modules">
+  <Content Name="Modules" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Modules">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Modules" />
       <State Value="DockLeft" />
@@ -1142,8 +1217,11 @@
       <Content Name="Modules" />
       <State Value="DockLeft" />
       <Position Size="250, 150" Location="150, 150" />
-      <Best Count="1">
+      <Best Count="4">
         <Item Name="Modules" />
+        <Item Name="Hierarchy" />
+        <Item Name="Properties" />
+        <Item Name="Toolbox" />
       </Best>
       <Next Count="0" />
       <Previous Count="0" />
@@ -1152,7 +1230,10 @@
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Modules" />
         <Space Value="100" />
-        <Best Count="1">
+        <Best Count="4">
+          <Item Name="Toolbox" />
+          <Item Name="Properties" />
+          <Item Name="Hierarchy" />
           <Item Name="Modules" />
         </Best>
         <Next Count="0" />
@@ -1160,8 +1241,12 @@
         <Child Type="Crownwood.Magic.Docking.RestoreWindowContent">
           <Content Name="Modules" />
           <Next Count="0" />
-          <Previous Count="0" />
-          <Selected Value="True" />
+          <Previous Count="3">
+            <Item Name="Toolbox" />
+            <Item Name="Properties" />
+            <Item Name="Hierarchy" />
+          </Previous>
+          <Selected Value="False" />
           <Child Type="null" />
         </Child>
       </Child>

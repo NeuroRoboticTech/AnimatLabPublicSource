@@ -60,6 +60,26 @@
 </CurrentGain>
 <FieldPairs>
 <Pair>
+<Vertex x="-0.5" y="0.5" z="0.5"/>
+<NeuronID>39943dfa-9963-4ab7-aaa8-d4859b65ac5e</NeuronID>
+</Pair>
+<Pair>
+<Vertex x="0.5" y="0.5" z="-0.5"/>
+<NeuronID>39943dfa-9963-4ab7-aaa8-d4859b65ac5e</NeuronID>
+</Pair>
+<Pair>
+<Vertex x="-0.5" y="-0.5" z="-0.5"/>
+<NeuronID>2143a526-a8bf-478f-bd2b-3e27d367b969</NeuronID>
+</Pair>
+<Pair>
+<Vertex x="0.5" y="0.5" z="0.5"/>
+<NeuronID>39943dfa-9963-4ab7-aaa8-d4859b65ac5e</NeuronID>
+</Pair>
+<Pair>
+<Vertex x="-0.5" y="0.5" z="-0.5"/>
+<NeuronID>39943dfa-9963-4ab7-aaa8-d4859b65ac5e</NeuronID>
+</Pair>
+<Pair>
 <Vertex x="0.5" y="-0.5" z="0.5"/>
 <NeuronID>2143a526-a8bf-478f-bd2b-3e27d367b969</NeuronID>
 </Pair>
@@ -69,10 +89,6 @@
 </Pair>
 <Pair>
 <Vertex x="0.5" y="-0.5" z="-0.5"/>
-<NeuronID>2143a526-a8bf-478f-bd2b-3e27d367b969</NeuronID>
-</Pair>
-<Pair>
-<Vertex x="-0.5" y="-0.5" z="-0.5"/>
 <NeuronID>2143a526-a8bf-478f-bd2b-3e27d367b969</NeuronID>
 </Pair>
 </FieldPairs>

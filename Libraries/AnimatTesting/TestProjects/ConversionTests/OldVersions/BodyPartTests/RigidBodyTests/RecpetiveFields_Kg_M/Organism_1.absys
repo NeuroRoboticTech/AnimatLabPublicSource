@@ -14,6 +14,26 @@
 <TargetModule>FastNeuralNet</TargetModule>
 <FieldPairs>
 <Pair>
+<Vertex x="-0.5" y="0.5" z="0.5"/>
+<TargetNodeID>1</TargetNodeID>
+</Pair>
+<Pair>
+<Vertex x="0.5" y="0.5" z="-0.5"/>
+<TargetNodeID>1</TargetNodeID>
+</Pair>
+<Pair>
+<Vertex x="-0.5" y="-0.5" z="-0.5"/>
+<TargetNodeID>0</TargetNodeID>
+</Pair>
+<Pair>
+<Vertex x="0.5" y="0.5" z="0.5"/>
+<TargetNodeID>1</TargetNodeID>
+</Pair>
+<Pair>
+<Vertex x="-0.5" y="0.5" z="-0.5"/>
+<TargetNodeID>1</TargetNodeID>
+</Pair>
+<Pair>
 <Vertex x="0.5" y="-0.5" z="0.5"/>
 <TargetNodeID>0</TargetNodeID>
 </Pair>
@@ -23,10 +43,6 @@
 </Pair>
 <Pair>
 <Vertex x="0.5" y="-0.5" z="-0.5"/>
-<TargetNodeID>0</TargetNodeID>
-</Pair>
-<Pair>
-<Vertex x="-0.5" y="-0.5" z="-0.5"/>
 <TargetNodeID>0</TargetNodeID>
 </Pair>
 </FieldPairs>

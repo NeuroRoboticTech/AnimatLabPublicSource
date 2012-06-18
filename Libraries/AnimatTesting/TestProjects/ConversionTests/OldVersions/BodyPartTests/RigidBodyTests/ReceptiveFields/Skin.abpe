@@ -1,16 +1,16 @@
 <Editor>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.Forms.BodyPlan.Editor</ClassName>
-<NormalLocation x="193" y="31"/>
-<NormalSize Width="1163" Height="730"/>
+<NormalLocation x="8" y="179"/>
+<NormalSize Width="1217" Height="730"/>
 <WindowState>Normal</WindowState>
 <Structure>21ef29d6-9044-41c4-91d1-1fdd8b5d1ef1</Structure>
 <MouseSensitivity>0.005</MouseSensitivity>
 <PanX>-0.105</PanX>
 <PanY>-0.545</PanY>
-<Zoom>7.5</Zoom>
+<Zoom>12.5</Zoom>
 <RotateX>-2.05</RotateX>
-<RotateY>1.28159</RotateY>
+<RotateY>1.18659</RotateY>
 <RotateZ>3.14159</RotateZ>
 <BackColor Red="0" Green="0" Blue="0" Alpha="1"/>
 <DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">
@@ -63,7 +63,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Receptive Fields" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="355, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Receptive Fields">
+  <Content Name="Receptive Fields" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="392, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Receptive Fields">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Receptive Fields" />
       <State Value="DockLeft" />
@@ -77,7 +77,7 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Receptive Fields" />
       <State Value="DockRight" />
-      <Position Size="355, 150" Location="150, 150" />
+      <Position Size="392, 150" Location="150, 150" />
       <Best Count="1">
         <Item Name="Receptive Fields" />
       </Best>

@@ -4022,6 +4022,61 @@ Namespace Forms
             End Try
         End Sub
 
+        Private Delegate Sub ExecuteAppPropertyMethodDelegate(ByVal strPropertyName As String, ByVal strMethodName As String, ByVal aryParams() As Object)
+
+        Public Function ExecuteAppPropertyMethod(ByVal strPropertyName As String, ByVal strMethodName As String, ByVal aryParams() As Object) As Object
+            If Me.InvokeRequired Then
+                Return Me.Invoke(New ExecuteAppPropertyMethodDelegate(AddressOf ExecuteAppPropertyMethod), New Object() {strPropertyName, strMethodName, aryParams})
+            End If
+
+            If Util.ActiveDialogs.Count > 0 Then
+                Throw New System.Exception("You attempted to execute an application method while there was an active dialog.")
+            End If
+
+            Dim oProperty As PropertyInfo = Me.GetType().GetProperty(strPropertyName)
+
+            Dim oMethod As MethodInfo = oProperty.GetType().GetMethod(strMethodName)
+
+            If oMethod Is Nothing Then
+                Throw New System.Exception("Method name '" & strMethodName & "' not found on property '" & strPropertyName & "'.")
+            End If
+            Return oMethod.Invoke(Me, aryParams)
+
+        End Function
+
+        Public Sub ExecuteIndirectAppPropertyMethod(ByVal strPropertyName As String, ByVal strMethodName As String, ByVal aryParams() As Object)
+
+            m_strAutomationName = strPropertyName
+            m_strAutomationMethodName = strMethodName
+            m_aryAutomationParams = aryParams
+
+            m_timerAutomation = New System.Timers.Timer(10)
+            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnExecuteIndirectMethodTimer
+            m_timerAutomation.Enabled = True
+        End Sub
+
+        Private Delegate Sub OnExecuteIndirectAppPropertyMethodTimerDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+        Protected Overridable Sub OnExecuteIndirectAppPropertyMethodTimer(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
+
+            m_timerAutomation.Enabled = False
+
+            If Me.InvokeRequired Then
+                Me.Invoke(New OnExecuteIndirectAppPropertyMethodTimerDelegate(AddressOf OnExecuteIndirectAppPropertyMethodTimer), New Object() {sender, eProps})
+                Return
+            End If
+
+            Try
+                RemoveHandler m_timerAutomation.Elapsed, AddressOf OnExecuteIndirectMethodTimer
+                m_timerAutomation = Nothing
+
+                ExecuteAppPropertyMethod(m_strAutomationName, m_strAutomationMethodName, m_aryAutomationParams)
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
         Public Sub SelectWorkspaceItem(ByVal strPath As String, ByVal bSelectMultiple As Boolean)
             If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
                 Throw New System.Exception("No project is currently loaded.")
