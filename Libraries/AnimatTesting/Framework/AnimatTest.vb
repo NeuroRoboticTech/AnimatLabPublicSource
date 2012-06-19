@@ -182,6 +182,24 @@ Namespace Framework
 
         End Function
 
+        Public Overridable Function ExecuteAppPropertyMethod(ByVal strPropertyName As String, ByVal strMethodName As String, ByVal aryInnerParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200) As Object
+            Debug.WriteLine("ExecuteAppPropertyMethod: Path: '" & strPropertyName & ", Method: " & strMethodName & ", Params: '" & Util.ParamsToString(aryInnerParams) & "', Wait: " & iWaitMilliseconds)
+
+            Dim aryParams As Object() = New Object() {strPropertyName, strMethodName, aryInnerParams}
+
+            Return ExecuteDirectMethod("ExecuteAppPropertyMethod", aryParams)
+
+        End Function
+
+        Public Overridable Function ExecuteIndirectAppPropertyMethod(ByVal strPropertyName As String, ByVal strMethodName As String, ByVal aryInnerParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200) As Object
+            Debug.WriteLine("ExecuteIndirectAppPropertyMethod: Path: '" & strPropertyName & ", Method: " & strMethodName & ", Params: '" & Util.ParamsToString(aryInnerParams) & "', Wait: " & iWaitMilliseconds)
+
+            Dim aryParams As Object() = New Object() {strPropertyName, strMethodName, aryInnerParams}
+
+            Return ExecuteDirectMethod("ExecuteIndirectAppPropertyMethod", aryParams)
+
+        End Function
+
         Protected Overridable Sub ExecuteMethodAssertError(ByVal strMethodName As String, ByVal aryParams() As Object, ByVal strErrorText As String, _
                                                            Optional ByVal eErrorTextType As enumErrorTextType = enumErrorTextType.EndsWith, _
                                                            Optional ByVal iWaitMilliseconds As Integer = 200)

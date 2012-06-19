@@ -64,22 +64,28 @@ Namespace UITests
                         'Load and convert the project.
                         TestConversionProject("AfterConversion_", aryMaxErrors)
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "ReceptiveFieldSensor.ReceptiveCurrentGain.C", "100 n"})
+                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "ReceptiveFieldSensor.ReceptiveCurrentGain.C", "100 n"})
 
-                        RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "CurrentGain_C_100n_")
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "CurrentGain_C_100n_")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "ReceptiveFieldSensor.ReceptiveFieldGain.Width", "300 "})
+                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "ReceptiveFieldSensor.ReceptiveFieldGain.Width", "300 "})
 
-                        RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FieldGain_Width_300_")
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FieldGain_Width_300_")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "ReceptiveFieldSensor.ReceptiveFieldGain.Width", "50 "})
+                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "ReceptiveFieldSensor.ReceptiveFieldGain.Width", "50 "})
 
-                        RunSimulationWaitToEnd()
-                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FieldGain_Width_50_")
+                        'RunSimulationWaitToEnd()
+                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FieldGain_Width_50_")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "ReceptiveFieldSensor.ReceptiveFieldGain.Width", "150 "})
+                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "ReceptiveFieldSensor.ReceptiveFieldGain.Width", "150 "})
+
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", False})
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_RemoveReceptiveFieldPair", New Object() {"A1", "(0.00, 0.50, 2.50)"})
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_ClearReceptiveFieldPairs", Nothing)
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", False})
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_AddReceptiveFieldPair", New Object() {"A6", CSng(0.0), CSng(0.5), CSng(2.5)})
 
                         'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_5\Cone", "Height", "10 c"})
                         'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_5\Cone", "UpperRadius", "5 c"})

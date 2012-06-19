@@ -221,7 +221,11 @@ Public Class Util
         Dim strParams As String = ""
         If Not aryParams Is Nothing Then
             For Each oParam In aryParams
-                strParams = oParam.ToString & ", "
+                If Not oParam Is Nothing Then
+                    strParams = oParam.ToString & ", "
+                Else
+                    strParams = "Nothing, "
+                End If
             Next
             If strParams.Length >= 2 Then
                 strParams = strParams.Substring(0, strParams.Length - 2)
@@ -236,7 +240,11 @@ Public Class Util
         Dim strParams As String = ""
         If Not aryParams Is Nothing Then
             For Each oParam In aryParams
-                strParams = oParam.ToString & ", "
+                If Not oParam Is Nothing Then
+                    strParams = oParam.ToString & ", "
+                Else
+                    strParams = "Nothing, "
+                End If
             Next
             If strParams.Length >= 2 Then
                 strParams = strParams.Substring(0, strParams.Length - 2)

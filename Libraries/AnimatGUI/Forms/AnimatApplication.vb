@@ -4035,12 +4035,14 @@ Namespace Forms
 
             Dim oProperty As PropertyInfo = Me.GetType().GetProperty(strPropertyName)
 
-            Dim oMethod As MethodInfo = oProperty.GetType().GetMethod(strMethodName)
+            Dim oObj As Object = oProperty.GetValue(Me, Nothing)
+
+            Dim oMethod As MethodInfo = oObj.GetType.GetMethod(strMethodName)
 
             If oMethod Is Nothing Then
                 Throw New System.Exception("Method name '" & strMethodName & "' not found on property '" & strPropertyName & "'.")
             End If
-            Return oMethod.Invoke(Me, aryParams)
+            Return oMethod.Invoke(oObj, aryParams)
 
         End Function
 

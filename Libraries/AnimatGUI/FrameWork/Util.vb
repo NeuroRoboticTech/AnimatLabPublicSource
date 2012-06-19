@@ -1426,16 +1426,33 @@ Namespace Framework
             Return tnNode
         End Function
 
-        Public Shared Function FindListItemByName(ByVal strName As String, ByVal aryItems As Windows.Forms.ListView.ListViewItemCollection, Optional ByVal bThrowError As Boolean = True) As ListViewItem
+        Public Shared Function FindListItemByName(ByVal strName As String, ByVal aryItems As Windows.Forms.ListView.ListViewItemCollection, Optional ByVal bThrowError As Boolean = True, Optional ByVal strSubName As String = "") As ListViewItem
 
             For Each liItem As ListViewItem In aryItems
                 If liItem.Text = strName Then
-                    Return liItem
+                    If strSubName.Length <= 0 OrElse (strSubName.Length > 0 AndAlso strSubName = liItem.SubItems(1).Text) Then
+                        Return liItem
+                    End If
                 End If
             Next
 
             If bThrowError Then
                 Throw New System.Exception("No listview item with the name '" & strName & "' was found.")
+            End If
+
+            Return Nothing
+        End Function
+
+        Public Shared Function FindComboItemByName(ByVal strName As String, ByVal aryItems As Windows.Forms.ComboBox.ObjectCollection, Optional ByVal bThrowError As Boolean = True) As Framework.DataObject
+
+            For Each doItem As Framework.DataObject In aryItems
+                If doItem.Name = strName Then
+                    Return doItem
+                End If
+            Next
+
+            If bThrowError Then
+                Throw New System.Exception("No combobox item with the name '" & strName & "' was found.")
             End If
 
             Return Nothing

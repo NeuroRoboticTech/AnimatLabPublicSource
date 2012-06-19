@@ -364,87 +364,137 @@ Namespace Forms
             End Try
         End Sub
 
+        Protected Sub AddPair()
+            If cboNeurons.SelectedItem Is Nothing Then
+                Throw New System.Exception("You must select a neuron before you can add a receptive field pair.")
+            End If
+
+            If m_doSelPart Is Nothing Or m_doSelPart.SelectedVertex Is Nothing Then
+                Throw New System.Exception("You must select a rigid body from an organism and select a vertex before you can add a receptive field pair.")
+            End If
+
+            'Check to see if the rigid body has a contact sensor or not. If it does not then add one.
+            If m_doSelPart.ReceptiveFieldSensor Is Nothing Then
+                m_doSelPart.AddReceptiveFieldSensor()
+            End If
+
+            Dim doNeuron As DataObjects.Behavior.Nodes.Neuron = DirectCast(cboNeurons.SelectedItem, DataObjects.Behavior.Nodes.Neuron)
+
+            Dim doPair As DataObjects.Physical.ReceptiveFieldPair = m_doSelPart.ReceptiveFieldSensor.AddFieldPair(doNeuron, m_doSelPart.SelectedVertex)
+
+            Dim lvItem As New ListViewItem(doPair.Field.Vertex.ToString())
+            lvItem.SubItems.Add(doPair.Neuron.Name)
+            lvItem.Tag = doPair
+
+            lvFieldPairs.Items.Add(lvItem)
+        End Sub
+
         Private Sub btnAdd_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAdd.Click
             Try
-                If cboNeurons.SelectedItem Is Nothing Then
-                    Throw New System.Exception("You must select a neuron before you can add a receptive field pair.")
-                End If
-
-                If m_doSelPart Is Nothing Or m_doSelPart.SelectedVertex Is Nothing Then
-                    Throw New System.Exception("You must select a rigid body from an organism and select a vertex before you can add a receptive field pair.")
-                End If
-
-                'Check to see if the rigid body has a contact sensor or not. If it does not then add one.
-                If m_doSelPart.ReceptiveFieldSensor Is Nothing Then
-                    m_doSelPart.AddReceptiveFieldSensor()
-                End If
-
-                Dim doNeuron As DataObjects.Behavior.Nodes.Neuron = DirectCast(cboNeurons.SelectedItem, DataObjects.Behavior.Nodes.Neuron)
-
-                Dim doPair As DataObjects.Physical.ReceptiveFieldPair = m_doSelPart.ReceptiveFieldSensor.AddFieldPair(doNeuron, m_doSelPart.SelectedVertex)
-
-                Dim lvItem As New ListViewItem(doPair.Field.Vertex.ToString())
-                lvItem.SubItems.Add(doPair.Neuron.Name)
-                lvItem.Tag = doPair
-
-                lvFieldPairs.Items.Add(lvItem)
-
+                AddPair()
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+        End Sub
+
+        Protected Sub ClearPairs()
+            If Not m_doSelPart Is Nothing Then
+                If m_doSelPart.ReceptiveFieldSensor Is Nothing Then
+                    Throw New System.Exception("The receptive field sensor for the selected part is not set.")
+                End If
+
+                m_doSelPart.ReceptiveFieldSensor.ClearFieldPairs()
+                m_doSelPart.RemoveReceptiveFieldSensorIfNeeded()
+
+                ClearPairsListView()
+
+            End If
         End Sub
 
         Private Sub btnClear_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnClear.Click
             Try
-                If Not m_doSelPart Is Nothing Then
-                    If m_doSelPart.ReceptiveFieldSensor Is Nothing Then
-                        Throw New System.Exception("The receptive field sensor for the selected part is not set.")
-                    End If
-
-                    m_doSelPart.ReceptiveFieldSensor.ClearFieldPairs()
-                    m_doSelPart.RemoveReceptiveFieldSensorIfNeeded()
-
-                    ClearPairsListView()
-
-                End If
-
+                ClearPairs()
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
 
+        End Sub
+
+        Protected Sub RemovePair()
+            If Not m_doSelPart Is Nothing Then
+                If lvFieldPairs.SelectedItems.Count = 0 Then
+                    Throw New System.Exception("You must select a receptive field pair from the list view in order to remove it.")
+                End If
+
+                If m_doSelPart.ReceptiveFieldSensor Is Nothing Then
+                    Throw New System.Exception("The receptive field sensor for the selected part is not set.")
+                End If
+
+                Dim lvItem As ListViewItem = lvFieldPairs.SelectedItems(0)
+
+                If lvItem.Tag Is Nothing OrElse Not Util.IsTypeOf(lvItem.Tag.GetType(), GetType(DataObjects.Physical.ReceptiveFieldPair), False) Then
+                    Throw New System.Exception("The listview item tag is not a receptive field pair object type.")
+                End If
+
+                Dim doPair As DataObjects.Physical.ReceptiveFieldPair = DirectCast(lvItem.Tag, DataObjects.Physical.ReceptiveFieldPair)
+
+                m_doSelPart.ReceptiveFieldSensor.RemoveFieldPair(doPair)
+
+                lvFieldPairs.Items.Remove(lvItem)
+
+                m_doSelPart.RemoveReceptiveFieldSensorIfNeeded()
+
+            End If
         End Sub
 
         Private Sub btnRemove_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnRemove.Click
             Try
-                If Not m_doSelPart Is Nothing Then
-                    If lvFieldPairs.SelectedItems.Count = 0 Then
-                        Throw New System.Exception("You must select a receptive field pair from the list view in order to remove it.")
-                    End If
-
-                    If m_doSelPart.ReceptiveFieldSensor Is Nothing Then
-                        Throw New System.Exception("The receptive field sensor for the selected part is not set.")
-                    End If
-
-                    Dim lvItem As ListViewItem = lvFieldPairs.SelectedItems(0)
-
-                    If lvItem.Tag Is Nothing OrElse Not Util.IsTypeOf(lvItem.Tag.GetType(), GetType(DataObjects.Physical.ReceptiveFieldPair), False) Then
-                        Throw New System.Exception("The listview item tag is not a receptive field pair object type.")
-                    End If
-
-                    Dim doPair As DataObjects.Physical.ReceptiveFieldPair = DirectCast(lvItem.Tag, DataObjects.Physical.ReceptiveFieldPair)
-
-                    m_doSelPart.ReceptiveFieldSensor.RemoveFieldPair(doPair)
-
-                    lvFieldPairs.Items.Remove(lvItem)
-
-                    m_doSelPart.RemoveReceptiveFieldSensorIfNeeded()
-
-                End If
-
+                RemovePair()
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
         End Sub
+
+
+#Region "Automation"
+
+        Public Sub Automation_SelectNeuron(ByVal strName As String)
+
+            Dim doSelNeuron As Object = cboNeurons.SelectedItem
+
+            Dim doItem As Framework.DataObject = Util.FindComboItemByName(strName, cboNeurons.Items)
+
+            cboNeurons.SelectedItem = doItem
+
+        End Sub
+
+        Public Sub Automation_AddReceptiveFieldPair(ByVal strNeuronName As String, ByVal fltX As Single, ByVal fltY As Single, ByVal fltZ As Single)
+            If m_doSelPart Is Nothing Then
+                Throw New System.Exception("No part is currently selected")
+            End If
+
+            m_doSelPart.Automation_SelectedVertexChanged(fltX, fltY, fltZ)
+            Automation_SelectNeuron(strNeuronName)
+
+            AddPair()
+        End Sub
+
+        Public Sub Automation_RemoveReceptiveFieldPair(ByVal strNeuronName As String, ByVal strVertex As String)
+
+            Dim liItem As ListViewItem = Util.FindListItemByName(strVertex, lvFieldPairs.Items, True, strNeuronName)
+
+            lvFieldPairs.SelectedItems.Clear()
+            liItem.Selected = True
+
+            RemovePair()
+
+        End Sub
+
+        Public Sub Automation_ClearReceptiveFieldPairs()
+            ClearPairs()
+        End Sub
+
+#End Region
 
 
 #End Region
