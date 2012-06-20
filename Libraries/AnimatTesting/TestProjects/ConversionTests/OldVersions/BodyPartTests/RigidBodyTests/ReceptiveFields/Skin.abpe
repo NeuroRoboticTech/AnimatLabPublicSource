@@ -1,16 +1,16 @@
 <Editor>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.Forms.BodyPlan.Editor</ClassName>
-<NormalLocation x="8" y="179"/>
+<NormalLocation x="14" y="134"/>
 <NormalSize Width="1217" Height="730"/>
 <WindowState>Normal</WindowState>
 <Structure>21ef29d6-9044-41c4-91d1-1fdd8b5d1ef1</Structure>
 <MouseSensitivity>0.005</MouseSensitivity>
 <PanX>-0.105</PanX>
 <PanY>-0.545</PanY>
-<Zoom>12.5</Zoom>
+<Zoom>12</Zoom>
 <RotateX>-2.05</RotateX>
-<RotateY>1.18659</RotateY>
+<RotateY>1.18159</RotateY>
 <RotateZ>3.14159</RotateZ>
 <BackColor Red="0" Green="0" Blue="0" Alpha="1"/>
 <DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">

@@ -48,40 +48,40 @@
 <LimitOutputsReadOnly>False</LimitOutputsReadOnly>
 <UseParentIncomingDataType>True</UseParentIncomingDataType>
 <LowerLimitScale Value="0" Scale="None" Actual="0"/>
-<UpperLimitScale Value="10" Scale="None" Actual="10"/>
+<UpperLimitScale Value="100" Scale="None" Actual="100"/>
 <LowerOutputScale Value="0" Scale="None" Actual="0"/>
 <UpperOutputScale Value="10" Scale="nano" Actual="1e-08"/>
 <IndependentUnits>Force</IndependentUnits>
 <DependentUnits>Current</DependentUnits>
 <A Value="0" Scale="None" Actual="0"/>
 <B Value="0" Scale="None" Actual="0"/>
-<C Value="10" Scale="nano" Actual="1e-08"/>
+<C Value="0.5" Scale="nano" Actual="5e-10"/>
 <D Value="0" Scale="None" Actual="0"/>
 </CurrentGain>
 <FieldPairs>
 <Pair>
-<Vertex x="-1" y="0.5" z="1.5"/>
+<Vertex x="0" y="2.5" z="-1.5"/>
 <NeuronID>28b865c6-f68a-494f-9ca0-67cd3faba5a6</NeuronID>
 </Pair>
 <Pair>
-<Vertex x="0" y="0.5" z="2.5"/>
-<NeuronID>f4e22c5b-62ce-4780-b993-a696995bc020</NeuronID>
-</Pair>
-<Pair>
-<Vertex x="-1" y="0.5" z="-0.5"/>
-<NeuronID>e3d1b2a7-4c94-4543-86ad-4edfab9ff59e</NeuronID>
-</Pair>
-<Pair>
-<Vertex x="-1" y="0.5" z="0.5"/>
-<NeuronID>e142e03f-4108-48c9-9edb-dabc36ff54e8</NeuronID>
-</Pair>
-<Pair>
-<Vertex x="-1" y="0.5" z="-1.5"/>
+<Vertex x="0" y="2.5" z="1.5"/>
 <NeuronID>68888b21-a91d-4bd3-8fad-84b0d6b13861</NeuronID>
 </Pair>
 <Pair>
-<Vertex x="0" y="0.5" z="-2.5"/>
+<Vertex x="0" y="2.5" z="2.5"/>
 <NeuronID>e0c082f1-c67a-4624-86b8-f912786fca80</NeuronID>
+</Pair>
+<Pair>
+<Vertex x="0" y="2.5" z="-0.5"/>
+<NeuronID>e142e03f-4108-48c9-9edb-dabc36ff54e8</NeuronID>
+</Pair>
+<Pair>
+<Vertex x="0" y="2.5" z="0.5"/>
+<NeuronID>e3d1b2a7-4c94-4543-86ad-4edfab9ff59e</NeuronID>
+</Pair>
+<Pair>
+<Vertex x="0" y="2.5" z="-2.5"/>
+<NeuronID>f4e22c5b-62ce-4780-b993-a696995bc020</NeuronID>
 </Pair>
 </FieldPairs>
 </ContactSensor>
