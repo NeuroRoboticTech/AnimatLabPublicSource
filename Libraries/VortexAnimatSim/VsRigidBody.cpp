@@ -556,12 +556,12 @@ void VsRigidBody::ProcessContacts()
 		VxReal3 vForce;
 		float fltForceMag = 0;
 
+		//if(m_lpThisRB->GetSimulator()->TimeSlice() == 550 || m_lpThisRB->GetSimulator()->TimeSlice() == 9550 || m_lpThisRB->GetSimulator()->TimeSlice() == 10550)
+		//	fltForceMag = 0;
+
 		int iCount=0;
 		for(; itd != m_vxPart->dynamicsContactEnd(); ++itd, iCount++)
 		{
-			if(iCount == 4)
-				iCount=0;
-
 			VxDynamicsContact *vxDyn = *itd;
 			vxDyn->getPartPair(p, p+1);
 

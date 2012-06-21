@@ -183,13 +183,19 @@ Namespace DataObjects.Charting
 
         Public Overridable Function IsValidAxis() As Boolean
 
-            RemoveInvalidDataColumns()
+            Try
+                RemoveInvalidDataColumns()
 
-            If m_aryDataColumns.Count > 0 Then
-                Return True
-            Else
+                If m_aryDataColumns.Count > 0 Then
+                    Return True
+                Else
+                    Return False
+                End If
+            Catch ex As Exception
+                'If we had an error in herer for any reason then it is not a valid column.
+                Debug.WriteLine("execption caught in IsValidAxis: " & ex.Message)
                 Return False
-            End If
+            End Try
         End Function
 
         Protected Overridable Sub RemoveInvalidDataColumns()

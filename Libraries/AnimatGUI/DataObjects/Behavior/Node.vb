@@ -1053,7 +1053,7 @@ Namespace DataObjects.Behavior
             Dim doNode As AnimatGUI.DataObjects.Behavior.Node = Nothing
 
             If Not doOrganism Is Nothing Then
-                doNode = doOrganism.FindBehavioralNode(strDataItemID)
+                doNode = doOrganism.FindBehavioralNode(strDataItemID, bThrowError)
             End If
 
             Return doNode

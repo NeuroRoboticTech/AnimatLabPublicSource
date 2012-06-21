@@ -46,10 +46,19 @@ Namespace UITests
 
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
-                        aryMaxErrors.Add("ConeX", 0.04)
-                        aryMaxErrors.Add("ConeY", 0.04)
-                        aryMaxErrors.Add("ConeZ", 0.04)
-                        aryMaxErrors.Add("default", 0.04)
+                        aryMaxErrors.Add("A1", 0.001)
+                        aryMaxErrors.Add("A2", 0.001)
+                        aryMaxErrors.Add("A3", 0.001)
+                        aryMaxErrors.Add("A4", 0.001)
+                        aryMaxErrors.Add("A5", 0.001)
+                        aryMaxErrors.Add("A6", 0.001)
+                        aryMaxErrors.Add("A1Ia", 0.000000001)
+                        aryMaxErrors.Add("A2Ia", 0.000000001)
+                        aryMaxErrors.Add("A3Ia", 0.000000001)
+                        aryMaxErrors.Add("A4Ia", 0.000000001)
+                        aryMaxErrors.Add("A5Ia", 0.000000001)
+                        aryMaxErrors.Add("A6Ia", 0.000000001)
+                        aryMaxErrors.Add("default", 0.001)
 
                         m_strProjectName = "ReceptiveFields"
                         m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\RigidBodyTests"
@@ -84,8 +93,21 @@ Namespace UITests
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", False})
                         ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_ClearReceptiveFieldPairs", Nothing)
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "WidthSections", "10"})
-                        'ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", False})
-                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_AddReceptiveFieldPair", New Object() {"A6", CSng(0.0), CSng(0.5), CSng(2.5)})
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", False})
+                        System.Threading.Thread.Sleep(2000)
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_AddReceptiveFieldPair", New Object() {"A6", CSng(0.0), CSng(2.5), CSng(-1.5)})
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_AddReceptiveFieldPair", New Object() {"A5", CSng(0.0), CSng(2.5), CSng(-1)})
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_AddReceptiveFieldPair", New Object() {"A4", CSng(0.0), CSng(2.5), CSng(-0.5)})
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_AddReceptiveFieldPair", New Object() {"A3", CSng(0.0), CSng(2.5), CSng(0)})
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_AddReceptiveFieldPair", New Object() {"A2", CSng(0.0), CSng(2.5), CSng(0.5)})
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_AddReceptiveFieldPair", New Object() {"A1", CSng(0.0), CSng(2.5), CSng(1)})
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "ReceptiveFieldSensor.ReceptiveCurrentGain.C", "0.5 n"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "ReceptiveFieldSensor.ReceptiveCurrentGain.UpperLimit", "100 "})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "ReceptiveFieldSensor.ReceptiveFieldGain.Width", "150 "})
+
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "ResetFields_")
 
                         'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_5\Cone", "Height", "10 c"})
                         'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_5\Cone", "UpperRadius", "5 c"})

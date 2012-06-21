@@ -339,26 +339,29 @@ Namespace Forms
             End Try
         End Sub
 
+        Protected Sub FillNeuronsDropDown()
+            Dim doSelNeuron As Object = cboNeurons.SelectedItem
+
+            cboNeurons.Items.Clear()
+
+            If Not m_doOrganism Is Nothing Then
+                Dim aryNeurons As New Collections.DataObjects(Nothing)
+                m_doOrganism.RootSubSystem.FindChildrenOfType(GetType(DataObjects.Behavior.Nodes.Neuron), aryNeurons)
+
+                For Each doNeuron As DataObjects.Behavior.Nodes.Neuron In aryNeurons
+                    cboNeurons.Items.Add(doNeuron)
+
+                    If doNeuron Is doSelNeuron Then
+                        cboNeurons.SelectedItem = doNeuron
+                    End If
+                Next
+            End If
+        End Sub
+
         Private Sub cboNeurons_DropDown(ByVal sender As Object, ByVal e As System.EventArgs) Handles cboNeurons.DropDown
 
             Try
-                Dim doSelNeuron As Object = cboNeurons.SelectedItem
-
-                cboNeurons.Items.Clear()
-
-                If Not m_doOrganism Is Nothing Then
-                    Dim aryNeurons As New Collections.DataObjects(Nothing)
-                    m_doOrganism.RootSubSystem.FindChildrenOfType(GetType(DataObjects.Behavior.Nodes.Neuron), aryNeurons)
-
-                    For Each doNeuron As DataObjects.Behavior.Nodes.Neuron In aryNeurons
-                        cboNeurons.Items.Add(doNeuron)
-
-                        If doNeuron Is doSelNeuron Then
-                            cboNeurons.SelectedItem = doNeuron
-                        End If
-                    Next
-                End If
-
+                FillNeuronsDropDown()
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -460,7 +463,7 @@ Namespace Forms
 
         Public Sub Automation_SelectNeuron(ByVal strName As String)
 
-            Dim doSelNeuron As Object = cboNeurons.SelectedItem
+            FillNeuronsDropDown()
 
             Dim doItem As Framework.DataObject = Util.FindComboItemByName(strName, cboNeurons.Items)
 

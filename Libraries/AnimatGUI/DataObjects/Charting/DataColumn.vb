@@ -422,18 +422,25 @@ Namespace DataObjects.Charting
 
         Public Overridable Function IsValidColumn() As Boolean
 
-            If m_strDataItemAssemblyFile.Trim.Length = 0 OrElse m_strDataItemClassName.Trim.Length = 0 Then
-                Return False
-            End If
+            Try
+                If m_strDataItemAssemblyFile.Trim.Length = 0 OrElse m_strDataItemClassName.Trim.Length = 0 Then
+                    Return False
+                End If
 
-            Dim doBase As DataObjects.DragObject = DirectCast(Util.LoadClass(m_strDataItemAssemblyFile, m_strDataItemClassName, Me), DataObjects.DragObject)
-            Dim oItem As Object = doBase.FindDragObject(m_strStructureID, m_strDataItemID, False)
+                Dim doBase As DataObjects.DragObject = DirectCast(Util.LoadClass(m_strDataItemAssemblyFile, m_strDataItemClassName, Me), DataObjects.DragObject)
+                Dim oItem As Object = doBase.FindDragObject(m_strStructureID, m_strDataItemID, False)
 
-            If Not oItem Is Nothing Then
-                Return True
-            Else
+                If Not oItem Is Nothing Then
+                    Return True
+                Else
+                    Return False
+                End If
+
+            Catch ex As Exception
+                'If we had an error in herer for any reason then it is not a valid column.
+                Debug.WriteLine("execption caught in IsValidColumn: " & ex.Message)
                 Return False
-            End If
+            End Try
         End Function
 
         Public Overridable Function SaveDataColumnToXml() As String

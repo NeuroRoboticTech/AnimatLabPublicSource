@@ -1460,7 +1460,7 @@ Namespace Framework
             Threading.Thread.Sleep(500)
 
             'Assert that the error box showed up with the correct ending text.
-            AssertErrorDiolog(strEndError)
+            AssertErrorDialog(strEndError)
 
             'Close the error box and new project window.
             Me.UIMap.CloseNewProjectErrorWindow()
@@ -1471,7 +1471,7 @@ Namespace Framework
         '''<summary>
         '''AssertNewProjectAlreadyExists - Use 'AssertNewProjectAlreadyExistsExpectedValues' to pass parameters into this method.
         '''</summary>
-        Public Sub AssertErrorDiolog(ByVal strEndError As String)
+        Public Sub AssertErrorDialog(ByVal strEndError As String)
             Dim uITxtErrorMsgEdit As WinEdit = Me.UIMap.UIErrorWindow.UIThedirectoryCProjectWindow.UITxtErrorMsgEdit
 
             'Verify that 'txtErrorMsg' text box's property 'Text' ends with '' already exists. Please choose a different name or location for the project.'
