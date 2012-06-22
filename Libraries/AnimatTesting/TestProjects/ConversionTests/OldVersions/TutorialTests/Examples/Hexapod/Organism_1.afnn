@@ -1,0 +1,8778 @@
+<NeuralModule>
+<TimeStep>0.00025</TimeStep>
+<NetworkSize x="209" y="1" z="1"/>
+<Neurons>
+<Neuron>
+<Position x="0" y="0" z="0"/>
+<Name>LL Femur Side</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="1" y="0" z="0"/>
+<Name>LM PO FU</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="85" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="2" y="0" z="0"/>
+<Name>RM Tarsus</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="92" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="96" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="151" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="96" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="3" y="0" z="0"/>
+<Name>LU Femur Side</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="4" y="0" z="0"/>
+<Name>RM Stop Leg Forward</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="57" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="87" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="5" y="0" z="0"/>
+<Name>LC Right</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="161" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="119" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="6" y="0" z="0"/>
+<Name>LM Foot Down</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="7" y="0" z="0"/>
+<Name>RU PO FD</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="203" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="201" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="8" y="0" z="0"/>
+<Name>LM Stop Leg</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="139" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="31" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="9" y="0" z="0"/>
+<Name>RU Stance</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>15</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="32" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="124" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>1e-08</Ih>
+</Neuron>
+<Neuron>
+<Position x="10" y="0" z="0"/>
+<Name>RU Tarsus Rotation</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="11" y="0" z="0"/>
+<Name>LL Stop Leg Forward</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="103" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="87" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="12" y="0" z="0"/>
+<Name>LU Leg</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="140" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="29" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="141" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="29" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="141" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="140" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="13" y="0" z="0"/>
+<Name>LL Lower Foot</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="108" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="180" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="14" y="0" z="0"/>
+<Name>M Obstacle Mem</Name>
+<Type>Pacemaker</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>100</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="139" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="102" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Il>-2e-09</Il>
+<Ih>2e-09</Ih>
+<Vssm>0.0001</Vssm>
+<Mtl>-50</Mtl>
+<Btl>1.5</Btl>
+<Th>1</Th>
+</Neuron>
+<Neuron>
+<Position x="15" y="0" z="0"/>
+<Name>LM Pull In</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="65" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="16" y="0" z="0"/>
+<Name>Backwards</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="17" y="0" z="0"/>
+<Name>RU Stop Leg Forward</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="87" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="59" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="18" y="0" z="0"/>
+<Name>TL</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.025</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="45" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="19" y="0" z="0"/>
+<Name>LL Push Out</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="184" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="20" y="0" z="0"/>
+<Name>LU Stop Leg Forward</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="87" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="41" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="21" y="0" z="0"/>
+<Name>LM Push Out</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="184" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="22" y="0" z="0"/>
+<Name>RM Step Over</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="172" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="23" y="0" z="0"/>
+<Name>RM Stance</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>15</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="172" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="102" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>1e-08</Ih>
+</Neuron>
+<Neuron>
+<Position x="24" y="0" z="0"/>
+<Name>RL PI FU</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="205" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="106" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="25" y="0" z="0"/>
+<Name>RU Raise Foot</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="32" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="166" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="26" y="0" z="0"/>
+<Name>Stop</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-3e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-3e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-3e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-3e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-3e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="27" y="0" z="0"/>
+<Name>LL PO FU</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="56" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="28" y="0" z="0"/>
+<Name>RM Foot Above Setpoint</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>2e-08</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="29" y="0" z="0"/>
+<Name>LU Leg Back</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="49" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-3e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="133" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="195" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="162" y="0" z="0"/>
+<Weight>2</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="30" y="0" z="0"/>
+<Name>RM Allow Stance Adjust</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="67" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="31" y="0" z="0"/>
+<Name>LM Femur Side</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="32" y="0" z="0"/>
+<Name>RU Swing</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>30</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="134" y="0" z="0"/>
+<Weight>2e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="33" y="0" z="0"/>
+<Name>RU Leg</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="163" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="90" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="170" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="163" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="90" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="170" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="34" y="0" z="0"/>
+<Name>LM Foot Below Setpoint</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="35" y="0" z="0"/>
+<Name>LM Allow Stance Adjust</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="169" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="36" y="0" z="0"/>
+<Name>RM Femur Side</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="37" y="0" z="0"/>
+<Name>LM Stop Leg Back</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="38" y="0" z="0"/>
+<Name>LM Leg Back Sensor</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="39" y="0" z="0"/>
+<Name>RU Step Over</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="32" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="51" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="40" y="0" z="0"/>
+<Name>LU Step Over</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="97" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="51" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="41" y="0" z="0"/>
+<Name>LU Stop Leg</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="49" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="42" y="0" z="0"/>
+<Name>LL Stop Leg Back</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="103" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="43" y="0" z="0"/>
+<Name>RU Tarsus Setpoint</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="126" y="0" z="0"/>
+<Weight>-1.5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="39" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="199" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="174" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="89" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="83" y="0" z="0"/>
+<Weight>1.5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="44" y="0" z="0"/>
+<Name>Turn Strength</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="142" y="0" z="0"/>
+<Weight>-1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="93" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="173" y="0" z="0"/>
+<Weight>-1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="66" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="192" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="79" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="94" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="69" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="199" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="48" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="181" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="76" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="27" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="182" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="191" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="190" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="177" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="54" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="161" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="198" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="173" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="107" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="197" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="142" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="66" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="158" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="45" y="0" z="0"/>
+<Name>Turning</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="173" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="142" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="46" y="0" z="0"/>
+<Name>RM Foot Up</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.04</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>30</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="67" y="0" z="0"/>
+<Weight>-1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>1e-08</Ih>
+</Neuron>
+<Neuron>
+<Position x="47" y="0" z="0"/>
+<Name>RL Swing</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>30</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="153" y="0" z="0"/>
+<Weight>2e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="48" y="0" z="0"/>
+<Name>LU PI FU</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="179" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="104" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="49" y="0" z="0"/>
+<Name>LU Tarsus Side</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0.6</RelativeAccom>
+<AccomTimeConst>3</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-1.1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="50" y="0" z="0"/>
+<Name>LU Raise Foot</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="97" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="179" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="51" y="0" z="0"/>
+<Name>U Obstacle Mem</Name>
+<Type>Pacemaker</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>100</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="124" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="49" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Il>-2e-09</Il>
+<Ih>2e-09</Ih>
+<Vssm>0.0001</Vssm>
+<Mtl>-50</Mtl>
+<Btl>1.5</Btl>
+<Th>1</Th>
+</Neuron>
+<Neuron>
+<Position x="52" y="0" z="0"/>
+<Name>RL Raise Foot</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="47" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="205" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="53" y="0" z="0"/>
+<Name>LL Leg</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="146" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="146" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="62" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="42" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="62" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="42" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="54" y="0" z="0"/>
+<Name>LM PO FD</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="55" y="0" z="0"/>
+<Name>RL Foot Above Setpoint</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>2e-08</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="56" y="0" z="0"/>
+<Name>LL Foot Up</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.04</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>30</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="180" y="0" z="0"/>
+<Weight>-1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>1e-08</Ih>
+</Neuron>
+<Neuron>
+<Position x="57" y="0" z="0"/>
+<Name>RM Stop Leg</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="102" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="36" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="58" y="0" z="0"/>
+<Name>LM Leg Forward Sensor</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="59" y="0" z="0"/>
+<Name>RU Stop Leg</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="124" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="145" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="60" y="0" z="0"/>
+<Name>RM Leg</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="156" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="137" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="111" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="137" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="111" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="156" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="61" y="0" z="0"/>
+<Name>LM Tarsus Setpoint</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="182" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="54" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="68" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="191" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="34" y="0" z="0"/>
+<Weight>1.5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="178" y="0" z="0"/>
+<Weight>-1.5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="62" y="0" z="0"/>
+<Name>LL Leg Back</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-3e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="108" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="180" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="162" y="0" z="0"/>
+<Weight>2</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="77" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="63" y="0" z="0"/>
+<Name>RL Tarsus Rotation</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="64" y="0" z="0"/>
+<Name>LL Foot Below Setpoint</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="65" y="0" z="0"/>
+<Name>TL Fast</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="72" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="66" y="0" z="0"/>
+<Name>TR</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.025</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="45" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="67" y="0" z="0"/>
+<Name>RM Foot Down</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="68" y="0" z="0"/>
+<Name>LM Step Over</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="120" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="69" y="0" z="0"/>
+<Name>LU PO FD</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="195" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="129" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="70" y="0" z="0"/>
+<Name>RU Pull In</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="184" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="71" y="0" z="0"/>
+<Name>RU Leg Back Sensor</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="72" y="0" z="0"/>
+<Name>Speed Fast</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.018</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>500</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="119" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="73" y="0" z="0"/>
+<Name>RM Leg Back Sensor</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="74" y="0" z="0"/>
+<Name>RU Lower Foot</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="203" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="75" y="0" z="0"/>
+<Name>LM P1</Name>
+<Type>Pacemaker</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="81" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="38" y="0" z="0"/>
+<Weight>3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="139" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="162" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="84" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="38" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="58" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="208" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="58" y="0" z="0"/>
+<Weight>3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Il>-2e-09</Il>
+<Ih>2e-09</Ih>
+<Vssm>0</Vssm>
+<Mtl>-50</Mtl>
+<Btl>1.5</Btl>
+<Th>0.3</Th>
+</Neuron>
+<Neuron>
+<Position x="76" y="0" z="0"/>
+<Name>RL PO FU</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="205" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="148" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="77" y="0" z="0"/>
+<Name>LL Tarsus Side</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0.6</RelativeAccom>
+<AccomTimeConst>3</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-1.1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="78" y="0" z="0"/>
+<Name>LU Foot Min Height</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>2e-08</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="79" y="0" z="0"/>
+<Name>LU PO FU</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="179" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="129" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="80" y="0" z="0"/>
+<Name>RM Foot Below Setpoint</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="81" y="0" z="0"/>
+<Name>LU P1</Name>
+<Type>Pacemaker</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="114" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="162" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="160" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="114" y="0" z="0"/>
+<Weight>3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="134" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="49" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="75" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="160" y="0" z="0"/>
+<Weight>3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Il>-2e-09</Il>
+<Ih>2e-09</Ih>
+<Vssm>0</Vssm>
+<Mtl>-50</Mtl>
+<Btl>1.5</Btl>
+<Th>0.3</Th>
+</Neuron>
+<Neuron>
+<Position x="82" y="0" z="0"/>
+<Name>RL Foot Below Setpoint</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="83" y="0" z="0"/>
+<Name>RU Foot Below Setpoint</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="84" y="0" z="0"/>
+<Name>LL P1</Name>
+<Type>Pacemaker</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="109" y="0" z="0"/>
+<Weight>3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="162" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="127" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="109" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="127" y="0" z="0"/>
+<Weight>3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="153" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="77" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="75" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Il>-2e-09</Il>
+<Ih>2e-09</Ih>
+<Vssm>0</Vssm>
+<Mtl>-50</Mtl>
+<Btl>1.5</Btl>
+<Th>0.3</Th>
+</Neuron>
+<Neuron>
+<Position x="85" y="0" z="0"/>
+<Name>LM Foot Up</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.04</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>30</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>1e-08</Ih>
+</Neuron>
+<Neuron>
+<Position x="86" y="0" z="0"/>
+<Name>TR Slow</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="96" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="66" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="87" y="0" z="0"/>
+<Name>Forwards</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>15</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1.1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="87" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="87" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="87" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="87" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="87" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>1e-08</Ih>
+</Neuron>
+<Neuron>
+<Position x="88" y="0" z="0"/>
+<Name>LL Step Over</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="135" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="164" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="89" y="0" z="0"/>
+<Name>RU PI FU</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="70" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="166" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="90" y="0" z="0"/>
+<Name>RU Stop Leg Back</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="59" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="91" y="0" z="0"/>
+<Name>LM Foot</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="202" y="0" z="0"/>
+<Weight>-2e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="34" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="35" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>False</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="120" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="143" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="68" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="178" y="0" z="0"/>
+<Weight>-2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="35" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="182" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="120" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="92" y="0" z="0"/>
+<Name>RM Tarsus Setpoint</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="80" y="0" z="0"/>
+<Weight>1.5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="198" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="28" y="0" z="0"/>
+<Weight>-1.5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="190" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="197" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="158" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="93" y="0" z="0"/>
+<Name>LU PI FD</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="104" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="195" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="94" y="0" z="0"/>
+<Name>LL PO FD</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="180" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="95" y="0" z="0"/>
+<Name>RM Raise Foot</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="172" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="46" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="96" y="0" z="0"/>
+<Name>Speed Slow</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="72" y="0" z="0"/>
+<Weight>-1.1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>1e-08</Ih>
+</Neuron>
+<Neuron>
+<Position x="97" y="0" z="0"/>
+<Name>LU Swing</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>30</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="81" y="0" z="0"/>
+<Weight>2e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="98" y="0" z="0"/>
+<Name>LU Foot Above Setpoint</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>2e-08</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="99" y="0" z="0"/>
+<Name>LU Foot Max Height</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>2e-08</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="100" y="0" z="0"/>
+<Name>LU Tarsus Rotation</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="101" y="0" z="0"/>
+<Name>RL Femur Side</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="102" y="0" z="0"/>
+<Name>RM Tarsus Side</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0.6</RelativeAccom>
+<AccomTimeConst>3</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="36" y="0" z="0"/>
+<Weight>-1.1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="103" y="0" z="0"/>
+<Name>LL Stop Leg</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="77" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="104" y="0" z="0"/>
+<Name>LU Pull In</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="65" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="105" y="0" z="0"/>
+<Name>LL Pull In</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="65" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="106" y="0" z="0"/>
+<Name>RL Pull In</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="184" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="107" y="0" z="0"/>
+<Name>RL PI FD</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="106" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="193" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="108" y="0" z="0"/>
+<Name>LL Stance</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>15</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="135" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="77" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>1e-08</Ih>
+</Neuron>
+<Neuron>
+<Position x="109" y="0" z="0"/>
+<Name>LL Leg Forward Sensor</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="110" y="0" z="0"/>
+<Name>LM Leg</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="207" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="37" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="125" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="130" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="207" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="37" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="125" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="130" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="111" y="0" z="0"/>
+<Name>RM Stop Leg Back</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="57" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="112" y="0" z="0"/>
+<Name>LL Foot</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>False</Enabled>
+<From x="27" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="135" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="88" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="64" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="118" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="192" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="135" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-2e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="176" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="185" y="0" z="0"/>
+<Weight>-2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="118" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="113" y="0" z="0"/>
+<Name>LU Foot Below Setpoint</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="114" y="0" z="0"/>
+<Name>LU Leg Forward Sensor</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="115" y="0" z="0"/>
+<Name>RL Tarsus Side</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0.6</RelativeAccom>
+<AccomTimeConst>3</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="101" y="0" z="0"/>
+<Weight>-1.1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="116" y="0" z="0"/>
+<Name>LU Lower Foot</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="133" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="195" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="117" y="0" z="0"/>
+<Name>RL Tarsus Setpoint</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="194" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="76" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="55" y="0" z="0"/>
+<Weight>-1.5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="177" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="107" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="82" y="0" z="0"/>
+<Weight>1.5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="118" y="0" z="0"/>
+<Name>LL Allow Stance Adjust</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="108" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="180" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="119" y="0" z="0"/>
+<Name>LC</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="120" y="0" z="0"/>
+<Name>LM Swing</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>30</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="75" y="0" z="0"/>
+<Weight>2e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="121" y="0" z="0"/>
+<Name>RL Leg Forward Sensor</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="122" y="0" z="0"/>
+<Name>RL Stop Leg Forward</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="87" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="138" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="123" y="0" z="0"/>
+<Name>RL Stance</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>15</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="115" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="47" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>1e-08</Ih>
+</Neuron>
+<Neuron>
+<Position x="124" y="0" z="0"/>
+<Name>RU Tarsus Side</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0.6</RelativeAccom>
+<AccomTimeConst>3</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="145" y="0" z="0"/>
+<Weight>-1.1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="125" y="0" z="0"/>
+<Name>LM Leg Forward</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="120" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="85" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="126" y="0" z="0"/>
+<Name>RU Foot Above Setpoint</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>2e-08</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="127" y="0" z="0"/>
+<Name>LL Leg Back Sensor</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="128" y="0" z="0"/>
+<Name>RL Leg Back</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="123" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>2</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="193" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-3e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="115" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="129" y="0" z="0"/>
+<Name>LU Push Out</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="184" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="130" y="0" z="0"/>
+<Name>LM Stop Leg Forward</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="87" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="131" y="0" z="0"/>
+<Name>RL Tarsus</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="63" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="96" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="117" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="96" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="132" y="0" z="0"/>
+<Name>RL Allow Stance Adjust</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="123" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="193" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="133" y="0" z="0"/>
+<Name>LU Stance</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>15</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="97" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="49" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>1e-08</Ih>
+</Neuron>
+<Neuron>
+<Position x="134" y="0" z="0"/>
+<Name>RU P1</Name>
+<Type>Pacemaker</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="124" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="187" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="208" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="81" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="187" y="0" z="0"/>
+<Weight>3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="71" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="71" y="0" z="0"/>
+<Weight>3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Il>-2e-09</Il>
+<Ih>2e-09</Ih>
+<Vssm>0</Vssm>
+<Mtl>-50</Mtl>
+<Btl>1.5</Btl>
+<Th>0.3</Th>
+</Neuron>
+<Neuron>
+<Position x="135" y="0" z="0"/>
+<Name>LL Swing</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>30</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="84" y="0" z="0"/>
+<Weight>2e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="136" y="0" z="0"/>
+<Name>LU Allow Stance Adjust</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="195" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="133" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="137" y="0" z="0"/>
+<Name>RM Leg Back</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-3e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>2</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="67" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="102" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="138" y="0" z="0"/>
+<Name>RL Stop Leg</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="101" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="115" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="139" y="0" z="0"/>
+<Name>LM Tarsus Side</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0.6</RelativeAccom>
+<AccomTimeConst>3</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="31" y="0" z="0"/>
+<Weight>-1.1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="140" y="0" z="0"/>
+<Name>LU Leg Forward</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="97" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="179" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="141" y="0" z="0"/>
+<Name>LU Stop Leg Back</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="41" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="142" y="0" z="0"/>
+<Name>Right</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="143" y="0" z="0"/>
+<Name>LM Raise Foot</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="120" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="85" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="144" y="0" z="0"/>
+<Name>LL Tarsus Setpoint</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="94" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="185" y="0" z="0"/>
+<Weight>-1.5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="64" y="0" z="0"/>
+<Weight>1.5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="192" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="88" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="27" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="181" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="145" y="0" z="0"/>
+<Name>RU Femur Side</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="146" y="0" z="0"/>
+<Name>LL Leg Forward</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="135" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="56" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="147" y="0" z="0"/>
+<Name>RM Foot</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="186" y="0" z="0"/>
+<Weight>-2e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="80" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="30" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="28" y="0" z="0"/>
+<Weight>-2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="30" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>False</Enabled>
+<From x="197" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="172" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="95" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="190" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="172" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="148" y="0" z="0"/>
+<Name>RL Push Out</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="65" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="149" y="0" z="0"/>
+<Name>RL Leg Back Sensor</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="150" y="0" z="0"/>
+<Name>RL Leg</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="159" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="122" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="128" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="154" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="159" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="122" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="128" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="154" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="151" y="0" z="0"/>
+<Name>RM Tarsus Rotation</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="152" y="0" z="0"/>
+<Name>RU Allow Stance Adjust</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="203" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="153" y="0" z="0"/>
+<Name>RL P1</Name>
+<Type>Pacemaker</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="84" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="115" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="149" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="121" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="208" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="121" y="0" z="0"/>
+<Weight>3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="149" y="0" z="0"/>
+<Weight>3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Il>-2e-09</Il>
+<Ih>2e-09</Ih>
+<Vssm>0</Vssm>
+<Mtl>-50</Mtl>
+<Btl>1.5</Btl>
+<Th>0.3</Th>
+</Neuron>
+<Neuron>
+<Position x="154" y="0" z="0"/>
+<Name>RL Stop Leg Back</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="138" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="155" y="0" z="0"/>
+<Name>RM Pull In</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="184" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="156" y="0" z="0"/>
+<Name>RM Leg Forward</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="172" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="46" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="157" y="0" z="0"/>
+<Name>RL Foot</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="47" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>False</Enabled>
+<From x="76" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="47" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="194" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="52" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="183" y="0" z="0"/>
+<Weight>-2e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="55" y="0" z="0"/>
+<Weight>-2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="132" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="82" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="132" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="158" y="0" z="0"/>
+<Name>RM PO FD</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="67" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="204" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="159" y="0" z="0"/>
+<Name>RL Leg Forward</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="47" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="205" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="160" y="0" z="0"/>
+<Name>LU Leg Back Sensor</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="161" y="0" z="0"/>
+<Name>TL Slow</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="96" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="162" y="0" z="0"/>
+<Name>LC Left</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="119" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="86" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="163" y="0" z="0"/>
+<Name>RU Leg Back</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="124" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-3e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>2</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="203" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="164" y="0" z="0"/>
+<Name>L Obstacle Mem</Name>
+<Type>Pacemaker</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>100</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="77" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="115" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Il>-2e-09</Il>
+<Ih>2e-09</Ih>
+<Vssm>0.0001</Vssm>
+<Mtl>-50</Mtl>
+<Btl>1.5</Btl>
+<Th>1</Th>
+</Neuron>
+<Neuron>
+<Position x="165" y="0" z="0"/>
+<Name>LU Tarsus</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="100" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="96" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="200" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="96" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="166" y="0" z="0"/>
+<Name>RU Foot Up</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.04</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>30</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="203" y="0" z="0"/>
+<Weight>-1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>1e-08</Ih>
+</Neuron>
+<Neuron>
+<Position x="167" y="0" z="0"/>
+<Name>LL Tarsus Rotation</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="168" y="0" z="0"/>
+<Name>LM Tarsus</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="196" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="96" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="61" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="96" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="169" y="0" z="0"/>
+<Name>LM Stance</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>15</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="120" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="139" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>1e-08</Ih>
+</Neuron>
+<Neuron>
+<Position x="170" y="0" z="0"/>
+<Name>RU Leg Forward</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="32" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="166" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="171" y="0" z="0"/>
+<Name>LU Foot</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="48" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="97" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="50" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="98" y="0" z="0"/>
+<Weight>-2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="136" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="113" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="136" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="116" y="0" z="0"/>
+<Weight>-2e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="40" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>False</Enabled>
+<From x="79" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="97" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="172" y="0" z="0"/>
+<Name>RM Swing</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>30</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="208" y="0" z="0"/>
+<Weight>2e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="173" y="0" z="0"/>
+<Name>Left</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="174" y="0" z="0"/>
+<Name>RU PI FD</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="70" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="203" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="175" y="0" z="0"/>
+<Name>RU Foot</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="39" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="83" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="152" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>False</Enabled>
+<From x="199" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="32" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="89" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="32" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="25" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="126" y="0" z="0"/>
+<Weight>-2e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="152" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="74" y="0" z="0"/>
+<Weight>-2e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="176" y="0" z="0"/>
+<Name>LL Raise Foot</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-1.5e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="135" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="56" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="177" y="0" z="0"/>
+<Name>RL PO FD</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="193" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="148" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="178" y="0" z="0"/>
+<Name>LM Foot Above Setpoint</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>2e-08</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="179" y="0" z="0"/>
+<Name>LU Foot Up</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.04</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>30</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="195" y="0" z="0"/>
+<Weight>-1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>1e-08</Ih>
+</Neuron>
+<Neuron>
+<Position x="180" y="0" z="0"/>
+<Name>LL Foot Down</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="181" y="0" z="0"/>
+<Name>LL PI FD</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="180" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="105" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="182" y="0" z="0"/>
+<Name>LM PI FU</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="85" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="183" y="0" z="0"/>
+<Name>RL Lower Foot</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="123" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="193" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="184" y="0" z="0"/>
+<Name>TR Fast</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="66" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="72" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="185" y="0" z="0"/>
+<Name>LL Foot Above Setpoint</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>2e-08</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="186" y="0" z="0"/>
+<Name>RM Lower Foot</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="67" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="187" y="0" z="0"/>
+<Name>RU Leg Forward Sensor</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="188" y="0" z="0"/>
+<Name>LL Tarsus</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="144" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="96" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="167" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="96" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="189" y="0" z="0"/>
+<Name>RM Leg Forward Sensor</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="190" y="0" z="0"/>
+<Name>RM PI FU</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="46" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="155" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="191" y="0" z="0"/>
+<Name>LM PI FD</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="192" y="0" z="0"/>
+<Name>LL PI FU</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="105" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="56" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="193" y="0" z="0"/>
+<Name>RL Foot Down</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="194" y="0" z="0"/>
+<Name>RL Step Over</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="164" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="47" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="195" y="0" z="0"/>
+<Name>LU Foot Down</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="196" y="0" z="0"/>
+<Name>LM Tarsus Rotation</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="197" y="0" z="0"/>
+<Name>RM PO FU</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="46" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="204" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="198" y="0" z="0"/>
+<Name>RM PI FD</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="67" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="155" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="199" y="0" z="0"/>
+<Name>RU PO FU</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.015</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="166" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="201" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="200" y="0" z="0"/>
+<Name>LU Tarsus Setpoint</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="69" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="98" y="0" z="0"/>
+<Weight>-1.5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="113" y="0" z="0"/>
+<Weight>1.5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="40" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="79" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="93" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="48" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="201" y="0" z="0"/>
+<Name>RU Push Out</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="65" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="202" y="0" z="0"/>
+<Name>LM Lower Foot</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="169" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="203" y="0" z="0"/>
+<Name>RU Foot Down</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.01</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses/>
+</Neuron>
+<Neuron>
+<Position x="204" y="0" z="0"/>
+<Name>RM Push Out</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>200</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="65" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="205" y="0" z="0"/>
+<Name>RL Foot Up</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0.04</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>30</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="193" y="0" z="0"/>
+<Weight>-1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>1e-08</Ih>
+</Neuron>
+<Neuron>
+<Position x="206" y="0" z="0"/>
+<Name>RU Tarsus</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="43" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="96" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="96" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+<Ih>5e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="207" y="0" z="0"/>
+<Name>LM Leg Back</Name>
+<Type>Regular</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>20</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="139" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-3e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="169" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="162" y="0" z="0"/>
+<Weight>2</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+</Synapses>
+</Neuron>
+<Neuron>
+<Position x="208" y="0" z="0"/>
+<Name>RM P1</Name>
+<Type>Pacemaker</Type>
+<Enabled>True</Enabled>
+<Cn>1e-09</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>0</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>False</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="134" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="189" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="102" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="75" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="73" y="0" z="0"/>
+<Weight>3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="73" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="189" y="0" z="0"/>
+<Weight>3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="153" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Il>-2e-09</Il>
+<Ih>2e-09</Ih>
+<Vssm>0</Vssm>
+<Mtl>-50</Mtl>
+<Btl>1.5</Btl>
+<Th>0.3</Th>
+</Neuron>
+</Neurons>
+</NeuralModule>

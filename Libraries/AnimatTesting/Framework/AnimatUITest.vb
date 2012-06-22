@@ -1509,6 +1509,19 @@ Namespace Framework
             Mouse.Click(uIOpenSplitButton, New Point(53, 12))
         End Sub
 
+        Protected Sub WaitForProjectToOpen()
+            Dim bOpen As Boolean = False
+            Dim iCount = 0
+            While Not bOpen
+                Threading.Thread.Sleep(1000)
+                bOpen = DirectCast(GetApplicationProperty("ProjectIsOpen"), Boolean)
+                iCount = iCount + 1
+                If iCount > 30 Then
+                    Throw New System.Exception("Timed out waiting for the project to open.")
+                End If
+            End While
+        End Sub
+
 #Region "Neural Methods"
 
         Protected Overridable Sub OpenRootBehavioralSubsystem()

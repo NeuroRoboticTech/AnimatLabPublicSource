@@ -2559,7 +2559,7 @@ Namespace Forms
 
         End Sub
 
-        Public Overrides Sub UpdateToolstrips()
+        Public Overridable Sub UpdateToolstrips()
 
             If Me.m_bProjectIsOpen Then
                 'If a project is not open then disable a lot of stuff
@@ -2864,8 +2864,6 @@ Namespace Forms
 
             Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Closing project")
 
-            m_bProjectIsOpen = bOpeningProject
-
             If Not m_dockManager Is Nothing Then
                 ClearDockingContents()
             End If
@@ -3011,6 +3009,9 @@ Namespace Forms
 
                 UpdateToolstrips()
                 RaiseEvent ProjectLoaded()
+
+                m_bProjectIsOpen = True
+                UpdateToolstrips()
 
             Catch exOldVersion As OldProjectVersion
                 Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Attempted to load an old project version file: '" & strFilename & "', Old Version: " & exOldVersion.OldVersion)

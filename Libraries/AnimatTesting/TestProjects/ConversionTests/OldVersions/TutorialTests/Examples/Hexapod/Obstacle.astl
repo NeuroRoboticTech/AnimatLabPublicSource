@@ -1,0 +1,35 @@
+<Structure>
+<RigidBody>
+<Name>Root</Name>
+<ID>82fc77a2-bac6-43f5-b7eb-8987231d9863</ID>
+<Type>Box</Type>
+<PartType>VortexAnimatTools.DataObjects.Physical.RigidBodies.Box</PartType>
+<Description/>
+<IsVisible>True</IsVisible>
+<IsContactSensor>False</IsContactSensor>
+<Cd>0.5</Cd>
+<Cdr>0.5</Cdr>
+<Ca>1</Ca>
+<Car>1</Car>
+<Texture>wood089.bmp</Texture>
+<Density Value="5" Scale="None" Actual="5"/>
+<XCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<YCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<ZCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<Freeze>True</Freeze>
+<FoodSource>False</FoodSource>
+<CenterOfMass x="0" y="0" z="0"/>
+<RelativePosition x="0" y="0" z="0"/>
+<LocalPosition x="0" y="0" z="0"/>
+<Rotation x="0" y="0" z="0"/>
+<LocalRotation x="0" y="0" z="0"/>
+<Direction x="0" y="0" z="0"/>
+<Color Red="1" Green="1" Blue="1" Alpha="1"/>
+<OrientationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</OrientationMatrix>
+<TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</TranslationMatrix>
+<CombinedTransformationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</CombinedTransformationMatrix>
+<CollisionBoxSize x="100" y="0.3" z="10"/>
+<GraphicsBoxSize x="100" y="0.3" z="10"/>
+</RigidBody>
+<CollisionExclusionPairs/>
+</Structure>

@@ -96,7 +96,7 @@ Namespace UITests
                 'Click 'Ok' button
                 ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
-                Threading.Thread.Sleep(3000)
+                WaitForProjectToOpen()
             End Sub
 
             Protected Overridable Sub CleanupConversionProjectDirectory()

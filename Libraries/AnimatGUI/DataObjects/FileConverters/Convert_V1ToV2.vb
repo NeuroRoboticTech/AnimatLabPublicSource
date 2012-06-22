@@ -276,7 +276,7 @@ Namespace DataObjects
 
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "IsCollisionObject", "True")
 
-                m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
+                m_xnProjectXml.RemoveNode(xnRigidBody, "PartType", False)
                 m_xnProjectXml.RemoveNode(xnRigidBody, "Direction", False)
                 m_xnProjectXml.RemoveNode(xnRigidBody, "CenterOfMass", False)
 
@@ -564,7 +564,7 @@ Namespace DataObjects
 
                 ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTrasform, -1)
 
-                m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
+                m_xnProjectXml.RemoveNode(xnRigidBody, "PartType", False)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Attachment")
             End Sub
 
@@ -603,7 +603,7 @@ Namespace DataObjects
 
                 ModifyRigidBodyMuscle(xnRigidBody, aryParentTrasform, aryChildTrasform)
 
-                m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
+                m_xnProjectXml.RemoveNode(xnRigidBody, "PartType", False)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.LinearHillStretchReceptor")
 
             End Sub
@@ -795,7 +795,7 @@ Namespace DataObjects
                 ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTrasform, -1)
 
                 m_xnProjectXml.RemoveNode(xnRigidBody, "ID")
-                m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
+                m_xnProjectXml.RemoveNode(xnRigidBody, "PartType", False)
 
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "ID", m_strMouthID)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Mouth")
@@ -815,7 +815,7 @@ Namespace DataObjects
                 ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTrasform, -1)
 
                 m_xnProjectXml.RemoveNode(xnRigidBody, "ID")
-                m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
+                m_xnProjectXml.RemoveNode(xnRigidBody, "PartType", False)
 
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "ID", m_strStomachID)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Stomach")
@@ -835,7 +835,7 @@ Namespace DataObjects
                                                                 ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
                 ModifyRigidBodySphere(xnRigidBody, aryParentTrasform, aryChildTrasform, -1)
 
-                m_xnProjectXml.RemoveNode(xnRigidBody, "PartType")
+                m_xnProjectXml.RemoveNode(xnRigidBody, "PartType", False)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.OdorSensor")
 
             End Sub
@@ -894,7 +894,7 @@ Namespace DataObjects
 
                 ModifyRigidBodyColor(xnJoint)
 
-                m_xnProjectXml.RemoveNode(xnJoint, "PartType")
+                m_xnProjectXml.RemoveNode(xnJoint, "PartType", False)
                 m_xnProjectXml.RemoveNode(xnJoint, "Rotation", False)
                 m_xnProjectXml.RemoveNode(xnJoint, "RelativePosition", False)
                 m_xnProjectXml.RemoveNode(xnJoint, "RotationAxis", False)
@@ -1425,11 +1425,21 @@ Namespace DataObjects
 
                 Dim strTitle As String = m_xnProjectXml.GetSingleNodeValue(xnHolder, "Name")
 
-                Dim strOldFile As String = m_strProjectPath & "\" & strTitle.Replace(" ", "_") & ".atvf"
+                Dim bFileFound As Boolean = False
+                Dim strOldFile As String = ""
+                If File.Exists(m_strProjectPath & "\" & strTitle & ".atvf") Then
+                    bFileFound = True
+                    strOldFile = m_strProjectPath & "\" & strTitle & ".atvf"
+                ElseIf File.Exists(m_strProjectPath & "\" & strTitle.Replace(" ", "_") & ".atvf") Then
+                    bFileFound = True
+                    strOldFile = m_strProjectPath & "\" & strTitle.Replace(" ", "_") & ".atvf"
+                Else
+
+                End If
 
                 Dim xnOldToolFile As New Framework.XmlDom
 
-                If File.Exists(strOldFile) Then
+                If bFileFound Then
 
                     xnOldToolFile.Load(strOldFile)
 

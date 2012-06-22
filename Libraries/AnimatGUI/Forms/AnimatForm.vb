@@ -353,9 +353,9 @@ Namespace Forms
             End If
         End Function
 
-        Public Overridable Sub UpdateToolStrips()
+        'Public Overridable Sub UpdateToolStrips()
 
-        End Sub
+        'End Sub
 
         Public Overridable Overloads Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 

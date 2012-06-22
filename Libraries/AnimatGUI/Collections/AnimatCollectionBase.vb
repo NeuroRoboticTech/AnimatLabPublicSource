@@ -99,9 +99,8 @@ Namespace Collections
 
         Public Overridable Function FindObjectByID(ByVal strID As String) As Framework.DataObject
 
-            Dim doObject As Framework.DataObject
             Dim doFound As Framework.DataObject
-            For Each deObject As Object In Me
+            For Each doObject As Framework.DataObject In Me
                 doFound = doObject.FindObjectByID(strID)
                 If Not doFound Is Nothing Then
                     Return doFound
