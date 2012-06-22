@@ -1,11 +1,11 @@
 <Project>
-<ProjectName>RecpetiveFields_Kg_M</ProjectName>
+<ProjectName>ReceptiveFields_Kg_M</ProjectName>
 <PhysicsAssemblyName>VortexAnimatTools.dll</PhysicsAssemblyName>
 <PhysicsClassName>VortexAnimatTools.DataObjects.Simulation</PhysicsClassName>
-<SimulationFile>RecpetiveFields_Kg_M.asim</SimulationFile>
+<SimulationFile>ReceptiveFields_Kg_M.asim</SimulationFile>
 <LogLevel>Error</LogLevel>
 <Version>1</Version>
-<SimWindowLocation x="84" y="146"/>
+<SimWindowLocation x="-8" y="-30"/>
 <SimWindowSize Width="1190" Height="547"/>
 <DockingForms>
 <Form>

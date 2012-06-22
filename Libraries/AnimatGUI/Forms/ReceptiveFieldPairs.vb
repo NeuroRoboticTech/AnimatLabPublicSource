@@ -254,14 +254,9 @@ Namespace Forms
             Catch ex As Exception
             End Try
 
-            If Not m_doSelPart Is Nothing Then
-                Try
-                    RemoveHandler m_doSelPart.SimInterface.OnSelectedVertexChanged, AddressOf Me.OnSelectedVertexChanged
-                Catch ex As Exception
-                End Try
-                m_doSelPart = Nothing
-            End If
-         End Sub
+            RemovePartHandlers()
+            m_doSelPart = Nothing
+        End Sub
 
         Private Sub OnProjectLoaded()
             Try
@@ -274,6 +269,26 @@ Namespace Forms
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+        End Sub
+
+        Protected Sub AddPartHandlers()
+            If Not m_doSelPart Is Nothing Then
+                Try
+                    AddHandler m_doSelPart.SimInterface.OnSelectedVertexChanged, AddressOf Me.OnSelectedVertexChanged
+                    AddHandler m_doSelPart.AfterPropertyChanged, AddressOf Me.OnSelPartPropertyChanged
+                Catch ex As Exception
+                End Try
+            End If
+        End Sub
+
+        Protected Sub RemovePartHandlers()
+            If Not m_doSelPart Is Nothing Then
+                Try
+                    RemoveHandler m_doSelPart.SimInterface.OnSelectedVertexChanged, AddressOf Me.OnSelectedVertexChanged
+                    RemoveHandler m_doSelPart.AfterPropertyChanged, AddressOf Me.OnSelPartPropertyChanged
+                Catch ex As Exception
+                End Try
+            End If
         End Sub
 
         Private Sub OnWorkspaceSelectionChanged()
@@ -293,7 +308,7 @@ Namespace Forms
                     If Util.IsTypeOf(doSelPart.ParentStructure.GetType(), GetType(DataObjects.Physical.Organism), False) Then
                         m_doSelPart = doSelPart
                         m_doOrganism = DirectCast(doSelPart.ParentStructure, DataObjects.Physical.Organism)
-                        AddHandler m_doSelPart.SimInterface.OnSelectedVertexChanged, AddressOf Me.OnSelectedVertexChanged
+                        AddPartHandlers()
 
                         If Not m_doSelPart.SelectedVertex Is Nothing Then
                             txtSelVertex.Text = m_doSelPart.SelectedVertex.ToString
@@ -305,9 +320,8 @@ Namespace Forms
                         End If
                     End If
                 Else
-                    If Not m_doSelPart Is Nothing Then
-                        RemoveHandler m_doSelPart.SimInterface.OnSelectedVertexChanged, AddressOf Me.OnSelectedVertexChanged
-                    End If
+                    RemovePartHandlers()
+                    ClearPairsListView()
 
                     m_doOrganism = Nothing
                     m_doSelPart = Nothing
@@ -337,6 +351,16 @@ Namespace Forms
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
+        End Sub
+
+        Private Sub OnSelPartPropertyChanged(ByRef doObject As Framework.DataObject, propInfo As Reflection.PropertyInfo)
+            If m_doSelPart Is doObject AndAlso Not propInfo Is Nothing AndAlso Util.IsTypeOf(m_doSelPart.GetType, GetType(DataObjects.Physical.RigidBody)) Then
+                Dim doPart As DataObjects.Physical.RigidBody = DirectCast(m_doSelPart, DataObjects.Physical.RigidBody)
+
+                If doPart.ResetReceptiveFieldsAfterPropChange(propInfo) Then
+                    ClearPairs()
+                End If
+            End If
         End Sub
 
         Protected Sub FillNeuronsDropDown()
@@ -495,6 +519,16 @@ Namespace Forms
 
         Public Sub Automation_ClearReceptiveFieldPairs()
             ClearPairs()
+        End Sub
+
+        Public Sub Automation_VerifyFieldPairCount(ByVal iCount As Integer)
+            If lvFieldPairs.Items.Count <> iCount Then
+                Throw New System.Exception("Tested for field pair count of " & iCount & ", but correct count is " & lvFieldPairs.Items.Count)
+            End If
+        End Sub
+
+        Public Sub Automation_VerifyFieldPairExists(ByVal strNeuronName As String, ByVal strVertex As String)
+            Dim liItem As ListViewItem = Util.FindListItemByName(strVertex, lvFieldPairs.Items, True, strNeuronName)
         End Sub
 
 #End Region

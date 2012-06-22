@@ -184,6 +184,14 @@ Namespace DataObjects.Physical.Bodies
 
         End Sub
 
+        Public Overrides Function ResetReceptiveFieldsAfterPropChange(ByVal propInfo As Reflection.PropertyInfo) As Boolean
+
+            If propInfo.Name = "OuterRadius" OrElse propInfo.Name = "InnerRadius" OrElse propInfo.Name = "Sides" OrElse propInfo.Name = "Rings" Then
+                Return True
+            Else
+                Return False
+            End If
+        End Function
 
         Public Overloads Overrides Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(doStructure, oXml)

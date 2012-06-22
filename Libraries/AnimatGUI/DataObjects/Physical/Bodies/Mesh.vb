@@ -178,6 +178,15 @@ Namespace DataObjects.Physical.Bodies
 
         End Sub
 
+        Public Overrides Function ResetReceptiveFieldsAfterPropChange(ByVal propInfo As Reflection.PropertyInfo) As Boolean
+
+            If propInfo.Name = "ConvexMeshFile" Then
+                Return True
+            Else
+                Return False
+            End If
+        End Function
+
         Public Overrides Sub BeforeAddBody()
             Try
                 Dim frmMesh As New Forms.BodyPlan.SelectMesh

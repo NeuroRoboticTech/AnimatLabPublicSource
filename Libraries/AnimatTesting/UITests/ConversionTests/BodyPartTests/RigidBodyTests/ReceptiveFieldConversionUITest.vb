@@ -73,28 +73,33 @@ Namespace UITests
                         'Load and convert the project.
                         TestConversionProject("AfterConversion_", aryMaxErrors)
 
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "ReceptiveFieldSensor.ReceptiveCurrentGain.C", "100 n"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "ReceptiveFieldSensor.ReceptiveCurrentGain.C", "100 n"})
 
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "CurrentGain_C_100n_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "CurrentGain_C_100n_")
 
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "ReceptiveFieldSensor.ReceptiveFieldGain.Width", "300 "})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "ReceptiveFieldSensor.ReceptiveFieldGain.Width", "300 "})
 
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FieldGain_Width_300_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FieldGain_Width_300_")
 
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "ReceptiveFieldSensor.ReceptiveFieldGain.Width", "50 "})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "ReceptiveFieldSensor.ReceptiveFieldGain.Width", "50 "})
 
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FieldGain_Width_50_")
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FieldGain_Width_50_")
 
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "ReceptiveFieldSensor.ReceptiveFieldGain.Width", "150 "})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "ReceptiveFieldSensor.ReceptiveFieldGain.Width", "150 "})
 
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", False})
                         ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_ClearReceptiveFieldPairs", Nothing)
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_VerifyFieldPairCount", New Object() {0})
+
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_AddReceptiveFieldPair", New Object() {"A3", CSng(0.0), CSng(2.5), CSng(0)})
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_VerifyFieldPairExists", New Object() {"A3", "(0.00, 2.50, 0.00)"})
+
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_ClearReceptiveFieldPairs", Nothing)
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", "WidthSections", "10"})
-                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", False})
-                        System.Threading.Thread.Sleep(2000)
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_VerifyFieldPairCount", New Object() {0})
                         ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_AddReceptiveFieldPair", New Object() {"A6", CSng(0.0), CSng(2.5), CSng(-1.5)})
                         ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_AddReceptiveFieldPair", New Object() {"A5", CSng(0.0), CSng(2.5), CSng(-1)})
                         ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_AddReceptiveFieldPair", New Object() {"A4", CSng(0.0), CSng(2.5), CSng(-0.5)})
@@ -109,27 +114,90 @@ Namespace UITests
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "ResetFields_")
 
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_5\Cone", "Height", "10 c"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_5\Cone", "UpperRadius", "5 c"})
 
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "UpperRadius_5cm_")
+                        ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan"}, 2000)
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", False})
+                        ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"})
+                        PasteChildPartTypeWithJoint("RPRO", "Simulation\Environment\Organisms\Skin\Body Plan\Skin", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0, True)
 
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_5\Cone", "UpperRadius", "0 c"})
-                        'ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_5\Cone", "LowerRadius", "0 c"}, "Both the upper and lower radius cannot be zero.", enumErrorTextType.BeginsWith)
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin\Joint_1\Skin", "Name", "Skin2"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin\Joint_1\Skin2", "WorldPosition.X", "50 c"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin\Joint_1\Skin2", "WorldPosition.Y", "25 c"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin\Joint_1\Skin2", "WorldPosition.Z", "0"})
 
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_5\Cone", "UpperRadius", "5 c"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_5\Cone", "LowerRadius", "0 c"})
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin\Joint_1\Skin2", False})
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_VerifyFieldPairExists", New Object() {"A6", "(0.00, 2.50, -1.50)"})
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_VerifyFieldPairExists", New Object() {"A5", "(0.00, 2.50, -1.00)"})
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_VerifyFieldPairExists", New Object() {"A4", "(0.00, 2.50, -0.50)"})
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_VerifyFieldPairExists", New Object() {"A3", "(0.00, 2.50, 0.00)"})
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_VerifyFieldPairExists", New Object() {"A2", "(0.00, 2.50, 0.50)"})
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_VerifyFieldPairExists", New Object() {"A1", "(0.00, 2.50, 1.00)"})
 
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "LowerRadius_0cm_")
+                        AddStimulus("Motor Velocity", "Skin", "\Body Plan\Skin\Joint_1\Skin2\SkinToArm\Arm\ArmToPointer", "2_Down1")
+                        SetMotorVelocityStimulus("2_Down1", False, True, 1, 2, False, True, 0.05, "")
 
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_5\Cone", "UpperRadius", "1 c"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_5\Cone", "LowerRadius", "0 c"})
-                        'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_5\Cone", "Height", "25 c"})
+                        AddStimulus("Motor Velocity", "Skin", "\Body Plan\Skin\Joint_1\Skin2\SkinToArm\Arm\ArmToPointer", "2_Down2")
+                        SetMotorVelocityStimulus("2_Down2", False, True, 3, 4, False, True, 0.05, "")
 
-                        'RunSimulationWaitToEnd()
-                        'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "UpperRadius_1cm_")
+                        AddStimulus("Motor Velocity", "Skin", "\Body Plan\Skin\Joint_1\Skin2\SkinToArm\Arm\ArmToPointer", "2_Down3")
+                        SetMotorVelocityStimulus("2_Down3", False, True, 5, 6, False, True, 0.05, "")
+
+                        AddStimulus("Motor Velocity", "Skin", "\Body Plan\Skin\Joint_1\Skin2\SkinToArm\Arm\ArmToPointer", "2_Down4")
+                        SetMotorVelocityStimulus("2_Down4", False, True, 7, 8, False, True, 0.05, "")
+
+                        AddStimulus("Motor Velocity", "Skin", "\Body Plan\Skin\Joint_1\Skin2\SkinToArm\Arm\ArmToPointer", "2_Down5")
+                        SetMotorVelocityStimulus("2_Down5", False, True, 9, 10, False, True, 0.05, "")
+
+                        AddStimulus("Motor Velocity", "Skin", "\Body Plan\Skin\Joint_1\Skin2\SkinToArm\Arm\ArmToPointer", "2_Down6")
+                        SetMotorVelocityStimulus("2_Down6", False, True, 11, 12, False, True, 0.05, "")
+
+                        AddStimulus("Motor Velocity", "Skin", "\Body Plan\Skin\Joint_1\Skin2\SkinToArm", "2_Over1")
+                        SetMotorVelocityStimulus("2_Over1", False, True, 2.5, 3, False, True, 0.025, "")
+
+                        AddStimulus("Motor Velocity", "Skin", "\Body Plan\Skin\Joint_1\Skin2\SkinToArm", "2_Over2")
+                        SetMotorVelocityStimulus("2_Over2", False, True, 4.5, 5, False, True, 0.025, "")
+
+                        AddStimulus("Motor Velocity", "Skin", "\Body Plan\Skin\Joint_1\Skin2\SkinToArm", "2_Over3")
+                        SetMotorVelocityStimulus("2_Over3", False, True, 6.5, 7, False, True, 0.025, "")
+
+                        AddStimulus("Motor Velocity", "Skin", "\Body Plan\Skin\Joint_1\Skin2\SkinToArm", "2_Over4")
+                        SetMotorVelocityStimulus("2_Over4", False, True, 8.5, 9, False, True, 0.025, "")
+
+                        AddStimulus("Motor Velocity", "Skin", "\Body Plan\Skin\Joint_1\Skin2\SkinToArm", "2_Over5")
+                        SetMotorVelocityStimulus("2_Over5", False, True, 10.5, 11, False, True, 0.025, "")
+
+                        AddStimulus("Motor Velocity", "Skin", "\Body Plan\Skin\Joint_1\Skin2\SkinToArm\Arm\ArmToPointer", "2_Up1")
+                        SetMotorVelocityStimulus("2_Up1", False, True, 2, 3, False, True, -0.05, "")
+
+                        AddStimulus("Motor Velocity", "Skin", "\Body Plan\Skin\Joint_1\Skin2\SkinToArm\Arm\ArmToPointer", "2_Up2")
+                        SetMotorVelocityStimulus("2_Up2", False, True, 4, 5, False, True, -0.05, "")
+
+                        AddStimulus("Motor Velocity", "Skin", "\Body Plan\Skin\Joint_1\Skin2\SkinToArm\Arm\ArmToPointer", "2_Up3")
+                        SetMotorVelocityStimulus("2_Up3", False, True, 6, 7, False, True, -0.05, "")
+
+                        AddStimulus("Motor Velocity", "Skin", "\Body Plan\Skin\Joint_1\Skin2\SkinToArm\Arm\ArmToPointer", "2_Up4")
+                        SetMotorVelocityStimulus("2_Up4", False, True, 8, 9, False, True, -0.05, "")
+
+                        AddStimulus("Motor Velocity", "Skin", "\Body Plan\Skin\Joint_1\Skin2\SkinToArm\Arm\ArmToPointer", "2_Up5")
+                        SetMotorVelocityStimulus("2_Up5", False, True, 10, 11, False, True, -0.05, "")
+
+                        AddStimulus("Motor Velocity", "Skin", "\Body Plan\Skin\Joint_1\Skin2\SkinToArm\Arm\ArmToPointer", "2_Up6")
+                        SetMotorVelocityStimulus("2_Up6", False, True, 12, 13, False, True, -0.05, "")
+
+                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart", "CollectEndTime", "14"})
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation", "SimulationEndTime", "15"})
+
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AddSkin2_")
+
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", False})
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_ClearReceptiveFieldPairs", Nothing)
+
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin\Joint_1\Skin2", False})
+                        ExecuteAppPropertyMethod("ReceptiveFieldPairs", "Automation_VerifyFieldPairCount", New Object() {6})
+
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "ClearSkin1_")
 
                     End Sub
 
@@ -141,6 +209,8 @@ Namespace UITests
                         aryMaxErrors.Add("1", 0.1)
                         aryMaxErrors.Add("2", 0.1)
                         aryMaxErrors.Add("RootY", 0.1)
+                        aryMaxErrors.Add("1Ia", 0.00000001)
+                        aryMaxErrors.Add("2Ia", 0.00000001)
                         aryMaxErrors.Add("default", 0.1)
 
                         m_strProjectName = "ReceptiveFields_Kg_M"

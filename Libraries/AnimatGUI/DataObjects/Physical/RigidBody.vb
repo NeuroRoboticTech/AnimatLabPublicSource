@@ -1558,6 +1558,10 @@ Namespace DataObjects.Physical
 
         End Sub
 
+        Public Overridable Function ResetReceptiveFieldsAfterPropChange(ByVal propInfo As Reflection.PropertyInfo) As Boolean
+            Return False
+        End Function
+
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)

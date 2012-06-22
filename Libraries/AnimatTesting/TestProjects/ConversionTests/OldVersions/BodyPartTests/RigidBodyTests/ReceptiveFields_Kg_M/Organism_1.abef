@@ -1,7 +1,7 @@
 <Editor>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.Forms.Behavior.Editor</ClassName>
-<NormalLocation x="610" y="286"/>
+<NormalLocation x="542" y="141"/>
 <NormalSize Width="747" Height="415"/>
 <WindowState>Normal</WindowState>
 <Organism>e6eadb3a-5d1b-4b78-a53b-b83b26549bc6</Organism>
@@ -848,7 +848,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="214" y="86"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>

@@ -1228,8 +1228,8 @@ Namespace Framework
             'Set the stim properties
             ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "AlwaysActive", bAlwaysActive.ToString})
             ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "Enabled", bEnabled.ToString})
-            ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "StartTime", dblStartTime.ToString})
             ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "EndTime", dblEndTime.ToString})
+            ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\" & strStimName, "StartTime", dblStartTime.ToString})
         End Sub
 
 
