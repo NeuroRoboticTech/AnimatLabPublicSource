@@ -156,6 +156,7 @@ Namespace DataObjects.Physical.Bodies
 
         Public Overrides Sub InitAfterAppStart()
             MyBase.InitAfterAppStart()
+            RemoveCompatibleStimulus("ForceInput")
             AddCompatibleStimulusType("EnablerInput")
         End Sub
 

@@ -229,7 +229,7 @@ void VsForceStimulus::StepSimulation()
 				fltF[0] = m_fltForceX; fltF[1] = m_fltForceY; fltF[2] = m_fltForceZ;
 				fltP[0] = m_oRelativePosition.x; fltP[1] = m_oRelativePosition.y; fltP[2] = m_oRelativePosition.z;
 
-				if(m_fltForceX || m_fltForceY || m_fltForceZ)
+				if(m_lpVsBody->Part() && (m_fltForceX || m_fltForceY || m_fltForceZ))
 					m_lpVsBody->Part()->addForceAtLocalPosition(fltF, fltP);
 			}
 
@@ -261,7 +261,7 @@ void VsForceStimulus::StepSimulation()
 
 				fltF[0] = m_fltTorqueX; fltF[1] = m_fltTorqueY; fltF[2] = m_fltTorqueZ;
 
-				if(m_fltTorqueX || m_fltTorqueY || m_fltTorqueZ)
+				if(m_lpVsBody->Part() && (m_fltTorqueX || m_fltTorqueY || m_fltTorqueZ))
 					m_lpVsBody->Part()->addTorque (fltF);
 			}
 		}
