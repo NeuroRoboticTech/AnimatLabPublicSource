@@ -1102,10 +1102,7 @@ Namespace DataObjects.Behavior
         Public Overrides Sub InitializeAfterLoad()
 
             Try
-                If Me.ID.ToLower = "1881a97b-1c8d-4464-8ea1-61bfb61aaa34" Then
-                    Dim ival As Integer = 5
-                End If
-
+ 
                 If m_strOriginID.Trim.Length > 0 AndAlso m_strDestinationID.Trim.Length > 0 Then
                     Me.Origin = Me.Organism.FindBehavioralNode(m_strOriginID)
                     Me.Destination = Me.Organism.FindBehavioralNode(m_strDestinationID)

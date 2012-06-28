@@ -3244,10 +3244,6 @@ RigidBody *Simulator::FindClosestFoodSource(CStdFPoint &oMouthPos, float fltMinR
 **/
 void Simulator::AddToObjectList(AnimatBase *lpItem)
 {
-	int iVal=0;
-	if(lpItem->ID() == "42B005AD-6BB6-4D78-9A47-EC38B2ACFB16")
-		iVal =1;
-
 	if(FindByID(lpItem->ID(), FALSE) != NULL)
 		THROW_PARAM_ERROR(Al_Err_lDuplicateAddOfObject, Al_Err_strDuplicateAddOfObject, "ID", lpItem->ID());
 

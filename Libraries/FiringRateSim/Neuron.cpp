@@ -1034,9 +1034,6 @@ void Neuron::Load(CStdXml &oXml)
 {
 	int iCount, iIndex;
 
-	//if(m_strID == "78ADDE09-CD32-4617-A169-1588F0F62C69")
-	//	iCount = 0;
-
 	Node::Load(oXml);
 
 	oXml.IntoElem();  //Into Neuron Element
