@@ -48,8 +48,11 @@ void VsIntersectionEvent::notifyIntersect(VxUniverse::eIntersectEventType type, 
 				RigidBody *lpBody1 = (RigidBody *) v1;
 				RigidBody *lpBody2 = (RigidBody *) v2;
 
-				lpBody1->AddSurfaceContact(lpBody2);
-				lpBody2->AddSurfaceContact(lpBody1);
+				if( !((lpBody1->Parent() == lpBody2) || (lpBody2->Parent() == lpBody1)) )
+				{
+					lpBody1->AddSurfaceContact(lpBody2);
+					lpBody2->AddSurfaceContact(lpBody1);
+				}
 			}
 		}
 	}
@@ -72,8 +75,11 @@ void VsIntersectionEvent::notifyDisjoint(VxUniverse::eIntersectEventType type, V
 				RigidBody *lpBody1 = (RigidBody *) v1;
 				RigidBody *lpBody2 = (RigidBody *) v2;
 
-				lpBody1->RemoveSurfaceContact(lpBody2);
-				lpBody2->RemoveSurfaceContact(lpBody1);
+				if( !((lpBody1->Parent() == lpBody2) || (lpBody2->Parent() == lpBody1)) )
+				{
+					lpBody1->RemoveSurfaceContact(lpBody2);
+					lpBody2->RemoveSurfaceContact(lpBody1);
+				}
 			}
 		}
 	}

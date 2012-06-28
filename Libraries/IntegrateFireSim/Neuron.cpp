@@ -902,7 +902,7 @@ void Neuron::PreCalc(IntegrateFireNeuralModule *lpNS)
 		m_aryDG[i]=exp(-m_dDT/lpSCSyn->m_dDecay);
 		m_aryFacilD[i]=exp(-m_dDT/lpSCSyn->m_dFacilDecay);
 		
-        Std_TraceMsg(0, "I: " + STR(i) + "  SynG: " + STR(m_arySynG[i]) + "  NextSyn: " + STR(m_aryNextSponSynTime[i]) + "  FacilG: " + STR(m_aryFacilSponSynG[i]) + "  DG: " + STR(m_aryDG[i]) + "  FacilD: " + STR(m_aryFacilD[i]));
+        //Std_TraceMsg(0, "I: " + STR(i) + "  SynG: " + STR(m_arySynG[i]) + "  NextSyn: " + STR(m_aryNextSponSynTime[i]) + "  FacilG: " + STR(m_aryFacilSponSynG[i]) + "  DG: " + STR(m_aryDG[i]) + "  FacilD: " + STR(m_aryFacilD[i]));
 	}
 
 	m_dGK=0;

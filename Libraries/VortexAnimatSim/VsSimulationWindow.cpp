@@ -169,6 +169,10 @@ void VsSimulationWindow::InitEmbedded(Simulator *lpSim, VsSimulator *lpVsSim)
 
 	osgGA::GUIEventHandler *lpHandler = new VsDraggerHandler(lpSim, m_osgViewer.get(), osgViewport.get());
     m_osgViewer->addEventHandler(lpHandler);
+/*
+	m_osgStatsHandler = new VsStatsHandler;
+	m_osgStatsHandler->setStatsHandler(osgViewer::StatsHandler::StatsType::FRAME_RATE);
+	m_osgViewer->addEventHandler( m_osgStatsHandler );*/
 
 	m_osgViewer->realize();	
 
@@ -206,6 +210,10 @@ void VsSimulationWindow::InitStandalone(Simulator *lpSim, VsSimulator *lpVsSim)
 	// set mask for upper camera
 	m_osgViewer->getCamera()->setInheritanceMask(inheritanceMask);
 	m_osgViewer->getCamera()->setCullMask(0x1);
+/*
+	m_osgStatsHandler = new VsStatsHandler;
+	m_osgStatsHandler->setStatsHandler(osgViewer::StatsHandler::StatsType::FRAME_RATE);
+	m_osgViewer->addEventHandler( m_osgStatsHandler );*/
 
 	m_osgViewer->realize();
 

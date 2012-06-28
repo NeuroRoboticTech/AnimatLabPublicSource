@@ -401,9 +401,6 @@
     </Compile>
     <Compile Include="DataObjects\Physical\Bodies\Box.vb" />
     <Compile Include="DataObjects\Physical\BodyTransparencies.vb" />
-    <Compile Include="DataObjects\Physical\Camera.vb">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DataObjects\Physical\CollisionPair.vb">
       <SubType>Code</SubType>
     </Compile>

@@ -1004,7 +1004,7 @@ float Simulator::FrameStep() {return m_fltFrameStep;}
 **/
 void Simulator::FrameRate(int iVal)
 {
-	Std_IsAboveMin((int) 0, iVal, TRUE, "FrameRate");
+	Std_IsAboveMin((int) 9, iVal, TRUE, "FrameRate");
 
 	m_iFrameRate = iVal;
  	m_fltFrameStep = (1/ (float) m_iFrameRate);

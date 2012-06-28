@@ -391,6 +391,9 @@ void VsRigidBody::CreateSensorPart()
 
 	m_vxSensor->setControl(VxEntity::kControlNode);
 
+	//For some reason attempting to disable collisions between a sensor and its parent part does not work.
+	//I put some code in the checking to prevent this from being counted.
+
 	if(lpVsParent)
 		SetFollowEntity(lpVsParent);
 	else

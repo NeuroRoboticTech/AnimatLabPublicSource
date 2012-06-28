@@ -61,6 +61,8 @@ Namespace DataObjects
         Protected m_eVisualSelectionMode As enumVisualSelectionMode
         Protected m_bAddBodiesMode As Boolean = False
 
+        Protected m_iFrameRate As Integer = 30
+
 #End Region
 
 #Region " Properties "
@@ -261,6 +263,21 @@ Namespace DataObjects
                 m_bAddBodiesMode = value
             End Set
         End Property
+
+        Public Overridable Property FrameRate() As Integer
+            Get
+                Return m_iFrameRate
+            End Get
+            Set(ByVal value As Integer)
+                If value <= 10 OrElse value > 1000 Then
+                    Throw New System.Exception("The frame rate must be greater than 10 and less than 1000.")
+                End If
+
+                Me.SetSimData("FrameRate", value.ToString, True)
+                m_iFrameRate = value
+            End Set
+        End Property
+
 
 #End Region
 
@@ -627,8 +644,8 @@ Namespace DataObjects
             '                            "Simulation Modules", "This determines the animat plug-in module that will be used throughout the simulation. " & _
             '                            "This plug-in will control the physics portion of the simulation.", m_strAnimatModule))
 
-            'propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Use Release Libraries", m_bUseReleaseLibraries.GetType(), "UseReleaseLibraries", _
-            '                            "Playback Control", "Determines if the debug or release libraries should be used for running the simulator.", m_bUseReleaseLibraries))
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("FrameRate", m_iFrameRate.GetType(), "FrameRate", _
+                                        "Playback Control", "Determines the video frame rate of the simulation.", m_iFrameRate))
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("ID", Me.ID.GetType(), "ID", _
                                         "Settings", "ID", Me.ID, True))
@@ -683,16 +700,14 @@ Namespace DataObjects
 
 #End Region
 
-
         Public Overridable Overloads Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             oXml.IntoChildElement("Simulation")
 
             Me.UpdateDataInterval = oXml.GetChildInt("UpdateDataInterval", m_iUpdateDataInterval)
             Me.StartPaused = oXml.GetChildBool("StartPaused", m_bStartPaused)
-            'Me.UseReleaseLibraries = oXml.GetChildBool("UseReleaseLibraries", m_bUseReleaseLibraries)
+            Me.FrameRate = oXml.GetChildInt("FrameRate", m_iFrameRate)
             Me.EnableSimRecording = oXml.GetChildBool("EnableSimRecording", m_bEnableSimRecording)
-            'Me.AnimatModule = oXml.GetChildString("AnimatModule", m_strAnimatModule)
             m_strExternalStimuli = oXml.GetChildString("ExternalStimuli", "")
             m_strAPI_File = oXml.GetChildString("APIFile", "")
 

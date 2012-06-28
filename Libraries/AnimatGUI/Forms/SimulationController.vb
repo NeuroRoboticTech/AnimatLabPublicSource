@@ -700,19 +700,10 @@ Namespace Forms
             propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Time Scale", Me.ctrlTimeRuler.TimeScale.GetType, "TimeScale", _
                                         "Time Bar Settings", "Sets the time scale used for the time bar.", Me.ctrlTimeRuler.TimeScale))
 
-            'propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Update Data Interval", m_iUpdateDataInterval.GetType(), "UpdateDataInterval", _
-            '                            "Playback Control", "This controls how often the data is updated during the run of the simulation. " & _
-            '                            "For example, it will control how often the progress toolbar is refreshed.", m_iUpdateDataInterval))
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Frame Rate", Util.Simulation.FrameRate.GetType, "FrameRate", _
+                                        "Playback Controls", "Sets the time scale used for the time bar.", Util.Simulation.FrameRate))
 
-            propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Start Paused", GetType(Boolean), "StartPaused", _
-                                        "Playback Control", "This determines whether the simulation is paused when " & _
-                                        "it starts or if it begins running immediately.", Util.Simulation.StartPaused))
-
-            'propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Enable Sim Recording", GetType(Boolean), "EnableSimRecording", _
-            '                            "Playback Control", "If this is true then the simulation recording and playback feature is enabled. " & _
-            '                            "If this is turned off it may slightly improve the simulation speed.", Util.Simulation.EnableSimRecording))
-
-         End Sub
+        End Sub
 
 
         Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)

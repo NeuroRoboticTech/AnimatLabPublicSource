@@ -902,10 +902,8 @@ used to detect whether, and how many, contacts are currently happening.
 **/
 void RigidBody::RemoveSurfaceContact(RigidBody *lpContactedSurface)
 {
-	if(m_fltSurfaceContactCount<=0)
-		THROW_ERROR(Al_Err_lInvalidSurceContactCount, Al_Err_strInvalidSurceContactCount);
-
-	m_fltSurfaceContactCount--;
+	if(m_fltSurfaceContactCount>0)
+		m_fltSurfaceContactCount--;
 }
 
 /**
@@ -1017,6 +1015,7 @@ void RigidBody::ResetSimulation()
 
 	m_fltFoodQuantity = m_fltFoodQuantityInit;
 	m_fltFoodEaten = 0;
+	m_fltSurfaceContactCount = 0;
 }
 
 void RigidBody::AfterResetSimulation()
