@@ -456,7 +456,11 @@ Namespace DataObjects.Behavior
                 Return m_bnDestination
             End Get
             Set(ByVal Value As Behavior.Node)
+                RemoveFromInLinks(m_bnDestination)
+
                 m_bnDestination = Value
+                AddToInLinks(m_bnDestination)
+
                 UpdateChart()
 
                 If m_bIsInitialized Then
@@ -562,7 +566,11 @@ Namespace DataObjects.Behavior
                 Return m_bnOrigin
             End Get
             Set(ByVal Value As Behavior.Node)
+                RemoveFromOutLinks(m_bnOrigin)
+
                 m_bnOrigin = Value
+                AddToOutLinks(m_bnOrigin)
+
                 UpdateChart()
 
                 If m_bIsInitialized Then
@@ -902,6 +910,30 @@ Namespace DataObjects.Behavior
             DisconnectDiagramEvents()
         End Sub
 
+        Public Overridable Sub AddToInLinks(ByVal oVal As Behavior.Node)
+            If Not oVal Is Nothing AndAlso Not oVal.InLinks.Contains(Me.ID) Then
+                oVal.AddInLink(Me)
+            End If
+        End Sub
+
+        Public Overridable Sub RemoveFromInLinks(ByVal oVal As Behavior.Node)
+            If Not oVal Is Nothing AndAlso oVal.InLinks.Contains(Me.ID) Then
+                oVal.RemoveInLink(Me)
+            End If
+        End Sub
+
+        Public Overridable Sub AddToOutLinks(ByVal oVal As Behavior.Node)
+            If Not oVal Is Nothing AndAlso Not oVal.OutLinks.Contains(Me.ID) Then
+                oVal.AddOutLink(Me)
+            End If
+        End Sub
+
+        Public Overridable Sub RemoveFromOutLinks(ByVal oVal As Behavior.Node)
+            If Not oVal Is Nothing AndAlso oVal.OutLinks.Contains(Me.ID) Then
+                oVal.RemoveOutLink(Me)
+            End If
+        End Sub
+
 #End Region
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGUICtrls.Controls.PropertyTable)
@@ -1070,6 +1102,10 @@ Namespace DataObjects.Behavior
         Public Overrides Sub InitializeAfterLoad()
 
             Try
+                If Me.ID.ToLower = "1881a97b-1c8d-4464-8ea1-61bfb61aaa34" Then
+                    Dim ival As Integer = 5
+                End If
+
                 If m_strOriginID.Trim.Length > 0 AndAlso m_strDestinationID.Trim.Length > 0 Then
                     Me.Origin = Me.Organism.FindBehavioralNode(m_strOriginID)
                     Me.Destination = Me.Organism.FindBehavioralNode(m_strDestinationID)

@@ -96,6 +96,23 @@ Namespace DataObjects.Behavior.Nodes
         End Function
 
 #Region " DataObject Methods "
+        Public Overrides Sub InitializeSimulationReferences()
+            'Graphical items are not actually created in the simulation
+            m_doInterface = Nothing
+        End Sub
+
+#Region " Add-Remove to List Methods "
+
+        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
+            'Graphical items are not actually created in the simulation
+            m_doInterface = Nothing
+        End Sub
+
+        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
+            m_doInterface = Nothing
+        End Sub
+
+#End Region
 
 #End Region
 

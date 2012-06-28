@@ -186,8 +186,8 @@ Namespace DataObjects.Behavior.Nodes
                     bdLink = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
 
                     If bdLink.IsLinkCompatibleWithNodes(bdLink.ActualOrigin, doNewNode) Then
-                        If thOldLink.Node.InLinks.Contains(bdLink.ID) Then thOldLink.Node.InLinks.Remove(bdLink.ID)
-                        If Not thNewLink.Node.InLinks.Contains(bdLink.ID) Then thNewLink.Node.InLinks.Add(bdLink.ID, bdLink)
+                        If thOldLink.Node.InLinks.Contains(bdLink.ID) Then thOldLink.Node.RemoveInLink(bdLink)
+                        If Not thNewLink.Node.InLinks.Contains(bdLink.ID) Then thNewLink.Node.AddInLink(bdLink)
 
                         bdLink.RemoveFromSim(True)
                     Else
@@ -200,8 +200,8 @@ Namespace DataObjects.Behavior.Nodes
                     bdLink = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Link)
 
                     If bdLink.IsLinkCompatibleWithNodes(doNewNode, bdLink.ActualDestination) Then
-                        If thOldLink.Node.OutLinks.Contains(bdLink.ID) Then thOldLink.Node.OutLinks.Remove(bdLink.ID)
-                        If Not thNewLink.Node.OutLinks.Contains(bdLink.ID) Then thNewLink.Node.OutLinks.Add(bdLink.ID, bdLink)
+                        If thOldLink.Node.OutLinks.Contains(bdLink.ID) Then thOldLink.Node.RemoveOutLink(bdLink)
+                        If Not thNewLink.Node.OutLinks.Contains(bdLink.ID) Then thNewLink.Node.AddOutLink(bdLink)
 
                         bdLink.RemoveFromSim(True)
                     Else
@@ -337,7 +337,7 @@ Namespace DataObjects.Behavior.Nodes
                 If m_strLinkedNodeID.Trim.Length > 0 Then
                     Dim bnNode As Behavior.Node = Me.Organism.FindBehavioralNode(m_strLinkedNodeID, False)
                     If Not bnNode Is Nothing Then
-                        m_thLinkedNode = New TypeHelpers.LinkedNode(bnNode.Organism, bnNode)
+                        Me.LinkedNode = New TypeHelpers.LinkedNode(bnNode.Organism, bnNode)
                     Else
                         Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.ErrorType, "The offpage connector ID: " & Me.ID & " was unable to find its linked node ID: " & m_strLinkedNodeID & " in the diagram. I am defaulting it to nothing.")
                     End If
@@ -345,43 +345,39 @@ Namespace DataObjects.Behavior.Nodes
 
                 ConnectLinkedNodeEvents()
 
-                Dim strID As String = ""
+                'Dim strID As String = ""
 
-                Dim blLink As Behavior.Link
-                For Each strID In m_aryLoadingInLinkIDs
-                    If strID.Trim.Length > 0 Then
-                        blLink = Me.Organism.FindBehavioralLink(strID, False)
+                'Dim blLink As Behavior.Link
+                'For Each strID In m_aryLoadingInLinkIDs
+                '    If strID.Trim.Length > 0 Then
+                '        blLink = Me.Organism.FindBehavioralLink(strID, False)
 
-                        If Not blLink Is Nothing Then
-                            If Not m_aryInLinks.Contains(strID) Then m_aryInLinks.Add(strID, blLink)
-                            If Not m_aryLinks.Contains(strID) Then m_aryLinks.Add(strID, blLink)
+                '        If Not blLink Is Nothing Then
+                '            If Not m_aryInLinks.Contains(strID) Then AddInLink(blLink)
 
-                            If Not Me.LinkedNode Is Nothing AndAlso Not Me.LinkedNode.Node Is Nothing Then
-                                If Not Me.LinkedNode.Node.InLinks.Contains(strID) Then Me.LinkedNode.Node.InLinks.Add(strID, blLink)
-                                If Not Me.LinkedNode.Node.Links.Contains(strID) Then Me.LinkedNode.Node.Links.Add(strID, blLink)
-                            End If
-                        End If
-                    End If
-                Next
+                '            If Not Me.LinkedNode Is Nothing AndAlso Not Me.LinkedNode.Node Is Nothing Then
+                '                If Not Me.LinkedNode.Node.InLinks.Contains(strID) Then Me.LinkedNode.Node.AddInLink(blLink)
+                '            End If
+                '        End If
+                '    End If
+                'Next
 
-                For Each strID In m_aryLoadingOutLinkIDs
-                    If strID.Trim.Length > 0 Then
-                        blLink = Me.Organism.FindBehavioralLink(strID, False)
+                'For Each strID In m_aryLoadingOutLinkIDs
+                '    If strID.Trim.Length > 0 Then
+                '        blLink = Me.Organism.FindBehavioralLink(strID, False)
 
-                        If Not blLink Is Nothing Then
-                            If Not m_aryOutLinks.Contains(strID) Then m_aryOutLinks.Add(strID, blLink)
-                            If Not m_aryLinks.Contains(strID) Then m_aryLinks.Add(strID, blLink)
+                '        If Not blLink Is Nothing Then
+                '            If Not m_aryOutLinks.Contains(strID) Then AddOutLink(blLink)
 
-                            If Not Me.LinkedNode Is Nothing AndAlso Not Me.LinkedNode.Node Is Nothing Then
-                                If Not Me.LinkedNode.Node.OutLinks.Contains(strID) Then Me.LinkedNode.Node.OutLinks.Add(strID, blLink)
-                                If Not Me.LinkedNode.Node.Links.Contains(strID) Then Me.LinkedNode.Node.Links.Add(strID, blLink)
-                            End If
-                        End If
-                    End If
-                Next
+                '            If Not Me.LinkedNode Is Nothing AndAlso Not Me.LinkedNode.Node Is Nothing Then
+                '                If Not Me.LinkedNode.Node.OutLinks.Contains(strID) Then Me.LinkedNode.Node.AddOutLink(blLink)
+                '            End If
+                '        End If
+                '    End If
+                'Next
 
-                m_aryLoadingInLinkIDs.Clear()
-                m_aryLoadingOutLinkIDs.Clear()
+                'm_aryLoadingInLinkIDs.Clear()
+                'm_aryLoadingOutLinkIDs.Clear()
 
                 m_bIsInitialized = True
 
@@ -414,6 +410,35 @@ Namespace DataObjects.Behavior.Nodes
             oXml.OutOfElem() ' Outof Node Element
 
         End Sub
+
+        Public Overrides Sub AddInLink(ByRef blLink As Behavior.Link)
+            MyBase.AddInLink(blLink)
+            If Not Me.LinkedNode Is Nothing AndAlso Not Me.LinkedNode.Node Is Nothing Then
+                Me.LinkedNode.Node.AddInLink(blLink)
+            End If
+        End Sub
+
+        Public Overrides Sub RemoveInLink(ByRef blLink As Behavior.Link)
+            MyBase.RemoveInLink(blLink)
+            If Not Me.LinkedNode Is Nothing AndAlso Not Me.LinkedNode.Node Is Nothing Then
+                Me.LinkedNode.Node.RemoveInLink(blLink)
+            End If
+        End Sub
+
+        Public Overrides Sub AddOutLink(ByRef blLink As Behavior.Link)
+            MyBase.AddOutLink(blLink)
+            If Not Me.LinkedNode Is Nothing AndAlso Not Me.LinkedNode.Node Is Nothing Then
+                Me.LinkedNode.Node.AddOutLink(blLink)
+            End If
+        End Sub
+
+        Public Overrides Sub RemoveOutLink(ByRef blLink As Behavior.Link)
+            MyBase.RemoveOutLink(blLink)
+            If Not Me.LinkedNode Is Nothing AndAlso Not Me.LinkedNode.Node Is Nothing Then
+                Me.LinkedNode.Node.RemoveOutLink(blLink)
+            End If
+        End Sub
+
 
 #End Region
 

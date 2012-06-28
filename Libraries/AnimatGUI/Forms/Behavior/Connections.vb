@@ -14,7 +14,7 @@ Imports System.Data
 Namespace Forms.Behavior
 
     Public Class Connections
-        Inherits AnimatGUI.Forms.AnimatDialog
+        Inherits System.Windows.Forms.Form
 
 #Region " Windows Form Designer generated code "
 

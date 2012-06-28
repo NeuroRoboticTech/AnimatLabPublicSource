@@ -68,7 +68,10 @@ Namespace DataObjects.Behavior.Synapses
                 Return MyBase.Destination
             End Get
             Set(ByVal Value As AnimatGUI.DataObjects.Behavior.Node)
+                RemoveFromInLinks(m_bnDestination)
+
                 m_bnDestination = Value
+                AddToInLinks(m_bnDestination)
 
                 If Not Value Is Nothing AndAlso TypeOf Value Is AnimatGUI.DataObjects.Behavior.Nodes.OffPage Then
                     Dim doNode As AnimatGUI.DataObjects.Behavior.Nodes.OffPage = DirectCast(Value, AnimatGUI.DataObjects.Behavior.Nodes.OffPage)

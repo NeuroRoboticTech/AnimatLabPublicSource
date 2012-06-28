@@ -159,8 +159,8 @@ Namespace DataObjects.Behavior
         Protected m_aryOutLinks As New Collections.SortedLinks(Me)
 
         'Used to temporarilly store the id's of the in and out links during loading.
-        Protected m_aryLoadingInLinkIDs As New ArrayList
-        Protected m_aryLoadingOutLinkIDs As New ArrayList
+        'Protected m_aryLoadingInLinkIDs As New ArrayList
+        'Protected m_aryLoadingOutLinkIDs As New ArrayList
 
         Protected m_aryCompatibleLinks As New Collections.Links(Me)
 
@@ -876,6 +876,10 @@ Namespace DataObjects.Behavior
             If Not m_aryInLinks(blLink.ID) Is Nothing Then
                 Throw New System.Exception("The " & blLink.Text & " (ID: " & blLink.ID & ") has already been added as in-link.")
             End If
+            If Not blLink.Destination Is Nothing AndAlso Not (blLink.Destination Is Me OrElse blLink.ActualDestination Is Me) Then
+                Debug.WriteLine("Destination of inlink is not the current node?")
+            End If
+
             m_aryInLinks.Add(blLink.ID, blLink)
 
             If m_aryLinks(blLink.ID) Is Nothing Then
@@ -888,6 +892,10 @@ Namespace DataObjects.Behavior
             If Not m_aryOutLinks(blLink.ID) Is Nothing Then
                 Throw New System.Exception("The " & blLink.Text & " (ID: " & blLink.ID & ") has already been added as out-link.")
             End If
+            If Not blLink.Origin Is Nothing AndAlso Not (blLink.Origin Is Me OrElse blLink.ActualOrigin Is Me) Then
+                Debug.WriteLine("Origin of Outlink is not the current node?")
+            End If
+
             m_aryOutLinks.Add(blLink.ID, blLink)
 
             If m_aryLinks(blLink.ID) Is Nothing Then
@@ -1249,30 +1257,30 @@ Namespace DataObjects.Behavior
                 m_bYSizeable = oXml.GetChildBool("YSizeable")
                 m_iZOrder = oXml.GetChildInt("ZOrder")
 
-                m_aryLoadingInLinkIDs.Clear()
-                m_aryLoadingOutLinkIDs.Clear()
+                'm_aryLoadingInLinkIDs.Clear()
+                'm_aryLoadingOutLinkIDs.Clear()
 
-                ''Now lets read in the in and out links.
-                Dim strID As String
-                oXml.IntoChildElement("InLinks")
-                Dim iCount As Integer = oXml.NumberOfChildren() - 1
-                For iIndex As Integer = 0 To iCount
-                    oXml.FindChildByIndex(iIndex)
-                    strID = oXml.GetChildString()
+                ' ''Now lets read in the in and out links.
+                'Dim strID As String
+                'oXml.IntoChildElement("InLinks")
+                'Dim iCount As Integer = oXml.NumberOfChildren() - 1
+                'For iIndex As Integer = 0 To iCount
+                '    oXml.FindChildByIndex(iIndex)
+                '    strID = oXml.GetChildString()
 
-                    m_aryLoadingInLinkIDs.Add(strID)
-                Next
-                oXml.OutOfElem()  'Outof InLinks Element
+                '    m_aryLoadingInLinkIDs.Add(strID)
+                'Next
+                'oXml.OutOfElem()  'Outof InLinks Element
 
-                oXml.IntoChildElement("OutLinks")
-                iCount = oXml.NumberOfChildren() - 1
-                For iIndex As Integer = 0 To iCount
-                    oXml.FindChildByIndex(iIndex)
-                    strID = oXml.GetChildString()
+                'oXml.IntoChildElement("OutLinks")
+                'iCount = oXml.NumberOfChildren() - 1
+                'For iIndex As Integer = 0 To iCount
+                '    oXml.FindChildByIndex(iIndex)
+                '    strID = oXml.GetChildString()
 
-                    m_aryLoadingOutLinkIDs.Add(strID)
-                Next
-                oXml.OutOfElem()  'Outof OutLinks Element
+                '    m_aryLoadingOutLinkIDs.Add(strID)
+                'Next
+                'oXml.OutOfElem()  'Outof OutLinks Element
 
                 oXml.OutOfElem()  'Outof Node Element
 
@@ -1295,31 +1303,29 @@ Namespace DataObjects.Behavior
 
             Try
                 If Not m_bIsInitialized Then
-                    Dim blLink As Behavior.Link
-                    For Each strID In m_aryLoadingInLinkIDs
-                        If strID.Trim.Length > 0 Then
-                            blLink = Me.Organism.FindBehavioralLink(strID, False)
+                    'Dim blLink As Behavior.Link
+                    'For Each strID In m_aryLoadingInLinkIDs
+                    '    If strID.Trim.Length > 0 Then
+                    '        blLink = Me.Organism.FindBehavioralLink(strID, False)
 
-                            If Not blLink Is Nothing Then
-                                If Not m_aryInLinks.Contains(strID) Then m_aryInLinks.Add(strID, blLink)
-                                If Not m_aryLinks.Contains(strID) Then m_aryLinks.Add(strID, blLink)
-                            End If
-                        End If
-                    Next
+                    '        If Not blLink Is Nothing Then
+                    '            If Not m_aryInLinks.Contains(strID) Then AddInLink(blLink)
+                    '        End If
+                    '    End If
+                    'Next
 
-                    For Each strID In m_aryLoadingOutLinkIDs
-                        If strID.Trim.Length > 0 Then
-                            blLink = Me.Organism.FindBehavioralLink(strID, False)
+                    'For Each strID In m_aryLoadingOutLinkIDs
+                    '    If strID.Trim.Length > 0 Then
+                    '        blLink = Me.Organism.FindBehavioralLink(strID, False)
 
-                            If Not blLink Is Nothing Then
-                                If Not m_aryOutLinks.Contains(strID) Then m_aryOutLinks.Add(strID, blLink)
-                                If Not m_aryLinks.Contains(strID) Then m_aryLinks.Add(strID, blLink)
-                            End If
-                        End If
-                    Next
+                    '        If Not blLink Is Nothing Then
+                    '            If Not m_aryOutLinks.Contains(strID) Then AddOutLink(blLink)
+                    '        End If
+                    '    End If
+                    'Next
 
-                    m_aryLoadingInLinkIDs.Clear()
-                    m_aryLoadingOutLinkIDs.Clear()
+                    'm_aryLoadingInLinkIDs.Clear()
+                    'm_aryLoadingOutLinkIDs.Clear()
 
                     ConnectLinkEvents()
                     ConnectDiagramEvents()
@@ -1336,28 +1342,28 @@ Namespace DataObjects.Behavior
         Public Overrides Sub VerifyAfterPaste(ByVal aryItems As ArrayList)
             Dim aryRemoveList As New ArrayList
 
-            'We need to go through the in and out links and any that are NOT within the list of items 
-            'being copied then we need to get them out of the in/out lists.
-            For Each strID As String In m_aryLoadingInLinkIDs
-                If Not Util.FindIDInList(aryItems, strID) Then
-                    aryRemoveList.Add(strID)
-                End If
-            Next
+            ''We need to go through the in and out links and any that are NOT within the list of items 
+            ''being copied then we need to get them out of the in/out lists.
+            'For Each strID As String In m_aryLoadingInLinkIDs
+            '    If Not Util.FindIDInList(aryItems, strID) Then
+            '        aryRemoveList.Add(strID)
+            '    End If
+            'Next
 
-            For Each strID As String In aryRemoveList
-                m_aryLoadingInLinkIDs.Remove(strID)
-            Next
+            'For Each strID As String In aryRemoveList
+            '    m_aryLoadingInLinkIDs.Remove(strID)
+            'Next
 
-            aryRemoveList.Clear()
-            For Each strID As String In m_aryLoadingOutLinkIDs
-                If Not Util.FindIDInList(aryItems, strID) Then
-                    aryRemoveList.Add(strID)
-                End If
-            Next
+            'aryRemoveList.Clear()
+            'For Each strID As String In m_aryLoadingOutLinkIDs
+            '    If Not Util.FindIDInList(aryItems, strID) Then
+            '        aryRemoveList.Add(strID)
+            '    End If
+            'Next
 
-            For Each strID As String In aryRemoveList
-                m_aryLoadingOutLinkIDs.Remove(strID)
-            Next
+            'For Each strID As String In aryRemoveList
+            '    m_aryLoadingOutLinkIDs.Remove(strID)
+            'Next
 
         End Sub
 
