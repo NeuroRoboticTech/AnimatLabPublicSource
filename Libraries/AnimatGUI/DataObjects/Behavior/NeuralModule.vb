@@ -161,6 +161,40 @@ Namespace DataObjects.Behavior
 
         End Sub
 
+        Public Overrides Sub InitializeAfterLoad()
+            MyBase.InitializeAfterLoad()
+
+            VerifyBehaviorItems()
+        End Sub
+
+        Protected Overridable Sub VerifyBehaviorItems()
+            Dim aryDelete As New ArrayList
+
+            Dim bdItem As Behavior.Data
+            For Each deItem As DictionaryEntry In m_aryNodes
+                bdItem = DirectCast(deItem.Value, Behavior.Data)
+                If Not bdItem.IsValid Then
+                    aryDelete.Add(bdItem)
+                End If
+            Next
+
+            For Each bdItem In aryDelete
+                bdItem.Delete(False)
+            Next
+            aryDelete.Clear()
+
+            For Each deItem As DictionaryEntry In m_aryNodes
+                bdItem = DirectCast(deItem.Value, Behavior.Data)
+                If Not bdItem.IsValid Then
+                    aryDelete.Add(bdItem)
+                End If
+            Next
+
+            For Each bdItem In aryDelete
+                bdItem.Delete(False)
+            Next
+        End Sub
+
         Public Overrides Sub InitializeSimulationReferences()
             MyBase.InitializeSimulationReferences()
 

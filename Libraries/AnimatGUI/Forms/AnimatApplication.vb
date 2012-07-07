@@ -4717,6 +4717,15 @@ Namespace Forms
                 Dim frmType As New AnimatGUI.Forms.BodyPlan.SelectByType
 
                 frmType.SelectedItem = Util.ProjectWorkspace.SelectedDataObject
+
+                If frmType.SelectedItem Is Nothing Then
+                    If Util.ProjectWorkspace.SelectedItem Is Nothing Then
+                        Throw New System.Exception("You must select an item in the workspace before you can select by type.")
+                    Else
+                        Throw New System.Exception("Please select a part a rigid body part or behavior node so we know what type of part to look for.")
+                    End If
+                End If
+
                 If frmType.ShowDialog = DialogResult.OK Then
 
                     Dim colObjects As New AnimatGUI.Collections.DataObjects(Nothing)

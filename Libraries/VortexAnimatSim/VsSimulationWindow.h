@@ -14,7 +14,7 @@ class VORTEX_PORT VsSimulationWindow : public AnimatSim::SimulationWindow, osgGA
 
 		osg::ref_ptr<osgGA::TrackballManipulator> m_osgManip;
 
-		osg::ref_ptr<VsStatsHandler> m_osgStatsHandler;
+		//osg::ref_ptr<VsStatsHandler> m_osgStatsHandler;
 
 		BodyPart *m_lpTrackBody;
 

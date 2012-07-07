@@ -173,6 +173,13 @@ Namespace DataObjects.Behavior
             End Get
         End Property
 
+        <Browsable(False)> _
+        Public Overridable ReadOnly Property IsValid() As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
         '<Browsable(False)> _
         'Public Overridable Property Initialized() As Boolean
         '    Get

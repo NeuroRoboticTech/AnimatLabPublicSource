@@ -84,6 +84,11 @@ Namespace UITests
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "CylinderY_-55cm_", -1, aryIgnoreRows)
 
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "LocalPosition.Y", "0 c"})
+                        RunSimulationWaitToEnd()
+                        CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "BoxY_0cm_", -1, aryIgnoreRows)
+                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "WorldPosition.Y", "-55 c"})
+
                         aryIgnoreRows.Clear()
                         aryIgnoreRows.Add(New Point(131, 137))
                         aryIgnoreRows.Add(New Point(323, 324))

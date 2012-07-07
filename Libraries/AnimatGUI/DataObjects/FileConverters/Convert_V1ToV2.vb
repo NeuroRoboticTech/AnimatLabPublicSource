@@ -15,6 +15,7 @@ Namespace DataObjects
         Public Class Convert_V1ToV2
             Inherits FileConverter
 
+            Protected m_bSimHydro As Boolean = False
             Protected m_dblFluidDensity As Double = 1.0
             Protected m_iSimInterface As ManagedAnimatInterfaces.ISimulatorInterface
             Protected m_fltDistanceUnits As Single
@@ -28,6 +29,8 @@ Namespace DataObjects
 
             Protected m_strMouthID As String = System.Guid.NewGuid.ToString
             Protected m_strStomachID As String = System.Guid.NewGuid.ToString
+
+            Protected m_arySubsystemIDs As New ArrayList
 
             Public Overrides ReadOnly Property ConvertFrom As Single
                 Get
@@ -141,6 +144,7 @@ Namespace DataObjects
                 Dim xnEnvironment As XmlNode = m_xnProjectXml.GetNode(xnSimulation, "Environment")
 
                 m_dblFluidDensity = m_xnProjectXml.GetScaleNumberValue(xnEnvironment, "FluidDensity", False, 1.0)
+                m_bSimHydro = CBool(m_xnProjectXml.GetSingleNodeValue(xnEnvironment, "SimulateHydrodynamics", True, "False"))
                 m_xnProjectXml.RemoveNode(xnEnvironment, "FluidDensity", False)
                 m_xnProjectXml.RemoveNode(xnEnvironment, "MaxHydroForce", False)
                 m_xnProjectXml.RemoveNode(xnEnvironment, "MaxHydroTorque", False)
@@ -371,7 +375,7 @@ Namespace DataObjects
 
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "BuoyancyScale", "1")
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "Magnus", "0")
-                m_xnProjectXml.AddNodeValue(xnRigidBody, "EnableFluids", "False")
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "EnableFluids", m_bSimHydro.ToString)
 
             End Sub
 
@@ -1080,6 +1084,8 @@ Namespace DataObjects
 
             Protected Overridable Sub ModifyNervousSystem(ByVal xnOrganism As XmlNode)
 
+                m_arySubsystemIDs.Clear()
+
                 Dim xnNervousSys As XmlNode = m_xnProjectXml.AddNodeValue(xnOrganism, "NervousSystem", "")
 
                 Dim xnBodyFile As Framework.XmlDom = LoadBehavioralFile(xnOrganism)
@@ -1091,8 +1097,26 @@ Namespace DataObjects
                     CreateNeuralModules(xnNervousSys, xnBodyFile, xnOldNeuralMods)
 
                     Dim xnOldDiagrams As XmlNode = m_xnProjectXml.GetNode(xnOldRoot, "Diagrams")
-                    Dim xnOldDiagram As XmlNode = m_xnProjectXml.GetNode(xnOldDiagrams, "Diagram")
-                    ConvertRootDiagramToSubsystem(xnBodyFile, xnNervousSys, xnOldDiagram)
+
+                    Dim xnRootSubSystem As XmlNode
+                    Dim xnRootSubNodes As XmlNode
+                    If xnOldDiagrams.ChildNodes.Count = 1 Then
+                        Dim xnOldDiagram As XmlNode = xnOldDiagrams.FirstChild
+                        xnRootSubSystem = ConvertRootDiagramToSubsystem(xnBodyFile, xnNervousSys, xnOldDiagram)
+                        xnRootSubNodes = m_xnProjectXml.GetNode(xnRootSubSystem, "Nodes")
+                    Else
+                        Dim aryReplaceText As Hashtable = CreateReplaceStringList()
+
+                        xnRootSubSystem = CreateDefaultRootDiagram(xnBodyFile, xnNervousSys)
+                        xnRootSubNodes = m_xnProjectXml.GetNode(xnRootSubSystem, "Nodes")
+
+                        For Each xnOldDiagram As XmlNode In xnOldDiagrams.ChildNodes
+                            CreateChildRootDiagram(xnBodyFile, xnRootSubNodes, xnOldDiagram)
+                        Next
+
+                    End If
+
+                    VerifyAllDiagramsConverted(xnBodyFile, xnRootSubNodes, xnOldDiagrams)
                 Else
                     CreateDefaultNervousSystem(xnNervousSys)
                 End If
@@ -1237,14 +1261,27 @@ Namespace DataObjects
 
 #Region "Diagrams"
 
-            Protected Overridable Sub ConvertRootDiagramToSubsystem(ByVal xnBodyFile As Framework.XmlDom, ByVal xnNervousSys As XmlNode, ByVal xnOldDiagram As XmlNode)
-                Dim xnRootSubSystem As XmlNode = CreateRootSubsystem(xnNervousSys, xnBodyFile, xnOldDiagram)
-                ModifySubSystem(xnBodyFile, xnRootSubSystem)
-            End Sub
-
-            Protected Overridable Function CreateRootSubsystem(ByVal xnNervousSys As XmlNode, ByVal xnBodyFile As Framework.XmlDom, ByVal xnOldDiagram As XmlNode) As XmlNode
-
+            Protected Overridable Function ConvertRootDiagramToSubsystem(ByVal xnBodyFile As Framework.XmlDom, ByVal xnNervousSys As XmlNode, ByVal xnOldDiagram As XmlNode) As XmlNode
                 Dim strDiagramID As String = xnBodyFile.GetSingleNodeValue(xnOldDiagram, "ID")
+                Dim xnRootSubSystem As XmlNode = CreateRootSubsystem(xnNervousSys, strDiagramID, "Neural Subsystem", False)
+                ModifySubSystem(xnBodyFile, xnRootSubSystem)
+                Return xnRootSubSystem
+            End Function
+
+            Protected Overridable Function CreateDefaultRootDiagram(ByVal xnBodyFile As Framework.XmlDom, ByVal xnNervousSys As XmlNode) As XmlNode
+                Dim xnRootSubSystem As XmlNode = CreateRootSubsystem(xnNervousSys, System.Guid.NewGuid.ToString, "Neural Subsystem", True)
+                Return xnRootSubSystem
+            End Function
+
+            Protected Overridable Function CreateChildRootDiagram(ByVal xnBodyFile As Framework.XmlDom, ByVal xnRootDiagram As XmlNode, ByVal xnOldDiagram As XmlNode) As XmlNode
+                Dim strDiagramID As String = xnBodyFile.GetSingleNodeValue(xnOldDiagram, "ID")
+                Dim strDiagramName As String = xnBodyFile.GetSingleNodeValue(xnOldDiagram, "PageName")
+                Dim xnRootSubSystem As XmlNode = CreateRootSubsystem(xnRootDiagram, strDiagramID, strDiagramName, False)
+                ModifySubSystem(xnBodyFile, xnRootSubSystem)
+                Return xnRootSubSystem
+            End Function
+
+            Protected Overridable Function CreateRootSubsystem(ByVal xnNervousSys As XmlNode, ByVal strDiagramID As String, ByVal strDiagramName As String, ByVal bAddNodes As Boolean) As XmlNode
 
                 Dim strXml As String = "<AssemblyFile>AnimatGUI.dll</AssemblyFile>" & _
                                     "<ClassName>AnimatGUI.DataObjects.Behavior.Nodes.Subsystem</ClassName>" & _
@@ -1274,7 +1311,7 @@ Namespace DataObjects
                                      "<Shape>Rectangle</Shape>" & _
                                      "<ShapeOrientation>Angle0</ShapeOrientation>" & _
                                      "<Size Width=""40"" Height=""40""/>" & _
-                                     "<Text>Neural Subsystem</Text>" & _
+                                     "<Text>" & strDiagramName & "</Text>" & _
                                      "<TextColor>-16777216</TextColor>" & _
                                      "<TextMargin Width=""0"" Height=""0""/>" & _
                                      "<ToolTip/>" & _
@@ -1289,13 +1326,19 @@ Namespace DataObjects
                                      "<OutLinks/>" & _
                                      "<SubsystemID>" & strDiagramID & "</SubsystemID>"
 
+                If bAddNodes Then
+                    strXml = strXml & "<Nodes/><Links/>"
+                End If
+
                 Return m_xnProjectXml.AppendNode(xnNervousSys, strXml, "Node")
 
             End Function
 
+
             Protected Overridable Sub ModifySubSystem(ByVal xnBodyFile As Framework.XmlDom, ByVal xnSubSystem As XmlNode)
 
                 Dim strSubSystemID As String = m_xnProjectXml.GetSingleNodeValue(xnSubSystem, "SubsystemID")
+                m_arySubsystemIDs.Add(strSubSystemID.ToLower)
 
                 Dim xnRoot As XmlNode = xnBodyFile.GetRootNode("Editor")
                 Dim xnOldDiagramID As XmlNode = xnBodyFile.GetNode(xnRoot, "//ID[text()=""" & strSubSystemID & """]")
@@ -1380,6 +1423,31 @@ Namespace DataObjects
                         m_aryGainIDs.Add(strID)
                     End If
                 End If
+
+            End Sub
+
+            Protected Sub VerifyAllDiagramsConverted(ByVal xnBodyFile As Framework.XmlDom, ByVal xnRootSubNodes As XmlNode, ByVal xnOldDiagrams As XmlNode)
+
+                Dim aryNonConverted As New ArrayList
+                FindNonConvertedDiagrams(xnBodyFile, xnOldDiagrams, aryNonConverted)
+
+                For Each xnOldDiagram As XmlNode In aryNonConverted
+                    CreateChildRootDiagram(xnBodyFile, xnRootSubNodes, xnOldDiagram)
+                Next
+
+            End Sub
+
+            Protected Sub FindNonConvertedDiagrams(ByVal xnBodyFile As Framework.XmlDom, ByVal xnOldDiagrams As XmlNode, ByVal aryNonConverted As ArrayList)
+
+                For Each xnOldDiagram As XmlNode In xnOldDiagrams
+                    Dim strId As String = xnBodyFile.GetSingleNodeValue(xnOldDiagram, "ID")
+                    If Not m_arySubsystemIDs.Contains(strId.ToLower) Then
+                        aryNonConverted.Add(xnOldDiagram)
+                    End If
+
+                    Dim xnSubDiagrams As XmlNode = xnBodyFile.GetNode(xnOldDiagram, "Diagrams", False)
+                    FindNonConvertedDiagrams(xnBodyFile, xnSubDiagrams, aryNonConverted)
+                Next
 
             End Sub
 

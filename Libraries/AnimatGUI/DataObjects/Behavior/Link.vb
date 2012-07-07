@@ -1102,7 +1102,6 @@ Namespace DataObjects.Behavior
         Public Overrides Sub InitializeAfterLoad()
 
             Try
- 
                 If m_strOriginID.Trim.Length > 0 AndAlso m_strDestinationID.Trim.Length > 0 Then
                     Me.Origin = Me.Organism.FindBehavioralNode(m_strOriginID)
                     Me.Destination = Me.Organism.FindBehavioralNode(m_strDestinationID)

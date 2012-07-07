@@ -31,6 +31,30 @@ Namespace DataObjects.Behavior.Nodes
             End Get
         End Property
 
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property IsValid() As Boolean
+            Get
+                If Not m_bIsInitialized Then
+                    Return False
+                End If
+
+                If m_bnOrigin Is Nothing Then
+                    Return False
+                End If
+
+                If m_bnDestination Is Nothing Then
+                    Return False
+                End If
+
+                'Do not attempt to save this adapter if there is no source data type specified.
+                If m_thDataTypes.ID.Trim.Length = 0 Then
+                    Return False
+                End If
+
+                Return True
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "

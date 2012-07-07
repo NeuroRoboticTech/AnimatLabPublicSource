@@ -642,6 +642,9 @@ void AnimatBase::Load(StdUtils::CStdXml &oXml)
 	if(Std_IsBlank(m_strName)) 
 		m_strName = m_strID;
 
+	//if(Std_ToLower(m_strID) == "d10da888-6478-4d60-b878-0e761b7e8ef2")
+	//	m_strID = m_strID;
+
 	//This will add this object to the object list of the simulation.
 	if(m_lpSim)
 		m_lpSim->AddToObjectList(this);

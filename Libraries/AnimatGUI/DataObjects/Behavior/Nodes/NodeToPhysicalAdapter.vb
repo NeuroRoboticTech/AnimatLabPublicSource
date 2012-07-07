@@ -32,6 +32,61 @@ Namespace DataObjects.Behavior.Nodes
             End Get
         End Property
 
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property IsValid() As Boolean
+            Get
+                If Not m_bIsInitialized Then
+                    Return False
+                End If
+
+                If m_bnOrigin Is Nothing Then
+                    Return False
+                End If
+
+                If m_bnDestination Is Nothing Then
+                    Return False
+                End If
+
+                'If the origin or destination is an offpage then take care of that.
+                Dim bnOrigin As AnimatGUI.DataObjects.Behavior.Node
+                Dim bnDestination As AnimatGUI.DataObjects.Behavior.Node
+
+                If TypeOf m_bnOrigin Is AnimatGUI.DataObjects.Behavior.Nodes.OffPage Then
+                    Dim bnOffpage As Behavior.Nodes.OffPage = DirectCast(m_bnOrigin, Behavior.Nodes.OffPage)
+                    bnOrigin = bnOffpage.LinkedNode.Node
+                Else
+                    bnOrigin = m_bnOrigin
+                End If
+
+                If TypeOf m_bnDestination Is AnimatGUI.DataObjects.Behavior.Nodes.OffPage Then
+                    Dim bnOffpage As Behavior.Nodes.OffPage = DirectCast(m_bnDestination, Behavior.Nodes.OffPage)
+                    bnDestination = bnOffpage.LinkedNode.Node
+                Else
+                    bnDestination = m_bnDestination
+                End If
+
+                'Do not attempt to save this adapter if there is no source data type specified.
+                If m_thDataTypes.ID.Trim.Length = 0 Then
+                    Return False
+                End If
+
+                'If the destination is not a body part type (physics engine part) then we can not save the adapter.
+                If Not Util.IsTypeOf(bnDestination.GetType(), GetType(DataObjects.Behavior.Nodes.BodyPart), False) Then
+                    Return False
+                End If
+
+                Dim nmSource As NeuralModule = DirectCast(m_doOrganism.NeuralModules(bnOrigin.NeuralModuleType.FullName), NeuralModule)
+                Dim bpPart As DataObjects.Behavior.Nodes.BodyPart = DirectCast(bnDestination, DataObjects.Behavior.Nodes.BodyPart)
+
+                'If the linked physical body part is not set then we can not save the adapter.
+                If bpPart.LinkedPart Is Nothing OrElse bpPart.LinkedPart.BodyPart Is Nothing OrElse m_doOrganism.FindBodyPart(bpPart.LinkedPart.BodyPart.ID, False) Is Nothing Then
+                    Return False
+                End If
+
+                Return True
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "

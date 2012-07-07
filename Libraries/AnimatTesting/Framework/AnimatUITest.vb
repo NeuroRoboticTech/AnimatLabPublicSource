@@ -1520,6 +1520,8 @@ Namespace Framework
                     Throw New System.Exception("Timed out waiting for the project to open.")
                 End If
             End While
+
+            Threading.Thread.Sleep(3000)
         End Sub
 
 #Region "Neural Methods"

@@ -133,7 +133,7 @@
 #include <osgManipulator/AntiSquish>
 
 #include "WorldCoordinateNodeVisitor.h"
-#include "VsStatsHandler.h"
+//#include "VsStatsHandler.h"
 
 using namespace osgGA;
 

@@ -419,6 +419,14 @@ Namespace Forms
                         Return
                     End If
                 Next
+
+                For Each deEntry As DictionaryEntry In Util.Environment.Organisms
+                    Dim doStruct As DataObjects.Physical.PhysicalStructure = DirectCast(deEntry.Value, DataObjects.Physical.PhysicalStructure)
+                    If doStruct.ID = m_doStructure.ID Then
+                        Me.PhysicalStructure = doStruct
+                        Return
+                    End If
+                Next
             End If
 
         End Sub
@@ -708,6 +716,17 @@ Namespace Forms
                     Me.cboStructure.SelectedItem = doStruct
                 End If
             Next
+
+            For Each deEntry As DictionaryEntry In Util.Environment.Organisms
+                Dim doStruct As DataObjects.Physical.PhysicalStructure = DirectCast(deEntry.Value, DataObjects.Physical.PhysicalStructure)
+
+                Me.cboStructure.Items.Add(doStruct)
+
+                If Not Me.PhysicalStructure Is Nothing AndAlso Me.PhysicalStructure Is doStruct Then
+                    Me.cboStructure.SelectedItem = doStruct
+                End If
+            Next
+
 
             m_bDrawingStructureCombo = False
         End Sub

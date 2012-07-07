@@ -333,57 +333,18 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides Sub InitializeAfterLoad()
 
-            Try
-                If m_strLinkedNodeID.Trim.Length > 0 Then
-                    Dim bnNode As Behavior.Node = Me.Organism.FindBehavioralNode(m_strLinkedNodeID, False)
-                    If Not bnNode Is Nothing Then
-                        Me.LinkedNode = New TypeHelpers.LinkedNode(bnNode.Organism, bnNode)
-                    Else
-                        Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.ErrorType, "The offpage connector ID: " & Me.ID & " was unable to find its linked node ID: " & m_strLinkedNodeID & " in the diagram. I am defaulting it to nothing.")
-                    End If
+            If m_strLinkedNodeID.Trim.Length > 0 Then
+                Dim bnNode As Behavior.Node = Me.Organism.FindBehavioralNode(m_strLinkedNodeID, False)
+                If Not bnNode Is Nothing Then
+                    Me.LinkedNode = New TypeHelpers.LinkedNode(bnNode.Organism, bnNode)
+                Else
+                    Throw New System.Exception("The offpage connector ID: " & Me.ID & " was unable to find its linked node ID: " & m_strLinkedNodeID & " in the diagram.")
                 End If
+            End If
 
-                ConnectLinkedNodeEvents()
+            ConnectLinkedNodeEvents()
 
-                'Dim strID As String = ""
-
-                'Dim blLink As Behavior.Link
-                'For Each strID In m_aryLoadingInLinkIDs
-                '    If strID.Trim.Length > 0 Then
-                '        blLink = Me.Organism.FindBehavioralLink(strID, False)
-
-                '        If Not blLink Is Nothing Then
-                '            If Not m_aryInLinks.Contains(strID) Then AddInLink(blLink)
-
-                '            If Not Me.LinkedNode Is Nothing AndAlso Not Me.LinkedNode.Node Is Nothing Then
-                '                If Not Me.LinkedNode.Node.InLinks.Contains(strID) Then Me.LinkedNode.Node.AddInLink(blLink)
-                '            End If
-                '        End If
-                '    End If
-                'Next
-
-                'For Each strID In m_aryLoadingOutLinkIDs
-                '    If strID.Trim.Length > 0 Then
-                '        blLink = Me.Organism.FindBehavioralLink(strID, False)
-
-                '        If Not blLink Is Nothing Then
-                '            If Not m_aryOutLinks.Contains(strID) Then AddOutLink(blLink)
-
-                '            If Not Me.LinkedNode Is Nothing AndAlso Not Me.LinkedNode.Node Is Nothing Then
-                '                If Not Me.LinkedNode.Node.OutLinks.Contains(strID) Then Me.LinkedNode.Node.AddOutLink(blLink)
-                '            End If
-                '        End If
-                '    End If
-                'Next
-
-                'm_aryLoadingInLinkIDs.Clear()
-                'm_aryLoadingOutLinkIDs.Clear()
-
-                m_bIsInitialized = True
-
-            Catch ex As System.Exception
-                m_bIsInitialized = False
-            End Try
+            m_bIsInitialized = True
 
         End Sub
 
