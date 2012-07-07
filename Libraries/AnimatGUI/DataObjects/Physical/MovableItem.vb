@@ -352,7 +352,7 @@ Namespace DataObjects.Physical
 
         Public Overrides Sub SelectItem(Optional ByVal bSelectMultiple As Boolean = False)
             MyBase.SelectItem(bSelectMultiple)
-            If Not Util.Simulation.VisualSelectionMode = Simulation.enumVisualSelectionMode.SelectReceptiveFields Then
+            If Util.Simulation.VisualSelectionMode <> Simulation.enumVisualSelectionMode.SelectReceptiveFields AndAlso Util.Simulation.VisualSelectionMode <> DataObjects.Simulation.enumVisualSelectionMode.Simulation Then
                 Util.Simulation.VisualSelectionMode = Me.DefaultVisualSelectionMode
             End If
         End Sub

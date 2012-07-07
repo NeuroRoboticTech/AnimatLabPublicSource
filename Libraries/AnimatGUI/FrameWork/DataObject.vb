@@ -817,7 +817,7 @@ Namespace Framework
 
                     If Not Util.ProjectWorkspace.TreeView.SelectedNodes.Contains(m_tnWorkspaceNode) Then
                         Util.ProjectWorkspace.TreeView.SelectNode(m_tnWorkspaceNode, False, bSelectMultiple)
-                    ElseIf Not m_doInterface Is Nothing Then
+                    ElseIf Not m_doInterface Is Nothing AndAlso Util.Simulation.VisualSelectionMode <> DataObjects.Simulation.enumVisualSelectionMode.Simulation Then
                         m_doInterface.SelectItem(True, bSelectMultiple)
                     End If
 

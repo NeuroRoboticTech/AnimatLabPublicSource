@@ -64,7 +64,7 @@ bool VsCameraManipulator::handle(const GUIEventAdapter& ea, GUIActionAdapter& aa
 
 				if(!m_bInDrag)
 				{
-					if(m_lpPicked)
+					if(m_lpPicked && m_lpSim && m_lpSim->VisualSelectionMode() != SIMULATION_SELECTION_MODE)
 					{
 						//Change the selected vertex of the selected part.
 						m_lpPicked->SelectedVertex(m_vSelectedVertex.x(), m_vSelectedVertex.y(), m_vSelectedVertex.z(), TRUE, TRUE);

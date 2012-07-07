@@ -59,6 +59,7 @@ Namespace DataObjects
         Protected m_strAPI_File As String = ""
 
         Protected m_eVisualSelectionMode As enumVisualSelectionMode
+        Protected m_ePrevSelMode As enumVisualSelectionMode
         Protected m_bAddBodiesMode As Boolean = False
 
         Protected m_iFrameRate As Integer = 30
@@ -619,6 +620,7 @@ Namespace DataObjects
                 Util.Application.ReceptiveFieldsToolStripMenuItem.Enabled = False
                 Util.Application.SimulationToolStripMenuItem.Enabled = True
 
+                m_ePrevSelMode = Me.VisualSelectionMode
                 Me.VisualSelectionMode = enumVisualSelectionMode.Simulation
             Else
                 Util.Application.SelGraphicsToolStripButton.Enabled = True
@@ -632,6 +634,8 @@ Namespace DataObjects
                 Util.Application.JointsToolStripMenuItem.Enabled = True
                 Util.Application.ReceptiveFieldsToolStripMenuItem.Enabled = True
                 Util.Application.SimulationToolStripMenuItem.Enabled = True
+
+                Me.VisualSelectionMode = m_ePrevSelMode
             End If
 
         End Sub

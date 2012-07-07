@@ -2857,6 +2857,43 @@ Namespace Forms
             PopulateToolbox()
         End Sub
 
+        Protected Overridable Sub HideAllContentWidows()
+
+            If Not m_frmWorkspace Is Nothing AndAlso Not m_frmWorkspace.Content Is Nothing AndAlso Not m_frmWorkspace.Content.IsAutoHidden Then
+                m_dockManager.ToggleContentAutoHide(m_frmWorkspace.Content)
+            End If
+
+            If Not m_frmProperties Is Nothing AndAlso Not m_frmProperties.Content Is Nothing AndAlso Not m_frmProperties.Content.IsAutoHidden Then
+                m_dockManager.ToggleContentAutoHide(m_frmProperties.Content)
+            End If
+
+            If Not m_frmToolbox Is Nothing AndAlso Not m_frmToolbox.Content Is Nothing AndAlso Not m_frmToolbox.Content.IsAutoHidden Then
+                m_dockManager.ToggleContentAutoHide(m_frmToolbox.Content)
+            End If
+
+            If Not m_frmSimulationController Is Nothing AndAlso Not m_frmSimulationController.Content Is Nothing AndAlso Not m_frmSimulationController.Content.IsAutoHidden Then
+                m_dockManager.ToggleContentAutoHide(m_frmSimulationController.Content)
+            End If
+
+            If Not m_frmErrors Is Nothing AndAlso Not m_frmErrors.Content Is Nothing AndAlso Not m_frmErrors.Content.IsAutoHidden Then
+                m_dockManager.ToggleContentAutoHide(m_frmErrors.Content)
+            End If
+
+            If Not m_frmReceptiveFieldPairs Is Nothing AndAlso Not m_frmReceptiveFieldPairs.Content Is Nothing AndAlso Not m_frmReceptiveFieldPairs.Content.IsAutoHidden Then
+                m_dockManager.ToggleContentAutoHide(m_frmReceptiveFieldPairs.Content)
+            End If
+
+            If Not m_frmReceptiveFieldGain Is Nothing AndAlso Not m_frmReceptiveFieldGain.Content Is Nothing AndAlso Not m_frmReceptiveFieldGain.Content.IsAutoHidden Then
+                m_dockManager.ToggleContentAutoHide(m_frmReceptiveFieldGain.Content)
+            End If
+
+            If Not m_frmReceptiveFieldCurrent Is Nothing AndAlso Not m_frmReceptiveFieldCurrent.Content Is Nothing AndAlso Not m_frmReceptiveFieldCurrent.Content.IsAutoHidden Then
+                m_dockManager.ToggleContentAutoHide(m_frmReceptiveFieldCurrent.Content)
+            End If
+
+
+        End Sub
+
         Public Overridable Sub CloseProject(ByVal bOpeningProject As Boolean)
             If SaveIfDirty() = DialogResult.Cancel Then
                 Return
@@ -4944,6 +4981,8 @@ Namespace Forms
                     LoadProject(openFileDialog.FileName)
                 End If
 
+                Util.Simulation.VisualSelectionMode = DataObjects.Simulation.enumVisualSelectionMode.SelectCollisions
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
@@ -5969,6 +6008,8 @@ Namespace Forms
 
                 If Util.ShowMessage("The project conversion was successful. Would you like to load this project now?", "Project Conversion", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
                     Me.LoadProject(strProjectFile)
+                    HideAllContentWidows()
+                    Me.SaveProject(Me.ProjectFile)
                 End If
 
             Catch ex As System.Exception
