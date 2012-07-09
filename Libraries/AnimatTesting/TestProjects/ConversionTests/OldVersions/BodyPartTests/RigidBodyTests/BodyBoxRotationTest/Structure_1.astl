@@ -219,7 +219,7 @@
         <LocalRotation x="0" y="0" z="0" />
         <Direction x="-1" y="0" z="0" />
         <Color Red="0" Green="0" Blue="1" Alpha="1" />
-        <OrientationMatrix>-0.163176,-0.9254165,0.3420202,0,0.9051036,-0.2783766,-0.3213939,0,0.3926336,0.25712,0.8830222,0,0,0,0,1</OrientationMatrix>
+        <OrientationMatrix>-0.9396926,0,0.3420202,0,-0.1169778,-0.9396926,-0.3213939,0,0.3213939,-0.3420202,0.8830222,0,0,0,0,1</OrientationMatrix>
         <TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,-0.5,-0.5,-1.5,1</TranslationMatrix>
         <CombinedTransformationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,-0.5,-0.5,-1.5,1</CombinedTransformationMatrix>
         <CollisionBoxSize x="1" y="1" z="1" />

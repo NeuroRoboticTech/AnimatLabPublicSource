@@ -1257,31 +1257,6 @@ Namespace DataObjects.Behavior
                 m_bYSizeable = oXml.GetChildBool("YSizeable")
                 m_iZOrder = oXml.GetChildInt("ZOrder")
 
-                'm_aryLoadingInLinkIDs.Clear()
-                'm_aryLoadingOutLinkIDs.Clear()
-
-                ' ''Now lets read in the in and out links.
-                'Dim strID As String
-                'oXml.IntoChildElement("InLinks")
-                'Dim iCount As Integer = oXml.NumberOfChildren() - 1
-                'For iIndex As Integer = 0 To iCount
-                '    oXml.FindChildByIndex(iIndex)
-                '    strID = oXml.GetChildString()
-
-                '    m_aryLoadingInLinkIDs.Add(strID)
-                'Next
-                'oXml.OutOfElem()  'Outof InLinks Element
-
-                'oXml.IntoChildElement("OutLinks")
-                'iCount = oXml.NumberOfChildren() - 1
-                'For iIndex As Integer = 0 To iCount
-                '    oXml.FindChildByIndex(iIndex)
-                '    strID = oXml.GetChildString()
-
-                '    m_aryLoadingOutLinkIDs.Add(strID)
-                'Next
-                'oXml.OutOfElem()  'Outof OutLinks Element
-
                 oXml.OutOfElem()  'Outof Node Element
 
             Catch ex As System.Exception
@@ -1340,31 +1315,6 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overrides Sub VerifyAfterPaste(ByVal aryItems As ArrayList)
-            Dim aryRemoveList As New ArrayList
-
-            ''We need to go through the in and out links and any that are NOT within the list of items 
-            ''being copied then we need to get them out of the in/out lists.
-            'For Each strID As String In m_aryLoadingInLinkIDs
-            '    If Not Util.FindIDInList(aryItems, strID) Then
-            '        aryRemoveList.Add(strID)
-            '    End If
-            'Next
-
-            'For Each strID As String In aryRemoveList
-            '    m_aryLoadingInLinkIDs.Remove(strID)
-            'Next
-
-            'aryRemoveList.Clear()
-            'For Each strID As String In m_aryLoadingOutLinkIDs
-            '    If Not Util.FindIDInList(aryItems, strID) Then
-            '        aryRemoveList.Add(strID)
-            '    End If
-            'Next
-
-            'For Each strID As String In aryRemoveList
-            '    m_aryLoadingOutLinkIDs.Remove(strID)
-            'Next
-
         End Sub
 
         Public Overrides Sub FailedToInitialize()

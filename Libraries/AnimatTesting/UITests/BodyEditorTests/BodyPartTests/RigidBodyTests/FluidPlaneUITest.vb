@@ -155,14 +155,14 @@ Namespace UITests
                         'Set it to track the root of structure 2.
                         ExecuteMethod("SelectTrackItems", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, m_strStruct1Name, "Root"})
 
-                        'Zoom in on the part so we can try and move it with the mouse.
-                        ZoomInOnPart(m_ptInitialZoomStart, m_iInitialZoomDist1, m_iInitialZoomDist2)
+                        ''Zoom in on the part so we can try and move it with the mouse.
+                        'ZoomInOnPart(m_ptInitialZoomStart, m_iInitialZoomDist1, m_iInitialZoomDist2)
 
-                        'Move the z axis and verify position.
-                        MovePartAxis(m_strStruct1Name, "Root", _
-                                     m_strMoveRootWorldYAxis, m_strMoveRootLocalYAxis, _
-                                     m_ptMovePlaneStart, m_ptMovePlaneEnd, _
-                                     -2, 0, -2, 0, 0, 0)
+                        ''Move the z axis and verify position.
+                        'MovePartAxis(m_strStruct1Name, "Root", _
+                        '             m_strMoveRootWorldYAxis, m_strMoveRootLocalYAxis, _
+                        '             m_ptMovePlaneStart, m_ptMovePlaneEnd, _
+                        '             -2, 0, -2, 0, 0, 0)
 
                         'Select the simulation window tab so it is visible now.
                         ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Simulation\Environment\Structures\Structure_2"}, 1000)

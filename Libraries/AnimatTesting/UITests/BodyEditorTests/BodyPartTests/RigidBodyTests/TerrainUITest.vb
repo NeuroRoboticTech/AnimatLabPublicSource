@@ -83,8 +83,8 @@ Namespace UITests
                         ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MaxHeight", "0.5"})
 
 
-                        'For the terrain part we need to do an additional rotation so we can see the axis.
-                        DragMouse(m_ptTerrainAxisViewStart, m_ptTerrainAxisViewEnd, MouseButtons.Left, ModifierKeys.None, True)
+                        ''For the terrain part we need to do an additional rotation so we can see the axis.
+                        'DragMouse(m_ptTerrainAxisViewStart, m_ptTerrainAxisViewEnd, MouseButtons.Left, ModifierKeys.None, True)
 
                     End Sub
 

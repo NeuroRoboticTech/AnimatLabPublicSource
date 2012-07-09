@@ -1870,85 +1870,6 @@ Namespace Forms.Behavior
 
         End Sub
 
-        Protected Overridable Sub SynchronizeAddedLinks()
-
-            'TODO
-            'For Each afNode As Lassalle.Flow.Node In m_ctrlAddFlow.Nodes
-            '    For Each afLink As Lassalle.Flow.Link In afNode.OutLinks
-            '        If m_aryLinks(DirectCast(afLink.Tag, String)) Is Nothing Then
-            '            'We could not find an existing link that matched this addflow node id.
-            '            'so we need to try and find a delete link and add it back in.
-            '            If Not m_aryDeletedLinks(DirectCast(afLink.Tag, String)) Is Nothing Then
-            '                Dim blLink As AnimatGUI.DataObjects.Behavior.Link = DirectCast(m_aryDeletedLinks(DirectCast(afLink.Tag, String)), AnimatGUI.DataObjects.Behavior.Link)
-            '                blLink.BeforeUndoRemove()
-            '                m_aryLinks.Add(blLink.ID, blLink, True)
-            '                blLink.Origin.AddOutLink(blLink)
-            '                blLink.Destination.AddInLink(blLink)
-            '                m_aryAddFlowLinks.Add(blLink.ID, afLink)
-            '                m_aryDeletedLinks.Remove(blLink.ID)
-            '                AddToOrganism(blLink)
-            '                blLink.AfterUndoRemove()
-            '            Else
-            '                Throw New System.Exception("A deleted node was not found while trying to add it back to the diagram.")
-            '            End If
-
-            '        End If
-            '    Next
-            'Next
-
-        End Sub
-
-        Protected Overridable Sub SynchronizeRemovedLinks()
-            'TODO
-            'Dim blLink As AnimatGUI.DataObjects.Behavior.Link
-            'Dim aryRemove As New ArrayList
-
-            ''First lets go through and set all of the links to found = false
-            'Dim iCount As Integer = m_aryLinks.Count - 1
-            'For iIndex As Integer = 0 To iCount
-            '    blLink = DirectCast(m_aryLinks.GetByIndex(iIndex), AnimatGUI.DataObjects.Behavior.Link)
-            '    blLink.Found = False
-            'Next
-
-            ''Now go through and mark found = true for all links in the diagram.
-            'For Each afNode As Lassalle.Flow.Node In m_ctrlAddFlow.Nodes
-            '    For Each afLink As Lassalle.Flow.Link In afNode.InLinks
-            '        blLink = FindLink(DirectCast(afLink.Tag, String))
-            '        blLink.Found = True
-            '    Next
-            'Next
-
-            ''Now we need to go through and any nodes that are marked found = false were in the diagram, but no longer in the list of nodes.
-            'For iIndex As Integer = 0 To iCount
-            '    blLink = DirectCast(m_aryLinks.GetByIndex(iIndex), AnimatGUI.DataObjects.Behavior.Link)
-
-            '    If Not blLink.Found Then
-            '        'If it was not found in the chart then we need to remove the sucker. 
-            '        'Add it to the list of links to remove
-            '        aryRemove.Add(blLink)
-            '    End If
-            'Next
-
-            ''Now loop through all of the items in the remove list and remove them
-            'For Each oLink As Object In aryRemove
-            '    blLink = DirectCast(oLink, AnimatGUI.DataObjects.Behavior.Link)
-
-            '    blLink.BeforeRedoRemove()
-            '    blLink.ActualOrigin.RemoveOutLink(blLink)
-            '    blLink.ActualDestination.RemoveInLink(blLink)
-            '    m_aryLinks.Remove(blLink.ID, True)
-            '    m_aryAddFlowLinks.Remove(blLink.ID)
-            '    RemoveFromOrganism(blLink)
-
-            '    If m_aryDeletedLinks(blLink.ID) Is Nothing Then
-            '        m_aryDeletedLinks.Add(blLink.ID, blLink)
-            '    End If
-
-            '    blLink.AfterRedoRemove()
-            'Next
-
-        End Sub
-
         Public Overrides Sub BeginGroupChange()
             'TODO
             'If Not m_beEditor.InGroupChange Then
@@ -3929,7 +3850,6 @@ Namespace Forms.Behavior
                         blLink.EndBatchUpdate(False)
 
                         Me.Subsystem.AddLink(bnAdapter, bnDestination, blLink)
-
 
                         Dim baAdapter As AnimatGUI.DataObjects.Behavior.Nodes.Adapter = DirectCast(bnAdapter, AnimatGUI.DataObjects.Behavior.Nodes.Adapter)
                         baAdapter.InitializeAfterLoad()

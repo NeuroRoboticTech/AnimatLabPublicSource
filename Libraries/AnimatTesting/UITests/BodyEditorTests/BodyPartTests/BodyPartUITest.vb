@@ -179,6 +179,8 @@ Namespace UITests
                 Protected m_dblManYRot As Double = 45
                 Protected m_dblManZRot As Double = 45
 
+                Protected m_strAddChildPath As String = ""
+
                 Protected m_ptClickToAddChild As New Point(751, 362)
 
                 Protected m_ptChildTranslateXAxisStart As Point = New Point(878, 426)
@@ -275,6 +277,13 @@ Namespace UITests
                     CreateChartAndAddBodies()
                     SimulateAndDeleteParts()
 
+                End Sub
+
+                Protected Overrides Sub SetStructureNames(ByVal strPostFix As String, ByVal bIsStructure As Boolean)
+                    MyBase.SetStructureNames(strPostFix, bIsStructure)
+
+                    m_strAddChildPath = "Simulation\Environment\" & m_strStructureGroup & _
+                                       "\" & m_strStruct1Name & "\Body Plan\Root"
                 End Sub
 
                 Protected Overrides Sub RecalculatePositionsUsingResolution()
@@ -388,10 +397,10 @@ Namespace UITests
 
                     TestMovableRigidBodyProperties(m_strStruct1Name, "Root")
 
-                    RecalculatePositionsUsingResolution()
+                    'RecalculatePositionsUsingResolution()
 
                     'Zoom in on the part so we can try and move it with the mouse.
-                    ZoomInOnPart(m_ptInitialZoomStart, m_iInitialZoomDist1, m_iInitialZoomDist2)
+                    'ZoomInOnPart(m_ptInitialZoomStart, m_iInitialZoomDist1, m_iInitialZoomDist2)
 
                     'MouseMoveRoot()
 
@@ -407,48 +416,48 @@ Namespace UITests
                 End Sub
 
 
-                Protected Overridable Sub MouseMoveRoot()
-                    'Move the z axis and verify position.
-                    MovePartAxis(m_strStruct1Name, "Root", _
-                                 m_strMoveRootWorldZAxis, m_strMoveRootLocalZAxis, _
-                                 m_ptTranslateZAxisStart, m_ptTranslateZAxisEnd, _
-                                 m_dblMinTranRootWorldZ, m_dblMaxTranRootWorldZ, _
-                                 m_dblMinTranRootStructZ, m_dblMaxTranRootStructZ, _
-                                 m_dblMinTranRootLocalZ, m_dblMaxTranRootLocalZ)
+                'Protected Overridable Sub MouseMoveRoot()
+                '    'Move the z axis and verify position.
+                '    MovePartAxis(m_strStruct1Name, "Root", _
+                '                 m_strMoveRootWorldZAxis, m_strMoveRootLocalZAxis, _
+                '                 m_ptTranslateZAxisStart, m_ptTranslateZAxisEnd, _
+                '                 m_dblMinTranRootWorldZ, m_dblMaxTranRootWorldZ, _
+                '                 m_dblMinTranRootStructZ, m_dblMaxTranRootStructZ, _
+                '                 m_dblMinTranRootLocalZ, m_dblMaxTranRootLocalZ)
 
-                    'Move the z axis and verify position.
-                    MovePartAxis(m_strStruct1Name, "Root", _
-                                 m_strMoveRootWorldYAxis, m_strMoveRootLocalYAxis, _
-                                 m_ptTranslateYAxisStart, m_ptTranslateYAxisEnd, _
-                                 m_dblMinTranRootWorldY, m_dblMaxTranRootWorldY, _
-                                 m_dblMinTranRootStructY, m_dblMaxTranRootStructY, _
-                                 m_dblMinTranRootLocalY, m_dblMaxTranRootLocalY)
+                '    'Move the z axis and verify position.
+                '    MovePartAxis(m_strStruct1Name, "Root", _
+                '                 m_strMoveRootWorldYAxis, m_strMoveRootLocalYAxis, _
+                '                 m_ptTranslateYAxisStart, m_ptTranslateYAxisEnd, _
+                '                 m_dblMinTranRootWorldY, m_dblMaxTranRootWorldY, _
+                '                 m_dblMinTranRootStructY, m_dblMaxTranRootStructY, _
+                '                 m_dblMinTranRootLocalY, m_dblMaxTranRootLocalY)
 
-                    'Move view around to see z axis.
-                    DragMouse(m_ptRotatePartForTranslateStart, m_ptRotatePartForTranslateEnd, MouseButtons.Left, ModifierKeys.None, True)
+                '    'Move view around to see z axis.
+                '    DragMouse(m_ptRotatePartForTranslateStart, m_ptRotatePartForTranslateEnd, MouseButtons.Left, ModifierKeys.None, True)
 
-                    'Move the x axis and verify position.
-                    MovePartAxis(m_strStruct1Name, "Root", _
-                                 m_strMoveRootWorldXAxis, m_strMoveRootLocalXAxis, _
-                                 m_ptTranslateXAxisStart, m_ptTranslateXAxisEnd, _
-                                 m_dblMinTranRootWorldX, m_dblMaxTranRootWorldX, _
-                                 m_dblMinTranRootStructX, m_dblMaxTranRootStructX, _
-                                 m_dblMinTranRootLocalX, m_dblMaxTranRootLocalX)
+                '    'Move the x axis and verify position.
+                '    MovePartAxis(m_strStruct1Name, "Root", _
+                '                 m_strMoveRootWorldXAxis, m_strMoveRootLocalXAxis, _
+                '                 m_ptTranslateXAxisStart, m_ptTranslateXAxisEnd, _
+                '                 m_dblMinTranRootWorldX, m_dblMaxTranRootWorldX, _
+                '                 m_dblMinTranRootStructX, m_dblMaxTranRootStructX, _
+                '                 m_dblMinTranRootLocalX, m_dblMaxTranRootLocalX)
 
-                End Sub
+                'End Sub
 
-                Protected Overridable Sub MouseRotateRoot()
-                    If Me.AllowRootRotations Then
-                        'Rotate the x axis
-                        RotatePartAxis(m_strStruct1Name, "Root", "X", m_ptRotateXAxisStart, m_ptRotateXAxisEnd, m_dblMinRotRootX, m_dblMaxRotRootX, True)
+                'Protected Overridable Sub MouseRotateRoot()
+                '    If Me.AllowRootRotations Then
+                '        'Rotate the x axis
+                '        RotatePartAxis(m_strStruct1Name, "Root", "X", m_ptRotateXAxisStart, m_ptRotateXAxisEnd, m_dblMinRotRootX, m_dblMaxRotRootX, True)
 
-                        'Rotate the y axis
-                        RotatePartAxis(m_strStruct1Name, "Root", "Y", m_ptRotateYAxisStart, m_ptRotateYAxisEnd, m_dblMinRotRootY, m_dblMaxRotRootY, True)
+                '        'Rotate the y axis
+                '        RotatePartAxis(m_strStruct1Name, "Root", "Y", m_ptRotateYAxisStart, m_ptRotateYAxisEnd, m_dblMinRotRootY, m_dblMaxRotRootY, True)
 
-                        'Rotate the z axis
-                        RotatePartAxis(m_strStruct1Name, "Root", "Z", m_ptRotateZAxisStart, m_ptRotateZAxisEnd, m_dblMinRotRootZ, m_dblMaxRotRootZ, True)
-                    End If
-                End Sub
+                '        'Rotate the z axis
+                '        RotatePartAxis(m_strStruct1Name, "Root", "Z", m_ptRotateZAxisStart, m_ptRotateZAxisEnd, m_dblMinRotRootZ, m_dblMaxRotRootZ, True)
+                '    End If
+                'End Sub
 
                 Protected Overridable Sub ManualMoveRoot()
                     ManualMovePartAxis(m_strStruct1Name, "Root", _
@@ -482,7 +491,7 @@ Namespace UITests
                     End If
 
                     'We have tested moving/rotating the root part, now test doing it on a child part.
-                    AddChildPartTypeWithJoint(m_strSecondaryPartType, m_strChildJoint, m_ptClickToAddChild)
+                    AddChildPartTypeWithJoint(m_strSecondaryPartType, m_strChildJoint, m_strAddChildPath)
 
                     RepositionChildPart()
 
@@ -490,7 +499,7 @@ Namespace UITests
                     ExecuteMethod("SelectTrackItems", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, m_strStruct1Name, "Body_1"})
 
                     'Zoom in on the part so we can try and move it with the mouse.
-                    ZoomInOnPart(m_ptInitialZoomStart, m_iSecondaryZoomDist1, m_iSecondaryZoomDist2)
+                    'ZoomInOnPart(m_ptInitialZoomStart, m_iSecondaryZoomDist1, m_iSecondaryZoomDist2)
 
                     'MouseMoveChild()
 
@@ -508,48 +517,48 @@ Namespace UITests
 
                 End Sub
 
-                Protected Overridable Sub MouseMoveChild()
-                    'Move the z axis and verify position.
-                    MovePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", _
-                                 m_strMoveChildWorldZAxis, m_strMoveChildLocalZAxis, _
-                                 m_ptChildTranslateZAxisStart, m_ptChildTranslateZAxisEnd, _
-                                 m_dblMinTranChildWorldZ, m_dblMaxTranChildWorldZ, _
-                                 m_dblMinTranChildStructZ, m_dblMaxTranChildStructZ, _
-                                 m_dblMinTranChildLocalZ, m_dblMaxTranChildLocalZ)
+                'Protected Overridable Sub MouseMoveChild()
+                '    'Move the z axis and verify position.
+                '    MovePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", _
+                '                 m_strMoveChildWorldZAxis, m_strMoveChildLocalZAxis, _
+                '                 m_ptChildTranslateZAxisStart, m_ptChildTranslateZAxisEnd, _
+                '                 m_dblMinTranChildWorldZ, m_dblMaxTranChildWorldZ, _
+                '                 m_dblMinTranChildStructZ, m_dblMaxTranChildStructZ, _
+                '                 m_dblMinTranChildLocalZ, m_dblMaxTranChildLocalZ)
 
-                    'Move the y axis and verify position.
-                    MovePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", _
-                                 m_strMoveChildWorldYAxis, m_strMoveChildLocalYAxis, _
-                                 m_ptChildTranslateYAxisStart, m_ptChildTranslateYAxisEnd, _
-                                 m_dblMinTranChildWorldY, m_dblMaxTranChildWorldY, _
-                                 m_dblMinTranChildStructY, m_dblMaxTranChildStructY, _
-                                 m_dblMinTranChildLocalY, m_dblMaxTranChildLocalY)
+                '    'Move the y axis and verify position.
+                '    MovePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", _
+                '                 m_strMoveChildWorldYAxis, m_strMoveChildLocalYAxis, _
+                '                 m_ptChildTranslateYAxisStart, m_ptChildTranslateYAxisEnd, _
+                '                 m_dblMinTranChildWorldY, m_dblMaxTranChildWorldY, _
+                '                 m_dblMinTranChildStructY, m_dblMaxTranChildStructY, _
+                '                 m_dblMinTranChildLocalY, m_dblMaxTranChildLocalY)
 
-                    'Move view around to see z axis.
-                    DragMouse(m_ptChildRotatePartForTranslateStart, m_ptChildRotatePartForTranslateEnd, MouseButtons.Left, ModifierKeys.None, True)
+                '    'Move view around to see z axis.
+                '    DragMouse(m_ptChildRotatePartForTranslateStart, m_ptChildRotatePartForTranslateEnd, MouseButtons.Left, ModifierKeys.None, True)
 
-                    'Move the x axis and verify position.
-                    MovePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", _
-                                 m_strMoveChildWorldXAxis, m_strMoveChildLocalXAxis, _
-                                 m_ptChildTranslateXAxisStart, m_ptChildTranslateXAxisEnd, _
-                                 m_dblMinTranChildWorldX, m_dblMaxTranChildWorldX, _
-                                 m_dblMinTranChildStructX, m_dblMaxTranChildStructX, _
-                                 m_dblMinTranChildLocalX, m_dblMaxTranChildLocalX)
+                '    'Move the x axis and verify position.
+                '    MovePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", _
+                '                 m_strMoveChildWorldXAxis, m_strMoveChildLocalXAxis, _
+                '                 m_ptChildTranslateXAxisStart, m_ptChildTranslateXAxisEnd, _
+                '                 m_dblMinTranChildWorldX, m_dblMaxTranChildWorldX, _
+                '                 m_dblMinTranChildStructX, m_dblMaxTranChildStructX, _
+                '                 m_dblMinTranChildLocalX, m_dblMaxTranChildLocalX)
 
-                End Sub
+                'End Sub
 
-                Protected Overridable Sub MouseRotateChild()
-                    If Me.AllowChildRotations Then
-                        'Rotate the x axis
-                        RotatePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", "X", m_ptChildRotateXAxisStart, m_ptChildRotateXAxisEnd, m_dblMinRotChildX, m_dblMaxRotChildX, True)
+                'Protected Overridable Sub MouseRotateChild()
+                '    If Me.AllowChildRotations Then
+                '        'Rotate the x axis
+                '        RotatePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", "X", m_ptChildRotateXAxisStart, m_ptChildRotateXAxisEnd, m_dblMinRotChildX, m_dblMaxRotChildX, True)
 
-                        'Rotate the y axis
-                        RotatePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", "Y", m_ptChildRotateYAxisStart, m_ptChildRotateYAxisEnd, m_dblMinRotChildY, m_dblMaxRotChildY, True)
+                '        'Rotate the y axis
+                '        RotatePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", "Y", m_ptChildRotateYAxisStart, m_ptChildRotateYAxisEnd, m_dblMinRotChildY, m_dblMaxRotChildY, True)
 
-                        'Rotate the z axis
-                        RotatePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", "Z", m_ptChildRotateZAxisStart, m_ptChildRotateZAxisEnd, m_dblMinRotChildZ, m_dblMaxRotChildZ, True)
-                    End If
-                End Sub
+                '        'Rotate the z axis
+                '        RotatePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", "Z", m_ptChildRotateZAxisStart, m_ptChildRotateZAxisEnd, m_dblMinRotChildZ, m_dblMaxRotChildZ, True)
+                '    End If
+                'End Sub
 
                 Protected Overridable Sub ManualMoveChild()
                     ManualMovePartAxis(m_strStruct1Name, "Root\Joint_1\Body_1", _

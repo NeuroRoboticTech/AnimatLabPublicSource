@@ -192,11 +192,11 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides Sub BeforeAddLink(ByVal blLink As Link)
 
-            If blLink.ActualDestination Is Me AndAlso Me.InLinks.Count > 0 Then
+            If blLink.ActualDestination Is Me AndAlso Me.InLinks.Count <> 1 Then
                 Throw New System.Exception("You can only have one incoming link to an adapter node!")
             End If
 
-            If blLink.ActualOrigin Is Me AndAlso Me.OutLinks.Count > 0 Then
+            If blLink.ActualOrigin Is Me AndAlso Me.OutLinks.Count <> 1 Then
                 Throw New System.Exception("You can only have one outgoing link from an adapter node!")
             End If
 

@@ -451,44 +451,39 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overridable Sub AddLink(ByRef bnOrigin As AnimatGUI.DataObjects.Behavior.Node, ByRef bnDestination As AnimatGUI.DataObjects.Behavior.Node, ByRef blLink As AnimatGUI.DataObjects.Behavior.Link)
 
-            blLink.Organism = Me.Organism
-            blLink.ParentDiagram = Me.SubsystemDiagram
-            blLink.ParentSubsystem = Me
+            Try
+                blLink.Organism = Me.Organism
+                blLink.ParentDiagram = Me.SubsystemDiagram
+                blLink.ParentSubsystem = Me
 
-            blLink.BeginBatchUpdate()
-            blLink.Origin = bnOrigin
-            blLink.Destination = bnDestination
-            blLink.EndBatchUpdate(False)
+                blLink.BeginBatchUpdate()
+                blLink.Origin = bnOrigin
+                blLink.Destination = bnDestination
+                blLink.EndBatchUpdate(False)
 
-            blLink.ActualOrigin.BeforeAddLink(blLink)
-            blLink.ActualDestination.BeforeAddLink(blLink)
+                blLink.ActualOrigin.BeforeAddLink(blLink)
+                blLink.ActualDestination.BeforeAddLink(blLink)
 
-            blLink.InitializeAfterLoad()
+                blLink.InitializeAfterLoad()
 
-            blLink.BeforeAddLink()
+                blLink.BeforeAddLink()
 
-            blLink.ActualOrigin.AddOutLink(blLink)
-            blLink.ActualDestination.AddInLink(blLink)
+                Me.BehavioralLinks.Add(blLink.ID, blLink)
 
-            'If we are using an offpage connector it is possible for the origin and actual origin to be different.
-            'the both need to have the inlink though.
-            If Not blLink.Origin Is blLink.ActualOrigin AndAlso Not blLink.Origin.OutLinks.Contains(blLink.ID) Then
-                blLink.Origin.AddOutLink(blLink)
-            End If
-            If Not blLink.Destination Is blLink.ActualDestination AndAlso Not blLink.Destination.InLinks.Contains(blLink.ID) Then
-                blLink.Destination.AddInLink(blLink)
-            End If
+                If Not Me.SubsystemDiagram Is Nothing Then
+                    Me.SubsystemDiagram.AddDiagramLink(blLink)
+                End If
 
-            Me.BehavioralLinks.Add(blLink.ID, blLink)
+                blLink.ActualOrigin.AfterAddLink(blLink)
+                blLink.ActualDestination.AfterAddLink(blLink)
+                blLink.AfterAddLink()
+                blLink.SelectItem()
 
-            If Not Me.SubsystemDiagram Is Nothing Then
-                Me.SubsystemDiagram.AddDiagramLink(blLink)
-            End If
-
-            blLink.ActualOrigin.AfterAddLink(blLink)
-            blLink.ActualDestination.AfterAddLink(blLink)
-            blLink.AfterAddLink()
-            blLink.SelectItem()
+            Catch ex As Exception
+                blLink.Origin = Nothing
+                blLink.Destination = Nothing
+                Throw ex
+            End Try
 
         End Sub
 

@@ -2891,7 +2891,6 @@ Namespace Forms
                 m_dockManager.ToggleContentAutoHide(m_frmReceptiveFieldCurrent.Content)
             End If
 
-
         End Sub
 
         Public Overridable Sub CloseProject(ByVal bOpeningProject As Boolean)
@@ -2967,12 +2966,12 @@ Namespace Forms
 
         End Function
 
-        Public Overridable Sub SaveProject(ByVal strFilename As String)
+        Public Overridable Sub SaveProject(ByVal strFilename As String, Optional ByVal bOverrideProjectIsOpen As Boolean = False)
 
             Try
                 Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Starting Save of project: '" & Util.Application.ProjectPath & "\" & strFilename & "'")
 
-                If Not m_bProjectIsOpen Then
+                If Not m_bProjectIsOpen AndAlso Not bOverrideProjectIsOpen Then
                     Throw New System.Exception("You must have an open project before you can save it.")
                 End If
 
@@ -4951,7 +4950,10 @@ Namespace Forms
 
                     Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "About to call SaveProject")
 
-                    SaveProject(Util.Application.ProjectFile)
+                    SaveProject(Util.Application.ProjectFile, True)
+
+                    m_bProjectIsOpen = True
+                    UpdateToolstrips()
 
                     RaiseEvent ProjectCreated()
                 End If
@@ -5348,9 +5350,10 @@ Namespace Forms
 
         End Sub
 
-        Protected Sub OnHelpContents(ByVal sender As Object, ByVal e As System.EventArgs) Handles HelpToolStripMenuItem.Click, HelpToolStripButton.Click
+        Protected Sub OnHelpContents(ByVal sender As Object, ByVal e As System.EventArgs) Handles ContentsToolStripMenuItem.Click, HelpToolStripButton.Click
             Try
-                Help.ShowHelp(Me, "http:\\www.animatlab.com\Help.htm")
+                Dim sInfo As New ProcessStartInfo("http:\\www.animatlab.com\Help.htm")
+                Process.Start(sInfo)
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -5358,7 +5361,8 @@ Namespace Forms
 
         Protected Sub OnHelpSearch(ByVal sender As Object, ByVal e As System.EventArgs) Handles SearchToolStripMenuItem.Click
             Try
-                Help.ShowHelp(Me, "http:\\www.animatlab.com\Search.htm")
+                Dim sInfo As New ProcessStartInfo("http:\\www.animatlab.com\Search.htm")
+                Process.Start(sInfo)
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -5366,7 +5370,8 @@ Namespace Forms
 
         Private Sub OnHelpIndex(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles IndexToolStripMenuItem.Click
             Try
-                Help.ShowHelp(Me, "http:\\www.animatlab.com\sitemap.htm")
+                Dim sInfo As New ProcessStartInfo("http:\\www.animatlab.com\sitemap.htm")
+                Process.Start(sInfo)
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -5374,7 +5379,8 @@ Namespace Forms
 
         Protected Sub OnTechnicalSupport(ByVal sender As Object, ByVal e As System.EventArgs) Handles SupportToolStripMenuItem.Click
             Try
-                Help.ShowHelp(Me, "http:\\www.animatlab.com\Contact.htm")
+                Dim sInfo As New ProcessStartInfo("http:\\www.animatlab.com\Contact.htm")
+                Process.Start(sInfo)
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -6009,7 +6015,7 @@ Namespace Forms
                 If Util.ShowMessage("The project conversion was successful. Would you like to load this project now?", "Project Conversion", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
                     Me.LoadProject(strProjectFile)
                     HideAllContentWidows()
-                    Me.SaveProject(Me.ProjectFile)
+                    'Me.SaveProject(Me.ProjectFile)
                 End If
 
             Catch ex As System.Exception

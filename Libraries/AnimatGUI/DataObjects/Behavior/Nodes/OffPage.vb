@@ -19,8 +19,7 @@ Namespace DataObjects.Behavior.Nodes
         Protected m_thLinkedNode As TypeHelpers.LinkedNode
 
         'Only used during loading
-        Protected m_strLinkedNodeID As String
-        'Protected m_strLinkedDiagramID As String
+        Protected m_strLinkedNodeID As String = ""
 
 #End Region
 

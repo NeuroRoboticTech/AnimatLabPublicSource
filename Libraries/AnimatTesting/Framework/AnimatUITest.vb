@@ -372,7 +372,7 @@ Namespace Framework
             Debug.WriteLine("Compare Successful.")
         End Sub
 
-        Protected Sub SetStructureNames(ByVal strPostFix As String, ByVal bIsStructure As Boolean)
+        Protected Overridable Sub SetStructureNames(ByVal strPostFix As String, ByVal bIsStructure As Boolean)
             If bIsStructure Then
                 m_strStructureGroup = "Structures"
                 m_strStruct1Name = "Structure_" & strPostFix
@@ -393,6 +393,8 @@ Namespace Framework
             'Set params and hit ok button
             ExecuteActiveDialogMethod("SetProjectParams", New Object() {strProjectName, m_strRootFolder & strProjectPath})
             ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+            WaitForProjectToOpen()
 
             'Set simulation to automatically end at a specified time.
             ExecuteMethod("SetObjectProperty", New Object() {"Simulation", "SetSimulationEnd", "True"})
@@ -484,63 +486,63 @@ Namespace Framework
         End Sub
 
 
-        Protected Overridable Sub MovePartAxis(ByVal strStructure As String, ByVal strPart As String, _
-                                               ByVal strWorldAxis As String, ByVal strLocalAxis As String, _
-                                               ByVal ptAxisStart As Point, ByVal ptAxisEnd As Point, _
-                                               ByVal dblMinPartRange As Double, ByVal dblMaxPartRange As Double, _
-                                               ByVal dblMinStructRange As Double, ByVal dblMaxStructRange As Double, _
-                                               ByVal dblMinLocalRange As Double, ByVal dblMaxLocalRange As Double)
-            Debug.WriteLine("MovePartAxis. Structure: " & strStructure & ", Part: " & strPart & ", World Axis: " & strWorldAxis & ", Local Axis: " & strLocalAxis & _
-                            "Axis Start: " & ptAxisStart.ToString & ", Axis End: " & ptAxisEnd.ToString & " dblMinPartRange: " & dblMinPartRange & ", dblMaxPartRange" & dblMaxPartRange & _
-                            ", dblMinStructRange: " & dblMinStructRange & ", dblMaxStructRange: " & dblMaxStructRange & ", dblMinLocalRange: " & dblMinLocalRange & ", dblMaxLocalRange: " & dblMaxLocalRange)
+        'Protected Overridable Sub MovePartAxis(ByVal strStructure As String, ByVal strPart As String, _
+        '                                       ByVal strWorldAxis As String, ByVal strLocalAxis As String, _
+        '                                       ByVal ptAxisStart As Point, ByVal ptAxisEnd As Point, _
+        '                                       ByVal dblMinPartRange As Double, ByVal dblMaxPartRange As Double, _
+        '                                       ByVal dblMinStructRange As Double, ByVal dblMaxStructRange As Double, _
+        '                                       ByVal dblMinLocalRange As Double, ByVal dblMaxLocalRange As Double)
+        '    Debug.WriteLine("MovePartAxis. Structure: " & strStructure & ", Part: " & strPart & ", World Axis: " & strWorldAxis & ", Local Axis: " & strLocalAxis & _
+        '                    "Axis Start: " & ptAxisStart.ToString & ", Axis End: " & ptAxisEnd.ToString & " dblMinPartRange: " & dblMinPartRange & ", dblMaxPartRange" & dblMaxPartRange & _
+        '                    ", dblMinStructRange: " & dblMinStructRange & ", dblMaxStructRange: " & dblMaxStructRange & ", dblMinLocalRange: " & dblMinLocalRange & ", dblMaxLocalRange: " & dblMaxLocalRange)
 
-            'Get the part and structure x position before movement
-            Dim dblBeforePartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis & ".ActualValue"), Double)
-            Dim dblBeforeStructPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure, "LocalPosition." & strWorldAxis & ".ActualValue"), Double)
-            Dim dblBeforeLocalPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis & ".ActualValue"), Double)
+        '    'Get the part and structure x position before movement
+        '    Dim dblBeforePartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis & ".ActualValue"), Double)
+        '    Dim dblBeforeStructPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure, "LocalPosition." & strWorldAxis & ".ActualValue"), Double)
+        '    Dim dblBeforeLocalPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis & ".ActualValue"), Double)
 
-            'Move axis
-            DragMouse(ptAxisStart, ptAxisEnd, MouseButtons.Left)
+        '    'Move axis
+        '    DragMouse(ptAxisStart, ptAxisEnd, MouseButtons.Left)
 
-            Threading.Thread.Sleep(200)
+        '    Threading.Thread.Sleep(200)
 
-            'Get the part and structure x position after movement
-            Dim dblAfterPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis & ".ActualValue"), Double)
-            Dim dblAfterStructPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure, "LocalPosition." & strWorldAxis & ".ActualValue"), Double)
-            Dim dblAfterLocalPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis & ".ActualValue"), Double)
+        '    'Get the part and structure x position after movement
+        '    Dim dblAfterPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WorldPosition." & strWorldAxis & ".ActualValue"), Double)
+        '    Dim dblAfterStructPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure, "LocalPosition." & strWorldAxis & ".ActualValue"), Double)
+        '    Dim dblAfterLocalPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LocalPosition." & strLocalAxis & ".ActualValue"), Double)
 
-            AssertInRange("Part", strWorldAxis, "position", (dblAfterPartPos - dblBeforePartPos), dblMinPartRange, dblMaxPartRange)
-            AssertInRange("Structure", strWorldAxis, "position", (dblAfterStructPos - dblBeforeStructPos), dblMinStructRange, dblMaxStructRange)
-            AssertInRange("Part Local", strLocalAxis, "position", (dblAfterLocalPartPos - dblBeforeLocalPartPos), dblMinLocalRange, dblMaxLocalRange)
+        '    AssertInRange("Part", strWorldAxis, "position", (dblAfterPartPos - dblBeforePartPos), dblMinPartRange, dblMaxPartRange)
+        '    AssertInRange("Structure", strWorldAxis, "position", (dblAfterStructPos - dblBeforeStructPos), dblMinStructRange, dblMaxStructRange)
+        '    AssertInRange("Part Local", strLocalAxis, "position", (dblAfterLocalPartPos - dblBeforeLocalPartPos), dblMinLocalRange, dblMaxLocalRange)
 
-        End Sub
+        'End Sub
 
-        Protected Overridable Sub RotatePartAxis(ByVal strStructure As String, ByVal strPart As String, _
-                                                 ByVal strAxis As String, ByVal ptAxisStart As Point, ByVal ptAxisEnd As Point, _
-                                                ByVal dblMinRange As Double, ByVal dblMaxRange As Double, Optional ByVal bResetPos As Boolean = True)
-            Debug.WriteLine("RotatePartAxis. Structure: " & strStructure & ", Part: " & strPart & ", Axis: " & strAxis & _
-                "Axis Start: " & ptAxisStart.ToString & ", Axis End: " & ptAxisEnd.ToString & " dblMinRange: " & dblMinRange & ", dblMaxRange" & dblMaxRange & _
-                ", bResetPos: " & bResetPos)
+        'Protected Overridable Sub RotatePartAxis(ByVal strStructure As String, ByVal strPart As String, _
+        '                                         ByVal strAxis As String, ByVal ptAxisStart As Point, ByVal ptAxisEnd As Point, _
+        '                                        ByVal dblMinRange As Double, ByVal dblMaxRange As Double, Optional ByVal bResetPos As Boolean = True)
+        '    Debug.WriteLine("RotatePartAxis. Structure: " & strStructure & ", Part: " & strPart & ", Axis: " & strAxis & _
+        '        "Axis Start: " & ptAxisStart.ToString & ", Axis End: " & ptAxisEnd.ToString & " dblMinRange: " & dblMinRange & ", dblMaxRange" & dblMaxRange & _
+        '        ", bResetPos: " & bResetPos)
 
-            'Get the part rotation before movement
-            Dim dblBeforePartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis & ".ActualValue"), Double)
+        '    'Get the part rotation before movement
+        '    Dim dblBeforePartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis & ".ActualValue"), Double)
 
-            'Move axis
-            DragMouse(ptAxisStart, ptAxisEnd, MouseButtons.Left)
+        '    'Move axis
+        '    DragMouse(ptAxisStart, ptAxisEnd, MouseButtons.Left)
 
-            Threading.Thread.Sleep(200)
+        '    Threading.Thread.Sleep(200)
 
-            'Get the part and structure x position before movement
-            Dim dblAfterPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis & ".ActualValue"), Double)
+        '    'Get the part and structure x position before movement
+        '    Dim dblAfterPartPos As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis & ".ActualValue"), Double)
 
-            AssertInRange("Part", strAxis, "rotation", (dblAfterPartPos - dblBeforePartPos), dblMinRange, dblMaxRange)
+        '    AssertInRange("Part", strAxis, "rotation", (dblAfterPartPos - dblBeforePartPos), dblMinRange, dblMaxRange)
 
-            'Reset the rotation to 0.
-            If bResetPos Then
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis, dblBeforePartPos.ToString})
-            End If
+        '    'Reset the rotation to 0.
+        '    If bResetPos Then
+        '        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rotation." & strAxis, dblBeforePartPos.ToString})
+        '    End If
 
-        End Sub
+        'End Sub
 
         Protected Overridable Sub ResetStructurePosition(ByVal strStructure As String, ByVal strPart As String, _
                                                          ByVal dblPosX As Double, ByVal dblPosY As Double, ByVal dblPosZ As Double, _
@@ -983,37 +985,37 @@ Namespace Framework
 
         End Sub
 
-        '''<summary>
-        '''AddChildPartTypeWithJoint - Use 'AddChildPartTypeWithJointParams' to pass parameters into this method.
-        '''</summary>
-        Protected Overridable Sub AddChildPartTypeWithJoint(ByVal strPartType As String, ByVal strJointType As String, ByVal ptAddClick As Point)
-            Debug.WriteLine("AddChildPartTypeWithJoint. Part type: " & strPartType & ", Joint Type: " & strJointType & ", AddClick: " & ptAddClick.ToString)
+        ' '''<summary>
+        ' '''AddChildPartTypeWithJoint - Use 'AddChildPartTypeWithJointParams' to pass parameters into this method.
+        ' '''</summary>
+        'Protected Overridable Sub AddChildPartTypeWithJoint(ByVal strPartType As String, ByVal strJointType As String, ByVal ptAddClick As Point)
+        '    Debug.WriteLine("AddChildPartTypeWithJoint. Part type: " & strPartType & ", Joint Type: " & strJointType & ", AddClick: " & ptAddClick.ToString)
 
-            BeforeAddChildPart(strPartType, strJointType)
+        '    BeforeAddChildPart(strPartType, strJointType)
 
-            'Click 'Add Part' button
-            ExecuteMethod("ClickToolbarItem", New Object() {"AddPartToolStripButton"}, 2000)
+        '    'Click 'Add Part' button
+        '    ExecuteMethod("ClickToolbarItem", New Object() {"AddPartToolStripButton"}, 2000)
 
-            OpenDialogAndWait("Select Part Type", Me.GetType.GetMethod("ClickToAddBody"), New Object() {ptAddClick})
+        '    OpenDialogAndWait("Select Part Type", Me.GetType.GetMethod("ClickToAddBody"), New Object() {ptAddClick})
 
-            ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strPartType})
+        '    ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strPartType})
 
-            'Click 'Ok' button
-            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+        '    'Click 'Ok' button
+        '    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
-            AfterAddChildPart(strPartType, strJointType)
+        '    AfterAddChildPart(strPartType, strJointType)
 
-            OpenDialogAndWait("Select Part Type", Nothing, Nothing)
+        '    OpenDialogAndWait("Select Part Type", Nothing, Nothing)
 
-            ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strJointType})
+        '    ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strJointType})
 
-            'Click 'Ok' button
-            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+        '    'Click 'Ok' button
+        '    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
 
-            AfterAddChildPartJoint(strPartType, strJointType)
+        '    AfterAddChildPartJoint(strPartType, strJointType)
 
-            Threading.Thread.Sleep(1000)
-        End Sub
+        '    Threading.Thread.Sleep(1000)
+        'End Sub
 
         Protected Overridable Sub AddChildPartTypeWithJoint(ByVal strPartType As String, ByVal strJointType As String, ByVal strPath As String)
             Debug.WriteLine("AddChildPartTypeWithJoint. Part type: " & strPartType & ", Joint Type: " & strJointType & ", Path: " & strPath)
@@ -1044,18 +1046,43 @@ Namespace Framework
             Threading.Thread.Sleep(1000)
         End Sub
 
+        ' '''<summary>
+        ' '''AddChildPartTypeWithJoint - Use 'AddChildPartTypeWithJointParams' to pass parameters into this method.
+        ' '''</summary>
+        'Protected Overridable Sub AddChildPartTypeWithoutJoint(ByVal strPartType As String, ByVal ptAddClick As Point)
+        '    Debug.WriteLine("AddChildPartTypeWithJoint. Part type: " & strPartType & ", AddClick: " & ptAddClick.ToString)
+
+        '    BeforeAddChildPart(strPartType, "")
+
+        '    'Click 'Add Part' button
+        '    ExecuteMethod("ClickToolbarItem", New Object() {"AddPartToolStripButton"}, 2000)
+
+        '    OpenDialogAndWait("Select Part Type", Me.GetType.GetMethod("ClickToAddBody"), New Object() {ptAddClick})
+
+        '    ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strPartType})
+
+        '    'Click 'Ok' button
+        '    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+        '    AfterAddChildPart(strPartType, "")
+
+        '    Threading.Thread.Sleep(1000)
+        'End Sub
+
         '''<summary>
         '''AddChildPartTypeWithJoint - Use 'AddChildPartTypeWithJointParams' to pass parameters into this method.
         '''</summary>
-        Protected Overridable Sub AddChildPartTypeWithoutJoint(ByVal strPartType As String, ByVal ptAddClick As Point)
-            Debug.WriteLine("AddChildPartTypeWithJoint. Part type: " & strPartType & ", AddClick: " & ptAddClick.ToString)
+        Protected Overridable Sub AddChildPartTypeWithoutJoint(ByVal strPartType As String, ByVal strAddPath As String)
+            Debug.WriteLine("AddChildPartTypeWithJoint. Part type: " & strPartType & ", Path: " & strAddPath)
 
             BeforeAddChildPart(strPartType, "")
 
             'Click 'Add Part' button
             ExecuteMethod("ClickToolbarItem", New Object() {"AddPartToolStripButton"}, 2000)
 
-            OpenDialogAndWait("Select Part Type", Me.GetType.GetMethod("ClickToAddBody"), New Object() {ptAddClick})
+            AutomatedClickToAddBody(strAddPath, 0.04, 0.55, -0.5, 0.0, 0.0, -1.0)
+
+            OpenDialogAndWait("Select Part Type", Nothing, Nothing)
 
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strPartType})
 
@@ -1066,6 +1093,7 @@ Namespace Framework
 
             Threading.Thread.Sleep(1000)
         End Sub
+
 
         '''<summary>
         '''AddChildPartTypeWithJoint - Use 'AddChildPartTypeWithJointParams' to pass parameters into this method.
@@ -1234,26 +1262,26 @@ Namespace Framework
 
 
         Protected Overridable Sub CreateArmature(ByVal strPartType As String, ByVal strSecondaryPartType As String, _
-                                                 ByVal strJointType As String, ByVal ptClickToAddChild As Point, _
+                                                 ByVal strJointType As String, ByVal strChildPath As String, _
                                                  ByVal ptZoomStart As Point, ByVal iZoom1 As Integer, ByVal iZoom2 As Integer, _
                                                  ByVal bAddAttachments As Boolean, ByVal strAttachType As String, _
-                                                 ByVal ptRootAttach As Point, ByVal ptArmAttach As Point)
+                                                 ByVal strRootAttach As String, ByVal strArmAttach As String)
             Debug.WriteLine("CreateArmature")
 
             'Add a root part.
             AddRootPartType(m_strStructureGroup, m_strStruct1Name, strPartType)
 
-            RecalculatePositionsUsingResolution()
+            'RecalculatePositionsUsingResolution()
 
             'Zoom in on the part so we can try and move it with the mouse.
-            ZoomInOnPart(ptZoomStart, iZoom1, iZoom2)
+            'ZoomInOnPart(ptZoomStart, iZoom1, iZoom2)
 
             If strSecondaryPartType.Trim.Length = 0 Then
                 strSecondaryPartType = strPartType
             End If
 
             'We have tested moving/rotating the root part, now test doing it on a child part.
-            AddChildPartTypeWithJoint(strSecondaryPartType, strJointType, ptClickToAddChild)
+            AddChildPartTypeWithJoint(strSecondaryPartType, strJointType, strChildPath)
 
             ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1\Body_1_Graphics", "Name", "Arm_Graphics"})
             ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1", "Name", "Arm"})
@@ -1262,14 +1290,14 @@ Namespace Framework
 
             Dim iBlockerIndex As Integer = 2
             If bAddAttachments Then
-                AddChildPartTypeWithoutJoint(strAttachType, ptRootAttach)
-                AddChildPartTypeWithoutJoint(strAttachType, ptRootAttach)
-                AddChildPartTypeWithoutJoint(strAttachType, ptArmAttach)
+                AddChildPartTypeWithoutJoint(strAttachType, strRootAttach)
+                AddChildPartTypeWithoutJoint(strAttachType, strRootAttach)
+                AddChildPartTypeWithoutJoint(strAttachType, strArmAttach)
                 RepositionArmatureAttachments()
                 iBlockerIndex = 5
             End If
 
-            AddChildPartTypeWithJoint("Box", "Hinge", ptRootAttach)
+            AddChildPartTypeWithJoint("Box", "Hinge", strRootAttach)
 
             ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Body_" & iBlockerIndex & "\Body_" & iBlockerIndex & "_Graphics", "Name", "Blocker_Graphics"})
             ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Body_" & iBlockerIndex, "Name", "Blocker"})
@@ -1396,56 +1424,56 @@ Namespace Framework
             ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, 1000)
         End Sub
 
-        '''<summary>
-        '''ZoomInOnRootPart
-        '''</summary>
-        Public Sub ZoomInOnPart(ByVal ptStart As Point, ByVal iAmount1 As Integer, Optional ByVal iAmount2 As Integer = 0, _
-                                Optional ByVal bVertical As Boolean = True, Optional ByVal eButton As System.Windows.Forms.MouseButtons = MouseButtons.Right, _
-                                Optional ByVal eKeys As System.Windows.Input.ModifierKeys = ModifierKeys.None)
-            Dim uIStructure_1BodyClient As WinClient = Me.UIProjectWindow(m_strProjectName).UIStructure_1BodyWindow.UIStructure_1BodyClient(m_strStruct1Name)
+        ' '''<summary>
+        ' '''ZoomInOnRootPart
+        ' '''</summary>
+        'Public Sub ZoomInOnPart(ByVal ptStart As Point, ByVal iAmount1 As Integer, Optional ByVal iAmount2 As Integer = 0, _
+        '                        Optional ByVal bVertical As Boolean = True, Optional ByVal eButton As System.Windows.Forms.MouseButtons = MouseButtons.Right, _
+        '                        Optional ByVal eKeys As System.Windows.Input.ModifierKeys = ModifierKeys.None)
+        '    Dim uIStructure_1BodyClient As WinClient = Me.UIProjectWindow(m_strProjectName).UIStructure_1BodyWindow.UIStructure_1BodyClient(m_strStruct1Name)
 
-            If Math.Abs(iAmount1) > 0 Then
-                'Move using Right button 'Structure_1 Body' client
-                Mouse.StartDragging(uIStructure_1BodyClient, ptStart, eButton, eKeys)
-                If bVertical Then
-                    Mouse.StopDragging(uIStructure_1BodyClient, 0, iAmount1)
-                Else
-                    Mouse.StopDragging(uIStructure_1BodyClient, iAmount1, 0)
-                End If
-            End If
+        '    If Math.Abs(iAmount1) > 0 Then
+        '        'Move using Right button 'Structure_1 Body' client
+        '        Mouse.StartDragging(uIStructure_1BodyClient, ptStart, eButton, eKeys)
+        '        If bVertical Then
+        '            Mouse.StopDragging(uIStructure_1BodyClient, 0, iAmount1)
+        '        Else
+        '            Mouse.StopDragging(uIStructure_1BodyClient, iAmount1, 0)
+        '        End If
+        '    End If
 
-            'Move using Right button 'Structure_1 Body' client 
-            If Math.Abs(iAmount2) > 0 Then
-                Mouse.StartDragging(uIStructure_1BodyClient, ptStart, eButton, eKeys)
-                If bVertical Then
-                    Mouse.StopDragging(uIStructure_1BodyClient, 0, iAmount2)
-                Else
-                    Mouse.StopDragging(uIStructure_1BodyClient, iAmount2, 0)
-                End If
-            End If
+        '    'Move using Right button 'Structure_1 Body' client 
+        '    If Math.Abs(iAmount2) > 0 Then
+        '        Mouse.StartDragging(uIStructure_1BodyClient, ptStart, eButton, eKeys)
+        '        If bVertical Then
+        '            Mouse.StopDragging(uIStructure_1BodyClient, 0, iAmount2)
+        '        Else
+        '            Mouse.StopDragging(uIStructure_1BodyClient, iAmount2, 0)
+        '        End If
+        '    End If
 
-            If Math.Abs(iAmount1) > 0 OrElse Math.Abs(iAmount2) > 0 Then
-                Mouse.Click(uIStructure_1BodyClient, eButton, ModifierKeys.None, ptStart)
-            End If
+        '    If Math.Abs(iAmount1) > 0 OrElse Math.Abs(iAmount2) > 0 Then
+        '        Mouse.Click(uIStructure_1BodyClient, eButton, ModifierKeys.None, ptStart)
+        '    End If
 
-        End Sub
+        'End Sub
 
-        Public Sub DragMouse(ByVal ptStart As Point, ByVal ptEnd As Point, ByVal mButton As MouseButtons, _
-                             Optional ByVal mModifiers As ModifierKeys = ModifierKeys.None, _
-                             Optional ByVal bEndClick As Boolean = False)
-            Debug.WriteLine("Draggin Mouse. ptStart: " & ptStart.ToString & ", ptEnd: " & ptEnd.ToString & ", mButton: " & mButton.ToString & _
-                            "mModifiers: " & mModifiers.ToString & ", bEndClick: " & bEndClick)
+        'Public Sub DragMouse(ByVal ptStart As Point, ByVal ptEnd As Point, ByVal mButton As MouseButtons, _
+        '                     Optional ByVal mModifiers As ModifierKeys = ModifierKeys.None, _
+        '                     Optional ByVal bEndClick As Boolean = False)
+        '    Debug.WriteLine("Draggin Mouse. ptStart: " & ptStart.ToString & ", ptEnd: " & ptEnd.ToString & ", mButton: " & mButton.ToString & _
+        '                    "mModifiers: " & mModifiers.ToString & ", bEndClick: " & bEndClick)
 
-            Dim uIStructure_1BodyClient As WinClient = Me.UIProjectWindow(m_strProjectName).UIStructure_1BodyWindow.UIStructure_1BodyClient(m_strStruct1Name)
+        '    Dim uIStructure_1BodyClient As WinClient = Me.UIProjectWindow(m_strProjectName).UIStructure_1BodyWindow.UIStructure_1BodyClient(m_strStruct1Name)
 
-            Mouse.StartDragging(uIStructure_1BodyClient, ptStart, mButton, mModifiers)
-            Mouse.StopDragging(uIStructure_1BodyClient, ptEnd)
+        '    Mouse.StartDragging(uIStructure_1BodyClient, ptStart, mButton, mModifiers)
+        '    Mouse.StopDragging(uIStructure_1BodyClient, ptEnd)
 
-            If bEndClick Then
-                Mouse.Click(uIStructure_1BodyClient, MouseButtons.Right, ModifierKeys.None, ptEnd)
-            End If
+        '    If bEndClick Then
+        '        Mouse.Click(uIStructure_1BodyClient, MouseButtons.Right, ModifierKeys.None, ptEnd)
+        '    End If
 
-        End Sub
+        'End Sub
 
         '''<summary>
         '''NewProjectDlg_EnterNameAndPath - Use 'NewProjectDlg_EnterNameAndPathParams' to pass parameters into this method.
@@ -1521,7 +1549,7 @@ Namespace Framework
                 End If
             End While
 
-            Threading.Thread.Sleep(3000)
+            Threading.Thread.Sleep(1000)
         End Sub
 
 #Region "Neural Methods"

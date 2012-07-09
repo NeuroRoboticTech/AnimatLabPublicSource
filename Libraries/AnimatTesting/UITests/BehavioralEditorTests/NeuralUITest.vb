@@ -33,13 +33,14 @@ Namespace UITests
             Protected m_strSecondaryPartType As String = ""
             Protected m_strJointType As String = "Hinge"
 
-            Protected m_ptAddArmClick As New Point(751, 362)
+            Protected m_strAddArmPath As String = ""
+            'Protected m_ptAddArmClick As New Point(751, 362)
             Protected m_ptZoomStart As New Point(877, 100)
             Protected m_iZoom1 As Integer = 300
             Protected m_iZoom2 As Integer = 300
 
-            Protected m_ptAddRootAttach As New Point(757, 330)
-            Protected m_ptAddArmAttach As New Point(990, 545)
+            Protected m_strAddRootAttach As String = ""
+            Protected m_strAddArmAttach As String = ""
 
             Protected m_ptRotateArmStart As New Point(100, 420)
             Protected m_iRotateArm1 As Integer = 700
@@ -77,6 +78,17 @@ Namespace UITests
 #Region "Methods"
 
             Protected Overridable Sub TestNeuron()
+
+                m_strStructureGroup = "Organisms"
+                m_strStruct1Name = "Organism_1"
+
+                m_strAddArmPath = "Simulation\Environment\" & m_strStructureGroup & _
+                                   "\" & m_strStruct1Name & "\Body Plan\Root"
+
+                m_strAddRootAttach = "Simulation\Environment\" & m_strStructureGroup & _
+                                   "\" & m_strStruct1Name & "\Body Plan\Root"
+                m_strAddArmAttach = "Simulation\Environment\" & m_strStructureGroup & _
+                                   "\" & m_strStruct1Name & "\Body Plan\Root"
 
                 StartNewProject()
 
@@ -135,8 +147,8 @@ Namespace UITests
 
                 'Create the test armature.
                 CreateArmature(m_strPartType, m_strSecondaryPartType, m_strJointType, _
-                               m_ptAddArmClick, m_ptZoomStart, m_iZoom1, m_iZoom2, _
-                                False, "Attachment", m_ptAddRootAttach, m_ptAddArmAttach)
+                               m_strAddArmPath, m_ptZoomStart, m_iZoom1, m_iZoom2, _
+                                False, "Attachment", m_strAddRootAttach, m_strAddArmAttach)
 
                 ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & _
                            "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\HJ", _
@@ -150,56 +162,56 @@ Namespace UITests
 
             End Sub
 
-            Protected Overrides Sub RecalculatePositionsUsingResolution()
-                MyBase.RecalculatePositionsUsingResolution()
+            'Protected Overrides Sub RecalculatePositionsUsingResolution()
+            '    MyBase.RecalculatePositionsUsingResolution()
 
-                m_ptRotateArmStart.X = CInt(m_ptRotateArmStart.X * m_dblResScaleWidth)
-                m_ptRotateArmStart.Y = CInt(m_ptRotateArmStart.Y * m_dblResScaleHeight)
+            '    m_ptRotateArmStart.X = CInt(m_ptRotateArmStart.X * m_dblResScaleWidth)
+            '    m_ptRotateArmStart.Y = CInt(m_ptRotateArmStart.Y * m_dblResScaleHeight)
 
-                m_ptRotateArm2Start.X = CInt(m_ptRotateArm2Start.X * m_dblResScaleWidth)
-                m_ptRotateArm2Start.Y = CInt(m_ptRotateArm2Start.Y * m_dblResScaleHeight)
+            '    m_ptRotateArm2Start.X = CInt(m_ptRotateArm2Start.X * m_dblResScaleWidth)
+            '    m_ptRotateArm2Start.Y = CInt(m_ptRotateArm2Start.Y * m_dblResScaleHeight)
 
-                m_ptRotateArm2End.X = CInt(m_ptRotateArm2End.X * m_dblResScaleWidth)
-                m_ptRotateArm2End.Y = CInt(m_ptRotateArm2End.Y * m_dblResScaleHeight)
+            '    m_ptRotateArm2End.X = CInt(m_ptRotateArm2End.X * m_dblResScaleWidth)
+            '    m_ptRotateArm2End.Y = CInt(m_ptRotateArm2End.Y * m_dblResScaleHeight)
 
-                m_ptAddRootAttach.X = CInt(m_ptAddRootAttach.X * m_dblResScaleWidth)
-                m_ptAddRootAttach.Y = CInt(m_ptAddRootAttach.Y * m_dblResScaleHeight)
+            '    m_ptAddRootAttach.X = CInt(m_ptAddRootAttach.X * m_dblResScaleWidth)
+            '    m_ptAddRootAttach.Y = CInt(m_ptAddRootAttach.Y * m_dblResScaleHeight)
 
-                m_ptAddArmAttach.X = CInt(m_ptAddArmAttach.X * m_dblResScaleWidth)
-                m_ptAddArmAttach.Y = CInt(m_ptAddArmAttach.Y * m_dblResScaleHeight)
+            '    m_ptAddArmAttach.X = CInt(m_ptAddArmAttach.X * m_dblResScaleWidth)
+            '    m_ptAddArmAttach.Y = CInt(m_ptAddArmAttach.Y * m_dblResScaleHeight)
 
-                m_ptTranslateZAxisStart.X = CInt(m_ptTranslateZAxisStart.X * m_dblResScaleWidth)
-                m_ptTranslateZAxisStart.Y = CInt(m_ptTranslateZAxisStart.Y * m_dblResScaleHeight)
+            '    m_ptTranslateZAxisStart.X = CInt(m_ptTranslateZAxisStart.X * m_dblResScaleWidth)
+            '    m_ptTranslateZAxisStart.Y = CInt(m_ptTranslateZAxisStart.Y * m_dblResScaleHeight)
 
-                m_ptTranslateZAxisEnd.X = CInt(m_ptTranslateZAxisEnd.X * m_dblResScaleWidth)
-                m_ptTranslateZAxisEnd.Y = CInt(m_ptTranslateZAxisEnd.Y * m_dblResScaleHeight)
+            '    m_ptTranslateZAxisEnd.X = CInt(m_ptTranslateZAxisEnd.X * m_dblResScaleWidth)
+            '    m_ptTranslateZAxisEnd.Y = CInt(m_ptTranslateZAxisEnd.Y * m_dblResScaleHeight)
 
-                m_ptRotateJoint1Start.X = CInt(m_ptRotateJoint1Start.X * m_dblResScaleWidth)
-                m_ptRotateJoint1Start.Y = CInt(m_ptRotateJoint1Start.Y * m_dblResScaleHeight)
+            '    m_ptRotateJoint1Start.X = CInt(m_ptRotateJoint1Start.X * m_dblResScaleWidth)
+            '    m_ptRotateJoint1Start.Y = CInt(m_ptRotateJoint1Start.Y * m_dblResScaleHeight)
 
-                m_ptRotatejoint1End.X = CInt(m_ptRotatejoint1End.X * m_dblResScaleWidth)
-                m_ptRotatejoint1End.Y = CInt(m_ptRotatejoint1End.Y * m_dblResScaleHeight)
+            '    m_ptRotatejoint1End.X = CInt(m_ptRotatejoint1End.X * m_dblResScaleWidth)
+            '    m_ptRotatejoint1End.Y = CInt(m_ptRotatejoint1End.Y * m_dblResScaleHeight)
 
-                m_ptMoveJoint1Start.X = CInt(m_ptMoveJoint1Start.X * m_dblResScaleWidth)
-                m_ptMoveJoint1Start.Y = CInt(m_ptMoveJoint1Start.Y * m_dblResScaleHeight)
+            '    m_ptMoveJoint1Start.X = CInt(m_ptMoveJoint1Start.X * m_dblResScaleWidth)
+            '    m_ptMoveJoint1Start.Y = CInt(m_ptMoveJoint1Start.Y * m_dblResScaleHeight)
 
-                m_ptMovejoint1End.X = CInt(m_ptMovejoint1End.X * m_dblResScaleWidth)
-                m_ptMovejoint1End.Y = CInt(m_ptMovejoint1End.Y * m_dblResScaleHeight)
+            '    m_ptMovejoint1End.X = CInt(m_ptMovejoint1End.X * m_dblResScaleWidth)
+            '    m_ptMovejoint1End.Y = CInt(m_ptMovejoint1End.Y * m_dblResScaleHeight)
 
-                m_ptMoveJoint1Start.X = CInt(m_ptMoveJoint1Start.X * m_dblResScaleWidth)
-                m_ptMoveJoint1Start.Y = CInt(m_ptMoveJoint1Start.Y * m_dblResScaleHeight)
+            '    m_ptMoveJoint1Start.X = CInt(m_ptMoveJoint1Start.X * m_dblResScaleWidth)
+            '    m_ptMoveJoint1Start.Y = CInt(m_ptMoveJoint1Start.Y * m_dblResScaleHeight)
 
-                m_ptTransJointYAxisStart.X = CInt(m_ptTransJointYAxisStart.X * m_dblResScaleWidth)
-                m_ptTransJointYAxisEnd.Y = CInt(m_ptTransJointYAxisEnd.Y * m_dblResScaleHeight)
+            '    m_ptTransJointYAxisStart.X = CInt(m_ptTransJointYAxisStart.X * m_dblResScaleWidth)
+            '    m_ptTransJointYAxisEnd.Y = CInt(m_ptTransJointYAxisEnd.Y * m_dblResScaleHeight)
 
-            End Sub
+            'End Sub
 
 
             Protected Overrides Sub RepositionChildPart()
 
-                ZoomInOnPart(m_ptRotateArmStart, m_iRotateArm1, m_iRotateArm2, False, MouseButtons.Left)
+                'ZoomInOnPart(m_ptRotateArmStart, m_iRotateArm1, m_iRotateArm2, False, MouseButtons.Left)
 
-                DragMouse(m_ptRotateArm2Start, m_ptRotateArm2End, MouseButtons.Left, ModifierKeys.None, True)
+                'DragMouse(m_ptRotateArm2Start, m_ptRotateArm2End, MouseButtons.Left, ModifierKeys.None, True)
 
                 'Set the root part to be frozen.
                 ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Freeze", "True"})

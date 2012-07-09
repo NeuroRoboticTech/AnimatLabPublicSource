@@ -34,6 +34,10 @@ Namespace UITests
                 Protected m_strSecondaryPartType As String = ""
                 Protected m_strJointType As String = "Hinge"
 
+                Protected m_strAddArmPath As String = ""
+                Protected m_strAddRootAttach As String = ""
+                Protected m_strAddArmAttach As String = ""
+
                 Protected m_ptAddArmClick As New Point(751, 362)
                 Protected m_ptZoomStart As New Point(877, 100)
                 Protected m_iZoom1 As Integer = 300
@@ -125,10 +129,19 @@ Namespace UITests
 
                     StartNewProject()
 
+                    m_strAddArmPath = "Simulation\Environment\" & m_strStructureGroup & _
+                                       "\" & m_strStruct1Name & "\Body Plan\Root"
+
+                    m_strAddRootAttach = "Simulation\Environment\" & m_strStructureGroup & _
+                                       "\" & m_strStruct1Name & "\Body Plan\Root"
+                    m_strAddArmAttach = "Simulation\Environment\" & m_strStructureGroup & _
+                                       "\" & m_strStruct1Name & "\Body Plan\Root"
+
+
                     'Create the test armature.
                     CreateArmature(m_strPartType, m_strSecondaryPartType, m_strJointType, _
-                                   m_ptAddArmClick, m_ptZoomStart, m_iZoom1, m_iZoom2, _
-                                    False, "Attachment", m_ptAddRootAttach, m_ptAddArmAttach)
+                                   m_strAddArmPath, m_ptZoomStart, m_iZoom1, m_iZoom2, _
+                                    False, "Attachment", m_strAddRootAttach, m_strAddArmAttach)
 
                     'Create the chart for the test armature
                     CreateArmatureChart(False)
@@ -183,9 +196,9 @@ Namespace UITests
 
                 Protected Overrides Sub RepositionChildPart()
 
-                    ZoomInOnPart(m_ptRotateArmStart, m_iRotateArm1, m_iRotateArm2, False, MouseButtons.Left)
+                    'ZoomInOnPart(m_ptRotateArmStart, m_iRotateArm1, m_iRotateArm2, False, MouseButtons.Left)
 
-                    DragMouse(m_ptRotateArm2Start, m_ptRotateArm2End, MouseButtons.Left, ModifierKeys.None, True)
+                    'DragMouse(m_ptRotateArm2Start, m_ptRotateArm2End, MouseButtons.Left, ModifierKeys.None, True)
 
                     'Set the root part to be frozen.
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Freeze", "True"})

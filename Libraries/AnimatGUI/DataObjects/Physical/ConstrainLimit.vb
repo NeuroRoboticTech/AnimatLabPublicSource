@@ -151,8 +151,8 @@ Namespace DataObjects.Physical
             MyBase.New(doParent)
 
             m_snLimitPos = New AnimatGUI.Framework.ScaledNumber(Me, "LimitPos", -45, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "Degrees", "Deg")
-            m_snStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "Stiffness", 5, ScaledNumber.enumNumericScale.Mega, "N/m", "N/m")
-            m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 0, ScaledNumber.enumNumericScale.Kilo, "g/s", "g/s")
+            m_snStiffness = New AnimatGUI.Framework.ScaledNumber(Me, "Stiffness", 1, ScaledNumber.enumNumericScale.Kilo, "N/m", "N/m")
+            m_snDamping = New AnimatGUI.Framework.ScaledNumber(Me, "Damping", 250, ScaledNumber.enumNumericScale.None, "g/s", "g/s")
             m_snRestitution = New AnimatGUI.Framework.ScaledNumber(Me, "Restitution", 0, ScaledNumber.enumNumericScale.None, "v/v", "v/v")
 
         End Sub

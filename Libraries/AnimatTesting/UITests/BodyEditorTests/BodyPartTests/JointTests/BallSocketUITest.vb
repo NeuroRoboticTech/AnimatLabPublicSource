@@ -99,13 +99,14 @@ Namespace UITests
 
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", False})
 
-                        'Now move the arm over using the mouse.
-                        MovePartAxis(m_strStruct1Name, "Root\Joint_1\Arm", _
-                                     m_strMoveArmWorldZAxis, m_strMoveArmLocalZAxis, _
-                                     m_ptTranslateZAxisStart, m_ptTranslateZAxisEnd, _
-                                     m_dblMinTranArmWorldZ, m_dblMaxTranArmWorldZ, _
-                                     m_dblMinTranArmStructZ, m_dblMaxTranArmStructZ, _
-                                     m_dblMinTranArmLocalZ, m_dblMaxTranArmLocalZ)
+                        ''Now move the arm over using the mouse.
+                        'MovePartAxis(m_strStruct1Name, "Root\Joint_1\Arm", _
+                        '             m_strMoveArmWorldZAxis, m_strMoveArmLocalZAxis, _
+                        '             m_ptTranslateZAxisStart, m_ptTranslateZAxisEnd, _
+                        '             m_dblMinTranArmWorldZ, m_dblMaxTranArmWorldZ, _
+                        '             m_dblMinTranArmStructZ, m_dblMaxTranArmStructZ, _
+                        '             m_dblMinTranArmLocalZ, m_dblMaxTranArmLocalZ)
+
 
                         RunSimulationWaitToEnd()
                         LoadDataChart(m_strRootFolder & m_strTestDataPath, "DataTool_1.txt", "MouseMoveArm_")
@@ -113,13 +114,13 @@ Namespace UITests
 
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", False})
 
-                        'Now move the arm over using the mouse.
-                        MovePartAxis(m_strStruct1Name, "Root\Joint_1", _
-                                     m_strMoveJointWorldYAxis, m_strMoveJointLocalYAxis, _
-                                     m_ptTransJointYAxisStart, m_ptTransJointYAxisEnd, _
-                                     m_dblMinTranJointWorldY, m_dblMaxTranJointWorldY, _
-                                     m_dblMinTranJointStructY, m_dblMaxTranJointStructY, _
-                                     m_dblMinTranJointLocalY, m_dblMaxTranJointLocalY)
+                        ''Now move the arm over using the mouse.
+                        'MovePartAxis(m_strStruct1Name, "Root\Joint_1", _
+                        '             m_strMoveJointWorldYAxis, m_strMoveJointLocalYAxis, _
+                        '             m_ptTransJointYAxisStart, m_ptTransJointYAxisEnd, _
+                        '             m_dblMinTranJointWorldY, m_dblMaxTranJointWorldY, _
+                        '             m_dblMinTranJointStructY, m_dblMaxTranJointStructY, _
+                        '             m_dblMinTranJointLocalY, m_dblMaxTranJointLocalY)
 
                         RunSimulationWaitToEnd()
                         LoadDataChart(m_strRootFolder & m_strTestDataPath, "DataTool_1.txt", "MouseMoveJoint_")
