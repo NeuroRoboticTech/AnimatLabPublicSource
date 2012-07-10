@@ -1245,6 +1245,7 @@ Namespace Framework
                     Next
                 Next
 
+                tmpstream.Close()
             End If
 
         End Sub
@@ -1296,6 +1297,7 @@ Namespace Framework
                 Next
 
                 aryColumns = aryTemplateColumns
+                tmpstream.Close()
             End If
 
         End Sub

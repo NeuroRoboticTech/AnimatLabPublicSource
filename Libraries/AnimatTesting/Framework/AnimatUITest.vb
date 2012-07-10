@@ -243,8 +243,6 @@ Namespace Framework
             'No prefix on the exported chart.
             ExecuteMethod("ExportDataCharts", New Object() {"", ""})
 
-            Threading.Thread.Sleep(500)
-
             If aryIgnoreRows Is Nothing Then
                 'If no arraylist passed in then just create an empty one.
                 aryIgnoreRows = New ArrayList
