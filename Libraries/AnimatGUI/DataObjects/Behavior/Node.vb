@@ -1278,29 +1278,6 @@ Namespace DataObjects.Behavior
 
             Try
                 If Not m_bIsInitialized Then
-                    'Dim blLink As Behavior.Link
-                    'For Each strID In m_aryLoadingInLinkIDs
-                    '    If strID.Trim.Length > 0 Then
-                    '        blLink = Me.Organism.FindBehavioralLink(strID, False)
-
-                    '        If Not blLink Is Nothing Then
-                    '            If Not m_aryInLinks.Contains(strID) Then AddInLink(blLink)
-                    '        End If
-                    '    End If
-                    'Next
-
-                    'For Each strID In m_aryLoadingOutLinkIDs
-                    '    If strID.Trim.Length > 0 Then
-                    '        blLink = Me.Organism.FindBehavioralLink(strID, False)
-
-                    '        If Not blLink Is Nothing Then
-                    '            If Not m_aryOutLinks.Contains(strID) Then AddOutLink(blLink)
-                    '        End If
-                    '    End If
-                    'Next
-
-                    'm_aryLoadingInLinkIDs.Clear()
-                    'm_aryLoadingOutLinkIDs.Clear()
 
                     ConnectLinkEvents()
                     ConnectDiagramEvents()

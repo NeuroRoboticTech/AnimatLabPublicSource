@@ -632,14 +632,17 @@ Namespace DataObjects.Behavior.Nodes
                 MyBase.InitializeAfterLoad()
 
                 Dim doData As AnimatGUI.DataObjects.Behavior.Data
-                For Each deEntry As DictionaryEntry In Me.BehavioralNodes
+
+                'We must initialize the links first because we need the in/out links populated for each node BEFORE we attempt to
+                'init the node itself.
+                For Each deEntry As DictionaryEntry In Me.BehavioralLinks
                     doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
                     If Not doData.IsInitialized Then
                         doData.InitializeAfterLoad()
                     End If
                 Next
 
-                For Each deEntry As DictionaryEntry In Me.BehavioralLinks
+                For Each deEntry As DictionaryEntry In Me.BehavioralNodes
                     doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
                     If Not doData.IsInitialized Then
                         doData.InitializeAfterLoad()

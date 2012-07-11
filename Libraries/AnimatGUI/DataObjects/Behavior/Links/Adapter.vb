@@ -117,33 +117,9 @@ Namespace DataObjects.Behavior.Links
 
         Public Overrides Sub InitializeSimulationReferences()
             'The adapter link is in the editor only. It has nothing to initialize.
-            Dim iVal As Integer = 5
+            'Dim iVal As Integer = 5
         End Sub
 
-
-        '#Region " Add-Remove to List Methods "
-
-        '        Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
-
-        '            If Util.IsTypeOf(Me.Origin.GetType, GetType(Nodes.Adapter), False) Then
-        '                Me.Origin.AddToSim(bThrowError)
-        '            ElseIf Util.IsTypeOf(Me.Destination.GetType, GetType(Nodes.Adapter), False) Then
-        '                Me.Destination.AddToSim(bThrowError)
-        '            End If
-
-        '        End Sub
-
-        '        Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
-
-        '            If Util.IsTypeOf(Me.Origin.GetType, GetType(Nodes.Adapter), False) Then
-        '                Me.Origin.RemoveFromSim(bThrowError)
-        '            ElseIf Util.IsTypeOf(Me.Destination.GetType, GetType(Nodes.Adapter), False) Then
-        '                Me.Destination.RemoveFromSim(bThrowError)
-        '            End If
-
-        '        End Sub
-
-        '#End Region
 
 #End Region
 
