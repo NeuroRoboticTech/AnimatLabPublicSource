@@ -1277,7 +1277,7 @@ Namespace DataObjects.Behavior
             Dim strID As String = ""
 
             Try
-                If Not m_bIsInitialized Then
+                If Not Me.IsInitialized Then
 
                     ConnectLinkEvents()
                     ConnectDiagramEvents()
