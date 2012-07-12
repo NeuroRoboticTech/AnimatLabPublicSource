@@ -333,6 +333,14 @@ Namespace Framework
             End If
         End Sub
 
+        Public Overridable Sub AssertMatch(ByVal iFound As Integer, ByVal iExpected As Integer, ByVal strName As String)
+            Debug.WriteLine("AssertMatch. Found: " & iFound & ", Expected: " & iExpected & ", Name: " & strName)
+
+            If iFound <> iExpected Then
+                Throw New System.Exception("Mimatch for variable '" & strName & "'. Expected: " & iExpected & ", Found: " & iFound)
+            End If
+        End Sub
+
 #End Region
 
 

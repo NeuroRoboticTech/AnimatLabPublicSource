@@ -1291,6 +1291,11 @@ Namespace DataObjects.Behavior
 
         End Sub
 
+        Public Overrides Sub AfterInitialized()
+            ConnectLinkEvents()
+            ConnectDiagramEvents()
+        End Sub
+
         Public Overrides Sub VerifyAfterPaste(ByVal aryItems As ArrayList)
         End Sub
 

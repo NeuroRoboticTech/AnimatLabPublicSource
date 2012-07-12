@@ -501,6 +501,10 @@ Namespace DataObjects.Physical
                 Dim nmModule As Behavior.NeuralModule = DirectCast(deEntry.Value, Behavior.NeuralModule)
                 nmModule.InitializeAfterLoad()
             Next
+
+            If Not m_bnRootSubSystem Is Nothing AndAlso m_bnRootSubSystem.IsInitialized Then
+                m_bnRootSubSystem.AfterInitialized()
+            End If
         End Sub
 
         Public Overrides Sub InitializeSimulationReferences()

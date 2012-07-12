@@ -633,16 +633,14 @@ Namespace DataObjects.Behavior.Nodes
 
                 Dim doData As AnimatGUI.DataObjects.Behavior.Data
 
-                'We must initialize the links first because we need the in/out links populated for each node BEFORE we attempt to
-                'init the node itself.
-                For Each deEntry As DictionaryEntry In Me.BehavioralLinks
+                For Each deEntry As DictionaryEntry In Me.BehavioralNodes
                     doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
                     If Not doData.IsInitialized Then
                         doData.InitializeAfterLoad()
                     End If
                 Next
 
-                For Each deEntry As DictionaryEntry In Me.BehavioralNodes
+                For Each deEntry As DictionaryEntry In Me.BehavioralLinks
                     doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
                     If Not doData.IsInitialized Then
                         doData.InitializeAfterLoad()
@@ -655,6 +653,31 @@ Namespace DataObjects.Behavior.Nodes
             End Try
 
         End Sub
+
+        Public Overrides Sub AfterInitialized()
+
+            Try
+                MyBase.AfterInitialized()
+
+                Dim doData As AnimatGUI.DataObjects.Behavior.Data
+
+                For Each deEntry As DictionaryEntry In Me.BehavioralNodes
+                    doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                    doData.AfterInitialized()
+                Next
+
+                For Each deEntry As DictionaryEntry In Me.BehavioralLinks
+                    doData = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Behavior.Data)
+                    doData.AfterInitialized()
+                Next
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+                m_bIsInitialized = False
+            End Try
+
+        End Sub
+
 
         Public Overrides Sub InitPastedInSim()
             MyBase.InitPastedInSim()

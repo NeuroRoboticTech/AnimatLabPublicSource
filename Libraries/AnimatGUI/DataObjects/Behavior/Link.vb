@@ -901,6 +901,11 @@ Namespace DataObjects.Behavior
             Return tnNode
         End Function
 
+        Public Overrides Sub AfterInitialized()
+            ConnectNodeEvents()
+            ConnectDiagramEvents()
+        End Sub
+
 #Region " DataObject Methods "
 
 #Region " Add-Remove to List Methods "

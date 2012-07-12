@@ -415,6 +415,10 @@ Namespace DataObjects.Behavior
             SetSimData("Call_Init", "", True)
         End Sub
 
+        Public Overridable Sub AfterInitialized()
+
+        End Sub
+
 #End Region
 
 #End Region

@@ -1757,6 +1757,19 @@ Namespace UITests
                         Throw New System.Exception("S1F4->S1F1 link was not renamed correctly.")
                     End If
 
+                    'Check the in/out links of the nodes
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I1", "InLinks.Count"), Integer), 0, "S1I1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I1", "OutLinks.Count"), Integer), 0, "S1I1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I2", "InLinks.Count"), Integer), 1, "S1I2 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I2", "OutLinks.Count"), Integer), 0, "S1I2 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1OP1", "InLinks.Count"), Integer), 1, "S1OP1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1OP1", "OutLinks.Count"), Integer), 0, "S1OP1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1", "InLinks.Count"), Integer), 1, "S1F1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1", "OutLinks.Count"), Integer), 1, "S1F1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F4", "InLinks.Count"), Integer), 0, "S1F4 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F4", "OutLinks.Count"), Integer), 1, "S1F4 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1_S1I2", "InLinks.Count"), Integer), 1, "S1F1_S1I2 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1_S1I2", "OutLinks.Count"), Integer), 1, "S1F1_S1I2 inlink count")
 
                     'Change poly gains.
                     ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1_S1I2", "Gain"}, 500)
@@ -1806,6 +1819,20 @@ Namespace UITests
                     If ptF1ALoc <> ptF1BLoc OrElse ptF4ALoc <> ptF4BLoc Then
                         Throw New System.Exception("Locations did not match after paste in place.")
                     End If
+
+                    'Check the in/out links of the nodes
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I1", "InLinks.Count"), Integer), 0, "S1I1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I1", "OutLinks.Count"), Integer), 0, "S1I1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I2", "InLinks.Count"), Integer), 1, "S1I2 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I2", "OutLinks.Count"), Integer), 0, "S1I2 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1OP1", "InLinks.Count"), Integer), 1, "S1OP1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1OP1", "OutLinks.Count"), Integer), 0, "S1OP1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1", "InLinks.Count"), Integer), 1, "S1F1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1", "OutLinks.Count"), Integer), 1, "S1F1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F4", "InLinks.Count"), Integer), 0, "S1F4 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F4", "OutLinks.Count"), Integer), 1, "S1F4 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1_S1I2", "InLinks.Count"), Integer), 1, "S1F1_S1I2 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1_S1I2", "OutLinks.Count"), Integer), 1, "S1F1_S1I2 inlink count")
 
                     'Add these neurons to the chart.
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\NeuralData"}, 2000)
@@ -1868,6 +1895,29 @@ Namespace UITests
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2", "Name", "S2OP1"})
                     ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F1_S1I2", "Name", "S2F1_S1I2"})
 
+                    'Check the in/out links of the nodes
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I1", "InLinks.Count"), Integer), 0, "S1I1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I1", "OutLinks.Count"), Integer), 0, "S1I1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I2", "InLinks.Count"), Integer), 2, "S1I2 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I2", "OutLinks.Count"), Integer), 0, "S1I2 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1OP1", "InLinks.Count"), Integer), 1, "S1OP1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1OP1", "OutLinks.Count"), Integer), 0, "S1OP1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1", "InLinks.Count"), Integer), 1, "S1F1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1", "OutLinks.Count"), Integer), 1, "S1F1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F4", "InLinks.Count"), Integer), 0, "S1F4 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F4", "OutLinks.Count"), Integer), 1, "S1F4 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1_S1I2", "InLinks.Count"), Integer), 1, "S1F1_S1I2 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1_S1I2", "OutLinks.Count"), Integer), 1, "S1F1_S1I2 inlink count")
+
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2OP1", "InLinks.Count"), Integer), 1, "S2OP1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2OP1", "OutLinks.Count"), Integer), 0, "S2OP1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2F1", "InLinks.Count"), Integer), 1, "S2F1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2F1", "OutLinks.Count"), Integer), 1, "S2F1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2F4", "InLinks.Count"), Integer), 0, "S2F4 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2F4", "OutLinks.Count"), Integer), 1, "S2F4 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2F1_S1I2", "InLinks.Count"), Integer), 1, "S2F1_S1I2 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2F1_S1I2", "OutLinks.Count"), Integer), 1, "S2F1_S1I2 inlink count")
+
                     'Add these neurons to the chart.
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\NeuralData"}, 2000)
                     ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
@@ -1882,6 +1932,17 @@ Namespace UITests
                     'Switch S2OP1 to point to S1I1 instead.
                     ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2OP1", _
                                                "Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I1"})
+
+                    'Check the in/out links of the nodes
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I1", "InLinks.Count"), Integer), 1, "S1I1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I1", "OutLinks.Count"), Integer), 0, "S1I1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I2", "InLinks.Count"), Integer), 1, "S1I2 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I2", "OutLinks.Count"), Integer), 0, "S1I2 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2OP1", "InLinks.Count"), Integer), 1, "S2OP1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2OP1", "OutLinks.Count"), Integer), 0, "S2OP1 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2F1_S1I2", "InLinks.Count"), Integer), 1, "S2F1_S1I2 inlink count")
+                    AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2F1_S1I2", "OutLinks.Count"), Integer), 1, "S2F1_S1I2 inlink count")
+
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "SwitchS2OP1ToS1I1_")
 
