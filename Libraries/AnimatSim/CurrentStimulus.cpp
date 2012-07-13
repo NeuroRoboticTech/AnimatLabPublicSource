@@ -362,7 +362,7 @@ void CurrentStimulus::CurrentEquation(string strEquation)
 
 		//Initialize the postfix evaluator.
 		if(m_lpCurrentOnEval) 
-		{delete m_lpCurrentOnEval; m_lpCurrentOnEval = NULL;}
+			{delete m_lpCurrentOnEval; m_lpCurrentOnEval = NULL;}
 
 		m_lpCurrentOnEval = new CStdPostFixEval;
 
@@ -372,7 +372,13 @@ void CurrentStimulus::CurrentEquation(string strEquation)
 		m_fltActiveCurrent = m_lpCurrentOnEval->Solve();
 	}
 	else
+	{
+		//Remove the current eval.
+		if(m_lpCurrentOnEval) 
+			{delete m_lpCurrentOnEval; m_lpCurrentOnEval = NULL;}
+
 		m_fltActiveCurrent = m_fltCurrentOn;
+	}
 
 	m_fltInitialActiveCurrent = m_fltActiveCurrent;
 }

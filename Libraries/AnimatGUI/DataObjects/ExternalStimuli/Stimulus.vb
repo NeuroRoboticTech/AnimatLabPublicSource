@@ -31,7 +31,7 @@ Namespace DataObjects.ExternalStimuli
         Protected m_snStepInterval As AnimatGUI.Framework.ScaledNumber
         Protected m_bAlwaysActive As Boolean = False
         Protected m_eValueType As enumValueType = enumValueType.Constant
-        Protected m_strEquation As String = ""
+        Protected m_strEquation As String = "0"
 
         Protected m_aryCompatibleDataObjects As New Collections.CompatibleDataObjects(Me)
 
@@ -177,12 +177,13 @@ Namespace DataObjects.ExternalStimuli
                 Return m_eValueType
             End Get
             Set(ByVal Value As enumValueType)
-
                 m_eValueType = Value
 
-                If m_eValueType = enumValueType.Equation Then
-                    'If we are using a constant then make sure the equation is blanked in the sim so it will not be used.
-                    SetSimData("ValueType", "Equation", True)
+                SetSimData("ValueType", Value.ToString, True)
+                If Value = enumValueType.Equation AndAlso m_strEquation.Length > 0 Then
+                    SetSimEquation(m_strEquation)
+                Else
+                    SetSimData("Equation", "", True)
                 End If
 
                 If Not Util.ProjectWorkspace Is Nothing Then
@@ -197,14 +198,11 @@ Namespace DataObjects.ExternalStimuli
                 Return m_strEquation
             End Get
             Set(ByVal Value As String)
-                'Lets verify the equation before we use it.
-                'We need to convert the infix equation to postfix
-                Dim oMathEval As New MathStringEval
-                oMathEval.AddVariable("t")
-                oMathEval.Equation = Value
-                oMathEval.Parse()
+                If Value.Trim.Length = 0 Then
+                    Throw New System.Exception("Equation cannot be blank.")
+                End If
 
-                SetSimData("Equation", oMathEval.PostFix, True)
+                SetSimEquation(Value)
                 m_strEquation = Value
             End Set
         End Property
@@ -348,6 +346,21 @@ Namespace DataObjects.ExternalStimuli
         Protected Overridable Sub DisconnectItemEvents()
             If Not m_doStimulatedItem Is Nothing Then
                 RemoveHandler m_doStimulatedItem.AfterRemoveItem, AddressOf Me.OnAfterRemoveItem
+            End If
+        End Sub
+
+        Protected Overridable Sub SetSimEquation(ByVal strEquation As String)
+            If strEquation.Length > 0 Then
+                'Lets verify the equation before we use it.
+                'We need to convert the infix equation to postfix
+                Dim oMathEval As New MathStringEval
+                oMathEval.AddVariable("t")
+                oMathEval.Equation = strEquation
+                oMathEval.Parse()
+
+                SetSimData("Equation", oMathEval.PostFix, True)
+            Else
+                SetSimData("Equation", "0", True)
             End If
         End Sub
 

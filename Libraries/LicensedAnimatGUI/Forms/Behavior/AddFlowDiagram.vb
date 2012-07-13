@@ -2667,6 +2667,8 @@ Namespace Forms.Behavior
 
             'we need to go through and initialize all the nodes/links after loading.
             Me.Subsystem.InitializeAfterPasted()
+            Me.Subsystem.AfterInitialized()
+
             AddPastedToSim(aryNodes, aryLinks)
             InitPastedInSim(aryNodes, aryLinks)
 

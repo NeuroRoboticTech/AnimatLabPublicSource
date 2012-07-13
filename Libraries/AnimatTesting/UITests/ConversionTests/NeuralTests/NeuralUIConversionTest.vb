@@ -2118,6 +2118,26 @@ Namespace UITests
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
 
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Constant_Stim", "ValueType", "Constant"})
+
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "TonicCurrent_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Constant_Stim", "CurrentOn", "1 n"})
+
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "TonicCurrent_1na_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Constant_Stim", "ValueType", "Equation"})
+
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
+
+                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Constant_Stim", "Equation", "0.00000001*sin(5*t)"})
+
+                    RunSimulationWaitToEnd()
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Equation_")
+
                     ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Constant_Stim", "Enabled", "False"})
                     ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Repetitive_Stim", "Enabled", "True"})
                     RunSimulationWaitToEnd()

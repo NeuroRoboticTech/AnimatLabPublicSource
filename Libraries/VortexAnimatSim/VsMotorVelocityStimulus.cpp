@@ -182,7 +182,7 @@ BOOL VsMotorVelocityStimulus::SetData(string strDataType, string strValue, BOOL 
 	if(ExternalStimulus::SetData(strDataType, strValue, FALSE))
 		return TRUE;
 
-	if(strType == "VELOCITY")
+	if(strType == "VELOCITY" || strType == "EQUATION")
 	{
 		VelocityEquation(strValue);
 		return TRUE;

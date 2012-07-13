@@ -109,8 +109,11 @@ Namespace Framework
                 Equation = m_strEquation
             End Get
             Set(ByVal Value As String)
-                If Len(Value) = 0 Then Err.Raise(Err_lEquEmpty, , Err_strEquEmpty)
-                m_strEquation = Value
+                If Len(Value) = 0 Then
+                    m_strEquation = "0"
+                Else
+                    m_strEquation = Value
+                End If
                 m_strEqu = ReplaceTokens(LCase(m_strEquation))
 
                 ClearCollection(m_colStack)
