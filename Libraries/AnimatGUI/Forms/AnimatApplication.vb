@@ -16,11 +16,18 @@ Imports Crownwood.DotNetMagic.Docking
 Imports AnimatGUI.Framework
 Imports System.Reflection
 Imports System.Configuration
+Imports System.Runtime.InteropServices
 
 Namespace Forms
 
     Public Class AnimatApplication
         Inherits AnimatForm
+
+        Private Declare Function GetConsoleWindow Lib "kernel32.dll" () As IntPtr
+        Private Declare Function ShowWindow Lib "user32.dll" (ByVal hwnd As IntPtr, ByVal nCmdShow As Int32) As Int32
+        Private Const SW_SHOWMINNOACTIVE As Int32 = 7
+        Private Const SW_SHOWNORMAL As Int32 = 1
+        Private Const SW_HIDE As Int32 = 0
 
 #Region " Windows Form Designer generated code "
 
@@ -109,6 +116,7 @@ Namespace Forms
         Public WithEvents JointsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents ReceptiveFieldsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents SimulationToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents ConsoleToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents DisplayToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents ShowGraphicsGeometryToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents ShowCollisionGeomoetryToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -190,6 +198,7 @@ Namespace Forms
             Me.JointsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.ReceptiveFieldsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.SimulationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ConsoleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.DisplayToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.ShowGraphicsGeometryToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
             Me.ShowCollisionGeomoetryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -470,7 +479,7 @@ Namespace Forms
             '
             'ViewToolStripMenuItem
             '
-            Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RunSimulationToolStripMenuItem, Me.ToolStripSeparator3, Me.CustomizeToolStripMenuItem, Me.PreferencesToolStripMenuItem, Me.SelectionModeToolStripMenuItem, Me.DisplayToolStripMenuItem})
+            Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RunSimulationToolStripMenuItem, Me.ToolStripSeparator3, Me.CustomizeToolStripMenuItem, Me.PreferencesToolStripMenuItem, Me.SelectionModeToolStripMenuItem, Me.DisplayToolStripMenuItem, Me.ConsoleToolStripMenuItem})
             Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
             Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
             Me.ViewToolStripMenuItem.Text = "&View"
@@ -541,6 +550,14 @@ Namespace Forms
             Me.SimulationToolStripMenuItem.Name = "SimulationToolStripMenuItem"
             Me.SimulationToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
             Me.SimulationToolStripMenuItem.Text = "Simulation"
+            '
+            'ConsoleToolStripMenuItem
+            '
+            Me.ConsoleToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.SimulationSelectionMode_Small.gif")
+            Me.ConsoleToolStripMenuItem.Name = "ConsoleToolStripMenuItem"
+            Me.ConsoleToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
+            Me.ConsoleToolStripMenuItem.Text = "Console"
+            Me.ConsoleToolStripMenuItem.CheckOnClick = True
             '
             'DisplayToolStripMenuItem
             '
@@ -1213,7 +1230,7 @@ Namespace Forms
 
         Public Overridable ReadOnly Property RuntimeModePrefix() As String
             Get
-#If Debug Then
+#If DEBUG Then
                 Return "D"
 #Else
                 Return ""
@@ -2575,6 +2592,7 @@ Namespace Forms
 
                 Me.RunSimulationToolStripMenuItem.Enabled = True
                 Me.CustomizeToolStripMenuItem.Enabled = True
+                Me.ConsoleToolStripMenuItem.Enabled = True
 
                 Me.DeleteToolStripButton.Enabled = True
                 Me.DeleteToolStripMenuItem.Enabled = True
@@ -5660,6 +5678,14 @@ Namespace Forms
 
 #End Region
 
+
+        Private Sub ConsoleToolStripMenuItem_Click(sender As Object, e As System.EventArgs) Handles ConsoleToolStripMenuItem.Click
+            If Me.ConsoleToolStripMenuItem.Checked Then
+                ShowWindow(GetConsoleWindow(), SW_SHOWNORMAL)
+            Else
+                ShowWindow(GetConsoleWindow(), SW_HIDE)
+            End If
+        End Sub
 
         Protected Sub AnimatApplication_Closing(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles MyBase.Closing
 

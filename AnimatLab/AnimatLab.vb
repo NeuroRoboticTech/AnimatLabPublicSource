@@ -6,8 +6,15 @@ Imports System.Windows.Forms
 Imports System.Diagnostics
 Imports System.Reflection
 Imports System.Runtime.Remoting
+Imports System.Runtime.InteropServices
 
 Module AnimatLab
+
+    Private Declare Function GetConsoleWindow Lib "kernel32.dll" () As IntPtr
+    Private Declare Function ShowWindow Lib "user32.dll" (ByVal hwnd As IntPtr, ByVal nCmdShow As Int32) As Int32
+    Private Const SW_SHOWMINNOACTIVE As Int32 = 7
+    Private Const SW_SHOWNORMAL As Int32 = 1
+    Private Const SW_HIDE As Int32 = 0
 
     Private m_strCmdLineProject As String = ""
     Private m_iCmdLinePort As Integer = -1
@@ -16,6 +23,8 @@ Module AnimatLab
 
     Sub Main()
         Try
+            ShowWindow(GetConsoleWindow(), SW_HIDE)
+
             ProcessArguments()
 
             Dim strAssemblyPath As String = "", strClassName As String = ""

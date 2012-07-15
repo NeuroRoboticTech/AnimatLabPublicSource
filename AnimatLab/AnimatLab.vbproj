@@ -8,12 +8,12 @@
     <SchemaVersion>
     </SchemaVersion>
     <ProjectGuid>{027B78EB-AFCC-4775-A2BF-6DBAE00EDD16}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <StartupObject>AnimatLab.AnimatLab</StartupObject>
     <RootNamespace>AnimatLab</RootNamespace>
     <AssemblyName>AnimatLab2</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsFormsWithCustomSubMain</MyType>
+    <MyType>Console</MyType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>

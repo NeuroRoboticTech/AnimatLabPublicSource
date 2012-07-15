@@ -207,6 +207,8 @@ void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
 {
     osg::ArgumentParser arguments(&argc, (char **) argv);
 
+	osg::setNotifyLevel(osg::INFO);
+
     // set up the usage document, in case we need to print out how to use this program.
     arguments.getApplicationUsage()->setApplicationName(arguments.getApplicationName());
     arguments.getApplicationUsage()->setDescription(arguments.getApplicationName()+" is the standard OpenSceneGraph example which loads and visualises 3d models.");
@@ -217,6 +219,8 @@ void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
     osgDB::getDataFilePathList().push_front("./Resources");
     osgDB::getDataFilePathList().push_front("../Resources");
     osgDB::getDataFilePathList().push_front("../../Resources");
+
+	string strFile = osgDB::findLibraryFile("osgdb_freetype.dll");
 
 	//This is the root of the scenegraph.  Which will corrospond
 	//to the root of the simulation
