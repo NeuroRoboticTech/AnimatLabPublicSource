@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\mdl\ReaderWriterMDL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\mdl\BodyPart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\mdl\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\mdl\Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\mdl\MDLReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\mdl\MDLRoot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\mdl\VTXReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\mdl\VVDReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\src\osgPlugins\mdl\ReaderWriterMDL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\osgPlugins\mdl\BodyPart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\osgPlugins\mdl\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\osgPlugins\mdl\Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\osgPlugins\mdl\MDLLimits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\osgPlugins\mdl\MDLReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\osgPlugins\mdl\MDLRoot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\osgPlugins\mdl\VTXReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\osgPlugins\mdl\VVDReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\..\..\src\osgPlugins\mdl\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4F308182-CD01-49ED-8D03-50B7944EE921}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{01EA27C8-D1A9-4FE8-9C3C-1BC69AB54CB0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\src\osgPlugins\mdl\ReaderWriterMDL.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\mdl\BodyPart.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\mdl\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\mdl\Model.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\mdl\MDLReader.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\mdl\MDLRoot.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\mdl\VTXReader.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\mdl\VVDReader.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

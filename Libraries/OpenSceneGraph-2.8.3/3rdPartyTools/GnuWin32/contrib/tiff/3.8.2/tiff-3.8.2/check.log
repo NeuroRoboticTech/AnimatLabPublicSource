@@ -1,0 +1,120 @@
+Making check in port
+make[1]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/port'
+make[1]: Niets te doen voor `check'.
+make[1]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/port'
+Making check in libtiff
+make[1]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/libtiff'
+make[1]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/libtiff'
+Making check in tools
+make[1]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/tools'
+make[1]: Niets te doen voor `check'.
+make[1]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/tools'
+Making check in contrib
+make[1]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib'
+Making check in acorn
+make[2]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/acorn'
+make[2]: Niets te doen voor `check'.
+make[2]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/acorn'
+Making check in addtiffo
+make[2]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/addtiffo'
+make[2]: Niets te doen voor `check'.
+make[2]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/addtiffo'
+Making check in dbs
+make[2]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/dbs'
+Making check in xtiff
+make[3]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/dbs/xtiff'
+make[3]: Niets te doen voor `check'.
+make[3]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/dbs/xtiff'
+make[3]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/dbs'
+make[3]: Niets te doen voor `check-am'.
+make[3]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/dbs'
+make[2]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/dbs'
+Making check in iptcutil
+make[2]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/iptcutil'
+make[2]: Niets te doen voor `check'.
+make[2]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/iptcutil'
+Making check in mac-cw
+make[2]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/mac-cw'
+make[2]: Niets te doen voor `check'.
+make[2]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/mac-cw'
+Making check in mac-mpw
+make[2]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/mac-mpw'
+make[2]: Niets te doen voor `check'.
+make[2]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/mac-mpw'
+Making check in mfs
+make[2]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/mfs'
+make[2]: Niets te doen voor `check'.
+make[2]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/mfs'
+Making check in ojpeg
+make[2]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/ojpeg'
+make[2]: Niets te doen voor `check'.
+make[2]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/ojpeg'
+Making check in pds
+make[2]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/pds'
+make[2]: Niets te doen voor `check'.
+make[2]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/pds'
+Making check in ras
+make[2]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/ras'
+make[2]: Niets te doen voor `check'.
+make[2]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/ras'
+Making check in stream
+make[2]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/stream'
+make[2]: Niets te doen voor `check'.
+make[2]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/stream'
+Making check in tags
+make[2]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/tags'
+make[2]: Niets te doen voor `check'.
+make[2]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/tags'
+Making check in win_dib
+make[2]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/win_dib'
+make[2]: Niets te doen voor `check'.
+make[2]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib/win_dib'
+make[2]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib'
+make[2]: Niets te doen voor `check-am'.
+make[2]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib'
+make[1]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/contrib'
+Making check in test
+make[1]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/test'
+make  ascii_tag.exe long_tag.exe short_tag.exe strip_rw.exe
+make[2]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/test'
+make[2]: `ascii_tag.exe' is up to date.
+make[2]: `long_tag.exe' is up to date.
+make[2]: `short_tag.exe' is up to date.
+make[2]: `strip_rw.exe' is up to date.
+make[2]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/test'
+make  check-TESTS
+make[2]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/test'
+./.libs/ascii_tag.exe
+PASS: ascii_tag.exe
+./.libs/long_tag.exe
+PASS: long_tag.exe
+./.libs/short_tag.exe
+PASS: short_tag.exe
+./.libs/strip_rw.exe
+PASS: strip_rw.exe
+===================
+All 4 tests passed
+===================
+make[2]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/test'
+make[1]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/test'
+Making check in man
+make[1]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/man'
+make[1]: Niets te doen voor `check'.
+make[1]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/man'
+Making check in html
+make[1]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/html'
+Making check in images
+make[2]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/html/images'
+make[2]: Niets te doen voor `check'.
+make[2]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/html/images'
+Making check in man
+make[2]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/html/man'
+make[2]: Niets te doen voor `check'.
+make[2]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/html/man'
+make[2]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/html'
+make[2]: Niets te doen voor `check-am'.
+make[2]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/html'
+make[1]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2/html'
+make[1]: Entering directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2'
+make[1]: Niets te doen voor `check-am'.
+make[1]: Leaving directory `/cygdrive/j/Graphics/tiff/3.8.2/tiff-3.8.2'

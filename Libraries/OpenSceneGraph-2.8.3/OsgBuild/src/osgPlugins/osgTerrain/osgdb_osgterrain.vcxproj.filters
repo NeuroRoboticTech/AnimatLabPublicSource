@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osgTerrain\Locator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osgTerrain\ImageLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osgTerrain\HeightFieldLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osgTerrain\CompositeLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osgTerrain\SwitchLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osgTerrain\Layer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osgTerrain\TerrainTile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osgTerrain\GeometryTechnique.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osgTerrain\ReaderWriterOsgTerrain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\..\..\src\osgPlugins\osgTerrain\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4F308182-CD01-49ED-8D03-50B7944EE921}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\src\osgPlugins\osgTerrain\Locator.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osgTerrain\ImageLayer.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osgTerrain\HeightFieldLayer.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osgTerrain\CompositeLayer.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osgTerrain\SwitchLayer.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osgTerrain\Layer.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osgTerrain\TerrainTile.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osgTerrain\GeometryTechnique.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osgTerrain\ReaderWriterOsgTerrain.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\osgFX\AnisotropicLighting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgFX\BumpMapping.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgFX\Cartoon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgFX\Effect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgFX\MultiTextureControl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgFX\Registry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgFX\Scribe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgFX\SpecularHighlights.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgFX\Technique.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgFX\Validator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgFX\Version.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\..\src\osgFX\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4F308182-CD01-49ED-8D03-50B7944EE921}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{01EA27C8-D1A9-4FE8-9C3C-1BC69AB54CB0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\include\osgFX\AnisotropicLighting">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgFX\BumpMapping">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgFX\Cartoon">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgFX\Effect">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgFX\Export">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgFX\MultiTextureControl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgFX\Registry">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgFX\Scribe">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgFX\SpecularHighlights">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgFX\Technique">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgFX\Validator">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgFX\Version">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgFX\AnisotropicLighting.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgFX\BumpMapping.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgFX\Cartoon.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgFX\Effect.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgFX\MultiTextureControl.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgFX\Registry.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgFX\Scribe.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgFX\SpecularHighlights.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgFX\Technique.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgFX\Validator.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgFX\Version.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

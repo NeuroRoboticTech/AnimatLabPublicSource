@@ -1,0 +1,174 @@
+/* -*-c++-*- OpenSceneGraph - Copyright (C) 1998-2006 Robert Osfield 
+ *
+ * This library is open source and may be redistributed and/or modified under  
+ * the terms of the OpenSceneGraph Public License (OSGPL) version 0.0 or 
+ * (at your option) any later version.  The full license is in LICENSE file
+ * included with this distribution, and on the openscenegraph.org website.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+ * OpenSceneGraph Public License for more details.
+*/
+
+#ifndef OSG_OBJECT
+#define OSG_OBJECT 1
+
+#include <osg/Referenced>
+#include <osg/CopyOp>
+#include <osg/ref_ptr>
+
+#include <string>
+
+namespace osg {
+
+// forward declare
+class State;
+
+#define _ADDQUOTES(def) #def
+#define ADDQUOTES(def) _ADDQUOTES(def)
+
+/** META_Object macro define the standard clone, isSameKindAs and className methods.
+  * Use when subclassing from Object to make it more convenient to define 
+  * the standard pure virtual clone, isSameKindAs and className methods 
+  * which are required for all Object subclasses.*/
+#define META_Object(library,name) \
+        virtual osg::Object* cloneType() const { return new name (); } \
+        virtual osg::Object* clone(const osg::CopyOp& copyop) const { return new name (*this,copyop); } \
+        virtual bool isSameKindAs(const osg::Object* obj) const { return dynamic_cast<const name *>(obj)!=NULL; } \
+        virtual const char* libraryName() const { return #library; }\
+        virtual const char* className() const { return #name; }
+
+template<typename T>
+T* clone(const T* t, const osg::CopyOp& copyop=osg::CopyOp::SHALLOW_COPY)
+{
+    return dynamic_cast<T*>(t->clone(copyop)); 
+}
+
+
+template<typename T>
+T* clone(const T* t, const std::string& name, const osg::CopyOp& copyop=osg::CopyOp::SHALLOW_COPY)
+{
+    T* newObject = dynamic_cast<T*>(t->clone(copyop)); 
+    newObject->setName(name);
+    return newObject;
+}
+
+/** Base class/standard interface for objects which require IO support, 
+    cloning and reference counting.
+    Based on GOF Composite, Prototype and Template Method patterns.
+*/
+class OSG_EXPORT Object : public Referenced
+{
+    public:
+
+
+        /** Construct an object. Note Object is a pure virtual base class
+            and therefore cannot be constructed on its own, only derived
+            classes which override the clone and className methods are
+            concrete classes and can be constructed.*/
+        inline Object():Referenced(),_dataVariance(UNSPECIFIED) {}
+
+        inline explicit Object(bool threadSafeRefUnref):Referenced(threadSafeRefUnref),_dataVariance(UNSPECIFIED) {}
+
+        /** Copy constructor, optional CopyOp object can be used to control
+          * shallow vs deep copying of dynamic data.*/
+        Object(const Object&,const CopyOp& copyop=CopyOp::SHALLOW_COPY);
+
+        /** Clone the type of an object, with Object* return type.
+            Must be defined by derived classes.*/
+        virtual Object* cloneType() const = 0;
+
+        /** Clone an object, with Object* return type.
+            Must be defined by derived classes.*/
+        virtual Object* clone(const CopyOp&) const = 0;
+
+        virtual bool isSameKindAs(const Object*) const { return true; }
+
+        /** return the name of the object's library. Must be defined
+            by derived classes. The OpenSceneGraph convention is that the
+            namespace of a library is the same as the library name.*/
+        virtual const char* libraryName() const = 0;
+
+        /** return the name of the object's class type. Must be defined
+            by derived classes.*/
+        virtual const char* className() const = 0;
+        
+
+        /** Set the name of object using C++ style string.*/
+        inline void setName( const std::string& name ) { _name = name; }
+
+        /** Set the name of object using a C style string.*/
+        inline void setName( const char* name ) { _name = name; }
+
+        /** Get the name of object.*/
+        inline const std::string& getName() const { return _name; }
+
+
+        enum DataVariance
+        {
+            DYNAMIC,
+            STATIC,
+            UNSPECIFIED
+        };
+        
+        /** Set the data variance of this object.
+           * Can be set to either STATIC for values that do not change over the lifetime of the object,
+           * or DYNAMIC for values that vary over the lifetime of the object. The DataVariance value
+           * can be used by routines such as optimization codes that wish to share static data.
+           * UNSPECIFIED is used to specify that the DataVariance hasn't been set yet. */
+        inline void setDataVariance(DataVariance dv) { _dataVariance = dv; }
+
+        /** Get the data variance of this object.*/
+        inline DataVariance getDataVariance() const { return _dataVariance; }
+        
+        /** Compute the DataVariance based on an assessment of callback etc.*/
+        virtual void computeDataVariance() {}
+
+
+        /**
+         * Set user data, data must be subclassed from Referenced to allow
+         * automatic memory handling.  If your own data isn't directly 
+         * subclassed from Referenced then create an adapter object
+         * which points to your own object and handles the memory addressing.
+         */
+        inline void setUserData(Referenced* obj) { _userData = obj; }
+        
+        /** Get user data.*/
+        inline Referenced* getUserData() { return _userData.get(); }
+        
+        /** Get const user data.*/
+        inline const Referenced* getUserData() const { return _userData.get(); }
+
+        /** Resize any per context GLObject buffers to specified size. */
+        virtual void resizeGLObjectBuffers(unsigned int /*maxSize*/) {}
+
+        /** If State is non-zero, this function releases any associated OpenGL objects for
+           * the specified graphics context. Otherwise, releases OpenGL objects
+           * for all graphics contexts. */
+        virtual void releaseGLObjects(osg::State* = 0) const {}
+
+    protected:
+
+        /** Object destructor. Note, is protected so that Objects cannot
+            be deleted other than by being dereferenced and the reference
+            count being zero (see osg::Referenced), preventing the deletion
+            of nodes which are still in use. This also means that
+            Nodes cannot be created on stack i.e Node node will not compile,
+            forcing all nodes to be created on the heap i.e Node* node
+            = new Node().*/
+        virtual ~Object() {}
+        
+        std::string _name;
+        DataVariance _dataVariance;
+        ref_ptr<Referenced> _userData;
+
+    private:
+
+        /** disallow any copy operator.*/
+        Object& operator = (const Object&) { return *this; }
+};
+
+}
+
+#endif

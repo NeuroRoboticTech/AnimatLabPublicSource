@@ -1,0 +1,1862 @@
+/* -*-c++-*- OpenSceneGraph - Copyright (C) 1998-2006 Robert Osfield
+ *
+ * This library is open source and may be redistributed and/or modified under
+ * the terms of the OpenSceneGraph Public License (OSGPL) version 0.0 or
+ * (at your option) any later version.  The full license is in LICENSE file
+ * included with this distribution, and on the openscenegraph.org website.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * OpenSceneGraph Public License for more details.
+*/
+
+#ifndef OSG_STATE
+#define OSG_STATE 1
+
+#include <osg/Export>
+#include <osg/StateSet>
+#include <osg/Matrix>
+#include <osg/Uniform>
+#include <osg/BufferObject>
+#include <osg/observer_ptr>
+
+#include <osg/FrameStamp>
+#include <osg/DisplaySettings>
+#include <osg/Polytope>
+#include <osg/Viewport>
+
+#include <vector>
+#include <map>
+#include <set>
+#include <string>
+
+#ifndef GL_TEXTURE0
+#define GL_TEXTURE0 0x84C0
+#endif
+
+#ifndef GL_FOG_COORDINATE_ARRAY
+    #ifdef GL_FOG_COORDINATE_ARRAY_EXT
+        #define GL_FOG_COORDINATE_ARRAY GL_FOG_COORDINATE_ARRAY_EXT
+    #else
+         #define GL_FOG_COORDINATE_ARRAY 0x8457
+    #endif
+#endif
+
+#ifndef GL_SECONDARY_COLOR_ARRAY
+    #ifdef GL_SECONDARY_COLOR_ARRAY_EXT
+        #define GL_SECONDARY_COLOR_ARRAY GL_SECONDARY_COLOR_ARRAY_EXT
+    #else
+         #define GL_SECONDARY_COLOR_ARRAY 0x845E
+    #endif
+#endif
+
+namespace osg {
+
+/** macro for use with osg::StateAttribute::apply methods for detecting and
+  * reporting OpenGL error messages.*/
+#define OSG_GL_DEBUG(message) \
+    if (state.getFineGrainedErrorDetection()) \
+    { \
+        GLenum errorNo = glGetError(); \
+        if (errorNo!=GL_NO_ERROR) \
+        { \
+            osg::notify(WARN)<<"Warning: detected OpenGL error '"<<gluErrorString(errorNo)<<" "<<message<<endl; \
+        }\
+    }
+
+
+// forward declare GraphicsContext, View and State
+class GraphicsContext;
+
+/** Encapsulates the current applied OpenGL modes, attributes and vertex arrays settings,
+  * implements lazy state updating and provides accessors for querying the current state.
+  * The venerable Red Book says that "OpenGL is a state machine", and this class
+  * represents the OpenGL state in OSG. Furthermore, \c State also has other
+  * important features:
+  * - It works as a stack of states (see \c pushStateSet() and
+  *   \c popStateSet()). Manipulating this stack of OpenGL states manually is
+  *   seldom needed, since OSG does this in the most common situations.
+  * - It implements lazy state updating. This means that, if one requests a
+  *   state change and that particular state is already in the requested state,
+  *   no OpenGL call will be made. This ensures that the OpenGL pipeline is not
+  *   stalled by unnecessary state changes.
+  * - It allows to query the current OpenGL state without calls to \c glGet*(),
+  *   which typically stall the graphics pipeline (see, for instance,
+  *   \c captureCurrentState() and \c getModelViewMatrix()).
+  */
+class OSG_EXPORT State : public Referenced, public Observer
+{
+    public :
+
+        State();
+        
+
+        /** Set the graphics context associated with that owns this State object.*/        
+        void setGraphicsContext(GraphicsContext* context) { _graphicsContext = context; }
+
+        /** Get the graphics context associated with that owns this State object.*/        
+        GraphicsContext* getGraphicsContext() { return _graphicsContext; }
+
+        /** Get the const graphics context associated with that owns this State object.*/        
+        const GraphicsContext* getGraphicsContext() const { return _graphicsContext; }
+        
+
+        /** Set the current OpenGL context uniqueID.
+            Note, it is the application developers responsibility to
+            set up unique ID for each OpenGL context.  This value is
+            then used by osg::StateAttribute's and osg::Drawable's to
+            help manage OpenGL display list and texture binds appropriate
+            for each context, the contextID simply acts as an index in local
+            arrays that they maintain for the purpose.
+            Typical settings for contextID are 0,1,2,3... up to the maximum
+            number of graphics contexts you have set up.
+            By default contextID is 0.*/
+        inline void setContextID(unsigned int contextID) { _contextID=contextID; }
+
+        /** Get the current OpenGL context unique ID.*/
+        inline unsigned int getContextID() const { return _contextID; }
+
+        /** Push stateset onto state stack.*/
+        void pushStateSet(const StateSet* dstate);
+
+        /** Pop stateset off state stack.*/
+        void popStateSet();
+        
+        /** pop all statesets off state stack, ensuring it is empty ready for the next frame.
+          * Note, to return OpenGL to default state, one should do any state.popAllStatSets(); state.apply().*/
+        void popAllStateSets();
+
+        /** Insert stateset onto state stack.*/
+        void insertStateSet(unsigned int pos,const StateSet* dstate);
+
+        /** Pop stateset off state stack.*/
+        void removeStateSet(unsigned int pos);
+        
+        /** Get the number of StateSet's on the StateSet stack.*/
+        unsigned int getStateSetStackSize() { return static_cast<unsigned int>(_stateStateStack.size()); }
+        
+        /** Pop StateSet's for the StateSet stack till its size equals the specified size.*/
+        void popStateSetStackToSize(unsigned int size) { while (_stateStateStack.size()>size) popStateSet(); }
+
+        typedef std::vector<const StateSet*> StateSetStack;
+
+        /** Get the StateSet stack.*/
+        StateSetStack& getStateSetStack() { return _stateStateStack; }
+        
+
+        /** Copy the modes and attributes which capture the current state.*/
+        void captureCurrentState(StateSet& stateset) const;
+
+        /** reset the state object to an empty stack.*/
+        void reset();
+
+        inline const Viewport* getCurrentViewport() const
+        {
+            return static_cast<const Viewport*>(getLastAppliedAttribute(osg::StateAttribute::VIEWPORT));
+        }
+
+
+        void setInitialViewMatrix(const osg::RefMatrix* matrix);
+
+        inline const osg::Matrix& getInitialViewMatrix() const { return *_initialViewMatrix; }
+        inline const osg::Matrix& getInitialInverseViewMatrix() const { return _initialInverseViewMatrix; }
+
+        inline void applyProjectionMatrix(const osg::RefMatrix* matrix)
+        {
+            if (_projection!=matrix)
+            {
+                glMatrixMode( GL_PROJECTION );
+                if (matrix)
+                {
+                    _projection=matrix;
+                    glLoadMatrix(matrix->ptr());
+                }
+                else
+                {
+                    _projection=_identity;
+                    glLoadIdentity();
+                }
+                glMatrixMode( GL_MODELVIEW );
+            }
+        }
+
+        inline const osg::Matrix& getProjectionMatrix() const
+        {
+            return *_projection;
+        }
+
+        inline void applyModelViewMatrix(const osg::RefMatrix* matrix)
+        {
+            if (_modelView!=matrix)
+            {
+                if (matrix)
+                {
+                    _modelView=matrix;
+                    glLoadMatrix(matrix->ptr());
+                }
+                else
+                {
+                    _modelView=_identity;
+                    glLoadIdentity();
+                }
+            }
+        }
+
+        const osg::Matrix& getModelViewMatrix() const
+        {
+            return *_modelView;
+        }
+
+
+        Polytope getViewFrustum() const;
+
+
+        /** Apply stateset.*/
+        void apply(const StateSet* dstate);
+
+        /** Updates the OpenGL state so that it matches the \c StateSet at the
+          * top of the stack of <tt>StateSet</tt>s maintained internally by a
+          * \c State.
+         */
+        void apply();
+
+
+        /** Set whether a particular OpenGL mode is valid in the current graphics context.
+          * Use to disable OpenGL modes that are not supported by current graphics drivers/context.*/
+        inline void setModeValidity(StateAttribute::GLMode mode,bool valid)
+        {
+            ModeStack& ms = _modeMap[mode];
+            ms.valid = valid;
+        }
+
+        /** Get whether a particular OpenGL mode is valid in the current graphics context.
+          * Use to disable OpenGL modes that are not supported by current graphics drivers/context.*/
+        inline bool getModeValidity(StateAttribute::GLMode mode)
+        {
+            ModeStack& ms = _modeMap[mode];
+            return ms.valid;
+        }
+
+        inline void setGlobalDefaultModeValue(StateAttribute::GLMode mode,bool enabled)
+        {
+            ModeStack& ms = _modeMap[mode];
+            ms.global_default_value = enabled;
+        }
+
+        inline bool getGlobalDefaultModeValue(StateAttribute::GLMode mode)
+        {
+            return _modeMap[mode].global_default_value;
+        }
+
+
+        /** Apply an OpenGL mode if required. This is a wrapper around
+          * \c glEnable() and \c glDisable(), that just actually calls these
+          * functions if the \c enabled flag is different than the current
+          * state.
+          * @return \c true if the state was actually changed. \c false
+          *         otherwise. Notice that a \c false return does not indicate
+          *         an error, it just means that the mode was already set to the
+          *         same value as the \c enabled parameter.
+        */
+        inline bool applyMode(StateAttribute::GLMode mode,bool enabled)
+        {
+            ModeStack& ms = _modeMap[mode];
+            ms.changed = true;
+            return applyMode(mode,enabled,ms);
+        }
+
+        inline void setGlobalDefaultTextureModeValue(unsigned int unit, StateAttribute::GLMode mode,bool enabled)
+        {
+            ModeMap& modeMap = getOrCreateTextureModeMap(unit);
+            ModeStack& ms = modeMap[mode];
+            ms.global_default_value = enabled;
+        }
+
+        inline bool getGlobalDefaultTextureModeValue(unsigned int unit, StateAttribute::GLMode mode)
+        {
+            ModeMap& modeMap = getOrCreateTextureModeMap(unit);
+            ModeStack& ms = modeMap[mode];
+            return ms.global_default_value;
+        }
+
+        inline bool applyTextureMode(unsigned int unit, StateAttribute::GLMode mode,bool enabled)
+        {
+            if (setActiveTextureUnit(unit))
+            {
+                ModeMap& modeMap = getOrCreateTextureModeMap(unit);
+                ModeStack& ms = modeMap[mode];
+                ms.changed = true;
+                return applyMode(mode,enabled,ms);
+            }
+            else
+                return false;
+        }
+
+        inline void setGlobalDefaultAttribute(const StateAttribute* attribute)
+        {
+            AttributeStack& as = _attributeMap[attribute->getTypeMemberPair()];
+            as.global_default_attribute = attribute;
+        }
+
+        inline const StateAttribute* getGlobalDefaultAttribute(StateAttribute::Type type, unsigned int member=0)
+        {
+            AttributeStack& as = _attributeMap[StateAttribute::TypeMemberPair(type,member)];
+            return as.global_default_attribute.get();
+        }
+
+        /** Apply an attribute if required. */
+        inline bool applyAttribute(const StateAttribute* attribute)
+        {
+            AttributeStack& as = _attributeMap[attribute->getTypeMemberPair()];
+            as.changed = true;
+            return applyAttribute(attribute,as);
+        }
+
+        inline void setGlobalDefaultTextureAttribute(unsigned int unit, const StateAttribute* attribute)
+        {
+            AttributeMap& attributeMap = getOrCreateTextureAttributeMap(unit);
+            AttributeStack& as = attributeMap[attribute->getTypeMemberPair()];
+            as.global_default_attribute = attribute;
+        }
+
+        inline const StateAttribute* getGlobalDefaultTextureAttribute(unsigned int unit, StateAttribute::Type type, unsigned int member = 0)
+        {
+            AttributeMap& attributeMap = getOrCreateTextureAttributeMap(unit);
+            AttributeStack& as = attributeMap[StateAttribute::TypeMemberPair(type,member)];
+            return as.global_default_attribute.get();
+        }
+
+
+        inline bool applyTextureAttribute(unsigned int unit, const StateAttribute* attribute)
+        {
+            if (setActiveTextureUnit(unit))
+            {
+                AttributeMap& attributeMap = getOrCreateTextureAttributeMap(unit);
+                AttributeStack& as = attributeMap[attribute->getTypeMemberPair()];
+                as.changed = true;
+                return applyAttribute(attribute,as);
+            }
+            else
+                return false;
+        }
+
+        /** Mode has been set externally, update state to reflect this setting.*/
+        void haveAppliedMode(StateAttribute::GLMode mode,StateAttribute::GLModeValue value);
+
+        /** Mode has been set externally, therefore dirty the associated mode in osg::State
+          * so it is applied on next call to osg::State::apply(..)*/
+        void haveAppliedMode(StateAttribute::GLMode mode);
+
+        /** Attribute has been applied externally, update state to reflect this setting.*/
+        void haveAppliedAttribute(const StateAttribute* attribute);
+
+        /** Attribute has been applied externally, 
+          * and therefore this attribute type has been dirtied 
+          * and will need to be re-applied on next osg::State.apply(..).
+          * note, if you have an osg::StateAttribute which you have applied externally
+          * then use the have_applied(attribute) method as this will cause the osg::State to
+          * track the current state more accurately and enable lazy state updating such
+          * that only changed state will be applied.*/
+        void haveAppliedAttribute(StateAttribute::Type type, unsigned int member=0);
+
+        /** Get whether the current specified mode is enabled (true) or disabled (false).*/ 
+        bool getLastAppliedMode(StateAttribute::GLMode mode) const;
+
+        /** Get the current specified attribute, return NULL if one has not yet been applied.*/ 
+        const StateAttribute* getLastAppliedAttribute(StateAttribute::Type type, unsigned int member=0) const;
+
+        /** texture Mode has been set externally, update state to reflect this setting.*/
+        void haveAppliedTextureMode(unsigned int unit, StateAttribute::GLMode mode,StateAttribute::GLModeValue value);
+
+        /** texture Mode has been set externally, therefore dirty the associated mode in osg::State
+          * so it is applied on next call to osg::State::apply(..)*/
+        void haveAppliedTextureMode(unsigned int unit, StateAttribute::GLMode mode);
+
+        /** texture Attribute has been applied externally, update state to reflect this setting.*/
+        void haveAppliedTextureAttribute(unsigned int unit, const StateAttribute* attribute);
+
+        /** texture Attribute has been applied externally,
+          * and therefore this attribute type has been dirtied
+          * and will need to be re-applied on next osg::State.apply(..).
+          * note, if you have an osg::StateAttribute which you have applied externally
+          * then use the have_applied(attribute) method as this will the osg::State to
+          * track the current state more accurately and enable lazy state updating such
+          * that only changed state will be applied.*/
+        void haveAppliedTextureAttribute(unsigned int unit, StateAttribute::Type type, unsigned int member=0);
+
+        /** Get whether the current specified texture mode is enabled (true) or disabled (false).*/
+        bool getLastAppliedTextureMode(unsigned int unit, StateAttribute::GLMode mode) const;
+
+        /** Get the current specified texture attribute, return NULL if one has not yet been applied.*/
+        const StateAttribute* getLastAppliedTextureAttribute(unsigned int unit, StateAttribute::Type type, unsigned int member=0) const;
+
+
+        /** Dirty the modes previously applied in osg::State.*/
+        void dirtyAllModes();
+
+        /** Dirty the modes attributes previously applied in osg::State.*/
+        void dirtyAllAttributes();
+
+        /** disable the vertex, normal, color, tex coords, secondary color, fog coord and index arrays.*/
+        void disableAllVertexArrays();
+
+        /** dirty the vertex, normal, color, tex coords, secondary color, fog coord and index arrays.*/
+        void dirtyAllVertexArrays();
+
+
+        void setCurrentVertexBufferObject(osg::VertexBufferObject* vbo) { _currentVBO = vbo; }
+        const VertexBufferObject* getCurrentVertexBufferObject() { return _currentVBO; }
+        inline void bindVertexBufferObject(const osg::VertexBufferObject* vbo)
+        {
+            if (vbo == _currentVBO) return;
+            if (vbo->isDirty(_contextID)) vbo->compileBuffer(*this);
+            else _glBindBuffer(GL_ARRAY_BUFFER_ARB,vbo->buffer(_contextID));
+            _currentVBO = vbo;
+        }
+
+        inline void unbindVertexBufferObject()
+        {
+            if (!_currentVBO) return;
+            _glBindBuffer(GL_ARRAY_BUFFER_ARB,0);
+            _currentVBO = 0;
+        }
+
+        void setCurrentElementBufferObject(osg::ElementBufferObject* ebo) { _currentEBO = ebo; }
+        const ElementBufferObject* getCurrentElementBufferObject() { return _currentEBO; }
+
+        inline void bindElementBufferObject(const osg::ElementBufferObject* ebo)
+        {
+            if (ebo == _currentEBO) return;
+            if (ebo->isDirty(_contextID)) ebo->compileBuffer(*this);
+            else _glBindBuffer(GL_ELEMENT_ARRAY_BUFFER_ARB,ebo->buffer(_contextID));
+            _currentEBO = ebo;
+        }
+
+        inline void unbindElementBufferObject()
+        {
+            if (!_currentEBO) return;
+            _glBindBuffer(GL_ELEMENT_ARRAY_BUFFER_ARB,0);
+            _currentEBO = 0;
+        }
+
+        void setCurrentPixelBufferObject(osg::PixelBufferObject* pbo) { _currentPBO = pbo; }
+        const PixelBufferObject* getCurrentPixelBufferObject() { return _currentPBO; }
+
+        inline void bindPixelBufferObject(const osg::PixelBufferObject* pbo)
+        {
+            if (pbo == _currentPBO) return;
+
+            if (pbo->isDirty(_contextID)) pbo->compileBuffer(*this);
+            else _glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB,pbo->buffer(_contextID));
+
+            _currentPBO = pbo;
+        }
+
+        inline void unbindPixelBufferObject()
+        {
+            if (!_currentPBO) return;
+            
+            _glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB,0);
+            _currentPBO = 0;
+        }
+        
+        
+        inline void glDrawArraysInstanced(GLenum mode, GLint first, GLsizei count, GLsizei primcount)
+        {
+            if (primcount>=1 && _glDrawArraysInstanced!=0) _glDrawArraysInstanced(mode, first, count, primcount);
+            else glDrawArrays(mode, first, count);
+        }
+    
+        inline void glDrawElementsInstanced(GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, GLsizei primcount )
+        {
+            if (primcount>=1 && _glDrawElementsInstanced!=0) _glDrawElementsInstanced(mode, count, type, indices, primcount);
+            else glDrawElements(mode, count, type, indices);
+        }
+
+
+        /** Wrapper around glInterleavedArrays(..).
+          * also resets the internal array points and modes within osg::State to keep the other
+          * vertex array operations consistent. */
+        void setInterleavedArrays( GLenum format, GLsizei stride, const GLvoid* pointer);
+
+        /** Set the vertex pointer using an osg::Array, and manage any VBO that are required.*/
+        inline void setVertexPointer(const Array* array)
+        {
+            if (array)
+            {
+                const VertexBufferObject* vbo = array->getVertexBufferObject();
+                if (vbo)
+                { 
+                    bindVertexBufferObject(vbo);
+                    setVertexPointer(array->getDataSize(),array->getDataType(),0,array->getVertexBufferObjectOffset());
+                }
+                else
+                {
+                    unbindVertexBufferObject();
+                    setVertexPointer(array->getDataSize(),array->getDataType(),0,array->getDataPointer());
+                }
+            }
+            else disableVertexPointer();
+        }
+
+        /** wrapper around glEnableClientState(GL_VERTEX_ARRAY);glVertexPointer(..);
+          * note, only updates values that change.*/
+        inline void setVertexPointer( GLint size, GLenum type,
+                                      GLsizei stride, const GLvoid *ptr )
+        {
+            if (!_vertexArray._enabled || _vertexArray._dirty)
+            {
+                _vertexArray._enabled = true;
+                glEnableClientState(GL_VERTEX_ARRAY);
+            }
+            //if (_vertexArray._pointer!=ptr || _vertexArray._dirty)
+            {
+                _vertexArray._pointer=ptr;
+                glVertexPointer( size, type, stride, ptr );
+            }
+            _vertexArray._dirty = false;
+        }
+
+        /** wrapper around glDisableClientState(GL_VERTEX_ARRAY).
+          * note, only updates values that change.*/
+        inline void disableVertexPointer()
+        {
+            if (_vertexArray._enabled || _vertexArray._dirty)
+            {
+                _vertexArray._enabled = false;
+                _vertexArray._dirty = false;
+                glDisableClientState(GL_VERTEX_ARRAY);
+            }
+        }
+
+        inline void dirtyVertexPointer()
+        {
+            _vertexArray._pointer = 0;
+            _vertexArray._dirty = true;
+        }
+
+
+        /** Set the normal pointer using an osg::Array, and manage any VBO that are required.*/
+        inline void setNormalPointer(const Array* array)
+        {
+            if (array)
+            {
+                const VertexBufferObject* vbo = array->getVertexBufferObject();
+                if (vbo)
+                { 
+                    bindVertexBufferObject(vbo);
+                   setNormalPointer(array->getDataType(),0,array->getVertexBufferObjectOffset());
+                }
+                else
+                {
+                    unbindVertexBufferObject();
+                    setNormalPointer(array->getDataType(),0,array->getDataPointer());
+                }
+            }
+            else disableNormalPointer();
+        }
+
+        /** wrapper around glEnableClientState(GL_NORMAL_ARRAY);glNormalPointer(..);
+          * note, only updates values that change.*/
+        inline void setNormalPointer( GLenum type, GLsizei stride,
+                                      const GLvoid *ptr )
+        {
+            if (!_normalArray._enabled || _normalArray._dirty)
+            {
+                _normalArray._enabled = true;
+                glEnableClientState(GL_NORMAL_ARRAY);
+            }
+            //if (_normalArray._pointer!=ptr || _normalArray._dirty)
+            {
+                _normalArray._pointer=ptr;
+                glNormalPointer( type, stride, ptr );
+            }
+            _normalArray._dirty = false;
+        }
+
+        /** wrapper around glDisableClientState(GL_NORMAL_ARRAY);
+          * note, only updates values that change.*/
+        inline void disableNormalPointer()
+        {
+            if (_normalArray._enabled || _normalArray._dirty)
+            {
+                _normalArray._enabled = false;
+                _normalArray._dirty = false;
+                glDisableClientState(GL_NORMAL_ARRAY);
+            }
+        }
+
+        inline void dirtyNormalPointer()
+        {
+            _normalArray._pointer = 0;
+            _normalArray._dirty = true;
+        }
+
+        /** Set the color pointer using an osg::Array, and manage any VBO that are required.*/
+        inline void setColorPointer(const Array* array)
+        {
+            if (array)
+            {
+                const VertexBufferObject* vbo = array->getVertexBufferObject();
+                if (vbo)
+                { 
+                    bindVertexBufferObject(vbo);
+                    setColorPointer(array->getDataSize(),array->getDataType(),0,array->getVertexBufferObjectOffset());
+                }
+                else
+                {
+                    unbindVertexBufferObject();
+                    setColorPointer(array->getDataSize(),array->getDataType(),0,array->getDataPointer());
+                }
+            }
+            else disableColorPointer();
+        }
+
+
+        /** wrapper around glEnableClientState(GL_COLOR_ARRAY);glColorPointer(..);
+          * note, only updates values that change.*/
+        inline void setColorPointer( GLint size, GLenum type,
+                                     GLsizei stride, const GLvoid *ptr )
+        {
+            if (!_colorArray._enabled || _colorArray._dirty)
+            {
+                _colorArray._enabled = true;
+                glEnableClientState(GL_COLOR_ARRAY);
+            }
+            //if (_colorArray._pointer!=ptr || _colorArray._dirty)
+            {
+                _colorArray._pointer=ptr;
+                glColorPointer( size, type, stride, ptr );
+            }
+            _colorArray._dirty = false;
+        }
+
+        /** wrapper around glDisableClientState(GL_COLOR_ARRAY);
+          * note, only updates values that change.*/
+        inline void disableColorPointer()
+        {
+            if (_colorArray._enabled || _colorArray._dirty)
+            {
+                _colorArray._enabled = false;
+                _colorArray._dirty = false;
+                glDisableClientState(GL_COLOR_ARRAY);
+            }
+        }
+
+        inline void dirtyColorPointer()
+        {
+            _colorArray._pointer = 0;
+            _colorArray._dirty = true;
+        }
+
+
+        inline bool isSecondaryColorSupported() const { return _isSecondaryColorSupportResolved?_isSecondaryColorSupported:computeSecondaryColorSupported(); }
+
+
+        /** Set the secondary color pointer using an osg::Array, and manage any VBO that are required.*/
+        inline void setSecondaryColorPointer(const Array* array)
+        {
+            if (array)
+            {
+                const VertexBufferObject* vbo = array->getVertexBufferObject();
+                if (vbo)
+                { 
+                    bindVertexBufferObject(vbo);
+#if 0                    
+                    setSecondaryColorPointer(array->getDataSize(),array->getDataType(),0,vbo->getOffset(array->getVertexBufferObjectIndex()));
+#else
+                    setSecondaryColorPointer(array->getDataSize(),array->getDataType(),0,array->getVertexBufferObjectOffset());
+#endif
+                }
+                else
+                {
+                    unbindVertexBufferObject();
+                    setSecondaryColorPointer(array->getDataSize(),array->getDataType(),0,array->getDataPointer());
+                }
+            }
+            else disableSecondaryColorPointer();
+        }
+
+        /** wrapper around glEnableClientState(GL_SECONDARY_COLOR_ARRAY);glSecondayColorPointer(..);
+          * note, only updates values that change.*/
+        void setSecondaryColorPointer( GLint size, GLenum type, GLsizei stride, const GLvoid *ptr );
+
+        /** wrapper around glDisableClientState(GL_SECONDARY_COLOR_ARRAY);
+          * note, only updates values that change.*/
+        inline void disableSecondaryColorPointer()
+        {
+            if (_secondaryColorArray._enabled || _secondaryColorArray._dirty)
+            {
+                _secondaryColorArray._enabled = false;
+                _secondaryColorArray._dirty = false;
+                if (isSecondaryColorSupported()) glDisableClientState(GL_SECONDARY_COLOR_ARRAY);
+            }
+        }
+
+        inline void dirtySecondaryColorPointer()
+        {
+            _secondaryColorArray._pointer = 0;
+            _secondaryColorArray._dirty = true;
+        }
+
+        /** wrapper around glEnableClientState(GL_INDEX_ARRAY);glIndexPointer(..);
+          * note, only updates values that change.*/
+        inline void setIndexPointer( GLenum type, GLsizei stride,
+                              const GLvoid *ptr )
+        {
+            if (!_indexArray._enabled || _indexArray._dirty)
+            {
+                _indexArray._enabled = true;
+                glEnableClientState(GL_INDEX_ARRAY);
+            }
+            //if (_indexArray._pointer!=ptr || _indexArray._dirty)
+            {
+                _indexArray._pointer=ptr;
+                glIndexPointer( type, stride, ptr );
+            }
+            _indexArray._dirty = false;
+        }
+
+        /** wrapper around glDisableClientState(GL_INDEX_ARRAY);
+          * note, only updates values that change.*/
+        inline void disableIndexPointer()
+        {
+            if (_indexArray._enabled || _indexArray._dirty)
+            {
+                _indexArray._enabled = false;
+                _indexArray._dirty = false;
+                glDisableClientState(GL_INDEX_ARRAY);
+            }
+        }
+
+        inline void dirtyIndexPointer()
+        {
+            _indexArray._pointer = 0;
+            _indexArray._dirty = true;
+        }
+
+
+        inline bool isFogCoordSupported() const { return _isFogCoordSupportResolved?_isFogCoordSupported:computeFogCoordSupported(); }
+
+
+        /** Set the fog coord pointer using an osg::Array, and manage any VBO that are required.*/
+        inline void setFogCoordPointer(const Array* array)
+        {
+            if (array)
+            {
+                const VertexBufferObject* vbo = array->getVertexBufferObject();
+                if (vbo)
+                { 
+                    bindVertexBufferObject(vbo);
+#if 0
+                    setFogCoordPointer(array->getDataType(),0,vbo->getOffset(array->getVertexBufferObjectIndex()));
+#else
+                    setFogCoordPointer(array->getDataType(),0,array->getVertexBufferObjectOffset());
+#endif
+                }
+                else
+                {
+                    unbindVertexBufferObject();
+                    setFogCoordPointer(array->getDataType(),0,array->getDataPointer());
+                }
+            }
+            else disableFogCoordPointer();
+        }
+
+
+        /** wrapper around glEnableClientState(GL_FOG_COORDINATE_ARRAY);glFogCoordPointer(..);
+          * note, only updates values that change.*/
+        void setFogCoordPointer( GLenum type, GLsizei stride, const GLvoid *ptr );
+
+        /** wrapper around glDisableClientState(GL_FOG_COORDINATE_ARRAY);
+          * note, only updates values that change.*/
+        inline void disableFogCoordPointer()
+        {
+            if (_fogArray._enabled || _fogArray._dirty)
+            {
+                _fogArray._enabled = false;
+                _fogArray._dirty = false;
+                if (isFogCoordSupported()) glDisableClientState(GL_FOG_COORDINATE_ARRAY);
+            }
+        }
+
+        inline void dirtyFogCoordPointer()
+        {
+            _fogArray._pointer = 0;
+            _fogArray._dirty = true;
+        }
+
+
+
+        /** Set the tex coord pointer using an osg::Array, and manage any VBO that are required.*/
+        inline void setTexCoordPointer(unsigned int unit, const Array* array)
+        {
+            if (array)
+            {
+                const VertexBufferObject* vbo = array->getVertexBufferObject();
+                if (vbo)
+                { 
+                    bindVertexBufferObject(vbo);
+#if 0
+                    setTexCoordPointer(unit, array->getDataSize(),array->getDataType(),0,vbo->getOffset(array->getVertexBufferObjectIndex()));
+#else
+                    setTexCoordPointer(unit, array->getDataSize(),array->getDataType(),0,array->getVertexBufferObjectOffset());
+#endif
+                }
+                else
+                {
+                    unbindVertexBufferObject();
+                    setTexCoordPointer(unit, array->getDataSize(),array->getDataType(),0,array->getDataPointer());
+                }
+            }
+            else disableTexCoordPointer(unit);
+        }
+
+        /** wrapper around glEnableClientState(GL_TEXTURE_COORD_ARRAY);glTexCoordPointer(..);
+          * note, only updates values that change.*/
+        inline void setTexCoordPointer( unsigned int unit,
+                                        GLint size, GLenum type,
+                                        GLsizei stride, const GLvoid *ptr )
+        {
+            if (setClientActiveTextureUnit(unit))
+            {
+                if ( unit >= _texCoordArrayList.size()) _texCoordArrayList.resize(unit+1);
+                EnabledArrayPair& eap = _texCoordArrayList[unit];
+
+                if (!eap._enabled || eap._dirty)
+                {
+                    eap._enabled = true;
+                    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+                }
+                //if (eap._pointer!=ptr || eap._dirty)
+                {
+                    glTexCoordPointer( size, type, stride, ptr );
+                    eap._pointer = ptr;
+                }
+                eap._dirty = false;
+            }
+        }
+
+        /** wrapper around glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+          * note, only updates values that change.*/
+        inline void disableTexCoordPointer( unsigned int unit )
+        {
+            if (setClientActiveTextureUnit(unit))
+            {
+                if ( unit >= _texCoordArrayList.size()) _texCoordArrayList.resize(unit+1);
+                EnabledArrayPair& eap = _texCoordArrayList[unit];
+
+                if (eap._enabled || eap._dirty)
+                {
+                    eap._enabled = false;
+                    eap._dirty = false;
+                    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+                }
+            }
+        }
+
+        inline void dirtyTexCoordPointer( unsigned int unit )
+        {
+            if ( unit >= _texCoordArrayList.size()) return; // _texCoordArrayList.resize(unit+1);
+            EnabledArrayPair& eap = _texCoordArrayList[unit];
+            eap._pointer = 0;
+            eap._dirty = true;
+        }
+
+
+        inline void disableTexCoordPointersAboveAndIncluding( unsigned int unit )
+        {
+            while (unit<_texCoordArrayList.size())
+            {
+                EnabledArrayPair& eap = _texCoordArrayList[unit];
+                if (eap._enabled || eap._dirty)
+                {
+                    if (setClientActiveTextureUnit(unit))
+                    {
+                        eap._enabled = false;
+                        eap._dirty = false;
+                        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+                    }
+                }
+                ++unit;
+            }
+        }
+
+        inline void dirtyTexCoordPointersAboveAndIncluding( unsigned int unit )
+        {
+            while (unit<_texCoordArrayList.size())
+            {
+                EnabledArrayPair& eap = _texCoordArrayList[unit];
+                eap._pointer = 0;
+                eap._dirty = true;
+                ++unit;
+            }
+        }
+
+
+        /** Set the current texture unit, return true if selected,
+          * false if selection failed such as when multi texturing is not supported.
+          * note, only updates values that change.*/
+        bool setActiveTextureUnit( unsigned int unit );
+        
+        /** Get the current texture unit.*/
+        unsigned int getActiveTextureUnit() const { return _currentActiveTextureUnit; }
+
+        /** Set the current tex coord array texture unit, return true if selected,
+          * false if selection failed such as when multi texturing is not supported.
+          * note, only updates values that change.*/
+        bool setClientActiveTextureUnit( unsigned int unit );
+
+        /** Get the current tex coord array texture unit.*/
+        unsigned int getClientActiveTextureUnit() const { return _currentClientActiveTextureUnit; }
+
+        /** Set the vertex attrib pointer using an osg::Array, and manage any VBO that are required.*/
+        inline void setVertexAttribPointer(unsigned int unit, const Array* array, GLboolean normalized)
+        {
+            if (array)
+            {
+                const VertexBufferObject* vbo = array->getVertexBufferObject();
+                if (vbo)
+                { 
+                    bindVertexBufferObject(vbo);
+#if 0                    
+                    setVertexAttribPointer(unit, array->getDataSize(),array->getDataType(),normalized,0,vbo->getOffset(array->getVertexBufferObjectIndex()));
+#else
+                    setVertexAttribPointer(unit, array->getDataSize(),array->getDataType(),normalized,0,array->getVertexBufferObjectOffset());
+#endif
+                }
+                else
+                {
+                    unbindVertexBufferObject();
+                    setVertexAttribPointer(unit, array->getDataSize(),array->getDataType(),normalized,0,array->getDataPointer());
+                }
+            }
+            else disableVertexAttribPointer(unit);
+        }
+
+        /** wrapper around glEnableVertexAttribArrayARB(index);glVertexAttribPointerARB(..);
+          * note, only updates values that change.*/
+        void setVertexAttribPointer( unsigned int index,
+                                     GLint size, GLenum type, GLboolean normalized,
+                                     GLsizei stride, const GLvoid *ptr );
+
+        /** wrapper around DisableVertexAttribArrayARB(index);
+          * note, only updates values that change.*/
+        void disableVertexAttribPointer( unsigned int index );
+
+        void disableVertexAttribPointersAboveAndIncluding( unsigned int index );
+
+        inline void dirtyVertexAttribPointersAboveAndIncluding( unsigned int index )
+        {
+            while (index<_vertexAttribArrayList.size())
+            {
+                EnabledArrayPair& eap = _vertexAttribArrayList[index];
+                eap._pointer = 0;
+                eap._dirty = true;
+                ++index;
+            }
+        }
+
+        bool isVertexBufferObjectSupported() const { return _isVertexBufferObjectSupportResolved?_isVertexBufferObjectSupported:computeVertexBufferObjectSupported(); }
+
+
+        inline void setLastAppliedProgramObject(const Program::PerContextProgram* program)
+        {
+            if (_lastAppliedProgramObject!=program)
+            {
+                _lastAppliedProgramObject = program; 
+                if (program && _appliedProgramObjectSet.count(program)==0)
+                {
+                    _appliedProgramObjectSet.insert(program); 
+                    program->addObserver(this);
+                }
+            }
+        }
+        inline const Program::PerContextProgram* getLastAppliedProgramObject() const { return _lastAppliedProgramObject; }
+
+        inline GLint getUniformLocation( const std::string& name ) const { return _lastAppliedProgramObject ? _lastAppliedProgramObject->getUniformLocation(name) : -1; }
+        inline GLint getAttribLocation( const std::string& name ) const { return _lastAppliedProgramObject ? _lastAppliedProgramObject->getAttribLocation(name) : -1; }
+
+
+        /** Set the frame stamp for the current frame.*/
+        inline void setFrameStamp(FrameStamp* fs) { _frameStamp = fs; }
+
+        /** Get the frame stamp for the current frame.*/
+        inline FrameStamp* getFrameStamp() { return _frameStamp.get(); }
+
+        /** Get the const frame stamp for the current frame.*/
+        inline const FrameStamp* getFrameStamp() const { return _frameStamp.get(); }
+
+
+        /** Set the DisplaySettings. Note, nothing is applied, the visual settings are just
+          * used in the State object to pass the current visual settings to Drawables
+          * during rendering. */
+        inline void setDisplaySettings(DisplaySettings* vs) { _displaySettings = vs; }
+
+        /** Get the DisplaySettings */
+        inline const DisplaySettings* getDisplaySettings() const { return _displaySettings.get(); }
+
+
+
+        /** Set flag for early termination of the draw traversal.*/
+        void setAbortRenderingPtr(bool* abortPtr) { _abortRenderingPtr = abortPtr; }
+
+        /** Get flag for early termination of the draw traversal,
+          * if true steps should be taken to complete rendering early.*/
+        bool getAbortRendering() const { return _abortRenderingPtr!=0?(*_abortRenderingPtr):false; }
+
+
+        struct DynamicObjectRenderingCompletedCallback : public osg::Referenced
+        {
+            virtual void completed(osg::State*) = 0;
+        };
+        
+        /** Set the callback to be called when the dynamic object count hits 0.*/
+        void setDynamicObjectRenderingCompletedCallback(DynamicObjectRenderingCompletedCallback* cb){ _completeDynamicObjectRenderingCallback = cb; }
+        
+        /** Get the callback to be called when the dynamic object count hits 0.*/
+        DynamicObjectRenderingCompletedCallback* getDynamicObjectRenderingCompletedCallback() { return _completeDynamicObjectRenderingCallback.get(); }
+        
+        /** Set the number of dynamic objects that will be rendered in this graphics context this frame.*/
+        void setDynamicObjectCount(unsigned int count, bool callCallbackOnZero = false)
+        {
+            if (_dynamicObjectCount != count)
+            {
+                _dynamicObjectCount = count;
+                if (_dynamicObjectCount==0 && callCallbackOnZero && _completeDynamicObjectRenderingCallback.valid())
+                {
+                    _completeDynamicObjectRenderingCallback->completed(this);
+                }
+            }
+        }
+
+        /** Get the number of dynamic objects that will be rendered in this graphics context this frame.*/
+        unsigned int getDynamicObjectCount() const { return _dynamicObjectCount; }
+        
+        /** Decrement the number of dynamic objects left to render this frame, and once the count goes to zero call the 
+          * DynamicObjectRenderingCompletedCallback to inform of completion.*/
+        inline void decrementDynamicObjectCount()
+        {
+            --_dynamicObjectCount;
+            if (_dynamicObjectCount==0 && _completeDynamicObjectRenderingCallback.valid())
+            {
+                _completeDynamicObjectRenderingCallback->completed(this);
+            }
+        } 
+
+
+
+        enum CheckForGLErrors
+        {
+            /** NEVER_CHECK_GL_ERRORS hints that OpenGL need not be checked for, this 
+                is the fastest option since checking for errors does incurr a small overhead.*/
+            NEVER_CHECK_GL_ERRORS,
+            /** ONCE_PER_FRAME means that OpenGl errors will be checked for once per
+                frame, the overhead is still small, but at least OpenGL errors that are occurring
+                will be caught, the reporting isn't fine grained enough for debugging purposes.*/
+            ONCE_PER_FRAME,
+            /** ONCE_PER_ATTRIBUTE means that OpenGL errors will be checked for after
+                every attribute is applied, allow errors to be directly associated with
+                particular operations which makes debugging much easier.*/
+            ONCE_PER_ATTRIBUTE
+        };
+
+        /** Set whether and how often OpenGL errors should be checked for.*/
+        void setCheckForGLErrors(CheckForGLErrors check) { _checkGLErrors = check; }
+
+        /** Get whether and how often OpenGL errors should be checked for.*/
+        CheckForGLErrors getCheckForGLErrors() const { return _checkGLErrors; }
+
+        bool checkGLErrors(const char* str) const;
+        bool checkGLErrors(StateAttribute::GLMode mode) const;
+        bool checkGLErrors(const StateAttribute* attribute) const;
+
+
+        /** Initialize extension used by osg:::State.*/
+        void initializeExtensionProcs();
+
+        virtual void objectDeleted(void* object);
+
+    protected:
+
+        virtual ~State();
+
+        GraphicsContext*            _graphicsContext;
+        unsigned int                _contextID;
+        ref_ptr<FrameStamp>         _frameStamp;
+
+        ref_ptr<const RefMatrix>    _identity;
+        ref_ptr<const RefMatrix>    _initialViewMatrix;
+        ref_ptr<const RefMatrix>    _projection;
+        ref_ptr<const RefMatrix>    _modelView;
+
+        Matrix                      _initialInverseViewMatrix;
+
+        ref_ptr<DisplaySettings>    _displaySettings;
+
+        bool*                       _abortRenderingPtr;
+        CheckForGLErrors            _checkGLErrors;
+
+        struct ModeStack
+        {
+            typedef std::vector<StateAttribute::GLModeValue> ValueVec;
+
+            ModeStack()
+            {
+                valid = true;
+                changed = false;
+                last_applied_value = false;
+                global_default_value = false;
+            }
+
+            bool        valid;
+            bool        changed;
+            bool        last_applied_value;
+            bool        global_default_value;
+            ValueVec    valueVec;
+        };
+
+        struct AttributeStack
+        {
+            typedef std::pair<const StateAttribute*,StateAttribute::OverrideValue>  AttributePair;
+            typedef std::vector<AttributePair>                                      AttributeVec;
+
+            AttributeStack()
+            {
+                changed = false;
+                last_applied_attribute = 0L;
+                global_default_attribute = 0L;
+            }
+
+            /** apply an attribute if required, passing in attribute and appropriate attribute stack */
+            bool                    changed;
+            const StateAttribute*   last_applied_attribute;
+            ref_ptr<const StateAttribute> global_default_attribute;
+            AttributeVec            attributeVec;
+        };
+
+
+        struct UniformStack
+        {
+            typedef std::pair<const Uniform*,StateAttribute::OverrideValue>         UniformPair;
+            typedef std::vector<UniformPair>                                        UniformVec;
+
+            UniformStack() {}
+
+            UniformVec              uniformVec;
+        };
+
+
+        /** Apply an OpenGL mode if required, passing in mode, enable flag and
+          * appropriate mode stack. This is a wrapper around \c glEnable() and
+          * \c glDisable(), that just actually calls these functions if the
+          * \c enabled flag is different than the current state.
+          * @return \c true if the state was actually changed. \c false
+          *         otherwise. Notice that a \c false return does not indicate
+          *         an error, it just means that the mode was already set to the
+          *         same value as the \c enabled parameter.
+        */
+        inline bool applyMode(StateAttribute::GLMode mode,bool enabled,ModeStack& ms)
+        {
+            if (ms.valid && ms.last_applied_value != enabled)
+            {
+                ms.last_applied_value = enabled;
+
+                if (enabled) glEnable(mode);
+                else glDisable(mode);
+
+                if (_checkGLErrors==ONCE_PER_ATTRIBUTE) checkGLErrors(mode);
+
+                return true;
+            }
+            else
+                return false;
+        }
+
+
+        /** apply an attribute if required, passing in attribute and appropriate attribute stack */
+        inline bool applyAttribute(const StateAttribute* attribute,AttributeStack& as)
+        {
+            if (as.last_applied_attribute != attribute)
+            {
+                if (!as.global_default_attribute.valid()) as.global_default_attribute = dynamic_cast<StateAttribute*>(attribute->cloneType());
+
+                as.last_applied_attribute = attribute;
+                attribute->apply(*this);
+
+                if (_checkGLErrors==ONCE_PER_ATTRIBUTE) checkGLErrors(attribute);
+
+                return true;
+            }
+            else
+                return false;
+        }
+
+        inline bool applyGlobalDefaultAttribute(AttributeStack& as)
+        {
+            if (as.last_applied_attribute != as.global_default_attribute.get())
+            {
+                as.last_applied_attribute = as.global_default_attribute.get();
+                if (as.global_default_attribute.valid())
+                {
+                    as.global_default_attribute->apply(*this);
+                    if (_checkGLErrors==ONCE_PER_ATTRIBUTE) checkGLErrors(as.global_default_attribute.get());
+                }
+                return true;
+            }
+            else
+                return false;
+        }
+
+
+        typedef std::map<StateAttribute::GLMode,ModeStack>              ModeMap;
+        typedef std::vector<ModeMap>                                    TextureModeMapList;
+
+        typedef std::map<StateAttribute::TypeMemberPair,AttributeStack> AttributeMap;
+        typedef std::vector<AttributeMap>                               TextureAttributeMapList;
+
+        typedef std::map<std::string,UniformStack>                      UniformMap;
+
+        typedef std::vector<ref_ptr<const Matrix> >                     MatrixStack;
+        
+        typedef std::set<const Program::PerContextProgram* >            AppliedProgramObjectSet;
+
+        ModeMap                                                         _modeMap;
+        AttributeMap                                                    _attributeMap;
+        UniformMap                                                      _uniformMap;
+
+        TextureModeMapList                                              _textureModeMapList;
+        TextureAttributeMapList                                         _textureAttributeMapList;
+
+        AppliedProgramObjectSet                                         _appliedProgramObjectSet;
+        const Program::PerContextProgram*                               _lastAppliedProgramObject;
+
+        StateSetStack                                                   _stateStateStack;
+
+        struct EnabledArrayPair
+        {
+            EnabledArrayPair():_dirty(true),_enabled(false),_normalized(0),_pointer(0) {}
+            EnabledArrayPair(const EnabledArrayPair& eap):_dirty(eap._dirty), _enabled(eap._enabled),_normalized(eap._normalized),_pointer(eap._pointer) {}
+            EnabledArrayPair& operator = (const EnabledArrayPair& eap) { _dirty=eap._dirty; _enabled=eap._enabled; _normalized=eap._normalized;_pointer=eap._pointer; return *this; }
+
+            bool            _dirty;
+            bool            _enabled;
+            GLboolean       _normalized;
+            const GLvoid*   _pointer;
+        };
+
+        typedef std::vector<EnabledArrayPair>                   EnabledTexCoordArrayList;
+        typedef std::vector<EnabledArrayPair>                   EnabledVertexAttribArrayList;
+
+        EnabledArrayPair                _vertexArray;
+        EnabledArrayPair                _normalArray;
+        EnabledArrayPair                _colorArray;
+        EnabledArrayPair                _secondaryColorArray;
+        EnabledArrayPair                _indexArray;
+        EnabledArrayPair                _fogArray;
+        EnabledTexCoordArrayList        _texCoordArrayList;
+        EnabledVertexAttribArrayList    _vertexAttribArrayList;
+
+        unsigned int                    _currentActiveTextureUnit;
+        unsigned int                    _currentClientActiveTextureUnit;
+        const VertexBufferObject*       _currentVBO;
+        const ElementBufferObject*      _currentEBO;
+        const PixelBufferObject*        _currentPBO;
+
+
+        inline ModeMap& getOrCreateTextureModeMap(unsigned int unit)
+        {
+            if (unit>=_textureModeMapList.size()) _textureModeMapList.resize(unit+1);
+            return _textureModeMapList[unit];
+        }
+
+
+        inline AttributeMap& getOrCreateTextureAttributeMap(unsigned int unit)
+        {
+            if (unit>=_textureAttributeMapList.size()) _textureAttributeMapList.resize(unit+1);
+            return _textureAttributeMapList[unit];
+        }
+
+        inline void pushModeList(ModeMap& modeMap,const StateSet::ModeList& modeList);
+        inline void pushAttributeList(AttributeMap& attributeMap,const StateSet::AttributeList& attributeList);
+        inline void pushUniformList(UniformMap& uniformMap,const StateSet::UniformList& uniformList);
+
+        inline void popModeList(ModeMap& modeMap,const StateSet::ModeList& modeList);
+        inline void popAttributeList(AttributeMap& attributeMap,const StateSet::AttributeList& attributeList);
+        inline void popUniformList(UniformMap& uniformMap,const StateSet::UniformList& uniformList);
+
+        inline void applyModeList(ModeMap& modeMap,const StateSet::ModeList& modeList);
+        inline void applyAttributeList(AttributeMap& attributeMap,const StateSet::AttributeList& attributeList);
+        inline void applyUniformList(UniformMap& uniformMap,const StateSet::UniformList& uniformList);
+
+        inline void applyModeMap(ModeMap& modeMap);
+        inline void applyAttributeMap(AttributeMap& attributeMap);
+        inline void applyUniformMap(UniformMap& uniformMap);
+
+        void haveAppliedMode(ModeMap& modeMap,StateAttribute::GLMode mode,StateAttribute::GLModeValue value);
+        void haveAppliedMode(ModeMap& modeMap,StateAttribute::GLMode mode);
+        void haveAppliedAttribute(AttributeMap& attributeMap,const StateAttribute* attribute);
+        void haveAppliedAttribute(AttributeMap& attributeMap,StateAttribute::Type type, unsigned int member);
+        bool getLastAppliedMode(const ModeMap& modeMap,StateAttribute::GLMode mode) const;
+        const StateAttribute* getLastAppliedAttribute(const AttributeMap& attributeMap,StateAttribute::Type type, unsigned int member) const;
+
+
+        mutable bool _isSecondaryColorSupportResolved;
+        mutable bool _isSecondaryColorSupported;
+        bool computeSecondaryColorSupported() const;
+
+        mutable bool _isFogCoordSupportResolved;
+        mutable bool _isFogCoordSupported;
+        bool computeFogCoordSupported() const;
+
+        mutable bool _isVertexBufferObjectSupportResolved;
+        mutable bool _isVertexBufferObjectSupported;
+        bool computeVertexBufferObjectSupported() const;
+
+        typedef void (APIENTRY * ActiveTextureProc) (GLenum texture);
+        typedef void (APIENTRY * FogCoordPointerProc) (GLenum type, GLsizei stride, const GLvoid *pointer);
+        typedef void (APIENTRY * SecondaryColorPointerProc) (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer);
+        typedef void (APIENTRY * VertexAttribPointerProc) (unsigned int, GLint, GLenum, GLboolean normalized, GLsizei stride, const GLvoid *pointer);
+        typedef void (APIENTRY * EnableVertexAttribProc) (unsigned int);
+        typedef void (APIENTRY * DisableVertexAttribProc) (unsigned int);
+        typedef void (APIENTRY * BindBufferProc) (GLenum target, GLuint buffer);
+        
+        typedef void (APIENTRY * DrawArraysInstancedProc)( GLenum mode, GLint first, GLsizei count, GLsizei primcount );
+        typedef void (APIENTRY * DrawElementsInstancedProc)( GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, GLsizei primcount );
+
+        bool                        _extensionProcsInitialized;
+        GLint                       _glMaxTextureCoords;
+        GLint                       _glMaxTextureUnits;
+        ActiveTextureProc           _glClientActiveTexture;
+        ActiveTextureProc           _glActiveTexture;
+        FogCoordPointerProc         _glFogCoordPointer;
+        SecondaryColorPointerProc   _glSecondaryColorPointer;
+        VertexAttribPointerProc     _glVertexAttribPointer;
+        EnableVertexAttribProc      _glEnableVertexAttribArray;
+        DisableVertexAttribProc     _glDisableVertexAttribArray;
+        BindBufferProc              _glBindBuffer;
+        DrawArraysInstancedProc     _glDrawArraysInstanced;
+        DrawElementsInstancedProc   _glDrawElementsInstanced;
+
+        unsigned int                                            _dynamicObjectCount;
+        osg::ref_ptr<DynamicObjectRenderingCompletedCallback>   _completeDynamicObjectRenderingCallback;
+        
+};
+
+inline void State::pushModeList(ModeMap& modeMap,const StateSet::ModeList& modeList)
+{
+    for(StateSet::ModeList::const_iterator mitr=modeList.begin();
+        mitr!=modeList.end();
+        ++mitr)
+    {
+        // get the mode stack for incoming GLmode {mitr->first}.
+        ModeStack& ms = modeMap[mitr->first];
+        if (ms.valueVec.empty())
+        {
+            // first pair so simply push incoming pair to back.
+            ms.valueVec.push_back(mitr->second);
+        }
+        else if ((ms.valueVec.back() & StateAttribute::OVERRIDE) && !(mitr->second & StateAttribute::PROTECTED)) // check the existing override flag
+        {
+            // push existing back since override keeps the previous value.
+            ms.valueVec.push_back(ms.valueVec.back());
+        }
+        else
+        {
+            // no override on so simply push incoming pair to back.
+            ms.valueVec.push_back(mitr->second);
+        }
+        ms.changed = true;
+    }
+}
+
+inline void State::pushAttributeList(AttributeMap& attributeMap,const StateSet::AttributeList& attributeList)
+{
+    for(StateSet::AttributeList::const_iterator aitr=attributeList.begin();
+        aitr!=attributeList.end();
+        ++aitr)
+    {
+        // get the attribute stack for incoming type {aitr->first}.
+        AttributeStack& as = attributeMap[aitr->first];
+        if (as.attributeVec.empty())
+        {
+            // first pair so simply push incoming pair to back.
+            as.attributeVec.push_back(
+                AttributeStack::AttributePair(aitr->second.first.get(),aitr->second.second));
+        }
+        else if ((as.attributeVec.back().second & StateAttribute::OVERRIDE) && !(aitr->second.second & StateAttribute::PROTECTED)) // check the existing override flag
+        {
+            // push existing back since override keeps the previous value.
+            as.attributeVec.push_back(as.attributeVec.back());
+        }
+        else
+        {
+            // no override on so simply push incoming pair to back.
+            as.attributeVec.push_back(
+                AttributeStack::AttributePair(aitr->second.first.get(),aitr->second.second));
+        }
+        as.changed = true;
+    }
+}
+
+
+inline void State::pushUniformList(UniformMap& uniformMap,const StateSet::UniformList& uniformList)
+{
+    for(StateSet::UniformList::const_iterator aitr=uniformList.begin();
+        aitr!=uniformList.end();
+        ++aitr)
+    {
+        // get the attribute stack for incoming type {aitr->first}.
+        UniformStack& us = uniformMap[aitr->first];
+        if (us.uniformVec.empty())
+        {
+            // first pair so simply push incoming pair to back.
+            us.uniformVec.push_back(
+                UniformStack::UniformPair(aitr->second.first.get(),aitr->second.second));
+        }
+        else if ((us.uniformVec.back().second & StateAttribute::OVERRIDE) && !(aitr->second.second & StateAttribute::PROTECTED)) // check the existing override flag
+        {
+            // push existing back since override keeps the previous value.
+            us.uniformVec.push_back(us.uniformVec.back());
+        }
+        else
+        {
+            // no override on so simply push incoming pair to back.
+            us.uniformVec.push_back(
+                UniformStack::UniformPair(aitr->second.first.get(),aitr->second.second));
+        }
+    }
+}
+
+inline void State::popModeList(ModeMap& modeMap,const StateSet::ModeList& modeList)
+{
+    for(StateSet::ModeList::const_iterator mitr=modeList.begin();
+        mitr!=modeList.end();
+        ++mitr)
+    {
+        // get the mode stack for incoming GLmode {mitr->first}.
+        ModeStack& ms = modeMap[mitr->first];
+        if (!ms.valueVec.empty())
+        {
+            ms.valueVec.pop_back();
+        }
+        ms.changed = true;
+    }
+}
+
+inline void State::popAttributeList(AttributeMap& attributeMap,const StateSet::AttributeList& attributeList)
+{
+    for(StateSet::AttributeList::const_iterator aitr=attributeList.begin();
+        aitr!=attributeList.end();
+        ++aitr)
+    {
+        // get the attribute stack for incoming type {aitr->first}.
+        AttributeStack& as = attributeMap[aitr->first];
+        if (!as.attributeVec.empty())
+        {
+            as.attributeVec.pop_back();
+        }
+        as.changed = true;
+    }
+}
+
+inline void State::popUniformList(UniformMap& uniformMap,const StateSet::UniformList& uniformList)
+{
+    for(StateSet::UniformList::const_iterator aitr=uniformList.begin();
+        aitr!=uniformList.end();
+        ++aitr)
+    {
+        // get the attribute stack for incoming type {aitr->first}.
+        UniformStack& us = uniformMap[aitr->first];
+        if (!us.uniformVec.empty())
+        {
+            us.uniformVec.pop_back();
+        }
+    }
+}
+
+inline void State::applyModeList(ModeMap& modeMap,const StateSet::ModeList& modeList)
+{
+    StateSet::ModeList::const_iterator ds_mitr = modeList.begin();
+    ModeMap::iterator this_mitr=modeMap.begin();
+
+    while (this_mitr!=modeMap.end() && ds_mitr!=modeList.end())
+    {
+        if (this_mitr->first<ds_mitr->first)
+        {
+
+            // note GLMode = this_mitr->first
+            ModeStack& ms = this_mitr->second;
+            if (ms.changed)
+            {
+                ms.changed = false;
+                if (!ms.valueVec.empty())
+                {
+                    bool new_value = ms.valueVec.back() & StateAttribute::ON;
+                    applyMode(this_mitr->first,new_value,ms);
+                }
+                else
+                {
+                    // assume default of disabled.
+                    applyMode(this_mitr->first,ms.global_default_value,ms);
+
+                }
+
+            }
+
+            ++this_mitr;
+
+        }
+        else if (ds_mitr->first<this_mitr->first)
+        {
+
+            // ds_mitr->first is a new mode, therefore
+            // need to insert a new mode entry for ds_mistr->first.
+            ModeStack& ms = modeMap[ds_mitr->first];
+
+            bool new_value = ds_mitr->second & StateAttribute::ON;
+            applyMode(ds_mitr->first,new_value,ms);
+
+            // will need to disable this mode on next apply so set it to changed.
+            ms.changed = true;
+
+            ++ds_mitr;
+
+        }
+        else
+        {
+            // this_mitr & ds_mitr refer to the same mode, check the override
+            // if any otherwise just apply the incoming mode.
+
+            ModeStack& ms = this_mitr->second;
+
+            if (!ms.valueVec.empty() && (ms.valueVec.back() & StateAttribute::OVERRIDE) && !(ds_mitr->second & StateAttribute::PROTECTED))
+            {
+                // override is on, just treat as a normal apply on modes.
+
+                if (ms.changed)
+                {
+                    ms.changed = false;
+                    bool new_value = ms.valueVec.back() & StateAttribute::ON;
+                    applyMode(this_mitr->first,new_value,ms);
+
+                }
+            }
+            else
+            {
+                // no override on or no previous entry, therefore consider incoming mode.
+                bool new_value = ds_mitr->second & StateAttribute::ON;
+                if (applyMode(ds_mitr->first,new_value,ms))
+                {
+                    ms.changed = true;
+                }
+            }
+
+            ++this_mitr;
+            ++ds_mitr;
+        }
+    }
+
+    // iterator over the remaining state modes to apply any previous changes.
+    for(;
+        this_mitr!=modeMap.end();
+        ++this_mitr)
+    {
+        // note GLMode = this_mitr->first
+        ModeStack& ms = this_mitr->second;
+        if (ms.changed)
+        {
+            ms.changed = false;
+            if (!ms.valueVec.empty())
+            {
+                bool new_value = ms.valueVec.back() & StateAttribute::ON;
+                applyMode(this_mitr->first,new_value,ms);
+            }
+            else
+            {
+                // assume default of disabled.
+                applyMode(this_mitr->first,ms.global_default_value,ms);
+
+            }
+
+        }
+    }
+
+    // iterator over the remaining incoming modes to apply any new mode.
+    for(;
+        ds_mitr!=modeList.end();
+        ++ds_mitr)
+    {
+        ModeStack& ms = modeMap[ds_mitr->first];
+
+        bool new_value = ds_mitr->second & StateAttribute::ON;
+        applyMode(ds_mitr->first,new_value,ms);
+
+        // will need to disable this mode on next apply so set it to changed.
+        ms.changed = true;
+    }
+}
+
+inline void State::applyAttributeList(AttributeMap& attributeMap,const StateSet::AttributeList& attributeList)
+{
+    StateSet::AttributeList::const_iterator ds_aitr=attributeList.begin();
+
+    AttributeMap::iterator this_aitr=attributeMap.begin();
+
+    while (this_aitr!=attributeMap.end() && ds_aitr!=attributeList.end())
+    {
+        if (this_aitr->first<ds_aitr->first)
+        {
+
+            // note attribute type = this_aitr->first
+            AttributeStack& as = this_aitr->second;
+            if (as.changed)
+            {
+                as.changed = false;
+                if (!as.attributeVec.empty())
+                {
+                    const StateAttribute* new_attr = as.attributeVec.back().first;
+                    applyAttribute(new_attr,as);
+                }
+                else
+                {
+                    applyGlobalDefaultAttribute(as);
+                }
+            }
+
+            ++this_aitr;
+
+        }
+        else if (ds_aitr->first<this_aitr->first)
+        {
+
+            // ds_aitr->first is a new attribute, therefore
+            // need to insert a new attribute entry for ds_aitr->first.
+            AttributeStack& as = attributeMap[ds_aitr->first];
+
+            const StateAttribute* new_attr = ds_aitr->second.first.get();
+            applyAttribute(new_attr,as);
+
+            as.changed = true;
+
+            ++ds_aitr;
+
+        }
+        else
+        {
+            // this_mitr & ds_mitr refer to the same attribute, check the override
+            // if any otherwise just apply the incoming attribute
+
+            AttributeStack& as = this_aitr->second;
+
+            if (!as.attributeVec.empty() && (as.attributeVec.back().second & StateAttribute::OVERRIDE) && !(ds_aitr->second.second & StateAttribute::PROTECTED))
+            {
+                // override is on, just treat as a normal apply on attribute.
+
+                if (as.changed)
+                {
+                    as.changed = false;
+                    const StateAttribute* new_attr = as.attributeVec.back().first;
+                    applyAttribute(new_attr,as);
+                }
+            }
+            else
+            {
+                // no override on or no previous entry, therefore consider incoming attribute.
+                const StateAttribute* new_attr = ds_aitr->second.first.get();
+                if (applyAttribute(new_attr,as))
+                {
+                    as.changed = true;
+                }
+            }
+
+            ++this_aitr;
+            ++ds_aitr;
+        }
+    }
+
+    // iterator over the remaining state attributes to apply any previous changes.
+    for(;
+        this_aitr!=attributeMap.end();
+        ++this_aitr)
+    {
+        // note attribute type = this_aitr->first
+        AttributeStack& as = this_aitr->second;
+        if (as.changed)
+        {
+            as.changed = false;
+            if (!as.attributeVec.empty())
+            {
+                const StateAttribute* new_attr = as.attributeVec.back().first;
+                applyAttribute(new_attr,as);
+            }
+            else
+            {
+                applyGlobalDefaultAttribute(as);
+            }
+        }
+    }
+
+    // iterator over the remaining incoming attribute to apply any new attribute.
+    for(;
+        ds_aitr!=attributeList.end();
+        ++ds_aitr)
+    {
+        // ds_aitr->first is a new attribute, therefore
+        // need to insert a new attribute entry for ds_aitr->first.
+        AttributeStack& as = attributeMap[ds_aitr->first];
+
+        const StateAttribute* new_attr = ds_aitr->second.first.get();
+        applyAttribute(new_attr,as);
+
+        // will need to update this attribute on next apply so set it to changed.
+        as.changed = true;
+    }
+
+}
+
+inline void State::applyUniformList(UniformMap& uniformMap,const StateSet::UniformList& uniformList)
+{
+    if (!_lastAppliedProgramObject) return;
+
+    StateSet::UniformList::const_iterator ds_aitr=uniformList.begin();
+
+    UniformMap::iterator this_aitr=uniformMap.begin();
+
+    while (this_aitr!=uniformMap.end() && ds_aitr!=uniformList.end())
+    {
+        if (this_aitr->first<ds_aitr->first)
+        {
+            // note attribute type = this_aitr->first
+            UniformStack& as = this_aitr->second;
+            if (!as.uniformVec.empty())
+            {
+                _lastAppliedProgramObject->apply(*as.uniformVec.back().first);
+            }
+
+            ++this_aitr;
+
+        }
+        else if (ds_aitr->first<this_aitr->first)
+        {
+            _lastAppliedProgramObject->apply(*(ds_aitr->second.first.get()));
+
+            ++ds_aitr;
+        }
+        else
+        {
+            // this_mitr & ds_mitr refer to the same attribute, check the override
+            // if any otherwise just apply the incoming attribute
+
+            UniformStack& as = this_aitr->second;
+
+            if (!as.uniformVec.empty() && (as.uniformVec.back().second & StateAttribute::OVERRIDE) && !(ds_aitr->second.second & StateAttribute::PROTECTED))
+            {
+                // override is on, just treat as a normal apply on uniform.
+                _lastAppliedProgramObject->apply(*as.uniformVec.back().first);
+            }
+            else
+            {
+                // no override on or no previous entry, therefore consider incoming attribute.
+                _lastAppliedProgramObject->apply(*(ds_aitr->second.first.get()));
+            }
+
+            ++this_aitr;
+            ++ds_aitr;
+        }
+    }
+
+    // iterator over the remaining state attributes to apply any previous changes.
+    for(;
+        this_aitr!=uniformMap.end();
+        ++this_aitr)
+    {
+        // note attribute type = this_aitr->first
+        UniformStack& as = this_aitr->second;
+        if (!as.uniformVec.empty())
+        {
+            _lastAppliedProgramObject->apply(*as.uniformVec.back().first);
+        }
+    }
+
+    // iterator over the remaining incoming attribute to apply any new attribute.
+    for(;
+        ds_aitr!=uniformList.end();
+        ++ds_aitr)
+    {
+        _lastAppliedProgramObject->apply(*(ds_aitr->second.first.get()));
+    }
+
+}
+
+inline void State::applyModeMap(ModeMap& modeMap)
+{
+    for(ModeMap::iterator mitr=modeMap.begin();
+        mitr!=modeMap.end();
+        ++mitr)
+    {
+        // note GLMode = mitr->first
+        ModeStack& ms = mitr->second;
+        if (ms.changed)
+        {
+            ms.changed = false;
+            if (!ms.valueVec.empty())
+            {
+                bool new_value = ms.valueVec.back() & StateAttribute::ON;
+                applyMode(mitr->first,new_value,ms);
+            }
+            else
+            {
+                // assume default of disabled.
+                applyMode(mitr->first,ms.global_default_value,ms);
+            }
+
+        }
+    }
+}
+
+inline void State::applyAttributeMap(AttributeMap& attributeMap)
+{
+    for(AttributeMap::iterator aitr=attributeMap.begin();
+        aitr!=attributeMap.end();
+        ++aitr)
+    {
+        AttributeStack& as = aitr->second;
+        if (as.changed)
+        {
+            as.changed = false;
+            if (!as.attributeVec.empty())
+            {
+                const StateAttribute* new_attr = as.attributeVec.back().first;
+                applyAttribute(new_attr,as);
+            }
+            else
+            {
+                applyGlobalDefaultAttribute(as);
+            }
+
+        }
+    }
+}
+
+inline void State::applyUniformMap(UniformMap& uniformMap)
+{
+    if (!_lastAppliedProgramObject) return;
+
+    for(UniformMap::iterator aitr=uniformMap.begin();
+        aitr!=uniformMap.end();
+        ++aitr)
+    {
+        UniformStack& as = aitr->second;
+        if (!as.uniformVec.empty())
+        {
+            _lastAppliedProgramObject->apply(*as.uniformVec.back().first);
+        }
+    }
+}
+
+
+}
+
+#endif

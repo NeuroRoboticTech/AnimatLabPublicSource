@@ -1,0 +1,32 @@
+/* -*-c++-*- OpenSceneGraph - Copyright (C) 1998-2006 Robert Osfield 
+ *
+ * This library is open source and may be redistributed and/or modified under  
+ * the terms of the OpenSceneGraph Public License (OSGPL) version 0.0 or 
+ * (at your option) any later version.  The full license is in LICENSE file
+ * included with this distribution, and on the openscenegraph.org website.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+ * OpenSceneGraph Public License for more details.
+*/
+
+#ifndef OSG_GLU
+#define OSG_GLU 1
+
+#include <osg/GL>
+
+#if defined(__APPLE__) || \
+    (defined (_AIX) && !defined (_AIX51))
+    #include <OpenGL/glu.h>
+#else
+    #include <GL/glu.h>
+#endif
+
+#if defined(GLU_TESS_CALLBACK_TRIPLEDOT)
+    typedef void (APIENTRY *GLU_TESS_CALLBACK)(...);
+#else
+    typedef void (APIENTRY *GLU_TESS_CALLBACK)();
+#endif
+
+#endif  // __osgGLU_h

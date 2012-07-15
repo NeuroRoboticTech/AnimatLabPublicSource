@@ -1,0 +1,547 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\AlphaFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\AnimationPath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\AutoTransform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Billboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\BlendColor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\BlendEquation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\BlendFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Box.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\CameraView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Capsule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\ClearNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\ClipNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\ClipPlane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\ClusterCullingCallback.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\ColorMask.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\ColorMatrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\CompositeShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Cone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\ConvexPlanarOccluder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\CoordinateSystemNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Cylinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\CullFace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Depth.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Drawable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\EllipsoidModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Fog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\FragmentProgram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\FrontFace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Geode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Geometry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Group.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\HeightField.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\ImageSequence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Light.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\LightModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\LightSource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\LineStipple.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\LineWidth.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\LOD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Matrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\MatrixTransform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\NodeCallback.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Node.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\OccluderNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\OcclusionQueryNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\PagedLOD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Point.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\PointSprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\PolygonMode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\PolygonOffset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\PositionAttitudeTransform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Program.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Projection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\ProxyNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\ReaderWriterOSG.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Scissor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Sequence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\ShadeModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\ShapeDrawable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Sphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\StateAttribute.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\StateSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Stencil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Switch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\TessellationHints.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\TexEnvCombine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\TexEnv.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\TexEnvFilter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\TexGen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\TexGenNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\TexMat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Texture1D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Texture2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Texture3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\TextureCubeMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\TextureRectangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\TransferFunction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Uniform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\VertexProgram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\osgPlugins\osg\Viewport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\src\osgPlugins\osg\Matrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\..\..\src\osgPlugins\osg\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4F308182-CD01-49ED-8D03-50B7944EE921}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{01EA27C8-D1A9-4FE8-9C3C-1BC69AB54CB0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\src\osgPlugins\osg\AlphaFunc.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\AnimationPath.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\AutoTransform.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Billboard.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\BlendColor.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\BlendEquation.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\BlendFunc.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Box.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\CameraView.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Capsule.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\ClearNode.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\ClipNode.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\ClipPlane.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\ClusterCullingCallback.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\ColorMask.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\ColorMatrix.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\CompositeShape.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Cone.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\ConvexPlanarOccluder.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\CoordinateSystemNode.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Cylinder.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\CullFace.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Depth.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Drawable.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\EllipsoidModel.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Fog.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\FragmentProgram.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\FrontFace.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Geode.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Geometry.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Group.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\HeightField.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Image.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\ImageSequence.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Light.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\LightModel.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\LightSource.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\LineStipple.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\LineWidth.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\LOD.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Material.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Matrix.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\MatrixTransform.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\NodeCallback.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Node.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Object.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\OccluderNode.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\OcclusionQueryNode.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\PagedLOD.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Point.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\PointSprite.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\PolygonMode.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\PolygonOffset.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\PositionAttitudeTransform.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Program.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Projection.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\ProxyNode.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\ReaderWriterOSG.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Scissor.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Sequence.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\ShadeModel.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\ShapeDrawable.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Sphere.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\StateAttribute.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\StateSet.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Stencil.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Switch.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\TessellationHints.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\TexEnvCombine.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\TexEnv.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\TexEnvFilter.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\TexGen.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\TexGenNode.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\TexMat.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Texture1D.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Texture2D.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Texture3D.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\TextureCubeMap.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\TextureRectangle.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\TransferFunction.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Transform.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Uniform.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\VertexProgram.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\src\osgPlugins\osg\Viewport.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

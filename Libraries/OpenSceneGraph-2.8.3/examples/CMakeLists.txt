@@ -1,0 +1,212 @@
+#######################################################
+# this are setting used in SETUP_EXAMPLE macro
+#######################################################
+SET(TARGET_DEFAULT_PREFIX "example_")
+SET(TARGET_DEFAULT_LABEL_PREFIX "Examples")
+
+SET(TARGET_COMMON_LIBRARIES 
+    OpenThreads
+    osg 
+    osgDB 
+    osgUtil
+    osgGA
+    osgViewer 
+    osgText 
+)
+
+IF(DYNAMIC_OPENSCENEGRAPH)
+
+    ADD_SUBDIRECTORY(osg2cpp)
+    ADD_SUBDIRECTORY(osganimate)
+    ADD_SUBDIRECTORY(osgautocapture)
+    ADD_SUBDIRECTORY(osgautotransform)
+    ADD_SUBDIRECTORY(osgbillboard)
+    ADD_SUBDIRECTORY(osgblendequation)
+    ADD_SUBDIRECTORY(osgcallback)
+    ADD_SUBDIRECTORY(osgcamera)
+    ADD_SUBDIRECTORY(osgcatch)
+    ADD_SUBDIRECTORY(osgclip)
+    ADD_SUBDIRECTORY(osgcompositeviewer)
+    ADD_SUBDIRECTORY(osgcopy)
+    ADD_SUBDIRECTORY(osgcubemap)
+    ADD_SUBDIRECTORY(osgdelaunay)
+    ADD_SUBDIRECTORY(osgcluster)
+    ADD_SUBDIRECTORY(osgdepthpartition)
+    ADD_SUBDIRECTORY(osgdepthpeeling)
+    ADD_SUBDIRECTORY(osgdrawinstanced)
+    ADD_SUBDIRECTORY(osgdistortion)
+    ADD_SUBDIRECTORY(osgfadetext)
+    ADD_SUBDIRECTORY(osgfont)
+    ADD_SUBDIRECTORY(osgforest)
+    ADD_SUBDIRECTORY(osgfxbrowser)
+    ADD_SUBDIRECTORY(osggameoflife)
+    ADD_SUBDIRECTORY(osggeodemo)
+    ADD_SUBDIRECTORY(osggeometry)
+    ADD_SUBDIRECTORY(osggeometryshaders)
+    ADD_SUBDIRECTORY(osghangglide)
+    ADD_SUBDIRECTORY(osghud)
+    ADD_SUBDIRECTORY(osgimagesequence)
+    ADD_SUBDIRECTORY(osgimpostor)
+    ADD_SUBDIRECTORY(osgintersection)
+    ADD_SUBDIRECTORY(osgkdtree)
+    ADD_SUBDIRECTORY(osgkeyboard)
+    ADD_SUBDIRECTORY(osgkeyboardmouse)
+    ADD_SUBDIRECTORY(osglauncher)
+    ADD_SUBDIRECTORY(osglight)
+    ADD_SUBDIRECTORY(osglightpoint)
+    ADD_SUBDIRECTORY(osglogicop)
+    ADD_SUBDIRECTORY(osglogo)
+    ADD_SUBDIRECTORY(osgmanipulator)
+    ADD_SUBDIRECTORY(osgmotionblur)
+    ADD_SUBDIRECTORY(osgmovie)
+    ADD_SUBDIRECTORY(osgmultiplerendertargets)
+    ADD_SUBDIRECTORY(osgmultitexture)
+    ADD_SUBDIRECTORY(osgmultitexturecontrol)
+    ADD_SUBDIRECTORY(osgoccluder)
+    ADD_SUBDIRECTORY(osgocclusionquery)
+    ADD_SUBDIRECTORY(osgpackeddepthstencil)
+    ADD_SUBDIRECTORY(osgpagedlod)
+    ADD_SUBDIRECTORY(osgparametric)
+    ADD_SUBDIRECTORY(osgparticle)
+    ADD_SUBDIRECTORY(osgparticleeffects)
+    ADD_SUBDIRECTORY(osgphotoalbum)
+    ADD_SUBDIRECTORY(osgpick)
+    ADD_SUBDIRECTORY(osgplanets)
+    ADD_SUBDIRECTORY(osgpoints)
+    ADD_SUBDIRECTORY(osgpointsprite)
+    ADD_SUBDIRECTORY(osgprecipitation)
+    ADD_SUBDIRECTORY(osgprerender)
+    ADD_SUBDIRECTORY(osgprerendercubemap)
+    ADD_SUBDIRECTORY(osgreflect)
+    ADD_SUBDIRECTORY(osgrobot)
+    ADD_SUBDIRECTORY(osgscalarbar)
+    ADD_SUBDIRECTORY(osgscreencapture)
+    ADD_SUBDIRECTORY(osgscribe)
+    ADD_SUBDIRECTORY(osgsequence)
+    ADD_SUBDIRECTORY(osgshaders)
+    ADD_SUBDIRECTORY(osgshaderterrain)
+    ADD_SUBDIRECTORY(osgshadow)
+    ADD_SUBDIRECTORY(osgshape)
+    ADD_SUBDIRECTORY(osgsharedarray)
+    ADD_SUBDIRECTORY(osgsimplifier)
+    ADD_SUBDIRECTORY(osgsimulation)
+    ADD_SUBDIRECTORY(osgsidebyside)
+    ADD_SUBDIRECTORY(osgslice)
+    ADD_SUBDIRECTORY(osgspacewarp)
+    ADD_SUBDIRECTORY(osgspheresegment)
+    ADD_SUBDIRECTORY(osgspotlight)
+    ADD_SUBDIRECTORY(osgstereoimage)
+    ADD_SUBDIRECTORY(osgstereomatch)
+    ADD_SUBDIRECTORY(osgteapot)
+    ADD_SUBDIRECTORY(osgterrain)
+    ADD_SUBDIRECTORY(osgtessellate)
+    ADD_SUBDIRECTORY(osgtext)
+    ADD_SUBDIRECTORY(osgtext3D)
+    ADD_SUBDIRECTORY(osgtexture1D)
+    ADD_SUBDIRECTORY(osgtexture2D)
+    ADD_SUBDIRECTORY(osgtexture3D)
+    ADD_SUBDIRECTORY(osgtexturerectangle)
+    ADD_SUBDIRECTORY(osgthirdpersonview)
+    ADD_SUBDIRECTORY(osgvertexprogram)
+    ADD_SUBDIRECTORY(osgvolume)
+    ADD_SUBDIRECTORY(osgwindows)
+    ADD_SUBDIRECTORY(osganimationhardware)
+    ADD_SUBDIRECTORY(osganimationtimeline)
+    ADD_SUBDIRECTORY(osganimationnode)
+    ADD_SUBDIRECTORY(osganimationmakepath)
+    ADD_SUBDIRECTORY(osganimationskinning)
+    ADD_SUBDIRECTORY(osganimationsolid)
+    ADD_SUBDIRECTORY(osganimationviewer)
+    ADD_SUBDIRECTORY(osgbrowser)
+    ADD_SUBDIRECTORY(osgwidgetaddremove)
+    ADD_SUBDIRECTORY(osgwidgetbox)
+    ADD_SUBDIRECTORY(osgwidgetcanvas)
+    ADD_SUBDIRECTORY(osgwidgetframe)
+    ADD_SUBDIRECTORY(osgwidgetinput)
+    ADD_SUBDIRECTORY(osgwidgetlabel)
+    ADD_SUBDIRECTORY(osgwidgetmessagebox)
+    ADD_SUBDIRECTORY(osgwidgetmenu)
+    ADD_SUBDIRECTORY(osgwidgetnotebook)
+    ADD_SUBDIRECTORY(osgwidgetperformance)
+    ADD_SUBDIRECTORY(osgwidgetscrolled)
+    ADD_SUBDIRECTORY(osgwidgetshader)
+    ADD_SUBDIRECTORY(osgwidgetstyled)
+    ADD_SUBDIRECTORY(osgwidgettable)
+    ADD_SUBDIRECTORY(osgwidgetwindow)
+
+    IF(OSG_CPP_EXCEPTIONS_AVAILABLE)
+        ADD_SUBDIRECTORY(osgunittests)
+        ADD_SUBDIRECTORY(osgmemorytest)
+    ENDIF()
+
+    ADD_SUBDIRECTORY(osgpdf)
+    
+    IF   (BUILD_OSG_WRAPPERS)
+        ADD_SUBDIRECTORY(osgintrospection)
+    ENDIF(BUILD_OSG_WRAPPERS)
+
+    IF   (GLUT_FOUND)
+        ADD_SUBDIRECTORY(osgviewerGLUT)
+    ENDIF(GLUT_FOUND)
+
+    IF   (SDL_FOUND)
+        ADD_SUBDIRECTORY(osgviewerSDL)
+    ENDIF(SDL_FOUND)
+
+    IF   (GTKGL_FOUND)
+        ADD_SUBDIRECTORY(osgviewerGTK)
+    ENDIF(GTKGL_FOUND)
+
+    IF   (FOX_FOUND)
+        ADD_SUBDIRECTORY(osgviewerFOX)
+    ENDIF(FOX_FOUND)
+
+    IF   (wxWidgets_FOUND)
+        ADD_SUBDIRECTORY(osgviewerWX)
+    ENDIF(wxWidgets_FOUND)
+
+    IF   (QT_FOUND)
+        OPTION(BUILD_QT_EXAMPLES "Enable the build of the examples that depend on Qt" ON)
+
+        IF (BUILD_QT_EXAMPLES AND QT_QTOPENGL_LIBRARY)
+            ADD_SUBDIRECTORY(osgviewerQT)
+        ENDIF()
+    ENDIF()
+
+    IF   (FLTK_FOUND)
+        ADD_SUBDIRECTORY(osgviewerFLTK)
+    ENDIF(FLTK_FOUND)
+
+    IF   (WIN32)
+
+        OPTION(BUILD_MFC_EXAMPLE "Enable the build of the MFC Example" OFF)
+
+        IF   (BUILD_MFC_EXAMPLE)        
+            ADD_SUBDIRECTORY(osgviewerMFC)
+        ENDIF(BUILD_MFC_EXAMPLE)
+
+    ENDIF(WIN32)
+
+    IF   (APPLE)
+        ADD_SUBDIRECTORY(osgviewerCocoa)
+    ENDIF(APPLE)
+
+
+
+    IF   (LIBVNCSERVER_FOUND)
+        ADD_SUBDIRECTORY(osgvnc)
+    ENDIF(LIBVNCSERVER_FOUND)
+
+
+    #ADD_SUBDIRECTORY(osgcegui)
+
+    #to add subject to find socket#ADD_SUBDIRECTORY(osgcluster)
+
+ELSE(DYNAMIC_OPENSCENEGRAPH)
+    #needed on win32 or the linker get confused by _declspec declarations
+    ADD_DEFINITIONS(-DOSG_LIBRARY_STATIC)
+
+    ADD_SUBDIRECTORY(osgstaticviewer)
+    
+ENDIF(DYNAMIC_OPENSCENEGRAPH)
+

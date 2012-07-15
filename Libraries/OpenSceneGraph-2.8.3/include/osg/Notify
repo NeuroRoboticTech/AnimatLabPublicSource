@@ -1,0 +1,74 @@
+/* -*-c++-*- OpenSceneGraph - Copyright (C) 1998-2006 Robert Osfield 
+ *
+ * This library is open source and may be redistributed and/or modified under  
+ * the terms of the OpenSceneGraph Public License (OSGPL) version 0.0 or 
+ * (at your option) any later version.  The full license is in LICENSE file
+ * included with this distribution, and on the openscenegraph.org website.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+ * OpenSceneGraph Public License for more details.
+*/
+
+#ifndef OSG_NOTIFY
+#define OSG_NOTIFY 1
+
+#include <osg/Export>
+
+#include <ostream>
+
+namespace osg {
+
+/** Range of notify levels from DEBUG_FP through to FATAL, ALWAYS
+  * is reserved for forcing the absorption of all messages.  The
+  * keywords are also used verbatim when specified by the environmental
+  * variable OSGNOTIFYLEVEL.  See documentation on osg::notify() for
+  * further details.
+  */
+enum NotifySeverity {
+    ALWAYS=0,
+    FATAL=1,
+    WARN=2,
+    NOTICE=3,
+    INFO=4,
+    DEBUG_INFO=5,
+    DEBUG_FP=6
+};
+
+/** set the notify level, overriding the default or the value set by
+  * the environmental variable OSGNOTIFYLEVEL.
+  */
+extern OSG_EXPORT void setNotifyLevel(NotifySeverity severity);
+
+/** get the notify level. */
+extern OSG_EXPORT NotifySeverity getNotifyLevel();
+
+/** is notification enabled, given the current setNotifyLevel() setting? */
+extern OSG_EXPORT bool isNotifyEnabled(NotifySeverity severity);
+
+/** initialize notify level. */
+extern OSG_EXPORT bool initNotifyLevel();
+
+/** notify messaging function for providing fatal through to verbose
+  * debugging messages.  Level of messages sent to the console can
+  * be controlled by setting the NotifyLevel either within your 
+  * application or via the an environmental variable. For instance
+  * setenv OSGNOTIFYLEVEL DEBUG (for tsh), export OSGNOTIFYLEVEL=DEBUG
+  * (for bourne shell) or set OSGNOTIFYLEVEL=DEBUG (for Windows) all
+  * tell the osg to redirect all debugging and more important messages
+  * to the console (useful for debugging :-)  setting ALWAYS will force
+  * all messages to be absorbed, which might be appropriate for final
+  * applications.  Default NotifyLevel is NOTICE.  Check the enum 
+  * NotifySeverity for full range of possibilities.  To use the notify
+  * with your code simply use the notify function as a normal file
+  * stream (like cout) i.e osg::notify(osg::DEBUG) << "Hello Bugs!"<<endl;
+  */
+  
+extern OSG_EXPORT std::ostream& notify(const NotifySeverity severity);
+
+inline std::ostream& notify(void) { return notify(osg::INFO); }
+
+}
+
+#endif

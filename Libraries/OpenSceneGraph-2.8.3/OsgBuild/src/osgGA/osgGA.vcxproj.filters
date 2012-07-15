@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\osgGA\AnimationPathManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgGA\DriveManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgGA\EventQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgGA\EventVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgGA\FlightManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgGA\GUIEventAdapter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgGA\GUIEventHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgGA\KeySwitchMatrixManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgGA\MatrixManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgGA\NodeTrackerManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgGA\StateSetManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgGA\TerrainManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgGA\TrackballManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgGA\UFOManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgGA\Version.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osgGA\CameraViewSwitchManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\..\src\osgGA\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4F308182-CD01-49ED-8D03-50B7944EE921}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{01EA27C8-D1A9-4FE8-9C3C-1BC69AB54CB0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\include\osgGA\AnimationPathManipulator">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgGA\DriveManipulator">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgGA\EventQueue">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgGA\EventVisitor">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgGA\Export">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgGA\FlightManipulator">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgGA\GUIActionAdapter">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgGA\GUIEventAdapter">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgGA\GUIEventHandler">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgGA\KeySwitchMatrixManipulator">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgGA\MatrixManipulator">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgGA\NodeTrackerManipulator">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgGA\StateSetManipulator">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgGA\TerrainManipulator">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgGA\TrackballManipulator">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgGA\UFOManipulator">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgGA\Version">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osgGA\CameraViewSwitchManipulator">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgGA\AnimationPathManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgGA\DriveManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgGA\EventQueue.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgGA\EventVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgGA\FlightManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgGA\GUIEventAdapter.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgGA\GUIEventHandler.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgGA\KeySwitchMatrixManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgGA\MatrixManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgGA\NodeTrackerManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgGA\StateSetManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgGA\TerrainManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgGA\TrackballManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgGA\UFOManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgGA\Version.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osgGA\CameraViewSwitchManipulator.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

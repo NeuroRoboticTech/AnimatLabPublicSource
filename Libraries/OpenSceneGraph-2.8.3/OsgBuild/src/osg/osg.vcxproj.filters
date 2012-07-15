@@ -1,0 +1,1288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\osg\AlphaFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\AnimationPath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\ApplicationUsage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\ArgumentParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Array.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\AudioStream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\AutoTransform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Billboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\BlendColor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\BlendEquation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\BlendFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\BufferObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\CameraView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\ClampColor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\ClearNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\ClipNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\ClipPlane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\ClusterCullingCallback.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\CollectOccludersVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\ColorMask.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\ColorMatrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\ComputeBoundsVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\ConvexPlanarOccluder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\ConvexPlanarPolygon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\CoordinateSystemNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\CopyOp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\CullFace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\CullingSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\CullSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\CullStack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\DeleteHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Depth.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\DisplaySettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Drawable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\DrawPixels.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\dxtctool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Fog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\FragmentProgram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\FrameBufferObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\FrameStamp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\FrontFace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Geode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Geometry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\GL2Extensions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\GLExtensions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\GLObjects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\GraphicsContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\GraphicsThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Group.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Hint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\ImageSequence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\ImageStream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\ImageUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\KdTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Light.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\LightModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\LightSource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\LineSegment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\LineStipple.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\LineWidth.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\LOD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\LogicOp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Math.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Matrixd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\MatrixDecomposition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Matrixf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\MatrixTransform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Multisample.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\NodeCallback.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Node.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\NodeTrackerCallback.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\NodeVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Notify.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\OccluderNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\OcclusionQueryNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\OperationThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\PagedLOD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Point.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\PointSprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\PolygonMode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\PolygonOffset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\PolygonStipple.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\PositionAttitudeTransform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\PrimitiveSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Program.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Projection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\ProxyNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Quat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Referenced.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Scissor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Sequence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\ShadeModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\ShadowVolumeOccluder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Shape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\ShapeDrawable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\StateAttribute.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\State.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\StateSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Stats.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Stencil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\StencilTwoSided.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Switch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\TexEnvCombine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\TexEnv.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\TexEnvFilter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\TexGen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\TexGenNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\TexMat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Texture1D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Texture2DArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Texture2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Texture3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\TextureCubeMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\TextureRectangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\TransferFunction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Uniform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Version.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\VertexProgram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\View.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\osg\Viewport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\osg\dxtctool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\..\src\osg\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4F308182-CD01-49ED-8D03-50B7944EE921}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{01EA27C8-D1A9-4FE8-9C3C-1BC69AB54CB0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\include\osg\AlphaFunc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\AnimationPath">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ApplicationUsage">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ArgumentParser">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Array">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\AudioStream">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\AutoTransform">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Billboard">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\BlendColor">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\BlendEquation">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\BlendFunc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\BoundingBox">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\BoundingSphere">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\BoundsChecking">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\buffered_value">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\BufferObject">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Camera">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\CameraNode">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\CameraView">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ClampColor">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ClearNode">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ClipNode">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ClipPlane">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ClusterCullingCallback">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\CollectOccludersVisitor">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ColorMask">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ColorMatrix">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ComputeBoundsVisitor">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ConvexPlanarOccluder">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ConvexPlanarPolygon">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\CoordinateSystemNode">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\CopyOp">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\CullFace">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\CullingSet">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\CullSettings">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\CullStack">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\DeleteHandler">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Depth">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\DisplaySettings">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Drawable">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\DrawPixels">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Endian">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Export">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\fast_back_stack">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Fog">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\FragmentProgram">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\FrameBufferObject">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\FrameStamp">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\FrontFace">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Geode">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Geometry">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\GL">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\GL2Extensions">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\GLExtensions">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\GLObjects">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\GLU">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\GraphicsContext">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\GraphicsThread">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Group">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Hint">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Image">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ImageSequence">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ImageStream">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ImageUtils">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\io_utils">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\KdTree">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Light">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\LightModel">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\LightSource">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\LineSegment">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\LineStipple">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\LineWidth">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\LOD">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\LogicOp">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Material">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Math">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Matrix">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Matrixd">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Matrixf">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\MatrixTransform">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\MixinVector">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Multisample">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Node">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\NodeCallback">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\NodeTrackerCallback">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\NodeVisitor">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Notify">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Object">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\observer_ptr">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\OccluderNode">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\OcclusionQueryNode">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\OperationThread">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\PagedLOD">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Plane">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Point">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\PointSprite">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\PolygonMode">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\PolygonOffset">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\PolygonStipple">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Polytope">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\PositionAttitudeTransform">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\PrimitiveSet">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Program">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Projection">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ProxyNode">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Quat">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Referenced">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ref_ptr">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\RenderInfo">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Scissor">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Sequence">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ShadeModel">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Shader">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ShadowVolumeOccluder">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Shape">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\ShapeDrawable">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\State">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\StateAttribute">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\StateAttributeCallback">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\StateSet">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Stats">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Stencil">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\StencilTwoSided">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Switch">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\TemplatePrimitiveFunctor">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\TexEnv">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\TexEnvCombine">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\TexEnvFilter">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\TexGen">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\TexGenNode">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\TexMat">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Texture">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Texture1D">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Texture2D">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Texture2DArray">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Texture3D">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\TextureCubeMap">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\TextureRectangle">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Timer">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\TransferFunction">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Transform">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\TriangleFunctor">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\TriangleIndexFunctor">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Uniform">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Vec2">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Vec2b">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Vec2d">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Vec2f">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Vec2s">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Vec3">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Vec3b">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Vec3d">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Vec3f">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Vec3s">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Vec4">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Vec4b">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Vec4d">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Vec4f">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Vec4s">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Vec4ub">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Version">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\VertexProgram">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\View">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\include\osg\Viewport">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\include\osg\Config">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\AlphaFunc.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\AnimationPath.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\ApplicationUsage.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\ArgumentParser.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Array.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\AudioStream.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\AutoTransform.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Billboard.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\BlendColor.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\BlendEquation.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\BlendFunc.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\BufferObject.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\CameraView.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\ClampColor.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\ClearNode.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\ClipNode.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\ClipPlane.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\ClusterCullingCallback.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\CollectOccludersVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\ColorMask.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\ColorMatrix.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\ComputeBoundsVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\ConvexPlanarOccluder.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\ConvexPlanarPolygon.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\CoordinateSystemNode.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\CopyOp.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\CullFace.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\CullingSet.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\CullSettings.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\CullStack.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\DeleteHandler.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Depth.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\DisplaySettings.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Drawable.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\DrawPixels.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\dxtctool.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Fog.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\FragmentProgram.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\FrameBufferObject.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\FrameStamp.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\FrontFace.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Geode.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Geometry.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\GL2Extensions.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\GLExtensions.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\GLObjects.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\GraphicsContext.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\GraphicsThread.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Group.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Hint.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Image.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\ImageSequence.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\ImageStream.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\ImageUtils.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\KdTree.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Light.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\LightModel.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\LightSource.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\LineSegment.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\LineStipple.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\LineWidth.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\LOD.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\LogicOp.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Material.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Math.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Matrixd.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\MatrixDecomposition.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Matrixf.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\MatrixTransform.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Multisample.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\NodeCallback.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Node.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\NodeTrackerCallback.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\NodeVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Notify.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Object.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\OccluderNode.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\OcclusionQueryNode.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\OperationThread.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\PagedLOD.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Point.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\PointSprite.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\PolygonMode.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\PolygonOffset.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\PolygonStipple.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\PositionAttitudeTransform.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\PrimitiveSet.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Program.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Projection.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\ProxyNode.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Quat.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Referenced.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Scissor.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Sequence.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\ShadeModel.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\ShadowVolumeOccluder.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Shape.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\ShapeDrawable.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\StateAttribute.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\State.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\StateSet.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Stats.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Stencil.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\StencilTwoSided.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Switch.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\TexEnvCombine.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\TexEnv.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\TexEnvFilter.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\TexGen.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\TexGenNode.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\TexMat.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Texture1D.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Texture2DArray.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Texture2D.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Texture3D.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\TextureCubeMap.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\TextureRectangle.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Timer.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\TransferFunction.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Transform.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Uniform.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Version.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\VertexProgram.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\View.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\src\osg\Viewport.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

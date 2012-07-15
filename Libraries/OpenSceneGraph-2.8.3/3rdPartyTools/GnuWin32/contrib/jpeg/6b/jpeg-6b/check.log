@@ -1,0 +1,13 @@
+rm -f testout*
+./djpeg -dct int -ppm -outfile testout.ppm  ./testorig.jpg
+./djpeg -dct int -bmp -colors 256 -outfile testout.bmp  ./testorig.jpg
+./cjpeg -dct int -outfile testout.jpg  ./testimg.ppm
+./djpeg -dct int -ppm -outfile testoutp.ppm ./testprog.jpg
+./cjpeg -dct int -progressive -opt -outfile testoutp.jpg ./testimg.ppm
+./jpegtran -outfile testoutt.jpg ./testprog.jpg
+cmp ./testimg.ppm testout.ppm
+cmp ./testimg.bmp testout.bmp
+cmp ./testimg.jpg testout.jpg
+cmp ./testimg.ppm testoutp.ppm
+cmp ./testimgp.jpg testoutp.jpg
+cmp ./testorig.jpg testoutt.jpg

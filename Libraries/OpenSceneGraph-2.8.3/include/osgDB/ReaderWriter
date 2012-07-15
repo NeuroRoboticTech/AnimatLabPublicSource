@@ -1,0 +1,365 @@
+/* -*-c++-*- OpenSceneGraph - Copyright (C) 1998-2006 Robert Osfield 
+ *
+ * This library is open source and may be redistributed and/or modified under  
+ * the terms of the OpenSceneGraph Public License (OSGPL) version 0.0 or 
+ * (at your option) any later version.  The full license is in LICENSE file
+ * included with this distribution, and on the openscenegraph.org website.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+ * OpenSceneGraph Public License for more details.
+*/
+
+#ifndef OSGDB_READERWRITER
+#define OSGDB_READERWRITER 1
+
+#include <osg/Image>
+#include <osg/Shape>
+#include <osg/Node>
+
+#include <osgDB/AuthenticationMap>
+
+#include <deque>
+#include <list>
+#include <iosfwd>
+
+namespace osgDB {
+
+class Archive;
+
+/** list of directories to search through which searching for files. */
+typedef std::deque<std::string> FilePathList;
+
+/** pure virtual base class for reading and writing of non native formats. */
+class OSGDB_EXPORT ReaderWriter : public osg::Object
+{
+    public:
+    
+    
+        ReaderWriter():
+            osg::Object(true) {}
+            
+        ReaderWriter(const ReaderWriter& rw,const osg::CopyOp& copyop=osg::CopyOp::SHALLOW_COPY):
+            osg::Object(rw,copyop) {}
+
+        virtual ~ReaderWriter();
+
+        META_Object(osgDB,ReaderWriter);
+
+        typedef std::map<std::string, std::string> FormatDescriptionMap;
+
+        /** return which protocols are supported by ReaderWriter. */
+        virtual const FormatDescriptionMap& supportedProtocols() const { return _supportedProtocols; }
+        
+        /** return which list of file extensions supported by ReaderWriter. */
+        virtual const FormatDescriptionMap& supportedExtensions() const { return _supportedExtensions; }
+        
+        /** return which list of file extensions supported by ReaderWriter. */
+        virtual const FormatDescriptionMap& supportedOptions() const { return _supportedOptions; }
+
+        /** return true if ReaderWriter accepts specified file extension.*/
+        virtual bool acceptsExtension(const std::string& /*extension*/) const;
+
+        /** Options base class used for passing options into plugins to control their operation.*/
+        class Options : public osg::Object
+        {
+            public:
+            
+            
+                /// bit mask for setting up which object types get cached by readObject/Image/HeightField/Node(filename) calls
+                enum CacheHintOptions
+                {   /// do not cache objects of any type
+                    CACHE_NONE          = 0,
+
+                    /// cache nodes loaded via readNode(filename)
+                    CACHE_NODES         = 1<<0,
+
+                    /// cache images loaded via readImage(filename)
+                    CACHE_IMAGES        = 1<<1,
+
+                    /// cache heightfield loaded via readHeightField(filename)
+                    CACHE_HEIGHTFIELDS  = 1<<2, 
+
+                    /// cache heightfield loaded via readHeightField(filename)
+                    CACHE_ARCHIVES      = 1<<3, 
+
+                    /// cache objects loaded via readObject(filename)
+                    CACHE_OBJECTS       = 1<<4, 
+
+                    /// cache shaders loaded via readShader(filename)
+                    CACHE_SHADERS       = 1<<5,
+
+                    /// cache on all read*(filename) calls
+                    CACHE_ALL           = CACHE_NODES |
+                                          CACHE_IMAGES |
+                                          CACHE_HEIGHTFIELDS |
+                                          CACHE_ARCHIVES |
+                                          CACHE_OBJECTS |
+                                          CACHE_SHADERS
+                };
+                
+                /// range of options of whether to build kdtrees automatically on loading
+                enum BuildKdTreesHint
+                {
+                    NO_PREFERENCE,
+                    DO_NOT_BUILD_KDTREES,
+                    BUILD_KDTREES
+                };
+            
+
+                Options():
+                    osg::Object(true),
+                    _objectCacheHint(CACHE_ARCHIVES),
+                    _buildKdTreesHint(NO_PREFERENCE) {}
+                    
+                Options(const std::string& str):
+                    osg::Object(true),
+                    _str(str), 
+                    _objectCacheHint(CACHE_ARCHIVES),
+                    _buildKdTreesHint(NO_PREFERENCE) {}
+                
+                Options(const Options& options,const osg::CopyOp& copyop=osg::CopyOp::SHALLOW_COPY):
+                    osg::Object(options,copyop),
+                    _str(options._str),
+                    _databasePaths(options._databasePaths),
+                    _objectCacheHint(options._objectCacheHint),
+                    _buildKdTreesHint(options._buildKdTreesHint),
+                    _pluginData(options._pluginData),
+                    _pluginStringData(options._pluginStringData){}
+
+                META_Object(osgDB,Options);
+
+                /** Set the general Options string.*/
+                void setOptionString(const std::string& str) { _str = str; }
+
+                /** Get the general Options string.*/
+                const std::string& getOptionString() const { return _str; }
+
+                /** Set the database path to use a hint of where to look when loading models.*/
+                void setDatabasePath(const std::string& str) { _databasePaths.clear();  _databasePaths.push_back(str); }
+
+                /** Get the database path which is used a hint of where to look when loading models.*/
+                FilePathList& getDatabasePathList() { return _databasePaths; }
+
+                /** Get the const database path which is used a hint of where to look when loading models.*/
+                const FilePathList& getDatabasePathList() const { return _databasePaths; }
+
+
+                /** Set whether the Registry::ObjectCache should be used by default.*/
+                void setObjectCacheHint(CacheHintOptions useObjectCache) { _objectCacheHint = useObjectCache; }
+
+                /** Get whether the Registry::ObjectCache should be used by default.*/
+                CacheHintOptions getObjectCacheHint() const { return _objectCacheHint; }
+
+
+                /** Set whether the KdTrees should be built for geometry in the loader model. */
+                void setBuildKdTreesHint(BuildKdTreesHint hint) { _buildKdTreesHint = hint; }
+
+                /** Get whether the KdTrees should be built for geometry in the loader model. */
+                BuildKdTreesHint getBuildKdTreesHint() const { return _buildKdTreesHint; }
+
+
+                /** Set the password map to be used by plugins when access files from secure locations.*/
+                void setAuthenticationMap(AuthenticationMap* authenticationMap) { _authenticationMap = authenticationMap; }
+
+                /** Get the password map to be used by plugins when access files from secure locations.*/
+                const AuthenticationMap* getAuthenticationMap() const { return _authenticationMap.get(); }
+
+
+                /** Sets a plugindata value PluginData with a string */
+                void setPluginData(const std::string& s, void* v) const { _pluginData[s] = v; }
+
+                /** Get a value from the PluginData */
+                void* getPluginData(const std::string& s) { return _pluginData[s]; }
+
+                /** Get a value from the PluginData */
+                const void* getPluginData(const std::string& s) const
+                {
+                    PluginDataMap::const_iterator itr = _pluginData.find(s);
+                    return (itr == _pluginData.end()) ? 0 : itr->second;
+                }
+
+                /** Remove a value from the PluginData */
+                void removePluginData(const std::string& s) const { _pluginData.erase(s); }
+
+
+                /** Sets a plugindata value PluginData with a string */
+                void setPluginStringData(const std::string& s, const std::string& v) const { _pluginStringData[s] = v; }
+
+                /** Get a string from the PluginStrData */
+                std::string getPluginStringData(const std::string& s) { return _pluginStringData[s]; }
+
+                /** Get a value from the PluginData */
+                const std::string getPluginStringData(const std::string& s) const
+                {
+                    PluginStringDataMap::const_iterator itr = _pluginStringData.find(s);
+                    return (itr == _pluginStringData.end()) ? std::string("") : itr->second;
+                }
+
+                /** Remove a value from the PluginData */
+                void removePluginStringData(const std::string& s) const { _pluginStringData.erase(s); }
+
+
+
+
+            protected:
+
+                virtual ~Options() {}
+
+                std::string                     _str;
+                FilePathList                    _databasePaths;
+                CacheHintOptions                _objectCacheHint;
+                BuildKdTreesHint                _buildKdTreesHint;
+                osg::ref_ptr<AuthenticationMap> _authenticationMap;
+
+                typedef std::map<std::string,void*> PluginDataMap;
+                mutable PluginDataMap _pluginData;
+                typedef std::map<std::string,std::string> PluginStringDataMap;
+                mutable PluginStringDataMap _pluginStringData;
+
+        };
+
+
+        class OSGDB_EXPORT ReadResult
+        {
+            public:
+
+                enum ReadStatus
+                {
+                    FILE_NOT_HANDLED, //!< File is not appropriate for this file reader, due to some incompatibility, but *not* a read error.
+                    FILE_NOT_FOUND, //!< File could not be found or could not be read.
+                    FILE_LOADED, //!< File successfully found, loaded, and converted into osg.
+                    FILE_LOADED_FROM_CACHE, //!< File found in cache and returned.
+                    ERROR_IN_READING_FILE, //!< File found, loaded, but an error was encountered during processing.
+                    FILE_REQUESTED //!< Asyncronous file read has been requested, but returning immediatiely, keep polling plugin till file read has been completed.
+                };
+
+                ReadResult(ReadStatus status=FILE_NOT_HANDLED):_status(status) {}
+                ReadResult(const std::string& m):_status(ERROR_IN_READING_FILE),_message(m) {}
+                ReadResult(osg::Object* obj, ReadStatus status=FILE_LOADED):_status(status),_object(obj) {}
+                
+                ReadResult(const ReadResult& rr):_status(rr._status),_message(rr._message),_object(rr._object) {}
+                ReadResult& operator = (const ReadResult& rr) { if (this==&rr) return *this; _status=rr._status; _message=rr._message;_object=rr._object; return *this; }
+                
+                osg::Object* getObject();
+                osg::Image* getImage();
+                osg::HeightField* getHeightField();
+                osg::Node* getNode();
+                osgDB::Archive* getArchive();
+                osg::Shader* getShader();
+
+                bool validObject() { return _object.valid(); }
+                bool validImage() { return getImage()!=0; }
+                bool validHeightField() { return getHeightField()!=0; }
+                bool validNode() { return getNode()!=0; }
+                bool validArchive() { return getArchive()!=0; }
+                bool validShader() { return getShader()!=0; }
+
+                osg::Object* takeObject();
+                osg::Image* takeImage();
+                osg::HeightField* takeHeightField();
+                osg::Node* takeNode();
+                osgDB::Archive* takeArchive();
+                osg::Shader* takeShader();
+
+                std::string& message() { return _message; }
+                const std::string& message() const { return _message; }
+
+                ReadStatus status() const { return _status; }
+                bool success() const { return _status==FILE_LOADED || _status==FILE_LOADED_FROM_CACHE ; }
+                bool loadedFromCache() const { return _status==FILE_LOADED_FROM_CACHE; }
+                bool error() const { return _status==ERROR_IN_READING_FILE; }
+                bool notHandled() const { return _status==FILE_NOT_HANDLED; }
+                bool notFound() const { return _status==FILE_NOT_FOUND; }
+
+            protected:
+            
+                ReadStatus                  _status;
+                std::string                 _message;
+                osg::ref_ptr<osg::Object>   _object;
+
+        };
+
+        class WriteResult
+        {
+            public:
+
+                enum WriteStatus
+                {
+                    FILE_NOT_HANDLED,
+                    FILE_SAVED,
+                    ERROR_IN_WRITING_FILE
+                };
+
+                WriteResult(WriteStatus status=FILE_NOT_HANDLED):_status(status) {}
+                WriteResult(const std::string& m):_status(ERROR_IN_WRITING_FILE),_message(m) {}
+                
+                WriteResult(const WriteResult& rr):_status(rr._status),_message(rr._message) {}
+                WriteResult& operator = (const WriteResult& rr) { if (this==&rr) return *this; _status=rr._status; _message=rr._message; return *this; }
+                
+                std::string& message() { return _message; }
+                const std::string& message() const { return _message; }
+
+                WriteStatus status() const { return _status; }
+                bool success() const { return _status==FILE_SAVED; }
+                bool error() const { return _status==ERROR_IN_WRITING_FILE; }
+                bool notHandled() const { return _status==FILE_NOT_HANDLED; }
+
+            protected:
+            
+                WriteStatus                 _status;
+                std::string                 _message;
+        };
+
+        enum ArchiveStatus
+        {
+            READ,
+            WRITE,
+            CREATE
+        };
+
+        /** open an archive for reading, writing, or to create an empty archive for writing to.*/ 
+        virtual ReadResult openArchive(const std::string& /*fileName*/,ArchiveStatus, unsigned int =4096, const Options* =NULL) const { return ReadResult(ReadResult::FILE_NOT_HANDLED); }
+
+        /** open an archive for reading.*/ 
+        virtual ReadResult openArchive(std::istream& /*fin*/,const Options* =NULL) const { return ReadResult(ReadResult::FILE_NOT_HANDLED); }
+
+        virtual ReadResult readObject(const std::string& /*fileName*/,const Options* =NULL) const { return ReadResult(ReadResult::FILE_NOT_HANDLED); }
+        virtual ReadResult readImage(const std::string& /*fileName*/,const Options* =NULL) const { return ReadResult(ReadResult::FILE_NOT_HANDLED); }
+        virtual ReadResult readHeightField(const std::string& /*fileName*/,const Options* =NULL) const { return ReadResult(ReadResult::FILE_NOT_HANDLED); }
+        virtual ReadResult readNode(const std::string& /*fileName*/,const Options* =NULL) const { return ReadResult(ReadResult::FILE_NOT_HANDLED); }
+        virtual ReadResult readShader(const std::string& /*fileName*/,const Options* =NULL) const { return ReadResult(ReadResult::FILE_NOT_HANDLED); }
+
+        virtual WriteResult writeObject(const osg::Object& /*obj*/,const std::string& /*fileName*/,const Options* =NULL) const {return WriteResult(WriteResult::FILE_NOT_HANDLED); }
+        virtual WriteResult writeImage(const osg::Image& /*image*/,const std::string& /*fileName*/,const Options* =NULL) const {return WriteResult(WriteResult::FILE_NOT_HANDLED); }
+        virtual WriteResult writeHeightField(const osg::HeightField& /*heightField*/,const std::string& /*fileName*/,const Options* =NULL) const {return WriteResult(WriteResult::FILE_NOT_HANDLED); }
+        virtual WriteResult writeNode(const osg::Node& /*node*/,const std::string& /*fileName*/,const Options* =NULL) const { return WriteResult(WriteResult::FILE_NOT_HANDLED); }
+        virtual WriteResult writeShader(const osg::Shader& /*shader*/,const std::string& /*fileName*/,const Options* =NULL) const {return WriteResult(WriteResult::FILE_NOT_HANDLED); }
+
+        virtual ReadResult readObject(std::istream& /*fin*/,const Options* =NULL) const { return ReadResult(ReadResult::FILE_NOT_HANDLED); }
+        virtual ReadResult readImage(std::istream& /*fin*/,const Options* =NULL) const { return ReadResult(ReadResult::FILE_NOT_HANDLED); }
+        virtual ReadResult readHeightField(std::istream& /*fin*/,const Options* =NULL) const { return ReadResult(ReadResult::FILE_NOT_HANDLED); }
+        virtual ReadResult readNode(std::istream& /*fin*/,const Options* =NULL) const { return ReadResult(ReadResult::FILE_NOT_HANDLED); }
+        virtual ReadResult readShader(std::istream& /*fin*/,const Options* =NULL) const { return ReadResult(ReadResult::FILE_NOT_HANDLED); }
+
+        virtual WriteResult writeObject(const osg::Object& /*obj*/,std::ostream& /*fout*/,const Options* =NULL) const { return WriteResult(WriteResult::FILE_NOT_HANDLED); }
+        virtual WriteResult writeImage(const osg::Image& /*image*/,std::ostream& /*fout*/,const Options* =NULL) const { return WriteResult(WriteResult::FILE_NOT_HANDLED); }
+        virtual WriteResult writeHeightField(const osg::HeightField& /*heightField*/,std::ostream& /*fout*/,const Options* =NULL) const { return WriteResult(WriteResult::FILE_NOT_HANDLED); }
+        virtual WriteResult writeNode(const osg::Node& /*node*/,std::ostream& /*fout*/,const Options* =NULL) const { return WriteResult(WriteResult::FILE_NOT_HANDLED); }
+        virtual WriteResult writeShader(const osg::Shader& /*shader*/,std::ostream& /*fout*/,const Options* =NULL) const { return WriteResult(WriteResult::FILE_NOT_HANDLED); }
+
+    protected:
+    
+        void supportsProtocol(const std::string& fmt, const std::string& description);
+        void supportsExtension(const std::string& fmt, const std::string& description);
+        void supportsOption(const std::string& fmt, const std::string& description);
+
+        FormatDescriptionMap _supportedProtocols;
+        FormatDescriptionMap _supportedExtensions;
+        FormatDescriptionMap _supportedOptions;
+};
+
+}
+
+#endif // OSGDB_READERWRITER
