@@ -52,6 +52,8 @@ namespace VortexAnimatSim
 		virtual void StepVideoFrame();
 		virtual void SimulateEnd();
 
+		osg::NotifySeverity ConvertTraceLevelToOSG();
+
 	public:
 		VsSimulator();
 		virtual ~VsSimulator();

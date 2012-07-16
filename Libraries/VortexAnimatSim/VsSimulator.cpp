@@ -207,7 +207,7 @@ void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
 {
     osg::ArgumentParser arguments(&argc, (char **) argv);
 
-	osg::setNotifyLevel(osg::INFO);
+	osg::setNotifyLevel(ConvertTraceLevelToOSG());
 
     // set up the usage document, in case we need to print out how to use this program.
     arguments.getApplicationUsage()->setApplicationName(arguments.getApplicationName());
@@ -318,6 +318,26 @@ Vx::VxTriangleMesh *VsSimulator::CreatTriangleMeshFromOsg(osg::Node *osgNode)
 	return vxMesh;
 }
 
+osg::NotifySeverity VsSimulator::ConvertTraceLevelToOSG()
+{
+	int iLevel = Std_GetTraceLevel();
+
+	switch (iLevel)
+	{
+	case 0:
+		return osg::NotifySeverity::FATAL;
+	case 10:
+		return osg::NotifySeverity::WARN;
+	case 20:
+		return osg::NotifySeverity::INFO;
+	case 30:
+		return osg::NotifySeverity::DEBUG_INFO;
+	case 40:
+		return osg::NotifySeverity::DEBUG_FP;
+	default:
+		return osg::NotifySeverity::WARN;
+	}
+}
 
 Vx::VxConvexMesh *VsSimulator::CreateConvexMeshFromOsg(osg::Node *osgNode)
 {
