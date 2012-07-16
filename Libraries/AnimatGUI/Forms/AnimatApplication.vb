@@ -479,7 +479,7 @@ Namespace Forms
             '
             'ViewToolStripMenuItem
             '
-            Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RunSimulationToolStripMenuItem, Me.ToolStripSeparator3, Me.CustomizeToolStripMenuItem, Me.PreferencesToolStripMenuItem, Me.SelectionModeToolStripMenuItem, Me.DisplayToolStripMenuItem, Me.ConsoleToolStripMenuItem})
+            Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RunSimulationToolStripMenuItem, Me.ToolStripSeparator3, Me.CustomizeToolStripMenuItem, Me.PreferencesToolStripMenuItem, Me.SelectionModeToolStripMenuItem, Me.DisplayToolStripMenuItem})
             Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
             Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
             Me.ViewToolStripMenuItem.Text = "&View"
@@ -1056,6 +1056,7 @@ Namespace Forms
         Protected m_bUseMockDataObjectInterface As Boolean = False
         Protected m_bUseMockStdXml As Boolean = False
         Protected m_bUseNetLogger As Boolean = False
+        Protected m_bConsoleApp As Boolean = False
 
         Protected m_mgrToolStripImages As AnimatGUI.Framework.ImageManager
         Protected m_mgrLargeImages As AnimatGUI.Framework.ImageManager
@@ -1245,6 +1246,12 @@ Namespace Forms
         End Property
 
 #End Region
+
+        Public Overridable ReadOnly Property ConsoleApp() As Boolean
+            Get
+                Return m_bConsoleApp
+            End Get
+        End Property
 
         Public Overridable ReadOnly Property ChildForms() As Collections.AnimatForms
             Get
@@ -1601,9 +1608,15 @@ Namespace Forms
 
 #Region " Initialization "
 
-        Public Overridable Sub StartApplication(ByVal bModal As Boolean)
+        Public Overridable Sub StartApplication(ByVal bModal As Boolean, ByVal bConsoleApp As Boolean)
 
             Try
+                m_bConsoleApp = bConsoleApp
+                If Me.ConsoleApp Then
+                    Me.ViewToolStripMenuItem.DropDownItems.Add(Me.ConsoleToolStripMenuItem)
+                    Me.ConsoleToolStripMenuItem.Enabled = True
+                End If
+
                 ProcessArguments()
 
                 If bModal Then

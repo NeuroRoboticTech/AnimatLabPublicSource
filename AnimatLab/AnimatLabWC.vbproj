@@ -7,13 +7,13 @@
     </ProductVersion>
     <SchemaVersion>
     </SchemaVersion>
-    <ProjectGuid>{027B78EB-AFCC-4775-A2BF-6DBAE00EDD16}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{F6DFAD2D-03C5-4C69-BA53-A9B6A1EABA7F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <StartupObject>AnimatLab.AnimatLab</StartupObject>
     <RootNamespace>AnimatLab</RootNamespace>
-    <AssemblyName>AnimatLab2</AssemblyName>
+    <AssemblyName>AnimatLab2WC</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsFormsWithCustomSubMain</MyType>
+    <MyType>Console</MyType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -25,11 +25,11 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\bin\</OutputPath>
-    <DocumentationFile>AnimatLab2.xml</DocumentationFile>
+    <DocumentationFile>AnimatLab2WC.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-    <DefineConstants>ANIMAT_CONSOLE=0</DefineConstants>
+    <DefineConstants>ANIMAT_CONSOLE=1</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -38,11 +38,11 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>..\bin\</OutputPath>
-    <DocumentationFile>AnimatLab2.xml</DocumentationFile>
+    <DocumentationFile>AnimatLab2WC.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-    <DefineConstants>ANIMAT_CONSOLE=0</DefineConstants>
+    <DefineConstants>ANIMAT_CONSOLE=1</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>

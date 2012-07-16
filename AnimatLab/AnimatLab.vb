@@ -23,7 +23,11 @@ Module AnimatLab
 
     Sub Main()
         Try
+            Dim bConsoleApp As Boolean = False
+#If ANIMAT_CONSOLE Then
             ShowWindow(GetConsoleWindow(), SW_HIDE)
+            bConsoleApp = True
+#End If
 
             ProcessArguments()
 
@@ -40,7 +44,7 @@ Module AnimatLab
             End If
 
             'Start the app and block.
-            oStartApp.Invoke(m_oApplication, New Object() {True})
+            oStartApp.Invoke(m_oApplication, New Object() {True, bConsoleApp})
 
         Catch ex As Exception
             If Not ex.InnerException Is Nothing Then

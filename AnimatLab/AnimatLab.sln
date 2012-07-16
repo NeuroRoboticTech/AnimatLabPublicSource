@@ -5,6 +5,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AnimatLab", "AnimatLab.vbpr
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AnimatServer", "AnimatServer\AnimatServer.vbproj", "{F463C367-376C-4F30-98FB-7BDB52A9FC9B}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AnimatLabWC", "AnimatLabWC.vbproj", "{F6DFAD2D-03C5-4C69-BA53-A9B6A1EABA7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,16 @@ Global
 		{F463C367-376C-4F30-98FB-7BDB52A9FC9B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F463C367-376C-4F30-98FB-7BDB52A9FC9B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F463C367-376C-4F30-98FB-7BDB52A9FC9B}.Release|x86.ActiveCfg = Release|Any CPU
+		{F6DFAD2D-03C5-4C69-BA53-A9B6A1EABA7F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{F6DFAD2D-03C5-4C69-BA53-A9B6A1EABA7F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{F6DFAD2D-03C5-4C69-BA53-A9B6A1EABA7F}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{F6DFAD2D-03C5-4C69-BA53-A9B6A1EABA7F}.Debug|x86.ActiveCfg = Debug|x86
+		{F6DFAD2D-03C5-4C69-BA53-A9B6A1EABA7F}.Debug|x86.Build.0 = Debug|x86
+		{F6DFAD2D-03C5-4C69-BA53-A9B6A1EABA7F}.Release|Any CPU.ActiveCfg = Release|x86
+		{F6DFAD2D-03C5-4C69-BA53-A9B6A1EABA7F}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{F6DFAD2D-03C5-4C69-BA53-A9B6A1EABA7F}.Release|Mixed Platforms.Build.0 = Release|x86
+		{F6DFAD2D-03C5-4C69-BA53-A9B6A1EABA7F}.Release|x86.ActiveCfg = Release|x86
+		{F6DFAD2D-03C5-4C69-BA53-A9B6A1EABA7F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
