@@ -214,7 +214,14 @@ void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
     arguments.getApplicationUsage()->setDescription(arguments.getApplicationName()+" is the standard OpenSceneGraph example which loads and visualises 3d models.");
     arguments.getApplicationUsage()->setCommandLineUsage(arguments.getApplicationName()+" [options] filename ...");
     arguments.getApplicationUsage()->addCommandLineOption("-h or --help", "Display this information");
-    
+
+	//Ensure that our exe path is the only place it will attempt to find library files.
+	osgDB::FilePathList aryList = osgDB::getLibraryFilePathList();
+	string strPath = m_strExecutablePath.substr(0, m_strExecutablePath.length()-1);
+	aryList.clear();
+	aryList.push_front(strPath);
+	osgDB::setLibraryFilePathList(aryList);
+
     // add resource search paths
     osgDB::getDataFilePathList().push_front("./Resources");
     osgDB::getDataFilePathList().push_front("../Resources");
