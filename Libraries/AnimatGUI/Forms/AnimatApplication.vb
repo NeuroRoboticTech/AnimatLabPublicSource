@@ -1049,8 +1049,6 @@ Namespace Forms
 
 #Region " Attributes "
 
-        Private Declare Function WebUpdate Lib "wuw4.dll" (ByVal URL As String) As Long
-
         Protected m_fltAppVersion As Single = 2.0
         Protected m_bUseMockSimInterface As Boolean = False
         Protected m_bUseMockDataObjectInterface As Boolean = False
@@ -1153,6 +1151,8 @@ Namespace Forms
         Protected m_bAutomationPropBoolValue As Boolean = False
 
         Protected m_bBodyPartPasteInProgress As Boolean = False
+
+        Dim m_auBackup As wyDay.Controls.AutomaticUpdaterBackend
 
 #Region " Preferences "
 
@@ -1758,7 +1758,20 @@ Namespace Forms
 
         Private Sub AutoUpdate()
             Try
-#If Not Debug Then
+                '#If Not Debug Then
+                'Setup the autoupdater.
+                m_auBackup = New wyDay.Controls.AutomaticUpdaterBackend
+                m_auBackup.GUID = System.Guid.NewGuid.ToString
+                m_auBackup.UpdateType = wyDay.Controls.UpdateType.OnlyCheck
+                m_auBackup.wyUpdateLocation = "..\wyUpdate.exe"
+
+                AddHandler m_auBackup.UpdateAvailable, AddressOf Me.AutoUpdate_UpdateAvailable
+                AddHandler m_auBackup.UpToDate, AddressOf Me.AutoUpdate_UpToDate
+                AddHandler m_auBackup.CheckingFailed, AddressOf Me.AutoUpdate_CheckingFailed
+
+                m_auBackup.Initialize()
+                m_auBackup.AppLoaded()
+
                 Dim bDoUpdate As Boolean = False
                 If (m_eAutoUpdateInterval = enumAutoUpdateInterval.Daily) Then
                     Dim temp As TimeSpan = Now.Subtract(m_dtLastAutoUpdateTime)
@@ -1777,43 +1790,48 @@ Namespace Forms
                     bDoUpdate = False
                 End If
 
-                If bDoUpdate = True Then
-                    CheckForUpdates(False)
-                End If
-#End If
+                'If bDoUpdate = True Then
+                CheckForUpdates(False)
+                ' End If
+                '#End If
             Catch ex As System.Exception
             End Try
 
         End Sub
 
+        'Public Sub CheckForUpdates(ByVal bAnnouceUpdates As Boolean)
+
+        '    'For some reason if the user did not have internet access then the auto-update system could
+        '    'lock up when the app starts. So I am having it start a new thread to check for the update
+        '    'so the main app can go ahead.
+        '    m_bAnnouceUpdates = bAnnouceUpdates
+        '    Dim threadUpdates As New Threading.Thread(AddressOf Me.CheckForUpdatesThread)
+        '    threadUpdates.Start()
+        '    Threading.Thread.Sleep(0)
+
+        'End Sub
+
         Public Sub CheckForUpdates(ByVal bAnnouceUpdates As Boolean)
 
-            'For some reason if the user did not have internet access then the auto-update system could
-            'lock up when the app starts. So I am having it start a new thread to check for the update
-            'so the main app can go ahead.
             m_bAnnouceUpdates = bAnnouceUpdates
-            Dim threadUpdates As New Threading.Thread(AddressOf Me.CheckForUpdatesThread)
-            threadUpdates.Start()
-            Threading.Thread.Sleep(0)
 
-        End Sub
-
-        Private Sub CheckForUpdatesThread()
-
-            'First lets try and ping the server to see if this person is online.
-            'If they are not then lets skip trying to check for updates.
-            Dim netMon As New AnimatGuiCtrls.Network.Ping
-            Dim response As AnimatGuiCtrls.Network.PingResponse = netMon.PingHost("www.animatlab.com", 4)
-
-            If Not response Is Nothing AndAlso response.PingResult = AnimatGuiCtrls.Network.PingResponseType.Ok Then
-                Dim myURL As String
-                myURL = "http://www.animatlab.com/animatLab_Update.txt"
-                WebUpdate(myURL)
-                Me.LastAutoUpdateTime = Now
-                Util.UpdateConfigFile()
-            ElseIf m_bAnnouceUpdates = True Then
-                Util.ShowMessage("Unable to ping host!")
+            If Not m_auBackup Is Nothing Then
+                m_auBackup.ForceCheckForUpdate()
             End If
+            ''First lets try and ping the server to see if this person is online.
+            ''If they are not then lets skip trying to check for updates.
+            'Dim netMon As New AnimatGuiCtrls.Network.Ping
+            'Dim response As AnimatGuiCtrls.Network.PingResponse = netMon.PingHost("www.animatlab.com", 4)
+
+            'If Not response Is Nothing AndAlso response.PingResult = AnimatGuiCtrls.Network.PingResponseType.Ok Then
+            '    Dim myURL As String
+            '    myURL = "http://www.animatlab.com/animatLab_Update.txt"
+            '    'WebUpdate(myURL)
+            '    Me.LastAutoUpdateTime = Now
+            '    Util.UpdateConfigFile()
+            'ElseIf m_bAnnouceUpdates = True Then
+            '    Util.ShowMessage("Unable to ping host!")
+            'End If
 
         End Sub
 
@@ -6165,6 +6183,24 @@ Namespace Forms
 
             End Function
         End Class
+
+#Region "Autoupdater"
+
+        Private Sub AutoUpdate_UpdateAvailable(sender As Object, e As EventArgs)
+            MessageBox.Show("Updates available.")
+        End Sub
+
+        Private Sub AutoUpdate_UpToDate(sender As Object, e As wyDay.Controls.SuccessArgs)
+            MessageBox.Show("Software is up to date.")
+        End Sub
+
+        Private Sub AutoUpdate_CheckingFailed(sender As Object, e As wyDay.Controls.FailArgs)
+            MessageBox.Show("Software checking failed.")
+        End Sub
+
+#End Region
+
+
 
     End Class
 
