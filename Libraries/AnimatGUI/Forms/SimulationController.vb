@@ -772,7 +772,7 @@ Namespace Forms
             Try
                 If (m.Msg = Util.WindowsMessages.WM_AM_UPDATE_DATA) Then
                     Me.ctrlTimeRuler.CurrentMillisecond = Util.Application.SimulationInterface.CurrentMillisecond
-                    'Util.Application.StatusBar.Panels(0).Text = GenerateStatusBarText(-1)
+                    Util.Application.AppStatusText = GenerateStatusBarText(-1)
                 ElseIf (m.Msg = Util.WindowsMessages.WM_AM_SIMULATION_ERROR) Then
                     Me.btnSimStart.ImageIndex = Util.Application.LargeImages.GetImageIndex("AnimatGUI.PlayLarge.gif")
                     Me.btnSimStop.Enabled = False
@@ -857,7 +857,7 @@ Namespace Forms
             Try
 
                 Me.ctrlTimeRuler.CurrentMillisecond = Util.Application.SimulationInterface.CurrentMillisecond
-                'Util.Application.StatusBar.Panels(0).Text = GenerateStatusBarText(-1)
+                Util.Application.AppStatusText = GenerateStatusBarText(-1)
 
                 If Util.Simulation.SimulationAtEndTime Then
                     Util.Application.StopSimulation()
@@ -877,7 +877,7 @@ Namespace Forms
 
         Private Sub OnCursorMoved(ByVal sender As Object, ByVal e As AnimatGUICtrls.Controls.TimeRuler.HooverValueEventArgs)
             Try
-                'Util.Application.StatusBar.Panels(0).Text = GenerateStatusBarText(e.Value)
+                Util.Application.AppStatusText = GenerateStatusBarText(e.Value)
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

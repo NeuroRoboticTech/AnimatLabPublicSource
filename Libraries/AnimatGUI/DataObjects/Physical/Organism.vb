@@ -297,6 +297,8 @@ Namespace DataObjects.Physical
                 Dim oMod As Object
                 Dim nmModule As AnimatGUI.DataObjects.Behavior.NeuralModule
 
+                Util.Application.AppStatusText = "Loading " & Me.TypeName & " " & Me.Name & " neural modules"
+
                 m_aryNeuralModules.Clear()
 
                 oXml.IntoChildElement("NeuralModules")
@@ -339,11 +341,14 @@ Namespace DataObjects.Physical
                 'Load the structure data
                 MyBase.LoadData(oXml)
 
+                Util.Application.AppStatusText = "Loading " & Me.TypeName & " " & Me.Name & " nervous system"
+
                 oXml.IntoElem() 'Into Organism Element
                 oXml.IntoChildElement("NervousSystem") 'Into NervousSystem Element
 
                 LoadNeuralModules(oXml)
 
+                Util.Application.AppStatusText = "Loading " & Me.TypeName & " " & Me.Name & " Nodes"
                 If oXml.FindChildElement("Node", False) Then
                     Dim strAssemblyFile As String
                     Dim strClassName As String
@@ -371,9 +376,12 @@ Namespace DataObjects.Physical
 
             oXml.IntoElem()  'Into organism
 
+            Util.Application.AppStatusText = "Saving " & Me.TypeName & " " & Me.Name & " nervous system"
+
             oXml.AddChildElement("NervousSystem")
             oXml.IntoElem()
 
+            Util.Application.AppStatusText = "Saving " & Me.TypeName & " " & Me.Name & " neural modules"
             oXml.AddChildElement("NeuralModules")
             oXml.IntoElem()
             Dim nmModule As DataObjects.Behavior.NeuralModule
@@ -387,6 +395,7 @@ Namespace DataObjects.Physical
             Next
             oXml.OutOfElem() 'Outof NeuralModules
 
+            Util.Application.AppStatusText = "Saving " & Me.TypeName & " " & Me.Name & " Nodes"
             If Not m_bnRootSubSystem Is Nothing Then
                 m_bnRootSubSystem.SaveData(oXml)
             End If

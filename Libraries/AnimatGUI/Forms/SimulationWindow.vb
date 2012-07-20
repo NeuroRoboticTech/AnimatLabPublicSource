@@ -753,7 +753,7 @@ Namespace Forms
 
                 Me.cboBodyPart.Items.Clear()
 
-                If Not Me.PhysicalStructure Is Nothing Then
+                If Not Me.PhysicalStructure Is Nothing AndAlso Not Me.PhysicalStructure.WorkspaceNode Is Nothing Then
                     GenerateBodyPartDropDown(Me.PhysicalStructure.WorkspaceNode.Nodes)
                 End If
 

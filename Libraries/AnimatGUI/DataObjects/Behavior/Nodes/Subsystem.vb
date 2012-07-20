@@ -554,6 +554,7 @@ Namespace DataObjects.Behavior.Nodes
             MyBase.LoadData(oXml)
 
             Try
+                Util.Application.AppStatusText = "Loading " & Me.TypeName & " " & Me.Name & " Subsystem " & Me.Name
 
                 oXml.IntoElem()
 
@@ -730,6 +731,8 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.SaveData(oXml)
+
+            Util.Application.AppStatusText = "Saving " & Me.TypeName & " " & Me.Name & " Subsystem " & Me.Name
 
             oXml.IntoElem() 'Into Subsystem Element
 

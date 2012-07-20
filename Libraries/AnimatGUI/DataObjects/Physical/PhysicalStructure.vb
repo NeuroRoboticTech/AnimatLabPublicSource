@@ -592,8 +592,7 @@ Namespace DataObjects.Physical
             Try
                 oXml.IntoElem()
 
-                'm_strStructureType = oXml.GetChildString("Type", m_strStructureType)
-
+                Util.Application.AppStatusText = "Loading " & Me.TypeName & " " & Me.Name & " body parts"
                 If oXml.FindChildElement("RigidBody", False) Then
                     m_dbRoot = DirectCast(Util.Simulation.CreateObject(oXml, "RigidBody", Me), DataObjects.Physical.RigidBody)
                     m_dbRoot.IsRoot = True
@@ -603,6 +602,7 @@ Namespace DataObjects.Physical
                 End If
 
                 'Load collision pairs
+                Util.Application.AppStatusText = "Loading " & Me.TypeName & " " & Me.Name & " collision exclusions"
                 If oXml.FindChildElement("CollisionExclusionPairs", False) Then
                     oXml.IntoElem()
 
@@ -641,6 +641,8 @@ Namespace DataObjects.Physical
 
             Try
 
+                Util.Application.AppStatusText = "Saving " & Me.TypeName & " " & Me.Name & " body parts"
+
                 oXml.IntoElem()
 
                 oXml.AddChildElement("Type", "Basic")
@@ -650,6 +652,7 @@ Namespace DataObjects.Physical
                 End If
 
                 'Save collision pairs
+                Util.Application.AppStatusText = "Saving " & Me.TypeName & " " & Me.Name & " collision exclusions"
                 oXml.AddChildElement("CollisionExclusionPairs")
                 oXml.IntoElem()
                 For Each doPair As AnimatGUI.DataObjects.Physical.CollisionPair In m_aryCollisionExclusionPairs

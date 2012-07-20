@@ -56,6 +56,8 @@ Namespace Forms
         End Sub
 
         Public WithEvents AnimatStripContainer As System.Windows.Forms.ToolStripContainer
+        Public WithEvents AnimatAppStatusPanel As Crownwood.DotNetMagic.Controls.StatusPanel
+        Public WithEvents AnimatUpdateStatusPanel As Crownwood.DotNetMagic.Controls.StatusPanel
         Public WithEvents AnimatStatusBar As Crownwood.DotNetMagic.Controls.StatusBarControl
         Public WithEvents AnimatMenuStrip As AnimatGuiCtrls.Controls.AnimatMenuStrip
         Public WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -79,6 +81,7 @@ Namespace Forms
         Public WithEvents SearchToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents toolStripSeparator7 As System.Windows.Forms.ToolStripSeparator
         Public WithEvents AboutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents CheckForUpdatesStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents AnimatToolStrip As AnimatGuiCtrls.Controls.AnimatToolStrip
         Public WithEvents NewToolStripButton As System.Windows.Forms.ToolStripButton
         Public WithEvents OpenToolStripButton As System.Windows.Forms.ToolStripButton
@@ -163,6 +166,8 @@ Namespace Forms
             Me.AnimatStripContainer = New System.Windows.Forms.ToolStripContainer()
             Me.AnimatTabbedGroups = New Crownwood.DotNetMagic.Controls.TabbedGroups()
             Me.AnimatStatusBar = New Crownwood.DotNetMagic.Controls.StatusBarControl()
+            Me.AnimatAppStatusPanel = New Crownwood.DotNetMagic.Controls.StatusPanel()
+            Me.AnimatUpdateStatusPanel = New Crownwood.DotNetMagic.Controls.StatusPanel()
             Me.AnimatMenuStrip = New AnimatGuiCtrls.Controls.AnimatMenuStrip()
             Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.NewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -220,6 +225,7 @@ Namespace Forms
             Me.SupportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.toolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
             Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.CheckForUpdatesStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.AnimatToolStrip = New AnimatGuiCtrls.Controls.AnimatToolStrip()
             Me.NewToolStripButton = New System.Windows.Forms.ToolStripButton()
             Me.OpenToolStripButton = New System.Windows.Forms.ToolStripButton()
@@ -295,12 +301,23 @@ Namespace Forms
             Me.AnimatTabbedGroups.Size = New System.Drawing.Size(713, 215)
             Me.AnimatTabbedGroups.TabIndex = 1
             '
+            'AnimatStatusPanel1
+            '
+            Me.AnimatAppStatusPanel.Name = "AnimatAppStatusPanel"
+            Me.AnimatAppStatusPanel.AutoSizing = StatusBarPanelAutoSize.Contents
+            '
+            'AnimatStatusPanel2
+            '
+            Me.AnimatUpdateStatusPanel.Name = "AnimatUpdateStatusPanel"
+            Me.AnimatUpdateStatusPanel.AutoSizing = StatusBarPanelAutoSize.Spring
+            '
             'AnimatStatusBar
             '
             Me.AnimatStatusBar.Location = New System.Drawing.Point(0, 215)
             Me.AnimatStatusBar.Name = "AnimatStatusBar"
             Me.AnimatStatusBar.Size = New System.Drawing.Size(713, 19)
             Me.AnimatStatusBar.TabIndex = 0
+            Me.AnimatStatusBar.StatusPanels.AddRange(New Crownwood.DotNetMagic.Controls.StatusPanel() {Me.AnimatAppStatusPanel, Me.AnimatUpdateStatusPanel})
             '
             'AnimatMenuStrip
             '
@@ -654,7 +671,7 @@ Namespace Forms
             '
             'HelpToolStripMenuItem
             '
-            Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.IndexToolStripMenuItem, Me.SearchToolStripMenuItem, Me.SupportToolStripMenuItem, Me.toolStripSeparator7, Me.AboutToolStripMenuItem})
+            Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.IndexToolStripMenuItem, Me.SearchToolStripMenuItem, Me.SupportToolStripMenuItem, Me.toolStripSeparator7, Me.AboutToolStripMenuItem, Me.CheckForUpdatesStripMenuItem})
             Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
             Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
             Me.HelpToolStripMenuItem.Text = "&Help"
@@ -696,6 +713,12 @@ Namespace Forms
             Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
             Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
             Me.AboutToolStripMenuItem.Text = "&About..."
+            '
+            'AboutToolStripMenuItem
+            '
+            Me.CheckForUpdatesStripMenuItem.Name = "CheckForUpdatesStripMenuItem"
+            Me.CheckForUpdatesStripMenuItem.Size = New System.Drawing.Size(122, 22)
+            Me.CheckForUpdatesStripMenuItem.Text = "Check for updates"
             '
             'AnimatToolStrip
             '
@@ -1427,6 +1450,32 @@ Namespace Forms
             End Get
         End Property
 
+        Public Property AppStatusText() As String
+            Get
+                Return Me.AnimatAppStatusPanel.Text
+            End Get
+            Set(ByVal Value As String)
+                Me.AnimatAppStatusPanel.Text = Value
+                If Not Logger Is Nothing Then
+                    Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "AppStatusText: " & Value)
+                End If
+                Application.DoEvents()
+            End Set
+        End Property
+
+        Public Property UpdateStatusText() As String
+            Get
+                Return Me.AnimatUpdateStatusPanel.Text
+            End Get
+            Set(ByVal Value As String)
+                Me.AnimatUpdateStatusPanel.Text = Value
+                If Not Logger Is Nothing Then
+                    Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "UpdateStatusText: " & Value)
+                End If
+                Application.DoEvents()
+            End Set
+        End Property
+
         Public Overridable Property Simulation() As DataObjects.Simulation
             Get
                 Return m_doSimulation
@@ -1725,6 +1774,8 @@ Namespace Forms
                 'with foriegn culture infos not parsing the xml files correctly.
                 Thread.CurrentThread.CurrentCulture = New CultureInfo("")
 
+                Me.AppStatusText = "Starting application"
+
                 LoadUserConfig()
                 InitLogging()
                 FindMdiClient()
@@ -1749,6 +1800,8 @@ Namespace Forms
 
                 Util.Simulation.VisualSelectionMode = DataObjects.Simulation.enumVisualSelectionMode.SelectGraphics
 
+                Me.AppStatusText = ""
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
@@ -1760,14 +1813,25 @@ Namespace Forms
             Try
                 '#If Not Debug Then
                 'Setup the autoupdater.
+                Me.AppStatusText = "Auto update check"
                 m_auBackup = New wyDay.Controls.AutomaticUpdaterBackend
                 m_auBackup.GUID = System.Guid.NewGuid.ToString
                 m_auBackup.UpdateType = wyDay.Controls.UpdateType.OnlyCheck
                 m_auBackup.wyUpdateLocation = "..\wyUpdate.exe"
 
+                AddHandler m_auBackup.CheckingFailed, AddressOf Me.AutoUpdate_CheckingFailed
+                AddHandler m_auBackup.CloseAppNow, AddressOf Me.AutoUpdate_CloseAppNow
+                AddHandler m_auBackup.DownloadingFailed, AddressOf Me.AutoUpdate_Downloading_Failed
+                AddHandler m_auBackup.ExtractingFailed, AddressOf Me.AutoUpdate_ExtractingFailed
+                AddHandler m_auBackup.ReadyToBeInstalled, AddressOf Me.AutoUpdate_ReadyToBeInstalled
+                AddHandler m_auBackup.UpdateFailed, AddressOf Me.AutoUpdate_UpdateFailed
+                AddHandler m_auBackup.UpdateSuccessful, AddressOf Me.AutoUpdate_UpdateSuccessful
                 AddHandler m_auBackup.UpdateAvailable, AddressOf Me.AutoUpdate_UpdateAvailable
                 AddHandler m_auBackup.UpToDate, AddressOf Me.AutoUpdate_UpToDate
-                AddHandler m_auBackup.CheckingFailed, AddressOf Me.AutoUpdate_CheckingFailed
+                AddHandler m_auBackup.ProgressChanged, AddressOf Me.AutoUpdate_ProgressChanged
+                AddHandler m_auBackup.BeforeChecking, AddressOf Me.AutoUpdate_BeforeChecking
+                AddHandler m_auBackup.BeforeDownloading, AddressOf Me.AutoUpdate_BeforeDownloading
+                AddHandler m_auBackup.BeforeExtracting, AddressOf Me.AutoUpdate_BeforeExtracting
 
                 m_auBackup.Initialize()
                 m_auBackup.AppLoaded()
@@ -1791,7 +1855,7 @@ Namespace Forms
                 End If
 
                 'If bDoUpdate = True Then
-                CheckForUpdates(False)
+                'CheckForUpdates(False)
                 ' End If
                 '#End If
             Catch ex As System.Exception
@@ -1799,44 +1863,19 @@ Namespace Forms
 
         End Sub
 
-        'Public Sub CheckForUpdates(ByVal bAnnouceUpdates As Boolean)
-
-        '    'For some reason if the user did not have internet access then the auto-update system could
-        '    'lock up when the app starts. So I am having it start a new thread to check for the update
-        '    'so the main app can go ahead.
-        '    m_bAnnouceUpdates = bAnnouceUpdates
-        '    Dim threadUpdates As New Threading.Thread(AddressOf Me.CheckForUpdatesThread)
-        '    threadUpdates.Start()
-        '    Threading.Thread.Sleep(0)
-
-        'End Sub
-
         Public Sub CheckForUpdates(ByVal bAnnouceUpdates As Boolean)
 
-            m_bAnnouceUpdates = bAnnouceUpdates
-
             If Not m_auBackup Is Nothing Then
+                m_bAnnouceUpdates = bAnnouceUpdates
                 m_auBackup.ForceCheckForUpdate()
             End If
-            ''First lets try and ping the server to see if this person is online.
-            ''If they are not then lets skip trying to check for updates.
-            'Dim netMon As New AnimatGuiCtrls.Network.Ping
-            'Dim response As AnimatGuiCtrls.Network.PingResponse = netMon.PingHost("www.animatlab.com", 4)
-
-            'If Not response Is Nothing AndAlso response.PingResult = AnimatGuiCtrls.Network.PingResponseType.Ok Then
-            '    Dim myURL As String
-            '    myURL = "http://www.animatlab.com/animatLab_Update.txt"
-            '    'WebUpdate(myURL)
-            '    Me.LastAutoUpdateTime = Now
-            '    Util.UpdateConfigFile()
-            'ElseIf m_bAnnouceUpdates = True Then
-            '    Util.ShowMessage("Unable to ping host!")
-            'End If
 
         End Sub
 
         Private Sub LoadUserConfig()
             Try
+                Me.AppStatusText = "Loading user configuration"
+
                 m_strDefaultNewFolder = System.Configuration.ConfigurationManager.AppSettings("DefaultNewFolder")
 
                 m_eAutoUpdateInterval = DirectCast([Enum].Parse(GetType(enumAutoUpdateInterval), System.Configuration.ConfigurationManager.AppSettings("UpdateFrequency"), True), enumAutoUpdateInterval)
@@ -1867,6 +1906,8 @@ Namespace Forms
 
         Protected Overridable Sub InitLogging()
             Try
+                Me.AppStatusText = "Initializing logging"
+
                 m_Logger = CreateLogger()
 
                 If Not Directory.Exists(Me.ApplicationDirectory & "Logs") Then
@@ -1884,6 +1925,8 @@ Namespace Forms
 
         Protected Overridable Sub FindMdiClient()
             Dim c As Control
+
+            Me.AppStatusText = "Finding mdi clients"
 
             For Each c In Me.Controls
                 If TypeOf c Is MdiClient Then
@@ -2036,6 +2079,8 @@ Namespace Forms
             Dim strFailedLoad As String = ""
             Dim iFailedLoad As Integer = 0
             Dim bDebugOutput As Boolean = False
+
+            Me.AppStatusText = "Cataloging plugin modules"
 
             Try
                 Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Debug, "Beginning to catalog plugin modules")
@@ -2544,6 +2589,8 @@ Namespace Forms
 
         Protected Overridable Sub CreateImageManager()
 
+            Me.AppStatusText = "Creating new image manager"
+
             Dim myAssembly As System.Reflection.Assembly
             myAssembly = System.Reflection.Assembly.Load("AnimatGUI")
 
@@ -2608,6 +2655,8 @@ Namespace Forms
         End Sub
 
         Public Overridable Sub UpdateToolstrips()
+
+            Me.AppStatusText = "Updating toolbars"
 
             If Me.m_bProjectIsOpen Then
                 'If a project is not open then disable a lot of stuff
@@ -2743,6 +2792,8 @@ Namespace Forms
 #Region " Project Creation "
 
         Public Overridable Sub ResetProject(ByVal bNewProject As Boolean)
+            Me.AppStatusText = "Resetting project"
+
             CloseProject(bNewProject)
 
             Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Starting Reset Project")
@@ -2823,6 +2874,8 @@ Namespace Forms
         'will be deleted and it will not be recreated during the load. This method checks each of the major docking bars
         'after the load and makes sure they still exist. If it does not then it recreates it.
         Protected Sub VerifyToolbarsAfterLoad()
+
+            Me.AppStatusText = "Verifying toolbars"
 
             Dim afForm As AnimatForm
 
@@ -2943,7 +2996,10 @@ Namespace Forms
         End Sub
 
         Public Overridable Sub CloseProject(ByVal bOpeningProject As Boolean)
+            Me.AppStatusText = "Closing project"
+
             If SaveIfDirty() = DialogResult.Cancel Then
+                Me.AppStatusText = "Canceling project close"
                 Return
             End If
 
@@ -2957,11 +3013,14 @@ Namespace Forms
 
             'If we have a simulation up and running then completely shut it down and start over for the new project
             'This will need to be changed
+            Me.AppStatusText = "Shutting down simulation"
             Me.SimulationInterface.ShutdownSimulation()
 
             CreateImageManager()
 
             ' Create the object that manages the docking state
+            Me.AppStatusText = "Creating new docking manager"
+
             m_dockManager = New Crownwood.DotNetMagic.Docking.DockingManager(Me.AnimatStripContainer.ContentPanel, VisualStyle.Office2007Blue)
             m_dockManager.AllowFloating = False
             m_dockManager.OuterControl = Me.StatusBar
@@ -3019,6 +3078,7 @@ Namespace Forms
 
             Try
                 Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Starting Save of project: '" & Util.Application.ProjectPath & "\" & strFilename & "'")
+                Me.AppStatusText = "Saving project"
 
                 If Not m_bProjectIsOpen AndAlso Not bOverrideProjectIsOpen Then
                     Throw New System.Exception("You must have an open project before you can save it.")
@@ -3040,11 +3100,14 @@ Namespace Forms
 
                 Util.DisableDirtyFlags = True
                 SaveData(oXml)
+
+                Me.AppStatusText = "Saving xml file"
                 oXml.Save(Util.GetFilePath(Util.Application.ProjectPath, strFilename))
                 Util.DisableDirtyFlags = False
 
                 RaiseEvent ProjectSaved()
 
+                Me.AppStatusText = "Project saved"
                 Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Finished successful save of project: '" & Util.Application.ProjectPath & "\" & strFilename & "'")
 
             Catch ex As System.Exception
@@ -3060,6 +3123,7 @@ Namespace Forms
 
             Try
                 Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Starting load of project: '" & strFilename & "'")
+                Me.AppStatusText = "Starting project load"
 
                 Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
@@ -3077,6 +3141,7 @@ Namespace Forms
                 Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Loading xml")
                 oXml.Load(strFilename)
                 Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Loaded xml")
+                Me.AppStatusText = "Loaded xml"
 
                 oXml.FindElement("Project")
                 oXml.FindChildElement("")
@@ -3097,6 +3162,8 @@ Namespace Forms
 
                 m_bProjectIsOpen = True
                 UpdateToolstrips()
+
+                Me.AppStatusText = "Load project complete"
 
             Catch exOldVersion As OldProjectVersion
                 Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Attempted to load an old project version file: '" & strFilename & "', Old Version: " & exOldVersion.OldVersion)
@@ -3247,6 +3314,7 @@ Namespace Forms
             CloseProject(True)
 
             Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "LoadData starting")
+            Me.AppStatusText = "Loading project data"
 
             Try
                 Util.LoadInProgress = True
@@ -3287,6 +3355,8 @@ Namespace Forms
 
                 Util.Simulation.NewToolHolderIndex = Util.ExtractIDCount("DataTool", Util.Simulation.ToolHolders)
 
+                Me.AppStatusText = "Finished loading project data"
+
             Catch ex As System.Exception
                 Throw ex
             Finally
@@ -3298,6 +3368,8 @@ Namespace Forms
         Public Overridable Sub LoadDockingForms(ByRef dockManager As Crownwood.DotNetMagic.Docking.DockingManager, _
                                                  ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             Try
+                Me.AppStatusText = "Loading docking forms"
+
                 'Then create the forms. They will create their own sim references as they are loaded
                 If oXml.FindChildElement("DockingForms", False) Then
                     oXml.IntoChildElement("DockingForms") 'Into DockingForms Element
@@ -3317,6 +3389,7 @@ Namespace Forms
                                                  ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             Try
+                Me.AppStatusText = "Loading docking configuration"
                 Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
                 If dockManager.Contents.Count > 0 Then
@@ -3393,6 +3466,7 @@ Namespace Forms
 
             Try
                 Util.SaveInProgress = True
+                Me.AppStatusText = "Saving project data"
 
                 oXml.AddElement("Project")
 
@@ -3411,20 +3485,13 @@ Namespace Forms
                 oXml.IntoElem()   'Into DockingForms Element
 
                 'First lets save all Docking Forms associated with this application.
+                Util.Application.AppStatusText = "Saving docking windows"
                 Dim frmAnimat As AnimatForm
                 For Each conWindow As Content In m_dockManager.Contents
                     frmAnimat = DirectCast(conWindow.Control, AnimatForm)
                     frmAnimat.SaveData(oXml)
                 Next
                 oXml.OutOfElem()   'Outof DockingForms Element
-
-                'oXml.AddChildElement("ChildForms")
-                'oXml.IntoElem()   'Into ChildForms Element
-
-                'For Each frmChild As AnimatForm In Me.ChildForms
-                '    frmChild.SaveData(oXml)
-                'Next
-                'oXml.OutOfElem()   'Outof ChildForms Element
 
                 oXml.OutOfElem()   'Outof Stimuli element
 
@@ -3441,6 +3508,9 @@ Namespace Forms
 
         Public Overridable Sub SaveDockingConfig(ByRef dockManager As DockingManager, _
                                                  ByVal oXml As ManagedAnimatInterfaces.IStdXml)
+
+            Util.Application.AppStatusText = "Saving docking configuration"
+
             'Save the docking manager configuration
             Dim ascii As Encoding = Encoding.ASCII
             Dim aryBytes As Byte() = dockManager.SaveConfigToArray(ascii)
@@ -3528,6 +3598,8 @@ Namespace Forms
 
         Public Overridable Sub ClearChildForms()
 
+            Me.AppStatusText = "Clearing child window contents"
+
             For Each frmChild As Form In Me.ChildForms
                 frmChild.Close()
             Next
@@ -3538,6 +3610,8 @@ Namespace Forms
         End Sub
 
         Public Overridable Sub ClearDockingContents()
+
+            Me.AppStatusText = "Clearing docking window contents"
 
             Dim iCount As Integer = m_dockManager.Contents.Count - 1
             For iDock As Integer = 0 To iCount
@@ -3972,6 +4046,8 @@ Namespace Forms
         Public Sub StopSimulation()
 
             Try
+                Me.AppStatusText = "Stopping simulation"
+
                 Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
                 Me.SimulationInterface.PauseSimulation()
@@ -3990,6 +4066,8 @@ Namespace Forms
 
         Public Overridable Sub CreateSimulation(ByVal bPaused As Boolean)
             Try
+                Me.AppStatusText = "Creating simulation"
+
                 Me.SimulationInterface.CreateAndRunSimulation(bPaused)
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -5256,6 +5334,7 @@ Namespace Forms
         ''' \date   3/16/2011
         Protected Overridable Sub OnSimulationStarting()
             'We need to set the visualselection modes so that only the simulation mode is available.
+            Me.AppStatusText = "Starting simulation"
             Util.Simulation.SetVisualSelectionModeForSimStarting(True)
         End Sub
 
@@ -5279,6 +5358,7 @@ Namespace Forms
         ''' \date   3/16/2011
         Protected Overridable Sub OnSimulationResuming()
             'We need to set the visualselection modes so that only the simulation mode is available.
+            Me.AppStatusText = "Resuming simulation"
             Util.Simulation.SetVisualSelectionModeForSimStarting(True)
         End Sub
 
@@ -5291,6 +5371,7 @@ Namespace Forms
         ''' \date   3/16/2011
         Protected Overridable Sub OnSimulationPaused()
             'We need to release the other visualselection modes.
+            Me.AppStatusText = "Pausing simulation"
             Util.Simulation.SetVisualSelectionModeForSimStarting(False)
         End Sub
 
@@ -5304,6 +5385,7 @@ Namespace Forms
         ''' \date   3/16/2011
         Protected Overridable Sub OnSimulationStopped()
             'We need to release the other visualselection modes.
+            Me.AppStatusText = "Stopping simulation"
             Util.Simulation.SetVisualSelectionModeForSimStarting(False)
         End Sub
 
@@ -5439,6 +5521,14 @@ Namespace Forms
             Try
                 Dim frmAbout As New Forms.About
                 frmAbout.ShowDialog()
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub CheckForUpdatesStripMenuItem_Click(sender As Object, e As System.EventArgs) Handles CheckForUpdatesStripMenuItem.Click
+            Try
+                CheckForUpdates(True)
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -6186,20 +6276,214 @@ Namespace Forms
 
 #Region "Autoupdater"
 
-        Private Sub AutoUpdate_UpdateAvailable(sender As Object, e As EventArgs)
-            MessageBox.Show("Updates available.")
+        Private Delegate Sub AutoUpdate_BeforeDelegate(sender As Object, e As wyDay.Controls.BeforeArgs)
+
+        Private Sub AutoUpdate_BeforeChecking(sender As Object, e As wyDay.Controls.BeforeArgs)
+            Try
+                If Me.InvokeRequired Then
+                    Me.Invoke(New AutoUpdate_BeforeDelegate(AddressOf AutoUpdate_BeforeChecking), New Object() {sender, e})
+                    Return
+                End If
+
+                Debug.WriteLine("AutoUpdate Checking for updates.")
+                Me.UpdateStatusText = "Checking for updates"
+            Catch ex As Exception
+                Util.DisplayError(ex)
+            End Try
         End Sub
+
+        Private Sub AutoUpdate_BeforeDownloading(sender As Object, e As wyDay.Controls.BeforeArgs)
+            Try
+                If Me.InvokeRequired Then
+                    Me.Invoke(New AutoUpdate_BeforeDelegate(AddressOf AutoUpdate_BeforeDownloading), New Object() {sender, e})
+                    Return
+                End If
+
+                Debug.WriteLine("AutoUpdate downloading updates.")
+                Me.UpdateStatusText = "Downloading updates: 0 %"
+            Catch ex As Exception
+                Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub AutoUpdate_BeforeExtracting(sender As Object, e As wyDay.Controls.BeforeArgs)
+            Try
+                If Me.InvokeRequired Then
+                    Me.Invoke(New AutoUpdate_BeforeDelegate(AddressOf AutoUpdate_BeforeExtracting), New Object() {sender, e})
+                    Return
+                End If
+
+                Debug.WriteLine("AutoUpdate extracting updates.")
+                Me.UpdateStatusText = "Extracting updates: 0 %"
+            Catch ex As Exception
+                Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Delegate Sub AutoUpdate_EventsDelegate(sender As Object, e As EventArgs)
+
+        Private Sub AutoUpdate_UpdateAvailable(sender As Object, e As EventArgs)
+            Try
+                If Me.InvokeRequired Then
+                    Me.Invoke(New AutoUpdate_EventsDelegate(AddressOf AutoUpdate_UpdateAvailable), New Object() {sender, e})
+                    Return
+                End If
+
+                Me.UpdateStatusText = "Update available"
+                If Util.ShowMessage("Updates for AnimatLab are available. Would you like to install them now?", "Confirm Update", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+                    m_auBackup.InstallNow()
+                End If
+            Catch ex As Exception
+                Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Delegate Sub AutoUpdate_SuccessArgsDelegate(sender As Object, e As wyDay.Controls.SuccessArgs)
 
         Private Sub AutoUpdate_UpToDate(sender As Object, e As wyDay.Controls.SuccessArgs)
-            MessageBox.Show("Software is up to date.")
+            Try
+                If Me.InvokeRequired Then
+                    Me.Invoke(New AutoUpdate_SuccessArgsDelegate(AddressOf AutoUpdate_UpToDate), New Object() {sender, e})
+                    Return
+                End If
+
+                Me.UpdateStatusText = "Application is up to date"
+            Catch ex As Exception
+                Util.DisplayError(ex)
+            End Try
         End Sub
 
+        Private Delegate Sub AutoUpdate_FailedArgsDelegate(sender As Object, e As wyDay.Controls.FailArgs)
+
         Private Sub AutoUpdate_CheckingFailed(sender As Object, e As wyDay.Controls.FailArgs)
-            MessageBox.Show("Software checking failed.")
+            Try
+                If Me.InvokeRequired Then
+                    Me.Invoke(New AutoUpdate_FailedArgsDelegate(AddressOf AutoUpdate_CheckingFailed), New Object() {sender, e})
+                    Return
+                End If
+
+                Dim except As New System.Exception("Error occurred while checking for new updates. " & e.ErrorMessage)
+                Util.DisplayError(except)
+                Me.UpdateStatusText = "Error checking for update"
+            Catch ex As Exception
+                Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub AutoUpdate_CloseAppNow(sender As Object, e As EventArgs)
+            Try
+                If Me.InvokeRequired Then
+                    Me.Invoke(New AutoUpdate_EventsDelegate(AddressOf AutoUpdate_CloseAppNow), New Object() {sender, e})
+                    Return
+                End If
+
+                Me.UpdateStatusText = "Closing application"
+                Me.Close()
+            Catch ex As Exception
+                Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub AutoUpdate_Downloading_Failed(sender As Object, e As wyDay.Controls.FailArgs)
+            Try
+                If Me.InvokeRequired Then
+                    Me.Invoke(New AutoUpdate_FailedArgsDelegate(AddressOf AutoUpdate_Downloading_Failed), New Object() {sender, e})
+                    Return
+                End If
+
+                Dim except As New System.Exception("Error occurred while downloading for new updates. " & e.ErrorMessage)
+                Util.DisplayError(except)
+                Me.UpdateStatusText = "Error downloading update"
+            Catch ex As Exception
+                Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub AutoUpdate_ExtractingFailed(sender As Object, e As wyDay.Controls.FailArgs)
+            Try
+                If Me.InvokeRequired Then
+                    Me.Invoke(New AutoUpdate_FailedArgsDelegate(AddressOf AutoUpdate_ExtractingFailed), New Object() {sender, e})
+                    Return
+                End If
+
+                Dim except As New System.Exception("Error occurred while extracting new updates. " & e.ErrorMessage)
+                Util.DisplayError(except)
+                Me.UpdateStatusText = "Error extracting update"
+            Catch ex As Exception
+                Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Delegate Sub ProgressChangedDelegate(sender As Object, progress As Integer)
+
+        Private Sub AutoUpdate_ProgressChanged(sender As Object, progress As Integer)
+            Try
+                If Me.InvokeRequired Then
+                    Me.Invoke(New ProgressChangedDelegate(AddressOf AutoUpdate_ProgressChanged), New Object() {sender, progress})
+                    Return
+                End If
+
+                If m_auBackup.UpdateStepOn = wyDay.Controls.UpdateStepOn.DownloadingUpdate Then
+                    Me.UpdateStatusText = "Downloading updates: " & progress & " %"
+                    Debug.WriteLine("Downloading updates: " & progress & " %.")
+                ElseIf m_auBackup.UpdateStepOn = wyDay.Controls.UpdateStepOn.ExtractingUpdate Then
+                    Me.UpdateStatusText = "Extracting updates: " & progress & " %"
+                    Debug.WriteLine("Extracting updates: " & progress & " %.")
+                Else
+                    Me.UpdateStatusText = m_auBackup.UpdateStepOn.ToString & ": " & progress & " %"
+                    Debug.WriteLine(m_auBackup.UpdateStepOn.ToString & ": " & progress & " %.")
+                End If
+
+            Catch ex As Exception
+                Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub AutoUpdate_ReadyToBeInstalled(sender As Object, e As EventArgs)
+            Try
+                If Me.InvokeRequired Then
+                    Me.Invoke(New AutoUpdate_EventsDelegate(AddressOf AutoUpdate_ReadyToBeInstalled), New Object() {sender, e})
+                    Return
+                End If
+
+                Me.UpdateStatusText = "Installing updates"
+                m_auBackup.InstallNow()
+            Catch ex As Exception
+                Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub AutoUpdate_UpdateFailed(sender As Object, e As wyDay.Controls.FailArgs)
+            Try
+                If Me.InvokeRequired Then
+                    Me.Invoke(New AutoUpdate_FailedArgsDelegate(AddressOf AutoUpdate_UpdateFailed), New Object() {sender, e})
+                    Return
+                End If
+
+                Dim except As New System.Exception("Error occurred while updating. " & e.ErrorMessage)
+                Util.DisplayError(except)
+                Me.UpdateStatusText = "Error applying updates"
+            Catch ex As Exception
+                Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub AutoUpdate_UpdateSuccessful(sender As Object, e As wyDay.Controls.SuccessArgs)
+            Try
+                If Me.InvokeRequired Then
+                    Me.Invoke(New AutoUpdate_SuccessArgsDelegate(AddressOf AutoUpdate_UpdateSuccessful), New Object() {sender, e})
+                    Return
+                End If
+
+                Me.UpdateStatusText = "Update successful"
+                Debug.WriteLine("Update successful.")
+
+            Catch ex As Exception
+                Util.DisplayError(ex)
+            End Try
         End Sub
 
 #End Region
-
 
 
     End Class

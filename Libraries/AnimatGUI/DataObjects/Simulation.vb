@@ -706,6 +706,8 @@ Namespace DataObjects
 
         Public Overridable Overloads Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
+            Util.Application.AppStatusText = "Loading simulation"
+
             oXml.IntoChildElement("Simulation")
 
             Me.UpdateDataInterval = oXml.GetChildInt("UpdateDataInterval", m_iUpdateDataInterval)
@@ -728,12 +730,15 @@ Namespace DataObjects
 
             oXml.OutOfElem()
 
+            Util.Application.AppStatusText = "Finished loading simulation"
+
         End Sub
 
         Protected Overridable Sub LoadStimuli(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             Try
 
+                Util.Application.AppStatusText = "Loading Stimuli"
                 Dim doStim As DataObjects.ExternalStimuli.Stimulus
                 If oXml.FindChildElement("Stimuli", False) Then
                     oXml.IntoChildElement("Stimuli")
@@ -761,6 +766,7 @@ Namespace DataObjects
 
             Try
 
+                Util.Application.AppStatusText = "Loading tools"
                 Dim iCount As Integer
                 Dim doTool As DataObjects.ToolHolder
                 If oXml.FindChildElement("ToolViewers", False) Then
@@ -817,6 +823,9 @@ Namespace DataObjects
         End Sub
 
         Protected Overridable Sub SaveToolHolder(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
+
+            Util.Application.AppStatusText = "Saving tools"
+
             oXml.AddChildElement("ToolViewers")
             oXml.IntoElem()
 
@@ -830,6 +839,9 @@ Namespace DataObjects
         End Sub
 
         Protected Overridable Function SaveStimuli(ByVal oXml As ManagedAnimatInterfaces.IStdXml) As Collection
+
+            Util.Application.AppStatusText = "Saving stimuli"
+
             oXml.AddChildElement("Stimuli")
             oXml.IntoElem()
 
@@ -851,6 +863,8 @@ Namespace DataObjects
         End Function
 
         Protected Overridable Sub CleanupStimsToDelete(ByVal aryStimsToDelete As Collection)
+            Util.Application.AppStatusText = "Clearing stimuli to be deleted"
+
             'Now lets delete any stims that are no longer valid
             For Each doStim As DataObjects.ExternalStimuli.Stimulus In aryStimsToDelete
                 m_aryProjectStimuli.Remove(doStim.ID)
@@ -872,6 +886,8 @@ Namespace DataObjects
         End Sub
 
         Public Overridable Overloads Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
+
+            Util.Application.AppStatusText = "Saving simulation"
 
             oXml.AddChildElement("Simulation")
             oXml.IntoElem()

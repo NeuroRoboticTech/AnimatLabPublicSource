@@ -257,6 +257,8 @@ Namespace DataObjects.Behavior
 
         Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
+            Util.Application.AppStatusText = "Loading " & Me.TypeName & " " & Me.Name & " " & Me.GetType.Name & " neural module"
+
             oXml.IntoElem()  'Into Module Element
             m_strID = oXml.GetChildString("ID", m_strID)
             m_snTimeStep.LoadData(oXml, "TimeStep")
@@ -266,6 +268,8 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
+
+            Util.Application.AppStatusText = "Saving " & Me.TypeName & " " & Me.Name & " " & Me.GetType.Name & " neural module"
 
             oXml.AddChildElement("Node")
             oXml.IntoElem()  'Into Module Element

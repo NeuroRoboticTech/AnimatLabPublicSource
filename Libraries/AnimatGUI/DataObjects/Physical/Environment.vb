@@ -1148,6 +1148,8 @@ Namespace DataObjects.Physical
 
         Public Overridable Overloads Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
+            Util.Application.AppStatusText = "Loading environment"
+
             oXml.IntoChildElement("Environment") 'Into Environment Element
 
             m_snPhysicsTimeStep.LoadData(oXml, "PhysicsTimeStep")
@@ -1185,6 +1187,7 @@ Namespace DataObjects.Physical
             LoadMaterialPairs(oXml)
 
             'Odor types must be loaded before structures
+            Util.Application.AppStatusText = "Loading odors"
             Dim iCount As Integer
             If oXml.FindChildElement("OdorTypes", False) Then
                 oXml.IntoChildElement("OdorTypes") 'Into Structures Element
@@ -1206,6 +1209,7 @@ Namespace DataObjects.Physical
             oXml.IntoChildElement("Organisms") 'Into Organisms Element
             iCount = oXml.NumberOfChildren() - 1
 
+            Util.Application.AppStatusText = "Loading organisms"
             For iIndex As Integer = 0 To iCount
                 oXml.FindChildByIndex(iIndex)
 
@@ -1220,6 +1224,7 @@ Namespace DataObjects.Physical
             oXml.IntoChildElement("Structures") 'Into Structures Element
             iCount = oXml.NumberOfChildren() - 1
 
+            Util.Application.AppStatusText = "Loading structures"
             For iIndex As Integer = 0 To iCount
                 oXml.FindChildByIndex(iIndex)
 
@@ -1230,6 +1235,7 @@ Namespace DataObjects.Physical
             Next
             oXml.OutOfElem() 'Outof Structures Element
 
+            Util.Application.AppStatusText = "Loading lights"
             Dim newLight As DataObjects.Physical.Light
             If oXml.FindChildElement("Lights", False) Then
                 oXml.IntoChildElement("Lights") 'Into Lights Element
@@ -1284,6 +1290,8 @@ Namespace DataObjects.Physical
         Protected Overridable Sub LoadMaterialTypes(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             Try
+                Util.Application.AppStatusText = "Loading material types"
+
                 m_aryMaterialPairs.Clear()
                 m_aryMaterialTypes.Clear()
 
@@ -1314,6 +1322,8 @@ Namespace DataObjects.Physical
         Protected Overridable Sub LoadMaterialPairs(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             Try
+                Util.Application.AppStatusText = "Loading material pairs"
+
                 m_aryMaterialPairs.Clear()
 
                 Dim iCount As Integer
@@ -1341,6 +1351,8 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overridable Overloads Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
+
+            Util.Application.AppStatusText = "Saving environment"
 
             oXml.AddChildElement("Environment")
             oXml.IntoElem()
@@ -1372,6 +1384,7 @@ Namespace DataObjects.Physical
 
             'If we are saving the config file for downloading to a  robot then we should only
             'save the selected organism and none of the other organisms or structures.
+            Util.Application.AppStatusText = "Saving odors"
             If m_aryOdorTypes.Count > 0 Then
                 oXml.AddChildElement("OdorTypes")
                 oXml.IntoElem()
@@ -1386,6 +1399,7 @@ Namespace DataObjects.Physical
             SaveMaterialTypes(oXml)
             SaveMaterialPairs(oXml)
 
+            Util.Application.AppStatusText = "Saving organisms"
             oXml.AddChildElement("Organisms")
             oXml.IntoElem()
             Dim doOrganism As DataObjects.Physical.Organism
@@ -1395,6 +1409,7 @@ Namespace DataObjects.Physical
             Next
             oXml.OutOfElem() 'Outof Organisms Element
 
+            Util.Application.AppStatusText = "Saving structures"
             oXml.AddChildElement("Structures")
             oXml.IntoElem()
             Dim doStructure As DataObjects.Physical.PhysicalStructure
@@ -1404,6 +1419,7 @@ Namespace DataObjects.Physical
             Next
             oXml.OutOfElem() 'Outof Structures Element
 
+            Util.Application.AppStatusText = "Saving lights"
             oXml.AddChildElement("Lights")
             oXml.IntoElem()
             Dim doLight As DataObjects.Physical.Light
@@ -1418,6 +1434,8 @@ Namespace DataObjects.Physical
         End Sub
 
         Protected Overridable Sub SaveMaterialTypes(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
+            Util.Application.AppStatusText = "Saving material types"
+
             oXml.AddChildElement("MaterialTypes")
             oXml.IntoElem()   'Into MaterialTypes element
 
@@ -1431,6 +1449,8 @@ Namespace DataObjects.Physical
         End Sub
 
         Protected Overridable Sub SaveMaterialPairs(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
+            Util.Application.AppStatusText = "Saving material pairs"
+
             oXml.AddChildElement("MaterialPairs")
             oXml.IntoElem()   'Into MaterialPairs element
 

@@ -257,6 +257,8 @@ Namespace DataObjects
 
             oXml.IntoElem()
             m_strName = oXml.GetChildString("Name")
+            Util.Application.AppStatusText = "Loading Tool " & m_strName
+
             m_strOriginalName = m_strName
             m_strID = oXml.GetChildString("ID", m_strName)
             m_strBaseAssemblyFile = oXml.GetChildString("BaseAssemblyFile")
@@ -267,6 +269,8 @@ Namespace DataObjects
         End Sub
 
         Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
+
+            Util.Application.AppStatusText = "Saving Tool " & m_strName
 
             oXml.AddChildElement("ToolHolder")
             oXml.IntoElem()
