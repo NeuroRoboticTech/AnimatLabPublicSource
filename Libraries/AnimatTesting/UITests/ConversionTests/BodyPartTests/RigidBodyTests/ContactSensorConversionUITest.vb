@@ -204,7 +204,7 @@ Namespace UITests
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan"}, 2000)
                         ExecuteMethod("ClickToolbarItem", New Object() {"AddPartToolStripButton"}, 2000)
                         AutomatedClickToAddBody("Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0)
-                        AssertErrorDialogShown("You cannot add children to a contact sensor class.", enumMatchType.Equals)
+                        AssertErrorDialogShown("You cannot add children to a contact sensor class.", enumErrorTextType.Equals)
 
                     End Sub
 

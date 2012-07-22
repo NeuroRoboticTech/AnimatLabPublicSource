@@ -28,13 +28,6 @@ Namespace Framework
 
 #Region "enums"
 
-        Public Enum enumMatchType
-            Equals
-            Contains
-            BeginsWith
-            EndsWith
-        End Enum
-
 #End Region
 
 #Region "Attributes"
@@ -851,7 +844,7 @@ Namespace Framework
         Protected Overridable Sub AddRootPartType(ByVal strStructGroup As String, ByVal strStructure As String, ByVal strPartType As String, Optional ByVal strName As String = "")
             Debug.WriteLine("AddRootPartType. Structure Group:, " & strStructGroup & ", Structure: " & strStructure & ", PartType: " & strPartType & ", Name: " & strName)
 
-            OpenDialogAndWait("Select Part Type", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddPartToolStripButton"})
+            OpenDialogAndWait("Select Rigid Body Type", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddPartToolStripButton"})
 
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strPartType})
 
@@ -892,84 +885,6 @@ Namespace Framework
             ExecuteDirectMethod("ExecuteIndirectMethodOnObject", aryParams)
         End Sub
 
-        Protected Overridable Sub OpenDialogAndWait(ByVal strDlgName As String, ByVal oActionMethod As MethodInfo, ByVal aryParams() As Object)
-
-            Debug.WriteLine("OpenDialogAndWait for '" & strDlgName & "'")
-
-            Dim bDlgUp As Boolean = False
-            Dim iCount As Integer = 0
-            While Not bDlgUp
-                If Not oActionMethod Is Nothing Then
-                    'Perform the action method
-                    oActionMethod.Invoke(Me, aryParams)
-                    Debug.WriteLine("Calling actionmethod '" & oActionMethod.ToString & "'")
-                End If
-
-                Threading.Thread.Sleep(1000)
-
-                Dim strFormName As String = DirectCast(ExecuteDirectMethod("ActiveDialogName", Nothing), String)
-                If strFormName = strDlgName Then
-                    bDlgUp = True
-                    Debug.WriteLine("Opened '" & strDlgName & "'")
-                ElseIf strFormName = "<No Dialog>" Then
-                    bDlgUp = False
-                    Debug.WriteLine("Dialog was not opened, trying again.")
-                Else
-                    Throw New System.Exception("The active dialog name does not match the name we are waiting for. Active: '" & strFormName & "', Waiting: '" & strDlgName & "'")
-                End If
-                iCount = iCount + 1
-
-                If iCount > 5 Then
-                    Throw New System.Exception(strDlgName & " dialog would not open.")
-                End If
-            End While
-        End Sub
-
-        Protected Overridable Sub AssertErrorDialogShown(ByVal strErrorMsg As String, ByVal eMatchType As enumMatchType)
-            Debug.WriteLine("AssertErrorDialogShown. strErrorMsg:, " & strErrorMsg & ", Math Type: " & eMatchType.ToString)
-
-            OpenDialogAndWait("Error", Nothing, Nothing)
-            Threading.Thread.Sleep(1000)
-            Dim oVal As Object = GetApplicationProperty("ErrorDialogMessage")
-            Threading.Thread.Sleep(1000)
-            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
-            Threading.Thread.Sleep(1000)
-            If Not TypeOf oVal Is System.String Then
-                Throw New System.Exception("String not returned from error dialog box.")
-            End If
-            Dim strError As String = CStr(oVal)
-            If strError.Trim.Length = 0 Then
-                Throw New System.Exception("Error dialog box was not displayed.")
-            End If
-
-            Select Case eMatchType
-                Case enumMatchType.Equals
-                    If strError <> strErrorMsg Then
-                        Throw New System.Exception("Error did not match.")
-                    End If
-
-                Case enumMatchType.Contains
-                    If Not strError.Contains(strErrorMsg) Then
-                        Throw New System.Exception("Error did not match.")
-                    End If
-
-                Case enumMatchType.BeginsWith
-                    If Not strError.StartsWith(strErrorMsg) Then
-                        Throw New System.Exception("Error did not match.")
-                    End If
-
-                Case enumMatchType.EndsWith
-                    If Not strError.EndsWith(strErrorMsg) Then
-                        Throw New System.Exception("Error did not match.")
-                    End If
-
-                Case Else
-                    Throw New System.Exception("Inavlid match type provided: " & eMatchType.ToString)
-            End Select
-
-            Threading.Thread.Sleep(1000)
-            Debug.WriteLine("Error dialog shown correctly.")
-        End Sub
 
         Protected Overridable Sub BeforeAddChildPart(ByVal strPartType As String, ByVal strJointType As String)
 
@@ -1032,7 +947,7 @@ Namespace Framework
 
             AfterAddChildPart(strPartType, strJointType)
 
-            OpenDialogAndWait("Select Part Type", Nothing, Nothing)
+            OpenDialogAndWait("Select Joint Type", Nothing, Nothing)
 
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strJointType})
 
@@ -1080,7 +995,7 @@ Namespace Framework
 
             AutomatedClickToAddBody(strAddPath, 0.04, 0.55, -0.5, 0.0, 0.0, -1.0)
 
-            OpenDialogAndWait("Select Part Type", Nothing, Nothing)
+            OpenDialogAndWait("Select Rigid Body Type", Nothing, Nothing)
 
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strPartType})
 
@@ -1111,7 +1026,7 @@ Namespace Framework
             AfterAddChildPart("", strJointType)
 
             If bHasJoint Then
-                OpenDialogAndWait("Select Part Type", Nothing, Nothing)
+                OpenDialogAndWait("Select Joint Type", Nothing, Nothing)
 
                 ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strJointType})
 

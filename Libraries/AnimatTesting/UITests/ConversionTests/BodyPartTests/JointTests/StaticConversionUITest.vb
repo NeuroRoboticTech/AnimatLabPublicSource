@@ -86,7 +86,7 @@ Namespace UITests
                         DeletePart("Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_2\Joint_2\Body_3", "Delete Body Part", True)
 
                         PasteChildPartTypeWithJoint("Static", "Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_2", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0, True)
-                        AssertErrorDialogShown("You cannot paste a rigid body using a static joint when the body has children.", enumMatchType.Equals)
+                        AssertErrorDialogShown("You cannot paste a rigid body using a static joint when the body has children.", enumErrorTextType.Equals)
 
                         PasteChildPartTypeWithJoint("RPRO", "Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_2", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0, True)
 

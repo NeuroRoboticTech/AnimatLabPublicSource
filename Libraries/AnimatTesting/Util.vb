@@ -222,9 +222,9 @@ Public Class Util
         If Not aryParams Is Nothing Then
             For Each oParam In aryParams
                 If Not oParam Is Nothing Then
-                    strParams = oParam.ToString & ", "
+                    strParams = strParams & oParam.ToString & ", "
                 Else
-                    strParams = "Nothing, "
+                    strParams = strParams & "Nothing, "
                 End If
             Next
             If strParams.Length >= 2 Then
@@ -241,9 +241,9 @@ Public Class Util
         If Not aryParams Is Nothing Then
             For Each oParam In aryParams
                 If Not oParam Is Nothing Then
-                    strParams = oParam.ToString & ", "
+                    strParams = strParams & oParam.ToString & ", "
                 Else
-                    strParams = "Nothing, "
+                    strParams = strParams & "Nothing, "
                 End If
             Next
             If strParams.Length >= 2 Then

@@ -10,6 +10,7 @@ Imports System.Collections.Generic
 Imports System.Drawing
 Imports System.Text.RegularExpressions
 Imports System.IO
+Imports System.Reflection
 
 Namespace Framework
 
@@ -18,8 +19,9 @@ Namespace Framework
 #Region " Enums "
 
         Public Enum enumErrorTextType
-            BeginsWith
+            Equals
             Contains
+            BeginsWith
             EndsWith
         End Enum
 
@@ -207,8 +209,9 @@ Namespace Framework
             Try
                 Debug.WriteLine("ExecuteMethodAssertError Method: '" & strMethodName & "', Params: '" & Util.ParamsToString(aryParams) & "', Wait: " & iWaitMilliseconds & ", ErrorText: '" & strErrorText & "', ErrorTextType: '" & eErrorTextType.ToString & "'")
 
-                Dim oRet As Object = m_oServer.ExecuteMethod(strMethodName, aryParams)
-                Throw New System.Exception("Expected exception from call to '" & strMethodName & "' and did not get it.")
+                Dim oRet As Object = m_oServer.ExecuteIndirectMethod(strMethodName, aryParams)
+                AssertErrorDialogShown(strErrorText, eErrorTextType)
+
             Catch ex As System.Exception
                 Debug.WriteLine("Exception was caught.")
 
@@ -232,6 +235,86 @@ Namespace Framework
                 End If
             End Try
         End Sub
+
+        Protected Overridable Sub OpenDialogAndWait(ByVal strDlgName As String, ByVal oActionMethod As MethodInfo, ByVal aryParams() As Object)
+
+            Debug.WriteLine("OpenDialogAndWait for '" & strDlgName & "'")
+
+            Dim bDlgUp As Boolean = False
+            Dim iCount As Integer = 0
+            While Not bDlgUp
+                If Not oActionMethod Is Nothing Then
+                    'Perform the action method
+                    oActionMethod.Invoke(Me, aryParams)
+                    Debug.WriteLine("Calling actionmethod '" & oActionMethod.ToString & "'")
+                End If
+
+                Threading.Thread.Sleep(1000)
+
+                Dim strFormName As String = DirectCast(ExecuteDirectMethod("ActiveDialogName", Nothing), String)
+                If strFormName = strDlgName Then
+                    bDlgUp = True
+                    Debug.WriteLine("Opened '" & strDlgName & "'")
+                ElseIf strFormName = "<No Dialog>" Then
+                    bDlgUp = False
+                    Debug.WriteLine("Dialog was not opened, trying again.")
+                Else
+                    Throw New System.Exception("The active dialog name does not match the name we are waiting for. Active: '" & strFormName & "', Waiting: '" & strDlgName & "'")
+                End If
+                iCount = iCount + 1
+
+                If iCount > 5 Then
+                    Throw New System.Exception(strDlgName & " dialog would not open.")
+                End If
+            End While
+        End Sub
+
+        Protected Overridable Sub AssertErrorDialogShown(ByVal strErrorMsg As String, ByVal eMatchType As enumErrorTextType)
+            Debug.WriteLine("AssertErrorDialogShown. strErrorMsg:, " & strErrorMsg & ", Math Type: " & eMatchType.ToString)
+
+            OpenDialogAndWait("Error", Nothing, Nothing)
+            Threading.Thread.Sleep(1000)
+            Dim oVal As Object = GetApplicationProperty("ErrorDialogMessage")
+            Threading.Thread.Sleep(1000)
+            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+            Threading.Thread.Sleep(1000)
+            If Not TypeOf oVal Is System.String Then
+                Throw New System.Exception("String not returned from error dialog box.")
+            End If
+            Dim strError As String = CStr(oVal)
+            If strError.Trim.Length = 0 Then
+                Throw New System.Exception("Error dialog box was not displayed.")
+            End If
+
+            Select Case eMatchType
+                Case enumErrorTextType.Equals
+                    If strError <> strErrorMsg Then
+                        Throw New System.Exception("Error did not match.")
+                    End If
+
+                Case enumErrorTextType.Contains
+                    If Not strError.Contains(strErrorMsg) Then
+                        Throw New System.Exception("Error did not match.")
+                    End If
+
+                Case enumErrorTextType.BeginsWith
+                    If Not strError.StartsWith(strErrorMsg) Then
+                        Throw New System.Exception("Error did not match.")
+                    End If
+
+                Case enumErrorTextType.EndsWith
+                    If Not strError.EndsWith(strErrorMsg) Then
+                        Throw New System.Exception("Error did not match.")
+                    End If
+
+                Case Else
+                    Throw New System.Exception("Inavlid match type provided: " & eMatchType.ToString)
+            End Select
+
+            Threading.Thread.Sleep(1000)
+            Debug.WriteLine("Error dialog shown correctly.")
+        End Sub
+
 
         Protected Overridable Function ExecuteDirectMethod(ByVal strMethodName As String, ByVal aryParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200) As Object
             Debug.WriteLine("Executing Direct Method: '" & strMethodName & "', Params: '" & Util.ParamsToString(aryParams) & "', Wait: " & iWaitMilliseconds)

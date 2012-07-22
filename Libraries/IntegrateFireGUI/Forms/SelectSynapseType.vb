@@ -47,43 +47,42 @@ Namespace Forms
         Friend WithEvents btnCancel As System.Windows.Forms.Button
         Friend WithEvents btnOk As System.Windows.Forms.Button
         <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-            Me.tvSynapseTypes = New Crownwood.DotNetMagic.Controls.TreeControl
-            Me.pgTypeProperties = New System.Windows.Forms.PropertyGrid
-            Me.btnCancel = New System.Windows.Forms.Button
-            Me.btnOk = New System.Windows.Forms.Button
+            Me.tvSynapseTypes = New Crownwood.DotNetMagic.Controls.TreeControl()
+            Me.pgTypeProperties = New System.Windows.Forms.PropertyGrid()
+            Me.btnCancel = New System.Windows.Forms.Button()
+            Me.btnOk = New System.Windows.Forms.Button()
             Me.SuspendLayout()
             '
             'tvSynapseTypes
             '
-            'Me.tvSynapseTypes.FullRowSelect = True
-            'Me.tvSynapseTypes.HideSelection = False
-            Me.tvSynapseTypes.ImageIndex = -1
-            Me.tvSynapseTypes.LabelEdit = True
+            Me.tvSynapseTypes.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+                Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Me.tvSynapseTypes.FocusNode = Nothing
+            Me.tvSynapseTypes.HotBackColor = System.Drawing.Color.Empty
+            Me.tvSynapseTypes.HotForeColor = System.Drawing.Color.Empty
             Me.tvSynapseTypes.Location = New System.Drawing.Point(8, 8)
             Me.tvSynapseTypes.Name = "tvSynapseTypes"
-            Me.tvSynapseTypes.SelectedImageIndex = -1
-            Me.tvSynapseTypes.Size = New System.Drawing.Size(208, 416)
-            'Me.tvSynapseTypes.Sorted = True
+            Me.tvSynapseTypes.SelectedNode = Nothing
+            Me.tvSynapseTypes.SelectedNoFocusBackColor = System.Drawing.SystemColors.Control
+            Me.tvSynapseTypes.Size = New System.Drawing.Size(208, 367)
             Me.tvSynapseTypes.TabIndex = 0
             '
             'pgTypeProperties
             '
-            Me.pgTypeProperties.CommandsVisibleIfAvailable = True
-            Me.pgTypeProperties.LargeButtons = False
+            Me.pgTypeProperties.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+                Or System.Windows.Forms.AnchorStyles.Left) _
+                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.pgTypeProperties.LineColor = System.Drawing.SystemColors.ScrollBar
             Me.pgTypeProperties.Location = New System.Drawing.Point(224, 8)
             Me.pgTypeProperties.Name = "pgTypeProperties"
-            Me.pgTypeProperties.Size = New System.Drawing.Size(312, 416)
+            Me.pgTypeProperties.Size = New System.Drawing.Size(329, 364)
             Me.pgTypeProperties.TabIndex = 2
-            Me.pgTypeProperties.Text = "PropertyGrid1"
-            Me.pgTypeProperties.ViewBackColor = System.Drawing.SystemColors.Window
-            Me.pgTypeProperties.ViewForeColor = System.Drawing.SystemColors.WindowText
             '
             'btnCancel
             '
             Me.btnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
             Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            Me.btnCancel.Location = New System.Drawing.Point(272, 592)
+            Me.btnCancel.Location = New System.Drawing.Point(272, 383)
             Me.btnCancel.Name = "btnCancel"
             Me.btnCancel.Size = New System.Drawing.Size(64, 24)
             Me.btnCancel.TabIndex = 4
@@ -92,7 +91,7 @@ Namespace Forms
             'btnOk
             '
             Me.btnOk.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-            Me.btnOk.Location = New System.Drawing.Point(200, 592)
+            Me.btnOk.Location = New System.Drawing.Point(200, 383)
             Me.btnOk.Name = "btnOk"
             Me.btnOk.Size = New System.Drawing.Size(64, 24)
             Me.btnOk.TabIndex = 3
@@ -101,7 +100,7 @@ Namespace Forms
             'SelectSynapseType
             '
             Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-            Me.ClientSize = New System.Drawing.Size(544, 622)
+            Me.ClientSize = New System.Drawing.Size(561, 413)
             Me.Controls.Add(Me.btnCancel)
             Me.Controls.Add(Me.btnOk)
             Me.Controls.Add(Me.pgTypeProperties)
@@ -274,24 +273,24 @@ Namespace Forms
 
         End Sub
 
-        Protected Overrides Sub OnResize(ByVal e As System.EventArgs)
-            MyBase.OnResize(e)
+        'Protected Overrides Sub OnResize(ByVal e As System.EventArgs)
+        '    MyBase.OnResize(e)
 
-            Try
-                tvSynapseTypes.Width = CInt((Me.Width / 2) - 40)
-                pgTypeProperties.Left = tvSynapseTypes.Left + tvSynapseTypes.Width + 10
-                pgTypeProperties.Width = CInt(Me.Width - tvSynapseTypes.Width - 35)
+        '    Try
+        '        tvSynapseTypes.Width = CInt((Me.Width / 2) - 40)
+        '        pgTypeProperties.Left = tvSynapseTypes.Left + tvSynapseTypes.Width + 10
+        '        pgTypeProperties.Width = CInt(Me.Width - tvSynapseTypes.Width - 35)
 
-                tvSynapseTypes.Height = Me.Height - 80
-                pgTypeProperties.Height = Me.Height - 80
+        '        tvSynapseTypes.Height = Me.Height - 80
+        '        pgTypeProperties.Height = Me.Height - 80
 
-                btnOk.Left = CInt((Me.Width / 2) - btnOk.Width - 2)
-                btnCancel.Left = CInt((Me.Width / 2) + 2)
+        '        btnOk.Left = CInt((Me.Width / 2) - btnOk.Width - 2)
+        '        btnCancel.Left = CInt((Me.Width / 2) + 2)
 
-            Catch ex As System.Exception
+        '    Catch ex As System.Exception
 
-            End Try
-        End Sub
+        '    End Try
+        'End Sub
 
         Private Sub tvSynapseTypes_AfterSelect1(ByVal tc As Crownwood.DotNetMagic.Controls.TreeControl, ByVal e As Crownwood.DotNetMagic.Controls.NodeEventArgs) Handles tvSynapseTypes.AfterSelect
             Try

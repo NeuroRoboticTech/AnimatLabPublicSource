@@ -251,6 +251,12 @@ Namespace Forms.BodyPlan
 
                 m_bIsRigidBody = Util.IsTypeOf(m_tpPartType, GetType(Physical.RigidBody), False)
 
+                If m_bIsRigidBody Then
+                    Me.Text = "Select Rigid Body Type"
+                Else
+                    Me.Text = "Select Joint Type"
+                End If
+
                 Dim iMaxWidth As Integer = imgDefault.Width
                 Dim iMaxHeight As Integer = imgDefault.Height
                 Dim aryList As New ArrayList

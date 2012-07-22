@@ -1480,7 +1480,7 @@ Namespace Framework
 
         End Sub
 
-        Public Shared Sub SetObjectProperty(ByVal oObj As Object, ByVal strPropertyName As String, ByVal strValue As String)
+        Public Shared Sub SetObjectPropertyDirect(ByVal oObj As Object, ByVal strPropertyName As String, ByVal strValue As String)
             Dim piAutomationPropInfo As PropertyInfo
             Dim oAutomationPropertyValue As Object
 
@@ -1489,6 +1489,29 @@ Namespace Framework
             oAutomationPropertyValue = TypeDescriptor.GetConverter(piAutomationPropInfo.PropertyType).ConvertFromString(strValue)
             piAutomationPropInfo.SetValue(oObj, oAutomationPropertyValue, Nothing)
             Util.ProjectWorkspace.RefreshProperties()
+        End Sub
+
+        Public Shared Sub SetObjectProperty(ByVal oObj As Object, ByVal strPropertyName As String, ByVal strValue As String)
+            Dim piAutomationPropInfo As PropertyInfo
+            Dim oAutomationPropertyValue As Object
+
+            Dim oMethod As MethodInfo = oObj.GetType().GetMethod("Properties_SetValue")
+            If Not oMethod Is Nothing Then
+                Util.GetObjectProperty(strPropertyName, piAutomationPropInfo, oObj)
+
+                oAutomationPropertyValue = TypeDescriptor.GetConverter(piAutomationPropInfo.PropertyType).ConvertFromString(strValue)
+
+                Dim propSpec As New AnimatGuiCtrls.Controls.PropertySpec(piAutomationPropInfo.Name, piAutomationPropInfo.PropertyType, piAutomationPropInfo.Name)
+                Dim propEvent As New AnimatGuiCtrls.Controls.PropertySpecEventArgs(propSpec, oAutomationPropertyValue)
+
+                Dim aryParams As Object() = New Object() {oObj, propEvent}
+                Dim oRet As Object = oMethod.Invoke(oObj, aryParams)
+
+                Util.ProjectWorkspace.RefreshProperties()
+            Else
+                SetObjectPropertyDirect(oObj, strPropertyName, strValue)
+            End If
+
         End Sub
 
         Public Shared Function GetObjectProperty(ByVal oObj As Object, ByVal strPropertyName As String) As Object

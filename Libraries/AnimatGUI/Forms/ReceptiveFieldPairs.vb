@@ -425,10 +425,7 @@ Namespace Forms
         End Sub
 
         Protected Sub ClearPairs()
-            If Not m_doSelPart Is Nothing Then
-                If m_doSelPart.ReceptiveFieldSensor Is Nothing Then
-                    Throw New System.Exception("The receptive field sensor for the selected part is not set.")
-                End If
+            If Not m_doSelPart Is Nothing AndAlso Not m_doSelPart.ReceptiveFieldSensor Is Nothing Then
 
                 m_doSelPart.ReceptiveFieldSensor.ClearFieldPairs()
                 m_doSelPart.RemoveReceptiveFieldSensorIfNeeded()

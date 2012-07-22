@@ -469,7 +469,7 @@ Namespace Framework
             Util.ModificationHistory.AddHistoryEvent(New UndoSystem.PropertyChangedEvent(frmRoot, Me, propInfo, origValue, newValue))
         End Sub
 
-        Protected Overridable Sub Properties_SetValue(ByVal sender As Object, ByVal e As PropertySpecEventArgs)
+        Public Overridable Sub Properties_SetValue(ByVal sender As Object, ByVal e As PropertySpecEventArgs)
             Dim origValue As Object
             Dim propInfo As System.Reflection.PropertyInfo
 
