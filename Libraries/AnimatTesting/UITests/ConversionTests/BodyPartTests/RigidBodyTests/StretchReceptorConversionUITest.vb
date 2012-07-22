@@ -49,31 +49,31 @@ Namespace UITests
 
                     Protected Overrides Sub SpindleTest(ByVal aryMaxErrors As Hashtable)
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle2", "IaDischargeConstant", "200 "})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle2", "IaDischargeConstant", "200 "})
 
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "1A_200_")
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle2", "IaDischargeConstant", "100 "})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle2", "IaDischargeConstant", "100 "})
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle2", "IbDischargeConstant", "200 "})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\B_A", "Gain.C", "0.01 n"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\B_A", "DataTypes", "AnimatGUI.DataObjects.Physical.Bodies.LinearHillStretchReceptor.DataTypes.Ib"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle2", "IbDischargeConstant", "200 "})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\B_A", "Gain.C", "0.01 n"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\B_A", "DataTypes", "AnimatGUI.DataObjects.Physical.Bodies.LinearHillStretchReceptor.DataTypes.Ib"})
 
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "1B_200_")
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle2", "IbDischargeConstant", "100 "})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle2", "IbDischargeConstant", "100 "})
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle2", "IIDischargeConstant", "200 "})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stretch", "EndTime", "5.125"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\B_A", "DataTypes", "AnimatGUI.DataObjects.Physical.Bodies.LinearHillStretchReceptor.DataTypes.II"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle2", "IIDischargeConstant", "200 "})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stretch", "EndTime", "5.125"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\B_A", "DataTypes", "AnimatGUI.DataObjects.Physical.Bodies.LinearHillStretchReceptor.DataTypes.II"})
 
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "II_200_")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle2", "IIDischargeConstant", "100 "})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stretch", "EndTime", "5.025"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\B_A", "DataTypes", "AnimatGUI.DataObjects.Physical.Bodies.LinearHillStretchReceptor.DataTypes.Ia"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\B_A", "Gain.C", "1 n"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle2", "IIDischargeConstant", "100 "})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stretch", "EndTime", "5.025"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\B_A", "DataTypes", "AnimatGUI.DataObjects.Physical.Bodies.LinearHillStretchReceptor.DataTypes.Ia"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\B_A", "Gain.C", "1 n"})
 
                     End Sub
 

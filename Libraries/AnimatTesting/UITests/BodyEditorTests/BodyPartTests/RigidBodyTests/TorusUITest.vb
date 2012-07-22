@@ -27,7 +27,7 @@ Namespace UITests
                         MyBase.TestMovableRigidBodyProperties(strStructure, strPart)
 
                         'Set the InnerRadius to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "InnerRadius", "0.02"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "InnerRadius", "0.02"})
 
                         'Set the InnerRadius to zero
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "InnerRadius", "0"}, "The inner radius of the torus cannot be less than or equal to zero.")
@@ -39,11 +39,11 @@ Namespace UITests
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "InnerRadius", "0.2"}, "The inner radius of the torus cannot be larger or equal to the outer raidus.")
 
                         'Set the InnerRadius to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "InnerRadius", "0.01"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "InnerRadius", "0.01"})
 
 
                         'Set the OuterRadius to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "OuterRadius", "0.04"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "OuterRadius", "0.04"})
 
                         'Set the OuterRadius to zero
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "OuterRadius", "0"}, "The outer radius of the torus cannot be less than or equal to zero.")
@@ -55,11 +55,11 @@ Namespace UITests
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "OuterRadius", "0.005"}, "The outer radius of the torus cannot be less than or equal to the inner raidus.")
 
                         'Set the OuterRadius to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "OuterRadius", "0.05"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "OuterRadius", "0.05"})
 
 
                         'Set the Rings to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rings", "25"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rings", "25"})
 
                         'Set the Rings to zero
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rings", "5"}, "The number of rings for the torus cannot be less than ten.")
@@ -68,12 +68,12 @@ Namespace UITests
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rings", "-2"}, "The number of rings for the torus cannot be less than ten.")
 
                         'Set the Rings to original value
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rings", "20"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Rings", "20"})
 
 
 
                         'Set the Sides to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Sides", "25"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Sides", "25"})
 
                         'Set the Sides to zero
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Sides", "5"}, "The number of sides for the torus cannot be less than ten.")
@@ -82,23 +82,23 @@ Namespace UITests
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Sides", "-2"}, "The number of sides for the torus cannot be less than ten.")
 
                         'Set the Sides to original value
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Sides", "20"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Sides", "20"})
 
 
                     End Sub
 
                     Protected Overrides Sub BeforeAddChildPart(ByVal strPartType As String, ByVal strJointType As String)
                         'Reset the rotation of the torus so it is 90 degrees rotated around Y
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.X", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.Y", "90"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.Z", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.X", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.Y", "90"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.Z", "0"})
                     End Sub
 
                     Protected Overrides Sub AfterAddChildPartJoint(ByVal strPartType As String, ByVal strJointType As String)
                         'Reset the rotation of the torus so it is 90 degrees rotated around Y
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.X", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.Y", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.Z", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.X", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.Y", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.Z", "0"})
                     End Sub
 
 

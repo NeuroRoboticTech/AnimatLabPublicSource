@@ -37,7 +37,7 @@ Namespace UITests
                         MyBase.TestMovableRigidBodyProperties(strStructure, strPart)
 
                         'Set the Size.X to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Size.X", "15"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Size.X", "15"})
 
                         'Set the Size.X to zero
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Size.X", "0"}, "The size of the plane cannot be less than or equal to zero.")
@@ -46,11 +46,11 @@ Namespace UITests
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Size.X", "-0.2"}, "The size of the plane cannot be less than or equal to zero.")
 
                         'Set the Size.X to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Size.X", "10"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Size.X", "10"})
 
 
                         'Set the Size.Y to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Size.Y", "15"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Size.Y", "15"})
 
                         'Set the Size.Y to zero
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Size.Y", "0"}, "The size of the plane cannot be less than or equal to zero.")
@@ -59,11 +59,11 @@ Namespace UITests
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Size.Y", "-0.2"}, "The size of the plane cannot be less than or equal to zero.")
 
                         'Set the Size.Y to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Size.Y", "10"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Size.Y", "10"})
 
 
                         'Set the WidthSegments to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WidthSegments", "4"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WidthSegments", "4"})
 
                         'Set the WidthSegments to zero
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "WidthSegments", "0"}, "The width segments cannot be less than or equal to zero.")
@@ -74,7 +74,7 @@ Namespace UITests
 
 
                         'Set the LengthSegments to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LengthSegments", "4"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LengthSegments", "4"})
 
                         'Set the LengthSegments to zero
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LengthSegments", "0"}, "The length segments cannot be less than or equal to zero.")
@@ -88,26 +88,26 @@ Namespace UITests
                     Protected Overrides Sub RepositionChildPart()
 
                         'Reposition the child part relative to the landscape part
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1", "LocalPosition.X", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1", "LocalPosition.Y", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1", "LocalPosition.Z", "0.5"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1", "LocalPosition.X", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1", "LocalPosition.Y", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1", "LocalPosition.Z", "0.5"})
 
                     End Sub
 
                     Protected Overrides Sub RepositionStruct1BeforeSim()
                         'Reposition the structure
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.X", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.Y", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.Z", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.X", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.Y", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.Z", "0"})
                     End Sub
 
                     Protected Overrides Sub RepositionStruct2BeforeSim()
                         'Move the structure up.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_2", "WorldPosition.Y", "1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_2", "WorldPosition.Y", "1"})
 
                         'Resize the sphere
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_2\Body Plan\Root", "Radius", "0.05"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_2\Body Plan\Root\Root_Graphics", "Radius", "0.05"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_2\Body Plan\Root", "Radius", "0.05"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_2\Body Plan\Root\Root_Graphics", "Radius", "0.05"})
                     End Sub
 
 #Region "Additional test attributes"

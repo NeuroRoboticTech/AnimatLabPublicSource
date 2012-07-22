@@ -34,10 +34,10 @@ Namespace UITests
                 ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan"}, 2000)
 
                 'Set simulation to automatically end at a specified time.
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation", "SetSimulationEnd", "True"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation", "SetSimulationEnd", "True"})
 
                 'Set simulation end time.
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation", "SimulationEndTime", "50"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation", "SimulationEndTime", "50"})
 
                 'Add a root cylinder part.
                 AddRootPartType(m_strStructureGroup, m_strStruct1Name, "Box")
@@ -52,13 +52,13 @@ Namespace UITests
                 AddItemToChart(m_strStruct1Name & "\Body Plan\Root")
 
                 'Set the name of the data chart item to root_y.
-                ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root", "Name", "Root_Y"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root", "Name", "Root_Y"})
 
                 'Change the data type to track the world Y position.
-                ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root_Y", "DataTypeID", "WorldPositionY"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root_Y", "DataTypeID", "WorldPositionY"})
 
                 'Change the end time of the data chart to 45 seconds.
-                ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectEndTime", "45"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectEndTime", "45"})
 
                 'Run the simulation and wait for it to end.
                 RunSimulationWaitToEnd()

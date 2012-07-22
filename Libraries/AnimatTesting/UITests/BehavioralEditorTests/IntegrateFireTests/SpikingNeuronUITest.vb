@@ -22,10 +22,10 @@ Namespace UITests
 
 #Region "Methods"
 
-                <TestMethod()>
-                Public Sub TestIGF_SpikingNeuron()
-                    TestNeuron()
-                End Sub
+                '<TestMethod()>
+                'Public Sub TestIGF_SpikingNeuron()
+                '    TestNeuron()
+                'End Sub
 
 
 #Region "Additional test attributes"

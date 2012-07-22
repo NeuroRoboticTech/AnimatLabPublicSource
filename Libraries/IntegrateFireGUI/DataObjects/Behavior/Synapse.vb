@@ -71,7 +71,7 @@ Namespace DataObjects.Behavior
                 m_stSynapseType = Value
 
                 If Not m_stSynapseType Is Nothing AndAlso m_stSynapseType.GetType() Is GetType(SynapseTypes.SpikingChemical) _
-                    AndAlso m_stSynapseType.Name <> stOldSynapse.Name Then
+                    AndAlso (stOldSynapse Is Nothing OrElse m_stSynapseType.Name <> stOldSynapse.Name) Then
                     Dim scType As SynapseTypes.SpikingChemical = DirectCast(m_stSynapseType, SynapseTypes.SpikingChemical)
                     Me.SynapticConductance = DirectCast(scType.SynapticConductance.Clone(Me, False, Nothing), ScaledNumber)
                 End If

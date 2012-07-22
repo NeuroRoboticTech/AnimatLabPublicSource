@@ -31,30 +31,30 @@ Namespace UITests
 
                         StartNewProject()
                         'Set simulation to automatically end at a specified time.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation", "SetSimulationEnd", "True"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation", "SetSimulationEnd", "True"})
 
                         'Set simulation end time.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation", "SimulationEndTime", "6"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation", "SimulationEndTime", "6"})
 
                         'Add a root part.
                         AddRootPartType(m_strStructureGroup, m_strStruct1Name, "Box")
 
                         'Set the root part to be frozen.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Freeze", "True"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Freeze", "True"})
 
                         'We have tested moving/rotating the root part, now test doing it on a child part.
                         AddChildPartTypeWithJoint("Box", "Hinge", "Simulation\Environment\Structures\Structure_1\Body Plan\Root")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1", "Name", "Arm"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\Body_1_Graphics", "Name", "Arm_Graphics"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Name", "Hinge"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1", "Name", "Arm"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\Body_1_Graphics", "Name", "Arm_Graphics"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Name", "Hinge"})
 
                         'We have tested moving/rotating the root part, now test doing it on a child part.
                         AddChildPartTypeWithJoint("Box", "Distance", "Simulation\Environment\Structures\Structure_1\Body Plan\Root\Hinge\Arm")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Joint_2\Body_2", "Name", "Block"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Joint_2\Block\Body_2_Graphics", "Name", "Block_Graphics"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Joint_2", "Name", "Distance"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Joint_2\Body_2", "Name", "Block"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Joint_2\Block\Body_2_Graphics", "Name", "Block_Graphics"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Joint_2", "Name", "Distance"})
 
                         SizeParts()
 
@@ -68,52 +68,52 @@ Namespace UITests
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Y90_")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.X", "90"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.Y", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.Z", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.X", "90"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.Y", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.Z", "0"})
 
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "X90_")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.X", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.Y", "1"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.Z", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.X", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.Y", "1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.Z", "0"})
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.X", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.Y", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.Z", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.X", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.Y", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.Z", "0"})
 
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "X90_Reposition_")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.X", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.Y", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.Z", "90"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.X", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.Y", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.Z", "90"})
 
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Z90_")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.X", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.Y", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.Z", "1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.X", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.Y", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.Z", "1"})
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.X", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.Y", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.Z", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.X", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.Y", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.Z", "0"})
 
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Z90_Reposition_")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.X", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.Y", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.Z", "45"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.X", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.Y", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.Z", "45"})
 
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Z45_")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block", "LocalPosition.X", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block", "LocalPosition.Y", "0.5"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block", "LocalPosition.Z", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block", "LocalPosition.X", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block", "LocalPosition.Y", "0.5"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block", "LocalPosition.Z", "0"})
 
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Block_Y_05_")
@@ -121,19 +121,19 @@ Namespace UITests
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan"}, 2000)
                         DeletePart("Simulation\Environment\Structures\Structure_1\Body Plan\Root\Hinge\Arm", "Delete Body Part", True)
                         PasteChildPartTypeWithJoint("Hinge", "Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0, True)
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_3", "Name", "Hinge"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_3", "Name", "Hinge"})
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.X", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.Y", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.Z", "1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.X", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.Y", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.Z", "1"})
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.X", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.Y", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.Z", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.X", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.Y", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.Z", "0"})
 
                         AddStimulus("Motor Velocity", m_strStruct1Name, "\Body Plan\Root\Hinge", "MotorStim")
                         SetMotorVelocityStimulus("MotorStim", True, True, 0, 5, False, True, 2, "")
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "EnableLimits", "False"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "EnableLimits", "False"})
 
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\DataTool_1"}, 2000)
                         AddChartItems()
@@ -145,50 +145,50 @@ Namespace UITests
 
                     Protected Sub SizeParts()
                         'Resize the root part and graphic.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Height", "0.1"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Width", "0.1"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Length", "0.1"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Height", "0.1"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Width", "0.1"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Length", "0.1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Height", "0.1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Width", "0.1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Length", "0.1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Height", "0.1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Width", "0.1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Length", "0.1"})
 
                         'Resize the child part and graphic.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "Height", "0.1"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "Width", "0.1"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "Length", "0.1"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Arm_Graphics", "Height", "0.1"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Arm_Graphics", "Width", "0.1"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Arm_Graphics", "Length", "0.1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "Height", "0.1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "Width", "0.1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "Length", "0.1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Arm_Graphics", "Height", "0.1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Arm_Graphics", "Width", "0.1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Arm_Graphics", "Length", "0.1"})
 
                         'Resize the child part and graphic.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block", "Height", "0.1"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block", "Width", "0.1"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block", "Length", "0.1"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block\Block_Graphics", "Height", "0.1"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block\Block_Graphics", "Width", "0.1"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block\Block_Graphics", "Length", "0.1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block", "Height", "0.1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block", "Width", "0.1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block", "Length", "0.1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block\Block_Graphics", "Height", "0.1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block\Block_Graphics", "Width", "0.1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block\Block_Graphics", "Length", "0.1"})
 
                     End Sub
 
                     Protected Sub PositionParts()
                         'Reposition the child part relative to the parent part
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.X", "1"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.Y", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.Z", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.X", "1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.Y", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm", "LocalPosition.Z", "0"})
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block", "LocalPosition.X", "0.3"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block", "LocalPosition.Y", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block", "LocalPosition.Z", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block", "LocalPosition.X", "0.3"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block", "LocalPosition.Y", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block", "LocalPosition.Z", "0"})
 
                         'Reposition the joint relative to the parent part
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.X", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.Y", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.Z", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.X", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.Y", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "WorldPosition.Z", "0"})
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.X", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.Y", "90"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.Z", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "EnableLimits", "False"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.X", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.Y", "90"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "Rotation.Z", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Hinge", "EnableLimits", "False"})
 
                     End Sub
 
@@ -204,23 +204,23 @@ Namespace UITests
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1", False})
 
                         'Change the end time of the data chart to 45 seconds.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectEndTime", "5"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectEndTime", "5"})
 
                         AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block")
-                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Block", "Name", "Block_X"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Block_X", "DataTypeID", "WorldPositionX"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Block", "Name", "Block_X"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Block_X", "DataTypeID", "WorldPositionX"})
 
                         AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block")
-                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Block", "Name", "Block_Y"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Block_Y", "DataTypeID", "WorldPositionY"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Block", "Name", "Block_Y"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Block_Y", "DataTypeID", "WorldPositionY"})
 
                         AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block")
-                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Block", "Name", "Block_Z"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Block_Z", "DataTypeID", "WorldPositionZ"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Block", "Name", "Block_Z"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Block_Z", "DataTypeID", "WorldPositionZ"})
 
                         AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Hinge")
-                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Hinge", "Name", "Rotation"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Rotation", "DataTypeID", "JointRotation"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Hinge", "Name", "Rotation"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Rotation", "DataTypeID", "JointRotation"})
 
                     End Sub
 

@@ -65,13 +65,13 @@ Namespace UITests
                         'Load and convert the project.
                         TestConversionProject("AfterConversion_", aryMaxErrors)
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Y", "-7 "})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge", "WorldPosition.Y", "0 "})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Y", "-7 "})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge", "WorldPosition.Y", "0 "})
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "L_7m_")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\MotorStim", "Enabled", "False"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim", "Enabled", "True"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\MotorStim", "Enabled", "False"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim", "Enabled", "True"})
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "F_10N_")
 
@@ -101,13 +101,13 @@ Namespace UITests
                         'Load and convert the project.
                         TestConversionProject("AfterConversion_", aryMaxErrors)
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Y", "-70 c"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge", "WorldPosition.Y", "0 "})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Y", "-70 c"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge", "WorldPosition.Y", "0 "})
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "L_70cm_")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\MotorStim", "Enabled", "False"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim", "Enabled", "True"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\MotorStim", "Enabled", "False"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim", "Enabled", "True"})
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "F_5N_")
 
@@ -136,13 +136,13 @@ Namespace UITests
                         'Load and convert the project.
                         TestConversionProject("AfterConversion_", aryMaxErrors)
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Y", "-7 c"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge", "WorldPosition.Y", "0 "})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Y", "-7 c"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge", "WorldPosition.Y", "0 "})
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "L_7cm_")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\MotorStim", "Enabled", "False"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim", "Enabled", "True"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\MotorStim", "Enabled", "False"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\ForceStim", "Enabled", "True"})
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "F_10mN_")
 

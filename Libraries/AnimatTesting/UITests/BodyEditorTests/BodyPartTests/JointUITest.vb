@@ -201,56 +201,56 @@ Namespace UITests
                     'DragMouse(m_ptRotateArm2Start, m_ptRotateArm2End, MouseButtons.Left, ModifierKeys.None, True)
 
                     'Set the root part to be frozen.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Freeze", "True"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Freeze", "True"})
 
                     'Resize the root part and graphic.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Height", "0.2"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Width", "0.05"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Length", "0.05"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Height", "0.2"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Width", "0.05"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Length", "0.05"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Height", "0.2"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Width", "0.05"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Length", "0.05"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Height", "0.2"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Width", "0.05"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Length", "0.05"})
 
                     'Resize the child part and graphic.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "Height", "0.05"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "Width", "0.05"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "Length", "0.2"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\Arm_Graphics", "Height", "0.05"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\Arm_Graphics", "Width", "0.05"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\Arm_Graphics", "Length", "0.2"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "Height", "0.05"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "Width", "0.05"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "Length", "0.2"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\Arm_Graphics", "Height", "0.05"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\Arm_Graphics", "Width", "0.05"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\Arm_Graphics", "Length", "0.2"})
 
                     'Reposition the child part relative to the parent part
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "LocalPosition.X", "0.125"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "LocalPosition.Y", "-0.075"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "LocalPosition.Z", "0"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "LocalPosition.X", "0.125"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "LocalPosition.Y", "-0.075"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "LocalPosition.Z", "0"})
 
                     'Reposition the joint relative to the parent part
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LocalPosition.X", m_strInitialJointXPos})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LocalPosition.Y", m_strInitialJointYPos})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LocalPosition.Z", m_strInitialJointZPos})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LocalPosition.X", m_strInitialJointXPos})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LocalPosition.Y", m_strInitialJointYPos})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LocalPosition.Z", m_strInitialJointZPos})
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", m_strInitialJointXRot})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.Y", m_strInitialJointYRot})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.Z", m_strInitialJointZRot})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", m_strInitialJointXRot})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.Y", m_strInitialJointYRot})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.Z", m_strInitialJointZRot})
 
                 End Sub
 
                 Protected Overrides Sub RepositionBlockerPart()
                     'Resize the child part and graphic.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "Height", "0.05"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "Width", "0.05"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "Length", "0.05"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker\Blocker_Graphics", "Height", "0.05"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker\Blocker_Graphics", "Width", "0.05"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker\Blocker_Graphics", "Length", "0.05"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "Height", "0.05"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "Width", "0.05"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "Length", "0.05"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker\Blocker_Graphics", "Height", "0.05"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker\Blocker_Graphics", "Width", "0.05"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker\Blocker_Graphics", "Length", "0.05"})
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.X", "0"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.Y", "0.125"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.Z", "0"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.X", "0"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.Y", "0.125"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.Z", "0"})
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2", "LocalPosition.X", "0"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2", "LocalPosition.Y", "0"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2", "LocalPosition.Z", "0"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2", "LocalPosition.X", "0"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2", "LocalPosition.Y", "0"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2", "LocalPosition.Z", "0"})
                 End Sub
 
                 Protected Overridable Sub SimulateJointTests()
@@ -269,7 +269,7 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallUp" & m_strFallUpper1 & "Deg_")
 
                     'Now increase upper limit
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "UpperLimit.LimitPos", m_strFallUpper2})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "UpperLimit.LimitPos", m_strFallUpper2})
 
                     'simulate the arm falling down under gravity.
                     RunSimulationWaitToEnd()
@@ -278,7 +278,7 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallUp" & m_strFallUpper2 & "Deg_")
 
                     'Now decrease upper limit
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "UpperLimit.LimitPos", m_strFallUpper3})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "UpperLimit.LimitPos", m_strFallUpper3})
 
                     'simulate the arm falling down under gravity.
                     RunSimulationWaitToEnd()
@@ -287,8 +287,8 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallUp" & m_strFallUpper3 & "Deg_")
 
                     'reset upper limit, rotate body to test lower limit
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "UpperLimit.LimitPos", m_strFallUpper1})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.X", "180"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "UpperLimit.LimitPos", m_strFallUpper1})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.X", "180"})
 
                     'simulate the arm falling down under gravity.
                     RunSimulationWaitToEnd()
@@ -297,7 +297,7 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallLow" & m_strFallLower1 & "Deg_")
 
                     'Now increase upper limit
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LowerLimit.LimitPos", m_strFallLower2})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LowerLimit.LimitPos", m_strFallLower2})
 
                     'simulate the arm falling down under gravity.
                     RunSimulationWaitToEnd()
@@ -306,7 +306,7 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallLow" & m_strFallLower2 & "Deg_")
 
                     'Now decrease upper limit
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LowerLimit.LimitPos", m_strFallLower3})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LowerLimit.LimitPos", m_strFallLower3})
 
                     'simulate the arm falling down under gravity.
                     RunSimulationWaitToEnd()
@@ -315,8 +315,8 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallLow" & m_strFallLower3 & "Deg_")
 
                     'Reset the limit, rotate the part so it should not fall.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LowerLimit.LimitPos", m_strFallLower1})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.X", m_strInitialJointXRot})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LowerLimit.LimitPos", m_strFallLower1})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.X", m_strInitialJointXRot})
 
                     'simulate the arm falling down under gravity.
                     RunSimulationWaitToEnd()
@@ -325,7 +325,7 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallNone_")
 
                     'Now Rotate joint so it should fall.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", "0"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", "0"})
 
                     'simulate the arm falling down under gravity.
                     RunSimulationWaitToEnd()
@@ -334,7 +334,7 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallXRot0_")
 
                     'Now Rotate joint so it should fall.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", "45"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", "45"})
 
                     'simulate the arm falling down under gravity.
                     RunSimulationWaitToEnd()
@@ -343,7 +343,7 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallXRot45_")
 
                     'Turn off constraint limits
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "EnableLimits", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "EnableLimits", "False"})
 
                     'simulate the arm falling down under gravity.
                     RunSimulationWaitToEnd()
@@ -352,21 +352,21 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "FallXRot45NoLimit_")
 
                     'Reset armature
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "EnableLimits", "True"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", m_strInitialJointXRot})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.X", "0"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "EnableLimits", "True"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", m_strInitialJointXRot})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Rotation.X", "0"})
 
                     'Reposition the blocker to be in the way
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.X", "0.2"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.Y", "-0.18"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.Z", "0"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.X", "0.2"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.Y", "-0.18"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.Z", "0"})
 
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "BlockFall45_")
 
                     'Made the blocker wider.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "Width", "0.3"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker\Blocker_Graphics", "Width", "0.3"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "Width", "0.3"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker\Blocker_Graphics", "Width", "0.3"})
 
                     ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", False})
 
@@ -386,16 +386,16 @@ Namespace UITests
                     'CompareColummData(5, 150, 180, enumDataComparisonType.Max, m_dblMaxMovePos, 0, m_dblMaxMovePosError)
 
                     'Reset blocker position
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.X", "0"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.Y", "0.125"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.Z", "0"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.X", "0"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.Y", "0.125"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.Z", "0"})
 
                     'Reset blocker size.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "Width", "0.05"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker\Blocker_Graphics", "Width", "0.05"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "Width", "0.05"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker\Blocker_Graphics", "Width", "0.05"})
 
                     'Reset the arm position.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "LocalPosition.Z", "0"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "LocalPosition.Z", "0"})
 
                 End Sub
 
@@ -433,7 +433,7 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "MotorDownVelEqu_")
 
                     'Rotate joint
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.Z", "45"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.Z", "45"})
 
                     SetMotorVelocityStimulus("JointVelocity", False, True, 1, 5, False, False, 0, "-0.25*t")
 
@@ -441,7 +441,7 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "MotorDownVelEqu45Deg_")
 
                     'Reset the joint
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.Z", m_strInitialJointZRot})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.Z", m_strInitialJointZRot})
 
                     DeletePart("Stimuli\JointVelocity", "Delete Stimulus")
                 End Sub
@@ -462,7 +462,7 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "MotorUpForce15_")
 
                     'Rotate joint
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", m_strForceXJointRotation})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", m_strForceXJointRotation})
 
                     SetForceStimulus("ArmForce", False, True, 1, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0)
 
@@ -470,7 +470,7 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, "MotorLeftForce1_")
 
                     'Reset the joint
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", m_strInitialJointXRot})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", m_strInitialJointXRot})
 
                     'ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", False})
                     'RotatePartAxis(m_strStruct1Name, "Root\Joint_1", "X", m_ptRotateJoint1Start, m_ptRotatejoint1End, m_dblMouseRotateJointMin, m_sblMouseRotateJointMax, False)
@@ -480,7 +480,7 @@ Namespace UITests
                     'LoadDataChart(m_strRootFolder & m_strTestDataPath, "DataTool_1.txt", "MouseRotate_")
                     'CompareColummData(3, 3070, 3080, enumDataComparisonType.Max, m_dblMaxRotPos, 0, m_dblMaxRotPosError)
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", m_strInitialJointXRot})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", m_strInitialJointXRot})
 
                     DeletePart("Stimuli\ArmForce", "Delete Stimulus")
                 End Sub

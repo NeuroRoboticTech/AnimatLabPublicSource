@@ -76,18 +76,18 @@ Namespace UITests
                         'Load and convert the project.
                         TestConversionProject("AfterConversion_", aryMaxErrors, -1, aryIgnoreRows)
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "WorldPosition.Y", "-55 c"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "WorldPosition.Y", "-55 c"})
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "BoxY_-55cm_", -1, aryIgnoreRows)
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.Y", "-55 c"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.Y", "-55 c"})
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "CylinderY_-55cm_", -1, aryIgnoreRows)
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "LocalPosition.Y", "0 c"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "LocalPosition.Y", "0 c"})
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "BoxY_0cm_", -1, aryIgnoreRows)
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "WorldPosition.Y", "-55 c"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "WorldPosition.Y", "-55 c"})
 
                         aryIgnoreRows.Clear()
                         aryIgnoreRows.Add(New Point(131, 137))
@@ -99,9 +99,9 @@ Namespace UITests
                         aryIgnoreRows.Add(New Point(2548, 2549))
                         aryIgnoreRows.Add(New Point(2641, 2641))
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "Rotation.X", "-45"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Y", "-10 c"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Z", "-20 c"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "Rotation.X", "-45"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Y", "-10 c"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Z", "-20 c"})
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "PendulumRotate_", -1, aryIgnoreRows)
 
@@ -128,9 +128,9 @@ Namespace UITests
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\BodyData"}, 2000)
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 3", False})
                         AddItemToChart("Organism_1\Behavioral System\Neural Subsystem\Nodes\S2\Nodes\BoxContact")
-                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 3\BoxContact", "DataTypeID", "MembraneVoltage"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 3\BoxContact", "DataTypeID", "MembraneVoltage"})
                         AddItemToChart("Organism_1\Behavioral System\Neural Subsystem\Nodes\S2\Nodes\CylinderContact")
-                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 3\CylinderContact", "DataTypeID", "MembraneVoltage"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 3\CylinderContact", "DataTypeID", "MembraneVoltage"})
 
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "PendulumRotate_", -1, aryIgnoreRows)
@@ -151,10 +151,10 @@ Namespace UITests
                             Throw New System.Exception("BS_BC adapter node was not removed correctly.")
                         End If
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "Rotation.X", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Y", "-20 c"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Z", "0"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.Y", "-35 c"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "Rotation.X", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Y", "-20 c"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", "WorldPosition.Z", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.Y", "-35 c"})
 
                         aryIgnoreRows.Clear()
                         aryIgnoreRows.Add(New Point(162, 173))
@@ -168,21 +168,21 @@ Namespace UITests
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DeleteBoxSensor_", -1, aryIgnoreRows)
 
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan"}, 2000)
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.X", "5 c"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.Y", "-35 c"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.Z", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.X", "5 c"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.Y", "-35 c"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\CylinderSensor", "WorldPosition.Z", "0"})
 
                         PasteChildPartTypeWithJoint("", "Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0, False)
                         Threading.Thread.Sleep(1000)
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "WorldPosition.X", "-5 c"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "WorldPosition.Y", "-35 c"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "WorldPosition.Z", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "WorldPosition.X", "-5 c"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "WorldPosition.Y", "-35 c"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", "WorldPosition.Z", "0"})
 
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\BodyData"}, 2000)
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1", False})
                         AddItemToChart("Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor")
-                        ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1\BoxSensor", "DataTypeID", "ContactCount"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1\BoxSensor", "DataTypeID", "ContactCount"})
 
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2"}, 2000)
                         ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\BoxSensor", _
@@ -193,9 +193,9 @@ Namespace UITests
                         If Not CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\2"})) Then
                             Throw New System.Exception("2 adapter was not added")
                         End If
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\2", "Name", "BS_BC"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\BS_BC", "Gain.C", "10 n"})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\BS_BC", "DataTypes", "AnimatGUI.DataObjects.Physical.Bodies.Box.DataTypes.ContactCount"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\2", "Name", "BS_BC"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\BS_BC", "Gain.C", "10 n"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\BS_BC", "DataTypes", "AnimatGUI.DataObjects.Physical.Bodies.Box.DataTypes.ContactCount"})
 
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_", -1, aryIgnoreRows)

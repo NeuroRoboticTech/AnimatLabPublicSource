@@ -77,7 +77,8 @@ Namespace UITests
 
 #Region "Methods"
 
-            Protected Overridable Sub TestNeuron()
+            <TestMethod()>
+            Public Sub Test_Neuron_Synapse_UI()
 
                 m_strStructureGroup = "Organisms"
                 m_strStruct1Name = "Organism_1"
@@ -100,13 +101,52 @@ Namespace UITests
 
                 AddBehavioralNode("Simulation\Environment\" & m_strStructureGroup & _
                           "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem, _
-                          "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking", New Point(200, 200), "B")
+                          "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking", New Point(200, 100), "B")
+
+                AddBehavioralLink("Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\A", _
+                           "Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\B", "2", _
+                          "Synapses Classes\Non-Spiking Chemical Synapses\Hyperpolarising IPSP", True, True)
 
                 AddBehavioralLink("Simulation\Environment\" & m_strStructureGroup & _
                           "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\A", _
                            "Simulation\Environment\" & m_strStructureGroup & _
                           "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\B", "2", _
                           "Synapses Classes\Non-Spiking Chemical Synapses\Hyperpolarising IPSP", True)
+
+                AddBehavioralLink("Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\B", _
+                           "Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\A", "3", _
+                          "Synapses Classes\Electrical Synapses\Rectifying Synapse", True)
+
+
+                AddBehavioralNode("Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem, _
+                          "IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking", New Point(100, 150), "C")
+
+                AddBehavioralNode("Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem, _
+                          "IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking", New Point(200, 150), "D")
+
+                AddBehavioralLink("Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\C", _
+                           "Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\D", "2", _
+                          "Synapses Classes\Spiking Chemical Synapses\Nicotinic ACh", True)
+
+                AddBehavioralLink("Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\C", _
+                           "Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\D", "2", _
+                          "Synapses Classes\Non-Spiking Chemical Synapses\Hyperpolarising IPSP", True)
+
+                AddBehavioralLink("Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\D", _
+                           "Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\C", "3", _
+                          "Synapses Classes\Electrical Synapses\Rectifying Synapse", True)
 
 
                 AddBehavioralNode("Simulation\Environment\" & m_strStructureGroup & _
@@ -214,56 +254,56 @@ Namespace UITests
                 'DragMouse(m_ptRotateArm2Start, m_ptRotateArm2End, MouseButtons.Left, ModifierKeys.None, True)
 
                 'Set the root part to be frozen.
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Freeze", "True"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Freeze", "True"})
 
                 'Resize the root part and graphic.
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Height", "0.2"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Width", "0.05"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Length", "0.05"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Height", "0.2"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Width", "0.05"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Length", "0.05"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Height", "0.2"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Width", "0.05"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Length", "0.05"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Height", "0.2"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Width", "0.05"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Length", "0.05"})
 
                 'Resize the child part and graphic.
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "Height", "0.05"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "Width", "0.05"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "Length", "0.2"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\Arm_Graphics", "Height", "0.05"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\Arm_Graphics", "Width", "0.05"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\Arm_Graphics", "Length", "0.2"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "Height", "0.05"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "Width", "0.05"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "Length", "0.2"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\Arm_Graphics", "Height", "0.05"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\Arm_Graphics", "Width", "0.05"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\Arm_Graphics", "Length", "0.2"})
 
                 'Reposition the child part relative to the parent part
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "LocalPosition.X", "0.125"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "LocalPosition.Y", "-0.075"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "LocalPosition.Z", "0"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "LocalPosition.X", "0.125"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "LocalPosition.Y", "-0.075"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm", "LocalPosition.Z", "0"})
 
                 'Reposition the joint relative to the parent part
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LocalPosition.X", m_strInitialJointXPos})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LocalPosition.Y", m_strInitialJointYPos})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LocalPosition.Z", m_strInitialJointZPos})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LocalPosition.X", m_strInitialJointXPos})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LocalPosition.Y", m_strInitialJointYPos})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "LocalPosition.Z", m_strInitialJointZPos})
 
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", m_strInitialJointXRot})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.Y", m_strInitialJointYRot})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.Z", m_strInitialJointZRot})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.X", m_strInitialJointXRot})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.Y", m_strInitialJointYRot})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1", "Rotation.Z", m_strInitialJointZRot})
 
             End Sub
 
             Protected Overrides Sub RepositionBlockerPart()
                 'Resize the child part and graphic.
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "Height", "0.05"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "Width", "0.05"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "Length", "0.05"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker\Blocker_Graphics", "Height", "0.05"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker\Blocker_Graphics", "Width", "0.05"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker\Blocker_Graphics", "Length", "0.05"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "Height", "0.05"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "Width", "0.05"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "Length", "0.05"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker\Blocker_Graphics", "Height", "0.05"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker\Blocker_Graphics", "Width", "0.05"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker\Blocker_Graphics", "Length", "0.05"})
 
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.X", "0"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.Y", "0.125"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.Z", "0"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.X", "0"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.Y", "0.125"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2\Blocker", "LocalPosition.Z", "0"})
 
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2", "LocalPosition.X", "0"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2", "LocalPosition.Y", "0"})
-                ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2", "LocalPosition.Z", "0"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2", "LocalPosition.X", "0"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2", "LocalPosition.Y", "0"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_2", "LocalPosition.Z", "0"})
             End Sub
 
 #End Region

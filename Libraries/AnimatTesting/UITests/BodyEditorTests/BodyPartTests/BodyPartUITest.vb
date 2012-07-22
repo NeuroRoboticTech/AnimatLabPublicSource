@@ -606,7 +606,7 @@ Namespace UITests
 
                 Protected Overridable Sub RepositionStruct1BeforeSim()
                     'Move the structure up.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.Y", "1"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.Y", "1"})
                 End Sub
 
                 Protected Overridable Sub RepositionStruct2BeforeSim()
@@ -631,10 +631,10 @@ Namespace UITests
                     AddItemToChart("Structure_2\Body Plan\Root")
 
                     'Set the name of the data chart item to root_y.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root", "Name", "Root2_Y"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root", "Name", "Root2_Y"})
 
                     'Change the data type to track the world Y position.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root2_Y", "DataTypeID", "WorldPositionY"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root2_Y", "DataTypeID", "WorldPositionY"})
 
                     'Select the simulation window tab so it is visible now.
                     ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Simulation\Environment\Structures\Structure_2"}, 1000)
@@ -700,7 +700,7 @@ Namespace UITests
 
                     If m_bTestDensity Then
                         'Set the density to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Density", m_dblTestDensity.ToString})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Density", m_dblTestDensity.ToString})
 
                         Dim dblTest As Double = DirectCast(GetSimObjectProperty("Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "Density.ActualValue"), Double)
 
@@ -725,9 +725,9 @@ Namespace UITests
                 '    CreateAndTestChild()
 
                 '    'Reposition the structure
-                '    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.X", "0"})
-                '    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.Y", "0"})
-                '    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.Z", "0"})
+                '    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.X", "0"})
+                '    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.Y", "0"})
+                '    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name, "WorldPosition.Z", "0"})
 
                 '    'Reposition the Child
                 '    RepositionChildPart()

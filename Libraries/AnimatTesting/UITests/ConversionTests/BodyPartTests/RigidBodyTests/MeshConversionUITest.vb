@@ -87,16 +87,16 @@ Namespace UITests
                         aryMaxErrors("MeshX") = 0.03
                         aryMaxErrors("MeshY") = 0.03
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.X", strBlock1X})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.Y", strBlock1Y})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.Z", strBlock1Z})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.X", strBlock1X})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.Y", strBlock1Y})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.Z", strBlock1Z})
 
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Block1_")
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.X", strBlock2X})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.Y", strBlock2Y})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.Z", strBlock2Z})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.X", strBlock2X})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.Y", strBlock2Y})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.Z", strBlock2Z})
 
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Block2_")
@@ -104,9 +104,9 @@ Namespace UITests
                         aryMaxErrors("MeshX") = 0.08
                         aryMaxErrors("MeshY") = 0.08
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_3\Mesh", "LocalPosition.X", strMesh1X})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_3\Mesh", "LocalPosition.Y", strMesh1Y})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_3\Mesh", "LocalPosition.Z", strMesh1Z})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_3\Mesh", "LocalPosition.X", strMesh1X})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_3\Mesh", "LocalPosition.Y", strMesh1Y})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_3\Mesh", "LocalPosition.Z", strMesh1Z})
 
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Mesh1_")
@@ -114,9 +114,9 @@ Namespace UITests
                         aryMaxErrors("MeshX") = 0.03
                         aryMaxErrors("MeshY") = 0.03
 
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.X", strBlock3X})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.Y", strBlock3Y})
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.Z", strBlock3Z})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.X", strBlock3X})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.Y", strBlock3Y})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Joint_2\Right_Block", "LocalPosition.Z", strBlock3Z})
 
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Block3_")

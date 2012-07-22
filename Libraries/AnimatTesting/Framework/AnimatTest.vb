@@ -171,6 +171,13 @@ Namespace Framework
             Dim oRet As Object = m_oServer.ExecuteIndirectMethod(strMethodName, aryParams)
             Threading.Thread.Sleep(iWaitMilliseconds)
 
+            'Check to see if an error dialog is present. If it is then get the error name.
+            Dim strFormName As String = DirectCast(ExecuteDirectMethod("ActiveDialogName", Nothing), String)
+            If strFormName = "Error" Then
+                Dim strError As String = CStr(GetApplicationProperty("ErrorDialogMessage"))
+                Throw New System.Exception(strError)
+            End If
+
             If Not oRet Is Nothing Then Debug.WriteLine("Return: " & oRet.ToString) Else Debug.WriteLine("Return: Nothing")
             Return oRet
         End Function

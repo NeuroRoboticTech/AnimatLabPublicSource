@@ -264,6 +264,7 @@ Namespace Forms
 
         Protected Overrides Sub OnResize(ByVal e As System.EventArgs)
             Try
+                MyBase.OnResize(e)
                 ResizeForm()
             Catch ex As System.Exception
                 Util.ShowMessage(ex.Message)

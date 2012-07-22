@@ -3920,6 +3920,8 @@ Namespace Forms
                     Return
                 End If
 
+                Util.Application.Cursor = System.Windows.Forms.Cursors.WaitCursor
+
                 'If there is not already an open window then lets create it.
                 Dim frmAnimat As Forms.SimulationWindow = DirectCast(CreateForm("AnimatGUI.dll", "AnimatGUI.Forms.SimulationWindow", doStructure.Name & " Body", False), Forms.SimulationWindow)
                 doStructure.BodyEditor = frmAnimat

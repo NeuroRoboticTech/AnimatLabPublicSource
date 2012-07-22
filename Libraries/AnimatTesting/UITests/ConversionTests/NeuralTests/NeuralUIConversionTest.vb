@@ -67,32 +67,32 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
                     'Change the time step of the firing rate neural sim to 0.5 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_0_5ms_")
 
                     'Change the time step of the firing rate neural sim to 1 ms, physics time step to 0.5 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_1ms_PhysicsTimeStep_0_5ms_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
 
                     'Set Vth to 12 mv
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vsth", "12 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vsth", "12 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vsth_12mv_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vsth", "10 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vsth", "10 m"})
 
                     'Set ih to 4na, Il to -1 na
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Ih", "4 n"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Il", "-1 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Ih", "4 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Il", "-1 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Ih_4na_Il_-1na_")
 
                     'Set stim_3 to -5 nA
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_3", "CurrentOn", "-5 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_3", "CurrentOn", "-5 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Stim3_-5na_")
 
@@ -133,36 +133,36 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
                     'Change the time step of the firing rate neural sim to 0.5 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_0_5ms_")
 
                     'Change the time step of the firing rate neural sim to 1 ms, physics time step to 0.5 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_1ms_PhysicsTimeStep_0_5ms_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 1] 1 (5 nA))", "Weight", "0.5"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -1] 1 (5 nA))", "Weight", "-0.5"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 1] 1 (5 nA))", "Weight", "0.5"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -1] 1 (5 nA))", "Weight", "-0.5"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "W_0_5_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 0.5] 1 (5 nA))", "Enabled", "False"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -0.5] 1 (5 nA))", "Enabled", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 0.5] 1 (5 nA))", "Enabled", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -0.5] 1 (5 nA))", "Enabled", "False"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Disabled_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 0.5] 1 (5 nA))", "Enabled", "True"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -0.5] 1 (5 nA))", "Enabled", "True"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 0.5] 1 (5 nA))", "Enabled", "True"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -0.5] 1 (5 nA))", "Enabled", "True"})
 
                     'swap settings.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 0.5] 1 (5 nA))", "Weight", "-1"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W -1] 1 (5 nA))", "GateInitiallyOn", "True"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 0.5] 1 (5 nA))", "Weight", "-1"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W -1] 1 (5 nA))", "GateInitiallyOn", "True"})
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -0.5] 1 (5 nA))", "Weight", "1"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W 1] 1 (5 nA))", "GateInitiallyOn", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -0.5] 1 (5 nA))", "Weight", "1"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W 1] 1 (5 nA))", "GateInitiallyOn", "False"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "SwapGates_")
 
@@ -171,9 +171,9 @@ Namespace UITests
                                                                  "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\6 (1 nA)"})
                     ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W 1] 1 (5 nA))", _
                                                                  "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\6 (1 nA)"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 (5 nA)", "Enabled", "False"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\1 (5 nA)", "Enabled", "False"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_9", "Enabled", "True"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 (5 nA)", "Enabled", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\1 (5 nA)", "Enabled", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_9", "Enabled", "True"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "SwapLinkedSynapses_")
 
@@ -219,35 +219,35 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
                     'Change the time step of the firing rate neural sim to 0.5 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_0_5ms_")
 
                     'Change the time step of the firing rate neural sim to 1 ms, physics time step to 0.5 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_1ms_PhysicsTimeStep_0_5ms_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
 
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 2] 1 (5 nA))", "Enabled", "False"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -2] 1 (5 nA))", "Enabled", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 2] 1 (5 nA))", "Enabled", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -2] 1 (5 nA))", "Enabled", "False"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Disabled_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 2] 1 (5 nA))", "Enabled", "True"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -2] 1 (5 nA))", "Enabled", "True"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 2] 1 (5 nA))", "Enabled", "True"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -2] 1 (5 nA))", "Enabled", "True"})
 
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 2] 1 (5 nA))", "Gain", "2.5"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -2] 1 (5 nA))", "Gain", "-2.5"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 2] 1 (5 nA))", "Gain", "2.5"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -2] 1 (5 nA))", "Gain", "-2.5"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "W_2_5_")
 
                     'swap settings.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 2.5] 1 (5 nA))", "Gain", "-2"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -2.5] 1 (5 nA))", "Gain", "2"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\3 ([W 2.5] 1 (5 nA))", "Gain", "-2"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W -2.5] 1 (5 nA))", "Gain", "2"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "SwapGates_")
 
@@ -256,9 +256,9 @@ Namespace UITests
                                                                  "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\6 (1 nA)"})
                     ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\5 ([W 2] 1 (5 nA))", _
                                                                  "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\6 (1 nA)"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 (5 nA)", "Enabled", "False"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\1 (5 nA)", "Enabled", "False"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_9", "Enabled", "True"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 (5 nA)", "Enabled", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\4\1 (5 nA)", "Enabled", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_9", "Enabled", "True"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "SwapLinkedSynapses_")
 
@@ -293,68 +293,68 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
                     'Change the time step of the firing rate neural sim to 0.5 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_0_5ms_")
 
                     'Change the time step of the firing rate neural sim to 1 ms, physics time step to 0.5 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_1ms_PhysicsTimeStep_0_5ms_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
 
                     'Now decrease Cm from 3nf to 1nf
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Cm", "1 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Cm", "1 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Cm1nf_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Cm", "3 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Cm", "3 n"})
 
                     'Now increase Gm from 100nS to 200nS
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Gm", "200 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Gm", "200 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Gm200ns_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Gm", "100 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Gm", "100 n"})
 
                     'Now increase Vth from 0 to 20mV
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vth", "20 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vth", "20 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vth20mv_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vth", "0 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vth", "0 m"})
 
                     'Now increase FMin from 0 to 0.2 Hz
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Fmin", "0.2"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Fmin", "0.2"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Fmin2_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Fmin", "0"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Fmin", "0"})
 
                     'Now increase Gain from 15 to 20
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Gain", "20"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Gain", "20"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Gain20_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Gain", "15"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Gain", "15"})
 
                     'Now decrease Vrest from 0 to -70 mv and Vth
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vrest", "-70 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vth", "-70 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vrest", "-70 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vth", "-70 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vrest-70mv_")
 
                     'Now increase accomodation from 0 to 1
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeAccommodation", "1"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeAccommodation", "1"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Accom1_")
 
                     'Now decrease accomodation tc from 200 ms to 100 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AccommodationTimeConstant", "100 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AccommodationTimeConstant", "100 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AccomTc100ms_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeAccommodation", "0"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AccommodationTimeConstant", "200 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeAccommodation", "0"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AccommodationTimeConstant", "200 m"})
 
                     'Change Vnoise to 5 mv
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "VNoiseMax", "5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "VNoiseMax", "5 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vnoise5mv_")
 
@@ -387,36 +387,36 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
                     'Change the time step of the firing rate neural sim to 0.5 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_0_5ms_")
 
                     'Change the time step of the firing rate neural sim to 1 ms, physics time step to 0.5 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_1ms_PhysicsTimeStep_0_5ms_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 (-10 nAA)", "Weight", "-5 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 (-10 nAA)", "Weight", "-5 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "W_-5na_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 (-5 nAA)", "Weight", "-15 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 (-5 nAA)", "Weight", "-15 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "W_-15na_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 (-15 nAA)", "Weight", "10 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 (-15 nAA)", "Weight", "10 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "W_10na_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Vth", "-50 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Vrest", "-70 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Vth", "-50 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Vrest", "-70 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "2_Vrest_-70mv_Vth_-50mv_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Ih", "-1 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Ih", "-1 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Ih_-1na_")
 
@@ -451,46 +451,46 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
                     'Change the time step of the firing rate neural sim to 0.5 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_0_5ms_")
 
                     'Change the time step of the firing rate neural sim to 1 ms, physics time step to 0.5 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_1ms_PhysicsTimeStep_0_5ms_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
 
                     'Now decrease Cm from 3nf to 1nf
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Ih", "2.5 n"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Il", "-2.5 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Ih", "2.5 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Il", "-2.5 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IhIl_2_5_")
 
                     'Now increase Gm from 100nS to 200nS
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Th", "0.5"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Th", "0.5"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Th_0_5_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Th", "1"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Th", "1"})
 
                     'Now increase Vth from 0 to 20mV
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Mtl", "-50"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Mtl", "-50"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Mtl_-50_")
 
                     'Now increase FMin from 0 to 0.2 Hz
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Btl", "1"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Btl", "1"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Btl_1_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Mtl", "-100"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Btl", "2"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Mtl", "-100"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Btl", "2"})
 
                     'Now increase Gain from 15 to 20
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vssm", "0.5 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\C", "CurrentOn", "-2 n"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\D", "CurrentOn", "2 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Vssm", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\C", "CurrentOn", "-2 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\D", "CurrentOn", "2 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vsm_0_5_")
 
@@ -521,42 +521,42 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
                     'Change the time step of the firing rate neural sim to 0.5 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "0.5 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_0_5ms_")
 
                     'Change the time step of the firing rate neural sim to 1 ms, physics time step to 0.5 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.5 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FFmodTimeStep_1ms_PhysicsTimeStep_0_5ms_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\FiringRateSim", "TimeStep", "2 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
 
                     'Set Il to -5 na
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Il", "-5 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Il", "-5 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Il_-5_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Il", "0"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Il", "0"})
 
                     'I cannot do the tests below because the random number results are different from VS7 to VS10. It produces different double results.
                     'Now increase burst length duration to 0.023 
-                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "BurstLengthDistribution.C", "0.023"})
+                    'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "BurstLengthDistribution.C", "0.023"})
                     'RunSimulationWaitToEnd()
                     'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "BLength_023_")
-                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "BurstLengthDistribution.C", "0.013"})
+                    'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "BurstLengthDistribution.C", "0.013"})
 
                     ''Now increase Current size to 0.3 nA
-                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CurrentDistribution.C", "0.3 n"})
+                    'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CurrentDistribution.C", "0.3 n"})
                     'RunSimulationWaitToEnd()
                     'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "CDist_03n_")
-                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CurrentDistribution.C", "0.1 n"})
+                    'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CurrentDistribution.C", "0.1 n"})
 
                     ''Now increase inter-burst length duration to 0.022 
-                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "InterburstLengthDistribution.C", "0.022"})
+                    'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "InterburstLengthDistribution.C", "0.022"})
                     'RunSimulationWaitToEnd()
                     'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IBLength_022_")
-                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "InterburstLengthDistribution.C", "0.012"})
+                    'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "InterburstLengthDistribution.C", "0.012"})
 
                 End Sub
 
@@ -584,7 +584,7 @@ Namespace UITests
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Ih", "5 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "Ih", "5 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Ih_5na_")
 
@@ -627,18 +627,18 @@ Namespace UITests
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Excitatory_Ach_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "EndTime", "140 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "StartTime", "130 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "EndTime", "140 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "StartTime", "130 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FoodAfterBell_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "StartTime", "120 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "EndTime", "130 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "StartTime", "120 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "EndTime", "130 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FoodAfterBellB_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "StartTime", "110 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "EndTime", "120 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "StartTime", "110 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "EndTime", "120 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "FoodAfterBellC_")
 
@@ -648,13 +648,13 @@ Namespace UITests
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "LearnIncr_0_2_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "Enabled", "False"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_D", "Enabled", "True"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "Enabled", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_D", "Enabled", "True"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "StimD_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Tool Viewers\NeuralData\LineChart", "CollectEndTime", "2.5"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "Enabled", "True"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\NeuralData\LineChart", "CollectEndTime", "2.5"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "Enabled", "True"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "StimC_")
 
@@ -683,60 +683,60 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
                     'Change the time step of the firing rate neural sim to 0.1 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.1 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_1ms_")
 
                     'Change the time step of the firing rate neural sim to 0.5 ms, physics time step to 0.1 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.5 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.1 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_5ms_PhysicsTimeStep_0_1ms_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.2 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.2 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "MaxCaConductance", "30 u"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "MaxCaConductance", "30 u"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "MaxGaCond_30us_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "MaxCaConductance", "18 u"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "MaxCaConductance", "18 u"})
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaActivation.MidPoint", "-27 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaActivation.MidPoint", "-27 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Act_Mid_-27mv_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaActivation.MidPoint", "-35 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaActivation.MidPoint", "-35 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Act_Mid_-35mv_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaActivation.MidPoint", "-30 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaActivation.MidPoint", "-30 m"})
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaActivation.Slope", "0.09"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaActivation.Slope", "0.09"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Act_Slope_0_09_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaActivation.Slope", "0.12"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaActivation.Slope", "0.12"})
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaActivation.TimeConstant", "20 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaActivation.TimeConstant", "20 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Act_TC_20ms_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaActivation.TimeConstant", "8 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaActivation.TimeConstant", "8 m"})
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaDeactivation.MidPoint", "-72 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaDeactivation.MidPoint", "-72 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Deact_Mid_-72mv_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaDeactivation.MidPoint", "-90 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaDeactivation.MidPoint", "-90 m"})
 
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaDeactivation.Slope", "-0.08"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaDeactivation.Slope", "-0.08"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Deact_Slope_-0_08_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaDeactivation.Slope", "-0.1"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaDeactivation.Slope", "-0.1"})
 
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaDeactivation.TimeConstant", "4000 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaDeactivation.TimeConstant", "4000 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Deact_Tc_4000ms_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaDeactivation.TimeConstant", "2000 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "CaDeactivation.TimeConstant", "2000 m"})
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "ApplyCd", "True"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "ApplyCd", "True"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Cad_")
 
@@ -862,17 +862,17 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
                     'Change the time step of the firing rate neural sim to 0.1 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.1 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_1ms_")
 
                     'Change the time step of the firing rate neural sim to 0.5 ms, physics time step to 0.1 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.5 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.1 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_5ms_PhysicsTimeStep_0_1ms_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.2 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.2 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
 
                     ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 (A)", "SynapseType"}, 500)
                     ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Non-Spiking Chemical Synapses\Nicotinic ACh type", "EquilibriumPotential", "50 m"})
@@ -933,25 +933,25 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
                     'Change the time step of the firing rate neural sim to 0.1 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.1 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_1ms_")
 
                     'Change the time step of the firing rate neural sim to 0.5 ms, physics time step to 0.1 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.5 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.1 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_5ms_PhysicsTimeStep_0_1ms_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.2 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.2 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "CurrentOn", "-30 n"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "CurrentOn", "-30 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "CurrentOn", "-30 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "CurrentOn", "-30 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Stim_-30nA_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "CurrentOn", "30 n"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "CurrentOn", "30 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "CurrentOn", "30 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "CurrentOn", "30 n"})
                     ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2\1 (A)", "SynapseType"}, 500)
                     ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Electrical Synapses\Non-Rectifying Synapse", "HighCoupling", "0.3 u"})
                     ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Electrical Synapses\Non-Rectifying Synapse", "LowCoupling", "0.05 u"})
@@ -961,8 +961,8 @@ Namespace UITests
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Rectifying_Stim_30nA_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "CurrentOn", "-30 n"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "CurrentOn", "-30 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "CurrentOn", "-30 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "CurrentOn", "-30 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Rectifying_Stim_-30nA_")
 
@@ -992,37 +992,37 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
                     'Change the time step of the firing rate neural sim to 0.1 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.1 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_1ms_")
 
                     'Change the time step of the firing rate neural sim to 0.5 ms, physics time step to 0.1 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.5 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.1 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_5ms_PhysicsTimeStep_0_1ms_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.2 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.2 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapticConductance", "2 u"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapticConductance", "2 u"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_2uS_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (2 uS)", "SynapticConductance", "1.5 u"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (2 uS)", "SynapticConductance", "1.5 u"})
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\2 (0.5 uS)", "SynapticConductance", "2 u"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\2 (0.5 uS)", "SynapticConductance", "2 u"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S2_2uS_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\2 (2 uS)", "SynapticConductance", "0.5 u"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\2 (2 uS)", "SynapticConductance", "0.5 u"})
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "ConductionDelay", "1.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "ConductionDelay", "1.5 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "1_Delay_1_5_ms_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\2 (0.5 uS)", "ConductionDelay", "1.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\2 (0.5 uS)", "ConductionDelay", "1.5 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "2_Delay_1_5_ms_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "ConductionDelay", "0"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\2 (0.5 uS)", "ConductionDelay", "0"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "ConductionDelay", "0"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\2 (0.5 uS)", "ConductionDelay", "0"})
 
                     ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapseType"}, 500)
                     ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Nicotinic ACh", "DecayRate", "5 m"})
@@ -1103,14 +1103,14 @@ Namespace UITests
 
                     'Voltage dependent tests
                     'Disabled Neuron 2, switch synapse 1 to NMDA type, REset stim to go from 50-60ms at 30 nA, reset chart to 0 to 200 ms.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Enabled", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Enabled", "False"})
                     ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapseType"}, 500)
                     ExecuteActiveDialogMethod("SelectItemInTreeView", New Object() {"Synapses Classes\Spiking Chemical Synapses\NMDA type"})
                     ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "Enabled", "False"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "StartTime", "50 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "EndTime", "60 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "CurrentOn", "30 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "Enabled", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "StartTime", "50 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "EndTime", "60 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "CurrentOn", "30 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "N2_Disabled_S1_NMDA_")
 
@@ -1130,13 +1130,13 @@ Namespace UITests
                     ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\NMDA type", "MaxRelativeConductance", "10 u"})
                     ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
                     AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\Neural Subsystem\3", "Stimulus_C") ', "Stimulus_1"
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "StartTime", "20 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "EndTime", "170 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "CurrentOn", "5 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "StartTime", "20 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "EndTime", "170 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "CurrentOn", "5 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Stim3_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "CurrentOn", "-5 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "CurrentOn", "-5 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Stim3_-5nA_")
 
@@ -1153,7 +1153,7 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_NoVoltageDep_")
 
                     ''Only used if commenting out upper portion to test hebbian.
-                    'ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Enabled", "False"})
+                    'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Enabled", "False"})
                     'ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapseType"}, 500)
                     'ExecuteActiveDialogMethod("SelectItemInTreeView", New Object() {"Synapses Classes\Spiking Chemical Synapses\NMDA type"})
                     'ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
@@ -1162,43 +1162,43 @@ Namespace UITests
 
 
                     'Hebbian tests
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeAccomodation", "0"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3", "AHP_Conductance", "1.5 u"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeAccomodation", "0"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3", "AHP_Conductance", "1.5 u"})
                     ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.1 uS)", "SynapseType"}, 500)
                     ExecuteActiveDialogMethod("SelectItemInTreeView", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hebbian ACh type"})
                     ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "StartTime", "10 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "EndTime", "260 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "CurrentOn", "21 n"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "Enabled", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "StartTime", "10 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "EndTime", "260 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_A", "CurrentOn", "21 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "Enabled", "False"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_Hebbian_")
 
                     AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\Neural Subsystem\1", "Stimulus_D") ', "Stimulus_2"
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_D", "StartTime", "110 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_D", "EndTime", "160 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_D", "CurrentOn", "10 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_D", "StartTime", "110 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_D", "EndTime", "160 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_D", "CurrentOn", "10 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_LowFreq_Increase_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_D", "Enabled", "False"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "Enabled", "True"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "StartTime", "110 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "EndTime", "160 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "CurrentOn", "10 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_D", "Enabled", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "Enabled", "True"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "StartTime", "110 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "EndTime", "160 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "CurrentOn", "10 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_N2_10nA_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "CurrentOn", "30 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "CurrentOn", "30 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_N2_30nA_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "CurrentOn", "50 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "CurrentOn", "50 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_N2_50nA_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "CurrentOn", "10 n"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.4 uS)", "SynapticConductance", "0.6 u"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_C", "CurrentOn", "10 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.4 uS)", "SynapticConductance", "0.6 u"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_Cond_0_6uS_")
 
@@ -1215,7 +1215,7 @@ Namespace UITests
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "S1_LearnWindow_4ms_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.6 uS)", "SynapticConductance", "0.4 u"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.6 uS)", "SynapticConductance", "0.4 u"})
                     ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (0.4 uS)", "SynapseType"}, 500)
                     ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hebbian ACh type", "MaxAugmentedConductance", "2 u"})
                     ExecuteActiveDialogMethod("SetTreeNodeObjectProperty", New Object() {"Synapses Classes\Spiking Chemical Synapses\Hebbian ACh type", "LearningTimeWindow", "30 m"})
@@ -1275,118 +1275,118 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
                     'Change the time step of the firing rate neural sim to 0.1 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.1 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_1ms_")
 
                     'Change the time step of the firing rate neural sim to 0.5 ms, physics time step to 0.1 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.5 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.1 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_5ms_PhysicsTimeStep_0_1ms_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.2 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.2 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
 
                     ''Change AHP Eq Pot to -90 mv: AHP_EqPot_-90mv_
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "AHPEquilibriumPotential", "-90 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "AHPEquilibriumPotential", "-90 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AHP_EqPot_-90mv_")
 
                     ''Change AHP Eq Pot to -70 mv, Vth=-55mv, Refractory Period=5ms: Vth_-55mv_Refr_5ms_
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "InitialThreshold", "-55 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "AHPEquilibriumPotential", "-70 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "RefractoryPeriod", "5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "InitialThreshold", "-55 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "AHPEquilibriumPotential", "-70 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "RefractoryPeriod", "5 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vth_-55mv_Refr_5ms_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "RefractoryPeriod", "2 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "RefractoryPeriod", "2 m"})
 
                     ''Change spike peak to 10 mv: SpikePeak_10mv_
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "SpikePeak", "10 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "SpikePeak", "10 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "SpikePeak_10mv_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "SpikePeak", "0 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "SpikePeak", "0 m"})
 
                     ''Apply TTX: TTX_
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "ApplyTTX", "True"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "ApplyTTX", "True"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "TTX_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "ApplyTTX", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "ApplyTTX", "False"})
 
                     ''Change Vth to -50 mv: Vth_-50mv_
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "InitialThreshold", "-50 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "InitialThreshold", "-50 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vth_-50mv_")
 
                     'Vth=-50mv, Tc=50ms: Vth_-50_Tc_50ms_
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "TimeConstant", "50 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "TimeConstant", "50 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vth_-50_Tc_50ms_")
 
                     'Vth=-50mv, Tc=50ms, Size: 0.5: Vth_-50mv_Tc_5ms_Size_0_5_
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "TimeConstant", "5 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeSize", "0.5"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "TimeConstant", "5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeSize", "0.5"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vth_-50mv_Tc_5ms_Size_0_5_")
 
                     'Vth=-50mv, Tc=50ms, Size: 1.5: Vth_-50mv_Tc_5ms_Size_1_5
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeSize", "1.5"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeSize", "1.5"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vth_-50mv_Tc_5ms_Size_1_5_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeSize", "1"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeSize", "1"})
 
                     'Vth=-50mv, Tc=5ms, Accom=0,7: Tc_5ms_Accom_7_
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeAccomodation", "0.7"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeAccomodation", "0.7"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Tc_5ms_Accom_7_")
 
                     'Accom=0.7, Accom Tc=5ms: Accom_7_ATc_5ms_
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AccomodationTimeConstant", "5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AccomodationTimeConstant", "5 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Accom_7_ATc_5ms_")
 
                     'Accom=0.7, Accom Tc=15ms: Accom_7_ATc_15ms_
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AccomodationTimeConstant", "15 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AccomodationTimeConstant", "15 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Accom_7_ATc_15ms_")
 
                     'Accom=0.3, Accom Tc=10ms, AHP G=10uS: Accom_3_ATc_10ms_AHPG_10uS_
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeAccomodation", "0.3"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AccomodationTimeConstant", "10 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AHP_Conductance", "10 u"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RelativeAccomodation", "0.3"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AccomodationTimeConstant", "10 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AHP_Conductance", "10 u"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Accom_3_ATc_10ms_AHPG_10uS_")
 
                     'AHP G=10uS, AHP Tc=10ms: AHPG_10uS_AHPTc_10ms_
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AHP_TimeConstant", "10 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AHP_TimeConstant", "10 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AHPG_10uS_AHPTc_10ms_")
 
                     'AHP G=10uS, AHP Tc=10ms, Vrest=-55mv: AHPG_10uS_AHPTc_10ms_Vrest_-55mv_
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RestingPotential", "-55 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RestingPotential", "-55 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AHPG_10uS_AHPTc_10ms_Vrest_-55mv_")
 
                     'AHP G=1uS, AHP Tc=3ms, Vrest=-45mv: AHPG_1uS_AHPTc_3ms_Vrest_-45mv_
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AHP_Conductance", "1 u"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AHP_TimeConstant", "3 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RestingPotential", "-45 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AHP_Conductance", "1 u"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "AHP_TimeConstant", "3 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RestingPotential", "-45 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AHPG_1uS_AHPTc_3ms_Vrest_-45mv_")
 
                     'Vrest=-70mv: Vrest_-70mv_
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RestingPotential", "-70 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "RestingPotential", "-70 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Vrest_-70mv_")
 
                     'ITonic=10nA: Itonic_10na_
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "TonicStimulus", "10 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "TonicStimulus", "10 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Itonic_10na_")
 
                     'ITonic=0nA, INoise=5mV, Stim disabled: Itonic_10na_INoise_5mv_NoStim_
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "TonicStimulus", "0 n"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "TonicNoise", "5 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_1", "Enabled", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "TonicStimulus", "0 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1", "TonicNoise", "5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_1", "Enabled", "False"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Itonic_10na_INoise_5mv_NoStim_")
 
@@ -1445,7 +1445,7 @@ Namespace UITests
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "Enabled", "True"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stimulus_B", "Enabled", "True"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "DistalInhib_")
 
@@ -1517,18 +1517,18 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
                     'Change the time step of the firing rate neural sim to 0.1 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.1 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_1ms_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.2 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.2 m"})
 
                     'Change the time step of the firing rate neural sim to 0.5 ms, physics time step to 0.1 ms
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.5 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.5 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "0.1 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "IGFmodTimeStep_0_5ms_PhysicsTimeStep_0_1ms_")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.2 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Neural Modules\IntegrateFireSim", "TimeStep", "0.2 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment", "PhysicsTimeStep", "1 m"})
 
                     'Change poly gains.
                     ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1", "Gain"}, 500)
@@ -1585,13 +1585,13 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "SigmoidGain_")
 
                     'Disabled adapters
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1", "Enabled", "False"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2_B", "Enabled", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1", "Enabled", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2_B", "Enabled", "False"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Disabled_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1", "Enabled", "True"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1", "DataTypes", "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking.DataTypes.ExternalCurrent"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1", "Enabled", "True"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1", "DataTypes", "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking.DataTypes.ExternalCurrent"})
                     ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A_1", "Gain"}, 500)
                     ExecuteActiveDialogMethod("SelectGainType", New Object() {"AnimatGUI.DataObjects.Gains.Sigmoid"})
                     ExecuteActiveDialogMethod("SetGainProperty", New Object() {"Amplitude", "10 n"})
@@ -1634,9 +1634,9 @@ Namespace UITests
                     If Not CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2"})) Then
                         Throw New System.Exception("2 adapter was not added")
                     End If
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Name", "1_B"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2", "Name", "1_B"})
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1_B", "DataTypes", "FiringRateGUI.DataObjects.Behavior.Neurons.Normal.DataTypes.FiringFrequency"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1_B", "DataTypes", "FiringRateGUI.DataObjects.Behavior.Neurons.Normal.DataTypes.FiringFrequency"})
                     ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1_B", "Gain"}, 500)
                     ExecuteActiveDialogMethod("SelectGainType", New Object() {"AnimatGUI.DataObjects.Gains.Sigmoid"})
                     ExecuteActiveDialogMethod("SetGainProperty", New Object() {"Amplitude", "10 n"})
@@ -1647,15 +1647,15 @@ Namespace UITests
 
                     AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F2", _
                                       "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F1", "S_F2_F1", "Normal Synapse", False)
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F1\F2 (S_F2_F1)", "Weight", "100 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F1\F2 (S_F2_F1)", "Weight", "100 n"})
 
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Adapter1B_")
 
                     ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\OP", _
                                                                  "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1_B", "Name", "1_A"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_A", "Enabled", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\1_B", "Name", "1_A"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_A", "Enabled", "False"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Adapter1A_")
 
@@ -1666,13 +1666,13 @@ Namespace UITests
                                                                  "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F1"})
                     AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F2", _
                                       "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\OP", "S_F2_F1", "Normal Synapse", False)
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F1\F2 (S_F2_F1)", "Weight", "100 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F1\F2 (S_F2_F1)", "Weight", "100 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "F2ToOPtoF1_")
 
                     ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\OP", _
                                                                  "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F2"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F2\F2 (100 nA)", "Weight", "5 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F2\F2 (100 nA)", "Weight", "5 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "F2ToOPtoF2_")
 
@@ -1717,7 +1717,7 @@ Namespace UITests
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem", "Name", "S1"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem", "Name", "S1"})
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1"}, 2000)
                     AddBehavioralNode("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1", _
                                       "AnimatGUI.DataObjects.Behavior.Nodes.OffPage", New Point(316, 114), "S1OP1")
@@ -1729,7 +1729,7 @@ Namespace UITests
                     If Not CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\2"})) Then
                         Throw New System.Exception("2 adapter was not added")
                     End If
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\2", "Name", "S1F1_S1I2"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\2", "Name", "S1F1_S1I2"})
 
                     If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\2"})) Then
                         Throw New System.Exception("S1F1_S1I2 adapter was not renamed correctly. 2 node still found")
@@ -1745,7 +1745,7 @@ Namespace UITests
                     End If
 
                     'Now change the name of the S1F2 neuron to S1F4 and verify that the names changed correctly in the treeview.
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F2", "Name", "S1F4"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F2", "Name", "S1F4"})
 
                     If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F2"})) Then
                         Throw New System.Exception("S1F4 node was not renamed correctly. S1F2 node still found")
@@ -1807,8 +1807,8 @@ Namespace UITests
                     ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"})
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2"}, 2000)
                     ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F1", "Name", "S2F1"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F4", "Name", "S2F4"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F1", "Name", "S2F1"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F4", "Name", "S2F4"})
 
                     'Verify that the pasted nodes have the same locations on the page as the copied ones since we did a paste in place.
                     Dim ptF1ALoc As PointF = DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1", "Location"), PointF)
@@ -1843,8 +1843,8 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "PasteF1F4_")
 
                     AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\S1\S2\S2F4", "Stim_S2F4")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S2F4", "EndTime", "0.1 "})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S2F4", "CurrentOn", "1 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S2F4", "EndTime", "0.1 "})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S2F4", "CurrentOn", "1 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "StimS2F4_")
 
@@ -1890,10 +1890,10 @@ Namespace UITests
                     ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"})
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2"}, 2000)
                     ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F1", "Name", "S2F1"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F4", "Name", "S2F4"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2", "Name", "S2OP1"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F1_S1I2", "Name", "S2F1_S1I2"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F1", "Name", "S2F1"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F4", "Name", "S2F4"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2", "Name", "S2OP1"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F1_S1I2", "Name", "S2F1_S1I2"})
 
                     'Check the in/out links of the nodes
                     AssertMatch(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I1", "InLinks.Count"), Integer), 0, "S1I1 inlink count")
@@ -1924,8 +1924,8 @@ Namespace UITests
                     AddItemToChart("Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S2F1")
 
                     AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\S1\S2\S2F4", "Stim_S2F4")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S2F4", "EndTime", "0.1 "})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S2F4", "CurrentOn", "10 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S2F4", "EndTime", "0.1 "})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S2F4", "CurrentOn", "10 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "StimS2F4_2_")
 
@@ -1955,11 +1955,11 @@ Namespace UITests
                     ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"})
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2"}, 2000)
                     ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2", "Name", "S3"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S3\S2F1", "Name", "S3F1"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S3\S2F4", "Name", "S3F4"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S3\S1I1", "Name", "S3OP1"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S3\S2F1_S1I2", "Name", "S3F1_S1I2"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2", "Name", "S3"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S3\S2F1", "Name", "S3F1"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S3\S2F4", "Name", "S3F4"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S3\S1I1", "Name", "S3OP1"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S3\S2F1_S1I2", "Name", "S3F1_S1I2"})
 
                     'Add these neurons to the chart.
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\NeuralData"}, 2000)
@@ -1970,9 +1970,9 @@ Namespace UITests
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "CopyS3_")
 
                     AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\S1\S2\S3\S3F4", "Stim_S3F4")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S3F4", "StartTime", "0.1 "})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S3F4", "EndTime", "0.2 "})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S3F4", "CurrentOn", "10 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S3F4", "StartTime", "0.1 "})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S3F4", "EndTime", "0.2 "})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S3F4", "CurrentOn", "10 n"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "StimS3F4_")
 
@@ -2015,9 +2015,9 @@ Namespace UITests
                     DeleteSelectedParts("Delete Group", True)
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2"}, 2000)
                     ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2", "Name", "S1I2_Temp"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2", "Name", "S1OP1"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2_Temp", "Name", "S1I2"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2", "Name", "S1I2_Temp"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2", "Name", "S1OP1"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2_Temp", "Name", "S1I2"})
 
                     If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Tool Viewers\NeuralData\LineChart\Y Axis 1\S1I1Vm"})) Then
                         Throw New System.Exception("S1I1Vm chart node was not removed correctly.")
@@ -2053,10 +2053,10 @@ Namespace UITests
                     AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 4", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F4", "S1F4", "S1F2FF")
 
                     AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\S1\S2\S1F4", "Stim_S1F4")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F4", "StartTime", "0 "})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F4", "EndTime", "1 "})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F4", "ValueType", "Equation"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F4", "Equation", "20*t"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F4", "StartTime", "0 "})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F4", "EndTime", "1 "})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F4", "ValueType", "Equation"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F4", "Equation", "20*t"})
 
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterOffpageAdded_")
@@ -2077,21 +2077,21 @@ Namespace UITests
                     End If
 
                     AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\S1\S1F1", "Stim_S1F1")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F1", "StartTime", "0.1 "})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F1", "EndTime", "0.2 "})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F1", "CurrentOn", "10 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F1", "StartTime", "0.1 "})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F1", "EndTime", "0.2 "})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F1", "CurrentOn", "10 n"})
                     AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\S1\S1F4", "StimB_S1F4")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\StimB_S1F4", "StartTime", "0.1 "})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\StimB_S1F4", "EndTime", "0.2 "})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\StimB_S1F4", "CurrentOn", "10 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\StimB_S1F4", "StartTime", "0.1 "})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\StimB_S1F4", "EndTime", "0.2 "})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\StimB_S1F4", "CurrentOn", "10 n"})
                     AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\S1\S1I1", "Stim_S1I1")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1I1", "StartTime", "0.1 "})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1I1", "EndTime", "0.2 "})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1I1", "CurrentOn", "10 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1I1", "StartTime", "0.1 "})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1I1", "EndTime", "0.2 "})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1I1", "CurrentOn", "10 n"})
                     AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\S1\S1I2", "Stim_S1I2")
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1I2", "StartTime", "0.1 "})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1I2", "EndTime", "0.2 "})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1I2", "CurrentOn", "10 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1I2", "StartTime", "0.1 "})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1I2", "EndTime", "0.2 "})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1I2", "CurrentOn", "10 n"})
 
                     'This should have no effect on the old neurons.
                     RunSimulationWaitToEnd()
@@ -2118,50 +2118,50 @@ Namespace UITests
                     'Load and convert the project.
                     TestConversionProject("AfterConversion_", aryMaxErrors)
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Constant_Stim", "ValueType", "Constant"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Constant_Stim", "ValueType", "Constant"})
 
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "TonicCurrent_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Constant_Stim", "CurrentOn", "1 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Constant_Stim", "CurrentOn", "1 n"})
 
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "TonicCurrent_1na_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Constant_Stim", "ValueType", "Equation"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Constant_Stim", "ValueType", "Equation"})
 
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "AfterConversion_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Constant_Stim", "Equation", "0.00000001*sin(5*t)"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Constant_Stim", "Equation", "0.00000001*sin(5*t)"})
 
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Equation_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Constant_Stim", "Enabled", "False"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Repetitive_Stim", "Enabled", "True"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Constant_Stim", "Enabled", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Repetitive_Stim", "Enabled", "True"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Repetitive_On_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Repetitive_Stim", "CurrentOff", "-5 n"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Repetitive_Stim", "CurrentOn", "5 n"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Repetitive_Stim", "CycleOnDuration", "100 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Repetitive_Stim", "CycleOffDuration", "200 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Repetitive_Stim", "CurrentOff", "-5 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Repetitive_Stim", "CurrentOn", "5 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Repetitive_Stim", "CycleOnDuration", "100 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Repetitive_Stim", "CycleOffDuration", "200 m"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Repetitive_Set_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Repetitive_Stim", "Enabled", "False"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "Enabled", "True"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Repetitive_Stim", "Enabled", "False"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "Enabled", "True"})
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "Burst_On_")
 
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "CurrentOff", "-5 n"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "CurrentOn", "5 n"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "CurrentBurstOff", "-1 n"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "CycleOnDuration", "20 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "CycleOffDuration", "20 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "BurstOnDuration", "200 m"})
-                    ExecuteMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "BurstOffDuration", "200 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "CurrentOff", "-5 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "CurrentOn", "5 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "CurrentBurstOff", "-1 n"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "CycleOnDuration", "20 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "CycleOffDuration", "20 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "BurstOnDuration", "200 m"})
+                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Burst_Stim", "BurstOffDuration", "200 m"})
 
                     Dim aryIgnoreRows As New ArrayList
                     aryIgnoreRows.Add(New Point(451, 451))

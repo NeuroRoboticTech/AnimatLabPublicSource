@@ -58,8 +58,6 @@ Namespace DataObjects.Physical.Bodies
                 Return m_snLength
             End Get
             Set(ByVal value As AnimatGUI.Framework.ScaledNumber)
-                Throw New System.Exception("Test error")
-
                 If value.ActualValue <= 0 Then
                     Throw New System.Exception("The length of the box cannot be less than or equal to zero.")
                 End If

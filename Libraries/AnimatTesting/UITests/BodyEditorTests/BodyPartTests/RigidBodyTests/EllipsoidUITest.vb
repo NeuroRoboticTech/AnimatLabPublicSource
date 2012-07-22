@@ -27,7 +27,7 @@ Namespace UITests
                         MyBase.TestMovableRigidBodyProperties(strStructure, strPart)
 
                         'Set the major radius to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MajorAxisRadius", "0.04"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MajorAxisRadius", "0.04"})
 
                         'Set the major radius to zero
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MajorAxisRadius", "0"}, "The major axis radius of the ellipsoid cannot be less than or equal to zero.")
@@ -36,11 +36,11 @@ Namespace UITests
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MajorAxisRadius", "-0.2"}, "The major axis radius of the ellipsoid cannot be less than or equal to zero.")
 
                         'Set the major radius to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MajorAxisRadius", "0.03"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MajorAxisRadius", "0.03"})
 
 
                         'Set the minor radius to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MinorAxisRadius", "0.02"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MinorAxisRadius", "0.02"})
 
                         'Set the minor radius to zero
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MinorAxisRadius", "0"}, "The minor axis radius of the ellipsoid cannot be less than or equal to zero.")
@@ -49,11 +49,11 @@ Namespace UITests
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MinorAxisRadius", "-0.2"}, "The minor axis radius of the ellipsoid cannot be less than or equal to zero.")
 
                         'Set the minor radius to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MinorAxisRadius", "0.01"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "MinorAxisRadius", "0.01"})
 
 
                         'Set the LatitudeSegments to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LatitudeSegments", "30"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LatitudeSegments", "30"})
 
                         'Set the LatitudeSegments to zero
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LatitudeSegments", "5"}, "The number of latitude segments for the ellipsoid cannot be less than ten.")
@@ -62,11 +62,11 @@ Namespace UITests
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LatitudeSegments", "-2"}, "The number of latitude segments for the ellipsoid cannot be less than ten.")
 
                         'Set the LatitudeSegments to original value
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LatitudeSegments", "20"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LatitudeSegments", "20"})
 
 
                         'Set the LongtitudeSegments to a valid value.
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LongtitudeSegments", "30"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LongtitudeSegments", "30"})
 
                         'Set the LongtitudeSegments to zero
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LongtitudeSegments", "5"}, "The number of longtitude segments for the ellipsoid cannot be less than ten.")
@@ -75,7 +75,7 @@ Namespace UITests
                         ExecuteMethodAssertError("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LongtitudeSegments", "-2"}, "The number of longtitude segments for the ellipsoid cannot be less than ten.")
 
                         'Set the LongtitudeSegments to original value
-                        ExecuteMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LongtitudeSegments", "20"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & "\Body Plan\" & strPart, "LongtitudeSegments", "20"})
 
                     End Sub
 
