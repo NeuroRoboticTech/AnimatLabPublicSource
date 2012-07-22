@@ -65,6 +65,7 @@ Namespace Framework
         Protected Shared m_bExportStimsInStandAloneSim As Boolean = False
         Protected Shared m_bExportChartsInStandAloneSim As Boolean = False
         Protected Shared m_bExportChartsToFile As Boolean = False 'Determines if data charts are saved to a file or kept in memory for sim.
+        Protected Shared m_strVersionNumber As String = "2.0.1"
 
         Protected Shared m_aryActiveDialogs As New ArrayList
 
@@ -76,6 +77,12 @@ Namespace Framework
 
         Protected Shared m_dblRadiansToDegreeRatio As Double = (180 / Math.PI)
         Protected Shared m_dblDegreeToRadiansRatio As Double = (Math.PI / 180)
+
+        Public Shared ReadOnly Property VersionNumber() As String
+            Get
+                Return m_strVersionNumber
+            End Get
+        End Property
 
         Public Shared Property Application() As Forms.AnimatApplication
             Get

@@ -1,3 +1,4 @@
+Imports AnimatGUI.Framework
 
 Namespace Forms
 
@@ -40,23 +41,26 @@ Namespace Forms
         Friend WithEvents btnExit As System.Windows.Forms.Button
         Friend WithEvents lblUrl As System.Windows.Forms.LinkLabel
         <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-            Dim resources As System.Resources.ResourceManager = New System.Resources.ResourceManager(GetType(About))
-            Me.pictGSU = New System.Windows.Forms.PictureBox
-            Me.pictCmLabs = New System.Windows.Forms.PictureBox
-            Me.picNIH = New System.Windows.Forms.PictureBox
-            Me.lblAnimatLab = New System.Windows.Forms.LinkLabel
-            Me.lblText = New System.Windows.Forms.Label
-            Me.btnExit = New System.Windows.Forms.Button
-            Me.lblUrl = New System.Windows.Forms.LinkLabel
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(About))
+            Me.pictGSU = New System.Windows.Forms.PictureBox()
+            Me.pictCmLabs = New System.Windows.Forms.PictureBox()
+            Me.picNIH = New System.Windows.Forms.PictureBox()
+            Me.lblAnimatLab = New System.Windows.Forms.LinkLabel()
+            Me.lblText = New System.Windows.Forms.Label()
+            Me.btnExit = New System.Windows.Forms.Button()
+            Me.lblUrl = New System.Windows.Forms.LinkLabel()
+            CType(Me.pictGSU, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.pictCmLabs, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.picNIH, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'pictGSU
             '
             Me.pictGSU.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-            Me.pictGSU.Image = CType(resources.GetObject("pictGSU.WorkspaceImage"), System.Drawing.Image)
+            Me.pictGSU.Image = CType(resources.GetObject("pictGSU.Image"), System.Drawing.Image)
             Me.pictGSU.Location = New System.Drawing.Point(8, 304)
             Me.pictGSU.Name = "pictGSU"
-            Me.pictGSU.Size = New System.Drawing.Size(151, 50)
+            Me.pictGSU.Size = New System.Drawing.Size(153, 52)
             Me.pictGSU.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
             Me.pictGSU.TabIndex = 0
             Me.pictGSU.TabStop = False
@@ -64,10 +68,10 @@ Namespace Forms
             'pictCmLabs
             '
             Me.pictCmLabs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-            Me.pictCmLabs.Image = CType(resources.GetObject("pictCmLabs.WorkspaceImage"), System.Drawing.Image)
+            Me.pictCmLabs.Image = CType(resources.GetObject("pictCmLabs.Image"), System.Drawing.Image)
             Me.pictCmLabs.Location = New System.Drawing.Point(304, 304)
             Me.pictCmLabs.Name = "pictCmLabs"
-            Me.pictCmLabs.Size = New System.Drawing.Size(136, 50)
+            Me.pictCmLabs.Size = New System.Drawing.Size(138, 52)
             Me.pictCmLabs.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
             Me.pictCmLabs.TabIndex = 1
             Me.pictCmLabs.TabStop = False
@@ -75,17 +79,17 @@ Namespace Forms
             'picNIH
             '
             Me.picNIH.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-            Me.picNIH.Image = CType(resources.GetObject("picNIH.WorkspaceImage"), System.Drawing.Image)
+            Me.picNIH.Image = CType(resources.GetObject("picNIH.Image"), System.Drawing.Image)
             Me.picNIH.Location = New System.Drawing.Point(360, 216)
             Me.picNIH.Name = "picNIH"
-            Me.picNIH.Size = New System.Drawing.Size(54, 61)
+            Me.picNIH.Size = New System.Drawing.Size(56, 63)
             Me.picNIH.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
             Me.picNIH.TabIndex = 2
             Me.picNIH.TabStop = False
             '
             'lblAnimatLab
             '
-            Me.lblAnimatLab.Font = New System.Drawing.Font("Microsoft Sans Serif", 36.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+            Me.lblAnimatLab.Font = New System.Drawing.Font("Microsoft Sans Serif", 27.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
             Me.lblAnimatLab.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
             Me.lblAnimatLab.LinkColor = System.Drawing.Color.Red
             Me.lblAnimatLab.Location = New System.Drawing.Point(88, 8)
@@ -118,7 +122,7 @@ Namespace Forms
             Me.lblUrl.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
             Me.lblUrl.Location = New System.Drawing.Point(72, 48)
             Me.lblUrl.Name = "lblUrl"
-            Me.lblUrl.Size = New System.Drawing.Size(288, 16)
+            Me.lblUrl.Size = New System.Drawing.Size(288, 24)
             Me.lblUrl.TabIndex = 6
             Me.lblUrl.TabStop = True
             Me.lblUrl.Text = "http:\\www.AnimatLab.com"
@@ -141,7 +145,11 @@ Namespace Forms
             Me.Name = "About"
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
             Me.Text = "About AnimatLab"
+            CType(Me.pictGSU, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.pictCmLabs, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.picNIH, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
+            Me.PerformLayout()
 
         End Sub
 
@@ -151,14 +159,14 @@ Namespace Forms
             Try
                 lblAnimatLab.Links.Add(0, lblAnimatLab.Text.Length, "http:\\www.AnimatLab.com")
 
-                lblText.Text = "AnimatLab Project Team" & vbCrLf & vbCrLf & _
+                lblText.Text = "Version " & Util.VersionNumber & vbCrLf & vbCrLf & _
+                          "AnimatLab  Project Team" & vbCrLf & vbCrLf & _
                           "Project Managers: & " & vbCrLf & _
                           "    Dr. Donald Edwards, Professor of Biology at GSU. " & vbCrLf & _
                           "    Dr. Ying Zhu, Professor of CSC at GSU. " & vbCrLf & _
                           "    Dr. Gennady Cymbalyuk, Professor of Physics at GSU. " & vbCrLf & vbCrLf & _
                           "    Development Team: " & vbCrLf & _
                           "    David Cofer, Graduate student in Biology at GSU. " & vbCrLf & _
-                          "    James Reid, Graduate student in CSC at GSU. " & vbCrLf & _
                           "    Dr. William Heitler, Professor of Biology at University of St. Andrews. " & vbCrLf & vbCrLf & _
                           "The physics engine we use in this application is vortex by cm-labs. " & vbCrLf & vbCrLf & _
                           "This project is funded in part by a NIH exploratory grant (GM065762)."
