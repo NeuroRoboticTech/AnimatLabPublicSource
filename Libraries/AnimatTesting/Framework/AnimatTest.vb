@@ -47,6 +47,7 @@ Namespace Framework
         Protected m_strTestDataPath As String = ""
         Protected m_dblSimEndTime As Double = 15
         Protected m_dblChartEndTime As Double = 8
+        Protected m_bIgnoreSimAndCompare As Boolean = False
 
 #End Region
 
@@ -392,6 +393,8 @@ Namespace Framework
         End Sub
 
         Protected Overridable Sub RunSimulationWaitToEnd()
+
+            If m_bIgnoreSimAndCompare Then Return
 
             Threading.Thread.Sleep(1000)
 

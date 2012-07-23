@@ -211,6 +211,8 @@ Namespace Framework
                                                     Optional ByVal dblMaxError As Double = 0.1, Optional ByVal iMaxRows As Integer = -1)
             Debug.WriteLine("Comparing simulation output. Test Data Path: '" & strTestDataPath & "', Prefix: '" & strPrefix & "', MaxError: " & dblMaxError & ", MaxRows: " & iMaxRows)
 
+            If m_bIgnoreSimAndCompare Then Return
+
             'No prefix on the exported chart.
             ExecuteMethod("ExportDataCharts", New Object() {"", ""})
 
@@ -233,6 +235,8 @@ Namespace Framework
                                                     Optional ByVal strPrefix As String = "", Optional ByVal iMaxRows As Integer = -1, Optional aryIgnoreRows As ArrayList = Nothing)
             Debug.WriteLine("Comparing simulation output. Test Data Path: '" & strTestDataPath & "', Prefix: '" & strPrefix & "', MaxError: '" & Util.ParamsToString(aryMaxErrors) & "', MaxRows: " & iMaxRows)
 
+            If m_bIgnoreSimAndCompare Then Return
+
             'No prefix on the exported chart.
             ExecuteMethod("ExportDataCharts", New Object() {"", ""})
 
@@ -254,6 +258,8 @@ Namespace Framework
                                                             ByVal strColName As String, Optional ByVal iStartIdx As Integer = -1, Optional ByVal iEndIdx As Integer = -1)
             Debug.WriteLine("Comparing simulation analysis. Project Path: '" & strProjectPath & "', Filename: '" & strFilename & "', TestDataPath: '" & _
                             strTestDataPath & "', Prefix: '" & strPrefix & "', ColName: '" & strColName & "', iStartIdx: '" & iStartIdx & "', iEndIdx: '" & iEndIdx)
+
+            If m_bIgnoreSimAndCompare Then Return
 
             'No prefix on the exported chart.
             ExecuteMethod("ExportDataCharts", New Object() {"", ""})

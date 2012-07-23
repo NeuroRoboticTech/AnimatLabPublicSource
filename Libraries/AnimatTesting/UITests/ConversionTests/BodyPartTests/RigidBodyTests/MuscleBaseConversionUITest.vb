@@ -54,6 +54,8 @@ Namespace UITests
                         aryMaxErrors.Add("Len", 0.003)
                         aryMaxErrors.Add("default", 0.04)
 
+                        m_bIgnoreSimAndCompare = True
+
                         m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\RigidBodyTests"
                         m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\RigidBodyTests\" & m_strProjectName
                         m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\RigidBodyTests\" & m_strProjectName
@@ -297,6 +299,8 @@ Namespace UITests
                         'Add subsystem.
                         AddBehavioralNode("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem", _
                                           "AnimatGUI.DataObjects.Behavior.Nodes.Subsystem", New Point(316, 30), "S2")
+
+                        m_bIgnoreSimAndCompare = False
 
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\MN", False})
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\MV", True})
