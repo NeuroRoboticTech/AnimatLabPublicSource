@@ -267,7 +267,14 @@ Namespace Framework
                     bDlgUp = False
                     Debug.WriteLine("Dialog was not opened, trying again.")
                 Else
-                    Throw New System.Exception("The active dialog name does not match the name we are waiting for. Active: '" & strFormName & "', Waiting: '" & strDlgName & "'")
+                    Dim strErrorText As String
+                    If strFormName = "Error" Then
+                        strErrorText = CStr(GetApplicationProperty("ErrorDialogMessage"))
+                        Throw New System.Exception("The active dialog name does not match the name we are waiting for. Active: '" & strFormName & "', Waiting: '" & strDlgName & "'" & ", Error: " & strErrorText)
+                    Else
+                        Throw New System.Exception("The active dialog name does not match the name we are waiting for. Active: '" & strFormName & "', Waiting: '" & strDlgName & "'")
+                    End If
+
                 End If
                 iCount = iCount + 1
 

@@ -21,14 +21,14 @@ Namespace UITests
                 StartApplication("", m_iPort)
 
                 'Click the New Project button.
-                ExecuteMethod("ClickToolbarItem", New Object() {"NewToolStripButton"})
+                ExecuteMethod("ClickToolbarItem", New Object() {"NewToolStripButton"}, 500)
 
                 'Set params and hit ok button
                 ExecuteActiveDialogMethod("SetProjectParams", New Object() {"TestProject", m_strRootFolder & "\Libraries\AnimatTesting\TestProjects\CreationTests"})
-                ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+                ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, 2000)
 
                 'Click the add structure button.
-                ExecuteMethod("ClickToolbarItem", New Object() {"AddStructureToolStripButton"})
+                ExecuteMethod("ClickToolbarItem", New Object() {"AddStructureToolStripButton"}, 1000)
 
                 'Open the Structure_1 body plan editor window
                 ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan"}, 2000)
@@ -67,11 +67,11 @@ Namespace UITests
                 CompareSimulation(m_strRootFolder & "\Libraries\AnimatTesting\TestData\CreationTests\NewProjectUITest\")
 
                 'Save the project
-                ExecuteMethod("ClickToolbarItem", New Object() {"SaveToolStripButton"})
+                ExecuteMethod("ClickToolbarItem", New Object() {"SaveToolStripButton"}, 500)
 
                 'Now verify that if we try and create a new project at the same location we get an error.
                 'Click the New Project button.
-                ExecuteMethod("ClickToolbarItem", New Object() {"NewToolStripButton"})
+                ExecuteMethod("ClickToolbarItem", New Object() {"NewToolStripButton"}, 500)
 
                 'Enter text and verify error. Verify the error.
                 ExecuteActiveDialogMethod("SetProjectParams", New Object() {"TestProject", m_strRootFolder & "\Libraries\AnimatTesting\TestProjects\CreationTests"})

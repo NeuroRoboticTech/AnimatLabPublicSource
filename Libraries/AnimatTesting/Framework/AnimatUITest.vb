@@ -170,7 +170,7 @@ Namespace Framework
                 End Try
 
                 'Save the project
-                ExecuteMethod("ClickToolbarItem", New Object() {"SaveToolStripButton"})
+                ExecuteMethod("ClickToolbarItem", New Object() {"SaveToolStripButton"}, 500)
 
                 'Close the project
                 ExecuteMethod("Close", Nothing)
@@ -412,9 +412,9 @@ Namespace Framework
 
             'Click the add structure button.
             If bCreateStructure Then
-                ExecuteMethod("ClickToolbarItem", New Object() {"AddStructureToolStripButton"})
+                ExecuteMethod("ClickToolbarItem", New Object() {"AddStructureToolStripButton"}, 500)
             Else
-                ExecuteMethod("ClickToolbarItem", New Object() {"AddOrganismStripButton"})
+                ExecuteMethod("ClickToolbarItem", New Object() {"AddOrganismStripButton"}, 500)
             End If
 
             'Set the name of the structure
@@ -865,8 +865,8 @@ Namespace Framework
             'but when I do it here for some reason I have to set it to something else first and then back. I think it has something to do with the 
             ' timing of the call or something. Regardless, it does not really matter here, I just need it in Collisions mode and that works when done
             ' manually, so I am using this trick to get it to work in the test.
-            ExecuteMethod("ClickToolbarItem", New Object() {"SelGraphicsToolStripButton"})
-            ExecuteMethod("ClickToolbarItem", New Object() {"SelCollisionToolStripButton"})
+            ExecuteMethod("ClickToolbarItem", New Object() {"SelGraphicsToolStripButton"}, 500)
+            ExecuteMethod("ClickToolbarItem", New Object() {"SelCollisionToolStripButton"}, 500)
             ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & strStructGroup & "\" & strStructure & "\Body Plan\Root", False})
 
             If strName.Length > 0 Then
@@ -1298,7 +1298,7 @@ Namespace Framework
 
             If m_strJointChartMovementName.Length > 0 Then
                 'Add a new axis to chart the joint rotation.
-                ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+                ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"}, 500)
 
                 AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1")
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 2\Joint_1", "Name", m_strJointChartMovementName})
@@ -1307,7 +1307,7 @@ Namespace Framework
 
             If m_strJointChartVelocityName.Length > 0 Then
                 'Add a new axis to chart the joint velocity.
-                ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+                ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"}, 500)
 
                 AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1")
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 3\Joint_1", "Name", m_strJointChartVelocityName})
@@ -1334,9 +1334,9 @@ Namespace Framework
             Debug.WriteLine("DeleteSelectedParts. DlgName: " & strDlgName & ", Cut: " & bCut)
 
             If bCut Then
-                ExecuteMethod("ClickMenuItem", New Object() {"CutToolStripMenuItem"})
+                ExecuteMethod("ClickMenuItem", New Object() {"CutToolStripMenuItem"}, 500)
             Else
-                ExecuteMethod("ClickToolbarItem", New Object() {"DeleteToolStripButton"})
+                ExecuteMethod("ClickToolbarItem", New Object() {"DeleteToolStripButton"}, 500)
             End If
 
             OpenDialogAndWait(strDlgName, Nothing, Nothing)

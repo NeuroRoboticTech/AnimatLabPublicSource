@@ -170,7 +170,7 @@ Namespace UITests
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan"}, 2000)
 
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring", False})
-                        ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"})
+                        ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"}, 500)
 
                         PasteChildPartTypeWithJoint("", "Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0, False)
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring", "Name", "Spring1"})
@@ -238,7 +238,7 @@ Namespace UITests
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B\A_B", True})
                         DeleteSelectedParts("Delete Group", True)
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2"}, 2000)
-                        ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"})
+                        ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"}, 500)
 
                         AddStimulus("Tonic Current", "Organism_1", "\Behavioral System\Neural Subsystem\S2\A", "Stim_A")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_A", "EndTime", "10 "})
@@ -247,7 +247,7 @@ Namespace UITests
 
                         'Add these neurons to the chart.
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\BodyData"}, 2000)
-                        ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+                        ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"}, 500)
                         AddItemToChart("Organism_1\Behavioral System\Neural Subsystem\Nodes\S2\Nodes\A")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 2\A", "Name", "2"})
 

@@ -71,7 +71,7 @@ Namespace DataObjects.Behavior
                 m_stSynapseType = Value
 
                 If Not m_stSynapseType Is Nothing AndAlso m_stSynapseType.GetType() Is GetType(SynapseTypes.SpikingChemical) _
-                    AndAlso (stOldSynapse Is Nothing OrElse m_stSynapseType.Name <> stOldSynapse.Name) Then
+                    AndAlso (Not stOldSynapse Is Nothing AndAlso m_stSynapseType.Name <> stOldSynapse.Name) Then
                     Dim scType As SynapseTypes.SpikingChemical = DirectCast(m_stSynapseType, SynapseTypes.SpikingChemical)
                     Me.SynapticConductance = DirectCast(scType.SynapticConductance.Clone(Me, False, Nothing), ScaledNumber)
                 End If
@@ -295,6 +295,17 @@ Namespace DataObjects.Behavior
         Protected Sub OnSynapseTypeChanged()
             UpdateChart(True)
         End Sub
+
+        Public Overrides Sub BeforeAddLink()
+            MyBase.BeforeAddLink()
+
+            If Not m_stSynapseType Is Nothing AndAlso m_stSynapseType.GetType() Is GetType(SynapseTypes.SpikingChemical)  Then
+                Dim scType As SynapseTypes.SpikingChemical = DirectCast(m_stSynapseType, SynapseTypes.SpikingChemical)
+                Me.SynapticConductance = DirectCast(scType.SynapticConductance.Clone(Me, False, Nothing), ScaledNumber)
+            End If
+
+        End Sub
+
 
         Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
 

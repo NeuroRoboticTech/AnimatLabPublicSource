@@ -117,7 +117,7 @@ Namespace UITests
 
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan"}, 2000)
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin", False})
-                        ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"})
+                        ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"}, 500)
                         PasteChildPartTypeWithJoint("RPRO", "Simulation\Environment\Organisms\Skin\Body Plan\Skin", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0, True)
 
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Skin\Body Plan\Skin\Joint_1\Skin", "Name", "Skin2"})

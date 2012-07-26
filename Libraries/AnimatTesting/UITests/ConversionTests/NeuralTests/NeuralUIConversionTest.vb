@@ -1804,9 +1804,9 @@ Namespace UITests
                     ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1", False})
                     ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F4", True})
                     ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1\S1F4 (100 nA)", True})
-                    ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"})
+                    ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"}, 500)
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2"}, 2000)
-                    ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"})
+                    ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"}, 500)
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F1", "Name", "S2F1"})
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F4", "Name", "S2F4"})
 
@@ -1836,7 +1836,7 @@ Namespace UITests
 
                     'Add these neurons to the chart.
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\NeuralData"}, 2000)
-                    ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+                    ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"}, 500)
                     AddItemToChart("Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S2F1")
                     AddItemToChart("Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S2F4")
                     RunSimulationWaitToEnd()
@@ -1887,9 +1887,9 @@ Namespace UITests
                     ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1_S1I2", True})
                     ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I2\S1F1_S1I2", True})
                     ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1_S1I2\S1F1", True})
-                    ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"})
+                    ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"}, 500)
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2"}, 2000)
-                    ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"})
+                    ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"}, 500)
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F1", "Name", "S2F1"})
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F4", "Name", "S2F4"})
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2", "Name", "S2OP1"})
@@ -1920,7 +1920,7 @@ Namespace UITests
 
                     'Add these neurons to the chart.
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\NeuralData"}, 2000)
-                    ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+                    ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"}, 500)
                     AddItemToChart("Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S2F1")
 
                     AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\S1\S2\S2F4", "Stim_S2F4")
@@ -1952,9 +1952,9 @@ Namespace UITests
 
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1"}, 2000)
                     ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2", False})
-                    ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"})
+                    ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"}, 500)
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2"}, 2000)
-                    ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"})
+                    ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"}, 500)
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S2", "Name", "S3"})
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S3\S2F1", "Name", "S3F1"})
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S3\S2F4", "Name", "S3F4"})
@@ -2014,7 +2014,7 @@ Namespace UITests
                     ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1I2", True})
                     DeleteSelectedParts("Delete Group", True)
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2"}, 2000)
-                    ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"})
+                    ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"}, 500)
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2", "Name", "S1I2_Temp"})
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2", "Name", "S1OP1"})
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2_Temp", "Name", "S1I2"})
@@ -2040,15 +2040,15 @@ Namespace UITests
                     AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 1", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1I1", "S1I1", "S1I1Vm")
                     AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 1", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1I2", "S1I2", "S1I2Vm")
 
-                    ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+                    ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"}, 500)
                     AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 2", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F1", "S1F1", "S1F1Vm", "FiringRateGUI.DataObjects.Behavior.Neurons.Normal.DataTypes.MembraneVoltage")
                     AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 2", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F4", "S1F4", "S1F2Vm", "FiringRateGUI.DataObjects.Behavior.Neurons.Normal.DataTypes.MembraneVoltage")
 
-                    ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+                    ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"}, 500)
                     AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 3", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F1", "S1F1", "S1F1Ia", "FiringRateGUI.DataObjects.Behavior.Neurons.Normal.DataTypes.AdapterCurrent")
                     AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 3", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1I2", "S1I2", "S1I2Ia", "IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking.DataTypes.AdapterCurrent")
 
-                    ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"})
+                    ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"}, 500)
                     AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 4", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F1", "S1F1", "S1F1FF")
                     AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 4", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F4", "S1F4", "S1F2FF")
 
@@ -2068,9 +2068,9 @@ Namespace UITests
                     ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1F1_S1I2", True})
                     ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I1", True})
                     ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2", True})
-                    ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"})
+                    ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"}, 500)
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1"}, 2000)
-                    ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"})
+                    ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"}, 500)
 
                     If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S1F1_S1I2"})) Then
                         Throw New System.Exception("S1F1_S1I2 node was incorrectly copied over to S1.")
