@@ -1448,22 +1448,23 @@ Namespace Framework
         End Sub
 
         Protected Overridable Sub AddBehavioralLink(ByVal strOrigin As String, ByVal strDestination As String, ByVal strName As String, _
-                                                    ByVal strSynapseType As String, ByVal bInTree As Boolean, Optional ByVal bCancel As Boolean = False)
+                                                    ByVal strSynapseType As String, ByVal bInTree As Boolean, _
+                                                    Optional ByVal bCancel As Boolean = False, Optional ByVal bErrorOk As Boolean = False)
             Debug.WriteLine("AddBehavioralLink")
 
-            ExecuteMethod("AddBehavioralLink", New Object() {strOrigin, strDestination, strName}, 2000)
+            ExecuteMethod("AddBehavioralLink", New Object() {strOrigin, strDestination, strName}, 2000, bErrorOk, True)
 
             If strSynapseType.Length > 0 Then
                 If bInTree Then
-                    ExecuteActiveDialogMethod("SelectItemInTreeView", New Object() {strSynapseType}, 2000)
+                    ExecuteActiveDialogMethod("SelectItemInTreeView", New Object() {strSynapseType}, 2000, bErrorOk, True)
                 Else
-                    ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strSynapseType}, 2000)
+                    ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strSynapseType}, 2000, bErrorOk, True)
                 End If
 
                 If bCancel Then
-                    ExecuteIndirectActiveDialogMethod("ClickCancelButton", Nothing)
+                    ExecuteIndirectActiveDialogMethod("ClickCancelButton", Nothing, , bErrorOk, False)
                 Else
-                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, , bErrorOk, False)
                 End If
             End If
 

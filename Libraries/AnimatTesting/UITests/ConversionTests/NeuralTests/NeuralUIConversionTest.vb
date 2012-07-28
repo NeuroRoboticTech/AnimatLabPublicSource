@@ -1620,7 +1620,7 @@ Namespace UITests
                                       "AnimatGUI.DataObjects.Behavior.Nodes.OffPage", New Point(316, 114), "OP")
 
                     AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\F1", _
-                                      "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\OP", "A", "", False)
+                                      "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\OP", "A", "", False, , True)
 
                     AssertErrorDialogShown("The off-page connector node 'OP' must be associated with another node before you can connect it with a link.", enumErrorTextType.Equals)
 
