@@ -241,7 +241,7 @@ Namespace UITests
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan"}, 2000)
 
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle", False})
-                        ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"}, 500)
+                        ClickMenuItem("CopyToolStripMenuItem", True)
 
                         PasteChildPartTypeWithJoint("", "Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0, False)
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle", "Name", "Muscle1"})
@@ -311,7 +311,7 @@ Namespace UITests
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Muscle\A_B", True})
                         DeleteSelectedParts("Delete Group", True)
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2"}, 2000)
-                        ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"}, 500)
+                        ClickMenuItem("PasteInPlaceToolStripMenuItem", True)
 
                         AddStimulus("Tonic Current", "Organism_1", "\Behavioral System\Neural Subsystem\S2\MN", "Stim_MN")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_MN", "EndTime", "20 "})
@@ -320,7 +320,7 @@ Namespace UITests
 
                         'Add these neurons to the chart.
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\BodyData"}, 2000)
-                        ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"}, 500)
+                        ClickToolbarItem("AddAxisToolStripButton", True)
                         AddItemToChart("Organism_1\Behavioral System\Neural Subsystem\Nodes\S2\Nodes\MV")
 
                         RunSimulationWaitToEnd()
@@ -377,7 +377,7 @@ Namespace UITests
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\B_A", "Gain.C", "1 n"})
 
                         ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Tool Viewers\BodyData"}, 1000)
-                        ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"}, 500)
+                        ClickToolbarItem("AddAxisToolStripButton", True)
                         AddItemToChart("Organism_1\Behavioral System\Neural Subsystem\Nodes\S2\Nodes\Len")
 
                         RunSimulationWaitToEnd()
@@ -395,7 +395,7 @@ Namespace UITests
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\B_A\Muscle", True})
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\Len\B_A", True})
                         DeleteSelectedParts("Delete Group", True)
-                        ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"}, 500)
+                        ClickMenuItem("PasteInPlaceToolStripMenuItem", True)
 
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "CreateB_A_")

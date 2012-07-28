@@ -1172,6 +1172,8 @@ Namespace Forms
         Protected m_strAutomationMethodName As String = ""
         Protected m_aryAutomationParams() As Object
         Protected m_bAutomationPropBoolValue As Boolean = False
+        Protected m_bAutomationMethodInProgress As Boolean = False
+        Protected m_bAppIsBusy As Boolean = False
 
         Protected m_bBodyPartPasteInProgress As Boolean = False
 
@@ -1591,6 +1593,35 @@ Namespace Forms
             Get
                 Return m_bProjectIsOpen
             End Get
+        End Property
+
+        Public Overridable ReadOnly Property AutomationMethodInProgress() As Boolean
+            Get
+                Return m_bAutomationMethodInProgress
+            End Get
+        End Property
+
+        Protected Overridable Property InternalAutomationMethodInProgress() As Boolean
+            Get
+                Return m_bAutomationMethodInProgress
+            End Get
+            Set(value As Boolean)
+                m_bAutomationMethodInProgress = value
+            End Set
+        End Property
+
+        Public Overridable Property AppIsBusy() As Boolean
+            Get
+                Return m_bAppIsBusy
+            End Get
+            Set(value As Boolean)
+                m_bAppIsBusy = value
+                If m_bAppIsBusy Then
+                    Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                Else
+                    Me.Cursor = System.Windows.Forms.Cursors.Default
+                End If
+            End Set
         End Property
 
         Public Overridable ReadOnly Property ModificationHistory() As AnimatGUI.Framework.UndoSystem.ModificationHistory
@@ -3048,7 +3079,7 @@ Namespace Forms
         Public Overridable Function SaveStandAlone(ByVal bSaveCharts As Boolean, ByVal bSaveStims As Boolean, ByVal bSaveChartsToFile As Boolean) As ManagedAnimatInterfaces.IStdXml
 
             Try
-                Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                Me.AppIsBusy = True
 
                 Util.DisableDirtyFlags = True
                 Util.ExportForStandAloneSim = True
@@ -3069,7 +3100,7 @@ Namespace Forms
                 Util.ExportForStandAloneSim = False
                 Util.ExportChartsInStandAloneSim = False
                 Util.ExportStimsInStandAloneSim = False
-                Me.Cursor = System.Windows.Forms.Cursors.Arrow
+                Me.AppIsBusy = False
             End Try
 
         End Function
@@ -3084,7 +3115,7 @@ Namespace Forms
                     Throw New System.Exception("You must have an open project before you can save it.")
                 End If
 
-                Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                Me.AppIsBusy = True
 
                 Dim oXml As ManagedAnimatInterfaces.IStdXml = CreateStdXml()
 
@@ -3115,7 +3146,7 @@ Namespace Forms
                 Throw ex
             Finally
                 Util.DisableDirtyFlags = False
-                Me.Cursor = System.Windows.Forms.Cursors.Arrow
+                Me.AppIsBusy = False
             End Try
         End Sub
 
@@ -3125,7 +3156,7 @@ Namespace Forms
                 Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Starting load of project: '" & strFilename & "'")
                 Me.AppStatusText = "Starting project load"
 
-                Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                Me.AppIsBusy = True
 
                 ' Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
                 Dim oXml As ManagedAnimatInterfaces.IStdXml = CreateStdXml()
@@ -3181,7 +3212,7 @@ Namespace Forms
                 Throw ex
             Finally
                 Util.DisableDirtyFlags = False
-                Me.Cursor = System.Windows.Forms.Cursors.Arrow
+                Me.AppIsBusy = False
             End Try
         End Sub
 
@@ -3194,7 +3225,7 @@ Namespace Forms
                     Throw New System.Exception("You must have an open project before you can save it.")
                 End If
 
-                Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                Me.AppIsBusy = True
 
                 Me.ClearIsDirty()
 
@@ -3221,7 +3252,7 @@ Namespace Forms
                 Util.DisableDirtyFlags = False
                 Util.ExportChartsInStandAloneSim = False
                 Util.ExportStimsInStandAloneSim = False
-                Me.Cursor = System.Windows.Forms.Cursors.Arrow
+                Me.AppIsBusy = False
             End Try
         End Sub
 
@@ -3235,7 +3266,7 @@ Namespace Forms
                     Throw New System.Exception("You must have an open project before you can save it.")
                 End If
 
-                Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                Me.AppIsBusy = True
 
                 Me.ClearIsDirty()
 
@@ -3262,7 +3293,7 @@ Namespace Forms
                 Util.DisableDirtyFlags = False
                 Util.ExportChartsInStandAloneSim = False
                 Util.ExportStimsInStandAloneSim = False
-                Me.Cursor = System.Windows.Forms.Cursors.Arrow
+                Me.AppIsBusy = False
             End Try
 
         End Sub
@@ -3318,7 +3349,7 @@ Namespace Forms
 
             Try
                 Util.LoadInProgress = True
-                Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                Me.AppIsBusy = True
 
                 Dim fltVersion As Single = oXml.GetChildFloat("Version", 1)
 
@@ -3390,7 +3421,7 @@ Namespace Forms
 
             Try
                 Me.AppStatusText = "Loading docking configuration"
-                Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                Me.AppIsBusy = True
 
                 If dockManager.Contents.Count > 0 Then
                     If oXml.FindChildElement("DockingConfig", False) Then
@@ -3420,7 +3451,7 @@ Namespace Forms
                                                ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
             Try
-                Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                Me.AppIsBusy = True
 
                 oXml.IntoElem()   'Into Form Element
 
@@ -3886,7 +3917,7 @@ Namespace Forms
                 'Dim frmMdi As New AnimatGUI.Forms.Behavior.Editor
                 'Dim frmBase As AnimatForm
 
-                'Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                'Me.AppIsBusy = True
 
                 'frmMdi.Organism = doOrganism
                 'frmMdi.Initialize(Me, frmBase)
@@ -3900,13 +3931,13 @@ Namespace Forms
 
                 'doOrganism.BehaviorEditor = frmMdi
 
-                'Me.Cursor = System.Windows.Forms.Cursors.Arrow
+                'Me.AppIsBusy = False
 
                 'Return frmMdi
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
-                Me.Cursor = System.Windows.Forms.Cursors.Arrow
+                Me.AppIsBusy = False
             End Try
 
         End Function
@@ -3920,7 +3951,7 @@ Namespace Forms
                     Return
                 End If
 
-                Util.Application.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                Util.Application.AppIsBusy = True
 
                 'If there is not already an open window then lets create it.
                 Dim frmAnimat As Forms.SimulationWindow = DirectCast(CreateForm("AnimatGUI.dll", "AnimatGUI.Forms.SimulationWindow", doStructure.Name & " Body", False), Forms.SimulationWindow)
@@ -3936,7 +3967,7 @@ Namespace Forms
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
-                Me.Cursor = System.Windows.Forms.Cursors.Arrow
+                Me.AppIsBusy = False
             End Try
 
         End Sub
@@ -3950,13 +3981,13 @@ Namespace Forms
                 'frmMdi.MdiParent = Me
                 'frmMdi.Show()
 
-                'Me.Cursor = System.Windows.Forms.Cursors.Arrow
+                'Me.AppIsBusy = False
 
                 'Return Nothing
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
-                Me.Cursor = System.Windows.Forms.Cursors.Arrow
+                Me.AppIsBusy = False
             End Try
 
         End Function
@@ -3984,7 +4015,7 @@ Namespace Forms
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
-                Me.Cursor = System.Windows.Forms.Cursors.Arrow
+                Me.AppIsBusy = False
             End Try
 
         End Sub
@@ -4006,7 +4037,7 @@ Namespace Forms
         Public Sub ToggleSimulation()
 
             Try
-                Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                Me.AppIsBusy = True
 
                 Me.Simulation.SimulationAtEndTime = False
 
@@ -4040,7 +4071,7 @@ Namespace Forms
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
-                Me.Cursor = System.Windows.Forms.Cursors.Default
+                Me.AppIsBusy = False
             End Try
 
         End Sub
@@ -4050,7 +4081,7 @@ Namespace Forms
             Try
                 Me.AppStatusText = "Stopping simulation"
 
-                Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                Me.AppIsBusy = True
 
                 Me.SimulationInterface.PauseSimulation()
                 RaiseEvent SimulationStopped()
@@ -4061,7 +4092,7 @@ Namespace Forms
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
-                Me.Cursor = System.Windows.Forms.Cursors.Default
+                Me.AppIsBusy = False
             End Try
 
         End Sub
@@ -4083,6 +4114,7 @@ Namespace Forms
         Private Delegate Sub ExecuteMethodDelegate(ByVal strMethodName As String, ByVal aryParams() As Object)
 
         Public Function ExecuteMethod(ByVal strMethodName As String, ByVal aryParams() As Object) As Object
+
             If Me.InvokeRequired Then
                 Return Me.Invoke(New ExecuteMethodDelegate(AddressOf ExecuteMethod), New Object() {strMethodName, aryParams})
             End If
@@ -4103,6 +4135,7 @@ Namespace Forms
         Private Delegate Sub ExecuteMethodOnObjectDelegate(ByVal strPath As String, ByVal strMethodName As String, ByVal aryParams() As Object)
 
         Public Function ExecuteMethodOnObject(ByVal strPath As String, ByVal strMethodName As String, ByVal aryParams() As Object) As Object
+
             If Me.InvokeRequired Then
                 Return Me.Invoke(New ExecuteMethodOnObjectDelegate(AddressOf ExecuteMethodOnObject), New Object() {strPath, strMethodName, aryParams})
             End If
@@ -4123,13 +4156,21 @@ Namespace Forms
         End Function
 
         Public Sub ExecuteIndirectMethod(ByVal strMethodName As String, ByVal aryParams() As Object)
+            Me.InternalAutomationMethodInProgress = True
 
-            m_strAutomationMethodName = strMethodName
-            m_aryAutomationParams = aryParams
+            Try
 
-            m_timerAutomation = New System.Timers.Timer(10)
-            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnExecuteIndirectMethodTimer
-            m_timerAutomation.Enabled = True
+                m_strAutomationMethodName = strMethodName
+                m_aryAutomationParams = aryParams
+
+                m_timerAutomation = New System.Timers.Timer(10)
+                AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnExecuteIndirectMethodTimer
+                m_timerAutomation.Enabled = True
+
+            Catch ex As Exception
+                Me.InternalAutomationMethodInProgress = False
+                Throw ex
+            End Try
         End Sub
 
         Private Delegate Sub OnExecuteIndirectMethodTimerDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
@@ -4151,19 +4192,29 @@ Namespace Forms
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Me.InternalAutomationMethodInProgress = False
             End Try
         End Sub
 
         Public Sub ExecuteIndirectMethodOnObject(ByVal strPath As String, ByVal strMethodName As String, ByVal aryParams() As Object)
+            Me.InternalAutomationMethodInProgress = True
 
-            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
-            m_strAutomationPath = strPath
-            m_strAutomationMethodName = strMethodName
-            m_aryAutomationParams = aryParams
+            Try
 
-            m_timerAutomation = New System.Timers.Timer(10)
-            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnExecuteIndirectMethodOnObjectTimer
-            m_timerAutomation.Enabled = True
+                m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
+                m_strAutomationPath = strPath
+                m_strAutomationMethodName = strMethodName
+                m_aryAutomationParams = aryParams
+
+                m_timerAutomation = New System.Timers.Timer(10)
+                AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnExecuteIndirectMethodOnObjectTimer
+                m_timerAutomation.Enabled = True
+
+            Catch ex As Exception
+                Me.InternalAutomationMethodInProgress = False
+                Throw ex
+            End Try
         End Sub
 
         Private Delegate Sub OnExecuteIndirectMethodOnObjectTimerDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
@@ -4185,6 +4236,8 @@ Namespace Forms
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Me.InternalAutomationMethodInProgress = False
             End Try
         End Sub
 
@@ -4213,14 +4266,21 @@ Namespace Forms
         End Function
 
         Public Sub ExecuteIndirectAppPropertyMethod(ByVal strPropertyName As String, ByVal strMethodName As String, ByVal aryParams() As Object)
+            Me.InternalAutomationMethodInProgress = True
 
-            m_strAutomationName = strPropertyName
-            m_strAutomationMethodName = strMethodName
-            m_aryAutomationParams = aryParams
+            Try
+                m_strAutomationName = strPropertyName
+                m_strAutomationMethodName = strMethodName
+                m_aryAutomationParams = aryParams
 
-            m_timerAutomation = New System.Timers.Timer(10)
-            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnExecuteIndirectMethodTimer
-            m_timerAutomation.Enabled = True
+                m_timerAutomation = New System.Timers.Timer(10)
+                AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnExecuteIndirectMethodTimer
+                m_timerAutomation.Enabled = True
+
+            Catch ex As Exception
+                Me.InternalAutomationMethodInProgress = False
+                Throw ex
+            End Try
         End Sub
 
         Private Delegate Sub OnExecuteIndirectAppPropertyMethodTimerDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
@@ -4242,20 +4302,29 @@ Namespace Forms
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Me.InternalAutomationMethodInProgress = False
             End Try
         End Sub
 
         Public Sub SelectWorkspaceItem(ByVal strPath As String, ByVal bSelectMultiple As Boolean)
-            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
-                Throw New System.Exception("No project is currently loaded.")
-            End If
+            Me.InternalAutomationMethodInProgress = True
 
-            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
-            m_bAutomationPropBoolValue = bSelectMultiple
+            Try
+                If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
+                    Throw New System.Exception("No project is currently loaded.")
+                End If
 
-            m_timerAutomation = New System.Timers.Timer(10)
-            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnSelectWorkspaceItemTimer
-            m_timerAutomation.Enabled = True
+                m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
+                m_bAutomationPropBoolValue = bSelectMultiple
+
+                m_timerAutomation = New System.Timers.Timer(10)
+                AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnSelectWorkspaceItemTimer
+                m_timerAutomation.Enabled = True
+            Catch ex As Exception
+                Me.InternalAutomationMethodInProgress = False
+                Throw ex
+            End Try
         End Sub
 
         Private Delegate Sub OnSelectWorkspaceItemTimerDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
@@ -4278,19 +4347,29 @@ Namespace Forms
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Me.InternalAutomationMethodInProgress = False
             End Try
         End Sub
 
         Public Sub DblClickWorkspaceItem(ByVal strPath As String)
-            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
-                Throw New System.Exception("No project is currently loaded.")
-            End If
+            Me.InternalAutomationMethodInProgress = True
 
-            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
+            Try
+                If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
+                    Throw New System.Exception("No project is currently loaded.")
+                End If
 
-            m_timerAutomation = New System.Timers.Timer(10)
-            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnDblClickWorkspaceItemTimer
-            m_timerAutomation.Enabled = True
+                m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
+
+                m_timerAutomation = New System.Timers.Timer(10)
+                AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnDblClickWorkspaceItemTimer
+                m_timerAutomation.Enabled = True
+
+            Catch ex As Exception
+                Me.InternalAutomationMethodInProgress = False
+                Throw ex
+            End Try
         End Sub
 
         Private Delegate Sub OnDblClickWorkspaceItemTimerDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
@@ -4323,32 +4402,49 @@ Namespace Forms
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Me.InternalAutomationMethodInProgress = False
             End Try
         End Sub
 
-        Public Sub ClickToolbarItem(ByVal strToolName As String)
+        Public Sub ClickToolbarItem(ByVal strToolName As String, ByVal bReturnImmediate As Boolean)
+            Me.InternalAutomationMethodInProgress = bReturnImmediate
 
-            m_aryToolClicks = Me.AnimatToolStrip.Items.Find(strToolName, True)
-            If m_aryToolClicks Is Nothing OrElse m_aryToolClicks.Length = 0 Then
-                Throw New System.Exception("No tool item was found with that name.")
-            End If
+            Try
 
-            m_timerAutomation = New System.Timers.Timer(10)
-            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnToolClickTimer
-            m_timerAutomation.Enabled = True
+                m_aryToolClicks = Me.AnimatToolStrip.Items.Find(strToolName, True)
+                If m_aryToolClicks Is Nothing OrElse m_aryToolClicks.Length = 0 Then
+                    Throw New System.Exception("No tool item was found with that name.")
+                End If
 
+                m_timerAutomation = New System.Timers.Timer(10)
+                AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnToolClickTimer
+                m_timerAutomation.Enabled = True
+
+            Catch ex As Exception
+                Me.InternalAutomationMethodInProgress = False
+                Throw ex
+            End Try
         End Sub
 
-        Public Sub ClickMenuItem(ByVal strToolName As String)
+        Public Sub ClickMenuItem(ByVal strToolName As String, ByVal bReturnImmediate As Boolean)
+            Me.InternalAutomationMethodInProgress = bReturnImmediate
 
-            m_aryToolClicks = Me.AnimatMenuStrip.Items.Find(strToolName, True)
-            If m_aryToolClicks Is Nothing OrElse m_aryToolClicks.Length = 0 Then
-                Throw New System.Exception("No menu item was found with that name.")
-            End If
+            Try
 
-            m_timerAutomation = New System.Timers.Timer(10)
-            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnToolClickTimer
-            m_timerAutomation.Enabled = True
+                m_aryToolClicks = Me.AnimatMenuStrip.Items.Find(strToolName, True)
+                If m_aryToolClicks Is Nothing OrElse m_aryToolClicks.Length = 0 Then
+                    Throw New System.Exception("No menu item was found with that name.")
+                End If
+
+                m_timerAutomation = New System.Timers.Timer(10)
+                AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnToolClickTimer
+                m_timerAutomation.Enabled = True
+
+            Catch ex As Exception
+                Me.InternalAutomationMethodInProgress = False
+                Throw ex
+            End Try
 
         End Sub
 
@@ -4375,35 +4471,45 @@ Namespace Forms
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Me.InternalAutomationMethodInProgress = False
             End Try
         End Sub
 
         Public Sub AddBehavioralNode(ByVal strSubsystem As String, ByVal strClassName As String, ByVal ptPosition As Point, ByVal strName As String)
-            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
-                Throw New System.Exception("No project is currently loaded.")
-            End If
+            Me.InternalAutomationMethodInProgress = True
 
-            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strSubsystem, Util.ProjectWorkspace.TreeView.Nodes)
+            Try
+                If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
+                    Throw New System.Exception("No project is currently loaded.")
+                End If
 
-            If m_tnAutomationTreeNode Is Nothing OrElse m_tnAutomationTreeNode.Tag Is Nothing OrElse Not Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(DataObjects.Behavior.Nodes.Subsystem), False) Then
-                Throw New System.Exception("The path to the specified subsystem was not the correct object type.")
-            End If
+                m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strSubsystem, Util.ProjectWorkspace.TreeView.Nodes)
 
-            Dim doSubsystem As Framework.DataObject = DirectCast(m_tnAutomationTreeNode.Tag, Framework.DataObject)
+                If m_tnAutomationTreeNode Is Nothing OrElse m_tnAutomationTreeNode.Tag Is Nothing OrElse Not Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(DataObjects.Behavior.Nodes.Subsystem), False) Then
+                    Throw New System.Exception("The path to the specified subsystem was not the correct object type.")
+                End If
 
-            Dim bnSubsystem As DataObjects.Behavior.Nodes.Subsystem = DirectCast(doSubsystem, DataObjects.Behavior.Nodes.Subsystem)
+                Dim doSubsystem As Framework.DataObject = DirectCast(m_tnAutomationTreeNode.Tag, Framework.DataObject)
 
-            If bnSubsystem.SubsystemDiagram Is Nothing Then
-                Throw New System.Exception("The diagram for the specified subsystem is not open")
-            End If
+                Dim bnSubsystem As DataObjects.Behavior.Nodes.Subsystem = DirectCast(doSubsystem, DataObjects.Behavior.Nodes.Subsystem)
 
-            m_bnAutomationNodeOrigin = DirectCast(Util.LoadClass(strClassName, doSubsystem), DataObjects.Behavior.Node)
-            m_strAutomationName = strName
-            m_ptAutomationPosition = ptPosition
+                If bnSubsystem.SubsystemDiagram Is Nothing Then
+                    Throw New System.Exception("The diagram for the specified subsystem is not open")
+                End If
 
-            m_timerAutomation = New System.Timers.Timer(10)
-            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnAddBehavioralNodeTimer
-            m_timerAutomation.Enabled = True
+                m_bnAutomationNodeOrigin = DirectCast(Util.LoadClass(strClassName, doSubsystem), DataObjects.Behavior.Node)
+                m_strAutomationName = strName
+                m_ptAutomationPosition = ptPosition
+
+                m_timerAutomation = New System.Timers.Timer(10)
+                AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnAddBehavioralNodeTimer
+                m_timerAutomation.Enabled = True
+
+            Catch ex As Exception
+                Me.InternalAutomationMethodInProgress = False
+                Throw ex
+            End Try
         End Sub
 
         Private Delegate Sub OnAddBehavioralNodeTimerDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
@@ -4432,45 +4538,55 @@ Namespace Forms
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Me.InternalAutomationMethodInProgress = False
             End Try
         End Sub
 
 
         Public Sub AddBehavioralLink(ByVal strNodeOrigin As String, ByVal strNodeDestination As String, ByVal strName As String)
-            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
-                Throw New System.Exception("No project is currently loaded.")
-            End If
+            Me.InternalAutomationMethodInProgress = True
 
-            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strNodeOrigin, Util.ProjectWorkspace.TreeView.Nodes)
+            Try
+                If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
+                    Throw New System.Exception("No project is currently loaded.")
+                End If
 
-            If m_tnAutomationTreeNode Is Nothing OrElse m_tnAutomationTreeNode.Tag Is Nothing OrElse Not Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(DataObjects.Behavior.Node), False) Then
-                Throw New System.Exception("The path to the origin node was not the correct object type.")
-            End If
+                m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strNodeOrigin, Util.ProjectWorkspace.TreeView.Nodes)
 
-            m_bnAutomationNodeOrigin = DirectCast(m_tnAutomationTreeNode.Tag, DataObjects.Behavior.Node)
+                If m_tnAutomationTreeNode Is Nothing OrElse m_tnAutomationTreeNode.Tag Is Nothing OrElse Not Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(DataObjects.Behavior.Node), False) Then
+                    Throw New System.Exception("The path to the origin node was not the correct object type.")
+                End If
 
-            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strNodeDestination, Util.ProjectWorkspace.TreeView.Nodes)
+                m_bnAutomationNodeOrigin = DirectCast(m_tnAutomationTreeNode.Tag, DataObjects.Behavior.Node)
 
-            If m_tnAutomationTreeNode Is Nothing OrElse m_tnAutomationTreeNode.Tag Is Nothing OrElse Not Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(DataObjects.Behavior.Node), False) Then
-                Throw New System.Exception("The path to the destination node was not the correct object type.")
-            End If
+                m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strNodeDestination, Util.ProjectWorkspace.TreeView.Nodes)
 
-            m_bnAutomationNodeDestination = DirectCast(m_tnAutomationTreeNode.Tag, DataObjects.Behavior.Node)
+                If m_tnAutomationTreeNode Is Nothing OrElse m_tnAutomationTreeNode.Tag Is Nothing OrElse Not Util.IsTypeOf(m_tnAutomationTreeNode.Tag.GetType, GetType(DataObjects.Behavior.Node), False) Then
+                    Throw New System.Exception("The path to the destination node was not the correct object type.")
+                End If
 
-            If m_bnAutomationNodeDestination.ParentDiagram Is Nothing OrElse m_bnAutomationNodeOrigin.ParentDiagram Is Nothing Then
-                Throw New System.Exception("The parent diagram for either the origin or destination is not shown.")
-            End If
+                m_bnAutomationNodeDestination = DirectCast(m_tnAutomationTreeNode.Tag, DataObjects.Behavior.Node)
 
-            If Not m_bnAutomationNodeDestination.ParentDiagram Is m_bnAutomationNodeOrigin.ParentDiagram Then
-                Throw New System.Exception("The parent diagram for the origin and destination are different. They must be the same to add a link.")
-            End If
+                If m_bnAutomationNodeDestination.ParentDiagram Is Nothing OrElse m_bnAutomationNodeOrigin.ParentDiagram Is Nothing Then
+                    Throw New System.Exception("The parent diagram for either the origin or destination is not shown.")
+                End If
 
-            m_tnAutomationTreeNode = Nothing
-            m_strAutomationName = strName
+                If Not m_bnAutomationNodeDestination.ParentDiagram Is m_bnAutomationNodeOrigin.ParentDiagram Then
+                    Throw New System.Exception("The parent diagram for the origin and destination are different. They must be the same to add a link.")
+                End If
 
-            m_timerAutomation = New System.Timers.Timer(10)
-            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnAddBehavioralLinkTimer
-            m_timerAutomation.Enabled = True
+                m_tnAutomationTreeNode = Nothing
+                m_strAutomationName = strName
+
+                m_timerAutomation = New System.Timers.Timer(10)
+                AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnAddBehavioralLinkTimer
+                m_timerAutomation.Enabled = True
+
+            Catch ex As Exception
+                Me.InternalAutomationMethodInProgress = False
+                Throw ex
+            End Try
         End Sub
 
         Private Delegate Sub OnAddBehavioralLinkTimerDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
@@ -4505,6 +4621,8 @@ Namespace Forms
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Me.InternalAutomationMethodInProgress = False
             End Try
         End Sub
 
@@ -4572,31 +4690,39 @@ Namespace Forms
         End Function
 
         Public Sub OpenUITypeEditor(ByVal strPath As String, ByVal strPropertyName As String)
-            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
-                Throw New System.Exception("No project is currently loaded.")
-            End If
+            Me.InternalAutomationMethodInProgress = False 'This always opens a dialog window. So we should not mark it as busy.
 
-            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
+            Try
+                If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
+                    Throw New System.Exception("No project is currently loaded.")
+                End If
 
-            If m_tnAutomationTreeNode.Tag Is Nothing Then
-                Throw New System.Exception("No object was found in the tree node path '" & strPath & "'.")
-            End If
+                m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
 
-            Dim oObj As Object = m_tnAutomationTreeNode.Tag
-            Util.GetObjectProperty(strPropertyName, m_piAutomationPropInfo, oObj)
+                If m_tnAutomationTreeNode.Tag Is Nothing Then
+                    Throw New System.Exception("No object was found in the tree node path '" & strPath & "'.")
+                End If
 
-            'Get the property object.
-            Dim oObjProp As Object = m_piAutomationPropInfo.GetValue(oObj, Nothing)
+                Dim oObj As Object = m_tnAutomationTreeNode.Tag
+                Util.GetObjectProperty(strPropertyName, m_piAutomationPropInfo, oObj)
 
-            Dim tpProps As PropertyDescriptorCollection = TypeDescriptor.GetProperties(oObj)
-            Dim tpProp As PropertyDescriptor = tpProps(strPropertyName)
-            Dim oPropEdit As Object = tpProp.GetEditor(GetType(System.Drawing.Design.UITypeEditor))
+                'Get the property object.
+                Dim oObjProp As Object = m_piAutomationPropInfo.GetValue(oObj, Nothing)
 
-            m_strAutomationName = strPropertyName
+                Dim tpProps As PropertyDescriptorCollection = TypeDescriptor.GetProperties(oObj)
+                Dim tpProp As PropertyDescriptor = tpProps(strPropertyName)
+                Dim oPropEdit As Object = tpProp.GetEditor(GetType(System.Drawing.Design.UITypeEditor))
 
-            m_timerAutomation = New System.Timers.Timer(10)
-            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnOpenUITypeEditorTimer
-            m_timerAutomation.Enabled = True
+                m_strAutomationName = strPropertyName
+
+                m_timerAutomation = New System.Timers.Timer(10)
+                AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnOpenUITypeEditorTimer
+                m_timerAutomation.Enabled = True
+
+            Catch ex As Exception
+                Me.InternalAutomationMethodInProgress = False
+                Throw ex
+            End Try
         End Sub
 
         Private Delegate Sub OnOpenUITypeEditorDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
@@ -4638,19 +4764,29 @@ Namespace Forms
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Me.InternalAutomationMethodInProgress = False
             End Try
         End Sub
 
         Public Sub SelectWorkspaceTabPage(ByVal strPath As String)
-            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
-                Throw New System.Exception("No project is currently loaded.")
-            End If
+            Me.InternalAutomationMethodInProgress = True
 
-            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
+            Try
+                If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
+                    Throw New System.Exception("No project is currently loaded.")
+                End If
 
-            m_timerAutomation = New System.Timers.Timer(10)
-            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnSelectTabPageTimer
-            m_timerAutomation.Enabled = True
+                m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
+
+                m_timerAutomation = New System.Timers.Timer(10)
+                AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnSelectTabPageTimer
+                m_timerAutomation.Enabled = True
+
+            Catch ex As Exception
+                Me.InternalAutomationMethodInProgress = False
+                Throw ex
+            End Try
 
         End Sub
 
@@ -4696,27 +4832,37 @@ Namespace Forms
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Me.InternalAutomationMethodInProgress = False
             End Try
         End Sub
 
         Public Sub SelectTrackItems(ByVal strPath As String, ByVal strStructure As String, ByVal strPart As String)
-            If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
-                Throw New System.Exception("No project is currently loaded.")
-            End If
+            Me.InternalAutomationMethodInProgress = True
 
-            m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
+            Try
+                If Util.ProjectWorkspace Is Nothing OrElse Util.ProjectWorkspace.TreeView Is Nothing Then
+                    Throw New System.Exception("No project is currently loaded.")
+                End If
 
-            If strStructure = "No Tracking" Then
-                m_doAutomationStructure = Nothing
-                m_doAutomationBodyPart = Nothing
-            Else
-                m_doAutomationStructure = DirectCast(Util.Environment.Structures.FindDataObjectByName(strStructure), DataObjects.Physical.PhysicalStructure)
-                m_doAutomationBodyPart = m_doAutomationStructure.FindBodyPartByName(strPart, False)
-            End If
+                m_tnAutomationTreeNode = Util.FindTreeNodeByPath(strPath, Util.ProjectWorkspace.TreeView.Nodes)
 
-            m_timerAutomation = New System.Timers.Timer(10)
-            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnSelectTrackItemsTimer
-            m_timerAutomation.Enabled = True
+                If strStructure = "No Tracking" Then
+                    m_doAutomationStructure = Nothing
+                    m_doAutomationBodyPart = Nothing
+                Else
+                    m_doAutomationStructure = DirectCast(Util.Environment.Structures.FindDataObjectByName(strStructure), DataObjects.Physical.PhysicalStructure)
+                    m_doAutomationBodyPart = m_doAutomationStructure.FindBodyPartByName(strPart, False)
+                End If
+
+                m_timerAutomation = New System.Timers.Timer(10)
+                AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnSelectTrackItemsTimer
+                m_timerAutomation.Enabled = True
+
+            Catch ex As Exception
+                Me.InternalAutomationMethodInProgress = False
+                Throw ex
+            End Try
 
         End Sub
 
@@ -4756,6 +4902,8 @@ Namespace Forms
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Me.InternalAutomationMethodInProgress = False
             End Try
         End Sub
 
@@ -4781,13 +4929,21 @@ Namespace Forms
         End Function
 
         Public Sub ExecuteIndirecActiveDialogtMethod(ByVal strMethodName As String, ByVal aryParams() As Object)
+            Me.InternalAutomationMethodInProgress = True
 
-            m_strAutomationMethodName = strMethodName
-            m_aryAutomationParams = aryParams
+            Try
 
-            m_timerAutomation = New System.Timers.Timer(10)
-            AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnExecuteIndirectActiveDialogMethodTimer
-            m_timerAutomation.Enabled = True
+                m_strAutomationMethodName = strMethodName
+                m_aryAutomationParams = aryParams
+
+                m_timerAutomation = New System.Timers.Timer(10)
+                AddHandler m_timerAutomation.Elapsed, AddressOf Me.OnExecuteIndirectActiveDialogMethodTimer
+                m_timerAutomation.Enabled = True
+
+            Catch ex As Exception
+                Me.InternalAutomationMethodInProgress = False
+                Throw ex
+            End Try
         End Sub
 
         Private Delegate Sub OnExecuteIndirecActiveDialogtMethodTimerDelegate(ByVal sender As Object, ByVal eProps As System.Timers.ElapsedEventArgs)
@@ -4809,6 +4965,8 @@ Namespace Forms
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Me.InternalAutomationMethodInProgress = False
             End Try
         End Sub
 
@@ -5056,6 +5214,10 @@ Namespace Forms
 
                 frmNewProject.txtProjectName.Text = "NewProject"
                 If frmNewProject.ShowDialog = DialogResult.OK Then
+                    Me.AppIsBusy = True
+
+                    Threading.Thread.Sleep(1000)
+
                     Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "User hit ok on new project dialog. Creating sim object.")
 
                     m_doSimulation = New DataObjects.Simulation(Me.FormHelper)
@@ -5069,8 +5231,6 @@ Namespace Forms
                     Me.Title = Me.ProjectName & " Project"
 
                     Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Creating a new Project: '" & Util.Application.ProjectPath & "\" & Util.Application.ProjectFile)
-
-                    Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
                     'Create the project directory
                     System.IO.Directory.CreateDirectory(Util.Application.ProjectPath)
@@ -5090,7 +5250,7 @@ Namespace Forms
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
-                Me.Cursor = System.Windows.Forms.Cursors.Arrow
+                Me.AppIsBusy = False
                 Util.DisableDirtyFlags = False
             End Try
         End Sub
@@ -5102,7 +5262,7 @@ Namespace Forms
                     Return
                 End If
 
-                Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                Me.AppIsBusy = True
 
                 Dim openFileDialog As New OpenFileDialog
                 openFileDialog.Filter = "AnimatLab Project|*.aproj"
@@ -5117,7 +5277,7 @@ Namespace Forms
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
-                Me.Cursor = System.Windows.Forms.Cursors.Arrow
+                Me.AppIsBusy = False
             End Try
         End Sub
 
@@ -5166,7 +5326,7 @@ Namespace Forms
                     Util.Application.SimulationFile = Util.Application.ProjectName & ".asim"
                     Me.Title = Me.ProjectName & " Project"
 
-                    Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                    Me.AppIsBusy = True
 
                     SaveProject(Util.Application.ProjectFile)
 
@@ -5176,7 +5336,7 @@ Namespace Forms
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
-                Me.Cursor = System.Windows.Forms.Cursors.Default
+                Me.AppIsBusy = False
             End Try
         End Sub
 
@@ -5651,7 +5811,7 @@ Namespace Forms
 
                     Dim frmBase As Forms.Tools.ToolForm = DirectCast(frmTool.Clone(), Forms.Tools.ToolForm)
 
-                    Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                    Me.AppIsBusy = True
 
                     frmBase.Title = strName
                     frmBase.Initialize(Me)
@@ -5669,14 +5829,14 @@ Namespace Forms
 
                     Application.DoEvents()
 
-                    Me.Cursor = System.Windows.Forms.Cursors.Arrow
+                    Me.AppIsBusy = False
 
                 End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
-                Me.Cursor = System.Windows.Forms.Cursors.Arrow
+                Me.AppIsBusy = False
             End Try
         End Sub
 

@@ -148,7 +148,7 @@ Namespace Framework
             'Start the application.
             StartApplication("", m_bAttachServerOnly)
 
-            ExecuteIndirectMethod("LoadProject", New Object() {m_strRootFolder & m_strProjectPath & "\" & m_strProjectName & "\" & m_strProjectName & ".aproj"})
+            ExecuteIndirectMethod("LoadProject", New Object() {m_strRootFolder & m_strProjectPath & "\" & m_strProjectName & "\" & m_strProjectName & ".aproj"}, 20, False, True)
 
          End Sub
 
@@ -170,7 +170,7 @@ Namespace Framework
                 End Try
 
                 'Save the project
-                ExecuteMethod("ClickToolbarItem", New Object() {"SaveToolStripButton"}, 500)
+                ExecuteMethod("ClickToolbarItem", New Object() {"SaveToolStripButton", True}, 500)
 
                 'Close the project
                 ExecuteMethod("Close", Nothing)
@@ -385,7 +385,7 @@ Namespace Framework
 
             Debug.WriteLine("Creating a new project. Project name: '" & strProjectName & "', Project Path: '" & m_strProjectPath & "', Sim End: " & dblSimEnd & ", CreateStructure: " & bCreateStructure)
 
-            OpenDialogAndWait("New Project", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"NewToolStripButton"})
+            OpenDialogAndWait("New Project", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"NewToolStripButton", False, 200, False, False})
 
             'Set params and hit ok button
             ExecuteActiveDialogMethod("SetProjectParams", New Object() {strProjectName, m_strRootFolder & strProjectPath})
@@ -412,9 +412,9 @@ Namespace Framework
 
             'Click the add structure button.
             If bCreateStructure Then
-                ExecuteMethod("ClickToolbarItem", New Object() {"AddStructureToolStripButton"}, 500)
+                ClickToolbarItem("AddStructureToolStripButton", True)
             Else
-                ExecuteMethod("ClickToolbarItem", New Object() {"AddOrganismStripButton"}, 500)
+                ClickToolbarItem("AddOrganismStripButton", True)
             End If
 
             'Set the name of the structure
@@ -850,7 +850,7 @@ Namespace Framework
         Protected Overridable Sub AddRootPartType(ByVal strStructGroup As String, ByVal strStructure As String, ByVal strPartType As String, Optional ByVal strName As String = "")
             Debug.WriteLine("AddRootPartType. Structure Group:, " & strStructGroup & ", Structure: " & strStructure & ", PartType: " & strPartType & ", Name: " & strName)
 
-            OpenDialogAndWait("Select Rigid Body Type", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddPartToolStripButton"})
+            OpenDialogAndWait("Select Rigid Body Type", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddPartToolStripButton", False, 200, False, False})
 
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strPartType})
 
@@ -865,8 +865,8 @@ Namespace Framework
             'but when I do it here for some reason I have to set it to something else first and then back. I think it has something to do with the 
             ' timing of the call or something. Regardless, it does not really matter here, I just need it in Collisions mode and that works when done
             ' manually, so I am using this trick to get it to work in the test.
-            ExecuteMethod("ClickToolbarItem", New Object() {"SelGraphicsToolStripButton"}, 500)
-            ExecuteMethod("ClickToolbarItem", New Object() {"SelCollisionToolStripButton"}, 500)
+            ClickToolbarItem("SelGraphicsToolStripButton", True)
+            ClickToolbarItem("SelCollisionToolStripButton", True)
             ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & strStructGroup & "\" & strStructure & "\Body Plan\Root", False})
 
             If strName.Length > 0 Then
@@ -904,45 +904,13 @@ Namespace Framework
 
         End Sub
 
-        ' '''<summary>
-        ' '''AddChildPartTypeWithJoint - Use 'AddChildPartTypeWithJointParams' to pass parameters into this method.
-        ' '''</summary>
-        'Protected Overridable Sub AddChildPartTypeWithJoint(ByVal strPartType As String, ByVal strJointType As String, ByVal ptAddClick As Point)
-        '    Debug.WriteLine("AddChildPartTypeWithJoint. Part type: " & strPartType & ", Joint Type: " & strJointType & ", AddClick: " & ptAddClick.ToString)
-
-        '    BeforeAddChildPart(strPartType, strJointType)
-
-        '    'Click 'Add Part' button
-        '    ExecuteMethod("ClickToolbarItem", New Object() {"AddPartToolStripButton"}, 2000)
-
-        '    OpenDialogAndWait("Select Part Type", Me.GetType.GetMethod("ClickToAddBody"), New Object() {ptAddClick})
-
-        '    ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strPartType})
-
-        '    'Click 'Ok' button
-        '    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
-
-        '    AfterAddChildPart(strPartType, strJointType)
-
-        '    OpenDialogAndWait("Select Part Type", Nothing, Nothing)
-
-        '    ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strJointType})
-
-        '    'Click 'Ok' button
-        '    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
-
-        '    AfterAddChildPartJoint(strPartType, strJointType)
-
-        '    Threading.Thread.Sleep(1000)
-        'End Sub
-
         Protected Overridable Sub AddChildPartTypeWithJoint(ByVal strPartType As String, ByVal strJointType As String, ByVal strPath As String)
             Debug.WriteLine("AddChildPartTypeWithJoint. Part type: " & strPartType & ", Joint Type: " & strJointType & ", Path: " & strPath)
 
             BeforeAddChildPart(strPartType, strJointType)
 
             'Click 'Add Part' button
-            ExecuteMethod("ClickToolbarItem", New Object() {"AddPartToolStripButton"}, 2000)
+            ClickToolbarItem("AddPartToolStripButton", True)
 
             AutomatedClickToAddBody(strPath, 0.04, 0.55, -0.5, 0.0, 0.0, -1.0)
 
@@ -997,7 +965,7 @@ Namespace Framework
             BeforeAddChildPart(strPartType, "")
 
             'Click 'Add Part' button
-            ExecuteMethod("ClickToolbarItem", New Object() {"AddPartToolStripButton"}, 2000)
+            ClickToolbarItem("AddPartToolStripButton", True)
 
             AutomatedClickToAddBody(strAddPath, 0.04, 0.55, -0.5, 0.0, 0.0, -1.0)
 
@@ -1025,7 +993,7 @@ Namespace Framework
             BeforeAddChildPart("", strJointType)
 
             'Click 'Add Part' button
-            ExecuteMethod("ClickToolbarItem", New Object() {"PasteToolStripButton"}, 2000)
+            ClickToolbarItem("PasteToolStripButton", True)
 
             AutomatedClickToAddBody(strPath, fltPosX, fltPosY, fltPosZ, fltNormX, fltNormY, fltNormZ)
 
@@ -1051,7 +1019,7 @@ Namespace Framework
         Protected Overridable Sub AddChart(ByVal strChartType As String)
             Debug.WriteLine("Adding chart: '" & strChartType & "'")
 
-            OpenDialogAndWait("Select Data Tool Type", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddToolToolStripButton"})
+            OpenDialogAndWait("Select Data Tool Type", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddToolToolStripButton", False, 200, False, False})
 
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strChartType})
 
@@ -1061,11 +1029,6 @@ Namespace Framework
             Threading.Thread.Sleep(1000)
         End Sub
 
-        Public Overridable Sub ClickToolbarItem(ByVal strButton As String)
-            'Click 'Add DataTool' button
-            ExecuteMethod("ClickToolbarItem", New Object() {strButton})
-        End Sub
-
         '''<summary>
         '''AddRootPartToChart
         '''</summary>
@@ -1073,7 +1036,7 @@ Namespace Framework
             Debug.WriteLine("Adding item to chart: '" & strPath & "'")
 
             'Click 'Add Chart Item' button
-            OpenDialogAndWait("Select Data Item", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddDataItemToolStripButton"})
+            OpenDialogAndWait("Select Data Item", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddDataItemToolStripButton", False, 200, False, False})
 
             ExecuteActiveDialogMethod("SelectItem", New Object() {strPath})
             ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
@@ -1105,7 +1068,7 @@ Namespace Framework
 
             ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & strStructure & strPart, False})
 
-            OpenDialogAndWait("Select Stimulus Type", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddStimulusToolStripButton"})
+            OpenDialogAndWait("Select Stimulus Type", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddStimulusToolStripButton", False, 200, False, False})
 
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strStimulusType})
 
@@ -1298,7 +1261,7 @@ Namespace Framework
 
             If m_strJointChartMovementName.Length > 0 Then
                 'Add a new axis to chart the joint rotation.
-                ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"}, 500)
+                ClickToolbarItem("AddAxisToolStripButton", True)
 
                 AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1")
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 2\Joint_1", "Name", m_strJointChartMovementName})
@@ -1307,7 +1270,7 @@ Namespace Framework
 
             If m_strJointChartVelocityName.Length > 0 Then
                 'Add a new axis to chart the joint velocity.
-                ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"}, 500)
+                ClickToolbarItem("AddAxisToolStripButton", True)
 
                 AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1")
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 3\Joint_1", "Name", m_strJointChartVelocityName})
@@ -1334,13 +1297,13 @@ Namespace Framework
             Debug.WriteLine("DeleteSelectedParts. DlgName: " & strDlgName & ", Cut: " & bCut)
 
             If bCut Then
-                ExecuteMethod("ClickMenuItem", New Object() {"CutToolStripMenuItem"}, 500)
+                ClickMenuItem("CutToolStripMenuItem", False)
             Else
-                ExecuteMethod("ClickToolbarItem", New Object() {"DeleteToolStripButton"}, 500)
+                ClickToolbarItem("DeleteToolStripButton", False)
             End If
 
             OpenDialogAndWait(strDlgName, Nothing, Nothing)
-            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, 1000)
+            ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
         End Sub
 
         ' '''<summary>
@@ -1498,9 +1461,9 @@ Namespace Framework
                 End If
 
                 If bCancel Then
-                    ExecuteIndirectActiveDialogMethod("ClickCancelButton", Nothing, 1000)
+                    ExecuteIndirectActiveDialogMethod("ClickCancelButton", Nothing)
                 Else
-                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, 1000)
+                    ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
                 End If
             End If
 

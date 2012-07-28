@@ -112,7 +112,7 @@ Namespace UITests
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_2", "LocalPosition.Z", "0"})
 
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\JointData"}, 2000)
-                        ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"}, 500)
+                        ClickToolbarItem("AddAxisToolStripButton", True)
                         AddItemToChart("Structure_1\Body Plan\Root\Joint_2\Body_2")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 2\Body_2", "Name", "BodyX"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 2\BodyX", "DataTypeID", "WorldPositionX"})

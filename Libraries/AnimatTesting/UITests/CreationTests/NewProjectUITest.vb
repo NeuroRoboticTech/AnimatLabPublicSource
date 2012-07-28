@@ -15,23 +15,23 @@ Namespace UITests
             Inherits AnimatUITest
 
             <TestMethod()>
-            Public Sub TestCreateNewProject()
+            Public Sub Test_CreateNewProject()
 
                 'Start the application.
                 StartApplication("", m_iPort)
 
                 'Click the New Project button.
-                ExecuteMethod("ClickToolbarItem", New Object() {"NewToolStripButton"}, 500)
+                ClickToolbarItem("NewToolStripButton", False)
 
                 'Set params and hit ok button
                 ExecuteActiveDialogMethod("SetProjectParams", New Object() {"TestProject", m_strRootFolder & "\Libraries\AnimatTesting\TestProjects\CreationTests"})
                 ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, 2000)
 
                 'Click the add structure button.
-                ExecuteMethod("ClickToolbarItem", New Object() {"AddStructureToolStripButton"}, 1000)
+                ClickToolbarItem("AddStructureToolStripButton", True)
 
                 'Open the Structure_1 body plan editor window
-                ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan"}, 2000)
+                ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan"})
 
                 'Set simulation to automatically end at a specified time.
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation", "SetSimulationEnd", "True"})
@@ -67,15 +67,15 @@ Namespace UITests
                 CompareSimulation(m_strRootFolder & "\Libraries\AnimatTesting\TestData\CreationTests\NewProjectUITest\")
 
                 'Save the project
-                ExecuteMethod("ClickToolbarItem", New Object() {"SaveToolStripButton"}, 500)
+                ClickToolbarItem("SaveToolStripButton", True)
 
                 'Now verify that if we try and create a new project at the same location we get an error.
                 'Click the New Project button.
-                ExecuteMethod("ClickToolbarItem", New Object() {"NewToolStripButton"}, 500)
+                ClickToolbarItem("NewToolStripButton", False)
 
                 'Enter text and verify error. Verify the error.
                 ExecuteActiveDialogMethod("SetProjectParams", New Object() {"TestProject", m_strRootFolder & "\Libraries\AnimatTesting\TestProjects\CreationTests"})
-                ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+                ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, 200, True)
                 AssertErrorDialogShown(" already exists. Please choose a different name or location for the project.", enumErrorTextType.EndsWith)
 
             End Sub

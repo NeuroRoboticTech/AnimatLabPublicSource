@@ -777,7 +777,7 @@ Namespace Forms
                     Me.btnSimStart.ImageIndex = Util.Application.LargeImages.GetImageIndex("AnimatGUI.PlayLarge.gif")
                     Me.btnSimStop.Enabled = False
 
-                    Me.Cursor = System.Windows.Forms.Cursors.Default
+                    Util.Application.AppIsBusy = False
                     m_Timer.Enabled = False
                     Util.Application.StopSimulation()
                     MessageBox.Show(Util.Application.SimulationInterface.ErrorMessage, "Simulation Error", MessageBoxButtons.OK, MessageBoxIcon.Error)

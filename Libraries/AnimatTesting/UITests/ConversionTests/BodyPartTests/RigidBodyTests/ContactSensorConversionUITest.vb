@@ -122,7 +122,7 @@ Namespace UITests
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\CylinderContact\CS_CC", True})
                         DeleteSelectedParts("Delete Group", True)
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2"}, 2000)
-                        ExecuteMethod("ClickMenuItem", New Object() {"PasteInPlaceToolStripMenuItem"}, 500)
+                        ClickMenuItem("PasteInPlaceToolStripMenuItem", True)
 
 
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\BodyData"}, 2000)
@@ -202,7 +202,7 @@ Namespace UITests
 
                         'Click 'Add Part' button
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan"}, 2000)
-                        ExecuteMethod("ClickToolbarItem", New Object() {"AddPartToolStripButton"}, 2000)
+                        ClickToolbarItem("AddPartToolStripButton", True)
                         AutomatedClickToAddBody("Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0)
                         AssertErrorDialogShown("You cannot add children to a contact sensor class.", enumErrorTextType.Equals)
 

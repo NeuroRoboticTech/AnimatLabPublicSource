@@ -159,7 +159,7 @@ Namespace UITests
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\OdorSensor", False})
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", True})
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Mouth", True})
-                        ExecuteMethod("ClickMenuItem", New Object() {"CopyToolStripMenuItem"}, 500)
+                        ClickMenuItem("CopyToolStripMenuItem", True)
                         AssertErrorDialogShown("Only one body part can be selected to be copied at one time.", enumErrorTextType.Equals)
 
                         DeletePart("Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\OdorSensor", "Delete Body Part", True)
@@ -188,11 +188,11 @@ Namespace UITests
                         AddItemToChart("Organism_1\Body Plan\Root\Hinge1\Head\OdorSensor")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1\OdorSensor", "DataTypeID", "OdorValue"})
 
-                        ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"}, 500)
+                        ClickToolbarItem("AddAxisToolStripButton", True)
                         AddItemToChart("Organism_1\Body Plan\Root\Hinge1\Head\Mouth")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 5\Mouth", "DataTypeID", "EatingRate"})
 
-                        ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"}, 500)
+                        ClickToolbarItem("AddAxisToolStripButton", True)
                         AddItemToChart("Organism_1\Body Plan\Root\Hinge1\Head\Stomach")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 6\Stomach", "DataTypeID", "EnergyLevel"})
 

@@ -156,68 +156,117 @@ Namespace Framework
             End If
         End Sub
 
-        Protected Overridable Function ExecuteMethod(ByVal strMethodName As String, ByVal aryParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200) As Object
+        Protected Overridable Sub WaitWhileBusy(Optional ByVal bSkipWaiting As Boolean = False, Optional ByVal bErrorOk As Boolean = False)
+            If bSkipWaiting Then Return
+
+            Dim bInProgress As Boolean = DirectCast(GetApplicationProperty("AutomationMethodInProgress"), Boolean)
+            Dim bIsBusy As Boolean = DirectCast(GetApplicationProperty("AppIsBusy"), Boolean)
+            Dim iCount = 0
+
+            While bInProgress OrElse bIsBusy
+                Debug.WriteLine("Waiting on automation in progress. Count: " & iCount)
+                Threading.Thread.Sleep(20)
+                bInProgress = DirectCast(GetApplicationProperty("AutomationMethodInProgress"), Boolean)
+                bIsBusy = DirectCast(GetApplicationProperty("AppIsBusy"), Boolean)
+
+                If bInProgress OrElse bIsBusy Then
+                    Dim oVal As Object = GetApplicationProperty("ErrorDialogMessage")
+                    If Not oVal Is Nothing AndAlso CStr(oVal).Length > 0 Then
+                        If bErrorOk Then
+                            Return
+                        Else
+                            Throw New System.Exception("Error dialog open. Message: " & oVal.ToString)
+                        End If
+                    End If
+
+                    iCount = iCount + 1
+                    If iCount > 1000 Then
+                        Throw New System.Exception("Timed out waiting for an automation method in progress.")
+                    End If
+                End If
+            End While
+
+            Threading.Thread.Sleep(100)
+
+        End Sub
+
+        Protected Overridable Function ExecuteMethod(ByVal strMethodName As String, ByVal aryParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200, Optional ByVal bErrorOk As Boolean = False, Optional ByVal bSkipWaiting As Boolean = False) As Object
             Debug.WriteLine("Executing Method: '" & strMethodName & "', Params: '" & Util.ParamsToString(aryParams) & "', Wait: " & iWaitMilliseconds)
 
             Dim oRet As Object = m_oServer.ExecuteMethod(strMethodName, aryParams)
             Threading.Thread.Sleep(iWaitMilliseconds)
 
+            WaitWhileBusy(bSkipWaiting, bErrorOk)
+
             If Not oRet Is Nothing Then Debug.WriteLine("Return: " & oRet.ToString) Else Debug.WriteLine("Return: Nothing")
             Return oRet
         End Function
 
-        Protected Overridable Function ExecuteIndirectMethod(ByVal strMethodName As String, ByVal aryParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200) As Object
+        Protected Overridable Function ExecuteIndirectMethod(ByVal strMethodName As String, ByVal aryParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 20, Optional ByVal bErrorOk As Boolean = False, Optional ByVal bSkipWaiting As Boolean = False) As Object
             Debug.WriteLine("Executing Indirect Method: '" & strMethodName & "', Params: '" & Util.ParamsToString(aryParams) & "', Wait: " & iWaitMilliseconds)
 
             Dim oRet As Object = m_oServer.ExecuteIndirectMethod(strMethodName, aryParams)
             Threading.Thread.Sleep(iWaitMilliseconds)
 
             'Check to see if an error dialog is present. If it is then get the error name.
-            Dim strFormName As String = DirectCast(ExecuteDirectMethod("ActiveDialogName", Nothing), String)
+            Dim strFormName As String = DirectCast(ExecuteDirectMethod("ActiveDialogName", Nothing, 200, bErrorOk, bSkipWaiting), String)
             If strFormName = "Error" Then
                 Dim strError As String = CStr(GetApplicationProperty("ErrorDialogMessage"))
                 Throw New System.Exception(strError)
             End If
 
+            WaitWhileBusy(bSkipWaiting, bErrorOk)
+
             If Not oRet Is Nothing Then Debug.WriteLine("Return: " & oRet.ToString) Else Debug.WriteLine("Return: Nothing")
             Return oRet
         End Function
 
-        Public Overridable Function ExecuteIndirectMethodOnObject(ByVal strPath As String, ByVal strMethod As String, ByVal aryInnerParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200) As Object
+        Public Overridable Function ExecuteIndirectMethodOnObject(ByVal strPath As String, ByVal strMethod As String, ByVal aryInnerParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 20, Optional ByVal bErrorOk As Boolean = False, Optional ByVal bSkipWaiting As Boolean = False) As Object
             Debug.WriteLine("ExecuteIndirectMethodOnObject: Path: '" & strPath & ", Method: " & strMethod & ", Params: '" & Util.ParamsToString(aryInnerParams) & "', Wait: " & iWaitMilliseconds)
 
             Dim aryParams As Object() = New Object() {strPath, strMethod, aryInnerParams}
 
-            Return ExecuteDirectMethod("ExecuteIndirectMethodOnObject", aryParams)
+            Dim oRet As Object = ExecuteDirectMethod("ExecuteIndirectMethodOnObject", aryParams)
 
+            WaitWhileBusy(bSkipWaiting, bErrorOk)
+
+            Return oRet
         End Function
 
-        Public Overridable Function ExecuteAppPropertyMethod(ByVal strPropertyName As String, ByVal strMethodName As String, ByVal aryInnerParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200) As Object
+        Public Overridable Function ExecuteAppPropertyMethod(ByVal strPropertyName As String, ByVal strMethodName As String, ByVal aryInnerParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200, Optional ByVal bErrorOk As Boolean = False, Optional ByVal bSkipWaiting As Boolean = False) As Object
             Debug.WriteLine("ExecuteAppPropertyMethod: Path: '" & strPropertyName & ", Method: " & strMethodName & ", Params: '" & Util.ParamsToString(aryInnerParams) & "', Wait: " & iWaitMilliseconds)
 
             Dim aryParams As Object() = New Object() {strPropertyName, strMethodName, aryInnerParams}
 
-            Return ExecuteDirectMethod("ExecuteAppPropertyMethod", aryParams)
+            Dim oRet As Object = ExecuteDirectMethod("ExecuteAppPropertyMethod", aryParams)
 
+            WaitWhileBusy(bSkipWaiting, bErrorOk)
+
+            Return oRet
         End Function
 
-        Public Overridable Function ExecuteIndirectAppPropertyMethod(ByVal strPropertyName As String, ByVal strMethodName As String, ByVal aryInnerParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200) As Object
+        Public Overridable Function ExecuteIndirectAppPropertyMethod(ByVal strPropertyName As String, ByVal strMethodName As String, ByVal aryInnerParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 20, Optional ByVal bErrorOk As Boolean = False, Optional ByVal bSkipWaiting As Boolean = False) As Object
             Debug.WriteLine("ExecuteIndirectAppPropertyMethod: Path: '" & strPropertyName & ", Method: " & strMethodName & ", Params: '" & Util.ParamsToString(aryInnerParams) & "', Wait: " & iWaitMilliseconds)
 
             Dim aryParams As Object() = New Object() {strPropertyName, strMethodName, aryInnerParams}
 
-            Return ExecuteDirectMethod("ExecuteIndirectAppPropertyMethod", aryParams)
+            Dim oRet As Object = ExecuteDirectMethod("ExecuteIndirectAppPropertyMethod", aryParams)
 
+            WaitWhileBusy(bSkipWaiting, bErrorOk)
+
+            Return oRet
         End Function
 
         Protected Overridable Sub ExecuteMethodAssertError(ByVal strMethodName As String, ByVal aryParams() As Object, ByVal strErrorText As String, _
                                                            Optional ByVal eErrorTextType As enumErrorTextType = enumErrorTextType.EndsWith, _
-                                                           Optional ByVal iWaitMilliseconds As Integer = 200)
+                                                           Optional ByVal iWaitMilliseconds As Integer = 20)
 
             Try
                 Debug.WriteLine("ExecuteMethodAssertError Method: '" & strMethodName & "', Params: '" & Util.ParamsToString(aryParams) & "', Wait: " & iWaitMilliseconds & ", ErrorText: '" & strErrorText & "', ErrorTextType: '" & eErrorTextType.ToString & "'")
 
+
                 Dim oRet As Object = m_oServer.ExecuteIndirectMethod(strMethodName, aryParams)
+
                 AssertErrorDialogShown(strErrorText, eErrorTextType)
 
             Catch ex As System.Exception
@@ -259,7 +308,7 @@ Namespace Framework
 
                 Threading.Thread.Sleep(1000)
 
-                Dim strFormName As String = DirectCast(ExecuteDirectMethod("ActiveDialogName", Nothing), String)
+                Dim strFormName As String = DirectCast(ExecuteDirectMethod("ActiveDialogName", Nothing, , True, True), String)
                 If strFormName = strDlgName Then
                     bDlgUp = True
                     Debug.WriteLine("Opened '" & strDlgName & "'")
@@ -331,31 +380,37 @@ Namespace Framework
         End Sub
 
 
-        Protected Overridable Function ExecuteDirectMethod(ByVal strMethodName As String, ByVal aryParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200) As Object
+        Protected Overridable Function ExecuteDirectMethod(ByVal strMethodName As String, ByVal aryParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200, Optional ByVal bErrorOk As Boolean = False, Optional ByVal bSkipWaiting As Boolean = False) As Object
             Debug.WriteLine("Executing Direct Method: '" & strMethodName & "', Params: '" & Util.ParamsToString(aryParams) & "', Wait: " & iWaitMilliseconds)
 
             Dim oRet As Object = m_oServer.ExecuteDirectMethod(strMethodName, aryParams)
             Threading.Thread.Sleep(iWaitMilliseconds)
 
+            WaitWhileBusy(bSkipWaiting, bErrorOk)
+
             If Not oRet Is Nothing Then Debug.WriteLine("Return: " & oRet.ToString) Else Debug.WriteLine("Return: Nothing")
             Return oRet
         End Function
 
-        Protected Overridable Function ExecuteActiveDialogMethod(ByVal strMethodName As String, ByVal aryParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200) As Object
+        Protected Overridable Function ExecuteActiveDialogMethod(ByVal strMethodName As String, ByVal aryParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200, Optional ByVal bErrorOk As Boolean = False, Optional ByVal bSkipWaiting As Boolean = False) As Object
             Debug.WriteLine("ExecuteActiveDialogMethod Method: '" & strMethodName & "', Params: '" & Util.ParamsToString(aryParams) & "', Wait: " & iWaitMilliseconds)
 
             Dim oRet As Object = m_oServer.ExecuteDirectMethod("ExecuteActiveDialogMethod", New Object() {strMethodName, aryParams})
             Threading.Thread.Sleep(iWaitMilliseconds)
 
+            WaitWhileBusy(bSkipWaiting, bErrorOk)
+
             If Not oRet Is Nothing Then Debug.WriteLine("Return: " & oRet.ToString) Else Debug.WriteLine("Return: Nothing")
             Return oRet
         End Function
 
-        Protected Overridable Function ExecuteIndirectActiveDialogMethod(ByVal strMethodName As String, ByVal aryParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200) As Object
+        Protected Overridable Function ExecuteIndirectActiveDialogMethod(ByVal strMethodName As String, ByVal aryParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200, Optional ByVal bErrorOk As Boolean = False, Optional ByVal bSkipWaiting As Boolean = False) As Object
             Debug.WriteLine("ExecuteActiveDialogMethod Method: '" & strMethodName & "', Params: '" & Util.ParamsToString(aryParams) & "', Wait: " & iWaitMilliseconds)
 
             Dim oRet As Object = m_oServer.ExecuteDirectMethod("ExecuteIndirecActiveDialogtMethod", New Object() {strMethodName, aryParams})
             Threading.Thread.Sleep(iWaitMilliseconds)
+
+            WaitWhileBusy(bSkipWaiting, bErrorOk)
 
             If Not oRet Is Nothing Then Debug.WriteLine("Return: " & oRet.ToString) Else Debug.WriteLine("Return: Nothing")
             Return oRet
@@ -441,6 +496,23 @@ Namespace Framework
             End If
         End Sub
 
+        Public Overridable Sub ClickMenuItem(ByVal strItemName As String, ByVal bReturnImmediate As Boolean, Optional ByVal iWaitMilliseconds As Integer = 20, Optional ByVal bErrorOk As Boolean = False, Optional ByVal bSkipWaiting As Boolean = False)
+            Debug.WriteLine("ClickMenuItem. Menu Item Name: " & strItemName & ", bReturnImmediate: " & bReturnImmediate)
+
+            ExecuteMethod("ClickMenuItem", New Object() {strItemName, bReturnImmediate}, iWaitMilliseconds)
+
+            WaitWhileBusy(bSkipWaiting, bErrorOk)
+
+        End Sub
+
+        Public Overridable Overloads Sub ClickToolbarItem(ByVal strItemName As String, ByVal bReturnImmediate As Boolean, Optional ByVal iWaitMilliseconds As Integer = 20, Optional ByVal bErrorOk As Boolean = False, Optional ByVal bSkipWaiting As Boolean = False)
+            Debug.WriteLine("ClickToolbarItem. Toolbar Item Name: " & strItemName & ", bReturnImmediate: " & bReturnImmediate)
+
+            ExecuteMethod("ClickToolbarItem", New Object() {strItemName, bReturnImmediate}, iWaitMilliseconds)
+
+            WaitWhileBusy(bSkipWaiting, bErrorOk)
+
+        End Sub
 #End Region
 
 

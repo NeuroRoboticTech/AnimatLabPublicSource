@@ -96,7 +96,7 @@ Namespace UITests
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Structures\Structure_1\Body Plan\Root\Joint_1\Body_2\Joint_2\Body_3", "LocalPosition.Z", "0"})
 
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\JointData"}, 2000)
-                        ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"}, 500)
+                        ClickToolbarItem("AddAxisToolStripButton", True)
                         AddItemToChart("Structure_1\Body Plan\Root\Joint_1\Body_2\Joint_2\Body_3")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 3\Body_3", "Name", "Body_3X"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 3\Body_3X", "DataTypeID", "WorldPositionX"})
@@ -106,7 +106,7 @@ Namespace UITests
                         AddItemToChart("Structure_1\Body Plan\Root\Joint_1\Body_2\Joint_2\Body_3")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 3\Body_3", "Name", "Body_3Z"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 3\Body_3Z", "DataTypeID", "WorldPositionZ"})
-                        ExecuteMethod("ClickToolbarItem", New Object() {"AddAxisToolStripButton"}, 500)
+                        ClickToolbarItem("AddAxisToolStripButton", True)
                         AddItemToChart("Structure_1\Body Plan\Root\Joint_1\Body_2\Joint_2\Body_3\Joint_3\Body_4")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 4\Body_4", "Name", "Body_4X"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\JointData\LineChart\Y Axis 4\Body_4X", "DataTypeID", "WorldPositionX"})

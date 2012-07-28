@@ -18,7 +18,7 @@ Namespace Forms.BodyPlan
 
         Private Sub btnMeshFileDlg_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnMeshFileDlg.Click
             Try
-                Util.Application.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                Util.Application.AppIsBusy = True
 
                 'Office Files|*.doc;*.xls;*.ppt
                 Dim openFileDialog As New OpenFileDialog
@@ -42,13 +42,13 @@ Namespace Forms.BodyPlan
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
-                Util.Application.Cursor = System.Windows.Forms.Cursors.Arrow
+                Util.Application.AppIsBusy = False
             End Try
         End Sub
 
         Private Sub btnTextureFileDlg_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnTextureFileDlg.Click
             Try
-                Util.Application.Cursor = System.Windows.Forms.Cursors.WaitCursor
+                Util.Application.AppIsBusy = True
 
                 'Office Files|*.doc;*.xls;*.ppt
                 Dim openFileDialog As New OpenFileDialog
@@ -72,7 +72,7 @@ Namespace Forms.BodyPlan
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
-                Util.Application.Cursor = System.Windows.Forms.Cursors.Arrow
+                Util.Application.AppIsBusy = False
             End Try
         End Sub
 
