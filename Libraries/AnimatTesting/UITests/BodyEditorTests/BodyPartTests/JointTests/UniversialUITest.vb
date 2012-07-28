@@ -29,7 +29,7 @@ Namespace UITests
 #Region "Methods"
 
                     <TestMethod()>
-                    Public Sub TestUniversal()
+                    Public Sub Test_Universal()
                         TestJoint()
                     End Sub
 

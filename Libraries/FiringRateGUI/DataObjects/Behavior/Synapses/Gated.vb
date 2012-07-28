@@ -173,7 +173,7 @@ Namespace DataObjects.Behavior.Synapses
                 Dim strName As String = ""
                 If Not Me.Origin Is Nothing Then
                     Dim strGated As String = ""
-                    If Not GatedSynapse Is Nothing Then
+                    If Not GatedSynapse Is Nothing AndAlso Not GatedSynapse.Link Is Nothing Then
                         strGated = GatedSynapse.Link.ItemName
                     End If
                     If Me.Text.Trim.Length = 0 Then

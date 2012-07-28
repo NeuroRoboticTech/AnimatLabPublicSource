@@ -29,7 +29,7 @@ Namespace UITests
 #Region "Methods"
 
                     <TestMethod()>
-                    Public Sub TestBallSocket()
+                    Public Sub Test_BallSocket()
                         TestJoint()
                     End Sub
 

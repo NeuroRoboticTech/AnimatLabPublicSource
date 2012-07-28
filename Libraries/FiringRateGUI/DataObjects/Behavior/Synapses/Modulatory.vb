@@ -158,7 +158,7 @@ Namespace DataObjects.Behavior.Synapses
                 Dim strName As String = ""
                 If Not Me.Origin Is Nothing Then
                     Dim strModulated As String = ""
-                    If Not ModulatedSynapse Is Nothing Then
+                    If Not ModulatedSynapse Is Nothing AndAlso Not ModulatedSynapse.Link Is Nothing Then
                         strModulated = ModulatedSynapse.Link.ItemName
                     End If
                     If Me.Text.Trim.Length = 0 Then

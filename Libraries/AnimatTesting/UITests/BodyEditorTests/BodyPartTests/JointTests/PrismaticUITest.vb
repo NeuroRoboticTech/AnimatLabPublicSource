@@ -19,7 +19,7 @@ Namespace UITests
 #Region "Methods"
 
                     <TestMethod()>
-                    Public Sub TestPrismatic()
+                    Public Sub Test_Prismatic()
                         TestJoint()
                     End Sub
 

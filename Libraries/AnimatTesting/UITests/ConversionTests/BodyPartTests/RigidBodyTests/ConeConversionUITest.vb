@@ -47,7 +47,7 @@ Namespace UITests
                                "ConeTestData", _
                                DataAccessMethod.Sequential), _
                     DeploymentItem("TestCases.accdb")>
-                    Public Sub Test_Cone()
+                    Public Sub Test_ConeConversion()
                         m_strProjectName = TestContext.DataRow("TestName").ToString
 
                         Dim aryMaxErrors As New Hashtable

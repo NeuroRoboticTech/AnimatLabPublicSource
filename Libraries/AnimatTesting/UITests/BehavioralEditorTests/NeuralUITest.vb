@@ -103,12 +103,11 @@ Namespace UITests
                           "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem, _
                           "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking", New Point(200, 100), "B")
 
-                'TODO why is this dying?
-                'AddBehavioralLink("Simulation\Environment\" & m_strStructureGroup & _
-                '          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\A", _
-                '           "Simulation\Environment\" & m_strStructureGroup & _
-                '          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\B", "2", _
-                '          "Synapses Classes\Non-Spiking Chemical Synapses\Hyperpolarising IPSP", True, True)
+                AddBehavioralLink("Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\A", _
+                           "Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\B", "2", _
+                          "Synapses Classes\Non-Spiking Chemical Synapses\Hyperpolarising IPSP", True, True)
 
                 AddBehavioralLink("Simulation\Environment\" & m_strStructureGroup & _
                           "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\A", _
@@ -135,28 +134,44 @@ Namespace UITests
                           "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\C", _
                            "Simulation\Environment\" & m_strStructureGroup & _
                           "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\D", "2", _
-                          "Synapses Classes\Spiking Chemical Synapses\Nicotinic ACh", True)
+                          "Synapses Classes\Spiking Chemical Synapses\NMDA type", True)
+
+                If Math.Abs(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\D\C (2)", "SynapticConductance.ActualValue"), Double) - 0.0000001) > 0.000001 Then
+                    Throw New System.Exception("Incorrect synaptic conductance for spiking synapse.")
+                End If
 
                 AddBehavioralLink("Simulation\Environment\" & m_strStructureGroup & _
                           "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\C", _
                            "Simulation\Environment\" & m_strStructureGroup & _
-                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\D", "2", _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\D", "3", _
                           "Synapses Classes\Non-Spiking Chemical Synapses\Hyperpolarising IPSP", True)
 
                 AddBehavioralLink("Simulation\Environment\" & m_strStructureGroup & _
                           "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\D", _
                            "Simulation\Environment\" & m_strStructureGroup & _
-                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\C", "3", _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\C", "4", _
                           "Synapses Classes\Electrical Synapses\Rectifying Synapse", True)
 
 
                 AddBehavioralNode("Simulation\Environment\" & m_strStructureGroup & _
                           "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem, _
-                          "FiringRateGUI.DataObjects.Behavior.Neurons.Normal", New Point(100, 300), "A1")
+                          "FiringRateGUI.DataObjects.Behavior.Neurons.Bistable", New Point(100, 200), "A1")
 
                 AddBehavioralNode("Simulation\Environment\" & m_strStructureGroup & _
                           "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem, _
-                          "FiringRateGUI.DataObjects.Behavior.Neurons.Pacemaker", New Point(200, 400), "B1")
+                          "FiringRateGUI.DataObjects.Behavior.Neurons.Normal", New Point(200, 200), "B1")
+
+                AddBehavioralNode("Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem, _
+                          "FiringRateGUI.DataObjects.Behavior.Neurons.Pacemaker", New Point(300, 200), "C1")
+
+                AddBehavioralNode("Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem, _
+                          "FiringRateGUI.DataObjects.Behavior.Neurons.Random", New Point(400, 200), "D1")
+
+                AddBehavioralNode("Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem, _
+                          "FiringRateGUI.DataObjects.Behavior.Neurons.Tonic", New Point(500, 200), "E1")
 
                 AddBehavioralLink("Simulation\Environment\" & m_strStructureGroup & _
                           "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\A1", _
@@ -165,18 +180,30 @@ Namespace UITests
                           "Normal Synapse", False)
 
                 AddBehavioralLink("Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\C1", _
+                           "Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\B1", "4", _
+                          "Gated Synapse", False)
+
+                AddBehavioralLink("Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\D1", _
+                           "Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\B1", "5", _
+                          "Modulatory Synapse", False)
+
+                AddBehavioralLink("Simulation\Environment\" & m_strStructureGroup & _
                           "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\A", _
                            "Simulation\Environment\" & m_strStructureGroup & _
-                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\A1", "4", _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\A1", "6", _
                           "", False)
 
                 AddBehavioralNode("Simulation\Environment\" & m_strStructureGroup & _
                           "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem, _
-                          "AnimatGUI.DataObjects.Behavior.Nodes.OffPage", New Point(400, 400), "OP")
+                          "AnimatGUI.DataObjects.Behavior.Nodes.OffPage", New Point(100, 300), "OP")
 
                 AddBehavioralNode("Simulation\Environment\" & m_strStructureGroup & _
                           "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem, _
-                          "AnimatGUI.DataObjects.Behavior.Nodes.Joint", New Point(500, 400), "HJ")
+                          "AnimatGUI.DataObjects.Behavior.Nodes.Joint", New Point(200, 300), "HJ")
 
                 ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & _
                           "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\OP", _
@@ -196,9 +223,50 @@ Namespace UITests
                            "Simulation\Environment\" & m_strStructureGroup & _
                            "\" & m_strStruct1Name & "\Body Plan\Root\Joint_1"})
 
+                ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & _
+                           "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\OP", _
+                           "Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\A"})
 
-                ''Create the chart for the test armature
-                'CreateArmatureChart(False)
+                AddBehavioralLink("Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\HJ", _
+                           "Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\C", "7", _
+                          "", False)
+
+                AddBehavioralLink("Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\C", _
+                           "Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\HJ", "8", _
+                          "", False)
+
+                AddBehavioralLink("Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\OP", _
+                           "Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\A1", "9", _
+                          "", False)
+
+                AddBehavioralLink("Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\A1", _
+                           "Simulation\Environment\" & m_strStructureGroup & _
+                          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\OP", "10", _
+                          "", False)
+
+                'Add subsystem.
+                AddBehavioralNode("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem", _
+                                  "AnimatGUI.DataObjects.Behavior.Nodes.Subsystem", New Point(300, 300), "S2")
+
+                ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem"}, 2000)
+                ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\C", False})
+                ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\D", True})
+                ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\D\C (2)", True})
+                ClickMenuItem("CopyToolStripMenuItem", True)
+                ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2"}, 2000)
+                ClickMenuItem("PasteInPlaceToolStripMenuItem", True)
+
+                If Math.Abs(DirectCast(GetSimObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\D\C (2)", "SynapticConductance.ActualValue"), Double) - 0.0000001) > 0.000001 Then
+                    Throw New System.Exception("Incorrect synaptic conductance for copied spiking synapse.")
+                End If
 
 
             End Sub

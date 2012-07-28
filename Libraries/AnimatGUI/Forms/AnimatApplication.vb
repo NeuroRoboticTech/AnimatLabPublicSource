@@ -4534,7 +4534,10 @@ Namespace Forms
                 End If
 
                 Dim bnNode As DataObjects.Behavior.Node = bnSubsystem.SubsystemDiagram.Automation_DropNode(m_bnAutomationNodeOrigin, m_ptAutomationPosition)
-                bnNode.Name = m_strAutomationName
+
+                If Not bnNode Is Nothing Then
+                    bnNode.Name = m_strAutomationName
+                End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -4617,7 +4620,10 @@ Namespace Forms
                 End If
 
                 Dim blLink As DataObjects.Behavior.Link = m_bnAutomationNodeDestination.ParentDiagram.Automation_DrawLink(m_bnAutomationNodeOrigin, m_bnAutomationNodeDestination)
-                blLink.Text = m_strAutomationName
+
+                If Not blLink Is Nothing Then
+                    blLink.Text = m_strAutomationName
+                End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -5215,8 +5221,6 @@ Namespace Forms
                 frmNewProject.txtProjectName.Text = "NewProject"
                 If frmNewProject.ShowDialog = DialogResult.OK Then
                     Me.AppIsBusy = True
-
-                    Threading.Thread.Sleep(1000)
 
                     Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "User hit ok on new project dialog. Creating sim object.")
 

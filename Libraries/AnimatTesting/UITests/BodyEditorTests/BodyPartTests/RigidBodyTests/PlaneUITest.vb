@@ -29,7 +29,7 @@ Namespace UITests
 #Region "Methods"
 
                     <TestMethod()>
-                    Public Sub TestPlane()
+                    Public Sub Test_Plane()
                         TestPart()
                     End Sub
 

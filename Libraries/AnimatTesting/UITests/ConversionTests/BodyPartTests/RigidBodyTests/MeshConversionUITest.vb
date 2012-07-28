@@ -48,7 +48,7 @@ Namespace UITests
                                "MeshTestData", _
                                DataAccessMethod.Sequential), _
                     DeploymentItem("TestCases.accdb")>
-                    Public Sub Test_Mesh()
+                    Public Sub Test_MeshConversion()
                         m_strProjectName = TestContext.DataRow("TestName").ToString
                         Dim strBlock1X As String = TestContext.DataRow("Block1X").ToString
                         Dim strBlock1Y As String = TestContext.DataRow("Block1Y").ToString

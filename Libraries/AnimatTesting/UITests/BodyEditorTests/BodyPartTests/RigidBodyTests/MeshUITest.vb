@@ -20,7 +20,7 @@ Namespace UITests
 #Region "Methods"
 
                     <TestMethod()>
-                    Public Sub TestMesh()
+                    Public Sub Test_Mesh()
                         TestPart()
                     End Sub
 

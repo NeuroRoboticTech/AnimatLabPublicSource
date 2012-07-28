@@ -19,7 +19,7 @@ Namespace UITests
 #Region "Methods"
 
                     <TestMethod()>
-                    Public Sub TestHinge()
+                    Public Sub Test_Hinge()
                         TestJoint()
                     End Sub
 

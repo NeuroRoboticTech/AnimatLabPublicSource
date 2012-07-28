@@ -58,7 +58,7 @@ Namespace UITests
 #Region "Methods"
 
                     <TestMethod()>
-                    Public Sub TestFluidPlane()
+                    Public Sub Test_FluidPlane()
 
                         StartNewProject()
                         CreateAndTestRoot()

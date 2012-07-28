@@ -19,7 +19,7 @@ Namespace UITests
 #Region "Methods"
 
                     <TestMethod()>
-                    Public Sub TestSphere()
+                    Public Sub Test_Sphere()
                         TestPart()
                     End Sub
 

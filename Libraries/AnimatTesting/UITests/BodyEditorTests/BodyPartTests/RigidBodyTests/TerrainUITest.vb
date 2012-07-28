@@ -35,7 +35,7 @@ Namespace UITests
 #Region "Methods"
 
                     <TestMethod()>
-                    Public Sub TestTerrain()
+                    Public Sub Test_Terrain()
                         TestPart()
                     End Sub
 

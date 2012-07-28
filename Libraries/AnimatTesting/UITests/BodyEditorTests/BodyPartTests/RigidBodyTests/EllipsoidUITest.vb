@@ -19,7 +19,7 @@ Namespace UITests
 #Region "Methods"
 
                     <TestMethod()>
-                    Public Sub TestEllipsoid()
+                    Public Sub Test_Ellipsoid()
                         TestPart()
                     End Sub
 

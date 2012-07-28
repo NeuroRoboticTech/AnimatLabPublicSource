@@ -1456,6 +1456,8 @@ Namespace Framework
 
             ExecuteMethod("AddBehavioralLink", New Object() {strOrigin, strDestination, strName}, 2000, bErrorOk, True)
 
+            Threading.Thread.Sleep(200)
+
             If strSynapseType.Length > 0 Then
                 If bInTree Then
                     ExecuteActiveDialogMethod("SelectItemInTreeView", New Object() {strSynapseType}, 2000, bErrorOk, True)
