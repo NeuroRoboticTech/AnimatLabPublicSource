@@ -1285,15 +1285,15 @@ Namespace Framework
 
         End Sub
 
-        Protected Overridable Sub DeletePart(ByVal strPath As String, ByVal strDlgName As String, Optional ByVal bCut As Boolean = False)
+        Protected Overridable Sub DeletePart(ByVal strPath As String, ByVal strDlgName As String, Optional ByVal bCut As Boolean = False, Optional ByVal bWaitMilliseconds As Integer = 200)
             Debug.WriteLine("DeletePart. Path: '" & strPath & "', DlgName: " & strDlgName & ", Cut: " & bCut)
 
             ExecuteMethod("SelectWorkspaceItem", New Object() {strPath, False})
 
-            DeleteSelectedParts(strDlgName, bCut)
+            DeleteSelectedParts(strDlgName, bCut, bWaitMilliseconds)
         End Sub
 
-        Protected Overridable Sub DeleteSelectedParts(ByVal strDlgName As String, Optional ByVal bCut As Boolean = False)
+        Protected Overridable Sub DeleteSelectedParts(ByVal strDlgName As String, Optional ByVal bCut As Boolean = False, Optional ByVal bWaitMilliseconds As Integer = 200)
             Debug.WriteLine("DeleteSelectedParts. DlgName: " & strDlgName & ", Cut: " & bCut)
 
             If bCut Then
@@ -1304,6 +1304,8 @@ Namespace Framework
 
             OpenDialogAndWait(strDlgName, Nothing, Nothing)
             ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+
+            Threading.Thread.Sleep(bWaitMilliseconds)
         End Sub
 
         ' '''<summary>
