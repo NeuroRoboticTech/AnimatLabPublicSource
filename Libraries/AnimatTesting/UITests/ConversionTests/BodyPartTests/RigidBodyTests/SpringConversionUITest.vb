@@ -125,7 +125,7 @@ Namespace UITests
 
                         ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring", "AttachmentPoints"}, 500)
                         ExecuteActiveDialogMethod("Automation_AddAttachment", New Object() {"RightAttach2"})
-                        ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
+                        ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, , True, True)
                         AssertErrorDialogShown("Only 2 are allowed for this part type. Please reduce the number of attachments to this number.", enumErrorTextType.Equals)
                         ExecuteActiveDialogMethod("Automation_RemoveAttachment", New Object() {"RightAttach"})
                         ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
@@ -211,7 +211,7 @@ Namespace UITests
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem"}, 2000)
 
                         AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A", _
-                                          "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B", "", "", False)
+                                          "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B", "", "", False, , True)
                         AssertErrorDialogShown("You must specify a linked body part before you can add an adapter to this node.", enumErrorTextType.Equals)
 
                         ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B", _

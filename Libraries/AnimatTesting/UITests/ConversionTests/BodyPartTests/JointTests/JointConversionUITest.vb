@@ -123,7 +123,7 @@ Namespace UITests
                                           "AnimatGUI.DataObjects.Behavior.Nodes.Joint", New Point(228, 250), "Joint2")
 
                         AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\C", _
-                                          "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Joint2", "", "", False)
+                                          "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Joint2", "", "", False, , True)
                         AssertErrorDialogShown("You must specify a linked body part before you can add an adapter to this node.", enumErrorTextType.Equals)
 
                         ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Joint2", _
