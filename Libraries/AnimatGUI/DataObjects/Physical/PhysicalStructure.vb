@@ -550,7 +550,11 @@ Namespace DataObjects.Physical
             frmDataItem.ImageManager.AddImage(myAssembly, "AnimatGUI.DefaultLink.gif")
 
             Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(Me.Name)
-            frmDataItem.TreeView.Nodes.Add(tnNode)
+            If tnParent Is Nothing Then
+                frmDataItem.TreeView.Nodes.Add(tnNode)
+            Else
+                tnParent.Nodes.Add(tnNode)
+            End If
             tnNode.ImageIndex = frmDataItem.ImageManager.GetImageIndex(Me.WorkspaceImageName)
             tnNode.SelectedImageIndex = frmDataItem.ImageManager.GetImageIndex(Me.WorkspaceImageName)
             tnNode.Tag = Me

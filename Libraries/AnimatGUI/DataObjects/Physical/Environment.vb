@@ -125,6 +125,13 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property AllowTreeviewNameEdit() As Boolean
+            Get
+                Return False
+            End Get
+        End Property
+
 #End Region
 
         Public Property PhysicsTimeStep() As ScaledNumber
@@ -995,40 +1002,40 @@ Namespace DataObjects.Physical
                                         "Mouse Spring Settings", "Sets the damping of the spring used when applying forces using the mouse during a simulation.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Calc Sim Params", Me.CalculateCriticalSimulationParams.GetType(), "CalculateCriticalSimulationParams", _
-                                        "World Stability", "Determines if the critical simulation params are automatically calculated or are specified manually.", Me.CalculateCriticalSimulationParams))
+            'propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Calc Sim Params", Me.CalculateCriticalSimulationParams.GetType(), "CalculateCriticalSimulationParams", _
+            '                            "World Stability", "Determines if the critical simulation params are automatically calculated or are specified manually.", Me.CalculateCriticalSimulationParams))
 
-            pbNumberBag = m_snLinearCompliance.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Linear Compliance", pbNumberBag.GetType(), "LinearCompliance", _
-                                        "World Stability", "The compliance value of the spring used in linear collisions within the simulator.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            'pbNumberBag = m_snLinearCompliance.Properties
+            'propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Linear Compliance", pbNumberBag.GetType(), "LinearCompliance", _
+            '                            "World Stability", "The compliance value of the spring used in linear collisions within the simulator.", pbNumberBag, _
+            '                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            pbNumberBag = m_snAngularCompliance.Properties
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Angular Compliance", pbNumberBag.GetType(), "AngularCompliance", _
-                                        "World Stability", "The compliance value of the spring used in angular collisions within the simulator.", pbNumberBag, _
-                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            'pbNumberBag = m_snAngularCompliance.Properties
+            'propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Angular Compliance", pbNumberBag.GetType(), "AngularCompliance", _
+            '                            "World Stability", "The compliance value of the spring used in angular collisions within the simulator.", pbNumberBag, _
+            '                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-            If Not m_bCalcCriticalSimParams Then
-                pbNumberBag = m_snLinearDamping.Properties
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Linear Damping", pbNumberBag.GetType(), "LinearDamping", _
-                                            "World Stability", "The damping value of the spring used in linear collisions within the simulator.", pbNumberBag, _
-                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            'If Not m_bCalcCriticalSimParams Then
+            '    pbNumberBag = m_snLinearDamping.Properties
+            '    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Linear Damping", pbNumberBag.GetType(), "LinearDamping", _
+            '                                "World Stability", "The damping value of the spring used in linear collisions within the simulator.", pbNumberBag, _
+            '                                "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-                pbNumberBag = m_snLinearKineticLoss.Properties
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Linear Kinetic Loss", pbNumberBag.GetType(), "LinearKineticLoss", _
-                                            "World Stability", "The amount of kinetic loss for linear collisions within the simulator.", pbNumberBag, _
-                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            '    pbNumberBag = m_snLinearKineticLoss.Properties
+            '    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Linear Kinetic Loss", pbNumberBag.GetType(), "LinearKineticLoss", _
+            '                                "World Stability", "The amount of kinetic loss for linear collisions within the simulator.", pbNumberBag, _
+            '                                "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-                pbNumberBag = m_snAngularDamping.Properties
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Angular Damping", pbNumberBag.GetType(), "AngularDamping", _
-                                            "World Stability", "The damping value of the spring used in angular collisions within the simulator.", pbNumberBag, _
-                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            '    pbNumberBag = m_snAngularDamping.Properties
+            '    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Angular Damping", pbNumberBag.GetType(), "AngularDamping", _
+            '                                "World Stability", "The damping value of the spring used in angular collisions within the simulator.", pbNumberBag, _
+            '                                "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
 
-                pbNumberBag = m_snAngularKineticLoss.Properties
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Angular Kinetic Loss", pbNumberBag.GetType(), "AngularKineticLoss", _
-                                            "World Stability", "The amount of kinetic loss for angular collisions within the simulator.", pbNumberBag, _
-                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
-            End If
+            '    pbNumberBag = m_snAngularKineticLoss.Properties
+            '    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Angular Kinetic Loss", pbNumberBag.GetType(), "AngularKineticLoss", _
+            '                                "World Stability", "The amount of kinetic loss for angular collisions within the simulator.", pbNumberBag, _
+            '                                "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            'End If
 
         End Sub
 

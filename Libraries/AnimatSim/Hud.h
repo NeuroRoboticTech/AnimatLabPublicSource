@@ -21,6 +21,7 @@ namespace AnimatSim
 		virtual ~Hud();
 
 		virtual void Reset();
+		virtual void ResetSimulation();
 		virtual void Initialize() = 0;
 		virtual void Update();
 

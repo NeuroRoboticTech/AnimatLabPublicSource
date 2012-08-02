@@ -68,11 +68,13 @@ Namespace UITests
 
                 Threading.Thread.Sleep(3000)
 
-                'Run the simulation and wait for it to end.
-                RunSimulationWaitToEnd()
+                If strDataPrefix.Length > 0 Then
+                    'Run the simulation and wait for it to end.
+                    RunSimulationWaitToEnd()
 
-                'Compare chart data to verify simulation results.
-                CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, strDataPrefix, iMaxRows, aryIgnoreRows)
+                    'Compare chart data to verify simulation results.
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, strDataPrefix, iMaxRows, aryIgnoreRows)
+                End If
 
             End Sub
 
@@ -97,6 +99,8 @@ Namespace UITests
                 ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, , , True)
 
                 WaitForProjectToOpen()
+
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation", "PlaybackControlMode", "FastestPossible"})
             End Sub
 
             Protected Overridable Sub CleanupConversionProjectDirectory()

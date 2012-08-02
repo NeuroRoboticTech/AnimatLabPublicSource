@@ -3114,9 +3114,12 @@ unsigned long STD_UTILS_PORT Std_GreyCodeToBinary(unsigned long lVal)
 **/
 unsigned long STD_UTILS_PORT Std_GetTick()
 	{
+		/*
 	  struct _timeb stTime;
 		_ftime( &stTime );
 		return ((stTime.time*1000)+ stTime.millitm);
+		*/
+		return  GetTickCount64();
 	}
 
 #endif 

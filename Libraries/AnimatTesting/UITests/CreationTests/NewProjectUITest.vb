@@ -49,7 +49,7 @@ Namespace UITests
                 ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1", False})
 
                 'Add root to chart
-                AddItemToChart(m_strStruct1Name & "\Body Plan\Root")
+                AddItemToChart("Simulation\" & m_strStruct1Name & "\Body Plan\Root")
 
                 'Set the name of the data chart item to root_y.
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root", "Name", "Root_Y"})

@@ -221,16 +221,18 @@ Namespace Forms.Tools
             tvStructures.ImageList = m_imgManager.ImageList
             Me.ImageManager.ImageList.ImageSize = New Size(16, 16)
 
+            Dim oSimNode As Crownwood.DotNetMagic.Controls.Node = Util.Simulation.CreateDataItemTreeView(Me, Nothing, m_tpPartTemplate)
+
             If m_doSelectedStructure Is Nothing Then
                 Dim doStruct As DataObjects.Physical.PhysicalStructure
                 For Each deEntry As DictionaryEntry In Util.Environment.Structures
                     doStruct = DirectCast(deEntry.Value, DataObjects.Physical.PhysicalStructure)
-                    doStruct.CreateDataItemTreeView(Me, Nothing, m_tpPartTemplate)
+                    doStruct.CreateDataItemTreeView(Me, oSimNode, m_tpPartTemplate)
                 Next
 
                 For Each deEntry As DictionaryEntry In Util.Environment.Organisms
                     doStruct = DirectCast(deEntry.Value, DataObjects.Physical.PhysicalStructure)
-                    doStruct.CreateDataItemTreeView(Me, Nothing, m_tpPartTemplate)
+                    doStruct.CreateDataItemTreeView(Me, oSimNode, m_tpPartTemplate)
                 Next
 
                 Dim doStim As DataObjects.ExternalStimuli.Stimulus
@@ -238,7 +240,7 @@ Namespace Forms.Tools
                     doStim = DirectCast(deEntry.Value, DataObjects.ExternalStimuli.Stimulus)
 
                     If doStim.CanBeCharted Then
-                        doStim.CreateDataItemTreeView(Me, Nothing, m_tpPartTemplate)
+                        doStim.CreateDataItemTreeView(Me, oSimNode, m_tpPartTemplate)
                     End If
                 Next
 
@@ -246,7 +248,7 @@ Namespace Forms.Tools
                     tvStructures.ExpandAll()
                 End If
             Else
-                m_doSelectedStructure.CreateDataItemTreeView(Me, Nothing, m_tpPartTemplate)
+                m_doSelectedStructure.CreateDataItemTreeView(Me, oSimNode, m_tpPartTemplate)
                 tvStructures.ExpandAll()
             End If
 

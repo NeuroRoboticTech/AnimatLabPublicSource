@@ -332,18 +332,26 @@ Namespace DataObjects.Charting
         <Browsable(False)> _
         Public Overridable ReadOnly Property RequiresAutoDataCollectInterval() As Boolean
             Get
-                If m_strDataItemAssemblyFile.Trim.Length = 0 OrElse m_strDataItemClassName.Trim.Length = 0 Then
-                    Return False
-                End If
+                'If m_strDataItemAssemblyFile.Trim.Length = 0 OrElse m_strDataItemClassName.Trim.Length = 0 Then
+                '    Return False
+                'End If
 
-                Dim doBase As DataObjects.DragObject = DirectCast(Util.LoadClass(m_strDataItemAssemblyFile, m_strDataItemClassName, Me), DataObjects.DragObject)
-                Dim oItem As DataObjects.DragObject = DirectCast(doBase.FindDragObject(m_strStructureID, m_strDataItemID, False), DataObjects.DragObject)
-
-                If Not oItem Is Nothing Then
-                    Return oItem.RequiresAutoDataCollectInterval
+                Dim oItem As Object = Util.Simulation.FindObjectByID(m_strDataItemID)
+                Dim doItem As DataObjects.DragObject = Nothing
+                If Not oItem Is Nothing AndAlso Util.IsTypeOf(oItem.GetType, GetType(DataObjects.DragObject)) Then
+                    doItem = DirectCast(oItem, DataObjects.DragObject)
+                    Return doItem.RequiresAutoDataCollectInterval
                 Else
-                    Return False
+                    Throw New System.Exception("Could not find object with ID '" & m_strDataItemID & "'")
                 End If
+            '    Dim doItem As DataObjects.DragObject = DirectCast(
+            '    'Dim doBase As DataObjects.DragObject = DirectCast(Util.LoadClass(m_strDataItemAssemblyFile, m_strDataItemClassName, Me), DataObjects.DragObject)
+            '    'Dim oItem As DataObjects.DragObject = DirectCast(doBase.FindDragObject(m_strStructureID, m_strDataItemID, False), DataObjects.DragObject)
+
+            '    If Not oItem Is Nothing Then
+            '    Else
+            '        Return False
+            '    End If
             End Get
         End Property
 
@@ -423,18 +431,27 @@ Namespace DataObjects.Charting
         Public Overridable Function IsValidColumn() As Boolean
 
             Try
-                If m_strDataItemAssemblyFile.Trim.Length = 0 OrElse m_strDataItemClassName.Trim.Length = 0 Then
-                    Return False
-                End If
-
-                Dim doBase As DataObjects.DragObject = DirectCast(Util.LoadClass(m_strDataItemAssemblyFile, m_strDataItemClassName, Me), DataObjects.DragObject)
-                Dim oItem As Object = doBase.FindDragObject(m_strStructureID, m_strDataItemID, False)
-
-                If Not oItem Is Nothing Then
+                Dim oItem As Object = Util.Simulation.FindObjectByID(m_strDataItemID)
+                Dim doItem As DataObjects.DragObject = Nothing
+                If Not oItem Is Nothing AndAlso Util.IsTypeOf(oItem.GetType, GetType(DataObjects.DragObject)) Then
+                    doItem = DirectCast(oItem, DataObjects.DragObject)
                     Return True
                 Else
-                    Return False
+                    Throw New System.Exception("Could not find object with ID '" & m_strDataItemID & "'")
                 End If
+
+                'If m_strDataItemAssemblyFile.Trim.Length = 0 OrElse m_strDataItemClassName.Trim.Length = 0 Then
+                '    Return False
+                'End If
+
+                'Dim doBase As DataObjects.DragObject = DirectCast(Util.LoadClass(m_strDataItemAssemblyFile, m_strDataItemClassName, Me), DataObjects.DragObject)
+                'Dim oItem As Object = doBase.FindDragObject(m_strStructureID, m_strDataItemID, False)
+
+                'If Not oItem Is Nothing Then
+                '    Return True
+                'Else
+                '    Return False
+                'End If
 
             Catch ex As Exception
                 'If we had an error in herer for any reason then it is not a valid column.

@@ -309,6 +309,13 @@ Namespace Forms
             End Get
         End Property
 
+        <Browsable(False)> _
+        Public Overridable ReadOnly Property AllowTreeviewNameEdit() As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "

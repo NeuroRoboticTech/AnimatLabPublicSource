@@ -127,9 +127,9 @@ Namespace UITests
 
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\BodyData"}, 2000)
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 3", False})
-                        AddItemToChart("Organism_1\Behavioral System\Neural Subsystem\Nodes\S2\Nodes\BoxContact")
+                        AddItemToChart("Simulation\Organism_1\Behavioral System\Neural Subsystem\Nodes\S2\Nodes\BoxContact")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 3\BoxContact", "DataTypeID", "MembraneVoltage"})
-                        AddItemToChart("Organism_1\Behavioral System\Neural Subsystem\Nodes\S2\Nodes\CylinderContact")
+                        AddItemToChart("Simulation\Organism_1\Behavioral System\Neural Subsystem\Nodes\S2\Nodes\CylinderContact")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 3\CylinderContact", "DataTypeID", "MembraneVoltage"})
 
                         RunSimulationWaitToEnd()
@@ -181,7 +181,7 @@ Namespace UITests
 
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\BodyData"}, 2000)
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1", False})
-                        AddItemToChart("Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor")
+                        AddItemToChart("Simulation\Organism_1\Body Plan\Root\Hinge\Pendulum\BoxSensor")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1\BoxSensor", "DataTypeID", "ContactCount"})
 
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2"}, 2000)

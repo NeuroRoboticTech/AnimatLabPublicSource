@@ -66,7 +66,7 @@ Simulator::Simulator()
 	m_lTimeSlice = 0;
 	m_fltEndSimTime = -1;
 	m_lEndSimTimeSlice = -1;
-	m_iStartSimTick = 0;
+	m_lStartSimTick = 0;
 	m_bStopSimulation = FALSE;
 	m_bForceSimulationStop = FALSE;
     m_bBlockSimulation = FALSE;
@@ -74,8 +74,6 @@ Simulator::Simulator()
 	m_lPhysicsSliceCount = 0;
 	m_lVideoSliceCount = 0;
 	m_iPhysicsStepCount = 0;
-	m_iFrameRate = 30;
- 	m_fltFrameStep = (1/ (float) m_iFrameRate);
 	m_iVideoLoops = 0;
 	m_lpAnimatClassFactory = NULL;
 	m_bSimulateHydrodynamics = FALSE;
@@ -118,6 +116,26 @@ Simulator::Simulator()
 
 	m_bAutoGenerateRandomSeed = TRUE;
 	m_iManualRandomSeed = 12345;
+
+	m_iPlaybackControlMode = PLAYBACK_MODE_MATCH_PHYSICS_STEP;
+	m_fltPresetPlaybackTimeStep = 0;
+	m_lStepStartTick = 0;
+	m_lStepSimEndTick = 0;
+	m_fltSimulationRealTimeToStep = 0;
+	m_fltTotalRealTimeForStep = 0;
+	m_fltPlaybackAdditionRealTimeToStep = 0;
+	m_fltPrevTotalRealTimeForStep = 0;
+	m_fltTotalRealTimeForStepSmooth = 0;
+	m_fltPhysicsStepTime = 0;
+	m_fltTotalNeuralStepTime = 0;
+	m_fltRealTime = 0;
+	m_fltVideoFrameDrawn = 0;
+	m_lLastTickTaken = 0;
+
+	m_iDesiredFrameRate = 30;
+ 	m_fltDesiredFrameStep = (1/ (float) m_iDesiredFrameRate);
+	m_lVideoFrameStartTick = 0;
+	m_fltActualFrameRate = 0;
 
 	m_bRecordVideo = FALSE;
 	m_strVideoFilename = "Video.avi";
@@ -537,7 +555,7 @@ long Simulator::SliceToMillisecond(long lSlice) {return (long) (lSlice * m_fltTi
 
 \return	tick when the simulation begins.
 **/
-DWORD Simulator::StartSimTick() {return m_iStartSimTick;}
+unsigned long long Simulator::StartSimTick() {return m_lStartSimTick;}
 
 /**
 \brief	Gets the current time slice.
@@ -980,7 +998,7 @@ BOOL Simulator::Stopped() {return (m_bStopSimulation | m_bForceSimulationStop);}
 
 \return	Frame rate in cylces per second.
 **/
-int Simulator::FrameRate() {return m_iFrameRate;}
+int Simulator::DesiredFrameRate() {return m_iDesiredFrameRate;}
 
 /**
 \brief	Gets the frame step time.
@@ -992,7 +1010,7 @@ int Simulator::FrameRate() {return m_iFrameRate;}
 
 \return	Frame duration.
 **/
-float Simulator::FrameStep() {return m_fltFrameStep;}
+float Simulator::DesiredFrameStep() {return m_fltDesiredFrameStep;}
 
 /**
 \brief	Sets the frame rate in cycles per second.
@@ -1002,13 +1020,24 @@ float Simulator::FrameStep() {return m_fltFrameStep;}
 
 \param	iVal	The new value. 
 **/
-void Simulator::FrameRate(int iVal)
+void Simulator::DesiredFrameRate(int iVal)
 {
 	Std_IsAboveMin((int) 9, iVal, TRUE, "FrameRate");
 
-	m_iFrameRate = iVal;
- 	m_fltFrameStep = (1/ (float) m_iFrameRate);
+	m_iDesiredFrameRate = iVal;
+ 	m_fltDesiredFrameStep = ((1/ (float) m_iDesiredFrameRate)*1);
 }
+
+
+/**
+\brief	Returns the real time since the simulation was started.
+
+\author	dcofer
+\date	3/28/2011
+
+**/
+float Simulator::RealTime()
+{return m_fltRealTime;}
 
 /**
 \brief	Gets the physics step interval.
@@ -1295,7 +1324,6 @@ void Simulator::BackgroundColor(float *aryColor)
 
 \param	strXml	The color data in an xml data packet
 **/
-
 void Simulator::BackgroundColor(string strXml)
 {
 	CStdColor vColor(1);
@@ -1326,6 +1354,106 @@ void Simulator::RecFieldSelRadius(float fltValue, BOOL bUseScaling, BOOL bUpdate
 	}
 }
 
+
+/**
+\brief	Gets the playback control mode.
+
+\description The follow playback control modes are supported.
+1. Fastest possible: In this mode no time delay is added to the playback at all.
+The physics and neural engines are stepped as fast as they possibly can. However, 
+this can lead to simulations that go too fast to see easily, and as parts of the simulation
+because more complex with a larger number of collisions the playback rate will slow down
+and then speed up again. 
+
+2. Match Physics time step: In this mode the physics and neural engines will be stepped
+to the next physics time step, and then any remaining real time left over will be used to
+delay the simulation to match that value. This mode attempts to playback the simulation
+in real time. If there is no time left over then it does not add any time to the playback.
+
+3. Use Preset Value: This mode is the same as the physics time step, except it attempts to
+match a preset playback time step.
+
+\author	dcofer
+\date	3/2/2011
+
+**/
+int Simulator::PlaybackControlMode()
+{return m_iPlaybackControlMode;}
+
+/**
+\brief	Sets the playback control mode.
+
+\description The follow playback control modes are supported.
+1. Fastest possible: In this mode no time delay is added to the playback at all.
+The physics and neural engines are stepped as fast as they possibly can. However, 
+this can lead to simulations that go too fast to see easily, and as parts of the simulation
+because more complex with a larger number of collisions the playback rate will slow down
+and then speed up again. 
+
+2. Match Physics time step: In this mode the physics and neural engines will be stepped
+to the next physics time step, and then any remaining real time left over will be used to
+delay the simulation to match that value. This mode attempts to playback the simulation
+in real time. If there is no time left over then it does not add any time to the playback.
+
+3. Use Preset Value: This mode is the same as the physics time step, except it attempts to
+match a preset playback time step.
+
+\author	dcofer
+\date	3/2/2011
+
+\param	iMode The playback mode to use.
+**/
+void Simulator::PlaybackControlMode(int iMode)
+{
+	if(iMode != PLAYBACK_MODE_FASTEST_POSSIBLE && iMode !=  PLAYBACK_MODE_MATCH_PHYSICS_STEP && iMode != PLAYBACK_MODE_PRESET_VALUE)
+		THROW_PARAM_ERROR(Al_Err_lInvalidPlaybackMode, Al_Err_strInvalidPlaybackMode, "Mode", STR(iMode));
+
+	m_iPlaybackControlMode = iMode;
+}
+
+/**
+\brief	Gets the preset playback time step.
+
+\description If the playback control mode is set to use a preset value
+for the playback time step then this is the time step used.
+
+\author	dcofer
+\date	3/2/2011
+
+**/
+float Simulator::PresetPlaybackTimeStep()
+{return m_fltPresetPlaybackTimeStep;}
+
+/**
+\brief	Sets the preset playback time step in milliseconds.
+
+\description If the playback control mode is set to use a preset value
+for the playback time step then this is the time step used.
+
+\author	dcofer
+\date	3/2/2011
+
+\param	lTimeStep	The time step to use. 
+**/
+void Simulator::PresetPlaybackTimeStep(float fltTimeStep)
+{
+	if(fltTimeStep < 0)
+		THROW_PARAM_ERROR(Al_Err_lInvalidPresetPlaybackTimeStep, Al_Err_strInvalidPresetPlaybackTimeStep, "Time Step", STR((float) fltTimeStep));
+
+	m_fltPresetPlaybackTimeStep = fltTimeStep;
+}
+
+unsigned long long Simulator::StepStartTick()
+{return m_lStepStartTick;}
+
+unsigned long long Simulator::StepSimEndTick()
+{return m_lStepSimEndTick;}
+
+double Simulator::CurrentRealTimeForStep_n()
+{return TimerDiff_n(m_lStepStartTick, GetTimerTick());}
+
+double Simulator::CurrentRealTimeForStep_s()
+{return TimerDiff_s(m_lStepStartTick, GetTimerTick());}
 
 #pragma endregion
 
@@ -1756,8 +1884,6 @@ void Simulator::Reset()
 	m_lTimeSlice = 0;
 	m_fltEndSimTime = -1;
 	m_lPhysicsSliceCount = 0;
-	m_iFrameRate = 30;
- 	m_fltFrameStep = (1/ (float) m_iFrameRate);
 	m_lVideoSliceCount = 0;
 	m_iVideoLoops = 0;
 	m_bSimulateHydrodynamics = FALSE;
@@ -1792,6 +1918,25 @@ void Simulator::Reset()
 	m_lpVideoPlayback = NULL; //Do not delete this object. It is in the list of Keyframes.
 	m_bEnableSimRecording = FALSE;
 	m_lSnapshotByteSize = 0;
+	m_iPlaybackControlMode = PLAYBACK_MODE_MATCH_PHYSICS_STEP;
+	m_fltPresetPlaybackTimeStep = 0;
+	m_lStepStartTick = 0;
+	m_lStepSimEndTick = 0;
+	m_fltSimulationRealTimeToStep = 0;
+	m_fltTotalRealTimeForStep = 0;
+	m_fltPlaybackAdditionRealTimeToStep = 0;
+	m_fltPrevTotalRealTimeForStep = 0;
+	m_fltTotalRealTimeForStepSmooth = 0;
+	m_fltPhysicsStepTime = 0;
+	m_fltTotalNeuralStepTime = 0;
+	m_fltRealTime = 0;
+	m_fltVideoFrameDrawn = 0;
+	m_lLastTickTaken = 0;
+
+	m_iDesiredFrameRate = 30;
+ 	m_fltDesiredFrameStep = (1/ (float) m_iDesiredFrameRate);
+	m_lVideoFrameStartTick = 0;
+	m_fltActualFrameRate = 0;
 
 	m_bPaused = TRUE;
 	m_bInitialized = FALSE;
@@ -1900,6 +2045,7 @@ void Simulator::ResetSimulation()
 	m_oDataChartMgr.ResetSimulation();
 	m_oExternalStimuliMgr.ResetSimulation();
 	m_oLightMgr.ResetSimulation();
+	if(m_lpWinMgr) m_lpWinMgr->ResetSimulation();
 	
 	if(m_lpSimRecorder)
 		m_lpSimRecorder->ResetSimulation();
@@ -1918,6 +2064,60 @@ float Simulator::MinTimeStep()
 
 	return m_fltTimeStep;
 }
+
+void Simulator::MicroWait(unsigned int iMicroTime)
+{
+	unsigned long long lStart = GetTimerTick();
+	int iRemaining = iMicroTime;
+
+	while(iRemaining > 0)
+		iRemaining = iMicroTime - (unsigned int) TimerDiff_u(lStart, GetTimerTick());
+
+	//double dblWaitTime = TimerDiff_u(lStart, GetTimerTick());
+}
+
+void Simulator::StepPlaybackControl()
+{
+	RecordSimulationStepTimer();
+
+	//If paused or stepping fastest possible then just step the video frame and exit.
+	if(m_bPaused || m_iPlaybackControlMode == PLAYBACK_MODE_FASTEST_POSSIBLE 
+	   || (m_iPlaybackControlMode == PLAYBACK_MODE_PRESET_VALUE && m_fltPresetPlaybackTimeStep <= 0))
+		StepVideoFrame();
+	else
+	{
+		double dblRemainingTime = 0;
+
+		do {
+			dblRemainingTime = (CalculateRemainingPlaybackTime()); //scale the remaining time back by 10% to account for the time of other things.
+
+			if(dblRemainingTime > m_fltDesiredFrameStep)
+				MicroSleep(m_fltDesiredFrameStep*1000000);
+			else if(dblRemainingTime > 0)
+				MicroWait(dblRemainingTime*1000000);
+
+			StepVideoFrame();				
+
+		} while(dblRemainingTime > 0);
+
+		RecordAddedPlaybackTime();
+	}
+}
+
+void Simulator::StepVideoFrame()
+{
+	//m_fltVideoFrameDrawn = 0; 
+
+	double dblTime = TimeBetweenVideoFrames();
+	if(dblTime > m_fltDesiredFrameStep)
+	{
+		UpdateSimulationWindows();
+		StartVideoFrameTimer();
+	}
+	else if(m_bPaused)
+		MicroSleep((unsigned int) (RemainingVideoFrameTime()*1000000));
+}
+
 
 /**
 \brief	Step the neural engine of each organism.
@@ -1981,7 +2181,7 @@ void Simulator::Step()
 	m_oDataChartMgr.StepSimulation();
 	if(m_lpSimRecorder) 
 		m_lpSimRecorder->StepSimulation();
-
+		
 	m_lTimeSlice++;
 	m_fltTime = m_lTimeSlice*m_fltTimeStep;
 }
@@ -2042,10 +2242,12 @@ void Simulator::ProcessSimulationStep()
 		//If we are blocking the simulation stepping code for multi-threaded access then don't do this code..
 		if(!CheckSimulationBlock())
 		{
+		 	StartSimulationStepTimer();
 			StepSimulation();
-			StepVideoFrame();
- 
+			StepPlaybackControl();
+
 			CheckEndSimulationTime();
+			RecordSimulationTotalStepTimer();
 		}
 	}
 	catch(CStdErrorInfo oError)
@@ -2168,6 +2370,88 @@ void Simulator::HandleNonCriticalError(string strError)
 		m_lpSimCallback->HandleCriticalError(strError);
 }
 
+void Simulator::StartSimulationStepTimer()
+{
+	m_lStepStartTick = GetTimerTick();
+	m_fltRealTime = TimerDiff_s(m_lStartSimTick, m_lStepStartTick); 
+	ClearNeuralStepTimes();
+}
+
+void Simulator::RecordSimulationStepTimer()
+{
+	m_lStepSimEndTick = GetTimerTick();
+	m_fltSimulationRealTimeToStep = (float) TimerDiff_s(m_lStepStartTick, m_lStepSimEndTick);
+
+	m_fltPlaybackAdditionRealTimeToStep = 0;
+}
+
+void Simulator::RecordSimulationTotalStepTimer()
+{
+	unsigned long long lEnd = GetTimerTick();
+	m_fltPrevTotalRealTimeForStep = m_fltTotalRealTimeForStep;
+	m_fltTotalRealTimeForStep = (float) TimerDiff_s(m_lStepStartTick, lEnd);
+
+	m_fltTotalRealTimeForStepSmooth = m_fltTotalRealTimeForStepSmooth + 0.05*(m_fltPrevTotalRealTimeForStep-m_fltTotalRealTimeForStepSmooth);
+}
+
+double Simulator::CalculateRemainingPlaybackTime()
+{
+	if(m_iPlaybackControlMode == PLAYBACK_MODE_FASTEST_POSSIBLE)
+		return 0;
+	else if(m_iPlaybackControlMode ==  PLAYBACK_MODE_MATCH_PHYSICS_STEP)
+		return m_fltPhysicsTimeStep - CurrentRealTimeForStep_s();
+	else 
+		return m_fltPresetPlaybackTimeStep - CurrentRealTimeForStep_s();
+}
+
+void Simulator::RecordAddedPlaybackTime()
+{
+	unsigned long long lEnd = GetTimerTick();
+	m_fltPlaybackAdditionRealTimeToStep = (float) TimerDiff_s(m_lStepSimEndTick, lEnd);
+}
+
+void Simulator::StartVideoFrameTimer()
+{
+	double dblTime = TimeBetweenVideoFrames();
+	m_fltActualFrameRate = (float) 1.0/(dblTime);
+	m_lVideoFrameStartTick = GetTimerTick();
+}
+
+double Simulator::TimeBetweenVideoFrames()
+{
+	return TimerDiff_s(m_lVideoFrameStartTick, GetTimerTick());
+}
+
+double Simulator::RemainingVideoFrameTime()
+{
+	double dblRemaining =  (m_fltDesiredFrameStep - TimeBetweenVideoFrames());
+	if(dblRemaining < 0) dblRemaining = 0;
+	return dblRemaining;
+}
+
+void Simulator::ClearNeuralStepTimes()
+{
+	//CStdMap<string, float>::iterator oPos;
+	//for(oPos=m_aryNeuralEngineRealTimeSteps.begin(); oPos!=m_aryNeuralEngineRealTimeSteps.end(); ++oPos)
+	//	oPos->second = 0;
+
+	m_fltTotalNeuralStepTime = 0; 
+}
+
+
+void Simulator::AddNeuralStepTime(string strModuleName, double dblStepTime)
+{
+	//CStdMap<string, float>::iterator oPos;
+	//oPos = m_aryNeuralEngineRealTimeSteps.find(Std_CheckString(strModuleName));
+
+	//if(oPos != m_aryNeuralEngineRealTimeSteps.end())
+	//	oPos->second +=  (float) dblStepTime;
+	//else
+	//	m_aryNeuralEngineRealTimeSteps.Add(Std_CheckString(strModuleName), dblStepTime);
+	
+	m_fltTotalNeuralStepTime += dblStepTime; 
+}
+
 /**
 \brief	Generates an automatic seed value based on the current time.
 
@@ -2280,6 +2564,9 @@ void Simulator::Load(CStdXml &oXml)
 	SetEndSimTime(oXml.GetChildBool("SetSimEnd", FALSE));
 	EndSimTime(oXml.GetChildFloat("SimEndTime", m_fltEndSimTime));
  
+	PlaybackControlMode(oXml.GetChildInt("PlaybackControlMode", m_iPlaybackControlMode));
+	PresetPlaybackTimeStep(oXml.GetChildFloat("PresetPlaybackTimeStep", m_fltPresetPlaybackTimeStep));
+
 	if(m_bEnableSimRecording)
 		m_lpSimRecorder = CreateSimulationRecorder();
 
@@ -2367,7 +2654,7 @@ void Simulator::LoadEnvironment(CStdXml &oXml)
 	AutoGenerateRandomSeed(oXml.GetChildBool("AutoGenerateRandomSeed", m_bAutoGenerateRandomSeed));
 	ManualRandomSeed(oXml.GetChildInt("ManualRandomSeed", m_iManualRandomSeed));
 
-	FrameRate(oXml.GetChildInt("FrameRate", m_iFrameRate));
+	DesiredFrameRate(oXml.GetChildInt("FrameRate", m_iDesiredFrameRate));
 	ForceFastMoving(oXml.GetChildBool("FastMoving", m_bForceFastMoving));
 
 	MouseSpringStiffness(oXml.GetChildFloat("MouseSpringStiffness", m_fltMouseSpringStiffness));
@@ -3647,6 +3934,24 @@ float *Simulator::GetDataPointer(string strDataType)
 		lpData = &m_fltTime;
 	else if(strType == "PHYSICSTIMESTEP")
 		lpData = &m_fltPhysicsTimeStep;
+	else if(strType == "SIMULATIONREALTIMETOSTEP")
+		lpData = &m_fltSimulationRealTimeToStep;
+	else if(strType == "PLAYBACKADDITIONREALTIMETOSTEP")
+		lpData = &m_fltPlaybackAdditionRealTimeToStep;
+	else if(strType == "TOTALREALTIMEFORSTEP")
+		lpData = &m_fltTotalRealTimeForStep;
+	else if(strType == "ACTUALFRAMERATE")
+		lpData = &m_fltActualFrameRate;
+	else if(strType == "REALTIME")
+		lpData = &m_fltRealTime;
+	else if(strType == "VIDEOFRAMEDRAWN")
+		lpData = &m_fltVideoFrameDrawn;
+	else if(strType == "TOTALREALTIMEFORSTEPSMOOTHED")
+		lpData = &m_fltTotalRealTimeForStepSmooth;
+	else if(strType == "PHYSICSREALTIMEFORSTEP")
+		lpData = &m_fltPhysicsStepTime;
+	else if(strType == "NEURALREALTIMEFORSTEP")
+		lpData = &m_fltTotalNeuralStepTime;
 	else
 		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Simulator DataType: " + strDataType);
 
@@ -3704,7 +4009,7 @@ BOOL Simulator::SetData(string strDataType, string strValue, BOOL bThrowError)
 	}
 	else if(strType == "FRAMERATE")
 	{
-		FrameRate(atoi(strValue.c_str()));
+		DesiredFrameRate(atoi(strValue.c_str()));
 		return TRUE;
 	}
 	else if(strType == "FORCEFASTMOVING")
@@ -3780,6 +4085,16 @@ BOOL Simulator::SetData(string strDataType, string strValue, BOOL bThrowError)
 	else if(strDataType == "TIMESTEPMODIFIED")
 	{
 		NotifyTimeStepModified();
+		return TRUE;
+	}
+	else if(strDataType == "PLAYBACKCONTROLMODE")
+	{
+		PlaybackControlMode(atoi(strValue.c_str()));
+		return TRUE;
+	}
+	else if(strDataType == "PRESETPLAYBACKTIMESTEP")
+	{
+		PresetPlaybackTimeStep(atof(strValue.c_str()));
 		return TRUE;
 	}
 	//If it was not one of those above then we have a problem.

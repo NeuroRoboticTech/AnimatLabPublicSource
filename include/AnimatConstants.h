@@ -415,6 +415,12 @@
 #define Al_Err_lNoModuleParamOnCommandLine -4060
 #define Al_Err_strNoModuleParamOnCommandLine "There was no module parameter defined on the command line."
 
+#define Al_Err_lInvalidPlaybackMode -4061
+#define Al_Err_strInvalidPlaybackMode "Invalid plaback control mode specified."
+
+#define Al_Err_lInvalidPresetPlaybackTimeStep -4062
+#define Al_Err_strInvalidPresetPlaybackTimeStep "Preset playback time step must be greater than or equal to zero."
+
 
 #define MAX_DATA_CHART_BUFFER 10485760
 
@@ -440,6 +446,10 @@
 #define JOINT_SELECTION_MODE 4
 #define RECEPTIVE_FIELD_SELECTION_MODE 8
 #define SIMULATION_SELECTION_MODE 18
+
+#define PLAYBACK_MODE_FASTEST_POSSIBLE 0
+#define PLAYBACK_MODE_MATCH_PHYSICS_STEP 1
+#define PLAYBACK_MODE_PRESET_VALUE 2
 
 #define ANIMAT_X_AXIS 0
 #define ANIMAT_Y_AXIS 1

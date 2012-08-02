@@ -69,6 +69,7 @@ void VsHudText::Initialize(void *lpVoidProjection)
 {
 	HudText::Initialize(lpVoidProjection);
 
+	m_fltPrevious = -1;
 	osg::Projection *lpProjection = (osg::Projection *) (lpVoidProjection);
 	if(!lpProjection)
 		THROW_PARAM_ERROR(Vs_Err_lHudProjectionNotDefined, Vs_Err_strHudProjectionNotDefined, "ID", m_strID);
@@ -86,14 +87,20 @@ void VsHudText::Initialize(void *lpVoidProjection)
     lpProjection->addChild(m_osgGeode.get());
 }
 
+void VsHudText::ResetSimulation()
+{
+	m_fltPrevious = -1;
+}
+
 void VsHudText::Update()
 {
     char str[1024];
 
-	if(m_osgText.valid() && m_lpData)
+	if(m_osgText.valid() && m_lpData && (fabs(*m_lpData-m_fltPrevious) > 0.1) )
 	{
 		sprintf(str, m_strText.c_str(), *m_lpData);
 		m_osgText->setText(str);
+		m_fltPrevious = *m_lpData;
 	}
 }
 

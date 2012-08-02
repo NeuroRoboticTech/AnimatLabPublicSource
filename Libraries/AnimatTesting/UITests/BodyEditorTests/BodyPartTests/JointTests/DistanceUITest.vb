@@ -206,19 +206,19 @@ Namespace UITests
                         'Change the end time of the data chart to 45 seconds.
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectEndTime", "5"})
 
-                        AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block")
+                        AddItemToChart("Simulation\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Block", "Name", "Block_X"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Block_X", "DataTypeID", "WorldPositionX"})
 
-                        AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block")
+                        AddItemToChart("Simulation\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Block", "Name", "Block_Y"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Block_Y", "DataTypeID", "WorldPositionY"})
 
-                        AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block")
+                        AddItemToChart("Simulation\" & m_strStruct1Name & "\Body Plan\Root\Hinge\Arm\Distance\Block")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Block", "Name", "Block_Z"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Block_Z", "DataTypeID", "WorldPositionZ"})
 
-                        AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Hinge")
+                        AddItemToChart("Simulation\" & m_strStruct1Name & "\Body Plan\Root\Hinge")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Hinge", "Name", "Rotation"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Rotation", "DataTypeID", "JointRotation"})
 

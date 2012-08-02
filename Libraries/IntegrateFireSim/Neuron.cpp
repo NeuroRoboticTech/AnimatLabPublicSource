@@ -841,7 +841,7 @@ void Neuron::CalculateFiringFreq(IntegrateFireNeuralModule *lpNS)
 {
 	if(m_bSpike)
 	{
-		double dblDiff = (lpNS->GetCurrentTime() - m_fltLastSpikeTime)/1000;
+		double dblDiff = (lpNS->GetCurrentTime() - m_fltLastSpikeTime)/(double) 1000.0;
 		
 		if(dblDiff > 0)
 			m_fltFiringFreq = 1/dblDiff;

@@ -35,9 +35,6 @@ VsSimulator::VsSimulator()
 	m_uUniverse = NULL;
 	m_grpScene = NULL;	
 	m_vsWinMgr = NULL;
-	m_iLastFrame = osg::Timer::instance()->tick();
-	m_iCurrentFrame = osg::Timer::instance()->tick();
-	m_fltFrameDt = 0;
 	m_vsWinMgr = new VsSimulationWindowMgr;
 	m_lpWinMgr = m_vsWinMgr;
 	m_lpWinMgr->SetSystemPointers(this, NULL, NULL, NULL, TRUE);
@@ -250,7 +247,7 @@ void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
 	//rootStateSet->setMode( GL_LIGHT1, osg::StateAttribute::ON );
 
 	m_oLightMgr.Initialize();
- }
+}
 
 void VsSimulator::SetSimulationStabilityParams()
 {
@@ -437,18 +434,9 @@ void VsSimulator::GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4
 					  aryTransform[2][0], aryTransform[2][1], aryTransform[2][2], aryTransform[2][3], 
 					  aryTransform[3][0], aryTransform[3][1], aryTransform[3][2], aryTransform[3][3]);
 
-	//osg::Matrix osgConv(aryConversion[0][0], aryConversion[0][1], aryConversion[0][2], aryConversion[0][3], 
-	//				    aryConversion[1][0], aryConversion[1][1], aryConversion[1][2], aryConversion[1][3], 
-	//				    aryConversion[2][0], aryConversion[2][1], aryConversion[2][2], aryConversion[2][3], 
-	//				    aryConversion[3][0], aryConversion[3][1], aryConversion[3][2], aryConversion[3][3]);
-
 	osg::Matrix osgFinal;
 	
 	osgFinal = osgMT;
-	//if(bPreMultConv)
-	//	osgFinal = osgConv * osgMT;
-	//else
-	//	osgFinal = osgMT * osgConv;
 
 	//Lets get the current world coordinates for this body part and then recalculate the 
 	//new local position for the part and then finally reset its new local position.
@@ -466,6 +454,27 @@ void VsSimulator::GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4
 	vRot.ClearNearZero();
 }
 
+//Timer Methods
+unsigned long long VsSimulator::GetTimerTick()
+{
+	m_lLastTickTaken = osg::Timer::instance()->tick();
+	return m_lLastTickTaken;
+}
+
+double VsSimulator::TimerDiff_n(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_n(lStart, lEnd);}
+
+double VsSimulator::TimerDiff_u(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_u(lStart, lEnd);}
+
+double VsSimulator::TimerDiff_m(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_m(lStart, lEnd);}
+
+double VsSimulator::TimerDiff_s(unsigned long long lStart, unsigned long long lEnd)
+{return osg::Timer::instance()->delta_s(lStart, lEnd);}
+
+void VsSimulator::MicroSleep(unsigned int iMicroTime)
+{OpenThreads::Thread::microSleep(iMicroTime);}
 
 void VsSimulator::Initialize(int argc, const char **argv)
 {
@@ -493,7 +502,10 @@ void VsSimulator::StepSimulation()
 		if (!m_bPaused)	
 		{
 			Simulator::StepSimulation();
+
+			unsigned long long lStart = GetTimerTick();
 			m_vxFrame->step();
+			m_fltPhysicsStepTime = TimerDiff_s(lStart, GetTimerTick());
 		}
 
 	}
@@ -505,25 +517,15 @@ void VsSimulator::StepSimulation()
 	//Dont catch other errors here. Let them bubble up as critical errors in the ProcessStepSimulation method.
 }
 
-void VsSimulator::StepVideoFrame()
+void VsSimulator::UpdateSimulationWindows()
 {
-	//Get the current frame time
-	//To control the frame rate we need to only update the graphics after a given period of time.
-	//until that time we need to be free to run physics/neural simulation as fast as possible between frames.
-	m_iCurrentFrame = osg::Timer::instance()->tick();
-	m_fltFrameDt = osg::Timer::instance()->delta_s(m_iLastFrame, m_iCurrentFrame);
-	if( m_fltFrameDt > m_fltFrameStep)
-	{
-		m_bStopSimulation = !m_vsWinMgr->Update();
-		m_iLastFrame = m_iCurrentFrame;
-	}
-	else if(m_bPaused)
-	{
-		//However, if we are paused then we want to sleep for the time in between instead of processing.
-		float fltRemains = m_fltFrameStep - m_fltFrameDt;
-		OpenThreads::Thread::microSleep((unsigned long)(fltRemains*1000000.0));
-	}
+	m_bStopSimulation = !m_vsWinMgr->Update();
+	//m_fltVideoFrameDrawn = 1;
+
+	if(m_fltVideoFrameDrawn && !m_bPaused)
+		m_bPaused = false;
 }
+
 
 void VsSimulator::SimulateEnd()
 {
@@ -546,6 +548,8 @@ BOOL VsSimulator::PauseSimulation()
 
 BOOL VsSimulator::StartSimulation()
 {
+	m_lStartSimTick = GetTimerTick();
+
 	SimStarting();
 	m_bSimRunning = TRUE;
 	m_bPaused = FALSE;
@@ -557,14 +561,14 @@ float *VsSimulator::GetDataPointer(string strDataType)
 	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);
 
-	if(strType == "FRAMEDT")
-		lpData = &m_fltFrameDt;
-	else
-	{
+	//if(strType == "FRAMEDT")
+	//	lpData = &m_fltFrameDt;
+	//else
+	//{
 		lpData = Simulator::GetDataPointer(strDataType);
 		if(!lpData)
 			THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Simulator DataType: " + strDataType);
-	}
+	//}
 
 	return lpData;
 }

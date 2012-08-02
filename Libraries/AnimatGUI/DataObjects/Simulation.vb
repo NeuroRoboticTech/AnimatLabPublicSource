@@ -12,7 +12,7 @@ Imports AnimatGUI.Framework
 Namespace DataObjects
 
     Public Class Simulation
-        Inherits Framework.DataObject
+        Inherits DataObjects.DragObject
 
 #Region " Enums "
 
@@ -24,6 +24,13 @@ Namespace DataObjects
             Simulation = 18   '16 + 2 = 0001 0010
         End Enum
 
+        'Settings for determining how fast the simulation plays back to the user.
+        Public Enum enumPlaybackControlMode
+            FastestPossible = 0   'No delay between time steps. Sim plays back as fast as possible.
+            MatchPhysicsStep = 1  'The simulation steps take place and then the app sleeps for the time remaining to match the physics step.
+            UsePresetValue = 2    ' The simulation steps take place, and then the app sleeps for the time remaining in a preset time duration.
+        End Enum
+
 #End Region
 
 #Region " Attributes "
@@ -32,6 +39,8 @@ Namespace DataObjects
         Protected m_bStartPaused As Boolean = False
         Protected m_bUseReleaseLibraries As Boolean = True
         Protected m_bEnableSimRecording As Boolean = True
+        Protected m_ePlaybackControlMode As enumPlaybackControlMode = enumPlaybackControlMode.MatchPhysicsStep
+        Protected m_snPresetPlaybackTimeStep As ScaledNumber
 
         Protected m_doEnvironment As New DataObjects.Physical.Environment(Me)
 
@@ -68,6 +77,25 @@ Namespace DataObjects
 
 #Region " Properties "
 
+#Region "DragObject Properties"
+
+        Public Overrides Property ItemName As String
+            Get
+                Return Me.Name()
+            End Get
+            Set(value As String)
+                Me.Name = value
+            End Set
+        End Property
+
+        Public Overrides ReadOnly Property CanBeCharted As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
+#End Region
+
         Public ReadOnly Property AnimatModule() As String
             Get
                 Return "VortexAnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll"
@@ -78,6 +106,13 @@ Namespace DataObjects
          Public Overrides ReadOnly Property WorkspaceImageName() As String
             Get
                 Return "AnimatGUI.Simulation.gif"
+            End Get
+        End Property
+
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property AllowTreeviewNameEdit() As Boolean
+            Get
+                Return False
             End Get
         End Property
 
@@ -279,6 +314,33 @@ Namespace DataObjects
             End Set
         End Property
 
+        Public Overridable Property PlaybackControlMode() As enumPlaybackControlMode
+            Get
+                Return m_ePlaybackControlMode
+            End Get
+            Set(ByVal value As enumPlaybackControlMode)
+                Me.SetSimData("PlaybackControlMode", CStr(CType(value, Integer)), True)
+                m_ePlaybackControlMode = value
+                If Not Util.ProjectWorkspace Is Nothing Then
+                    Util.ProjectWorkspace.RefreshProperties()
+                End If
+            End Set
+        End Property
+
+        Public Overridable Property PresetPlaybackTimeStep() As ScaledNumber
+            Get
+                Return m_snPresetPlaybackTimeStep
+            End Get
+            Set(ByVal value As ScaledNumber)
+                If value.ActualValue < 0 Then
+                    Throw New System.Exception("The preset playback time step must be greater than 0.")
+                End If
+
+                SetSimData("PresetPlaybackTimeStep", value.ActualValue.ToString, True)
+
+                m_snPresetPlaybackTimeStep.CopyData(value)
+            End Set
+        End Property
 
 #End Region
 
@@ -292,12 +354,26 @@ Namespace DataObjects
             m_strName = "Simulation"
             m_strID = "Simulator"
             m_snSimEndTime = New AnimatGUI.Framework.ScaledNumber(Me, "SimEndTime", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "seconds", "s")
+            m_snPresetPlaybackTimeStep = New AnimatGUI.Framework.ScaledNumber(Me, "PresetPlaybackTimeStep", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
 
             Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Sim.New Adding handlers")
 
             'These events are called when the simulation is starting or resuming so that we can initialize certain objects like stimuli and data charts.
             AddHandler Util.Application.SimulationStarting, AddressOf Me.OnSimulationStarting
             AddHandler Util.Application.SimulationResuming, AddressOf Me.OnSimulationResuming
+
+            m_thDataTypes.DataTypes.Clear()
+
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("SimulationRealTimeToStep", "Time for Sim Step", "Seconds", "s", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("PlaybackAdditionRealTimeToStep", "Playback Time added for Step", "Seconds", "s", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("TotalRealTimeForStep", "Total Time For Step", "Seconds", "s", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("TotalRealTimeForStepSmoothed", "Smoothed Total Time For Step", "Seconds", "s", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("PhysicsRealTimeForStep", "Physics Time For Step", "Seconds", "s", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("NeuralRealTimeForStep", "Neural Time For Step", "Seconds", "s", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ActualFrameRate", "Frame Rate", "FPS", "FPS", 0, 60))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("RealTime", "Real vs Sim Time", "Seconds", "s", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("VideoFrameDrawn", "Video Frame Drawn", "", "", 0, 1))
+            m_thDataTypes.ID = "SimulationRealTimeToStep"
 
             Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Sim.New Finished")
         End Sub
@@ -310,6 +386,7 @@ Namespace DataObjects
             m_strName = "Simulation"
             m_strID = "Simulator"
             m_snSimEndTime = New AnimatGUI.Framework.ScaledNumber(Me, "SimEndTime", 1, AnimatGUI.Framework.ScaledNumber.enumNumericScale.None, "seconds", "s")
+            m_snPresetPlaybackTimeStep = New AnimatGUI.Framework.ScaledNumber(Me, "PresetPlaybackTimeStep", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "seconds", "s")
 
             Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Sim.New Adding handlers")
 
@@ -317,8 +394,25 @@ Namespace DataObjects
             AddHandler Util.Application.SimulationStarting, AddressOf Me.OnSimulationStarting
             AddHandler Util.Application.SimulationResuming, AddressOf Me.OnSimulationResuming
 
+            m_thDataTypes.DataTypes.Clear()
+
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("SimulationRealTimeToStep", "Time for Sim Step", "Seconds", "s", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("PlaybackAdditionRealTimeToStep", "Playback Time added for Step", "Seconds", "s", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("TotalRealTimeForStep", "Total Time For Step", "Seconds", "s", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("TotalRealTimeForStepSmoothed", "Smoothed Total Time For Step", "Seconds", "s", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("PhysicsRealTimeForStep", "Physics Time For Step", "Seconds", "s", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("NeuralRealTimeForStep", "Neural Time For Step", "Seconds", "s", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ActualFrameRate", "Frame Rate", "FPS", "FPS", 0, 60))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("RealTime", "Real vs Sim Time", "Seconds", "s", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("VideoFrameDrawn", "Video Frame Drawn", "", "", 0, 1))
+            m_thDataTypes.ID = "SimulationRealTimeToStep"
+
             Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Sim.New Finished")
         End Sub
+
+        Public Overrides Function FindDragObject(strStructureName As String, strDataItemID As String, Optional bThrowError As Boolean = True) As DragObject
+            Throw New System.Exception("FindDragObject not implemented")
+        End Function
 
         Public Overrides Function Clone(ByVal doParent As Framework.DataObject, ByVal bCutData As Boolean, ByVal doRoot As Framework.DataObject) As Framework.DataObject
             'Dim oSim As New Simulation(doParent)
@@ -644,12 +738,21 @@ Namespace DataObjects
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
 
-            'propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Animat Module", m_strAnimatModule.GetType(), "AnimatModule", _
-            '                            "Simulation Modules", "This determines the animat plug-in module that will be used throughout the simulation. " & _
-            '                            "This plug-in will control the physics portion of the simulation.", m_strAnimatModule))
-
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("FrameRate", m_iFrameRate.GetType(), "FrameRate", _
-                                        "Playback Control", "Determines the video frame rate of the simulation.", m_iFrameRate))
+                                        "Playback Controls", "Determines the video frame rate of the simulation.", m_iFrameRate))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Playback Control Mode", m_ePlaybackControlMode.GetType(), "PlaybackControlMode", _
+                                        "Playback Controls", "Determins how the playback speed of the simulation is controlled. " & _
+                                        "If set to fastest possible then no delay will be added between simulation time steps. " & _
+                                        "If set to use physics time step then it will attempt to set the playback speed to match physics time step. " & _
+                                        "If using a preset value then it will attempt to set the playback speed to match this preset value.", m_ePlaybackControlMode))
+
+            Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = m_snPresetPlaybackTimeStep.Properties
+            If m_ePlaybackControlMode = enumPlaybackControlMode.UsePresetValue Then
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Playback Time Step", pbNumberBag.GetType(), "PresetPlaybackTimeStep", _
+                                            "Playback Controls", "Controls the pause between simulation time steps. This lets you control the playback speed of a simulation independent of the integration time step.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            End If
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("ID", Me.ID.GetType(), "ID", _
                                         "Settings", "ID", Me.ID, True))
@@ -661,11 +764,11 @@ Namespace DataObjects
                                         "Logging", "Sets the level of logging in the application.", Me.LogLevel))
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Set Sim To End", m_bSetSimEnd.GetType(), "SetSimulationEnd", _
-                                        "Playback Control", "If this is true then the simulation will automatically end at the Sim End Time.", m_bSetSimEnd))
+                                        "Playback Controls", "If this is true then the simulation will automatically end at the Sim End Time.", m_bSetSimEnd))
 
-            Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = m_snSimEndTime.Properties
+            pbNumberBag = m_snSimEndTime.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Sim End Time", pbNumberBag.GetType(), "SimulationEndTime", _
-                                        "Playback Control", "Sets the time at which the simulation will end if the SetSimEnd property is true.", pbNumberBag, _
+                                        "Playback Controls", "Sets the time at which the simulation will end if the SetSimEnd property is true.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), Not m_bSetSimEnd))
 
         End Sub
@@ -676,6 +779,8 @@ Namespace DataObjects
             m_aryToolHolders.ClearIsDirty()
             m_aryProjectStimuli.ClearIsDirty()
             m_aryHudItems.ClearIsDirty()
+            m_snSimEndTime.ClearIsDirty()
+            m_snPresetPlaybackTimeStep.ClearIsDirty()
         End Sub
 
         Public Overrides Sub UnitsChanged(ByVal ePrevMass As AnimatGUI.DataObjects.Physical.Environment.enumMassUnits, _
@@ -720,6 +825,12 @@ Namespace DataObjects
             If oXml.FindChildElement("SetSimEnd", False) Then
                 m_bSetSimEnd = oXml.GetChildBool("SetSimEnd", m_bSetSimEnd)
                 m_snSimEndTime.LoadData(oXml, "SimEndTime")
+            End If
+
+            If oXml.FindChildElement("PlaybackControlMode", False) Then
+                Dim strVal As String = oXml.GetChildString("PlaybackControlMode")
+                Me.PlaybackControlMode = DirectCast([Enum].Parse(GetType(enumPlaybackControlMode), oXml.GetChildString("PlaybackControlMode"), True), enumPlaybackControlMode)
+                m_snPresetPlaybackTimeStep.LoadData(oXml, "PresetPlaybackTimeStep")
             End If
 
             m_doEnvironment.LoadData(oXml)
@@ -901,6 +1012,9 @@ Namespace DataObjects
             oXml.AddChildElement("APIFile", m_strAPI_File)
             m_snSimEndTime.SaveData(oXml, "SimEndTime")
 
+            oXml.AddChildElement("PlaybackControlMode", m_ePlaybackControlMode.ToString)
+            m_snPresetPlaybackTimeStep.SaveData(oXml, "PresetPlaybackTimeStep")
+
             m_doEnvironment.SaveData(oXml)
 
             SaveToolHolder(oXml)
@@ -988,6 +1102,10 @@ Namespace DataObjects
             oXml.AddChildElement("SetSimEnd", m_bSetSimEnd)
             oXml.AddChildElement("APIFile", m_strAPI_File)
             m_snSimEndTime.SaveSimulationXml(oXml, Me, "SimEndTime")
+
+            Dim iVal As Integer = CType(m_ePlaybackControlMode, Integer)
+            oXml.AddChildElement("PlaybackControlMode", iVal)
+            m_snPresetPlaybackTimeStep.SaveSimulationXml(oXml, Me, "PresetPlaybackTimeStep")
 
             m_doEnvironment.SaveSimulationXml(oXml)
 

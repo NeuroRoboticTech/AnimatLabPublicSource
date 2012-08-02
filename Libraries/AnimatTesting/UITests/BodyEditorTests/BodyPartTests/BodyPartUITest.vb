@@ -628,7 +628,7 @@ Namespace UITests
 
                     'Now add the new part to the chart.
                     'Now add items to the chart to plot the y position of the root of structure 2
-                    AddItemToChart("Structure_2\Body Plan\Root")
+                    AddItemToChart("Simulation\" & "Structure_2\Body Plan\Root")
 
                     'Set the name of the data chart item to root_y.
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root", "Name", "Root2_Y"})

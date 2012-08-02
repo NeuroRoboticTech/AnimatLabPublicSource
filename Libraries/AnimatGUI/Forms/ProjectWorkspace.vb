@@ -421,17 +421,25 @@ Namespace Forms
         End Sub
 
         Private Sub ctrlTreeView_BeforeLabelEdit(ByVal tc As Crownwood.DotNetMagic.Controls.TreeControl, ByVal e As Crownwood.DotNetMagic.Controls.LabelEditEventArgs) Handles ctrlTreeView.BeforeLabelEdit
+            Dim bCancel As Boolean = True
 
             Try
-                If Not e.Node.Tag Is Nothing AndAlso _
-                   (TypeOf e.Node.Tag Is DataObjects.ToolHolder OrElse _
-                   TypeOf e.Node.Tag Is DataObjects.ExternalStimuli.Stimulus OrElse _
-                   (TypeOf e.Node.Tag Is DataObjects.Physical.PhysicalStructure)) Then
-                    e.Cancel = False
-                Else
-                    e.Cancel = True
+                If Not e.Node.Tag Is Nothing AndAlso Util.IsTypeOf(e.Node.Tag.GetType, GetType(Framework.DataObject)) Then
+                    Dim doObj As Framework.DataObject = DirectCast(e.Node.Tag, Framework.DataObject)
+
+                    If doObj.AllowTreeviewNameEdit Then
+                        bCancel = False
+                    End If
+                ElseIf Not e.Node.Tag Is Nothing AndAlso Util.IsTypeOf(e.Node.Tag.GetType, GetType(Forms.AnimatForm)) Then
+                    Dim doObj As Forms.AnimatForm = DirectCast(e.Node.Tag, Forms.AnimatForm)
+
+                    If doObj.AllowTreeviewNameEdit Then
+                        bCancel = False
+                    End If
+
                 End If
 
+                e.Cancel = bCancel
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

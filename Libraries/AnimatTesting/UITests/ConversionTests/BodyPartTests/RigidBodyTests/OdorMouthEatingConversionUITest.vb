@@ -185,15 +185,15 @@ Namespace UITests
 
                         ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Tool Viewers\BodyData"}, 1000)
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1", False})
-                        AddItemToChart("Organism_1\Body Plan\Root\Hinge1\Head\OdorSensor")
+                        AddItemToChart("Simulation\Organism_1\Body Plan\Root\Hinge1\Head\OdorSensor")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1\OdorSensor", "DataTypeID", "OdorValue"})
 
                         ClickToolbarItem("AddAxisToolStripButton", True)
-                        AddItemToChart("Organism_1\Body Plan\Root\Hinge1\Head\Mouth")
+                        AddItemToChart("Simulation\Organism_1\Body Plan\Root\Hinge1\Head\Mouth")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 5\Mouth", "DataTypeID", "EatingRate"})
 
                         ClickToolbarItem("AddAxisToolStripButton", True)
-                        AddItemToChart("Organism_1\Body Plan\Root\Hinge1\Head\Stomach")
+                        AddItemToChart("Simulation\Organism_1\Body Plan\Root\Hinge1\Head\Stomach")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 6\Stomach", "DataTypeID", "EnergyLevel"})
 
                         ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Mouth", _
@@ -203,6 +203,24 @@ Namespace UITests
 
                         RunSimulationWaitToEnd()
  
+                    End Sub
+
+                    Protected Sub CreateChart()
+                        Debug.WriteLine("CreateChart")
+
+                        'Select the LineChart to add.
+                        AddChart("Line Chart")
+
+                        'Select the Chart axis
+                        ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1", False})
+
+                        'Change the end time of the data chart to 45 seconds.
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectEndTime", "2"})
+
+                        AddItemToChart("Simulation")
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Arm", "Name", "TotalStepTimeSmoothed"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\TotalStepTimeSmoothed", "DataTypeID", "TotalRealTimeForStepSmoothed"})
+
                     End Sub
 
 

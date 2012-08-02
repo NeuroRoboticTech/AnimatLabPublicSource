@@ -70,6 +70,13 @@ void Hud::Reset()
 	m_aryHudItems.RemoveAll();
 }
 
+void Hud::ResetSimulation()
+{
+	int iCount = m_aryHudItems.GetSize();
+	for(int iIndex = 0; iIndex < iCount; iIndex++)
+		m_aryHudItems[iIndex]->ResetSimulation();
+}
+
 void Hud::Update()
 {
 	HudItem *lpItem = NULL;

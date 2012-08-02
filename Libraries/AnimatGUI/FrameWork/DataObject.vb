@@ -64,6 +64,13 @@ Namespace Framework
             End Set
         End Property
 
+        <Browsable(False)> _
+        Public Overridable ReadOnly Property AllowTreeviewNameEdit() As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
         <[ReadOnly](True)> _
         Public Overridable Property ID() As String
             Get

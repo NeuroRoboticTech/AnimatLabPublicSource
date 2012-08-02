@@ -1837,8 +1837,8 @@ Namespace UITests
                     'Add these neurons to the chart.
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\NeuralData"}, 2000)
                     ClickToolbarItem("AddAxisToolStripButton", True)
-                    AddItemToChart("Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S2F1")
-                    AddItemToChart("Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S2F4")
+                    AddItemToChart("Simulation\Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S2F1")
+                    AddItemToChart("Simulation\Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S2F4")
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "PasteF1F4_")
 
@@ -1921,7 +1921,7 @@ Namespace UITests
                     'Add these neurons to the chart.
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\NeuralData"}, 2000)
                     ClickToolbarItem("AddAxisToolStripButton", True)
-                    AddItemToChart("Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S2F1")
+                    AddItemToChart("Simulation\Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S2F1")
 
                     AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\S1\S2\S2F4", "Stim_S2F4")
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S2F4", "EndTime", "0.1 "})
@@ -1964,7 +1964,7 @@ Namespace UITests
                     'Add these neurons to the chart.
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\NeuralData"}, 2000)
                     ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\NeuralData\LineChart\Y Axis 6", False})
-                    AddItemToChart("Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S3\Nodes\S3F1")
+                    AddItemToChart("Simulation\Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S3\Nodes\S3F1")
 
                     RunSimulationWaitToEnd()
                     CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "CopyS3_")
@@ -2037,20 +2037,20 @@ Namespace UITests
 
                     'Add these neurons to the chart.
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\NeuralData"}, 2000)
-                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 1", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1I1", "S1I1", "S1I1Vm")
-                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 1", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1I2", "S1I2", "S1I2Vm")
+                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 1", "Simulation\Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1I1", "S1I1", "S1I1Vm")
+                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 1", "Simulation\Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1I2", "S1I2", "S1I2Vm")
 
                     ClickToolbarItem("AddAxisToolStripButton", True)
-                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 2", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F1", "S1F1", "S1F1Vm", "FiringRateGUI.DataObjects.Behavior.Neurons.Normal.DataTypes.MembraneVoltage")
-                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 2", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F4", "S1F4", "S1F2Vm", "FiringRateGUI.DataObjects.Behavior.Neurons.Normal.DataTypes.MembraneVoltage")
+                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 2", "Simulation\Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F1", "S1F1", "S1F1Vm", "FiringRateGUI.DataObjects.Behavior.Neurons.Normal.DataTypes.MembraneVoltage")
+                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 2", "Simulation\Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F4", "S1F4", "S1F2Vm", "FiringRateGUI.DataObjects.Behavior.Neurons.Normal.DataTypes.MembraneVoltage")
 
                     ClickToolbarItem("AddAxisToolStripButton", True)
-                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 3", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F1", "S1F1", "S1F1Ia", "FiringRateGUI.DataObjects.Behavior.Neurons.Normal.DataTypes.AdapterCurrent")
-                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 3", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1I2", "S1I2", "S1I2Ia", "IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking.DataTypes.AdapterCurrent")
+                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 3", "Simulation\Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F1", "S1F1", "S1F1Ia", "FiringRateGUI.DataObjects.Behavior.Neurons.Normal.DataTypes.AdapterCurrent")
+                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 3", "Simulation\Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1I2", "S1I2", "S1I2Ia", "IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking.DataTypes.AdapterCurrent")
 
                     ClickToolbarItem("AddAxisToolStripButton", True)
-                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 4", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F1", "S1F1", "S1F1FF")
-                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 4", "Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F4", "S1F4", "S1F2FF")
+                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 4", "Simulation\Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F1", "S1F1", "S1F1FF")
+                    AddItemToChart("Tool Viewers\NeuralData\LineChart\Y Axis 4", "Simulation\Organism_1\Behavioral System\S1\Nodes\S2\Nodes\S1F4", "S1F4", "S1F2FF")
 
                     AddStimulus("Tonic Current", m_strStruct1Name, "\Behavioral System\S1\S2\S1F4", "Stim_S1F4")
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\Stim_S1F4", "StartTime", "0 "})

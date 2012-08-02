@@ -209,12 +209,16 @@ void SimulationWindowMgr::RemoveSimulationWindow(HWND win)
 **/
 BOOL SimulationWindowMgr::Update()
 {
-	//First update the hud item data.
-	m_lpHudMgr->Update();
-
 	int iCount = m_aryWindows.GetSize();
-	for(int iIndex=0; iIndex<iCount; iIndex++)
-		m_aryWindows[iIndex]->Update();
+
+	//First update the hud item data.
+	if(iCount > 0)
+	{
+		m_lpHudMgr->Update();
+
+		for(int iIndex=0; iIndex<iCount; iIndex++)
+			m_aryWindows[iIndex]->Update();
+	}
 
 	return TRUE;
 }
@@ -281,6 +285,15 @@ BOOL SimulationWindowMgr::HasContainedWindow()
 			return TRUE;
 	}
 	return FALSE;
+}
+
+void SimulationWindowMgr::ResetSimulation()
+{
+	m_lpHudMgr->ResetSimulation();
+
+	int iCount = m_aryWindows.GetSize();
+	for(int iIndex=0; iIndex<iCount; iIndex++)
+		m_aryWindows[iIndex]->ResetSimulation();
 }
 
 void SimulationWindowMgr::Load(CStdXml &oXml)

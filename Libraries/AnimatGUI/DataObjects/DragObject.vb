@@ -64,7 +64,11 @@ Namespace DataObjects
         End Property
 
         <Browsable(False)> _
-        Public MustOverride ReadOnly Property StructureID() As String
+        Public Overridable ReadOnly Property StructureID As String
+            Get
+                Return ""
+            End Get
+        End Property
 
         <Browsable(False)> _
         Public MustOverride ReadOnly Property CanBeCharted() As Boolean
@@ -168,6 +172,30 @@ Namespace DataObjects
 
         End Sub
 
+        Public Overridable Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, ByVal tpTemplatePartType As Type) As Crownwood.DotNetMagic.Controls.Node
+
+            'If a template part type is supplied and this part is not one of those template types then do not add it to the tree view
+            If tpTemplatePartType Is Nothing OrElse (Not tpTemplatePartType Is Nothing AndAlso Util.IsTypeOf(Me.GetType(), tpTemplatePartType, False)) Then
+                Dim myAssembly As System.Reflection.Assembly
+                myAssembly = System.Reflection.Assembly.Load(Me.AssemblyModuleName)
+                frmDataItem.ImageManager.AddImage(myAssembly, Me.WorkspaceImageName)
+
+                Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(Me.ItemName)
+                If tnParent Is Nothing Then
+                    frmDataItem.TreeView.Nodes.Add(tnNode)
+                Else
+                    tnParent.Nodes.Add(tnNode)
+                End If
+                tnNode.ImageIndex = frmDataItem.ImageManager.GetImageIndex(Me.WorkspaceImageName)
+                tnNode.SelectedImageIndex = frmDataItem.ImageManager.GetImageIndex(Me.WorkspaceImageName)
+                tnNode.Tag = Me
+
+                Return tnNode
+            Else
+                Return Nothing
+            End If
+        End Function
+
         Protected Overridable Sub AddCompatibleStimulusType(ByVal strStimulusType As String)
             AddCompatibleStimulusType(strStimulusType, Me)
         End Sub
@@ -197,26 +225,6 @@ Namespace DataObjects
             Next
 
         End Sub
-
-        Public Overridable Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, ByVal tpTemplatePartType As Type) As Crownwood.DotNetMagic.Controls.Node
-
-            'If a template part type is supplied and this part is not one of those template types then do not add it to the tree view
-            If tpTemplatePartType Is Nothing OrElse (Not tpTemplatePartType Is Nothing AndAlso Util.IsTypeOf(Me.GetType(), tpTemplatePartType, False)) Then
-                Dim myAssembly As System.Reflection.Assembly
-                myAssembly = System.Reflection.Assembly.Load(Me.AssemblyModuleName)
-                frmDataItem.ImageManager.AddImage(myAssembly, Me.WorkspaceImageName)
-
-                Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(Me.ItemName)
-                tnParent.Nodes.Add(tnNode)
-                tnNode.ImageIndex = frmDataItem.ImageManager.GetImageIndex(Me.WorkspaceImageName)
-                tnNode.SelectedImageIndex = frmDataItem.ImageManager.GetImageIndex(Me.WorkspaceImageName)
-                tnNode.Tag = Me
-
-                Return tnNode
-            Else
-                Return Nothing
-            End If
-        End Function
 
 #End Region
 

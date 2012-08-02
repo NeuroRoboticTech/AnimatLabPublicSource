@@ -68,6 +68,7 @@ public:
 
 	virtual SimulationWindow *FindSimulationWindow(HWND win, int &iIndex, BOOL bThrowError = TRUE);
 
+	virtual void ResetSimulation();
 	virtual SimulationWindow *AddSimulationWindow(string strModule, string strType, BOOL bInit, HWND win, string strHudXml);
 	virtual void RemoveSimulationWindow(HWND win);
 	virtual void CloseAllWindows();

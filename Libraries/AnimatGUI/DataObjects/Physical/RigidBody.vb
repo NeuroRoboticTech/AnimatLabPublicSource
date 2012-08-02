@@ -1369,6 +1369,10 @@ Namespace DataObjects.Physical
                 'If this is  a collision objectthen we need to add a default graphics object for this item.
                 If bAddDefaultGraphics AndAlso rbChildBody.IsCollisionObject Then
                     rbChildBody.CreateDefaultGraphicsObject()
+                ElseIf Not bAddDefaultGraphics AndAlso rbChildBody.IsCollisionObject Then
+                    'If it is a collision object and no default graphic is added then we want to set its
+                    'simulation transparency to 0 so it is visible in the sim.
+                    rbChildBody.Transparencies.SimulationTransparency = 0
                 End If
 
             End If

@@ -496,7 +496,8 @@ Namespace Forms
             '
             'ViewToolStripMenuItem
             '
-            Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RunSimulationToolStripMenuItem, Me.ToolStripSeparator3, Me.CustomizeToolStripMenuItem, Me.PreferencesToolStripMenuItem, Me.SelectionModeToolStripMenuItem, Me.DisplayToolStripMenuItem})
+            ', Me.DisplayToolStripMenuItem
+            Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RunSimulationToolStripMenuItem, Me.ToolStripSeparator3, Me.CustomizeToolStripMenuItem, Me.PreferencesToolStripMenuItem, Me.SelectionModeToolStripMenuItem})
             Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
             Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
             Me.ViewToolStripMenuItem.Text = "&View"
@@ -734,7 +735,8 @@ Namespace Forms
                                                                                         Me.EditMaterialsToolStripButton, Me.ToolStripSeparator10, _
                                                                                         Me.SelGraphicsToolStripButton, Me.SelCollisionToolStripButton, _
                                                                                         Me.SelJointsToolStripButton, Me.SelRecFieldsToolStripButton, _
-                                                                                        Me.SelSimToolStripButton, Me.DisplayModeDropDown})
+                                                                                        Me.SelSimToolStripButton})
+            ', Me.DisplayModeDropDown
             Me.AnimatToolStrip.Location = New System.Drawing.Point(3, 24)
             Me.AnimatToolStrip.Name = "AnimatToolStrip"
             Me.AnimatToolStrip.SecurityMgr = Nothing

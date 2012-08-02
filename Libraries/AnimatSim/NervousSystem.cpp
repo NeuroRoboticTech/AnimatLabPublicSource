@@ -51,6 +51,7 @@ namespace AnimatSim
 NervousSystem::NervousSystem()
 {
 	m_lpOrganism = NULL;
+	m_lStepStartTick = 0;
 }
 
 /**
@@ -264,12 +265,29 @@ void NervousSystem::StepSim()
 		lpModule = oPos->second;
 
 		if(lpModule->NeedToStep(TRUE))
+		{
+			StartStepTimer();
 			lpModule->StepSimulation();
+			RecordStepTimer(lpModule->Name());
+		}
 	}
+}
+
+void NervousSystem::StartStepTimer()
+{
+	m_lStepStartTick = m_lpSim->GetTimerTick();
+}
+
+void NervousSystem::RecordStepTimer(string strModuleName)
+{
+	double dblTime = m_lpSim->TimerDiff_s(m_lStepStartTick, m_lpSim->GetTimerTick());
+	m_lpSim->AddNeuralStepTime(strModuleName, dblTime);
 }
 
 void NervousSystem::StepAdapters()
 {
+	StartStepTimer();
+
 	NeuralModule *lpModule = NULL;
 	CStdPtrMap<string, NeuralModule>::iterator oPos;
 	
@@ -283,6 +301,8 @@ void NervousSystem::StepAdapters()
 			lpModule->ResetStepCounter();
 		}
 	}
+
+	RecordStepTimer("Adapters");
 }
 
 long NervousSystem::CalculateSnapshotByteSize()

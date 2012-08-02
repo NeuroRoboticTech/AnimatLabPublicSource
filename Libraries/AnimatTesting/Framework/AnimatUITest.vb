@@ -150,7 +150,12 @@ Namespace Framework
 
             ExecuteIndirectMethod("LoadProject", New Object() {m_strRootFolder & m_strProjectPath & "\" & m_strProjectName & "\" & m_strProjectName & ".aproj"}, 20, False, True)
 
-         End Sub
+            'Set simulation to fastest possible.
+            If DirectCast(GetApplicationProperty("ProjectIsOpen"), Boolean) Then
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation", "PlaybackControlMode", "FastestPossible"})
+            End If
+
+        End Sub
 
         ' Use TestCleanup to run code after each test has run
         <TestCleanup()> Public Overridable Sub MyTestCleanup()
@@ -399,6 +404,9 @@ Namespace Framework
             'Set simulation end time.
             ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation", "SimulationEndTime", dblSimEnd.ToString})
 
+            'Set simulation to fastest possible.
+            ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation", "PlaybackControlMode", "FastestPossible"})
+
             SetStructureNames("1", bCreateStructure)
             CreateStructure(m_strStructureGroup, m_strStruct1Name, m_strStruct1Name, bCreateStructure)
 
@@ -441,7 +449,7 @@ Namespace Framework
 
             'Now add items to the chart to plot the y position of the root, child part, and joint.
             'Add root part.
-            AddItemToChart(m_strStruct1Name & "\Body Plan\Root")
+            AddItemToChart("Simulation\" & m_strStruct1Name & "\Body Plan\Root")
 
             'Set the name of the data chart item to root_y.
             ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Root", "Name", "Root_Y"})
@@ -451,7 +459,7 @@ Namespace Framework
 
             If Me.HasChildPart Then
                 'Add child body part
-                AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1")
+                AddItemToChart("Simulation\" & "Simulation\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1")
 
                 'Set the name of the data chart item to root_y.
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Body_1", "Name", "Child_Y"})
@@ -1233,28 +1241,28 @@ Namespace Framework
             'Change the end time of the data chart to 45 seconds.
             ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectEndTime", m_dblChartEndTime.ToString})
 
-            AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm")
+            AddItemToChart("Simulation\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm")
             ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Arm", "Name", "Arm_X"})
             ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Arm_X", "DataTypeID", "WorldPositionX"})
 
-            AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm")
+            AddItemToChart("Simulation\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm")
             ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Arm", "Name", "Arm_Y"})
             ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Arm_Y", "DataTypeID", "WorldPositionY"})
 
-            AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm")
+            AddItemToChart("Simulation\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm")
             ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Arm", "Name", "Arm_Z"})
             ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Arm_Z", "DataTypeID", "WorldPositionZ"})
 
             If bChartAttachments Then
-                AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\ArmAttach")
+                AddItemToChart("Simulation\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\ArmAttach")
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\ArmAttach", "Name", "ArmAttach_X"})
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\ArmAttach_X", "DataTypeID", "WorldPositionX"})
 
-                AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\ArmAttach")
+                AddItemToChart("Simulation\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\ArmAttach")
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\ArmAttach", "Name", "ArmAttach_Y"})
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\ArmAttach_Y", "DataTypeID", "WorldPositionY"})
 
-                AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\ArmAttach")
+                AddItemToChart("Simulation\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Arm\ArmAttach")
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\ArmAttach", "Name", "ArmAttach_Z"})
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\ArmAttach_Z", "DataTypeID", "WorldPositionZ"})
             End If
@@ -1263,7 +1271,7 @@ Namespace Framework
                 'Add a new axis to chart the joint rotation.
                 ClickToolbarItem("AddAxisToolStripButton", True)
 
-                AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1")
+                AddItemToChart("Simulation\" & m_strStruct1Name & "\Body Plan\Root\Joint_1")
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 2\Joint_1", "Name", m_strJointChartMovementName})
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 2\" & m_strJointChartMovementName, "DataTypeID", m_strJointChartMovementType})
             End If
@@ -1272,7 +1280,7 @@ Namespace Framework
                 'Add a new axis to chart the joint velocity.
                 ClickToolbarItem("AddAxisToolStripButton", True)
 
-                AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1")
+                AddItemToChart("Simulation\" & m_strStruct1Name & "\Body Plan\Root\Joint_1")
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 3\Joint_1", "Name", m_strJointChartVelocityName})
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 3\" & m_strJointChartVelocityName, "DataTypeID", m_strJointChartVelocityType})
             End If

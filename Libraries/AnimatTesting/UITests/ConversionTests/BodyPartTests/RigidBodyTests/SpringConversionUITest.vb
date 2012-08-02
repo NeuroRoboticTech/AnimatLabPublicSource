@@ -178,7 +178,7 @@ Namespace UITests
 
                         ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Tool Viewers\BodyData"}, 1000)
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1", False})
-                        AddItemToChart("Organism_1\Body Plan\Base\Joint_1\Arm\Spring2")
+                        AddItemToChart("Simulation\Organism_1\Body Plan\Base\Joint_1\Arm\Spring2")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 1\Spring2", "Name", "Length2"})
                         VerifyPropertyValue("Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring2", "Length.ActualValue", 5.5)
                         RunSimulationWaitToEnd()
@@ -248,7 +248,7 @@ Namespace UITests
                         'Add these neurons to the chart.
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\BodyData"}, 2000)
                         ClickToolbarItem("AddAxisToolStripButton", True)
-                        AddItemToChart("Organism_1\Behavioral System\Neural Subsystem\Nodes\S2\Nodes\A")
+                        AddItemToChart("Simulation\Organism_1\Behavioral System\Neural Subsystem\Nodes\S2\Nodes\A")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Y Axis 2\A", "Name", "2"})
 
                         RunSimulationWaitToEnd()

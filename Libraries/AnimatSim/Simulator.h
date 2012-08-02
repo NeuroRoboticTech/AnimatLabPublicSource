@@ -226,13 +226,7 @@ namespace AnimatSim
 			float m_lEndSimTimeSlice;
 
 			///The tick count for when the simulation first begins running.
-			DWORD m_iStartSimTick;
-
-			/// Zero-based index of the frame rate
-			int m_iFrameRate;
-
-			/// The time value duration of the frame step.
-			float m_fltFrameStep;
+			unsigned long long m_lStartSimTick;
 
 			///The number of slices that the physics engine has been updated.
 			long m_lPhysicsSliceCount;
@@ -271,6 +265,71 @@ namespace AnimatSim
 			/// so we can show the selected vertex. It adds a sphere to the part at that vertex coordinate and
 			/// uses this radius when drawing the sphere.
 			float m_fltRecFieldSelRadius;
+
+#pragma endregion
+
+#pragma region TimingVariables
+
+			/// Determines the mode used for playback control. See the accessor method for more details.
+			int m_iPlaybackControlMode;
+
+			/// The time step you want to use for playback if the playback control mode is set to a preset value.
+			/// This value is in milliseconds.
+			float m_fltPresetPlaybackTimeStep;
+
+			/// This is the tick count that is taken when a step is started.
+			unsigned long long m_lStepStartTick;
+			
+			///The tick count for when the simulation procressing of the step ends.
+			unsigned long long m_lStepSimEndTick;
+
+			/// This is the total number of milliseconds for the simulation processing time.
+			/// This is a float so that it can easily be reported.
+			float m_fltSimulationRealTimeToStep;
+
+			/// This is the total time it takes to complete one physics time step.
+			float m_fltTotalRealTimeForStep;
+
+			/// Previous total time for the step. Used for exponential smoothing algorithm.
+			float m_fltPrevTotalRealTimeForStep;
+
+			/// Current value of the exponential smoothing algorith for real time step.
+			float m_fltTotalRealTimeForStepSmooth;
+
+			/// This is the time pers step for the physics engine.
+			float m_fltPhysicsStepTime;
+
+			/// This keeps track of the real time from the begginning of the simulation.
+			float m_fltRealTime;
+
+			/// This is the total number of milliseconds that is added by the playback control to match the
+			/// desired playback rate.
+			/// This is a float so that it can easily be reported.
+			float m_fltPlaybackAdditionRealTimeToStep;
+
+			/// Desired frame rate of the simulation video.
+			int m_iDesiredFrameRate;
+
+			/// The desired time value duration of the video frame step.
+			float m_fltDesiredFrameStep;
+
+			/// The tick when a new video frame time starts.
+			unsigned long long m_lVideoFrameStartTick;
+
+			/// The frame rate for the current frame.
+			float m_fltActualFrameRate;
+
+			/// This is used for reporting when a video frame was actually drawn.
+			float m_fltVideoFrameDrawn;
+
+			/// This is the last tick taken by a GetTickCount. It is used in debugging.
+			unsigned long long m_lLastTickTaken;
+
+			///A list of all the times for the current step for all neural engines. 
+			//CStdMap<string, float> m_aryNeuralEngineRealTimeSteps;
+
+			/// Total time for processing of all neural items for this step.
+			float m_fltTotalNeuralStepTime;
 
 #pragma endregion
 
@@ -443,7 +502,8 @@ namespace AnimatSim
 
 			virtual void ProcessSimulationStep();
 			virtual void StepSimulation();
-			virtual void StepVideoFrame() = 0;
+			virtual void StepVideoFrame();
+			virtual void StepPlaybackControl();
 			virtual void SimulateBegin();
 			virtual void SimulateEnd();
 
@@ -456,6 +516,21 @@ namespace AnimatSim
 
 			virtual void HandleCriticalError(string strError);
 			virtual void HandleNonCriticalError(string strError);
+
+			virtual void UpdateSimulationWindows() = 0;
+
+			//Timing Methods
+			virtual void StartSimulationStepTimer();
+			virtual void RecordSimulationStepTimer();
+			virtual void RecordSimulationTotalStepTimer();
+			virtual double CurrentRealTimeForStep_n();
+			virtual double CurrentRealTimeForStep_s();
+			virtual double CalculateRemainingPlaybackTime();
+			virtual void RecordAddedPlaybackTime();
+			virtual void StartVideoFrameTimer();
+			virtual double TimeBetweenVideoFrames();
+			virtual double RemainingVideoFrameTime();
+			virtual void ClearNeuralStepTimes();
 
 #pragma endregion
 
@@ -536,7 +611,7 @@ namespace AnimatSim
 			virtual long Millisecond();
 			virtual long MillisecondToSlice(long lMillisecond);
 			virtual long SliceToMillisecond(long lSlice);
-			virtual DWORD StartSimTick();
+			virtual unsigned long long StartSimTick();
 
 			virtual float MinTimeStep();
 			virtual float TimeStep();
@@ -595,9 +670,6 @@ namespace AnimatSim
 
 			virtual BOOL Stopped();
 
-			virtual int FrameRate();
-			virtual float FrameStep();
-			virtual void FrameRate(int iVal);
 			virtual short PhysicsStepInterval();
 			virtual void PhysicsStepInterval(short iVal);
 		 
@@ -629,6 +701,21 @@ namespace AnimatSim
 			virtual float RecFieldSelRadius();
 			virtual void RecFieldSelRadius(float fltValue, BOOL bUseScaling = TRUE, BOOL bUpdateAllBodies = TRUE);
 
+			virtual int PlaybackControlMode();
+			virtual void PlaybackControlMode(int iMode);
+
+			virtual float PresetPlaybackTimeStep();
+			virtual void PresetPlaybackTimeStep(float fltTimeStep);
+
+			virtual unsigned long long StepStartTick();
+			virtual unsigned long long StepSimEndTick();
+
+			virtual int DesiredFrameRate();
+			virtual float DesiredFrameStep();
+			virtual void DesiredFrameRate(int iVal);
+
+			virtual float RealTime();
+
 #pragma endregion
 
 #pragma region UnitScalingVariables
@@ -648,6 +735,17 @@ namespace AnimatSim
 #pragma region HelperMethods
 
 		virtual void GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4], CStdFPoint &vPos, CStdFPoint &vRot) = 0;
+
+		//Timer Methods
+		virtual unsigned long long GetTimerTick() = 0;
+		virtual double TimerDiff_n(unsigned long long lStart, unsigned long long lEnd) = 0;
+		virtual double TimerDiff_u(unsigned long long lStart, unsigned long long lEnd) = 0;
+		virtual double TimerDiff_m(unsigned long long lStart, unsigned long long lEnd) = 0;
+		virtual double TimerDiff_s(unsigned long long lStart, unsigned long long lEnd) = 0;
+		virtual void MicroSleep(unsigned int iMicroTime) = 0;
+		virtual void MicroWait(unsigned int iMicroTime);
+
+		virtual void AddNeuralStepTime(string strModuleName, double dblStepTime);
 
 #pragma endregion
 

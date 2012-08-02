@@ -555,6 +555,33 @@ Namespace Forms
             End Get
         End Property
 
+        Public Overridable Property FrameRate() As Integer
+            Get
+                Return Util.Simulation.FrameRate
+            End Get
+            Set(ByVal Value As Integer)
+                Util.Simulation.FrameRate = Value
+            End Set
+        End Property
+
+        Public Overridable Property PlaybackControlMode() As DataObjects.Simulation.enumPlaybackControlMode
+            Get
+                Return Util.Simulation.PlaybackControlMode
+            End Get
+            Set(ByVal value As DataObjects.Simulation.enumPlaybackControlMode)
+                Util.Simulation.PlaybackControlMode = value
+            End Set
+        End Property
+
+        Public Overridable Property PresetPlaybackTimeStep() As ScaledNumber
+            Get
+                Return Util.Simulation.PresetPlaybackTimeStep
+            End Get
+            Set(ByVal value As ScaledNumber)
+                Util.Simulation.PresetPlaybackTimeStep = value
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -700,8 +727,22 @@ Namespace Forms
             propTable.Properties.Add(New AnimatGUICtrls.Controls.PropertySpec("Time Scale", Me.ctrlTimeRuler.TimeScale.GetType, "TimeScale", _
                                         "Time Bar Settings", "Sets the time scale used for the time bar.", Me.ctrlTimeRuler.TimeScale))
 
-            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Frame Rate", Util.Simulation.FrameRate.GetType, "FrameRate", _
-                                        "Playback Controls", "Sets the time scale used for the time bar.", Util.Simulation.FrameRate))
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Frame Rate", Me.FrameRate.GetType, "FrameRate", _
+                                        "Playback Controls", "Sets the graphics playback frame rate. Adjust this as needed to optimize the " & _
+                                        "performance of your graphics and physics engine. Minimum value is 10 FPS.", Me.FrameRate))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Playback Control Mode", Util.Simulation.PlaybackControlMode.GetType(), "PlaybackControlMode", _
+                                        "Playback Controls", "Determins how the playback speed of the simulation is controlled. " & _
+                                        "If set to fastest possible then no delay will be added between simulation time steps. " & _
+                                        "If set to use physics time step then it will attempt to set the playback speed to match physics time step. " & _
+                                        "If using a preset value then it will attempt to set the playback speed to match this preset value.", Util.Simulation.PlaybackControlMode))
+
+            pbNumberBag = Util.Simulation.PresetPlaybackTimeStep.Properties
+            If Util.Simulation.PlaybackControlMode = Util.Simulation.enumPlaybackControlMode.UsePresetValue Then
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Playback Time Step", pbNumberBag.GetType(), "PresetPlaybackTimeStep", _
+                                            "Playback Controls", "Controls the pause between simulation time steps. This lets you control the playback speed of a simulation independent of the integration time step.", pbNumberBag, _
+                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+            End If
 
         End Sub
 

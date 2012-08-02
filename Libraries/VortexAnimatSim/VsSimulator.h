@@ -19,11 +19,6 @@ namespace VortexAnimatSim
 	class VORTEX_PORT VsSimulator : public AnimatSim::Simulator  
 	{
 	protected:
-
-		osg::Timer_t m_iLastFrame;
-		osg::Timer_t m_iCurrentFrame;
-		float m_fltFrameDt;
-
 		VsSimulationWindowMgr *m_vsWinMgr;
 
 		//osg group node for the main scene
@@ -49,8 +44,9 @@ namespace VortexAnimatSim
 		void SetSimulationStabilityParams();
 		
 		virtual void StepSimulation();
-		virtual void StepVideoFrame();
 		virtual void SimulateEnd();
+
+		virtual void UpdateSimulationWindows();
 
 		osg::NotifySeverity ConvertTraceLevelToOSG();
 
@@ -92,6 +88,14 @@ namespace VortexAnimatSim
 #pragma region HelperMethods
 
 		virtual void GetPositionAndRotationFromD3DMatrix(float (&aryTransform)[4][4], CStdFPoint &vPos, CStdFPoint &vRot);
+
+		//Timer Methods
+		virtual unsigned long long GetTimerTick();
+		virtual double TimerDiff_n(unsigned long long lStart, unsigned long long lEnd);
+		virtual double TimerDiff_u(unsigned long long lStart, unsigned long long lEnd);
+		virtual double TimerDiff_m(unsigned long long lStart, unsigned long long lEnd);
+		virtual double TimerDiff_s(unsigned long long lStart, unsigned long long lEnd);
+		virtual void MicroSleep(unsigned int iMicroTime);
 
 #pragma endregion
 

@@ -249,7 +249,7 @@ Namespace UITests
 
                         ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Tool Viewers\BodyData"}, 1000)
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\BodyData\LineChart\Tension", False})
-                        AddItemToChart("Organism_1\Body Plan\Base\Joint_1\Arm\Muscle2")
+                        AddItemToChart("Simulation\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle2")
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\BodyData\LineChart\Tension\Muscle2", "DataTypeID", "Tension"})
                         VerifyPropertyValue("Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle2", "Length.ActualValue", 0.947)
                         RunSimulationWaitToEnd()
@@ -321,7 +321,7 @@ Namespace UITests
                         'Add these neurons to the chart.
                         ExecuteMethod("DblClickWorkspaceItem", New Object() {"Tool Viewers\BodyData"}, 2000)
                         ClickToolbarItem("AddAxisToolStripButton", True)
-                        AddItemToChart("Organism_1\Behavioral System\Neural Subsystem\Nodes\S2\Nodes\MV")
+                        AddItemToChart("Simulation\Organism_1\Behavioral System\Neural Subsystem\Nodes\S2\Nodes\MV")
 
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "CreateA_B_")
@@ -378,7 +378,7 @@ Namespace UITests
 
                         ExecuteMethod("SelectWorkspaceTabPage", New Object() {"Tool Viewers\BodyData"}, 1000)
                         ClickToolbarItem("AddAxisToolStripButton", True)
-                        AddItemToChart("Organism_1\Behavioral System\Neural Subsystem\Nodes\S2\Nodes\Len")
+                        AddItemToChart("Simulation\Organism_1\Behavioral System\Neural Subsystem\Nodes\S2\Nodes\Len")
 
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "CreateB_A_")

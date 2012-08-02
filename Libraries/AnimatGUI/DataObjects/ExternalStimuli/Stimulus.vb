@@ -399,7 +399,11 @@ Namespace DataObjects.ExternalStimuli
                 Next
 
                 If tnStimuli Is Nothing Then
-                    tnStimuli = frmDataItem.TreeView.Nodes.Add(New Crownwood.DotNetMagic.Controls.Node("Stimuli"))
+                    If tnParent Is Nothing Then
+                        tnStimuli = frmDataItem.TreeView.Nodes.Add(New Crownwood.DotNetMagic.Controls.Node("Stimuli"))
+                    Else
+                        tnStimuli = tnParent.Nodes.Add(New Crownwood.DotNetMagic.Controls.Node("Stimuli"))
+                    End If
                 End If
 
                 tnNode = New Crownwood.DotNetMagic.Controls.Node(Me.ItemName)
