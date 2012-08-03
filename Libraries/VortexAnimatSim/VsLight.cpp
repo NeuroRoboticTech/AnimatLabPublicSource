@@ -65,6 +65,21 @@ osg::Group *VsLight::ParentOSG()
 	return GetVsSimulator()->OSGRoot();
 }
 
+void VsLight::Enabled(BOOL bVal)
+{
+	 AnimatSim::Environment::Light::Enabled(bVal);
+
+	 if(GetVsSimulator() &&  GetVsSimulator()->OSGRoot())
+	 {
+		osg::StateSet *rootStateSet = GetVsSimulator()->OSGRoot()->getOrCreateStateSet();
+
+		if(bVal)
+			rootStateSet->setMode( GetGlLight(), osg::StateAttribute::ON );
+		else
+			rootStateSet->setMode( GetGlLight(), osg::StateAttribute::OFF );
+	 }
+}
+
 void VsLight::Position(CStdFPoint &oPoint, BOOL bUseScaling, BOOL bFireChangeEvent, BOOL bUpdateMatrix)
 {
 	Light::Position(oPoint, bUseScaling, bFireChangeEvent, bUpdateMatrix);
@@ -188,8 +203,9 @@ void VsLight::SetupLighting()
     m_osgLightSource->setLight(m_osgLight.get());
 	GetVsSimulator()->OSGRoot()->addChild(m_osgLightSource.get());
 
-	osg::StateSet *rootStateSet = GetVsSimulator()->OSGRoot()->getOrCreateStateSet();
-	rootStateSet->setMode( GetGlLight(), osg::StateAttribute::ON );
+	Enabled(m_bEnabled);
+	//osg::StateSet *rootStateSet = GetVsSimulator()->OSGRoot()->getOrCreateStateSet();
+	//rootStateSet->setMode( GetGlLight(), osg::StateAttribute::ON );
 
 	//m_osgLightSource->setLocalStateSetModes(osg::StateAttribute::ON); 
 	//m_osgLightSource->setStateSetModes(*groupStateSet, osg::StateAttribute::ON); 

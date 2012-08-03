@@ -53,6 +53,7 @@ Light::Light(void)
 	m_fltConstantAttenRatio = 0;
 	m_fltLinearAttenDistance = 0;
 	m_fltQuadraticAttenDistance = 0;
+	m_bEnabled = true;
 }
 
 /**
@@ -66,6 +67,30 @@ Light::~Light(void)
 }
 
 #pragma region AccessorMutators
+/**
+\brief	Tells whether this light is enabled.
+
+\author	dcofer
+\date	2/24/2011
+
+\return	true if it enabled, false if not. 
+**/
+BOOL Light::Enabled() {return m_bEnabled;}
+
+/**
+\brief	Enables the node.
+
+\details Some types of nodes can be enabled/disabled. This sets the enabled state of the object. 
+
+\author	dcofer
+\date	2/24/2011
+
+\param	bValue	true to enable. 
+**/
+void Light::Enabled(BOOL bValue) 
+{
+	m_bEnabled = bValue;
+}
 
 /**
 \brief	Called to collect any body data for this part. 
@@ -265,6 +290,12 @@ BOOL Light::SetData(string strDataType, string strValue, BOOL bThrowError)
 	if(MovableItem::SetData(strType, strValue, FALSE))
 		return true;
 
+	if(strType == "ENABLED")
+	{
+		Enabled(Std_ToBool(strValue));
+		return TRUE;
+	}
+
 	if(strType == "RADIUS")
 	{
 		Radius(atof(strValue.c_str()));
@@ -320,6 +351,7 @@ void Light::Load(CStdXml &oXml)
 	MovableItem::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element
+	Enabled(oXml.GetChildBool("Enabled", m_bEnabled));
 	Radius(oXml.GetChildFloat("Radius", m_fltRadius));
 	LatitudeSegments(oXml.GetChildInt("LatitudeSegments", m_iLatitudeSegments));
 	LongtitudeSegments(oXml.GetChildInt("LongtitudeSegments", m_iLongtitudeSegments));

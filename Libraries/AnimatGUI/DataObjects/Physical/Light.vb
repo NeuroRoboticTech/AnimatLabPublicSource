@@ -160,6 +160,9 @@ Namespace DataObjects.Physical
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Enabled", GetType(Boolean), "Enabled", _
+                                        "Part Properties", "Determines if this light is enabled or not.", m_bEnabled))
+
             Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag
             pbNumberBag = m_snRadius.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Radius", pbNumberBag.GetType(), "Radius", _
@@ -278,6 +281,8 @@ Namespace DataObjects.Physical
             Try
                 oXml.IntoElem()
 
+                m_bEnabled = oXml.GetChildBool("Enabled", m_bEnabled)
+
                 m_snRadius.LoadData(oXml, "Radius")
 
                 m_fltConstantAttenuation = oXml.GetChildFloat("ConstantAttenuation", m_fltConstantAttenuation)
@@ -300,6 +305,8 @@ Namespace DataObjects.Physical
 
             Try
                 oXml.IntoElem()
+
+                oXml.AddChildElement("Enabled", m_bEnabled)
 
                 m_snRadius.SaveData(oXml, "Radius")
 
@@ -325,6 +332,7 @@ Namespace DataObjects.Physical
                 oXml.IntoElem()
 
                 oXml.AddChildElement("Type", "Light")
+                oXml.AddChildElement("Enabled", m_bEnabled)
                 m_snRadius.SaveSimulationXml(oXml, Me, "Radius")
 
                 oXml.AddChildElement("ConstantAttenuation", m_fltConstantAttenuation)

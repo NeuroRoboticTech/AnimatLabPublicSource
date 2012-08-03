@@ -530,9 +530,11 @@ Namespace DataObjects.Physical
         'This is different from the OnPositionChanged event. Those events come up from the simulation.
         Protected Overridable Sub OnLocalPositionValueChanged()
             Try
-                Me.SetSimData("Position", m_svLocalPosition.GetSimulationXml("Position"), True)
-                Util.ProjectProperties.RefreshProperties()
-                RaiseMovedEvent()
+                If Not Util.ProjectProperties Is Nothing Then
+                    Me.SetSimData("Position", m_svLocalPosition.GetSimulationXml("Position"), True)
+                    Util.ProjectProperties.RefreshProperties()
+                    RaiseMovedEvent()
+                End If
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

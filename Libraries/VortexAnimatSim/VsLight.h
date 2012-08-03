@@ -45,6 +45,8 @@ namespace VortexAnimatSim
 			VsLight();
 			virtual ~VsLight();
 
+			virtual void Enabled(BOOL bVal);
+
 			virtual void Position(CStdFPoint &oPoint, BOOL bUseScaling = TRUE, BOOL bFireChangeEvent = FALSE, BOOL bUpdateMatrix = TRUE);
 			virtual void Ambient(CStdColor &aryColor);
 			virtual void Diffuse(CStdColor &aryColor);

@@ -1794,6 +1794,7 @@ Namespace Forms
             Try
                 Util.DisableDirtyFlags = True
                 Util.Application = Me
+                Me.Title = "AnimatLab"
 
                 m_doSimInterface = CreateSimInterface()
 
@@ -3075,6 +3076,8 @@ Namespace Forms
 
             Me.ClearIsDirty()
 
+            Me.Title = "AnimatLab"
+
             Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Closed current project")
         End Sub
 
@@ -3186,7 +3189,7 @@ Namespace Forms
 
                 Me.ClearIsDirty()
 
-                Me.Title = Me.ProjectName & " Project"
+                Me.Title = "AnimatLab " & Me.ProjectName & " Project"
 
                 Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Finished successful load of project: '" & strFilename & "'")
 
@@ -5234,7 +5237,7 @@ Namespace Forms
                     Util.Application.ProjectName = frmNewProject.txtProjectName.Text
                     Util.Application.ProjectFile = Util.Application.ProjectName & ".aproj"
                     Util.Application.SimulationFile = Util.Application.ProjectName & ".asim"
-                    Me.Title = Me.ProjectName & " Project"
+                    Me.Title = "AnimatLab " & Me.ProjectName & " Project"
 
                     Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Creating a new Project: '" & Util.Application.ProjectPath & "\" & Util.Application.ProjectFile)
 
@@ -5330,7 +5333,7 @@ Namespace Forms
                     Util.Application.ProjectName = frmSave.txtProjectName.Text
                     Util.Application.ProjectFile = Util.Application.ProjectName & ".aproj"
                     Util.Application.SimulationFile = Util.Application.ProjectName & ".asim"
-                    Me.Title = Me.ProjectName & " Project"
+                    Me.Title = "AnimatLab " & Me.ProjectName & " Project"
 
                     Me.AppIsBusy = True
 
@@ -6302,11 +6305,11 @@ Namespace Forms
 
         Private Sub SnapshotSimToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SnapshotSimToolStripMenuItem.Click
             Try
-                'Me.SimulationInterface.SaveSimulationFile(Me.ProjectPath & "Snapshot")
+                Me.SimulationInterface.SaveSimulationFile(Me.ProjectPath & "Snapshot")
 
                 'Me.OpenUITypeEditor("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\3\1 (1.5 uS)", "SynapseType")
                 'Me.SetObjectProperty("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A", "DataTypes", "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking.DataTypes.ExternalCurrent")
-                Me.SetObjectProperty("Simulation\Environment\Organisms\Organism_1\Body Plan\Base", "Height", "0.3")
+                'Me.SetObjectProperty("Simulation\Environment\Organisms\Organism_1\Body Plan\Base", "Height", "0.3")
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

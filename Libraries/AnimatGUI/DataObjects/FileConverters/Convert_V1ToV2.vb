@@ -1024,8 +1024,9 @@ Namespace DataObjects
 
             Protected Overridable Sub AddLight(ByVal xnEnvironment As XmlNode)
 
-                Dim fltDist As Single = 20 * m_fltDistanceUnits
-                Dim fltAttenuation As Single = 1000 * m_fltDistanceUnits
+                Dim fltDistY As Single = 20 * m_fltDistanceUnits
+                Dim fltDistXZ As Single = 10 * m_fltDistanceUnits
+                Dim fltAttenuation As Single = 750 * m_fltDistanceUnits
 
                 Dim strXml As String = "<Light>" & _
                                        "    <Name>Light_1</Name>" & _
@@ -1045,9 +1046,43 @@ Namespace DataObjects
                                        "    <Shininess>64</Shininess>" & _
                                        "    <Texture/>" & _
                                        "    <LocalPosition>" & _
-                                       "        <X Value=""1"" Scale=""None"" Actual=""1""/>" & _
-                                       "        <Y Value=""" & fltDist & """ Scale=""None"" Actual=""" & fltDist & """/>" & _
+                                       "        <X Value=""" & fltDistXZ & """ Scale=""None"" Actual=""" & fltDistXZ & """/>" & _
+                                       "        <Y Value=""" & fltDistY & """ Scale=""None"" Actual=""" & fltDistY & """/>" & _
+                                       "        <Z Value=""" & fltDistXZ & """ Scale=""None"" Actual=""" & fltDistXZ & """/>" & _
+                                       "    </LocalPosition>" & _
+                                       "    <Rotation>" & _
+                                       "        <X Value=""0"" Scale=""None"" Actual=""0""/>" & _
+                                       "        <Y Value=""0"" Scale=""None"" Actual=""0""/>" & _
                                        "        <Z Value=""0"" Scale=""None"" Actual=""0""/>" & _
+                                       "    </Rotation>" & _
+                                       "    <Radius Value=""50"" Scale=""milli"" Actual=""0.05""/>" & _
+                                       "    <ConstantAttenuation>0</ConstantAttenuation>" & _
+                                       "    <LinearAttenuationDistance Value=""0"" Scale=""None"" Actual=""0""/>" & _
+                                       "    <QuadraticAttenuationDistance Value=""" & fltAttenuation & """ Scale=""None"" Actual=""" & fltAttenuation & """/>" & _
+                                       "    <LatitudeSegments>10</LatitudeSegments>" & _
+                                       "    <LongtitudeSegments>10</LongtitudeSegments>" & _
+                                       "</Light>" & _
+                                       "<Light>" & _
+                                       "    <Name>Light_2</Name>" & _
+                                       "   <ID>" & System.Guid.NewGuid.ToString & "</ID>" & _
+                                       "    <Description/>" & _
+                                       "    <Transparencies>" & _
+                                       "        <Graphics>50</Graphics>" & _
+                                       "        <Collisions>50</Collisions>" & _
+                                       "        <Joints>50</Joints>" & _
+                                       "        <RecFields>50</RecFields>" & _
+                                       "        <Simulation>100</Simulation>" & _
+                                       "    </Transparencies>" & _
+                                       "    <IsVisible>True</IsVisible>" & _
+                                       "    <Ambient Red=""1"" Green=""1"" Blue=""1"" Alpha=""1""/>" & _
+                                       "    <Diffuse Red=""1"" Green=""1"" Blue=""1"" Alpha=""1""/>" & _
+                                       "    <Specular Red=""1"" Green=""1"" Blue=""1"" Alpha=""1""/>" & _
+                                       "    <Shininess>64</Shininess>" & _
+                                       "    <Texture/>" & _
+                                       "    <LocalPosition>" & _
+                                       "        <X Value=""" & -fltDistXZ & """ Scale=""None"" Actual=""" & -fltDistXZ & """/>" & _
+                                       "        <Y Value=""" & fltDistY & """ Scale=""None"" Actual=""" & fltDistY & """/>" & _
+                                       "        <Z Value=""" & -fltDistXZ & """ Scale=""None"" Actual=""" & -fltDistXZ & """/>" & _
                                        "    </LocalPosition>" & _
                                        "    <Rotation>" & _
                                        "        <X Value=""0"" Scale=""None"" Actual=""0""/>" & _

@@ -23,6 +23,9 @@ namespace AnimatSim
 		class ANIMAT_PORT Light : public AnimatBase, public MovableItem
 		{
 		protected:
+			///Determines if light is enabled or not.
+			BOOL m_bEnabled;
+
 			/// The radius of the sphere
 			float m_fltRadius;
 
@@ -51,6 +54,9 @@ namespace AnimatSim
 			virtual ~Light(void);
 
 #pragma region AccessorMutators
+
+			virtual BOOL Enabled();
+			virtual void Enabled(BOOL bValue);
 
 			virtual void Resize();
 

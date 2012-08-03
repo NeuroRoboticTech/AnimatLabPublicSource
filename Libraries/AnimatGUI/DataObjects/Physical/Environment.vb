@@ -601,10 +601,7 @@ Namespace DataObjects.Physical
 
             m_snRecFieldSelRadius = New ScaledNumber(Me, "RecFieldSelRadius", 5, ScaledNumber.enumNumericScale.milli, "Meters", "m")
 
-            'Add one light object by default.
-            Dim newLight As New DataObjects.Physical.Light(Me)
-            newLight.Name = "Light_1"
-            m_aryLights.Add(newLight.ID, newLight)
+            AddDefaultLights()
 
             m_clBackgroundcolor = Color.FromArgb(255, 51, 51, 153)
 
@@ -1258,12 +1255,32 @@ Namespace DataObjects.Physical
                 Next
                 oXml.OutOfElem() 'Outof Lights Element
             Else
-                newLight = New DataObjects.Physical.Light(Me)
-                newLight.Name = "Light_1"
-                m_aryLights.Add(newLight.ID, newLight)
+                AddDefaultLights()
             End If
 
             oXml.OutOfElem() 'Outof Environment Element
+
+        End Sub
+
+        Protected Overridable Sub AddDefaultLights()
+            m_aryLights.Clear()
+
+            'Add Two light objects by default.
+            Dim newLight1 As New DataObjects.Physical.Light(Me)
+            newLight1.Name = "Light_1"
+            newLight1.LocalPosition.X.ActualValue = 1
+            newLight1.LocalPosition.Y.ActualValue = 2
+            newLight1.LocalPosition.Z.ActualValue = 1
+            newLight1.QuadraticAttenuationDistance.ActualValue = 75
+            m_aryLights.Add(newLight1.ID, newLight1)
+
+            Dim newLight2 As New DataObjects.Physical.Light(Me)
+            newLight2.Name = "Light_2"
+            newLight2.LocalPosition.X.ActualValue = -1
+            newLight2.LocalPosition.Y.ActualValue = 2
+            newLight2.LocalPosition.Z.ActualValue = -1
+            newLight2.QuadraticAttenuationDistance.ActualValue = 75
+            m_aryLights.Add(newLight2.ID, newLight2)
 
         End Sub
 
