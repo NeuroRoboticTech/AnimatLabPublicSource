@@ -4003,7 +4003,7 @@ BOOL Simulator::SetData(string strDataType, string strValue, BOOL bThrowError)
 	}
 	else if(strType == "MASSUNITS")
 	{
-		DistanceUnits(strValue);
+		MassUnits(strValue);
 		return TRUE;
 	}
 	else if(strType == "GRAVITY")

@@ -2062,7 +2062,12 @@ Namespace Forms
         End Sub
 
         Public Overridable Sub ChangeUnits(ByVal eNewMass As AnimatGUI.DataObjects.Physical.Environment.enumMassUnits, _
-                                           ByVal eNewDistance As AnimatGUI.DataObjects.Physical.Environment.enumDistanceUnits)
+                                           ByVal eNewDistance As AnimatGUI.DataObjects.Physical.Environment.enumDistanceUnits, _
+                                           Optional ByVal bAsk As Boolean = True)
+
+            If bAsk AndAlso Util.ShowMessage("The simulation must be restarted for this change to take effect.", "Confirm unit change", MessageBoxButtons.OKCancel) = Windows.Forms.DialogResult.Cancel Then
+                Return
+            End If
 
             Dim ePrevDist As AnimatGUI.DataObjects.Physical.Environment.enumDistanceUnits
             Dim ePrevMass As AnimatGUI.DataObjects.Physical.Environment.enumMassUnits
@@ -2091,6 +2096,10 @@ Namespace Forms
 
                 'Now inform any interested part that the units have changed
                 RaiseEvent UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDist, eNewDistance, fltDistanceChange)
+
+                'TODO: Need to refactor this so we do not have to save and reload entire project.
+                SaveProject(Me.ProjectPath & Me.ProjectFile)
+                LoadProject(Me.ProjectPath & Me.ProjectFile)
 
             Catch ex As System.Exception
                 Throw ex

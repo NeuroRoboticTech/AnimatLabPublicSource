@@ -25,7 +25,7 @@ Namespace TypeHelpers
                         frmEditor.DistanceUnits = Util.Environment.DistanceUnits
 
                         If frmEditor.ShowDialog() = Windows.Forms.DialogResult.OK Then
-                            Util.Application.ChangeUnits(frmEditor.MassUnits, frmEditor.DistanceUnits)
+                            Util.Application.ChangeUnits(frmEditor.MassUnits, frmEditor.DistanceUnits, True)
                         End If
 
                         Return value

@@ -82,7 +82,7 @@ Namespace Framework.UndoSystem
             Try
                 Util.ModificationHistory.AllowAddHistory = False
                 Util.Application.UndoRedoInProgress = True
-                Util.Application.ChangeUnits(m_ePrevMassUnits, m_ePrevDistanceUnits)
+                Util.Application.ChangeUnits(m_ePrevMassUnits, m_ePrevDistanceUnits, False)
             Catch ex As System.Exception
                 Throw ex
             Finally
@@ -95,7 +95,7 @@ Namespace Framework.UndoSystem
             Try
                 Util.ModificationHistory.AllowAddHistory = False
                 Util.Application.UndoRedoInProgress = True
-                Util.Application.ChangeUnits(m_eNewMassUnits, m_eNewDistanceUnits)
+                Util.Application.ChangeUnits(m_eNewMassUnits, m_eNewDistanceUnits, False)
             Catch ex As System.Exception
                 Throw ex
             Finally
