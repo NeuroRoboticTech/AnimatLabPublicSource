@@ -129,7 +129,6 @@ Simulator::Simulator()
 	m_fltPhysicsStepTime = 0;
 	m_fltTotalNeuralStepTime = 0;
 	m_fltRealTime = 0;
-	m_fltVideoFrameDrawn = 0;
 	m_lLastTickTaken = 0;
 	m_fltExternalStimuliStepTime = 0;
 	m_fltDataChartStepTime = 0;
@@ -1933,7 +1932,6 @@ void Simulator::Reset()
 	m_fltPhysicsStepTime = 0;
 	m_fltTotalNeuralStepTime = 0;
 	m_fltRealTime = 0;
-	m_fltVideoFrameDrawn = 0;
 	m_lLastTickTaken = 0;
 	m_fltExternalStimuliStepTime = 0;
 	m_fltDataChartStepTime = 0;
@@ -2112,8 +2110,6 @@ void Simulator::StepPlaybackControl()
 
 void Simulator::StepVideoFrame()
 {
-	//m_fltVideoFrameDrawn = 0; 
-
 	double dblTime = TimeBetweenVideoFrames();
 	if(dblTime > m_fltDesiredFrameStep)
 	{
@@ -3962,8 +3958,6 @@ float *Simulator::GetDataPointer(string strDataType)
 		lpData = &m_fltActualFrameRate;
 	else if(strType == "REALTIME")
 		lpData = &m_fltRealTime;
-	else if(strType == "VIDEOFRAMEDRAWN")
-		lpData = &m_fltVideoFrameDrawn;
 	else if(strType == "TOTALREALTIMEFORSTEPSMOOTHED")
 		lpData = &m_fltTotalRealTimeForStepSmooth;
 	else if(strType == "PHYSICSREALTIMEFORSTEP")

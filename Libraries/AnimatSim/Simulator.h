@@ -319,9 +319,6 @@ namespace AnimatSim
 			/// The frame rate for the current frame.
 			float m_fltActualFrameRate;
 
-			/// This is used for reporting when a video frame was actually drawn.
-			float m_fltVideoFrameDrawn;
-
 			/// This is the last tick taken by a GetTickCount. It is used in debugging.
 			unsigned long long m_lLastTickTaken;
 

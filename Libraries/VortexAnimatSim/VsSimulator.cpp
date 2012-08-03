@@ -520,10 +520,6 @@ void VsSimulator::StepSimulation()
 void VsSimulator::UpdateSimulationWindows()
 {
 	m_bStopSimulation = !m_vsWinMgr->Update();
-	//m_fltVideoFrameDrawn = 1;
-
-	if(m_fltVideoFrameDrawn && !m_bPaused)
-		m_bPaused = false;
 }
 
 
