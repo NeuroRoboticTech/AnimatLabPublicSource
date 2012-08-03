@@ -325,11 +325,17 @@ namespace AnimatSim
 			/// This is the last tick taken by a GetTickCount. It is used in debugging.
 			unsigned long long m_lLastTickTaken;
 
-			///A list of all the times for the current step for all neural engines. 
-			//CStdMap<string, float> m_aryNeuralEngineRealTimeSteps;
-
 			/// Total time for processing of all neural items for this step.
 			float m_fltTotalNeuralStepTime;
+
+			/// Time to process external stimuli for this step.
+			float m_fltExternalStimuliStepTime;
+
+			/// time to process data charts for this step.
+			float m_fltDataChartStepTime;
+
+			/// Time to process simulation recorder for this step.
+			float m_fltSimRecorderStepTime;
 
 #pragma endregion
 
@@ -498,6 +504,9 @@ namespace AnimatSim
 
 			virtual void StepNeuralEngine();
 			virtual void StepPhysicsEngine();
+			virtual void StepExternalStimuli();
+			virtual void StepDataCharts();
+			virtual void StepSimRecorder();
 			virtual void Step();
 
 			virtual void ProcessSimulationStep();
@@ -530,7 +539,6 @@ namespace AnimatSim
 			virtual void StartVideoFrameTimer();
 			virtual double TimeBetweenVideoFrames();
 			virtual double RemainingVideoFrameTime();
-			virtual void ClearNeuralStepTimes();
 
 #pragma endregion
 
@@ -744,8 +752,6 @@ namespace AnimatSim
 		virtual double TimerDiff_s(unsigned long long lStart, unsigned long long lEnd) = 0;
 		virtual void MicroSleep(unsigned int iMicroTime) = 0;
 		virtual void MicroWait(unsigned int iMicroTime);
-
-		virtual void AddNeuralStepTime(string strModuleName, double dblStepTime);
 
 #pragma endregion
 

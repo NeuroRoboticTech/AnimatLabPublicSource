@@ -33,18 +33,12 @@ namespace AnimatSim
 
 			/// The array of neural modules used within this nervous system.
 			CStdPtrMap<string, NeuralModule> m_aryNeuralModules;
-
-			/// This is the start tick for the adapter step of this nervous system.
-			unsigned long long m_lStepStartTick;
-
+			
 			NeuralModule *LoadNeuralModule(CStdXml &oXml);
 			void AddNeuralModule(NeuralModule *lpModule);
 
 			virtual void StepSim();
 			virtual void StepAdapters();
-
-			virtual void StartStepTimer();
-			virtual void RecordStepTimer(string strModuleName);
 
 		public:
 			NervousSystem();

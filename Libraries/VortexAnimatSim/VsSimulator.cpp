@@ -505,7 +505,7 @@ void VsSimulator::StepSimulation()
 
 			unsigned long long lStart = GetTimerTick();
 			m_vxFrame->step();
-			m_fltPhysicsStepTime = TimerDiff_s(lStart, GetTimerTick());
+			m_fltPhysicsStepTime += TimerDiff_s(lStart, GetTimerTick());
 		}
 
 	}
