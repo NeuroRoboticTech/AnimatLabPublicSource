@@ -459,7 +459,7 @@ Namespace Framework
 
             If Me.HasChildPart Then
                 'Add child body part
-                AddItemToChart("Simulation\" & "Simulation\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1")
+                AddItemToChart("Simulation\" & m_strStruct1Name & "\Body Plan\Root\Joint_1\Body_1")
 
                 'Set the name of the data chart item to root_y.
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Body_1", "Name", "Child_Y"})
@@ -1293,7 +1293,7 @@ Namespace Framework
 
         End Sub
 
-        Protected Overridable Sub DeletePart(ByVal strPath As String, ByVal strDlgName As String, Optional ByVal bCut As Boolean = False, Optional ByVal bWaitMilliseconds As Integer = 200)
+        Protected Overridable Sub DeletePart(ByVal strPath As String, ByVal strDlgName As String, Optional ByVal bCut As Boolean = False, Optional ByVal bWaitMilliseconds As Integer = 500)
             Debug.WriteLine("DeletePart. Path: '" & strPath & "', DlgName: " & strDlgName & ", Cut: " & bCut)
 
             ExecuteMethod("SelectWorkspaceItem", New Object() {strPath, False})

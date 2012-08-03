@@ -18,7 +18,7 @@ Namespace UITests
             Public Sub Test_CreateNewProject()
 
                 'Start the application.
-                StartApplication("", m_iPort)
+                StartApplication("")
 
                 'Click the New Project button.
                 ClickToolbarItem("NewToolStripButton", False)
@@ -32,12 +32,6 @@ Namespace UITests
 
                 'Open the Structure_1 body plan editor window
                 ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan"})
-
-                'Set simulation to automatically end at a specified time.
-                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation", "SetSimulationEnd", "True"})
-
-                'Set simulation end time.
-                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation", "SimulationEndTime", "50"})
 
                 'Add a root cylinder part.
                 AddRootPartType(m_strStructureGroup, m_strStruct1Name, "Box")
@@ -59,6 +53,12 @@ Namespace UITests
 
                 'Change the end time of the data chart to 45 seconds.
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectEndTime", "45"})
+
+                'Set simulation to automatically end at a specified time.
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation", "SetSimulationEnd", "True"})
+
+                'Set simulation end time.
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation", "SimulationEndTime", "50"})
 
                 'Run the simulation and wait for it to end.
                 RunSimulationWaitToEnd()

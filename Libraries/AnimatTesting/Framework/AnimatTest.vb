@@ -499,7 +499,7 @@ Namespace Framework
         Public Overridable Sub ClickMenuItem(ByVal strItemName As String, ByVal bReturnImmediate As Boolean, Optional ByVal iWaitMilliseconds As Integer = 20, Optional ByVal bErrorOk As Boolean = False, Optional ByVal bSkipWaiting As Boolean = False)
             Debug.WriteLine("ClickMenuItem. Menu Item Name: " & strItemName & ", bReturnImmediate: " & bReturnImmediate)
 
-            ExecuteMethod("ClickMenuItem", New Object() {strItemName, bReturnImmediate}, iWaitMilliseconds)
+            ExecuteMethod("ClickMenuItem", New Object() {strItemName, bReturnImmediate}, iWaitMilliseconds, bErrorOk, bSkipWaiting)
 
             WaitWhileBusy(bSkipWaiting, bErrorOk)
 
@@ -508,7 +508,7 @@ Namespace Framework
         Public Overridable Overloads Sub ClickToolbarItem(ByVal strItemName As String, ByVal bReturnImmediate As Boolean, Optional ByVal iWaitMilliseconds As Integer = 20, Optional ByVal bErrorOk As Boolean = False, Optional ByVal bSkipWaiting As Boolean = False)
             Debug.WriteLine("ClickToolbarItem. Toolbar Item Name: " & strItemName & ", bReturnImmediate: " & bReturnImmediate)
 
-            ExecuteMethod("ClickToolbarItem", New Object() {strItemName, bReturnImmediate}, iWaitMilliseconds)
+            ExecuteMethod("ClickToolbarItem", New Object() {strItemName, bReturnImmediate}, iWaitMilliseconds, bErrorOk, bSkipWaiting)
 
             WaitWhileBusy(bSkipWaiting, bErrorOk)
 
