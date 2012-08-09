@@ -5,8 +5,8 @@
 <SimulationFile>Hexapod.asim</SimulationFile>
 <LogLevel>Error</LogLevel>
 <Version>1</Version>
-<SimWindowLocation x="52" y="18"/>
-<SimWindowSize Width="626" Height="498"/>
+<SimWindowLocation x="-8" y="-30"/>
+<SimWindowSize Width="598" Height="536"/>
 <DockingForms>
 <Form>
 <Title>Project Toolbox</Title>
@@ -21,7 +21,7 @@
 <ClassName>AnimatTools.Forms.ProjectWorkspace</ClassName>
 <TabTitle>Workspace</TabTitle>
 <BackgroundForm>True</BackgroundForm>
-<TreeViewHeight>411</TreeViewHeight>
+<TreeViewHeight>18</TreeViewHeight>
 </Form>
 <Form>
 <Title>Simulation Controller</Title>
@@ -74,14 +74,19 @@
 <Title>Turn Data</Title>
 </Form>
 </Child>
+<Child>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.Tools.Viewer</ClassName>
+<EditorFile>DataTool_1.atvf</EditorFile>
+<TreeViewHeight>168</TreeViewHeight>
+<Form>
+<AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.Forms.Charts.LineChart</ClassName>
+<Title>DataTool_1</Title>
+</Form>
+</Child>
 </ChildForms>
 <ToolViewers>
-<ToolHolder>
-<ID>bd5268a8-536b-40f0-967f-c46c7728f28f</ID>
-<Name>Turning</Name>
-<BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
-<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
-</ToolHolder>
 <ToolHolder>
 <ID>20d9c950-4be1-46f2-8ab8-bd9d55b4510e</ID>
 <Name>Stance Adjust LU</Name>
@@ -119,8 +124,14 @@
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
 <ToolHolder>
-<ID>2b569014-d227-49ff-99be-ad8731765169</ID>
-<Name>Pacemaker Firing</Name>
+<ID>25eed415-9615-45bb-83f8-84085005909e</ID>
+<Name>DataTool_1</Name>
+<BaseAssemblyFile>LicensedAnimatTools.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
+</ToolHolder>
+<ToolHolder>
+<ID>bd5268a8-536b-40f0-967f-c46c7728f28f</ID>
+<Name>Turning</Name>
 <BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
@@ -133,6 +144,12 @@
 <ToolHolder>
 <ID>842b3f60-36f0-40d5-a634-359aa126d7af</ID>
 <Name>LU Stop Leg Motion</Name>
+<BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
+</ToolHolder>
+<ToolHolder>
+<ID>2b569014-d227-49ff-99be-ad8731765169</ID>
+<Name>Pacemaker Firing</Name>
 <BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
@@ -170,6 +187,94 @@
 <CycleOnDuration Value="8" Scale="None" Actual="8"/>
 <CycleOffDuration Value="0" Scale="None" Actual="0"/>
 <BurstOnDuration Value="8" Scale="None" Actual="8"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Backwards</Name>
+<ID>a17cfedb-0373-4267-8dbf-9cc18d797dda</ID>
+<StartTime Value="5" Scale="None" Actual="5"/>
+<EndTime Value="50" Scale="None" Actual="50"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>13d9d561-2e7f-4050-b86a-e03f6f7f4e81</OrganismID>
+<NodeID>78adde09-cd32-4617-a169-1588f0f62c69</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-08"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="45" Scale="None" Actual="45"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="45" Scale="None" Actual="45"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
+<Name>Stimulus_1</Name>
+<ID>4de81018-94f0-4d60-810c-cc9222b47423</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="5" Scale="None" Actual="5"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>True</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>13d9d561-2e7f-4050-b86a-e03f6f7f4e81</OrganismID>
+<NodeID>1ef60ca1-5288-4465-af95-db2864d5bba8</NodeID>
+<CurrentOn Value="0" Scale="nano" Actual="0"/>
+<CurrentOff Value="10" Scale="nano" Actual="1e-08"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="14" Scale="None" Actual="14"/>
+<CycleOffDuration Value="6" Scale="None" Actual="6"/>
+<BurstOnDuration Value="20" Scale="Kilo" Actual="20000"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>LU Tarsus</Name>
+<ID>2dfd9194-8288-4fb3-8872-b23455c951da</ID>
+<StartTime Value="1" Scale="None" Actual="1"/>
+<EndTime Value="3" Scale="None" Actual="3"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>13d9d561-2e7f-4050-b86a-e03f6f7f4e81</OrganismID>
+<NodeID>4d61e19e-2fc2-4460-b841-5f50a78863bd</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-08"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="2" Scale="None" Actual="2"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="2" Scale="None" Actual="2"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>LC</Name>
+<ID>964957d2-dd09-440a-878a-30a82b42f81d</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="1000" Scale="None" Actual="1000"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>True</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>13d9d561-2e7f-4050-b86a-e03f6f7f4e81</OrganismID>
+<NodeID>a20e0c9d-6b30-41d4-b22d-91e344890092</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-08"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="1" Scale="Kilo" Actual="1000"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="1" Scale="Kilo" Actual="1000"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 <Stimulus>
@@ -219,50 +324,6 @@
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>LC</Name>
-<ID>964957d2-dd09-440a-878a-30a82b42f81d</ID>
-<StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="1000" Scale="None" Actual="1000"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>True</AlwaysActive>
-<Enabled>True</Enabled>
-<ValueType>Constant</ValueType>
-<Equation/>
-<OrganismID>13d9d561-2e7f-4050-b86a-e03f6f7f4e81</OrganismID>
-<NodeID>a20e0c9d-6b30-41d4-b22d-91e344890092</NodeID>
-<CurrentOn Value="10" Scale="nano" Actual="1e-08"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="1" Scale="Kilo" Actual="1000"/>
-<CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="1" Scale="Kilo" Actual="1000"/>
-<BurstOffDuration Value="0" Scale="None" Actual="0"/>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatTools.dll</AssemblyFile>
-<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>LU Tarsus</Name>
-<ID>2dfd9194-8288-4fb3-8872-b23455c951da</ID>
-<StartTime Value="1" Scale="None" Actual="1"/>
-<EndTime Value="3" Scale="None" Actual="3"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>False</AlwaysActive>
-<Enabled>False</Enabled>
-<ValueType>Constant</ValueType>
-<Equation/>
-<OrganismID>13d9d561-2e7f-4050-b86a-e03f6f7f4e81</OrganismID>
-<NodeID>4d61e19e-2fc2-4460-b841-5f50a78863bd</NodeID>
-<CurrentOn Value="10" Scale="nano" Actual="1e-08"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="2" Scale="None" Actual="2"/>
-<CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="2" Scale="None" Actual="2"/>
-<BurstOffDuration Value="0" Scale="None" Actual="0"/>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatTools.dll</AssemblyFile>
-<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
 <Name>Right Fast</Name>
 <ID>ee00a25f-6038-4e91-b3ed-5418ab84159b</ID>
 <StartTime Value="2" Scale="None" Actual="2"/>
@@ -304,53 +365,9 @@
 <BurstOnDuration Value="7" Scale="None" Actual="7"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatTools.dll</AssemblyFile>
-<ClassName>AnimatTools.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
-<Name>Stimulus_1</Name>
-<ID>4de81018-94f0-4d60-810c-cc9222b47423</ID>
-<StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="5" Scale="None" Actual="5"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>True</AlwaysActive>
-<Enabled>True</Enabled>
-<ValueType>Constant</ValueType>
-<Equation/>
-<OrganismID>13d9d561-2e7f-4050-b86a-e03f6f7f4e81</OrganismID>
-<NodeID>1ef60ca1-5288-4465-af95-db2864d5bba8</NodeID>
-<CurrentOn Value="0" Scale="nano" Actual="0"/>
-<CurrentOff Value="10" Scale="nano" Actual="1e-08"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="14" Scale="None" Actual="14"/>
-<CycleOffDuration Value="6" Scale="None" Actual="6"/>
-<BurstOnDuration Value="20" Scale="Kilo" Actual="20000"/>
-<BurstOffDuration Value="0" Scale="None" Actual="0"/>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatTools.dll</AssemblyFile>
-<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Backwards</Name>
-<ID>a17cfedb-0373-4267-8dbf-9cc18d797dda</ID>
-<StartTime Value="5" Scale="None" Actual="5"/>
-<EndTime Value="50" Scale="None" Actual="50"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>False</AlwaysActive>
-<Enabled>False</Enabled>
-<ValueType>Constant</ValueType>
-<Equation/>
-<OrganismID>13d9d561-2e7f-4050-b86a-e03f6f7f4e81</OrganismID>
-<NodeID>78adde09-cd32-4617-a169-1588f0f62c69</NodeID>
-<CurrentOn Value="10" Scale="nano" Actual="1e-08"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="45" Scale="None" Actual="45"/>
-<CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="45" Scale="None" Actual="45"/>
-<BurstOffDuration Value="0" Scale="None" Actual="0"/>
-</Stimulus>
 </Stimuli>
 <DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">
-  <Content Name="Simulation Controller" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 86" DisplayLocation="150, 150" AutoHideSize="150, 100" FloatingSize="150, 150" FullTitle="Simulation Controller">
+  <Content Name="Simulation Controller" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 20" DisplayLocation="150, 150" AutoHideSize="150, 100" FloatingSize="150, 150" FullTitle="Simulation Controller">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Simulation Controller" />
       <State Value="DockLeft" />
@@ -364,7 +381,7 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Simulation Controller" />
       <State Value="DockBottom" />
-      <Position Size="150, 86" Location="150, 150" />
+      <Position Size="150, 20" Location="150, 150" />
       <Best Count="1">
         <Item Name="Simulation Controller" />
       </Best>
@@ -398,7 +415,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Project Workspace" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="294, 150" DisplayLocation="150, 150" AutoHideSize="294, 150" FloatingSize="150, 150" FullTitle="Project Workspace">
+  <Content Name="Project Workspace" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="77, 150" DisplayLocation="150, 150" AutoHideSize="294, 150" FloatingSize="150, 150" FullTitle="Project Workspace">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Project Workspace" />
       <State Value="DockLeft" />
@@ -418,7 +435,7 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Project Workspace" />
       <State Value="DockLeft" />
-      <Position Size="294, 150" Location="150, 150" />
+      <Position Size="77, 150" Location="150, 150" />
       <Best Count="2">
         <Item Name="Project Toolbox" />
         <Item Name="Project Workspace" />
@@ -455,7 +472,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Project Toolbox" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="268, 150" DisplayLocation="150, 150" AutoHideSize="294, 150" FloatingSize="150, 150" FullTitle="Project Toolbox">
+  <Content Name="Project Toolbox" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="77, 150" DisplayLocation="150, 150" AutoHideSize="294, 150" FloatingSize="150, 150" FullTitle="Project Toolbox">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Project Toolbox" />
       <State Value="DockLeft" />
@@ -475,7 +492,7 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Project Toolbox" />
       <State Value="DockLeft" />
-      <Position Size="268, 150" Location="150, 150" />
+      <Position Size="77, 150" Location="150, 150" />
       <Best Count="2">
         <Item Name="Project Toolbox" />
         <Item Name="Project Workspace" />

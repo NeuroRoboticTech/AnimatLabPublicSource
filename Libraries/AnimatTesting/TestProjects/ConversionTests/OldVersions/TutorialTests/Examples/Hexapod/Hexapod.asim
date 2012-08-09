@@ -1,5 +1,5 @@
 <Simulation>
-<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\Tutorials\Examples\Hexapod\</ProjectPath>
+<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\TutorialTests\Examples\Hexapod\</ProjectPath>
 <AnimatModule>VortexAnimatLibrary_vc7.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
@@ -8,7 +8,7 @@
 <APIFile/>
 <SimEndTime Value="11" Scale="None" Actual="11"/>
 <Environment>
-<PhysicsTimeStep Value="1" Scale="milli" Actual="0.001"/>
+<PhysicsTimeStep Value="0.25" Scale="milli" Actual="0.00025"/>
 <FluidDensity Value="1" Scale="None" Actual="1"/>
 <MaxSurfaceFriction Value="1" Scale="None" Actual="1"/>
 <Gravity Value="-9.81" Scale="None" Actual="-9.81"/>
@@ -70,7 +70,7 @@
 <Type>Basic</Type>
 <Reference>False</Reference>
 <BodyPlan>Organism_1.astl</BodyPlan>
-<Position x="0" y="0.9" z="0"/>
+<Position x="0" y="0.75" z="0"/>
 <BehavioralSystem>Organism_1.absys</BehavioralSystem>
 </Structure>
 </Organisms>
@@ -81,7 +81,7 @@
 <Type>Basic</Type>
 <Reference>False</Reference>
 <BodyPlan>Obstacle.astl</BodyPlan>
-<Position x="0" y="0.15" z="15"/>
+<Position x="0" y="12.15" z="15"/>
 </Structure>
 </Structures>
 </Environment>

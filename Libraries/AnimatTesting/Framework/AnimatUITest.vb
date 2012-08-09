@@ -468,7 +468,7 @@ Namespace Framework
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Child_Y", "DataTypeID", "WorldPositionY"})
 
                 'Add joint body part
-                AddItemToChart(m_strStruct1Name & "\Body Plan\Root\Joint_1")
+                AddItemToChart("Simulation\" & m_strStruct1Name & "\Body Plan\Root\Joint_1")
 
                 'Set the name of the data chart item to root_y.
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Joint_1", "Name", "Joint_Y"})

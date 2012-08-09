@@ -306,7 +306,12 @@ Namespace DataObjects.Behavior.Nodes
                     If (m_strLinkedBodyPartID.Length > 0) Then
                         bpPart = m_doOrganism.FindBodyPart(m_strLinkedBodyPartID, False)
 
-                        Me.LinkedPart = CreateBodyPartList(m_doOrganism, bpPart, m_tpBodyPartType)
+                        If Not bpPart Is Nothing Then
+                            Me.LinkedPart = CreateBodyPartList(m_doOrganism, bpPart, m_tpBodyPartType)
+                        Else
+                            Util.Application.DeleteItemAfterLoading(Me)
+                            Util.DisplayError(New System.Exception("The body part connector ID: " & Me.ID & " was unable to find its linked item ID: " & m_strLinkedBodyPartID & " in the diagram. This node and all links will be removed."))
+                        End If
                     End If
                 End If
 

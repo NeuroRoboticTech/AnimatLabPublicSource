@@ -11,7 +11,7 @@
 <Cdr>0.5</Cdr>
 <Ca>1</Ca>
 <Car>1</Car>
-<Texture>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\Tutorials\Examples\Hexapod\checkerboard.bmp</Texture>
+<Texture>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\TutorialTests\Examples\Hexapod\checkerboard.bmp</Texture>
 <Density Value="0.1" Scale="None" Actual="0.1"/>
 <XCenterOfMass Value="0" Scale="centi" Actual="0"/>
 <YCenterOfMass Value="0" Scale="centi" Actual="0"/>

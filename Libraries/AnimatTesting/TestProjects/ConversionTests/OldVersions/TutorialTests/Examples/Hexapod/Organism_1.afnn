@@ -383,28 +383,6 @@
 <Synapses>
 <Synapse>
 <Enabled>True</Enabled>
-<From x="140" y="0" z="0"/>
-<Weight>5e-09</Weight>
-<CompoundSynapses>
-<CompoundSynapse>
-<Type>Gated</Type>
-<Enabled>True</Enabled>
-<From x="16" y="0" z="0"/>
-<Weight>-1</Weight>
-<InitialGateValue>1</InitialGateValue>
-</CompoundSynapse>
-<CompoundSynapse>
-<Type>Gated</Type>
-<Enabled>True</Enabled>
-<From x="20" y="0" z="0"/>
-<Weight>-1</Weight>
-<InitialGateValue>1</InitialGateValue>
-</CompoundSynapse>
-</CompoundSynapses>
-<Type>Compound</Type>
-</Synapse>
-<Synapse>
-<Enabled>True</Enabled>
 <From x="29" y="0" z="0"/>
 <Weight>-5e-09</Weight>
 <CompoundSynapses>
@@ -433,16 +411,38 @@
 <CompoundSynapse>
 <Type>Gated</Type>
 <Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
 <From x="141" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="140" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
 <Weight>-1</Weight>
 <InitialGateValue>1</InitialGateValue>
 </CompoundSynapse>
 <CompoundSynapse>
 <Type>Gated</Type>
 <Enabled>True</Enabled>
-<From x="16" y="0" z="0"/>
-<Weight>1</Weight>
-<InitialGateValue>0</InitialGateValue>
+<From x="20" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
 </CompoundSynapse>
 </CompoundSynapses>
 <Type>Compound</Type>
@@ -1279,28 +1279,6 @@
 <Synapses>
 <Synapse>
 <Enabled>True</Enabled>
-<From x="163" y="0" z="0"/>
-<Weight>-5e-09</Weight>
-<CompoundSynapses>
-<CompoundSynapse>
-<Type>Gated</Type>
-<Enabled>True</Enabled>
-<From x="90" y="0" z="0"/>
-<Weight>-1</Weight>
-<InitialGateValue>1</InitialGateValue>
-</CompoundSynapse>
-<CompoundSynapse>
-<Type>Gated</Type>
-<Enabled>True</Enabled>
-<From x="16" y="0" z="0"/>
-<Weight>-1</Weight>
-<InitialGateValue>1</InitialGateValue>
-</CompoundSynapse>
-</CompoundSynapses>
-<Type>Compound</Type>
-</Synapse>
-<Synapse>
-<Enabled>True</Enabled>
 <From x="170" y="0" z="0"/>
 <Weight>-5e-09</Weight>
 <CompoundSynapses>
@@ -1352,6 +1330,28 @@
 <Type>Gated</Type>
 <Enabled>True</Enabled>
 <From x="17" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="163" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="90" y="0" z="0"/>
 <Weight>-1</Weight>
 <InitialGateValue>1</InitialGateValue>
 </CompoundSynapse>
@@ -1740,13 +1740,13 @@
 <Synapses>
 <Synapse>
 <Enabled>True</Enabled>
-<From x="142" y="0" z="0"/>
-<Weight>-1e-08</Weight>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
 <CompoundSynapses>
 <CompoundSynapse>
 <Type>Gated</Type>
 <Enabled>True</Enabled>
-<From x="18" y="0" z="0"/>
+<From x="24" y="0" z="0"/>
 <Weight>1</Weight>
 <InitialGateValue>0</InitialGateValue>
 </CompoundSynapse>
@@ -1791,7 +1791,7 @@
 <CompoundSynapse>
 <Type>Gated</Type>
 <Enabled>True</Enabled>
-<From x="192" y="0" z="0"/>
+<From x="182" y="0" z="0"/>
 <Weight>1</Weight>
 <InitialGateValue>0</InitialGateValue>
 </CompoundSynapse>
@@ -1807,21 +1807,6 @@
 <Type>Gated</Type>
 <Enabled>True</Enabled>
 <From x="79" y="0" z="0"/>
-<Weight>1</Weight>
-<InitialGateValue>0</InitialGateValue>
-</CompoundSynapse>
-</CompoundSynapses>
-<Type>Compound</Type>
-</Synapse>
-<Synapse>
-<Enabled>True</Enabled>
-<From x="44" y="0" z="0"/>
-<Weight>-3e-09</Weight>
-<CompoundSynapses>
-<CompoundSynapse>
-<Type>Gated</Type>
-<Enabled>True</Enabled>
-<From x="1" y="0" z="0"/>
 <Weight>1</Weight>
 <InitialGateValue>0</InitialGateValue>
 </CompoundSynapse>
@@ -1875,13 +1860,13 @@
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>
-<From x="44" y="0" z="0"/>
-<Weight>5e-09</Weight>
+<From x="173" y="0" z="0"/>
+<Weight>1e-08</Weight>
 <CompoundSynapses>
 <CompoundSynapse>
 <Type>Gated</Type>
 <Enabled>True</Enabled>
-<From x="48" y="0" z="0"/>
+<From x="18" y="0" z="0"/>
 <Weight>1</Weight>
 <InitialGateValue>0</InitialGateValue>
 </CompoundSynapse>
@@ -1897,6 +1882,21 @@
 <Type>Gated</Type>
 <Enabled>True</Enabled>
 <From x="181" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="48" y="0" z="0"/>
 <Weight>1</Weight>
 <InitialGateValue>0</InitialGateValue>
 </CompoundSynapse>
@@ -1935,28 +1935,13 @@
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>
-<From x="44" y="0" z="0"/>
-<Weight>5e-09</Weight>
+<From x="142" y="0" z="0"/>
+<Weight>1e-08</Weight>
 <CompoundSynapses>
 <CompoundSynapse>
 <Type>Gated</Type>
 <Enabled>True</Enabled>
-<From x="182" y="0" z="0"/>
-<Weight>1</Weight>
-<InitialGateValue>0</InitialGateValue>
-</CompoundSynapse>
-</CompoundSynapses>
-<Type>Compound</Type>
-</Synapse>
-<Synapse>
-<Enabled>True</Enabled>
-<From x="44" y="0" z="0"/>
-<Weight>-3e-09</Weight>
-<CompoundSynapses>
-<CompoundSynapse>
-<Type>Gated</Type>
-<Enabled>True</Enabled>
-<From x="191" y="0" z="0"/>
+<From x="66" y="0" z="0"/>
 <Weight>1</Weight>
 <InitialGateValue>0</InitialGateValue>
 </CompoundSynapse>
@@ -1980,13 +1965,13 @@
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>
-<From x="44" y="0" z="0"/>
-<Weight>5e-09</Weight>
+<From x="142" y="0" z="0"/>
+<Weight>-1e-08</Weight>
 <CompoundSynapses>
 <CompoundSynapse>
 <Type>Gated</Type>
 <Enabled>True</Enabled>
-<From x="24" y="0" z="0"/>
+<From x="18" y="0" z="0"/>
 <Weight>1</Weight>
 <InitialGateValue>0</InitialGateValue>
 </CompoundSynapse>
@@ -2070,13 +2055,13 @@
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>
-<From x="173" y="0" z="0"/>
-<Weight>1e-08</Weight>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
 <CompoundSynapses>
 <CompoundSynapse>
 <Type>Gated</Type>
 <Enabled>True</Enabled>
-<From x="18" y="0" z="0"/>
+<From x="191" y="0" z="0"/>
 <Weight>1</Weight>
 <InitialGateValue>0</InitialGateValue>
 </CompoundSynapse>
@@ -2106,7 +2091,7 @@
 <CompoundSynapse>
 <Type>Gated</Type>
 <Enabled>True</Enabled>
-<From x="197" y="0" z="0"/>
+<From x="1" y="0" z="0"/>
 <Weight>1</Weight>
 <InitialGateValue>0</InitialGateValue>
 </CompoundSynapse>
@@ -2115,13 +2100,28 @@
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>
-<From x="142" y="0" z="0"/>
-<Weight>1e-08</Weight>
+<From x="44" y="0" z="0"/>
+<Weight>5e-09</Weight>
 <CompoundSynapses>
 <CompoundSynapse>
 <Type>Gated</Type>
 <Enabled>True</Enabled>
-<From x="66" y="0" z="0"/>
+<From x="192" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="44" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="197" y="0" z="0"/>
 <Weight>1</Weight>
 <InitialGateValue>0</InitialGateValue>
 </CompoundSynapse>
@@ -3282,21 +3282,6 @@
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>
-<From x="38" y="0" z="0"/>
-<Weight>3e-09</Weight>
-<CompoundSynapses>
-<CompoundSynapse>
-<Type>Gated</Type>
-<Enabled>True</Enabled>
-<From x="16" y="0" z="0"/>
-<Weight>-1</Weight>
-<InitialGateValue>1</InitialGateValue>
-</CompoundSynapse>
-</CompoundSynapses>
-<Type>Compound</Type>
-</Synapse>
-<Synapse>
-<Enabled>True</Enabled>
 <From x="139" y="0" z="0"/>
 <Weight>-5e-09</Weight>
 <CompoundSynapses/>
@@ -3319,14 +3304,14 @@
 <Synapse>
 <Enabled>True</Enabled>
 <From x="38" y="0" z="0"/>
-<Weight>-3e-09</Weight>
+<Weight>3e-09</Weight>
 <CompoundSynapses>
 <CompoundSynapse>
 <Type>Gated</Type>
 <Enabled>True</Enabled>
 <From x="16" y="0" z="0"/>
-<Weight>1</Weight>
-<InitialGateValue>0</InitialGateValue>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
 </CompoundSynapse>
 </CompoundSynapses>
 <Type>Compound</Type>
@@ -3340,15 +3325,15 @@
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>
-<From x="58" y="0" z="0"/>
+<From x="38" y="0" z="0"/>
 <Weight>-3e-09</Weight>
 <CompoundSynapses>
 <CompoundSynapse>
 <Type>Gated</Type>
 <Enabled>True</Enabled>
 <From x="16" y="0" z="0"/>
-<Weight>-1</Weight>
-<InitialGateValue>1</InitialGateValue>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
 </CompoundSynapse>
 </CompoundSynapses>
 <Type>Compound</Type>
@@ -3371,6 +3356,21 @@
 <From x="16" y="0" z="0"/>
 <Weight>1</Weight>
 <InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="58" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
 </CompoundSynapse>
 </CompoundSynapses>
 <Type>Compound</Type>
@@ -4034,6 +4034,13 @@
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>
+<From x="143" y="0" z="0"/>
+<Weight>2e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
 <From x="34" y="0" z="0"/>
 <Weight>2e-09</Weight>
 <CompoundSynapses>
@@ -4061,13 +4068,6 @@
 </CompoundSynapse>
 </CompoundSynapses>
 <Type>Compound</Type>
-</Synapse>
-<Synapse>
-<Enabled>True</Enabled>
-<From x="143" y="0" z="0"/>
-<Weight>2e-09</Weight>
-<CompoundSynapses/>
-<Type>Regular</Type>
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>
@@ -5679,14 +5679,22 @@
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>
-<From x="208" y="0" z="0"/>
-<Weight>-5e-09</Weight>
-<CompoundSynapses/>
-<Type>Regular</Type>
+<From x="71" y="0" z="0"/>
+<Weight>-3e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>
-<From x="26" y="0" z="0"/>
+<From x="208" y="0" z="0"/>
 <Weight>-5e-09</Weight>
 <CompoundSynapses/>
 <Type>Regular</Type>
@@ -5716,21 +5724,6 @@
 <Synapse>
 <Enabled>True</Enabled>
 <From x="71" y="0" z="0"/>
-<Weight>-3e-09</Weight>
-<CompoundSynapses>
-<CompoundSynapse>
-<Type>Gated</Type>
-<Enabled>True</Enabled>
-<From x="16" y="0" z="0"/>
-<Weight>1</Weight>
-<InitialGateValue>0</InitialGateValue>
-</CompoundSynapse>
-</CompoundSynapses>
-<Type>Compound</Type>
-</Synapse>
-<Synapse>
-<Enabled>True</Enabled>
-<From x="71" y="0" z="0"/>
 <Weight>3e-09</Weight>
 <CompoundSynapses>
 <CompoundSynapse>
@@ -5742,6 +5735,13 @@
 </CompoundSynapse>
 </CompoundSynapses>
 <Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="26" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
 </Synapse>
 </Synapses>
 <Il>-2e-09</Il>
@@ -6098,13 +6098,6 @@
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>
-<From x="64" y="0" z="0"/>
-<Weight>1.5e-09</Weight>
-<CompoundSynapses/>
-<Type>Regular</Type>
-</Synapse>
-<Synapse>
-<Enabled>True</Enabled>
 <From x="44" y="0" z="0"/>
 <Weight>5e-09</Weight>
 <CompoundSynapses>
@@ -6117,6 +6110,13 @@
 </CompoundSynapse>
 </CompoundSynapses>
 <Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="64" y="0" z="0"/>
+<Weight>1.5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>
@@ -6395,14 +6395,14 @@
 <CompoundSynapse>
 <Type>Gated</Type>
 <Enabled>True</Enabled>
-<From x="16" y="0" z="0"/>
+<From x="122" y="0" z="0"/>
 <Weight>-1</Weight>
 <InitialGateValue>1</InitialGateValue>
 </CompoundSynapse>
 <CompoundSynapse>
 <Type>Gated</Type>
 <Enabled>True</Enabled>
-<From x="122" y="0" z="0"/>
+<From x="16" y="0" z="0"/>
 <Weight>-1</Weight>
 <InitialGateValue>1</InitialGateValue>
 </CompoundSynapse>
@@ -6461,16 +6461,16 @@
 <CompoundSynapse>
 <Type>Gated</Type>
 <Enabled>True</Enabled>
-<From x="154" y="0" z="0"/>
-<Weight>-1</Weight>
-<InitialGateValue>1</InitialGateValue>
+<From x="16" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
 </CompoundSynapse>
 <CompoundSynapse>
 <Type>Gated</Type>
 <Enabled>True</Enabled>
-<From x="16" y="0" z="0"/>
-<Weight>1</Weight>
-<InitialGateValue>0</InitialGateValue>
+<From x="154" y="0" z="0"/>
+<Weight>-1</Weight>
+<InitialGateValue>1</InitialGateValue>
 </CompoundSynapse>
 </CompoundSynapses>
 <Type>Compound</Type>
@@ -6767,21 +6767,6 @@
 <GainType>False</GainType>
 <Synapses>
 <Synapse>
-<Enabled>True</Enabled>
-<From x="24" y="0" z="0"/>
-<Weight>1e-09</Weight>
-<CompoundSynapses>
-<CompoundSynapse>
-<Type>Gated</Type>
-<Enabled>True</Enabled>
-<From x="47" y="0" z="0"/>
-<Weight>1</Weight>
-<InitialGateValue>0</InitialGateValue>
-</CompoundSynapse>
-</CompoundSynapses>
-<Type>Compound</Type>
-</Synapse>
-<Synapse>
 <Enabled>False</Enabled>
 <From x="76" y="0" z="0"/>
 <Weight>2e-09</Weight>
@@ -6816,6 +6801,21 @@
 <Weight>-2e-09</Weight>
 <CompoundSynapses/>
 <Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>1e-09</Weight>
+<CompoundSynapses>
+<CompoundSynapse>
+<Type>Gated</Type>
+<Enabled>True</Enabled>
+<From x="47" y="0" z="0"/>
+<Weight>1</Weight>
+<InitialGateValue>0</InitialGateValue>
+</CompoundSynapse>
+</CompoundSynapses>
+<Type>Compound</Type>
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>
@@ -8321,6 +8321,13 @@
 <Synapses>
 <Synapse>
 <Enabled>True</Enabled>
+<From x="98" y="0" z="0"/>
+<Weight>-1.5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
 <From x="44" y="0" z="0"/>
 <Weight>5e-09</Weight>
 <CompoundSynapses>
@@ -8336,22 +8343,8 @@
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>
-<From x="98" y="0" z="0"/>
-<Weight>-1.5e-09</Weight>
-<CompoundSynapses/>
-<Type>Regular</Type>
-</Synapse>
-<Synapse>
-<Enabled>True</Enabled>
 <From x="113" y="0" z="0"/>
 <Weight>1.5e-09</Weight>
-<CompoundSynapses/>
-<Type>Regular</Type>
-</Synapse>
-<Synapse>
-<Enabled>True</Enabled>
-<From x="40" y="0" z="0"/>
-<Weight>1e-08</Weight>
 <CompoundSynapses/>
 <Type>Regular</Type>
 </Synapse>
@@ -8399,6 +8392,13 @@
 </CompoundSynapse>
 </CompoundSynapses>
 <Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="40" y="0" z="0"/>
+<Weight>1e-08</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
 </Synapse>
 </Synapses>
 <Ih>5e-09</Ih>
@@ -8673,13 +8673,6 @@
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>
-<From x="134" y="0" z="0"/>
-<Weight>-5e-09</Weight>
-<CompoundSynapses/>
-<Type>Regular</Type>
-</Synapse>
-<Synapse>
-<Enabled>True</Enabled>
 <From x="189" y="0" z="0"/>
 <Weight>-3e-09</Weight>
 <CompoundSynapses>
@@ -8702,13 +8695,6 @@
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>
-<From x="75" y="0" z="0"/>
-<Weight>-5e-09</Weight>
-<CompoundSynapses/>
-<Type>Regular</Type>
-</Synapse>
-<Synapse>
-<Enabled>True</Enabled>
 <From x="73" y="0" z="0"/>
 <Weight>3e-09</Weight>
 <CompoundSynapses>
@@ -8721,6 +8707,13 @@
 </CompoundSynapse>
 </CompoundSynapses>
 <Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="75" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>
@@ -8758,6 +8751,13 @@
 </CompoundSynapse>
 </CompoundSynapses>
 <Type>Compound</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="134" y="0" z="0"/>
+<Weight>-5e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
 </Synapse>
 <Synapse>
 <Enabled>True</Enabled>

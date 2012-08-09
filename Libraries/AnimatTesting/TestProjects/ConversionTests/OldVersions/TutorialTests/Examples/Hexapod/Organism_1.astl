@@ -79,9 +79,9 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+<Stiffness Value="20" Scale="None" Actual="20"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
@@ -121,9 +121,9 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+<Stiffness Value="20" Scale="None" Actual="20"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
@@ -194,9 +194,9 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+<Stiffness Value="20" Scale="None" Actual="20"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
@@ -343,9 +343,9 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+<Stiffness Value="20" Scale="None" Actual="20"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
@@ -385,9 +385,9 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+<Stiffness Value="20" Scale="None" Actual="20"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
@@ -458,9 +458,9 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+<Stiffness Value="20" Scale="None" Actual="20"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
@@ -658,9 +658,9 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+<Stiffness Value="20" Scale="None" Actual="20"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
@@ -700,9 +700,9 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+<Stiffness Value="20" Scale="None" Actual="20"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
@@ -773,9 +773,9 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+<Stiffness Value="20" Scale="None" Actual="20"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
@@ -922,9 +922,9 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+<Stiffness Value="20" Scale="None" Actual="20"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
@@ -964,9 +964,9 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+<Stiffness Value="20" Scale="None" Actual="20"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
@@ -1006,9 +1006,9 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+<Stiffness Value="20" Scale="None" Actual="20"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
@@ -1286,9 +1286,9 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+<Stiffness Value="20" Scale="None" Actual="20"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
@@ -1328,9 +1328,9 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+<Stiffness Value="20" Scale="None" Actual="20"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
@@ -1370,9 +1370,9 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+<Stiffness Value="20" Scale="None" Actual="20"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
@@ -1550,9 +1550,9 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+<Stiffness Value="20" Scale="None" Actual="20"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
@@ -1592,9 +1592,9 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+<Stiffness Value="20" Scale="None" Actual="20"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
@@ -1665,9 +1665,9 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Damping Value="250" Scale="None" Actual="250"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+<Stiffness Value="20" Scale="None" Actual="20"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>

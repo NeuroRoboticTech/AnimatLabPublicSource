@@ -124,7 +124,7 @@
         <Scale x="1" y="1" z="1" />
         <MeshFile>Left_Rear_Femur.obj</MeshFile>
         <CollisionMeshFile>Left_Rear_Femur_Collision.obj</CollisionMeshFile>
-        <CollisionMeshType>Triangular</CollisionMeshType>
+        <CollisionMeshType>Convex</CollisionMeshType>
       </RigidBody>
       <RigidBody>
         <Name>Right_Block</Name>

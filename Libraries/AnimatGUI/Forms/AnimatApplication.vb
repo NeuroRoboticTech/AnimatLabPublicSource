@@ -1149,6 +1149,12 @@ Namespace Forms
         ' then that child cannot be added to that parent type.
         Protected m_aryPartTypeExclusions As New ArrayList
 
+        'List of items that need to be deleted after load is finished because they are invalid.
+        'This can happen when converting an old version that was not saved out correctly. The old
+        'version did not always clean itself up correctly. There could be offpage connectors that 
+        'no longer had nodes to them. We need to clean these up.
+        Protected m_aryDeleteAfterLoad As New ArrayList
+
         'Protected m_ipToolPanel As New IconPanel
 
         'Protected m_ptSimWindowLocation As System.Drawing.Point
@@ -3365,6 +3371,7 @@ Namespace Forms
                 Util.LoadInProgress = True
                 Me.AppIsBusy = True
 
+                m_aryDeleteAfterLoad.Clear()
                 Dim fltVersion As Single = oXml.GetChildFloat("Version", 1)
 
                 If fltVersion < Me.AppVersion Then
@@ -3386,6 +3393,7 @@ Namespace Forms
 
                         'Now initialize after load
                         m_doSimulation.InitializeAfterLoad()
+                        DeleteItemsAfterLoadFinished()
 
                     Catch ex As System.Exception
                         AnimatGUI.Framework.Util.DisplayError(ex)
@@ -3589,6 +3597,18 @@ Namespace Forms
 
             Return eResult
         End Function
+
+        Public Overridable Sub DeleteItemAfterLoading(ByVal doItem As Framework.DataObject)
+            m_aryDeleteAfterLoad.Add(doItem)
+        End Sub
+
+        Protected Overridable Sub DeleteItemsAfterLoadFinished()
+            For Each doItem As Framework.DataObject In m_aryDeleteAfterLoad
+                doItem.Delete(False)
+            Next
+
+            m_aryDeleteAfterLoad.Clear()
+        End Sub
 
 #End Region
 
@@ -6331,6 +6351,7 @@ Namespace Forms
 
         Public Overridable Sub ConvertProjectFile(ByVal strProjectFile As String, ByVal fltOldVersion As Single) Handles Me.ConvertFileVersion
             Try
+                Me.AppIsBusy = True
 
                 Dim fltVersion As Single = fltOldVersion
                 Dim fltCurrentVersion As Single = Me.AppVersion
@@ -6348,6 +6369,8 @@ Namespace Forms
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Me.AppIsBusy = False
             End Try
         End Sub
 

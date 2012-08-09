@@ -174,7 +174,7 @@
       </PreviousAll>
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Hierarchy" />
-        <Space Value="59.379615952732644017725258490" />
+        <Space Value="28.436018957345971563981042650" />
         <Best Count="1">
           <Item Name="Hierarchy" />
         </Best>
@@ -224,7 +224,7 @@
       </PreviousAll>
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Properties" />
-        <Space Value="40.620384047267355982274741510" />
+        <Space Value="71.563981042654028436018957350" />
         <Best Count="1">
           <Item Name="Properties" />
         </Best>

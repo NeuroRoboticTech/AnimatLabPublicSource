@@ -486,7 +486,7 @@ void VsSimulator::Initialize(int argc, const char **argv)
 	m_oExternalStimuliMgr.Initialize();
 	if(m_lpSimRecorder) m_lpSimRecorder->Initialize();
 
-	//m_vsIntersect.Initialize();
+	//m_vsIntersect.SetUniverse(m_uUniverse);
 
 	//realize the osg viewer
 	m_vsWinMgr->Realize();

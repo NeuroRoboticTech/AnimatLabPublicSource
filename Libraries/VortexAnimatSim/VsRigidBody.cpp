@@ -719,7 +719,7 @@ void VsRigidBody::Physics_DisableCollision(RigidBody *lpBody)
 		THROW_PARAM_ERROR(Vs_Err_lCollisionGeomNotDefined, Vs_Err_strCollisionGeomNotDefined, "ID", m_lpThisAB->ID());
 
 	if(lpUniv->getPairIntersectEnabled(m_vxCollisionGeometry, lpVsBody->CollisionGeometry()) == true)
-		lpUniv->disablePairIntersect(m_vxPart, lpVsBody->Sensor());
+		lpUniv->disablePairIntersect(m_vxSensor, lpVsBody->Sensor());
 }
 
 float *VsRigidBody::Physics_GetDataPointer(string strDataType)

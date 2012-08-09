@@ -337,7 +337,8 @@ Namespace DataObjects.Behavior.Nodes
                 If Not bnNode Is Nothing Then
                     Me.LinkedNode = New TypeHelpers.LinkedNode(bnNode.Organism, bnNode)
                 Else
-                    Throw New System.Exception("The offpage connector ID: " & Me.ID & " was unable to find its linked node ID: " & m_strLinkedNodeID & " in the diagram.")
+                    Util.Application.DeleteItemAfterLoading(Me)
+                    Util.DisplayError(New System.Exception("The offpage connector ID: " & Me.ID & " was unable to find its linked node ID: " & m_strLinkedNodeID & " in the diagram. This node and all links will be removed."))
                 End If
             End If
 
