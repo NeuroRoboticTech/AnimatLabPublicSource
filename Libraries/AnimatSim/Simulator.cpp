@@ -99,6 +99,7 @@ Simulator::Simulator()
 	m_iSelectionMode = GRAPHICS_SELECTION_MODE;
 	m_bAddBodiesMode = FALSE;
 	m_fltRecFieldSelRadius = 0.05f;
+	m_iPhysicsBodyCount = 0;
 
 	m_bPaused = TRUE;
 	m_bInitialized = FALSE;
@@ -127,12 +128,14 @@ Simulator::Simulator()
 	m_fltPrevTotalRealTimeForStep = 0;
 	m_fltTotalRealTimeForStepSmooth = 0;
 	m_fltPhysicsStepTime = 0;
+	m_fltPrevPhysicsStepTime = 0;
 	m_fltTotalNeuralStepTime = 0;
 	m_fltRealTime = 0;
 	m_lLastTickTaken = 0;
 	m_fltExternalStimuliStepTime = 0;
 	m_fltDataChartStepTime = 0;
 	m_fltSimRecorderStepTime = 0;
+	m_fltRemainingStepTime = 0;
 
 	m_iDesiredFrameRate = 30;
  	m_fltDesiredFrameStep = (1/ (float) m_iDesiredFrameRate);
@@ -1905,6 +1908,7 @@ void Simulator::Reset()
 	m_fltAngularDamping = 5e12f;
 	m_fltLinearKineticLoss = 0.1e-9f;
 	m_fltAngularKineticLoss = 1e-12f;
+	m_iPhysicsBodyCount = 0;
 
 	m_bForceFastMoving = TRUE;
 	m_bSteppingSim = FALSE;
@@ -1930,12 +1934,14 @@ void Simulator::Reset()
 	m_fltPrevTotalRealTimeForStep = 0;
 	m_fltTotalRealTimeForStepSmooth = 0;
 	m_fltPhysicsStepTime = 0;
+	m_fltPrevPhysicsStepTime = 0;
 	m_fltTotalNeuralStepTime = 0;
 	m_fltRealTime = 0;
 	m_lLastTickTaken = 0;
 	m_fltExternalStimuliStepTime = 0;
 	m_fltDataChartStepTime = 0;
 	m_fltSimRecorderStepTime = 0;
+	m_fltRemainingStepTime = 0;
 
 	m_iDesiredFrameRate = 30;
  	m_fltDesiredFrameStep = (1/ (float) m_iDesiredFrameRate);
@@ -2103,9 +2109,9 @@ void Simulator::StepPlaybackControl()
 			StepVideoFrame();				
 
 		} while(dblRemainingTime > 0);
-
-		RecordAddedPlaybackTime();
 	}
+
+	RecordAddedPlaybackTime();
 }
 
 void Simulator::StepVideoFrame()
@@ -2139,7 +2145,7 @@ void Simulator::StepNeuralEngine()
 		m_lpSelOrganism->StepNeuralEngine();
 	}
 
-	m_fltTotalNeuralStepTime = TimerDiff_s(lStart, GetTimerTick());
+	m_fltTotalNeuralStepTime += TimerDiff_s(lStart, GetTimerTick());
 }
 
 /**
@@ -2170,7 +2176,7 @@ void Simulator::StepPhysicsEngine()
 
 	m_lPhysicsSliceCount++;
 
-	m_fltPhysicsStepTime = TimerDiff_s(lStart, GetTimerTick());
+	m_fltPhysicsStepTime += TimerDiff_s(lStart, GetTimerTick());
 }
 
 void Simulator::StepExternalStimuli()
@@ -2179,7 +2185,7 @@ void Simulator::StepExternalStimuli()
 
 	m_oExternalStimuliMgr.StepSimulation();
 
-	m_fltExternalStimuliStepTime = TimerDiff_s(lStart, GetTimerTick());
+	m_fltExternalStimuliStepTime += TimerDiff_s(lStart, GetTimerTick());
 }
 
 void Simulator::StepDataCharts()
@@ -2188,7 +2194,7 @@ void Simulator::StepDataCharts()
 
 	m_oDataChartMgr.StepSimulation();
 
-	m_fltDataChartStepTime = TimerDiff_s(lStart, GetTimerTick());
+	m_fltDataChartStepTime += TimerDiff_s(lStart, GetTimerTick());
 }
 
 void Simulator::StepSimRecorder()
@@ -2197,7 +2203,7 @@ void Simulator::StepSimRecorder()
 
 	m_lpSimRecorder->StepSimulation();
 
-	m_fltSimRecorderStepTime = TimerDiff_s(lStart, GetTimerTick());
+	m_fltSimRecorderStepTime += TimerDiff_s(lStart, GetTimerTick());
 }
 
 /**
@@ -2215,13 +2221,30 @@ void Simulator::Step()
 
 	StepNeuralEngine();
 
-	StepDataCharts();
-
 	if(m_lpSimRecorder) 
 		StepSimRecorder();
+
+	//Must be last in order to get all data changes that were previously made.
+	StepDataCharts();
 		
 	m_lTimeSlice++;
 	m_fltTime = m_lTimeSlice*m_fltTimeStep;
+}
+
+/**
+\brief	Resets the variables that are used to keep track of the time that each component of the time step takes to execute.
+
+\author	dcofer
+**/
+void Simulator::ResetSimulationTimingParams()
+{
+	m_fltPrevPhysicsStepTime = m_fltPhysicsStepTime;
+	m_fltPhysicsStepTime = 0;
+	m_fltTotalNeuralStepTime = 0;
+	m_fltExternalStimuliStepTime = 0;
+	m_fltDataChartStepTime = 0;
+	m_fltSimRecorderStepTime = 0;
+	m_fltRemainingStepTime = 0;
 }
 
 /**
@@ -2242,6 +2265,7 @@ the ultimate performance of the system.
 **/
 void Simulator::StepSimulation()
 {
+	ResetSimulationTimingParams();
 	for(m_iPhysicsStepCount=1; m_iPhysicsStepCount<=m_iPhysicsStepInterval; m_iPhysicsStepCount++)
 		Step();
 }
@@ -2427,6 +2451,8 @@ void Simulator::RecordSimulationTotalStepTimer()
 	unsigned long long lEnd = GetTimerTick();
 	m_fltPrevTotalRealTimeForStep = m_fltTotalRealTimeForStep;
 	m_fltTotalRealTimeForStep = (float) TimerDiff_s(m_lStepStartTick, lEnd);
+
+	m_fltRemainingStepTime = m_fltTotalRealTimeForStep - (m_fltPhysicsStepTime + m_fltTotalNeuralStepTime + m_fltExternalStimuliStepTime + m_fltDataChartStepTime + m_fltSimRecorderStepTime + m_fltPlaybackAdditionRealTimeToStep);
 
 	m_fltTotalRealTimeForStepSmooth = m_fltTotalRealTimeForStepSmooth + 0.05*(m_fltPrevTotalRealTimeForStep-m_fltTotalRealTimeForStepSmooth);
 }
@@ -3935,6 +3961,11 @@ void Simulator::RemoveOdorType(string strID, BOOL bThrowError)
 	m_aryOdorTypes.Remove(strID);
 }
 
+void  Simulator::IncrementPhysicsBodyCount()
+{
+	m_iPhysicsBodyCount++;
+}
+
 #pragma endregion
 
 #pragma region DataAccesMethods
@@ -3961,7 +3992,7 @@ float *Simulator::GetDataPointer(string strDataType)
 	else if(strType == "TOTALREALTIMEFORSTEPSMOOTHED")
 		lpData = &m_fltTotalRealTimeForStepSmooth;
 	else if(strType == "PHYSICSREALTIMEFORSTEP")
-		lpData = &m_fltPhysicsStepTime;
+		lpData = &m_fltPrevPhysicsStepTime;
 	else if(strType == "NEURALREALTIMEFORSTEP")
 		lpData = &m_fltTotalNeuralStepTime;
 	else if(strType == "EXTERNALSTIMULIREALTIMEFORSTEP")
@@ -3970,6 +4001,8 @@ float *Simulator::GetDataPointer(string strDataType)
 		lpData = &m_fltDataChartStepTime;
 	else if(strType == "SIMRECORDERREALTIMEFORSTEP")
 		lpData = &m_fltSimRecorderStepTime;
+	else if(strType == "REMAININGSTEPTIME")
+		lpData = &m_fltRemainingStepTime;
 	else
 		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Simulator DataType: " + strDataType);
 

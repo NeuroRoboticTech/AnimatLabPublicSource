@@ -284,13 +284,14 @@ void VsSimulator::SetSimulationStabilityParams()
 //classes and the vortex viewer.
 void VsSimulator::InitializeVortex(int argc, const char **argv)
 {
-	#define NOBJECTS 100
-
 	InitializeVortexViewer(argc, argv);
+
+	int iObjectCount = 100 + m_iPhysicsBodyCount;
+	int iCollisionCount = iObjectCount*40;
 
 	//create the frame
 	m_vxFrame = VxFrame::instance();
-	m_uUniverse = new Vx::VxUniverse(NOBJECTS, NOBJECTS*40);
+	m_uUniverse = new Vx::VxUniverse(iObjectCount, iCollisionCount);
 	m_uUniverse->setGravity(0, m_fltGravity, 0);
 	//m_uUniverse->setGravity(0, 0, m_fltGravity);
 	m_vxFrame->addUniverse(m_uUniverse);
@@ -505,7 +506,8 @@ void VsSimulator::StepSimulation()
 
 			unsigned long long lStart = GetTimerTick();
 			m_vxFrame->step();
-			m_fltPhysicsStepTime += TimerDiff_s(lStart, GetTimerTick());
+			float fltVal = TimerDiff_s(lStart, GetTimerTick());
+			m_fltPhysicsStepTime += fltVal;
 		}
 
 	}

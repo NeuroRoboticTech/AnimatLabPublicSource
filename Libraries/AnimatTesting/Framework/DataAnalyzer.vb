@@ -257,6 +257,17 @@ Namespace Framework
             Throw New System.Exception("No match for test '" & strTestName & "'. Template point: " & oTemp.SaveXml())
         End Sub
 
+        Public Function CalculateAverage(ByVal aryPoints As List(Of Double)) As Double
+
+            Dim fltTotal As Double = 0
+            For Each fltVal As Double In aryPoints
+                fltTotal = fltTotal + fltVal
+            Next
+
+            Dim fltAvg As Double = fltTotal / aryPoints.Count
+            Return fltAvg
+        End Function
+
     End Class
 
 End Namespace

@@ -1441,6 +1441,8 @@ void RigidBody::Load(CStdXml &oXml)
 	if(m_lpJointToParent) {delete m_lpJointToParent; m_lpJointToParent=NULL;}
 	m_aryChildParts.RemoveAll();
 
+	m_lpSim->IncrementPhysicsBodyCount();
+
 	BodyPart::Load(oXml);
 
 	oXml.IntoElem();  //Into RigidBody Element

@@ -1444,6 +1444,17 @@ Namespace Framework
             Threading.Thread.Sleep(1000)
         End Sub
 
+        Protected Function CalculateChartColumnAverage(ByVal strChart As String, ByVal iColIdx As Integer) As Double
+            Dim aryChartColumns() As String = {""}
+            Dim aryChartData As New List(Of List(Of Double))
+            Util.ReadCSVFileToList(strChart, aryChartColumns, aryChartData, True)
+
+            Dim aryData As List(Of Double) = aryChartData(iColIdx)
+            Dim oAnalysis As New Framework.DataAnalyzer
+
+            Return oAnalysis.CalculateAverage(aryData)
+        End Function
+
 #Region "Neural Methods"
 
         Protected Overridable Sub OpenRootBehavioralSubsystem()

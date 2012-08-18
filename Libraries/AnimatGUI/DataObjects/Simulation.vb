@@ -375,6 +375,7 @@ Namespace DataObjects
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("SimRecorderRealTimeForStep", "Simulation Recorder Time For Step", "Seconds", "s", 0, 1))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ActualFrameRate", "Frame Rate", "FPS", "FPS", 0, 60))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("RealTime", "Real vs Sim Time", "Seconds", "s", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("RemainingStepTime", "Remaining Step Time", "Seconds", "s", 0, 1))
             m_thDataTypes.ID = "SimulationRealTimeToStep"
 
             Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Sim.New Finished")
@@ -409,6 +410,7 @@ Namespace DataObjects
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("SimRecorderRealTimeForStep", "Simulation Recorder Time For Step", "Seconds", "s", 0, 1))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ActualFrameRate", "Frame Rate", "FPS", "FPS", 0, 60))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("RealTime", "Real vs Sim Time", "Seconds", "s", 0, 1))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("RemainingStepTime", "Remaining Step Time", "Seconds", "s", 0, 1))
             m_thDataTypes.ID = "SimulationRealTimeToStep"
 
             Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Sim.New Finished")

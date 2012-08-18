@@ -266,6 +266,10 @@ namespace AnimatSim
 			/// uses this radius when drawing the sphere.
 			float m_fltRecFieldSelRadius;
 
+			/// This is the number of physics bodies within the simulation. This is used to setup the 
+			/// presets for the simulation.
+			int m_iPhysicsBodyCount;
+
 #pragma endregion
 
 #pragma region TimingVariables
@@ -296,9 +300,6 @@ namespace AnimatSim
 			/// Current value of the exponential smoothing algorith for real time step.
 			float m_fltTotalRealTimeForStepSmooth;
 
-			/// This is the time pers step for the physics engine.
-			float m_fltPhysicsStepTime;
-
 			/// This keeps track of the real time from the begginning of the simulation.
 			float m_fltRealTime;
 
@@ -322,6 +323,14 @@ namespace AnimatSim
 			/// This is the last tick taken by a GetTickCount. It is used in debugging.
 			unsigned long long m_lLastTickTaken;
 
+			/// This is the time pers step for the physics engine.
+			float m_fltPhysicsStepTime;
+
+			/// This is the previous time pers step for the physics engine.
+			/// This time is a weird one. It really gets calculated after we have updated the data in the chart, so we need to 
+			/// use the value from the previous time step to get the real value correctly.
+			float m_fltPrevPhysicsStepTime;
+
 			/// Total time for processing of all neural items for this step.
 			float m_fltTotalNeuralStepTime;
 
@@ -333,6 +342,10 @@ namespace AnimatSim
 
 			/// Time to process simulation recorder for this step.
 			float m_fltSimRecorderStepTime;
+
+			/// This is the time left over from subtracting all the calculated times form the total time for the step.
+			/// This is primarily used for debuggin purposes to make sure that I have not missed anything.
+			float m_fltRemainingStepTime;
 
 #pragma endregion
 
@@ -505,6 +518,7 @@ namespace AnimatSim
 			virtual void StepDataCharts();
 			virtual void StepSimRecorder();
 			virtual void Step();
+			virtual void ResetSimulationTimingParams();
 
 			virtual void ProcessSimulationStep();
 			virtual void StepSimulation();
@@ -912,6 +926,8 @@ namespace AnimatSim
 			virtual void Save(string strFilename);
 
 			static IStdClassFactory *LoadClassFactory(string strModuleName);
+
+			virtual void IncrementPhysicsBodyCount();
 
 #pragma endregion
 		 			

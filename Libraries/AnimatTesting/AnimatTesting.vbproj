@@ -161,6 +161,8 @@
     <Compile Include="UITests\ConversionTests\SystemTests\PlaybackControlConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\TutorialTests\ExamplesConversionUITest.vb" />
     <Compile Include="UITests\CreationTests\NewProjectUITest.vb" />
+    <Compile Include="UITests\PerformanceTests\DropBoxesUITest.vb" />
+    <Compile Include="UITests\PerformanceTests\NumberOfItemsUITest.vb" />
     <Compile Include="UnitTests\DataAnalysis.vb" />
     <Compile Include="UnitTests\FileConversions\Convert_V1ToV2Test.vb" />
     <Compile Include="Util.vb" />

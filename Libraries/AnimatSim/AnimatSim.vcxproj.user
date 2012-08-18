@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerCommand>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\bin\AnimatSimulatorD.exe</LocalDebuggerCommand>
+    <LocalDebuggerCommand>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\bin\AnimatSimulator.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>-library VortexAnimatPrivateSim_vc10D.dll -project "C:\Projects\AnimatLabSDK\Experiments\ConversionTests\Converted\CylinderTest\CylinderTest_Standalone.asim"</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-library VortexAnimatPrivateSim_vc10D.dll -project "C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\TutorialTests\Examples\Hexapod\Hexapod_Standalone.asim"</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LocalDebuggerCommand>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\bin\AnimatSimulator.exe</LocalDebuggerCommand>
