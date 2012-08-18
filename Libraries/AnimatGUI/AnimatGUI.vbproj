@@ -420,6 +420,7 @@
     </Compile>
     <Compile Include="DataObjects\Physical\Joints\BallSocket.vb" />
     <Compile Include="DataObjects\Physical\Joints\Distance.vb" />
+    <Compile Include="DataObjects\Physical\Joints\FreeJoint.vb" />
     <Compile Include="DataObjects\Physical\Joints\Hinge.vb" />
     <Compile Include="DataObjects\Physical\Joints\Linear.vb" />
     <Compile Include="DataObjects\Physical\Joints\Prismatic.vb" />
@@ -1336,6 +1337,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Graphics\BodyPlan\RPRO_SelectType.gif" />
     <EmbeddedResource Include="Graphics\BodyPlan\RPRO_Treeview.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\BodyPlan\FreeJoint_SelectType.gif" />
+    <EmbeddedResource Include="Graphics\BodyPlan\FreeJoint_Treeview.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
