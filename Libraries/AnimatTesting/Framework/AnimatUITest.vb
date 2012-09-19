@@ -855,12 +855,16 @@ Namespace Framework
         '''<summary>
         '''AddRootPartType - Use 'AddRootPartTypeParams' to pass parameters into this method.
         '''</summary>
-        Protected Overridable Sub AddRootPartType(ByVal strStructGroup As String, ByVal strStructure As String, ByVal strPartType As String, Optional ByVal strName As String = "")
+        Protected Overridable Sub AddRootPartType(ByVal strStructGroup As String, ByVal strStructure As String, ByVal strPartType As String, Optional ByVal strName As String = "", Optional ByVal bAddGraphicsbox As Boolean = True)
             Debug.WriteLine("AddRootPartType. Structure Group:, " & strStructGroup & ", Structure: " & strStructure & ", PartType: " & strPartType & ", Name: " & strName)
 
             OpenDialogAndWait("Select Rigid Body Type", Me.GetType.GetMethod("ClickToolbarItem"), New Object() {"AddPartToolStripButton", False, 200, False, False})
 
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strPartType})
+
+            If Not bAddGraphicsbox Then
+                ExecuteActiveDialogMethod("Click_GraphicsCheckBox", New Object() {False})
+            End If
 
             'Click 'Ok' button
             ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
@@ -912,7 +916,7 @@ Namespace Framework
 
         End Sub
 
-        Protected Overridable Sub AddChildPartTypeWithJoint(ByVal strPartType As String, ByVal strJointType As String, ByVal strPath As String)
+        Protected Overridable Sub AddChildPartTypeWithJoint(ByVal strPartType As String, ByVal strJointType As String, ByVal strPath As String, Optional ByVal bAddGraphicsbox As Boolean = True)
             Debug.WriteLine("AddChildPartTypeWithJoint. Part type: " & strPartType & ", Joint Type: " & strJointType & ", Path: " & strPath)
 
             BeforeAddChildPart(strPartType, strJointType)
@@ -923,6 +927,10 @@ Namespace Framework
             AutomatedClickToAddBody(strPath, 0.04, 0.55, -0.5, 0.0, 0.0, -1.0)
 
             ExecuteActiveDialogMethod("SelectItemInListView", New Object() {strPartType})
+
+            If Not bAddGraphicsbox Then
+                ExecuteActiveDialogMethod("Click_GraphicsCheckBox", New Object() {False})
+            End If
 
             'Click 'Ok' button
             ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)

@@ -1,0 +1,1 @@
+AnimatSimulator.exe -library VortexAnimatPrivateSim_vc10.dll -project "C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\PerformanceTests\DropBoxesTest_10\DropBoxesTest_Standalone.asim" 

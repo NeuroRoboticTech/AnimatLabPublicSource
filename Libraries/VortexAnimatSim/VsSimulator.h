@@ -35,6 +35,12 @@ namespace VortexAnimatSim
 		
 		VsIntersectionEvent m_vsIntersect;
 
+		CStdTimer m_Timer;
+
+		double m_dblTotalStepTime;
+		double m_dblTotalStepTime2;
+		long m_lStepTimeCount;
+
 		virtual AnimatSim::Recording::SimulationRecorder *CreateSimulationRecorder();
 		virtual void SnapshotStopFrame();
 

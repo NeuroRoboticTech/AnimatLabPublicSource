@@ -30,7 +30,6 @@ Namespace UITests
 
 #Region "Attributes"
 
-            Protected m_strOldProjectFolder As String
 
             Protected m_aryWindowsToOpen As New ArrayList
 
@@ -101,18 +100,6 @@ Namespace UITests
                 WaitForProjectToOpen()
 
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation", "PlaybackControlMode", "FastestPossible"})
-            End Sub
-
-            Protected Overridable Sub CleanupConversionProjectDirectory()
-                'Make sure any left over project directory is cleaned up before starting the test.
-                If m_strRootFolder.Length > 0 AndAlso m_strProjectPath.Length > 0 AndAlso m_strProjectName.Length > 0 Then
-                    DeleteDirectory(m_strRootFolder & m_strProjectPath & "\" & m_strProjectName)
-                End If
-
-                'Copy the old version project folder back so we can load it up.
-                If m_strOldProjectFolder.Length > 0 Then
-                    Util.CopyDirectory(m_strRootFolder & m_strOldProjectFolder, m_strRootFolder & m_strProjectPath & "\" & m_strProjectName)
-                End If
             End Sub
 
 

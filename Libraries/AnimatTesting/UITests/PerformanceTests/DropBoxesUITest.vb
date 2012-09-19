@@ -8,67 +8,49 @@ Imports Microsoft.VisualStudio.TestTools.UITesting.Keyboard
 Imports AnimatTesting.Framework
 
 Namespace UITests
-    Namespace CreationTests
+    Namespace PerformanceTests
 
         <CodedUITest()>
-        Public Class NumberOfItemsUITest
-            Inherits AnimatUITest
+        Public Class DropBoxesUITest
+            Inherits PerformanceUITest
 
             Protected m_aryStepTimes As New ArrayList
+            Protected m_fltSize As Single = 0.2
+            Protected m_fltInterBoxDist As Single = m_fltSize * 3
 
             <TestMethod()>
-            Public Sub Test_NumberOfItems()
+            Public Sub Test_DropBoxes()
 
                 'Start the application.
-                StartApplication("")
+                CleanupConversionProjectDirectory()
 
-                'Click the New Project button.
-                ClickToolbarItem("NewToolStripButton", False)
+                StartExistingProject()
 
-                'Set params and hit ok button
-                ExecuteActiveDialogMethod("SetProjectParams", New Object() {"NumberOfItems", m_strRootFolder & "\Libraries\AnimatTesting\TestProjects\PerformanceTests"})
-                ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, 2000)
-
-                CreateStructure(m_strStructureGroup, m_strStruct1Name, m_strStruct1Name, False)
+                WaitForProjectToOpen()
 
                 'Open the Structure_1 body plan editor window
                 ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan"})
 
-                'Add a root cylinder part.
-                AddRootPartType(m_strStructureGroup, m_strStruct1Name, "Box")
+                Dim iMaxBoxes As Integer = 30
+                Dim iBoxes As Integer = 0
+                For fltX As Single = -10 To 10 Step m_fltInterBoxDist
+                    For fltZ As Single = -10 To 10 Step m_fltInterBoxDist
+                        If iBoxes < iMaxBoxes Then
 
-                'Set the root part to be frozen.
-                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Freeze", "True"})
+                            If iBoxes > 0 Then
+                                AddChildPartTypeWithJoint("Box", "FreeJoint", "Simulation\Environment\Organisms\Organism_1\Body Plan\Root", False)
+                                RepositionChildParts(iBoxes, fltX, fltZ)
+                            Else
+                                AddRootPartType(m_strStructureGroup, m_strStruct1Name, "Box", , False)
+                                RepositionRootPart(fltX, fltZ)
+                            End If
 
-                'Select the LineChart to add.
-                AddChart("Line Chart")
-
-                'Select the Chart axis
-                ExecuteMethod("SelectWorkspaceItem", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1", False})
-
-                'Add root to chart
-                AddItemToChart("Simulation")
-
-                'Set the name of the data chart item to root_y.
-                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart\Y Axis 1\Simulation", "Name", "StepTime"})
-
-                'Change the end time of the data chart to 45 seconds.
-                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectStartTime", "0.1"})
-                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Tool Viewers\DataTool_1\LineChart", "CollectEndTime", "0.2"})
-
-                'Set simulation to automatically end at a specified time.
-                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation", "SetSimulationEnd", "True"})
-
-                'Set simulation end time.
-                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation", "SimulationEndTime", "0.5"})
+                            iBoxes = iBoxes + 1
+                        End If
+                    Next
+                Next
 
                 GetStepTime()
-
-                For iJoints As Integer = 1 To 50
-                    AddChildPartTypeWithJoint("Box", "Hinge", "Simulation\Environment\Organisms\Organism_1\Body Plan\Root")
-                    RepositionChildParts(iJoints)
-                    GetStepTime()
-                Next
 
                 Debug.WriteLine("Average step times")
                 For Each dblAvg As Double In m_aryStepTimes
@@ -83,26 +65,49 @@ Namespace UITests
 
                 ExecuteMethod("ExportDataCharts", New Object() {"", ""})
 
-                Dim dblAvgTime As Double = CalculateChartColumnAverage(m_strRootFolder & "\Libraries\AnimatTesting\TestProjects\PerformanceTests\NumberOfItems\DataTool_1.txt", 1)
+                Dim dblAvgTime As Double = CalculateChartColumnAverage(m_strRootFolder & m_strProjectPath & "\" & m_strProjectName & "\DataTool_1.txt", 1)
 
                 m_aryStepTimes.Add(dblAvgTime)
             End Sub
 
-            Protected Sub RepositionChildParts(ByVal iChildIdx As Integer)
+            Protected Sub RepositionChildParts(ByVal iChildIdx As Integer, ByVal fltX As Single, ByVal fltZ As Single)
+
+                'Resize the child part
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_" & iChildIdx & "\Body_" & iChildIdx, "Width", CStr(m_fltSize)})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_" & iChildIdx & "\Body_" & iChildIdx, "Height", CStr(m_fltSize)})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_" & iChildIdx & "\Body_" & iChildIdx, "Length", CStr(m_fltSize)})
+
+                'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_" & iChildIdx & "\Body_" & iChildIdx & "\Body_" & iChildIdx & "_Graphics", "Width", CStr(m_fltSize)})
+                'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_" & iChildIdx & "\Body_" & iChildIdx & "\Body_" & iChildIdx & "_Graphics", "Height", CStr(m_fltSize)})
+                'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_" & iChildIdx & "\Body_" & iChildIdx & "\Body_" & iChildIdx & "_Graphics", "Length", CStr(m_fltSize)})
 
                 'Reposition the child part relative to the parent part
-                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_" & iChildIdx & "\Body_" & iChildIdx, "LocalPosition.X", "20 c"})
-                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_" & iChildIdx & "\Body_" & iChildIdx, "LocalPosition.Y", "0"})
-                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_" & iChildIdx & "\Body_" & iChildIdx, "LocalPosition.Z", ((iChildIdx - 1) * 20) & " c"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_" & iChildIdx & "\Body_" & iChildIdx, "WorldPosition.X", CStr(fltX)})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_" & iChildIdx & "\Body_" & iChildIdx, "WorldPosition.Y", "5"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_" & iChildIdx & "\Body_" & iChildIdx, "WorldPosition.Z", CStr(fltZ)})
 
                 'Reposition the joint relative to the parent part
-                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_" & iChildIdx, "LocalPosition.X", "-10 c"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_" & iChildIdx, "LocalPosition.X", "0"})
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_" & iChildIdx, "LocalPosition.Y", "0"})
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_" & iChildIdx, "LocalPosition.Z", "0"})
 
-                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_" & iChildIdx, "Rotation.X", "90"})
-                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_" & iChildIdx, "Rotation.Y", "0"})
-                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Joint_" & iChildIdx, "Rotation.Z", "90"})
+            End Sub
+
+            Protected Sub RepositionRootPart(ByVal fltX As Single, ByVal fltZ As Single)
+
+                'Resize the child part
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Width", CStr(m_fltSize)})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Height", CStr(m_fltSize)})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "Length", CStr(m_fltSize)})
+
+                'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Width", CStr(m_fltSize)})
+                'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Height", CStr(m_fltSize)})
+                'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root\Root_Graphics", "Length", CStr(m_fltSize)})
+
+                'Reposition the child part relative to the parent part
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "WorldPosition.X", CStr(fltX)})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "WorldPosition.Y", "5"})
+                ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\" & m_strStructureGroup & "\" & m_strStruct1Name & "\Body Plan\Root", "WorldPosition.Z", CStr(fltZ)})
 
             End Sub
 
@@ -114,8 +119,13 @@ Namespace UITests
             <TestInitialize()> Public Overrides Sub MyTestInitialize()
                 MyBase.MyTestInitialize()
 
+                m_strProjectName = "DropBoxesTest"
+                m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\PerformanceTests"
+                m_strTestDataPath = "\Libraries\AnimatTesting\TestProjects\PerformanceTests\" & m_strProjectName
+                m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\PerformanceTests\" & m_strProjectName
+
                 'Make sure any left over project directory is cleaned up before starting the test.
-                DeleteDirectory(m_strRootFolder & "\Libraries\AnimatTesting\TestProjects\PerformanceTests\NumberOfItems")
+                DeleteDirectory(m_strRootFolder & m_strProjectPath & "\" & m_strProjectName)
 
                 SetStructureNames("1", False)
             End Sub
@@ -124,7 +134,6 @@ Namespace UITests
             <TestCleanup()> Public Overrides Sub MyTestCleanup()
                 MyBase.MyTestCleanup()
 
-                DeleteDirectory(m_strRootFolder & "\Libraries\AnimatTesting\TestProjects\PerformanceTests\NumberOfItems")
             End Sub
 
 #End Region

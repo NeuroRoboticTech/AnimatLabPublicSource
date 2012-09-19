@@ -131,6 +131,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClCompile Include="VsBallSocket.cpp" />
     <ClCompile Include="VsBody.cpp" />
     <ClCompile Include="VsBox.cpp" />
+    <ClCompile Include="VsBoxTest.cpp" />
     <ClCompile Include="VsCameraManipulator.cpp" />
     <ClCompile Include="VsClassFactory.cpp" />
     <ClCompile Include="VsCone.cpp" />
@@ -157,6 +158,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClCompile Include="VsOsgUserData.cpp" />
     <ClCompile Include="VsOsgUserDataVisitor.cpp" />
     <ClCompile Include="VsPlane.cpp" />
+    <ClCompile Include="VsPlaneTest.cpp" />
     <ClCompile Include="VsPrismatic.cpp" />
     <ClCompile Include="VsPrismaticLimit.cpp" />
     <ClCompile Include="VsRigidBody.cpp" />
@@ -180,6 +182,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClInclude Include="VsBallSocket.h" />
     <ClInclude Include="VsBody.h" />
     <ClInclude Include="VsBox.h" />
+    <ClInclude Include="VsBoxTest.h" />
     <ClInclude Include="VsCameraManipulator.h" />
     <ClInclude Include="VsClassFactory.h" />
     <ClInclude Include="VsCone.h" />
@@ -206,6 +209,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClInclude Include="VsOsgUserData.h" />
     <ClInclude Include="VsOsgUserDataVisitor.h" />
     <ClInclude Include="VsPlane.h" />
+    <ClInclude Include="VsPlaneTest.h" />
     <ClInclude Include="VsPrismatic.h" />
     <ClInclude Include="VsPrismaticLimit.h" />
     <ClInclude Include="VsRigidBody.h" />

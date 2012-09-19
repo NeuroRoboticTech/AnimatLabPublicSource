@@ -46,8 +46,10 @@ void VsStructure::Body(RigidBody *lpBody)
 {
 	Structure::Body(lpBody);
 	m_lpVsBody = dynamic_cast<VsRigidBody *>(lpBody);
-	if(!m_lpVsBody)
-		THROW_TEXT_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody, "ID: " + lpBody->Name());
+
+	//TODO: FIX BACK
+	//if(!m_lpVsBody)
+	//	THROW_TEXT_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody, "ID: " + lpBody->Name());
 }
 
 void VsStructure::SetThisPointers()
@@ -86,7 +88,8 @@ void VsStructure::UpdatePositionAndRotationFromMatrix()
 {
 	VsMovableItem::UpdatePositionAndRotationFromMatrix();
 
-	m_lpVsBody->EndGripDrag();
+	if(m_lpVsBody)
+		m_lpVsBody->EndGripDrag();
 }
 
 	}			// Environment

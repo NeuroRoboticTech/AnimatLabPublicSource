@@ -11,7 +11,9 @@
 #include "VsMotorizedJoint.h"
 #include "VsRigidBody.h"
 #include "VsPlane.h"
+#include "VsPlaneTest.h"
 #include "VsBox.h"
+#include "VsBoxTest.h"
 #include "VsCylinder.h"
 #include "VsCone.h" 
 #include "VsSphere.h"
@@ -77,6 +79,8 @@ try
 
 	if(strType == "BOX")
 		lpPart = new VsBox;
+	else if(strType == "BOXTEST")
+		lpPart = new VsBoxTest;
 	else if(strType == "BOXCONTACTSENSOR")
 	{
 		lpPart = new VsBox;
@@ -95,6 +99,8 @@ try
 		lpPart = new VsSphere;
 	else if(strType == "PLANE")
 		lpPart = new VsPlane;
+	else if(strType == "PLANETEST")
+		lpPart = new VsPlaneTest;
 	else if(strType == "ATTACHMENT")
 		lpPart = new VsAttachment;
 	else if(strType == "LINEARHILLMUSCLE")

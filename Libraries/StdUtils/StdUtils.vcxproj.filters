@@ -75,6 +75,9 @@
     <ClCompile Include="XYTrace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="StdTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MarkupSTL.h">
@@ -132,6 +135,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="XYTrace.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StdTimer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

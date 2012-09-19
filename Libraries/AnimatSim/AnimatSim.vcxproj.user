@@ -3,7 +3,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LocalDebuggerCommand>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\bin\AnimatSimulator.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>-library VortexAnimatPrivateSim_vc10D.dll -project "C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\TutorialTests\Examples\Hexapod\Hexapod_Standalone.asim"</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-library VortexAnimatPrivateSim_vc10D.dll -project "C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\PerformanceTests\DropBoxesTest_30_NG\DropBoxesTest_Standalone_DT.asim"</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LocalDebuggerCommand>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\bin\AnimatSimulator.exe</LocalDebuggerCommand>

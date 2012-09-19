@@ -41,6 +41,8 @@ VsSimulator::VsSimulator()
 	m_uUniverse = NULL;
 	m_vxFrame = NULL;
 	//m_vsIntersect.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
+	m_dblTotalStepTime = 0;
+	m_lStepTimeCount = 0;
 }
 
 VsSimulator::~VsSimulator()
@@ -204,7 +206,9 @@ void VsSimulator::InitializeVortexViewer(int argc, const char **argv)
 {
     osg::ArgumentParser arguments(&argc, (char **) argv);
 
-	osg::setNotifyLevel(ConvertTraceLevelToOSG());
+	osg::setNotifyLevel(osg::NotifySeverity::NOTICE);  //ConvertTraceLevelToOSG());
+
+	//osg::notify(osg::NOTICE) << "Setting OSG notice level to '" << Std_GetTraceLevel() << std::endl
 
     // set up the usage document, in case we need to print out how to use this program.
     arguments.getApplicationUsage()->setApplicationName(arguments.getApplicationName());
@@ -504,10 +508,28 @@ void VsSimulator::StepSimulation()
 		{
 			Simulator::StepSimulation();
 
+			m_Timer.StartTimer();
 			unsigned long long lStart = GetTimerTick();
 			m_vxFrame->step();
-			float fltVal = TimerDiff_s(lStart, GetTimerTick());
-			m_fltPhysicsStepTime += fltVal;
+			double dblVal = TimerDiff_s(lStart, GetTimerTick());
+			double dblVal2 = m_Timer.StopTimer();
+			m_fltPhysicsStepTime += dblVal;
+
+			if(m_lTimeSlice > 10 && m_lTimeSlice < 5000)
+			{
+				m_dblTotalStepTime = dblVal;
+				m_dblTotalStepTime2 = dblVal2;
+				m_lStepTimeCount++;
+			}
+			else if(m_lTimeSlice == 5000)
+			{
+				double dblAvgStepTime = m_dblTotalStepTime/m_lStepTimeCount;
+				double dblAvgTimerStepTime = m_dblTotalStepTime2/m_lStepTimeCount;
+				osg::notify(osg::NOTICE) << "Average step time: " << dblAvgStepTime << std::endl;
+				osg::notify(osg::NOTICE) << "Average Timer step time: " << dblAvgTimerStepTime << std::endl;
+				osg::notify(osg::NOTICE) << "Slice Time: " << m_lTimeSlice << std::endl;
+				osg::notify(osg::NOTICE) << "Sim Time: " << Time() << std::endl;
+			}
 		}
 
 	}

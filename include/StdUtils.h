@@ -92,6 +92,7 @@ namespace StdUtils
 #include "StdBitmap.h"
 #include "StdAvi.h"
 #include "StdColor.h"
+#include "StdTimer.h"
 
 #ifndef _WIN32_WCE
 	#define STRING_TYPE LPCSTR

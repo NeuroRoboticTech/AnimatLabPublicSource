@@ -159,6 +159,12 @@
     <ClCompile Include="VsRPRO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VsBoxTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VsPlaneTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MeshMinVertexDistanceVisitor.h">
@@ -300,6 +306,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VsRPRO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VsBoxTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VsPlaneTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

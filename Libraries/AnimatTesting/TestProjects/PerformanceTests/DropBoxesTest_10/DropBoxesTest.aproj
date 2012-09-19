@@ -1,0 +1,2373 @@
+<Project>
+<ProjectName>DropBoxesTest</ProjectName>
+<SimulationFile>DropBoxesTest.asim</SimulationFile>
+<LogLevel>ErrorType</LogLevel>
+<Version>2</Version>
+<Simulation>
+<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\PerformanceTests\DropBoxesTest\</ProjectPath>
+<AnimatModule>VortexAnimatSim_VC10D.dll</AnimatModule>
+<UpdateDataInterval>250</UpdateDataInterval>
+<StartPaused>False</StartPaused>
+<EnableSimRecording>True</EnableSimRecording>
+<SetSimEnd>True</SetSimEnd>
+<APIFile/>
+<SimEndTime Value="0.5" Scale="None" Actual="0.5"/>
+<PlaybackControlMode>FastestPossible</PlaybackControlMode>
+<PresetPlaybackTimeStep Value="0" Scale="milli" Actual="0"/>
+<Environment>
+<PhysicsTimeStep Value="0.5" Scale="milli" Actual="0.0005"/>
+<Gravity Value="-9.81" Scale="None" Actual="-9.81"/>
+<MouseSpringStiffness Value="0.5" Scale="None" Actual="0.5"/>
+<MouseSpringDamping Value="200" Scale="None" Actual="200"/>
+<CalcCriticalSimParams>True</CalcCriticalSimParams>
+<LinearCompliance Value="0.1" Scale="nano" Actual="1e-010"/>
+<AngularCompliance Value="0.1" Scale="nano" Actual="1e-010"/>
+<LinearDamping Value="50" Scale="Giga" Actual="5e+010"/>
+<AngularDamping Value="50" Scale="Kilo" Actual="50000"/>
+<LinearKineticLoss Value="0.1" Scale="nano" Actual="1e-010"/>
+<AngularKineticLoss Value="1" Scale="pico" Actual="1e-012"/>
+<RecFieldSelRadius Value="5" Scale="milli" Actual="0.005"/>
+<BackgroundColor Red="0.2" Green="0.2" Blue="0.6" Alpha="1"/>
+<SimulateHydrodynamics>False</SimulateHydrodynamics>
+<MassUnits>Kilograms</MassUnits>
+<DistanceUnits>Meters</DistanceUnits>
+<AutoGenerateRandomSeed>True</AutoGenerateRandomSeed>
+<ManualRandomSeed>12345</ManualRandomSeed>
+<MaterialTypes>
+<MaterialType>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.MaterialType</ClassName>
+<ID>DEFAULTMATERIAL</ID>
+<Name>Default</Name>
+</MaterialType>
+</MaterialTypes>
+<MaterialPairs>
+<MaterialPair>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.MaterialPair</ClassName>
+<ID>e0a039d3-54bd-4e2c-8056-93da652c8d2f</ID>
+<Name/>
+<Material1ID>DEFAULTMATERIAL</Material1ID>
+<Material2ID>DEFAULTMATERIAL</Material2ID>
+<FrictionPrimaryCoefficient Value="1" Scale="None" Actual="1"/>
+<SecondaryFrictionCoefficient Value="1" Scale="None" Actual="1"/>
+<PrimaryMaximumFriction Value="500" Scale="None" Actual="500"/>
+<SecondaryMaximumFriction Value="500" Scale="None" Actual="500"/>
+<Compliance Value="1" Scale="nano" Actual="1e-009"/>
+<Damping Value="50" Scale="Giga" Actual="5e+010"/>
+<Restitution Value="0" Scale="None" Actual="0"/>
+<PrimarySlip Value="0" Scale="None" Actual="0"/>
+<SecondarySlip Value="0" Scale="None" Actual="0"/>
+<PrimarySlide Value="0" Scale="None" Actual="0"/>
+<SecondarySlide Value="0" Scale="None" Actual="0"/>
+<MaximumAdhesion Value="0" Scale="None" Actual="0"/>
+</MaterialPair>
+</MaterialPairs>
+<Organisms>
+<Organism>
+<Name>Organism_1</Name>
+<ID>f9bfd36a-9a1e-4341-b74c-3a6f6eb27522</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>100</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="-10" Scale="None" Actual="-10"/>
+<Y Value="5" Scale="None" Actual="5"/>
+<Z Value="-10" Scale="None" Actual="-10"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Basic</Type>
+<RigidBody>
+<Name>Root</Name>
+<ID>ade970ad-5266-42b4-a6df-94c020fbb2c7</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>0</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>100</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<Freeze>False</Freeze>
+<ChildBodies>
+<RigidBody>
+<Name>Root_Graphics</Name>
+<ID>19f28133-0283-45e0-9859-1a9a775a95b3</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>50</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0" Green="0" Blue="1" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>False</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+<RigidBody>
+<Name>Body_4</Name>
+<ID>1a794fd7-336d-4ebb-b42f-588575df3dfb</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>0</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>100</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="2.4" Scale="None" Actual="2.4"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<Joint>
+<Name>Joint_4</Name>
+<ID>f383bd05-66c7-49f0-9a3a-e64d5831697b</ID>
+<Description>Allows the joint to move freely in all 6 DOF.</Description>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>0</Joints>
+<RecFields>50</RecFields>
+<Simulation>50</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<ModuleName>VortexAnimatPrivateSim_VC10D.dll</ModuleName>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>FreeJoint</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.FreeJoint</PartType>
+<Size Value="50" Scale="milli" Actual="0.05"/>
+<EnableLimits>True</EnableLimits>
+</Joint>
+<ChildBodies>
+<RigidBody>
+<Name>Body_4_Graphics</Name>
+<ID>73c577d1-eb4b-4e20-ac98-e270a64f07a6</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>50</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0" Green="0" Blue="1" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>False</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+</ChildBodies>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+<RigidBody>
+<Name>Body_9</Name>
+<ID>537b27d8-3b2c-4b69-b4bd-703b941dfaab</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>0</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>100</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="5.4" Scale="None" Actual="5.4"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<Joint>
+<Name>Joint_9</Name>
+<ID>ba2a8925-c6bf-4042-aa0a-d3b086e15371</ID>
+<Description>Allows the joint to move freely in all 6 DOF.</Description>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>0</Joints>
+<RecFields>50</RecFields>
+<Simulation>50</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<ModuleName>VortexAnimatPrivateSim_VC10D.dll</ModuleName>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>FreeJoint</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.FreeJoint</PartType>
+<Size Value="50" Scale="milli" Actual="0.05"/>
+<EnableLimits>True</EnableLimits>
+</Joint>
+<ChildBodies>
+<RigidBody>
+<Name>Body_9_Graphics</Name>
+<ID>7ac55bf3-0330-4112-b4d5-a3d7751f28f0</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>50</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0" Green="0" Blue="1" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>False</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+</ChildBodies>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+<RigidBody>
+<Name>Body_6</Name>
+<ID>6185f9d0-ce92-4b49-aaea-d996a8595983</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>0</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>100</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="3.6" Scale="None" Actual="3.6"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<Joint>
+<Name>Joint_6</Name>
+<ID>006a7b41-d80e-47f3-b17a-8cf8b7ebfdb7</ID>
+<Description>Allows the joint to move freely in all 6 DOF.</Description>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>0</Joints>
+<RecFields>50</RecFields>
+<Simulation>50</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<ModuleName>VortexAnimatPrivateSim_VC10D.dll</ModuleName>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>FreeJoint</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.FreeJoint</PartType>
+<Size Value="50" Scale="milli" Actual="0.05"/>
+<EnableLimits>True</EnableLimits>
+</Joint>
+<ChildBodies>
+<RigidBody>
+<Name>Body_6_Graphics</Name>
+<ID>14e5ba50-b3ce-48db-ac13-035ca568937e</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>50</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0" Green="0" Blue="1" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>False</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+</ChildBodies>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+<RigidBody>
+<Name>Body_2</Name>
+<ID>65a30f5b-fbff-4b38-aec6-40966287a9d8</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>0</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>100</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="1.2" Scale="None" Actual="1.2"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<Joint>
+<Name>Joint_2</Name>
+<ID>e3c707e9-5d48-4168-b1cd-6b338dc1ac6b</ID>
+<Description>Allows the joint to move freely in all 6 DOF.</Description>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>0</Joints>
+<RecFields>50</RecFields>
+<Simulation>50</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<ModuleName>VortexAnimatPrivateSim_VC10D.dll</ModuleName>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>FreeJoint</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.FreeJoint</PartType>
+<Size Value="50" Scale="milli" Actual="0.05"/>
+<EnableLimits>True</EnableLimits>
+</Joint>
+<ChildBodies>
+<RigidBody>
+<Name>Body_2_Graphics</Name>
+<ID>cb32b07a-07b6-468f-8d5a-18073974bd2a</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>50</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0" Green="0" Blue="1" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>False</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+</ChildBodies>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+<RigidBody>
+<Name>Body_7</Name>
+<ID>6bf355d3-9797-43d9-b836-175f0719fe0d</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>0</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>100</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="4.2" Scale="None" Actual="4.2"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<Joint>
+<Name>Joint_7</Name>
+<ID>901f81da-012e-4423-b0ce-5b21357e14a7</ID>
+<Description>Allows the joint to move freely in all 6 DOF.</Description>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>0</Joints>
+<RecFields>50</RecFields>
+<Simulation>50</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<ModuleName>VortexAnimatPrivateSim_VC10D.dll</ModuleName>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>FreeJoint</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.FreeJoint</PartType>
+<Size Value="50" Scale="milli" Actual="0.05"/>
+<EnableLimits>True</EnableLimits>
+</Joint>
+<ChildBodies>
+<RigidBody>
+<Name>Body_7_Graphics</Name>
+<ID>0b48035f-59a3-44ad-8222-bfa0131676fd</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>50</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0" Green="0" Blue="1" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>False</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+</ChildBodies>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+<RigidBody>
+<Name>Body_8</Name>
+<ID>7ead821b-0a26-442e-8b35-356e87ba71f1</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>0</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>100</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="4.8" Scale="None" Actual="4.8"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<Joint>
+<Name>Joint_8</Name>
+<ID>8c4a64d3-4f02-47bc-b190-8c120a34580c</ID>
+<Description>Allows the joint to move freely in all 6 DOF.</Description>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>0</Joints>
+<RecFields>50</RecFields>
+<Simulation>50</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<ModuleName>VortexAnimatPrivateSim_VC10D.dll</ModuleName>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>FreeJoint</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.FreeJoint</PartType>
+<Size Value="50" Scale="milli" Actual="0.05"/>
+<EnableLimits>True</EnableLimits>
+</Joint>
+<ChildBodies>
+<RigidBody>
+<Name>Body_8_Graphics</Name>
+<ID>14b1e4c6-38dc-4508-a060-9ed91a5aca19</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>50</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0" Green="0" Blue="1" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>False</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+</ChildBodies>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+<RigidBody>
+<Name>Body_3</Name>
+<ID>855cddcc-943c-4a23-9a24-5e767c8e81c3</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>0</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>100</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="1.8" Scale="None" Actual="1.8"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<Joint>
+<Name>Joint_3</Name>
+<ID>c26fb161-030e-4ed0-943d-6b2ad259a318</ID>
+<Description>Allows the joint to move freely in all 6 DOF.</Description>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>0</Joints>
+<RecFields>50</RecFields>
+<Simulation>50</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<ModuleName>VortexAnimatPrivateSim_VC10D.dll</ModuleName>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>FreeJoint</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.FreeJoint</PartType>
+<Size Value="50" Scale="milli" Actual="0.05"/>
+<EnableLimits>True</EnableLimits>
+</Joint>
+<ChildBodies>
+<RigidBody>
+<Name>Body_3_Graphics</Name>
+<ID>299f0d98-de97-4acc-9e7d-bd737bb44a94</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>50</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0" Green="0" Blue="1" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>False</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+</ChildBodies>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+<RigidBody>
+<Name>Body_5</Name>
+<ID>b260217c-37f8-46f7-8938-1fe7bc488ec4</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>0</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>100</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="3" Scale="None" Actual="3"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<Joint>
+<Name>Joint_5</Name>
+<ID>c21aaf8a-90a7-4c2e-8d81-7f9c5cd52812</ID>
+<Description>Allows the joint to move freely in all 6 DOF.</Description>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>0</Joints>
+<RecFields>50</RecFields>
+<Simulation>50</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<ModuleName>VortexAnimatPrivateSim_VC10D.dll</ModuleName>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>FreeJoint</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.FreeJoint</PartType>
+<Size Value="50" Scale="milli" Actual="0.05"/>
+<EnableLimits>True</EnableLimits>
+</Joint>
+<ChildBodies>
+<RigidBody>
+<Name>Body_5_Graphics</Name>
+<ID>4aa0e970-0535-4a3c-af5f-72faa2cd2a8e</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>50</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0" Green="0" Blue="1" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>False</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+</ChildBodies>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+<RigidBody>
+<Name>Body_1</Name>
+<ID>eaebd7b9-028b-4a43-bb38-3b05d2f8e463</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>0</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>100</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="60" Scale="centi" Actual="0.6"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<Joint>
+<Name>Joint_1</Name>
+<ID>dd5fdad9-32f8-430a-b7cf-10bd4eb3ceb0</ID>
+<Description>Allows the joint to move freely in all 6 DOF.</Description>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>0</Joints>
+<RecFields>50</RecFields>
+<Simulation>50</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<ModuleName>VortexAnimatPrivateSim_VC10D.dll</ModuleName>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>FreeJoint</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.FreeJoint</PartType>
+<Size Value="50" Scale="milli" Actual="0.05"/>
+<EnableLimits>True</EnableLimits>
+</Joint>
+<ChildBodies>
+<RigidBody>
+<Name>Body_1_Graphics</Name>
+<ID>ffd0ee74-16d9-4c10-b7f9-d1d49ab2dda4</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>50</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0" Green="0" Blue="1" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>False</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+</ChildBodies>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+</ChildBodies>
+<FoodSource>False</FoodSource>
+<Length Value="0.2" Scale="None" Actual="0.2"/>
+<Width Value="0.2" Scale="None" Actual="0.2"/>
+<Height Value="0.2" Scale="None" Actual="0.2"/>
+<LengthSections>1</LengthSections>
+<WidthSections>1</WidthSections>
+<HeightSections>1</HeightSections>
+</RigidBody>
+<CollisionExclusionPairs/>
+<NervousSystem>
+<NeuralModules/>
+<Node>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Behavior.Nodes.Subsystem</ClassName>
+<ID>90c37f16-265f-4519-96e7-c1caae510f56</ID>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-8586240</FillColor>
+<Font Family="Arial" Size="12" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="0" y="0"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Rectangle</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>Neural Subsystem</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<InLinks/>
+<OutLinks/>
+<Nodes/>
+<Links/>
+<DiagramXml><![CDATA[]]></DiagramXml>
+</Node>
+</NervousSystem>
+</Organism>
+</Organisms>
+<Structures>
+<Structure>
+<Name>Structure_1</Name>
+<ID>ba2b9189-c3cf-4d04-9ef2-df01f0e5afe9</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>100</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Basic</Type>
+<RigidBody>
+<Name>Root</Name>
+<ID>eb3465ad-eaf5-4743-af09-fa9807012c80</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>0</Collisions>
+<Joints>0</Joints>
+<RecFields>0</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="1" Green="1" Blue="1" Alpha="1"/>
+<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
+<Specular Red="1" Green="1" Blue="1" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="-90" Scale="None" Actual="-90"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Type>Plane</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Plane</PartType>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<Drag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</Drag>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="Kilo" Actual="1000"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<Freeze>False</Freeze>
+<FoodSource>False</FoodSource>
+<Size>
+<X Value="0.1" Scale="Kilo" Actual="100"/>
+<Y Value="0.1" Scale="Kilo" Actual="100"/>
+</Size>
+<WidthSegments>1</WidthSegments>
+<LengthSegments>1</LengthSegments>
+</RigidBody>
+<CollisionExclusionPairs/>
+</Structure>
+</Structures>
+<Lights>
+<Light>
+<Name>Light_1</Name>
+<ID>6809a4e3-a5cd-4941-a46b-b7d5bb7b7090</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>100</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="1" Green="1" Blue="1" Alpha="1"/>
+<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
+<Specular Red="1" Green="1" Blue="1" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="0.1" Scale="Kilo" Actual="100"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Enabled>True</Enabled>
+<Radius Value="50" Scale="milli" Actual="0.05"/>
+<ConstantAttenuation>0</ConstantAttenuation>
+<LinearAttenuationDistance Value="0" Scale="milli" Actual="0"/>
+<QuadraticAttenuationDistance Value="2" Scale="Kilo" Actual="2000"/>
+<LatitudeSegments>10</LatitudeSegments>
+<LongtitudeSegments>10</LongtitudeSegments>
+</Light>
+<Light>
+<Name>Light_2</Name>
+<ID>dd34524c-50ac-44ac-8016-b139657095fa</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>100</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="1" Green="1" Blue="1" Alpha="1"/>
+<Diffuse Red="1" Green="1" Blue="1" Alpha="1"/>
+<Specular Red="1" Green="1" Blue="1" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="-1" Scale="None" Actual="-1"/>
+<Y Value="0.1" Scale="Kilo" Actual="100"/>
+<Z Value="-1" Scale="None" Actual="-1"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<Enabled>True</Enabled>
+<Radius Value="50" Scale="milli" Actual="0.05"/>
+<ConstantAttenuation>0</ConstantAttenuation>
+<LinearAttenuationDistance Value="0" Scale="milli" Actual="0"/>
+<QuadraticAttenuationDistance Value="2" Scale="Kilo" Actual="2000"/>
+<LatitudeSegments>10</LatitudeSegments>
+<LongtitudeSegments>10</LongtitudeSegments>
+</Light>
+</Lights>
+</Environment>
+<ToolViewers>
+<ToolHolder>
+<ID>52a96e0e-234d-4550-98df-d6a1ca383a38</ID>
+<Name>DataTool_1</Name>
+<BaseAssemblyFile>LicensedAnimatGUI.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatGUI.Forms.Charts.LineChart</BaseClassName>
+<ToolFormID>29343f44-e057-4c28-9196-a6c8da935a9b</ToolFormID>
+</ToolHolder>
+</ToolViewers>
+<Stimuli/>
+<HudItems>
+<HudItem>
+<Name>52981c72-8c80-402d-980a-53fed81d1278</Name>
+<ID>52981c72-8c80-402d-980a-53fed81d1278</ID>
+<Type>HudText</Type>
+<CharSize>30</CharSize>
+<Text>Time: %3.3f</Text>
+<TargetID>Simulator</TargetID>
+<DataType>Time</DataType>
+<Position x="10" y="10"/>
+<Color Red="1" Green="1" Blue="1" Alpha="1"/>
+</HudItem>
+</HudItems>
+</Simulation>
+<DockingForms>
+<Form>
+<ID>7c752edf-193b-4ff8-bd5f-43e4e633c80e</ID>
+<Title>Receptive Field Current</Title>
+<TabPageName>Page 1</TabPageName>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.Forms.ReceptiveFieldCurrent</ClassName>
+<BackgroundForm>True</BackgroundForm>
+</Form>
+<Form>
+<ID>d1f9be2f-feb6-4106-9a86-c5caae06788e</ID>
+<Title>Receptive Field Gain</Title>
+<TabPageName>Page 1</TabPageName>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.Forms.ReceptiveFieldGain</ClassName>
+<BackgroundForm>True</BackgroundForm>
+</Form>
+<Form>
+<ID>b8e1d2b9-5d5b-4cdc-99f7-20f60fb6db68</ID>
+<Title>Receptive Field Pairs</Title>
+<TabPageName>Page 1</TabPageName>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.Forms.ReceptiveFieldPairs</ClassName>
+<BackgroundForm>True</BackgroundForm>
+</Form>
+<Form>
+<ID>777fd9ab-eba3-4d6c-9676-9da494e460b2</ID>
+<Title>Toolbox</Title>
+<TabPageName>Page 1</TabPageName>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.Forms.Toolbox</ClassName>
+<BackgroundForm>True</BackgroundForm>
+</Form>
+<Form>
+<ID>91344b6b-b9e9-488a-9a6e-409463ce6b0b</ID>
+<Title>Properties</Title>
+<TabPageName>Page 1</TabPageName>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.Forms.ProjectProperties</ClassName>
+<BackgroundForm>True</BackgroundForm>
+</Form>
+<Form>
+<ID>9f90424a-7691-4cf1-a96a-1dd96a544d2c</ID>
+<Title>Workspace</Title>
+<TabPageName>Page 1</TabPageName>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.Forms.ProjectWorkspace</ClassName>
+<BackgroundForm>True</BackgroundForm>
+</Form>
+<Form>
+<ID>30127e26-1fb1-4900-b773-87a1d2f50bb2</ID>
+<Title>Simulation Controller</Title>
+<TabPageName>Page 1</TabPageName>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.Forms.SimulationController</ClassName>
+<BackgroundForm>True</BackgroundForm>
+<StartingBarTime Value="0" Scale="milli" Actual="0"/>
+<EndingBarTime Value="5000" Scale="milli" Actual="5"/>
+<TimeBarInterval Value="1" Scale="None" Actual="1"/>
+<ActualTimeColor>-5383962</ActualTimeColor>
+<CurrentTimeColor>-16776961</CurrentTimeColor>
+<AutomaticTimeScale>True</AutomaticTimeScale>
+<DivisionMarkFactor>4</DivisionMarkFactor>
+<Divisions>10</Divisions>
+<MajorInterval>200</MajorInterval>
+<MiddleMarkFactor>3</MiddleMarkFactor>
+<TimeScale>MilliSeconds</TimeScale>
+</Form>
+<Form>
+<ID>8c8638d1-225f-4919-81c7-b361ef93547f</ID>
+<Title>Errors</Title>
+<TabPageName>Page 1</TabPageName>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.Forms.Errors</ClassName>
+<BackgroundForm>True</BackgroundForm>
+</Form>
+</DockingForms>
+<DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
+&lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
+&lt;!-- Modifying this generated file will probably render it invalid --&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="09/04/2012 08:40:40"&gt;
+  &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Errors" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/DefaultRestore&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideState"&gt;
+      &lt;Content Name="Errors" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/AutoHideRestore&gt;
+    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
+      &lt;Content Name="Errors" UniqueName="" /&gt;
+      &lt;State Value="DockBottom" /&gt;
+      &lt;Position Size="150, 125" Location="150, 150" /&gt;
+      &lt;Best Count="2"&gt;
+        &lt;Item Name="Errors" /&gt;
+        &lt;Item Name="Simulation Controller" /&gt;
+      &lt;/Best&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="2"&gt;
+        &lt;Item Name="Workspace" /&gt;
+        &lt;Item Name="Properties" /&gt;
+      &lt;/NextAll&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
+        &lt;Content Name="Errors" UniqueName="" /&gt;
+        &lt;Space Value="100" /&gt;
+        &lt;Best Count="2"&gt;
+          &lt;Item Name="Simulation Controller" /&gt;
+          &lt;Item Name="Errors" /&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="0" /&gt;
+        &lt;Previous Count="0" /&gt;
+        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
+          &lt;Content Name="Errors" UniqueName="" /&gt;
+          &lt;Next Count="0" /&gt;
+          &lt;Previous Count="1"&gt;
+            &lt;Item Name="Simulation Controller" /&gt;
+          &lt;/Previous&gt;
+          &lt;Selected Value="False" /&gt;
+          &lt;Child Type="null" /&gt;
+        &lt;/Child&gt;
+      &lt;/Child&gt;
+    &lt;/DockingRestore&gt;
+    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Errors" UniqueName="" /&gt;
+      &lt;State Value="Floating" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/FloatingRestore&gt;
+  &lt;/Content&gt;
+  &lt;Content Name="Simulation Controller" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Simulation Controller" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Simulation Controller" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/DefaultRestore&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideState"&gt;
+      &lt;Content Name="Simulation Controller" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/AutoHideRestore&gt;
+    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
+      &lt;Content Name="Simulation Controller" UniqueName="" /&gt;
+      &lt;State Value="DockBottom" /&gt;
+      &lt;Position Size="150, 125" Location="150, 150" /&gt;
+      &lt;Best Count="1"&gt;
+        &lt;Item Name="Simulation Controller" /&gt;
+      &lt;/Best&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="2"&gt;
+        &lt;Item Name="Workspace" /&gt;
+        &lt;Item Name="Properties" /&gt;
+      &lt;/NextAll&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
+        &lt;Content Name="Simulation Controller" UniqueName="" /&gt;
+        &lt;Space Value="100" /&gt;
+        &lt;Best Count="1"&gt;
+          &lt;Item Name="Simulation Controller" /&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="0" /&gt;
+        &lt;Previous Count="0" /&gt;
+        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
+          &lt;Content Name="Simulation Controller" UniqueName="" /&gt;
+          &lt;Next Count="0" /&gt;
+          &lt;Previous Count="0" /&gt;
+          &lt;Selected Value="True" /&gt;
+          &lt;Child Type="null" /&gt;
+        &lt;/Child&gt;
+      &lt;/Child&gt;
+    &lt;/DockingRestore&gt;
+    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Simulation Controller" UniqueName="" /&gt;
+      &lt;State Value="Floating" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/FloatingRestore&gt;
+  &lt;/Content&gt;
+  &lt;Content Name="Workspace" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Workspace" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Workspace" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/DefaultRestore&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideState"&gt;
+      &lt;Content Name="Workspace" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/AutoHideRestore&gt;
+    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
+      &lt;Content Name="Workspace" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Position Size="200, 150" Location="150, 150" /&gt;
+      &lt;Best Count="2"&gt;
+        &lt;Item Name="Workspace" /&gt;
+        &lt;Item Name="Properties" /&gt;
+      &lt;/Best&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="0" /&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
+        &lt;Content Name="Workspace" UniqueName="" /&gt;
+        &lt;Space Value="50" /&gt;
+        &lt;Best Count="1"&gt;
+          &lt;Item Name="Workspace" /&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="1"&gt;
+          &lt;Item Name="Properties" /&gt;
+        &lt;/Next&gt;
+        &lt;Previous Count="0" /&gt;
+        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
+          &lt;Content Name="Workspace" UniqueName="" /&gt;
+          &lt;Next Count="0" /&gt;
+          &lt;Previous Count="0" /&gt;
+          &lt;Selected Value="True" /&gt;
+          &lt;Child Type="null" /&gt;
+        &lt;/Child&gt;
+      &lt;/Child&gt;
+    &lt;/DockingRestore&gt;
+    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Workspace" UniqueName="" /&gt;
+      &lt;State Value="Floating" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/FloatingRestore&gt;
+  &lt;/Content&gt;
+  &lt;Content Name="Properties" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Properties" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Properties" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/DefaultRestore&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideState"&gt;
+      &lt;Content Name="Properties" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/AutoHideRestore&gt;
+    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
+      &lt;Content Name="Properties" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Position Size="200, 150" Location="150, 150" /&gt;
+      &lt;Best Count="1"&gt;
+        &lt;Item Name="Properties" /&gt;
+      &lt;/Best&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="0" /&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
+        &lt;Content Name="Properties" UniqueName="" /&gt;
+        &lt;Space Value="100" /&gt;
+        &lt;Best Count="1"&gt;
+          &lt;Item Name="Properties" /&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="0" /&gt;
+        &lt;Previous Count="0" /&gt;
+        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
+          &lt;Content Name="Properties" UniqueName="" /&gt;
+          &lt;Next Count="0" /&gt;
+          &lt;Previous Count="0" /&gt;
+          &lt;Selected Value="True" /&gt;
+          &lt;Child Type="null" /&gt;
+        &lt;/Child&gt;
+      &lt;/Child&gt;
+    &lt;/DockingRestore&gt;
+    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Properties" UniqueName="" /&gt;
+      &lt;State Value="Floating" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/FloatingRestore&gt;
+  &lt;/Content&gt;
+  &lt;Content Name="Toolbox" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="False" DisplaySize="150, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Toolbox" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Toolbox" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/DefaultRestore&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideAffinity"&gt;
+      &lt;Content Name="Toolbox" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="0" /&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;CurrentContent Value="True" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/AutoHideRestore&gt;
+    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
+      &lt;Content Name="Toolbox" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Position Size="150, 150" Location="150, 150" /&gt;
+      &lt;Best Count="1"&gt;
+        &lt;Item Name="Toolbox" /&gt;
+      &lt;/Best&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="0" /&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
+        &lt;Content Name="Toolbox" UniqueName="" /&gt;
+        &lt;Space Value="100" /&gt;
+        &lt;Best Count="1"&gt;
+          &lt;Item Name="Toolbox" /&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="0" /&gt;
+        &lt;Previous Count="0" /&gt;
+        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
+          &lt;Content Name="Toolbox" UniqueName="" /&gt;
+          &lt;Next Count="0" /&gt;
+          &lt;Previous Count="0" /&gt;
+          &lt;Selected Value="True" /&gt;
+          &lt;Child Type="null" /&gt;
+        &lt;/Child&gt;
+      &lt;/Child&gt;
+    &lt;/DockingRestore&gt;
+    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Toolbox" UniqueName="" /&gt;
+      &lt;State Value="Floating" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/FloatingRestore&gt;
+  &lt;/Content&gt;
+  &lt;Content Name="Receptive Field Pairs" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="False" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Receptive Field Pairs" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/DefaultRestore&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideAffinity"&gt;
+      &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+      &lt;State Value="DockRight" /&gt;
+      &lt;Next Count="2"&gt;
+        &lt;Item Name="Receptive Field Gain" /&gt;
+        &lt;Item Name="Receptive Field Current" /&gt;
+      &lt;/Next&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="0" /&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;CurrentContent Value="True" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/AutoHideRestore&gt;
+    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
+      &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+      &lt;State Value="DockRight" /&gt;
+      &lt;Position Size="200, 150" Location="150, 150" /&gt;
+      &lt;Best Count="3"&gt;
+        &lt;Item Name="Receptive Field Current" /&gt;
+        &lt;Item Name="Receptive Field Gain" /&gt;
+        &lt;Item Name="Receptive Field Pairs" /&gt;
+      &lt;/Best&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="4"&gt;
+        &lt;Item Name="Simulation Controller" /&gt;
+        &lt;Item Name="Errors" /&gt;
+        &lt;Item Name="Workspace" /&gt;
+        &lt;Item Name="Properties" /&gt;
+      &lt;/NextAll&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
+        &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+        &lt;Space Value="100" /&gt;
+        &lt;Best Count="3"&gt;
+          &lt;Item Name="Receptive Field Pairs" /&gt;
+          &lt;Item Name="Receptive Field Gain" /&gt;
+          &lt;Item Name="Receptive Field Current" /&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="0" /&gt;
+        &lt;Previous Count="0" /&gt;
+        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
+          &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+          &lt;Next Count="2"&gt;
+            &lt;Item Name="Receptive Field Gain" /&gt;
+            &lt;Item Name="Receptive Field Current" /&gt;
+          &lt;/Next&gt;
+          &lt;Previous Count="0" /&gt;
+          &lt;Selected Value="True" /&gt;
+          &lt;Child Type="null" /&gt;
+        &lt;/Child&gt;
+      &lt;/Child&gt;
+    &lt;/DockingRestore&gt;
+    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Receptive Field Pairs" UniqueName="" /&gt;
+      &lt;State Value="Floating" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/FloatingRestore&gt;
+  &lt;/Content&gt;
+  &lt;Content Name="Receptive Field Gain" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="False" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Receptive Field Gain" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/DefaultRestore&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideAffinity"&gt;
+      &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+      &lt;State Value="DockRight" /&gt;
+      &lt;Next Count="1"&gt;
+        &lt;Item Name="Receptive Field Current" /&gt;
+      &lt;/Next&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="0" /&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;CurrentContent Value="True" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/AutoHideRestore&gt;
+    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
+      &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+      &lt;State Value="DockRight" /&gt;
+      &lt;Position Size="200, 150" Location="150, 150" /&gt;
+      &lt;Best Count="2"&gt;
+        &lt;Item Name="Receptive Field Current" /&gt;
+        &lt;Item Name="Receptive Field Gain" /&gt;
+      &lt;/Best&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="4"&gt;
+        &lt;Item Name="Simulation Controller" /&gt;
+        &lt;Item Name="Errors" /&gt;
+        &lt;Item Name="Workspace" /&gt;
+        &lt;Item Name="Properties" /&gt;
+      &lt;/NextAll&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
+        &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+        &lt;Space Value="100" /&gt;
+        &lt;Best Count="2"&gt;
+          &lt;Item Name="Receptive Field Gain" /&gt;
+          &lt;Item Name="Receptive Field Current" /&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="0" /&gt;
+        &lt;Previous Count="0" /&gt;
+        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
+          &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+          &lt;Next Count="1"&gt;
+            &lt;Item Name="Receptive Field Current" /&gt;
+          &lt;/Next&gt;
+          &lt;Previous Count="0" /&gt;
+          &lt;Selected Value="True" /&gt;
+          &lt;Child Type="null" /&gt;
+        &lt;/Child&gt;
+      &lt;/Child&gt;
+    &lt;/DockingRestore&gt;
+    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Receptive Field Gain" UniqueName="" /&gt;
+      &lt;State Value="Floating" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/FloatingRestore&gt;
+  &lt;/Content&gt;
+  &lt;Content Name="Receptive Field Current" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="False" DisplaySize="200, 150" DisplayLocation="150, 150" AutoHideSize="200, 150" FloatingSize="150, 150" FullTitle="Receptive Field Current" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+    &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
+      &lt;State Value="DockLeft" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/DefaultRestore&gt;
+    &lt;AutoHideRestore Type="Crownwood.DotNetMagic.Docking.RestoreAutoHideAffinity"&gt;
+      &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
+      &lt;State Value="DockRight" /&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="0" /&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;CurrentContent Value="True" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/AutoHideRestore&gt;
+    &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
+      &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
+      &lt;State Value="DockRight" /&gt;
+      &lt;Position Size="200, 150" Location="150, 150" /&gt;
+      &lt;Best Count="1"&gt;
+        &lt;Item Name="Receptive Field Current" /&gt;
+      &lt;/Best&gt;
+      &lt;Next Count="0" /&gt;
+      &lt;Previous Count="0" /&gt;
+      &lt;NextAll Count="4"&gt;
+        &lt;Item Name="Simulation Controller" /&gt;
+        &lt;Item Name="Errors" /&gt;
+        &lt;Item Name="Workspace" /&gt;
+        &lt;Item Name="Properties" /&gt;
+      &lt;/NextAll&gt;
+      &lt;PreviousAll Count="0" /&gt;
+      &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
+        &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
+        &lt;Space Value="100" /&gt;
+        &lt;Best Count="1"&gt;
+          &lt;Item Name="Receptive Field Current" /&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="0" /&gt;
+        &lt;Previous Count="0" /&gt;
+        &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
+          &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
+          &lt;Next Count="0" /&gt;
+          &lt;Previous Count="0" /&gt;
+          &lt;Selected Value="True" /&gt;
+          &lt;Child Type="null" /&gt;
+        &lt;/Child&gt;
+      &lt;/Child&gt;
+    &lt;/DockingRestore&gt;
+    &lt;FloatingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
+      &lt;Content Name="Receptive Field Current" UniqueName="" /&gt;
+      &lt;State Value="Floating" /&gt;
+      &lt;Child Type="null" /&gt;
+    &lt;/FloatingRestore&gt;
+  &lt;/Content&gt;
+&lt;/DockingConfig&gt;</DockingConfig>
+<TabbedGroupsConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
+&lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
+&lt;!-- Modifying this generated file will probably render it invalid --&gt;
+&lt;TabbedGroups FormatVersion="1" ActiveLeaf="3"&gt;
+  &lt;CustomGlobalData /&gt;
+  &lt;Sequence Count="1" Unique="0" Space="100" Direction="Horizontal"&gt;
+    &lt;Leaf Count="3" Unique="3" Space="100"&gt;
+      &lt;Page Title="Organism_1 Body" ImageList="True" ImageIndex="0" Selected="True" Control="null" UniqueName=""&gt;
+        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
+&lt;Form&gt;
+&lt;ID&gt;bd06b67d-3d2e-40f3-84f3-b94841316aa7&lt;/ID&gt;
+&lt;Title&gt;Organism_1 Body&lt;/Title&gt;
+&lt;TabPageName&gt;Page 1&lt;/TabPageName&gt;
+&lt;AssemblyFile&gt;AnimatGUI.dll&lt;/AssemblyFile&gt;
+&lt;ClassName&gt;AnimatGUI.Forms.SimulationWindow&lt;/ClassName&gt;
+&lt;TrackCamera&gt;True&lt;/TrackCamera&gt;
+&lt;StructureID&gt;f9bfd36a-9a1e-4341-b74c-3a6f6eb27522&lt;/StructureID&gt;
+&lt;BodyPartID&gt;ade970ad-5266-42b4-a6df-94c020fbb2c7&lt;/BodyPartID&gt;
+&lt;/Form&gt;
+&lt;/TabPage&gt;
+]]&gt;&lt;/CustomPageData&gt;
+      &lt;/Page&gt;
+      &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
+        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
+&lt;Form&gt;
+&lt;ID&gt;29343f44-e057-4c28-9196-a6c8da935a9b&lt;/ID&gt;
+&lt;Title&gt;DataTool_1&lt;/Title&gt;
+&lt;TabPageName&gt;Page 1&lt;/TabPageName&gt;
+&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
+&lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
+&lt;ExternalFile&gt;DataTool_1.aform&lt;/ExternalFile&gt;
+&lt;/Form&gt;
+&lt;/TabPage&gt;
+]]&gt;&lt;/CustomPageData&gt;
+      &lt;/Page&gt;
+      &lt;Page Title="Structure_1 Body" ImageList="True" ImageIndex="0" Selected="False" Control="null" UniqueName=""&gt;
+        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
+&lt;Form&gt;
+&lt;ID&gt;5a0dcceb-1feb-4e1b-8613-56b79da776e7&lt;/ID&gt;
+&lt;Title&gt;Structure_1 Body&lt;/Title&gt;
+&lt;TabPageName&gt;Page 1&lt;/TabPageName&gt;
+&lt;AssemblyFile&gt;AnimatGUI.dll&lt;/AssemblyFile&gt;
+&lt;ClassName&gt;AnimatGUI.Forms.SimulationWindow&lt;/ClassName&gt;
+&lt;TrackCamera&gt;True&lt;/TrackCamera&gt;
+&lt;StructureID&gt;ba2b9189-c3cf-4d04-9ef2-df01f0e5afe9&lt;/StructureID&gt;
+&lt;BodyPartID&gt;eb3465ad-eaf5-4743-af09-fa9807012c80&lt;/BodyPartID&gt;
+&lt;/Form&gt;
+&lt;/TabPage&gt;
+]]&gt;&lt;/CustomPageData&gt;
+      &lt;/Page&gt;
+    &lt;/Leaf&gt;
+  &lt;/Sequence&gt;
+&lt;/TabbedGroups&gt;</TabbedGroupsConfig>
+</Project>

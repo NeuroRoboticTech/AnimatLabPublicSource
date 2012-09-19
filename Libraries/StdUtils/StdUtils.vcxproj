@@ -133,6 +133,7 @@ Copy "$(TargetPath)" ..\..\bin
     <ClCompile Include="StdLookupTable.cpp" />
     <ClCompile Include="StdPostFixEval.cpp" />
     <ClCompile Include="StdSerialize.cpp" />
+    <ClCompile Include="StdTimer.cpp" />
     <ClCompile Include="StdUtilFunctions.cpp" />
     <ClCompile Include="StdUtils.cpp" />
     <ClCompile Include="StdVariable.cpp" />
@@ -155,6 +156,7 @@ Copy "$(TargetPath)" ..\..\bin
     <ClInclude Include="StdLookupTable.h" />
     <ClInclude Include="StdPostFixEval.h" />
     <ClInclude Include="StdSerialize.h" />
+    <ClInclude Include="StdTimer.h" />
     <ClInclude Include="StdUtilFunctions.h" />
     <ClInclude Include="StdVariable.h" />
     <ClInclude Include="StdVariant.h" />

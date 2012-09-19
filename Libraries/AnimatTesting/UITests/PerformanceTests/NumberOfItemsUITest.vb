@@ -8,11 +8,11 @@ Imports Microsoft.VisualStudio.TestTools.UITesting.Keyboard
 Imports AnimatTesting.Framework
 
 Namespace UITests
-    Namespace CreationTests
+    Namespace PerformanceTests
 
         <CodedUITest()>
         Public Class NumberOfItemsUITest
-            Inherits AnimatUITest
+            Inherits PerformanceUITest
 
             Protected m_aryStepTimes As New ArrayList
 

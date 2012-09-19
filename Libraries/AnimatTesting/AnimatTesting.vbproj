@@ -163,6 +163,7 @@
     <Compile Include="UITests\CreationTests\NewProjectUITest.vb" />
     <Compile Include="UITests\PerformanceTests\DropBoxesUITest.vb" />
     <Compile Include="UITests\PerformanceTests\NumberOfItemsUITest.vb" />
+    <Compile Include="UITests\PerformanceTests\PerformanaceUITest.vb" />
     <Compile Include="UnitTests\DataAnalysis.vb" />
     <Compile Include="UnitTests\FileConversions\Convert_V1ToV2Test.vb" />
     <Compile Include="Util.vb" />

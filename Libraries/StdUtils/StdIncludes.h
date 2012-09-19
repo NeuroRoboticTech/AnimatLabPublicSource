@@ -71,6 +71,7 @@ class CStdCriticalSection;
 #include "StdCriticalSection.h"
 #include "StdFixed.h"
 #include "StdColor.h"
+#include "StdTimer.h"
 
 #ifndef _WIN32_WCE
 	#include "XYTrace.h"

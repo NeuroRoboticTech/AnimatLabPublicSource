@@ -456,6 +456,14 @@ Namespace Forms.BodyPlan
 
 #End Region
 
+#Region "Automation Methods"
+
+        Public Sub Click_GraphicsCheckBox(ByVal bCheckedState As Boolean)
+            chkAddGraphics.Checked = bCheckedState
+        End Sub
+
+#End Region
+
     End Class
 
 End Namespace
