@@ -14,6 +14,7 @@ namespace VortexAnimatSim
 			AnimatBase *m_lpThisAB;
 			MovableItem *m_lpThisMI;
 			VsMovableItem *m_lpThisVsMI;
+			VsMovableItem *m_lpParentVsMI;
 
 			osg::Matrix m_osgWorldMatrix;
 
@@ -87,6 +88,13 @@ namespace VortexAnimatSim
 			virtual osg::Group *NodeGroup() {return m_osgNodeGroup.get();};
 			virtual osg::Matrix LocalMatrix() {return m_osgLocalMatrix;};
 			virtual osg::Matrix FinalMatrix() {return m_osgFinalMatrix;};
+
+			virtual void Physics_SetParent(MovableItem *lpParent)
+			{
+				m_lpParentVsMI = dynamic_cast<VsMovableItem *>(lpParent);
+			};
+			virtual void Physics_SetChild(MovableItem *lpParent) {};
+
 
 			//virtual CStdFPoint GetOSGWorldCoords(osg::MatrixTransform *osgMT);
 			virtual CStdFPoint GetOSGWorldCoords();

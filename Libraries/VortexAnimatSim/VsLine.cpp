@@ -206,7 +206,7 @@ void VsLine::StepSimulation(float fltTension)
 			Attachment *lpAttach1 = aryAttachments->at(0), *lpAttach2 = NULL;
 			CStdFPoint oPrimPos, oPrimPlusPos, oSecPos, oSecMinusPos;
 			CStdFPoint oPrimForce, oSecForce;
-			VsRigidBody *lpAttach1Parent, *lpAttach2Parent;
+			RigidBody *lpAttach1Parent, *lpAttach2Parent;
 
 			if(m_lpThisBP->GetSimulator()->Time() >= 0.99)
 				iCount = iCount;
@@ -217,14 +217,14 @@ void VsLine::StepSimulation(float fltTension)
 			{
 				lpAttach2 = aryAttachments->at(iIndex);
 
-				lpAttach1Parent = dynamic_cast<VsRigidBody *>(lpAttach1->Parent());
-				lpAttach2Parent = dynamic_cast<VsRigidBody *>(lpAttach2->Parent());
+				lpAttach1Parent = lpAttach1->Parent();
+				lpAttach2Parent = lpAttach2->Parent();
 
 				CalculateForceVector(lpAttach1, lpAttach2, fltTension, oPrimPos, oPrimPlusPos, oPrimForce);
 				CalculateForceVector(lpAttach2, lpAttach1, fltTension, oSecPos, oSecMinusPos, oSecForce);
 
-				lpAttach1Parent->Physics_AddBodyForce(oPrimPos.x, oPrimPos.y, oPrimPos.z, oPrimForce.x, oPrimForce.y, oPrimForce.z, TRUE); 
-				lpAttach2Parent->Physics_AddBodyForce(oSecPos.x, oSecPos.y, oSecPos.z, oSecForce.x, oSecForce.y, oSecForce.z, TRUE); 
+				lpAttach1Parent->AddForce(oPrimPos.x, oPrimPos.y, oPrimPos.z, oPrimForce.x, oPrimForce.y, oPrimForce.z, TRUE); 
+				lpAttach2Parent->AddForce(oSecPos.x, oSecPos.y, oSecPos.z, oSecForce.x, oSecForce.y, oSecForce.z, TRUE); 
 
 				lpAttach1 = lpAttach2;
 			}

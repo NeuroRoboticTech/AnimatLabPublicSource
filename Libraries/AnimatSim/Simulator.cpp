@@ -175,6 +175,9 @@ Simulator::Simulator()
 	m_oExternalStimuliMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
 	m_oMaterialMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
 	m_oLightMgr.SetSystemPointers(this, NULL, NULL, NULL, TRUE);
+
+	m_dblTotalStepTime = 0;
+	m_lStepTimeCount = 0;
 }
 
 /**
@@ -2455,6 +2458,18 @@ void Simulator::RecordSimulationTotalStepTimer()
 	m_fltRemainingStepTime = m_fltTotalRealTimeForStep - (m_fltPhysicsStepTime + m_fltTotalNeuralStepTime + m_fltExternalStimuliStepTime + m_fltDataChartStepTime + m_fltSimRecorderStepTime + m_fltPlaybackAdditionRealTimeToStep);
 
 	m_fltTotalRealTimeForStepSmooth = m_fltTotalRealTimeForStepSmooth + 0.05*(m_fltPrevTotalRealTimeForStep-m_fltTotalRealTimeForStepSmooth);
+
+	if(m_lTimeSlice > 10 && m_lTimeSlice < 5000)
+	{
+		m_dblTotalStepTime += m_fltTotalRealTimeForStep;
+		m_lStepTimeCount++;
+	}
+	else if(m_lTimeSlice == 5000)
+	{
+		double dblAvgStepTime = m_dblTotalStepTime/m_lStepTimeCount;
+		WriteToConsole("Average total step time: " + STR(dblAvgStepTime));
+	}
+
 }
 
 double Simulator::CalculateRemainingPlaybackTime()

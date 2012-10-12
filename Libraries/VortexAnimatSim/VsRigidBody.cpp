@@ -342,19 +342,10 @@ by moving the root body.
 **/
 osg::Group *VsRigidBody::ParentOSG()
 {
-	RigidBody *lpParent = NULL;
-
-	lpParent = m_lpThisRB->Parent();
-
 	VsMovableItem *lpItem = NULL;
 
-	if(!m_lpThisRB->IsRoot())
-	{
-		lpItem = dynamic_cast<VsMovableItem *>(lpParent);
-		if(!lpItem)
-			THROW_PARAM_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody, "Name", lpParent->Name());
-		return lpItem->GetMatrixTransform();
-	}
+	if(!m_lpThisRB->IsRoot() && m_lpParentVsMI)
+		return m_lpParentVsMI->GetMatrixTransform();
 	else
 		return GetVsSimulator()->OSGRoot();
 }

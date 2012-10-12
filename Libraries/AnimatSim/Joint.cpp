@@ -175,7 +175,12 @@ RigidBody *Joint::Child() {return m_lpChild;}
 
 \param [in,out]	lpValue	IPointer to the child part. 
 **/
-void Joint::Child(RigidBody *lpValue) {m_lpChild = lpValue;}
+void Joint::Child(RigidBody *lpValue) 
+{
+	m_lpChild = lpValue;
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->Physics_SetChild(lpValue);
+}
 
 /**
 \brief	Gets the joint position.

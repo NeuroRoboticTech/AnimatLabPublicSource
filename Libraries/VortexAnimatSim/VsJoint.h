@@ -13,6 +13,7 @@ namespace VortexAnimatSim
 {
 	namespace Environment
 	{
+		class VsRigidBody;
 
 		/*! \brief 
 			A common class for all joint data specific to vortex.
@@ -62,6 +63,8 @@ namespace VortexAnimatSim
 #pragma endregion
 
 			Joint *m_lpThisJoint;
+			VsRigidBody *m_lpVsParent;
+			VsRigidBody *m_lpVsChild;
 
 			virtual void SetThisPointers();
 			void UpdatePosition();
@@ -95,6 +98,8 @@ namespace VortexAnimatSim
 			virtual Vx::VxConstraint::CoordinateID CoordinateID() {return m_iCoordID;};
 
 			//Methods not used by joints.
+			virtual void Physics_SetParent(MovableItem *lpParent);
+			virtual void Physics_SetChild(MovableItem *lpChild);
 			virtual void Physics_UpdateMatrix();
 			virtual void Physics_PositionChanged();
 			virtual void Physics_RotationChanged();

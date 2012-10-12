@@ -889,9 +889,10 @@ try
 	if(!lpBody)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "RigidBody");
 	Body(lpBody);
-	m_lpBody->Parent(NULL);
 
+	m_lpBody->Parent(NULL);
 	m_lpBody->SetSystemPointers(m_lpSim, this, NULL, NULL, TRUE);
+
 	m_lpBody->Load(oXml);
 	AddRigidBody(m_lpBody);
 

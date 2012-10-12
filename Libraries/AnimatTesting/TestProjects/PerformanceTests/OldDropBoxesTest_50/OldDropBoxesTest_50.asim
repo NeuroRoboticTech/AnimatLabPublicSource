@@ -53,7 +53,7 @@
 <dwQuality>7500</dwQuality>
 <fccHandler>1668707181</fccHandler>
 <fccType>0</fccType>
-<LookAtStructureID>f2587299-e0c3-40b5-a3d1-c7f7a4905868</LookAtStructureID>
+<LookAtStructureID>de86c363-9104-4571-92d9-eab4fd938940</LookAtStructureID>
 <LookAtBodyID/>
 </Camera>
 <GroundSurface>
@@ -63,7 +63,26 @@
 <BodyPlan>Ground.astl</BodyPlan>
 <Position x="0" y="0" z="0"/>
 </GroundSurface>
-<Organisms/>
+<Organisms>
+<Structure>
+<ID>de86c363-9104-4571-92d9-eab4fd938940</ID>
+<Name>Organism_1</Name>
+<Type>Basic</Type>
+<Reference>False</Reference>
+<BodyPlan>Organism_1.astl</BodyPlan>
+<Position x="0" y="0" z="0"/>
+<BehavioralSystem>Organism_1.absys</BehavioralSystem>
+</Structure>
+<Structure>
+<ID>df77961f-1cad-42d3-ada3-76c0529cebd8</ID>
+<Name>Organism_2</Name>
+<Type>Basic</Type>
+<Reference>False</Reference>
+<BodyPlan>Organism_2.astl</BodyPlan>
+<Position x="0" y="0" z="0"/>
+<BehavioralSystem>Organism_2.absys</BehavioralSystem>
+</Structure>
+</Organisms>
 <Structures>
 <Structure>
 <ID>f2587299-e0c3-40b5-a3d1-c7f7a4905868</ID>

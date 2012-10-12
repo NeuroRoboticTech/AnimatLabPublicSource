@@ -4,7 +4,7 @@ namespace AnimatSim
 {
 	namespace Environment
 	{
-
+		class MovableItem;
 
 		class ANIMAT_PORT IPhysicsMovableItem
 		{
@@ -17,6 +17,8 @@ namespace AnimatSim
 			virtual void SetVisible(BOOL bVisible) = 0;
 			virtual void SetAlpha() = 0;
 
+			virtual void Physics_SetParent(MovableItem *lpParent) = 0;
+			virtual void Physics_SetChild(MovableItem *lpChild) = 0;
 			virtual void Physics_UpdateMatrix() = 0;
 			virtual void Physics_ResetGraphicsAndPhysics() = 0;
 			virtual void Physics_PositionChanged() = 0;

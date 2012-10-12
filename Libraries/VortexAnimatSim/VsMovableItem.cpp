@@ -35,6 +35,7 @@ VsMovableItem::VsMovableItem()
 	m_lpThisAB = NULL;
 	m_lpThisMI = NULL;
 	m_lpThisVsMI = NULL;
+	m_lpParentVsMI = NULL;
 }
 
 
@@ -298,7 +299,7 @@ void VsMovableItem::DeleteGraphics()
 
 VsMovableItem *VsMovableItem::VsParent()
 {
-	return dynamic_cast<VsMovableItem *>(m_lpThisMI->Parent());
+	return m_lpParentVsMI;
 }
 
 osg::Matrix VsMovableItem::GetWorldMatrix()
@@ -308,8 +309,8 @@ osg::Matrix VsMovableItem::GetWorldMatrix()
 
 osg::Matrix VsMovableItem::GetParentWorldMatrix()
 {
-	if(m_lpThisVsMI && m_lpThisVsMI->VsParent())
-		return m_lpThisVsMI->VsParent()->GetWorldMatrix();
+	if(m_lpParentVsMI)
+		return m_lpParentVsMI->GetWorldMatrix();
 	
 	osg::Matrix osgMatrix;
 	osgMatrix.makeIdentity();

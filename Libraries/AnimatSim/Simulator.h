@@ -347,6 +347,10 @@ namespace AnimatSim
 			/// This is primarily used for debuggin purposes to make sure that I have not missed anything.
 			float m_fltRemainingStepTime;
 
+			double m_dblTotalStepTime;
+			long m_lStepTimeCount;
+			CStdTimer m_Timer;
+
 #pragma endregion
 
 #pragma region RecordingVariables
@@ -763,6 +767,8 @@ namespace AnimatSim
 		virtual double TimerDiff_s(unsigned long long lStart, unsigned long long lEnd) = 0;
 		virtual void MicroSleep(unsigned int iMicroTime) = 0;
 		virtual void MicroWait(unsigned int iMicroTime);
+
+		virtual void WriteToConsole(string strMessage) = 0;
 
 #pragma endregion
 

@@ -26,11 +26,25 @@ namespace VortexAnimatSim
 VsJoint::VsJoint()
 {
 	m_vxJoint = NULL;
+	m_lpVsParent = NULL;
+	m_lpVsChild = NULL;
+
 	m_iCoordID = -1; //-1 if not used.
 }
 
 VsJoint::~VsJoint()
 {
+}
+
+void VsJoint::Physics_SetParent(MovableItem *lpParent)
+{
+	m_lpParentVsMI = dynamic_cast<VsMovableItem *>(lpParent);
+	m_lpVsParent = dynamic_cast<VsRigidBody *>(lpParent);
+}
+
+void VsJoint::Physics_SetChild(MovableItem *lpChild) 
+{
+	m_lpVsChild = dynamic_cast<VsRigidBody *>(lpChild);
 }
 
 void VsJoint::SetThisPointers()
@@ -71,10 +85,6 @@ void VsJoint::Physics_CollectData()
 {
 	if(m_lpThisJoint && m_vxJoint)
 	{
-		VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisJoint->Parent());
-		if(!lpVsParent)
-			THROW_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody);
-
 		UpdatePosition();
 
 		//Only attempt to make these calls if the coordinate ID is a valid number.
@@ -101,24 +111,16 @@ void VsJoint::Physics_CollectData()
 
 osg::Group *VsJoint::ParentOSG()
 {
-	RigidBody *lpParent = m_lpThisJoint->Parent();
-	if(lpParent)
-	{
-		VsRigidBody *lpVsParent = dynamic_cast<VsRigidBody *>(lpParent);
-		if(lpVsParent) return lpVsParent->GetMatrixTransform();
-	}
+	if(m_lpVsParent)
+		return m_lpVsParent->GetMatrixTransform();
 
 	return NULL;
 }
 
 osg::Group *VsJoint::ChildOSG()
 {
-	RigidBody *lpChild = m_lpThisJoint->Child();
-	if(lpChild)
-	{
-		VsRigidBody *lpVsChild = dynamic_cast<VsRigidBody *>(lpChild);
-		if(lpVsChild) return lpVsChild->GetMatrixTransform();
-	}
+	if(m_lpVsChild)
+		m_lpVsChild->GetMatrixTransform();
 
 	return NULL;
 }
@@ -200,6 +202,15 @@ graphics then just override this function and define it yourself, but do not cal
 **/
 void VsJoint::SetupGraphics()
 {
+	//Setup Vs pointers to child and parent.
+	m_lpVsParent = dynamic_cast<VsRigidBody *>(m_lpThisJoint->Parent());
+	if(!m_lpVsParent)
+		THROW_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody);
+
+	m_lpVsChild = dynamic_cast<VsRigidBody *>(m_lpThisJoint->Child());
+	if(!m_lpVsChild)
+		THROW_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody);
+
 	//The parent osg object for the joint is actually the child rigid body object.
 	m_osgParent = ParentOSG();
 	osg::ref_ptr<osg::Group> osgChild = ChildOSG();

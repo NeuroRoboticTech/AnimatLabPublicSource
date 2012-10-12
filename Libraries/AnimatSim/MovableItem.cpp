@@ -94,7 +94,12 @@ RigidBody *MovableItem::Parent() {return m_lpParent;}
 
 \param [in,out]	lpValue	The pointer to the parent RigidBody. 
 **/
-void MovableItem::Parent(RigidBody *lpValue) {m_lpParent = lpValue;}
+void MovableItem::Parent(RigidBody *lpValue) 
+{
+	m_lpParent = lpValue;
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->Physics_SetParent(lpValue);
+}
 
 /**
 \brief	Gets the visual selection type for this part.

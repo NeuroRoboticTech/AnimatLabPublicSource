@@ -1565,9 +1565,10 @@ try
 	lpChild = dynamic_cast<RigidBody *>(m_lpSim->CreateObject(strModule, "RigidBody", strType));
 	if(!lpChild)
 		THROW_TEXT_ERROR(Al_Err_lConvertingClassToType, Al_Err_strConvertingClassToType, "RigidBody");
+	
 	lpChild->Parent(this);
-
 	lpChild->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
+
 	lpChild->Load(oXml);
 
 	m_aryChildParts.Add(lpChild);
@@ -1618,6 +1619,7 @@ try
 		m_lpJointToParent->Child(this);
 
 		m_lpJointToParent->SetSystemPointers(m_lpSim, m_lpStructure, NULL, this, TRUE);
+
 		m_lpJointToParent->Load(oXml);
 
 		m_lpStructure->AddJoint(m_lpJointToParent);

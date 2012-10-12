@@ -35,11 +35,8 @@ namespace VortexAnimatSim
 		
 		VsIntersectionEvent m_vsIntersect;
 
-		CStdTimer m_Timer;
-
-		double m_dblTotalStepTime;
-		double m_dblTotalStepTime2;
-		long m_lStepTimeCount;
+		double m_dblTotalVortexStepTime;
+		long m_lStepVortexTimeCount;
 
 		virtual AnimatSim::Recording::SimulationRecorder *CreateSimulationRecorder();
 		virtual void SnapshotStopFrame();
@@ -102,6 +99,8 @@ namespace VortexAnimatSim
 		virtual double TimerDiff_m(unsigned long long lStart, unsigned long long lEnd);
 		virtual double TimerDiff_s(unsigned long long lStart, unsigned long long lEnd);
 		virtual void MicroSleep(unsigned int iMicroTime);
+
+		virtual void WriteToConsole(string strMessage);
 
 #pragma endregion
 
