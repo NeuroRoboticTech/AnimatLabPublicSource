@@ -17,14 +17,17 @@ namespace StdUtils
      timer.start.QuadPart=0;
      timer.stop.QuadPart=0; 
      QueryPerformanceFrequency( &frequency ) ;
- }
+ 	 m_bStarted = false;
+}
  
  void CStdTimer::StartTimer( ) {
+	 m_bStarted = true;
      QueryPerformanceCounter(&timer.start) ;
  }
  
  double CStdTimer::StopTimer( ) {
      QueryPerformanceCounter(&timer.stop) ;
+	 m_bStarted = false;
 	 return ElapsedTime();
  }
  

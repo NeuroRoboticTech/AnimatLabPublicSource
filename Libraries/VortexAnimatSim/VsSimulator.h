@@ -38,6 +38,11 @@ namespace VortexAnimatSim
 		double m_dblTotalVortexStepTime;
 		long m_lStepVortexTimeCount;
 
+		CStdTimer m_timeSimulationStep;
+		CStdTimer m_timePeriod;
+		double m_dblTotalStepTime;
+		long m_lStepTimeCount;
+
 		virtual AnimatSim::Recording::SimulationRecorder *CreateSimulationRecorder();
 		virtual void SnapshotStopFrame();
 

@@ -38,11 +38,14 @@ class STD_UTILS_PORT CStdTimer {
      stopWatch timer;
      LARGE_INTEGER frequency;
      double LIToSecs( LARGE_INTEGER & L) ;
+	 bool m_bStarted;
  public:
      CStdTimer() ;
      void StartTimer( ) ;
      double StopTimer( ) ;
      double ElapsedTime() ;
+
+	 bool TimerStarted() {return m_bStarted;}
  };
 
 }				//StdUtils

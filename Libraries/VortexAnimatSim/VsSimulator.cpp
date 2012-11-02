@@ -42,6 +42,8 @@ VsSimulator::VsSimulator()
 	m_vxFrame = NULL;
 	m_dblTotalStepTime = 0;
 	m_lStepTimeCount = 0;
+	m_dblTotalStepTime= 0;
+	m_lStepTimeCount = 0;
 }
 
 VsSimulator::~VsSimulator()
@@ -503,6 +505,10 @@ void VsSimulator::Initialize(int argc, const char **argv)
 
 void VsSimulator::StepSimulation()
 {
+	if(m_lTimeSlice > 10 && m_lTimeSlice < 5000 && !m_timePeriod.TimerStarted())
+		m_timePeriod.StartTimer();
+
+
 	try
 	{ 
 		//step the frame and update the windows
@@ -536,7 +542,24 @@ void VsSimulator::StepSimulation()
 		string strError = "An error occurred while step the simulation.\nError: " + oError.m_strError;
 		HandleNonCriticalError(strError);
 	}
-	//Dont catch other errors here. Let them bubble up as critical errors in the ProcessStepSimulation method.
+
+
+	double dblVal2 = m_timeSimulationStep.StopTimer();
+	if(m_lTimeSlice > 10 && m_lTimeSlice < 5000)
+	{
+		m_dblTotalStepTime += dblVal2;
+		m_lStepTimeCount++;
+	}
+	else if(m_lTimeSlice == 5000)
+	{
+		double dblAvgStepTime = m_dblTotalStepTime/m_lStepTimeCount;
+		cout << "Average step time: " << dblAvgStepTime << std::endl;
+		cout << "Total step time: " << m_dblTotalStepTime << ", " << m_lStepTimeCount << std::endl;
+		cout << "Period time: " << m_timePeriod.StopTimer() << std::endl;
+		cout << "Slice Time: " << m_lTimeSlice << std::endl;
+		cout << "Sim Time: " << Time() << std::endl;
+	}
+
 }
 
 void VsSimulator::UpdateSimulationWindows()
