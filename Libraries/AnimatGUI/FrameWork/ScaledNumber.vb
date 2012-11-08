@@ -86,21 +86,16 @@ Namespace Framework
             End Get
             Set(ByVal Value As Double)
 
-                ''NEED TO FIX
-                'I do not remember the purpose behind this bit of code. Not sure what I was trying to do.
-                'If I do not remember before testing phase then fix this
-                'If Not m_doParent Is Nothing AndAlso m_strPropertyName.Trim.Length > 0 Then
-                '    Dim snOld As ScaledNumber = DirectCast(Me.Clone(Me.Parent, False, Nothing), ScaledNumber)
-                '    snOld.m_fltValue = Value
-                '    If Not UpdateParent(snOld) Then
-                '        m_fltValue = Value
-                '    End If
-                'Else
-                '    m_fltValue = Value
-                'End If
-
                 If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanging(Value, m_eScale)
-                m_fltValue = Value
+                If Not m_doParent Is Nothing AndAlso m_strPropertyName.Trim.Length > 0 AndAlso Not Util.ProjectWorkspace Is Nothing Then
+                    Dim snOld As ScaledNumber = DirectCast(Me.Clone(Me.Parent, False, Nothing), ScaledNumber)
+                    snOld.m_fltValue = Value
+                    If Not UpdateParent(snOld) Then
+                        m_fltValue = Value
+                    End If
+                Else
+                    m_fltValue = Value
+                End If
                 If Not m_bIgnoreChangeValueEvents Then RaiseEvent ValueChanged()
 
                 'Dim snNew As ScaledNumber = DirectCast(Me.Clone, ScaledNumber)
@@ -123,7 +118,7 @@ Namespace Framework
             End Get
             Set(ByVal Value As enumNumericScale)
 
-                If Not m_doParent Is Nothing AndAlso m_strPropertyName.Trim.Length > 0 Then
+                If Not m_doParent Is Nothing AndAlso m_strPropertyName.Trim.Length > 0 AndAlso Not Util.ProjectWorkspace Is Nothing Then
                     Dim snOld As ScaledNumber = DirectCast(Me.Clone(Me.Parent, False, Nothing), ScaledNumber)
                     snOld.m_eScale = Value
                     If Not UpdateParent(snOld) Then
@@ -158,6 +153,13 @@ Namespace Framework
         Public ReadOnly Property Text() As String
             Get
                 Return m_fltValue.ToString("0.###") & " " & ScaledNumber.ScaleAbbreviation(m_eScale) & m_strUnitsAbbrev
+            End Get
+        End Property
+
+        <Browsable(False)> _
+        Public ReadOnly Property TextWithoutUnitsAbbrev() As String
+            Get
+                Return m_fltValue.ToString("0.###") & " " & ScaledNumber.ScaleAbbreviation(m_eScale)
             End Get
         End Property
 
@@ -560,7 +562,9 @@ Namespace Framework
                     Me.ManualAddPropertyHistory(m_doParent, m_strPropertyName, doOrig, snNewValue, True)
                 End If
 
-                Util.Application.ProjectWorkspace.RefreshProperties()
+                If Not Util.ProjectWorkspace Is Nothing Then
+                    Util.ProjectWorkspace.RefreshProperties()
+                End If
 
                 Return True
             End If

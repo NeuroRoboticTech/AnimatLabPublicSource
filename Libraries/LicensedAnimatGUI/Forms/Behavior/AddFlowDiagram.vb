@@ -3625,16 +3625,18 @@ Namespace Forms.Behavior
                 ElseIf m_ctrlAddFlow.SelectedItems.Count > 1 Then
                     m_bSelectingMultiple = True
 
+                    Dim aryItems As New AnimatGUI.Collections.DataObjects(Nothing)
                     'If more than one item is selected then lets get a list of them and pass that it.
                     Dim bdItem As AnimatGUI.DataObjects.Behavior.Data
                     Dim iIndex As Integer = 0
-                    Util.ProjectWorkspace.ClearSelections()
                     For Each afItem As Lassalle.Flow.Item In m_ctrlAddFlow.SelectedItems
                         If Not afItem.Tag Is Nothing Then
                             bdItem = FindItem(DirectCast(afItem.Tag, String))
-                            bdItem.SelectItem(True)
+                            aryItems.Add(bdItem)
                         End If
                     Next
+
+                    Util.ProjectWorkspace.SelectMultipleItems(aryItems)
 
                     m_bSelectingMultiple = False
                 Else

@@ -318,6 +318,7 @@ Namespace DataObjects
                     bDelete = False
                 End If
 
+                Util.Application.AppIsBusy = True
                 If bDelete Then
                     Util.Application.CloseForm(Me.ToolForm, e)
 
@@ -330,6 +331,8 @@ Namespace DataObjects
                 Return Not bDelete
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Util.Application.AppIsBusy = False
             End Try
 
         End Function

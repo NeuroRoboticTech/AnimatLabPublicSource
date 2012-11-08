@@ -194,28 +194,35 @@ Namespace DataObjects.Physical
 
         Public Overrides Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
 
-            If bAskToDelete Then
-                If Util.ShowMessage("Are you certain that you want to permanently delete this " & _
-                                    "body part and all its children?", "Delete Body Part", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
-                    Return True
-                End If
-            End If
-
-            If Not Me.ParentStructure Is Nothing Then
-                If Not m_doInterface Is Nothing Then
-                    RemoveHandler m_doInterface.OnPositionChanged, AddressOf Me.OnPositionChanged
-                    RemoveHandler m_doInterface.OnRotationChanged, AddressOf Me.OnRotationChanged
-                    RemoveHandler m_doInterface.OnSelectionChanged, AddressOf Me.OnSelectionChanged
+            Try
+                If bAskToDelete Then
+                    If Util.ShowMessage("Are you certain that you want to permanently delete this " & _
+                                        "body part and all its children?", "Delete Body Part", MessageBoxButtons.YesNo) <> DialogResult.Yes Then
+                        Return True
+                    End If
                 End If
 
-                Me.ParentStructure.DeleteBodyPart(Me)
-
+                Util.Application.AppIsBusy = True
                 If Not Me.ParentStructure Is Nothing Then
-                    Me.ParentStructure.SelectItem()
+                    If Not m_doInterface Is Nothing Then
+                        RemoveHandler m_doInterface.OnPositionChanged, AddressOf Me.OnPositionChanged
+                        RemoveHandler m_doInterface.OnRotationChanged, AddressOf Me.OnRotationChanged
+                        RemoveHandler m_doInterface.OnSelectionChanged, AddressOf Me.OnSelectionChanged
+                    End If
+
+                    Me.ParentStructure.DeleteBodyPart(Me)
+
+                    If Not Me.ParentStructure Is Nothing Then
+                        Me.ParentStructure.SelectItem()
+                    End If
                 End If
-            End If
 
                 Return False
+            Catch ex As Exception
+                Throw ex
+            Finally
+                Util.Application.AppIsBusy = False
+            End Try
         End Function
 
         Public Overridable Sub CopyBodyPart()

@@ -1182,6 +1182,7 @@ Namespace Forms
         Protected m_bAutomationPropBoolValue As Boolean = False
         Protected m_bAutomationMethodInProgress As Boolean = False
         Protected m_bAppIsBusy As Boolean = False
+        Protected m_iAppBusyCounter As Integer = 0
 
         Protected m_bBodyPartPasteInProgress As Boolean = False
 
@@ -1622,11 +1623,21 @@ Namespace Forms
             Get
                 Return m_bAppIsBusy
             End Get
-            Set(value As Boolean)
-                m_bAppIsBusy = value
-                If m_bAppIsBusy Then
+            Set(ByVal value As Boolean)
+
+                If value AndAlso m_bAppIsBusy Then
+                    m_iAppBusyCounter = m_iAppBusyCounter + 1
+                ElseIf Not value And m_iAppBusyCounter > 0 Then
+                    m_iAppBusyCounter = m_iAppBusyCounter - 1
+                ElseIf value AndAlso Not m_bAppIsBusy Then
+                    m_iAppBusyCounter = 1
+                End If
+
+                If m_iAppBusyCounter = 1 AndAlso m_bAppIsBusy = False Then
+                    m_bAppIsBusy = True
                     Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
-                Else
+                ElseIf m_iAppBusyCounter = 0 Then
+                    m_bAppIsBusy = False
                     Me.Cursor = System.Windows.Forms.Cursors.Default
                 End If
             End Set
@@ -3413,6 +3424,7 @@ Namespace Forms
             Catch ex As System.Exception
                 Throw ex
             Finally
+                Me.AppIsBusy = False
                 Util.LoadInProgress = False
             End Try
 
@@ -3465,6 +3477,8 @@ Namespace Forms
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Me.AppIsBusy = False
             End Try
 
         End Sub
@@ -3511,6 +3525,8 @@ Namespace Forms
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Me.AppIsBusy = False
             End Try
 
         End Sub
@@ -5867,14 +5883,14 @@ Namespace Forms
 
                     Application.DoEvents()
 
-                    Me.AppIsBusy = False
-
                 End If
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             Finally
-                Me.AppIsBusy = False
+                If Not frmTool Is Nothing Then
+                    Me.AppIsBusy = False
+                End If
             End Try
         End Sub
 

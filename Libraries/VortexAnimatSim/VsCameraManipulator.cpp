@@ -396,22 +396,20 @@ BOOL VsCameraManipulator::DoMouseSpring(const GUIEventAdapter& ea, float x, floa
 	VsMouseSpring::GetInstance()->SetEnd(v3End);
 
 	//Calculate the force from the spring
-	osg::Vec3 vSpringLength = v3End - vGrabPos;
+	osg::Vec3 vSpringLength = ((v3End - vGrabPos) * m_lpSim->DistanceUnits());
 	osg::Vec3 vSpringForce = vSpringLength * m_lpSim->MouseSpringStiffness();
 
 	//And the force from damping of the spring.
 	CStdFPoint fpBodyVel = rbBody->GetVelocityAtPoint(vGrabPos.x(), vGrabPos.y(), vGrabPos.z());
 	osg::Vec3 v3BodyVel(fpBodyVel.x, fpBodyVel.y, fpBodyVel.z);
-	osg::Vec3 v3BodyForce = v3BodyVel * m_lpSim->MouseSpringDamping();
+	osg::Vec3 v3BodyForce = (v3BodyVel * m_lpSim->DistanceUnits()) * m_lpSim->MouseSpringDamping();
 
 	//Then the total force = Spring force - damping force
 	osg::Vec3 vTotalForce = vSpringForce - v3BodyForce;
-	float fltMass = -rbBody->GetMass();
-	vTotalForce *= rbBody->GetMass();
-	rbBody->AddForce(vGrabPos.x(), vGrabPos.y(), vGrabPos.z(), vTotalForce.x(), vTotalForce.y(), vTotalForce.z(), FALSE);
+	rbBody->AddForce(vGrabPos.x(), vGrabPos.y(), vGrabPos.z(), vTotalForce.x(), vTotalForce.y(), vTotalForce.z(), TRUE);
 
 	//char strDest[150];
-	//sprintf(strDest, "MS: (%3.1f, %3.1f, %3.1f)-(%3.1f, %3.1f, %3.1f)  FORCE: (%3.1f, %3.1f, %3.1f)\n", vGrabPos[0], vGrabPos[1], vGrabPos[2], v3End[0], v3End[1], v3End[2], vTotalForce[0], vTotalForce[1], vTotalForce[2]);
+	//sprintf(strDest, "Length: (%3.1f, %3.1f, %3.1f)   MS: (%3.1f, %3.1f, %3.1f)-(%3.1f, %3.1f, %3.1f)  FORCE: (%3.1f, %3.1f, %3.1f)\n", vSpringLength[0], vSpringLength[1], vSpringLength[2], vGrabPos[0], vGrabPos[1], vGrabPos[2], v3End[0], v3End[1], v3End[2], vTotalForce[0], vTotalForce[1], vTotalForce[2]);
 	//OutputDebugString(strDest);
 
 	return TRUE;

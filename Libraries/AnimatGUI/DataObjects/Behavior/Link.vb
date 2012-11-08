@@ -1033,10 +1033,13 @@ Namespace DataObjects.Behavior
                     Return False
                 End If
 
+                Util.Application.AppIsBusy = True
                 Me.ParentSubsystem.RemoveLink(Me)
                 Return True
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Util.Application.AppIsBusy = False
             End Try
 
         End Function

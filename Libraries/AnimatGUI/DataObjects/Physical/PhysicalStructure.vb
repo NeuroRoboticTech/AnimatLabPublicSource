@@ -746,6 +746,7 @@ Namespace DataObjects.Physical
                     bDelete = False
                 End If
 
+                Util.Application.AppIsBusy = True
                 If bDelete Then
                     DeleteInternal()
                 End If
@@ -753,6 +754,8 @@ Namespace DataObjects.Physical
                 Return Not bDelete
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Util.Application.AppIsBusy = False
             End Try
 
         End Function

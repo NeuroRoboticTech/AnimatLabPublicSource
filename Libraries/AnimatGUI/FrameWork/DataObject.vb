@@ -719,8 +719,15 @@ Namespace Framework
         End Sub
 
         Public Overridable Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
-            Me.RemoveWorksapceTreeView()
-            Return False
+            Try
+                Util.Application.AppIsBusy = True
+                Me.RemoveWorksapceTreeView()
+                Return False
+            Catch ex As Exception
+                Throw ex
+            Finally
+                Util.Application.AppIsBusy = False
+            End Try
         End Function
 
         Public Overridable Function DeleteSortCompare(ByVal doObj2 As DataObject) As Integer

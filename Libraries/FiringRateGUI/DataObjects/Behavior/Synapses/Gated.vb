@@ -340,8 +340,10 @@ Namespace DataObjects.Behavior.Synapses
         Public Overrides Sub RemoveFromSim(ByVal bThrowError As Boolean)
             'However, we do need to remove it if it is removed from the list.
             If Not m_lsGatedSynapse Is Nothing AndAlso Not m_lsGatedSynapse.Link Is Nothing AndAlso Not m_doInterface Is Nothing Then
-                Util.Application.SimulationInterface.RemoveItem(m_lsGatedSynapse.Link.ID, "Synapse", Me.ID, bThrowError)
-                m_doInterface = Nothing
+                If Util.Application.SimulationInterface.FindItem(m_lsGatedSynapse.Link.ID, False) Then
+                    Util.Application.SimulationInterface.RemoveItem(m_lsGatedSynapse.Link.ID, "Synapse", Me.ID, bThrowError)
+                    m_doInterface = Nothing
+                End If
             End If
         End Sub
 

@@ -316,14 +316,21 @@ Namespace DataObjects.ExternalStimuli
 
         Public Overrides Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
 
-            If Not bAskToDelete OrElse (bAskToDelete AndAlso Util.ShowMessage("Are you certain that you want to permanently delete this " & _
-                                "stimulus?", "Delete Stimulus", MessageBoxButtons.YesNo) = DialogResult.Yes) Then
-                Me.RemoveWorksapceTreeView()
-                Util.Simulation.ProjectStimuli.Remove(Me.ID)
-                Return False
-            End If
+            Try
+                If Not bAskToDelete OrElse (bAskToDelete AndAlso Util.ShowMessage("Are you certain that you want to permanently delete this " & _
+                                    "stimulus?", "Delete Stimulus", MessageBoxButtons.YesNo) = DialogResult.Yes) Then
+                    Util.Application.AppIsBusy = True
+                    Me.RemoveWorksapceTreeView()
+                    Util.Simulation.ProjectStimuli.Remove(Me.ID)
+                    Return False
+                End If
 
-            Return True
+                Return True
+            Catch ex As Exception
+                Throw ex
+            Finally
+                Util.Application.AppIsBusy = False
+            End Try
         End Function
 
         Public Overridable Sub AddCompatibleDataObject(ByVal doObject As Framework.DataObject)

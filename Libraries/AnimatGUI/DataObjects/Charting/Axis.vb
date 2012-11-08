@@ -237,6 +237,7 @@ Namespace DataObjects.Charting
             Try
                 If bAskToDelete AndAlso Util.ShowMessage("Are you certain that you want to delete this " & _
                                     "axis and all data columns?", "Delete Axis", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+                    Util.Application.AppIsBusy = True
                     DeleteAxis(True)
                     Return False
                 End If
@@ -244,6 +245,8 @@ Namespace DataObjects.Charting
                 Return True
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Util.Application.AppIsBusy = False
             End Try
 
         End Function

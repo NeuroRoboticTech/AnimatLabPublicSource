@@ -619,12 +619,15 @@ Namespace DataObjects.Charting
                 End If
 
                 If bDelete AndAlso Not m_frmParentAxis Is Nothing AndAlso m_frmParentAxis.DataColumns.Contains(Me.ID) Then
+                    Util.Application.AppIsBusy = True
                     Me.RemoveFromAxis()
                 End If
 
                 Return Not bDelete
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Util.Application.AppIsBusy = False
             End Try
 
         End Function

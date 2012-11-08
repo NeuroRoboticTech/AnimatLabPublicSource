@@ -1514,7 +1514,9 @@ Namespace Framework
                 Dim aryParams As Object() = New Object() {oObj, propEvent}
                 Dim oRet As Object = oMethod.Invoke(oObj, aryParams)
 
-                Util.ProjectWorkspace.RefreshProperties()
+                If Not Util.ProjectWorkspace Is Nothing Then
+                    Util.ProjectWorkspace.RefreshProperties()
+                End If
             Else
                 SetObjectPropertyDirect(oObj, strPropertyName, strValue)
             End If

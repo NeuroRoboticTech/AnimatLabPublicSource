@@ -57,6 +57,7 @@ Namespace Forms
 
         Protected m_PropertyData As AnimatGuiCtrls.Controls.PropertyBag
         Protected m_PropertyArray() As AnimatGuiCtrls.Controls.PropertyBag
+        Protected m_bMutlipleSelectInProgress As Boolean = False
 
 #End Region
 
@@ -216,12 +217,59 @@ Namespace Forms
 
         Public Overridable Sub ClearSelections()
 
-            For Each tnNode As Crownwood.DotNetMagic.Controls.Node In Me.TreeView.SelectedNodes
-                If Not tnNode.Tag Is Nothing AndAlso Util.IsTypeOf(tnNode.Tag.GetType, GetType(AnimatGUI.Framework.DataObject), False) Then
-                    Dim doObj As Framework.DataObject = DirectCast(tnNode.Tag, Framework.DataObject)
-                    doObj.DeselectItem()
+            Try
+                Util.Application.AppIsBusy = True
+                For Each tnNode As Crownwood.DotNetMagic.Controls.Node In Me.TreeView.SelectedNodes
+                    If Not tnNode.Tag Is Nothing AndAlso Util.IsTypeOf(tnNode.Tag.GetType, GetType(AnimatGUI.Framework.DataObject), False) Then
+                        Dim doObj As Framework.DataObject = DirectCast(tnNode.Tag, Framework.DataObject)
+                        doObj.DeselectItem()
+                    End If
+                Next
+            Catch ex As Exception
+                Throw ex
+            Finally
+                Util.Application.AppIsBusy = False
+            End Try
+        End Sub
+
+        Public Overridable Sub SelectMultipleItems(ByVal arySelectItems As Collections.DataObjects)
+            Try
+                Util.Application.AppIsBusy = True
+                m_bMutlipleSelectInProgress = True
+                ctrlTreeView.InstantUpdate = False
+
+                ClearSelections()
+
+                Dim iCount As Integer = arySelectItems.Count - 1
+                Dim aryItems(iCount) As PropertyBag
+                Dim iIndex As Integer = 0
+                For Each doNode As Framework.DataObject In arySelectItems
+                    If Util.IsTypeOf(doNode.GetType, GetType(Framework.DataObject), False) Then
+                        aryItems(iIndex) = doNode.Properties
+                        iIndex = iIndex + 1
+                        doNode.SelectItem(True)
+                        doNode.AfterSelected()
+                    End If
+                Next
+
+                If iCount >= 0 Then
+                    Util.ProjectProperties.PropertyData = Nothing
+                    Util.ProjectProperties.PropertyArray = aryItems
+                Else
+                    Util.ProjectProperties.PropertyData = Nothing
+                    Util.ProjectProperties.PropertyArray = Nothing
                 End If
-            Next
+
+                RaiseEvent WorkspaceSelectionChanged()
+
+            Catch ex As Exception
+                Throw ex
+            Finally
+                Util.Application.AppIsBusy = False
+                m_bMutlipleSelectInProgress = False
+                ctrlTreeView.InstantUpdate = True
+            End Try
+
         End Sub
 
 #End Region
@@ -307,6 +355,11 @@ Namespace Forms
         Private Sub ctrlTreeView_AfterSelectionChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctrlTreeView.AfterSelectionChanged
 
             Try
+                If m_bMutlipleSelectInProgress Then
+                    'If we are doing multiple selection simultainously then let it do this process
+                    Return
+                End If
+
                 If ctrlTreeView.SelectedNodes.Count > 1 Then
                     Dim iCount As Integer = ctrlTreeView.SelectedNodes.Count - 1
                     Dim aryItems(iCount) As PropertyBag
