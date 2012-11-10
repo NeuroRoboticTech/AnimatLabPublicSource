@@ -27,7 +27,9 @@ VsHudText::VsHudText()
 	m_strFont = "fonts/Arial.ttf";
 	m_iCharSize = 30;
 	m_strText = "";
-	m_lpData = NULL;
+	m_lpDisplayData = NULL;
+	m_lpUpdateData = NULL;
+	m_fltUpdateInterval = 1;
 }
 
 /**
@@ -44,15 +46,20 @@ VsHudText::VsHudText()
 \param	strTargetID		  	Identifier for the string target.
 \param	strDataType		  	Type of the string data.
 **/
-VsHudText::VsHudText(float *aryColor, CStdFPoint &ptPosition, string strFont, int iCharSize, string strText, string strTargetID, string strDataType)
+VsHudText::VsHudText(float *aryColor, CStdFPoint &ptPosition, string strFont, int iCharSize, string strText, string strDisplayTargetID, string strDisplayDataType, string strUpdateTargetID, string strUpdateDataType, float fltUpdateInterval)
 {
 	m_aryColor.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
 	m_ptPosition = ptPosition;
 	m_strFont = strFont;
 	m_iCharSize = iCharSize;
 	m_strText = strText;
-	m_strTargetID = strTargetID;
-	m_strDataType = strDataType;
+	m_lpDisplayData = NULL;
+	m_lpUpdateData = NULL;
+	m_strDisplayTargetID = strDisplayTargetID;
+	m_strDisplayDataType = strDisplayDataType;
+	m_strUpdateTargetID = strUpdateTargetID;
+	m_strUpdateDataType = strUpdateDataType;
+	m_fltUpdateInterval = fltUpdateInterval;
 }
 
 /**
@@ -96,11 +103,11 @@ void VsHudText::Update()
 {
     char str[1024];
 
-	if(m_osgText.valid() && m_lpData && (fabs(*m_lpData-m_fltPrevious) > 0.1) )
+	if(m_osgText.valid() && m_lpDisplayData && m_lpUpdateData && (fabs(*m_lpUpdateData-m_fltPrevious) > 0.1) )
 	{
-		sprintf(str, m_strText.c_str(), *m_lpData);
+		sprintf(str, m_strText.c_str(), *m_lpDisplayData);
 		m_osgText->setText(str);
-		m_fltPrevious = *m_lpData;
+		m_fltPrevious = *m_lpUpdateData;
 	}
 }
 

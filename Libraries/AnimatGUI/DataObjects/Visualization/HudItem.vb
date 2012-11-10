@@ -21,8 +21,11 @@ Namespace DataObjects.Visualization
         Protected m_ptPosition As System.Drawing.Point = New System.Drawing.Point(10, 10)
         Protected m_iCharSize As Integer = 30
         Protected m_strText As String = "Time: %3.3f"
-        Protected m_strTargetID As String = "Simulator"
-        Protected m_strDataType As String = "Time"
+        Protected m_strDisplayTargetID As String = "Simulator"
+        Protected m_strDisplayDataType As String = "Time"
+        Protected m_strUpdateTargetID As String = "Simulator"
+        Protected m_strUpdateDataType As String = "RealTime"
+        Protected m_fltUpdateInterval As Single = 0.25
 
 #End Region
 
@@ -34,12 +37,15 @@ Namespace DataObjects.Visualization
             End Get
         End Property
 
+
 #End Region
 
 #Region " Methods "
 
         Public Sub New(ByVal doParent As Framework.DataObject, ByVal strHudType As String, ByVal clColor As System.Drawing.Color, _
-                       ByVal ptPosition As System.Drawing.Point, ByVal iCharSize As Integer, ByVal strText As String, ByVal strTargetID As String, ByVal strDataType As String)
+                       ByVal ptPosition As System.Drawing.Point, ByVal iCharSize As Integer, ByVal strText As String, _
+                       ByVal strDisplayTargetID As String, ByVal strDisplayDataType As String, _
+                       ByVal strUpdateTargetID As String, ByVal strUpdateDataType As String, ByVal fltUpdateInterval As Single)
             MyBase.New(doParent)
 
             m_strName = m_strID
@@ -49,8 +55,11 @@ Namespace DataObjects.Visualization
             m_ptPosition = ptPosition
             m_iCharSize = iCharSize
             m_strText = strText
-            m_strTargetID = strTargetID
-            m_strDataType = strDataType
+            m_strDisplayTargetID = strDisplayTargetID
+            m_strDisplayDataType = strDisplayDataType
+            m_strUpdateTargetID = strUpdateTargetID
+            m_strUpdateDataType = strUpdateDataType
+            m_fltUpdateInterval = fltUpdateInterval
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
@@ -88,8 +97,11 @@ Namespace DataObjects.Visualization
             m_strHudType = oXml.GetChildString("HudType", m_strHudType)
             m_iCharSize = oXml.GetChildInt("CharSize", m_iCharSize)
             m_strText = oXml.GetChildString("Text", m_strText)
-            m_strTargetID = oXml.GetChildString("TargetID", m_strTargetID)
-            m_strDataType = oXml.GetChildString("DataType", m_strDataType)
+            m_strDisplayTargetID = oXml.GetChildString("DisplayTargetID", m_strDisplayTargetID)
+            m_strDisplayDataType = oXml.GetChildString("DisplayDataType", m_strDisplayDataType)
+            m_strUpdateTargetID = oXml.GetChildString("UpdateTargetID", m_strUpdateTargetID)
+            m_strUpdateDataType = oXml.GetChildString("UpdateDataType", m_strUpdateDataType)
+            m_fltUpdateInterval = oXml.GetChildFloat("UpdateInterval", m_fltUpdateInterval)
             m_ptPosition = Util.LoadPoint(oXml, "Position")
             m_clColor = Util.LoadColor(oXml, "Color", m_clColor)
 
@@ -107,8 +119,11 @@ Namespace DataObjects.Visualization
             oXml.AddChildElement("Type", m_strHudType)
             oXml.AddChildElement("CharSize", m_iCharSize)
             oXml.AddChildElement("Text", m_strText)
-            oXml.AddChildElement("TargetID", m_strTargetID)
-            oXml.AddChildElement("DataType", m_strDataType)
+            oXml.AddChildElement("DisplayTargetID", m_strDisplayTargetID)
+            oXml.AddChildElement("DisplayDataType", m_strDisplayDataType)
+            oXml.AddChildElement("UpdateTargetID", m_strUpdateTargetID)
+            oXml.AddChildElement("UpdateDataType", m_strUpdateDataType)
+            oXml.AddChildElement("UpdateInterval", m_fltUpdateInterval)
             Util.SavePoint(oXml, "Position", m_ptPosition)
             Util.SaveColor(oXml, "Color", m_clColor)
 
@@ -127,8 +142,11 @@ Namespace DataObjects.Visualization
             oXml.AddChildElement("Type", m_strHudType)
             oXml.AddChildElement("CharSize", m_iCharSize)
             oXml.AddChildElement("Text", m_strText)
-            oXml.AddChildElement("TargetID", m_strTargetID)
-            oXml.AddChildElement("DataType", m_strDataType)
+            oXml.AddChildElement("DisplayTargetID", m_strDisplayTargetID)
+            oXml.AddChildElement("DisplayDataType", m_strDisplayDataType)
+            oXml.AddChildElement("UpdateTargetID", m_strUpdateTargetID)
+            oXml.AddChildElement("UpdateDataType", m_strUpdateDataType)
+            oXml.AddChildElement("UpdateInterval", m_fltUpdateInterval)
             Util.SavePoint(oXml, "Position", m_ptPosition)
             Util.SaveColor(oXml, "Color", m_clColor)
 

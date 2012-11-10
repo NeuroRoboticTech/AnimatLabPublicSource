@@ -46,18 +46,23 @@ HudText::HudText()
 	m_strFont = "fonts/Arial.ttf";
 	m_iCharSize = 30;
 	m_strText = "";
-	m_lpData = NULL;
+	m_lpDisplayData = NULL;
+	m_lpUpdateData = NULL;
+	m_fltUpdateInterval = 1;
 }
 
-HudText::HudText(float *aryColor, CStdFPoint &ptPosition, string strFont, int iCharSize, string strText, string strTargetID, string strDataType)
+HudText::HudText(float *aryColor, CStdFPoint &ptPosition, string strFont, int iCharSize, string strText, string strDisplayTargetID, string strDisplayDataType, string strUpdateTargetID, string strUpdateDataType, float fltUpdateInterval)
 {
 	m_aryColor.Set(aryColor[0], aryColor[1], aryColor[2], aryColor[3]);
 	m_ptPosition = ptPosition;
 	m_strFont = strFont;
 	m_iCharSize = iCharSize;
 	m_strText = strText;
-	m_strTargetID = strTargetID;
-	m_strDataType = strDataType;
+	m_strDisplayTargetID = strDisplayTargetID;
+	m_strDisplayDataType = strDisplayDataType;
+	m_strUpdateTargetID = strUpdateTargetID;
+	m_strUpdateDataType = strUpdateDataType;
+	m_fltUpdateInterval = fltUpdateInterval;
 }
 
 HudText::~HudText()
@@ -68,8 +73,11 @@ void HudText::Initialize(void *lpVoidProjection)
 {
 	AnimatBase::Initialize();
 
-	AnimatBase *lpBase = m_lpSim->FindByID(m_strTargetID);
-	m_lpData = lpBase->GetDataPointer(m_strDataType);
+	AnimatBase *lpBase = m_lpSim->FindByID(m_strDisplayTargetID);
+	m_lpDisplayData = lpBase->GetDataPointer(m_strDisplayDataType);
+
+	lpBase = m_lpSim->FindByID(m_strUpdateTargetID);
+	m_lpUpdateData = lpBase->GetDataPointer(m_strUpdateDataType);
 }
 
 void HudText::Load(CStdXml &oXml)
@@ -83,8 +91,11 @@ void HudText::Load(CStdXml &oXml)
 	m_strFont = oXml.GetChildString("Font", m_strFont);
 	m_iCharSize = oXml.GetChildInt("CharSize", m_iCharSize);
 	m_strText = oXml.GetChildString("Text", m_strText);
-	m_strTargetID = oXml.GetChildString("TargetID");
-	m_strDataType = oXml.GetChildString("DataType");
+	m_strDisplayTargetID = oXml.GetChildString("DisplayTargetID");
+	m_strDisplayDataType = oXml.GetChildString("DisplayDataType");
+	m_strUpdateTargetID = oXml.GetChildString("UpdateTargetID");
+	m_strUpdateDataType = oXml.GetChildString("UpdateDataType");
+	m_fltUpdateInterval = oXml.GetChildFloat("UpdateInterval");
 
 	oXml.OutOfElem();
 }

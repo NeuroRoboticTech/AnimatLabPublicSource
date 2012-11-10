@@ -928,7 +928,7 @@ Namespace DataObjects
                 'Add a new hud item to display the time and the axis by default
                 'TODO: We need a Hud manager code in the GUI. For now just hard code it to have a Hud Text Item.
                 m_aryHudItems.Clear()
-                Dim doHudItem As New DataObjects.Visualization.HudItem(Me, "HudText", Color.White, New System.Drawing.Point(10, 10), 30, "Time: %3.3f", "Simulator", "Time")
+                Dim doHudItem As New DataObjects.Visualization.HudItem(Me, "HudText", Color.White, New System.Drawing.Point(10, 10), 30, "Time: %3.3f", "Simulator", "Time", "Simulator", "RealTime", 1)
                 m_aryHudItems.Add(doHudItem.ID, doHudItem)
                 'End If
 
