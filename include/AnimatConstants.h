@@ -421,6 +421,11 @@
 #define Al_Err_lInvalidPresetPlaybackTimeStep -4062
 #define Al_Err_strInvalidPresetPlaybackTimeStep "Preset playback time step must be greater than or equal to zero."
 
+#define Al_Err_lLoadingReleaseLib -4063
+#define Al_Err_strLoadingReleaseLib "You are attempting to load release libraries while in debug mode."
+
+#define Al_Err_lLoadingDebugLib -4064
+#define Al_Err_strLoadingDebugLib "You are attempting to load debug libraries while in release mode."
 
 #define MAX_DATA_CHART_BUFFER 10485760
 

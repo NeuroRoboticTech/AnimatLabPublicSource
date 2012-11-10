@@ -39,7 +39,7 @@
 <Name>Joint_1</Name>
 <ID>0860b7a3-86ce-4d1c-a388-87b0ee9e94e7</ID>
 <Type>Static</Type>
-<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Static</PartType>
+<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Free</PartType>
 <Description/>
 <Constraint>
 <EnableLimits>True</EnableLimits>
@@ -75,7 +75,7 @@
 <Name>Joint_2</Name>
 <ID>a22d8834-4a68-4514-b9e3-fddffad2131a</ID>
 <Type>Static</Type>
-<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Static</PartType>
+<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Free</PartType>
 <Description/>
 <Constraint>
 <EnableLimits>True</EnableLimits>
@@ -111,7 +111,7 @@
 <Name>Joint_3</Name>
 <ID>427ef941-fe98-4a59-a19d-a0e3d679761f</ID>
 <Type>Static</Type>
-<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Static</PartType>
+<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Free</PartType>
 <Description/>
 <Constraint>
 <EnableLimits>True</EnableLimits>
@@ -147,7 +147,7 @@
 <Name>Joint_4</Name>
 <ID>a9431554-40ee-4c28-8125-2568577c4982</ID>
 <Type>Static</Type>
-<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Static</PartType>
+<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Free</PartType>
 <Description/>
 <Constraint>
 <EnableLimits>True</EnableLimits>
@@ -183,7 +183,7 @@
 <Name>Joint_5</Name>
 <ID>40776ff9-44e7-4df5-8df6-b3e05314bea8</ID>
 <Type>Static</Type>
-<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Static</PartType>
+<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Free</PartType>
 <Description/>
 <Constraint>
 <EnableLimits>True</EnableLimits>
@@ -219,7 +219,7 @@
 <Name>Joint_1</Name>
 <ID>956fab92-6936-490d-b62e-74895cb89ce0</ID>
 <Type>Static</Type>
-<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Static</PartType>
+<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Free</PartType>
 <Description/>
 <Constraint>
 <EnableLimits>True</EnableLimits>
@@ -255,7 +255,7 @@
 <Name>Joint_2</Name>
 <ID>0be0a06d-d1e8-4324-99ec-43584a4a5676</ID>
 <Type>Static</Type>
-<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Static</PartType>
+<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Free</PartType>
 <Description/>
 <Constraint>
 <EnableLimits>True</EnableLimits>
@@ -291,7 +291,7 @@
 <Name>Joint_3</Name>
 <ID>81cd25a5-7498-418c-90ff-9076fc96948f</ID>
 <Type>Static</Type>
-<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Static</PartType>
+<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Free</PartType>
 <Description/>
 <Constraint>
 <EnableLimits>True</EnableLimits>
@@ -327,7 +327,7 @@
 <Name>Joint_4</Name>
 <ID>d195fd54-95fd-4e6f-8773-35d068274832</ID>
 <Type>Static</Type>
-<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Static</PartType>
+<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Free</PartType>
 <Description/>
 <Constraint>
 <EnableLimits>True</EnableLimits>

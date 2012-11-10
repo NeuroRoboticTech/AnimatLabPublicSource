@@ -2658,6 +2658,16 @@ IStdClassFactory *Simulator::LoadClassFactory(string strModuleName)
 
 try
 {
+	int iFindDebug = Std_ToLower(strModuleName).find("d.dll");
+
+#ifdef DEBUG
+	if(iFindDebug == -1 )
+		THROW_PARAM_ERROR(Al_Err_lLoadingReleaseLib, Al_Err_strLoadingReleaseLib, "Module Name", strModuleName);
+#else
+	if(iFindDebug != -1)
+		THROW_PARAM_ERROR(Al_Err_lLoadingDebugLib, Al_Err_strLoadingDebugLib, "Module Name", strModuleName);
+#endif
+
 	lpFactory = IStdClassFactory::LoadModule(strModuleName);
 	return lpFactory;
 }

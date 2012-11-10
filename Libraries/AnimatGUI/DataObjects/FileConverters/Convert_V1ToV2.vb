@@ -139,7 +139,7 @@ Namespace DataObjects
 
             Protected Overridable Sub ModifySimNode(ByVal xnSimulation As XmlNode)
 
-                m_xnProjectXml.UpdateSingleNodeValue(xnSimulation, "AnimatModule", "VortexAnimatSim_VC10D.dll")
+                m_xnProjectXml.UpdateSingleNodeValue(xnSimulation, "AnimatModule", "VortexAnimatSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll")
 
                 Dim xnEnvironment As XmlNode = m_xnProjectXml.GetNode(xnSimulation, "Environment")
 
@@ -741,7 +741,7 @@ Namespace DataObjects
                                         "<Specular Red=""0.25098"" Green=""0.25098"" Blue=""0.25098"" Alpha=""1""/>" & vbCrLf & _
                                         "<Shininess>64</Shininess>" & vbCrLf & _
                                         "<Texture/>" & _
-                                        "<ModuleName>VortexAnimatPrivateSim_VC10D.dll</ModuleName>" & vbCrLf & _
+                                        "<ModuleName>VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll</ModuleName>" & vbCrLf & _
                                         "<LocalPosition>" & vbCrLf & _
                                         "<X Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
                                         "<Y Value=""0"" Scale=""None"" Actual=""0""/>" & vbCrLf & _
@@ -803,7 +803,7 @@ Namespace DataObjects
 
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "ID", m_strMouthID)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Mouth")
-                m_xnProjectXml.AddNodeValue(xnRigidBody, "ModuleName", "VortexAnimatPrivateSim_VC10D.dll")
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "ModuleName", "VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll")
 
                 m_xnMouth = xnRigidBody
 
@@ -823,7 +823,7 @@ Namespace DataObjects
 
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "ID", m_strStomachID)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Stomach")
-                m_xnProjectXml.AddNodeValue(xnRigidBody, "ModuleName", "VortexAnimatPrivateSim_VC10D.dll")
+                m_xnProjectXml.AddNodeValue(xnRigidBody, "ModuleName", "VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll")
 
                 m_xnStomach = xnRigidBody
 
