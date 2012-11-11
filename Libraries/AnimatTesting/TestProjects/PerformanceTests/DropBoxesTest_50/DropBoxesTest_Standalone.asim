@@ -5431,15 +5431,18 @@
 				<HudItem>
 					<ModuleName/>
 					<Type>HudText</Type>
-					<Name>d92e8bbe-50c4-485d-9945-3d04c882813f</Name>
-					<ID>d92e8bbe-50c4-485d-9945-3d04c882813f</ID>
+					<Name>52981c72-8c80-402d-980a-53fed81d1278</Name>
+					<ID>52981c72-8c80-402d-980a-53fed81d1278</ID>
 					<Type>HudText</Type>
 					<CharSize>30</CharSize>
 					<Text>Time: %3.3f</Text>
-					<TargetID>Simulator</TargetID>
-					<DataType>Time</DataType>
+					<DisplayTargetID>Simulator</DisplayTargetID>
+					<DisplayDataType>Time</DisplayDataType>
+					<UpdateTargetID>Simulator</UpdateTargetID>
+					<UpdateDataType>Time</UpdateDataType>
+					<UpdateInterval>0.25</UpdateInterval>
 					<Position x="10" y="10"/>
-					<Color Red="1" Green="1" Blue="1" Alpha="1"/>
+					<Color Red="1" Green="1" Blue="1" Alpha="1"/>					
 				</HudItem>
 			</HudItems>
 		</Hud>
@@ -5450,7 +5453,7 @@
 				<Size x="640" y="480" />
 				<StandAlone>True</StandAlone>
 				<LookAtStructureID>f9bfd36a-9a1e-4341-b74c-3a6f6eb27522</LookAtStructureID>
-				<LookAtBodyID></LookAtBodyID>
+				<LookAtBodyID>ade970ad-5266-42b4-a6df-94c020fbb2c7</LookAtBodyID>
 				<TrackCamera>True</TrackCamera>
 			</Window>
 		</Windows>

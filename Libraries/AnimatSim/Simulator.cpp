@@ -2660,7 +2660,7 @@ try
 {
 	int iFindDebug = Std_ToLower(strModuleName).find("d.dll");
 
-#ifdef DEBUG
+#ifdef _DEBUG
 	if(iFindDebug == -1 )
 		THROW_PARAM_ERROR(Al_Err_lLoadingReleaseLib, Al_Err_strLoadingReleaseLib, "Module Name", strModuleName);
 #else

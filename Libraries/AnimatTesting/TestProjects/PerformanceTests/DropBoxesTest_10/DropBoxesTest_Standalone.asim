@@ -1259,8 +1259,11 @@
 					<Type>HudText</Type>
 					<CharSize>30</CharSize>
 					<Text>Time: %3.3f</Text>
-					<TargetID>Simulator</TargetID>
-					<DataType>Time</DataType>
+					<DisplayTargetID>Simulator</DisplayTargetID>
+					<DisplayDataType>Time</DisplayDataType>
+					<UpdateTargetID>Simulator</UpdateTargetID>
+					<UpdateDataType>Time</UpdateDataType>
+					<UpdateInterval>0.25</UpdateInterval>
 					<Position x="10" y="10"/>
 					<Color Red="1" Green="1" Blue="1" Alpha="1"/>					
 				</HudItem>

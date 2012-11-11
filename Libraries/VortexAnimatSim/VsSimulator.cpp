@@ -44,6 +44,8 @@ VsSimulator::VsSimulator()
 	m_lStepTimeCount = 0;
 	m_dblTotalStepTime= 0;
 	m_lStepTimeCount = 0;
+	m_dblTotalVortexStepTime = 0;
+	m_lStepVortexTimeCount = 0;
 }
 
 VsSimulator::~VsSimulator()
@@ -544,21 +546,21 @@ void VsSimulator::StepSimulation()
 	}
 
 
-	double dblVal2 = m_timeSimulationStep.StopTimer();
-	if(m_lTimeSlice > 10 && m_lTimeSlice < 5000)
-	{
-		m_dblTotalStepTime += dblVal2;
-		m_lStepTimeCount++;
-	}
-	else if(m_lTimeSlice == 5000)
-	{
-		double dblAvgStepTime = m_dblTotalStepTime/m_lStepTimeCount;
-		cout << "Average step time: " << dblAvgStepTime << std::endl;
-		cout << "Total step time: " << m_dblTotalStepTime << ", " << m_lStepTimeCount << std::endl;
-		cout << "Period time: " << m_timePeriod.StopTimer() << std::endl;
-		cout << "Slice Time: " << m_lTimeSlice << std::endl;
-		cout << "Sim Time: " << Time() << std::endl;
-	}
+	//double dblVal2 = m_timeSimulationStep.StopTimer();
+	//if(m_lTimeSlice > 10 && m_lTimeSlice < 5000)
+	//{
+	//	m_dblTotalStepTime += dblVal2;
+	//	m_lStepTimeCount++;
+	//}
+	//else if(m_lTimeSlice == 5000)
+	//{
+	//	double dblAvgStepTime = m_dblTotalStepTime/m_lStepTimeCount;
+	//	cout << "Average step time: " << dblAvgStepTime << std::endl;
+	//	cout << "Total step time: " << m_dblTotalStepTime << ", " << m_lStepTimeCount << std::endl;
+	//	cout << "Period time: " << m_timePeriod.StopTimer() << std::endl;
+	//	cout << "Slice Time: " << m_lTimeSlice << std::endl;
+	//	cout << "Sim Time: " << Time() << std::endl;
+	//}
 
 }
 
