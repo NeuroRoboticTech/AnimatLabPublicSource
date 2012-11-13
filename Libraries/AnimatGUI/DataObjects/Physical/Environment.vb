@@ -1271,7 +1271,8 @@ Namespace DataObjects.Physical
             newLight1.LocalPosition.X.ActualValue = 1
             newLight1.LocalPosition.Y.ActualValue = 2
             newLight1.LocalPosition.Z.ActualValue = 1
-            newLight1.QuadraticAttenuationDistance.ActualValue = 75
+            newLight1.ConstantAttenuation = 0.7
+            newLight1.QuadraticAttenuationDistance.ActualValue = 0
             m_aryLights.Add(newLight1.ID, newLight1)
 
             Dim newLight2 As New DataObjects.Physical.Light(Me)

@@ -1090,9 +1090,9 @@ Namespace DataObjects
                                        "        <Z Value=""0"" Scale=""None"" Actual=""0""/>" & _
                                        "    </Rotation>" & _
                                        "    <Radius Value=""50"" Scale=""milli"" Actual=""0.05""/>" & _
-                                       "    <ConstantAttenuation>0</ConstantAttenuation>" & _
+                                       "    <ConstantAttenuation>0.7</ConstantAttenuation>" & _
                                        "    <LinearAttenuationDistance Value=""0"" Scale=""None"" Actual=""0""/>" & _
-                                       "    <QuadraticAttenuationDistance Value=""" & fltAttenuation & """ Scale=""None"" Actual=""" & fltAttenuation & """/>" & _
+                                       "    <QuadraticAttenuationDistance Value=""0"" Scale=""None"" Actual=""0""/>" & _
                                        "    <LatitudeSegments>10</LatitudeSegments>" & _
                                        "    <LongtitudeSegments>10</LongtitudeSegments>" & _
                                        "</Light>"
