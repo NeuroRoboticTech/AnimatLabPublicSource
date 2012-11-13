@@ -665,6 +665,14 @@ Namespace Forms
             End If
         End Sub
 
+        <Browsable(False)> _
+                Public Overridable ReadOnly Property Selected() As Boolean
+            Get
+                'Go through the treeview in the project workspace to see if this item is currently selected
+                Return Util.ProjectWorkspace.TreeView.SelectedNodes.Contains(Me.WorkspaceNode)
+            End Get
+        End Property
+
 #Region " Add-Remove to List Methods "
 
         Public Overridable Sub BeforeAddToList(Optional ByVal bThrowError As Boolean = True)

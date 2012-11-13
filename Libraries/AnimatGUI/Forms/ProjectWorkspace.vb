@@ -225,6 +225,8 @@ Namespace Forms
                         doObj.DeselectItem()
                     End If
                 Next
+                Application.DoEvents()
+
             Catch ex As Exception
                 Throw ex
             Finally
@@ -235,10 +237,11 @@ Namespace Forms
         Public Overridable Sub SelectMultipleItems(ByVal arySelectItems As Collections.DataObjects)
             Try
                 Util.Application.AppIsBusy = True
-                m_bMutlipleSelectInProgress = True
-                ctrlTreeView.InstantUpdate = False
 
                 ClearSelections()
+
+                m_bMutlipleSelectInProgress = True
+                ctrlTreeView.InstantUpdate = False
 
                 Dim iCount As Integer = arySelectItems.Count - 1
                 Dim aryItems(iCount) As PropertyBag
@@ -352,6 +355,74 @@ Namespace Forms
 
         Public Event WorkspaceSelectionChanged()
 
+        Protected Sub SelectMultipleFromTree()
+            Try
+                Util.Application.AppIsBusy = True
+                m_bMutlipleSelectInProgress = True
+                ctrlTreeView.InstantUpdate = False
+
+                Dim iCount As Integer = ctrlTreeView.SelectedNodes.Count - 1
+                Dim aryItems(iCount) As PropertyBag
+                Dim iIndex As Integer = 0
+                For Each tnNode As Crownwood.DotNetMagic.Controls.Node In ctrlTreeView.SelectedNodes
+                    If Not tnNode.Tag Is Nothing Then
+                        If Util.IsTypeOf(tnNode.Tag.GetType, GetType(Framework.DataObject), False) Then
+                            Dim doObj As Framework.DataObject = DirectCast(tnNode.Tag, Framework.DataObject)
+                            aryItems(iIndex) = doObj.Properties
+                            iIndex = iIndex + 1
+                            doObj.SelectItem(True)
+                            doObj.AfterSelected()
+                        ElseIf Util.IsTypeOf(tnNode.Tag.GetType, GetType(Forms.AnimatForm), False) Then
+                            Dim doObj As Forms.AnimatForm = DirectCast(tnNode.Tag, Forms.AnimatForm)
+                            aryItems(iIndex) = doObj.Properties
+                            iIndex = iIndex + 1
+                            doObj.SelectItem(True)
+                            doObj.AfterSelected()
+                        End If
+                    Else
+                        iCount = iCount - 1
+                        ReDim Preserve aryItems(iCount)
+                    End If
+                Next
+
+                If iCount >= 0 Then
+                    Util.ProjectProperties.PropertyData = Nothing
+                    Util.ProjectProperties.PropertyArray = aryItems
+                Else
+                    Util.ProjectProperties.PropertyData = Nothing
+                    Util.ProjectProperties.PropertyArray = Nothing
+                End If
+            Catch ex As Exception
+                Throw ex
+            Finally
+                Util.Application.AppIsBusy = False
+                m_bMutlipleSelectInProgress = False
+                ctrlTreeView.InstantUpdate = True
+            End Try
+        End Sub
+
+        Protected Sub SelectSingleFromTree()
+            Util.ProjectProperties.PropertyArray = Nothing
+
+            If Not ctrlTreeView.SelectedNode Is Nothing AndAlso Not ctrlTreeView.SelectedNode.Tag Is Nothing Then
+                If Util.IsTypeOf(ctrlTreeView.SelectedNode.Tag.GetType, GetType(Framework.DataObject), False) Then
+                    Dim doObj As Framework.DataObject = DirectCast(ctrlTreeView.SelectedNode.Tag, Framework.DataObject)
+                    Util.ProjectProperties.PropertyData = doObj.Properties
+                    doObj.SelectItem(False)
+                    doObj.AfterSelected()
+                ElseIf Util.IsTypeOf(ctrlTreeView.SelectedNode.Tag.GetType, GetType(Forms.AnimatForm), False) Then
+                    Dim doObj As Forms.AnimatForm = DirectCast(ctrlTreeView.SelectedNode.Tag, Forms.AnimatForm)
+                    Util.ProjectProperties.PropertyData = doObj.Properties
+                    doObj.SelectItem(False)
+                    doObj.AfterSelected()
+                Else
+                    Util.ProjectProperties.PropertyData = Nothing
+                End If
+            Else
+                Util.ProjectProperties.PropertyData = Nothing
+            End If
+        End Sub
+
         Private Sub ctrlTreeView_AfterSelectionChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctrlTreeView.AfterSelectionChanged
 
             Try
@@ -361,57 +432,9 @@ Namespace Forms
                 End If
 
                 If ctrlTreeView.SelectedNodes.Count > 1 Then
-                    Dim iCount As Integer = ctrlTreeView.SelectedNodes.Count - 1
-                    Dim aryItems(iCount) As PropertyBag
-                    Dim iIndex As Integer = 0
-                    For Each tnNode As Crownwood.DotNetMagic.Controls.Node In ctrlTreeView.SelectedNodes
-                        If Not tnNode.Tag Is Nothing Then
-                            If Util.IsTypeOf(tnNode.Tag.GetType, GetType(Framework.DataObject), False) Then
-                                Dim doObj As Framework.DataObject = DirectCast(tnNode.Tag, Framework.DataObject)
-                                aryItems(iIndex) = doObj.Properties
-                                iIndex = iIndex + 1
-                                doObj.SelectItem(True)
-                                doObj.AfterSelected()
-                            ElseIf Util.IsTypeOf(tnNode.Tag.GetType, GetType(Forms.AnimatForm), False) Then
-                                Dim doObj As Forms.AnimatForm = DirectCast(tnNode.Tag, Forms.AnimatForm)
-                                aryItems(iIndex) = doObj.Properties
-                                iIndex = iIndex + 1
-                                doObj.SelectItem(True)
-                                doObj.AfterSelected()
-                            End If
-                        Else
-                            iCount = iCount - 1
-                            ReDim Preserve aryItems(iCount)
-                        End If
-                    Next
-
-                    If iCount >= 0 Then
-                        Util.ProjectProperties.PropertyData = Nothing
-                        Util.ProjectProperties.PropertyArray = aryItems
-                    Else
-                        Util.ProjectProperties.PropertyData = Nothing
-                        Util.ProjectProperties.PropertyArray = Nothing
-                    End If
+                    SelectMultipleFromTree()
                 Else
-                    Util.ProjectProperties.PropertyArray = Nothing
-
-                    If Not ctrlTreeView.SelectedNode Is Nothing AndAlso Not ctrlTreeView.SelectedNode.Tag Is Nothing Then
-                        If Util.IsTypeOf(ctrlTreeView.SelectedNode.Tag.GetType, GetType(Framework.DataObject), False) Then
-                            Dim doObj As Framework.DataObject = DirectCast(ctrlTreeView.SelectedNode.Tag, Framework.DataObject)
-                            Util.ProjectProperties.PropertyData = doObj.Properties
-                            doObj.SelectItem(False)
-                            doObj.AfterSelected()
-                        ElseIf Util.IsTypeOf(ctrlTreeView.SelectedNode.Tag.GetType, GetType(Forms.AnimatForm), False) Then
-                            Dim doObj As Forms.AnimatForm = DirectCast(ctrlTreeView.SelectedNode.Tag, Forms.AnimatForm)
-                            Util.ProjectProperties.PropertyData = doObj.Properties
-                            doObj.SelectItem(False)
-                            doObj.AfterSelected()
-                        Else
-                            Util.ProjectProperties.PropertyData = Nothing
-                        End If
-                    Else
-                        Util.ProjectProperties.PropertyData = Nothing
-                    End If
+                    SelectSingleFromTree()
                 End If
 
                 RaiseEvent WorkspaceSelectionChanged()

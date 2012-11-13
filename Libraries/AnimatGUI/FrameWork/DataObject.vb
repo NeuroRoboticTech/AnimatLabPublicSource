@@ -855,6 +855,7 @@ Namespace Framework
                     End If
 
                     If Not m_doInterface Is Nothing Then
+                        'Select item as false to deselect it.
                         m_doInterface.SelectItem(False, False)
                     End If
 

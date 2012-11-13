@@ -5110,15 +5110,17 @@ Namespace Forms
                     Dim colObjects As New AnimatGUI.Collections.DataObjects(Nothing)
                     frmType.SelectedItem.FindChildrenOfType(frmType.SelectedType, colObjects)
 
-                    Util.ProjectWorkspace.ClearSelections()
+                    Util.ProjectWorkspace.SelectMultipleItems(colObjects)
 
-                    Dim doPart As AnimatGUI.DataObjects.Physical.BodyPart
-                    For Each doData As Framework.DataObject In colObjects
-                        If TypeOf doData Is AnimatGUI.DataObjects.Physical.BodyPart Then
-                            doPart = DirectCast(doData, AnimatGUI.DataObjects.Physical.BodyPart)
-                            doPart.SelectItem(True)
-                        End If
-                    Next
+                    'Util.ProjectWorkspace.ClearSelections()
+
+                    'Dim doPart As AnimatGUI.DataObjects.Physical.BodyPart
+                    'For Each doData As Framework.DataObject In colObjects
+                    '    If TypeOf doData Is AnimatGUI.DataObjects.Physical.BodyPart Then
+                    '        doPart = DirectCast(doData, AnimatGUI.DataObjects.Physical.BodyPart)
+                    '        doPart.SelectItem(True)
+                    '    End If
+                    'Next
 
                 End If
 
