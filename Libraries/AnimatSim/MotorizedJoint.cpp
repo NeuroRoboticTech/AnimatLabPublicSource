@@ -261,7 +261,11 @@ float MotorizedJoint::SetVelocity() {return m_fltSetVelocity;}
 void MotorizedJoint::SetVelocity(float fltVal) 
 {
 	m_fltSetVelocity = fltVal;
-	m_fltReportSetVelocity = m_fltSetVelocity * m_lpSim->DistanceUnits();
+
+	if(!UsesRadians())
+		m_fltReportSetVelocity = m_fltSetVelocity * m_lpSim->DistanceUnits();
+	else
+		m_fltReportSetVelocity = m_fltSetVelocity;
 }
 
 /**

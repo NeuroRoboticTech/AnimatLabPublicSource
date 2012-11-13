@@ -8,7 +8,7 @@
 <APIFile/>
 <SimEndTime Value="11" Scale="None" Actual="11"/>
 <Environment>
-<PhysicsTimeStep Value="0.25" Scale="milli" Actual="0.00025"/>
+<PhysicsTimeStep Value="0.5" Scale="milli" Actual="0.0005"/>
 <FluidDensity Value="1" Scale="None" Actual="1"/>
 <MaxSurfaceFriction Value="1" Scale="None" Actual="1"/>
 <Gravity Value="-9.81" Scale="None" Actual="-9.81"/>
@@ -29,7 +29,6 @@
 <UseAlphaBlending>False</UseAlphaBlending>
 <AutoGenerateRandomSeed>True</AutoGenerateRandomSeed>
 <ManualRandomSeed>12345</ManualRandomSeed>
-<CollisionObjects>42</CollisionObjects>
 <Camera>
 <Rotation>3.14159</Rotation>
 <Elevation>0.2</Elevation>
@@ -81,7 +80,7 @@
 <Type>Basic</Type>
 <Reference>False</Reference>
 <BodyPlan>Obstacle.astl</BodyPlan>
-<Position x="0" y="12.15" z="15"/>
+<Position x="0" y="0" z="15"/>
 </Structure>
 </Structures>
 </Environment>

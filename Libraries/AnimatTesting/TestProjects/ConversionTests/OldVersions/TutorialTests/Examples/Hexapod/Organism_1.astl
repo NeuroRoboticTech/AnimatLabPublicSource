@@ -79,15 +79,15 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="250" Scale="None" Actual="250"/>
+<Damping Value="1" Scale="Kilo" Actual="1000"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="20" Scale="None" Actual="20"/>
+<Stiffness Value="5" Scale="None" Actual="5"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxTorque Value="100" Scale="None" Actual="100"/>
-<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<MaxTorque Value="4.7" Scale="None" Actual="4.7"/>
+<MaxVelocity Value="0.047" Scale="None" Actual="0.047"/>
 <RotationAxis x="0" y="-1" z="-4.37114e-08"/>
 <Radius>0.02</Radius>
 <RelativePosition x="0" y="0" z="0"/>
@@ -121,15 +121,15 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="250" Scale="None" Actual="250"/>
+<Damping Value="1" Scale="Kilo" Actual="1000"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="20" Scale="None" Actual="20"/>
+<Stiffness Value="5" Scale="None" Actual="5"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxTorque Value="100" Scale="None" Actual="100"/>
-<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<MaxTorque Value="4.7" Scale="None" Actual="4.7"/>
+<MaxVelocity Value="0.047" Scale="None" Actual="0.047"/>
 <RotationAxis x="0" y="0" z="1"/>
 <Radius>0.02</Radius>
 <RelativePosition x="0.329998" y="0" z="0"/>
@@ -194,15 +194,15 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="250" Scale="None" Actual="250"/>
+<Damping Value="1" Scale="Kilo" Actual="1000"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="20" Scale="None" Actual="20"/>
+<Stiffness Value="5" Scale="None" Actual="5"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxTorque Value="100" Scale="None" Actual="100"/>
-<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<MaxTorque Value="4.7" Scale="None" Actual="4.7"/>
+<MaxVelocity Value="0.047" Scale="None" Actual="0.047"/>
 <RotationAxis x="0" y="0" z="1"/>
 <Radius>0.02</Radius>
 <RelativePosition x="0" y="0.349998" z="0"/>
@@ -343,15 +343,15 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="250" Scale="None" Actual="250"/>
+<Damping Value="1" Scale="Kilo" Actual="1000"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="20" Scale="None" Actual="20"/>
+<Stiffness Value="5" Scale="None" Actual="5"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxTorque Value="100" Scale="None" Actual="100"/>
-<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<MaxTorque Value="4.7" Scale="None" Actual="4.7"/>
+<MaxVelocity Value="0.047" Scale="None" Actual="0.047"/>
 <RotationAxis x="8.74228e-08" y="-1" z="1.31134e-07"/>
 <Radius>0.02</Radius>
 <RelativePosition x="0" y="0" z="0"/>
@@ -385,15 +385,15 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="250" Scale="None" Actual="250"/>
+<Damping Value="1" Scale="Kilo" Actual="1000"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="20" Scale="None" Actual="20"/>
+<Stiffness Value="5" Scale="None" Actual="5"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxTorque Value="100" Scale="None" Actual="100"/>
-<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<MaxTorque Value="4.7" Scale="None" Actual="4.7"/>
+<MaxVelocity Value="0.047" Scale="None" Actual="0.047"/>
 <RotationAxis x="-8.74228e-08" y="-8.74228e-08" z="-1"/>
 <Radius>0.02</Radius>
 <RelativePosition x="-0.33" y="-2.88495e-08" z="2.88495e-08"/>
@@ -458,15 +458,15 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="250" Scale="None" Actual="250"/>
+<Damping Value="1" Scale="Kilo" Actual="1000"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="20" Scale="None" Actual="20"/>
+<Stiffness Value="5" Scale="None" Actual="5"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxTorque Value="100" Scale="None" Actual="100"/>
-<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<MaxTorque Value="4.7" Scale="None" Actual="4.7"/>
+<MaxVelocity Value="0.047" Scale="None" Actual="0.047"/>
 <RotationAxis x="-8.74228e-08" y="-8.74228e-08" z="-1"/>
 <Radius>0.02</Radius>
 <RelativePosition x="0" y="0.35" z="-3.0598e-08"/>
@@ -658,15 +658,15 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="250" Scale="None" Actual="250"/>
+<Damping Value="1" Scale="Kilo" Actual="1000"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="20" Scale="None" Actual="20"/>
+<Stiffness Value="5" Scale="None" Actual="5"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxTorque Value="100" Scale="None" Actual="100"/>
-<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<MaxTorque Value="4.7" Scale="None" Actual="4.7"/>
+<MaxVelocity Value="0.047" Scale="None" Actual="0.047"/>
 <RotationAxis x="-8.74228e-08" y="-1" z="-4.37114e-08"/>
 <Radius>0.02</Radius>
 <RelativePosition x="0" y="0" z="0"/>
@@ -700,15 +700,15 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="250" Scale="None" Actual="250"/>
+<Damping Value="1" Scale="Kilo" Actual="1000"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="20" Scale="None" Actual="20"/>
+<Stiffness Value="5" Scale="None" Actual="5"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxTorque Value="100" Scale="None" Actual="100"/>
-<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<MaxTorque Value="4.7" Scale="None" Actual="4.7"/>
+<MaxVelocity Value="0.047" Scale="None" Actual="0.047"/>
 <RotationAxis x="-8.74228e-08" y="8.74228e-08" z="-1"/>
 <Radius>0.02</Radius>
 <RelativePosition x="-0.33" y="2.88495e-08" z="0"/>
@@ -773,15 +773,15 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="250" Scale="None" Actual="250"/>
+<Damping Value="1" Scale="Kilo" Actual="1000"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="20" Scale="None" Actual="20"/>
+<Stiffness Value="5" Scale="None" Actual="5"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxTorque Value="100" Scale="None" Actual="100"/>
-<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<MaxTorque Value="4.7" Scale="None" Actual="4.7"/>
+<MaxVelocity Value="0.047" Scale="None" Actual="0.047"/>
 <RotationAxis x="-8.74228e-08" y="8.74228e-08" z="-1"/>
 <Radius>0.02</Radius>
 <RelativePosition x="0" y="0.35" z="0"/>
@@ -922,15 +922,15 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="250" Scale="None" Actual="250"/>
+<Damping Value="1" Scale="Kilo" Actual="1000"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="20" Scale="None" Actual="20"/>
+<Stiffness Value="5" Scale="None" Actual="5"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxTorque Value="100" Scale="None" Actual="100"/>
-<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<MaxTorque Value="4.7" Scale="None" Actual="4.7"/>
+<MaxVelocity Value="0.047" Scale="None" Actual="0.047"/>
 <RotationAxis x="0" y="-1" z="-4.37114e-08"/>
 <Radius>0.02</Radius>
 <RelativePosition x="0" y="0" z="0"/>
@@ -964,15 +964,15 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="250" Scale="None" Actual="250"/>
+<Damping Value="1" Scale="Kilo" Actual="1000"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="20" Scale="None" Actual="20"/>
+<Stiffness Value="5" Scale="None" Actual="5"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxTorque Value="100" Scale="None" Actual="100"/>
-<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<MaxTorque Value="4.7" Scale="None" Actual="4.7"/>
+<MaxVelocity Value="0.047" Scale="None" Actual="0.047"/>
 <RotationAxis x="0" y="0" z="1"/>
 <Radius>0.02</Radius>
 <RelativePosition x="0.329998" y="0" z="0"/>
@@ -1006,15 +1006,15 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="250" Scale="None" Actual="250"/>
+<Damping Value="1" Scale="Kilo" Actual="1000"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="20" Scale="None" Actual="20"/>
+<Stiffness Value="5" Scale="None" Actual="5"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxTorque Value="100" Scale="None" Actual="100"/>
-<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<MaxTorque Value="4.7" Scale="None" Actual="4.7"/>
+<MaxVelocity Value="0.047" Scale="None" Actual="0.047"/>
 <RotationAxis x="0" y="0" z="1"/>
 <Radius>0.02</Radius>
 <RelativePosition x="0" y="0.349998" z="0"/>
@@ -1286,15 +1286,15 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="250" Scale="None" Actual="250"/>
+<Damping Value="1" Scale="Kilo" Actual="1000"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="20" Scale="None" Actual="20"/>
+<Stiffness Value="5" Scale="None" Actual="5"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxTorque Value="100" Scale="None" Actual="100"/>
-<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<MaxTorque Value="4.7" Scale="None" Actual="4.7"/>
+<MaxVelocity Value="0.047" Scale="None" Actual="0.047"/>
 <RotationAxis x="0" y="-1" z="-4.37114e-08"/>
 <Radius>0.02</Radius>
 <RelativePosition x="0" y="0" z="0"/>
@@ -1328,15 +1328,15 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="250" Scale="None" Actual="250"/>
+<Damping Value="1" Scale="Kilo" Actual="1000"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="20" Scale="None" Actual="20"/>
+<Stiffness Value="5" Scale="None" Actual="5"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxTorque Value="100" Scale="None" Actual="100"/>
-<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<MaxTorque Value="4.7" Scale="None" Actual="4.7"/>
+<MaxVelocity Value="0.047" Scale="None" Actual="0.047"/>
 <RotationAxis x="0" y="0" z="1"/>
 <Radius>0.02</Radius>
 <RelativePosition x="0.329998" y="0" z="0"/>
@@ -1370,15 +1370,15 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="250" Scale="None" Actual="250"/>
+<Damping Value="1" Scale="Kilo" Actual="1000"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="20" Scale="None" Actual="20"/>
+<Stiffness Value="5" Scale="None" Actual="5"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxTorque Value="100" Scale="None" Actual="100"/>
-<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<MaxTorque Value="4.7" Scale="None" Actual="4.7"/>
+<MaxVelocity Value="0.047" Scale="None" Actual="0.047"/>
 <RotationAxis x="0" y="0" z="1"/>
 <Radius>0.02</Radius>
 <RelativePosition x="0" y="0.349998" z="0"/>
@@ -1550,15 +1550,15 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="250" Scale="None" Actual="250"/>
+<Damping Value="1" Scale="Kilo" Actual="1000"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="20" Scale="None" Actual="20"/>
+<Stiffness Value="5" Scale="None" Actual="5"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxTorque Value="100" Scale="None" Actual="100"/>
-<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<MaxTorque Value="4.7" Scale="None" Actual="4.7"/>
+<MaxVelocity Value="0.047" Scale="None" Actual="0.047"/>
 <RotationAxis x="-8.74228e-08" y="-1" z="-4.37114e-08"/>
 <Radius>0.02</Radius>
 <RelativePosition x="0" y="0" z="0"/>
@@ -1592,15 +1592,15 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="250" Scale="None" Actual="250"/>
+<Damping Value="1" Scale="Kilo" Actual="1000"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="20" Scale="None" Actual="20"/>
+<Stiffness Value="5" Scale="None" Actual="5"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxTorque Value="100" Scale="None" Actual="100"/>
-<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<MaxTorque Value="4.7" Scale="None" Actual="4.7"/>
+<MaxVelocity Value="0.047" Scale="None" Actual="0.047"/>
 <RotationAxis x="-8.74228e-08" y="8.74228e-08" z="-1"/>
 <Radius>0.02</Radius>
 <RelativePosition x="-0.33" y="2.88495e-08" z="0"/>
@@ -1665,15 +1665,15 @@
 <Description/>
 <Constraint Low="-0.785398" High="0.785398">
 <EnableLimits>True</EnableLimits>
-<Damping Value="250" Scale="None" Actual="250"/>
+<Damping Value="1" Scale="Kilo" Actual="1000"/>
 <Restitution Value="0" Scale="None" Actual="0"/>
-<Stiffness Value="20" Scale="None" Actual="20"/>
+<Stiffness Value="5" Scale="None" Actual="5"/>
 </Constraint>
 <EnableMotor>True</EnableMotor>
 <ServoMotor>False</ServoMotor>
 <ServoGain>100</ServoGain>
-<MaxTorque Value="100" Scale="None" Actual="100"/>
-<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<MaxTorque Value="4.7" Scale="None" Actual="4.7"/>
+<MaxVelocity Value="0.047" Scale="None" Actual="0.047"/>
 <RotationAxis x="-8.74228e-08" y="8.74228e-08" z="-1"/>
 <Radius>0.02</Radius>
 <RelativePosition x="0" y="0.35" z="0"/>

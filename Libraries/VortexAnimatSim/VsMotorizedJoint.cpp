@@ -92,7 +92,7 @@ void VsMotorizedJoint::Physics_SetVelocityToDesired()
 					m_vxJoint->setMotorDesiredVelocity(m_iCoordID, fltSetVelocity);
 			}
 			else
-			{
+			{ 
 				if(m_vxJoint->getControl(m_iCoordID) != Vx::VxConstraint::CoordinateControlEnum::kControlLocked)
 					m_lpThisMotorJoint->EnableLock(TRUE, m_vxJoint->getCoordinateCurrentPosition(m_iCoordID), fltMaxForce);
 			}

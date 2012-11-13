@@ -121,7 +121,7 @@ Namespace DataObjects.Physical.Joints
                     Throw New System.Exception("The maximum velocity must be greater than zero.")
                 End If
 
-                SetSimData("MaxVelocity", m_snMaxVelocity.ActualValue.ToString(), True)
+                SetSimData("MaxVelocity", value.ActualValue.ToString(), True)
                 m_snMaxVelocity.CopyData(value)
             End Set
         End Property

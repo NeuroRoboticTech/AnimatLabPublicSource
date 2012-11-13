@@ -4,8 +4,7 @@
 <PhysicsClassName>VortexAnimatTools.DataObjects.Simulation</PhysicsClassName>
 <SimulationFile>Hexapod.asim</SimulationFile>
 <LogLevel>Error</LogLevel>
-<Version>1</Version>
-<SimWindowLocation x="-8" y="-30"/>
+<SimWindowLocation x="135" y="111"/>
 <SimWindowSize Width="598" Height="536"/>
 <DockingForms>
 <Form>
@@ -21,7 +20,7 @@
 <ClassName>AnimatTools.Forms.ProjectWorkspace</ClassName>
 <TabTitle>Workspace</TabTitle>
 <BackgroundForm>True</BackgroundForm>
-<TreeViewHeight>18</TreeViewHeight>
+<TreeViewHeight>420</TreeViewHeight>
 </Form>
 <Form>
 <Title>Simulation Controller</Title>
@@ -37,9 +36,9 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>2</MajorInterval>
+<MajorInterval>500</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>Seconds</TimeScale>
+<TimeScale>MilliSeconds</TimeScale>
 </Form>
 </DockingForms>
 <ChildForms>
@@ -63,28 +62,6 @@
 <Title>Edit Organism_1</Title>
 </Form>
 </Child>
-<Child>
-<AssemblyFile>AnimatTools.dll</AssemblyFile>
-<ClassName>AnimatTools.Forms.Tools.Viewer</ClassName>
-<EditorFile>Turn Data.atvf</EditorFile>
-<TreeViewHeight>168</TreeViewHeight>
-<Form>
-<AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
-<ClassName>LicensedAnimatTools.Forms.Charts.LineChart</ClassName>
-<Title>Turn Data</Title>
-</Form>
-</Child>
-<Child>
-<AssemblyFile>AnimatTools.dll</AssemblyFile>
-<ClassName>AnimatTools.Forms.Tools.Viewer</ClassName>
-<EditorFile>DataTool_1.atvf</EditorFile>
-<TreeViewHeight>168</TreeViewHeight>
-<Form>
-<AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
-<ClassName>LicensedAnimatTools.Forms.Charts.LineChart</ClassName>
-<Title>DataTool_1</Title>
-</Form>
-</Child>
 </ChildForms>
 <ToolViewers>
 <ToolHolder>
@@ -96,12 +73,6 @@
 <ToolHolder>
 <ID>009388f2-2263-43a4-8b60-0bdacd8045e4</ID>
 <Name>LU StepOver</Name>
-<BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
-<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
-</ToolHolder>
-<ToolHolder>
-<ID>4e330fd0-c0b0-4635-8cb4-167051e7ce6a</ID>
-<Name>Turn Speed</Name>
 <BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
@@ -124,12 +95,6 @@
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
 <ToolHolder>
-<ID>25eed415-9615-45bb-83f8-84085005909e</ID>
-<Name>DataTool_1</Name>
-<BaseAssemblyFile>LicensedAnimatTools.dll</BaseAssemblyFile>
-<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
-</ToolHolder>
-<ToolHolder>
 <ID>bd5268a8-536b-40f0-967f-c46c7728f28f</ID>
 <Name>Turning</Name>
 <BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
@@ -138,6 +103,12 @@
 <ToolHolder>
 <ID>688f0606-befb-4781-8782-c08a339dba56</ID>
 <Name>Left Middle leg</Name>
+<BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
+</ToolHolder>
+<ToolHolder>
+<ID>4e330fd0-c0b0-4635-8cb4-167051e7ce6a</ID>
+<Name>Turn Speed</Name>
 <BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
@@ -213,28 +184,6 @@
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
-<ClassName>AnimatTools.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
-<Name>Stimulus_1</Name>
-<ID>4de81018-94f0-4d60-810c-cc9222b47423</ID>
-<StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="5" Scale="None" Actual="5"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>True</AlwaysActive>
-<Enabled>True</Enabled>
-<ValueType>Constant</ValueType>
-<Equation/>
-<OrganismID>13d9d561-2e7f-4050-b86a-e03f6f7f4e81</OrganismID>
-<NodeID>1ef60ca1-5288-4465-af95-db2864d5bba8</NodeID>
-<CurrentOn Value="0" Scale="nano" Actual="0"/>
-<CurrentOff Value="10" Scale="nano" Actual="1e-08"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="14" Scale="None" Actual="14"/>
-<CycleOffDuration Value="6" Scale="None" Actual="6"/>
-<BurstOnDuration Value="20" Scale="Kilo" Actual="20000"/>
-<BurstOffDuration Value="0" Scale="None" Actual="0"/>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
 <Name>LU Tarsus</Name>
 <ID>2dfd9194-8288-4fb3-8872-b23455c951da</ID>
@@ -248,6 +197,28 @@
 <OrganismID>13d9d561-2e7f-4050-b86a-e03f6f7f4e81</OrganismID>
 <NodeID>4d61e19e-2fc2-4460-b841-5f50a78863bd</NodeID>
 <CurrentOn Value="10" Scale="nano" Actual="1e-08"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="2" Scale="None" Actual="2"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="2" Scale="None" Actual="2"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>LU Tarsus Setpoint</Name>
+<ID>595967cf-bd6b-487d-a6cb-daae4b3ff65b</ID>
+<StartTime Value="1" Scale="None" Actual="1"/>
+<EndTime Value="3" Scale="None" Actual="3"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>13d9d561-2e7f-4050-b86a-e03f6f7f4e81</OrganismID>
+<NodeID>1de21e58-b572-4cbf-8eba-60807e6046b5</NodeID>
+<CurrentOn Value="2" Scale="nano" Actual="2e-09"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
 <CycleOnDuration Value="2" Scale="None" Actual="2"/>
@@ -279,24 +250,24 @@
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
-<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>LU Tarsus Setpoint</Name>
-<ID>595967cf-bd6b-487d-a6cb-daae4b3ff65b</ID>
-<StartTime Value="1" Scale="None" Actual="1"/>
-<EndTime Value="3" Scale="None" Actual="3"/>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
+<Name>Stimulus_1</Name>
+<ID>4de81018-94f0-4d60-810c-cc9222b47423</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="5" Scale="None" Actual="5"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>False</AlwaysActive>
-<Enabled>False</Enabled>
+<AlwaysActive>True</AlwaysActive>
+<Enabled>True</Enabled>
 <ValueType>Constant</ValueType>
 <Equation/>
 <OrganismID>13d9d561-2e7f-4050-b86a-e03f6f7f4e81</OrganismID>
-<NodeID>1de21e58-b572-4cbf-8eba-60807e6046b5</NodeID>
-<CurrentOn Value="2" Scale="nano" Actual="2e-09"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<NodeID>1ef60ca1-5288-4465-af95-db2864d5bba8</NodeID>
+<CurrentOn Value="0" Scale="nano" Actual="0"/>
+<CurrentOff Value="10" Scale="nano" Actual="1e-08"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="2" Scale="None" Actual="2"/>
-<CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="2" Scale="None" Actual="2"/>
+<CycleOnDuration Value="14" Scale="None" Actual="14"/>
+<CycleOffDuration Value="6" Scale="None" Actual="6"/>
+<BurstOnDuration Value="20" Scale="Kilo" Actual="20000"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 <Stimulus>
@@ -367,7 +338,7 @@
 </Stimulus>
 </Stimuli>
 <DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">
-  <Content Name="Simulation Controller" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 20" DisplayLocation="150, 150" AutoHideSize="150, 100" FloatingSize="150, 150" FullTitle="Simulation Controller">
+  <Content Name="Simulation Controller" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 107" DisplayLocation="150, 150" AutoHideSize="150, 100" FloatingSize="150, 150" FullTitle="Simulation Controller">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Simulation Controller" />
       <State Value="DockLeft" />
@@ -381,7 +352,7 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Simulation Controller" />
       <State Value="DockBottom" />
-      <Position Size="150, 20" Location="150, 150" />
+      <Position Size="150, 107" Location="150, 150" />
       <Best Count="1">
         <Item Name="Simulation Controller" />
       </Best>
@@ -415,7 +386,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Project Workspace" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="77, 150" DisplayLocation="150, 150" AutoHideSize="294, 150" FloatingSize="150, 150" FullTitle="Project Workspace">
+  <Content Name="Project Workspace" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="195, 150" DisplayLocation="150, 150" AutoHideSize="294, 150" FloatingSize="150, 150" FullTitle="Project Workspace">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Project Workspace" />
       <State Value="DockLeft" />
@@ -435,7 +406,7 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Project Workspace" />
       <State Value="DockLeft" />
-      <Position Size="77, 150" Location="150, 150" />
+      <Position Size="195, 150" Location="150, 150" />
       <Best Count="2">
         <Item Name="Project Toolbox" />
         <Item Name="Project Workspace" />
@@ -472,7 +443,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Project Toolbox" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="77, 150" DisplayLocation="150, 150" AutoHideSize="294, 150" FloatingSize="150, 150" FullTitle="Project Toolbox">
+  <Content Name="Project Toolbox" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="195, 150" DisplayLocation="150, 150" AutoHideSize="294, 150" FloatingSize="150, 150" FullTitle="Project Toolbox">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Project Toolbox" />
       <State Value="DockLeft" />
@@ -492,7 +463,7 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Project Toolbox" />
       <State Value="DockLeft" />
-      <Position Size="77, 150" Location="150, 150" />
+      <Position Size="195, 150" Location="150, 150" />
       <Best Count="2">
         <Item Name="Project Toolbox" />
         <Item Name="Project Workspace" />
