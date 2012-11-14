@@ -14,7 +14,7 @@ namespace GrasshopperPosture
 	namespace ExternalStimuli
 	{
 
-		class LOCUST_PORT PostureControlStimulus  : public AnimatLibrary::ExternalStimuli::ExternalStimulus
+		class LOCUST_PORT PostureControlStimulus  : public AnimatSim::ExternalStimuli::ExternalStimulus
 		{
 		protected:
 			Organism *m_lpOrganism;
@@ -96,7 +96,7 @@ namespace GrasshopperPosture
 			string m_strAb4JointID;
 			
 			//Ab control neurons
-			long m_lDorsalAbNeuronID;
+			string m_strDorsalAbNeuronID;
 			//long m_lVentralAbNeuronID;
 
 			//Body parts that will be needed to perform calculations
@@ -340,7 +340,7 @@ namespace GrasshopperPosture
 
 			float m_fltAbDelay;
 			float m_fltAbPropGain;
-			AnimatLibrary::DelayLine m_PitchDelay;
+			AnimatSim::DelayLine m_PitchDelay;
 			BOOL m_bEnableAbControl;
 			BOOL m_bLockAbJump;
 			float m_fltAbPeriod;
@@ -392,37 +392,40 @@ namespace GrasshopperPosture
 			float m_fltRightRearFemurTibiaPos;
 			float m_fltRightRearTibiaTarsusPos;
 
-			void ActivateMotor(Simulator *lpSim, Joint *lpJoint);
-			void SetMotorPosition(Simulator *lpSim, Joint *lpJoint, float fltPos);
-			void DeactivateMotor(Simulator *lpSim, Joint *lpJoint);
-			void DeactivateMotors(Simulator *lpSim);
-			void ReactiveInFlightMotors(Simulator *lpSim);
-			void DeactiveInFlightMotors(Simulator *lpSim);
-			void CalculateInitialJointAngles(Simulator *lpSim);
-			void CalculateFeedbackAngles(Simulator *lpSim);
-			void SetAbdomenPositions(Simulator *lpSim);
-			void CalculatePitch(Simulator *lpSim);
-			void CalculateNewPitch(Simulator *lpSim);
-			void CalculateOldPitch(Simulator *lpSim);
+			void ActivateMotor(Simulator *m_lpSim, MotorizedJoint *lpJoint);
+			void SetMotorPosition(Simulator *m_lpSim, MotorizedJoint *lpJoint, float fltPos);
+			void DeactivateMotor(Simulator *m_lpSim, MotorizedJoint *lpJoint);
+			void DeactivateMotors(Simulator *m_lpSim);
+			void ReactiveInFlightMotors(Simulator *m_lpSim);
+			void DeactiveInFlightMotors(Simulator *m_lpSim);
+			void CalculateInitialJointAngles(Simulator *m_lpSim);
+			void CalculateFeedbackAngles(Simulator *m_lpSim);
+			void SetAbdomenPositions(Simulator *m_lpSim);
+			void CalculatePitch(Simulator *m_lpSim);
+			void CalculateNewPitch(Simulator *m_lpSim);
+			void CalculateOldPitch(Simulator *m_lpSim);
+
+			void ClearValues();
 
 		public:
 			PostureControlStimulus();
 			virtual ~PostureControlStimulus();
 
-			virtual void Load(Simulator *lpSim, CStdXml &oXml);
-			virtual void Save(Simulator *lpSim, CStdXml &oXml);
+			virtual void Load(CStdXml &oXml);
 
 			virtual float *GetDataPointer(string strDataType);
+			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
 			//ActiveItem overrides
-			virtual string Type() {return "ExternalInput";};
-			virtual void Activate(Simulator *lpSim);
-			virtual void Initialize(Simulator *lpSim);  
-			virtual void StepSimulation(Simulator *lpSim);
-			virtual void Deactivate(Simulator *lpSim);
+			virtual string Type() {return "GrasshopperPosture";};
+			virtual void Initialize();
+			virtual void Activate();
+			virtual void ResetSimulation();  
+			virtual void StepSimulation();
+			virtual void Deactivate();
 		};
 
 	}			//ExternalStimuli
-}				//VortexAnimatLibrary
+}				//VortexAnimatSim
 
 #endif // !defined(AFX_POSTURE_CONTROL_STIMULUS_H__AEBF2DF9_E7A0_4ED2_83CD_BE74B7D74E59__INCLUDED_)

@@ -6,7 +6,7 @@ namespace GrasshopperPosture
 	namespace ExternalStimuli
 	{
 
-		class LOCUST_PORT SynergyFitnessEval : public AnimatLibrary::ExternalStimuli::ExternalStimulus
+		class LOCUST_PORT SynergyFitnessEval : public AnimatSim::ExternalStimuli::ExternalStimulus
 		{
 		protected:
 			Structure *m_lpStructure;
@@ -128,13 +128,13 @@ namespace GrasshopperPosture
 			virtual float *GetDataPointer(string strDataType);
 
 			//ActiveItem overrides
-			virtual string Type() {return "ExternalInput";};
-			virtual void Activate(Simulator *lpSim);
-			virtual void Initialize(Simulator *lpSim);  
-			virtual void StepSimulation(Simulator *lpSim);
-			virtual void Deactivate(Simulator *lpSim);
-
+			virtual string Type() {return "SynergyFitnessEveal";};
+			virtual void Initialize();
+			virtual void Activate();
+			virtual void ResetSimulation();  
+			virtual void StepSimulation();
+			virtual void Deactivate();
 		};
 
 	}			//ExternalStimuli
-}				//VortexAnimatLibrary
+}				//VortexAnimatSim

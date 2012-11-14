@@ -100,12 +100,9 @@ catch(...)
 }
 
 
-void SynergyFitnessEval::Initialize(Simulator *lpSim)
+void SynergyFitnessEval::Initialize()
 {
-	if(!lpSim)
-		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
-
-	AnimatLibrary::ExternalStimuli::ExternalStimulus::Initialize(lpSim);
+	AnimatSim::ExternalStimuli::ExternalStimulus::Initialize();
 
 	//Lets try and get the node we will dealing with.
 	m_lpStructure = lpSim->FindStructureFromAll(m_strStructureID);
@@ -331,7 +328,7 @@ void SynergyFitnessEval::Deactivate(Simulator *lpSim)
 
 	//And save the fitness value out for processing.
 	ofstream oStream;
-	string strFile = AnimatLibrary::GetFilePath(lpSim->ProjectPath(), "Fitness.txt");
+	string strFile = AnimatSim::GetFilePath(lpSim->ProjectPath(), "Fitness.txt");
 	oStream.open(strFile.c_str());
 	oStream << m_fltFitness << "\n";
 	oStream.close();
@@ -399,7 +396,7 @@ float *SynergyFitnessEval::GetDataPointer(string strDataType)
 } 
 void SynergyFitnessEval::Load(Simulator *lpSim, CStdXml &oXml)
 {
-	AnimatLibrary::ActivatedItem::Load(lpSim, oXml);
+	AnimatSim::ActivatedItem::Load(lpSim, oXml);
 
 	oXml.IntoElem();  //Into Simulus Element
 
@@ -445,5 +442,5 @@ void SynergyFitnessEval::Save(Simulator *lpSim, CStdXml &oXml)
 }
 
 	}			//ExternalStimuli
-}				//VortexAnimatLibrary
+}				//VortexAnimatSim
 

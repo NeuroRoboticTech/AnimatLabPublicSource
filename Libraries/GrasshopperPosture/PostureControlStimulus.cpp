@@ -18,6 +18,22 @@ namespace GrasshopperPosture
 
 PostureControlStimulus::PostureControlStimulus()
 {
+	ClearValues();
+}
+
+PostureControlStimulus::~PostureControlStimulus()
+{
+
+try
+{
+	m_lpOrganism = NULL;
+}
+catch(...)
+{Std_TraceMsg(0, "Caught Error in desctructor of PostureControlStimulus\r\n", "", -1, FALSE, TRUE);}
+}
+
+void PostureControlStimulus::ClearValues()
+{
 	m_lpOrganism = NULL;
 
 	m_fltDesiredBeta = 0;
@@ -289,26 +305,12 @@ PostureControlStimulus::PostureControlStimulus()
 	m_bActivateAbFlexMotor = FALSE;
 }
 
-PostureControlStimulus::~PostureControlStimulus()
+void PostureControlStimulus::Initialize()
 {
-
-try
-{
-	m_lpOrganism = NULL;
-}
-catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of PostureControlStimulus\r\n", "", -1, FALSE, TRUE);}
-}
-
-void PostureControlStimulus::Initialize(Simulator *lpSim)
-{
-	if(!lpSim) 
-		THROW_ERROR(Al_Err_lSimulationNotDefined, Al_Err_strSimulationNotDefined);
-
-	AnimatLibrary::ExternalStimuli::ExternalStimulus::Initialize(lpSim);
+	AnimatSim::ExternalStimuli::ExternalStimulus::Initialize();
 
 	//Lets try and get the node we will dealing with.
-	m_lpOrganism = dynamic_cast<Organism *>(lpSim->FindOrganism(m_strStructureID));
+	m_lpOrganism = dynamic_cast<Organism *>(m_lpSim->FindOrganism(m_strStructureID));
 
 	//Now lets get the body parts that will be needed to perform calculations.
 	m_lpThorax = m_lpOrganism->FindRigidBody(m_strThoraxID);
@@ -341,15 +343,15 @@ void PostureControlStimulus::Initialize(Simulator *lpSim)
 	m_lpLeftMiddleFemur = dynamic_cast<Mesh *>(m_lpOrganism->FindRigidBody(m_strLeftMiddleFemurID));
 	m_lpLeftMiddleTibia = dynamic_cast<Mesh *>(m_lpOrganism->FindRigidBody(m_strLeftMiddleTibiaID));
 
-	CStdFPoint oPoint = m_lpLeftMiddleFemur->CollisionBoxSize();
-	m_fltLeftMiddleFemurLength = oPoint.y*lpSim->InverseDistanceUnits()*0.001;
-	oPoint = m_lpLeftMiddleTibia->CollisionBoxSize(); 
-	m_fltLeftMiddleTibiaLength = oPoint.y*lpSim->InverseDistanceUnits()*0.001;
+	AnimatSim::BoundingBox oPoint = m_lpLeftMiddleFemur->GetBoundingBox();
+	m_fltLeftMiddleFemurLength = oPoint.Height()*m_lpSim->InverseDistanceUnits()*0.001;
+	oPoint = m_lpLeftMiddleTibia->GetBoundingBox();
+	m_fltLeftMiddleTibiaLength = oPoint.Height()*m_lpSim->InverseDistanceUnits()*0.001;
 
-	oPoint = m_lpLeftFrontFemur->CollisionBoxSize();
-	m_fltLeftFrontFemurLength = oPoint.z*lpSim->InverseDistanceUnits()*0.0001;
-	oPoint = m_lpLeftFrontTibia->CollisionBoxSize();
-	m_fltLeftFrontTibiaLength = oPoint.z*lpSim->InverseDistanceUnits()*0.0001;
+	oPoint = m_lpLeftFrontFemur->GetBoundingBox();
+	m_fltLeftFrontFemurLength = oPoint.Width()*m_lpSim->InverseDistanceUnits()*0.0001;
+	oPoint = m_lpLeftFrontTibia->GetBoundingBox();
+	m_fltLeftFrontTibiaLength = oPoint.Width()*m_lpSim->InverseDistanceUnits()*0.0001;
 
 	//Now lets get the foot down sensors.
 	m_lpLeftMiddleFootDown = m_lpOrganism->FindRigidBody(m_strLeftMiddleFootDownID);
@@ -404,9 +406,9 @@ void PostureControlStimulus::Initialize(Simulator *lpSim)
 	m_lpAb4Joint = dynamic_cast<VsHinge *>(m_lpOrganism->FindJoint(m_strAb4JointID));
 
 	//Ab control neurons
-	if(m_lDorsalAbNeuronID>=0)
+	if(m_strDorsalAbNeuronID.length() > 0)
 	{
-		m_lpDorsalAbNeuron = m_lpOrganism->NervousSystem()->FindNode("FastNeuralNet", m_lDorsalAbNeuronID);
+		m_lpDorsalAbNeuron = dynamic_cast<AnimatSim::Node *>(m_lpSim->FindByID(m_strDorsalAbNeuronID));
 		m_lpDorsalAbCurrent = m_lpDorsalAbNeuron->GetDataPointer("ExternalCurrent");
 	}
 
@@ -534,50 +536,50 @@ void PostureControlStimulus::Initialize(Simulator *lpSim)
 
 	m_lpbRearFootDown = m_lpLeftTibiaBeta->GetDataPointer("ContactCount");
 
-	m_PitchDelay.Initialize(m_fltAbDelay, lpSim->PhysicsTimeStep());
+	m_PitchDelay.Initialize(m_fltAbDelay, m_lpSim->PhysicsTimeStep());
 
 	//Adjust the desired beta angle by the current thoracic coxa position.
 	//m_fltDesiredBeta+=m_fltDesiredDelta;
 }
 
-void PostureControlStimulus::Activate(Simulator *lpSim)
+void PostureControlStimulus::Activate()
 {
-	ActivateMotor(lpSim, m_lpLeftFrontCoxaFemur);
-	ActivateMotor(lpSim, m_lpLeftFrontFemurTibia);
-	//ActivateMotor(lpSim, m_lpLeftFrontTibiaTarsus);
+	ActivateMotor(m_lpSim, m_lpLeftFrontCoxaFemur);
+	ActivateMotor(m_lpSim, m_lpLeftFrontFemurTibia);
+	//ActivateMotor(m_lpSim, m_lpLeftFrontTibiaTarsus);
 
-	ActivateMotor(lpSim, m_lpLeftMiddleCoxaFemur);
-	ActivateMotor(lpSim, m_lpLeftMiddleFemurTibia);
-	//ActivateMotor(lpSim, m_lpLeftMiddleTibiaTarsus);
+	ActivateMotor(m_lpSim, m_lpLeftMiddleCoxaFemur);
+	ActivateMotor(m_lpSim, m_lpLeftMiddleFemurTibia);
+	//ActivateMotor(m_lpSim, m_lpLeftMiddleTibiaTarsus);
 
-	ActivateMotor(lpSim, m_lpLeftRearThoracicCoxa);
-	ActivateMotor(lpSim, m_lpLeftRearCoxaFemur);
-	ActivateMotor(lpSim, m_lpLeftRearFemurTibia);
-	ActivateMotor(lpSim, m_lpLeftRearTibiaTarsus);
+	ActivateMotor(m_lpSim, m_lpLeftRearThoracicCoxa);
+	ActivateMotor(m_lpSim, m_lpLeftRearCoxaFemur);
+	ActivateMotor(m_lpSim, m_lpLeftRearFemurTibia);
+	ActivateMotor(m_lpSim, m_lpLeftRearTibiaTarsus);
 
-	ActivateMotor(lpSim, m_lpRightFrontCoxaFemur);
-	ActivateMotor(lpSim, m_lpRightFrontFemurTibia);
-	//ActivateMotor(lpSim, m_lpRightFrontTibiaTarsus);
+	ActivateMotor(m_lpSim, m_lpRightFrontCoxaFemur);
+	ActivateMotor(m_lpSim, m_lpRightFrontFemurTibia);
+	//ActivateMotor(m_lpSim, m_lpRightFrontTibiaTarsus);
 
-	ActivateMotor(lpSim, m_lpRightMiddleCoxaFemur);
-	ActivateMotor(lpSim, m_lpRightMiddleFemurTibia);
-	ActivateMotor(lpSim, m_lpRightRearFemurTibia);
-	ActivateMotor(lpSim, m_lpRightRearTibiaTarsus);
+	ActivateMotor(m_lpSim, m_lpRightMiddleCoxaFemur);
+	ActivateMotor(m_lpSim, m_lpRightMiddleFemurTibia);
+	ActivateMotor(m_lpSim, m_lpRightRearFemurTibia);
+	ActivateMotor(m_lpSim, m_lpRightRearTibiaTarsus);
 
-	ActivateMotor(lpSim, m_lpRightRearThoracicCoxa);
-	ActivateMotor(lpSim, m_lpRightRearCoxaFemur);
-	//ActivateMotor(lpSim, m_lpRightRearTibiaTarsus);
+	ActivateMotor(m_lpSim, m_lpRightRearThoracicCoxa);
+	ActivateMotor(m_lpSim, m_lpRightRearCoxaFemur);
+	//ActivateMotor(m_lpSim, m_lpRightRearTibiaTarsus);
 
 	//if(m_bEnableAbControl)
 	//{
-	//	ActivateMotor(lpSim, m_lpAb1Joint);
-	//	ActivateMotor(lpSim, m_lpAb2Joint);
-	//	ActivateMotor(lpSim, m_lpAb3Joint);
-	//	ActivateMotor(lpSim, m_lpAb4Joint);
+	//	ActivateMotor(m_lpSim, m_lpAb1Joint);
+	//	ActivateMotor(m_lpSim, m_lpAb2Joint);
+	//	ActivateMotor(m_lpSim, m_lpAb3Joint);
+	//	ActivateMotor(m_lpSim, m_lpAb4Joint);
 	//}
 }
 
-void PostureControlStimulus::StepSimulation(Simulator *lpSim)
+void PostureControlStimulus::StepSimulation()
 {
 	try
 	{
@@ -635,7 +637,7 @@ void PostureControlStimulus::StepSimulation(Simulator *lpSim)
 
 		
 		//Calculate pitch
-		CalculatePitch(lpSim);
+		CalculatePitch(m_lpSim);
 
 		//Calculate Yaw
 		vA[0] = *m_vTailAxisRefPos[0];
@@ -666,11 +668,11 @@ void PostureControlStimulus::StepSimulation(Simulator *lpSim)
 		m_fltRollD = (m_fltRollR*180)/3.141;
 
 		
-		if(!RearFemurTibiaDisabled && (lpSim->Time() > 50e-3) )
+		if(!RearFemurTibiaDisabled && (m_lpSim->Time() > 50e-3) )
 		{
 			RearFemurTibiaDisabled = TRUE;
-			DeactivateMotor(lpSim, m_lpRightRearFemurTibia);
-			DeactivateMotor(lpSim, m_lpLeftRearFemurTibia);
+			DeactivateMotor(m_lpSim, m_lpRightRearFemurTibia);
+			DeactivateMotor(m_lpSim, m_lpLeftRearFemurTibia);
 		}
 
 		//This code determines when a jump  is immiment.
@@ -682,7 +684,7 @@ void PostureControlStimulus::StepSimulation(Simulator *lpSim)
 				m_fltLeftRearThoracicCoxaPos = 0;
 				m_fltRightRearThoracicCoxaPos = 0;
 				m_bTendonLockEnabled = TRUE;
-				m_bTendonLockEnabledTime = lpSim->Time();
+				m_bTendonLockEnabledTime = m_lpSim->Time();
 			}
 		}
 		else
@@ -691,7 +693,7 @@ void PostureControlStimulus::StepSimulation(Simulator *lpSim)
 			if( (*m_lpbLeftTendonLockEnabled <= 0 && *m_lpbRightTendonLockEnabled <= 0) && !m_bTendonLockDisabled)
 			{
 				m_bTendonLockDisabled = TRUE;
-				m_fltTendonDisabledTime = lpSim->Time();
+				m_fltTendonDisabledTime = m_lpSim->Time();
 			}
 		}
 
@@ -699,7 +701,7 @@ void PostureControlStimulus::StepSimulation(Simulator *lpSim)
 		//the joint angles we will need to get the correct beta angle.
 		if(m_bTendonLockEnabled)
 		{
-			if(lpSim->Time() - m_bTendonLockEnabledTime > 10e-3)
+			if(m_lpSim->Time() - m_bTendonLockEnabledTime > 10e-3)
 			{
 				//Once the tendon lock is engaged then we want to control the coxa-femur joint to ensure the beta angle.
 				if(!m_bRearCoxaFemurEnabled)
@@ -708,25 +710,25 @@ void PostureControlStimulus::StepSimulation(Simulator *lpSim)
 					m_fltLeftRearThoracicCoxaPos = m_fltDesiredDelta;
 					m_fltRightRearThoracicCoxaPos = m_fltDesiredDelta;
 
-					ActivateMotor(lpSim, m_lpLeftRearCoxaFemur);
-					ActivateMotor(lpSim, m_lpRightRearCoxaFemur);
+					ActivateMotor(m_lpSim, m_lpLeftRearCoxaFemur);
+					ActivateMotor(m_lpSim, m_lpRightRearCoxaFemur);
 
 					m_bRearCoxaFemurEnabled = TRUE;
 				}
 			}
 
-			if(lpSim->Time() - m_bTendonLockEnabledTime > 30e-3)
-				CalculateFeedbackAngles(lpSim);
+			if(m_lpSim->Time() - m_bTendonLockEnabledTime > 30e-3)
+				CalculateFeedbackAngles(m_lpSim);
 
 			//After 500 ms move the rear tarsus down so it touches the ground
-			if(lpSim->Time() - m_bTendonLockEnabledTime > 800e-3)
+			if(m_lpSim->Time() - m_bTendonLockEnabledTime > 800e-3)
 			{
 				if(m_lpfltLeftRearTarsusDown && m_lpfltLeftRearTarsusDown && !m_bMoveTarsusStarted && (*m_lpfltLeftRearTarsusDown <= 0) && (*m_lpfltLeftRearTarsusDown <= 0) )
 				{
-					DeactivateMotor(lpSim, m_lpLeftRearTibiaTarsus);
-					DeactivateMotor(lpSim, m_lpRightRearTibiaTarsus);
-					//DeactivateMotor(lpSim, m_lpLeftMiddleCoxaFemur);
-					//DeactivateMotor(lpSim, m_lpRightMiddleCoxaFemur);
+					DeactivateMotor(m_lpSim, m_lpLeftRearTibiaTarsus);
+					DeactivateMotor(m_lpSim, m_lpRightRearTibiaTarsus);
+					//DeactivateMotor(m_lpSim, m_lpLeftMiddleCoxaFemur);
+					//DeactivateMotor(m_lpSim, m_lpRightMiddleCoxaFemur);
 					m_bMoveTarsusStarted = TRUE;
 				}
 				
@@ -737,10 +739,10 @@ void PostureControlStimulus::StepSimulation(Simulator *lpSim)
 				//{
 				//	m_fltLeftRearTibiaTarsusPos = *m_lpfltLeftRearTibiaTarsusRotation;
 				//	m_fltRightRearTibiaTarsusPos = *m_lpfltRightRearTibiaTarsusRotation;
-				//	SetMotorPosition(lpSim, m_lpLeftRearTibiaTarsus, m_fltLeftRearTibiaTarsusPos);
-				//	SetMotorPosition(lpSim, m_lpRightRearTibiaTarsus, m_fltRightRearTibiaTarsusPos);
-				//	ActivateMotor(lpSim, m_lpLeftRearTibiaTarsus);
-				//	ActivateMotor(lpSim, m_lpRightRearTibiaTarsus);
+				//	SetMotorPosition(m_lpSim, m_lpLeftRearTibiaTarsus, m_fltLeftRearTibiaTarsusPos);
+				//	SetMotorPosition(m_lpSim, m_lpRightRearTibiaTarsus, m_fltRightRearTibiaTarsusPos);
+				//	ActivateMotor(m_lpSim, m_lpLeftRearTibiaTarsus);
+				//	ActivateMotor(m_lpSim, m_lpRightRearTibiaTarsus);
 				//}
 			}
 		}
@@ -748,29 +750,29 @@ void PostureControlStimulus::StepSimulation(Simulator *lpSim)
 		if(!m_bTendonLockDisabled)
 		{
 			//This code controls the joints until the tendon lock is disabled so the jump will occur.
-			SetMotorPosition(lpSim, m_lpLeftFrontCoxaFemur, m_fltLeftFrontCoxaFemurPos);
-			SetMotorPosition(lpSim, m_lpLeftFrontFemurTibia, m_fltLeftFrontFemurTibiaPos);
-			SetMotorPosition(lpSim, m_lpLeftFrontTibiaTarsus, m_fltLeftFrontTibiaTarsusPos);
+			SetMotorPosition(m_lpSim, m_lpLeftFrontCoxaFemur, m_fltLeftFrontCoxaFemurPos);
+			SetMotorPosition(m_lpSim, m_lpLeftFrontFemurTibia, m_fltLeftFrontFemurTibiaPos);
+			SetMotorPosition(m_lpSim, m_lpLeftFrontTibiaTarsus, m_fltLeftFrontTibiaTarsusPos);
 
-			SetMotorPosition(lpSim, m_lpLeftMiddleCoxaFemur, m_fltLeftMiddleCoxaFemurPos);
-			SetMotorPosition(lpSim, m_lpLeftMiddleFemurTibia, m_fltLeftMiddleFemurTibiaPos);
-			SetMotorPosition(lpSim, m_lpLeftMiddleTibiaTarsus, m_fltLeftMiddleTibiaTarsusPos);
+			SetMotorPosition(m_lpSim, m_lpLeftMiddleCoxaFemur, m_fltLeftMiddleCoxaFemurPos);
+			SetMotorPosition(m_lpSim, m_lpLeftMiddleFemurTibia, m_fltLeftMiddleFemurTibiaPos);
+			SetMotorPosition(m_lpSim, m_lpLeftMiddleTibiaTarsus, m_fltLeftMiddleTibiaTarsusPos);
 
-			SetMotorPosition(lpSim, m_lpLeftRearThoracicCoxa, m_fltLeftRearThoracicCoxaPos);
-			SetMotorPosition(lpSim, m_lpLeftRearCoxaFemur, m_fltLeftRearCoxaFemurPos);
-			SetMotorPosition(lpSim, m_lpLeftRearTibiaTarsus, m_fltLeftRearTibiaTarsusPos);
+			SetMotorPosition(m_lpSim, m_lpLeftRearThoracicCoxa, m_fltLeftRearThoracicCoxaPos);
+			SetMotorPosition(m_lpSim, m_lpLeftRearCoxaFemur, m_fltLeftRearCoxaFemurPos);
+			SetMotorPosition(m_lpSim, m_lpLeftRearTibiaTarsus, m_fltLeftRearTibiaTarsusPos);
 
-			SetMotorPosition(lpSim, m_lpRightFrontCoxaFemur, m_fltRightFrontCoxaFemurPos);
-			SetMotorPosition(lpSim, m_lpRightFrontFemurTibia, m_fltRightFrontFemurTibiaPos);
-			SetMotorPosition(lpSim, m_lpRightFrontTibiaTarsus, m_fltRightFrontTibiaTarsusPos);
+			SetMotorPosition(m_lpSim, m_lpRightFrontCoxaFemur, m_fltRightFrontCoxaFemurPos);
+			SetMotorPosition(m_lpSim, m_lpRightFrontFemurTibia, m_fltRightFrontFemurTibiaPos);
+			SetMotorPosition(m_lpSim, m_lpRightFrontTibiaTarsus, m_fltRightFrontTibiaTarsusPos);
 
-			SetMotorPosition(lpSim, m_lpRightMiddleCoxaFemur, m_fltRightMiddleCoxaFemurPos);
-			SetMotorPosition(lpSim, m_lpRightMiddleFemurTibia, m_fltRightMiddleFemurTibiaPos);
-			SetMotorPosition(lpSim, m_lpRightMiddleTibiaTarsus, m_fltRightMiddleTibiaTarsusPos);
+			SetMotorPosition(m_lpSim, m_lpRightMiddleCoxaFemur, m_fltRightMiddleCoxaFemurPos);
+			SetMotorPosition(m_lpSim, m_lpRightMiddleFemurTibia, m_fltRightMiddleFemurTibiaPos);
+			SetMotorPosition(m_lpSim, m_lpRightMiddleTibiaTarsus, m_fltRightMiddleTibiaTarsusPos);
 
-			SetMotorPosition(lpSim, m_lpRightRearThoracicCoxa, m_fltRightRearThoracicCoxaPos);
-			SetMotorPosition(lpSim, m_lpRightRearCoxaFemur, m_fltRightRearCoxaFemurPos);
-			SetMotorPosition(lpSim, m_lpRightRearTibiaTarsus, m_fltRightRearTibiaTarsusPos);
+			SetMotorPosition(m_lpSim, m_lpRightRearThoracicCoxa, m_fltRightRearThoracicCoxaPos);
+			SetMotorPosition(m_lpSim, m_lpRightRearCoxaFemur, m_fltRightRearCoxaFemurPos);
+			SetMotorPosition(m_lpSim, m_lpRightRearTibiaTarsus, m_fltRightRearTibiaTarsusPos);
 		}
 		else
 		{
@@ -778,23 +780,23 @@ void PostureControlStimulus::StepSimulation(Simulator *lpSim)
 			//As soon as the tendon lock is disabled then disable all the motors controlling the posture.
 			//Then, 40 ms after the locust has taken off lets move the rear femur to be even with the body, and 
 			//pull the tibia in.
-			if(lpSim->Time() - m_fltTendonDisabledTime > 6e-3)
+			if(m_lpSim->Time() - m_fltTendonDisabledTime > 6e-3)
 			{
 				if(m_bActiveInFlightMotor)
 				{
-					if(lpSim->Time() - m_fltTendonDisabledTime < 150e-3 && m_bMotorsDisabled)
-						ReactiveInFlightMotors(lpSim);
+					if(m_lpSim->Time() - m_fltTendonDisabledTime < 150e-3 && m_bMotorsDisabled)
+						ReactiveInFlightMotors(m_lpSim);
 				
-					if(lpSim->Time() - m_fltTendonDisabledTime > 150e-3 && !m_bMotorsDisabled)
-						DeactiveInFlightMotors(lpSim);
+					if(m_lpSim->Time() - m_fltTendonDisabledTime > 150e-3 && !m_bMotorsDisabled)
+						DeactiveInFlightMotors(m_lpSim);
 				}
 			}
 			else if(!m_bMotorsDisabled)
-				DeactivateMotors(lpSim);
+				DeactivateMotors(m_lpSim);
 
 			//After the tendon lock is disabled we want the abdomen control system to become active.
 			if(m_bEnableAbControl)
-				SetAbdomenPositions(lpSim);
+				SetAbdomenPositions(m_lpSim);
 		}
 	}
 	catch(...)
@@ -803,19 +805,19 @@ void PostureControlStimulus::StepSimulation(Simulator *lpSim)
 	}
 }
 
-void PostureControlStimulus::CalculatePitch(Simulator *lpSim)
+void PostureControlStimulus::CalculatePitch(Simulator *m_lpSim)
 {
-	CalculateNewPitch(lpSim);
-	CalculateOldPitch(lpSim);
+	CalculateNewPitch(m_lpSim);
+	CalculateOldPitch(m_lpSim);
 }
 
 
-void PostureControlStimulus::CalculateNewPitch(Simulator *lpSim)
+void PostureControlStimulus::CalculateNewPitch(Simulator *m_lpSim)
 {
 	float vA[3];
 	float a,b,c;
 
-	//if(lpSim->Time() > 0.235)
+	//if(m_lpSim->Time() > 0.235)
 	//	a = 0;
 
 	vA[0] = *m_vPronotumFrontRefPos[0];
@@ -832,8 +834,8 @@ void PostureControlStimulus::CalculateNewPitch(Simulator *lpSim)
 	m_fltHeadPitchR = Std_Sign(*m_vPronotumFrontRefPos[1]-*m_vPronotumRearRefPos[1])*acos( (b*b + c*c - a*a)/(2*b*c) );
 	m_fltHeadPitchD = (m_fltHeadPitchR*180)/3.141;
 
-	m_fltPitchVelR = (m_fltHeadPitchR - fltOldPitchR)/lpSim->TimeStep();
-	m_fltPitchVelD = (m_fltHeadPitchD - fltOldPitchD)/lpSim->TimeStep();
+	m_fltPitchVelR = (m_fltHeadPitchR - fltOldPitchR)/m_lpSim->TimeStep();
+	m_fltPitchVelD = (m_fltHeadPitchD - fltOldPitchD)/m_lpSim->TimeStep();
 
 	//Add this pitch to the delay line.
 	m_PitchDelay.AddValue(*m_lpfltAb1JointVelocity);
@@ -841,7 +843,7 @@ void PostureControlStimulus::CalculateNewPitch(Simulator *lpSim)
 
 
 //This is the old method of calculating the body pitch. I am leaving this in here for backwards compatibility with old projects
-void PostureControlStimulus::CalculateOldPitch(Simulator *lpSim)
+void PostureControlStimulus::CalculateOldPitch(Simulator *m_lpSim)
 {
 	float vA[3];
 	float a,b;
@@ -863,7 +865,7 @@ void PostureControlStimulus::CalculateOldPitch(Simulator *lpSim)
 //	m_PitchDelay.AddValue(m_fltPitchR);
 }
 
-void PostureControlStimulus::CalculateInitialJointAngles(Simulator *lpSim)
+void PostureControlStimulus::CalculateInitialJointAngles(Simulator *m_lpSim)
 {
 	//m_fltLeftRearThoracicCoxaPos = (PI/2) - (PI - m_fltDesiredDelta - (PI/2) + m_fltDesiredBeta);
 	//m_fltRightRearThoracicCoxaPos = (PI/2) - (PI - m_fltDesiredDelta - (PI/2) + m_fltDesiredBeta);
@@ -889,7 +891,7 @@ void PostureControlStimulus::CalculateInitialJointAngles(Simulator *lpSim)
 	//float fltRightA = sqrt( pow((double) (*m_vRightMiddleCoxaFemurPos[0]-*m_vRightMiddleFemurTibiaPos[0]), 2.0) + pow((double) (*m_vRightMiddleCoxaFemurPos[1]-*m_vRightMiddleFemurTibiaPos[1]), 2.0) + pow((double) (*m_vRightMiddleCoxaFemurPos[2]-*m_vRightMiddleFemurTibiaPos[2]), 2.0) );
 	//float fltRightB = sqrt( pow((double) (*m_vRightMiddleFemurTibiaPos[0]-*m_vRightMiddleTibiaTarsusPos[0]), 2.0) + pow((double) (*m_vRightMiddleFemurTibiaPos[1]-*m_vRightMiddleTibiaTarsusPos[1]), 2.0) + pow((double) (*m_vRightMiddleFemurTibiaPos[2]-*m_vRightMiddleTibiaTarsusPos[2]), 2.0) );
  
-	m_fltLeftMiddleCoxaFemurPos = asin( (m_fltLeftMiddleTibiaLength*cos(PI/4)-fltLeftD)/m_fltLeftMiddleFemurLength );
+	m_fltLeftMiddleCoxaFemurPos = asin( (m_fltLeftMiddleTibiaLength*cos(osg::PI/4)-fltLeftD)/m_fltLeftMiddleFemurLength );
 	m_fltRightMiddleCoxaFemurPos = -m_fltLeftMiddleCoxaFemurPos;
 	//m_fltRightMiddleCoxaFemurPos = -asin( (fltRightB*cos(PI/4)-fltRightD)/fltRightA );
 
@@ -899,7 +901,7 @@ void PostureControlStimulus::CalculateInitialJointAngles(Simulator *lpSim)
 
 	fltLeftD = *m_vLeftFrontCoxaFemurPos[1] - *m_vLeftTibiaBetaPos[1];
 
-	m_fltLeftFrontCoxaFemurPos = asin( (m_fltLeftFrontTibiaLength*cos(PI/4)-fltLeftD)/m_fltLeftFrontFemurLength );
+	m_fltLeftFrontCoxaFemurPos = asin( (m_fltLeftFrontTibiaLength*cos(osg::PI/4)-fltLeftD)/m_fltLeftFrontFemurLength );
 	m_fltRightFrontCoxaFemurPos = m_fltLeftFrontCoxaFemurPos;
 
 	m_fltLeftFrontFemurTibiaPos = 0;
@@ -919,7 +921,7 @@ void PostureControlStimulus::CalculateInitialJointAngles(Simulator *lpSim)
 }
 
 /*
-void PostureControlStimulus::CalculateFeedbackAngles(Simulator *lpSim)
+void PostureControlStimulus::CalculateFeedbackAngles(Simulator *m_lpSim)
 {
 	float fltDelta=0;
 
@@ -977,7 +979,7 @@ void PostureControlStimulus::CalculateFeedbackAngles(Simulator *lpSim)
 */ 
 
 
-void PostureControlStimulus::CalculateFeedbackAngles(Simulator *lpSim)
+void PostureControlStimulus::CalculateFeedbackAngles(Simulator *m_lpSim)
 {
 	float fltDelta=0;
 
@@ -996,7 +998,7 @@ void PostureControlStimulus::CalculateFeedbackAngles(Simulator *lpSim)
 	m_fltRightFrontCoxaFemurPos += m_fltPitchChange;
  
 	//Lets ensure that the beta angles are the ones that the user specified.
-	if(lpSim->Time() - m_bTendonLockEnabledTime < 600e-3)
+	if(m_lpSim->Time() - m_bTendonLockEnabledTime < 600e-3)
 	{ 
 		m_fltLeftBetaChange = m_fltGain * (m_fltLeftBetaR - m_fltDesiredBeta);
 
@@ -1024,58 +1026,58 @@ void PostureControlStimulus::CalculateFeedbackAngles(Simulator *lpSim)
 }
 
 
-void PostureControlStimulus::Deactivate(Simulator *lpSim)
+void PostureControlStimulus::Deactivate()
 {
-	DeactivateMotors(lpSim);
+	DeactivateMotors(m_lpSim);
 }
 
-void PostureControlStimulus::DeactivateMotors(Simulator *lpSim)
+void PostureControlStimulus::DeactivateMotors(Simulator *m_lpSim)
 {
-	DeactivateMotor(lpSim, m_lpLeftFrontCoxaFemur);
-	DeactivateMotor(lpSim, m_lpLeftFrontFemurTibia);
-	DeactivateMotor(lpSim, m_lpLeftFrontTibiaTarsus);
+	DeactivateMotor(m_lpSim, m_lpLeftFrontCoxaFemur);
+	DeactivateMotor(m_lpSim, m_lpLeftFrontFemurTibia);
+	DeactivateMotor(m_lpSim, m_lpLeftFrontTibiaTarsus);
 
-	DeactivateMotor(lpSim, m_lpLeftMiddleCoxaFemur);
-	DeactivateMotor(lpSim, m_lpLeftMiddleFemurTibia);
-	DeactivateMotor(lpSim, m_lpLeftMiddleTibiaTarsus);
+	DeactivateMotor(m_lpSim, m_lpLeftMiddleCoxaFemur);
+	DeactivateMotor(m_lpSim, m_lpLeftMiddleFemurTibia);
+	DeactivateMotor(m_lpSim, m_lpLeftMiddleTibiaTarsus);
 
-	//DeactivateMotor(lpSim, m_lpLeftRearThoracicCoxa);
-	DeactivateMotor(lpSim, m_lpLeftRearCoxaFemur);
-	DeactivateMotor(lpSim, m_lpLeftRearTibiaTarsus);
+	//DeactivateMotor(m_lpSim, m_lpLeftRearThoracicCoxa);
+	DeactivateMotor(m_lpSim, m_lpLeftRearCoxaFemur);
+	DeactivateMotor(m_lpSim, m_lpLeftRearTibiaTarsus);
 
-	DeactivateMotor(lpSim, m_lpRightFrontCoxaFemur);
-	DeactivateMotor(lpSim, m_lpRightFrontFemurTibia);
-	DeactivateMotor(lpSim, m_lpRightFrontTibiaTarsus);
+	DeactivateMotor(m_lpSim, m_lpRightFrontCoxaFemur);
+	DeactivateMotor(m_lpSim, m_lpRightFrontFemurTibia);
+	DeactivateMotor(m_lpSim, m_lpRightFrontTibiaTarsus);
 
-	DeactivateMotor(lpSim, m_lpRightMiddleCoxaFemur);
-	DeactivateMotor(lpSim, m_lpRightMiddleFemurTibia);
-	DeactivateMotor(lpSim, m_lpRightMiddleTibiaTarsus);
+	DeactivateMotor(m_lpSim, m_lpRightMiddleCoxaFemur);
+	DeactivateMotor(m_lpSim, m_lpRightMiddleFemurTibia);
+	DeactivateMotor(m_lpSim, m_lpRightMiddleTibiaTarsus);
 
-	//DeactivateMotor(lpSim, m_lpRightRearThoracicCoxa);
-	DeactivateMotor(lpSim, m_lpRightRearCoxaFemur);
-	DeactivateMotor(lpSim, m_lpRightRearTibiaTarsus);
+	//DeactivateMotor(m_lpSim, m_lpRightRearThoracicCoxa);
+	DeactivateMotor(m_lpSim, m_lpRightRearCoxaFemur);
+	DeactivateMotor(m_lpSim, m_lpRightRearTibiaTarsus);
 
 	if(m_bLockAbJump && !m_bEnableAbControl)
 	{
-		ActivateMotor(lpSim, m_lpAb1Joint);
-		ActivateMotor(lpSim, m_lpAb2Joint);
-		ActivateMotor(lpSim, m_lpAb3Joint);
-		ActivateMotor(lpSim, m_lpAb4Joint);
+		ActivateMotor(m_lpSim, m_lpAb1Joint);
+		ActivateMotor(m_lpSim, m_lpAb2Joint);
+		ActivateMotor(m_lpSim, m_lpAb3Joint);
+		ActivateMotor(m_lpSim, m_lpAb4Joint);
 	}
 
 	m_bMotorsDisabled = TRUE;
 }
 
-void PostureControlStimulus::ReactiveInFlightMotors(Simulator *lpSim)
+void PostureControlStimulus::ReactiveInFlightMotors(Simulator *m_lpSim)
 {
 	
-	ActivateMotor(lpSim, m_lpLeftRearThoracicCoxa);
-	ActivateMotor(lpSim, m_lpLeftRearCoxaFemur);
-	//ActivateMotor(lpSim, m_lpLeftRearFemurTibia);
+	ActivateMotor(m_lpSim, m_lpLeftRearThoracicCoxa);
+	ActivateMotor(m_lpSim, m_lpLeftRearCoxaFemur);
+	//ActivateMotor(m_lpSim, m_lpLeftRearFemurTibia);
 
-	ActivateMotor(lpSim, m_lpRightRearThoracicCoxa);
-	ActivateMotor(lpSim, m_lpRightRearCoxaFemur);
-	//ActivateMotor(lpSim, m_lpRightRearFemurTibia);
+	ActivateMotor(m_lpSim, m_lpRightRearThoracicCoxa);
+	ActivateMotor(m_lpSim, m_lpRightRearCoxaFemur);
+	//ActivateMotor(m_lpSim, m_lpRightRearFemurTibia);
 
 	m_fltLeftRearThoracicCoxaPos = 0;
 	m_fltLeftRearCoxaFemurPos = 0;
@@ -1085,48 +1087,48 @@ void PostureControlStimulus::ReactiveInFlightMotors(Simulator *lpSim)
 	m_fltRightRearCoxaFemurPos = 0;
 	m_fltRightRearFemurTibiaPos = *m_lpfltRightRearFemurTibiaRotation;
 
-	SetMotorPosition(lpSim, m_lpLeftRearThoracicCoxa, m_fltLeftRearThoracicCoxaPos);
-	SetMotorPosition(lpSim, m_lpLeftRearCoxaFemur, m_fltLeftRearCoxaFemurPos);
-	//SetMotorPosition(lpSim, m_lpLeftRearFemurTibia, m_fltLeftRearFemurTibiaPos);
+	SetMotorPosition(m_lpSim, m_lpLeftRearThoracicCoxa, m_fltLeftRearThoracicCoxaPos);
+	SetMotorPosition(m_lpSim, m_lpLeftRearCoxaFemur, m_fltLeftRearCoxaFemurPos);
+	//SetMotorPosition(m_lpSim, m_lpLeftRearFemurTibia, m_fltLeftRearFemurTibiaPos);
 
-	SetMotorPosition(lpSim, m_lpRightRearThoracicCoxa, m_fltRightRearThoracicCoxaPos);
-	SetMotorPosition(lpSim, m_lpRightRearCoxaFemur, m_fltRightRearCoxaFemurPos);
-	//SetMotorPosition(lpSim, m_lpRightRearFemurTibia, m_fltRightRearFemurTibiaPos);
+	SetMotorPosition(m_lpSim, m_lpRightRearThoracicCoxa, m_fltRightRearThoracicCoxaPos);
+	SetMotorPosition(m_lpSim, m_lpRightRearCoxaFemur, m_fltRightRearCoxaFemurPos);
+	//SetMotorPosition(m_lpSim, m_lpRightRearFemurTibia, m_fltRightRearFemurTibiaPos);
 
 	m_bMotorsDisabled = FALSE;
 }
 
-void PostureControlStimulus::DeactiveInFlightMotors(Simulator *lpSim)
+void PostureControlStimulus::DeactiveInFlightMotors(Simulator *m_lpSim)
 {
-	DeactivateMotor(lpSim, m_lpLeftRearThoracicCoxa);
-	DeactivateMotor(lpSim, m_lpLeftRearCoxaFemur);
-	//DeactivateMotor(lpSim, m_lpLeftRearFemurTibia);
+	DeactivateMotor(m_lpSim, m_lpLeftRearThoracicCoxa);
+	DeactivateMotor(m_lpSim, m_lpLeftRearCoxaFemur);
+	//DeactivateMotor(m_lpSim, m_lpLeftRearFemurTibia);
 	
-	DeactivateMotor(lpSim, m_lpRightRearThoracicCoxa);
-	DeactivateMotor(lpSim, m_lpRightRearCoxaFemur);
-	//DeactivateMotor(lpSim, m_lpRightRearFemurTibia);
+	DeactivateMotor(m_lpSim, m_lpRightRearThoracicCoxa);
+	DeactivateMotor(m_lpSim, m_lpRightRearCoxaFemur);
+	//DeactivateMotor(m_lpSim, m_lpRightRearFemurTibia);
 
 	m_bMotorsDisabled = TRUE;
 }
 
 //Torque ab control
-//void PostureControlStimulus::SetAbdomenPositions(Simulator *lpSim)
+//void PostureControlStimulus::SetAbdomenPositions(Simulator *m_lpSim)
 //{
-//	float fltTime = (lpSim->Time() - m_fltTendonDisabledTime);
+//	float fltTime = (m_lpSim->Time() - m_fltTendonDisabledTime);
 //	if( fltTime >= m_fltAbStart && fltTime <= (m_fltAbStart+m_fltAbPeriod))
 //	{
-//		m_lpAb1->AddTorque(lpSim, -m_fltAbPropGain*(*m_lpfltAb1Torque), 0, 0);
-//		m_lpThorax->AddTorque(lpSim, -m_fltAbPropGain*(*m_lpfltThoraxTorque), 0, 0);
+//		m_lpAb1->AddTorque(m_lpSim, -m_fltAbPropGain*(*m_lpfltAb1Torque), 0, 0);
+//		m_lpThorax->AddTorque(m_lpSim, -m_fltAbPropGain*(*m_lpfltThoraxTorque), 0, 0);
 //	}
 //}
 
 
 //Motor ab control
-void PostureControlStimulus::SetAbdomenPositions(Simulator *lpSim)
+void PostureControlStimulus::SetAbdomenPositions(Simulator *m_lpSim)
 {
 	//Abdomen Control system
 	//float fltPitchVel = m_PitchDelay.ReadValue();
-	//float fltTime = (lpSim->Time() - m_fltTendonDisabledTime);
+	//float fltTime = (m_lpSim->Time() - m_fltTendonDisabledTime);
 
 	//if(*m_lpbRearFootDown == TRUE)
 	//{
@@ -1155,8 +1157,8 @@ void PostureControlStimulus::SetAbdomenPositions(Simulator *lpSim)
 	//		{
 	//			m_fltAbMag = *m_lpfltAb1JointVelocity;
 	//			m_lpAb1Joint->ServoMotor(FALSE);
-	//			ActivateMotor(lpSim, m_lpAb1Joint);
-	//			SetMotorPosition(lpSim, m_lpAb1Joint, m_fltAbMag);
+	//			ActivateMotor(m_lpSim, m_lpAb1Joint);
+	//			SetMotorPosition(m_lpSim, m_lpAb1Joint, m_fltAbMag);
 	//			m_fltAbTime = fltTime;
 	//			m_bSetAbMag = TRUE;
 	//		}
@@ -1164,28 +1166,28 @@ void PostureControlStimulus::SetAbdomenPositions(Simulator *lpSim)
 	//	else if(*m_lpbRearFootDown == FALSE  && fltTime <= (m_fltAbTime+m_fltLegPeriod) && !m_bDeactivateAbMag)
 	//	{
 	//		m_fltAbVel = m_fltAbMag*cos( (PI*(fltTime-m_fltAbTime))/(2*m_fltLegPeriod) );
-	//		SetMotorPosition(lpSim, m_lpAb1Joint, m_fltAbVel);
+	//		SetMotorPosition(m_lpSim, m_lpAb1Joint, m_fltAbVel);
 	//	}
 	//	else if(*m_lpbRearFootDown == FALSE  && fltTime > (m_fltAbTime+m_fltLegPeriod) && !m_bDeactivateAbMag)
 	//	{
-	//		//DeactivateMotor(lpSim, m_lpAb1Joint);
+	//		//DeactivateMotor(m_lpSim, m_lpAb1Joint);
 	//		m_bDeactivateAbMag = TRUE;
 	//	}
 	//}
 }
 
-void PostureControlStimulus::ActivateMotor(Simulator *lpSim, Joint *lpJoint)
+void PostureControlStimulus::ActivateMotor(Simulator *m_lpSim, MotorizedJoint *lpJoint)
 {
 	lpJoint->EnableMotor(TRUE);
 	lpJoint->DesiredVelocity(0);
 }
 
-void PostureControlStimulus::SetMotorPosition(Simulator *lpSim, Joint *lpJoint, float fltPos)
+void PostureControlStimulus::SetMotorPosition(Simulator *m_lpSim, MotorizedJoint *lpJoint, float fltPos)
 {
 	try
 	{
 		if(!lpJoint->UsesRadians())
-			fltPos *= lpSim->InverseDistanceUnits();
+			fltPos *= m_lpSim->InverseDistanceUnits();
 
 		lpJoint->DesiredVelocity(fltPos);
 	}
@@ -1196,7 +1198,7 @@ void PostureControlStimulus::SetMotorPosition(Simulator *lpSim, Joint *lpJoint, 
 }
 
 
-void PostureControlStimulus::DeactivateMotor(Simulator *lpSim, Joint *lpJoint)
+void PostureControlStimulus::DeactivateMotor(Simulator *m_lpSim, MotorizedJoint *lpJoint)
 {
 	lpJoint->DesiredVelocity(0);
 	lpJoint->EnableMotor(FALSE);
@@ -1250,9 +1252,9 @@ float *PostureControlStimulus::GetDataPointer(string strDataType)
 
 	return lpData;
 } 
-void PostureControlStimulus::Load(Simulator *lpSim, CStdXml &oXml)
+void PostureControlStimulus::Load(CStdXml &oXml)
 {
-	AnimatLibrary::ActivatedItem::Load(lpSim, oXml);
+	AnimatSim::ActivatedItem::Load(oXml);
 
 	oXml.IntoElem();  //Into Simulus Element
 
@@ -1340,7 +1342,7 @@ void PostureControlStimulus::Load(Simulator *lpSim, CStdXml &oXml)
 	m_strAb3JointID = oXml.GetChildString("Ab3Joint");
 	m_strAb4JointID = oXml.GetChildString("Ab4Joint");
 
-	m_lDorsalAbNeuronID = oXml.GetChildLong("DorsalAbNeuron", 0);
+	m_strDorsalAbNeuronID = oXml.GetChildString("DorsalAbNeuron");
 	//m_lVentralAbNeuronID = oXml.GetChildLong("VentralAbNeuron");
 	
 	m_bEnableAbControl = oXml.GetChildBool("EnableAbControl", FALSE);
@@ -1362,12 +1364,19 @@ void PostureControlStimulus::Load(Simulator *lpSim, CStdXml &oXml)
 
 }
 
-void PostureControlStimulus::Save(Simulator *lpSim, CStdXml &oXml)
+void PostureControlStimulus::ResetSimulation()
 {
+	ClearValues();
+	Initialize();
+}
+
+BOOL PostureControlStimulus::SetData(string strDataType, string strValue, BOOL bThrowError)
+{
+	return FALSE;
 }
 
 	}			//ExternalStimuli
-}				//VortexAnimatLibrary
+}				//VortexAnimatSim
 
 
 

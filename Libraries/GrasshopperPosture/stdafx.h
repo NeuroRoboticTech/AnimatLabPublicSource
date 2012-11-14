@@ -10,12 +10,15 @@
 // Windows Header Files:
 #include <windows.h>
 
+#pragma warning(disable: 4005)
+
 #define LOCUST_PORT __declspec( dllexport )
 
 //#define STD_TRACING_ON
 
 #include "StdUtils.h"
-#include "VortexAnimatLibrary.h"
+#include "AnimatSim.h"
+#include "VortexAnimatSim.h"
 
 #define Nl_Err_lInvalidExternalStimulusType -3027
 #define Nl_Err_strInvalidExternalStimulusType "Invalid external stimulus type."

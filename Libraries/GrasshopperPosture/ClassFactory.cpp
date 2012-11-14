@@ -5,7 +5,7 @@
 #include "stdafx.h"
  
 #include "PostureControlStimulus.h"
-#include "SynergyFitnessEval.h"
+//#include "SynergyFitnessEval.h"
 #include "ClassFactory.h"
 
 namespace GrasshopperPosture
@@ -39,8 +39,8 @@ try
 
 	if(strType == "POSTURECONTROL")
 		lpStimulus = new ExternalStimuli::PostureControlStimulus;
-	else if(strType == "SYNERGYFITNESS")
-		lpStimulus = new ExternalStimuli::SynergyFitnessEval;
+	//else if(strType == "SYNERGYFITNESS")
+	//	lpStimulus = new ExternalStimuli::SynergyFitnessEval;
 	else
 	{
 		lpStimulus = NULL;
