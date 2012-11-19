@@ -62,7 +62,7 @@ Public Class SimulatorInterfaceMock
 
     End Sub
 
-    Public Sub GenerateCollisionMeshFile(sOriginalMeshFile As String, sCollisionMeshFile As String) Implements ISimulatorInterface.GenerateCollisionMeshFile
+    Public Sub GenerateCollisionMeshFile(ByVal sOriginalMeshFile As String, ByVal sCollisionMeshFile As String, ByVal fltScaleX As Single, ByVal fltScaleY As Single, ByVal fltScaleZ As Single) Implements ISimulatorInterface.GenerateCollisionMeshFile
 
     End Sub
 

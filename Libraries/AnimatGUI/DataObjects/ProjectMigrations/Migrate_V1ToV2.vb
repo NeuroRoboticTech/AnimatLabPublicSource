@@ -12,7 +12,7 @@ Imports AnimatGUI.Framework
 Namespace DataObjects
     Namespace ProjectMigrations
 
-        Public Class Convert_V1ToV2
+        Public Class Migrate_V1toV2
             Inherits ProjectMigration
 
             Protected m_bSimHydro As Boolean = False
@@ -632,6 +632,7 @@ Namespace DataObjects
             Protected Overridable Sub ModifyRigidBodyMesh(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, _
                                                           ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix)
 
+                m_xnProjectXml.RemoveNode(xnRigidBody, "Scale", False)
                 m_xnProjectXml.RemoveNode(xnRigidBody, "Transparencies")
                 m_xnProjectXml.AddTransparency(xnRigidBody, 50, 0, 50, 50, 100)
 

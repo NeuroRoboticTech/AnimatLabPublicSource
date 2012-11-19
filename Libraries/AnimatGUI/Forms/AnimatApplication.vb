@@ -1124,7 +1124,7 @@ Namespace Forms
         Protected m_aryGainTypes As New Collections.Gains(Nothing)
         Protected m_aryProgramModules As New Collections.ProgramModules(Nothing)
         Protected m_aryExternalStimuli As New Collections.Stimuli(Nothing)
-        Protected m_aryFileConverters As New Hashtable()
+        Protected m_aryProjectMigrations As New Hashtable()
 
         Protected m_wcWorkspaceContent As Crownwood.DotNetMagic.Docking.WindowContent
         Protected m_wcPropertiesContent As Crownwood.DotNetMagic.Docking.WindowContent
@@ -2326,11 +2326,11 @@ Namespace Forms
                                     m_aryExternalStimuli.Add(doStim, False)
                                     m_aryAllDataTypes.Add(doStim)
                                 End If
-                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.FileConverter), True) Then
-                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.FileConverter")
-                                Dim doConv As DataObjects.FileConverter = CreateFileConverter(assemModule, tpClass, Nothing)
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.ProjectMigration), True) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.ProjectMigration")
+                                Dim doConv As DataObjects.ProjectMigration = CreateProjectMigration(assemModule, tpClass, Nothing)
                                 If Not doConv Is Nothing Then
-                                    m_aryFileConverters.Add(doConv.ConvertFrom, doConv)
+                                    m_aryProjectMigrations.Add(doConv.ConvertFrom, doConv)
                                 End If
                             End If
                         Next
@@ -2517,16 +2517,16 @@ Namespace Forms
 
         End Function
 
-        Protected Overridable Function CreateFileConverter(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.FileConverter
+        Protected Overridable Function CreateProjectMigration(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.ProjectMigration
 
             Try
                 If Not tpClass.IsAbstract Then
-                    Dim doConv As DataObjects.FileConverter = DirectCast(Util.LoadClass(assemModule, tpClass.FullName), DataObjects.FileConverter)
+                    Dim doConv As DataObjects.ProjectMigration = DirectCast(Util.LoadClass(assemModule, tpClass.FullName), DataObjects.ProjectMigration)
                     Return doConv
                 End If
             Catch ex As System.Exception
                 If ex.Message <> "Cannot create an abstract class." Then
-                    Util.ShowMessage("CreateFileConverter: " & tpClass.FullName)
+                    Util.ShowMessage("CreateProjectMigration: " & tpClass.FullName)
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End If
             End Try
@@ -6395,11 +6395,11 @@ Namespace Forms
         Protected Overridable Function ConvertProjectVersion(ByVal strProjectFile As String, ByVal fltVersion As Single) As Single
 
             'Find a converter that will convert this file type to a newer version.
-            If Not m_aryFileConverters.ContainsKey(fltVersion) Then
+            If Not m_aryProjectMigrations.ContainsKey(fltVersion) Then
                 Throw New System.Exception("No file converter was found that can convert a project version '" & fltVersion & "'")
             End If
 
-            Dim doConv As DataObjects.FileConverter = DirectCast(m_aryFileConverters(fltVersion), DataObjects.FileConverter)
+            Dim doConv As DataObjects.ProjectMigration = DirectCast(m_aryProjectMigrations(fltVersion), DataObjects.ProjectMigration)
 
             doConv.ConvertFiles(strProjectFile)
 

@@ -28,6 +28,8 @@ Namespace DataObjects.Physical.Bodies
         Protected m_strMeshFile As String = ""
         Protected m_strConvexMeshFile As String = ""
         Protected m_eMeshType As enumMeshType = enumMeshType.Convex
+        Protected m_svScale As ScaledVector3
+        Protected m_svPrevScale As ScaledVector3
 
 #End Region
 
@@ -73,6 +75,8 @@ Namespace DataObjects.Physical.Bodies
             End Get
             Set(ByVal value As String)
                 Try
+                    Util.Application.AppIsBusy = True
+
                     'If the file is specified and it is a full path, then check to see if it is in the project directory. If it is then
                     'just use the file path
                     Dim strPath As String, strFile As String
@@ -81,7 +85,7 @@ Namespace DataObjects.Physical.Bodies
                     End If
 
                     'If this is a convex mesh then we need to create the convex mesh within the project
-                    CreateConvexMeshFile(value, m_eMeshType)
+                    CreateConvexMeshFile(value, m_eMeshType, m_svScale)
 
                     SetSimData("SetMeshFile", CreateMeshFileXml(value, m_eMeshType, Me.ActiveMeshFile), True)
                     m_strMeshFile = value
@@ -89,10 +93,12 @@ Namespace DataObjects.Physical.Bodies
                     Try
                         'If there is a problem with setting this property then 
                         'try and reset things back on the convex mesh file
-                        CreateConvexMeshFile(m_strMeshFile, m_eMeshType)
+                        CreateConvexMeshFile(m_strMeshFile, m_eMeshType, m_svScale)
                     Catch ex2 As Exception
 
                     End Try
+                Finally
+                    Util.Application.AppIsBusy = False
                 End Try
             End Set
         End Property
@@ -109,8 +115,10 @@ Namespace DataObjects.Physical.Bodies
             End Get
             Set(ByVal value As enumMeshType)
                 Try
+                    Util.Application.AppIsBusy = True
+
                     'If this is a convex mesh then we need to create the convex mesh within the project
-                    CreateConvexMeshFile(m_strMeshFile, value)
+                    CreateConvexMeshFile(m_strMeshFile, value, m_svScale)
 
                     SetSimData("SetMeshFile", CreateMeshFileXml(m_strMeshFile, value, Me.ActiveMeshFile), True)
                     m_eMeshType = value
@@ -118,11 +126,22 @@ Namespace DataObjects.Physical.Bodies
                     Try
                         'If there is a problem with setting this property then 
                         'try and reset things back on the convex mesh file
-                        CreateConvexMeshFile(m_strMeshFile, m_eMeshType)
+                        CreateConvexMeshFile(m_strMeshFile, m_eMeshType, m_svScale)
                     Catch ex2 As Exception
 
                     End Try
+                Finally
+                    Util.Application.AppIsBusy = False
                 End Try
+            End Set
+        End Property
+
+        Public Overridable Property Scale() As Framework.ScaledVector3
+            Get
+                Return m_svScale
+            End Get
+            Set(ByVal value As Framework.ScaledVector3)
+                SetScale(value)
             End Set
         End Property
 
@@ -140,6 +159,49 @@ Namespace DataObjects.Physical.Bodies
             m_strDescription = ""
             m_clDiffuse = Drawing.Color.White
 
+            m_svScale = New ScaledVector3(Me, "Scale", "Scale of the " & Me.TypeName & " part.", "", "")
+            m_svScale.X.SetFromValue(1.0, ScaledNumber.enumNumericScale.None)
+            m_svScale.Y.SetFromValue(1.0, ScaledNumber.enumNumericScale.None)
+            m_svScale.Z.SetFromValue(1.0, ScaledNumber.enumNumericScale.None)
+
+            m_svPrevScale = New ScaledVector3(Me, "PrevScale", "Scale of the " & Me.TypeName & " part.", "", "")
+            m_svPrevScale.CopyData(m_svScale)
+
+            AddHandler m_svScale.ValueChanged, AddressOf Me.OnScaleValueChanged
+
+        End Sub
+
+        Protected Sub SetScale(ByVal value As ScaledVector3, Optional ByVal bIgnoreEvents As Boolean = False)
+            Try
+                Util.Application.AppIsBusy = True
+
+                'Only attempt to set the scale if it is different.
+                If value.X.ActualValue <> m_svPrevScale.X.ActualValue OrElse value.Y.ActualValue <> m_svPrevScale.Y.ActualValue OrElse value.Z.ActualValue <> m_svPrevScale.Z.ActualValue Then
+
+                    'If this is a convex mesh then we need to create the convex mesh within the project
+                    CreateConvexMeshFile(m_strMeshFile, m_eMeshType, value)
+
+                    Me.SetSimData("Scale", value.GetSimulationXml("Scale"), True)
+                    m_svPrevScale.CopyData(m_svScale, True)
+                    m_svScale.CopyData(value, bIgnoreEvents)
+                End If
+            Catch ex As Exception
+                Try
+                    'If there is a problem with setting this property then 
+                    'try and reset things back on the convex mesh file
+                    CreateConvexMeshFile(m_strMeshFile, m_eMeshType, m_svScale)
+                Catch ex2 As Exception
+
+                End Try
+            Finally
+                Util.Application.AppIsBusy = False
+            End Try
+
+        End Sub
+
+        Public Overrides Sub ClearIsDirty()
+            MyBase.ClearIsDirty()
+            If Not m_svScale Is Nothing Then m_svScale.ClearIsDirty()
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As Framework.DataObject, ByVal bCutData As Boolean, ByVal doRoot As Framework.DataObject) As Framework.DataObject
@@ -153,10 +215,17 @@ Namespace DataObjects.Physical.Bodies
                                             ByVal doRoot As AnimatGUI.Framework.DataObject)
             MyBase.CloneInternal(doOriginal, bCutData, doRoot)
 
+            RemoveHandler m_svScale.ValueChanged, AddressOf Me.OnScaleValueChanged
+
             Dim doOrig As Bodies.Mesh = DirectCast(doOriginal, Bodies.Mesh)
 
             m_strMeshFile = doOrig.m_strMeshFile
             m_eMeshType = doOrig.m_eMeshType
+            m_svScale = DirectCast(doOrig.m_svScale.Clone(Me, bCutData, doRoot), Framework.ScaledVector3)
+            m_svPrevScale.CopyData(m_svScale)
+
+            AddHandler m_svScale.ValueChanged, AddressOf Me.OnScaleValueChanged
+
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
@@ -175,6 +244,11 @@ Namespace DataObjects.Physical.Bodies
                                                 "Part Properties", "The filename of the convex mesh file.", m_strConvexMeshFile))
                 End If
             End If
+
+            Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = Me.Scale.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Scale", pbNumberBag.GetType(), "Scale", _
+                                        "Part Properties", "Sets the scale of this body part.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledVector3.ScaledVector3PropBagConverter), Not AllowGuiCoordinateChange()))
 
         End Sub
 
@@ -237,6 +311,9 @@ Namespace DataObjects.Physical.Bodies
                 m_strConvexMeshFile = oXml.GetChildString("ConvexMeshFile")
             End If
 
+            m_svScale.LoadData(oXml, "Scale", False)
+            m_svPrevScale.CopyData(m_svScale)
+
             oXml.OutOfElem() 'Outof RigidBody Element
 
         End Sub
@@ -252,6 +329,8 @@ Namespace DataObjects.Physical.Bodies
             If Me.IsCollisionObject AndAlso m_eMeshType = enumMeshType.Convex Then
                 oXml.AddChildElement("ConvexMeshFile", m_strConvexMeshFile)
             End If
+
+            m_svScale.SaveData(oXml, "Scale")
 
             oXml.OutOfElem() 'Outof BodyPart Element
 
@@ -269,17 +348,20 @@ Namespace DataObjects.Physical.Bodies
                 oXml.AddChildElement("ConvexMeshFile", m_strConvexMeshFile)
             End If
 
+            m_svScale.SaveSimulationXml(oXml, Me, "Scale")
+
             oXml.OutOfElem()
 
         End Sub
 
-        Protected Overridable Function CreateConvexMeshFile(ByVal strFile As String, ByVal eMeshType As enumMeshType) As Single
+        Protected Overridable Function CreateConvexMeshFile(ByVal strFile As String, ByVal eMeshType As enumMeshType, ByVal svScale As ScaledVector3) As Single
 
             If Me.IsCollisionObject Then
                 If eMeshType = enumMeshType.Convex Then
                     Dim strExt As String = Util.GetFileExtension(strFile)
                     m_strConvexMeshFile = strFile.Replace("." & strExt, "_Convex.osg")
-                    Util.Application.SimulationInterface.GenerateCollisionMeshFile(strFile, m_strConvexMeshFile)
+                    Util.Application.SimulationInterface.GenerateCollisionMeshFile(strFile, m_strConvexMeshFile, _
+                            CSng(svScale.X.ActualValue), CSng(svScale.Y.ActualValue), CSng(svScale.Z.ActualValue))
                 Else
                     'If we are switching to a triangle mesh file then delete the old convex mesh file if it exists.
                     If m_strConvexMeshFile.Trim.Length > 0 AndAlso File.Exists(m_strConvexMeshFile) Then
@@ -302,6 +384,23 @@ Namespace DataObjects.Physical.Bodies
 
             Return oXml.Serialize()
         End Function
+
+
+#Region " Events "
+
+        Protected Overridable Sub OnScaleValueChanged()
+            Try
+                If Not Util.ProjectProperties Is Nothing Then
+                    SetScale(m_svScale, True)
+                    Util.ProjectProperties.RefreshProperties()
+                End If
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+#End Region
+
 
     End Class
 

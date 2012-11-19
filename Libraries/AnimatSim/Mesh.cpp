@@ -49,6 +49,7 @@ namespace AnimatSim
 **/
 Mesh::Mesh()
 {
+	m_vScale.Set(1, 1, 1);
 }
 
 /**
@@ -149,6 +150,84 @@ void Mesh::ConvexMeshFile(string strFile)
 }
 
 
+/**
+\brief	Gets the local position. (m_oPosition) 
+
+\author	dcofer
+\date	3/2/2011
+
+\return	returns m_oPosition. 
+**/
+CStdFPoint Mesh::Scale() {return m_vScale;}
+
+/**
+\brief	Sets the local sacle. (m_vScale) 
+
+\author	dcofer
+\date	3/2/2011
+
+\param [in,out]	oPoint		The new point to use to set the scale. 
+\param	bUpdateMatrix		If true then the IPhysicsMovableItem->Physics_UpdateMatrix method will be
+							called so that the osg graphics will be updated. If false then this
+							will be skipped. 
+**/
+void Mesh::Scale(CStdFPoint &oPoint, BOOL bUpdateMatrix) 
+{
+	m_vScale = oPoint;
+
+	if(m_lpPhysicsMovableItem && bUpdateMatrix)
+		m_lpPhysicsMovableItem->Physics_Resize();
+}
+
+/**
+\brief	Sets the scale. (m_vScale) 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	fltX				The x coordinate. 
+\param	fltY				The y coordinate. 
+\param	fltZ				The z coordinate. 
+\param	bUseScaling			If true then the scale values that are passed in will be scaled by
+							the unit scaling values. 
+\param	bUpdateMatrix		If true then the IPhysicsMovableItem->Physics_UpdateMatrix method will be
+							called so that the osg graphics will be updated. If false then this
+							will be skipped. 
+**/
+void Mesh::Scale(float fltX, float fltY, float fltZ, BOOL bUpdateMatrix) 
+{
+	CStdFPoint vPos(fltX, fltY, fltZ);
+	Scale(vPos);
+}
+
+/**
+\brief	Sets the scale of the mesh. (m_vScale). This method is primarily used by the GUI to
+scale of the mesh using an xml data packet. 
+
+\author	dcofer
+\date	3/2/2011
+
+\param	strXml				The xml string with the data to load in the scale. 
+\param	bFireChangeEvent	If true then this will call the IMovableItemCallback->SizeChanged
+							callback method to inform the GUI that the part has moved. If false
+							then this callback will be skipped. 
+\param	bUpdateMatrix		If true then the IPhysicsMovableItem->Physics_UpdateMatrix method will be
+							called so that the osg graphics will be updated. If false then this
+							will be skipped. 
+**/
+void Mesh::Scale(string strXml, BOOL bUpdateMatrix)
+{
+	CStdXml oXml;
+	oXml.Deserialize(strXml);
+	oXml.FindElement("Root");
+	oXml.FindChildElement("Scale");
+	
+	CStdFPoint vPos;
+	Std_LoadPoint(oXml, "Scale", vPos);
+	Scale(vPos);
+}
+
+
 void Mesh::SetMeshFile(string strXml)
 {
 	CStdXml oXml;
@@ -156,13 +235,9 @@ void Mesh::SetMeshFile(string strXml)
 	oXml.FindElement("Root");
 	oXml.FindChildElement("MeshFile");
 
-	//oXml.IntoElem();
-
 	m_strMeshFile = oXml.GetChildString("MeshFile");
 	m_strConvexMeshFile = oXml.GetChildString("ConvexMeshFile", "");
 	CollisionMeshType(oXml.GetChildString("MeshType"));
-
-	//oXml.OutOfElem();
 }
 
 BOOL Mesh::SetData(string strDataType, string strValue, BOOL bThrowError)
@@ -196,6 +271,12 @@ BOOL Mesh::SetData(string strDataType, string strValue, BOOL bThrowError)
 		return TRUE;
 	}
 
+	if(strType == "SCALE")
+	{
+		Scale(strValue);
+		return TRUE;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -212,6 +293,8 @@ void Mesh::Load(CStdXml &oXml)
 	MeshFile(oXml.GetChildString("MeshFile"));
 	CollisionMeshType(oXml.GetChildString("MeshType"));
 	ConvexMeshFile(oXml.GetChildString("ConvexMeshFile", ""));
+
+	Std_LoadPoint(oXml, "Scale", m_vScale, false);
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
 

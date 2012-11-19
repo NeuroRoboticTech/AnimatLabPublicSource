@@ -203,6 +203,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClCompile Include="VsLinearHillMuscle.cpp" />
     <ClCompile Include="VsLinearHillStretchReceptor.cpp" />
     <ClCompile Include="VsMaterialPair.cpp" />
+    <ClCompile Include="VsMeshMgr.cpp" />
     <ClCompile Include="VsMotorizedJoint.cpp" />
     <ClCompile Include="VsMotorVelocityStimulus.cpp" />
     <ClCompile Include="VsMouseSpring.cpp" />
@@ -254,6 +255,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClInclude Include="VsLinearHillMuscle.h" />
     <ClInclude Include="VsLinearHillStretchReceptor.h" />
     <ClInclude Include="VsMaterialPair.h" />
+    <ClInclude Include="VsMeshMgr.h" />
     <ClInclude Include="VsMotorizedJoint.h" />
     <ClInclude Include="VsMotorVelocityStimulus.h" />
     <ClInclude Include="VsMouseSpring.h" />

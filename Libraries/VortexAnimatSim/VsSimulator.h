@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "VsMeshMgr.h"
 #include "VsMaterialPair.h"
 #include "VsHud.h"
 #include "VsIntersectionEvent.h"
@@ -43,6 +44,8 @@ namespace VortexAnimatSim
 		double m_dblTotalStepTime;
 		long m_lStepTimeCount;
 
+		VsMeshMgr *m_lpMeshMgr;
+
 		virtual AnimatSim::Recording::SimulationRecorder *CreateSimulationRecorder();
 		virtual void SnapshotStopFrame();
 
@@ -67,12 +70,19 @@ namespace VortexAnimatSim
 		VsRigidBody *TrackBody();
 		osg::Group *OSGRoot() {return m_grpScene.get();};
 		osgManipulator::CommandManager *OsgCmdMgr() {return m_osgCmdMgr.get();};
+		VsMeshMgr *MeshMgr() 
+		{
+			if(!m_lpMeshMgr)
+				m_lpMeshMgr = new VsMeshMgr();
+
+			return m_lpMeshMgr;
+		};
 
 #pragma region CreateMethods
 
 		virtual Vx::VxTriangleMesh *CreatTriangleMeshFromOsg(osg::Node *osgNode);
 		virtual Vx::VxConvexMesh *CreateConvexMeshFromOsg(osg::Node *osgNode);
-		virtual void GenerateCollisionMeshFile(string strOriginalMeshFile, string strCollisionMeshFile);
+		virtual void GenerateCollisionMeshFile(string strOriginalMeshFile, string strCollisionMeshFile, float fltScaleX, float fltScaleY, float fltScaleZ);
 		virtual void ConvertV1MeshFile(string strOriginalMeshFile, string strNewMeshFile, string strTexture);
 
 #pragma endregion

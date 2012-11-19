@@ -120,5 +120,8 @@
 #define Vs_Err_lCollisionGeomNotDefined -4039
 #define Vs_Err_strCollisionGeomNotDefined "Collision geometry not defined."
 
+#define Vs_Err_lMeshIDNotFound -4040
+#define Vs_Err_strMeshNotFound "Mesh filename was not found in the mesh manager."
+
 #endif // __VS_ERROR_CONSTANTS_H__
 

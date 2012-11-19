@@ -1063,7 +1063,7 @@ namespace AnimatGUI
 				}
 			}
 
-			void SimulatorInterface::GenerateCollisionMeshFile(String ^sOriginalMeshFile, String ^sCollisionMeshFile)
+			void SimulatorInterface::GenerateCollisionMeshFile(String ^sOriginalMeshFile, String ^sCollisionMeshFile, float fltScaleX, float fltScaleY, float fltScaleZ)
 			{
 				try
 				{
@@ -1074,7 +1074,7 @@ namespace AnimatGUI
 						string strOriginalMeshFile = Util::StringToStd(sOriginalMeshFile);
 						string strCollisionMeshFile = Util::StringToStd(sCollisionMeshFile);
 
-						m_lpSim->GenerateCollisionMeshFile(strOriginalMeshFile, strCollisionMeshFile);
+						m_lpSim->GenerateCollisionMeshFile(strOriginalMeshFile, strCollisionMeshFile, fltScaleX, fltScaleY, fltScaleZ);
 					}
 				}
 				catch(CStdErrorInfo oError)

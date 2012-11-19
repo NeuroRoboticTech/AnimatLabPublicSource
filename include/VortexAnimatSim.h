@@ -138,6 +138,7 @@ namespace VortexAnimatSim
 {
 	class VsClassFactory;
 	class VsSimulator;
+	class VsMeshMgr;
 
 	namespace Environment
 	{
@@ -223,6 +224,7 @@ using namespace VortexAnimatSim::Visualization;
 using namespace Vx;
 
 #include "VsClassFactory.h"
+#include "VsMeshMgr.h"
 
 #include "VsMovableItem.h"
 #include "VsBody.h"

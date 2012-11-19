@@ -46,6 +46,7 @@ VsSimulator::VsSimulator()
 	m_lStepTimeCount = 0;
 	m_dblTotalVortexStepTime = 0;
 	m_lStepVortexTimeCount = 0;
+	m_lpMeshMgr = NULL;
 }
 
 VsSimulator::~VsSimulator()
@@ -53,6 +54,12 @@ VsSimulator::~VsSimulator()
 
 try
 {
+	if(m_lpMeshMgr)
+	{
+		delete m_lpMeshMgr;
+		m_lpMeshMgr = NULL;
+	}
+
 	m_bShuttingDown = TRUE;
 
 	//Set this to NULL so all of the DeletePhysics calls will not try and remove
@@ -173,6 +180,13 @@ void VsSimulator::Reset()
 
 	if(m_osgCmdMgr.valid())
 		m_osgCmdMgr.release();
+
+	if(m_lpMeshMgr)
+	{
+		delete m_lpMeshMgr;
+		m_lpMeshMgr = NULL;
+	}
+
 }
 
 void VsSimulator::ResetSimulation()
@@ -367,14 +381,14 @@ we will use this new file instead of the original one.
 \param	strOriginalMeshFile 	The original mesh file. 
 \param	strCollisionMeshFile	The new collision mesh file. 
 **/
-void VsSimulator::GenerateCollisionMeshFile(string strOriginalMeshFile, string strCollisionMeshFile)
+void VsSimulator::GenerateCollisionMeshFile(string strOriginalMeshFile, string strCollisionMeshFile, float fltScaleX, float fltScaleY, float fltScaleZ)
 {
 	//First load the original mesh in.
 	string strPath = this->ProjectPath();
 	string strOrigFile = AnimatSim::GetFilePath(strPath, strOriginalMeshFile);
 	string strNewFile = AnimatSim::GetFilePath(strPath, strCollisionMeshFile);
 
-	osg::ref_ptr<osg::Node> osgNode = osgDB::readNodeFile(strOrigFile.c_str());
+	osg::ref_ptr<osg::Node> osgNode = MeshMgr()->LoadMesh(strOrigFile); //osgDB::readNodeFile(strOrigFile.c_str());
 
 	//Make sure the mesh loaded is valid.
 	if(!osgNode.valid())
@@ -388,8 +402,22 @@ void VsSimulator::GenerateCollisionMeshFile(string strOriginalMeshFile, string s
 	osg::ref_ptr<osg::Geode> osgNewNode = new osg::Geode;
 	osgNewNode->addDrawable(osgGeom.get());
 
+	osg::Matrix osgScale = osg::Matrix::scale(fltScaleX, fltScaleY, fltScaleZ);
+	osg::ref_ptr<osg::MatrixTransform> osgScaleMT = new osg::MatrixTransform(osgScale);
+	osgScaleMT->addChild(osgNewNode.get());
+	osgScaleMT->setDataVariance(osg::Object::STATIC);
+
+	// Now do some OSG voodoo, which should spread the transform downward
+	//  through the loaded model, and delete the transform.
+	osgUtil::Optimizer optimizer;
+	optimizer.optimize(osgScaleMT.get(), osgUtil::Optimizer::FLATTEN_STATIC_TRANSFORMS);
+
 	//Now save out the new collision mesh.
 	osgDB::writeNodeFile(*osgNewNode, strNewFile.c_str());
+
+	//Make sure we stamp the new file tim on the file. For some reason osgDB is not settign that correctly.
+	//If we do not do this then the mesh mgr will not recognize that it has changed, and will not load it.
+	Std_SetFileTime(strNewFile);
 }
 
 void VsSimulator::ConvertV1MeshFile(string strOriginalMeshFile, string strNewMeshFile, string strTexture)
@@ -403,7 +431,7 @@ void VsSimulator::ConvertV1MeshFile(string strOriginalMeshFile, string strNewMes
 	if(!Std_IsBlank(strTexture))
 		strTextFile = AnimatSim::GetFilePath(strPath, strTexture);
 
-	osg::ref_ptr<osg::Node> osgNode = osgDB::readNodeFile(strOrigFile.c_str());
+	osg::ref_ptr<osg::Node> osgNode = MeshMgr()->LoadMesh(strOrigFile); //osgDB::readNodeFile(strOrigFile.c_str());
 
 	//Make sure the mesh loaded is valid.
 	if(!osgNode.valid())

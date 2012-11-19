@@ -130,9 +130,9 @@ Namespace Framework
 
         Protected Overridable Function ReplaceXmlText(ByVal strXml As String, ByVal aryReplaceText As Hashtable) As String
 
-            Dim oRep As DataObjects.FileConverter.ReplaceText
+            Dim oRep As DataObjects.ProjectMigration.ReplaceText
             For Each de As DictionaryEntry In aryReplaceText
-                oRep = DirectCast(de.Value, DataObjects.FileConverter.ReplaceText)
+                oRep = DirectCast(de.Value, DataObjects.ProjectMigration.ReplaceText)
                 strXml = Replace(strXml, oRep.m_strFind, oRep.m_strReplace, Compare:=CompareMethod.Text)
             Next
 

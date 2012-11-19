@@ -11,7 +11,7 @@ Imports AnimatGUI.Framework
 
 Namespace DataObjects
 
-    Public MustInherit Class FileConverter
+    Public MustInherit Class ProjectMigration
 
         Protected m_strProjectPath As String
         Protected m_strProjectName As String

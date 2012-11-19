@@ -3235,6 +3235,36 @@ BOOL STD_UTILS_PORT Std_DirectoryExists(string strPath)
 	return FALSE;
 }
 
+void STD_UTILS_PORT Std_SetFileTime(string strFilename)
+{
+	// Create a systemtime struct
+	SYSTEMTIME thesystemtime;
+	 
+	// Get current system time and then change the day to the 3rd
+	// You can also change year, month, day of week etc
+	GetSystemTime(&thesystemtime);
+
+	Std_SetFileTime(strFilename, thesystemtime);
+}
+
+void STD_UTILS_PORT Std_SetFileTime(string strFilename, SYSTEMTIME newTime)
+{
+	// Create a FILETIME struct and convert our new SYSTEMTIME
+	// over to the FILETIME struct for use in SetFileTime below
+	FILETIME thefiletime;
+	SystemTimeToFileTime(&newTime,&thefiletime);
+	 
+	// Get a handle to our file and with file_write_attributes access
+	HANDLE filename = CreateFile(strFilename.c_str(), FILE_WRITE_ATTRIBUTES, FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	    
+	// Set the file time on the file
+	SetFileTime(filename,(LPFILETIME) NULL,(LPFILETIME) NULL,&thefiletime);
+	    
+	// Close our handle.
+	CloseHandle(filename);
+}
+
+
 // File Functions
 //***************************************************************************************************************
 

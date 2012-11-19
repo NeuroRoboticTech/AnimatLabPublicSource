@@ -372,8 +372,6 @@
     <Compile Include="DataObjects\ExternalStimuli\VoltageClamp.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataObjects\FileConverter.vb" />
-    <Compile Include="DataObjects\FileConverters\Convert_V1ToV2.vb" />
     <Compile Include="DataObjects\FormHelper.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -474,6 +472,8 @@
     <Compile Include="DataObjects\ProgramModule.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataObjects\ProjectMigration.vb" />
+    <Compile Include="DataObjects\ProjectMigrations\Migrate_V1ToV2.vb" />
     <Compile Include="DataObjects\Simulation.vb">
       <SubType>Code</SubType>
     </Compile>

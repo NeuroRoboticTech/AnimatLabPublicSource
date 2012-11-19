@@ -146,6 +146,7 @@ namespace VortexAnimatSim
 {
 	class VsClassFactory;
 	class VsSimulator;
+	class VsMeshMgr;
 
 	namespace ExternalStimuli
 	{

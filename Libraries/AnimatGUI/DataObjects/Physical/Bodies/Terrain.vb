@@ -246,6 +246,7 @@ Namespace DataObjects.Physical.Bodies
             If propTable.Properties.Contains("Mesh Type") Then propTable.Properties.Remove("Mesh Type")
             If propTable.Properties.Contains("Convex Mesh File") Then propTable.Properties.Remove("Convex Mesh File")
             If propTable.Properties.Contains("Rotation") Then propTable.Properties.Remove("Rotation")
+            If propTable.Properties.Contains("Scale") Then propTable.Properties.Remove("Scale")
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Terrain File", m_strMeshFile.GetType(), "MeshFile", _
                           "Part Properties", "Sets the terrain file to use for this body part.", _
