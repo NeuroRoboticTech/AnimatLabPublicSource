@@ -10,10 +10,10 @@ Imports AnimatGuiCtrls.Controls
 Imports AnimatGUI.Framework
 
 Namespace DataObjects
-    Namespace FileConverters
+    Namespace ProjectMigrations
 
         Public Class Convert_V1ToV2
-            Inherits FileConverter
+            Inherits ProjectMigration
 
             Protected m_bSimHydro As Boolean = False
             Protected m_dblFluidDensity As Double = 1.0
@@ -673,7 +673,7 @@ Namespace DataObjects
                 If strCollisionMeshType.ToUpper() = "CONVEX" Then
                     strExt = Util.GetFileExtension(strCollisionMeshFileOld)
                     Dim strConvexMeshFile As String = strCollisionMeshFileOld.Replace("." & strExt, "_Convex.osg")
-                    m_iSimInterface.GenerateCollisionMeshFile(strCollisionMeshFileOld, strConvexMeshFile)
+                    m_iSimInterface.GenerateCollisionMeshFile(strCollisionMeshFileOld, strConvexMeshFile, 1, 1, 1)
                     ConvertV1MeshFile(strConvexMeshFile, strCollisionMeshFile, "")
 
                     m_xnProjectXml.AddNodeValue(xnRigidBody, "ConvexMeshFile", strCollisionMeshFile)
