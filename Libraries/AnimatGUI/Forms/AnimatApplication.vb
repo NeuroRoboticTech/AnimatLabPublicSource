@@ -1862,7 +1862,7 @@ Namespace Forms
 
         Private Sub AutoUpdate()
             Try
-                '#If Not Debug Then
+#If Not Debug Then
                 'Setup the autoupdater.
                 Me.AppStatusText = "Auto update check"
                 m_auBackup = New wyDay.Controls.AutomaticUpdaterBackend
@@ -1905,10 +1905,10 @@ Namespace Forms
                     bDoUpdate = False
                 End If
 
-                'If bDoUpdate = True Then
-                'CheckForUpdates(False)
-                ' End If
-                '#End If
+                If bDoUpdate = True Then
+                    CheckForUpdates(False)
+                End If
+#End If
             Catch ex As System.Exception
             End Try
 
