@@ -16,7 +16,7 @@ Namespace UITests
 
             Protected m_aryStepTimes As New ArrayList
 
-            <TestMethod()>
+            '<TestMethod()>
             Public Sub Test_NumberOfItems()
 
                 'Start the application.

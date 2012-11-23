@@ -18,7 +18,7 @@ Namespace UITests
             Protected m_fltSize As Single = 0.2
             Protected m_fltInterBoxDist As Single = m_fltSize * 3
 
-            <TestMethod()>
+            '<TestMethod()>
             Public Sub Test_DropBoxes()
 
                 'Start the application.
