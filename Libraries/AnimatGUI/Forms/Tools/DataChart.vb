@@ -679,13 +679,13 @@ Namespace Forms.Tools
 
         End Sub
 
-        Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
+            MyBase.InitializeSimulationReferences(bShowError)
 
             Dim doAxis As DataObjects.Charting.Axis
             For Each deEntry As DictionaryEntry In m_aryAxisList
                 doAxis = DirectCast(deEntry.Value, DataObjects.Charting.Axis)
-                doAxis.InitializeSimulationReferences()
+                doAxis.InitializeSimulationReferences(bShowError)
             Next
 
         End Sub

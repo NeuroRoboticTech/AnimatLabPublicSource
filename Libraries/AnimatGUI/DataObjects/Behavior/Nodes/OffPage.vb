@@ -355,7 +355,7 @@ Namespace DataObjects.Behavior.Nodes
         '''
         ''' \author dcofer
         ''' \date   9/7/2011
-        Public Overrides Sub InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
         End Sub
 
         Public Overrides Sub SaveData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)

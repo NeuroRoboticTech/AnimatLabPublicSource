@@ -521,8 +521,8 @@ Namespace DataObjects.Physical
             End If
         End Sub
 
-        Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
+            MyBase.InitializeSimulationReferences(bShowError)
 
             Dim nmModule As DataObjects.Behavior.NeuralModule
             For Each deEntry As DictionaryEntry In m_aryNeuralModules
@@ -532,12 +532,12 @@ Namespace DataObjects.Physical
                 'The problem is that a neural module is not created in the simulation unless it 
                 ' has neurons. 
                 If nmModule.SimObjectExists Then
-                    nmModule.InitializeSimulationReferences()
+                    nmModule.InitializeSimulationReferences(bShowError)
                 End If
             Next
 
             If Not m_bnRootSubSystem Is Nothing Then
-                m_bnRootSubSystem.InitializeSimulationReferences()
+                m_bnRootSubSystem.InitializeSimulationReferences(bShowError)
             End If
         End Sub
 

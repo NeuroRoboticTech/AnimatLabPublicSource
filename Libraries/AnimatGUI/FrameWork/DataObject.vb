@@ -689,10 +689,18 @@ Namespace Framework
             m_bIsInitialized = True
         End Sub
 
-        Public Overridable Sub InitializeSimulationReferences()
-            If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
-                m_doInterface = Util.Application.CreateDataObjectInterface(Me.ID)
-            End If
+        Public Overridable Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
+            Try
+                If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
+                    m_doInterface = Util.Application.CreateDataObjectInterface(Me.ID)
+                End If
+            Catch ex As System.Exception
+                If bShowError Then
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                Else
+                    Throw ex
+                End If
+            End Try
         End Sub
 
         'Check to see if a simulation object exists that matches this object.

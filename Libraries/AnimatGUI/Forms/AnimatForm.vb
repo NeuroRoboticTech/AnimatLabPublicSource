@@ -348,10 +348,18 @@ Namespace Forms
 
         End Sub
 
-        Public Overridable Sub InitializeSimulationReferences()
-            If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
-                m_doInterface = Util.Application.CreateDataObjectInterface(Me.ID)
-            End If
+        Public Overridable Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
+            Try
+                If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
+                    m_doInterface = Util.Application.CreateDataObjectInterface(Me.ID)
+                End If
+            Catch ex As System.Exception
+                If bShowError Then
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                Else
+                    Throw ex
+                End If
+            End Try
         End Sub
 
         Public Overridable Function SetSimData(ByVal sDataType As String, ByVal sValue As String, ByVal bThrowError As Boolean) As Boolean

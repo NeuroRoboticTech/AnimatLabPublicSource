@@ -160,8 +160,8 @@ Namespace DataObjects.Physical.Bodies
             AddCompatibleStimulusType("EnablerInput")
         End Sub
 
-        Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
+            MyBase.InitializeSimulationReferences(bShowError)
 
             'Lets get a data pointer for the muscle length so we can use that to update our length variable.
             If Not m_doInterface Is Nothing Then

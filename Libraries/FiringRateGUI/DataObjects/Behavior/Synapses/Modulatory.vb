@@ -303,6 +303,13 @@ Namespace DataObjects.Behavior.Synapses
             If Not m_lsModulatedSynapse Is Nothing Then m_lsModulatedSynapse.ClearIsDirty()
         End Sub
 
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
+            'We should only try and initialize the sim references here if the modulated synapse is set.
+            If Not Me.ModulatedSynapse Is Nothing AndAlso Not Me.ModulatedSynapse.Link Is Nothing Then
+                MyBase.InitializeSimulationReferences(bShowError)
+            End If
+        End Sub
+
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)
@@ -330,6 +337,7 @@ Namespace DataObjects.Behavior.Synapses
 
             If bCallSimMethods Then RemoveFromSim(bThrowError)
         End Sub
+
 
 #End Region
 

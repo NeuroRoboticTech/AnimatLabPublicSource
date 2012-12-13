@@ -195,8 +195,8 @@ Namespace DataObjects.Behavior
             Next
         End Sub
 
-        Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
+            MyBase.InitializeSimulationReferences(bShowError)
 
             'Get the actual physics time step after initialization of the sim object.
             If Not m_doInterface Is Nothing Then

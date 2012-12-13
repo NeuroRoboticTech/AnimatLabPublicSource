@@ -223,15 +223,23 @@ Namespace DataObjects.Behavior.Nodes
 
 #Region " DataObject Methods "
 
-        Public Overrides Sub InitializeSimulationReferences()
-            If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
-                m_doInterface = Util.Application.CreateDataObjectInterface(Me.ID)
-            End If
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
+            Try
+                If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
+                    m_doInterface = Util.Application.CreateDataObjectInterface(Me.ID)
+                End If
 
-            For Each deEntry As DictionaryEntry In m_aryFieldPairs
-                Dim doPair As DataObjects.Physical.ReceptiveFieldPair = DirectCast(deEntry.Value, DataObjects.Physical.ReceptiveFieldPair)
-                doPair.InitializeSimulationReferences()
-            Next
+                For Each deEntry As DictionaryEntry In m_aryFieldPairs
+                    Dim doPair As DataObjects.Physical.ReceptiveFieldPair = DirectCast(deEntry.Value, DataObjects.Physical.ReceptiveFieldPair)
+                    doPair.InitializeSimulationReferences()
+                Next
+            Catch ex As System.Exception
+                If bShowError Then
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                Else
+                    Throw ex
+                End If
+            End Try
         End Sub
 
 #End Region

@@ -330,7 +330,7 @@ Namespace DataObjects.Behavior.Nodes
         ''' 		 
         ''' \author dcofer
         ''' \date   9/25/2011
-        Public Overrides Sub InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
         End Sub
 
         Public Overrides Sub ClearIsDirty()

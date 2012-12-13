@@ -167,11 +167,11 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
+            MyBase.InitializeSimulationReferences(bShowError)
 
-            m_gnReceptiveFieldGain.InitializeSimulationReferences()
-            m_gnReceptiveCurrentGain.InitializeSimulationReferences()
+            m_gnReceptiveFieldGain.InitializeSimulationReferences(bShowError)
+            m_gnReceptiveCurrentGain.InitializeSimulationReferences(bShowError)
 
             For Each deEntry As DictionaryEntry In m_aryFields
                 Dim doField As DataObjects.Physical.ReceptiveField = DirectCast(deEntry.Value, DataObjects.Physical.ReceptiveField)

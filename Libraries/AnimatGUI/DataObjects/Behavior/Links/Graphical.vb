@@ -74,7 +74,7 @@ Namespace DataObjects.Behavior.Links
 
 #Region " DataObject Methods "
 
-        Public Overrides Sub InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
             'Graphical items are not actually created in the simulation
             m_doInterface = Nothing
         End Sub

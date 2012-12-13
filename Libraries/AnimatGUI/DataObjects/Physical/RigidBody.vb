@@ -986,10 +986,10 @@ Namespace DataObjects.Physical
 
         End Sub
 
-        Public Overrides Sub InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
             'Only do this if not already initialized.
             If m_doInterface Is Nothing Then
-                MyBase.InitializeSimulationReferences()
+                MyBase.InitializeSimulationReferences(bShowError)
 
                 If Not m_doInterface Is Nothing Then
                     AddHandler m_doInterface.OnAddBodyClicked, AddressOf Me.OnAddBodyClicked
@@ -997,23 +997,23 @@ Namespace DataObjects.Physical
                 End If
 
                 If Not m_JointToParent Is Nothing Then
-                    m_JointToParent.InitializeSimulationReferences()
+                    m_JointToParent.InitializeSimulationReferences(bShowError)
                 End If
 
                 Dim doChild As AnimatGUI.DataObjects.Physical.RigidBody
                 For Each deEntry As DictionaryEntry In m_aryChildBodies
                     doChild = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Physical.RigidBody)
-                    doChild.InitializeSimulationReferences()
+                    doChild.InitializeSimulationReferences(bShowError)
                 Next
 
                 Dim doOdor As Odor
                 For Each deEntry As DictionaryEntry In m_aryOdorSources
                     doOdor = DirectCast(deEntry.Value, Odor)
-                    doOdor.InitializeSimulationReferences()
+                    doOdor.InitializeSimulationReferences(bShowError)
                 Next
 
                 If Not m_doReceptiveFieldSensor Is Nothing Then
-                    m_doReceptiveFieldSensor.InitializeSimulationReferences()
+                    m_doReceptiveFieldSensor.InitializeSimulationReferences(bShowError)
                 End If
             End If
         End Sub

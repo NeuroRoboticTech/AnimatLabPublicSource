@@ -292,7 +292,7 @@ Namespace Forms
         '    End Try
         'End Sub
 
-        Private Sub tvSynapseTypes_AfterSelect1(ByVal tc As Crownwood.DotNetMagic.Controls.TreeControl, ByVal e As Crownwood.DotNetMagic.Controls.NodeEventArgs) Handles tvSynapseTypes.AfterSelect
+        Private Sub tvSynapseTypes_AfterSelect(ByVal tc As Crownwood.DotNetMagic.Controls.TreeControl, ByVal e As Crownwood.DotNetMagic.Controls.NodeEventArgs) Handles tvSynapseTypes.AfterSelect
             Try
 
                 'This is always called the first time the form is shown for some stupid reason.
@@ -322,11 +322,11 @@ Namespace Forms
                 tvSynapseTypes.ContextMenuNode = popup
 
                 If Not tvSynapseTypes.SelectedNode Is Nothing AndAlso Not tvSynapseTypes.SelectedNode.Tag Is Nothing Then
-                    Dim mcNew As New System.Windows.Forms.ToolStripMenuItem("Delete Syanpse Type", Nothing, New EventHandler(AddressOf Me.OnCloneSynapseType))
-                    Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete Axis", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Me.OnDelete))
+                    Dim mcNew As New System.Windows.Forms.ToolStripMenuItem("Clone Syanpse Type", Nothing, New EventHandler(AddressOf Me.OnCloneSynapseType))
+                    Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete Synapse Type", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Me.OnDelete))
                     popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcNew, mcDelete})
-                Else
-                    Dim mcNew As New System.Windows.Forms.ToolStripMenuItem("Delete Syanpse Type", Nothing, New EventHandler(AddressOf Me.OnCloneSynapseType))
+                ElseIf Not tvSynapseTypes.SelectedNode Is m_tnSynapseTypes Then
+                    Dim mcNew As New System.Windows.Forms.ToolStripMenuItem("New Syanpse Type", Nothing, New EventHandler(AddressOf Me.OnNewSynapseType))
                     popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcNew})
                 End If
 

@@ -302,17 +302,24 @@ Namespace DataObjects.Behavior.Nodes
             If Not m_gnGain Is Nothing Then m_gnGain.ClearIsDirty()
         End Sub
 
-        Public Overrides Sub InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
+            Try
+                If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
+                    If Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
+                        AddToSim(True)
+                    End If
 
-            If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
-                If Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
-                    AddToSim(True)
+                    m_doInterface = Util.Application.CreateDataObjectInterface(Me.ID)
                 End If
 
-                m_doInterface = Util.Application.CreateDataObjectInterface(Me.ID)
-            End If
-
-            m_gnGain.InitializeSimulationReferences()
+                m_gnGain.InitializeSimulationReferences(bShowError)
+            Catch ex As System.Exception
+                If bShowError Then
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                Else
+                    Throw ex
+                End If
+            End Try
         End Sub
 
         Public Overrides Function CanCopy(ByVal aryItems As ArrayList) As Boolean

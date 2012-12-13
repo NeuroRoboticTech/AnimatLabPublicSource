@@ -582,11 +582,11 @@ Namespace DataObjects.Physical
             End If
         End Sub
 
-        Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
+            MyBase.InitializeSimulationReferences(bShowError)
 
             If Not m_dbRoot Is Nothing Then
-                m_dbRoot.InitializeSimulationReferences()
+                m_dbRoot.InitializeSimulationReferences(bShowError)
             End If
         End Sub
 

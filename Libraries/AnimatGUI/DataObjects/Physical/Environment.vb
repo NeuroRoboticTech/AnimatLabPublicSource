@@ -1621,18 +1621,18 @@ Namespace DataObjects.Physical
 
         End Function
 
-        Public Overrides Sub InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
             'The environment is really just a pointer to the simulation object in the sim.
             If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
                 m_doInterface = Util.Application.CreateDataObjectInterface(Util.Simulation.ID)
             End If
 
-            m_aryOdorTypes.InitializeSimulationReferences()
-            m_aryOrganisms.InitializeSimulationReferences()
-            m_aryStructures.InitializeSimulationReferences()
-            m_aryLights.InitializeSimulationReferences()
-            m_aryMaterialTypes.InitializeSimulationReferences()
-            m_aryMaterialPairs.InitializeSimulationReferences()
+            m_aryOdorTypes.InitializeSimulationReferences(bShowError)
+            m_aryOrganisms.InitializeSimulationReferences(bShowError)
+            m_aryStructures.InitializeSimulationReferences(bShowError)
+            m_aryLights.InitializeSimulationReferences(bShowError)
+            m_aryMaterialTypes.InitializeSimulationReferences(bShowError)
+            m_aryMaterialPairs.InitializeSimulationReferences(bShowError)
 
             'Get the actual physics time step after initialization of the sim object.
             If Not m_doInterface Is Nothing Then

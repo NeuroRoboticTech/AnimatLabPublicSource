@@ -195,12 +195,12 @@ Namespace Collections
 
         End Sub
 
-        Public Overridable Sub InitializeSimulationReferences()
+        Public Overridable Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
             Dim doVal As AnimatGUI.Framework.DataObject
             For Each deEntry As DictionaryEntry In Me
                 If TypeOf deEntry.Value Is AnimatGUI.Framework.DataObject Then
                     doVal = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                    doVal.InitializeSimulationReferences()
+                    doVal.InitializeSimulationReferences(bShowError)
                 End If
             Next
 

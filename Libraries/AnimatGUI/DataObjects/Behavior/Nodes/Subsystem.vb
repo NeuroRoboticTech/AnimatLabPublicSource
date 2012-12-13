@@ -376,7 +376,7 @@ Namespace DataObjects.Behavior.Nodes
 
         End Function
 
-        Public Overrides Sub InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
             'Do not call base class Initialize method here. The subsystem is not a node that is within the 
             'simulator. It is a GUI editor object only. It is merely a place holder for other objects in the 
             ' nervous system.
@@ -384,12 +384,12 @@ Namespace DataObjects.Behavior.Nodes
             Dim doData As DataObjects.Behavior.Data
             For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
                 doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
-                doData.InitializeSimulationReferences()
+                doData.InitializeSimulationReferences(bShowError)
             Next
 
             For Each deEntry As DictionaryEntry In m_aryBehavioralLinks
                 doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
-                doData.InitializeSimulationReferences()
+                doData.InitializeSimulationReferences(bShowError)
             Next
         End Sub
 

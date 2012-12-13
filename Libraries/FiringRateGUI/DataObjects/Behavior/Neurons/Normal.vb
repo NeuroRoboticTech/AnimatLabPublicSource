@@ -282,13 +282,13 @@ Namespace DataObjects.Behavior.Neurons
 
         End Sub
 
-        Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
+            MyBase.InitializeSimulationReferences(bShowError)
 
             Dim doObject As AnimatGUI.Framework.DataObject
             For Each deEntry As DictionaryEntry In m_aryInLinks
                 doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                doObject.InitializeSimulationReferences()
+                doObject.InitializeSimulationReferences(bShowError)
             Next
         End Sub
 

@@ -494,13 +494,21 @@ Namespace DataObjects.Physical
             Return Me.Name
         End Function
 
-        Public Overrides Sub InitializeSimulationReferences()
-            If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
-                m_doInterface = Util.Application.CreateDataObjectInterface(Me.ID)
-                AddHandler m_doInterface.OnPositionChanged, AddressOf Me.OnPositionChanged
-                AddHandler m_doInterface.OnRotationChanged, AddressOf Me.OnRotationChanged
-                AddHandler m_doInterface.OnSelectionChanged, AddressOf Me.OnSelectionChanged
-            End If
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
+            Try
+                If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then
+                    m_doInterface = Util.Application.CreateDataObjectInterface(Me.ID)
+                    AddHandler m_doInterface.OnPositionChanged, AddressOf Me.OnPositionChanged
+                    AddHandler m_doInterface.OnRotationChanged, AddressOf Me.OnRotationChanged
+                    AddHandler m_doInterface.OnSelectionChanged, AddressOf Me.OnSelectionChanged
+                End If
+            Catch ex As System.Exception
+                If bShowError Then
+                    AnimatGUI.Framework.Util.DisplayError(ex)
+                Else
+                    Throw ex
+                End If
+            End Try
         End Sub
 
         Public Overrides Function FindDragObject(ByVal strStructureName As String, ByVal strDataItemID As String, Optional ByVal bThrowError As Boolean = True) As DataObjects.DragObject

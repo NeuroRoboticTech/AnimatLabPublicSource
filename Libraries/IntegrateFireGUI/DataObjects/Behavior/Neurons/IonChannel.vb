@@ -356,14 +356,14 @@ Namespace DataObjects.Behavior.Neurons
 
         End Function
 
-        Public Overrides Sub InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
             If Me.IsInitialized Then
-                MyBase.InitializeSimulationReferences()
+                MyBase.InitializeSimulationReferences(bShowError)
 
-                m_gnMinf.InitializeSimulationReferences()
-                m_gnTm.InitializeSimulationReferences()
-                m_gnHinf.InitializeSimulationReferences()
-                m_gnTh.InitializeSimulationReferences()
+                m_gnMinf.InitializeSimulationReferences(bShowError)
+                m_gnTm.InitializeSimulationReferences(bShowError)
+                m_gnHinf.InitializeSimulationReferences(bShowError)
+                m_gnTh.InitializeSimulationReferences(bShowError)
             End If
         End Sub
 

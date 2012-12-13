@@ -2428,7 +2428,7 @@ Namespace Forms.Behavior
         End Sub
 
         'AddFlow Diagrams have no sim object
-        Public Overrides Sub InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
         End Sub
 
         Public Overrides Sub LoadDiagramXml(ByVal strXml As String)

@@ -459,18 +459,18 @@ Namespace DataObjects.Behavior.Neurons
 
         End Sub
 
-        Public Overrides Sub InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
             If Me.IsInitialized Then
-                MyBase.InitializeSimulationReferences()
+                MyBase.InitializeSimulationReferences(bShowError)
 
                 Dim doObject As AnimatGUI.Framework.DataObject
                 For Each deEntry As DictionaryEntry In m_aryIonChannels
                     doObject = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                    doObject.InitializeSimulationReferences()
+                    doObject.InitializeSimulationReferences(bShowError)
                 Next
 
-                m_atCaActivation.InitializeSimulationReferences()
-                m_atCaDeactivation.InitializeSimulationReferences()
+                m_atCaActivation.InitializeSimulationReferences(bShowError)
+                m_atCaDeactivation.InitializeSimulationReferences(bShowError)
             End If
         End Sub
 

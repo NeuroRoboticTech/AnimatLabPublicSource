@@ -229,11 +229,11 @@ Namespace DataObjects.Physical.Joints
             m_snMaxVelocity = DirectCast(doOrig.m_snMaxVelocity.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
         End Sub
 
-        Public Overrides Sub InitializeSimulationReferences()
-            MyBase.InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
+            MyBase.InitializeSimulationReferences(bShowError)
 
-            m_doLowerLimit.InitializeSimulationReferences()
-            m_doUpperLimit.InitializeSimulationReferences()
+            m_doLowerLimit.InitializeSimulationReferences(bShowError)
+            m_doUpperLimit.InitializeSimulationReferences(bShowError)
         End Sub
 
         Public Overrides Sub AddToReplaceIDList(aryReplaceIDList As System.Collections.ArrayList)

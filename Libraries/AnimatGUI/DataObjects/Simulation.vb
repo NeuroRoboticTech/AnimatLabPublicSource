@@ -1130,18 +1130,18 @@ Namespace DataObjects
 
         End Sub
 
-        Public Overrides Sub InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
             MyBase.InitializeSimulationReferences()
 
-            m_doEnvironment.InitializeSimulationReferences()
-            m_aryProjectStimuli.InitializeSimulationReferences()
+            m_doEnvironment.InitializeSimulationReferences(bShowError)
+            m_aryProjectStimuli.InitializeSimulationReferences(bShowError)
             'm_aryMaterialTypes.InitializeSimulationReferences()
             'm_aryMaterialPairs.InitializeSimulationReferences()
 
             For Each frmWindow As System.Windows.Forms.Form In Util.Application.ChildForms
                 If TypeOf frmWindow Is Forms.Tools.ToolForm Then
                     Dim frmViewer As Forms.Tools.ToolForm = DirectCast(frmWindow, Forms.Tools.ToolForm)
-                    frmViewer.InitializeSimulationReferences()
+                    frmViewer.InitializeSimulationReferences(bShowError)
                 End If
             Next
         End Sub

@@ -100,7 +100,7 @@ Namespace DataObjects.Physical.Joints
         '''
         ''' \author dcofer
         ''' \date   4/16/2011
-        Public Overrides Sub InitializeSimulationReferences()
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
