@@ -13,7 +13,7 @@ Module AnimatLabScripter
         Public m_strPropName As String
         Public m_strNewPropVal As String
         Public m_strOldPropVal As String
-        Public m_doObj As AnimatTools.Framework.DataObject
+        Public m_doObj As AnimatGUI.Framework.DataObject
         Public m_oProp As System.Reflection.PropertyInfo
 
         Private Sub SetPropVal(ByVal strNewVal As String)
@@ -59,14 +59,14 @@ Module AnimatLabScripter
 
                 Case typeCode.Object
                     If m_oProp.PropertyType.Name = "ScaledNumber" Then
-                        Dim oScaledNum As AnimatTools.Framework.ScaledNumber = DirectCast(m_oProp.GetValue(m_doObj, Nothing), AnimatTools.Framework.ScaledNumber)
+                        Dim oScaledNum As AnimatGUI.Framework.ScaledNumber = DirectCast(m_oProp.GetValue(m_doObj, Nothing), AnimatGUI.Framework.ScaledNumber)
                         m_strOldPropVal = CStr(oScaledNum.ActualValue)
                         oScaledNum.ActualValue = CDbl(strNewVal)
                     Else
                         Throw New System.Exception("Invalid object type. ID: " & m_strID & ", PropName: " & m_strPropName & ", Object Type: " & m_oProp.PropertyType.Name)
                     End If
 
-                Case typeCode.SByte
+                Case typeCode.[SByte]
                     m_strOldPropVal = CStr(m_oProp.GetValue(m_doObj, Nothing))
                     m_oProp.SetValue(m_doObj, CByte(strNewVal), Nothing)
 
@@ -125,7 +125,7 @@ Module AnimatLabScripter
     Dim g_strProjectFile As String = ""
     Dim g_strStandaloneProjectFile As String = ""
     Dim g_strAPIFile As String = ""
-    Dim g_oApp As AnimatTools.Forms.AnimatApplication
+    Dim g_oApp As AnimatGUI.Forms.AnimatApplication
     Dim g_oWatcher As FileSystemWatcher
     Dim g_bExit As Boolean = False
     Dim g_aryParams As New Collections.ArrayList
@@ -153,7 +153,7 @@ Module AnimatLabScripter
 
             Console.WriteLine("Loading Project '" & g_strProjectPath & g_strProjectFile & "'")
 
-            g_oApp = New AnimatTools.Forms.AnimatApplication
+            g_oApp = New AnimatGUI.Forms.AnimatApplication
             g_oApp.LoadProject(g_strProjectPath & g_strProjectFile)
 
             ' Create a new FileSystemWatcher and set its properties.
@@ -191,9 +191,8 @@ Module AnimatLabScripter
             Console.WriteLine("Closing Application")
             Try
                 If g_strProjectPath.Length > 0 Then
-                    Dim oFile As System.IO.File
                     Dim oWrite As System.IO.StreamWriter
-                    oWrite = oFile.CreateText(g_strProjectPath & "ScriptError.txt")
+                    oWrite = File.CreateText(g_strProjectPath & "ScriptError.txt")
                     oWrite.WriteLine(ex.Message)
                     oWrite.Close()
                 End If
@@ -257,14 +256,13 @@ Module AnimatLabScripter
     End Sub
 
     Sub OnCreated(ByVal source As Object, ByVal e As FileSystemEventArgs)
-        Dim oFile As System.IO.File
         Dim oRead As System.IO.StreamReader
 
         Try
             System.Threading.Thread.Sleep(100)
 
             Console.WriteLine("Beginning Parsing of '" & g_strProjectPath & "\" & g_strAPIFile & "'")
-            oRead = oFile.OpenText(g_strProjectPath & "\" & g_strAPIFile)
+            oRead = File.OpenText(g_strProjectPath & "\" & g_strAPIFile)
 
             'Pause a bit to allow them to finish writing to the file.
             System.Threading.Thread.Sleep(10)
@@ -280,9 +278,8 @@ Module AnimatLabScripter
         Catch ex As System.Exception
             Console.WriteLine("Error: " & ex.Message)
             Try
-                Dim oFile2 As System.IO.File
                 Dim oWrite As System.IO.StreamWriter
-                oWrite = oFile2.CreateText(g_strProjectPath & "ScriptError.txt")
+                oWrite = File.CreateText(g_strProjectPath & "ScriptError.txt")
                 oWrite.WriteLine(ex.Message)
                 oWrite.Close()
             Catch ex2 As System.Exception
@@ -313,9 +310,9 @@ Module AnimatLabScripter
     'End Sub
 
 
-    'Dim doArm As AnimatTools.DataObjects.Physical.Organism = DirectCast(AnimatTools.Framework.Util.Environment.FindOrganismByName("Arm"), AnimatTools.DataObjects.Physical.Organism)
-    'Dim doAtttach As VortexAnimatTools.DataObjects.Physical.RigidBodies.MuscleAttachment = DirectCast(doArm.FindBodyPartByName("Bicep-Ulna"), VortexAnimatTools.DataObjects.Physical.RigidBodies.MuscleAttachment)
-    'Dim doUlna As VortexAnimatTools.DataObjects.Physical.RigidBodies.Box = DirectCast(doArm.FindBodyPartByName("Ulna"), VortexAnimatTools.DataObjects.Physical.RigidBodies.Box)
+    'Dim doArm As AnimatGui.DataObjects.Physical.Organism = DirectCast(AnimatGui.Framework.Util.Environment.FindOrganismByName("Arm"), AnimatGui.DataObjects.Physical.Organism)
+    'Dim doAtttach As VortexAnimatGui.DataObjects.Physical.RigidBodies.MuscleAttachment = DirectCast(doArm.FindBodyPartByName("Bicep-Ulna"), VortexAnimatGui.DataObjects.Physical.RigidBodies.MuscleAttachment)
+    'Dim doUlna As VortexAnimatGui.DataObjects.Physical.RigidBodies.Box = DirectCast(doArm.FindBodyPartByName("Ulna"), VortexAnimatGui.DataObjects.Physical.RigidBodies.Box)
 
     '        doAtttach.ZLocalLocationScaled.Value = -15
     '        doUlna.XRotationScaled.Value = 45

@@ -90,17 +90,17 @@ void VsJoint::Physics_CollectData()
 		//Only attempt to make these calls if the coordinate ID is a valid number.
 		if(m_iCoordID >= 0)
 		{
+			float fltDistanceUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
+			float fltMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
+
 			if(m_vxJoint->isAngular(m_iCoordID) == true)
 			{
 				m_lpThisJoint->JointPosition(m_vxJoint->getCoordinateCurrentPosition (m_iCoordID)); 
 				m_lpThisJoint->JointVelocity(m_vxJoint->getCoordinateVelocity (m_iCoordID));
-				m_lpThisJoint->JointForce(m_vxJoint->getCoordinateForce (m_iCoordID));
+				m_lpThisJoint->JointForce(m_vxJoint->getCoordinateForce(m_iCoordID) * fltMassUnits * fltDistanceUnits * fltDistanceUnits);
 			}
 			else
 			{
-				float fltDistanceUnits = m_lpThisAB->GetSimulator()->DistanceUnits();
-				float fltMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
-
 				m_lpThisJoint->JointPosition(m_vxJoint->getCoordinateCurrentPosition (m_iCoordID) * fltDistanceUnits); 
 				m_lpThisJoint->JointVelocity(m_vxJoint->getCoordinateVelocity(m_iCoordID) * fltDistanceUnits);
 				m_lpThisJoint->JointForce(m_vxJoint->getCoordinateForce(m_iCoordID) * fltMassUnits * fltDistanceUnits);
