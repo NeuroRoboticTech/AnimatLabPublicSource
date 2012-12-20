@@ -128,6 +128,56 @@ Namespace DataObjects.Behavior.Nodes
             End Set
         End Property
 
+        Public Overridable ReadOnly Property SubsystemNodeCount() As Integer
+            Get
+                Return m_aryBehavioralNodes.Count
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property SubsystemLinkCount() As Integer
+            Get
+                Return m_aryBehavioralLinks.Count
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property TotalNodeCount() As Integer
+            Get
+                Dim iNodes As Integer = Me.BehavioralNodes.Count
+
+                Dim arySubSystems As New AnimatGUI.Collections.DataObjects(Nothing)
+                Me.FindChildrenOfType(Me.GetType, arySubSystems)
+
+                For Each doObj As Framework.DataObject In arySubSystems
+                    Dim doSub As Subsystem = DirectCast(doObj, Subsystem)
+
+                    If Not doSub Is Me Then
+                        iNodes = iNodes + doSub.TotalNodeCount
+                    End If
+                Next
+
+                Return iNodes
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property TotalLinkCount() As Integer
+            Get
+                Dim iLinks As Integer = Me.BehavioralLinks.Count
+
+                Dim arySubSystems As New AnimatGUI.Collections.DataObjects(Nothing)
+                Me.FindChildrenOfType(Me.GetType, arySubSystems)
+
+                For Each doObj As Framework.DataObject In arySubSystems
+                    Dim doSub As Subsystem = DirectCast(doObj, Subsystem)
+
+                    If Not doSub Is Me Then
+                        iLinks = iLinks + doSub.TotalLinkCount
+                    End If
+                Next
+
+                Return iLinks
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -536,6 +586,23 @@ Namespace DataObjects.Behavior.Nodes
         End Sub
 
 #Region " DataObject Methods "
+
+        Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
+            MyBase.BuildProperties(propTable)
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Nodes", GetType(Integer), "SubsystemNodeCount", _
+                            "Node Properties", "Tells how many nodes are contained in this subsystem.", Me.SubsystemNodeCount, True))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Links", GetType(Integer), "SubsystemLinkCount", _
+                            "Node Properties", "Tells how many links are contained in this subsystem.", Me.SubsystemLinkCount, True))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Total Nodes", GetType(Integer), "TotalNodeCount", _
+                            "Node Properties", "Tells how many nodes are contained in this subsystem and all children.", Me.TotalNodeCount, True))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Total Links", GetType(Integer), "TotalLinkCount", _
+                            "Node Properties", "Tells how many links are contained in this subsystem and all children.", Me.TotalLinkCount, True))
+
+        End Sub
 
         Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
             MyBase.AddToReplaceIDList(aryReplaceIDList)

@@ -356,6 +356,25 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property TotalSubChildren() As Integer
+            Get
+                Dim iBodies As Integer = Me.ChildBodies.Count
+
+                If Not m_JointToParent Is Nothing Then
+                    iBodies = iBodies + 1
+                End If
+
+                Dim doChild As RigidBody
+                For Each deEntry As DictionaryEntry In Me.ChildBodies
+                    doChild = DirectCast(deEntry.Value, RigidBody)
+                    iBodies = iBodies + doChild.TotalSubChildren
+                Next
+
+                Return iBodies
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "

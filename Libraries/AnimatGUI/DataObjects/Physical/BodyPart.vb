@@ -117,6 +117,13 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
+        <Browsable(False)> _
+        Public Overridable ReadOnly Property TotalSubChildren() As Integer
+            Get
+                Return 0
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -385,9 +392,15 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overridable Sub BeforeAddBody()
+            If Not Util.Application Is Nothing Then
+                Util.Application.SignalBeforeAddBody(Me)
+            End If
         End Sub
 
         Public Overridable Sub AfterAddBody()
+            If Not Util.Application Is Nothing Then
+                Util.Application.SignalAfterAddBody(Me)
+            End If
         End Sub
 
         Public MustOverride Function SwapBodyPartList() As AnimatGUI.Collections.BodyParts

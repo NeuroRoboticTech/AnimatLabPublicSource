@@ -80,6 +80,22 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
+        Public Overridable ReadOnly Property TotalNodeCount() As Integer
+            Get
+                If Not m_bnRootSubSystem Is Nothing Then
+                    Return m_bnRootSubSystem.TotalNodeCount
+                End If
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property TotalLinkCount() As Integer
+            Get
+                If Not m_bnRootSubSystem Is Nothing Then
+                    Return m_bnRootSubSystem.TotalLinkCount
+                End If
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -101,6 +117,12 @@ Namespace DataObjects.Physical
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Total Nodes", GetType(Integer), "TotalNodeCount", _
+                            "Structure Properties", "Tells how many nodes are contained in this organism.", Me.TotalNodeCount, True))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Total Links", GetType(Integer), "TotalLinkCount", _
+                            "Structure Properties", "Tells how many links are contained in this organism.", Me.TotalLinkCount, True))
 
         End Sub
 

@@ -22,6 +22,7 @@ Namespace Forms
 
     Public Class AnimatApplication
         Inherits AnimatForm
+        Implements ManagedAnimatInterfaces.ISimApplication
 
         Private Declare Function GetConsoleWindow Lib "kernel32.dll" () As IntPtr
         Private Declare Function ShowWindow Lib "user32.dll" (ByVal hwnd As IntPtr, ByVal nCmdShow As Int32) As Int32
@@ -1200,7 +1201,7 @@ Namespace Forms
 
         Protected m_bAnnouceUpdates As Boolean = False
 
-        Protected m_SecurityMgr As New AnimatGuiCtrls.Security.SecurityManager
+        Protected m_SecurityMgr As New AnimatSecurityCtrl.SecurityManager(Me)
 
         Protected m_eDefaultLogLevel As ManagedAnimatInterfaces.ILogger.enumLogLevel = ManagedAnimatInterfaces.ILogger.enumLogLevel.ErrorType
         Protected m_strSimVCVersion As String = "10"
@@ -5224,16 +5225,16 @@ Namespace Forms
 
 #Region " Application Events "
 
-        Public Event ProjectLoaded()
-        Public Event ProjectSaved()
-        Public Event ProjectClosed()
-        Public Event ProjectCreated()
-        Public Event ApplicationExiting()
-        Public Event SimulationStarting()
-        Public Event SimulationResuming()
-        Public Event SimulationStarted()
-        Public Event SimulationPaused()
-        Public Event SimulationStopped()
+        Public Event ProjectLoaded() Implements ManagedAnimatInterfaces.ISimApplication.ProjectLoaded
+        Public Event ProjectSaved() Implements ManagedAnimatInterfaces.ISimApplication.ProjectSaved
+        Public Event ProjectClosed() Implements ManagedAnimatInterfaces.ISimApplication.ProjectClosed
+        Public Event ProjectCreated() Implements ManagedAnimatInterfaces.ISimApplication.ProjectCreated
+        Public Event ApplicationExiting() Implements ManagedAnimatInterfaces.ISimApplication.ApplicationExiting
+        Public Event SimulationStarting() Implements ManagedAnimatInterfaces.ISimApplication.SimulationStarting
+        Public Event SimulationResuming() Implements ManagedAnimatInterfaces.ISimApplication.SimulationResuming
+        Public Event SimulationStarted() Implements ManagedAnimatInterfaces.ISimApplication.SimulationStarted
+        Public Event SimulationPaused() Implements ManagedAnimatInterfaces.ISimApplication.SimulationPaused
+        Public Event SimulationStopped() Implements ManagedAnimatInterfaces.ISimApplication.SimulationStopped
         Public Event TimeStepChanged(ByVal doObject As Framework.DataObject)
         Public Event UnitsChanged(ByVal ePrevMass As AnimatGUI.DataObjects.Physical.Environment.enumMassUnits, _
                                   ByVal eNewMass As AnimatGUI.DataObjects.Physical.Environment.enumMassUnits, _
@@ -5244,12 +5245,67 @@ Namespace Forms
         Public Event BodyPartPasteStarting()
         Public Event BodyPartPasteEnding()
 
+        Public Event BeforeAddNode(ByVal doNode As Object) Implements ManagedAnimatInterfaces.ISimApplication.BeforeAddNode
+        Public Event AfterAddNode(ByVal doNode As Object) Implements ManagedAnimatInterfaces.ISimApplication.AfterAddNode
+        Public Event BeforeRemoveNode(ByVal doNode As Object) Implements ManagedAnimatInterfaces.ISimApplication.BeforeRemoveNode
+        Public Event AfterRemoveNode(ByVal doNode As Object) Implements ManagedAnimatInterfaces.ISimApplication.AfterRemoveNode
+
+        Public Event BeforeAddLink(ByVal doLink As Object) Implements ManagedAnimatInterfaces.ISimApplication.BeforeAddLink
+        Public Event AfterAddLink(ByVal doLink As Object) Implements ManagedAnimatInterfaces.ISimApplication.AfterAddLink
+        Public Event BeforeRemoveLink(ByVal doLink As Object) Implements ManagedAnimatInterfaces.ISimApplication.BeforeRemoveLink
+        Public Event AfterRemoveLink(ByVal doLink As Object) Implements ManagedAnimatInterfaces.ISimApplication.AfterRemoveLink
+
+        Public Event BeforeAddBody(ByVal doBody As Object) Implements ManagedAnimatInterfaces.ISimApplication.BeforeAddBody
+        Public Event AfterAddBody(ByVal doBody As Object) Implements ManagedAnimatInterfaces.ISimApplication.AfterAddBody
+        'Public Event BeforeRemoveBody(ByVal doBody As DataObjects.Physical.BodyPart)
+        'Public Event AfterRemoveBody(ByVal doBody As DataObjects.Physical.BodyPart)
+
         Public Overridable Sub SignalTimeStepChanged(ByVal doObject As Framework.DataObject)
             RaiseEvent TimeStepChanged(doObject)
             m_doSimulation.NotifySimTimeStepChanged()
         End Sub
 
         Protected Event ConvertFileVersion(ByVal strProjectFile As String, ByVal fltOldVersion As Single)
+
+        Public Overridable Sub SignalBeforeAddNode(ByVal doNode As DataObjects.Behavior.Node)
+            RaiseEvent BeforeAddNode(doNode)
+        End Sub
+
+        Public Overridable Sub SignalAfterAddNode(ByVal doNode As DataObjects.Behavior.Node)
+            RaiseEvent AfterAddNode(doNode)
+        End Sub
+
+        Public Overridable Sub SignalBeforeRemoveNode(ByVal doNode As DataObjects.Behavior.Node)
+            RaiseEvent BeforeRemoveNode(doNode)
+        End Sub
+
+        Public Overridable Sub SignalAfterRemoveNode(ByVal doNode As DataObjects.Behavior.Node)
+            RaiseEvent AfterRemoveNode(doNode)
+        End Sub
+
+        Public Overridable Sub SignalBeforeAddLink(ByVal doLink As DataObjects.Behavior.Link)
+            RaiseEvent BeforeAddLink(doLink)
+        End Sub
+
+        Public Overridable Sub SignalAfterAddLink(ByVal doLink As DataObjects.Behavior.Link)
+            RaiseEvent AfterAddLink(doLink)
+        End Sub
+
+        Public Overridable Sub SignalBeforeRemoveLink(ByVal doLink As DataObjects.Behavior.Link)
+            RaiseEvent BeforeRemoveLink(doLink)
+        End Sub
+
+        Public Overridable Sub SignalAfterRemoveLink(ByVal doLink As DataObjects.Behavior.Link)
+            RaiseEvent AfterRemoveLink(doLink)
+        End Sub
+
+        Public Overridable Sub SignalBeforeAddBody(ByVal doBody As DataObjects.Physical.BodyPart)
+            RaiseEvent BeforeAddBody(doBody)
+        End Sub
+
+        Public Overridable Sub SignalAfterAddBody(ByVal doBody As DataObjects.Physical.BodyPart)
+            RaiseEvent AfterAddBody(doBody)
+        End Sub
 
 #End Region
 
@@ -5650,7 +5706,7 @@ Namespace Forms
 
         End Sub
 
-        Protected Sub OnRunMacro(ByVal sender As Object, ByVal e As System.EventArgs)
+        Protected Sub OnRunMacro(ByVal sender As Object, ByVal e As System.EventArgs) Handles RunMacroToolStripMenuItem.Click
 
             Try
                 Dim frmProgramModules As New Forms.SelectProgramModule

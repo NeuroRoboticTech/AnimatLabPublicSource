@@ -155,6 +155,15 @@ Namespace DataObjects.Physical
             End Set
         End Property
 
+        Public Overridable ReadOnly Property TotalBodyCount() As Integer
+            Get
+                If Not m_dbRoot Is Nothing Then
+                    Dim iCount As Integer = m_dbRoot.TotalSubChildren()
+                    Return iCount
+                End If
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -185,6 +194,10 @@ Namespace DataObjects.Physical
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Collision Exclusions", m_aryCollisionExclusionPairs.GetType(), "CollisionExclusionPairs", _
                                         "Structure Properties", "Pairs of body parts that should be excluded from collision detection between each other.", m_aryCollisionExclusionPairs, _
                                         GetType(TypeHelpers.CollisionPairsTypeEditor), GetType(TypeHelpers.CollisionPairsTypeConverter)))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Total Body parts", GetType(Integer), "TotalBodyCount", _
+                            "Structure Properties", "Tells how many body parts (rigid bodies and joints) are contained in this structure", Me.TotalBodyCount, True))
+
 
         End Sub
 

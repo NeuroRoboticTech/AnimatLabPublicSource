@@ -85,6 +85,7 @@
     <Compile Include="DataObjectInterfaceMock.vb" />
     <Compile Include="IDataObjectInterface.vb" />
     <Compile Include="ILogger.vb" />
+    <Compile Include="ISimApplication.vb" />
     <Compile Include="ISimulatorInterface.vb" />
     <Compile Include="IStdXml.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

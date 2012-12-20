@@ -131,9 +131,11 @@ Namespace Forms
                 m_btnCancel = Me.btnCancel
 
                 For Each doModule As DataObjects.ProgramModule In Util.Application.ProgramModules
-                    Dim liItem As New ListViewItem(doModule.Name)
-                    liItem.Tag = doModule
-                    lvProgramModules.Items.Add(liItem)
+                    If doModule.AllowUserSelection Then
+                        Dim liItem As New ListViewItem(doModule.Name)
+                        liItem.Tag = doModule
+                        lvProgramModules.Items.Add(liItem)
+                    End If
                 Next
 
             Catch ex As System.Exception

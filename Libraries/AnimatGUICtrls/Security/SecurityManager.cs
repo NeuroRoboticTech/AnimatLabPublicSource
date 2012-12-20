@@ -44,7 +44,7 @@ namespace AnimatGuiCtrls.Security
 		/// <summary>
 		/// Initializes a new instance of the SecurityManager class.
 		/// </summary>
-        public SecurityManager()
+        public SecurityManager(ManagedAnimatInterfaces.ISimApplication oParent)
 		{
             m_Properties = new Dictionary<string, SecurityItem>();
             m_Menus = new Dictionary<string, SecurityItem>();

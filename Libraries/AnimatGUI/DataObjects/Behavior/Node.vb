@@ -790,12 +790,19 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overridable Sub BeforeAddNode()
+            If Not Util.Application Is Nothing Then
+                Util.Application.SignalBeforeAddNode(Me)
+            End If
         End Sub
 
         Public Overridable Sub AfterAddNode()
             AddWorkspaceTreeNode()
             CheckForErrors()
             ConnectDiagramEvents()
+
+            If Not Util.Application Is Nothing Then
+                Util.Application.SignalAfterAddNode(Me)
+            End If
         End Sub
 
         Public Overridable Sub BeforeAddLink(ByVal blLink As Behavior.Link)
@@ -809,12 +816,19 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overridable Sub BeforeRemoveNode()
+            If Not Util.Application Is Nothing Then
+                Util.Application.SignalBeforeRemoveNode(Me)
+            End If
         End Sub
 
         Public Overridable Sub AfterRemoveNode()
             RemoveWorksapceTreeView()
             ClearErrors()
             DisconnectDiagramEvents()
+
+            If Not Util.Application Is Nothing Then
+                Util.Application.SignalAfterRemoveNode(Me)
+            End If
         End Sub
 
         Public Overridable Sub BeforeRemoveLink(ByVal blLink As Behavior.Link)

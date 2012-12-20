@@ -800,6 +800,9 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overridable Sub BeforeAddLink()
+            If Not Util.Application Is Nothing Then
+                Util.Application.SignalBeforeAddLink(Me)
+            End If
         End Sub
 
         Public Overridable Sub AfterAddLink()
@@ -807,9 +810,16 @@ Namespace DataObjects.Behavior
             CheckForErrors()
             ConnectNodeEvents()
             ConnectDiagramEvents()
+
+            If Not Util.Application Is Nothing Then
+                Util.Application.SignalAfterAddLink(Me)
+            End If
         End Sub
 
         Public Overridable Sub BeforeRemoveLink()
+            If Not Util.Application Is Nothing Then
+                Util.Application.SignalBeforeRemoveLink(Me)
+            End If
         End Sub
 
         Public Overridable Sub AfterRemoveLink()
@@ -817,6 +827,10 @@ Namespace DataObjects.Behavior
             CheckForErrors()
             DisconnectNodeEvents()
             DisconnectDiagramEvents()
+
+            If Not Util.Application Is Nothing Then
+                Util.Application.SignalAfterRemoveLink(Me)
+            End If
         End Sub
 
         Public Overrides Sub AfterUndoRemove()

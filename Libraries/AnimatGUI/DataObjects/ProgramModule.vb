@@ -26,6 +26,12 @@ Namespace DataObjects
 
 #Region " Properties "
 
+        Public Overridable ReadOnly Property AllowUserSelection() As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "

@@ -577,6 +577,51 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
+        Public Overridable ReadOnly Property TotalNodeCount() As Integer
+            Get
+                Dim iNodes As Integer = 0
+                Dim doOrganism As Physical.Organism
+                For Each deEntry As DictionaryEntry In Me.Organisms
+                    doOrganism = DirectCast(deEntry.Value, Physical.Organism)
+                    iNodes = iNodes + doOrganism.TotalNodeCount
+                Next
+
+                Return iNodes
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property TotalLinkCount() As Integer
+            Get
+                Dim iLinks As Integer = 0
+                Dim doOrganism As Physical.Organism
+                For Each deEntry As DictionaryEntry In Me.Organisms
+                    doOrganism = DirectCast(deEntry.Value, Physical.Organism)
+                    iLinks = iLinks + doOrganism.TotalLinkCount
+                Next
+
+                Return iLinks
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property TotalBodyCount() As Integer
+            Get
+                Dim iBodies As Integer = 0
+                Dim doStruct As Physical.PhysicalStructure
+                For Each deEntry As DictionaryEntry In Me.Structures
+                    doStruct = DirectCast(deEntry.Value, Physical.PhysicalStructure)
+                    iBodies = iBodies + doStruct.TotalBodyCount
+                Next
+
+                Dim doOrganism As Physical.Organism
+                For Each deEntry As DictionaryEntry In Me.Organisms
+                    doOrganism = DirectCast(deEntry.Value, Physical.Organism)
+                    iBodies = iBodies + doOrganism.TotalBodyCount
+                Next
+
+                Return iBodies
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -704,6 +749,7 @@ Namespace DataObjects.Physical
             End If
             Return Nothing
         End Function
+
 
 #Region " Treeview/Menu Methods "
 

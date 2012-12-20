@@ -191,7 +191,12 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ManagedAnimatInterfaces\ManagedAnimatInterfaces.vbproj">
+      <Project>{EBC9D7C3-EB4A-4515-9426-AD41E0BBEBFC}</Project>
+      <Name>ManagedAnimatInterfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
