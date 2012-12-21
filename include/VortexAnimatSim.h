@@ -163,6 +163,10 @@ namespace VortexAnimatSim
 			class VsPlane;
 			class VsSphere;
 			class VsSpring;
+			class VsTorus;
+			class VsEllipsoid;
+			class VsMouth;
+			class VsOdorSensor;
 		}
 
 		namespace Joints
@@ -172,6 +176,8 @@ namespace VortexAnimatSim
 			class VsHingeLimit;
 			class VsPrismatic;
 			class VsPrismaticLimit;
+			class VsUniversal;
+			class VsFreeJoint;
 		}
 	}
 
@@ -236,12 +242,18 @@ using namespace Vx;
 #include "VsCylinder.h"
 #include "VsCone.h" 
 #include "VsSphere.h"
+#include "VsTorus.h"
+#include "VsEllipsoid.h"
+#include "VsMouth.h"
+#include "VsOdorSensor.h"
 
 #include "VsHinge.h"
 #include "VsHingeLimit.h"
 #include "VsPrismatic.h"
 #include "VsPrismaticLimit.h"
 #include "VsBallSocket.h"
+#include "VsUniversal.h"
+#include "VsFreeJoint.h"
 
 #include "VsAttachment.h"
 #include "VsLine.h"

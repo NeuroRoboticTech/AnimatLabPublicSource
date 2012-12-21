@@ -17,11 +17,18 @@
 #include "VsCylinder.h"
 #include "VsCone.h" 
 #include "VsSphere.h"
+#include "VsTorus.h"
+#include "VsEllipsoid.h"
+#include "VsMouth.h"
+#include "VsOdorSensor.h"
 
 #include "VsHinge.h"
 #include "VsPrismatic.h"
 #include "VsBallSocket.h"
 #include "VsRPRO.h"
+#include "VsUniversal.h"
+#include "VsFreeJoint.h"
+#include "VsDistanceJoint.h"
 
 #include "VsAttachment.h"
 
@@ -109,6 +116,14 @@ try
 		lpPart = new VsLinearHillStretchReceptor;
 	else if(strType == "SPRING")
 		lpPart = new VsSpring;
+	else if(strType == "TORUS")
+		lpPart = new VsTorus;
+	else if(strType == "ELLIPSOID")
+		lpPart = new VsEllipsoid;
+	else if(strType == "MOUTH")
+		lpPart = new VsMouth;
+	else if(strType == "ODORSENSOR")
+		lpPart = new VsOdorSensor;
 	else
 	{
 		lpPart = NULL;
@@ -155,6 +170,12 @@ try
 		lpJoint = new VsRPRO;
 	else if(strType == "STATIC")
 		lpJoint = NULL;
+	else if(strType == "UNIVERSAL")
+		lpJoint = new VsUniversal;
+	else if(strType == "FREEJOINT")
+		lpJoint = new VsFreeJoint;
+	else if(strType == "DISTANCE")
+		lpJoint = new VsDistanceJoint;
 	else
 	{
 		lpJoint = NULL;

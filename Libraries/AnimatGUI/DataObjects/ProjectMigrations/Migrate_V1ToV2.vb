@@ -804,7 +804,6 @@ Namespace DataObjects
 
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "ID", m_strMouthID)
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "PartType", "AnimatGUI.DataObjects.Physical.Bodies.Mouth")
-                m_xnProjectXml.AddNodeValue(xnRigidBody, "ModuleName", "VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll")
 
                 m_xnMouth = xnRigidBody
 

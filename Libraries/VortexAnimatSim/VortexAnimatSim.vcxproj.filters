@@ -168,6 +168,27 @@
     <ClCompile Include="VsMeshMgr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VsUniversal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VsTorus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VsEllipsoid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VsFreeJoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VsMouth.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VsDistanceJoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VsOdorSensor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MeshMinVertexDistanceVisitor.h">
@@ -318,6 +339,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VsMeshMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VsUniversal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VsTorus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VsEllipsoid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VsFreeJoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VsMouth.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VsDistanceJoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VsOdorSensor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

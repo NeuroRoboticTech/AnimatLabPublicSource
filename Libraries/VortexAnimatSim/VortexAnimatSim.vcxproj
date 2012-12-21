@@ -189,9 +189,12 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClCompile Include="VsClassFactory.cpp" />
     <ClCompile Include="VsCone.cpp" />
     <ClCompile Include="VsCylinder.cpp" />
+    <ClCompile Include="VsDistanceJoint.cpp" />
     <ClCompile Include="VsDragger.cpp" />
     <ClCompile Include="VsDraggerHandler.cpp" />
+    <ClCompile Include="VsEllipsoid.cpp" />
     <ClCompile Include="VsForceStimulus.cpp" />
+    <ClCompile Include="VsFreeJoint.cpp" />
     <ClCompile Include="VsHinge.cpp" />
     <ClCompile Include="VsHingeLimit.cpp" />
     <ClCompile Include="VsHud.cpp" />
@@ -207,7 +210,9 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClCompile Include="VsMotorizedJoint.cpp" />
     <ClCompile Include="VsMotorVelocityStimulus.cpp" />
     <ClCompile Include="VsMouseSpring.cpp" />
+    <ClCompile Include="VsMouth.cpp" />
     <ClCompile Include="VsMovableItem.cpp" />
+    <ClCompile Include="VsOdorSensor.cpp" />
     <ClCompile Include="VsOrganism.cpp" />
     <ClCompile Include="VsOsgUserData.cpp" />
     <ClCompile Include="VsOsgUserDataVisitor.cpp" />
@@ -223,8 +228,10 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClCompile Include="VsSphere.cpp" />
     <ClCompile Include="VsSpring.cpp" />
     <ClCompile Include="VsStructure.cpp" />
+    <ClCompile Include="VsTorus.cpp" />
     <ClCompile Include="VsTrackballDragger.cpp" />
     <ClCompile Include="VsTranslateAxisDragger.cpp" />
+    <ClCompile Include="VsUniversal.cpp" />
     <ClCompile Include="WorldCoordinateNodeVisitor.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -241,9 +248,12 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClInclude Include="VsClassFactory.h" />
     <ClInclude Include="VsCone.h" />
     <ClInclude Include="VsCylinder.h" />
+    <ClInclude Include="VsDistanceJoint.h" />
     <ClInclude Include="VsDragger.h" />
     <ClInclude Include="VsDraggerHandler.h" />
+    <ClInclude Include="VsEllipsoid.h" />
     <ClInclude Include="VsForceStimulus.h" />
+    <ClInclude Include="VsFreeJoint.h" />
     <ClInclude Include="VsHinge.h" />
     <ClInclude Include="VsHingeLimit.h" />
     <ClInclude Include="VsHud.h" />
@@ -259,7 +269,9 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClInclude Include="VsMotorizedJoint.h" />
     <ClInclude Include="VsMotorVelocityStimulus.h" />
     <ClInclude Include="VsMouseSpring.h" />
+    <ClInclude Include="VsMouth.h" />
     <ClInclude Include="VsMovableItem.h" />
+    <ClInclude Include="VsOdorSensor.h" />
     <ClInclude Include="VsOrganism.h" />
     <ClInclude Include="VsOsgUserData.h" />
     <ClInclude Include="VsOsgUserDataVisitor.h" />
@@ -275,8 +287,10 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClInclude Include="VsSphere.h" />
     <ClInclude Include="VsSpring.h" />
     <ClInclude Include="VsStructure.h" />
+    <ClInclude Include="VsTorus.h" />
     <ClInclude Include="VsTrackballDragger.h" />
     <ClInclude Include="VsTranslateAxisDragger.h" />
+    <ClInclude Include="VsUniversal.h" />
     <ClInclude Include="WorldCoordinateNodeVisitor.h" />
   </ItemGroup>
   <ItemGroup>
