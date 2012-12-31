@@ -56,13 +56,6 @@ Namespace DataObjects.Physical.Bodies
             End Set
         End Property
 
-        <Browsable(False)> _
-        Public Overrides ReadOnly Property ModuleName() As String
-            Get
-                Return "VortexAnimatPrivateSim_VC" & Util.Application.SimVCVersion & Util.Application.RuntimeModePrefix & ".dll"
-            End Get
-        End Property
-
 #End Region
 
         Public Sub New(ByVal doParent As Framework.DataObject)

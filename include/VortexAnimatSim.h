@@ -167,6 +167,10 @@ namespace VortexAnimatSim
 			class VsEllipsoid;
 			class VsMouth;
 			class VsOdorSensor;
+			class VsFluidPlane;
+			class VsMeshBase;
+			class VsMesh;
+			class VsTerrain;
 		}
 
 		namespace Joints
@@ -246,6 +250,10 @@ using namespace Vx;
 #include "VsEllipsoid.h"
 #include "VsMouth.h"
 #include "VsOdorSensor.h"
+#include "VsFluidPlane.h"
+#include "VsMeshBase.h"
+#include "VsMesh.h"
+#include "VsTerrain.h"
 
 #include "VsHinge.h"
 #include "VsHingeLimit.h"

@@ -193,6 +193,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClCompile Include="VsDragger.cpp" />
     <ClCompile Include="VsDraggerHandler.cpp" />
     <ClCompile Include="VsEllipsoid.cpp" />
+    <ClCompile Include="VsFluidPlane.cpp" />
     <ClCompile Include="VsForceStimulus.cpp" />
     <ClCompile Include="VsFreeJoint.cpp" />
     <ClCompile Include="VsHinge.cpp" />
@@ -206,6 +207,8 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClCompile Include="VsLinearHillMuscle.cpp" />
     <ClCompile Include="VsLinearHillStretchReceptor.cpp" />
     <ClCompile Include="VsMaterialPair.cpp" />
+    <ClCompile Include="VsMesh.cpp" />
+    <ClCompile Include="VsMeshBase.cpp" />
     <ClCompile Include="VsMeshMgr.cpp" />
     <ClCompile Include="VsMotorizedJoint.cpp" />
     <ClCompile Include="VsMotorVelocityStimulus.cpp" />
@@ -228,6 +231,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClCompile Include="VsSphere.cpp" />
     <ClCompile Include="VsSpring.cpp" />
     <ClCompile Include="VsStructure.cpp" />
+    <ClCompile Include="VsTerrain.cpp" />
     <ClCompile Include="VsTorus.cpp" />
     <ClCompile Include="VsTrackballDragger.cpp" />
     <ClCompile Include="VsTranslateAxisDragger.cpp" />
@@ -252,6 +256,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClInclude Include="VsDragger.h" />
     <ClInclude Include="VsDraggerHandler.h" />
     <ClInclude Include="VsEllipsoid.h" />
+    <ClInclude Include="VsFluidPlane.h" />
     <ClInclude Include="VsForceStimulus.h" />
     <ClInclude Include="VsFreeJoint.h" />
     <ClInclude Include="VsHinge.h" />
@@ -265,6 +270,8 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClInclude Include="VsLinearHillMuscle.h" />
     <ClInclude Include="VsLinearHillStretchReceptor.h" />
     <ClInclude Include="VsMaterialPair.h" />
+    <ClInclude Include="VsMesh.h" />
+    <ClInclude Include="VsMeshBase.h" />
     <ClInclude Include="VsMeshMgr.h" />
     <ClInclude Include="VsMotorizedJoint.h" />
     <ClInclude Include="VsMotorVelocityStimulus.h" />
@@ -287,6 +294,7 @@ Copy "$(TargetPath)" ..\..\bin</Command>
     <ClInclude Include="VsSphere.h" />
     <ClInclude Include="VsSpring.h" />
     <ClInclude Include="VsStructure.h" />
+    <ClInclude Include="VsTerrain.h" />
     <ClInclude Include="VsTorus.h" />
     <ClInclude Include="VsTrackballDragger.h" />
     <ClInclude Include="VsTranslateAxisDragger.h" />

@@ -21,6 +21,10 @@
 #include "VsEllipsoid.h"
 #include "VsMouth.h"
 #include "VsOdorSensor.h"
+#include "VsFluidPlane.H"
+#include "VsMeshBase.h"
+#include "VsMesh.h"
+#include "VsTerrain.h"
 
 #include "VsHinge.h"
 #include "VsPrismatic.h"
@@ -124,6 +128,14 @@ try
 		lpPart = new VsMouth;
 	else if(strType == "ODORSENSOR")
 		lpPart = new VsOdorSensor;
+	else if(strType == "FLUIDPLANE")
+		lpPart = new VsFluidPlane;
+	else if(strType == "TERRAIN")
+		lpPart = new VsTerrain;
+	else if(strType == "MESH")
+		lpPart = new VsMesh;
+	else if(strType == "STOMACH")
+		lpPart = new Stomach;
 	else
 	{
 		lpPart = NULL;
