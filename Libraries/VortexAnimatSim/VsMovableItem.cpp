@@ -143,8 +143,12 @@ void VsMovableItem::CreateDragger(string strName)
 	{
 		if(GetVsSimulator()->OsgCmdMgr())
 		{
+			if(m_osgDragger.valid())
+				m_osgDragger.release();
+
 			m_osgDragger = new VsDragger(this, m_lpThisMI->AllowTranslateDragX(), m_lpThisMI->AllowTranslateDragY(), m_lpThisMI->AllowTranslateDragX(),
-										 m_lpThisMI->AllowRotateDragX(), m_lpThisMI->AllowRotateDragY(), m_lpThisMI->AllowRotateDragZ());
+										 m_lpThisMI->AllowRotateDragX(), m_lpThisMI->AllowRotateDragY(), m_lpThisMI->AllowRotateDragZ(), 
+										 m_lpThisMI->UserDefinedDraggerRadius());
 			m_osgDragger->setName(strName + "_Dragger");
 
 			m_osgDragger->setupDefaultGeometry();
@@ -574,6 +578,21 @@ void VsMovableItem::Physics_LoadTransformMatrix(CStdXml &oXml)
 					  aryMT[3][0], aryMT[3][1], aryMT[3][2], aryMT[3][3]);
 	
 	UpdatePositionAndRotationFromMatrix(osgMT);
+}
+
+void VsMovableItem::Physics_ResizeDragHandler(float fltRadius)
+{
+	BOOL bInScene = FALSE;
+	if(m_osgDragger.valid() && m_osgDragger->IsInScene())
+	{
+		m_osgDragger->RemoveFromScene();
+		bInScene = TRUE;
+	}
+
+	CreateDragger(m_lpThisAB->Name());
+	
+	if(bInScene)
+		m_osgDragger->AddToScene();
 }
 
 void VsMovableItem::Physics_ResetGraphicsAndPhysics()

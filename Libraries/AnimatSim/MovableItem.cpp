@@ -62,6 +62,7 @@ MovableItem::MovableItem(void)
 	m_vDiffuse.Set(1, 0, 0, 1);
 	m_vSpecular.Set(0.25f, 0.25f, 0.25f, 1);
 	m_fltShininess = 64;
+	m_fltUserDefinedDraggerRadius = -1;
 }
 
 /**
@@ -1077,6 +1078,22 @@ BOOL MovableItem::AllowRotateDragY() {return TRUE;}
 **/
 BOOL MovableItem::AllowRotateDragZ() {return TRUE;}
 
+
+void MovableItem::UserDefinedDraggerRadius(float fltRadius)
+{
+	if(fltRadius <= 0)
+		m_fltUserDefinedDraggerRadius = -1;
+	else
+		m_fltUserDefinedDraggerRadius = fltRadius;
+
+	if(m_lpPhysicsMovableItem)
+		m_lpPhysicsMovableItem->Physics_ResizeDragHandler(m_fltUserDefinedDraggerRadius);
+}
+		
+
+float MovableItem::UserDefinedDraggerRadius()
+{return m_fltUserDefinedDraggerRadius;}
+
 #pragma endregion
 
 void MovableItem::Selected(BOOL bValue, BOOL bSelectMultiple)
@@ -1283,6 +1300,12 @@ BOOL MovableItem::SetData(string strDataType, string strValue, BOOL bThrowError)
 		Texture(strValue);
 		return TRUE;
 	}
+	
+	if(strDataType == "DRAGGERRADIUS")
+	{
+		UserDefinedDraggerRadius(atof(strValue.c_str()));
+		return TRUE;
+	}
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
@@ -1359,6 +1382,8 @@ void MovableItem::Load(CStdXml &oXml)
 	m_fltShininess = oXml.GetChildFloat("Shininess", m_fltShininess);
 
 	m_strTexture = oXml.GetChildString("Texture", "");
+
+	m_fltUserDefinedDraggerRadius = oXml.GetChildFloat("DraggerSize", m_fltUserDefinedDraggerRadius);
 
 	oXml.OutOfElem(); //OutOf Element
 }

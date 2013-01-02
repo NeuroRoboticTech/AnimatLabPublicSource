@@ -40,6 +40,8 @@ Namespace DataObjects.Physical
 
         Protected m_strTexture As String = ""
 
+        Protected m_snUserDefinedDraggerRadius As ScaledNumber
+
 #End Region
 
 #Region " Properties "
@@ -92,6 +94,22 @@ Namespace DataObjects.Physical
                 Return True
             End Get
         End Property
+
+        Public Overridable Property UserDefinedDraggerRadius() As ScaledNumber
+            Get
+                Return m_snUserDefinedDraggerRadius
+            End Get
+            Set(ByVal Value As ScaledNumber)
+                If Value.ActualValue <= 0 Then
+                    Me.SetSimData("DraggerRadius", "-1", True)
+                    m_snUserDefinedDraggerRadius.SetFromValue(-1)
+                Else
+                    Me.SetSimData("DraggerRadius", Value.ToString, True)
+                    m_snUserDefinedDraggerRadius.CopyData(Value)
+                End If
+            End Set
+        End Property
+
 
 #Region " Location Properties "
 
@@ -298,6 +316,7 @@ Namespace DataObjects.Physical
             m_svLocalPosition = New ScaledVector3(Me, "LocalPosition", "Location of the " & Me.TypeName & " relative to its parent.", "Meters", "m")
             m_svWorldPosition = New ScaledVector3(Me, "WorldPosition", "Location of the " & Me.TypeName & " relative to the center of the world.", "Meters", "m")
             m_svRotation = New ScaledVector3(Me, "Rotation", "Rotation of the object.", "Degrees", "Deg")
+            m_snUserDefinedDraggerRadius = New ScaledNumber(Me, "Dragger Radius", -1, ScaledNumber.enumNumericScale.None, "m", "m")
             m_Transparencies = New BodyTransparencies(Me)
 
             AddHandler m_svLocalPosition.ValueChanged, AddressOf Me.OnLocalPositionValueChanged
@@ -314,6 +333,7 @@ Namespace DataObjects.Physical
             If Not m_svWorldPosition Is Nothing Then m_svWorldPosition.ClearIsDirty()
             If Not m_svRotation Is Nothing Then m_svRotation.ClearIsDirty()
             If Not m_Transparencies Is Nothing Then m_Transparencies.ClearIsDirty()
+            If Not m_snUserDefinedDraggerRadius Is Nothing Then m_snUserDefinedDraggerRadius.ClearIsDirty()
         End Sub
 
         Protected Overrides Sub CloneInternal(ByVal doOriginal As Framework.DataObject, ByVal bCutData As Boolean, ByVal doRoot As Framework.DataObject)
@@ -325,6 +345,7 @@ Namespace DataObjects.Physical
             m_svWorldPosition = DirectCast(bpOrig.m_svWorldPosition.Clone(Me, bCutData, doRoot), Framework.ScaledVector3)
             m_svRotation = DirectCast(bpOrig.m_svRotation.Clone(Me, bCutData, doRoot), Framework.ScaledVector3)
             m_Transparencies = DirectCast(bpOrig.m_Transparencies.Clone(Me, bCutData, doRoot), BodyTransparencies)
+            m_snUserDefinedDraggerRadius = DirectCast(bpOrig.m_snUserDefinedDraggerRadius.Clone(Me, bCutData, doRoot), Framework.ScaledNumber)
             m_bVisible = bpOrig.m_bVisible
             m_strDescription = bpOrig.m_strDescription
 
@@ -408,6 +429,12 @@ Namespace DataObjects.Physical
 
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Shininess", m_fltShininess.GetType(), "Shininess", _
                                         "Visibility", "Sets the shininess for this item.", m_fltShininess))
+
+            pbNumberBag = m_snUserDefinedDraggerRadius.Properties
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Dragger Radius", pbNumberBag.GetType(), "UserDefinedDraggerRadius", _
+                                        "Visibility", "Sets a user defined dragger radius. If this is < 0 then it will use the default size for this part.", pbNumberBag, _
+                                        "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
         End Sub
 
         Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
@@ -430,6 +457,10 @@ Namespace DataObjects.Physical
 
             m_strTexture = oXml.GetChildString("Texture", m_strTexture)
             m_strTexture = Util.VerifyFilePath(m_strTexture)
+
+            If oXml.FindChildElement("DraggerSize", False) Then
+                m_snUserDefinedDraggerRadius.LoadData(oXml, "DraggerSize")
+            End If
 
             oXml.OutOfElem() 'Outof BodyPart Element
 
@@ -459,6 +490,8 @@ Namespace DataObjects.Physical
             m_svLocalPosition.SaveData(oXml, "LocalPosition")
             m_svRotation.SaveData(oXml, "Rotation")
 
+            m_snUserDefinedDraggerRadius.SaveData(oXml, "DraggerSize")
+
             oXml.OutOfElem() 'Outof BodyPart Element
 
         End Sub
@@ -486,6 +519,8 @@ Namespace DataObjects.Physical
 
             m_svLocalPosition.SaveSimulationXml(oXml, Me, "Position")
             Me.RadianRotation.SaveSimulationXml(oXml, Me, "Rotation")
+
+            m_snUserDefinedDraggerRadius.SaveSimulationXml(oXml, Me, "DraggerSize")
 
             oXml.OutOfElem() 'Outof BodyPart Element
         End Sub

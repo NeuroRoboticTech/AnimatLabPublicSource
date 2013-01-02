@@ -122,6 +122,7 @@ namespace VortexAnimatSim
 			virtual void Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos) {};
 			virtual BOOL Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);
 			virtual void Physics_LoadTransformMatrix(CStdXml &oXml);
+			virtual void Physics_ResizeDragHandler(float fltRadius);
 
 			virtual void SetTexture(string strTexture);
 			virtual void SetCulling();

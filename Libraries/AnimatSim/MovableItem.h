@@ -99,6 +99,9 @@ namespace AnimatSim
 			/// directly without having to overload a bunch of methods in each box, sphere, etc..
 			IPhysicsMovableItem *m_lpPhysicsMovableItem;
 
+			/// User defined drag handle radius. If this is -1 then the user has not set the value and the default is used.
+			float m_fltUserDefinedDraggerRadius;
+
 			virtual void LoadPosition(CStdXml &oXml);
 			virtual void LoadRotation(CStdXml &oXml);
 
@@ -205,6 +208,9 @@ namespace AnimatSim
 			virtual BOOL AllowRotateDragX();
 			virtual BOOL AllowRotateDragY();
 			virtual BOOL AllowRotateDragZ();
+
+			virtual void UserDefinedDraggerRadius(float fltRadius);
+			virtual float UserDefinedDraggerRadius();
 
 #pragma endregion
 

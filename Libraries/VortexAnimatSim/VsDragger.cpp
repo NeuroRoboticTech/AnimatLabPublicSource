@@ -17,10 +17,15 @@ namespace VortexAnimatSim
 	{
 
 VsDragger::VsDragger(VsMovableItem *lpParent, BOOL bAllowTranslateX, BOOL bAllowTranslateY, BOOL bAllowTranslateZ, 
-					 BOOL bAllowRotateX, BOOL bAllowRotateY, BOOL bAllowRotateZ)
+					 BOOL bAllowRotateX, BOOL bAllowRotateY, BOOL bAllowRotateZ, float fltUserDefinedRadius)
 {
 	if(!lpParent)
 		THROW_ERROR(Al_Err_lParentNotDefined, Al_Err_strParentNotDefined);
+
+	if(fltUserDefinedRadius <= 0)
+		m_fltUserDefinedRadius = -1;
+	else
+		m_fltUserDefinedRadius = fltUserDefinedRadius;
 
 	m_lpVsParent = lpParent;
 
@@ -83,6 +88,15 @@ void VsDragger::RemoveFromScene()
 			m_lpVsParent->RootGroup()->removeChild(m_osgGripperMT.get());
 }
 
+BOOL VsDragger::IsInScene()
+{
+	if(m_lpVsParent && m_lpVsParent->RootGroup() && m_osgGripperMT.valid())
+		if(m_lpVsParent->RootGroup()->containsNode(m_osgGripperMT.get()))
+			return TRUE;
+
+	return FALSE;
+}
+
 void VsDragger::SetupMatrix()
 {
 	if(m_lpVsParent && m_lpVsParent->RootGroup() && m_osgGripperMT.valid())
@@ -99,7 +113,12 @@ void VsDragger::SetupMatrix()
 		//Use an equation to calculate the radius here. This seemed to work best. 
 		//I tried several size values and found a good radius scale that fit it. Then
 		//I did a regression to find this equation of the line for the radius.
-		float fltRadius = fltMaxDim*0.501794454f + 0.639290375f;
+		float fltRadius;
+		
+		if(m_fltUserDefinedRadius > 0)
+			fltRadius = m_fltUserDefinedRadius;
+		else
+			fltRadius = fltMaxDim*0.501794454f + fltMaxDim;
 
 		//We are dividing the number by 100 because we are using a _sizeTransform that scales it up by 100.
 		//_autoTransform->setMinimumScale( (fltRadius*0.01f) );
