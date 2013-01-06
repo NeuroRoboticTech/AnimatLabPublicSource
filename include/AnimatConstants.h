@@ -427,6 +427,21 @@
 #define Al_Err_lLoadingDebugLib -4064
 #define Al_Err_strLoadingDebugLib "You are attempting to load debug libraries while in release mode."
 
+#define Al_Err_lOpenFile -4065
+#define Al_Err_strOpenFile "Unable to open the specified file."
+
+#define Al_Err_lInvalidMuscleLengthCols -4066
+#define Al_Err_strInvalidMuscleLengthCols "There can only be 3 items in a muscle length data file: Time, Length, and Velocity"
+
+#define Al_Err_lMuscleLengthDataEmpty -4067
+#define Al_Err_strMuscleLengthDataEmpty "There was no data in the muscle length file?"
+
+#define Al_Err_lMuscleLengthTimeStep -4068
+#define Al_Err_strMuscleLengthTimeStep "The time step for the predicted muscle length data does not match the time step of the physics engine."
+
+#define Al_Err_lMuscleLengthStartTime -4069
+#define Al_Err_strMuscleLengthStartTime "The start and end times for the stimulus and the data file do not match."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 #define PI 3.14159

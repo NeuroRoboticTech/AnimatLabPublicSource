@@ -488,87 +488,6 @@ Namespace Forms
 
         End Sub
 
-#Region " Copy/Paste Methods "
-
-        Public Overridable Sub CutSelected()
-
-            Try
-                CopySelected()
-                Util.Application.OnDeleteFromWorkspace(Me, Nothing)
-
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            End Try
-
-        End Sub
-
-        Public Overridable Sub CopySelected()
-
-            Try
-                If Util.ProjectWorkspace.TreeView.SelectedCount > 1 Then
-                    Throw New System.Exception("Only one body part can be selected to be copied at one time.")
-                End If
-
-                If Util.ProjectWorkspace.SelectedDataObject Is Nothing Then
-                    Throw New System.Exception("You must select at least one body part to be copied.")
-                End If
-
-                If Not Util.IsTypeOf(Util.ProjectWorkspace.SelectedDataObject.GetType, GetType(DataObjects.Physical.RigidBody)) Then
-                    Throw New System.Exception("The selected item must be a body part type in order to be copied.")
-                End If
-
-                Dim rbPart As DataObjects.Physical.RigidBody = DirectCast(Util.ProjectWorkspace.SelectedDataObject, DataObjects.Physical.RigidBody)
-
-                If Not rbPart.CanCopy(New ArrayList) Then
-                    Throw New System.Exception("This part cannot be copied.")
-                End If
-
-                rbPart.CopyBodyPart()
-
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            End Try
-
-        End Sub
-
-        'Public Overridable Function SaveSelected(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal rbPart As DataObjects.Physical.RigidBody) As Boolean
-
-        '    oXml.AddElement("BodyPlan")
-
-        '    'First lets sort the selected items into nodes and links and generate temp selected ids
-        '    Dim aryReplaceIDs As New ArrayList
-
-        '    'Call BeforeCopy first
-        '    rbPart.BeforeCopy()
-
-        '    rbPart.AddToReplaceIDList(aryReplaceIDs)
-
-        '    'Save the replaceme ID list
-        '    oXml.AddChildElement("ReplaceIDList")
-        '    oXml.IntoElem() 'Into ReplaceIDList Element
-        '    For Each strID As String In aryReplaceIDs
-        '        oXml.AddChildElement("ID", strID)
-        '    Next
-        '    oXml.OutOfElem() 'Outof ReplaceIDList Element
-
-        '    rbPart.SaveData(rbPart.ParentStructure, oXml)
-
-        '    rbPart.AfterCopy()
-
-        '    Return True
-        'End Function
-
-        Public Overridable Sub PasteSelected(ByVal bInPlace As Boolean)
-
-            Try
-                Util.Application.ToggleBodyPartPasteInProgress()
-            Catch ex As System.Exception
-                AnimatGUI.Framework.Util.DisplayError(ex)
-            End Try
-
-        End Sub
-
-#End Region
 
 #End Region
 
@@ -857,15 +776,15 @@ Namespace Forms
         End Sub
 
         Private Sub CutToolStripButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles CutToolStripButton.Click, CutToolStripMenuItem.Click
-            CutSelected()
+            BodyPart.CutSelected(Me)
         End Sub
 
         Private Sub CopyToolStripButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles CopyToolStripButton.Click, CopyToolStripMenuItem.Click
-            CopySelected()
+            BodyPart.CopySelected()
         End Sub
 
         Private Sub PasteToolStripButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles PasteToolStripButton.Click, PasteToolStripMenuItem.Click
-            PasteSelected(False)
+            BodyPart.PasteSelected(False)
         End Sub
 
         Protected Sub OnBodyPartPasteStarting()

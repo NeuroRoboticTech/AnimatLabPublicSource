@@ -1,27 +1,19 @@
-// CurrentStimulus.h: interface for the CurrentStimulus class.
+// InverseMuscleCurrent.h: interface for the CurrentStimulus class.
 //
 //////////////////////////////////////////////////////////////////////
 
-#if !defined(AFX_INVERSE_MUSCLE_STIM_H__AEBF2DF9_E7A0_4ED2_83CD_BE74B7D74E59__INCLUDED_)
-#define AFX_INVERSE_MUSCLE_STIM_H__AEBF2DF9_E7A0_4ED2_83CD_BE74B7D74E59__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
-namespace VortexAnimatSim
+namespace AnimatSim
 {
 	namespace ExternalStimuli
 	{
 
-		class VORTEX_PORT VsInverseMuscleCurrent  : public AnimatSim::ExternalStimuli::ExternalStimulus
+		class ANIMAT_PORT InverseMuscleCurrent  : public ExternalStimulus
 		{
 		protected:
-			Organism *m_lpOrganism;
-			string m_strOrganismID;
-
-			string m_strNeuralModule;
 			string m_strTargetNodeID;
+			Node *m_lpTargetNode; 
 
 			float *m_lpExternalCurrent;
 
@@ -51,22 +43,39 @@ namespace VortexAnimatSim
 			void LoadMuscleData(string strFilename);
 
 		public:
-			VsInverseMuscleCurrent();
-			virtual ~VsInverseMuscleCurrent();
+			InverseMuscleCurrent();
+			virtual ~InverseMuscleCurrent();
+
+			virtual void RestPotential(float fltV);
+			virtual float RestPotential();
+
+			virtual void Conductance(float fltG);
+			virtual float Conductance();
+
+			virtual void TargetNodeID(string strID);
+			virtual string TargetNodeID();
+			virtual Node *TargetNode();
+
+			virtual void MuscleID(string strID);
+			virtual string MuscleID();
+			virtual LinearHillMuscle *Muscle();
+
+			virtual void MuscleLengthData(string strFilename);
+			virtual string MuscleLengthData();
 
 			virtual void Load(CStdXml &oXml);
 
 			virtual float *GetDataPointer(string strDataType);
+			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 
 			//ActiveItem overrides
 			virtual string Type() {return "InverseMuscleCurrent";};
 			virtual void Initialize();  
 			virtual void Activate();
+			virtual void ResetSimulation();  
 			virtual void StepSimulation();
 			virtual void Deactivate();
 		};
 
 	}			//ExternalStimuli
-}				//VortexAnimatSim
-
-#endif // !defined(AFX_INVERSE_MUSCLE_STIM_H__AEBF2DF9_E7A0_4ED2_83CD_BE74B7D74E59__INCLUDED_)
+}				//AnimatSim

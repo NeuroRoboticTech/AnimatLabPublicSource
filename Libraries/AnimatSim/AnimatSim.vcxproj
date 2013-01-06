@@ -207,6 +207,7 @@ Copy "$(TargetPath)" ..\..\bin
     <ClCompile Include="HudText.cpp" />
     <ClCompile Include="IMotorizedJoint.cpp" />
     <ClCompile Include="IMovableItemCallback.cpp" />
+    <ClCompile Include="InverseMuscleCurrent.cpp" />
     <ClCompile Include="IPhysicsBody.cpp" />
     <ClCompile Include="IPhysicsMovableItem.cpp" />
     <ClCompile Include="ISimGUICallback.cpp" />
@@ -298,6 +299,7 @@ Copy "$(TargetPath)" ..\..\bin
     <ClInclude Include="HudText.h" />
     <ClInclude Include="IMotorizedJoint.h" />
     <ClInclude Include="IMovableItemCallback.h" />
+    <ClInclude Include="InverseMuscleCurrent.h" />
     <ClInclude Include="IPhysicsBody.h" />
     <ClInclude Include="IPhysicsMovableItem.h" />
     <ClInclude Include="ISimGUICallback.h" />

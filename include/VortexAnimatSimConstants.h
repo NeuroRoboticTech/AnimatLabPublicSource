@@ -42,21 +42,6 @@
 #define Vs_Err_lCreatingGeometry -4013
 #define Vs_Err_strCreatingGeometry "An error occurred while creating the collision geometry for the speicifed body."
 
-#define Vs_Err_lOpenFile -4014
-#define Vs_Err_strOpenFile "Unable to open the specified file."
-
-#define Vs_Err_lInvalidMuscleLengthCols -4015
-#define Vs_Err_strInvalidMuscleLengthCols "There can only be 3 items in a muscle length data file: Time, Length, and Velocity"
-
-#define Vs_Err_lMuscleLengthDataEmpty -4016
-#define Vs_Err_strMuscleLengthDataEmpty "There was no data in the muscle length file?"
-
-#define Vs_Err_lMuscleLengthTimeStep -4017
-#define Vs_Err_strMuscleLengthTimeStep "The time step for the predicted muscle length data does not match the time step of the physics engine."
-
-#define Vs_Err_lMuscleLengthStartTime -4019
-#define Vs_Err_strMuscleLengthStartTime "The start and end times for the stimulus and the data file do not match."
-
 #define Vs_Err_lOSGDrawableNotDefined -4020
 #define Vs_Err_strOSGDrawableNotDefined "The OSG Drawable node was note defined before calling VsRigidBody::CreateParts."
 

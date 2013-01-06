@@ -532,8 +532,8 @@ try
 		lpStimulus = new ExternalInputStimulus;
 	else if(strType == "ENABLERINPUT")
 		lpStimulus = new EnablerStimulus;
-	//else if(strType == "INVERSEMUSCLECURRENT")
-	//	lpStimulus = new VsInverseMuscleCurrent;
+	else if(strType == "INVERSEMUSCLECURRENT")
+		lpStimulus = new InverseMuscleCurrent;
 	else if(strType == "CURRENT")
 		lpStimulus = new AnimatSim::ExternalStimuli::CurrentStimulus;
 	else

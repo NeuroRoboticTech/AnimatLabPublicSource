@@ -282,6 +282,9 @@
     <ClCompile Include="RPRO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="InverseMuscleCurrent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActivatedItem.h">
@@ -549,6 +552,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RPRO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InverseMuscleCurrent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
