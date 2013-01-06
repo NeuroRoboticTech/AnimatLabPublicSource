@@ -281,7 +281,6 @@ using namespace Vx;
 
 #include "VsMotorVelocityStimulus.h"
 #include "VsForceStimulus.h"
-#include "VsInverseMuscleCurrent.h"
 
 #include "VsTrackballDragger.h"
 #include "VsTranslateAxisDragger.h"

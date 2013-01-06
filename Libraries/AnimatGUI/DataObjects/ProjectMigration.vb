@@ -86,22 +86,25 @@ Namespace DataObjects
             m_aryAFNN_Files = Directory.GetFiles(m_strProjectPath, "*.afnn")
             m_aryARNN_Files = Directory.GetFiles(m_strProjectPath, "*.arnn")
 
-            If Not Directory.Exists(m_strProjectPath & "\Backup") Then
-                Directory.CreateDirectory(m_strProjectPath & "\Backup")
-            End If
+            'If Not Directory.Exists(m_strProjectPath & "\Backup") Then
+            '    Directory.CreateDirectory(m_strProjectPath & "\Backup")
+            'End If
 
-            CopyFiles(m_aryAPROJ_Files)
-            CopyFiles(m_aryASTL_Files)
-            CopyFiles(m_aryABPE_Files)
-            CopyFiles(m_aryABSYS_Files)
-            CopyFiles(m_aryASIM_Files)
-            CopyFiles(m_aryOBJ_Files)
-            CopyFiles(m_aryMTL_Files)
-            CopyFiles(m_aryASE_Files)
-            CopyFiles(m_aryATVF_Files)
-            CopyFiles(m_aryABEF_Files)
-            CopyFiles(m_aryAFNN_Files)
-            CopyFiles(m_aryARNN_Files)
+            'Copy all files in the current directory to the new one.
+            Util.CopyDirectory(m_strProjectPath, m_strProjectPath & "\Backup", False)
+
+            'CopyFiles(m_aryAPROJ_Files)
+            'CopyFiles(m_aryASTL_Files)
+            'CopyFiles(m_aryABPE_Files)
+            'CopyFiles(m_aryABSYS_Files)
+            'CopyFiles(m_aryASIM_Files)
+            'CopyFiles(m_aryOBJ_Files)
+            'CopyFiles(m_aryMTL_Files)
+            'CopyFiles(m_aryASE_Files)
+            'CopyFiles(m_aryATVF_Files)
+            'CopyFiles(m_aryABEF_Files)
+            'CopyFiles(m_aryAFNN_Files)
+            'CopyFiles(m_aryARNN_Files)
 
         End Sub
 
