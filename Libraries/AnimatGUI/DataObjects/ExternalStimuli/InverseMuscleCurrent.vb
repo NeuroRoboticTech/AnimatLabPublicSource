@@ -269,6 +269,10 @@ Namespace DataObjects.ExternalStimuli
             oXml.OutOfElem()
         End Sub
 
+        'Public Overrides Sub SaveDataColumnToXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
+
+        'End Sub
+
 #Region " DataObject Methods "
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)

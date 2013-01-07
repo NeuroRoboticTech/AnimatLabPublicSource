@@ -291,7 +291,7 @@ void ActivatedItemMgr::StepSimulation()
 			else if(lpItem->NeedToDeactivate())
 				lpItem->Deactivate();
 
-			if(lpItem->IsActivated())
+			if(lpItem->IsActivated() && lpItem->NeedToStep())
 				lpItem->StepSimulation();
 		}
 	}

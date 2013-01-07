@@ -187,10 +187,13 @@ void InverseMuscleCurrent::Initialize()
 	//Tells how many time steps it takes before we do this stimulus.
 	//The neural stuff can have faster time steps than the physics engine.
 	//We only need to update this guy when the physics engine steps though.
-	m_iStepInterval = m_lpSim->PhysicsTimeStep()/m_lpSim->TimeStep();
+	m_iStepInterval = (int) (m_lpSim->PhysicsTimeStep()/m_lpSim->TimeStep() + 0.5);
 
 	if(!Std_IsBlank(m_strMuscleID))
 		m_lpMuscle = dynamic_cast<LinearHillMuscle *>( m_lpSim->FindByID(m_strMuscleID));
+
+	m_lStartSlice = (long) (m_fltStartTime / m_lpSim->TimeStep() + 0.5);
+	m_lEndSlice = (long) (m_fltEndTime / m_lpSim->TimeStep() + 0.5);
 }
 
 void InverseMuscleCurrent::ResetSimulation()

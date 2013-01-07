@@ -373,9 +373,9 @@ Namespace DataObjects.ExternalStimuli
 
 #Region " DragObject Methods "
 
-        Public Overrides Sub SaveDataColumnToXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
+        'Public Overrides Sub SaveDataColumnToXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 
-        End Sub
+        'End Sub
 
         Public Overrides Function FindDragObject(ByVal strStructureName As String, ByVal strDataItemID As String, Optional ByVal bThrowError As Boolean = True) As DataObjects.DragObject
 
@@ -397,9 +397,16 @@ Namespace DataObjects.ExternalStimuli
                 myAssembly = System.Reflection.Assembly.Load(Me.AssemblyModuleName)
                 frmDataItem.ImageManager.AddImage(myAssembly, Me.WorkspaceImageName)
 
+                Dim tnNodes As Crownwood.DotNetMagic.Controls.NodeCollection
+                If tnParent Is Nothing Then
+                    tnNodes = frmDataItem.TreeView.Nodes
+                Else
+                    tnNodes = tnParent.Nodes
+                End If
+
                 Dim tnNode As Crownwood.DotNetMagic.Controls.Node
                 Dim tnStimuli As Crownwood.DotNetMagic.Controls.Node = Nothing
-                For Each tnNode In frmDataItem.TreeView.Nodes
+                For Each tnNode In tnNodes
                     If tnNode.Text = "Stimuli" Then
                         tnStimuli = tnNode
                     End If
