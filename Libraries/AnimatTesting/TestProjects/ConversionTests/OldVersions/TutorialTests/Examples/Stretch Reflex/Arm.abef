@@ -35,6 +35,54 @@
 <Link>
 <AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
 <ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.NonSpikingChemical</ClassName>
+<ID>e6202c87-5fce-42dd-b492-ea45697a83e7</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID/>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID/>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<Name>Nicotinic ACh type</Name>
+<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
+<MaxSynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<PreSynapticThreshold Value="-65" Scale="milli" Actual="-0.065"/>
+<PreSynapticSaturationLevel Value="-20" Scale="milli" Actual="-0.02"/>
+</Link>
+<Link>
+<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.NonSpikingChemical</ClassName>
 <ID>390b182b-5fed-426b-a5e3-a50a730f384f</ID>
 <AdjustDst>False</AdjustDst>
 <AdjustOrg>False</AdjustOrg>
@@ -239,66 +287,6 @@
 <Link>
 <AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
 <ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
-<ID>fad8521f-194c-4fc3-bd63-8a6f9f0eced8</ID>
-<AdjustDst>False</AdjustDst>
-<AdjustOrg>False</AdjustOrg>
-<ArrowDestination>
-<Style>Circle</Style>
-<Size>Medium</Size>
-<Angle>deg30</Angle>
-<Filled>True</Filled>
-</ArrowDestination>
-<ArrowMiddle>
-<Style>None</Style>
-<Size>Small</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowMiddle>
-<ArrowOrigin>
-<Style>None</Style>
-<Size>Small</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowOrigin>
-<BackMode>Transparent</BackMode>
-<DashStyle>Solid</DashStyle>
-<DrawColor>-16777216</DrawColor>
-<DrawWidth>1</DrawWidth>
-<DestinationID/>
-<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
-<Hidden>False</Hidden>
-<Jump>Arc</Jump>
-<LineStyle>Polyline</LineStyle>
-<OrthogonalDynamic>True</OrthogonalDynamic>
-<OriginID/>
-<OrientedText>True</OrientedText>
-<Selectable>True</Selectable>
-<Stretchable>True</Stretchable>
-<Text/>
-<ToolTip/>
-<Url/>
-<ZOrder>0</ZOrder>
-<Name>Hyperpolarizing IPSP</Name>
-<EquilibriumPotential Value="-70" Scale="milli" Actual="-0.07"/>
-<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
-<DecayRate Value="10" Scale="milli" Actual="0.01"/>
-<RelativeFacilitation Value="1.5" Scale="None" Actual="1.5"/>
-<FacilitationDecay Value="100" Scale="milli" Actual="0.1"/>
-<VoltageDependent>False</VoltageDependent>
-<MaxRelativeConductance Value="5" Scale="micro" Actual="5e-06"/>
-<SaturatePotential Value="-30" Scale="milli" Actual="-0.03"/>
-<ThresholdPotential Value="-60" Scale="milli" Actual="-0.06"/>
-<Hebbian>False</Hebbian>
-<MaxAugmentedConductance Value="1" Scale="micro" Actual="1e-06"/>
-<LearningIncrement>0.1</LearningIncrement>
-<LearningTimeWindow Value="20" Scale="milli" Actual="0.02"/>
-<AllowForgetting>True</AllowForgetting>
-<ForgettingTimeWindow Value="10000" Scale="milli" Actual="10"/>
-<ConsolidationFactor>1</ConsolidationFactor>
-</Link>
-<Link>
-<AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
-<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
 <ID>9209503c-4533-46dc-a48f-0a1cf5223cc2</ID>
 <AdjustDst>False</AdjustDst>
 <AdjustOrg>False</AdjustOrg>
@@ -418,15 +406,15 @@
 </Link>
 <Link>
 <AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
-<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.NonSpikingChemical</ClassName>
-<ID>e6202c87-5fce-42dd-b492-ea45697a83e7</ID>
+<ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
+<ID>fad8521f-194c-4fc3-bd63-8a6f9f0eced8</ID>
 <AdjustDst>False</AdjustDst>
 <AdjustOrg>False</AdjustOrg>
 <ArrowDestination>
-<Style>Arrow</Style>
+<Style>Circle</Style>
 <Size>Medium</Size>
 <Angle>deg30</Angle>
-<Filled>False</Filled>
+<Filled>True</Filled>
 </ArrowDestination>
 <ArrowMiddle>
 <Style>None</Style>
@@ -458,11 +446,23 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<Name>Nicotinic ACh type</Name>
-<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
-<MaxSynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
-<PreSynapticThreshold Value="-65" Scale="milli" Actual="-0.065"/>
-<PreSynapticSaturationLevel Value="-20" Scale="milli" Actual="-0.02"/>
+<Name>Hyperpolarizing IPSP</Name>
+<EquilibriumPotential Value="-70" Scale="milli" Actual="-0.07"/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<DecayRate Value="10" Scale="milli" Actual="0.01"/>
+<RelativeFacilitation Value="1.5" Scale="None" Actual="1.5"/>
+<FacilitationDecay Value="100" Scale="milli" Actual="0.1"/>
+<VoltageDependent>False</VoltageDependent>
+<MaxRelativeConductance Value="5" Scale="micro" Actual="5e-06"/>
+<SaturatePotential Value="-30" Scale="milli" Actual="-0.03"/>
+<ThresholdPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<Hebbian>False</Hebbian>
+<MaxAugmentedConductance Value="1" Scale="micro" Actual="1e-06"/>
+<LearningIncrement>0.1</LearningIncrement>
+<LearningTimeWindow Value="20" Scale="milli" Actual="0.02"/>
+<AllowForgetting>True</AllowForgetting>
+<ForgettingTimeWindow Value="10000" Scale="milli" Actual="10"/>
+<ConsolidationFactor>1</ConsolidationFactor>
 </Link>
 <Link>
 <AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
@@ -2993,7 +2993,7 @@
     <GradientColor>0</GradientColor>
     <Text>Bicep</Text>
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>4</ImageIndex>
+    <ImageIndex>2</ImageIndex>
     <Tag>e9b10153-96d3-4eb6-86bd-20cbcb4ce63d</Tag>
   </Node>
   <Node Left="204.75" Top="422" Width="51.5" Height="150">
@@ -3005,7 +3005,7 @@
     <GradientColor>0</GradientColor>
     <Text>Tricep</Text>
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>4</ImageIndex>
+    <ImageIndex>2</ImageIndex>
     <Tag>2bafd86b-27f8-4a02-915f-444289c508b2</Tag>
   </Node>
   <Node Left="37" Top="48" Width="40" Height="40">
@@ -3245,7 +3245,7 @@
     <GradientColor>0</GradientColor>
     <Text>Bicep Stretch</Text>
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>1</ImageIndex>
+    <ImageIndex>3</ImageIndex>
     <Tag>914e2e4c-ae97-4038-bc2f-3cddef62daf4</Tag>
   </Node>
   <Node Left="401" Top="290" Width="56.5" Height="150">
@@ -3257,7 +3257,7 @@
     <GradientColor>0</GradientColor>
     <Text>Tricep Stretch</Text>
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>1</ImageIndex>
+    <ImageIndex>3</ImageIndex>
     <Tag>d8d27662-3f01-44b8-889d-4c2b3cdc9b3c</Tag>
   </Node>
   <Node Left="496.5625" Top="172.375" Width="40" Height="40">
@@ -3544,7 +3544,7 @@
           <Previous Count="1">
             <Item Name="Toolbox" />
           </Previous>
-          <Selected Value="True" />
+          <Selected Value="False" />
           <Child Type="null" />
         </Child>
       </Child>
@@ -3672,7 +3672,7 @@
             <Item Name="Properties" />
             <Item Name="Hierarchy" />
           </Previous>
-          <Selected Value="False" />
+          <Selected Value="True" />
           <Child Type="null" />
         </Child>
       </Child>

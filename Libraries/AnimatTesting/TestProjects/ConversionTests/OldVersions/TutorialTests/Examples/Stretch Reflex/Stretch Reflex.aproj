@@ -21,9 +21,9 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>500</MajorInterval>
+<MajorInterval>5</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>MilliSeconds</TimeScale>
+<TimeScale>Seconds</TimeScale>
 </Form>
 <Form>
 <Title>Project Toolbox</Title>
@@ -87,6 +87,12 @@
 </ChildForms>
 <ToolViewers>
 <ToolHolder>
+<ID>de84b389-cffb-4e8c-a5ac-b03e0a6a5bbf</ID>
+<Name>Tricep Prediction</Name>
+<BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
+</ToolHolder>
+<ToolHolder>
 <ID>557550f7-cc27-4d4e-9f6f-cb382edf8154</ID>
 <Name>Bicep Prediction</Name>
 <BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
@@ -99,20 +105,14 @@
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
 <ToolHolder>
-<ID>78d2098c-86ea-403c-83cd-76da54eed873</ID>
-<Name>Muscles</Name>
-<BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
-<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
-</ToolHolder>
-<ToolHolder>
 <ID>0f4cc478-cd2f-4025-8fc9-058d72cc7021</ID>
 <Name>Tricep Stretch</Name>
 <BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
 <ToolHolder>
-<ID>de84b389-cffb-4e8c-a5ac-b03e0a6a5bbf</ID>
-<Name>Tricep Prediction</Name>
+<ID>78d2098c-86ea-403c-83cd-76da54eed873</ID>
+<Name>Muscles</Name>
 <BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
@@ -145,8 +145,8 @@
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Tricep Stim C</Name>
-<ID>607bf986-9a13-4c07-bbf5-70e8200e1b92</ID>
+<Name>Bicep Stim C</Name>
+<ID>63377c73-6064-4ae0-9d82-23b03e288f24</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
 <EndTime Value="5" Scale="None" Actual="5"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
@@ -155,8 +155,30 @@
 <ValueType>Constant</ValueType>
 <Equation/>
 <OrganismID>8267d7d4-8ad4-4686-8f81-dd27c05aed27</OrganismID>
-<NodeID>a806bc94-b8d6-4b1b-b0e4-58c170d8db71</NodeID>
-<CurrentOn Value="33" Scale="nano" Actual="3.3e-08"/>
+<NodeID>c4265e56-da4d-4860-b285-6db8465ea868</NodeID>
+<CurrentOn Value="40" Scale="nano" Actual="4e-08"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="5" Scale="None" Actual="5"/>
+<CycleOffDuration Value="0" Scale="milli" Actual="0"/>
+<BurstOnDuration Value="5" Scale="None" Actual="5"/>
+<BurstOffDuration Value="0" Scale="milli" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Bicep Stim B</Name>
+<ID>c259fce0-c850-4f77-ba49-d4a964f524d2</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="5" Scale="None" Actual="5"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>True</AlwaysActive>
+<Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>8267d7d4-8ad4-4686-8f81-dd27c05aed27</OrganismID>
+<NodeID>ca847519-3a69-46cb-b3ee-ca98235eb67e</NodeID>
+<CurrentOn Value="45.2" Scale="nano" Actual="4.52e-08"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
 <CycleOnDuration Value="5" Scale="None" Actual="5"/>
@@ -266,28 +288,6 @@
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Bicep Stretch Stim</Name>
-<ID>5dc141c8-3164-41ce-a4a4-c0e7e3c71b47</ID>
-<StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="5.001" Scale="None" Actual="5.001"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
-<ValueType>Constant</ValueType>
-<Equation/>
-<OrganismID>8267d7d4-8ad4-4686-8f81-dd27c05aed27</OrganismID>
-<NodeID>bb188cb2-3d6e-4f09-8df3-990a9b87dae9</NodeID>
-<CurrentOn Value="66" Scale="nano" Actual="6.6e-08"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="5.001" Scale="None" Actual="5.001"/>
-<CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="5.001" Scale="None" Actual="5.001"/>
-<BurstOffDuration Value="0" Scale="None" Actual="0"/>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatTools.dll</AssemblyFile>
-<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
 <Name>Tricep Stim B</Name>
 <ID>736b67df-9ad9-4c0f-9d3a-66090297c7f4</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
@@ -310,8 +310,8 @@
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Bicep Stim C</Name>
-<ID>63377c73-6064-4ae0-9d82-23b03e288f24</ID>
+<Name>Tricep Stim C</Name>
+<ID>607bf986-9a13-4c07-bbf5-70e8200e1b92</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
 <EndTime Value="5" Scale="None" Actual="5"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
@@ -320,8 +320,8 @@
 <ValueType>Constant</ValueType>
 <Equation/>
 <OrganismID>8267d7d4-8ad4-4686-8f81-dd27c05aed27</OrganismID>
-<NodeID>c4265e56-da4d-4860-b285-6db8465ea868</NodeID>
-<CurrentOn Value="40" Scale="nano" Actual="4e-08"/>
+<NodeID>a806bc94-b8d6-4b1b-b0e4-58c170d8db71</NodeID>
+<CurrentOn Value="33" Scale="nano" Actual="3.3e-08"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
 <CycleOnDuration Value="5" Scale="None" Actual="5"/>
@@ -354,24 +354,24 @@
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Bicep Stim B</Name>
-<ID>c259fce0-c850-4f77-ba49-d4a964f524d2</ID>
+<Name>Bicep Stretch Stim</Name>
+<ID>5dc141c8-3164-41ce-a4a4-c0e7e3c71b47</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="5" Scale="None" Actual="5"/>
+<EndTime Value="5.001" Scale="None" Actual="5.001"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>True</AlwaysActive>
-<Enabled>False</Enabled>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
 <ValueType>Constant</ValueType>
 <Equation/>
 <OrganismID>8267d7d4-8ad4-4686-8f81-dd27c05aed27</OrganismID>
-<NodeID>ca847519-3a69-46cb-b3ee-ca98235eb67e</NodeID>
-<CurrentOn Value="45.2" Scale="nano" Actual="4.52e-08"/>
+<NodeID>bb188cb2-3d6e-4f09-8df3-990a9b87dae9</NodeID>
+<CurrentOn Value="66" Scale="nano" Actual="6.6e-08"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="5" Scale="None" Actual="5"/>
-<CycleOffDuration Value="0" Scale="milli" Actual="0"/>
-<BurstOnDuration Value="5" Scale="None" Actual="5"/>
-<BurstOffDuration Value="0" Scale="milli" Actual="0"/>
+<CycleOnDuration Value="5.001" Scale="None" Actual="5.001"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="5.001" Scale="None" Actual="5.001"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
@@ -507,7 +507,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Simulation Controller" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="150, 100" DisplayLocation="150, 150" AutoHideSize="150, 100" FloatingSize="150, 150" FullTitle="Simulation Controller">
+  <Content Name="Simulation Controller" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 100" DisplayLocation="150, 150" AutoHideSize="150, 100" FloatingSize="150, 150" FullTitle="Simulation Controller">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Simulation Controller" />
       <State Value="DockLeft" />

@@ -1,12 +1,12 @@
 <Simulation>
-<ProjectPath>C:\Projects\Tutorials\Examples\Stretch Reflex\</ProjectPath>
+<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\TutorialTests\Examples\Stretch Reflex\</ProjectPath>
 <AnimatModule>VortexAnimatLibrary_vc7.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
 <EnableSimRecording>True</EnableSimRecording>
-<SetSimEnd>False</SetSimEnd>
+<SetSimEnd>True</SetSimEnd>
 <APIFile/>
-<SimEndTime Value="1" Scale="None" Actual="1"/>
+<SimEndTime Value="41" Scale="None" Actual="41"/>
 <Environment>
 <PhysicsTimeStep Value="1" Scale="milli" Actual="0.001"/>
 <FluidDensity Value="0.001" Scale="Kilo" Actual="1"/>

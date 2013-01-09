@@ -286,24 +286,35 @@ Namespace Framework
                 Debug.WriteLine("Exception was caught.")
 
                 If Not ex.InnerException Is Nothing Then
-                    If eErrorTextType = enumErrorTextType.Contains AndAlso ex.InnerException.Message.Contains(strErrorText) Then
-                        Debug.WriteLine("It matched the text")
-                        Return
-                    ElseIf eErrorTextType = enumErrorTextType.BeginsWith AndAlso ex.InnerException.Message.StartsWith(strErrorText) Then
-                        Debug.WriteLine("It matched the text")
-                        Return
-                    ElseIf eErrorTextType = enumErrorTextType.EndsWith AndAlso ex.InnerException.Message.EndsWith(strErrorText) Then
-                        Debug.WriteLine("It matched the text")
-                        Return
-                    Else
-                        Debug.WriteLine("It did not match the text. Message: '" & ex.InnerException.Message & "'")
-                        Throw ex
-                    End If
+                    CheckException(ex.InnerException, strErrorText, eErrorTextType)
                 Else
                     Debug.WriteLine("No inner execption was found.")
                     Throw ex
                 End If
             End Try
+        End Sub
+
+
+        Protected Overridable Sub CheckException(ByVal ex As Exception, ByVal strErrorText As String, _
+                                                           Optional ByVal eErrorTextType As enumErrorTextType = enumErrorTextType.EndsWith)
+            If Not ex Is Nothing Then
+                If eErrorTextType = enumErrorTextType.Contains AndAlso ex.Message.Contains(strErrorText) Then
+                    Debug.WriteLine("It matched the text")
+                    Return
+                ElseIf eErrorTextType = enumErrorTextType.BeginsWith AndAlso ex.Message.StartsWith(strErrorText) Then
+                    Debug.WriteLine("It matched the text")
+                    Return
+                ElseIf eErrorTextType = enumErrorTextType.EndsWith AndAlso ex.Message.EndsWith(strErrorText) Then
+                    Debug.WriteLine("It matched the text")
+                    Return
+                Else
+                    Debug.WriteLine("It did not match the text. Message: '" & ex.Message & "'")
+                    Throw ex
+                End If
+            Else
+                Debug.WriteLine("No execption was found.")
+                Throw ex
+            End If
         End Sub
 
         Protected Overridable Sub OpenDialogAndWait(ByVal strDlgName As String, ByVal oActionMethod As MethodInfo, ByVal aryParams() As Object)
