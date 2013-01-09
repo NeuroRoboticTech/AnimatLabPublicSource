@@ -1,0 +1,729 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3D70C1FB-0EF3-4E48-B90C-5932EB78BC14}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>Resources\AppIcon.ico</ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>DotNetMagic</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Crownwood.DotNetMagic</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>..\..\Bin\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>DotNetMagic2005.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>..\..\Bin\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>DotNetMagic2005.xml</DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Design">
+      <Name>System.Design</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\AreaObscurer.cs">
+    </Compile>
+    <Compile Include="Common\MediaPlayerColorTable.cs" />
+    <Compile Include="Common\MediaPlayerRenderer.cs" />
+    <Compile Include="Common\PlainRenderer.cs" />
+    <Compile Include="Common\ProfessionalBlueColorTable.cs" />
+    <Compile Include="Controls\TabControl\TabPageDesigner.cs" />
+    <Compile Include="Docking\DockingObscurer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\CollectionWithEvents.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\ColorDetails.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\ColorHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\CommandDraw.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\CommandImage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\ControlHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\ConversionHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Definitions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\DragFeedback.cs" />
+    <Compile Include="Common\DrawHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\DropIndicators.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\DropSolid.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\Edges.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\KeyHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Office2007ColorTable.cs" />
+    <Compile Include="Common\Office2007Helpers.cs" />
+    <Compile Include="Common\Office2007Renderer.cs" />
+    <Compile Include="Common\ResourceHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\ThemeColorHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\ThemeHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\BorderForControl\BorderForControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ButtonWithStyle\ButtonWithStyle.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\InertButton\InertButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\OfficeExtender\OfficeExtender.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\PopupBase\PopupBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\PopupBase\PopupShadow.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\ResizeBar\ResizeBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\SlidingTitleBar\SlidingTitleBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\StatusBar\StatusBarControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\StatusBar\StatusPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\StatusBar\StatusPanelBorder.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\StatusBar\StatusPanelCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TabbedGroups\TabbedGroupEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TabbedGroups\TabbedGroups.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TabbedGroups\TabGroupBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TabbedGroups\TabGroupBaseCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TabbedGroups\TabGroupLeaf.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TabbedGroups\TabGroupSequence.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TabbedGroups\Target.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TabbedGroups\TargetArea.cs" />
+    <Compile Include="Controls\TabbedGroups\TargetManager.cs" />
+    <Compile Include="Controls\TabbedGroups\TargetManagerAreas.cs" />
+    <Compile Include="Controls\TabbedGroups\TargetManagerZones.cs" />
+    <Compile Include="Controls\TabControl\TabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TabControl\TabControlDesigner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TabControl\TabPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TabControl\TabPageCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TitleBar\TitleBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TitleBar\TitleButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TitleBar\TitleButtonCollection.cs" />
+    <Compile Include="Controls\Tooltips\PopupTooltipSingle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\TreeControl\DefaultCollectionVC.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TreeControl\DefaultNodeVC.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TreeControl\Definitions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TreeControl\Enums.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TreeControl\EventClasses.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TreeControl\GroupCollectionVC.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TreeControl\GroupNodeVC.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TreeControl\IndentPaddingEdges.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TreeControl\Node.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TreeControl\NodeCache.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TreeControl\NodeCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TreeControl\NodeCollectionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\TreeControl\NodeCollectionEditor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TreeControl\SelectedNodeCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\TreeControl\TreeControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\WizardControl\WizardControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\WizardControl\WizardControlDesigner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\WizardControl\WizardDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\WizardControl\WizardPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\WizardControl\WizardPageCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\AutoHidePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Docking\Collections\ContentCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\Collections\HotZoneCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\Collections\ManagerContentCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\Collections\StringCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\Collections\WindowCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\Collections\WindowDetailCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\Collections\ZoneCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\Content.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\Definitions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\DockingFactory.cs" />
+    <Compile Include="Docking\DockingManager.cs">
+    </Compile>
+    <Compile Include="Docking\FloatingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Docking\HotZone\HotArea.cs" />
+    <Compile Include="Docking\HotZone\HotAreaCollection.cs" />
+    <Compile Include="Docking\HotZone\HotAreaFloating.cs" />
+    <Compile Include="Docking\HotZone\HotAreaInside.cs" />
+    <Compile Include="Docking\HotZone\HotAreaOutside.cs" />
+    <Compile Include="Docking\HotZone\HotAreaTabbed.cs" />
+    <Compile Include="Docking\HotZone\HotZone.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\HotZone\HotZoneFloating.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\HotZone\HotZoneNull.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\HotZone\HotZoneReposition.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\HotZone\HotZoneSequence.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\HotZone\HotZoneTabbed.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\Redocker\Redocker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\Redocker\RedockerContent.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\Redocker\RedockerContentAreas.cs" />
+    <Compile Include="Docking\Redocker\RedockerContentOutline.cs" />
+    <Compile Include="Docking\Redocker\RedockerContentSolid.cs" />
+    <Compile Include="Docking\Redocker\RedockerContentZones.cs" />
+    <Compile Include="Docking\Restore.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\TabStub.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Docking\Window\Window.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Docking\Window\WindowContent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Docking\Window\WindowContentTabbed.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Docking\Window\WindowDetail.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Docking\Window\WindowDetailCaption.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Docking\Zone\Zone.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Docking\Zone\ZoneHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Docking\Zone\ZoneSequence.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\DotNetMagicForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NAG\NAG.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="NAG\NAGScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Win32\Enums.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Win32\Gdi32.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Win32\Structs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Win32\User32.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Win32\Uxtheme.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="Common\DropIndicators.resx">
+      <DependentUpon>DropIndicators.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\DropSolid.resx">
+      <DependentUpon>DropSolid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\Edges.resx">
+      <DependentUpon>Edges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\BorderForControl\BorderForControl.resx">
+      <DependentUpon>BorderForControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ButtonWithStyle.bmp" />
+    <EmbeddedResource Include="Controls\ButtonWithStyle\ButtonWithStyle.resx">
+      <DependentUpon>ButtonWithStyle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\InertButton.bmp" />
+    <EmbeddedResource Include="Controls\InertButton\InertButton.resx">
+      <DependentUpon>InertButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\OfficeExtender.bmp" />
+    <EmbeddedResource Include="Controls\OfficeExtender\OfficeExtender.resx">
+      <DependentUpon>OfficeExtender.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PopupBase\PopupBase.resx">
+      <DependentUpon>PopupBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ResizeBar\ResizeBar.resx">
+      <DependentUpon>ResizeBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SlidingTitleBar.bmp" />
+    <EmbeddedResource Include="Controls\SlidingTitleBar\SlidingTitleBar.resx">
+      <DependentUpon>SlidingTitleBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StatusBar\StatusPanel.resx">
+      <DependentUpon>StatusPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StatusBar\StatusPanelBorder.resx">
+      <DependentUpon>StatusPanelBorder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StatusBarControl.bmp" />
+    <EmbeddedResource Include="Controls\TabbedGroups.bmp" />
+    <EmbeddedResource Include="Controls\TabbedGroups\TabbedGroups.resx">
+      <DependentUpon>TabbedGroups.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TabControl.bmp" />
+    <EmbeddedResource Include="Controls\TabControl\TabControl.resx">
+      <DependentUpon>TabControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TabControl\TabPage.resx">
+      <DependentUpon>TabPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TitleBar.bmp" />
+    <EmbeddedResource Include="Controls\TitleBar\ImageDown.bmp" />
+    <EmbeddedResource Include="Controls\TitleBar\ImageLeft.bmp" />
+    <EmbeddedResource Include="Controls\TitleBar\ImageRight.bmp" />
+    <EmbeddedResource Include="Controls\TitleBar\ImageUp.bmp" />
+    <EmbeddedResource Include="Controls\TitleBar\Pinned.bmp" />
+    <EmbeddedResource Include="Controls\TitleBar\TitleBar.resx">
+      <DependentUpon>TitleBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TitleBar\TitleButton.resx">
+      <DependentUpon>TitleButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TitleBar\Unpinned.bmp" />
+    <EmbeddedResource Include="Controls\TreeControl.bmp" />
+    <EmbeddedResource Include="Controls\TreeControl\DefaultCollectionVC.resx">
+      <DependentUpon>DefaultCollectionVC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TreeControl\DefaultNodeVC.resx">
+      <DependentUpon>DefaultNodeVC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TreeControl\Definitions.resx">
+      <DependentUpon>Definitions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TreeControl\Enums.resx">
+      <DependentUpon>Enums.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TreeControl\EventClasses.resx">
+      <DependentUpon>EventClasses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TreeControl\GroupCollectionVC.resx">
+      <DependentUpon>GroupCollectionVC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TreeControl\GroupNodeVC.resx">
+      <DependentUpon>GroupNodeVC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TreeControl\IndentPaddingEdges.resx">
+      <DependentUpon>IndentPaddingEdges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TreeControl\Node.resx">
+      <DependentUpon>Node.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TreeControl\NodeCache.resx">
+      <DependentUpon>NodeCache.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TreeControl\NodeCollectionDialog.resx">
+      <DependentUpon>NodeCollectionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TreeControl\NodeCollectionEditor.resx">
+      <DependentUpon>NodeCollectionEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TreeControl\TreeControl.resx">
+      <DependentUpon>TreeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\WizardControl.bmp" />
+    <EmbeddedResource Include="Controls\WizardControl\WizardControl.resx">
+      <DependentUpon>WizardControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\WizardControl\WizardDialog.resx">
+      <DependentUpon>WizardDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\WizardControl\WizardPage.resx">
+      <DependentUpon>WizardPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Docking\AutoHidePanel.resx">
+      <DependentUpon>AutoHidePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Docking\FloatingForm.resx">
+      <DependentUpon>FloatingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Docking\TabStub.resx">
+      <DependentUpon>TabStub.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Docking\Window\Window.resx">
+      <DependentUpon>Window.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Docking\Window\WindowDetail.resx">
+      <DependentUpon>WindowDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Docking\Window\WindowDetailCaption.resx">
+      <DependentUpon>WindowDetailCaption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Docking\Zone\Zone.resx">
+      <DependentUpon>Zone.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NAG\NAGScreen.resx">
+      <DependentUpon>NAGScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ExpandImage.bmp" />
+    <EmbeddedResource Include="Resources\ImagesCaptionIDE.bmp" />
+    <EmbeddedResource Include="Resources\ImagesCaptionOffice2003.bmp" />
+    <EmbeddedResource Include="Resources\ImagesCaptionPlain.bmp" />
+    <EmbeddedResource Include="Resources\ImagesMenuControl.bmp" />
+    <EmbeddedResource Include="Resources\ImagesPopupMenu.bmp" />
+    <EmbeddedResource Include="Resources\ImagesTabbedGroups.bmp" />
+    <EmbeddedResource Include="Resources\ImagesTabControl.bmp" />
+    <EmbeddedResource Include="Resources\Indicators.bmp" />
+    <EmbeddedResource Include="Resources\MenuCheckMark.bmp" />
+    <EmbeddedResource Include="Resources\MenuRadioCheckMark.bmp" />
+    <EmbeddedResource Include="Resources\MenuSubMenuMark.bmp" />
+    <EmbeddedResource Include="Resources\TabbedInvalid.cur" />
+    <EmbeddedResource Include="Resources\TabbedValid.cur" />
+    <EmbeddedResource Include="Resources\WizardPicture.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SilverCaptionI.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackButtonCloseA.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackButtonCloseAH.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackButtonCloseI.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackButtonMaxA.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackButtonMaxAH.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackButtonMaxI.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackButtonMinA.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackButtonMinAH.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackButtonMinI.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackButtonPressed.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackButtonRestoreA.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackButtonRestoreAH.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackButtonRestoreI.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackButtonTracking.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackCaptionA.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackCaptionI.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueButtonCloseA.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueButtonCloseI.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueButtonMaxA.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueButtonMaxI.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueButtonMinA.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueButtonMinI.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueButtonPressed.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueButtonRestoreA.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueButtonRestoreI.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueButtonTracking.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueCaptionA.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueCaptionI.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SilverButtonCloseA.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SilverButtonCloseI.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SilverButtonMaxA.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SilverButtonMaxI.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SilverButtonMinA.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SilverButtonMinI.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SilverButtonPressed.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SilverButtonRestoreA.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SilverButtonRestoreI.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SilverButtonTracking.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SilverCaptionA.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SilverButtonTrackingS.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackButtonPressedS.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackButtonTrackingS.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueButtonPressedS.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueButtonTrackingS.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SilverButtonPressedS.bmp" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

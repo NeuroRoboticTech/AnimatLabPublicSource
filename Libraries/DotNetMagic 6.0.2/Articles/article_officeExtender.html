@@ -1,0 +1,220 @@
+<html xmlns="http://www.w3.org/TR/REC-html40">
+  <head>
+    <title>Crownwood Software</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta name="resource-type" content="document" />
+    <meta name="robots" content="ALL" />
+    <meta name="copyright" content="Crownwood Software" />
+    <meta name="author" content="Crownwood Software" />
+    <meta name="description" content="Crownwood Software, DotNetMagic, Empowering the User" />
+    <meta name="Content-Language" content="en-UK" />
+    <meta name="Coverage" content="Worldwide" />
+    <meta name="rating" content="general" />
+    <link rel="stylesheet" type="text/css" href="./images/site.css" />
+  </head>
+  <body leftmargin="0" topmargin="0" border="0">
+    <table border="0" cellpadding="0" cellspacing="0" width="775" style="background-repeat: no-repeat;">
+      <tr>
+        <td>
+          <img src="./images/header-lhs.gif" /></td>
+        <td>
+          <img src="./images/header-mid.gif" /></td>
+        <td>
+          <img src="./images/header-rhs.gif" /></td>
+      </tr>
+    </table>
+    <table width="775" height="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td width="160" valign="top">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td height="21">
+                <img src="./images/shortcut-top.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" background="images/shortcut-mid.gif">
+                  <tr>
+                    <td width="20"></td>
+                    <td>
+                      <span class="redheading">Index</span></td>
+                  </tr>
+                  <tr>
+                    <td width="20"></td>
+                    <td height="10"></td>
+                  </tr>
+                  <tr>
+                    <td height="15" width="20"></td>
+                    <td height="15">
+                      <a class="blue" href="#overview">overview</a></td>
+                  </tr>
+                  <tr>
+                    <td height="2" width="20"></td>
+                    <td height="2"></td>
+                  </tr>
+                </table></td>
+            </tr>
+            <tr>
+              <td height="20">
+                <img src="./images/shortcut-bottom.gif" /></td>
+            </tr>
+          </table></td>
+        <td width="615" valign="top">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td>
+                <img src="./images/section-top.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" background="images/section-mid.gif">
+                  <tr>
+                    <td width="20"></td>
+                    <td>
+                      <table width="100%">
+                        <tr>
+                          <td height="20">
+                            <a class="documentHeader" name="overview">OfficeExtender Overview</a></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                        <tr class="documentMain">
+                          <td valign="top" class="documentText">
+                            <content xmlns="">
+			If your using the <i>Office2003</i>,<i>Office2007</i> or <i>MediaPlayer</i> visual styles in your application when you will probably 
+			want to make use of this handy little component. Unlike other visual style settings the office styles do not use the 
+			standard control background color. So if you want your <i>Form</i> / <i>Panel</i> or <i>Control</i> derived classes 
+			to have the same background color as the current office appearance you need to take additional steps.<p />
+			
+			This is where the <i>OfficeExtender</i> control comes into use. It can be used to automatically update the 
+			background color of specified control instances with the correct color background value. This will take into account 
+			the current desktop theme if using the <i>Office2003</i> style as well as the requested variation of the color needed.<p /><h2>Design Time</h2>
+			The easiest way to use the extender control is to drag and drop an instance onto your <i>Form</i> at design
+			time. As an extender type control it will then add two new properties to each of the child controls on your design
+			surface. These are called <i>Office2003BackColor</i> and <i>Office2007BackColor</i> and cause the <i>BackColor</i>
+			property on the target control to be automatically set according to the selected enumeration value. The possible
+			values for both of the extender properties is as follows: -
+			
+            <UL><LI><i>Disable</i></LI><LI><i>Base</i></LI><LI><i>Light</i></LI><LI><i>Dark</i></LI><LI><i>Enhanced</i></LI></UL>
+
+			The default value is <i>Disable</i> and will prevent the background color being set automatically. If you choose any
+			of the other values than the appropriate color variation for the desktop theme will be set. When the desktop scheme is
+			changed by the user at runtime then any required change will also be proprogated to the controls.<br /><h2>Programmatic Use</h2>
+			In many situations you will not be able to use the extender at design time. Maybe you are creating instances of controls
+			at runtime dynamically or loading information from a cofiguration file. But you can still take advantage of the extender 
+			control by creating an instance in code and then calling the appropriate methods.<p /> 
+			
+			Indeed, this is exactly what the docking manager class does in the library in order to automatically update <i>Form</i> and 
+			<i>Panel</i> instances that are added as <i>Content</i> at runtime. Here is an example of creating an instance and adding two 
+			controls that will be updated with the <i>Base</i> and <i>Dark</i> theme color variations for <i>Office2003</i> styling : -<p /><code>C#</code><pre>
+
+   OfficeExtender extender = new OfficeExtender();
+	
+   extender.SetOffice2003BackColor(_control1, OfficeColor.Base);
+   extender.SetOffice2003BackColor(_control2, OfficeColor.Dark);
+
+</pre><code>VB.NET</code><pre>
+
+   Dim extender As New OfficeExtender()
+	
+   extender.SetOffice2003BackColor(_control1, OfficeColor.Base)
+   extender.SetOffice2003BackColor(_control2, OfficeColor.Dark)
+
+</pre>
+			If instead you are using one of the three <i>Office2007</i> styles then you would need to hook into the <i>Office2007BackColor</i>
+			extender property instead. You also need to set the <i>Office2007Variant</i> property to the correct color scheme that you are using
+			for <i>Office2007</i>. Here is the alternative : -<p /><pre>
+
+   OfficeExtender extender = new OfficeExtender();
+	
+   extender.Office2007Variant = Office2007Variant.Silver;
+   extender.SetOffice2007BackColor(_control1, OfficeColor.Base);
+   extender.SetOffice2007BackColor(_control2, OfficeColor.Dark);
+
+</pre><code>VB.NET</code><pre>
+
+   Dim extender As New OfficeExtender()
+	
+   extender.Office2007Variant = Office2007Variant.Silver
+   extender.SetOffice2007BackColor(_control1, OfficeColor.Base)
+   extender.SetOffice2007BackColor(_control2, OfficeColor.Dark)
+
+</pre>
+			If your application changes to a different color scheme that is still <i>Office2007</i> then you would only need to update
+			the <i>Office2007Variant</i> property to the new scheme.<p />
+
+			You can use the <i>GetOffice2003BackColor</i> / <i>GetOffice2007BackColor</i> methods to discover the current settings of a control 
+			that has already been added to the extender. Plus the <i>RemoveControl</i> method is useful when you are dynamically removing controls 
+			from your <i>Form</i> and so also need it removed from the extender.<p />
+			
+			Here is an example that shows the methods being used: -<p /><code>C#</code><pre>
+
+   Console.WriteLine("Control 2003 Setting: {0}",
+      extender.GetOffice2003BackColor(_control1));
+
+   Console.WriteLine("Control 2007 Setting: {0}",
+      extender.GetOffice2007BackColor(_control1));
+      
+   extender.RemoveControl(_control1);
+
+</pre><code>VB.NET</code><pre>
+
+   Console.WriteLine("Control 2003 Setting: {0}", _
+      extender.GetOffice2003BackColor(_control1))
+      
+   Console.WriteLine("Control 2007 Setting: {0}", _
+      extender.GetOffice2007BackColor(_control1))
+
+   extender.RemoveControl(_control1)
+
+</pre>
+			The three <i>MediaPlayer</i> styles work in the same manner as the <i>Office2007</i> styles and so you should use the following
+			code to set the <i>MediaPlayerVariant</i> property to the correct color scheme. <p /><code>C#</code><pre>
+
+   OfficeExtender extender = new OfficeExtender();
+	
+   extender.MediaPlayerVariant = MediaPlayerVariant.Orange;
+   extender.SetMediaPlayerBackColor(_control1, OfficeColor.Base);
+   extender.SetMediaPlayerBackColor(_control2, OfficeColor.Dark);
+
+</pre><code>VB.NET</code><pre>
+
+   Dim extender As New OfficeExtender()
+	
+   extender.MediaPlayerVariant = MediaPlayerVariant.Orange
+   extender.SetMediaPlayerBackColor(_control1, MediaPlayerColor.Base)
+   extender.SetMediaPlayerBackColor(_control2, MediaPlayerColor.Dark)
+
+</pre><b>NOTE</b> that you should remember to call the <i>Dispose</i> method on the extender just like any other control when you have 
+			finished using it. Otherwise extra references to controls will persist and garbage collection will not work as expected.
+
+		</content></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                      </table></td>
+                    <td width="20"></td>
+                  </tr>
+                </table></td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./images/section-bottom.gif" /></td>
+            </tr>
+          </table></td>
+      </tr>
+    </table>
+    <div style="position:absolute; left:20px; top:132px;">
+      <a href="../readme.html" class="white">ReadMe</a>
+      <span class="cyan">| </span>
+      <a href="articles.html" class="white">Articles</a>
+      <span class="cyan">| </span>
+      <a href="contact.html" class="white">Contact</a>
+    </div>
+    <div style="position:absolute; left:620px; top:132px; text-align:right;">
+      <span class="whitebold">Empowering the User</span>
+    </div>
+  </body>
+</html>

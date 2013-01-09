@@ -1,0 +1,383 @@
+<html xmlns="http://www.w3.org/TR/REC-html40">
+  <head>
+    <title>Crownwood Software</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta name="resource-type" content="document" />
+    <meta name="robots" content="ALL" />
+    <meta name="copyright" content="Crownwood Software" />
+    <meta name="author" content="Crownwood Software" />
+    <meta name="description" content="Crownwood Software, DotNetMagic, Empowering the User" />
+    <meta name="Content-Language" content="en-UK" />
+    <meta name="Coverage" content="Worldwide" />
+    <meta name="rating" content="general" />
+    <link rel="stylesheet" type="text/css" href="./images/site.css" />
+  </head>
+  <body leftmargin="0" topmargin="0" border="0">
+    <table border="0" cellpadding="0" cellspacing="0" width="775" style="background-repeat: no-repeat;">
+      <tr>
+        <td>
+          <img src="./images/header-lhs.gif" /></td>
+        <td>
+          <img src="./images/header-mid.gif" /></td>
+        <td>
+          <img src="./images/header-rhs.gif" /></td>
+      </tr>
+    </table>
+    <table width="775" height="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td width="160" valign="top">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td height="21">
+                <img src="./images/shortcut-top.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" background="images/shortcut-mid.gif">
+                  <tr>
+                    <td width="20"></td>
+                    <td>
+                      <span class="redheading">Index</span></td>
+                  </tr>
+                  <tr>
+                    <td width="20"></td>
+                    <td height="10"></td>
+                  </tr>
+                  <tr>
+                    <td height="15" width="20"></td>
+                    <td height="15">
+                      <a class="blue" href="#overview">overview</a></td>
+                  </tr>
+                  <tr>
+                    <td height="2" width="20"></td>
+                    <td height="2"></td>
+                  </tr>
+                  <tr>
+                    <td height="15" width="20"></td>
+                    <td height="15">
+                      <a class="blue" href="#design">design</a></td>
+                  </tr>
+                  <tr>
+                    <td height="2" width="20"></td>
+                    <td height="2"></td>
+                  </tr>
+                  <tr>
+                    <td height="15" width="20"></td>
+                    <td height="15">
+                      <a class="blue" href="#properties">properties</a></td>
+                  </tr>
+                  <tr>
+                    <td height="2" width="20"></td>
+                    <td height="2"></td>
+                  </tr>
+                  <tr>
+                    <td height="15" width="20"></td>
+                    <td height="15">
+                      <a class="blue" href="#methods">methods</a></td>
+                  </tr>
+                  <tr>
+                    <td height="2" width="20"></td>
+                    <td height="2"></td>
+                  </tr>
+                  <tr>
+                    <td height="15" width="20"></td>
+                    <td height="15">
+                      <a class="blue" href="#TitleBar">TitleBar</a></td>
+                  </tr>
+                  <tr>
+                    <td height="2" width="20"></td>
+                    <td height="2"></td>
+                  </tr>
+                </table></td>
+            </tr>
+            <tr>
+              <td height="20">
+                <img src="./images/shortcut-bottom.gif" /></td>
+            </tr>
+          </table></td>
+        <td width="615" valign="top">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td>
+                <img src="./images/section-top.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" background="images/section-mid.gif">
+                  <tr>
+                    <td width="20"></td>
+                    <td>
+                      <table width="100%">
+                        <tr>
+                          <td height="20">
+                            <a class="documentHeader" name="overview">SlidingTitleBar Overview</a></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                        <tr class="documentMain">
+                          <td valign="top" class="documentText">
+                            <content xmlns="">
+			This control provides a great way for you to make maximum use of limited screen real estate. It combines
+			the <i>TitleBar</i> control with the ability to progressively slide a child control into and out of view. 
+			The  <i>TitleBar</i> control is used to give a heading that indicates to the user the nature of the feature
+			it provides. Any <i>Control</i> derived class can be used as the child control that slides in and out of view.<p />
+			
+			A button is provided on the title area that can be used to show or hide display of the child control. When
+			opened the child control is visible the whole time, but when closed the child is hidden until the user hovers the 
+			mouse over the title area. It will then slide into view and remain displayed for as long as the mouse is over the 
+			title or child control. Once the mouse is moved away the child will slide back into the hidden state.<p />
+		
+			An example will illustrate how the <i>SlidingTitleBar</i> can improve usability of an application. Imagine a 
+			financial application where the user needs to perform calculations, such as adding up a few numbers, on a regular
+			basis. In this case you could place <i>SlidingTitleBar</i> instance at the top of the client area and attach to it a 
+			calculater control. During normal operation only the title part of the control is showing and so takes up very little 
+			space. When the user decides to perform a calculation they just hover the mouse over the title area for a short time 
+			and the calculater slides into view. It will remain in view as the user performs the actual calculation. Once finished 
+			all the user needs to do is move the cursor away from the calculator and it will then slide out of view again.<p />
+			
+			The following sections show how to use the control and describe the more important properties and 
+			events for controlling the <i>SlidingTitleBar</i>. This is not however an exhaustive list and so the
+			help document should be consulted for the definitive list of all functionality.
+		</content></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                      </table></td>
+                    <td width="20"></td>
+                  </tr>
+                </table></td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./images/section-bottom.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./images/section-top.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" background="images/section-mid.gif">
+                  <tr>
+                    <td width="20"></td>
+                    <td>
+                      <table width="100%">
+                        <tr>
+                          <td height="20">
+                            <a class="documentHeader" name="design">Design time support</a></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                        <tr class="documentMain">
+                          <td valign="top" class="documentText">
+                            <content xmlns="">
+			To create an instance of the <i>SlidingTitleBar</i> control you just drag the control from the <i>Toolbox</i> and
+			drop onto the surface of the <i>Form</i> you are designing. You can then use the properties exposed in the <i>Properties</i>
+			window to alter the appearance of the title bar and operation of the sliding effect.<p />
+			
+			In order to provide the content that will appear in the child portion of the control you need to write code to manually 
+			manipulate the child area. It would be much better to expose this area as a designable target in the same way that you can
+			drag and drop controls onto a <i>Panel</i> instance. However, due to limitations in the designer capabilities of .NET you cannot 
+			expose the child <i>Panel</i> control from the <i>SlidingTitleBar</i> as a designable surface and so we are stuck with using code.<p />
+			
+			Here is how you would alter the constructor for your <i>Form</i> to add a <i>Button</i> control that takes up the entire child portion
+			of the sliding control: -<br /><br /><code>C#</code><pre>
+   
+   public MyForm()
+   {
+      InitializeComponent();
+
+      // Create a button instance and add into the sliding control
+      Button b = new Button();
+      b.Dock = DockStyle.Fill;
+      slidingControl1.Panel.Controls.Add(b);
+   }
+
+</pre><code>VB.NET</code><pre>
+   
+   Public Sub New()
+      InitializeComponent()
+
+      ' Create a button instance and add into the sliding control
+      Dim b as New Button()
+      b.Dock = DockStyle.Fill
+      slidingControl1.Panel.Controls.Add(b)
+   End Sub
+
+</pre></content></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                      </table></td>
+                    <td width="20"></td>
+                  </tr>
+                </table></td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./images/section-bottom.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./images/section-top.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" background="images/section-mid.gif">
+                  <tr>
+                    <td width="20"></td>
+                    <td>
+                      <table width="100%">
+                        <tr>
+                          <td height="20">
+                            <a class="documentHeader" name="properties">Properties</a></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                        <tr class="documentMain">
+                          <td valign="top" class="documentText">
+                            <content xmlns="">
+                              <h2>SlideSteps</h2>
+			This property determines the number of steps used to transition from hidden to visible or vica versa. 
+			If you provide a value of 1 then you completely remove the sliding effect because it no longer has
+			any intermediate steps.<br /><h2>SlideDuration</h2>
+			The sliding duration is the total length of time, in milliseconds, that the sliding effect should take. If you
+			specify 500 milliseconds and define the number of slide steps to be 10 then each individual step should occur at 
+			50 millisecond intervals.<br /><h2>SlideOnHover</h2>
+			Use this property to turn on or off the sliding effect when the mouse hovers over the title bar area. By default
+			this property is enabled and so when the child control is not visible and you hover over the title bar a slide
+			effect is used to bring it back into view. When disabled the only way the user can show the child is by using the
+			button on the title bar.<br /><h2>HoverDelay</h2>
+			When the <i>SlideOnHover</i> property is defined as enabled, the delay between hovering over the title bar and starting
+			the slide effect is the number of milliseconds defined by this property.<br /><h2>Open</h2>
+			Use this property to define if the child area should be visible all the time. When defined as <i>True</i> the child area
+			is shown but the user can remove it by using the button on the title bar. If defined as <i>False</i> then the user can
+			either use the button to make it visible all the time or hover over the title bar so it slides into view. Note that when
+			the child is shown because of hovering this property still returns <i>False</i>.
+			
+			<h2>Edge</h2>
+			This determines at which edge the title bar is displayed relative to the child area.
+			
+			The four possible values for the property are: -
+            <UL><LI><i>TitleEdge.Top</i></LI><LI><i>TitleEdge.Bottom</i></LI><LI><i>TitleEdge.Left</i></LI><LI><i>TitleEdge.Right</i></LI></UL><h2>Length</h2>
+			To change the size of the title bar you need to define the <i>Length</i> that it is sized from the <i>Edge</i> it
+			is placed against. So when placed at the top edge, the length will specify the height of the title bar but the
+			width is automatically defined by the width of the whole control. When the title bar is placed on the left edge
+			the <i>Length</i> is the width of the title bar control and the height is automatically defined by the height of 
+			the whole control.
+			
+		</content></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                      </table></td>
+                    <td width="20"></td>
+                  </tr>
+                </table></td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./images/section-bottom.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./images/section-top.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" background="images/section-mid.gif">
+                  <tr>
+                    <td width="20"></td>
+                    <td>
+                      <table width="100%">
+                        <tr>
+                          <td height="20">
+                            <a class="documentHeader" name="methods">Methods</a></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                        <tr class="documentMain">
+                          <td valign="top" class="documentText">
+                            <content xmlns="">
+                              <h2>CloseUp</h2>
+			Call this method to have the slide out control removed from display when then <i>Open</i> property is defined as
+			<i>True</i>. This is useful if you want to simulate combo box style behaviour, where the user hovers over the title
+			bar area to show a list or grid style contents. Then the user would select an item and expect the slide out control
+			to disppear again. Calling this method will achieve the effect of snapping back the slide out control. Note that it
+			has no effect when <i>Open</i> is defined as <i>True</i>.
+		</content></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                      </table></td>
+                    <td width="20"></td>
+                  </tr>
+                </table></td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./images/section-bottom.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./images/section-top.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" background="images/section-mid.gif">
+                  <tr>
+                    <td width="20"></td>
+                    <td>
+                      <table width="100%">
+                        <tr>
+                          <td height="20">
+                            <a class="documentHeader" name="TitleBar">Contained TitleBar</a></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                        <tr class="documentMain">
+                          <td valign="top" class="documentText">
+                            <content xmlns="">
+			The implementation of the <i>SlidingTitleBar</i> contains an instance of a <i>TitleBar</i> control. Almost all the
+			properties of the contained title bar are exposed from the sliding title bar control so that you can customize its 
+			appearance. All the properties are the same name except the background and foreground colour which are exposed as 
+			<i>TitleBarForeColor</i> and <i>TitleBarBackColor</i>. See the <i>TitleBar</i> article for more information about its 
+			properties.
+		</content></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                      </table></td>
+                    <td width="20"></td>
+                  </tr>
+                </table></td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./images/section-bottom.gif" /></td>
+            </tr>
+          </table></td>
+      </tr>
+    </table>
+    <div style="position:absolute; left:20px; top:132px;">
+      <a href="../readme.html" class="white">ReadMe</a>
+      <span class="cyan">| </span>
+      <a href="articles.html" class="white">Articles</a>
+      <span class="cyan">| </span>
+      <a href="contact.html" class="white">Contact</a>
+    </div>
+    <div style="position:absolute; left:620px; top:132px; text-align:right;">
+      <span class="whitebold">Empowering the User</span>
+    </div>
+  </body>
+</html>

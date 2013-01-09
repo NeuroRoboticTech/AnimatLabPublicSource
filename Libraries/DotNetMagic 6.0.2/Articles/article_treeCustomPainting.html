@@ -1,0 +1,929 @@
+<html xmlns="http://www.w3.org/TR/REC-html40">
+  <head>
+    <title>Crownwood Software</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta name="resource-type" content="document" />
+    <meta name="robots" content="ALL" />
+    <meta name="copyright" content="Crownwood Software" />
+    <meta name="author" content="Crownwood Software" />
+    <meta name="description" content="Crownwood Software, DotNetMagic, Empowering the User" />
+    <meta name="Content-Language" content="en-UK" />
+    <meta name="Coverage" content="Worldwide" />
+    <meta name="rating" content="general" />
+    <link rel="stylesheet" type="text/css" href="./images/site.css" />
+  </head>
+  <body leftmargin="0" topmargin="0" border="0">
+    <table border="0" cellpadding="0" cellspacing="0" width="775" style="background-repeat: no-repeat;">
+      <tr>
+        <td>
+          <img src="./images/header-lhs.gif" /></td>
+        <td>
+          <img src="./images/header-mid.gif" /></td>
+        <td>
+          <img src="./images/header-rhs.gif" /></td>
+      </tr>
+    </table>
+    <table width="775" height="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td width="160" valign="top">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td height="21">
+                <img src="./images/shortcut-top.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" background="images/shortcut-mid.gif">
+                  <tr>
+                    <td width="20"></td>
+                    <td>
+                      <span class="redheading">Index</span></td>
+                  </tr>
+                  <tr>
+                    <td width="20"></td>
+                    <td height="10"></td>
+                  </tr>
+                  <tr>
+                    <td height="15" width="20"></td>
+                    <td height="15">
+                      <a class="blue" href="#custompainting">custom painting</a></td>
+                  </tr>
+                  <tr>
+                    <td height="2" width="20"></td>
+                    <td height="2"></td>
+                  </tr>
+                  <tr>
+                    <td height="15" width="20"></td>
+                    <td height="15">
+                      <a class="blue" href="#viewcontrollers">viewControllers</a></td>
+                  </tr>
+                  <tr>
+                    <td height="2" width="20"></td>
+                    <td height="2"></td>
+                  </tr>
+                  <tr>
+                    <td height="15" width="20"></td>
+                    <td height="15">
+                      <a class="blue" href="#nodepainting">node painting</a></td>
+                  </tr>
+                  <tr>
+                    <td height="2" width="20"></td>
+                    <td height="2"></td>
+                  </tr>
+                  <tr>
+                    <td height="15" width="20"></td>
+                    <td height="15">
+                      <a class="blue" href="#nodecollectionpainting">collection painting</a></td>
+                  </tr>
+                  <tr>
+                    <td height="2" width="20"></td>
+                    <td height="2"></td>
+                  </tr>
+                </table></td>
+            </tr>
+            <tr>
+              <td height="20">
+                <img src="./images/shortcut-bottom.gif" /></td>
+            </tr>
+          </table></td>
+        <td width="615" valign="top">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td>
+                <img src="./images/section-top.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" background="images/section-mid.gif">
+                  <tr>
+                    <td width="20"></td>
+                    <td>
+                      <table width="100%">
+                        <tr>
+                          <td height="20">
+                            <a class="documentHeader" name="custompainting">TreeControl Custom Painting</a></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                        <tr class="documentMain">
+                          <td valign="top" class="documentText">
+                            <content xmlns="">
+	This article describes how to provide custom painting within two areas of the <i>TreeControl</i>
+	at runtime. As you would expect, you can provide custom painting of individual <i>Node</i> instances
+	that are visible in the tree. More surprising and certainly very useful is the ability to provide
+	runtime custom painting for a whole collection of nodes. 
+
+	As this is an advanced topic it is recommended that you read the following three basic articles first
+	so that you have a full understanding of the <i>TreeControl</i> before continuing: -
+		<ul><li><a class="mainLink" href="article_treeNode.html">Node article</a></li><li><a class="mainLink" href="article_treeNodeCollection.html">NodeCollection article</a></li><li><a class="mainLink" href="article_treeControl.html">TreeControl article</a></li></ul>
+
+	To see an example of custom painting in action have a look at the <i>SampleTreeControl</i> program 
+	that is provided in the installation. Run the sample and then press the <i>Custom - Draw</i> style button 
+	and the <i>TreeControl</i> instance will show a gradient background to child collections and also show two
+	<i>Node</i> instances that have custom painting defined.
+</content></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                      </table></td>
+                    <td width="20"></td>
+                  </tr>
+                </table></td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./images/section-bottom.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./images/section-top.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" background="images/section-mid.gif">
+                  <tr>
+                    <td width="20"></td>
+                    <td>
+                      <table width="100%">
+                        <tr>
+                          <td height="20">
+                            <a class="documentHeader" name="viewcontrollers">ViewControllers</a></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                        <tr class="documentMain">
+                          <td valign="top" class="documentText">
+                            <content xmlns="">
+        The <i>TreeControl</i> itself does not know how to draw individual nodes or how to process actions such as the user
+        clicking the mouse on a node. It acts only as the <i>Model</i> in the traditional <i>Model, View, Controller</i> design
+        pattern. Root level nodes are stored from the <i>TreeControl</i> and a large number of properties exposed but the 
+        actual <i>View, Controller</i> sections of the design pattern are implemented in separate classes. In fact a single 
+        class is used to implement both the <i>View</i> and the <i>Controller</i>, hence the name <i>ViewController</i>.<p />
+        
+        There are two different types of <i>ViewControllers</i>, the first is used for dealing with individual <i>Node</i>
+        instances and the second for collections of nodes, a <i>NodeCollection</i> instance.<p /><b>INodeVC and NodeVC</b><br />
+        Any node level <i>ViewController</i> must implement the <i>INodeVC</i> interface. This interface defines a variety of 
+        methods, ranging from calculating the size of the node to processing mouse clicks for the node instance. In practice you
+        should never need to implement your own class for the interface from scratch, although you can do so if desired. This is 
+        because there are already two built-in implementations of the interface, <i>DefaultNodeVC</i> and <i>GroupNodeVC</i>.<p />
+        
+        As the name suggests, the <i>DefaultNodeVC</i> is used as the default implementation. The <i>GroupNodeVC</i> is a class
+        derived from <i>DefaultNodeVC</i> and adds the extra group level appearance and functionality you will have seen from the
+        <i>SampleTreeControl</i> application. These implementations provide all functionality using virtual functions that make it 
+        easy to derive a new class from them and then override any methods of interest.<p />
+        
+        Once you have derived your new class from an existing <i>ViewControllers</i> or even built your own from scratch by
+        implementing the <i>INodeVC</i> interface, you need to instruct the <i>TreeControl</i> to use it. This is achieved by
+        assigning an instance of your new class to the <i>NodeVC</i> property of the <i>TreeControl</i>. To remove the use of the
+        custom <i>ViewController</i> you need only assign the value <i>null</i> to the <i>NodeVC</i> property. This is because when
+        the <i>NodeVC</i> property is cleared it will automatically use the appropriate built-in <i>ViewController</i> as defined by
+        the <i>TreeControl</i> property <i>ViewControllers</i>.<p />
+        
+        You are not restricted to using the same <i>ViewContoller</i> for all the <i>Node</i> instances. You can provide each individual
+        node with its own reference by assigning to the <i>Node</i> instance <i>VC</i> property. This provides maximum flexibility because 
+        you have the following order of priority. Any defined <i>Node.VC</i> is used as the top priority, but if this is not defined 
+        then it will use the <i>TreeControl.NodeVC</i> instead. If that is also undefined then it reverts to the appropriate built-in 
+        <i>ViewController</i> instance.<p /><b>INodeCollectionVC and NodeCollectionVC</b><br />
+        The collection level details are identical in nature but applied to node collections instead of node instances. Any node 
+        collection level <i>ViewController</i> must implement the <i>INodeCollectionVC</i> interface. Again you should never need to 
+        implement your own class for the interface from scratch because there are already two built-in implementations of the interface, 
+        <i>DefaultNodeCollectionVC</i> and <i>GroupNodeCollectionVC</i>.<p />
+        
+        The <i>DefaultNodeCollectionVC</i> is used as the default implementation and the <i>GroupNodeCollectionVC</i> is derived from 
+        it. These implementations provide all functionality via a series of virtual functions that make it easy to derive a new class from 
+        them and then override any methods of interest.<p />
+        
+        Once you have derived your new class from an existing <i>ViewControllers</i> you need to instruct the <i>TreeControl</i> to use it. 
+        This is achieved by assigning an instance of your new class to the <i>NodeCollectionVC</i> property of the <i>TreeControl</i>. To remove 
+        the use of the custom <i>ViewController</i> you need only assign the value <i>null</i> to the <i>NodeCollectionVC</i> property.<p />
+        
+        You are not restricted to using the same <i>ViewContoller</i> for all the <i>NodeCollection</i> instances. You can provide each 
+        individual collection with its own reference by assigning it to the <i>NodeCollection</i> instance <i>VC</i> property. The order of
+        priority is to use any defined <i>NodeCollection.VC</i> first, followed by the <i>TreeControl.NodeVC</i> if not defined. If that is also 
+        undefined then it reverts to the appropriate built-in <i>ViewContoller</i> instance.        
+</content></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                      </table></td>
+                    <td width="20"></td>
+                  </tr>
+                </table></td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./images/section-bottom.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./images/section-top.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" background="images/section-mid.gif">
+                  <tr>
+                    <td width="20"></td>
+                    <td>
+                      <table width="100%">
+                        <tr>
+                          <td height="20">
+                            <a class="documentHeader" name="nodepainting">Custom Node Painting</a></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                        <tr class="documentMain">
+                          <td valign="top" class="documentText">
+                            <content xmlns="">
+	To explain how to provide custom painting for a <i>Node</i> instance we are going to develop the code required to 
+	produce the <i>SampleTreeControl</i> appearance when you select the <i>Custom - Draw</i> option. In this example
+	the background of the node is painted with a gradient color effect, a single pixel border drawn around the node
+	edge and some extra text drawn at the right hand side of the node.<p />
+	
+	We begin by creating a new class that derives from the existing <i>DefaultNodeVC</i> and we then override the only
+	two virtual methods we need for this example: -<br /><br /><code>C#</code><pre>
+
+   public class CustomNodeVC : DefaultNodeVC
+   {
+      public override Size MeasureSize(TreeControl tc, Node n, Graphics g)
+      {
+         return base.MeasureSize(tc, n, g);
+      }
+      
+      public override void DrawText(TreeControl tc, Node n, Graphics g, 
+                                    Rectangle rect, int hotLeft)
+      {
+         return base.DrawText(tc, n, g, rect, hotLeft);
+      }
+   }
+
+</pre><code>VB.NET</code><pre>
+
+   Public Class CustomNodeVC
+      Inherits DefaultNodeVC
+
+      Public Overrides Function MeasureSize(ByVal tc As TreeControl, 
+                                            ByVal n As Node, 
+                                            ByVal g As Graphics) As Size
+         Return MyBase.MeasureSize(tc, n, g)
+      End Function
+
+      Public Overrides Sub DrawText(ByVal tc As TreeControl, 
+                                    ByVal n As Node, 
+                                    ByVal g As Graphics, 
+                                    ByVal rect As Rectangle, 
+                                    ByVal hotLeft As Integer)
+         MyBase.DrawText(tc, n, g, rect, hotLeft)
+      End Sub
+</pre><b>MeasureSize Method</b><br />
+	This simple method is called whenever the size of the <i>Node</i> needs to be calculated. At the moment we just call the base class
+	that works by combining together three different values. It will calcuate the requirements for the checkbox/radio button size, the image 
+	size and the text drawing size. The width is just the three sections added together and for the height it will use the tallest of the
+	three. You could override each of these three individual sizes by overriding the three virtual functions called <i>GetCheckSize</i>,
+	<i>GetImageSize</i> and <i>GetTextSize</i>.<p />
+	
+	We requirea little more calculation than just overriding one of the three sections and instead we let the base class 
+	perform the basic size calculation and then modify it afterwards. We are going to add a fixed value of 6 pixels to the height of the
+	area. This represents 3 pixels extra at the top and again at the bottom for drawing the border around the node. To the width we are
+	going to add a fixed value of 11. This is 3 pixels at the start and end for drawing the border plus an extra 5 spacing gap between
+	the node text and the extra text we are drawing manually. Last of all we add to the width the length of the custom text we are
+	going to draw. The new code looks like this: -<br /><br /><code>C#</code><pre>
+
+   public override Size MeasureSize(TreeControl tc, Node n, Graphics g)
+   {
+      bool sizeDirty = n.IsSizeDirty;
+      
+      // Let base class calculate basic sizing values
+      Size newSize = base.MeasureSize (tc, n, g);
+
+      // Do we need recalculate the node size?
+      if (sizeDirty)
+      {
+         // We add a border all around
+         newSize.Width += 6;
+         newSize.Height += 6;
+
+         // Create font we will use to draw extra text
+         Font extraFont = new Font("Arial", 8f, FontStyle.Bold);
+
+         // Measure the extra text we want to draw
+         SizeF extraText = g.MeasureString("Custom Node", extraFont);
+
+         // Add on the space for the extra text plus a spacing gap
+         newSize.Width += (int)(extraText.Width + 1) + 5;
+      }
+      
+      return newSize;
+    }
+
+</pre><code>VB.NET</code><pre>
+
+   Public Overrides Function MeasureSize(ByVal tc As TreeControl,
+                                         ByVal n As Node, 
+                                         ByVal g As Graphics) As Size
+      
+      Dim sizeDirty As Boolean = n.IsSizeDirty
+
+      ' Let base class calculate basic sizing values
+      Dim newSize As Size = MyBase.MeasureSize(tc, n, g)
+
+      ' Do we need recalculate the node size?
+      If (sizeDirty) Then
+         ' We add a border all around
+         newSize.Width += 6
+         newSize.Height += 6
+
+         ' Create font we will use to draw extra text
+         Dim extraFont As New Font("Arial", 8.0F, FontStyle.Bold)
+
+         ' Measure the extra text we want to draw
+         Dim extraText As SizeF = g.MeasureString("Custom Node", 
+                                                  extraFont)
+
+         ' Add on the space for the extra text plus a spacing gap
+         newSize.Width += CType((extraText.Width + 1) + 5, Integer)
+      End If
+
+      Return newSize
+   End Function
+
+</pre>
+
+	Notice that we check if the node needs to be recalculated before we actually apply our changes. To improve
+	performance the size of the node is cached and so only when the <i>IsSizeDirty</i> flag is set to <i>true</i>
+	do we actually need to perform our extra calculation.<p /><b>DrawText Method</b><br />
+	First of all we need to create a rectangle that can be used for drawing the border around the node
+	and also used to fill the area with the gradient effect. By default the bottom of a node is immediately
+	next to the top of the next sibling node, therefore we do not want to draw the border for the node using
+	the rectangle that is passed into the method. If we did then the bottom line of one node would be next to
+	the top line of the sibling and we want there to be a gap between the two nodes. So the first line of code 
+	constructs a rectangle that is inset by a pixel gap.<p />
+	
+	The next line then creates a gradient brush that fades from red on the left side to be white on the right side. We
+	use the brush to fill the background of the node and then draw a single pixel border around the whole area using a
+	light gray color. This gives us the following code: -<br /><br /><code>C#</code><pre>
+
+   public override void DrawText(TreeControl tc, Node n, Graphics g,
+                                 Rectangle rect, int hotLeft)
+   {
+      // Create rectangle indented by a pixel inside the node size
+      Rectangle wholeBounds = new Rectangle(rect.X + 1, 
+                                            rect.Y + 1, 
+                                            rect.Width - 3, 
+                                            rect.Height - 3);
+
+      // Use Gradient brush to fill node area
+      using(Brush drawBrush = new LinearGradientBrush(wholeBounds,
+                                                      Color.Red, 
+                                                      Color.White,
+                                                      0f))
+      {
+	     g.FillRectangle(drawBrush, wholeBounds);
+      }
+		
+      // Draw a pixel width border around node area
+      g.DrawRectangle(Pens.Gray, wholeBounds);
+
+</pre><code>VB.NET</code><pre>
+
+   Public Overrides Sub DrawText(ByVal tc As TreeControl, 
+                                 ByVal n As Node, 
+                                 ByVal g As Graphics, 
+                                 ByVal rect As Rectangle, 
+                                 ByVal hotLeft As Integer)
+      
+      ' Create rectangle indented by a pixel inside the node size
+      Dim wholeBounds As New Rectangle(rect.X + 1, 
+                                       rect.Y + 1, 
+                                       rect.Width - 3, 
+                                       rect.Height - 3)
+
+      ' Use Gradient brush to fill node area
+      Dim drawBrush As New LinearGradientBrush(wholeBounds, 
+                                               Color.Red, 
+                                               Color.White, 
+                                               0.0F)
+
+      g.FillRectangle(drawBrush, wholeBounds)
+
+      ' Draw a pixel width border around node area
+      g.DrawRectangle(Pens.Gray, wholeBounds)
+
+      ' No longer need the brush, so remember to release resources
+      drawBrush.Dispose()
+      
+</pre>
+
+	Our next task is to draw the fixed text on the right hand side of the node area. To do this we need to create
+	a <i>Font</i> object and then measure the width of the text using this. From this a rectangle can be constructed 
+	for drawing the text on the right hand side of the node area: -<br /><br /><code>C#</code><pre>
+
+      // Create fixed font for extra text
+      Font extraFont = new Font("Arial", 8f, FontStyle.Bold);
+
+      // Measure the width of the fixed text
+      SizeF extraText = g.MeasureString("Custom Node", extraFont);
+      int extraWidth = (int)(extraText.Width + 1) + 5;
+
+      // Calculate rectangle for drawing string into
+      Rectangle stringRect = new Rectangle(wholeBounds.Right - extraWidth,
+                                           wholeBounds.Top, 
+                                           extraWidth, 
+                                           wholeBounds.Height);
+
+      // Create a StringFormat so text is centered vertically
+      StringFormat format = new StringFormat();
+      format.Alignment = StringAlignment.Near;
+      format.LineAlignment = StringAlignment.Center;
+
+      // Draw the custom string at right hand side of node
+      g.DrawString("Custom Node", extraFont, 
+                   Brushes.Black, stringRect, format);
+	
+</pre><code>VB.NET</code><pre>
+
+      ' Create fixed font for extra text
+      Dim extraFont As New Font("Arial", 8.0F, FontStyle.Bold)
+
+      ' Measure the width of the fixed text
+      Dim extraText As SizeF = g.MeasureString("Custom Node", extraFont)
+      Dim extraWidth As Integer = CType((extraText.Width + 1) + 5, Integer)
+
+      ' Calculate rectangle for drawing string into
+      Dim stringRect As New RectangleF(wholeBounds.Right - extraWidth, 
+                                       wholeBounds.Top, 
+                                       extraWidth, 
+                                       wholeBounds.Height)
+
+      ' Create a StringFormat so text is centered vertically
+      Dim format As New StringFormat
+      format.Alignment = StringAlignment.Near
+      format.LineAlignment = StringAlignment.Center
+
+      ' Draw the custom string at right hand side of node			
+      g.DrawString("Custom Node", extraFont, 
+                   Brushes.Black, stringRect, format)
+                   
+</pre>
+
+	Last of all we want to call the base class so that the standard drawing takes place for the checkbox/radio button, any
+	image and the node text. This also has the advantage that the correct background and text colors will be used depending
+	on the selected and hot tracking state of the node. The <i>rect</i> that is provided as a parameter is adjusted to remove
+	the extra sizing values we add for out custom painting: -<br /><br /><code>C#</code><pre>
+
+      // Reduce available width to remove the extra text
+      rect.Width -= (int)(extraText.Width + 1) + 5;
+
+      // Reduce left over size
+      rect.Width -= 6;
+      rect.Height -= 6;
+      rect.X += 3;
+      rect.Y += 3;
+
+      // Let base class finish the drawing
+      base.DrawText(tc, n, g, rect, hotLeft);
+   }
+
+</pre><code>VB.NET</code><pre>
+
+      ' Reduce available width to remove the extra text
+      rect.Width -= CType((extraText.Width + 1) + 5, Integer)
+
+      ' Reduce left over size
+      rect.Width -= 6
+      rect.Height -= 6
+      rect.X += 3
+      rect.Y += 3
+
+      ' Let base class finish the drawing
+      MyBase.DrawText(tc, n, g, rect, hotLeft)
+   End Sub
+
+</pre>
+
+	Now the class is completed we just have to add an instance of this to the <i>Node.VC</i> property for each <i>Node</i> instance
+	that we would like to be drawn using the new code. Alternatively we could add this to the <i>TreeControl.NodeVC</i> property so 
+	that it is used for all nodes by default.<p />
+	
+	If you need to override the drawing of the checkbox/radio button or the image you can override the virtual methods 
+	<i>DrawCheck</i> and <i>DrawImage</i> respectively. These, plus the method we have just overridden <i>DrawText</i>, are called 
+	from the <i>Draw</i> virtual method. This can also be overridden for the maximum level of customization possible.<p />
+	
+	It is suggested you examine the code for all these methods in the <i>DefaultNodeVC.cs</i> source file for a complete understanding 
+	of the drawing process and so allowing any level of customization you could need at the node level.
+
+</content></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                      </table></td>
+                    <td width="20"></td>
+                  </tr>
+                </table></td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./images/section-bottom.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./images/section-top.gif" /></td>
+            </tr>
+            <tr>
+              <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" background="images/section-mid.gif">
+                  <tr>
+                    <td width="20"></td>
+                    <td>
+                      <table width="100%">
+                        <tr>
+                          <td height="20">
+                            <a class="documentHeader" name="nodecollectionpainting">Custom Node Collection Painting</a></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                        <tr class="documentMain">
+                          <td valign="top" class="documentText">
+                            <content xmlns="">
+	Custom painting for a <i>NodeCollection</i> instance is similar but not quite the same as for working with a <i>Node</i>.
+	For our example we are going to develop the code required to produce the effect seen in the <i>SampleTreeControl</i> application
+	when you select the <i>Custom - Draw</i> option. In this example the background of the node collection is painted with a gradient color effect, 
+	a single pixel border drawn around the node edge and some extra text drawn above the collection.<p />
+	
+	We begin by creating a new class that derives from the existing <i>DefaultNodeCollectionVC</i> and we then override three virtual 
+	methods: -<br /><br /><code>C#</code><pre>
+
+   public class CustomCollectionVC : DefaultCollectionVC
+   {
+      public override Edges MeasureEdges(TreeControl tc, 
+                                         NodeCollection nc,
+                                         Graphics g)
+      {
+         return base.MeasureEdges(tc, nc, g);
+      }
+
+      public override void AdjustBeforeDrawing(TreeControl tc, 
+                                               NodeCollection nc, 
+                                               ref Rectangle ncBounds)
+      {
+         base.AdjustBeforeDrawing(tc, nc, ref ncBounds);
+      }
+
+      public override void Draw(TreeControl tc, 
+                                NodeCollection nc, 
+                                Graphics g, 
+                                Rectangle clipRectangle, 
+                                bool preDraw)
+      {
+         base.Draw(tc, nc, g, clipRectangle, preDraw);
+      }
+   }
+	
+</pre><code>VB.NET</code><pre>
+
+   Public Class CustomCollectionVC
+      Inherits DefaultCollectionVC
+
+      Public Overrides Function MeasureEdges(ByVal tc As TreeControl, _
+                                             ByVal nc As NodeCollection, _
+                                             ByVal g As Graphics) As Edges
+         Return MyBase.MeasureEdges(tc, nc, g)
+      End Function
+
+      Public Overrides Sub AdjustBeforeDrawing(ByVal tc As TreeControl, _
+                                               ByVal nc As NodeCollection, _
+                                               ByRef ncBounds As Rectangle)
+         MyBase.AdjustBeforeDrawing(tc, nc, ncBounds)
+      End Sub
+
+      Public Overrides Sub Draw(ByVal tc As TreeControl, _
+                                ByVal nc As NodeCollection, _ 
+                                ByVal g As Graphics, _
+                                ByVal clipRectangle As Rectangle, _
+                                ByVal preDraw As Boolean)
+         MyBase.Draw(tc, nc, g, clipRectangle, preDraw)
+      End Sub
+    End Class
+
+</pre><b>MeasureEdges Method</b><br />
+	The <i>TreeControl</i> will automatically add up the sizes of each of the visible children inside the <i>NodeCollection</i> in order
+	to work out the basic size needed for drawing the collection. It will then call the <i>MeasureEdges</i> method to ask how much extra 
+	space should be allocated for each of the four edges around the drawing of the children. The base class implementation will add the
+	space needed for drawing the expand/collapse buttons and the connecting lines between sibling nodes.<p />
+
+	So our implementation should call the base class to have the basic calculations performed and then we need to modify the returned
+	value to add our extra space for the border and custom text. We only want to add our extra drawing for child collections and so the
+	code will first of all check to see if the collection being processed is the root level collection. If not the root collection then
+	it will add an extra 10 pixels to each of the edges and finaly add some extra height for drawing the custom text at the top. This
+	results in the following simple code: -<br /><br /><code>C#</code><pre>
+
+   public override Edges MeasureEdges(TreeControl tc, 
+                                      NodeCollection nc, 
+                                      Graphics g)
+   {
+      ' Get the requirement from the base class first
+      Edges edges = base.MeasureEdges (tc, nc, g);
+
+      ' We only modify nested collections
+      if (nc != tc.Nodes)
+      {
+         ' We add on our space for all edges to create a border
+         edges.Left += 10;
+         edges.Right += 10;
+         edges.Top += 10;
+         edges.Bottom += 10;
+
+         ' Create font we will use for custom painting
+         Font drawFont = new Font("Arial", 8f, FontStyle.Bold);
+
+         ' Add space to draw this text
+         edges.Top += (int)(drawFont.Height * 1.25);
+      }
+			
+      return edges;
+   }
+
+</pre><code>VB.NET</code><pre>
+
+   Public Overrides Function MeasureEdges(ByVal tc As TreeControl, _
+                                          ByVal nc As NodeCollection, _
+                                          ByVal g As Graphics) As Edges
+      ' Get the requirement from the base class first
+      Dim edges As Edges = MyBase.MeasureEdges(tc, nc, g)
+
+      ' We only modify nested collections
+      If (Not nc Is tc.Nodes) Then
+         ' We add on our space for all edges to create a border
+         edges.Left += 10
+         edges.Right += 10
+         edges.Top += 10
+         edges.Bottom += 10
+
+         ' Create font we will use for custom painting
+         Dim drawFont As New Font("Arial", 8.0F, FontStyle.Bold)
+
+         ' Add space to draw this text
+         edges.Top += CType(drawFont.Height * 1.25, Integer)
+      End If
+
+      Return edges
+   End Function
+
+</pre><b>AdjustBeforeDrawing Method</b><br />
+	Before implementing the actual method to perform our custom drawing we must also remember to override one other important method. Because we
+	have changed the size of the collection in the previous method we have impacted on the calculations used when the mouse is clicked over the
+	collection area. The expand/collapse boxes are no longer drawn in the same place, they have been shifted across by 10 pixels. We need to ensure
+	that the rest of the <i>ViewController</i> is made aware of this so that clicking on the expand/collapse box actually works. It will also get called
+	just before any drawing of the base class takes place so that the base class knows the correct rectangle for drawing the inner area. This is the purpose
+	of the <i>AdjustBeforeDrawing</i> method.<p />
+	
+	The method takes as input the total rectangle that bounds the collection and the method is expected to adjust this to take into account any
+	changes made to the horizontal sizing of the collection we made in the <i>MeasureEdges</i> method. In our case we need to reduce the provided rectangle 
+	so that it no longer has the extra 10 pixels border on the left and right hand sides: -<br /><br /><code>C#</code><pre>
+
+   public override void AdjustBeforeDrawing(TreeControl tc, 
+                                            NodeCollection nc, 
+                                            ref Rectangle ncBounds)
+   {
+      // We only modify nested collections
+      if (nc != tc.Nodes)
+      {
+         // Shrink width so the expand/collapse column is moved across
+         ncBounds.X += 10;
+         ncBounds.Width -= 20;
+      }
+      else
+         base.AdjustBeforeDrawing(tc, nc, ref ncBounds);
+   }
+
+</pre><code>VB.NET</code><pre>
+
+   Public Overrides Sub AdjustBeforeDrawing(ByVal tc As TreeControl, _
+                                            ByVal nc As NodeCollection, _
+                                            ByRef ncBounds As Rectangle)
+      ' We only modify nested collections
+      If (Not nc Is tc.Nodes) Then
+         ' Shrink width so the expand/collapse column is moved across
+         ncBounds.X += 10
+         ncBounds.Width -= 20
+      Else
+         MyBase.AdjustBeforeDrawing(tc, nc, ncBounds)
+      End If
+   End Sub
+
+</pre><b>Draw Method</b><br />
+	The draw method for the <i>NodeCollection</i> level <i>ViewController</i> differs in that it gets called twice when drawing each collection.
+	This is the purpose of the <i>preDraw</i> parameter, that is defined as <i>true</i> when it is called the first time and <i>false</i> when
+	called for the second time. As can be guessed from the name, the routine is called for the first time before the actual children of the
+	collection are themselves drawn. Once the children have been drawn then the routine is called for a second time. This process allows painting
+	to occur underneath the children as well as on top of the child nodes.<p />
+	
+	In our example we only need to draw before the child nodes in order to give the gradient background for the group. So the first check in the
+	implementation is to ensure we only process the first call to the routine where <i>preDraw</i> is equal to <i>true</i>. We only want to add our 
+	extra drawing for child collections and so the code will next check to see if the collection being processed is the root level collection. If not 
+	the root collection then it uses a loop to calculate how many parent nodes the collection has. Rather than always draw with a single background color
+	we use three different colors and alternate between them to give a more interesting appearance. The resulting code looks like this: -<br /><br /><code>C#</code><pre>
+
+   public override void Draw(TreeControl tc, 
+                             NodeCollection nc, 
+                             Graphics g, 
+                             Rectangle clipRectangle, 
+                             bool preDraw)
+   {
+      // Do not post draw as that would overwrite the node drawing
+      if (preDraw)
+      {
+         // We only modify nested collections
+         if (nc != tc.Nodes)
+         {
+            int depth = 0;
+
+            // Find depth of this collection
+            Node parent = nc.ParentNode;
+            while(parent != null)
+            {
+               parent = parent.Parent;
+               depth++;
+            }
+
+            Color backColor;
+
+            // We use just three unique colors for background
+            depth = depth % 2;
+
+            if (depth == 0)
+               backColor = Color.Silver;
+            else if (depth == 1)
+               backColor = Color.Bisque;
+            else
+               backColor = Color.LightGreen;
+               
+</pre><code>VB.NET</code><pre>
+
+   Public Overrides Sub Draw(ByVal tc As TreeControl, _
+                             ByVal nc As NodeCollection, _
+                             ByVal g As Graphics, _
+                             ByVal clipRectangle As Rectangle, _
+                             ByVal preDraw As Boolean)
+      ' Do not post draw as that would overwrite the node drawing
+      If (preDraw) Then
+         ' We only modify nested collections
+         If (Not nc Is tc.Nodes) Then
+            Dim depth As Integer = 0
+
+            ' Find depth of this collection
+            Dim parent As Node = nc.ParentNode
+            While (Not parent Is Nothing)
+               parent = parent.Parent
+               depth += 1
+            End While
+
+            Dim backColor As Color
+ 
+            ' We use just three unique colors for background
+            depth = depth Mod 2
+
+            If (depth = 0) Then
+               backColor = Color.Silver
+            Else 
+               If (depth = 1) Then
+                  backColor = Color.Bisque
+               Else
+                  backColor = Color.LightGreen
+               End If
+            End If
+
+</pre>
+
+	To finish off the drawing process we find the height needed to draw the fixed text string and draw the string at the
+	top of the collection bounds. Then a gradient brush is created and used to fill the remainder of the space below the 
+	text drawing area. Finally a gray border is drawn around the gradient area to give it a well defined edge: -<br /><br /><code>C#</code><pre>
+
+            Rectangle ncBounds = nc.Bounds;
+
+            // Create font we will use for custom painting
+            Font drawFont = new Font("Arial", 8f, FontStyle.Bold);
+
+            // Add space to draw this text
+            int textHeight = (int)(drawFont.Height * 1.25);
+
+            // Draw the text first
+            g.DrawString("Custom Collection", 
+                         drawFont, 
+                         Brushes.Black, 
+                         ncBounds.Left + 2, 
+                         ncBounds.Top + 1);
+
+            // We only want to draw slightly inside the collection
+            Rectangle wholeBounds = 
+                   new Rectangle(ncBounds.Left, 
+                                 ncBounds.Top + 2 + textHeight, 
+                                 ncBounds.Width, 
+                                 ncBounds.Height - 5 - textHeight);
+
+            // Create an appropriate gradient brush
+            using(Brush drawBrush = new LinearGradientBrush(wholeBounds,
+                                                            backColor, 
+                                                            Color.White,
+                                                            0f))
+            {
+               // Use Gradient Fill for entire area
+               g.FillRectangle(drawBrush, wholeBounds);
+
+               // Draw an outline around whole border
+               g.DrawRectangle(Pens.Gray, wholeBounds);
+            }
+         }
+      }
+
+      base.Draw(tc, nc, g, clipRectangle, preDraw);
+   }
+
+</pre><code>VB.NET</code><pre>
+
+            Dim ncBounds As Rectangle = nc.Bounds
+
+            ' Create font we will use for custom painting
+            Dim drawFont As New Font("Arial", 8.0F, FontStyle.Bold)
+
+            ' Add space to draw this text
+            Dim textHeight As Integer = CType(drawFont.Height * 1.25, 
+                                              Integer)
+
+            ' Draw the text first
+            g.DrawString("Custom Collection", _
+                         drawFont, _
+                         Brushes.Black, _
+                         ncBounds.Left + 2, _
+                         ncBounds.Top + 1)
+
+            ' We only want to draw slightly inside the collection
+            Dim wholeBounds As New Rectangle(ncBounds.Left, _
+                                             ncBounds.Top + 2 + textHeight, _
+                                             ncBounds.Width, _
+                                             ncBounds.Height - 5 - textHeight)
+
+            ' Create an appropriate gradient brush
+            Dim drawBrush As New LinearGradientBrush(wholeBounds, _
+                                                     backColor, _
+                                                     Color.White, _
+                                                     0.0F)
+
+            ' Use Gradient Fill for entire area
+            g.FillRectangle(drawBrush, wholeBounds)
+
+            ' Draw an outline around whole border
+            g.DrawRectangle(Pens.Gray, wholeBounds)
+
+            drawBrush.Dispose()
+         End If
+      End If
+
+      MyBase.Draw(tc, nc, g, clipRectangle, preDraw)
+   End Sub
+
+</pre>
+
+	To make use of our completed class we need to create an instance and add it to each <i>NodeCollection.VC</i> that we would like to
+	gain the new appearance. In this example we want to use the class for drawing all the collections and so it is simpler to just 
+	add a new instance to the <i>TreeControl.NodeCollectionVC</i> property instead. This will then be used by default for all node
+	collections that have not had a specific <i>ViewContoller</i> assigned to them.<p />
+	
+	It is suggested you examine the code for all these methods in the <i>DefaultNodeCollectionVC.cs</i> source file for a complete 
+	understanding  of the drawing process and so allowing any level of customization you could need at the node level.
+
+</content></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                      </table></td>
+                    <td width="20"></td>
+                  </tr>
+                </table></td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./images/section-bottom.gif" /></td>
+            </tr>
+          </table></td>
+      </tr>
+    </table>
+    <div style="position:absolute; left:20px; top:132px;">
+      <a href="../readme.html" class="white">ReadMe</a>
+      <span class="cyan">| </span>
+      <a href="articles.html" class="white">Articles</a>
+      <span class="cyan">| </span>
+      <a href="contact.html" class="white">Contact</a>
+    </div>
+    <div style="position:absolute; left:620px; top:132px; text-align:right;">
+      <span class="whitebold">Empowering the User</span>
+    </div>
+  </body>
+</html>
