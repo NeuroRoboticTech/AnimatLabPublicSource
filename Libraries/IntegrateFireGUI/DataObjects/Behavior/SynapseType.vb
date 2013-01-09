@@ -41,6 +41,7 @@ Namespace DataObjects.Behavior
 
                 If Not Me.WorkspaceNode Is Nothing Then
                     Me.WorkspaceNode.Text = m_strName
+                    Util.ProjectWorkspace.TreeView.Sort()
                 End If
             End Set
         End Property

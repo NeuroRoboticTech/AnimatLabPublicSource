@@ -47,7 +47,10 @@ Namespace DataObjects.Charting
 
                 m_frmParentChart.AxisList.Add(m_strName, Me)
 
-                If Not m_tnWorkspaceNode Is Nothing Then m_tnWorkspaceNode.Text = m_strName
+                If Not m_tnWorkspaceNode Is Nothing Then
+                    m_tnWorkspaceNode.Text = m_strName
+                    Util.ProjectWorkspace.TreeView.Sort()
+                End If
 
             End Set
         End Property

@@ -60,6 +60,7 @@ Namespace Framework
 
                 If Not m_tnWorkspaceNode Is Nothing Then
                     m_tnWorkspaceNode.Text = m_strName
+                    Util.ProjectWorkspace.TreeView.Sort()
                 End If
             End Set
         End Property
