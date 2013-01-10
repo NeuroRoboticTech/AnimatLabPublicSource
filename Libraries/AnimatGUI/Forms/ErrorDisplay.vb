@@ -285,7 +285,7 @@ Namespace Forms
 
         Public Overridable Function GetErrorMessage() As String
             If Not m_exError Is Nothing Then
-                Return m_exError.Message
+                Return Me.txtErrorMsg.Text & vbCrLf & Me.txtErrorDetails.Text
             Else
                 Return ""
             End If

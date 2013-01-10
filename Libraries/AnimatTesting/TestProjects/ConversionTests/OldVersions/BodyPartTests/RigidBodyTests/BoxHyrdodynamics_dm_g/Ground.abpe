@@ -1,14 +1,14 @@
 <Editor>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.Forms.BodyPlan.Editor</ClassName>
-<NormalLocation x="100" y="100"/>
+<NormalLocation x="75" y="75"/>
 <NormalSize Width="1000" Height="600"/>
 <WindowState>Normal</WindowState>
-<Structure>d0771375-4386-4272-a23f-9183bcc92d5b</Structure>
+<Structure>GROUND</Structure>
 <MouseSensitivity>0.005</MouseSensitivity>
 <PanX>0</PanX>
 <PanY>0</PanY>
-<Zoom>-4.5</Zoom>
+<Zoom>0</Zoom>
 <RotateX>0</RotateX>
 <RotateY>0</RotateY>
 <RotateZ>0</RotateZ>

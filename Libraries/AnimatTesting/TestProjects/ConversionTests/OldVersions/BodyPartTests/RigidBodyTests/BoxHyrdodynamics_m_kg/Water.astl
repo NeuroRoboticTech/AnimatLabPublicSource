@@ -1,9 +1,9 @@
 <Structure>
 <RigidBody>
-<Name>MarkerRoot</Name>
-<ID>0cb73628-b501-4fed-bb54-66ab5710725c</ID>
-<Type>Box</Type>
-<PartType>VortexAnimatTools.DataObjects.Physical.RigidBodies.Box</PartType>
+<Name>WaterPlane</Name>
+<ID>5d845c45-8652-4447-917b-200aaf2cfc52</ID>
+<Type>Plane</Type>
+<PartType>VortexAnimatTools.DataObjects.Physical.RigidBodies.Plane</PartType>
 <Description/>
 <IsVisible>True</IsVisible>
 <IsContactSensor>False</IsContactSensor>
@@ -16,7 +16,7 @@
 <XCenterOfMass Value="0" Scale="centi" Actual="0"/>
 <YCenterOfMass Value="0" Scale="centi" Actual="0"/>
 <ZCenterOfMass Value="0" Scale="centi" Actual="0"/>
-<Freeze>True</Freeze>
+<Freeze>False</Freeze>
 <FoodSource>False</FoodSource>
 <CenterOfMass x="0" y="0" z="0"/>
 <RelativePosition x="0" y="0" z="0"/>
@@ -24,12 +24,15 @@
 <Rotation x="0" y="0" z="0"/>
 <LocalRotation x="0" y="0" z="0"/>
 <Direction x="0" y="0" z="0"/>
-<Color Red="1" Green="0" Blue="1" Alpha="1"/>
+<Color Red="0" Green="0" Blue="1" Alpha="1"/>
 <OrientationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</OrientationMatrix>
 <TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</TranslationMatrix>
 <CombinedTransformationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</CombinedTransformationMatrix>
-<CollisionBoxSize x="0.5" y="0.5" z="0.5"/>
-<GraphicsBoxSize x="0.5" y="0.5" z="0.5"/>
+<Height>20</Height>
+<HeightFieldImage/>
+<MapLocation x="0" y="0" z="0"/>
+<MapSize x="100" y="100" z="0"/>
+<MapScale>1</MapScale>
 </RigidBody>
 <CollisionExclusionPairs/>
 </Structure>

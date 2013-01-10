@@ -1,8 +1,8 @@
 <Project>
-<ProjectName>BoxHyrdodynamics_dm_g</ProjectName>
+<ProjectName>BoxHyrdodynamics_m_kg</ProjectName>
 <PhysicsAssemblyName>VortexAnimatTools.dll</PhysicsAssemblyName>
 <PhysicsClassName>VortexAnimatTools.DataObjects.Simulation</PhysicsClassName>
-<SimulationFile>BoxHyrdodynamics_dm_g.asim</SimulationFile>
+<SimulationFile>BoxHyrdodynamics_m_kg.asim</SimulationFile>
 <LogLevel>Error</LogLevel>
 <SimWindowLocation x="132" y="113"/>
 <SimWindowSize Width="1071" Height="612"/>
@@ -36,9 +36,9 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>1</MajorInterval>
+<MajorInterval>500</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>Seconds</TimeScale>
+<TimeScale>MilliSeconds</TimeScale>
 </Form>
 </DockingForms>
 <ChildForms>
