@@ -315,7 +315,7 @@ Public Class Form1
             Dim strFile As String
             Dim strOutFile As String
             Dim strProg As String = txtSourceFiles.Text & "\Animatsimulator"
-            Dim strArg As String = "-d3d -runtime 2.2 -library vortexanimatlibrary_vc7.dll -project """ & txtCommonFiles.Text & "\BetaPitch_012209_30_6.asim"""
+            Dim strArg As String
             Dim procSim As System.Diagnostics.Process
             Dim fltRuntime As Single = CSng(txtRuntime.Text)
 
@@ -328,7 +328,7 @@ Public Class Form1
             For Each strFFile As String In aryFiles
                 strFile = GetFilename(strFFile)
                 File.Copy(txtSimFiles.Text & "\" & strFile, txtCommonFiles.Text & "\" & strFile)
-                strArg = "-d3d -runtime " & fltRuntime.ToString & " -library vortexanimatlibrary_vc7.dll -project """ & txtCommonFiles.Text & "\" & strFile & """"
+                strArg = "-library VortexAnimatPrivateSim_vc10.dll -project """ & txtCommonFiles.Text & "\" & strFile & """"
 
                 lblStatus.Text = "Processing " & iCount & " of " & aryFiles.Length & "   File: " & strFile
                 Application.DoEvents()
