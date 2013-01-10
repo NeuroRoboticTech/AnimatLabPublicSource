@@ -12,7 +12,7 @@ Imports AnimatGUI.Framework
 
 Namespace Forms
 
-    Public Class SelectProgramModule
+    Public Class SelectMacro
         Inherits AnimatGUI.Forms.AnimatDialog
 
 #Region " Windows Form Designer generated code "
@@ -43,27 +43,27 @@ Namespace Forms
         'NOTE: The following procedure is required by the Windows Form Designer
         'It can be modified using the Windows Form Designer.  
         'Do not modify it using the code editor.
-        Friend WithEvents lvProgramModules As System.Windows.Forms.ListView
+        Friend WithEvents lvMacros As System.Windows.Forms.ListView
         Friend WithEvents txtDescription As System.Windows.Forms.TextBox
         Friend WithEvents btnOk As System.Windows.Forms.Button
         Friend WithEvents btnCancel As System.Windows.Forms.Button
         <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-            Me.lvProgramModules = New System.Windows.Forms.ListView
+            Me.lvMacros = New System.Windows.Forms.ListView
             Me.txtDescription = New System.Windows.Forms.TextBox
             Me.btnOk = New System.Windows.Forms.Button
             Me.btnCancel = New System.Windows.Forms.Button
             Me.SuspendLayout()
             '
-            'lvProgramModules
+            'lvMacros
             '
-            Me.lvProgramModules.HideSelection = False
-            Me.lvProgramModules.Location = New System.Drawing.Point(8, 8)
-            Me.lvProgramModules.MultiSelect = False
-            Me.lvProgramModules.Name = "lvProgramModules"
-            Me.lvProgramModules.Size = New System.Drawing.Size(184, 312)
-            Me.lvProgramModules.Sorting = System.Windows.Forms.SortOrder.Ascending
-            Me.lvProgramModules.TabIndex = 0
-            Me.lvProgramModules.View = System.Windows.Forms.View.List
+            Me.lvMacros.HideSelection = False
+            Me.lvMacros.Location = New System.Drawing.Point(8, 8)
+            Me.lvMacros.MultiSelect = False
+            Me.lvMacros.Name = "lvMacros"
+            Me.lvMacros.Size = New System.Drawing.Size(184, 312)
+            Me.lvMacros.Sorting = System.Windows.Forms.SortOrder.Ascending
+            Me.lvMacros.TabIndex = 0
+            Me.lvMacros.View = System.Windows.Forms.View.List
             '
             'txtDescription
             '
@@ -94,31 +94,31 @@ Namespace Forms
             Me.btnCancel.TabIndex = 3
             Me.btnCancel.Text = "Cancel"
             '
-            'SelectProgramModule
+            'SelectMacro
             '
             Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
             Me.ClientSize = New System.Drawing.Size(400, 334)
             Me.Controls.Add(Me.btnCancel)
             Me.Controls.Add(Me.btnOk)
             Me.Controls.Add(Me.txtDescription)
-            Me.Controls.Add(Me.lvProgramModules)
+            Me.Controls.Add(Me.lvMacros)
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
-            Me.Name = "SelectProgramModule"
+            Me.Name = "SelectMacro"
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-            Me.Text = "Select Program Module"
+            Me.Text = "Select Macro"
             Me.ResumeLayout(False)
 
         End Sub
 
 #End Region
 
-        Protected m_doSelModule As DataObjects.ProgramModule
+        Protected m_doSelModule As DataObjects.Macro
 
-        Public Property SelectedModule() As DataObjects.ProgramModule
+        Public Property SelectedModule() As DataObjects.Macro
             Get
                 Return m_doSelModule
             End Get
-            Set(ByVal Value As DataObjects.ProgramModule)
+            Set(ByVal Value As DataObjects.Macro)
                 m_doSelModule = Value
             End Set
         End Property
@@ -130,11 +130,11 @@ Namespace Forms
                 m_btnOk = Me.btnOk
                 m_btnCancel = Me.btnCancel
 
-                For Each doModule As DataObjects.ProgramModule In Util.Application.ProgramModules
+                For Each doModule As DataObjects.Macro In Util.Application.Macros
                     If doModule.AllowUserSelection Then
                         Dim liItem As New ListViewItem(doModule.Name)
                         liItem.Tag = doModule
-                        lvProgramModules.Items.Add(liItem)
+                        lvMacros.Items.Add(liItem)
                     End If
                 Next
 
@@ -145,13 +145,13 @@ Namespace Forms
 
         Private Sub btnOk_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnOk.Click
             Try
-                If lvProgramModules.SelectedItems.Count <> 1 Then
+                If lvMacros.SelectedItems.Count <> 1 Then
                     Throw New System.Exception("You must select a program module to run.")
                 Else
-                    Dim liItem As ListViewItem = lvProgramModules.SelectedItems.Item(0)
+                    Dim liItem As ListViewItem = lvMacros.SelectedItems.Item(0)
 
-                    If Not liItem.Tag Is Nothing AndAlso TypeOf liItem.Tag Is DataObjects.ProgramModule Then
-                        m_doSelModule = DirectCast(liItem.Tag, DataObjects.ProgramModule)
+                    If Not liItem.Tag Is Nothing AndAlso TypeOf liItem.Tag Is DataObjects.Macro Then
+                        m_doSelModule = DirectCast(liItem.Tag, DataObjects.Macro)
                     End If
 
                     Me.DialogResult = DialogResult.OK
@@ -163,13 +163,13 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Sub lvProgramModules_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles lvProgramModules.SelectedIndexChanged
+        Private Sub lvMacros_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles lvMacros.SelectedIndexChanged
             Try
-                If lvProgramModules.SelectedItems.Count = 1 Then
-                    Dim liItem As ListViewItem = lvProgramModules.SelectedItems.Item(0)
+                If lvMacros.SelectedItems.Count = 1 Then
+                    Dim liItem As ListViewItem = lvMacros.SelectedItems.Item(0)
 
-                    If Not liItem.Tag Is Nothing AndAlso TypeOf liItem.Tag Is DataObjects.ProgramModule Then
-                        Dim doModule As DataObjects.ProgramModule = DirectCast(liItem.Tag, DataObjects.ProgramModule)
+                    If Not liItem.Tag Is Nothing AndAlso TypeOf liItem.Tag Is DataObjects.Macro Then
+                        Dim doModule As DataObjects.Macro = DirectCast(liItem.Tag, DataObjects.Macro)
                         txtDescription.Text = doModule.Description
                     End If
                 End If

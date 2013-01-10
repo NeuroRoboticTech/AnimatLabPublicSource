@@ -9,10 +9,10 @@ Imports System.Xml
 Imports AnimatGuiCtrls.Controls
 Imports AnimatGUI.Framework
 
-Namespace DataObjects.ProgramModules
+Namespace DataObjects.Macros
 
     Public Class LinearInerconnectedNeuralNet
-        Inherits AnimatGUI.DataObjects.ProgramModule
+        Inherits AnimatGUI.DataObjects.Macro
 
 #Region " Attributes "
 
@@ -36,9 +36,9 @@ Namespace DataObjects.ProgramModules
             m_strName = "Linear Interconnected Neural Network"
         End Sub
 
-        Public Overrides Sub ShowDialog()
+        Public Overrides Sub Execute()
             Try
-                Dim frmNet As New Forms.ProgramModules.LinearInterconnectedNeuralNet
+                Dim frmNet As New Forms.Macros.LinearInterconnectedNeuralNet
                 frmNet.ShowDialog()
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

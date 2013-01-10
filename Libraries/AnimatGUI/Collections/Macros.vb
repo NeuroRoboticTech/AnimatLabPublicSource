@@ -11,86 +11,86 @@ Imports AnimatGUI.DataObjects
 
 Namespace Collections
 
-    Public Class ProgramModules
+    Public Class Macros
         Inherits AnimatCollectionBase
 
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
         End Sub
 
-        Default Public Property Item(ByVal index As Integer) As AnimatGUI.DataObjects.ProgramModule
+        Default Public Property Item(ByVal index As Integer) As AnimatGUI.DataObjects.Macro
             Get
-                Return CType(List(index), AnimatGUI.DataObjects.ProgramModule)
+                Return CType(List(index), AnimatGUI.DataObjects.Macro)
             End Get
-            Set(ByVal Value As AnimatGUI.DataObjects.ProgramModule)
+            Set(ByVal Value As AnimatGUI.DataObjects.Macro)
                 List(index) = Value
             End Set
         End Property
 
-        Public Function Add(ByVal value As AnimatGUI.DataObjects.ProgramModule) As Integer
+        Public Function Add(ByVal value As AnimatGUI.DataObjects.Macro) As Integer
             Me.IsDirty = True
             Return List.Add(value)
         End Function 'Add
 
-        Public Function IndexOf(ByVal value As AnimatGUI.DataObjects.ProgramModule) As Integer
-            Return List.IndexOf(DirectCast(value, AnimatGUI.DataObjects.ProgramModule))
+        Public Function IndexOf(ByVal value As AnimatGUI.DataObjects.Macro) As Integer
+            Return List.IndexOf(DirectCast(value, AnimatGUI.DataObjects.Macro))
         End Function 'IndexOf
 
 
-        Public Sub Insert(ByVal index As Integer, ByVal value As AnimatGUI.DataObjects.ProgramModule)
+        Public Sub Insert(ByVal index As Integer, ByVal value As AnimatGUI.DataObjects.Macro)
             Me.IsDirty = True
             List.Insert(index, value)
         End Sub 'Insert
 
 
-        Public Sub Remove(ByVal value As AnimatGUI.DataObjects.ProgramModule)
+        Public Sub Remove(ByVal value As AnimatGUI.DataObjects.Macro)
             Me.IsDirty = True
             List.Remove(value)
         End Sub 'Remove
 
 
-        Public Function Contains(ByVal value As AnimatGUI.DataObjects.ProgramModule) As Boolean
+        Public Function Contains(ByVal value As AnimatGUI.DataObjects.Macro) As Boolean
             ' If value is not of type Int16, this will return false.
             Return List.Contains(value)
         End Function 'Contains
 
 
         Protected Overrides Sub OnInsert(ByVal index As Integer, ByVal value As [Object])
-            If Not TypeOf (value) Is AnimatGUI.DataObjects.ProgramModule Then
-                Throw New ArgumentException("value must be of type AnimatGUI.DataObjects.ProgramModule.", "value")
+            If Not TypeOf (value) Is AnimatGUI.DataObjects.Macro Then
+                Throw New ArgumentException("value must be of type AnimatGUI.DataObjects.Macro.", "value")
             End If
         End Sub 'OnInsert
 
 
         Protected Overrides Sub OnRemove(ByVal index As Integer, ByVal value As [Object])
-            If Not TypeOf (value) Is AnimatGUI.DataObjects.ProgramModule Then
-                Throw New ArgumentException("value must be of type AnimatGUI.DataObjects.ProgramModule.", "value")
+            If Not TypeOf (value) Is AnimatGUI.DataObjects.Macro Then
+                Throw New ArgumentException("value must be of type AnimatGUI.DataObjects.Macro.", "value")
             End If
         End Sub 'OnRemove
 
 
         Protected Overrides Sub OnSet(ByVal index As Integer, ByVal oldValue As [Object], ByVal newValue As [Object])
-            If Not TypeOf (newValue) Is AnimatGUI.DataObjects.ProgramModule Then
-                Throw New ArgumentException("newValue must be of type AnimatGUI.DataObjects.ProgramModule.", "newValue")
+            If Not TypeOf (newValue) Is AnimatGUI.DataObjects.Macro Then
+                Throw New ArgumentException("newValue must be of type AnimatGUI.DataObjects.Macro.", "newValue")
             End If
         End Sub 'OnSet
 
 
         Protected Overrides Sub OnValidate(ByVal value As [Object])
-            If Not TypeOf (value) Is AnimatGUI.DataObjects.ProgramModule Then
-                Throw New ArgumentException("value must be of type AnimatGUI.DataObjects.ProgramModule.")
+            If Not TypeOf (value) Is AnimatGUI.DataObjects.Macro Then
+                Throw New ArgumentException("value must be of type AnimatGUI.DataObjects.Macro.")
             End If
         End Sub 'OnValidate 
 
         Public Overrides Function Copy() As AnimatCollectionBase
-            Dim aryList As New ProgramModules(m_doParent)
+            Dim aryList As New Macros(m_doParent)
             aryList.CopyInternal(Me)
             Return aryList
         End Function
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
                                            ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatCollectionBase
-            Dim aryList As New ProgramModules(doParent)
+            Dim aryList As New Macros(doParent)
             aryList.CloneInternal(Me, doParent, bCutData, doRoot)
             Return aryList
         End Function
@@ -98,18 +98,18 @@ Namespace Collections
     End Class
 
 
-    Public Class SortedProgramModules
+    Public Class SortedMacros
         Inherits AnimatDictionaryBase
 
         Public Sub New(ByVal doParent As Framework.DataObject)
             MyBase.New(doParent)
         End Sub
 
-        Default Public Property Item(ByVal key As [String]) As AnimatGUI.DataObjects.ProgramModule
+        Default Public Property Item(ByVal key As [String]) As AnimatGUI.DataObjects.Macro
             Get
-                Return CType(Dictionary(key), AnimatGUI.DataObjects.ProgramModule)
+                Return CType(Dictionary(key), AnimatGUI.DataObjects.Macro)
             End Get
-            Set(ByVal Value As AnimatGUI.DataObjects.ProgramModule)
+            Set(ByVal Value As AnimatGUI.DataObjects.Macro)
                 Dictionary(key) = Value
             End Set
         End Property
@@ -126,7 +126,7 @@ Namespace Collections
             End Get
         End Property
 
-        Public Sub Add(ByVal key As [String], ByVal value As AnimatGUI.DataObjects.ProgramModule)
+        Public Sub Add(ByVal key As [String], ByVal value As AnimatGUI.DataObjects.Macro)
             Dictionary.Add(key, value)
             Me.IsDirty = True
         End Sub 'Add
@@ -145,11 +145,11 @@ Namespace Collections
                 Throw New ArgumentException("key must be of type String.", "key")
             End If
 
-            If Not TypeOf (value) Is AnimatGUI.DataObjects.ProgramModule Then
-                Throw New ArgumentException("value must be of type AnimatGUI.DataObjects.ProgramModule.", "value")
+            If Not TypeOf (value) Is AnimatGUI.DataObjects.Macro Then
+                Throw New ArgumentException("value must be of type AnimatGUI.DataObjects.Macro.", "value")
             End If
 
-            Dim diImage As AnimatGUI.DataObjects.ProgramModule = DirectCast(value, AnimatGUI.DataObjects.ProgramModule)
+            Dim diImage As AnimatGUI.DataObjects.Macro = DirectCast(value, AnimatGUI.DataObjects.Macro)
 
         End Sub 'OnInsert
 
@@ -164,8 +164,8 @@ Namespace Collections
                 Throw New ArgumentException("key must be of type String.", "key")
             End If
 
-            If Not TypeOf (newValue) Is AnimatGUI.DataObjects.ProgramModule Then
-                Throw New ArgumentException("newValue must be of type AnimatGUI.DataObjects.ProgramModule.", "newValue")
+            If Not TypeOf (newValue) Is AnimatGUI.DataObjects.Macro Then
+                Throw New ArgumentException("newValue must be of type AnimatGUI.DataObjects.Macro.", "newValue")
             End If
         End Sub 'OnSet
 
@@ -174,20 +174,20 @@ Namespace Collections
                 Throw New ArgumentException("key must be of type String.", "key")
             End If
 
-            If Not TypeOf (value) Is AnimatGUI.DataObjects.ProgramModule Then
-                Throw New ArgumentException("value must be of type AnimatGUI.DataObjects.ProgramModule.", "value")
+            If Not TypeOf (value) Is AnimatGUI.DataObjects.Macro Then
+                Throw New ArgumentException("value must be of type AnimatGUI.DataObjects.Macro.", "value")
             End If
         End Sub 'OnValidate 
 
         Public Overrides Function Copy() As AnimatDictionaryBase
-            Dim aryList As New SortedProgramModules(m_doParent)
+            Dim aryList As New SortedMacros(m_doParent)
             aryList.CopyInternal(Me)
             Return aryList
         End Function
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _
                                            ByVal doRoot As AnimatGUI.Framework.DataObject) As AnimatDictionaryBase
-            Dim aryList As New SortedProgramModules(doParent)
+            Dim aryList As New SortedMacros(doParent)
             aryList.CloneInternal(Me, doParent, bCutData, doRoot)
             Return aryList
         End Function

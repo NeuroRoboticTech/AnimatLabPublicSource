@@ -7,7 +7,7 @@ Imports System.Diagnostics
 Imports AnimatGuiCtrls.Controls
 Imports AnimatGUI.Framework
 
-Namespace Forms.ProgramModules
+Namespace Forms.Macros
 
     Public Class LinearInterconnectedNeuralNet
         Inherits System.Windows.Forms.Form

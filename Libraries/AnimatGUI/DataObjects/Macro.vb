@@ -11,7 +11,7 @@ Imports AnimatGUI.Framework
 
 Namespace DataObjects
 
-    Public MustInherit Class ProgramModule
+    Public MustInherit Class Macro
         Inherits Framework.DataObject
 
 #Region " Attributes "
@@ -40,7 +40,7 @@ Namespace DataObjects
             MyBase.New(doParent)
         End Sub
 
-        Public MustOverride Sub ShowDialog()
+        Public MustOverride Sub Execute()
 
 #Region " DataObject Methods "
 

@@ -1123,7 +1123,7 @@ Namespace Forms
         Protected m_aryAlphabeticalBehavioralPanels As New ArrayList
         Protected m_aryToolPlugins As New Collections.Tools(Nothing)
         Protected m_aryGainTypes As New Collections.Gains(Nothing)
-        Protected m_aryProgramModules As New Collections.ProgramModules(Nothing)
+        Protected m_aryMacros As New Collections.Macros(Nothing)
         Protected m_aryExternalStimuli As New Collections.Stimuli(Nothing)
         Protected m_aryProjectMigrations As New Hashtable()
 
@@ -1563,9 +1563,9 @@ Namespace Forms
             End Get
         End Property
 
-        Public Overridable ReadOnly Property ProgramModules() As Collections.ProgramModules
+        Public Overridable ReadOnly Property Macros() As Collections.Macros
             Get
-                Return m_aryProgramModules
+                Return m_aryMacros
             End Get
         End Property
 
@@ -2161,7 +2161,7 @@ Namespace Forms
                 m_aryJointTypes.Clear()
                 m_aryToolPlugins.Clear()
                 m_aryGainTypes.Clear()
-                m_aryProgramModules.Clear()
+                m_aryMacros.Clear()
                 m_aryExternalStimuli.Clear()
 
                 Util.DisableDirtyFlags = True
@@ -2313,11 +2313,11 @@ Namespace Forms
                                     m_aryGainTypes.Add(doGain)
                                     m_aryAllDataTypes.Add(doGain)
                                 End If
-                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.ProgramModule)) Then
-                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.ProgramModule")
-                                Dim doModule As DataObjects.ProgramModule = CreateProgramModule(assemModule, tpClass, Nothing)
+                            ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.Macro)) Then
+                                If bDebugOutput Then Debug.WriteLine("Working on AnimatGUI.DataObjects.Macro")
+                                Dim doModule As DataObjects.Macro = CreateMacro(assemModule, tpClass, Nothing)
                                 If Not doModule Is Nothing Then
-                                    m_aryProgramModules.Add(doModule)
+                                    m_aryMacros.Add(doModule)
                                     m_aryAllDataTypes.Add(doModule)
                                 End If
                             ElseIf Util.IsTypeOf(tpClass, GetType(AnimatGUI.DataObjects.ExternalStimuli.Stimulus), False) Then
@@ -2486,16 +2486,16 @@ Namespace Forms
 
         End Function
 
-        Protected Overridable Function CreateProgramModule(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.ProgramModule
+        Protected Overridable Function CreateMacro(ByVal assemModule As System.Reflection.Assembly, ByVal tpClass As System.Type, ByVal doParent As AnimatGUI.Framework.DataObject) As DataObjects.Macro
 
             Try
                 If Not tpClass.IsAbstract Then
-                    Dim doModule As DataObjects.ProgramModule = DirectCast(Util.LoadClass(assemModule, tpClass.FullName, doParent), DataObjects.ProgramModule)
+                    Dim doModule As DataObjects.Macro = DirectCast(Util.LoadClass(assemModule, tpClass.FullName, doParent), DataObjects.Macro)
                     Return doModule
                 End If
             Catch ex As System.Exception
                 If ex.Message <> "Cannot create an abstract class." Then
-                    Util.ShowMessage("CreateProgramModule: " & tpClass.FullName)
+                    Util.ShowMessage("CreateMacro: " & tpClass.FullName)
                     AnimatGUI.Framework.Util.DisplayError(ex)
                 End If
             End Try
@@ -5709,10 +5709,10 @@ Namespace Forms
         Protected Sub OnRunMacro(ByVal sender As Object, ByVal e As System.EventArgs) Handles RunMacroToolStripMenuItem.Click
 
             Try
-                Dim frmProgramModules As New Forms.SelectProgramModule
+                Dim frmMacros As New Forms.SelectMacro
 
-                If frmProgramModules.ShowDialog() = DialogResult.OK AndAlso Not frmProgramModules.SelectedModule Is Nothing Then
-                    frmProgramModules.SelectedModule.ShowDialog()
+                If frmMacros.ShowDialog() = DialogResult.OK AndAlso Not frmMacros.SelectedModule Is Nothing Then
+                    frmMacros.SelectedModule.Execute()
                 End If
 
             Catch ex As System.Exception
