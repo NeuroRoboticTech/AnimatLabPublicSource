@@ -3108,7 +3108,7 @@ Namespace Forms
             Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Closed current project")
         End Sub
 
-        Public Overridable Function SaveStandAlone(ByVal bSaveCharts As Boolean, ByVal bSaveStims As Boolean, ByVal bSaveChartsToFile As Boolean) As ManagedAnimatInterfaces.IStdXml
+        Public Overridable Function SaveStandAlone(ByVal bIncludeCharts As Boolean, ByVal bIncludeStims As Boolean, ByVal bSaveChartsToFile As Boolean) As ManagedAnimatInterfaces.IStdXml
 
             Try
                 Me.AppIsBusy = True
@@ -3116,8 +3116,8 @@ Namespace Forms
                 Util.DisableDirtyFlags = True
                 Util.ExportForStandAloneSim = True
                 Util.ExportChartsToFile = bSaveChartsToFile
-                Util.ExportChartsInStandAloneSim = bSaveCharts
-                Util.ExportStimsInStandAloneSim = bSaveStims
+                Util.ExportChartsInStandAloneSim = bIncludeCharts
+                Util.ExportStimsInStandAloneSim = bIncludeStims
 
                 Dim oXml As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
 
@@ -3267,6 +3267,7 @@ Namespace Forms
                 Util.ExportForStandAloneSim = True
                 Util.ExportChartsInStandAloneSim = True
                 Util.ExportStimsInStandAloneSim = True
+                Util.ExportChartsToFile = True
 
                 Util.Simulation.SaveSimulationXml(strFilename)
 
@@ -3284,6 +3285,7 @@ Namespace Forms
                 Util.DisableDirtyFlags = False
                 Util.ExportChartsInStandAloneSim = False
                 Util.ExportStimsInStandAloneSim = False
+                Util.ExportChartsToFile = False
                 Me.AppIsBusy = False
             End Try
         End Sub
@@ -3308,6 +3310,7 @@ Namespace Forms
                 Util.ExportForStandAloneSim = True
                 Util.ExportChartsInStandAloneSim = True
                 Util.ExportStimsInStandAloneSim = True
+                Util.ExportChartsToFile = True
 
                 Util.Simulation.SaveSimulationXml(strFilename)
 
@@ -3325,6 +3328,7 @@ Namespace Forms
                 Util.DisableDirtyFlags = False
                 Util.ExportChartsInStandAloneSim = False
                 Util.ExportStimsInStandAloneSim = False
+                Util.ExportChartsToFile = False
                 Me.AppIsBusy = False
             End Try
 

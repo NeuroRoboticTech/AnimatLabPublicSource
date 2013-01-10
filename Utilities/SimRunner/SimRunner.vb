@@ -47,27 +47,23 @@ Public Class Form1
     Friend WithEvents btnCancel As System.Windows.Forms.Button
     Friend WithEvents barProgress As System.Windows.Forms.ProgressBar
     Friend WithEvents lblStatus As System.Windows.Forms.Label
-    Friend WithEvents txtRuntime As System.Windows.Forms.TextBox
-    Friend WithEvents Label1 As System.Windows.Forms.Label
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.txtSimFiles = New System.Windows.Forms.TextBox
-        Me.btnSimFiles = New System.Windows.Forms.Button
-        Me.lblSimFiles = New System.Windows.Forms.Label
-        Me.lblResultFiles = New System.Windows.Forms.Label
-        Me.btnResultFiles = New System.Windows.Forms.Button
-        Me.txtResultFiles = New System.Windows.Forms.TextBox
-        Me.lblCommonFiles = New System.Windows.Forms.Label
-        Me.btnCommonFiles = New System.Windows.Forms.Button
-        Me.txtCommonFiles = New System.Windows.Forms.TextBox
-        Me.lblSourceFiles = New System.Windows.Forms.Label
-        Me.btnSourceFiles = New System.Windows.Forms.Button
-        Me.txtSourceFiles = New System.Windows.Forms.TextBox
-        Me.btnProcess = New System.Windows.Forms.Button
-        Me.btnCancel = New System.Windows.Forms.Button
-        Me.barProgress = New System.Windows.Forms.ProgressBar
-        Me.lblStatus = New System.Windows.Forms.Label
-        Me.txtRuntime = New System.Windows.Forms.TextBox
-        Me.Label1 = New System.Windows.Forms.Label
+        Me.txtSimFiles = New System.Windows.Forms.TextBox()
+        Me.btnSimFiles = New System.Windows.Forms.Button()
+        Me.lblSimFiles = New System.Windows.Forms.Label()
+        Me.lblResultFiles = New System.Windows.Forms.Label()
+        Me.btnResultFiles = New System.Windows.Forms.Button()
+        Me.txtResultFiles = New System.Windows.Forms.TextBox()
+        Me.lblCommonFiles = New System.Windows.Forms.Label()
+        Me.btnCommonFiles = New System.Windows.Forms.Button()
+        Me.txtCommonFiles = New System.Windows.Forms.TextBox()
+        Me.lblSourceFiles = New System.Windows.Forms.Label()
+        Me.btnSourceFiles = New System.Windows.Forms.Button()
+        Me.txtSourceFiles = New System.Windows.Forms.TextBox()
+        Me.btnProcess = New System.Windows.Forms.Button()
+        Me.btnCancel = New System.Windows.Forms.Button()
+        Me.barProgress = New System.Windows.Forms.ProgressBar()
+        Me.lblStatus = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'txtSimFiles
@@ -76,7 +72,7 @@ Public Class Form1
         Me.txtSimFiles.Name = "txtSimFiles"
         Me.txtSimFiles.Size = New System.Drawing.Size(480, 20)
         Me.txtSimFiles.TabIndex = 0
-        Me.txtSimFiles.Text = "C:\Program Files\AnimatLabSDK\VS7\Utilities\SimRunner\SimFiles"
+        Me.txtSimFiles.Text = "C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Utilities\SimRunner\SimFiles"
         '
         'btnSimFiles
         '
@@ -118,7 +114,7 @@ Public Class Form1
         Me.txtResultFiles.Name = "txtResultFiles"
         Me.txtResultFiles.Size = New System.Drawing.Size(480, 20)
         Me.txtResultFiles.TabIndex = 3
-        Me.txtResultFiles.Text = "C:\Program Files\AnimatLabSDK\VS7\Utilities\SimRunner\Results"
+        Me.txtResultFiles.Text = "C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Utilities\SimRunner\Results"
         '
         'lblCommonFiles
         '
@@ -143,7 +139,7 @@ Public Class Form1
         Me.txtCommonFiles.Name = "txtCommonFiles"
         Me.txtCommonFiles.Size = New System.Drawing.Size(480, 20)
         Me.txtCommonFiles.TabIndex = 6
-        Me.txtCommonFiles.Text = "C:\Program Files\AnimatLabSDK\VS7\Utilities\SimRunner\Common Files"
+        Me.txtCommonFiles.Text = "C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Utilities\SimRunner\NeuralTest"
         '
         'lblSourceFiles
         '
@@ -168,7 +164,7 @@ Public Class Form1
         Me.txtSourceFiles.Name = "txtSourceFiles"
         Me.txtSourceFiles.Size = New System.Drawing.Size(480, 20)
         Me.txtSourceFiles.TabIndex = 9
-        Me.txtSourceFiles.Text = "C:\Program Files\AnimatLabSDK\VS7\bin"
+        Me.txtSourceFiles.Text = "C:\Projects\AnimatLabSDK\AnimatLabPublicSource\bin"
         '
         'btnProcess
         '
@@ -202,28 +198,10 @@ Public Class Form1
         Me.lblStatus.TabIndex = 15
         Me.lblStatus.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
-        'txtRuntime
-        '
-        Me.txtRuntime.Location = New System.Drawing.Point(88, 184)
-        Me.txtRuntime.Name = "txtRuntime"
-        Me.txtRuntime.Size = New System.Drawing.Size(64, 20)
-        Me.txtRuntime.TabIndex = 16
-        Me.txtRuntime.Text = "2.104"
-        '
-        'Label1
-        '
-        Me.Label1.Location = New System.Drawing.Point(8, 184)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(72, 16)
-        Me.Label1.TabIndex = 17
-        Me.Label1.Text = "Run time"
-        '
         'Form1
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(528, 294)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.txtRuntime)
         Me.Controls.Add(Me.lblStatus)
         Me.Controls.Add(Me.barProgress)
         Me.Controls.Add(Me.btnCancel)
@@ -243,6 +221,7 @@ Public Class Form1
         Me.Name = "Form1"
         Me.Text = "Form1"
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -317,7 +296,6 @@ Public Class Form1
             Dim strProg As String = txtSourceFiles.Text & "\Animatsimulator"
             Dim strArg As String
             Dim procSim As System.Diagnostics.Process
-            Dim fltRuntime As Single = CSng(txtRuntime.Text)
 
             Dim aryFiles As String() = Directory.GetFiles(txtSimFiles.Text)
 

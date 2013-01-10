@@ -44,6 +44,15 @@ Namespace DataObjects
 
 #Region " DataObject Methods "
 
+        Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
+            'This should never really be used by a macro
+        End Sub
+
+        Public Overrides Function Clone(doParent As Framework.DataObject, bCutData As Boolean, doRoot As Framework.DataObject) As Framework.DataObject
+            'This should never really be used by a macro
+            Return Nothing
+        End Function
+
 #End Region
 
 #End Region
