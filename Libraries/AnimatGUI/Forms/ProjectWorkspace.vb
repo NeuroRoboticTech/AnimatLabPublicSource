@@ -59,6 +59,8 @@ Namespace Forms
         Protected m_PropertyArray() As AnimatGuiCtrls.Controls.PropertyBag
         Protected m_bMutlipleSelectInProgress As Boolean = False
 
+        Protected m_bLoadInProgress As Boolean = False
+
 #End Region
 
 #Region " Properties "
@@ -141,9 +143,9 @@ Namespace Forms
 
             Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(strName)
             If Not tnParent Is Nothing Then
-                tnParent.Nodes.Add(tnNode)
+                tnParent.Nodes.Add(tnNode, Not m_bLoadInProgress)
             Else
-                tnNode = Util.ProjectWorkspace.TreeView.Nodes.Add(tnNode)
+                tnNode = Util.ProjectWorkspace.TreeView.Nodes.Add(tnNode, Not m_bLoadInProgress)
             End If
 
             tnNode.ImageIndex = Util.Application.WorkspaceImages.GetImageIndex(strImage)
@@ -289,14 +291,20 @@ Namespace Forms
 
         Private Sub OnProjectLoaded()
             Try
+                m_bLoadInProgress = True
+
                 If Not Util.Application.Simulation Is Nothing Then
                     Util.Application.Simulation.CreateWorkspaceTreeView(DirectCast(m_doFormHelper, AnimatGUI.Framework.DataObject), Nothing)
                 End If
+
+                ctrlTreeView.Sort()
 
                 ctrlTreeView.ExpandAll()
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                m_bLoadInProgress = False
             End Try
         End Sub
 

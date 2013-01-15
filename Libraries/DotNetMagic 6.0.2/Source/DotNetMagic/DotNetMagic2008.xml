@@ -27277,6 +27277,14 @@
             <param name="value">The Node object to add to the collection.</param>
             <returns>The Node object added to the collection.</returns>
         </member>
+        <member name="M:Crownwood.DotNetMagic.Controls.NodeCollection.Add(Crownwood.DotNetMagic.Controls.Node,System.Boolean)">
+            <summary>
+            Adds the specified Node object to the collection.
+            </summary>
+            <param name="value">The Node object to add to the collection.</param>
+            <param name="bSort">If true it will sort the collection after adding the new node.</param>
+            <returns>The Node object added to the collection.</returns>
+        </member>
         <member name="M:Crownwood.DotNetMagic.Controls.NodeCollection.AddRange(Crownwood.DotNetMagic.Controls.Node[])">
             <summary>
             Adds an array of Node objects to the collection.

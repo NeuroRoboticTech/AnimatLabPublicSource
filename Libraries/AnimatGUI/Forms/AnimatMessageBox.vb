@@ -12,6 +12,37 @@ Namespace Forms
     Public Class AnimatMessageBox
         Inherits Forms.AnimatDialog
 
+        Protected m_iSetHeight As Integer = -1
+        Protected m_iSetWidth As Integer = -1
+        Protected m_eSetTextAlign As System.Drawing.ContentAlignment
+
+        Public Property SetHeight() As Integer
+            Get
+                Return m_iSetHeight
+            End Get
+            Set(ByVal value As Integer)
+                m_iSetHeight = value
+            End Set
+        End Property
+
+        Public Property SetWidth() As Integer
+            Get
+                Return m_iSetWidth
+            End Get
+            Set(ByVal value As Integer)
+                m_iSetWidth = value
+            End Set
+        End Property
+
+        Public Property SetTextAlign() As System.Drawing.ContentAlignment
+            Get
+                Return m_eSetTextAlign
+            End Get
+            Set(ByVal value As System.Drawing.ContentAlignment)
+                m_eSetTextAlign = value
+            End Set
+        End Property
+
         Private Sub InitializeComponent()
             Me.lblMessage = New System.Windows.Forms.Label()
             Me.btn2 = New System.Windows.Forms.Button()
@@ -73,7 +104,7 @@ Namespace Forms
             Me.MaximizeBox = False
             Me.MinimizeBox = False
             Me.Name = "AnimatMessageBox"
-            Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
+            Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
             Me.Text = "AnimatMessageBox"
             Me.ResumeLayout(False)
 
@@ -107,6 +138,15 @@ Namespace Forms
 
                 lblMessage.Text = m_strMessage
                 Me.Text = m_strCaption
+                Me.lblMessage.TextAlign = m_eSetTextAlign
+
+                If m_iSetWidth > 100 Then
+                    Me.Width = m_iSetWidth
+                End If
+
+                If m_iSetHeight > 100 Then
+                    Me.Height = m_iSetHeight
+                End If
 
                 Select Case m_eDialogButtons
                     Case MessageBoxButtons.AbortRetryIgnore

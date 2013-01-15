@@ -433,13 +433,18 @@ Namespace Framework
         End Sub
 
         Public Shared Function ShowMessage(ByVal strMessage As String, Optional ByVal strCaption As String = "", _
-                                           Optional ByVal eButtons As System.Windows.Forms.MessageBoxButtons = MessageBoxButtons.OK) As System.Windows.Forms.DialogResult
+                                           Optional ByVal eButtons As System.Windows.Forms.MessageBoxButtons = MessageBoxButtons.OK, _
+                                           Optional ByVal iWidth As Integer = -1, Optional ByVal iHeight As Integer = -1, _
+                                           Optional ByVal eTextAlign As System.Drawing.ContentAlignment = ContentAlignment.MiddleCenter) As System.Windows.Forms.DialogResult
 
             Util.Application.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Starting ShowMessage: '" & strMessage & "'")
 
             m_frmMessage = New Forms.AnimatMessageBox
             m_frmMessage.SetMessage(strMessage, eButtons, strCaption)
             m_frmMessage.StartPosition = FormStartPosition.CenterScreen
+            m_frmMessage.SetWidth = iWidth
+            m_frmMessage.SetHeight = iHeight
+            m_frmMessage.SetTextAlign = eTextAlign
 
             Return m_frmMessage.ShowDialog(Util.Application)
         End Function
@@ -1162,36 +1167,16 @@ Namespace Framework
 
         Public Shared Sub UpdateConfigFile()
             Try
-                System.Configuration.ConfigurationManager.AppSettings("UpdateFrequency") = Util.Application.AutoUpdateInterval.ToString
+                Dim Myconfig As System.Configuration.Configuration
+                Myconfig = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.None)
+
+                Myconfig.AppSettings.Settings("UpdateFrequency").Value = Util.Application.AutoUpdateInterval.ToString
                 Dim dtTime As DateTime = Util.Application.LastAutoUpdateTime
-                System.Configuration.ConfigurationManager.AppSettings("UpdateFrequency") = dtTime.Month.ToString() & "/" & dtTime.Day.ToString & "/" & dtTime.Year.ToString
-                System.Configuration.ConfigurationManager.AppSettings("DefaultNewFolder") = Util.Application.DefaultNewFolder
+                Myconfig.AppSettings.Settings("UpdateTime").Value = dtTime.Month.ToString() & "/" & dtTime.Day.ToString & "/" & dtTime.Year.ToString
+                Myconfig.AppSettings.Settings("DefaultNewFolder").Value = Util.Application.DefaultNewFolder
+                Myconfig.Save()
 
-
-                'Dim oXmlRead As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
-                ''Dim readInfo as
-                'oXmlRead.Load(Util.Application.ApplicationDirectory() & "AnimatLab.config")
-
-                'oXmlRead.FindElement("AnimatLabConfig")
-                'oXmlRead.FindChildElement("")
-
-                'Dim strAssemName As String = oXmlRead.GetChildString("AssemblyName")
-                'Dim strClassName As String = oXmlRead.GetChildString("ClassName")
-
-                'oXmlRead = Nothing
-
-                'Dim oXmlWrite As ManagedAnimatInterfaces.IStdXml = Util.Application.CreateStdXml()
-
-                'oXmlWrite.AddElement("AnimatLabConfig")
-                'oXmlWrite.AddChildElement("AssemblyName", strAssemName)
-                'oXmlWrite.AddChildElement("ClassName", strClassName)
-                'oXmlWrite.AddChildElement("UpdateFrequency", Util.Application.AutoUpdateInterval.ToString)
-                'Dim dtTime As DateTime = Util.Application.LastAutoUpdateTime
-                'oXmlWrite.AddChildElement("UpdateTime", dtTime.Month.ToString() & "/" & dtTime.Day.ToString & "/" & dtTime.Year.ToString)
-
-                'oXmlWrite.AddChildElement("DefaultNewFolder", Util.Application.DefaultNewFolder)
-
-                'oXmlWrite.Save(Util.Application.ApplicationDirectory() & "AnimatLab.config")
+                System.Configuration.ConfigurationManager.RefreshSection("appSettings")
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

@@ -9,7 +9,7 @@ using System.Globalization;
 
 namespace AnimatGuiCtrls.Security
 {
-    public class SecurityManager
+    public abstract class SecurityManager
     {
         protected Dictionary<string, SecurityItem> m_Properties;
         protected Dictionary<string, SecurityItem> m_Menus;
@@ -41,6 +41,11 @@ namespace AnimatGuiCtrls.Security
             get { return m_Toolbars; }
         }
 
+        public abstract bool IsValidSerialNumber
+        {
+            get;
+        }
+
 		/// <summary>
 		/// Initializes a new instance of the SecurityManager class.
 		/// </summary>
@@ -53,6 +58,9 @@ namespace AnimatGuiCtrls.Security
             m_Windows = new Dictionary<string, SecurityItem>();
 		}
 
+        public abstract bool ValidateSerialNumber(string strSerialNumber);
+        public abstract string MachineCode();
+        public abstract string ValidationFailureError();
 
     }
 }

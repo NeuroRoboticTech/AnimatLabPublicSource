@@ -200,10 +200,23 @@ namespace Crownwood.DotNetMagic.Controls
             // Use base class to process actual collection operation
             base.List.Add(value as object);
 
-            Sort();
 			return value;
         }
 
+        /// <summary>
+        /// Adds the specified Node object to the collection.
+        /// </summary>
+        /// <param name="value">The Node object to add to the collection.</param>
+        /// <param name="bSort">If true it will sort the collection after adding the new node.</param>
+        /// <returns>The Node object added to the collection.</returns>
+        public Node Add(Node value, Boolean bSort)
+        {
+            // Use base class to process actual collection operation
+            base.List.Add(value as object);
+
+            if(bSort) Sort();
+            return value;
+        }
 		/// <summary>
 		/// Adds an array of Node objects to the collection.
 		/// </summary>

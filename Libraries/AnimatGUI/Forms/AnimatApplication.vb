@@ -43,7 +43,6 @@ Namespace Forms
 
             'This call is required by the Windows Form Designer.
             InitializeComponent()
-            Initialize(Nothing)
         End Sub
 
         'Form overrides dispose to clean up the component list.
@@ -83,6 +82,8 @@ Namespace Forms
         Public WithEvents toolStripSeparator7 As System.Windows.Forms.ToolStripSeparator
         Public WithEvents AboutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents CheckForUpdatesStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents toolStripSeparatorHelp2 As System.Windows.Forms.ToolStripSeparator
+        Public WithEvents RegisterStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents AnimatToolStrip As AnimatGuiCtrls.Controls.AnimatToolStrip
         Public WithEvents NewToolStripButton As System.Windows.Forms.ToolStripButton
         Public WithEvents OpenToolStripButton As System.Windows.Forms.ToolStripButton
@@ -227,6 +228,8 @@ Namespace Forms
             Me.toolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
             Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.CheckForUpdatesStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.toolStripSeparatorHelp2 = New System.Windows.Forms.ToolStripSeparator()
+            Me.RegisterStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.AnimatToolStrip = New AnimatGuiCtrls.Controls.AnimatToolStrip()
             Me.NewToolStripButton = New System.Windows.Forms.ToolStripButton()
             Me.OpenToolStripButton = New System.Windows.Forms.ToolStripButton()
@@ -673,7 +676,10 @@ Namespace Forms
             '
             'HelpToolStripMenuItem
             '
-            Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.IndexToolStripMenuItem, Me.SearchToolStripMenuItem, Me.SupportToolStripMenuItem, Me.toolStripSeparator7, Me.AboutToolStripMenuItem, Me.CheckForUpdatesStripMenuItem})
+            Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.IndexToolStripMenuItem, _
+                                                                                                      Me.SearchToolStripMenuItem, Me.SupportToolStripMenuItem, Me.toolStripSeparator7, _
+                                                                                                      Me.AboutToolStripMenuItem, Me.CheckForUpdatesStripMenuItem, _
+                                                                                                      Me.toolStripSeparatorHelp2, Me.RegisterStripMenuItem})
             Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
             Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
             Me.HelpToolStripMenuItem.Text = "&Help"
@@ -721,6 +727,17 @@ Namespace Forms
             Me.CheckForUpdatesStripMenuItem.Name = "CheckForUpdatesStripMenuItem"
             Me.CheckForUpdatesStripMenuItem.Size = New System.Drawing.Size(122, 22)
             Me.CheckForUpdatesStripMenuItem.Text = "Check for updates"
+            '
+            'toolStripSeparator7
+            '
+            Me.toolStripSeparatorHelp2.Name = "toolStripSeparatorHelp2"
+            Me.toolStripSeparatorHelp2.Size = New System.Drawing.Size(119, 6)
+            '
+            'AboutToolStripMenuItem
+            '
+            Me.RegisterStripMenuItem.Name = "RegisterStripMenuItem"
+            Me.RegisterStripMenuItem.Size = New System.Drawing.Size(122, 22)
+            Me.RegisterStripMenuItem.Text = "Register AnimatLab Pro"
             '
             'AnimatToolStrip
             '
@@ -1201,7 +1218,7 @@ Namespace Forms
 
         Protected m_bAnnouceUpdates As Boolean = False
 
-        Protected m_SecurityMgr As New AnimatSecurityCtrl.SecurityManager(Me)
+        Protected m_SecurityMgr As AnimatGuiCtrls.Security.SecurityManager
 
         Protected m_eDefaultLogLevel As ManagedAnimatInterfaces.ILogger.enumLogLevel = ManagedAnimatInterfaces.ILogger.enumLogLevel.ErrorType
         Protected m_strSimVCVersion As String = "10"
@@ -1258,7 +1275,7 @@ Namespace Forms
             End Set
         End Property
 
-        Public ReadOnly Property Logger() As ManagedAnimatInterfaces.ILogger
+        Public ReadOnly Property Logger() As ManagedAnimatInterfaces.ILogger Implements ManagedAnimatInterfaces.ISimApplication.Logger
             Get
                 Return m_Logger
             End Get
@@ -1708,9 +1725,17 @@ Namespace Forms
 
 #Region " Initialization "
 
-        Public Overridable Sub StartApplication(ByVal bModal As Boolean, ByVal bConsoleApp As Boolean)
+        Public Overridable Sub StartApplication(ByVal bModal As Boolean, ByVal bConsoleApp As Boolean, ByVal oSecCtrl As Object) Implements ManagedAnimatInterfaces.ISimApplication.StartApplication
 
             Try
+
+                m_SecurityMgr = DirectCast(oSecCtrl, AnimatGuiCtrls.Security.SecurityManager)
+                If m_SecurityMgr Is Nothing Then
+                    Throw New System.Exception("Security manager was not defined.")
+                End If
+
+                Initialize(Nothing)
+
                 m_bConsoleApp = bConsoleApp
                 If Me.ConsoleApp Then
                     Me.ViewToolStripMenuItem.DropDownItems.Add(Me.ConsoleToolStripMenuItem)
@@ -1920,6 +1945,9 @@ Namespace Forms
             If Not m_auBackup Is Nothing Then
                 m_bAnnouceUpdates = bAnnouceUpdates
                 m_auBackup.ForceCheckForUpdate()
+
+                m_dtLastAutoUpdateTime = Now
+                Util.UpdateConfigFile()
             End If
 
         End Sub
@@ -2844,6 +2872,14 @@ Namespace Forms
 
                 Me.EditMaterialsToolStripButton.Enabled = False
                 Me.EditMaterialsToolStripMenuItem.Enabled = False
+            End If
+
+            If m_SecurityMgr.IsValidSerialNumber Then
+                Me.RegisterStripMenuItem.Visible = False
+                Me.toolStripSeparatorHelp2.Visible = False
+            Else
+                Me.RegisterStripMenuItem.Visible = True
+                Me.toolStripSeparatorHelp2.Visible = True
             End If
 
         End Sub
@@ -5807,6 +5843,15 @@ Namespace Forms
         Private Sub CheckForUpdatesStripMenuItem_Click(sender As Object, e As System.EventArgs) Handles CheckForUpdatesStripMenuItem.Click
             Try
                 CheckForUpdates(True)
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub RegisterStripMenuItem_Click(sender As Object, e As System.EventArgs) Handles RegisterStripMenuItem.Click
+            Try
+                Dim oRegDlg As New AnimatGUI.Forms.Register
+                oRegDlg.ShowDialog()
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

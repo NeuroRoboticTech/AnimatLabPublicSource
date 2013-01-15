@@ -111,10 +111,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\DotNetMagic.DLL</HintPath>
     </Reference>
-    <Reference Include="osg65-osgSec, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\osg65-osgSec.dll</HintPath>
-    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -621,6 +617,12 @@
     <Compile Include="Forms\ReceptiveFieldPairs.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\Register.Designer.vb">
+      <DependentUpon>Register.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Register.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\RelabelSelected.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -847,6 +849,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ProjectProperties.resx">
       <DependentUpon>ProjectProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Register.resx">
+      <DependentUpon>Register.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RelabelSelected.resx">
       <DependentUpon>RelabelSelected.vb</DependentUpon>
