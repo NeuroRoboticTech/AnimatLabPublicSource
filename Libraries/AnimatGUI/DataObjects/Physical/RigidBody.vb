@@ -1037,6 +1037,19 @@ Namespace DataObjects.Physical
             End If
         End Sub
 
+        Public Overridable Sub EnableCollisions(ByVal doOtherBody As RigidBody)
+
+            'Only re-enable collisions if they are not parent child parts.
+            If Not (m_doParent Is doOtherBody OrElse doOtherBody.Parent Is Me) Then
+                m_doInterface.EnableCollisions(doOtherBody.ID)
+            End If
+
+        End Sub
+
+        Public Overridable Sub DisableCollisions(ByVal doOtherBody As RigidBody)
+            m_doInterface.DisableCollisions(doOtherBody.ID)
+        End Sub
+
         Public Overloads Overrides Sub LoadData(ByRef doStructure As DataObjects.Physical.PhysicalStructure, ByVal oXml As ManagedAnimatInterfaces.IStdXml)
             MyBase.LoadData(doStructure, oXml)
 

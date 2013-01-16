@@ -102,4 +102,12 @@ Public Class DataObjectInterfaceMock
         End Set
     End Property
 
+    Public Sub EnableCollisions(ByVal strOtherBodyID As String) Implements IDataObjectInterface.EnableCollisions
+
+    End Sub
+
+    Public Sub DisableCollisions(ByVal strOtherBodyID As String) Implements IDataObjectInterface.DisableCollisions
+
+    End Sub
+
 End Class

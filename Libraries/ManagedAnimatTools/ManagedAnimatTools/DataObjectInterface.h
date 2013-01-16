@@ -21,6 +21,7 @@ namespace AnimatGUI
 			Simulator *m_lpSim;
 			AnimatBase *m_lpBase;
 			MovableItem *m_lpMovable;
+			RigidBody *m_lpRigidBody;
 
 			float *m_lpWorldPositionX;
 			float *m_lpWorldPositionY;
@@ -116,6 +117,9 @@ namespace AnimatGUI
 			virtual float GetBoundingBoxValue(int iIndex);
 			virtual void OrientNewPart(double dblXPos, double dblYPos, double dblZPos, double dblXNorm, double dblYNorm, double dblZNorm);
 			virtual System::Boolean CalculateLocalPosForWorldPos(double dblXWorldX, double dblWorldY, double dblWorldZ, System::Collections::ArrayList ^aryLocalPos);
+
+			virtual void EnableCollisions(String ^sOtherBodyID);
+			virtual void DisableCollisions(String ^sOtherBodyID);
 
 		#pragma endregion
 

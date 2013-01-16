@@ -25,6 +25,7 @@ DataObjectInterface::DataObjectInterface(ManagedAnimatInterfaces::ISimulatorInte
 			string strSID = Util::StringToStd(strID);
 			m_lpBase = m_lpSim->FindByID(strSID);
 			m_lpMovable = dynamic_cast<MovableItem *>(m_lpBase);
+			m_lpRigidBody = dynamic_cast<RigidBody *>(m_lpBase);
 
 			//If this is a bodypart or struture type then lets add the callbacks to it so those
 			//classes can fire managed events back up to the gui.
@@ -358,6 +359,79 @@ System::Boolean DataObjectInterface::CalculateLocalPosForWorldPos(double dblXWor
 
 	return false;
 }
+
+void DataObjectInterface::EnableCollisions(String ^sOtherBodyID)
+{
+	try
+	{
+		if(m_lpBase) 
+		{
+			string strOtherBodyID = Util::StringToStd(sOtherBodyID);
+
+			TRACE_DEBUG("EnableCollisions. Body1 ID: " + m_lpBase->ID() + ", Body2: " + strOtherBodyID + "\r\n");
+
+			if(!m_lpRigidBody)
+				throw gcnew System::Exception("Base object is not a rigid body.");
+
+			RigidBody *lpOtherBody = dynamic_cast<RigidBody *>(m_lpSim->FindByID(strOtherBodyID));
+
+			if(!lpOtherBody)
+				throw gcnew System::Exception("Other object is not a rigid body.");
+
+			m_lpRigidBody->EnableCollision(lpOtherBody);
+		}
+	}
+	catch(CStdErrorInfo oError)
+	{
+		string strError = "An error occurred while attempting to add a collision exclusion pair.\nError: " + oError.m_strError;
+		String ^strErrorMessage = gcnew String(strError.c_str());
+		throw gcnew PropertyUpdateException(strErrorMessage);
+	}
+	catch(System::Exception ^ex)
+	{throw ex;}
+	catch(...)
+	{
+		String ^strErrorMessage = "An unknown error occurred while attempting  to add a collision exclusion pair.";
+		throw gcnew System::Exception(strErrorMessage);
+	}
+}
+
+void DataObjectInterface::DisableCollisions(String ^sOtherBodyID)
+{
+	try
+	{
+		if(m_lpBase) 
+		{
+			string strOtherBodyID = Util::StringToStd(sOtherBodyID);
+
+			TRACE_DEBUG("DisableCollisions. Body1 ID: " + m_lpBase->ID() + ", Body2: " + strOtherBodyID + "\r\n");
+
+			if(!m_lpRigidBody)
+				throw gcnew System::Exception("Base object is not a rigid body.");
+
+			RigidBody *lpOtherBody = dynamic_cast<RigidBody *>(m_lpSim->FindByID(strOtherBodyID));
+
+			if(!lpOtherBody)
+				throw gcnew System::Exception("Other object is not a rigid body.");
+
+			m_lpRigidBody->DisableCollision(lpOtherBody);
+		}
+	}
+	catch(CStdErrorInfo oError)
+	{
+		string strError = "An error occurred while attempting to remove a collision exclusion pair.\nError: " + oError.m_strError;
+		String ^strErrorMessage = gcnew String(strError.c_str());
+		throw gcnew PropertyUpdateException(strErrorMessage);
+	}
+	catch(System::Exception ^ex)
+	{throw ex;}
+	catch(...)
+	{
+		String ^strErrorMessage = "An unknown error occurred while attempting to remove a collision exclusion pair.";
+		throw gcnew System::Exception(strErrorMessage);
+	}
+}
+
 
 	}
 }

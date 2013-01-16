@@ -170,6 +170,9 @@ Namespace Forms.BodyPlan
 #Region " Attributes "
 
         Protected m_aryCollisionPairs As AnimatGUI.Collections.CollisionPairs
+        Protected m_aryOriginalCollisionPairs As AnimatGUI.Collections.CollisionPairs
+        Protected m_aryAddedPairs As New AnimatGUI.Collections.CollisionPairs(Nothing)
+        Protected m_aryRemovedPairs As New AnimatGUI.Collections.CollisionPairs(Nothing)
         Protected m_aryBodyParts As New AnimatGUI.Collections.DataObjects(Nothing)
         Protected m_bIsDirty As Boolean = False
 
@@ -183,6 +186,7 @@ Namespace Forms.BodyPlan
             End Get
             Set(ByVal Value As AnimatGUI.Collections.CollisionPairs)
                 m_aryCollisionPairs = Value
+                m_aryOriginalCollisionPairs = DirectCast(Value.Copy(), AnimatGUI.Collections.CollisionPairs)
             End Set
         End Property
 
@@ -282,6 +286,11 @@ Namespace Forms.BodyPlan
                 lvCollisionPairs.Items.Add(liItem)
                 m_bIsDirty = True
 
+                m_aryAddedPairs.Add(doPair)
+                If m_aryOriginalCollisionPairs.Contains(doPair) AndAlso m_aryRemovedPairs.Contains(doPair) Then
+                    m_aryRemovedPairs.Remove(doPair)
+                End If
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -290,12 +299,21 @@ Namespace Forms.BodyPlan
         Private Sub btnDelete_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnDelete.Click
 
             Try
+                Dim doPair As Physical.CollisionPair
                 For Each liItem As ListViewItem In lvCollisionPairs.SelectedItems
-                    m_aryCollisionPairs.Remove(DirectCast(liItem.Tag, AnimatGUI.DataObjects.Physical.CollisionPair))
+                    doPair = DirectCast(liItem.Tag, AnimatGUI.DataObjects.Physical.CollisionPair)
+
+                    If m_aryAddedPairs.Contains(doPair) Then
+                        m_aryAddedPairs.Remove(doPair)
+                    End If
+                    If m_aryOriginalCollisionPairs.Contains(doPair) Then
+                        m_aryRemovedPairs.Add(doPair)
+                    End If
+
+                    m_aryCollisionPairs.Remove(doPair)
                 Next
 
                 lvCollisionPairs.Items.Clear()
-                Dim doPair As AnimatGUI.DataObjects.Physical.CollisionPair
                 lvCollisionPairs.Items.Clear()
                 For Each doPair In m_aryCollisionPairs
                     Dim liItem As New ListViewItem(doPair.ToString())
@@ -313,6 +331,16 @@ Namespace Forms.BodyPlan
         Private Sub btnOk_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnOk.Click
 
             Try
+                'Go through the removed pairs and disable collisions
+                For Each doPair As Physical.CollisionPair In m_aryRemovedPairs
+                    doPair.Part1.EnableCollisions(doPair.Part2)
+                Next
+
+                'Go through the added pairs and enable collisions
+                For Each doPair As Physical.CollisionPair In m_aryAddedPairs
+                    doPair.Part1.DisableCollisions(doPair.Part2)
+                Next
+
                 If m_bIsDirty Then
                     Me.DialogResult = DialogResult.OK
                 Else

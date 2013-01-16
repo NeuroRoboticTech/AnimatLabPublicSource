@@ -35,6 +35,9 @@ Public Interface IDataObjectInterface
     Function CalculateLocalPosForWorldPos(ByVal dblXWorldX As Double, ByVal dblWorldY As Double, ByVal dblWorldZ As Double, _
                                           ByVal aryLocalPos As System.Collections.ArrayList) As Boolean
 
+    Sub EnableCollisions(ByVal strOtherBodyID As String)
+    Sub DisableCollisions(ByVal strOtherBodyID As String)
+
 #End Region
 
 #Region "Events"

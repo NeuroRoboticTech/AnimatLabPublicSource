@@ -147,10 +147,6 @@ Namespace DataObjects.Physical
                     Throw New System.Exception("The collision exclusion pair list can not be null.")
                 End If
 
-                'If Me.Name = "Crayfish" AndAlso Not Value.Count = 20 Then
-                '    Util.ShowMessage("Collision pairs messed up!!!")
-                'End If
-
                 m_aryCollisionExclusionPairs = Value
             End Set
         End Property
