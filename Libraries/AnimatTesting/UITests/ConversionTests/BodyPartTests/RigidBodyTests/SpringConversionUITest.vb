@@ -126,7 +126,7 @@ Namespace UITests
                         ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring", "AttachmentPoints"}, 500)
                         ExecuteActiveDialogMethod("Automation_AddAttachment", New Object() {"RightAttach2"})
                         ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, , True, True)
-                        AssertErrorDialogShown("Only 2 are allowed for this part type. Please reduce the number of attachments to this number.", enumErrorTextType.Equals)
+                        AssertErrorDialogShown("Only 2 are allowed for this part type. Please reduce the number of attachments to this number.", enumErrorTextType.Contains)
                         ExecuteActiveDialogMethod("Automation_RemoveAttachment", New Object() {"RightAttach"})
                         ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
                         VerifyPropertyValue("Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring", "Length.ActualValue", 5.59)
@@ -212,7 +212,7 @@ Namespace UITests
 
                         AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\A", _
                                           "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B", "", "", False, , True)
-                        AssertErrorDialogShown("You must specify a linked body part before you can add an adapter to this node.", enumErrorTextType.Equals)
+                        AssertErrorDialogShown("You must specify a linked body part before you can add an adapter to this node.", enumErrorTextType.Contains)
 
                         ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\B", _
                                                                      "Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Spring2"})

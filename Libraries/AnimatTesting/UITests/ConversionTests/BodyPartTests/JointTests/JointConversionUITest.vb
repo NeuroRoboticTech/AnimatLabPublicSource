@@ -124,7 +124,7 @@ Namespace UITests
 
                         AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\C", _
                                           "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Joint2", "", "", False, , True)
-                        AssertErrorDialogShown("You must specify a linked body part before you can add an adapter to this node.", enumErrorTextType.Equals)
+                        AssertErrorDialogShown("You must specify a linked body part before you can add an adapter to this node.", enumErrorTextType.Contains)
 
                         ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Joint2", _
                                              "Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint"})

@@ -42,6 +42,7 @@ Namespace DataObjects.Behavior.Neurons
             End Set
         End Property
 
+        <EditorAttribute(GetType(AnimatGUI.TypeHelpers.GainTypeEditor), GetType(System.Drawing.Design.UITypeEditor))> _
         Public Overridable Property CurrentDistribution() As AnimatGUI.DataObjects.Gain
             Get
                 Return m_gnCurrentDistribution
@@ -61,6 +62,7 @@ Namespace DataObjects.Behavior.Neurons
             End Set
         End Property
 
+        <EditorAttribute(GetType(AnimatGUI.TypeHelpers.GainTypeEditor), GetType(System.Drawing.Design.UITypeEditor))> _
         Public Overridable Property BurstLengthDistribution() As AnimatGUI.DataObjects.Gain
             Get
                 Return m_gnBurstLengthDistribution
@@ -80,6 +82,7 @@ Namespace DataObjects.Behavior.Neurons
             End Set
         End Property
 
+        <EditorAttribute(GetType(AnimatGUI.TypeHelpers.GainTypeEditor), GetType(System.Drawing.Design.UITypeEditor))> _
         Public Overridable Property InterburstLengthDistribution() As AnimatGUI.DataObjects.Gain
             Get
                 Return m_gnInterburstLengthDistribution

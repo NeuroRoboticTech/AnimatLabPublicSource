@@ -160,7 +160,7 @@ Namespace UITests
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Stomach", True})
                         ExecuteMethod("SelectWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\Mouth", True})
                         ClickMenuItem("CopyToolStripMenuItem", True, , True, True)
-                        AssertErrorDialogShown("Only one body part can be selected to be copied at one time.", enumErrorTextType.Equals)
+                        AssertErrorDialogShown("Only one body part can be selected to be copied at one time.", enumErrorTextType.Contains)
 
                         DeletePart("Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head\OdorSensor", "Delete Body Part", True)
                         PasteChildPartTypeWithJoint("", "Simulation\Environment\Organisms\Organism_1\Body Plan\Root\Hinge1\Head", 0.04, 0.55, -0.5, 0.0, 0.0, -1.0, False)

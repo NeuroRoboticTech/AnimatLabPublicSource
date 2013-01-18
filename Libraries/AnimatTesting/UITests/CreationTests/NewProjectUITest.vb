@@ -76,7 +76,7 @@ Namespace UITests
                 'Enter text and verify error. Verify the error.
                 ExecuteActiveDialogMethod("SetProjectParams", New Object() {"TestProject", m_strRootFolder & "\Libraries\AnimatTesting\TestProjects\CreationTests"})
                 ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing, 200, True)
-                AssertErrorDialogShown(" already exists. Please choose a different name or location for the project.", enumErrorTextType.EndsWith)
+                AssertErrorDialogShown(" already exists. Please choose a different name or location for the project.", enumErrorTextType.Contains)
 
             End Sub
 

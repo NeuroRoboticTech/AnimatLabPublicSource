@@ -39,6 +39,7 @@ Namespace TypeHelpers
 
                     Util.ModificationHistory.AllowAddHistory = False
                     If frmGainEditor.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                        context.PropertyDescriptor.SetValue(oGain.Parent, frmGainEditor.Gain)
                         oGain = frmGainEditor.Gain
                     End If
 

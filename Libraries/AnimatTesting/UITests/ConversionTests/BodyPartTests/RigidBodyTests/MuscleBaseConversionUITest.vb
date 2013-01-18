@@ -283,7 +283,7 @@ Namespace UITests
 
                         AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\MV", _
                                           "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Muscle", "", "", False, , True)
-                        AssertErrorDialogShown("You must specify a linked body part before you can add an adapter to this node.", enumErrorTextType.Equals)
+                        AssertErrorDialogShown("You must specify a linked body part before you can add an adapter to this node.", enumErrorTextType.Contains)
 
                         ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\Muscle", _
                                                                      "Simulation\Environment\Organisms\Organism_1\Body Plan\Base\Joint_1\Arm\Muscle2"})
@@ -333,7 +333,7 @@ Namespace UITests
 
                         AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\OP", _
                                           "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\Muscle", "", "", False, False, True)
-                        AssertErrorDialogShown("The off-page connector node 'OP' must be associated with another node before you can connect it with a link.", enumErrorTextType.Equals)
+                        AssertErrorDialogShown("The off-page connector node 'OP' must be associated with another node before you can connect it with a link.", enumErrorTextType.Contains)
 
 
                         ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\OP", _
@@ -361,7 +361,7 @@ Namespace UITests
 
                         AddBehavioralLink("Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\Muscle", _
                                           "Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\OP2", "", "", False, , True)
-                        AssertErrorDialogShown("The off-page connector node 'OP2' must be associated with another node before you can connect it with a link.", enumErrorTextType.Equals)
+                        AssertErrorDialogShown("The off-page connector node 'OP2' must be associated with another node before you can connect it with a link.", enumErrorTextType.Contains)
 
 
                         ExecuteMethod("SetLinkedItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\S2\OP2", _

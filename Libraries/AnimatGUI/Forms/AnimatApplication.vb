@@ -4857,6 +4857,9 @@ Namespace Forms
                     Dim edEdit As System.Drawing.Design.UITypeEditor = DirectCast(oPropEdit, System.Drawing.Design.UITypeEditor)
                     Dim doRetVal As Object = edEdit.EditValue(oPropContext, Nothing, oObjProp)
                     m_piAutomationPropInfo.SetValue(oObj, doRetVal, Nothing)
+                Else
+                    Throw New System.Exception("Attempted to call OnOpenUITypeEditor for " & m_tnAutomationTreeNode.Tag.ToString & _
+                                               " with name " & m_strAutomationName & " failed to find  UITypeEditor to work with.")
                 End If
 
             Catch ex As System.Exception

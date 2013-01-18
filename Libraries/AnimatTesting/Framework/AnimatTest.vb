@@ -271,7 +271,7 @@ Namespace Framework
         End Function
 
         Protected Overridable Sub ExecuteMethodAssertError(ByVal strMethodName As String, ByVal aryParams() As Object, ByVal strErrorText As String, _
-                                                           Optional ByVal eErrorTextType As enumErrorTextType = enumErrorTextType.EndsWith, _
+                                                           Optional ByVal eErrorTextType As enumErrorTextType = enumErrorTextType.Contains, _
                                                            Optional ByVal iWaitMilliseconds As Integer = 20)
 
             Try
@@ -296,7 +296,7 @@ Namespace Framework
 
 
         Protected Overridable Sub CheckException(ByVal ex As Exception, ByVal strErrorText As String, _
-                                                           Optional ByVal eErrorTextType As enumErrorTextType = enumErrorTextType.EndsWith)
+                                                           Optional ByVal eErrorTextType As enumErrorTextType = enumErrorTextType.Contains)
             If Not ex Is Nothing Then
                 If eErrorTextType = enumErrorTextType.Contains AndAlso ex.Message.Contains(strErrorText) Then
                     Debug.WriteLine("It matched the text")
