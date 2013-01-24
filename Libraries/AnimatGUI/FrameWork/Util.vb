@@ -1075,7 +1075,19 @@ Namespace Framework
             Return Math.Sqrt(Math.Pow(vA.X - vB.X, 2) + Math.Pow(vA.Y - vB.Y, 2) + Math.Pow(vA.Z - vB.Z, 2))
         End Function
 
-        Public Shared Sub Relable(ByVal aryObjects As ArrayList, ByVal strMatch As String, ByVal strReplace As String)
+        Public Shared Sub RegExRelableWithConfirm(ByVal aryObjects As ArrayList, ByVal strMatch As String, ByVal strReplace As String)
+            Dim frmConfirm As New AnimatGUI.Forms.ConfirmRelabel
+            frmConfirm.Items = aryObjects
+            frmConfirm.Match = strMatch
+            frmConfirm.Replace = strReplace
+
+            If frmConfirm.ShowDialog() = DialogResult.OK Then
+                RegExRelable(aryObjects, strMatch, strReplace)
+            End If
+
+        End Sub
+
+        Public Shared Sub RegExRelable(ByVal aryObjects As ArrayList, ByVal strMatch As String, ByVal strReplace As String)
 
             Try
 

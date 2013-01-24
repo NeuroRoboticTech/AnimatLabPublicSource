@@ -115,12 +115,6 @@ Namespace DataObjects.Physical
                     Dim bpParent As DataObjects.Physical.RigidBody = DirectCast(bpChild.Parent, DataObjects.Physical.RigidBody)
                     AddHandler bpParent.Moved, AddressOf Me.OnAttachedPartMoved
                     AddHandler bpParent.Rotated, AddressOf Me.OnAttachedPartRotated
-
-                    If bpParent.IsRoot Then
-                        'TODO: Have to add this back!
-                        'AddHandler Me.ParentStructure.Moved, AddressOf Me.OnAttachedPartMoved
-                        'AddHandler Me.ParentStructure.Rotated, AddressOf Me.OnAttachedPartRotated
-                    End If
                 End If
             End If
 

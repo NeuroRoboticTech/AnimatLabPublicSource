@@ -119,19 +119,20 @@ Namespace Forms.Behavior
         'Select callback methods
         Public Overridable Sub SelectAll()
             Try
-                'TODO
-                'Me.SelectDataItem(Nothing, True)
+                Dim colObjects As New AnimatGUI.Collections.DataObjects(Nothing)
+                Dim doObj As Framework.DataObject
 
-                'Dim doData As DataObjects.Behavior.Data
-                'For Each deEntry As DictionaryEntry In Me.Nodes
-                '    doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
-                '    Me.SelectDataItem(doData, False)
-                'Next
+                For Each deItem As DictionaryEntry In Me.m_bnSubSystem.BehavioralNodes
+                    doObj = DirectCast(deItem.Value, Framework.DataObject)
+                    colObjects.Add(doObj)
+                Next
 
-                'For Each deEntry As DictionaryEntry In Me.Links
-                '    doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
-                '    Me.SelectDataItem(doData, False)
-                'Next
+                For Each deItem As DictionaryEntry In Me.m_bnSubSystem.BehavioralLinks
+                    doObj = DirectCast(deItem.Value, Framework.DataObject)
+                    colObjects.Add(doObj)
+                Next
+
+                Util.ProjectWorkspace.SelectMultipleItems(colObjects)
 
             Catch ex As System.Exception
                 Throw ex
@@ -189,27 +190,6 @@ Namespace Forms.Behavior
         Public MustOverride Sub ExportDiagram(ByVal strFilename As String, ByVal eFormat As System.Drawing.Imaging.ImageFormat)
         Public MustOverride Function SaveSelected(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal bCopy As Boolean) As Boolean
         Public MustOverride Sub LoadPasted(ByVal oXml As ManagedAnimatInterfaces.IStdXml, ByVal bInPlace As Boolean)
-
-        Public Overridable Sub RetrieveChildren(ByVal bThisDiagramOnly As Boolean, ByRef aryChildren As ArrayList)
-
-            'TODO
-            'For Each deEntry As DictionaryEntry In m_aryNodes
-            '    aryChildren.Add(deEntry.Value)
-            'Next
-
-            'For Each deEntry As DictionaryEntry In m_aryLinks
-            '    aryChildren.Add(deEntry.Value)
-            'Next
-
-            'If Not bThisDiagramOnly Then
-            '    Dim doChild As Behavior.DiagramOld
-            '    For Each deEntry As DictionaryEntry In Me.Diagrams
-            '        doChild = DirectCast(deEntry.Value, Behavior.DiagramOld)
-            '        doChild.RetrieveChildren(bThisDiagramOnly, aryChildren)
-            '    Next
-            'End If
-
-        End Sub
 
         Public Overrides Sub ClearIsDirty()
             MyBase.ClearIsDirty()

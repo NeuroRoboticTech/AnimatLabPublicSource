@@ -585,6 +585,28 @@ Namespace DataObjects.Behavior.Nodes
 
         End Sub
 
+        Public Overridable Sub RetrieveChildren(ByVal bThisDiagramOnly As Boolean, ByRef aryChildren As ArrayList)
+
+            For Each deEntry As DictionaryEntry In Me.BehavioralNodes
+                aryChildren.Add(deEntry.Value)
+            Next
+
+            For Each deEntry As DictionaryEntry In Me.BehavioralLinks
+                aryChildren.Add(deEntry.Value)
+            Next
+
+            If Not bThisDiagramOnly Then
+                Dim doChild As DataObjects.Behavior.Nodes.Subsystem
+                For Each deEntry As DictionaryEntry In Me.BehavioralNodes
+                    If Util.IsTypeOf(deEntry.Value.GetType, GetType(DataObjects.Behavior.Nodes.Subsystem)) Then
+                        doChild = DirectCast(deEntry.Value, DataObjects.Behavior.Nodes.Subsystem)
+                        doChild.RetrieveChildren(bThisDiagramOnly, aryChildren)
+                    End If
+                Next
+            End If
+
+        End Sub
+
 #Region " DataObject Methods "
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)

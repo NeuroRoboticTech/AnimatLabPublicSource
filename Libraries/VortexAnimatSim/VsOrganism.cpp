@@ -40,9 +40,9 @@ void VsOrganism::Body(RigidBody *lpBody)
 {
 	Organism::Body(lpBody);
 	m_lpVsBody = dynamic_cast<VsRigidBody *>(lpBody);
-	//TODO: FIX BACK
-	//if(!m_lpVsBody)
-	//	THROW_TEXT_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody, "ID: " + lpBody->Name());
+
+	if(!m_lpVsBody)
+		THROW_TEXT_ERROR(Vs_Err_lUnableToConvertToVsRigidBody, Vs_Err_strUnableToConvertToVsRigidBody, "ID: " + lpBody->Name());
 }
 
 void VsOrganism::SetThisPointers()

@@ -135,14 +135,12 @@ Namespace Forms
         Public WithEvents AddStimulusToolStripButton As System.Windows.Forms.ToolStripButton
         Public WithEvents toolStripSeparator As System.Windows.Forms.ToolStripSeparator
         Public WithEvents SelectByTypeToolStripButton As System.Windows.Forms.ToolStripButton
-        Public WithEvents RelabelToolStripButton As System.Windows.Forms.ToolStripButton
         Public WithEvents RelabelSelectedToolStripButton As System.Windows.Forms.ToolStripButton
         Public WithEvents AddPartToolStripButton As System.Windows.Forms.ToolStripButton
         Public WithEvents AddJointToolStripButton As System.Windows.Forms.ToolStripButton
         Public WithEvents CompareItemsToolStripButton As System.Windows.Forms.ToolStripButton
         Public WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
         Public WithEvents SelectByTypeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Public WithEvents RelabelToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents RelabelSelectedToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents CompareItemsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Public WithEvents AddItemToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -191,7 +189,6 @@ Namespace Forms
             Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
             Me.SelectByTypeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.RelabelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.RelabelSelectedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.CompareItemsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -246,7 +243,6 @@ Namespace Forms
             Me.AddStimulusToolStripButton = New System.Windows.Forms.ToolStripButton()
             Me.ToolStripSeparator9 = New System.Windows.Forms.ToolStripSeparator()
             Me.SelectByTypeToolStripButton = New System.Windows.Forms.ToolStripButton()
-            Me.RelabelToolStripButton = New System.Windows.Forms.ToolStripButton()
             Me.RelabelSelectedToolStripButton = New System.Windows.Forms.ToolStripButton()
             Me.CompareItemsToolStripButton = New System.Windows.Forms.ToolStripButton()
             Me.ToolStripSeparator10 = New System.Windows.Forms.ToolStripSeparator()
@@ -420,7 +416,7 @@ Namespace Forms
             Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UndoToolStripMenuItem, Me.RedoToolStripMenuItem, Me.RunMacroToolStripMenuItem})
             Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.toolStripSeparator6, Me.DeleteToolStripMenuItem})
             Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripSeparator1, Me.SelectByTypeToolStripMenuItem, _
-                                                                                                      Me.RelabelToolStripMenuItem, Me.RelabelSelectedToolStripMenuItem, _
+                                                                                                      Me.RelabelSelectedToolStripMenuItem, _
                                                                                                       Me.CompareItemsToolStripMenuItem, Me.EditMaterialsToolStripMenuItem})
             Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
             Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
@@ -473,14 +469,6 @@ Namespace Forms
             Me.SelectByTypeToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
             Me.SelectByTypeToolStripMenuItem.Text = "Select By Type"
             Me.SelectByTypeToolStripMenuItem.ToolTipText = "Select items by their type"
-            '
-            'RelabelToolStripMenuItem
-            '
-            Me.RelabelToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Relabel.gif")
-            Me.RelabelToolStripMenuItem.Name = "RelabelToolStripMenuItem"
-            Me.RelabelToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
-            Me.RelabelToolStripMenuItem.Text = "Relabel"
-            Me.RelabelToolStripMenuItem.ToolTipText = "Relabel items using a regular expression"
             '
             'RelabelSelectedToolStripMenuItem
             '
@@ -748,7 +736,7 @@ Namespace Forms
                                                                                         Me.AddStructureToolStripButton, Me.AddToolToolStripButton, _
                                                                                         Me.AddPartToolStripButton, Me.AddJointToolStripButton, _
                                                                                         Me.AddStimulusToolStripButton, Me.ToolStripSeparator9, _
-                                                                                        Me.SelectByTypeToolStripButton, Me.RelabelToolStripButton, _
+                                                                                        Me.SelectByTypeToolStripButton, _
                                                                                         Me.RelabelSelectedToolStripButton, Me.CompareItemsToolStripButton, _
                                                                                         Me.EditMaterialsToolStripButton, Me.ToolStripSeparator10, _
                                                                                         Me.SelGraphicsToolStripButton, Me.SelCollisionToolStripButton, _
@@ -892,16 +880,6 @@ Namespace Forms
             Me.SelectByTypeToolStripButton.Size = New System.Drawing.Size(23, 22)
             Me.SelectByTypeToolStripButton.Text = "SelectByTypeToolStripButton"
             Me.SelectByTypeToolStripButton.ToolTipText = "Select items by type"
-            '
-            'RelabelToolStripButton
-            '
-            Me.RelabelToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.RelabelToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Relabel.gif")
-            Me.RelabelToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.RelabelToolStripButton.Name = "RelabelToolStripButton"
-            Me.RelabelToolStripButton.Size = New System.Drawing.Size(23, 22)
-            Me.RelabelToolStripButton.Text = "RelabelToolStripButton"
-            Me.RelabelToolStripButton.ToolTipText = "Relabel Items."
             '
             'RelabelSelectedToolStripButton
             '
@@ -2786,8 +2764,6 @@ Namespace Forms
 
                 Me.SelectByTypeToolStripButton.Enabled = True
                 Me.SelectByTypeToolStripMenuItem.Enabled = True
-                Me.RelabelToolStripButton.Enabled = True
-                Me.RelabelToolStripMenuItem.Enabled = True
                 Me.RelabelSelectedToolStripButton.Enabled = True
                 Me.RelabelSelectedToolStripMenuItem.Enabled = True
                 Me.CompareItemsToolStripButton.Enabled = True
@@ -2846,8 +2822,6 @@ Namespace Forms
 
                 Me.SelectByTypeToolStripButton.Enabled = False
                 Me.SelectByTypeToolStripMenuItem.Enabled = False
-                Me.RelabelToolStripButton.Enabled = False
-                Me.RelabelToolStripMenuItem.Enabled = False
                 Me.RelabelSelectedToolStripButton.Enabled = False
                 Me.RelabelSelectedToolStripMenuItem.Enabled = False
                 Me.CompareItemsToolStripButton.Enabled = False
@@ -5156,16 +5130,6 @@ Namespace Forms
 
                     Util.ProjectWorkspace.SelectMultipleItems(colObjects)
 
-                    'Util.ProjectWorkspace.ClearSelections()
-
-                    'Dim doPart As AnimatGUI.DataObjects.Physical.BodyPart
-                    'For Each doData As Framework.DataObject In colObjects
-                    '    If TypeOf doData Is AnimatGUI.DataObjects.Physical.BodyPart Then
-                    '        doPart = DirectCast(doData, AnimatGUI.DataObjects.Physical.BodyPart)
-                    '        doPart.SelectItem(True)
-                    '    End If
-                    'Next
-
                 End If
 
             Catch ex As System.Exception
@@ -5179,9 +5143,7 @@ Namespace Forms
                 Dim frmRelabel As New AnimatGUI.Forms.BodyPlan.Relabel
 
                 frmRelabel.SelectedItem = Util.ProjectWorkspace.SelectedDataObject
-                If frmRelabel.ShowDialog = DialogResult.OK Then
-                    Util.Relable(frmRelabel.Items, frmRelabel.txtMatch.Text, frmRelabel.txtReplace.Text)
-                End If
+                frmRelabel.ShowDialog
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -5889,10 +5851,6 @@ Namespace Forms
 
         Public Sub OnSelectByType(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SelectByTypeToolStripMenuItem.Click, SelectByTypeToolStripButton.Click
             SelectByType()
-        End Sub
-
-        Public Sub OnRelabel(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RelabelToolStripMenuItem.Click, RelabelToolStripButton.Click
-            Relabel()
         End Sub
 
         Public Sub OnRelabelSelected(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RelabelSelectedToolStripMenuItem.Click, RelabelSelectedToolStripButton.Click

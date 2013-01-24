@@ -212,13 +212,13 @@ Namespace Forms.BodyPlan
                     m_aryItems.Add(doObj)
                 Next
 
-                Dim frmConfirm As New Forms.ConfirmRelabel
+                Dim frmConfirm As New AnimatGUI.Forms.ConfirmRelabel
                 frmConfirm.Items = m_aryItems
                 frmConfirm.Match = Me.txtMatch.Text
                 frmConfirm.Replace = Me.txtReplace.Text
 
                 If frmConfirm.ShowDialog() = DialogResult.OK Then
-                    Me.DialogResult = DialogResult.OK
+                    Util.RegExRelable(m_aryItems, Me.txtMatch.Text, Me.txtReplace.Text)
                     Me.Close()
                 End If
 

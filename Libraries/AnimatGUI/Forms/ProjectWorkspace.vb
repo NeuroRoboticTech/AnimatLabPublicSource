@@ -109,6 +109,21 @@ Namespace Forms
             End Get
         End Property
 
+        Public Overridable ReadOnly Property SelectedDataObjects() As Collections.DataObjects
+            Get
+                Dim arySelected As New Collections.DataObjects(Nothing)
+
+                For Each tvNode As Crownwood.DotNetMagic.Controls.Node In ctrlTreeView.SelectedNodes
+                    If Not tvNode.Tag Is Nothing AndAlso Util.IsTypeOf(tvNode.Tag.GetType(), GetType(Framework.DataObject), False) Then
+                        Dim doObj As Framework.DataObject = DirectCast(tvNode.Tag, Framework.DataObject)
+                        arySelected.Add(doObj)
+                    End If
+                Next
+
+                Return arySelected
+            End Get
+        End Property
+
 #End Region
 
 #Region " Methods "
@@ -236,7 +251,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Public Overridable Sub SelectMultipleItems(ByVal arySelectItems As Collections.DataObjects)
+        Protected Overridable Sub SelectMultipleItemsClearCurrent(ByVal arySelectItems As Collections.DataObjects)
             Try
                 Util.Application.AppIsBusy = True
 
@@ -274,6 +289,107 @@ Namespace Forms
                 m_bMutlipleSelectInProgress = False
                 ctrlTreeView.InstantUpdate = True
             End Try
+        End Sub
+
+        Protected Overridable Sub FindSelectionDifferences(ByVal arySelectItems As Collections.DataObjects, _
+                                                           ByRef aryToAdd As Collections.DataObjects, _
+                                                           ByRef aryToRemove As Collections.DataObjects)
+            'Lets first check this list against what is currently selected. If it matches with just a few differences
+            'then lets just do things individually. If it does not then lets redo the whole thing.
+            Dim aryCurrentlySelected As Collections.DataObjects = Me.SelectedDataObjects
+
+            For Each doSel As Framework.DataObject In arySelectItems
+                If Not aryCurrentlySelected.Contains(doSel) Then
+                    aryToAdd.Add(doSel)
+                End If
+            Next
+
+            For Each doSel As Framework.DataObject In aryCurrentlySelected
+                If Not arySelectItems.Contains(doSel) Then
+                    aryToRemove.Add(doSel)
+                End If
+            Next
+
+        End Sub
+
+        Protected Overridable Sub AddRemoveIndividualItems(ByVal aryToAdd As Collections.DataObjects, _
+                                                           ByVal aryToRemove As Collections.DataObjects)
+            Try
+                Util.Application.AppIsBusy = False
+
+                m_bMutlipleSelectInProgress = True
+                ctrlTreeView.InstantUpdate = False
+
+                For Each doItem As Framework.DataObject In aryToAdd
+                    doItem.SelectItem(True)
+                    doItem.AfterSelected()
+                Next
+
+                For Each doItem As Framework.DataObject In aryToRemove
+                    doItem.DeselectItem()
+                    doItem.AfterDeselected()
+                Next
+
+                RegenerateObjectPropertiesArray()
+
+            Catch ex As Exception
+                Throw ex
+            Finally
+                Util.Application.AppIsBusy = False
+                m_bMutlipleSelectInProgress = False
+                ctrlTreeView.InstantUpdate = True
+            End Try
+
+        End Sub
+
+        Public Overridable Sub SelectMultipleItems(ByVal arySelectItems As Collections.DataObjects)
+
+            If Math.Abs(ctrlTreeView.SelectedCount - arySelectItems.Count) > 5 Then
+                SelectMultipleItemsClearCurrent(arySelectItems)
+            Else
+                Dim aryToAdd As New Collections.DataObjects(Nothing)
+                Dim aryToRemove As New Collections.DataObjects(Nothing)
+
+                FindSelectionDifferences(arySelectItems, aryToAdd, aryToRemove)
+
+                If (aryToAdd.Count + aryToRemove.Count) > 5 Then
+                    SelectMultipleItemsClearCurrent(arySelectItems)
+                Else
+                    AddRemoveIndividualItems(aryToAdd, aryToRemove)
+                End If
+            End If
+
+        End Sub
+
+        Protected Overridable Sub RegenerateObjectPropertiesArray()
+
+            Dim iCount As Integer = ctrlTreeView.SelectedNodes.Count - 1
+            Dim aryItems(iCount) As PropertyBag
+            Dim iIndex As Integer = 0
+            For Each tnNode As Crownwood.DotNetMagic.Controls.Node In ctrlTreeView.SelectedNodes
+                If Not tnNode.Tag Is Nothing Then
+                    If Util.IsTypeOf(tnNode.Tag.GetType, GetType(Framework.DataObject), False) Then
+                        Dim doObj As Framework.DataObject = DirectCast(tnNode.Tag, Framework.DataObject)
+                        aryItems(iIndex) = doObj.Properties
+                        iIndex = iIndex + 1
+                    ElseIf Util.IsTypeOf(tnNode.Tag.GetType, GetType(Forms.AnimatForm), False) Then
+                        Dim doObj As Forms.AnimatForm = DirectCast(tnNode.Tag, Forms.AnimatForm)
+                        aryItems(iIndex) = doObj.Properties
+                        iIndex = iIndex + 1
+                    End If
+                Else
+                    iCount = iCount - 1
+                    ReDim Preserve aryItems(iCount)
+                End If
+            Next
+
+            If iCount >= 0 Then
+                Util.ProjectProperties.PropertyData = Nothing
+                Util.ProjectProperties.PropertyArray = aryItems
+            Else
+                Util.ProjectProperties.PropertyData = Nothing
+                Util.ProjectProperties.PropertyArray = Nothing
+            End If
 
         End Sub
 

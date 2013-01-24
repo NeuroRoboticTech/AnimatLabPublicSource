@@ -147,6 +147,8 @@ Namespace Forms.Behavior
         Friend WithEvents CutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents CopyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents PasteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents RelabelToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Public WithEvents RelabelToolStripButton As System.Windows.Forms.ToolStripButton
 
         'Friend WithEvents CopyPopupMenuItem As System.Windows.Forms.ToolStripMenuItem
         'Friend WithEvents PastePopupMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -283,6 +285,8 @@ Namespace Forms.Behavior
             Me.CutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.CopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.PasteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.RelabelToolStripButton = New System.Windows.Forms.ToolStripButton()
+            Me.RelabelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 
             'Me.CopyPopupMenuItem = New System.Windows.Forms.ToolStripMenuItem
             'Me.PastePopupMenuItem = New System.Windows.Forms.ToolStripMenuItem
@@ -330,7 +334,7 @@ Namespace Forms.Behavior
             '
             Me.AddFlowToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PrintToolStripButton, Me.PasteToolStripButton, Me.CopyToolStripButton, _
                                                                                          Me.CutToolStripButton, Me.ZoomInDropDownButton, Me.ZoomOutDropDownButton, _
-                                                                                         Me.AlignDropDownButton, Me.DistributeDropDownButton, Me.SizeDropDownButton})
+                                                                                         Me.AlignDropDownButton, Me.DistributeDropDownButton, Me.SizeDropDownButton, Me.RelabelToolStripButton})
             Me.AddFlowToolStrip.Location = New System.Drawing.Point(0, 24)
             Me.AddFlowToolStrip.Name = "AddFlowToolStrip"
             Me.AddFlowToolStrip.Size = New System.Drawing.Size(351, 25)
@@ -617,6 +621,16 @@ Namespace Forms.Behavior
             Me.SizeHeightToolStripItem.Text = "Height"
             Me.SizeHeightToolStripItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.SizeHeight.gif")
             '
+            'RelabelToolStripButton
+            '
+            Me.RelabelToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.RelabelToolStripButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Relabel.gif")
+            Me.RelabelToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.RelabelToolStripButton.Name = "RelabelToolStripButton"
+            Me.RelabelToolStripButton.Size = New System.Drawing.Size(23, 22)
+            Me.RelabelToolStripButton.Text = "RelabelToolStripButton"
+            Me.RelabelToolStripButton.ToolTipText = "Relabel Items."
+            '
             'AddFlowMenuStrip
             '
             Me.AddFlowMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.EditToolStripMenuItem, Me.ViewToolStripMenuItem, Me.ShapeToolStripMenuItem})
@@ -679,7 +693,7 @@ Namespace Forms.Behavior
             'EditToolStripMenuItem
             '
             Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteInPlaceMenuItem, Me.PasteToolStripMenuItem, Me.CopyToolStripMenuItem, _
-                                                                                                      Me.CutToolStripMenuItem, Me.ShowConnectionsToolStripMenuItem, Me.GridMenuItem})
+                                                                                                      Me.CutToolStripMenuItem, Me.ShowConnectionsToolStripMenuItem, Me.GridMenuItem, Me.RelabelToolStripMenuItem})
             Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
             Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
             Me.EditToolStripMenuItem.Text = "&Edit"
@@ -713,6 +727,14 @@ Namespace Forms.Behavior
             Me.FitToPageMenuItem.Size = New System.Drawing.Size(152, 22)
             Me.FitToPageMenuItem.Text = "Fit to Page"
             Me.FitToPageMenuItem.MergeAction = MergeAction.Append
+            '
+            'RelabelToolStripMenuItem
+            '
+            Me.RelabelToolStripMenuItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.Relabel.gif")
+            Me.RelabelToolStripMenuItem.Name = "RelabelToolStripMenuItem"
+            Me.RelabelToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
+            Me.RelabelToolStripMenuItem.Text = "Relabel"
+            Me.RelabelToolStripMenuItem.ToolTipText = "Relabel items using a regular expression"
             '
             'ZoomOutMenuItem
             '
@@ -2080,6 +2102,19 @@ Namespace Forms.Behavior
 
         End Sub
 
+        Public Overridable Sub RelabelRegEx()
+            Try
+                Dim frmRelabel As New AnimatGUI.Forms.Behavior.Relabel
+
+                frmRelabel.Diagram = Me
+                frmRelabel.ShowDialog 
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Sub
+
 #Region " Menu Methods "
 
         Public Overrides Sub ValidateEditToolStripItemState()
@@ -2120,7 +2155,6 @@ Namespace Forms.Behavior
             '
             Dim tsPopupMenu As New AnimatContextMenuStrip("AddFlowDiagramMenu", Nothing)
 
-            'TODO
             Dim mcCut As New System.Windows.Forms.ToolStripMenuItem("Cut", Util.Application.ToolStripImages.GetImage("AnimatGUI.Cut.gif"), New EventHandler(AddressOf Me.CutToolStripButton_Click))
             Dim mcCopy As New System.Windows.Forms.ToolStripMenuItem("Copy", Util.Application.ToolStripImages.GetImage("AnimatGUI.Copy.gif"), New EventHandler(AddressOf Me.CopyToolStripButton_Click))
             Dim mcPaste As New System.Windows.Forms.ToolStripMenuItem("Paste", Util.Application.ToolStripImages.GetImage("AnimatGUI.CopyClipboard.gif"), New EventHandler(AddressOf Me.PasteInPlaceMenuItem_Click))
@@ -2129,7 +2163,7 @@ Namespace Forms.Behavior
             'mcCut.ImageScaling = ToolStripItemImageScaling.SizeToFit
 
             Dim mcSelectByType As New System.Windows.Forms.ToolStripMenuItem("Select by type", Util.Application.ToolStripImages.GetImage("AnimatGUI.SelectByType.gif"), New EventHandler(AddressOf Util.Application.OnSelectByType))
-            Dim mcRelabel As New System.Windows.Forms.ToolStripMenuItem("Relabel", Util.Application.ToolStripImages.GetImage("AnimatGUI.Relabel.gif"), New EventHandler(AddressOf Util.Application.OnRelabel))
+            Dim mcRelabel As New System.Windows.Forms.ToolStripMenuItem("Relabel", Util.Application.ToolStripImages.GetImage("AnimatGUI.Relabel.gif"), New EventHandler(AddressOf Me.OnRelabel))
             Dim mcRelabelSelected As New System.Windows.Forms.ToolStripMenuItem("Relable selected", Util.Application.ToolStripImages.GetImage("AnimatGUI.RelabelSelected.gif"), New EventHandler(AddressOf Util.Application.OnRelabelSelected))
             Dim mcCompareItems As New System.Windows.Forms.ToolStripMenuItem("Compare items", Util.Application.ToolStripImages.GetImage("AnimatGUI.Equals.gif"), New EventHandler(AddressOf Util.Application.OnCompareItems))
 
@@ -2975,10 +3009,10 @@ Namespace Forms.Behavior
 
         End Sub
 
-        'Public Sub OnSelectAll(ByVal sender As Object, ByVal e As System.EventArgs)
-        '    SelectAll()
-        'End Sub
-        ' 
+        Public Sub OnSelectAll(ByVal sender As Object, ByVal e As System.EventArgs)
+            SelectAll()
+        End Sub
+
         Private Sub CutToolStripButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles CutToolStripButton.Click, CutToolStripMenuItem.Click
             CutSelected()
         End Sub
@@ -2993,6 +3027,10 @@ Namespace Forms.Behavior
 
         Private Sub PasteInPlaceMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles PasteInPlaceMenuItem.Click
             PasteSelected(True)
+        End Sub
+
+        Private Sub OnRelabel(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RelabelToolStripMenuItem.Click, RelabelToolStripButton.Click
+            RelabelRegEx()
         End Sub
 
 #End Region

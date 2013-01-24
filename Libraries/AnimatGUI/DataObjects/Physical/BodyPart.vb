@@ -431,9 +431,7 @@ Namespace DataObjects.Physical
 
                 frmRelabel.SelectedItem = Me
                 frmRelabel.RootNode = Me
-                If frmRelabel.ShowDialog = DialogResult.OK Then
-                    Util.Relable(frmRelabel.Items, frmRelabel.txtMatch.Text, frmRelabel.txtReplace.Text)
-                End If
+                frmRelabel.ShowDialog 
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

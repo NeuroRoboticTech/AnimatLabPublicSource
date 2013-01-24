@@ -174,6 +174,14 @@ Namespace DataObjects.Behavior.Neurons
             m_gnInterburstLengthDistribution = DirectCast(bnOrig.m_gnInterburstLengthDistribution.Clone(Me, bCutData, doRoot), AnimatGUI.DataObjects.Gain)
         End Sub
 
+        Public Overrides Sub AddToReplaceIDList(ByVal aryReplaceIDList As ArrayList)
+            MyBase.AddToReplaceIDList(aryReplaceIDList)
+
+            m_gnCurrentDistribution.AddToReplaceIDList(aryReplaceIDList)
+            m_gnBurstLengthDistribution.AddToReplaceIDList(aryReplaceIDList)
+            m_gnInterburstLengthDistribution.AddToReplaceIDList(aryReplaceIDList)
+        End Sub
+
         Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
             MyBase.SaveSimulationXml(oXml, nmParentControl)
 

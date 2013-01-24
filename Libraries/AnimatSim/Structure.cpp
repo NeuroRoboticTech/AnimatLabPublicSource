@@ -149,9 +149,6 @@ void Structure::Size(float fltVal, BOOL bUseScaling)
 		m_fltSize = fltVal * m_lpSim->InverseDistanceUnits();
 	else
 		m_fltSize = fltVal;
-
-	//TODO
-	//Resize();
 }
 
 void Structure::Selected(BOOL bValue, BOOL bSelectMultiple)

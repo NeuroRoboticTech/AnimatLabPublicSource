@@ -107,11 +107,6 @@ Namespace Forms.Behavior
                 Dim myAssembly As System.Reflection.Assembly
                 myAssembly = System.Reflection.Assembly.Load("AnimatGUI")
 
-                'TODO
-                'If Not m_beEditor.Organism Is Nothing Then
-                '    PopulateNeuralModules()
-                'End If
-
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
