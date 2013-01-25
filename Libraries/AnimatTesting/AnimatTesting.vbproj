@@ -160,6 +160,7 @@
     <Compile Include="UITests\ConversionTests\ConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\NeuralTests\NeuralUIConversionTest.vb" />
     <Compile Include="UITests\ConversionTests\SystemTests\PlaybackControlConversionUITest.vb" />
+    <Compile Include="UITests\ConversionTests\TutorialTests\BodyPartsConversionUITest.vb" />
     <Compile Include="UITests\ConversionTests\TutorialTests\ExamplesConversionUITest.vb" />
     <Compile Include="UITests\CreationTests\NewProjectUITest.vb" />
     <Compile Include="UITests\PerformanceTests\DropBoxesUITest.vb" />

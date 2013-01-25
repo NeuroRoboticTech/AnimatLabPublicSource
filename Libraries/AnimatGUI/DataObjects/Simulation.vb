@@ -39,7 +39,7 @@ Namespace DataObjects
         Protected m_bStartPaused As Boolean = False
         Protected m_bUseReleaseLibraries As Boolean = True
         Protected m_bEnableSimRecording As Boolean = True
-        Protected m_ePlaybackControlMode As enumPlaybackControlMode = enumPlaybackControlMode.MatchPhysicsStep
+        Protected m_ePlaybackControlMode As enumPlaybackControlMode = enumPlaybackControlMode.FastestPossible
         Protected m_snPresetPlaybackTimeStep As ScaledNumber
 
         Protected m_doEnvironment As New DataObjects.Physical.Environment(Me)
