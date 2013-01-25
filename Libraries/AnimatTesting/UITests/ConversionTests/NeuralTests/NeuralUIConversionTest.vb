@@ -545,7 +545,7 @@ Namespace UITests
                     ExecuteActiveDialogMethod("SetGainProperty", New Object() {"D", "0.01"})
                     ExecuteIndirectActiveDialogMethod("ClickOkButton", Nothing)
                     RunSimulationWaitToEnd()
-                    'CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "BLength_033_")
+                    CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "BLength_033_")
 
                     'ExecuteMethod("OpenUITypeEditor", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\Neural Subsystem\2_B", "Gain"}, 500)
                     'ExecuteActiveDialogMethod("SetGainProperty", New Object() {"A", "0"})
