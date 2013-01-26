@@ -393,6 +393,10 @@ void LinearHillMuscle::ResetSimulation()
 	m_fltPeLPrev = m_fltPeLength;
 
 	m_fltSeLength = m_gainLengthTension.SeRestLength();
+	m_fltPeLength = m_fltLength - m_fltSeLength;
+	if(m_fltPeLength<= 0)
+		m_fltPeLength = m_gainLengthTension.MinPeLength();
+
 	m_fltSeDisplacement = 0;
 
 	m_fltVse = 0;
@@ -530,7 +534,9 @@ void LinearHillMuscle::CreateJoints()
 	MuscleBase::CreateJoints();
 
 	m_fltSeLength = m_gainLengthTension.SeRestLength();
-	m_fltPeLength = m_gainLengthTension.MinPeLength();
+	m_fltPeLength = m_fltLength - m_fltSeLength;
+	if(m_fltPeLength<= 0)
+		m_fltPeLength = m_gainLengthTension.MinPeLength();
 
 	//Lets create the muscle velocity averaging array.
 	if(m_iMuscleVelAvgCount <= 0)
