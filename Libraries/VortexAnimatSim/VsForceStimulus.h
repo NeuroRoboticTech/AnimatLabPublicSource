@@ -93,6 +93,7 @@ namespace VortexAnimatSim
 			virtual void Initialize();
 			virtual void ResetSimulation();  
 			virtual void StepSimulation();
+			virtual void Deactivate();
 
 			virtual float *GetDataPointer(string strDataType);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);

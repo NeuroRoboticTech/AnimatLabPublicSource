@@ -272,6 +272,13 @@ void VsForceStimulus::StepSimulation()
 	}
 }
 
+void VsForceStimulus::Deactivate()
+{
+	AnimatSim::ExternalStimuli::ExternalStimulus::Deactivate();
+	if(m_lpVsBody->Part())
+		m_lpVsBody->Part()->wakeDynamics();
+}
+
 float *VsForceStimulus::GetDataPointer(string strDataType)
 {
 	float *lpData=NULL;
