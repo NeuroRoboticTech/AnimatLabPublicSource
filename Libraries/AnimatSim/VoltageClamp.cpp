@@ -131,7 +131,8 @@ float VoltageClamp::Vtarget() {return m_fltVtarget;}
 void VoltageClamp::Vtarget(float fltVal)
 {
 	m_fltVtarget = fltVal;
-	m_fltTargetCurrent = (m_fltVtarget - *m_lpVrest)*(*m_lpGm);
+	if(m_lpGm)
+		m_fltTargetCurrent = (m_fltVtarget - *m_lpVrest)*(*m_lpGm);
 }
 
 void VoltageClamp::Initialize()

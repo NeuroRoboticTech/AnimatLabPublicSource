@@ -349,6 +349,7 @@ Namespace DataObjects.Behavior.Neurons
             MyBase.InitAfterAppStart()
             AddCompatibleStimulusType("Current")
             AddCompatibleStimulusType("InverseMuscleCurrent")
+            AddCompatibleStimulusType("VoltageClamp")
         End Sub
 
         Public Overrides Function Clone(ByVal doParent As AnimatGUI.Framework.DataObject, ByVal bCutData As Boolean, _

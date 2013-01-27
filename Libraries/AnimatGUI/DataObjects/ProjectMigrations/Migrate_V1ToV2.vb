@@ -340,6 +340,8 @@ Namespace DataObjects
                         ModifyRigidBodyStomach(xnRigidBody, aryParentTrasform, aryChildTransform)
                     Case "PLANE"
                         ModifyRigidBodyPlane(xnRigidBody, aryParentTrasform, aryChildTransform, bIsFluidPlane)
+                    Case "MULTISEGMENTSPRING"
+                        ModifyMultiSegmentSpring(xnRigidBody, aryParentTrasform, aryChildTransform, bIsFluidPlane)
                     Case Else
                         Throw New System.Exception("Invalid body part type defined. '" & strType & "'")
                 End Select
@@ -889,6 +891,24 @@ Namespace DataObjects
                 m_xnProjectXml.AddNodeValue(xnRigidBody, "LengthSegments", fltSegSize.ToString)
 
             End Sub
+
+            Protected Overridable Sub ModifyMultiSegmentSpring(ByVal xnRigidBody As XmlNode, ByVal aryParentTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, _
+                                                           ByRef aryChildTrasform As AnimatGuiCtrls.MatrixLibrary.Matrix, ByVal bIsFluidPlane As Boolean)
+
+                Dim strWarn As String = "This project contains a multi-segment spring. These are no longer supported in AnimatLab. " & _
+                                        "Would you like to try and remove it now, or abort this operation and swap that part out in " & _
+                                        "AnimatLab 1. If you remove it now then any referneces to it will error out while loading and be " & _
+                                        "removed. Should I remove it Now?"
+
+                If Util.ShowMessage(strWarn, "Part not supported", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+                    'We no longer support multi-segment springs. Remove it from the file.
+                    xnRigidBody.ParentNode.RemoveChild(xnRigidBody)
+                Else
+                    Throw New System.Exception("Process aborted.")
+                End If
+
+            End Sub
+
 #End Region
 
 #End Region

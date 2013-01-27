@@ -4,19 +4,20 @@
 <PhysicsClassName>VortexAnimatTools.DataObjects.Simulation</PhysicsClassName>
 <SimulationFile>Limb Stiffness.asim</SimulationFile>
 <LogLevel>Error</LogLevel>
+<Version>1</Version>
 <SimWindowLocation x="168" y="144"/>
 <SimWindowSize Width="494" Height="418"/>
 <DockingForms>
 <Form>
 <Title>Project Toolbox</Title>
-<AssemblyFile>animattools.dll</AssemblyFile>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.Forms.Toolbox</ClassName>
 <TabTitle>Toolbox</TabTitle>
 <BackgroundForm>True</BackgroundForm>
 </Form>
 <Form>
 <Title>Project Workspace</Title>
-<AssemblyFile>animattools.dll</AssemblyFile>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.Forms.ProjectWorkspace</ClassName>
 <TabTitle>Workspace</TabTitle>
 <BackgroundForm>True</BackgroundForm>
@@ -24,7 +25,7 @@
 </Form>
 <Form>
 <Title>Simulation Controller</Title>
-<AssemblyFile>animattools.dll</AssemblyFile>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.Forms.SimulationController</ClassName>
 <TabTitle>SimulationController</TabTitle>
 <BackgroundForm>True</BackgroundForm>
@@ -36,14 +37,14 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>200</MajorInterval>
+<MajorInterval>5</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>MilliSeconds</TimeScale>
+<TimeScale>Seconds</TimeScale>
 </Form>
 </DockingForms>
 <ChildForms>
 <Child>
-<AssemblyFile>animattools.dll</AssemblyFile>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.Forms.BodyPlan.Editor</ClassName>
 <EditorFile>Arm.abpe</EditorFile>
 <Form>
@@ -53,7 +54,7 @@
 </Form>
 </Child>
 <Child>
-<AssemblyFile>animattools.dll</AssemblyFile>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.Forms.Behavior.Editor</ClassName>
 <EditorFile>Arm.abef</EditorFile>
 <Form>
@@ -63,28 +64,67 @@
 </Form>
 </Child>
 <Child>
-<AssemblyFile>animattools.dll</AssemblyFile>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.Forms.Tools.Viewer</ClassName>
-<EditorFile>ToolViewer_1.atvf</EditorFile>
+<EditorFile>DataChart.atvf</EditorFile>
 <TreeViewHeight>148</TreeViewHeight>
 <Form>
-<AssemblyFile>licensedanimattools.dll</AssemblyFile>
+<AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
 <ClassName>LicensedAnimatTools.Forms.Charts.LineChart</ClassName>
-<Title>ToolViewer_1</Title>
+<Title>DataChart</Title>
 </Form>
 </Child>
 </ChildForms>
 <ToolViewers>
 <ToolHolder>
 <ID>78d2098c-86ea-403c-83cd-76da54eed873</ID>
-<Name>ToolViewer_1</Name>
+<Name>DataChart</Name>
 <BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
 </ToolHolder>
 </ToolViewers>
 <Stimuli>
 <Stimulus>
-<AssemblyFile>animattools.dll</AssemblyFile>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
+<Name>Steady Arm</Name>
+<ID>52dd4be5-e596-453b-b62a-2de3f00e8366</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="1" Scale="None" Actual="1"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<StructureID>8267d7d4-8ad4-4686-8f81-dd27c05aed27</StructureID>
+<PartID>9de74621-8f5c-4977-aedf-5e97dedc6e17</PartID>
+<Velocity Value="0" Scale="centi" Actual="0"/>
+<DisableMotorWhenDone>True</DisableMotorWhenDone>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Bicep Stim A</Name>
+<ID>20ba3313-3633-4bad-ae34-4a4bc444dc8e</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="5" Scale="None" Actual="5"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>True</AlwaysActive>
+<Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>8267d7d4-8ad4-4686-8f81-dd27c05aed27</OrganismID>
+<NodeID>40745990-3db0-4397-8daa-d876be472b9a</NodeID>
+<CurrentOn Value="4.5" Scale="nano" Actual="4.5e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="5" Scale="None" Actual="5"/>
+<CycleOffDuration Value="0" Scale="milli" Actual="0"/>
+<BurstOnDuration Value="5" Scale="None" Actual="5"/>
+<BurstOffDuration Value="0" Scale="milli" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
 <Name>Bicep Stim D</Name>
 <ID>ce0e2918-74d0-41a2-aff8-3a4ab7489a0b</ID>
@@ -93,6 +133,8 @@
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
 <Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
 <OrganismID>8267d7d4-8ad4-4686-8f81-dd27c05aed27</OrganismID>
 <NodeID>c4265e56-da4d-4860-b285-6db8465ea868</NodeID>
 <CurrentOn Value="-0.5" Scale="nano" Actual="-5e-10"/>
@@ -104,47 +146,7 @@
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 <Stimulus>
-<AssemblyFile>animattools.dll</AssemblyFile>
-<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Bicep Stim B</Name>
-<ID>c259fce0-c850-4f77-ba49-d4a964f524d2</ID>
-<StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="5" Scale="None" Actual="5"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>True</AlwaysActive>
-<Enabled>False</Enabled>
-<OrganismID>8267d7d4-8ad4-4686-8f81-dd27c05aed27</OrganismID>
-<NodeID>ca847519-3a69-46cb-b3ee-ca98235eb67e</NodeID>
-<CurrentOn Value="45.2" Scale="nano" Actual="4.52e-08"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="5" Scale="None" Actual="5"/>
-<CycleOffDuration Value="0" Scale="milli" Actual="0"/>
-<BurstOnDuration Value="5" Scale="None" Actual="5"/>
-<BurstOffDuration Value="0" Scale="milli" Actual="0"/>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>animattools.dll</AssemblyFile>
-<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Tricep Stim A</Name>
-<ID>87f6d417-0531-44b2-85ce-a0fd96fa1213</ID>
-<StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="5" Scale="None" Actual="5"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>True</AlwaysActive>
-<Enabled>False</Enabled>
-<OrganismID>8267d7d4-8ad4-4686-8f81-dd27c05aed27</OrganismID>
-<NodeID>e770f57b-e57b-418d-9742-ef8dede61fdb</NodeID>
-<CurrentOn Value="3.53" Scale="nano" Actual="3.53e-09"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="5" Scale="None" Actual="5"/>
-<CycleOffDuration Value="0" Scale="milli" Actual="0"/>
-<BurstOnDuration Value="5" Scale="None" Actual="5"/>
-<BurstOffDuration Value="0" Scale="milli" Actual="0"/>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>animattools.dll</AssemblyFile>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
 <Name>Tricep Stim C</Name>
 <ID>607bf986-9a13-4c07-bbf5-70e8200e1b92</ID>
@@ -153,6 +155,8 @@
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>True</AlwaysActive>
 <Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
 <OrganismID>8267d7d4-8ad4-4686-8f81-dd27c05aed27</OrganismID>
 <NodeID>a806bc94-b8d6-4b1b-b0e4-58c170d8db71</NodeID>
 <CurrentOn Value="66" Scale="nano" Actual="6.6e-08"/>
@@ -164,42 +168,7 @@
 <BurstOffDuration Value="0" Scale="milli" Actual="0"/>
 </Stimulus>
 <Stimulus>
-<AssemblyFile>animattools.dll</AssemblyFile>
-<ClassName>AnimatTools.DataObjects.ExternalStimuli.MotorVelocity</ClassName>
-<Name>Steady Arm</Name>
-<ID>52dd4be5-e596-453b-b62a-2de3f00e8366</ID>
-<StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="1" Scale="None" Actual="1"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
-<StructureID>8267d7d4-8ad4-4686-8f81-dd27c05aed27</StructureID>
-<PartID>9de74621-8f5c-4977-aedf-5e97dedc6e17</PartID>
-<Velocity Value="0" Scale="centi" Actual="0"/>
-<DisableMotorWhenDone>True</DisableMotorWhenDone>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>animattools.dll</AssemblyFile>
-<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Bicep Stim C</Name>
-<ID>63377c73-6064-4ae0-9d82-23b03e288f24</ID>
-<StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="5" Scale="None" Actual="5"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>True</AlwaysActive>
-<Enabled>True</Enabled>
-<OrganismID>8267d7d4-8ad4-4686-8f81-dd27c05aed27</OrganismID>
-<NodeID>c4265e56-da4d-4860-b285-6db8465ea868</NodeID>
-<CurrentOn Value="80" Scale="nano" Actual="8e-08"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="5" Scale="None" Actual="5"/>
-<CycleOffDuration Value="0" Scale="milli" Actual="0"/>
-<BurstOnDuration Value="5" Scale="None" Actual="5"/>
-<BurstOffDuration Value="0" Scale="milli" Actual="0"/>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>animattools.dll</AssemblyFile>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
 <Name>Tricep Stim B</Name>
 <ID>736b67df-9ad9-4c0f-9d3a-66090297c7f4</ID>
@@ -208,6 +177,8 @@
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>True</AlwaysActive>
 <Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
 <OrganismID>8267d7d4-8ad4-4686-8f81-dd27c05aed27</OrganismID>
 <NodeID>60d4cb62-4201-40cf-b97a-4e3964ff1a8b</NodeID>
 <CurrentOn Value="36" Scale="nano" Actual="3.6e-08"/>
@@ -219,18 +190,64 @@
 <BurstOffDuration Value="0" Scale="milli" Actual="0"/>
 </Stimulus>
 <Stimulus>
-<AssemblyFile>animattools.dll</AssemblyFile>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Bicep Stim A</Name>
-<ID>20ba3313-3633-4bad-ae34-4a4bc444dc8e</ID>
+<Name>Bicep Stim C</Name>
+<ID>63377c73-6064-4ae0-9d82-23b03e288f24</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="5" Scale="None" Actual="5"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>True</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>8267d7d4-8ad4-4686-8f81-dd27c05aed27</OrganismID>
+<NodeID>c4265e56-da4d-4860-b285-6db8465ea868</NodeID>
+<CurrentOn Value="80" Scale="nano" Actual="8e-08"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="5" Scale="None" Actual="5"/>
+<CycleOffDuration Value="0" Scale="milli" Actual="0"/>
+<BurstOnDuration Value="5" Scale="None" Actual="5"/>
+<BurstOffDuration Value="0" Scale="milli" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Tricep Stim A</Name>
+<ID>87f6d417-0531-44b2-85ce-a0fd96fa1213</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
 <EndTime Value="5" Scale="None" Actual="5"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>True</AlwaysActive>
 <Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
 <OrganismID>8267d7d4-8ad4-4686-8f81-dd27c05aed27</OrganismID>
-<NodeID>40745990-3db0-4397-8daa-d876be472b9a</NodeID>
-<CurrentOn Value="4.5" Scale="nano" Actual="4.5e-09"/>
+<NodeID>e770f57b-e57b-418d-9742-ef8dede61fdb</NodeID>
+<CurrentOn Value="3.53" Scale="nano" Actual="3.53e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="5" Scale="None" Actual="5"/>
+<CycleOffDuration Value="0" Scale="milli" Actual="0"/>
+<BurstOnDuration Value="5" Scale="None" Actual="5"/>
+<BurstOffDuration Value="0" Scale="milli" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Bicep Stim B</Name>
+<ID>c259fce0-c850-4f77-ba49-d4a964f524d2</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="5" Scale="None" Actual="5"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>True</AlwaysActive>
+<Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>8267d7d4-8ad4-4686-8f81-dd27c05aed27</OrganismID>
+<NodeID>ca847519-3a69-46cb-b3ee-ca98235eb67e</NodeID>
+<CurrentOn Value="45.2" Scale="nano" Actual="4.52e-08"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
 <CycleOnDuration Value="5" Scale="None" Actual="5"/>

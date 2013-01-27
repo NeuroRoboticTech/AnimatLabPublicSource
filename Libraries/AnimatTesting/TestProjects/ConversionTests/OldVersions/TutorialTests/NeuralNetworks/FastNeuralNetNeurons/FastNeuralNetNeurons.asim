@@ -1,0 +1,72 @@
+<Simulation>
+<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\TutorialTests\NeuralNetworks\FastNeuralNetNeurons\</ProjectPath>
+<AnimatModule>VortexAnimatLibrary_vc7.dll</AnimatModule>
+<UpdateDataInterval>250</UpdateDataInterval>
+<StartPaused>False</StartPaused>
+<EnableSimRecording>True</EnableSimRecording>
+<SetSimEnd>True</SetSimEnd>
+<APIFile/>
+<SimEndTime Value="47" Scale="None" Actual="47"/>
+<Environment>
+<PhysicsTimeStep Value="1" Scale="milli" Actual="0.001"/>
+<FluidDensity Value="1" Scale="None" Actual="1"/>
+<MaxSurfaceFriction Value="15" Scale="Kilo" Actual="15000"/>
+<Gravity Value="-9.81" Scale="None" Actual="-9.81"/>
+<MouseSpringStiffness Value="300" Scale="None" Actual="300"/>
+<MouseSpringDamping Value="100" Scale="Kilo" Actual="100000"/>
+<LinearCompliance Value="0.1" Scale="micro" Actual="1e-07"/>
+<LinearDamping Value="200" Scale="Kilo" Actual="200000"/>
+<AngularCompliance Value="0.1" Scale="micro" Actual="1e-07"/>
+<AngularDamping Value="50" Scale="Kilo" Actual="50000"/>
+<LinearKineticLoss Value="1" Scale="micro" Actual="1e-06"/>
+<AngularKineticLoss Value="1" Scale="micro" Actual="1e-06"/>
+<MaxHydroForce Value="100" Scale="None" Actual="100"/>
+<MaxHydroTorque Value="100" Scale="None" Actual="100"/>
+<PlaybackRate>1</PlaybackRate>
+<SimulateHydrodynamics>False</SimulateHydrodynamics>
+<MassUnits>Grams</MassUnits>
+<DistanceUnits>Decimeters</DistanceUnits>
+<UseAlphaBlending>False</UseAlphaBlending>
+<AutoGenerateRandomSeed>False</AutoGenerateRandomSeed>
+<ManualRandomSeed>12345</ManualRandomSeed>
+<CollisionObjects>0</CollisionObjects>
+<Camera>
+<Rotation>0</Rotation>
+<Elevation>0</Elevation>
+<Offset>5</Offset>
+<TrackCamera>True</TrackCamera>
+<RecordVideo>False</RecordVideo>
+<SaveFrameImages>False</SaveFrameImages>
+<VideoFilename/>
+<VideoWidth>512</VideoWidth>
+<VideoHeight>580</VideoHeight>
+<RecordFrameTime Value="1" Scale="milli" Actual="0.001"/>
+<PlaybackFrameTime Value="100" Scale="milli" Actual="0.1"/>
+<VideoStartTime Value="0" Scale="None" Actual="0"/>
+<VideoEndTime Value="1" Scale="None" Actual="1"/>
+<cbFormat>0</cbFormat>
+<cbParms>4</cbParms>
+<dwBytesPerSecond>0</dwBytesPerSecond>
+<dwFlags>8</dwFlags>
+<dwInterleaveEvery>0</dwInterleaveEvery>
+<dwKeyFrameEvery>0</dwKeyFrameEvery>
+<dwQuality>7500</dwQuality>
+<fccHandler>1668707181</fccHandler>
+<fccType>0</fccType>
+<LookAtStructureID>bcb7435a-dd22-442d-979f-5693c5c94ca5</LookAtStructureID>
+<LookAtBodyID/>
+</Camera>
+<Organisms>
+<Structure>
+<ID>bcb7435a-dd22-442d-979f-5693c5c94ca5</ID>
+<Name>Organism_1</Name>
+<Type>Basic</Type>
+<Reference>False</Reference>
+<BodyPlan>Organism_1.astl</BodyPlan>
+<Position x="0" y="0" z="0"/>
+<BehavioralSystem>Organism_1.absys</BehavioralSystem>
+</Structure>
+</Organisms>
+<Structures/>
+</Environment>
+</Simulation>

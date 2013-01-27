@@ -1,0 +1,43 @@
+<NervousSystem>
+<NeuralModules>
+<NeuralModule>
+<ModuleName>FastNeuralNet</ModuleName>
+<ModuleFileName>FastNeuralNet_vc7.dll</ModuleFileName>
+<Type>FastNeuralModule</Type>
+<NeuralNetFile>Skin.afnn</NeuralNetFile>
+</NeuralModule>
+</NeuralModules>
+<Adapters>
+<Adapter>
+<Type>Contact</Type>
+<SourceBodyID>2d51e013-bb26-48ed-a944-8f0ed1ce19ba</SourceBodyID>
+<TargetModule>FastNeuralNet</TargetModule>
+<FieldPairs>
+<Pair>
+<Vertex x="0" y="0.5" z="0.5"/>
+<TargetNodeID>4</TargetNodeID>
+</Pair>
+<Pair>
+<Vertex x="0" y="0.5" z="1.5"/>
+<TargetNodeID>5</TargetNodeID>
+</Pair>
+<Pair>
+<Vertex x="0" y="0.5" z="-0.5"/>
+<TargetNodeID>1</TargetNodeID>
+</Pair>
+<Pair>
+<Vertex x="0" y="0.5" z="-1.5"/>
+<TargetNodeID>0</TargetNodeID>
+</Pair>
+<Pair>
+<Vertex x="0" y="0.5" z="-2.5"/>
+<TargetNodeID>2</TargetNodeID>
+</Pair>
+<Pair>
+<Vertex x="0" y="0.5" z="2.5"/>
+<TargetNodeID>3</TargetNodeID>
+</Pair>
+</FieldPairs>
+</Adapter>
+</Adapters>
+</NervousSystem>

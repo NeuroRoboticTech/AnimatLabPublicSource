@@ -1,0 +1,92 @@
+<Structure>
+<RigidBody>
+<Name>Root</Name>
+<ID>1bb4caa1-eb9b-4059-a659-a5cda1b8dc35</ID>
+<Type>Box</Type>
+<PartType>VortexAnimatTools.DataObjects.Physical.RigidBodies.Box</PartType>
+<Description/>
+<IsVisible>True</IsVisible>
+<IsContactSensor>False</IsContactSensor>
+<Cd>1</Cd>
+<Cdr>0.5</Cdr>
+<Ca>1</Ca>
+<Car>1</Car>
+<Texture/>
+<Density Value="1" Scale="None" Actual="1"/>
+<XCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<YCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<ZCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<Freeze>True</Freeze>
+<ChildBodies>
+<RigidBody>
+<Name>Arm</Name>
+<ID>86443f9f-7c5c-4baa-a9b0-1c1a5923a110</ID>
+<Type>Box</Type>
+<PartType>VortexAnimatTools.DataObjects.Physical.RigidBodies.Box</PartType>
+<Description/>
+<IsVisible>True</IsVisible>
+<IsContactSensor>False</IsContactSensor>
+<Cd>1</Cd>
+<Cdr>0.5</Cdr>
+<Ca>1</Ca>
+<Car>1</Car>
+<Texture/>
+<Density Value="1" Scale="None" Actual="1"/>
+<XCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<YCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<ZCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<Joint>
+<Name>ArmJoint</Name>
+<ID>5a3fa7a0-94ed-4683-94ca-40a6a5e5f833</ID>
+<Type>Hinge</Type>
+<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Hinge</PartType>
+<Description/>
+<Constraint Low="-0.785398" High="0.785398">
+<EnableLimits>True</EnableLimits>
+<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Restitution Value="0" Scale="None" Actual="0"/>
+<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+</Constraint>
+<EnableMotor>True</EnableMotor>
+<ServoMotor>False</ServoMotor>
+<ServoGain>100</ServoGain>
+<MaxTorque Value="100" Scale="None" Actual="100"/>
+<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<RotationAxis x="-8.74228e-08" y="1" z="1.31134e-07"/>
+<Radius>0.05</Radius>
+<RelativePosition x="-0.5" y="0" z="0"/>
+<Rotation x="-1.5708" y="-8.74228e-08" z="3.14159"/>
+<OrientationMatrix>-1,8.742278E-08,8.742278E-08,0,8.742278E-08,1,8.742278E-08,0,-8.742277E-08,8.742278E-08,-1,0,0,0,0,1</OrientationMatrix>
+<TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,-0.5,0,0,1</TranslationMatrix>
+</Joint>
+<FoodSource>False</FoodSource>
+<CenterOfMass x="0" y="0" z="0"/>
+<RelativePosition x="1" y="0" z="0"/>
+<LocalPosition x="1" y="0" z="0"/>
+<Rotation x="-1.5708" y="0" z="0"/>
+<LocalRotation x="0" y="0" z="0"/>
+<Direction x="1" y="0" z="0"/>
+<Color Red="0" Green="1" Blue="0" Alpha="1"/>
+<OrientationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</OrientationMatrix>
+<TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,1,0,0,1</TranslationMatrix>
+<CombinedTransformationMatrix>1,0,0,0,0,-4.371139E-08,1,0,0,-1,-4.371139E-08,0,1,0,0,1</CombinedTransformationMatrix>
+<CollisionBoxSize x="1" y="0.1" z="0.5"/>
+<GraphicsBoxSize x="1" y="0.1" z="0.5"/>
+</RigidBody>
+</ChildBodies>
+<FoodSource>False</FoodSource>
+<CenterOfMass x="0" y="0" z="0"/>
+<RelativePosition x="0" y="0" z="0"/>
+<LocalPosition x="0" y="0" z="0"/>
+<Rotation x="-1.5708" y="0" z="0"/>
+<LocalRotation x="1.5708" y="0" z="0"/>
+<Direction x="0" y="0" z="0"/>
+<Color Red="1" Green="0" Blue="0" Alpha="1"/>
+<OrientationMatrix>1,0,0,0,0,-4.371139E-08,1,0,0,-1,-4.371139E-08,0,0,0,0,1</OrientationMatrix>
+<TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</TranslationMatrix>
+<CombinedTransformationMatrix>1,0,0,0,0,-4.371139E-08,1,0,0,-1,-4.371139E-08,0,0,0,0,1</CombinedTransformationMatrix>
+<CollisionBoxSize x="1" y="1" z="1"/>
+<GraphicsBoxSize x="1" y="1" z="1"/>
+</RigidBody>
+<CollisionExclusionPairs/>
+</Structure>

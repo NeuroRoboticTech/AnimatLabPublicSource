@@ -536,6 +536,8 @@ try
 		lpStimulus = new InverseMuscleCurrent;
 	else if(strType == "CURRENT")
 		lpStimulus = new AnimatSim::ExternalStimuli::CurrentStimulus;
+	else if(strType == "VOLTAGECLAMP")
+		lpStimulus = new AnimatSim::ExternalStimuli::VoltageClamp;
 	else
 	{
 		lpStimulus = NULL;

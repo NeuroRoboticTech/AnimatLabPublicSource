@@ -10,6 +10,7 @@
 <Cn>1e-08</Cn>
 <Gn>1e-07</Gn>
 <Vth>0</Vth>
+<Vrest>0</Vrest>
 <Fmin>0</Fmin>
 <Gain>10</Gain>
 <ExternalI>0</ExternalI>
@@ -27,6 +28,7 @@
 <Cn>1e-08</Cn>
 <Gn>1e-07</Gn>
 <Vth>0</Vth>
+<Vrest>0</Vrest>
 <Fmin>0</Fmin>
 <Gain>10</Gain>
 <ExternalI>0</ExternalI>

@@ -1,9 +1,12 @@
 <Simulation>
+<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\TutorialTests\Examples\Limb Stiffness\</ProjectPath>
 <AnimatModule>VortexAnimatLibrary_vc7.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
-<UseReleaseLibraries>True</UseReleaseLibraries>
 <EnableSimRecording>True</EnableSimRecording>
+<SetSimEnd>True</SetSimEnd>
+<APIFile/>
+<SimEndTime Value="52" Scale="None" Actual="52"/>
 <Environment>
 <PhysicsTimeStep Value="1" Scale="milli" Actual="0.001"/>
 <FluidDensity Value="0.001" Scale="Kilo" Actual="1"/>
@@ -24,11 +27,32 @@
 <MassUnits>Kilograms</MassUnits>
 <DistanceUnits>Decimeters</DistanceUnits>
 <UseAlphaBlending>False</UseAlphaBlending>
+<AutoGenerateRandomSeed>False</AutoGenerateRandomSeed>
+<ManualRandomSeed>12345</ManualRandomSeed>
+<CollisionObjects>8</CollisionObjects>
 <Camera>
 <Rotation>-1.5708</Rotation>
 <Elevation>0</Elevation>
 <Offset>7.5</Offset>
 <TrackCamera>True</TrackCamera>
+<RecordVideo>False</RecordVideo>
+<SaveFrameImages>False</SaveFrameImages>
+<VideoFilename/>
+<VideoWidth>512</VideoWidth>
+<VideoHeight>580</VideoHeight>
+<RecordFrameTime Value="1" Scale="milli" Actual="0.001"/>
+<PlaybackFrameTime Value="100" Scale="milli" Actual="0.1"/>
+<VideoStartTime Value="0" Scale="None" Actual="0"/>
+<VideoEndTime Value="1" Scale="None" Actual="1"/>
+<cbFormat>0</cbFormat>
+<cbParms>4</cbParms>
+<dwBytesPerSecond>0</dwBytesPerSecond>
+<dwFlags>8</dwFlags>
+<dwInterleaveEvery>0</dwInterleaveEvery>
+<dwKeyFrameEvery>0</dwKeyFrameEvery>
+<dwQuality>7500</dwQuality>
+<fccHandler>1668707181</fccHandler>
+<fccType>0</fccType>
 <LookAtStructureID>8267d7d4-8ad4-4686-8f81-dd27c05aed27</LookAtStructureID>
 <LookAtBodyID/>
 </Camera>

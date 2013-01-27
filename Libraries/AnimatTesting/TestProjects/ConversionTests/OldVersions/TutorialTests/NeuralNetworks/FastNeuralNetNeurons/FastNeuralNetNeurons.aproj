@@ -1,0 +1,1203 @@
+<Project>
+<ProjectName>FastNeuralNetNeurons</ProjectName>
+<PhysicsAssemblyName>VortexAnimatTools.dll</PhysicsAssemblyName>
+<PhysicsClassName>VortexAnimatTools.DataObjects.Simulation</PhysicsClassName>
+<SimulationFile>FastNeuralNetNeurons.asim</SimulationFile>
+<LogLevel>Error</LogLevel>
+<Version>1</Version>
+<SimWindowLocation x="643" y="216"/>
+<SimWindowSize Width="638" Height="469"/>
+<DockingForms>
+<Form>
+<Title>Project Toolbox</Title>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.Toolbox</ClassName>
+<TabTitle>Toolbox</TabTitle>
+<BackgroundForm>True</BackgroundForm>
+</Form>
+<Form>
+<Title>Project Workspace</Title>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.ProjectWorkspace</ClassName>
+<TabTitle>Workspace</TabTitle>
+<BackgroundForm>True</BackgroundForm>
+<TreeViewHeight>614</TreeViewHeight>
+</Form>
+<Form>
+<Title>Simulation Controller</Title>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.SimulationController</ClassName>
+<TabTitle>SimulationController</TabTitle>
+<BackgroundForm>True</BackgroundForm>
+<StartingBarTime Value="0" Scale="milli" Actual="0"/>
+<EndingBarTime Value="5000" Scale="milli" Actual="5"/>
+<TimeBarInterval Value="1" Scale="None" Actual="1"/>
+<ActualTimeColor>-5383962</ActualTimeColor>
+<CurrentTimeColor>-16776961</CurrentTimeColor>
+<AutomaticTimeScale>True</AutomaticTimeScale>
+<DivisionMarkFactor>4</DivisionMarkFactor>
+<Divisions>10</Divisions>
+<MajorInterval>1</MajorInterval>
+<MiddleMarkFactor>3</MiddleMarkFactor>
+<TimeScale>Seconds</TimeScale>
+</Form>
+</DockingForms>
+<ChildForms>
+<Child>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.Behavior.Editor</ClassName>
+<EditorFile>Organism_1.abef</EditorFile>
+<Form>
+<AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.Forms.Behavior.AddFlowDiagram</ClassName>
+<Title>Edit Organism_1</Title>
+</Form>
+</Child>
+<Child>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.Tools.Viewer</ClassName>
+<EditorFile>BistableNeuronProperties.atvf</EditorFile>
+<TreeViewHeight>168</TreeViewHeight>
+<Form>
+<AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.Forms.Charts.LineChart</ClassName>
+<Title>BistableNeuronProperties</Title>
+</Form>
+</Child>
+<Child>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.Tools.Viewer</ClassName>
+<EditorFile>Excitatory_Synapse_Properties.atvf</EditorFile>
+<TreeViewHeight>168</TreeViewHeight>
+<Form>
+<AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.Forms.Charts.LineChart</ClassName>
+<Title>Excitatory_Synapse_Properties</Title>
+</Form>
+</Child>
+<Child>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.Tools.Viewer</ClassName>
+<EditorFile>Gated_Synapse_Properties.atvf</EditorFile>
+<TreeViewHeight>168</TreeViewHeight>
+<Form>
+<AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.Forms.Charts.LineChart</ClassName>
+<Title>Gated_Synapse_Properties</Title>
+</Form>
+</Child>
+<Child>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.Tools.Viewer</ClassName>
+<EditorFile>Inhibitory_Synapse_Properties.atvf</EditorFile>
+<TreeViewHeight>168</TreeViewHeight>
+<Form>
+<AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.Forms.Charts.LineChart</ClassName>
+<Title>Inhibitory_Synapse_Properties</Title>
+</Form>
+</Child>
+<Child>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.Tools.Viewer</ClassName>
+<EditorFile>Modulatory_Synapse_Properties.atvf</EditorFile>
+<TreeViewHeight>168</TreeViewHeight>
+<Form>
+<AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.Forms.Charts.LineChart</ClassName>
+<Title>Modulatory_Synapse_Properties</Title>
+</Form>
+</Child>
+<Child>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.Tools.Viewer</ClassName>
+<EditorFile>Normal_Neuron_Properties.atvf</EditorFile>
+<TreeViewHeight>168</TreeViewHeight>
+<Form>
+<AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.Forms.Charts.LineChart</ClassName>
+<Title>Normal_Neuron_Properties</Title>
+</Form>
+</Child>
+<Child>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.Tools.Viewer</ClassName>
+<EditorFile>Pacemaker_Neuron_Properties.atvf</EditorFile>
+<TreeViewHeight>168</TreeViewHeight>
+<Form>
+<AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.Forms.Charts.LineChart</ClassName>
+<Title>Pacemaker_Neuron_Properties</Title>
+</Form>
+</Child>
+<Child>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.Tools.Viewer</ClassName>
+<EditorFile>Random_Neuron_Properties.atvf</EditorFile>
+<TreeViewHeight>168</TreeViewHeight>
+<Form>
+<AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.Forms.Charts.LineChart</ClassName>
+<Title>Random_Neuron_Properties</Title>
+</Form>
+</Child>
+</ChildForms>
+<ToolViewers>
+<ToolHolder>
+<ID>93578f6a-efb9-4f25-af68-193682223292</ID>
+<Name>Pacemaker_Neuron_Properties</Name>
+<BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
+</ToolHolder>
+<ToolHolder>
+<ID>9c653f04-540f-45e1-b72e-453e205add39</ID>
+<Name>Normal_Neuron_Properties</Name>
+<BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
+</ToolHolder>
+<ToolHolder>
+<ID>b9df08c3-1e03-4e22-b1df-f193d1a98cd0</ID>
+<Name>ToolViewer_1</Name>
+<BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
+</ToolHolder>
+<ToolHolder>
+<ID>0160bc5d-4580-4367-8a7d-71dfc9a5b1bb</ID>
+<Name>Inhibitory_Synapse_Properties</Name>
+<BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
+</ToolHolder>
+<ToolHolder>
+<ID>c31085b5-a649-4947-b063-439b0b187f33</ID>
+<Name>Modulatory_Synapse_Properties</Name>
+<BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
+</ToolHolder>
+<ToolHolder>
+<ID>793c0b69-c9ec-4d7f-a5a3-2e6389bde045</ID>
+<Name>BistableNeuronProperties</Name>
+<BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
+</ToolHolder>
+<ToolHolder>
+<ID>88b17804-ef83-4d6b-b17b-bab8a42b7a07</ID>
+<Name>Excitatory_Synapse_Properties</Name>
+<BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
+</ToolHolder>
+<ToolHolder>
+<ID>3148e3b5-254c-4992-9802-5739e3333b9b</ID>
+<Name>Gated_Synapse_Properties</Name>
+<BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
+</ToolHolder>
+<ToolHolder>
+<ID>022f9d77-b646-4a0e-9eb1-fa0fd36d261d</ID>
+<Name>Random_Neuron_Properties</Name>
+<BaseAssemblyFile>licensedanimattools.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
+</ToolHolder>
+</ToolViewers>
+<Stimuli>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>MS_5</Name>
+<ID>f77bdffd-96c9-40e7-96bb-427af446018a</ID>
+<StartTime Value="900" Scale="milli" Actual="0.9"/>
+<EndTime Value="1" Scale="None" Actual="1"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>4bdb37d7-c064-455f-83b8-7b0a0f6c3183</NodeID>
+<CurrentOn Value="8" Scale="nano" Actual="8e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>GS_7</Name>
+<ID>1477ffa0-8df1-4ba9-9bf8-efa8c0bb69dd</ID>
+<StartTime Value="550" Scale="milli" Actual="0.55"/>
+<EndTime Value="850" Scale="milli" Actual="0.85"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>e6f6ff13-5b95-4ea0-9340-3590864df3fe</NodeID>
+<CurrentOn Value="5" Scale="nano" Actual="5e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="30" Scale="centi" Actual="0.3"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="30" Scale="centi" Actual="0.3"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>ES_1</Name>
+<ID>bba93d5d-664b-4c3a-9cf4-78f5641b3cb0</ID>
+<StartTime Value="100" Scale="milli" Actual="0.1"/>
+<EndTime Value="200" Scale="milli" Actual="0.2"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>24304718-dc86-4a4e-9acc-43f897d431c5</NodeID>
+<CurrentOn Value="-2" Scale="nano" Actual="-2e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>BN_1</Name>
+<ID>04312b82-4f10-4148-9aae-c2e99e91d9db</ID>
+<StartTime Value="2" Scale="None" Actual="2"/>
+<EndTime Value="2.2" Scale="None" Actual="2.2"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>72715bf5-0522-4feb-bfeb-a01327ac80d0</NodeID>
+<CurrentOn Value="3" Scale="nano" Actual="3e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="20" Scale="centi" Actual="0.2"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="20" Scale="centi" Actual="0.2"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>MS_6</Name>
+<ID>305eb274-8c12-4228-bb0f-88b5e2e66f5b</ID>
+<StartTime Value="550" Scale="milli" Actual="0.55"/>
+<EndTime Value="950" Scale="milli" Actual="0.95"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>ab6d53d4-10e7-4465-b744-f395b726d2f7</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-08"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="40" Scale="centi" Actual="0.4"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="40" Scale="centi" Actual="0.4"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>PN_1</Name>
+<ID>32f7e9fa-2bd6-4185-a138-4d85daabb811</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="10" Scale="None" Actual="10"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>ff2d935b-bcfa-4342-a7b4-79704c1e236e</NodeID>
+<CurrentOn Value="0.5" Scale="nano" Actual="5e-10"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="None" Actual="10"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="None" Actual="10"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>NN_3</Name>
+<ID>52d2d96e-a03d-4463-8e5a-8627bcab90fe</ID>
+<StartTime Value="500" Scale="milli" Actual="0.5"/>
+<EndTime Value="600" Scale="milli" Actual="0.6"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>646c6377-6213-4e75-aad4-70c4723ec489</NodeID>
+<CurrentOn Value="4" Scale="nano" Actual="4e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>IS_1</Name>
+<ID>0d768b10-d44a-4fe3-a411-8a6f4a45d360</ID>
+<StartTime Value="100" Scale="milli" Actual="0.1"/>
+<EndTime Value="200" Scale="milli" Actual="0.2"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>3fb35a39-08ed-4463-aa3c-e62c398e03ff</NodeID>
+<CurrentOn Value="-2" Scale="nano" Actual="-2e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>GS_4</Name>
+<ID>a50b6d63-ec5b-40ea-bace-b24fba33d319</ID>
+<StartTime Value="700" Scale="milli" Actual="0.7"/>
+<EndTime Value="800" Scale="milli" Actual="0.8"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>390a59d9-d695-489a-aa99-c5c0e1977359</NodeID>
+<CurrentOn Value="6" Scale="nano" Actual="6e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>GS_6</Name>
+<ID>981291db-cd23-4dbc-88fa-a6a779f20f1a</ID>
+<StartTime Value="550" Scale="milli" Actual="0.55"/>
+<EndTime Value="850" Scale="milli" Actual="0.85"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>cefedb19-941d-4440-bfe8-30bbcce392df</NodeID>
+<CurrentOn Value="5" Scale="nano" Actual="5e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="30" Scale="centi" Actual="0.3"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="30" Scale="centi" Actual="0.3"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>NN_1</Name>
+<ID>e3262ec7-8a4b-4829-9d04-d0fa6b2a666a</ID>
+<StartTime Value="100" Scale="milli" Actual="0.1"/>
+<EndTime Value="200" Scale="milli" Actual="0.2"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>646c6377-6213-4e75-aad4-70c4723ec489</NodeID>
+<CurrentOn Value="-4" Scale="nano" Actual="-4e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>GS_3</Name>
+<ID>152d1d3b-a344-4b13-a8ad-f77540669bc9</ID>
+<StartTime Value="500" Scale="milli" Actual="0.5"/>
+<EndTime Value="600" Scale="milli" Actual="0.6"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>390a59d9-d695-489a-aa99-c5c0e1977359</NodeID>
+<CurrentOn Value="4" Scale="nano" Actual="4e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>BN_3</Name>
+<ID>586fe6d9-3b55-4dba-adb3-bba981db8960</ID>
+<StartTime Value="8" Scale="None" Actual="8"/>
+<EndTime Value="8.2" Scale="None" Actual="8.2"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>72715bf5-0522-4feb-bfeb-a01327ac80d0</NodeID>
+<CurrentOn Value="1" Scale="nano" Actual="1e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="20" Scale="centi" Actual="0.2"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="20" Scale="centi" Actual="0.2"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>PN_3</Name>
+<ID>1d1f7961-58a0-419e-b651-47577d61cb93</ID>
+<StartTime Value="15" Scale="None" Actual="15"/>
+<EndTime Value="17" Scale="None" Actual="17"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>ff2d935b-bcfa-4342-a7b4-79704c1e236e</NodeID>
+<CurrentOn Value="-5" Scale="nano" Actual="-5e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="2" Scale="None" Actual="2"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="2" Scale="None" Actual="2"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>MS_3</Name>
+<ID>a371c3bd-8ed7-426c-a749-d44b13d97363</ID>
+<StartTime Value="500" Scale="milli" Actual="0.5"/>
+<EndTime Value="600" Scale="milli" Actual="0.6"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>4bdb37d7-c064-455f-83b8-7b0a0f6c3183</NodeID>
+<CurrentOn Value="4" Scale="nano" Actual="4e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>NN_4</Name>
+<ID>48bffff9-557a-42f3-b8e1-4aa72d534f7e</ID>
+<StartTime Value="700" Scale="milli" Actual="0.7"/>
+<EndTime Value="800" Scale="milli" Actual="0.8"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>646c6377-6213-4e75-aad4-70c4723ec489</NodeID>
+<CurrentOn Value="6" Scale="nano" Actual="6e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>PN_4</Name>
+<ID>8ef5c750-0105-498b-982e-c92c21f446ff</ID>
+<StartTime Value="22" Scale="None" Actual="22"/>
+<EndTime Value="40" Scale="None" Actual="40"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>ff2d935b-bcfa-4342-a7b4-79704c1e236e</NodeID>
+<CurrentOn Value="0.2" Scale="nano" Actual="2e-10"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="18" Scale="None" Actual="18"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="18" Scale="None" Actual="18"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>MS_7</Name>
+<ID>ab434e05-0be9-456d-923a-20b6dd1d162a</ID>
+<StartTime Value="550" Scale="milli" Actual="0.55"/>
+<EndTime Value="950" Scale="milli" Actual="0.95"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>6987cfc3-7347-4496-8320-635df3fe037f</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-08"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="40" Scale="centi" Actual="0.4"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="40" Scale="centi" Actual="0.4"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>MS_4</Name>
+<ID>ed9e3257-62f3-4647-8c65-f09a6431cff5</ID>
+<StartTime Value="700" Scale="milli" Actual="0.7"/>
+<EndTime Value="800" Scale="milli" Actual="0.8"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>4bdb37d7-c064-455f-83b8-7b0a0f6c3183</NodeID>
+<CurrentOn Value="6" Scale="nano" Actual="6e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>GS_5</Name>
+<ID>3eeda621-3988-4910-84ad-8d0b2f242dc4</ID>
+<StartTime Value="900" Scale="milli" Actual="0.9"/>
+<EndTime Value="1" Scale="None" Actual="1"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>390a59d9-d695-489a-aa99-c5c0e1977359</NodeID>
+<CurrentOn Value="8" Scale="nano" Actual="8e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>GS_2</Name>
+<ID>9a92be35-5660-45e9-a961-8ffc7245d0ce</ID>
+<StartTime Value="300" Scale="milli" Actual="0.3"/>
+<EndTime Value="400" Scale="milli" Actual="0.4"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>390a59d9-d695-489a-aa99-c5c0e1977359</NodeID>
+<CurrentOn Value="2" Scale="nano" Actual="2e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>ES_2</Name>
+<ID>eed17340-cc6e-4cb4-9197-a98a56307833</ID>
+<StartTime Value="300" Scale="milli" Actual="0.3"/>
+<EndTime Value="400" Scale="milli" Actual="0.4"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>24304718-dc86-4a4e-9acc-43f897d431c5</NodeID>
+<CurrentOn Value="2" Scale="nano" Actual="2e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>PN_2</Name>
+<ID>896f4a58-d4f0-4bc7-a68d-5d8d3e382b80</ID>
+<StartTime Value="10" Scale="None" Actual="10"/>
+<EndTime Value="20" Scale="None" Actual="20"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>ff2d935b-bcfa-4342-a7b4-79704c1e236e</NodeID>
+<CurrentOn Value="1.5" Scale="nano" Actual="1.5e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="None" Actual="10"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="None" Actual="10"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>NN_2</Name>
+<ID>e5962a76-55bb-4b35-84e1-70b99e1fc3cc</ID>
+<StartTime Value="300" Scale="milli" Actual="0.3"/>
+<EndTime Value="400" Scale="milli" Actual="0.4"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>646c6377-6213-4e75-aad4-70c4723ec489</NodeID>
+<CurrentOn Value="2" Scale="nano" Actual="2e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>MS_2</Name>
+<ID>dc4a3c89-989e-41fb-b11e-3b3511d2d40c</ID>
+<StartTime Value="300" Scale="milli" Actual="0.3"/>
+<EndTime Value="400" Scale="milli" Actual="0.4"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>4bdb37d7-c064-455f-83b8-7b0a0f6c3183</NodeID>
+<CurrentOn Value="2" Scale="nano" Actual="2e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>BN_2</Name>
+<ID>a99d89c1-242a-48c8-9341-c676037ca939</ID>
+<StartTime Value="6" Scale="None" Actual="6"/>
+<EndTime Value="6.2" Scale="None" Actual="6.2"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>72715bf5-0522-4feb-bfeb-a01327ac80d0</NodeID>
+<CurrentOn Value="-3" Scale="nano" Actual="-3e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="20" Scale="centi" Actual="0.2"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="20" Scale="centi" Actual="0.2"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>PN_6</Name>
+<ID>59c0b20b-bb29-4a06-aac0-845a42526034</ID>
+<StartTime Value="33.5" Scale="None" Actual="33.5"/>
+<EndTime Value="37" Scale="None" Actual="37"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>ff2d935b-bcfa-4342-a7b4-79704c1e236e</NodeID>
+<CurrentOn Value="5" Scale="nano" Actual="5e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="3.5" Scale="None" Actual="3.5"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="3.5" Scale="None" Actual="3.5"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>GS_1</Name>
+<ID>12eca7e4-2f6a-4564-8272-1637fc14f74a</ID>
+<StartTime Value="100" Scale="milli" Actual="0.1"/>
+<EndTime Value="200" Scale="milli" Actual="0.2"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>390a59d9-d695-489a-aa99-c5c0e1977359</NodeID>
+<CurrentOn Value="-2" Scale="nano" Actual="-2e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>IS_3</Name>
+<ID>9b8e8a4a-2ef4-4a6c-906d-747d9b918c11</ID>
+<StartTime Value="500" Scale="milli" Actual="0.5"/>
+<EndTime Value="600" Scale="milli" Actual="0.6"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>3fb35a39-08ed-4463-aa3c-e62c398e03ff</NodeID>
+<CurrentOn Value="4" Scale="nano" Actual="4e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>PN_5</Name>
+<ID>377a6882-6b01-4bf1-a0ca-c8add93ab32d</ID>
+<StartTime Value="28.5" Scale="None" Actual="28.5"/>
+<EndTime Value="28.8" Scale="None" Actual="28.8"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>ff2d935b-bcfa-4342-a7b4-79704c1e236e</NodeID>
+<CurrentOn Value="5" Scale="nano" Actual="5e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="30" Scale="centi" Actual="0.3"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="30" Scale="centi" Actual="0.3"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>ES_3</Name>
+<ID>cb6f7b7f-beca-4c07-834e-17524d69e8df</ID>
+<StartTime Value="500" Scale="milli" Actual="0.5"/>
+<EndTime Value="600" Scale="milli" Actual="0.6"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>24304718-dc86-4a4e-9acc-43f897d431c5</NodeID>
+<CurrentOn Value="4" Scale="nano" Actual="4e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>IS_2</Name>
+<ID>f22a78e8-1636-4da8-88a8-4746bc6286b2</ID>
+<StartTime Value="300" Scale="milli" Actual="0.3"/>
+<EndTime Value="400" Scale="milli" Actual="0.4"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>3fb35a39-08ed-4463-aa3c-e62c398e03ff</NodeID>
+<CurrentOn Value="2" Scale="nano" Actual="2e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>IS_5</Name>
+<ID>2b1580e5-da9a-4557-8d15-aa7cedc74b39</ID>
+<StartTime Value="900" Scale="milli" Actual="0.9"/>
+<EndTime Value="1" Scale="None" Actual="1"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>3fb35a39-08ed-4463-aa3c-e62c398e03ff</NodeID>
+<CurrentOn Value="8" Scale="nano" Actual="8e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>MS_1</Name>
+<ID>6c552ffd-6926-473e-a442-5f1b8ed3de42</ID>
+<StartTime Value="100" Scale="milli" Actual="0.1"/>
+<EndTime Value="200" Scale="milli" Actual="0.2"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>4bdb37d7-c064-455f-83b8-7b0a0f6c3183</NodeID>
+<CurrentOn Value="-2" Scale="nano" Actual="-2e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>ES_4</Name>
+<ID>935e4aea-af80-48f7-917a-0efbc7733f9d</ID>
+<StartTime Value="700" Scale="milli" Actual="0.7"/>
+<EndTime Value="800" Scale="milli" Actual="0.8"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>24304718-dc86-4a4e-9acc-43f897d431c5</NodeID>
+<CurrentOn Value="6" Scale="nano" Actual="6e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>ES_5</Name>
+<ID>5dbf0f4f-93ad-4778-9878-fadd9a89b9a3</ID>
+<StartTime Value="900" Scale="milli" Actual="0.9"/>
+<EndTime Value="1" Scale="None" Actual="1"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>24304718-dc86-4a4e-9acc-43f897d431c5</NodeID>
+<CurrentOn Value="8" Scale="nano" Actual="8e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>IS_4</Name>
+<ID>f2ad5b98-f315-44ce-b803-ddb918e771d0</ID>
+<StartTime Value="700" Scale="milli" Actual="0.7"/>
+<EndTime Value="800" Scale="milli" Actual="0.8"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>3fb35a39-08ed-4463-aa3c-e62c398e03ff</NodeID>
+<CurrentOn Value="6" Scale="nano" Actual="6e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>NN_5</Name>
+<ID>d39032eb-2d1b-44c4-bd25-2e112874cf3b</ID>
+<StartTime Value="900" Scale="milli" Actual="0.9"/>
+<EndTime Value="1" Scale="None" Actual="1"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>bcb7435a-dd22-442d-979f-5693c5c94ca5</OrganismID>
+<NodeID>646c6377-6213-4e75-aad4-70c4723ec489</NodeID>
+<CurrentOn Value="8" Scale="nano" Actual="8e-09"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="100" Scale="milli" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+</Stimuli>
+<DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">
+  <Content Name="Simulation Controller" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 36" DisplayLocation="150, 150" AutoHideSize="150, 100" FloatingSize="150, 150" FullTitle="Simulation Controller">
+    <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Simulation Controller" />
+      <State Value="DockLeft" />
+      <Child Type="null" />
+    </DefaultRestore>
+    <AutoHideRestore Type="Crownwood.Magic.Docking.RestoreAutoHideState">
+      <Content Name="Simulation Controller" />
+      <State Value="DockLeft" />
+      <Child Type="null" />
+    </AutoHideRestore>
+    <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
+      <Content Name="Simulation Controller" />
+      <State Value="DockBottom" />
+      <Position Size="150, 36" Location="150, 150" />
+      <Best Count="1">
+        <Item Name="Simulation Controller" />
+      </Best>
+      <Next Count="0" />
+      <Previous Count="0" />
+      <NextAll Count="2">
+        <Item Name="Project Workspace" />
+        <Item Name="Project Toolbox" />
+      </NextAll>
+      <PreviousAll Count="0" />
+      <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
+        <Content Name="Simulation Controller" />
+        <Space Value="100" />
+        <Best Count="1">
+          <Item Name="Simulation Controller" />
+        </Best>
+        <Next Count="0" />
+        <Previous Count="0" />
+        <Child Type="Crownwood.Magic.Docking.RestoreWindowContent">
+          <Content Name="Simulation Controller" />
+          <Next Count="0" />
+          <Previous Count="0" />
+          <Selected Value="True" />
+          <Child Type="null" />
+        </Child>
+      </Child>
+    </DockingRestore>
+    <FloatingRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Simulation Controller" />
+      <State Value="Floating" />
+      <Child Type="null" />
+    </FloatingRestore>
+  </Content>
+  <Content Name="Project Workspace" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="258, 150" DisplayLocation="150, 150" AutoHideSize="236, 150" FloatingSize="150, 150" FullTitle="Project Workspace">
+    <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Project Workspace" />
+      <State Value="DockLeft" />
+      <Child Type="null" />
+    </DefaultRestore>
+    <AutoHideRestore Type="Crownwood.Magic.Docking.RestoreAutoHideAffinity">
+      <Content Name="Project Workspace" />
+      <State Value="DockLeft" />
+      <Next Count="1">
+        <Item Name="Project Toolbox" />
+      </Next>
+      <Previous Count="0" />
+      <NextAll Count="0" />
+      <PreviousAll Count="0" />
+      <Child Type="null" />
+    </AutoHideRestore>
+    <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
+      <Content Name="Project Workspace" />
+      <State Value="DockLeft" />
+      <Position Size="258, 150" Location="150, 150" />
+      <Best Count="2">
+        <Item Name="Project Toolbox" />
+        <Item Name="Project Workspace" />
+      </Best>
+      <Next Count="0" />
+      <Previous Count="0" />
+      <NextAll Count="0" />
+      <PreviousAll Count="1">
+        <Item Name="Simulation Controller" />
+      </PreviousAll>
+      <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
+        <Content Name="Project Workspace" />
+        <Space Value="100" />
+        <Best Count="2">
+          <Item Name="Project Workspace" />
+          <Item Name="Project Toolbox" />
+        </Best>
+        <Next Count="0" />
+        <Previous Count="0" />
+        <Child Type="Crownwood.Magic.Docking.RestoreWindowContent">
+          <Content Name="Project Workspace" />
+          <Next Count="1">
+            <Item Name="Project Toolbox" />
+          </Next>
+          <Previous Count="0" />
+          <Selected Value="True" />
+          <Child Type="null" />
+        </Child>
+      </Child>
+    </DockingRestore>
+    <FloatingRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Project Workspace" />
+      <State Value="Floating" />
+      <Child Type="null" />
+    </FloatingRestore>
+  </Content>
+  <Content Name="Project Toolbox" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="258, 150" DisplayLocation="150, 150" AutoHideSize="236, 150" FloatingSize="150, 150" FullTitle="Project Toolbox">
+    <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Project Toolbox" />
+      <State Value="DockLeft" />
+      <Child Type="null" />
+    </DefaultRestore>
+    <AutoHideRestore Type="Crownwood.Magic.Docking.RestoreAutoHideAffinity">
+      <Content Name="Project Toolbox" />
+      <State Value="DockLeft" />
+      <Next Count="0" />
+      <Previous Count="1">
+        <Item Name="Project Workspace" />
+      </Previous>
+      <NextAll Count="0" />
+      <PreviousAll Count="0" />
+      <Child Type="null" />
+    </AutoHideRestore>
+    <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
+      <Content Name="Project Toolbox" />
+      <State Value="DockLeft" />
+      <Position Size="258, 150" Location="150, 150" />
+      <Best Count="2">
+        <Item Name="Project Toolbox" />
+        <Item Name="Project Workspace" />
+      </Best>
+      <Next Count="0" />
+      <Previous Count="0" />
+      <NextAll Count="0" />
+      <PreviousAll Count="1">
+        <Item Name="Simulation Controller" />
+      </PreviousAll>
+      <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
+        <Content Name="Project Toolbox" />
+        <Space Value="100" />
+        <Best Count="2">
+          <Item Name="Project Workspace" />
+          <Item Name="Project Toolbox" />
+        </Best>
+        <Next Count="0" />
+        <Previous Count="0" />
+        <Child Type="Crownwood.Magic.Docking.RestoreWindowContent">
+          <Content Name="Project Toolbox" />
+          <Next Count="0" />
+          <Previous Count="1">
+            <Item Name="Project Workspace" />
+          </Previous>
+          <Selected Value="False" />
+          <Child Type="null" />
+        </Child>
+      </Child>
+    </DockingRestore>
+    <FloatingRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Project Toolbox" />
+      <State Value="Floating" />
+      <Child Type="null" />
+    </FloatingRestore>
+  </Content>
+</DockingConfig>
+</Project>

@@ -34,8 +34,9 @@
 <IsVisible>True</IsVisible>
 <MaximumTension Value="100" Scale="None" Actual="100"/>
 <StimulusTension>
+<ID>1aada5b3-79f2-40bc-88e6-778d8bcc34eb</ID>
 <Type>StimulusTension</Type>
-<AssemblyFile>animattools.dll</AssemblyFile>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.Gains.MuscleGains.StimulusTension</ClassName>
 <UseLimits>True</UseLimits>
 <LimitsReadOnly>False</LimitsReadOnly>
@@ -53,8 +54,9 @@
 <A4 Value="0" Scale="None" Actual="0"/>
 </StimulusTension>
 <LengthTension>
+<ID>53f09ebf-41f5-4308-bcb2-ec5f59629d78</ID>
 <Type>LengthTension</Type>
-<AssemblyFile>animattools.dll</AssemblyFile>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.Gains.MuscleGains.LengthTension</ClassName>
 <UseLimits>False</UseLimits>
 <LimitsReadOnly>False</LimitsReadOnly>
@@ -93,8 +95,9 @@
 <IsVisible>True</IsVisible>
 <MaximumTension Value="100" Scale="None" Actual="100"/>
 <StimulusTension>
+<ID>b8417958-af67-4a67-94c7-fbb56b91f69f</ID>
 <Type>StimulusTension</Type>
-<AssemblyFile>animattools.dll</AssemblyFile>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.Gains.MuscleGains.StimulusTension</ClassName>
 <UseLimits>True</UseLimits>
 <LimitsReadOnly>False</LimitsReadOnly>
@@ -112,8 +115,9 @@
 <A4 Value="0" Scale="None" Actual="0"/>
 </StimulusTension>
 <LengthTension>
+<ID>dfd58cee-abb1-4f66-8ca0-e7df1249a360</ID>
 <Type>LengthTension</Type>
-<AssemblyFile>animattools.dll</AssemblyFile>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.Gains.MuscleGains.LengthTension</ClassName>
 <UseLimits>False</UseLimits>
 <LimitsReadOnly>False</LimitsReadOnly>

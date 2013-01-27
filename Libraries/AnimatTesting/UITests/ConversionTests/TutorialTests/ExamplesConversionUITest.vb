@@ -66,7 +66,7 @@ Namespace UITests
                 'End Sub
 
                 <TestMethod()>
-                Public Sub Test_BellyFlopper()
+                Public Sub Tutorial_BellyFlopper()
 
                     Dim aryMaxErrors As New Hashtable
                     aryMaxErrors.Add("Time", 0.001)
@@ -91,7 +91,7 @@ Namespace UITests
                 End Sub
 
                 <TestMethod()>
-                Public Sub Test_StretchReflex()
+                Public Sub Tutorial_StretchReflex()
 
                     Dim aryMaxErrors As New Hashtable
                     aryMaxErrors.Add("Time", 0.001)
@@ -138,6 +138,36 @@ Namespace UITests
                     '           "Simulation\Environment\" & m_strStructureGroup & _
                     '          "\" & m_strStruct1Name & "\Behavioral System\" & m_strRootNeuralSystem & "\A"})
 
+
+                End Sub
+
+
+                <TestMethod()>
+                Public Sub Tutorial_LimbStiffness()
+
+                    Dim aryMaxErrors As New Hashtable
+                    aryMaxErrors.Add("Time", 0.001)
+                    aryMaxErrors.Add("BicepTension", 1)
+                    aryMaxErrors.Add("TricepTension", 1)
+                    aryMaxErrors.Add("BicepLength", 0.01)
+                    aryMaxErrors.Add("TricepLength", 0.01)
+                    aryMaxErrors.Add("ElbowAngle", 0.1)
+                    aryMaxErrors.Add("STMN", 0.005)
+                    aryMaxErrors.Add("SBMN", 0.005)
+                    aryMaxErrors.Add("default", 0.1)
+
+                    m_strProjectName = "Limb Stiffness"
+                    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\TutorialTests\Examples"
+                    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\TutorialTests\Examples\" & m_strProjectName
+                    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\TutorialTests\Examples\" & m_strProjectName
+                    m_strStructureGroup = "Organisms"
+                    m_strStruct1Name = "Organism_1"
+
+                    m_aryWindowsToOpen.Clear()
+                    m_aryWindowsToOpen.Add("Tool Viewers\DataChart")
+
+                    'Load and convert the project.
+                    TestConversionProject("AfterConversion_", aryMaxErrors)
 
                 End Sub
 
