@@ -1,0 +1,260 @@
+<Editor>
+<AssemblyFile>animattools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.Tools.Viewer</ClassName>
+<NormalLocation x="0" y="0"/>
+<NormalSize Width="886" Height="745"/>
+<WindowState>Normal</WindowState>
+<ToolHolder>59e4672b-362d-4307-8591-ca81635e2c06</ToolHolder>
+<Form>
+<Title>Left Lower Leg</Title>
+<AssemblyFile>licensedanimattools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.Forms.Charts.LineChart</ClassName>
+<ID>5db36c79-b917-4582-b6f0-694230dd10c8</ID>
+<CollectDataInterval Value="2" Scale="milli" Actual="0.002"/>
+<CollectTimeWindow Value="3" Scale="None" Actual="3"/>
+<UpdateDataInterval Value="1000" Scale="milli" Actual="1"/>
+<SetStartEndTime>False</SetStartEndTime>
+<CollectStartTime Value="0" Scale="None" Actual="0"/>
+<CollectEndTime Value="10" Scale="None" Actual="10"/>
+<AxisList>
+<Axis>
+<AssemblyFile>licensedanimattools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.DataObjects.Charting.Pro2DAxis</ClassName>
+<Name>Arm</Name>
+<WorkingAxis>2</WorkingAxis>
+<DataColumns>
+<DataColumn>
+<AssemblyFile>licensedanimattools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>A Up</Name>
+<ID>bf804801-d3e1-478f-97e4-21374d211616</ID>
+<DataItemAssemblyFile>realisticneuralnettools.dll</DataItemAssemblyFile>
+<DataItemClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.Spiking</DataItemClassName>
+<StructureID>a20d32cb-45fe-484b-8d52-f5db13b6f860</StructureID>
+<DataItemID>b74875fc-1e9e-4910-a592-3ec83d0f000d</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>4</DataSubSet>
+<PrevDataSubset>4</PrevDataSubset>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<LineColor>-16711681</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>licensedanimattools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>A Down</Name>
+<ID>fd90ba7c-963d-4ab6-89b1-2c52ac6f80e9</ID>
+<DataItemAssemblyFile>realisticneuralnettools.dll</DataItemAssemblyFile>
+<DataItemClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.Spiking</DataItemClassName>
+<StructureID>a20d32cb-45fe-484b-8d52-f5db13b6f860</StructureID>
+<DataItemID>ae385ec9-956b-4c46-a87a-e95a16b822bc</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>5</DataSubSet>
+<PrevDataSubset>5</PrevDataSubset>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<LineColor>-65281</LineColor>
+</DataColumn>
+</DataColumns>
+</Axis>
+<Axis>
+<AssemblyFile>licensedanimattools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.DataObjects.Charting.Pro2DAxis</ClassName>
+<Name>Control</Name>
+<WorkingAxis>4</WorkingAxis>
+<DataColumns>
+<DataColumn>
+<AssemblyFile>licensedanimattools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>CG</Name>
+<ID>e59db71d-d707-4d90-af56-157a77c3b591</ID>
+<DataItemAssemblyFile>realisticneuralnettools.dll</DataItemAssemblyFile>
+<DataItemClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.Spiking</DataItemClassName>
+<StructureID>a20d32cb-45fe-484b-8d52-f5db13b6f860</StructureID>
+<DataItemID>e4b881ff-d05d-4904-a6c3-058c57a8c143</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>7</DataSubSet>
+<PrevDataSubset>7</PrevDataSubset>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<LineColor>-16776961</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>licensedanimattools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>IA</Name>
+<ID>eb47638f-a508-4fd2-927a-29e4169ed808</ID>
+<DataItemAssemblyFile>realisticneuralnettools.dll</DataItemAssemblyFile>
+<DataItemClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.Spiking</DataItemClassName>
+<StructureID>a20d32cb-45fe-484b-8d52-f5db13b6f860</StructureID>
+<DataItemID>77fbf156-c332-4960-ae22-0e9b3fbc7f33</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>8</DataSubSet>
+<PrevDataSubset>8</PrevDataSubset>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<LineColor>-256</LineColor>
+</DataColumn>
+</DataColumns>
+</Axis>
+<Axis>
+<AssemblyFile>licensedanimattools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.DataObjects.Charting.Pro2DAxis</ClassName>
+<Name>Elbow</Name>
+<WorkingAxis>0</WorkingAxis>
+<DataColumns>
+<DataColumn>
+<AssemblyFile>licensedanimattools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>E Forward</Name>
+<ID>b6db0853-05f5-4c2e-b650-8644f788872e</ID>
+<DataItemAssemblyFile>realisticneuralnettools.dll</DataItemAssemblyFile>
+<DataItemClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.Spiking</DataItemClassName>
+<StructureID>a20d32cb-45fe-484b-8d52-f5db13b6f860</StructureID>
+<DataItemID>ee0fcfd1-6b3c-4fd2-ad3f-e6c482b782ce</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>0</DataSubSet>
+<PrevDataSubset>0</PrevDataSubset>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<LineColor>-16711936</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>licensedanimattools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>E Back</Name>
+<ID>d4f73210-8923-4231-bf88-c362c248075b</ID>
+<DataItemAssemblyFile>realisticneuralnettools.dll</DataItemAssemblyFile>
+<DataItemClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.Spiking</DataItemClassName>
+<StructureID>a20d32cb-45fe-484b-8d52-f5db13b6f860</StructureID>
+<DataItemID>42cc6755-1f85-452f-b8fa-b79fa25f6f35</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>1</DataSubSet>
+<PrevDataSubset>1</PrevDataSubset>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<LineColor>-65536</LineColor>
+</DataColumn>
+</DataColumns>
+</Axis>
+<Axis>
+<AssemblyFile>licensedanimattools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.DataObjects.Charting.Pro2DAxis</ClassName>
+<Name>Threshold</Name>
+<WorkingAxis>1</WorkingAxis>
+<DataColumns>
+<DataColumn>
+<AssemblyFile>licensedanimattools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>E Back</Name>
+<ID>2be61727-a457-4342-a831-25f7ece7a643</ID>
+<DataItemAssemblyFile>realisticneuralnettools.dll</DataItemAssemblyFile>
+<DataItemClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.Spiking</DataItemClassName>
+<StructureID>a20d32cb-45fe-484b-8d52-f5db13b6f860</StructureID>
+<DataItemID>42cc6755-1f85-452f-b8fa-b79fa25f6f35</DataItemID>
+<SelectedDataType>Threshold</SelectedDataType>
+<DataSubSet>2</DataSubSet>
+<PrevDataSubset>2</PrevDataSubset>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<LineColor>-65536</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>licensedanimattools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>E Forward</Name>
+<ID>9bbc1802-1728-475f-bce3-e18d64b00102</ID>
+<DataItemAssemblyFile>realisticneuralnettools.dll</DataItemAssemblyFile>
+<DataItemClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.Spiking</DataItemClassName>
+<StructureID>a20d32cb-45fe-484b-8d52-f5db13b6f860</StructureID>
+<DataItemID>ee0fcfd1-6b3c-4fd2-ad3f-e6c482b782ce</DataItemID>
+<SelectedDataType>Threshold</SelectedDataType>
+<DataSubSet>3</DataSubSet>
+<PrevDataSubset>3</PrevDataSubset>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<LineColor>-16711936</LineColor>
+</DataColumn>
+</DataColumns>
+</Axis>
+<Axis>
+<AssemblyFile>licensedanimattools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.DataObjects.Charting.Pro2DAxis</ClassName>
+<Name>Walk</Name>
+<WorkingAxis>3</WorkingAxis>
+<DataColumns>
+<DataColumn>
+<AssemblyFile>licensedanimattools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Walk</Name>
+<ID>934cbea0-a501-4467-a957-5f4763003fdc</ID>
+<DataItemAssemblyFile>realisticneuralnettools.dll</DataItemAssemblyFile>
+<DataItemClassName>RealisticNeuralNetTools.DataObjects.Behavior.Neurons.Spiking</DataItemClassName>
+<StructureID>a20d32cb-45fe-484b-8d52-f5db13b6f860</StructureID>
+<DataItemID>7dc243ac-c45e-4908-90a0-ddcb9857099a</DataItemID>
+<SelectedDataType>ExternalCurrent</SelectedDataType>
+<DataSubSet>6</DataSubSet>
+<PrevDataSubset>6</PrevDataSubset>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<LineColor>-23296</LineColor>
+</DataColumn>
+</DataColumns>
+</Axis>
+</AxisList>
+<SaveDataWhenClosed>False</SaveDataWhenClosed>
+<PointsToKeep>10000</PointsToKeep>
+</Form>
+<ToolForms/>
+<DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">
+  <Content Name="Hierarchy" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="250, 150" DisplayLocation="150, 150" AutoHideSize="250, 150" FloatingSize="150, 150" FullTitle="Hierarchy">
+    <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Hierarchy" />
+      <State Value="DockLeft" />
+      <Child Type="null" />
+    </DefaultRestore>
+    <AutoHideRestore Type="Crownwood.Magic.Docking.RestoreAutoHideAffinity">
+      <Content Name="Hierarchy" />
+      <State Value="DockLeft" />
+      <Next Count="0" />
+      <Previous Count="0" />
+      <NextAll Count="0" />
+      <PreviousAll Count="0" />
+      <Child Type="null" />
+    </AutoHideRestore>
+    <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
+      <Content Name="Hierarchy" />
+      <State Value="DockLeft" />
+      <Position Size="250, 150" Location="150, 150" />
+      <Best Count="1">
+        <Item Name="Hierarchy" />
+      </Best>
+      <Next Count="0" />
+      <Previous Count="0" />
+      <NextAll Count="0" />
+      <PreviousAll Count="0" />
+      <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
+        <Content Name="Hierarchy" />
+        <Space Value="100" />
+        <Best Count="1">
+          <Item Name="Hierarchy" />
+        </Best>
+        <Next Count="0" />
+        <Previous Count="0" />
+        <Child Type="Crownwood.Magic.Docking.RestoreWindowContent">
+          <Content Name="Hierarchy" />
+          <Next Count="0" />
+          <Previous Count="0" />
+          <Selected Value="True" />
+          <Child Type="null" />
+        </Child>
+      </Child>
+    </DockingRestore>
+    <FloatingRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Hierarchy" />
+      <State Value="Floating" />
+      <Child Type="null" />
+    </FloatingRestore>
+  </Content>
+</DockingConfig>
+</Editor>

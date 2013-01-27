@@ -1,0 +1,334 @@
+<Project>
+<ProjectName>Bumps</ProjectName>
+<PhysicsAssemblyName>VortexAnimatTools.dll</PhysicsAssemblyName>
+<PhysicsClassName>VortexAnimatTools.DataObjects.Simulation</PhysicsClassName>
+<SimulationFile>Bumps.asim</SimulationFile>
+<LogLevel>Error</LogLevel>
+<Version>1</Version>
+<SimWindowLocation x="775" y="215"/>
+<SimWindowSize Width="640" Height="480"/>
+<DockingForms>
+<Form>
+<Title>Simulation Controller</Title>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.SimulationController</ClassName>
+<TabTitle>SimulationController</TabTitle>
+<BackgroundForm>True</BackgroundForm>
+<StartingBarTime Value="0" Scale="milli" Actual="0"/>
+<EndingBarTime Value="5000" Scale="milli" Actual="5"/>
+<TimeBarInterval Value="1" Scale="None" Actual="1"/>
+<ActualTimeColor>-5383962</ActualTimeColor>
+<CurrentTimeColor>-16776961</CurrentTimeColor>
+<AutomaticTimeScale>True</AutomaticTimeScale>
+<DivisionMarkFactor>4</DivisionMarkFactor>
+<Divisions>10</Divisions>
+<MajorInterval>500</MajorInterval>
+<MiddleMarkFactor>3</MiddleMarkFactor>
+<TimeScale>MilliSeconds</TimeScale>
+</Form>
+<Form>
+<Title>Project Toolbox</Title>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.Toolbox</ClassName>
+<TabTitle>Toolbox</TabTitle>
+<BackgroundForm>True</BackgroundForm>
+</Form>
+<Form>
+<Title>Project Workspace</Title>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.ProjectWorkspace</ClassName>
+<TabTitle>Workspace</TabTitle>
+<BackgroundForm>True</BackgroundForm>
+<TreeViewHeight>505</TreeViewHeight>
+</Form>
+</DockingForms>
+<ChildForms>
+<Child>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.Behavior.Editor</ClassName>
+<EditorFile>Organism_1.abef</EditorFile>
+<Form>
+<AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.Forms.Behavior.AddFlowDiagram</ClassName>
+<Title>Edit Organism_1</Title>
+</Form>
+</Child>
+<Child>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.Forms.Tools.Viewer</ClassName>
+<EditorFile>DataChart.atvf</EditorFile>
+<TreeViewHeight>322</TreeViewHeight>
+<Form>
+<AssemblyFile>LicensedAnimatTools.dll</AssemblyFile>
+<ClassName>LicensedAnimatTools.Forms.Charts.LineChart</ClassName>
+<Title>DataChart</Title>
+</Form>
+</Child>
+</ChildForms>
+<ToolViewers>
+<ToolHolder>
+<ID>25fb593d-555b-4768-a314-97892f477d1a</ID>
+<Name>DataChart</Name>
+<BaseAssemblyFile>LicensedAnimatTools.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatTools.Forms.Charts.LineChart</BaseClassName>
+</ToolHolder>
+</ToolViewers>
+<Stimuli>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Stimulus_1</Name>
+<ID>85a4040e-b6fd-4fea-b628-faaf60e55722</ID>
+<StartTime Value="5" Scale="None" Actual="5"/>
+<EndTime Value="5.3" Scale="None" Actual="5.3"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>8791fc4c-b5ae-4734-8367-43059f2b3675</OrganismID>
+<NodeID>61d771d4-2fc8-481e-b906-c95a89dc38b2</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-08"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="30" Scale="centi" Actual="0.3"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="30" Scale="centi" Actual="0.3"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Stim15</Name>
+<ID>893b53e3-044f-4ee0-8705-0d6726d489a7</ID>
+<StartTime Value="5" Scale="None" Actual="5"/>
+<EndTime Value="5.3" Scale="None" Actual="5.3"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>8791fc4c-b5ae-4734-8367-43059f2b3675</OrganismID>
+<NodeID>c4eebcd4-6bd4-438e-bd66-a3bbf5594a36</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-08"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="30" Scale="centi" Actual="0.3"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="30" Scale="centi" Actual="0.3"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Stim5</Name>
+<ID>ad6b9202-b8b9-48a5-b5f3-a83a5c9912cb</ID>
+<StartTime Value="10" Scale="None" Actual="10"/>
+<EndTime Value="10.3" Scale="None" Actual="10.3"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>8791fc4c-b5ae-4734-8367-43059f2b3675</OrganismID>
+<NodeID>762e2435-31df-4fa4-b79b-99421953aa94</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-08"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="30" Scale="centi" Actual="0.3"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="30" Scale="centi" Actual="0.3"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Stim19</Name>
+<ID>11dce836-a842-418d-95ea-3e9df0774d44</ID>
+<StartTime Value="15" Scale="None" Actual="15"/>
+<EndTime Value="15.3" Scale="None" Actual="15.3"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>8791fc4c-b5ae-4734-8367-43059f2b3675</OrganismID>
+<NodeID>3ad6a3eb-8061-48cf-a568-c81d8fe4beb8</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-08"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="30" Scale="centi" Actual="0.3"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="30" Scale="centi" Actual="0.3"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+</Stimuli>
+<DockingConfig FormatVersion="5" InsideFill="False" InnerMinimum="20, 20">
+  <Content Name="Project Workspace" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 150" DisplayLocation="150, 150" AutoHideSize="293, 150" FloatingSize="150, 150" FullTitle="Project Workspace">
+    <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Project Workspace" />
+      <State Value="DockLeft" />
+      <Child Type="null" />
+    </DefaultRestore>
+    <AutoHideRestore Type="Crownwood.Magic.Docking.RestoreAutoHideAffinity">
+      <Content Name="Project Workspace" />
+      <State Value="DockLeft" />
+      <Next Count="1">
+        <Item Name="Project Toolbox" />
+      </Next>
+      <Previous Count="0" />
+      <NextAll Count="0" />
+      <PreviousAll Count="0" />
+      <Child Type="null" />
+    </AutoHideRestore>
+    <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
+      <Content Name="Project Workspace" />
+      <State Value="DockLeft" />
+      <Position Size="150, 150" Location="150, 150" />
+      <Best Count="2">
+        <Item Name="Project Toolbox" />
+        <Item Name="Project Workspace" />
+      </Best>
+      <Next Count="0" />
+      <Previous Count="0" />
+      <NextAll Count="0" />
+      <PreviousAll Count="1">
+        <Item Name="Simulation Controller" />
+      </PreviousAll>
+      <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
+        <Content Name="Project Workspace" />
+        <Space Value="100" />
+        <Best Count="2">
+          <Item Name="Project Workspace" />
+          <Item Name="Project Toolbox" />
+        </Best>
+        <Next Count="0" />
+        <Previous Count="0" />
+        <Child Type="Crownwood.Magic.Docking.RestoreWindowContent">
+          <Content Name="Project Workspace" />
+          <Next Count="1">
+            <Item Name="Project Toolbox" />
+          </Next>
+          <Previous Count="0" />
+          <Selected Value="True" />
+          <Child Type="null" />
+        </Child>
+      </Child>
+    </DockingRestore>
+    <FloatingRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Project Workspace" />
+      <State Value="Floating" />
+      <Child Type="null" />
+    </FloatingRestore>
+  </Content>
+  <Content Name="Project Toolbox" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 150" DisplayLocation="150, 150" AutoHideSize="293, 150" FloatingSize="150, 150" FullTitle="Project Toolbox">
+    <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Project Toolbox" />
+      <State Value="DockLeft" />
+      <Child Type="null" />
+    </DefaultRestore>
+    <AutoHideRestore Type="Crownwood.Magic.Docking.RestoreAutoHideAffinity">
+      <Content Name="Project Toolbox" />
+      <State Value="DockLeft" />
+      <Next Count="0" />
+      <Previous Count="1">
+        <Item Name="Project Workspace" />
+      </Previous>
+      <NextAll Count="0" />
+      <PreviousAll Count="0" />
+      <Child Type="null" />
+    </AutoHideRestore>
+    <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
+      <Content Name="Project Toolbox" />
+      <State Value="DockLeft" />
+      <Position Size="150, 150" Location="150, 150" />
+      <Best Count="2">
+        <Item Name="Project Toolbox" />
+        <Item Name="Project Workspace" />
+      </Best>
+      <Next Count="0" />
+      <Previous Count="0" />
+      <NextAll Count="0" />
+      <PreviousAll Count="1">
+        <Item Name="Simulation Controller" />
+      </PreviousAll>
+      <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
+        <Content Name="Project Toolbox" />
+        <Space Value="100" />
+        <Best Count="2">
+          <Item Name="Project Workspace" />
+          <Item Name="Project Toolbox" />
+        </Best>
+        <Next Count="0" />
+        <Previous Count="0" />
+        <Child Type="Crownwood.Magic.Docking.RestoreWindowContent">
+          <Content Name="Project Toolbox" />
+          <Next Count="0" />
+          <Previous Count="1">
+            <Item Name="Project Workspace" />
+          </Previous>
+          <Selected Value="False" />
+          <Child Type="null" />
+        </Child>
+      </Child>
+    </DockingRestore>
+    <FloatingRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Project Toolbox" />
+      <State Value="Floating" />
+      <Child Type="null" />
+    </FloatingRestore>
+  </Content>
+  <Content Name="Simulation Controller" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="150, 100" DisplayLocation="150, 150" AutoHideSize="150, 100" FloatingSize="150, 150" FullTitle="Simulation Controller">
+    <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Simulation Controller" />
+      <State Value="DockLeft" />
+      <Child Type="null" />
+    </DefaultRestore>
+    <AutoHideRestore Type="Crownwood.Magic.Docking.RestoreAutoHideAffinity">
+      <Content Name="Simulation Controller" />
+      <State Value="DockBottom" />
+      <Next Count="0" />
+      <Previous Count="0" />
+      <NextAll Count="0" />
+      <PreviousAll Count="0" />
+      <Child Type="null" />
+    </AutoHideRestore>
+    <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
+      <Content Name="Simulation Controller" />
+      <State Value="DockBottom" />
+      <Position Size="150, 100" Location="150, 150" />
+      <Best Count="1">
+        <Item Name="Simulation Controller" />
+      </Best>
+      <Next Count="0" />
+      <Previous Count="0" />
+      <NextAll Count="2">
+        <Item Name="Project Workspace" />
+        <Item Name="Project Toolbox" />
+      </NextAll>
+      <PreviousAll Count="0" />
+      <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
+        <Content Name="Simulation Controller" />
+        <Space Value="100" />
+        <Best Count="1">
+          <Item Name="Simulation Controller" />
+        </Best>
+        <Next Count="0" />
+        <Previous Count="0" />
+        <Child Type="Crownwood.Magic.Docking.RestoreWindowContent">
+          <Content Name="Simulation Controller" />
+          <Next Count="0" />
+          <Previous Count="0" />
+          <Selected Value="True" />
+          <Child Type="null" />
+        </Child>
+      </Child>
+    </DockingRestore>
+    <FloatingRestore Type="Crownwood.Magic.Docking.RestoreContentState">
+      <Content Name="Simulation Controller" />
+      <State Value="Floating" />
+      <Child Type="null" />
+    </FloatingRestore>
+  </Content>
+</DockingConfig>
+</Project>

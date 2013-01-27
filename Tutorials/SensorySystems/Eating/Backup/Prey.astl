@@ -1,0 +1,106 @@
+<Structure>
+<RigidBody>
+<Name>Root</Name>
+<ID>a1f75911-b9a9-4ae0-b1c1-72b7a15c4021</ID>
+<Type>Box</Type>
+<PartType>VortexAnimatTools.DataObjects.Physical.RigidBodies.Box</PartType>
+<Description/>
+<IsVisible>True</IsVisible>
+<IsContactSensor>False</IsContactSensor>
+<Cd>1</Cd>
+<Cdr>0.5</Cdr>
+<Ca>1</Ca>
+<Car>1</Car>
+<Texture/>
+<Density Value="1" Scale="None" Actual="1"/>
+<XCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<YCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<ZCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<Freeze>True</Freeze>
+<ChildBodies>
+<RigidBody>
+<Name>Prey</Name>
+<ID>6c3051f1-783a-4fb8-b5c8-166cf7f69b4c</ID>
+<Type>Box</Type>
+<PartType>VortexAnimatTools.DataObjects.Physical.RigidBodies.Box</PartType>
+<Description/>
+<IsVisible>True</IsVisible>
+<IsContactSensor>False</IsContactSensor>
+<Cd>1</Cd>
+<Cdr>0.5</Cdr>
+<Ca>1</Ca>
+<Car>1</Car>
+<Texture/>
+<Density Value="1" Scale="None" Actual="1"/>
+<XCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<YCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<ZCenterOfMass Value="0" Scale="centi" Actual="0"/>
+<Joint>
+<Name>RootToPrey</Name>
+<ID>f9f5de5e-0d7c-4e0f-b20e-4402fcdb84aa</ID>
+<Type>Prismatic</Type>
+<PartType>VortexAnimatTools.DataObjects.Physical.Joints.Prismatic</PartType>
+<Description/>
+<Constraint Low="-25" High="25">
+<EnableLimits>True</EnableLimits>
+<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Restitution Value="0" Scale="None" Actual="0"/>
+<Stiffness Value="5" Scale="Mega" Actual="5e+06"/>
+</Constraint>
+<Length>5</Length>
+<EnableMotor>True</EnableMotor>
+<ServoMotor>False</ServoMotor>
+<ServoGain>100</ServoGain>
+<MaxForce Value="100" Scale="None" Actual="100"/>
+<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<RotationAxis x="1" y="4.37114e-08" z="4.37114e-08"/>
+<Radius>0.05</Radius>
+<RelativePosition x="0" y="0" z="0"/>
+<Rotation x="1.5708" y="-4.37114e-08" z="1.5708"/>
+<OrientationMatrix>-4.371139E-08,0,-1,0,0,1,0,0,1,0,-4.371139E-08,0,0,0,0,1</OrientationMatrix>
+<TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</TranslationMatrix>
+</Joint>
+<OdorSources>
+<Odor>
+<Name>Track Odor</Name>
+<ID>9ceff431-6861-4617-8738-2ab53bc91923</ID>
+<OdorTypeID>7030614d-a7e1-4bf8-b469-be211711cbbb</OdorTypeID>
+<Quantity>100</Quantity>
+<UseFoodQuantity>True</UseFoodQuantity>
+</Odor>
+</OdorSources>
+<FoodSource>True</FoodSource>
+<FoodQuantity Value="100" Scale="None" Actual="100"/>
+<MaxFoodQuantity Value="200" Scale="None" Actual="200"/>
+<FoodReplenishRate Value="1" Scale="None" Actual="1"/>
+<FoodEnergyContent Value="1" Scale="Kilo" Actual="1000"/>
+<CenterOfMass x="0" y="0" z="0"/>
+<RelativePosition x="0" y="0.25" z="0"/>
+<LocalPosition x="0" y="0.25" z="0"/>
+<Rotation x="1.5708" y="0" z="0"/>
+<LocalRotation x="-1.5708" y="0" z="0"/>
+<Direction x="0" y="1" z="0"/>
+<Color Red="0" Green="0" Blue="1" Alpha="1"/>
+<OrientationMatrix>1,0,0,0,0,-4.371139E-08,-1,0,0,1,-4.371139E-08,0,0,0,0,1</OrientationMatrix>
+<TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0.25,0,1</TranslationMatrix>
+<CombinedTransformationMatrix>1,0,0,0,0,-4.371139E-08,-1,0,0,1,-4.371139E-08,0,0,0.25,0,1</CombinedTransformationMatrix>
+<CollisionBoxSize x="1" y="1" z="0.45"/>
+<GraphicsBoxSize x="1" y="1" z="0.45"/>
+</RigidBody>
+</ChildBodies>
+<FoodSource>False</FoodSource>
+<CenterOfMass x="0" y="0" z="0"/>
+<RelativePosition x="0" y="0" z="0"/>
+<LocalPosition x="0" y="0" z="0"/>
+<Rotation x="0" y="0" z="0"/>
+<LocalRotation x="0" y="0" z="0"/>
+<Direction x="0" y="0" z="0"/>
+<Color Red="1" Green="0" Blue="0" Alpha="1"/>
+<OrientationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</OrientationMatrix>
+<TranslationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</TranslationMatrix>
+<CombinedTransformationMatrix>1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1</CombinedTransformationMatrix>
+<CollisionBoxSize x="50" y="0.05" z="1"/>
+<GraphicsBoxSize x="50" y="0.05" z="1"/>
+</RigidBody>
+<CollisionExclusionPairs/>
+</Structure>

@@ -1,0 +1,4706 @@
+<NeuralModule>
+<TimeStep>0.0025</TimeStep>
+<NetworkSize x="25" y="1" z="1"/>
+<Neurons>
+<Neuron>
+<Position x="0" y="0" z="0"/>
+<Name>24</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="1" y="0" z="0"/>
+<Name>10</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="2" y="0" z="0"/>
+<Name>7</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="3" y="0" z="0"/>
+<Name>12</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="4" y="0" z="0"/>
+<Name>11</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="5" y="0" z="0"/>
+<Name>20</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="6" y="0" z="0"/>
+<Name>18</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="7" y="0" z="0"/>
+<Name>6</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="8" y="0" z="0"/>
+<Name>4</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="9" y="0" z="0"/>
+<Name>22</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="10" y="0" z="0"/>
+<Name>19</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="11" y="0" z="0"/>
+<Name>21</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="12" y="0" z="0"/>
+<Name>1</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="13" y="0" z="0"/>
+<Name>15</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="14" y="0" z="0"/>
+<Name>23</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="15" y="0" z="0"/>
+<Name>16</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="16" y="0" z="0"/>
+<Name>25</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="17" y="0" z="0"/>
+<Name>13</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="18" y="0" z="0"/>
+<Name>2</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="19" y="0" z="0"/>
+<Name>5</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="20" y="0" z="0"/>
+<Name>8</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="21" y="0" z="0"/>
+<Name>17</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="22" y="0" z="0"/>
+<Name>14</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="23" y="0" z="0"/>
+<Name>9</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="24" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+<Neuron>
+<Position x="24" y="0" z="0"/>
+<Name>3</Name>
+<Type>Tonic</Type>
+<Enabled>True</Enabled>
+<Cn>1e-08</Cn>
+<Gn>1e-07</Gn>
+<Vth>0</Vth>
+<Vrest>0</Vrest>
+<Fmin>0</Fmin>
+<Gain>10</Gain>
+<ExternalI>0</ExternalI>
+<VNoiseMax>1e-05</VNoiseMax>
+<RelativeAccom>0</RelativeAccom>
+<AccomTimeConst>0.03</AccomTimeConst>
+<GainType>True</GainType>
+<Synapses>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="14" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="8" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="13" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="17" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="22" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="2" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="21" y="0" z="0"/>
+<Weight>-1.99293e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="23" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="20" y="0" z="0"/>
+<Weight>-1.14049e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="3" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="9" y="0" z="0"/>
+<Weight>-1.5041e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="11" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="5" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="1" y="0" z="0"/>
+<Weight>-1.74112e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="10" y="0" z="0"/>
+<Weight>-1.94773e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="16" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="4" y="0" z="0"/>
+<Weight>-1.87771e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="0" y="0" z="0"/>
+<Weight>-6.52013e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="7" y="0" z="0"/>
+<Weight>-8.71155e-11</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="18" y="0" z="0"/>
+<Weight>8.53688e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="12" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="6" y="0" z="0"/>
+<Weight>-1.97979e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="19" y="0" z="0"/>
+<Weight>4.56192e-10</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+<Synapse>
+<Enabled>True</Enabled>
+<From x="15" y="0" z="0"/>
+<Weight>-1.99776e-09</Weight>
+<CompoundSynapses/>
+<Type>Regular</Type>
+</Synapse>
+</Synapses>
+<Ih>2e-09</Ih>
+</Neuron>
+</Neurons>
+</NeuralModule>
