@@ -800,6 +800,7 @@ Namespace Framework
 
         Public Overridable Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
                                                        ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal bFullObjectList As Boolean, _
                                                        Optional ByVal bRootObject As Boolean = False)
 
             If m_tnWorkspaceNode Is Nothing AndAlso (bRootObject OrElse (Not bRootObject AndAlso Not doParentNode Is Nothing)) Then

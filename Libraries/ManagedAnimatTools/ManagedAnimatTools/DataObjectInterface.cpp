@@ -152,6 +152,45 @@ System::Boolean DataObjectInterface::SetData(String ^sDataType, String ^sValue, 
 	return false;
 }
 
+
+void DataObjectInterface::QueryProperties(System::Collections::ArrayList ^aryPropertyNames, System::Collections::ArrayList ^aryPropertyTypes)
+{
+	try
+	{
+		if(m_lpBase)
+		{
+			CStdArray<string> aryNames, aryTypes;
+			m_lpBase->QueryProperties(aryNames, aryTypes);
+
+			aryPropertyNames->Clear();
+			aryPropertyTypes->Clear();
+
+			int iCount = aryNames.GetSize();
+			for(int iIdx=0; iIdx<iCount; iIdx++)
+			{
+				System::String^ sName = gcnew String(aryNames[iIdx].c_str());
+				System::String^ sType = gcnew String(aryTypes[iIdx].c_str());
+
+				aryPropertyNames->Add(sName);
+				aryPropertyTypes->Add(sType);
+			}
+		}
+	}
+	catch(CStdErrorInfo oError)
+	{
+		string strError = "An error occurred while attempting to QueryProperties.\nError: " + oError.m_strError;
+		String ^strErrorMessage = gcnew String(strError.c_str());
+		throw gcnew PropertyUpdateException(strErrorMessage);
+	}
+	catch(System::Exception ^ex)
+	{throw ex;}
+	catch(...)
+	{
+		String ^strErrorMessage = "An unknown error occurred while attempting to QueryProperties.";
+		throw gcnew System::Exception(strErrorMessage);
+	}
+}
+
 void DataObjectInterface::SelectItem(bool bVal, bool bSelectMultiple)
 {
 	try
@@ -318,46 +357,94 @@ float DataObjectInterface::GetDataValueImmediate(String ^sData)
 
 float DataObjectInterface::GetBoundingBoxValue(int iIndex)
 {
-	if(m_lpMovable)
+	try
 	{
-		BoundingBox bb = m_lpMovable->GetBoundingBox();
+		if(m_lpMovable)
+		{
+			BoundingBox bb = m_lpMovable->GetBoundingBox();
 
-		if(iIndex == 0 && m_lpRotationX)
-			return bb.Length();
-		else if(iIndex == 1 && m_lpRotationY)
-			return bb.Height();
-		else if(iIndex == 2 && m_lpRotationZ)
-			return bb.Width();
+			if(iIndex == 0 && m_lpRotationX)
+				return bb.Length();
+			else if(iIndex == 1 && m_lpRotationY)
+				return bb.Height();
+			else if(iIndex == 2 && m_lpRotationZ)
+				return bb.Width();
+			else
+				return 0;
+		}
 		else
 			return 0;
 	}
-	else
-		return 0;
+	catch(CStdErrorInfo oError)
+	{
+		string strError = "An error occurred while attempting to call GetBoundingBoxValue.\nError: " + oError.m_strError;
+		String ^strErrorMessage = gcnew String(strError.c_str());
+		throw gcnew PropertyUpdateException(strErrorMessage);
+	}
+	catch(System::Exception ^ex)
+	{throw ex;}
+	catch(...)
+	{
+		String ^strErrorMessage = "An unknown error occurred while attempting to call GetBoundingBoxValue.";
+		throw gcnew System::Exception(strErrorMessage);
+	}
 }
 
 void DataObjectInterface::OrientNewPart(double dblXPos, double dblYPos, double dblZPos, double dblXNorm, double dblYNorm, double dblZNorm)
 {
-	if(m_lpMovable)
-		m_lpMovable->OrientNewPart(dblXPos, dblYPos, dblZPos, dblXNorm, dblYNorm, dblZNorm); 
+	try
+	{
+		if(m_lpMovable)
+			m_lpMovable->OrientNewPart(dblXPos, dblYPos, dblZPos, dblXNorm, dblYNorm, dblZNorm); 
+	}
+	catch(CStdErrorInfo oError)
+	{
+		string strError = "An error occurred while attempting to OrientNewPart.\nError: " + oError.m_strError;
+		String ^strErrorMessage = gcnew String(strError.c_str());
+		throw gcnew PropertyUpdateException(strErrorMessage);
+	}
+	catch(System::Exception ^ex)
+	{throw ex;}
+	catch(...)
+	{
+		String ^strErrorMessage = "An unknown error occurred while attempting to OrientNewPart.";
+		throw gcnew System::Exception(strErrorMessage);
+	}
 }
 
 System::Boolean DataObjectInterface::CalculateLocalPosForWorldPos(double dblXWorldX, double dblWorldY, double dblWorldZ, System::Collections::ArrayList ^aryLocalPos)
 {
-	if(m_lpMovable)
+	try
 	{
-		CStdFPoint vPos;
-		
-		if(m_lpMovable->CalculateLocalPosForWorldPos(dblXWorldX, dblWorldY, dblWorldZ, vPos))
+		if(m_lpMovable)
 		{
-			aryLocalPos->Clear();
-			aryLocalPos->Add(vPos.x);
-			aryLocalPos->Add(vPos.y);
-			aryLocalPos->Add(vPos.z);
-			return true;
+			CStdFPoint vPos;
+		
+			if(m_lpMovable->CalculateLocalPosForWorldPos(dblXWorldX, dblWorldY, dblWorldZ, vPos))
+			{
+				aryLocalPos->Clear();
+				aryLocalPos->Add(vPos.x);
+				aryLocalPos->Add(vPos.y);
+				aryLocalPos->Add(vPos.z);
+				return true;
+			}
 		}
-	}
 
-	return false;
+		return false;
+	}
+	catch(CStdErrorInfo oError)
+	{
+		string strError = "An error occurred while attempting to CalculateLocalPosForWorldPos.\nError: " + oError.m_strError;
+		String ^strErrorMessage = gcnew String(strError.c_str());
+		throw gcnew PropertyUpdateException(strErrorMessage);
+	}
+	catch(System::Exception ^ex)
+	{throw ex;}
+	catch(...)
+	{
+		String ^strErrorMessage = "An unknown error occurred while attempting to CalculateLocalPosForWorldPos.";
+		throw gcnew System::Exception(strErrorMessage);
+	}
 }
 
 void DataObjectInterface::EnableCollisions(String ^sOtherBodyID)

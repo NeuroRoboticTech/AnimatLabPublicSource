@@ -129,20 +129,21 @@ Namespace DataObjects.Physical
 #Region " Workspace TreeView "
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                      ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                      Optional ByVal bRootObject As Boolean = False)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject)
+                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal bFullObjectList As Boolean, _
+                                                       Optional ByVal bRootObject As Boolean = False)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bFullObjectList, bRootObject)
 
             If m_tnBehavioralSystem Is Nothing Then m_tnBehavioralSystem = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Behavioral System", "AnimatGUI.Neuron.gif")
 
-            m_bnRootSubSystem.CreateWorkspaceTreeView(Me, m_tnBehavioralSystem)
+            m_bnRootSubSystem.CreateWorkspaceTreeView(Me, m_tnBehavioralSystem, bFullObjectList)
 
             If m_tnNeuralModules Is Nothing Then m_tnNeuralModules = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Neural Modules", "AnimatGUI.NeuralModules_Treeview.gif")
 
             For Each deEntry As DictionaryEntry In Me.NeuralModules
                 Dim nmModule As Behavior.NeuralModule = DirectCast(deEntry.Value, Behavior.NeuralModule)
                 If Not Util.IsTypeOf(nmModule.GetType, GetType(Behavior.PhysicsModule), False) Then
-                    nmModule.CreateWorkspaceTreeView(Me, m_tnNeuralModules)
+                    nmModule.CreateWorkspaceTreeView(Me, m_tnNeuralModules, bFullObjectList)
                 End If
             Next
             m_tnNeuralModules.CollapseAll()
@@ -579,7 +580,7 @@ Namespace DataObjects.Physical
                 newOrganism.Name = "Organism_" & Util.Environment.NewOrganismCount
                 'newOrganism.LoadBodyPlan(Util.Simulation)
 
-                newOrganism.CreateWorkspaceTreeView(Util.Environment, Util.Environment.OrganismsTreeNode)
+                newOrganism.CreateWorkspaceTreeView(Util.Environment, Util.Environment.OrganismsTreeNode, False)
                 newOrganism.WorkspaceNode.ExpandAll()
                 Util.ProjectWorkspace.TreeView.SelectedNode = newOrganism.WorkspaceNode
                 'newOrganism.CreateFiles()

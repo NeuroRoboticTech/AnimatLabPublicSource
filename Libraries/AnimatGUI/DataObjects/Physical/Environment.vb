@@ -74,6 +74,9 @@ Namespace DataObjects.Physical
         Protected m_tnOrganisms As Crownwood.DotNetMagic.Controls.Node
         Protected m_tnStructures As Crownwood.DotNetMagic.Controls.Node
         Protected m_tnLights As Crownwood.DotNetMagic.Controls.Node
+        Protected m_tnOdorTypes As Crownwood.DotNetMagic.Controls.Node
+        Protected m_tnMaterialTypes As Crownwood.DotNetMagic.Controls.Node
+        Protected m_tnMaterialPairs As Crownwood.DotNetMagic.Controls.Node
 
         Protected m_bAutoGenerateRandomSeed As Boolean = True
         Protected m_iManualRandomSeed As Integer = 12345
@@ -752,11 +755,12 @@ Namespace DataObjects.Physical
 
 
 #Region " Treeview/Menu Methods "
-
+ 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
                                                        ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal bFullObjectList As Boolean, _
                                                        Optional ByVal bRootObject As Boolean = False)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bFullObjectList, bRootObject)
             m_tnWorkspaceNode.Select()
 
             If m_tnOrganisms Is Nothing Then m_tnOrganisms = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Organisms", "AnimatGUI.Organisms.gif")
@@ -766,20 +770,42 @@ Namespace DataObjects.Physical
             Dim doOrganism As DataObjects.Physical.Organism
             For Each deEntry As DictionaryEntry In m_aryOrganisms
                 doOrganism = DirectCast(deEntry.Value, DataObjects.Physical.Organism)
-                doOrganism.CreateWorkspaceTreeView(Me, m_tnOrganisms)
+                doOrganism.CreateWorkspaceTreeView(Me, m_tnOrganisms, bFullObjectList)
             Next
 
             Dim doStructure As DataObjects.Physical.PhysicalStructure
             For Each deEntry As DictionaryEntry In m_aryStructures
                 doStructure = DirectCast(deEntry.Value, DataObjects.Physical.PhysicalStructure)
-                doStructure.CreateWorkspaceTreeView(Me, m_tnStructures)
+                doStructure.CreateWorkspaceTreeView(Me, m_tnStructures, bFullObjectList)
             Next
 
             Dim doLight As DataObjects.Physical.Light
             For Each deEntry As DictionaryEntry In m_aryLights
                 doLight = DirectCast(deEntry.Value, DataObjects.Physical.Light)
-                doLight.CreateWorkspaceTreeView(Me, m_tnLights)
+                doLight.CreateWorkspaceTreeView(Me, m_tnLights, bFullObjectList)
             Next
+
+            If bFullObjectList Then
+                If m_tnOdorTypes Is Nothing Then m_tnOdorTypes = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Odor Types", "AnimatGUI.DefaultObject.gif")
+                Dim doObj As Framework.DataObject
+                For Each deEntry As DictionaryEntry In m_aryOdorTypes
+                    doObj = DirectCast(deEntry.Value, Framework.DataObject)
+                    doObj.CreateWorkspaceTreeView(Me, m_tnOdorTypes, bFullObjectList)
+                Next
+
+                If m_tnMaterialTypes Is Nothing Then m_tnOdorTypes = Util.ProjectWorkspace.AddTreeNode(m_tnMaterialTypes, "Material Types", "AnimatGUI.DefaultObject.gif")
+                For Each deEntry As DictionaryEntry In m_aryMaterialTypes
+                    doObj = DirectCast(deEntry.Value, Framework.DataObject)
+                    doObj.CreateWorkspaceTreeView(Me, m_tnMaterialTypes, bFullObjectList)
+                Next
+
+                If m_tnMaterialPairs Is Nothing Then m_tnMaterialPairs = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Material Pairs", "AnimatGUI.DefaultObject.gif")
+                For Each deEntry As DictionaryEntry In m_aryMaterialPairs
+                    doObj = DirectCast(deEntry.Value, Framework.DataObject)
+                    doObj.CreateWorkspaceTreeView(Me, m_tnMaterialPairs, bFullObjectList)
+                Next
+
+            End If
 
             m_iNewOrganismCount = Util.ExtractIDCount("Organism", m_aryOrganisms)
             m_iNewStructureCount = Util.ExtractIDCount("Structure", m_aryStructures)
@@ -1715,7 +1741,7 @@ Namespace DataObjects.Physical
                 doOrganism.InitializeAfterLoad()
                 Me.Organisms.Add(doOrganism.ID, doOrganism)
 
-                doOrganism.CreateWorkspaceTreeView(Me, m_tnOrganisms)
+                doOrganism.CreateWorkspaceTreeView(Me, m_tnOrganisms, False)
                 doOrganism.WorkspaceNode.ExpandAll()
                 Util.ProjectWorkspace.TreeView.SelectedNode = doOrganism.WorkspaceNode
 
@@ -1735,7 +1761,7 @@ Namespace DataObjects.Physical
                 doStructure.InitializeAfterLoad()
                 Me.Structures.Add(doStructure.ID, doStructure)
 
-                doStructure.CreateWorkspaceTreeView(Me, m_tnStructures)
+                doStructure.CreateWorkspaceTreeView(Me, m_tnStructures, False)
                 doStructure.SelectItem()
 
             Catch ex As System.Exception
@@ -1753,7 +1779,7 @@ Namespace DataObjects.Physical
                 doLight.Name = "Light_" & m_iNewLightCount
                 Me.Lights.Add(doLight.ID, doLight)
 
-                doLight.CreateWorkspaceTreeView(Me, m_tnStructures)
+                doLight.CreateWorkspaceTreeView(Me, m_tnStructures, False)
                 doLight.SelectItem()
 
             Catch ex As System.Exception

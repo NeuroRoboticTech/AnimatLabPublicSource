@@ -37,6 +37,8 @@ Namespace DataObjects.Behavior.Neurons
 
         Protected m_aryIonChannels As Collections.IonChannels
 
+        Protected m_tnIonChannels As Crownwood.DotNetMagic.Controls.Node
+
 #End Region
 
 #Region " Properties "
@@ -499,6 +501,25 @@ Namespace DataObjects.Behavior.Neurons
             Return doObject
 
         End Function
+
+        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As AnimatGUI.Framework.DataObject, _
+                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal bFullObjectList As Boolean, _
+                                                       Optional ByVal bRootObject As Boolean = False)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject, bFullObjectList)
+
+            If bFullObjectList Then
+                If Not m_atCaActivation Is Nothing Then m_atCaActivation.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, False, bFullObjectList)
+                If Not m_atCaDeactivation Is Nothing Then m_atCaDeactivation.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, False, bFullObjectList)
+
+                If m_tnIonChannels Is Nothing Then m_tnIonChannels = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Ion Channels", "AnimatGUI.DefaultObject.gif")
+                Dim doObj As AnimatGUI.Framework.DataObject
+                For Each deEntry As DictionaryEntry In m_aryIonChannels
+                    doObj = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
+                    doObj.CreateWorkspaceTreeView(Me, m_tnIonChannels, False, bFullObjectList)
+                Next
+            End If
+        End Sub
 
         'Public Overrides Sub SaveDataColumnToXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 

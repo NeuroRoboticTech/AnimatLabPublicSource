@@ -31,6 +31,8 @@ Namespace DataObjects.Physical
         Protected m_iNewBodyIndex As Integer = 0
         Protected m_iNewJointIndex As Integer = 0
 
+        Protected m_tnCollisionPairs As Crownwood.DotNetMagic.Controls.Node
+
         Protected m_aryCollisionExclusionPairs As New Collections.CollisionPairs(Me)
 
 #End Region
@@ -333,7 +335,7 @@ Namespace DataObjects.Physical
             End If
 
             If Not m_dbRoot Is Nothing Then
-                m_dbRoot.CreateWorkspaceTreeView(Me, m_tnBodyPlanNode)
+                m_dbRoot.CreateWorkspaceTreeView(Me, m_tnBodyPlanNode, False)
             End If
 
             m_dbRoot.AfterAddToList(False, True)
@@ -499,9 +501,10 @@ Namespace DataObjects.Physical
 #Region " Workspace TreeView "
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                      ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                      Optional ByVal bRootObject As Boolean = False)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject)
+                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal bFullObjectList As Boolean, _
+                                                       Optional ByVal bRootObject As Boolean = False)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bFullObjectList, bRootObject)
 
             If m_tnBodyPlanNode Is Nothing Then
                 m_tnBodyPlanNode = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Body Plan", "AnimatGUI.Joint.gif")
@@ -509,9 +512,15 @@ Namespace DataObjects.Physical
             End If
 
             If Not m_dbRoot Is Nothing Then
-                m_dbRoot.CreateWorkspaceTreeView(Me, m_tnBodyPlanNode)
+                m_dbRoot.CreateWorkspaceTreeView(Me, m_tnBodyPlanNode, bFullObjectList)
             End If
 
+            If bFullObjectList Then
+                If m_tnCollisionPairs Is Nothing Then m_tnCollisionPairs = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Collision Pairs", "AnimatGUI.DefaultObject.gif")
+                For Each doObj As Framework.DataObject In m_aryCollisionExclusionPairs
+                    doObj.CreateWorkspaceTreeView(Me, m_tnCollisionPairs, bFullObjectList, False)
+                Next
+            End If
         End Sub
 
         Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As Point) As Boolean

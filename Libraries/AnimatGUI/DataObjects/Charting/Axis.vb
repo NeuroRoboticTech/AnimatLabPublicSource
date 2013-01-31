@@ -285,13 +285,14 @@ Namespace DataObjects.Charting
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
                                                        ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal bFullObjectList As Boolean, _
                                                        Optional ByVal bRootObject As Boolean = False)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bFullObjectList, bRootObject)
 
             Dim doColumn As DataObjects.Charting.DataColumn
             For Each deEntry As DictionaryEntry In m_aryDataColumns
                 doColumn = DirectCast(deEntry.Value, DataObjects.Charting.DataColumn)
-                doColumn.CreateWorkspaceTreeView(Me, Me.WorkspaceNode)
+                doColumn.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, bFullObjectList)
             Next
         End Sub
 

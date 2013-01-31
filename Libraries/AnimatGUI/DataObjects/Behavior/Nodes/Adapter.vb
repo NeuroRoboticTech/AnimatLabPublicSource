@@ -347,6 +347,26 @@ Namespace DataObjects.Behavior.Nodes
             Return True
         End Function
 
+        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
+                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal bFullObjectList As Boolean, _
+                                                       Optional ByVal bRootObject As Boolean = False)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject, bFullObjectList)
+
+            If bFullObjectList AndAlso Not m_gnGain Is Nothing Then
+                m_gnGain.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, False, bFullObjectList)
+            End If
+        End Sub
+
+        Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject
+
+            Dim doObject As AnimatGUI.Framework.DataObject = MyBase.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_gnGain Is Nothing Then doObject = m_gnGain.FindObjectByID(strID)
+
+            Return doObject
+
+        End Function
+
 #Region " Add-Remove to List Methods "
 
         Public Overrides Sub AddToSim(ByVal bThrowError As Boolean, Optional ByVal bDoNotInit As Boolean = False)

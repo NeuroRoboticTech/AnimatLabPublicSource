@@ -152,6 +152,28 @@ Namespace DataObjects.Physical.Bodies
             End If
         End Sub
 
+        Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject
+
+            Dim doObject As AnimatGUI.Framework.DataObject = MyBase.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_StimTension Is Nothing Then doObject = m_StimTension.FindObjectByID(strID)
+            If doObject Is Nothing AndAlso Not m_LengthTension Is Nothing Then doObject = m_LengthTension.FindObjectByID(strID)
+
+            Return doObject
+
+        End Function
+
+        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
+                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal bFullObjectList As Boolean, _
+                                                       Optional ByVal bRootObject As Boolean = False)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject, bFullObjectList)
+
+            If bFullObjectList Then
+                If Not m_StimTension Is Nothing Then m_StimTension.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, False, bFullObjectList)
+                If Not m_LengthTension Is Nothing Then m_LengthTension.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, False, bFullObjectList)
+            End If
+        End Sub
+
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 

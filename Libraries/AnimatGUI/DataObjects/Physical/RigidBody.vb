@@ -39,6 +39,8 @@ Namespace DataObjects.Physical
         Protected m_fltMagnus As Single = 0
         Protected m_bEnableFluids As Boolean = False
 
+        Protected m_tnOdorSources As Crownwood.DotNetMagic.Controls.Node
+
         Protected m_aryOdorSources As New Collections.SortedOdors(Me)
 
         Protected m_bFoodSource As Boolean = False
@@ -641,22 +643,36 @@ Namespace DataObjects.Physical
         End Function
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                      ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                      Optional ByVal bRootObject As Boolean = False)
+                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal bFullObjectList As Boolean, _
+                                                       Optional ByVal bRootObject As Boolean = False)
 
             Dim tnParent As Crownwood.DotNetMagic.Controls.Node = doParentNode
             If Not m_JointToParent Is Nothing Then
-                m_JointToParent.CreateWorkspaceTreeView(Me, doParentNode)
+                m_JointToParent.CreateWorkspaceTreeView(Me, doParentNode, bFullObjectList)
                 tnParent = m_JointToParent.WorkspaceNode
             End If
 
-            MyBase.CreateWorkspaceTreeView(doParent, tnParent, bRootObject)
+            MyBase.CreateWorkspaceTreeView(doParent, tnParent, bFullObjectList, bRootObject)
 
             Dim dbChild As AnimatGUI.DataObjects.Physical.RigidBody
             For Each deEntry As DictionaryEntry In m_aryChildBodies
                 dbChild = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Physical.RigidBody)
-                dbChild.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
+                dbChild.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode, bFullObjectList)
             Next
+
+            If bFullObjectList Then
+                If Not m_doReceptiveFieldSensor Is Nothing Then m_doReceptiveFieldSensor.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, bFullObjectList, False)
+                If Not m_aryOdorSources Is Nothing Then
+                    If m_tnOdorSources Is Nothing Then m_tnOdorSources = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Odor Sources", "AnimatGUI.DefaultObject.gif")
+                    Dim doObj As Framework.DataObject
+                    For Each deEntry As DictionaryEntry In m_aryOdorSources
+                        doObj = DirectCast(deEntry.Value, Framework.DataObject)
+                        doObj.CreateWorkspaceTreeView(Me, m_tnOdorSources, bFullObjectList, False)
+                    Next
+
+                End If
+            End If
 
         End Sub
 
@@ -1411,7 +1427,7 @@ Namespace DataObjects.Physical
 
             Dim doStruct As AnimatGUI.DataObjects.Physical.PhysicalStructure = Me.ParentStructure
             If Not rbChildBody Is Nothing AndAlso Not m_tnWorkspaceNode Is Nothing Then
-                rbChildBody.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
+                rbChildBody.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode, False)
             End If
 
             Util.Application.AddPartToolStripButton.Checked = False

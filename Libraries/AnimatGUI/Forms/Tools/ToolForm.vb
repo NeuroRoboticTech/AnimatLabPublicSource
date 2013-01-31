@@ -160,7 +160,7 @@ Namespace Forms.Tools
                 If doTool.ToolFormID = Me.ID Then
                     doTool.ToolForm = Me
                     Me.ToolHolder = doTool
-                    CreateWorkspaceTreeView(m_doToolHolder, m_doToolHolder.WorkspaceNode)
+                    CreateWorkspaceTreeView(m_doToolHolder, m_doToolHolder.WorkspaceNode, False)
                     Return
                 End If
             Next

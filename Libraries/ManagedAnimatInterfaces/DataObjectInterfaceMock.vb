@@ -93,6 +93,10 @@ Public Class DataObjectInterfaceMock
         Return False
     End Function
 
+    Public Sub QueryProperties(ByVal aryPropertyNames As System.Collections.ArrayList, ByVal aryPropertyTypes As System.Collections.ArrayList) Implements IDataObjectInterface.QueryProperties
+
+    End Sub
+
     Public Property WorldPosition(iIndex As Integer) As Single Implements IDataObjectInterface.WorldPosition
         Get
             Return 0

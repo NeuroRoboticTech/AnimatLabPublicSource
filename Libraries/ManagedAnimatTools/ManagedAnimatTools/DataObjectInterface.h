@@ -108,6 +108,7 @@ namespace AnimatGUI
 		#pragma region Methods
 
 			virtual System::Boolean SetData(String ^sDataType, String ^sValue, System::Boolean bThrowError);
+			virtual void QueryProperties(System::Collections::ArrayList ^aryPropertyNames, System::Collections::ArrayList ^aryPropertyTypes);
 			virtual void SelectItem(bool bVal, bool bSelectMultiple);
 
 			virtual void GetDataPointer(String ^sData);

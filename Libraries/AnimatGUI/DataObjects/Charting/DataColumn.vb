@@ -105,7 +105,7 @@ Namespace DataObjects.Charting
 
                     If Not m_doParent Is Nothing AndAlso Not m_doParent.WorkspaceNode Is Nothing Then
                         Me.RemoveWorksapceTreeView()
-                        Me.CreateWorkspaceTreeView(m_doParent, m_doParent.WorkspaceNode)
+                        Me.CreateWorkspaceTreeView(m_doParent, m_doParent.WorkspaceNode, False)
                     End If
                 Else
                     m_strName = Value

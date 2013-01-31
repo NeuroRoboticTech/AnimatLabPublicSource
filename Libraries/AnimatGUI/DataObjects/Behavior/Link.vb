@@ -840,7 +840,7 @@ Namespace DataObjects.Behavior
 
         Public Overrides Sub AddWorkspaceTreeNode()
             If Not Me.Destination Is Nothing AndAlso Not Me.Destination.WorkspaceNode Is Nothing Then
-                CreateWorkspaceTreeView(Me.Destination, Me.Destination.WorkspaceNode)
+                CreateWorkspaceTreeView(Me.Destination, Me.Destination.WorkspaceNode, False)
             End If
         End Sub
 

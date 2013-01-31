@@ -27,6 +27,10 @@ Namespace DataObjects.Physical
 
         Protected m_aryPairInfo As ArrayList
 
+        Protected m_tnFieldPairs As Crownwood.DotNetMagic.Controls.Node
+        Protected m_tnFields As Crownwood.DotNetMagic.Controls.Node
+        Protected m_tnAdapters As Crownwood.DotNetMagic.Controls.Node
+
         Protected m_bAddedInitialFieldPairs As Boolean = False
 
 #End Region
@@ -211,6 +215,37 @@ Namespace DataObjects.Physical
             Return doObject
 
         End Function
+
+        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
+                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal bFullObjectList As Boolean, _
+                                                       Optional ByVal bRootObject As Boolean = False)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject, bFullObjectList)
+
+            If bFullObjectList Then
+                If Not Not m_gnReceptiveFieldGain Is Nothing Then m_gnReceptiveFieldGain.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, False, bFullObjectList)
+                If Not Not m_gnReceptiveCurrentGain Is Nothing Then m_gnReceptiveCurrentGain.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, False, bFullObjectList)
+
+                If m_tnFieldPairs Is Nothing Then m_tnFieldPairs = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "FieldPairs", "AnimatGUI.DefaultObject.gif")
+                Dim doObj As Framework.DataObject
+                For Each deEntry As DictionaryEntry In m_aryFieldPairs
+                    doObj = DirectCast(deEntry.Value, Framework.DataObject)
+                    doObj.CreateWorkspaceTreeView(Me, m_tnFieldPairs, False, bFullObjectList)
+                Next
+
+                If m_tnFields Is Nothing Then m_tnFields = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Fields", "AnimatGUI.DefaultObject.gif")
+                For Each deEntry As DictionaryEntry In m_aryFields
+                    doObj = DirectCast(deEntry.Value, Framework.DataObject)
+                    doObj.CreateWorkspaceTreeView(Me, m_tnFields, False, bFullObjectList)
+                Next
+
+                If m_tnAdapters Is Nothing Then m_tnAdapters = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Adapters", "AnimatGUI.DefaultObject.gif")
+                For Each deEntry As DictionaryEntry In m_aryAdapters
+                    doObj = DirectCast(deEntry.Value, Framework.DataObject)
+                    doObj.CreateWorkspaceTreeView(Me, m_tnAdapters, False, bFullObjectList)
+                Next
+            End If
+        End Sub
 
         Public Overridable Function AddFieldPair(ByVal doNeuron As DataObjects.Behavior.Nodes.Neuron, ByVal vVertex As Vec3d) As ReceptiveFieldPair
 

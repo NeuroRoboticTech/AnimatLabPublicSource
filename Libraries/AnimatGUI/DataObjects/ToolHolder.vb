@@ -182,11 +182,12 @@ Namespace DataObjects
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
                                                        ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal bFullObjectList As Boolean, _
                                                        Optional ByVal bRootObject As Boolean = False)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bFullObjectList, bRootObject)
 
             If Not m_frmTool Is Nothing Then
-                m_frmTool.CreateWorkspaceTreeView(Me, Me.WorkspaceNode)
+                m_frmTool.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, bFullObjectList)
             End If
         End Sub
 

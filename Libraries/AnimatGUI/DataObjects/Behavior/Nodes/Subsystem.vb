@@ -358,8 +358,9 @@ Namespace DataObjects.Behavior.Nodes
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
                                                        ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal bFullObjectList As Boolean, _
                                                        Optional ByVal bRootObject As Boolean = False)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bFullObjectList, bRootObject)
 
             Dim doData As DataObjects.Behavior.Data
             For Each deEntry As DictionaryEntry In m_aryBehavioralNodes

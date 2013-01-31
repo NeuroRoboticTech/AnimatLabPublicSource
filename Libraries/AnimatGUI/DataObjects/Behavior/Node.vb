@@ -852,14 +852,15 @@ Namespace DataObjects.Behavior
 
         Public Overrides Sub AddWorkspaceTreeNode()
             If Not Me.ParentSubsystem Is Nothing AndAlso Not Me.ParentSubsystem.WorkspaceNode Is Nothing Then
-                CreateWorkspaceTreeView(Me.ParentSubsystem, Me.ParentSubsystem.WorkspaceNode)
+                CreateWorkspaceTreeView(Me.ParentSubsystem, Me.ParentSubsystem.WorkspaceNode, False)
             End If
         End Sub
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
                                                        ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal bFullObjectList As Boolean, _
                                                        Optional ByVal bRootObject As Boolean = False)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bFullObjectList, bRootObject)
 
             'Now add back any links as children
             For Each deEntry As DictionaryEntry In Me.InLinks

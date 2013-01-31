@@ -326,14 +326,15 @@ Namespace Forms.Tools
 #Region " TreeView Methods "
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                        ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                        Optional ByVal bRootObject As Boolean = False)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject)
+                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal bFullObjectList As Boolean, _
+                                                       Optional ByVal bRootObject As Boolean = False)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bFullObjectList, bRootObject)
 
             Dim doAxis As DataObjects.Charting.Axis
             For Each deEntry As DictionaryEntry In m_aryAxisList
                 doAxis = DirectCast(deEntry.Value, DataObjects.Charting.Axis)
-                doAxis.CreateWorkspaceTreeView(Me.FormHelper, Me.WorkspaceNode)
+                doAxis.CreateWorkspaceTreeView(Me.FormHelper, Me.WorkspaceNode, bFullObjectList)
             Next
 
         End Sub
@@ -731,7 +732,7 @@ Namespace Forms.Tools
 
                 Dim doAxis As New AnimatGUI.DataObjects.Charting.Axis(Me)
                 doAxis.Name = strName
-                doAxis.CreateWorkspaceTreeView(Me.FormHelper, Me.WorkspaceNode)
+                doAxis.CreateWorkspaceTreeView(Me.FormHelper, Me.WorkspaceNode, False)
                 doAxis.SelectItem()
 
             Catch ex As System.Exception

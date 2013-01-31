@@ -460,15 +460,16 @@ Namespace DataObjects
         End Function
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                      ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                      Optional ByVal bRootObject As Boolean = False)
+                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal bFullObjectList As Boolean, _
+                                                       Optional ByVal bRootObject As Boolean = False)
 
             Util.Application.WorkspaceImages.ImageList.ImageSize = New Size(25, 25)
             Util.ProjectWorkspace.TreeView.ImageList = Util.Application.WorkspaceImages.ImageList
 
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, True)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, False, True)
 
-            m_doEnvironment.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
+            m_doEnvironment.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode, bFullObjectList)
 
             Dim myAssembly As System.Reflection.Assembly
             myAssembly = System.Reflection.Assembly.Load("AnimatGUI")
@@ -483,13 +484,13 @@ Namespace DataObjects
             Dim doTool As DataObjects.ToolHolder
             For Each deEntry As DictionaryEntry In Util.Simulation.ToolHolders
                 doTool = DirectCast(deEntry.Value, DataObjects.ToolHolder)
-                doTool.CreateWorkspaceTreeView(Me, m_tnToolViewers)
+                doTool.CreateWorkspaceTreeView(Me, m_tnToolViewers, bFullObjectList)
             Next
 
             Dim doStimulus As DataObjects.ExternalStimuli.Stimulus
             For Each deEntry As DictionaryEntry In Util.Simulation.ProjectStimuli
                 doStimulus = DirectCast(deEntry.Value, DataObjects.ExternalStimuli.Stimulus)
-                doStimulus.CreateWorkspaceTreeView(Me, m_tnExternalStimuli)
+                doStimulus.CreateWorkspaceTreeView(Me, m_tnExternalStimuli, bFullObjectList)
             Next
 
         End Sub

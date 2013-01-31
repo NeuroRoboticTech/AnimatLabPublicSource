@@ -544,6 +544,20 @@ Namespace DataObjects.Behavior.Neurons
 
         End Function
 
+        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As AnimatGUI.Framework.DataObject, _
+                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal bFullObjectList As Boolean, _
+                                                       Optional ByVal bRootObject As Boolean = False)
+            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject, bFullObjectList)
+
+            If bFullObjectList Then
+                If Not m_gnMinf Is Nothing Then m_gnMinf.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, False, bFullObjectList)
+                If Not m_gnTm Is Nothing Then m_gnTm.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, False, bFullObjectList)
+                If Not m_gnHinf Is Nothing Then m_gnHinf.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, False, bFullObjectList)
+                If Not m_gnTh Is Nothing Then m_gnTh.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, False, bFullObjectList)
+            End If
+        End Sub
+
 #End Region
 
         Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
