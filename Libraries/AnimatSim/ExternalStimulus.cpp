@@ -86,6 +86,14 @@ BOOL ExternalStimulus::SetData(string strDataType, string strValue, BOOL bThrowE
 	return FALSE;
 }
 
+void ExternalStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	ActivatedItem::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("ValueType");
+	aryTypes.Add("Integer");
+}
+
 BOOL ExternalStimulus::operator<(ActivatedItem *lpItem)
 {
 	ExternalStimulus *lpStimulus = dynamic_cast<ExternalStimulus *>(lpItem);

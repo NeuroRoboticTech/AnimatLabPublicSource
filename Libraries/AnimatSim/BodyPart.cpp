@@ -174,6 +174,12 @@ BOOL BodyPart::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void BodyPart::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Node::QueryProperties(aryNames, aryTypes);
+	MovableItem::QueryProperties(aryNames, aryTypes);
+}
+
 #pragma endregion
 
 /**

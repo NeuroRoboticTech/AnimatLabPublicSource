@@ -592,6 +592,35 @@ BOOL CurrentStimulus::SetData(string strDataType, string strValue, BOOL bThrowEr
 	return FALSE;
 }
 
+void CurrentStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	ExternalStimulus::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("CurrentOn");
+	aryTypes.Add("Float");
+
+	aryNames.Add("CurrentOff");
+	aryTypes.Add("Float");
+
+	aryNames.Add("CurrentBurstOff");
+	aryTypes.Add("Float");
+
+	aryNames.Add("CycleOnDuration");
+	aryTypes.Add("Float");
+
+	aryNames.Add("CycleOffDuration");
+	aryTypes.Add("Float");
+
+	aryNames.Add("BurstOnDuration");
+	aryTypes.Add("Float");
+
+	aryNames.Add("BurstOffDuration");
+	aryTypes.Add("Float");
+
+	aryNames.Add("CurrentEquation");
+	aryTypes.Add("String");
+}
+
 void CurrentStimulus::Load(CStdXml &oXml)
 {
 	ActivatedItem::Load(oXml);

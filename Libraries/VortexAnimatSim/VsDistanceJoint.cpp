@@ -144,6 +144,12 @@ BOOL VsDistanceJoint::SetData(string strDataType, string strValue, BOOL bThrowEr
 	return FALSE;
 }
 
+void VsDistanceJoint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	VsJoint::Physics_QueryProperties(aryNames, aryTypes);
+	Joint::QueryProperties(aryNames, aryTypes);
+}
+
 #pragma endregion
 
 		}		//Joints

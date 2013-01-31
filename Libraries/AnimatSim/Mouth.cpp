@@ -219,6 +219,17 @@ BOOL Mouth::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Mouth::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Sensor::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("StomachID");
+	aryTypes.Add("String");
+
+	aryNames.Add("MinimumFoodRadius");
+	aryTypes.Add("Float");
+}
+
 float *Mouth::GetDataPointer(string strDataType)
 {
 	string strType = Std_CheckString(strDataType);

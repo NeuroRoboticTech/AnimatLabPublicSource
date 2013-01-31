@@ -339,6 +339,33 @@ BOOL Light::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Light::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	AnimatBase::QueryProperties(aryNames, aryTypes);
+	MovableItem::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Enabled");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("Radius");
+	aryTypes.Add("Float");
+
+	aryNames.Add("LatitudeSegments");
+	aryTypes.Add("Integer");
+
+	aryNames.Add("LongtitudeSegments");
+	aryTypes.Add("Integer");
+
+	aryNames.Add("ConstantAttenuation");
+	aryTypes.Add("Float");
+
+	aryNames.Add("LinearAttenuationDistance");
+	aryTypes.Add("Float");
+
+	aryNames.Add("QuadraticAttenuationDistance");
+	aryTypes.Add("Float");
+}
+
 #pragma endregion
 
 void Light::Create()

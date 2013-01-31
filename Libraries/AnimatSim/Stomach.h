@@ -79,8 +79,9 @@ namespace AnimatSim
 
 				//Node Overrides
 				virtual void AddExternalNodeInput(float fltInput);
-				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
 				virtual float *GetDataPointer(string strDataType);
+				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 				virtual void StepSimulation();
 				virtual void ResetSimulation();
 				virtual void Load(CStdXml &oXml);

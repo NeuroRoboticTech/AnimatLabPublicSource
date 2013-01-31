@@ -220,6 +220,20 @@ BOOL Spring::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Spring::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	LineBase::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("NaturalLength");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Stiffness");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Damping");
+	aryTypes.Add("Float");
+}
+
 void Spring::Load(CStdXml &oXml)
 {
 	if(!m_lpParent)

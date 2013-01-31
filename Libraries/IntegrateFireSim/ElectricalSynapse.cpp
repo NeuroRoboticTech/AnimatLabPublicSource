@@ -161,6 +161,24 @@ BOOL ElectricalSynapse::SetData(string strDataType, string strValue, BOOL bThrow
 
 	return FALSE;
 }
+
+void ElectricalSynapse::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	AnimatBase::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("LowCoupling");
+	aryTypes.Add("Float");
+
+	aryNames.Add("HighCoupling");
+	aryTypes.Add("Float");
+
+	aryNames.Add("TurnOnThreshold");
+	aryTypes.Add("Float");
+
+	aryNames.Add("TurnOnSaturate");
+	aryTypes.Add("Float");
+}
+
 #pragma endregion
 
 void ElectricalSynapse::Load(CStdXml &oXml)

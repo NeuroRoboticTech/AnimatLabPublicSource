@@ -384,6 +384,14 @@ BOOL Adapter::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Adapter::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Node::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Gain");
+	aryTypes.Add("Xml");
+}
+
 void Adapter::Initialize()
 {
 	Node::Initialize();

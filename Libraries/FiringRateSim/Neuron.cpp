@@ -945,6 +945,41 @@ BOOL Neuron::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Neuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Node::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Cm");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Gm");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Vth");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Vrest");
+	aryTypes.Add("Float");
+
+	aryNames.Add("RelativeAccommodation");
+	aryTypes.Add("Float");
+
+	aryNames.Add("AccommodationTimeConstant");
+	aryTypes.Add("Float");
+
+	aryNames.Add("VNoiseMax");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Fmin");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Gain");
+	aryTypes.Add("Float");
+
+	aryNames.Add("GainType");
+	aryTypes.Add("Boolean");
+}
+
 BOOL Neuron::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);

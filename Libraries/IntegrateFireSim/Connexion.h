@@ -36,6 +36,7 @@ namespace IntegrateFireSim
 
 			virtual void ResetSimulation();
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 			virtual float *GetDataPointer(string strDataType);
 			
 			virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure,  AnimatSim::Behavior::NeuralModule *lpModule, Node *lpNode, BOOL bVerify);

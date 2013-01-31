@@ -175,6 +175,17 @@ BOOL FluidPlane::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void FluidPlane::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Plane::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Velocity");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Gravity");
+	aryTypes.Add("Float");
+}
+
 void FluidPlane::Load(CStdXml &oXml)
 {
 	Plane::Load(oXml);

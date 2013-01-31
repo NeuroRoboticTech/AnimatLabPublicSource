@@ -1448,7 +1448,7 @@ BOOL IntegrateFireNeuralModule::SetData(string strDataType, string strValue, BOO
 {
 	string strType = Std_CheckString(strDataType);
 			
-	if(AnimatBase::SetData(strDataType, strValue, FALSE))
+	if(NeuralModule::SetData(strDataType, strValue, FALSE))
 		return TRUE;
 
 	if(strType == "TIMESTEP")
@@ -1501,7 +1501,7 @@ BOOL IntegrateFireNeuralModule::SetData(string strDataType, string strValue, BOO
 
 	if(strType == "FREEZEHEBB")
 	{
-		FreezeHebb(atof(strValue.c_str()));
+		FreezeHebb(Std_ToBool(strValue));
 		return TRUE;
 	}
 
@@ -1540,6 +1540,53 @@ BOOL IntegrateFireNeuralModule::SetData(string strDataType, string strValue, BOO
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
 	return FALSE;
+}
+
+void IntegrateFireNeuralModule::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	NeuralModule::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("TimeStep");
+	aryTypes.Add("Float");
+
+	aryNames.Add("TTX");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("Cd");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("HH");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("RetainHebbMemory");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("UseCriticalPeriod");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("StartCriticalPeriod");
+	aryTypes.Add("Float");
+
+	aryNames.Add("EndCriticalPeriod");
+	aryTypes.Add("Float");
+
+	aryNames.Add("FreezeHebb");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("SpikePeak");
+	aryTypes.Add("Float");
+
+	aryNames.Add("SpikeStrength");
+	aryTypes.Add("Float");
+
+	aryNames.Add("CaEquilPot");
+	aryTypes.Add("Float");
+
+	aryNames.Add("AbsoluteRefr");
+	aryTypes.Add("Float");
+
+	aryNames.Add("AHPEquilPot");
+	aryTypes.Add("Float");
 }
 
 /**

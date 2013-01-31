@@ -161,6 +161,24 @@ BOOL NonSpikingChemicalSynapse::SetData(string strDataType, string strValue, BOO
 
 	return FALSE;
 }
+
+void NonSpikingChemicalSynapse::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	AnimatBase::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("EquilibriumPotential");
+	aryTypes.Add("Float");
+
+	aryNames.Add("MaxSynapticConductance");
+	aryTypes.Add("Float");
+
+	aryNames.Add("PreSynapticThreshold");
+	aryTypes.Add("Float");
+
+	aryNames.Add("PreSynapticSaturationLevel");
+	aryTypes.Add("Float");
+}
+
 #pragma endregion
 
 void NonSpikingChemicalSynapse::Load(CStdXml &oXml)

@@ -624,6 +624,23 @@ BOOL LinearHillMuscle::SetData(string strDataType, string strValue, BOOL bThrowE
 	return FALSE;
 }
 
+void LinearHillMuscle::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	MuscleBase::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Kse");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Kpe");
+	aryTypes.Add("Float");
+
+	aryNames.Add("B");
+	aryTypes.Add("Float");
+
+	aryNames.Add("IbDischarge");
+	aryTypes.Add("Float");
+}
+
 void LinearHillMuscle::Load(CStdXml &oXml)
 {
 	MuscleBase::Load(oXml);

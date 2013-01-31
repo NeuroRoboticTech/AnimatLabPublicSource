@@ -754,6 +754,21 @@ BOOL Connexion::SetData(string strDataType, string strValue, BOOL bThrowError)
 
 	return FALSE;
 }
+
+void Connexion::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Link::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("SynapticConductance");
+	aryTypes.Add("Float");
+
+	aryNames.Add("ConductionDelay");
+	aryTypes.Add("Float");
+
+	aryNames.Add("SynapseTypeID");
+	aryTypes.Add("String");
+}
+
 #pragma endregion
 
 

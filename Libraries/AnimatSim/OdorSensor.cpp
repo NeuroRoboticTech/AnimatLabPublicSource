@@ -133,6 +133,14 @@ BOOL OdorSensor::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void OdorSensor::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Sensor::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("OdorTypeID");
+	aryTypes.Add("String");
+}
+
 float *OdorSensor::GetDataPointer(string strDataType)
 {
 	string strType = Std_CheckString(strDataType);

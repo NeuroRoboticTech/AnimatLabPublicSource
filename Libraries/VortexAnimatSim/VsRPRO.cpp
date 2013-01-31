@@ -144,6 +144,12 @@ BOOL VsRPRO::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void VsRPRO::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	VsJoint::Physics_QueryProperties(aryNames, aryTypes);
+	RPRO::QueryProperties(aryNames, aryTypes);
+}
+
 #pragma endregion
 
 		}		//Joints

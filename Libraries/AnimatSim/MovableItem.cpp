@@ -1229,12 +1229,48 @@ BOOL MovableItem::SetData(string strDataType, string strValue, BOOL bThrowError)
 		return true;
 	}
 
+	if(strDataType == "POSITION.X")
+	{
+		Position(atof(strValue.c_str()), m_oReportPosition.y, m_oReportPosition.z);
+		return true;
+	}
+
+	if(strDataType == "POSITION.Y")
+	{
+		Position(m_oReportPosition.x, atof(strValue.c_str()), m_oReportPosition.z);
+		return true;
+	}
+
+	if(strDataType == "POSITION.Z")
+	{
+		Position(m_oReportPosition.x, m_oReportPosition.y, atof(strValue.c_str()));
+		return true;
+	}
+
 	if(strDataType == "ROTATION")
 	{
 		Rotation(strValue);
 		return true;
 	}
 
+	if(strDataType == "ROTATION.X")
+	{
+		Rotation(atof(strValue.c_str()), m_oReportRotation.y, m_oReportRotation.z);
+		return true;
+	}
+
+	if(strDataType == "ROTATION.Y")
+	{
+		Rotation(m_oReportRotation.x, atof(strValue.c_str()), m_oReportRotation.z);
+		return true;
+	}
+
+	if(strDataType == "ROTATION.Z")
+	{
+		Rotation(m_oReportRotation.x, m_oReportRotation.y, atof(strValue.c_str()));
+		return true;
+	}
+	
 	if(strDataType == "VISIBLE")
 	{
 		IsVisible(Std_ToBool(strValue));
@@ -1276,16 +1312,100 @@ BOOL MovableItem::SetData(string strDataType, string strValue, BOOL bThrowError)
 		Ambient(strValue);
 		return TRUE;
 	}
+
+	if(strDataType == "AMBIENT.RED")
+	{
+		float aryVal[4] = {atof(strValue.c_str()), m_vAmbient.g(), m_vAmbient.b(), m_vAmbient.a()};
+		Ambient(aryVal);
+		return TRUE;
+	}
+
+	if(strDataType == "AMBIENT.GREEN")
+	{
+		float aryVal[4] = {m_vAmbient.r(), atof(strValue.c_str()), m_vAmbient.b(), m_vAmbient.a()};
+		Ambient(aryVal);
+		return TRUE;
+	}
+
+	if(strDataType == "AMBIENT.BLUE")
+	{
+		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), atof(strValue.c_str()), m_vAmbient.a()};
+		Ambient(aryVal);
+		return TRUE;
+	}
+
+	if(strDataType == "AMBIENT.ALPHA")
+	{
+		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), m_vAmbient.b(), atof(strValue.c_str())};
+		Ambient(aryVal);
+		return TRUE;
+	}
 	
 	if(strDataType == "DIFFUSE")
 	{
 		Diffuse(strValue);
 		return TRUE;
 	}
+
+	if(strDataType == "DIFFUSE.RED")
+	{
+		float aryVal[4] = {atof(strValue.c_str()), m_vAmbient.g(), m_vAmbient.b(), m_vAmbient.a()};
+		Diffuse(aryVal);
+		return TRUE;
+	}
+
+	if(strDataType == "DIFFUSE.GREEN")
+	{
+		float aryVal[4] = {m_vAmbient.r(), atof(strValue.c_str()), m_vAmbient.b(), m_vAmbient.a()};
+		Diffuse(aryVal);
+		return TRUE;
+	}
+
+	if(strDataType == "DIFFUSE.BLUE")
+	{
+		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), atof(strValue.c_str()), m_vAmbient.a()};
+		Diffuse(aryVal);
+		return TRUE;
+	}
+
+	if(strDataType == "DIFFUSE.ALPHA")
+	{
+		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), m_vAmbient.b(), atof(strValue.c_str())};
+		Diffuse(aryVal);
+		return TRUE;
+	}
 	
 	if(strDataType == "SPECULAR")
 	{
 		Specular(strValue);
+		return TRUE;
+	}
+
+	if(strDataType == "SPECULAR.RED")
+	{
+		float aryVal[4] = {atof(strValue.c_str()), m_vAmbient.g(), m_vAmbient.b(), m_vAmbient.a()};
+		Specular(aryVal);
+		return TRUE;
+	}
+
+	if(strDataType == "SPECULAR.GREEN")
+	{
+		float aryVal[4] = {m_vAmbient.r(), atof(strValue.c_str()), m_vAmbient.b(), m_vAmbient.a()};
+		Specular(aryVal);
+		return TRUE;
+	}
+
+	if(strDataType == "SPECULAR.BLUE")
+	{
+		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), atof(strValue.c_str()), m_vAmbient.a()};
+		Specular(aryVal);
+		return TRUE;
+	}
+
+	if(strDataType == "SPECULAR.ALPHA")
+	{
+		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), m_vAmbient.b(), atof(strValue.c_str())};
+		Specular(aryVal);
 		return TRUE;
 	}
 	
@@ -1312,6 +1432,106 @@ BOOL MovableItem::SetData(string strDataType, string strValue, BOOL bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
 	return FALSE;
+}
+
+void MovableItem::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	aryNames.Add("Position");
+	aryTypes.Add("Xml");
+
+	aryNames.Add("Position.X");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Position.Y");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Position.Z");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Rotation");
+	aryTypes.Add("Xml");
+
+	aryNames.Add("Rotation.X");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Rotation.Y");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Rotation.Z");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Visible");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("GraphicsAlpha");
+	aryTypes.Add("Float");
+
+	aryNames.Add("CollisionAlpha");
+	aryTypes.Add("Float");
+
+	aryNames.Add("JointsAlpha");
+	aryTypes.Add("Float");
+
+	aryNames.Add("ReceptiveFieldsAlpha");
+	aryTypes.Add("Float");
+
+	aryNames.Add("SimulationAlpha");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Ambient");
+	aryTypes.Add("Xml");
+
+	aryNames.Add("Ambient.Red");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Ambient.Green");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Ambient.Blue");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Ambient.Alpha");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Diffuse");
+	aryTypes.Add("Xml");
+
+	aryNames.Add("Diffuse.Red");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Diffuse.Green");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Diffuse.Blue");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Diffuse.Alpha");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Specular");
+	aryTypes.Add("Xml");
+
+	aryNames.Add("Specular.Red");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Specular.Green");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Specular.Blue");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Specular.Alpha");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Shininess");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Texture");
+	aryTypes.Add("String");
+
+	aryNames.Add("DraggerRadius");
+	aryTypes.Add("Float");
+
 }
 
 #pragma endregion

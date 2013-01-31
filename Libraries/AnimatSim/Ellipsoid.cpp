@@ -182,6 +182,23 @@ BOOL Ellipsoid::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Ellipsoid::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	RigidBody::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("MajorRadius");
+	aryTypes.Add("Float");
+
+	aryNames.Add("MinorRadius");
+	aryTypes.Add("Float");
+
+	aryNames.Add("LatitudeSegments");
+	aryTypes.Add("Integer");
+
+	aryNames.Add("LongtitudeSegments");
+	aryTypes.Add("Integer");
+}
+
 void Ellipsoid::Load(CStdXml &oXml)
 {
 	RigidBody::Load(oXml);

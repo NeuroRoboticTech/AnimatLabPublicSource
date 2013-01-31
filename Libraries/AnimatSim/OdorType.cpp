@@ -188,6 +188,14 @@ BOOL OdorType::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void OdorType::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	AnimatBase::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("DiffusionConstant");
+	aryTypes.Add("Float");
+}
+
 void OdorType::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);

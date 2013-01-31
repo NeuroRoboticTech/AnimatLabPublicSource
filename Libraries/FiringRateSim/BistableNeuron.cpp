@@ -196,6 +196,20 @@ BOOL BistableNeuron::SetData(string strDataType, string strValue, BOOL bThrowErr
 	return FALSE;
 }
 
+void BistableNeuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Neuron::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Vsth");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Il");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Ih");
+	aryTypes.Add("Float");
+}
+
 #pragma endregion
 
 void BistableNeuron::Load(CStdXml &oXml)

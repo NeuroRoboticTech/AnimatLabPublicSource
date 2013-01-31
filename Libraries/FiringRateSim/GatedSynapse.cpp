@@ -102,6 +102,14 @@ BOOL GatedSynapse::SetData(string strDataType, string strValue, BOOL bThrowError
 	return FALSE;
 }
 
+void GatedSynapse::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Synapse::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("GateInitiallyOn");
+	aryTypes.Add("Boolean");
+}
+
 #pragma endregion
 
 void GatedSynapse::Load(CStdXml &oXml)

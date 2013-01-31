@@ -282,6 +282,14 @@ BOOL Synapse::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Synapse::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Link::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Weight");
+	aryTypes.Add("Float");
+}
+
 BOOL Synapse::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);

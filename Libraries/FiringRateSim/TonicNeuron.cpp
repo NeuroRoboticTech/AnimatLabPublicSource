@@ -96,6 +96,14 @@ BOOL TonicNeuron::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void TonicNeuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Neuron::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Ih");
+	aryTypes.Add("Float");
+}
+
 #pragma endregion
 
 void TonicNeuron::Load(CStdXml &oXml)

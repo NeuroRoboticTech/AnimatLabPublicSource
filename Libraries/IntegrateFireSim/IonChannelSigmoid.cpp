@@ -115,6 +115,35 @@ BOOL IonChannelSigmoid::SetData(string strDataType, string strValue, BOOL bThrow
 	return FALSE;
 }
 
+void IonChannelSigmoid::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Gain::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("A");
+	aryTypes.Add("Float");
+
+	aryNames.Add("B");
+	aryTypes.Add("Float");
+
+	aryNames.Add("C");
+	aryTypes.Add("Float");
+
+	aryNames.Add("D");
+	aryTypes.Add("Float");
+
+	aryNames.Add("E");
+	aryTypes.Add("Float");
+
+	aryNames.Add("F");
+	aryTypes.Add("Float");
+
+	aryNames.Add("G");
+	aryTypes.Add("Float");
+
+	aryNames.Add("H");
+	aryTypes.Add("Float");
+}
+
 void IonChannelSigmoid::Load(CStdXml &oXml)
 {
 	Gain::Load(oXml);

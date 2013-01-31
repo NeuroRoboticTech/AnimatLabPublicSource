@@ -165,4 +165,12 @@ BOOL Node::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Node::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	AnimatBase::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Enabled");
+	aryTypes.Add("Boolean");
+}
+
 }			//AnimatSim

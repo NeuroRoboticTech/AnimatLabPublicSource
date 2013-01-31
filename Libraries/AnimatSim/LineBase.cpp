@@ -259,6 +259,20 @@ BOOL LineBase::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void LineBase::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	RigidBody::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("AttachmentPoints");
+	aryTypes.Add("Xml");
+
+	aryNames.Add("Enabled");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("AttachedPartMovedOrRotated");
+	aryTypes.Add("String");
+}
+
 #pragma endregion
 
 /**

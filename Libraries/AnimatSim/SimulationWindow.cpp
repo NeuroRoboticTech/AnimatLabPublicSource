@@ -214,6 +214,20 @@ BOOL SimulationWindow::SetData(string strDataType, string strValue, BOOL bThrowE
 	return FALSE;
 }
 
+void SimulationWindow::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	AnimatBase::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("LookAtStructureID");
+	aryTypes.Add("String");
+
+	aryNames.Add("LookAtBodyID");
+	aryTypes.Add("String");
+
+	aryNames.Add("TrackCamera");
+	aryTypes.Add("Boolean");
+}
+
 #pragma endregion
 
 /**

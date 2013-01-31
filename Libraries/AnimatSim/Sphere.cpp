@@ -158,6 +158,20 @@ BOOL Sphere::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Sphere::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	RigidBody::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Radius");
+	aryTypes.Add("Float");
+
+	aryNames.Add("LatitudeSegments");
+	aryTypes.Add("Integer");
+
+	aryNames.Add("LongtitudeSegments");
+	aryTypes.Add("Integer");
+}
+
 void Sphere::Load(CStdXml &oXml)
 {
 	RigidBody::Load(oXml);

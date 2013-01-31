@@ -322,6 +322,29 @@ BOOL ConstraintLimit::SetData(string strDataType, string strValue, BOOL bThrowEr
 	return FALSE;
 }
 
+void ConstraintLimit::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	AnimatBase::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("LimitPos");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Damping");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Restitution");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Stiffness");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Color");
+	aryTypes.Add("Xml");
+
+	aryNames.Add("Alpha");
+	aryTypes.Add("Float");
+}
+
 #pragma endregion
 
 /**

@@ -217,6 +217,14 @@ BOOL VoltageClamp::SetData(string strDataType, string strValue, BOOL bThrowError
 	return FALSE;
 }
 
+void VoltageClamp::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	ExternalStimulus::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Vtarget");
+	aryTypes.Add("Float");
+}
+
 void VoltageClamp::Load(CStdXml &oXml)
 {
 	ActivatedItem::Load(oXml);

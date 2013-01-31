@@ -194,6 +194,14 @@ BOOL FiringRateModule::SetData(string strDataType, string strValue, BOOL bThrowE
 	return FALSE;
 }
 
+void FiringRateModule::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	NeuralModule::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("TimeStep");
+	aryTypes.Add("Float");
+}
+
 /**
 \brief	Adds a neuron to the module. 
 

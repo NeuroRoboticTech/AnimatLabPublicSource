@@ -89,6 +89,7 @@ namespace AnimatSim
 
 			virtual float *GetDataPointer(string strDataType);
 			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 			virtual void AddExternalNodeInput(float fltInput);
 			virtual void ResetSimulation();

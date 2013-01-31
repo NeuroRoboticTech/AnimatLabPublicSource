@@ -1488,6 +1488,44 @@ BOOL Neuron::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Neuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Node::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("RestingPotential");
+	aryTypes.Add("Float");
+
+	aryNames.Add("RelativeSize");
+	aryTypes.Add("Float");
+
+	aryNames.Add("TimeConstant");
+	aryTypes.Add("Float");
+
+	aryNames.Add("InitialThreshold");
+	aryTypes.Add("Float");
+
+	aryNames.Add("RelativeAccomodation");
+	aryTypes.Add("Float");
+
+	aryNames.Add("AccomodationTimeConstant");
+	aryTypes.Add("Float");
+
+	aryNames.Add("AHP_Conductance");
+	aryTypes.Add("Float");
+
+	aryNames.Add("AHP_TimeConstant");
+	aryTypes.Add("Float");
+
+	aryNames.Add("MaxCAConductance");
+	aryTypes.Add("Float");
+
+	aryNames.Add("TonicStimulus");
+	aryTypes.Add("Float");
+
+	aryNames.Add("TonicNoise");
+	aryTypes.Add("Float");
+}
+
 /**
 \brief	Adds an ion channel from an xml packet definition. 
 

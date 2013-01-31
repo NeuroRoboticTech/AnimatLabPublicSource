@@ -259,6 +259,20 @@ BOOL Plane::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Plane::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	RigidBody::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Size");
+	aryTypes.Add("Float");
+
+	aryNames.Add("LengthSegments");
+	aryTypes.Add("Integer");
+
+	aryNames.Add("WidthSegments");
+	aryTypes.Add("Integer");
+}
+
 void Plane::Load(CStdXml &oXml)
 {
 	RigidBody::Load(oXml);

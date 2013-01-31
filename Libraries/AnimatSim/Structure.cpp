@@ -514,6 +514,12 @@ BOOL Structure::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Structure::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	AnimatBase::QueryProperties(aryNames, aryTypes);
+	MovableItem::QueryProperties(aryNames, aryTypes);
+}
+
 BOOL Structure::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);

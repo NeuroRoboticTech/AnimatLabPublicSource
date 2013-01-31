@@ -277,11 +277,58 @@ BOOL Mesh::SetData(string strDataType, string strValue, BOOL bThrowError)
 		return TRUE;
 	}
 
+	if(strType == "SCALE.X")
+	{
+		Scale(atof(strValue.c_str()), m_vScale.y, m_vScale.z);
+		return TRUE;
+	}
+
+	if(strType == "SCALE.Y")
+	{
+		Scale(m_vScale.x, atof(strValue.c_str()), m_vScale.z);
+		return TRUE;
+	}
+
+	if(strType == "SCALE.Z")
+	{
+		Scale(m_vScale.x, m_vScale.y, atof(strValue.c_str()));
+		return TRUE;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
 	return FALSE;
+}
+
+void Mesh::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	RigidBody::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("MeshFile");
+	aryTypes.Add("String");
+
+	aryNames.Add("MeshType");
+	aryTypes.Add("String");
+
+	aryNames.Add("ConvexMeshFile");
+	aryTypes.Add("String");
+
+	aryNames.Add("SetMeshFile");
+	aryTypes.Add("Xml");
+
+	aryNames.Add("Scale");
+	aryTypes.Add("Xml");
+
+	aryNames.Add("Scale.X");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Scale.Y");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Scale.Z");
+	aryTypes.Add("Float");
 }
 
 void Mesh::Load(CStdXml &oXml)

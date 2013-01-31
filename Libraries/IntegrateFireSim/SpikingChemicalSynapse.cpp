@@ -633,6 +633,60 @@ BOOL SpikingChemicalSynapse::SetData(string strDataType, string strValue, BOOL b
 
 	return FALSE;
 }
+
+void SpikingChemicalSynapse::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	AnimatBase::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("EquilibriumPotential");
+	aryTypes.Add("Float");
+
+	aryNames.Add("SynapticConductance");
+	aryTypes.Add("Float");
+
+	aryNames.Add("DecayRate");
+	aryTypes.Add("Float");
+
+	aryNames.Add("RelativeFacilitation");
+	aryTypes.Add("Float");
+
+	aryNames.Add("FacilitationDecay");
+	aryTypes.Add("Float");
+
+	aryNames.Add("VoltageDependent");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("MaxRelativeConductance");
+	aryTypes.Add("Float");
+
+	aryNames.Add("SaturatePotential");
+	aryTypes.Add("Float");
+
+	aryNames.Add("ThresholdPotential");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Hebbian");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("MaxAugmentedConductance");
+	aryTypes.Add("Float");
+
+	aryNames.Add("LearningIncrement");
+	aryTypes.Add("Float");
+
+	aryNames.Add("LearningTimeWindow");
+	aryTypes.Add("Float");
+
+	aryNames.Add("AllowForgetting");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("ForgettingTimeWindow");
+	aryTypes.Add("Float");
+
+	aryNames.Add("ConsolidationFactor");
+	aryTypes.Add("Float");
+}
+
 #pragma endregion
 
 void SpikingChemicalSynapse::Load(CStdXml &oXml)

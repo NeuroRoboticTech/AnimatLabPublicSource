@@ -349,6 +349,27 @@ BOOL AnimatBase::SetData(string strDataType, string strValue, BOOL bThrowError)
 }
 
 /**
+\brief	Queries this object for a list of properties that can be changed using SetData.
+
+\details The method provides a list of the properties that can be set using the SetData method.
+It gives the property name and the type of data that should be passed to it. Valid date types
+are Boolean, Float, Integer, and Xml.
+
+\author	dcofer
+\date	2/22/2011
+
+\param	aryNames	Array list of the property names. 
+\param	strTypes	Array list of the type that is associated with the cooresponding name in the list. 
+
+\return	Nothing. 
+**/
+void AnimatBase::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	aryNames.Add("Name");
+	aryTypes.Add("String");
+}
+
+/**
 \brief	Adds a new object to this parent.
 
 \details Generic method to add a new child item to this parent by specifying a string item type

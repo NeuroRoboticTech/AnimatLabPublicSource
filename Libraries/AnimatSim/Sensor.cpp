@@ -136,6 +136,20 @@ BOOL Sensor::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Sensor::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	RigidBody::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Radius");
+	aryTypes.Add("Float");
+
+	aryNames.Add("LatitudeSegments");
+	aryTypes.Add("Integer");
+
+	aryNames.Add("LongtitudeSegments");
+	aryTypes.Add("Integer");
+}
+
 void Sensor::Initialize() 
 {}
 

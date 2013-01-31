@@ -165,7 +165,7 @@ BOOL Torus::SetData(string strDataType, string strValue, BOOL bThrowError)
 
 	if(strType == "SIDES")
 	{
-		Sides(atof(strValue.c_str()));
+		Sides(atoi(strValue.c_str()));
 		return TRUE;
 	}
 
@@ -180,6 +180,23 @@ BOOL Torus::SetData(string strDataType, string strValue, BOOL bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
 	return FALSE;
+}
+
+void Torus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	RigidBody::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("OutsideRadius");
+	aryTypes.Add("Float");
+
+	aryNames.Add("InsideRadius");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Sides");
+	aryTypes.Add("Integer");
+
+	aryNames.Add("Rings");
+	aryTypes.Add("Integer");
 }
 
 void Torus::Load(CStdXml &oXml)

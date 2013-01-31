@@ -218,6 +218,14 @@ BOOL ExternalInputStimulus::SetData(string strDataType, string strValue, BOOL bT
 	return FALSE;
 }
 
+void ExternalInputStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	ExternalStimulus::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("InputEquation");
+	aryTypes.Add("String");
+}
+
 void ExternalInputStimulus::Load(CStdXml &oXml)
 {
 	ActivatedItem::Load(oXml);

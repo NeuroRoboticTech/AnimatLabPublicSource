@@ -120,6 +120,14 @@ BOOL EquationGain::SetData(string strDataType, string strValue, BOOL bThrowError
 	return FALSE;
 }
 
+void EquationGain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Gain::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Equation");
+	aryTypes.Add("String");
+}
+
 void EquationGain::Load(CStdXml &oXml)
 {
 	Gain::Load(oXml);

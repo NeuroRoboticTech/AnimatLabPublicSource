@@ -191,6 +191,23 @@ BOOL LengthTensionGain::SetData(string strDataType, string strValue, BOOL bThrow
 	return FALSE;
 }
 
+void LengthTensionGain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Gain::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("RestingLength");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Lwidth");
+	aryTypes.Add("Float");
+
+	aryNames.Add("PeLengthPercentage");
+	aryTypes.Add("Float");
+
+	aryNames.Add("MinPeLengthPercentage");
+	aryTypes.Add("Float");
+}
+
 void LengthTensionGain::Load(CStdXml &oXml)
 {
 	Gain::Load(oXml);

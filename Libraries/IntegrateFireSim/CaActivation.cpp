@@ -78,6 +78,20 @@ BOOL CaActivation::SetData(string strDataType, string strValue, BOOL bThrowError
 	return FALSE;
 }
 
+void CaActivation::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	AnimatBase::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Midpoint");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Slope");
+	aryTypes.Add("Float");
+
+	aryNames.Add("TimeConstant");
+	aryTypes.Add("Float");
+}
+
 void CaActivation::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);

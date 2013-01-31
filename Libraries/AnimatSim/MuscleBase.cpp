@@ -312,6 +312,20 @@ BOOL MuscleBase::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void MuscleBase::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	LineBase::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("MaxTension");
+	aryTypes.Add("Float");
+
+	aryNames.Add("StimTension");
+	aryTypes.Add("Xml");
+
+	aryNames.Add("LengthTension");
+	aryTypes.Add("Xml");
+}
+
 #pragma endregion
 
 void MuscleBase::Load(CStdXml &oXml)

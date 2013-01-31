@@ -429,6 +429,23 @@ BOOL RandomNeuron::SetData(string strDataType, string strValue, BOOL bThrowError
 	return FALSE;
 }
 
+void RandomNeuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Neuron::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Il");
+	aryTypes.Add("Float");
+
+	aryNames.Add("CurrentDistribution");
+	aryTypes.Add("Xml");
+
+	aryNames.Add("BurstLengthDistribution");
+	aryTypes.Add("Xml");
+
+	aryNames.Add("InterbusrtLengthDistribution");
+	aryTypes.Add("Xml");
+}
+
 #pragma endregion
 
 void RandomNeuron::Load(CStdXml &oXml)

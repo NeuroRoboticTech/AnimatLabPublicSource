@@ -136,6 +136,14 @@ BOOL PhysicsNeuralModule::SetData(string strDataType, string strValue, BOOL bThr
 	return FALSE;
 }
 
+void PhysicsNeuralModule::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	NeuralModule::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("TimeStep");
+	aryTypes.Add("Float");
+}
+
 void PhysicsNeuralModule::AddAdapter(string strXml, BOOL bDoNotInit)
 {
 	CStdXml oXml;

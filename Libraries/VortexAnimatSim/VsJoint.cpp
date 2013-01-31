@@ -406,5 +406,9 @@ BOOL VsJoint::Physics_SetData(string strDataType, string strValue)
 	return FALSE;
 }
 
+void VsJoint::Physics_QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+}
+
 	}			// Environment
 }				//VortexAnimatSim

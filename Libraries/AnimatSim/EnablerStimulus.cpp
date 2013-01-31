@@ -171,6 +171,14 @@ BOOL EnablerStimulus::SetData(string strDataType, string strValue, BOOL bThrowEr
 	return FALSE;
 }
 
+void EnablerStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	ExternalStimulus::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("EnableWhenActive");
+	aryTypes.Add("Boolean");
+}
+
 void EnablerStimulus::Load(CStdXml &oXml)
 {
 	ActivatedItem::Load(oXml);

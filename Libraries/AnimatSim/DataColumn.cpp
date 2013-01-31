@@ -285,6 +285,17 @@ BOOL DataColumn::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void DataColumn::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	AnimatBase::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("ColumnIndex");
+	aryTypes.Add("Integer");
+
+	aryNames.Add("DataType");
+	aryTypes.Add("String");
+}
+
 /**
 \brief	Saves this DataColumn name to the out stream for the file.
 

@@ -147,6 +147,20 @@ BOOL Cylinder::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Cylinder::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	RigidBody::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Radius");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Height");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Sides");
+	aryTypes.Add("Float");
+}
+
 void Cylinder::Load(CStdXml &oXml)
 {
 	RigidBody::Load(oXml);

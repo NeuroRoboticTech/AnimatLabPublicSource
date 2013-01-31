@@ -370,6 +370,38 @@ BOOL VsForceStimulus::SetData(string strDataType, string strValue, BOOL bThrowEr
 	return FALSE;
 }
 
+void VsForceStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	ExternalStimulus::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("PositionX");
+	aryTypes.Add("Float");
+
+	aryNames.Add("PositionY");
+	aryTypes.Add("Float");
+
+	aryNames.Add("PositionZ");
+	aryTypes.Add("Float");
+
+	aryNames.Add("ForceX");
+	aryTypes.Add("Float");
+
+	aryNames.Add("ForceY");
+	aryTypes.Add("Float");
+
+	aryNames.Add("ForceZ");
+	aryTypes.Add("Float");
+
+	aryNames.Add("TorqueX");
+	aryTypes.Add("Float");
+
+	aryNames.Add("TorqueY");
+	aryTypes.Add("Float");
+
+	aryNames.Add("TorqueZ");
+	aryTypes.Add("Float");
+}
+
 void VsForceStimulus::Load(CStdXml &oXml)
 {
 	ActivatedItem::Load(oXml);

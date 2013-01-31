@@ -142,6 +142,7 @@ namespace IntegrateFireSim
 
 		virtual float *GetDataPointer(string strDataType);
 		virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+		virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 
 #pragma endregion
 

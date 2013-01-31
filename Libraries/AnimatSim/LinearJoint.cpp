@@ -115,6 +115,14 @@ BOOL LinearJoint::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void LinearJoint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Joint::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("LinearType");
+	aryTypes.Add("String");
+}
+
 #pragma endregion
 
 void LinearJoint::Load(CStdXml &oXml)

@@ -642,6 +642,41 @@ BOOL MaterialPair::SetData(string strDataType, string strValue, BOOL bThrowError
 	return FALSE;
 }
 
+void MaterialPair::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	AnimatBase::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("FrictionPrimary");
+	aryTypes.Add("Float");
+
+	aryNames.Add("FrictionSecondary");
+	aryTypes.Add("Float");
+
+	aryNames.Add("MaxFrictionPrimary");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Compliance");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Damping");
+	aryTypes.Add("Float");
+
+	aryNames.Add("PrimarySlip");
+	aryTypes.Add("Float");
+
+	aryNames.Add("SecondarySlip");
+	aryTypes.Add("Float");
+
+	aryNames.Add("PrimarySlide");
+	aryTypes.Add("Float");
+
+	aryNames.Add("SecondarySlide");
+	aryTypes.Add("Float");
+
+	aryNames.Add("MaxAdhesion");
+	aryTypes.Add("Float");
+}
+
 void MaterialPair::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);

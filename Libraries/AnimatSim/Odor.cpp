@@ -206,6 +206,17 @@ BOOL Odor::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Odor::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	AnimatBase::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Quantity");
+	aryTypes.Add("Float");
+
+	aryNames.Add("UseFoodQuantity");
+	aryTypes.Add("Boolean");
+}
+
 void Odor::Load(CStdXml &oXml)
 {
 	AnimatBase::Load(oXml);

@@ -264,6 +264,29 @@ BOOL Box::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Box::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	RigidBody::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Length");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Width");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Height");
+	aryTypes.Add("Float");
+
+	aryNames.Add("LengthSections");
+	aryTypes.Add("Integer");
+
+	aryNames.Add("WidthSections");
+	aryTypes.Add("Integer");
+
+	aryNames.Add("HeightSections");
+	aryTypes.Add("Integer");
+}
+
 void Box::Load(CStdXml &oXml)
 {
 	RigidBody::Load(oXml);

@@ -150,4 +150,12 @@ BOOL Link::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Link::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	AnimatBase::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Enabled");
+	aryTypes.Add("Boolean");
+}
+
 }			//AnimatSim

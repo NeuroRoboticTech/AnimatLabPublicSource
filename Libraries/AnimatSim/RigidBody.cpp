@@ -1212,6 +1212,24 @@ BOOL RigidBody::SetData(string strDataType, string strValue, BOOL bThrowError)
 		return true;
 	}
 
+	if(strDataType == "DRAG.X")
+	{
+		Drag(atof(strValue.c_str()), m_vDrag.y, m_vDrag.z);
+		return true;
+	}
+
+	if(strDataType == "DRAG.Y")
+	{
+		Drag(m_vDrag.x, atof(strValue.c_str()), m_vDrag.z);
+		return true;
+	}
+
+	if(strDataType == "DRAG.Z")
+	{
+		Drag(m_vDrag.x, m_vDrag.y, atof(strValue.c_str()));
+		return true;
+	}
+
 	if(strType == "MAGNUS")
 	{
 		Magnus(atof(strValue.c_str()));
@@ -1235,6 +1253,62 @@ BOOL RigidBody::SetData(string strDataType, string strValue, BOOL bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
 	return FALSE;
+}
+
+void RigidBody::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	BodyPart::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Freeze");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("Density");
+	aryTypes.Add("Float");
+
+	aryNames.Add("CenterOfMass");
+	aryTypes.Add("Xml");
+
+	aryNames.Add("FoodSource");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("FoodQuantity");
+	aryTypes.Add("Float");
+
+	aryNames.Add("MaxFoodQuantity");
+	aryTypes.Add("Float");
+
+	aryNames.Add("FoodReplenishRate");
+	aryTypes.Add("Float");
+
+	aryNames.Add("FoodEnergyContent");
+	aryTypes.Add("Float");
+
+	aryNames.Add("BuoyancyCenter");
+	aryTypes.Add("Xml");
+
+	aryNames.Add("BuoyancyScale");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Drag");
+	aryTypes.Add("Xml");
+
+	aryNames.Add("Drag.X");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Drag.Y");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Drag.Z");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Magnus");
+	aryTypes.Add("Float");
+
+	aryNames.Add("EnableFluids");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("MaterialID");
+	aryTypes.Add("String");
 }
 
 BOOL RigidBody::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)

@@ -375,7 +375,7 @@ BOOL MotorizedJoint::SetData(string strDataType, string strValue, BOOL bThrowErr
 
 	if(strType == "SERVOMOTOR")
 	{
-		Size(Std_ToBool(strValue));
+		ServoMotor(Std_ToBool(strValue));
 		return true;
 	}
 	
@@ -403,6 +403,27 @@ BOOL MotorizedJoint::SetData(string strDataType, string strValue, BOOL bThrowErr
 
 	return FALSE;
 }
+
+void MotorizedJoint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Joint::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("EnableMotor");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("ServoMotor");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("ServoGain");
+	aryTypes.Add("Float");
+
+	aryNames.Add("MaxForce");
+	aryTypes.Add("Float");
+
+	aryNames.Add("MaxVelocity");
+	aryTypes.Add("Float");
+}
+
 void MotorizedJoint::Load(CStdXml &oXml)
 {
 	Joint::Load(oXml);

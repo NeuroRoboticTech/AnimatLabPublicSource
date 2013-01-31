@@ -340,6 +340,12 @@ BOOL VsHinge::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void VsHinge::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	VsJoint::Physics_QueryProperties(aryNames, aryTypes);
+	Hinge::QueryProperties(aryNames, aryTypes);
+}
+
 #pragma endregion
 
 void VsHinge::StepSimulation()

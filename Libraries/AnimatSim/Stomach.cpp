@@ -286,6 +286,23 @@ BOOL Stomach::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Stomach::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	RigidBody::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("KillOrganism");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("EnergyLevel");
+	aryTypes.Add("Float");
+
+	aryNames.Add("MaxEnergyLevel");
+	aryTypes.Add("Float");
+
+	aryNames.Add("BaseConsumptionRate");
+	aryTypes.Add("Float");
+}
+
 float *Stomach::GetDataPointer(string strDataType)
 {
 	string strType = Std_CheckString(strDataType);

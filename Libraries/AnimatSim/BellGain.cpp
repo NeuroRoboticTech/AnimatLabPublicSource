@@ -181,6 +181,23 @@ BOOL BellGain::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void BellGain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Gain::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("A");
+	aryTypes.Add("Float");
+
+	aryNames.Add("B");
+	aryTypes.Add("Float");
+
+	aryNames.Add("C");
+	aryTypes.Add("Float");
+
+	aryNames.Add("D");
+	aryTypes.Add("Float");
+}
+
 void BellGain::Load(CStdXml &oXml)
 {
 	Gain::Load(oXml);

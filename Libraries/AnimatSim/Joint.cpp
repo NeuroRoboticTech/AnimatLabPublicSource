@@ -306,6 +306,17 @@ BOOL Joint::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Joint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	BodyPart::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("EnableLimits");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("Size");
+	aryTypes.Add("Float");
+}
+
 void Joint::AddExternalNodeInput(float fltInput) {}
 
 void Joint::ResetSimulation()

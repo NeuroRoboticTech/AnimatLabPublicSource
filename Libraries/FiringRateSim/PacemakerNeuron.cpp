@@ -404,6 +404,29 @@ BOOL PacemakerNeuron::SetData(string strDataType, string strValue, BOOL bThrowEr
 	return FALSE;
 }
 
+void PacemakerNeuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Neuron::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Vssm");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Btl");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Mtl");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Th");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Il");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Ih");
+	aryTypes.Add("Float");
+}
+
 #pragma endregion
 
 void PacemakerNeuron::SaveKeyFrameSnapshot(byte *aryBytes, long &lIndex)

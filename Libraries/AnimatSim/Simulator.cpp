@@ -4158,6 +4158,30 @@ BOOL Simulator::SetData(string strDataType, string strValue, BOOL bThrowError)
 		BackgroundColor(strValue);
 		return TRUE;
 	}
+	else if(strDataType == "BACKGROUNDCOLOR.RED")
+	{
+		float aryVal[4] = {atof(strValue.c_str()), m_vBackgroundColor.g(), m_vBackgroundColor.b(), m_vBackgroundColor.a()};
+		BackgroundColor(aryVal);
+		return TRUE;
+	}
+	else if(strDataType == "BACKGROUNDCOLOR.GREEN")
+	{
+		float aryVal[4] = {m_vBackgroundColor.r(), atof(strValue.c_str()), m_vBackgroundColor.b(), m_vBackgroundColor.a()};
+		BackgroundColor(aryVal);
+		return TRUE;
+	}
+	else if(strDataType == "BACKGROUNDCOLOR.BLUE")
+	{
+		float aryVal[4] = {m_vBackgroundColor.r(), m_vBackgroundColor.g(), atof(strValue.c_str()), m_vBackgroundColor.a()};
+		BackgroundColor(aryVal);
+		return TRUE;
+	}
+	else if(strDataType == "BACKGROUNDCOLOR.ALPHA")
+	{
+		float aryVal[4] = {m_vBackgroundColor.r(), m_vBackgroundColor.g(), m_vBackgroundColor.b(), atof(strValue.c_str())};
+		BackgroundColor(aryVal);
+		return TRUE;
+	}
 	else if(strDataType == "TIMESTEPMODIFIED")
 	{
 		NotifyTimeStepModified();
@@ -4178,6 +4202,101 @@ BOOL Simulator::SetData(string strDataType, string strValue, BOOL bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
 
 	return FALSE;
+}
+
+void Simulator::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	AnimatBase::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("VisualSelectionMode");
+	aryTypes.Add("Integer");
+
+	aryNames.Add("AddBodiesMode");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("DistanceUnits");
+	aryTypes.Add("String");
+
+	aryNames.Add("MassUnits");
+	aryTypes.Add("String");
+
+	aryNames.Add("Gravity");
+	aryTypes.Add("Float");
+
+	aryNames.Add("PhysicsTimeStep");
+	aryTypes.Add("Float");
+
+	aryNames.Add("SimulateHydrodynamics");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("AutoGenerateRandomSeed");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("ManualRandomSeed");
+	aryTypes.Add("Integer");
+
+	aryNames.Add("FrameRate");
+	aryTypes.Add("Integer");
+
+	aryNames.Add("ForceFastMoving");
+	aryTypes.Add("Integer");
+
+	aryNames.Add("MouseSpringStiffness");
+	aryTypes.Add("Float");
+
+	aryNames.Add("MouseSpringDamping");
+	aryTypes.Add("Float");
+
+	aryNames.Add("CalcCriticalSimParams");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("LinearCompliance");
+	aryTypes.Add("Float");
+
+	aryNames.Add("AngularCompliance");
+	aryTypes.Add("Float");
+
+	aryNames.Add("LinearDamping");
+	aryTypes.Add("Float");
+
+	aryNames.Add("AngularDamping");
+	aryTypes.Add("Float");
+
+	aryNames.Add("LinearKineticLoss");
+	aryTypes.Add("Float");
+
+	aryNames.Add("AngularKineticLoss");
+	aryTypes.Add("Float");
+
+	aryNames.Add("SetEndSimTime");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("EndSimTime");
+	aryTypes.Add("Float");
+
+	aryNames.Add("RecFieldSelRadius");
+	aryTypes.Add("Float");
+
+	aryNames.Add("BackgroundColor");
+	aryTypes.Add("Xml");
+
+	aryNames.Add("BackgroundColor.Red");
+	aryTypes.Add("Float");
+
+	aryNames.Add("BackgroundColor.Blue");
+	aryTypes.Add("Float");
+
+	aryNames.Add("BackgroundColor.Green");
+	aryTypes.Add("Float");
+
+	aryNames.Add("BackgroundColor.Alpha");
+	aryTypes.Add("Float");
+
+	aryNames.Add("PlaybackControlMode");
+	aryTypes.Add("Integer");
+
+	aryNames.Add("PresetPlaybackTimeStep");
+	aryTypes.Add("Float");
 }
 
 BOOL Simulator::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)

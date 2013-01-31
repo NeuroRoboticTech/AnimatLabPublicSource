@@ -201,6 +201,20 @@ BOOL VsMotorVelocityStimulus::SetData(string strDataType, string strValue, BOOL 
 	return FALSE;
 }
 
+void VsMotorVelocityStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	ExternalStimulus::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("Velocity");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Equation");
+	aryTypes.Add("String");
+
+	aryNames.Add("DisableMotorWhenDone");
+	aryTypes.Add("Boolean");
+}
+
 void VsMotorVelocityStimulus::Load(CStdXml &oXml)
 {
 	ActivatedItem::Load(oXml);

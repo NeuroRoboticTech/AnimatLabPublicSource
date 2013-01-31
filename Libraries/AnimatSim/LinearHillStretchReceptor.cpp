@@ -229,6 +229,20 @@ BOOL LinearHillStretchReceptor::SetData(string strDataType, string strValue, BOO
 	return FALSE;
 }
 
+void LinearHillStretchReceptor::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	LinearHillMuscle::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("ApplyTension");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("IaDischarge");
+	aryTypes.Add("Float");
+
+	aryNames.Add("IIDischarge");
+	aryTypes.Add("Float");
+}
+
 void LinearHillStretchReceptor::Load(CStdXml &oXml)
 {
 	LinearHillMuscle::Load(oXml);

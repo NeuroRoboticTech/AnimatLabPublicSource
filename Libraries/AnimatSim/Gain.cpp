@@ -215,6 +215,26 @@ BOOL Gain::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Gain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	AnimatBase::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("AnimatBase");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("LowerLimit");
+	aryTypes.Add("Float");
+
+	aryNames.Add("LowerOutput");
+	aryTypes.Add("Float");
+
+	aryNames.Add("UpperLimit");
+	aryTypes.Add("Float");
+
+	aryNames.Add("UpperOutput");
+	aryTypes.Add("Float");
+}
+
 /**
 \brief	Sets the Upper output. 
 

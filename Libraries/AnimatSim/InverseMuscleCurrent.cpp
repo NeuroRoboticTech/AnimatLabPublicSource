@@ -310,6 +310,22 @@ BOOL InverseMuscleCurrent::SetData(string strDataType, string strValue, BOOL bTh
 	return FALSE;
 }
 
+void InverseMuscleCurrent::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	ExternalStimulus::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("RestPotential");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Conductance");
+	aryTypes.Add("Float");
+
+	aryNames.Add("MuscleID");
+	aryTypes.Add("String");
+
+	aryNames.Add("MuscleLengthData");
+	aryTypes.Add("String");
+}
 
 void InverseMuscleCurrent::Load(CStdXml &oXml)
 {		

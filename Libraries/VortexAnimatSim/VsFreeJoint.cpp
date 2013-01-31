@@ -86,6 +86,12 @@ BOOL VsFreeJoint::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void VsFreeJoint::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	VsJoint::Physics_QueryProperties(aryNames, aryTypes);
+	BallSocket::QueryProperties(aryNames, aryTypes);
+}
+
 #pragma endregion
 
 		}		//Joints

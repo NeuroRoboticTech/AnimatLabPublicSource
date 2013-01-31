@@ -680,6 +680,26 @@ BOOL DataChart::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void DataChart::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	ActivatedItem::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("StartTime");
+	aryTypes.Add("Float");
+
+	aryNames.Add("EndTime");
+	aryTypes.Add("Float");
+
+	aryNames.Add("SetStartEndTime");
+	aryTypes.Add("Boolean");
+
+	aryNames.Add("CollectTimeWindow");
+	aryTypes.Add("Float");
+
+	aryNames.Add("CollectInterval");
+	aryTypes.Add("Float");
+}
+
 BOOL DataChart::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);

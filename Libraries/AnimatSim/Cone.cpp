@@ -174,6 +174,23 @@ BOOL Cone::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Cone::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	RigidBody::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("LowerRadius");
+	aryTypes.Add("Float");
+
+	aryNames.Add("UpperRadius");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Height");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Sides");
+	aryTypes.Add("Integer");
+}
+
 void Cone::Load(CStdXml &oXml)
 {
 	RigidBody::Load(oXml);

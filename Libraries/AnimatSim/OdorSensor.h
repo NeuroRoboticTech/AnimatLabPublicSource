@@ -44,6 +44,7 @@ namespace AnimatSim
 
 				virtual void ResetSimulation();
 				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 				virtual float *GetDataPointer(string strDataType);
 				virtual void StepSimulation();
 				virtual void Load(CStdXml &oXml);

@@ -291,6 +291,12 @@ BOOL VsPrismatic::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void VsPrismatic::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	VsJoint::Physics_QueryProperties(aryNames, aryTypes);
+	Prismatic::QueryProperties(aryNames, aryTypes);
+}
+
 #pragma endregion
 
 void VsPrismatic::StepSimulation()

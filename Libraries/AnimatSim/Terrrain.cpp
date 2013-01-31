@@ -147,6 +147,20 @@ BOOL Terrain::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
+void Terrain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+{
+	Mesh::QueryProperties(aryNames, aryTypes);
+
+	aryNames.Add("SegmentWidth");
+	aryTypes.Add("Float");
+
+	aryNames.Add("SegmentLength");
+	aryTypes.Add("Float");
+
+	aryNames.Add("MaxHeight");
+	aryTypes.Add("Float");
+}
+
 void Terrain::Load(CStdXml &oXml)
 {
 	Mesh::Load(oXml);
