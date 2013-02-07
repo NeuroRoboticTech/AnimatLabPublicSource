@@ -1184,6 +1184,10 @@ namespace AnimatGUI
 						BOOL bNoInit = FALSE;
 						if(bDoNotInit) bNoInit=TRUE;
 
+						string strTest = Std_CheckString(strXml);
+						if(strTest == "" || strTest == "<ROOT/>")
+							throw gcnew PropertyUpdateException("No xml provided for adding type '" + sItemType + "' to partID '" + sParentID + "'.");
+
 						//First check to see if this item already exists. If it does then do not attempt to add it again.
 						AnimatBase *lpItem = m_lpSim->FindByID(strID, FALSE);
 

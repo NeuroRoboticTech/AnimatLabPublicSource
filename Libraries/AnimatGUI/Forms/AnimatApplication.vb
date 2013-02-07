@@ -4075,7 +4075,7 @@ Namespace Forms
 
                 doTool.ToolForm = frmAnimat
 
-                doTool.CreateWorkspaceTreeView(Me.Simulation, Me.Simulation.ToolViewersTreeNode, False)
+                doTool.CreateWorkspaceTreeView(Me.Simulation, Me.Simulation.ToolViewersTreeNode)
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
@@ -5946,7 +5946,7 @@ Namespace Forms
                     doHolder.Name = strName
                     doHolder.ToolForm = frmBase
                     Util.Simulation.ToolHolders.Add(doHolder.ID, doHolder)
-                    doHolder.CreateWorkspaceTreeView(DirectCast(Me.Simulation, Framework.DataObject), Me.Simulation.ToolViewersTreeNode, False)
+                    doHolder.CreateWorkspaceTreeView(DirectCast(Me.Simulation, Framework.DataObject), Me.Simulation.ToolViewersTreeNode)
                     doHolder.SelectItem()
 
                     Application.DoEvents()

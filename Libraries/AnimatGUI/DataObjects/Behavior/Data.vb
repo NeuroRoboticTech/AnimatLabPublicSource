@@ -291,12 +291,11 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                       ByVal bFullObjectList As Boolean, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
                                                        Optional ByVal bRootObject As Boolean = False)
 
-            If m_tnWorkspaceNode Is Nothing AndAlso (bRootObject OrElse (Not bRootObject AndAlso Not doParentNode Is Nothing)) Then
-                m_tnWorkspaceNode = Util.ProjectWorkspace.AddTreeNode(doParentNode, Me.ItemName, Me.WorkspaceImageName)
+            If m_tnWorkspaceNode Is Nothing AndAlso (bRootObject OrElse (Not bRootObject AndAlso Not tnParentNode Is Nothing)) Then
+                m_tnWorkspaceNode = Util.ProjectWorkspace.AddTreeNode(tnParentNode, Me.ItemName, Me.WorkspaceImageName)
                 m_tnWorkspaceNode.Tag = Me
 
                 If Me.Enabled Then
@@ -375,7 +374,7 @@ Namespace DataObjects.Behavior
 
 #Region " DataObject Methods "
 
-        Public Overrides Sub BuildProperties(ByRef propTable As AnimatGUICtrls.Controls.PropertyTable)
+        Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
 
         End Sub
 

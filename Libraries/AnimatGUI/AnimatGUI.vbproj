@@ -310,6 +310,8 @@
     <Compile Include="DataObjects\Behavior\Nodes\PhysicalToNodeAdapter.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataObjects\Behavior\Nodes\PropertyControl.vb" />
+    <Compile Include="DataObjects\Behavior\Nodes\PropertyControlAdapter.vb" />
     <Compile Include="DataObjects\Behavior\Nodes\RigidBody.vb" />
     <Compile Include="DataObjects\Behavior\Nodes\StretchReceptor.vb" />
     <Compile Include="DataObjects\Behavior\Nodes\Subsystem.vb">
@@ -766,6 +768,11 @@
     <Compile Include="TypeHelpers\LinkedBodyPartTypeConverter.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TypeHelpers\LinkedDataObject.vb" />
+    <Compile Include="TypeHelpers\LinkedDataObjectPropertiesList.vb" />
+    <Compile Include="TypeHelpers\LinkedDataObjectPropertiesTypeConverter.vb" />
+    <Compile Include="TypeHelpers\LinkedDataObjectTree.vb" />
+    <Compile Include="TypeHelpers\LinkedDataObjectTypeConverter.vb" />
     <Compile Include="TypeHelpers\LinkedMaterialTypeConverter.vb" />
     <Compile Include="TypeHelpers\LinkedMaterialType.vb" />
     <Compile Include="TypeHelpers\LinkedNode.vb">

@@ -162,17 +162,16 @@ Namespace DataObjects.Physical.Bodies
 
         End Function
 
-        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                       ByVal bFullObjectList As Boolean, _
-                                                       Optional ByVal bRootObject As Boolean = False)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject, bFullObjectList)
+        Public Overrides Function CreateObjectListTreeView(ByVal doParent As Framework.DataObject, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal mgrImageList As AnimatGUI.Framework.ImageManager) As Crownwood.DotNetMagic.Controls.Node
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateObjectListTreeView(doParent, tnParentNode, mgrImageList)
 
-            If bFullObjectList Then
-                If Not m_StimTension Is Nothing Then m_StimTension.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, False, bFullObjectList)
-                If Not m_LengthTension Is Nothing Then m_LengthTension.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, False, bFullObjectList)
-            End If
-        End Sub
+            If Not m_StimTension Is Nothing Then m_StimTension.CreateObjectListTreeView(Me, tnNode, mgrImageList)
+            If Not m_LengthTension Is Nothing Then m_LengthTension.CreateObjectListTreeView(Me, tnNode, mgrImageList)
+
+            Return tnNode
+        End Function
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)

@@ -347,16 +347,13 @@ Namespace DataObjects.Behavior.Nodes
             Return True
         End Function
 
-        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                       ByVal bFullObjectList As Boolean, _
-                                                       Optional ByVal bRootObject As Boolean = False)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject, bFullObjectList)
-
-            If bFullObjectList AndAlso Not m_gnGain Is Nothing Then
-                m_gnGain.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, False, bFullObjectList)
-            End If
-        End Sub
+        Public Overrides Function CreateObjectListTreeView(ByVal doParent As Framework.DataObject, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal mgrImageList As AnimatGUI.Framework.ImageManager) As Crownwood.DotNetMagic.Controls.Node
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateObjectListTreeView(doParent, tnParentNode, mgrImageList)
+            m_gnGain.CreateObjectListTreeView(Me, tnNode, mgrImageList)
+            Return tnNode
+        End Function
 
         Public Overrides Function FindObjectByID(ByVal strID As String) As Framework.DataObject
 

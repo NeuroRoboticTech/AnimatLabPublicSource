@@ -27,6 +27,14 @@ Namespace TypeHelpers
                 Return Nothing
             End If
 
+            'Sometimes it passes this to us in a property bag for some reason. If so then extract it.
+            If Not value Is Nothing AndAlso TypeOf (value) Is AnimatGuiCtrls.Controls.PropertyBag Then
+                Dim propBag As AnimatGuiCtrls.Controls.PropertyBag = DirectCast(value, AnimatGuiCtrls.Controls.PropertyBag)
+                If Not propBag.Tag Is Nothing AndAlso TypeOf (propBag.Tag) Is AnimatGUI.Framework.DataObject Then
+                    value = propBag.Tag
+                End If
+            End If
+
             If value Is Nothing OrElse Not TypeOf (value) Is AnimatGUI.Framework.DataObject Then
                 Return MyBase.EditValue(provider, value)
             End If

@@ -1754,6 +1754,33 @@ Namespace Framework
             Return strXml
         End Function
 
+        Public Shared Function AddTreeNode(ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, _
+                                           ByVal strText As String, ByVal strImage As String, Optional ByVal strSelImage As String = "", _
+                                           Optional ByVal mgrImageMgr As Framework.ImageManager = Nothing) As Crownwood.DotNetMagic.Controls.Node
+
+            If Not mgrImageMgr Is Nothing Then
+                mgrImageMgr.AddImage(strImage)
+            End If
+
+            If strSelImage = "" Then
+                strSelImage = strImage
+            ElseIf Not mgrImageMgr Is Nothing Then
+                mgrImageMgr.AddImage(strSelImage)
+            End If
+
+            Dim tnNode As New Crownwood.DotNetMagic.Controls.Node(strText)
+            If Not tnParent Is Nothing Then
+                tnParent.Nodes.Add(tnNode, Not m_bLoadInProgress)
+            End If
+
+            If Not mgrImageMgr Is Nothing Then
+                tnNode.ImageIndex = mgrImageMgr.GetImageIndex(strImage)
+                tnNode.SelectedImageIndex = mgrImageMgr.GetImageIndex(strSelImage)
+            End If
+
+            Return tnNode
+        End Function
+
     End Class
 
 End Namespace

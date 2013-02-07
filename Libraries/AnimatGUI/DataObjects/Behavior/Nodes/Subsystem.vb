@@ -357,10 +357,9 @@ Namespace DataObjects.Behavior.Nodes
         End Sub
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                       ByVal bFullObjectList As Boolean, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
                                                        Optional ByVal bRootObject As Boolean = False)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bFullObjectList, bRootObject)
+            MyBase.CreateWorkspaceTreeView(doParent, tnParentNode, bRootObject)
 
             Dim doData As DataObjects.Behavior.Data
             For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
@@ -369,6 +368,20 @@ Namespace DataObjects.Behavior.Nodes
             Next
 
         End Sub
+
+        Public Overrides Function CreateObjectListTreeView(ByVal doParent As Framework.DataObject, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal mgrImageList As AnimatGUI.Framework.ImageManager) As Crownwood.DotNetMagic.Controls.Node
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateObjectListTreeView(doParent, tnParentNode, mgrImageList)
+
+            Dim doData As DataObjects.Behavior.Data
+            For Each deEntry As DictionaryEntry In m_aryBehavioralNodes
+                doData = DirectCast(deEntry.Value, DataObjects.Behavior.Data)
+                doData.CreateObjectListTreeView(Me, tnNode, mgrImageList)
+            Next
+
+            Return tnNode
+        End Function
 
         Public Overrides Function CreateDataItemTreeView(ByVal frmDataItem As Forms.Tools.SelectDataItem, ByVal tnParent As Crownwood.DotNetMagic.Controls.Node, ByVal tpTemplatePartType As Type) As Crownwood.DotNetMagic.Controls.Node
             Dim tnSubSystem As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateDataItemTreeView(frmDataItem, tnParent, tpTemplatePartType)

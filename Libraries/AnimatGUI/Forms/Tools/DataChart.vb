@@ -326,18 +326,30 @@ Namespace Forms.Tools
 #Region " TreeView Methods "
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                       ByVal bFullObjectList As Boolean, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
                                                        Optional ByVal bRootObject As Boolean = False)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bFullObjectList, bRootObject)
+            MyBase.CreateWorkspaceTreeView(doParent, tnParentNode, bRootObject)
 
             Dim doAxis As DataObjects.Charting.Axis
             For Each deEntry As DictionaryEntry In m_aryAxisList
                 doAxis = DirectCast(deEntry.Value, DataObjects.Charting.Axis)
-                doAxis.CreateWorkspaceTreeView(Me.FormHelper, Me.WorkspaceNode, bFullObjectList)
+                doAxis.CreateWorkspaceTreeView(Me.FormHelper, Me.WorkspaceNode)
             Next
 
         End Sub
+
+        Public Overrides Function CreateObjectListTreeView(ByVal doParent As Framework.DataObject, _
+                                                           ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                           ByVal mgrImageList As AnimatGUI.Framework.ImageManager) As Crownwood.DotNetMagic.Controls.Node
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateObjectListTreeView(doParent, tnParentNode, mgrImageList)
+
+            Dim doAxis As DataObjects.Charting.Axis
+            For Each deEntry As DictionaryEntry In m_aryAxisList
+                doAxis = DirectCast(deEntry.Value, DataObjects.Charting.Axis)
+                doAxis.CreateObjectListTreeView(Me.FormHelper, tnNode, mgrImageList)
+            Next
+
+        End Function
 
         Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As System.Drawing.Point) As Boolean
 
@@ -732,7 +744,7 @@ Namespace Forms.Tools
 
                 Dim doAxis As New AnimatGUI.DataObjects.Charting.Axis(Me)
                 doAxis.Name = strName
-                doAxis.CreateWorkspaceTreeView(Me.FormHelper, Me.WorkspaceNode, False)
+                doAxis.CreateWorkspaceTreeView(Me.FormHelper, Me.WorkspaceNode)
                 doAxis.SelectItem()
 
             Catch ex As System.Exception

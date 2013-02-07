@@ -502,24 +502,25 @@ Namespace DataObjects.Behavior.Neurons
 
         End Function
 
-        Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As AnimatGUI.Framework.DataObject, _
-                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                       ByVal bFullObjectList As Boolean, _
-                                                       Optional ByVal bRootObject As Boolean = False)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bRootObject, bFullObjectList)
+        Public Overrides Function CreateObjectListTreeView(ByVal doParent As AnimatGUI.Framework.DataObject, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal mgrImageList As AnimatGUI.Framework.ImageManager) As Crownwood.DotNetMagic.Controls.Node
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateObjectListTreeView(doParent, tnParentNode, mgrImageList)
 
-            If bFullObjectList Then
-                If Not m_atCaActivation Is Nothing Then m_atCaActivation.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, False, bFullObjectList)
-                If Not m_atCaDeactivation Is Nothing Then m_atCaDeactivation.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, False, bFullObjectList)
+            If Not m_atCaActivation Is Nothing Then m_atCaActivation.CreateObjectListTreeView(Me, tnNode, mgrImageList)
+            If Not m_atCaDeactivation Is Nothing Then m_atCaDeactivation.CreateObjectListTreeView(Me, tnNode, mgrImageList)
 
-                If m_tnIonChannels Is Nothing Then m_tnIonChannels = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Ion Channels", "AnimatGUI.DefaultObject.gif")
+            If m_aryIonChannels.Count > 0 Then
+                Dim tnIonChannels As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Ion Channels", "AnimatGUI.DefaultObject.gif", "", mgrImageList)
                 Dim doObj As AnimatGUI.Framework.DataObject
                 For Each deEntry As DictionaryEntry In m_aryIonChannels
                     doObj = DirectCast(deEntry.Value, AnimatGUI.Framework.DataObject)
-                    doObj.CreateWorkspaceTreeView(Me, m_tnIonChannels, False, bFullObjectList)
+                    doObj.CreateObjectListTreeView(Me, tnIonChannels, mgrImageList)
                 Next
             End If
-        End Sub
+
+            Return tnNode
+        End Function
 
         'Public Overrides Sub SaveDataColumnToXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
 

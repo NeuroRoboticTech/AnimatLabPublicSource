@@ -857,10 +857,9 @@ Namespace DataObjects.Behavior
         End Sub
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                       ByVal bFullObjectList As Boolean, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
                                                        Optional ByVal bRootObject As Boolean = False)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bFullObjectList, bRootObject)
+            MyBase.CreateWorkspaceTreeView(doParent, tnParentNode, bRootObject)
 
             'Now add back any links as children
             For Each deEntry As DictionaryEntry In Me.InLinks
@@ -874,6 +873,27 @@ Namespace DataObjects.Behavior
             Next
 
         End Sub
+
+        Public Overrides Function CreateObjectListTreeView(ByVal doParent As Framework.DataObject, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal mgrImageList As AnimatGUI.Framework.ImageManager) As Crownwood.DotNetMagic.Controls.Node
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateObjectListTreeView(doParent, tnParentNode, mgrImageList)
+
+            'Now add back any links as children
+            Dim tnInLinks As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "InLinks", "AnimatGUI.DefaultObject.gif", "", mgrImageList)
+            For Each deEntry As DictionaryEntry In Me.InLinks
+                Dim blLink As Behavior.Link = DirectCast(deEntry.Value, Behavior.Link)
+                blLink.CreateObjectListTreeView(Me, tnInLinks, mgrImageList)
+            Next
+
+            Dim tnOutLinks As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "OutLinks", "AnimatGUI.DefaultObject.gif", "", mgrImageList)
+            For Each deEntry As DictionaryEntry In Me.OutLinks
+                Dim blLink As Behavior.Link = DirectCast(deEntry.Value, Behavior.Link)
+                blLink.CreateObjectListTreeView(Me, tnOutLinks, mgrImageList)
+            Next
+
+            Return tnNode
+        End Function
 
         Public Overrides Sub RemoveWorksapceTreeView()
 

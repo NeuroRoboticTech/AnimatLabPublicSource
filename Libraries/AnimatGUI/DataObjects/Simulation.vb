@@ -460,16 +460,15 @@ Namespace DataObjects
         End Function
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                       ByVal bFullObjectList As Boolean, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
                                                        Optional ByVal bRootObject As Boolean = False)
 
             Util.Application.WorkspaceImages.ImageList.ImageSize = New Size(25, 25)
             Util.ProjectWorkspace.TreeView.ImageList = Util.Application.WorkspaceImages.ImageList
 
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, False, True)
+            MyBase.CreateWorkspaceTreeView(doParent, tnParentNode, True)
 
-            m_doEnvironment.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode, bFullObjectList)
+            m_doEnvironment.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
 
             Dim myAssembly As System.Reflection.Assembly
             myAssembly = System.Reflection.Assembly.Load("AnimatGUI")
@@ -484,16 +483,47 @@ Namespace DataObjects
             Dim doTool As DataObjects.ToolHolder
             For Each deEntry As DictionaryEntry In Util.Simulation.ToolHolders
                 doTool = DirectCast(deEntry.Value, DataObjects.ToolHolder)
-                doTool.CreateWorkspaceTreeView(Me, m_tnToolViewers, bFullObjectList)
+                doTool.CreateWorkspaceTreeView(Me, m_tnToolViewers)
             Next
 
             Dim doStimulus As DataObjects.ExternalStimuli.Stimulus
             For Each deEntry As DictionaryEntry In Util.Simulation.ProjectStimuli
                 doStimulus = DirectCast(deEntry.Value, DataObjects.ExternalStimuli.Stimulus)
-                doStimulus.CreateWorkspaceTreeView(Me, m_tnExternalStimuli, bFullObjectList)
+                doStimulus.CreateWorkspaceTreeView(Me, m_tnExternalStimuli)
             Next
 
         End Sub
+
+        Public Overrides Function CreateObjectListTreeView(ByVal doParent As Framework.DataObject, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal mgrImageList As AnimatGUI.Framework.ImageManager) As Crownwood.DotNetMagic.Controls.Node
+
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateObjectListTreeView(doParent, tnParentNode, mgrImageList)
+
+            m_doEnvironment.CreateObjectListTreeView(Me, tnNode, mgrImageList)
+
+            Dim myAssembly As System.Reflection.Assembly
+            myAssembly = System.Reflection.Assembly.Load("AnimatGUI")
+
+            Dim tnToolViewers As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(Nothing, "Tool Viewers", "AnimatGUI.Toolbox.gif", "", mgrImageList)
+            Dim tnExternalStimuli As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(Nothing, "Stimuli", "AnimatGUI.ExternalStimulus.gif", "", mgrImageList)
+            Dim tnPlaybackControl As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Playback Control", "AnimatGUI.RemoteControl.gif", "", mgrImageList)
+            tnPlaybackControl.Tag = New TypeHelpers.LinkedDataObjectTree(Util.Application.SimulationController.FormHelper)
+
+            Dim doTool As DataObjects.ToolHolder
+            For Each deEntry As DictionaryEntry In Util.Simulation.ToolHolders
+                doTool = DirectCast(deEntry.Value, DataObjects.ToolHolder)
+                doTool.CreateObjectListTreeView(Me, tnToolViewers, mgrImageList)
+            Next
+
+            Dim doStimulus As DataObjects.ExternalStimuli.Stimulus
+            For Each deEntry As DictionaryEntry In Util.Simulation.ProjectStimuli
+                doStimulus = DirectCast(deEntry.Value, DataObjects.ExternalStimuli.Stimulus)
+                doStimulus.CreateObjectListTreeView(Me, tnExternalStimuli, mgrImageList)
+            Next
+
+            Return tnNode
+        End Function
 
         Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As Point) As Boolean
             If m_doEnvironment.WorkspaceTreeviewPopupMenu(tnSelectedNode, ptPoint) Then Return True

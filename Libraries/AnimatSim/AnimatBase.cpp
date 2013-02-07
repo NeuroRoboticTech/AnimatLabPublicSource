@@ -370,6 +370,61 @@ void AnimatBase::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> 
 }
 
 /**
+\brief	Queries this object if it has a property with the given name.
+
+\details This method checks whether it has a property with the specified name.
+
+\author	dcofer
+\date	2/6/2013
+
+\param	strName		Property name we are checking for. 
+
+\return	True if a property with that exact name is found. Capilalization is not important. 
+**/
+BOOL AnimatBase::HasProperty(string strName)
+{
+	CStdArray<string> aryNames, aryTypes;
+	QueryProperties(aryNames, aryTypes);
+
+	string strCheck = Std_CheckString(strName);
+	int iCount = aryNames.GetSize();
+	for(int iIdx=0; iIdx<iCount; iIdx++)
+		if(Std_CheckString(aryNames[iIdx]) == strCheck)
+			return TRUE;
+
+	return FALSE;
+}
+
+
+AnimatBase::AnimatPropertyType AnimatBase::PropertyType(string strName)
+{
+	CStdArray<string> aryNames, aryTypes;
+	QueryProperties(aryNames, aryTypes);
+
+	string strCheck = Std_CheckString(strName);
+	int iCount = aryNames.GetSize();
+	for(int iIdx=0; iIdx<iCount; iIdx++)
+		if(Std_CheckString(aryNames[iIdx]) == strCheck)
+		{
+			string strType = Std_CheckString(aryTypes[iIdx]);
+			if(strType == "BOOLEAN")
+				return AnimatPropertyType::Boolean;
+			else if(strType == "INTEGER")
+				return AnimatPropertyType::Integer;
+			else if(strType == "FLOAT")
+				return AnimatPropertyType::Float;
+			else if(strType == "STRING")
+				return AnimatPropertyType::String;
+			else if(strType == "XML")
+				return AnimatPropertyType::Xml;
+			else
+				return AnimatPropertyType::Invalid;
+		}
+
+	return AnimatPropertyType::Invalid;
+}
+
+/**
 \brief	Adds a new object to this parent.
 
 \details Generic method to add a new child item to this parent by specifying a string item type

@@ -241,6 +241,7 @@ Copy "$(TargetPath)" ..\..\bin
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="PolynomialGain.cpp" />
     <ClCompile Include="Prismatic.cpp" />
+    <ClCompile Include="PropertyControlAdapter.cpp" />
     <ClCompile Include="ReceptiveField.cpp" />
     <ClCompile Include="ReceptiveFieldPair.cpp" />
     <ClCompile Include="RigidBody.cpp" />
@@ -333,6 +334,7 @@ Copy "$(TargetPath)" ..\..\bin
     <ClInclude Include="Plane.h" />
     <ClInclude Include="PolynomialGain.h" />
     <ClInclude Include="Prismatic.h" />
+    <ClInclude Include="PropertyControlAdapter.h" />
     <ClInclude Include="ReceptiveField.h" />
     <ClInclude Include="ReceptiveFieldPair.h" />
     <ClInclude Include="RigidBody.h" />

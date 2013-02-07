@@ -141,7 +141,7 @@ Namespace Forms
 
         Public Overloads Sub CreateWorkspaceTreeView()
             If Not Util.Application.Simulation Is Nothing Then
-                Util.Application.Simulation.CreateWorkspaceTreeView(DirectCast(m_doFormHelper, AnimatGUI.Framework.DataObject), Nothing, False)
+                Util.Application.Simulation.CreateWorkspaceTreeView(DirectCast(m_doFormHelper, AnimatGUI.Framework.DataObject), Nothing)
             End If
 
             ctrlTreeView.ExpandAll()
@@ -410,7 +410,7 @@ Namespace Forms
                 m_bLoadInProgress = True
 
                 If Not Util.Application.Simulation Is Nothing Then
-                    Util.Application.Simulation.CreateWorkspaceTreeView(DirectCast(m_doFormHelper, AnimatGUI.Framework.DataObject), Nothing, False)
+                    Util.Application.Simulation.CreateWorkspaceTreeView(DirectCast(m_doFormHelper, AnimatGUI.Framework.DataObject), Nothing)
                 End If
 
                 ctrlTreeView.Sort()

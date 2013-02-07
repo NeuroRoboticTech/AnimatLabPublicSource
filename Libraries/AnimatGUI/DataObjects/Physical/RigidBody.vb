@@ -643,38 +643,54 @@ Namespace DataObjects.Physical
         End Function
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                       ByVal bFullObjectList As Boolean, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
                                                        Optional ByVal bRootObject As Boolean = False)
 
-            Dim tnParent As Crownwood.DotNetMagic.Controls.Node = doParentNode
+            Dim tnParent As Crownwood.DotNetMagic.Controls.Node = tnParentNode
             If Not m_JointToParent Is Nothing Then
-                m_JointToParent.CreateWorkspaceTreeView(Me, doParentNode, bFullObjectList)
+                m_JointToParent.CreateWorkspaceTreeView(Me, tnParentNode)
                 tnParent = m_JointToParent.WorkspaceNode
             End If
 
-            MyBase.CreateWorkspaceTreeView(doParent, tnParent, bFullObjectList, bRootObject)
+            MyBase.CreateWorkspaceTreeView(doParent, tnParent, bRootObject)
 
             Dim dbChild As AnimatGUI.DataObjects.Physical.RigidBody
             For Each deEntry As DictionaryEntry In m_aryChildBodies
                 dbChild = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Physical.RigidBody)
-                dbChild.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode, bFullObjectList)
+                dbChild.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
             Next
 
-            If bFullObjectList Then
-                If Not m_doReceptiveFieldSensor Is Nothing Then m_doReceptiveFieldSensor.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, bFullObjectList, False)
-                If Not m_aryOdorSources Is Nothing Then
-                    If m_tnOdorSources Is Nothing Then m_tnOdorSources = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Odor Sources", "AnimatGUI.DefaultObject.gif")
-                    Dim doObj As Framework.DataObject
-                    For Each deEntry As DictionaryEntry In m_aryOdorSources
-                        doObj = DirectCast(deEntry.Value, Framework.DataObject)
-                        doObj.CreateWorkspaceTreeView(Me, m_tnOdorSources, bFullObjectList, False)
-                    Next
+        End Sub
 
-                End If
+        Public Overrides Function CreateObjectListTreeView(ByVal doParent As Framework.DataObject, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal mgrImageList As AnimatGUI.Framework.ImageManager) As Crownwood.DotNetMagic.Controls.Node
+
+            Dim tnParent As Crownwood.DotNetMagic.Controls.Node = tnParentNode
+            If Not m_JointToParent Is Nothing Then
+                tnParent = m_JointToParent.CreateObjectListTreeView(Me, tnParentNode, mgrImageList)
             End If
 
-        End Sub
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateObjectListTreeView(doParent, tnParent, mgrImageList)
+
+            Dim dbChild As AnimatGUI.DataObjects.Physical.RigidBody
+            For Each deEntry As DictionaryEntry In m_aryChildBodies
+                dbChild = DirectCast(deEntry.Value, AnimatGUI.DataObjects.Physical.RigidBody)
+                dbChild.CreateObjectListTreeView(Me, tnNode, mgrImageList)
+            Next
+
+            If Not m_doReceptiveFieldSensor Is Nothing Then m_doReceptiveFieldSensor.CreateObjectListTreeView(Me, tnNode, mgrImageList)
+            If Not m_aryOdorSources Is Nothing Then
+                Dim tnOdorSources As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Odor Sources", "AnimatGUI.DefaultObject.gif", "", mgrImageList)
+                Dim doObj As Framework.DataObject
+                For Each deEntry As DictionaryEntry In m_aryOdorSources
+                    doObj = DirectCast(deEntry.Value, Framework.DataObject)
+                    doObj.CreateObjectListTreeView(Me, tnOdorSources, mgrImageList)
+                Next
+            End If
+
+            Return tnNode
+        End Function
 
         Public Overrides Sub RemoveWorksapceTreeView()
 
@@ -1427,7 +1443,7 @@ Namespace DataObjects.Physical
 
             Dim doStruct As AnimatGUI.DataObjects.Physical.PhysicalStructure = Me.ParentStructure
             If Not rbChildBody Is Nothing AndAlso Not m_tnWorkspaceNode Is Nothing Then
-                rbChildBody.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode, False)
+                rbChildBody.CreateWorkspaceTreeView(Me, m_tnWorkspaceNode)
             End If
 
             Util.Application.AddPartToolStripButton.Checked = False

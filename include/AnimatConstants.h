@@ -442,6 +442,21 @@
 #define Al_Err_lMuscleLengthStartTime -4069
 #define Al_Err_strMuscleLengthStartTime "The start and end times for the stimulus and the data file do not match."
 
+#define Al_Err_lTargetObjectNotDefined -4070
+#define Al_Err_strTargetObjectNotDefined "Target object was not defined."
+
+#define Al_Err_lPropertyNameBlank -4071
+#define Al_Err_strPropertyNameBlank "Target object property name was blank."
+
+#define Al_Err_lTargetDoesNotHaveProperty -4072
+#define Al_Err_strTargetDoesNotHaveProperty "Target object does not have a property with specified name."
+
+#define Al_Err_lTargetInvalidPropertyType -4073
+#define Al_Err_strTargetInvalidPropertyType "Target object has an invalid property type. Only Boolean, Integer, and Float are allowed to be used for property control."
+
+#define Al_Err_lInvalidSetThreshold -4074
+#define Al_Err_strInvalidSetThreshold "Invalid set threshold. It must be greater than or equal to zero."
+
 #define MAX_DATA_CHART_BUFFER 10485760
 
 #define PI 3.14159

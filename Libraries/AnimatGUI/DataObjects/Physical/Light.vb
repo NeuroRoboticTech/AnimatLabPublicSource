@@ -230,11 +230,10 @@ Namespace DataObjects.Physical
         End Sub
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                       ByVal bFullObjectList As Boolean, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
                                                        Optional ByVal bRootObject As Boolean = False)
 
-            If m_tnWorkspaceNode Is Nothing AndAlso (bRootObject OrElse (Not bRootObject AndAlso Not doParentNode Is Nothing)) Then
+            If m_tnWorkspaceNode Is Nothing AndAlso (bRootObject OrElse (Not bRootObject AndAlso Not tnParentNode Is Nothing)) Then
                 m_tnWorkspaceNode = Util.ProjectWorkspace.AddTreeNode(Util.Environment.LightsTreeNode, Me.Name, Me.WorkspaceImageName)
                 m_tnWorkspaceNode.Tag = Me
 

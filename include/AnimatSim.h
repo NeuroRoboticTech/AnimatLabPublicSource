@@ -37,6 +37,7 @@ namespace AnimatSim
 	{
 		class Adapter;
 		class ContactAdapter;
+		class PropertyControlAdapter;
 	}
 
 	namespace Behavior
@@ -178,6 +179,7 @@ using namespace AnimatSim::Recording;
 #include "ReceptiveField.h"
 #include "ReceptiveFieldPair.h"
 #include "Adapter.h"
+#include "PropertyControlAdapter.h"
 #include "ContactAdapter.h"
 #include "ConstraintLimit.h"
 #include "Joint.h"

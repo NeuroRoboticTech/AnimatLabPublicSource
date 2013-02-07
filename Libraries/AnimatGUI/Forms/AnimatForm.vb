@@ -700,13 +700,12 @@ Namespace Forms
 #Region " Workspace Methods "
 
         Public Overridable Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                       ByVal bFullObjectList As Boolean, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
                                                        Optional ByVal bRootObject As Boolean = False)
             'Me.RemoveWorksapceTreeView()
 
-            If m_tnWorkspaceNode Is Nothing AndAlso (bRootObject OrElse (Not bRootObject AndAlso Not doParentNode Is Nothing)) Then
-                m_tnWorkspaceNode = Util.ProjectWorkspace.AddTreeNode(doParentNode, Me.Name, Me.WorkspaceImageName)
+            If m_tnWorkspaceNode Is Nothing AndAlso (bRootObject OrElse (Not bRootObject AndAlso Not tnParentNode Is Nothing)) Then
+                m_tnWorkspaceNode = Util.ProjectWorkspace.AddTreeNode(tnParentNode, Me.Name, Me.WorkspaceImageName)
                 m_tnWorkspaceNode.Tag = Me
 
                 If Me.Enabled Then
@@ -716,6 +715,22 @@ Namespace Forms
                 End If
             End If
         End Sub
+
+        Public Overridable Function CreateObjectListTreeView(ByVal doParent As Framework.DataObject, _
+                                                             ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                             ByVal mgrImageList As AnimatGUI.Framework.ImageManager) As Crownwood.DotNetMagic.Controls.Node
+
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = Util.ProjectWorkspace.AddTreeNode(tnParentNode, Me.Name, Me.WorkspaceImageName)
+            tnNode.Tag = Me
+
+            If Me.Enabled Then
+                tnNode.BackColor = Color.White
+            Else
+                tnNode.BackColor = Color.Gray
+            End If
+
+            Return tnNode
+        End Function
 
         Public Overridable Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As Point) As Boolean
 

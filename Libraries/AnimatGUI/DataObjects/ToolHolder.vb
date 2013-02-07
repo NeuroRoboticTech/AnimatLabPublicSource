@@ -181,15 +181,26 @@ Namespace DataObjects
         End Sub
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                       ByVal bFullObjectList As Boolean, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
                                                        Optional ByVal bRootObject As Boolean = False)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bFullObjectList, bRootObject)
+            MyBase.CreateWorkspaceTreeView(doParent, tnParentNode, bRootObject)
 
             If Not m_frmTool Is Nothing Then
-                m_frmTool.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, bFullObjectList)
+                m_frmTool.CreateWorkspaceTreeView(Me, Me.WorkspaceNode)
             End If
         End Sub
+
+        Public Overrides Function CreateObjectListTreeView(ByVal doParent As Framework.DataObject, _
+                                                         ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                        ByVal mgrImageList As AnimatGUI.Framework.ImageManager) As Crownwood.DotNetMagic.Controls.Node
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateObjectListTreeView(doParent, tnParentNode, mgrImageList)
+
+            If Not m_frmTool Is Nothing Then
+                m_frmTool.CreateObjectListTreeView(Me, tnNode, mgrImageList)
+            End If
+
+            Return tnNode
+        End Function
 
         Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As Point) As Boolean
 

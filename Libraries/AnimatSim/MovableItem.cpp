@@ -1349,28 +1349,28 @@ BOOL MovableItem::SetData(string strDataType, string strValue, BOOL bThrowError)
 
 	if(strDataType == "DIFFUSE.RED")
 	{
-		float aryVal[4] = {atof(strValue.c_str()), m_vAmbient.g(), m_vAmbient.b(), m_vAmbient.a()};
+		float aryVal[4] = {atof(strValue.c_str()), m_vDiffuse.g(), m_vDiffuse.b(), m_vDiffuse.a()};
 		Diffuse(aryVal);
 		return TRUE;
 	}
 
 	if(strDataType == "DIFFUSE.GREEN")
 	{
-		float aryVal[4] = {m_vAmbient.r(), atof(strValue.c_str()), m_vAmbient.b(), m_vAmbient.a()};
+		float aryVal[4] = {m_vDiffuse.r(), atof(strValue.c_str()), m_vDiffuse.b(), m_vDiffuse.a()};
 		Diffuse(aryVal);
 		return TRUE;
 	}
 
 	if(strDataType == "DIFFUSE.BLUE")
 	{
-		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), atof(strValue.c_str()), m_vAmbient.a()};
+		float aryVal[4] = {m_vDiffuse.r(), m_vDiffuse.g(), atof(strValue.c_str()), m_vDiffuse.a()};
 		Diffuse(aryVal);
 		return TRUE;
 	}
 
 	if(strDataType == "DIFFUSE.ALPHA")
 	{
-		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), m_vAmbient.b(), atof(strValue.c_str())};
+		float aryVal[4] = {m_vDiffuse.r(), m_vDiffuse.g(), m_vDiffuse.b(), atof(strValue.c_str())};
 		Diffuse(aryVal);
 		return TRUE;
 	}
@@ -1383,28 +1383,28 @@ BOOL MovableItem::SetData(string strDataType, string strValue, BOOL bThrowError)
 
 	if(strDataType == "SPECULAR.RED")
 	{
-		float aryVal[4] = {atof(strValue.c_str()), m_vAmbient.g(), m_vAmbient.b(), m_vAmbient.a()};
+		float aryVal[4] = {atof(strValue.c_str()), m_vSpecular.g(), m_vSpecular.b(), m_vSpecular.a()};
 		Specular(aryVal);
 		return TRUE;
 	}
 
 	if(strDataType == "SPECULAR.GREEN")
 	{
-		float aryVal[4] = {m_vAmbient.r(), atof(strValue.c_str()), m_vAmbient.b(), m_vAmbient.a()};
+		float aryVal[4] = {m_vSpecular.r(), atof(strValue.c_str()), m_vSpecular.b(), m_vSpecular.a()};
 		Specular(aryVal);
 		return TRUE;
 	}
 
 	if(strDataType == "SPECULAR.BLUE")
 	{
-		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), atof(strValue.c_str()), m_vAmbient.a()};
+		float aryVal[4] = {m_vSpecular.r(), m_vSpecular.g(), atof(strValue.c_str()), m_vSpecular.a()};
 		Specular(aryVal);
 		return TRUE;
 	}
 
 	if(strDataType == "SPECULAR.ALPHA")
 	{
-		float aryVal[4] = {m_vAmbient.r(), m_vAmbient.g(), m_vAmbient.b(), atof(strValue.c_str())};
+		float aryVal[4] = {m_vSpecular.r(), m_vSpecular.g(), m_vSpecular.b(), atof(strValue.c_str())};
 		Specular(aryVal);
 		return TRUE;
 	}

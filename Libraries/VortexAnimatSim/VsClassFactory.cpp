@@ -440,6 +440,8 @@ try
 		lpAdapter = new Adapter;
 	else if(strType == "CONTACT")
 		lpAdapter = new ContactAdapter;
+	else if(strType == "PROPERTYCONTROLADAPTER")
+		lpAdapter = new PropertyControlAdapter;
 	else
 	{
 		lpAdapter = NULL;

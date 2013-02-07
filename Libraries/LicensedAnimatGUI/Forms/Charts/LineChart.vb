@@ -2442,7 +2442,7 @@ Namespace Forms.Charts
                 Dim doAxis As New DataObjects.Charting.Pro2DAxis(Me)
                 doAxis.WorkingAxisInternal = FindAvailableWorkingAxis()
                 doAxis.Name = strName
-                doAxis.CreateWorkspaceTreeView(Me.FormHelper, Me.WorkspaceNode, False)
+                doAxis.CreateWorkspaceTreeView(Me.FormHelper, Me.WorkspaceNode)
                 doAxis.SelectItem()
 
             Catch ex As System.Exception

@@ -335,7 +335,7 @@ Namespace DataObjects.Physical
             End If
 
             If Not m_dbRoot Is Nothing Then
-                m_dbRoot.CreateWorkspaceTreeView(Me, m_tnBodyPlanNode, False)
+                m_dbRoot.CreateWorkspaceTreeView(Me, m_tnBodyPlanNode)
             End If
 
             m_dbRoot.AfterAddToList(False, True)
@@ -501,10 +501,9 @@ Namespace DataObjects.Physical
 #Region " Workspace TreeView "
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                       ByVal bFullObjectList As Boolean, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
                                                        Optional ByVal bRootObject As Boolean = False)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bFullObjectList, bRootObject)
+            MyBase.CreateWorkspaceTreeView(doParent, tnParentNode, bRootObject)
 
             If m_tnBodyPlanNode Is Nothing Then
                 m_tnBodyPlanNode = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Body Plan", "AnimatGUI.Joint.gif")
@@ -512,16 +511,29 @@ Namespace DataObjects.Physical
             End If
 
             If Not m_dbRoot Is Nothing Then
-                m_dbRoot.CreateWorkspaceTreeView(Me, m_tnBodyPlanNode, bFullObjectList)
-            End If
-
-            If bFullObjectList Then
-                If m_tnCollisionPairs Is Nothing Then m_tnCollisionPairs = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Collision Pairs", "AnimatGUI.DefaultObject.gif")
-                For Each doObj As Framework.DataObject In m_aryCollisionExclusionPairs
-                    doObj.CreateWorkspaceTreeView(Me, m_tnCollisionPairs, bFullObjectList, False)
-                Next
+                m_dbRoot.CreateWorkspaceTreeView(Me, m_tnBodyPlanNode)
             End If
         End Sub
+
+        Public Overrides Function CreateObjectListTreeView(ByVal doParent As Framework.DataObject, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal mgrImageList As AnimatGUI.Framework.ImageManager) As Crownwood.DotNetMagic.Controls.Node
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateObjectListTreeView(doParent, tnParentNode, mgrImageList)
+
+            Dim tnBodyPlanNode As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Body Plan", "AnimatGUI.Joint.gif", "", mgrImageList)
+            tnBodyPlanNode.Tag = New TypeHelpers.LinkedDataObjectTree(Me)
+
+            If Not m_dbRoot Is Nothing Then
+                m_dbRoot.CreateObjectListTreeView(Me, tnBodyPlanNode, mgrImageList)
+            End If
+
+            Dim tnCollisionPairs As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Collision Pairs", "AnimatGUI.DefaultObject.gif", "", mgrImageList)
+            For Each doObj As Framework.DataObject In m_aryCollisionExclusionPairs
+                doObj.CreateObjectListTreeView(Me, tnCollisionPairs, mgrImageList)
+            Next
+
+            Return tnNode
+        End Function
 
         Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As Point) As Boolean
 

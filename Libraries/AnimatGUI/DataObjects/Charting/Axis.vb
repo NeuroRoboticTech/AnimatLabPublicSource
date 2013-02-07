@@ -284,17 +284,30 @@ Namespace DataObjects.Charting
 #Region " TreeView Methods "
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                       ByVal bFullObjectList As Boolean, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
                                                        Optional ByVal bRootObject As Boolean = False)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bFullObjectList, bRootObject)
+            MyBase.CreateWorkspaceTreeView(doParent, tnParentNode, bRootObject)
 
             Dim doColumn As DataObjects.Charting.DataColumn
             For Each deEntry As DictionaryEntry In m_aryDataColumns
                 doColumn = DirectCast(deEntry.Value, DataObjects.Charting.DataColumn)
-                doColumn.CreateWorkspaceTreeView(Me, Me.WorkspaceNode, bFullObjectList)
+                doColumn.CreateWorkspaceTreeView(Me, Me.WorkspaceNode)
             Next
         End Sub
+
+        Public Overrides Function CreateObjectListTreeView(ByVal doParent As Framework.DataObject, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal mgrImageList As AnimatGUI.Framework.ImageManager) As Crownwood.DotNetMagic.Controls.Node
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateObjectListTreeView(doParent, tnParentNode, mgrImageList)
+
+            Dim doColumn As DataObjects.Charting.DataColumn
+            For Each deEntry As DictionaryEntry In m_aryDataColumns
+                doColumn = DirectCast(deEntry.Value, DataObjects.Charting.DataColumn)
+                doColumn.CreateObjectListTreeView(Me, tnNode, mgrImageList)
+            Next
+
+            Return tnNode
+        End Function
 
         Public Overrides Sub RemoveWorksapceTreeView()
 

@@ -129,26 +129,46 @@ Namespace DataObjects.Physical
 #Region " Workspace TreeView "
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
-                                                       ByVal doParentNode As Crownwood.DotNetMagic.Controls.Node, _
-                                                       ByVal bFullObjectList As Boolean, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
                                                        Optional ByVal bRootObject As Boolean = False)
-            MyBase.CreateWorkspaceTreeView(doParent, doParentNode, bFullObjectList, bRootObject)
+            MyBase.CreateWorkspaceTreeView(doParent, tnParentNode, bRootObject)
 
             If m_tnBehavioralSystem Is Nothing Then m_tnBehavioralSystem = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Behavioral System", "AnimatGUI.Neuron.gif")
 
-            m_bnRootSubSystem.CreateWorkspaceTreeView(Me, m_tnBehavioralSystem, bFullObjectList)
+            m_bnRootSubSystem.CreateWorkspaceTreeView(Me, m_tnBehavioralSystem)
 
             If m_tnNeuralModules Is Nothing Then m_tnNeuralModules = Util.ProjectWorkspace.AddTreeNode(m_tnWorkspaceNode, "Neural Modules", "AnimatGUI.NeuralModules_Treeview.gif")
 
             For Each deEntry As DictionaryEntry In Me.NeuralModules
                 Dim nmModule As Behavior.NeuralModule = DirectCast(deEntry.Value, Behavior.NeuralModule)
                 If Not Util.IsTypeOf(nmModule.GetType, GetType(Behavior.PhysicsModule), False) Then
-                    nmModule.CreateWorkspaceTreeView(Me, m_tnNeuralModules, bFullObjectList)
+                    nmModule.CreateWorkspaceTreeView(Me, m_tnNeuralModules)
                 End If
             Next
             m_tnNeuralModules.CollapseAll()
 
         End Sub
+
+        Public Overrides Function CreateObjectListTreeView(ByVal doParent As Framework.DataObject, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal mgrImageList As AnimatGUI.Framework.ImageManager) As Crownwood.DotNetMagic.Controls.Node
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateObjectListTreeView(doParent, tnParentNode, mgrImageList)
+
+            Dim tnBehavioralSystem As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Behavioral System", "AnimatGUI.Neuron.gif", "", mgrImageList)
+
+            m_bnRootSubSystem.CreateObjectListTreeView(Me, tnBehavioralSystem, mgrImageList)
+
+            Dim tnNeuralModules As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Neural Modules", "AnimatGUI.NeuralModules_Treeview.gif", "", mgrImageList)
+
+            For Each deEntry As DictionaryEntry In Me.NeuralModules
+                Dim nmModule As Behavior.NeuralModule = DirectCast(deEntry.Value, Behavior.NeuralModule)
+                If Not Util.IsTypeOf(nmModule.GetType, GetType(Behavior.PhysicsModule), False) Then
+                    nmModule.CreateObjectListTreeView(Me, tnNeuralModules, mgrImageList)
+                End If
+            Next
+
+            Return tnNode
+        End Function
 
         Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As Point) As Boolean
 
@@ -580,7 +600,7 @@ Namespace DataObjects.Physical
                 newOrganism.Name = "Organism_" & Util.Environment.NewOrganismCount
                 'newOrganism.LoadBodyPlan(Util.Simulation)
 
-                newOrganism.CreateWorkspaceTreeView(Util.Environment, Util.Environment.OrganismsTreeNode, False)
+                newOrganism.CreateWorkspaceTreeView(Util.Environment, Util.Environment.OrganismsTreeNode)
                 newOrganism.WorkspaceNode.ExpandAll()
                 Util.ProjectWorkspace.TreeView.SelectedNode = newOrganism.WorkspaceNode
                 'newOrganism.CreateFiles()
