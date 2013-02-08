@@ -227,7 +227,7 @@ void Plane::LengthSegments(int iVal)
 	Resize();
 }
 
-BOOL Plane::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Plane::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

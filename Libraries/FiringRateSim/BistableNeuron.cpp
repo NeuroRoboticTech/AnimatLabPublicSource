@@ -164,7 +164,7 @@ void BistableNeuron::ResetSimulation()
 
 #pragma region DataAccesMethods
 
-BOOL BistableNeuron::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL BistableNeuron::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

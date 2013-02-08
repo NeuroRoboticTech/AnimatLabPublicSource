@@ -1350,7 +1350,7 @@ void Neuron::ResetSimulation()
 
 #pragma region DataAccesMethods
 
-float *Neuron::GetDataPointer(string strDataType)
+float *Neuron::GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -1408,7 +1408,7 @@ float *Neuron::GetDataPointer(string strDataType)
 	return NULL;
 }
 
-BOOL Neuron::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Neuron::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 			
@@ -1562,7 +1562,7 @@ void Neuron::RemoveIonChannel(string strID, BOOL bThrowError)
 	m_aryIonChannels.RemoveAt(iPos);
 }
 
-BOOL Neuron::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
+BOOL Neuron::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
@@ -1579,7 +1579,7 @@ BOOL Neuron::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL b
 	return FALSE;
 }
 
-BOOL Neuron::RemoveItem(string strItemType, string strID, BOOL bThrowError)
+BOOL Neuron::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 

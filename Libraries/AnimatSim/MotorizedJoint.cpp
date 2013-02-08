@@ -360,7 +360,7 @@ void MotorizedJoint::ResetSimulation()
 	EnableMotor(m_bEnableMotorInit);
 }
 
-BOOL MotorizedJoint::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL MotorizedJoint::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

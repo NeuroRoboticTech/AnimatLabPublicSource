@@ -155,7 +155,7 @@ float LengthTensionGain::SeRestLength() {return m_fltSeRestLength;}
 **/
 float LengthTensionGain::MinPeLength() {return m_fltMinPeLength;}
 
-BOOL LengthTensionGain::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL LengthTensionGain::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))
 		return true;

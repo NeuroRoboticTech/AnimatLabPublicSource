@@ -213,7 +213,7 @@ void LineBase::AfterResetSimulation()
 
 #pragma region DataAccesMethods
 
-float *LineBase::GetDataPointer(string strDataType)
+float *LineBase::GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -229,7 +229,7 @@ float *LineBase::GetDataPointer(string strDataType)
 	return lpData;
 }
 
-BOOL LineBase::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL LineBase::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	if(RigidBody::SetData(strDataType, strValue, FALSE))
 		return true;

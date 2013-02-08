@@ -347,7 +347,7 @@ void PropertyControlStimulus::Deactivate()
 		m_lpTargetObject->SetData(m_strPropertyName, STR(m_fltFinalValue));
 }
 
-BOOL PropertyControlStimulus::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL PropertyControlStimulus::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 	

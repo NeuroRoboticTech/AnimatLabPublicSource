@@ -184,7 +184,7 @@ void VoltageClamp::ResetSimulation()
 	m_fltActiveCurrent = 0;
 }
 
-float *VoltageClamp::GetDataPointer(string strDataType)
+float *VoltageClamp::GetDataPointer(const string &strDataType)
 {
 	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);
@@ -197,7 +197,7 @@ float *VoltageClamp::GetDataPointer(string strDataType)
 	return lpData;
 } 
 
-BOOL VoltageClamp::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL VoltageClamp::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 		

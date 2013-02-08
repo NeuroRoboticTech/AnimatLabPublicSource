@@ -258,7 +258,7 @@ void DataColumn::ReInitialize()
 		Initialize();
 }
 
-BOOL DataColumn::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL DataColumn::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

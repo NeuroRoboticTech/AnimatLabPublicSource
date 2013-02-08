@@ -541,7 +541,7 @@ void IonChannel::ResetSimulation()
 
 #pragma region DataAccesMethods
 
-float *IonChannel::GetDataPointer(string strDataType)
+float *IonChannel::GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -578,7 +578,7 @@ float *IonChannel::GetDataPointer(string strDataType)
 	return NULL;
 }
 
-BOOL IonChannel::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL IonChannel::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 			

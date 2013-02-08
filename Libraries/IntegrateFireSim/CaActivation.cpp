@@ -37,7 +37,7 @@ CaActivation::~CaActivation()
 {
 }
 
-BOOL CaActivation::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL CaActivation::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 			

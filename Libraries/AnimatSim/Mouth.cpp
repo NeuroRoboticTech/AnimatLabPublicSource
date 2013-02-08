@@ -193,7 +193,7 @@ void Mouth::StepSimulation()
 	}
 }
 
-BOOL Mouth::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Mouth::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -230,7 +230,7 @@ void Mouth::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryT
 	aryTypes.Add("Float");
 }
 
-float *Mouth::GetDataPointer(string strDataType)
+float *Mouth::GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 

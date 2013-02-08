@@ -131,7 +131,7 @@ namespace VortexAnimatSim
 			virtual void Physics_EnableCollision(RigidBody *lpBody);
 			virtual void Physics_DisableCollision(RigidBody *lpBody);
 			virtual void Physics_CollectData();
-			virtual float *Physics_GetDataPointer(string strDataType);
+			virtual float *Physics_GetDataPointer(const string &strDataType);
 			virtual void Physics_UpdateMatrix();
 			virtual void Physics_SetFreeze(BOOL bVal);
 			virtual void Physics_SetDensity(float fltVal);

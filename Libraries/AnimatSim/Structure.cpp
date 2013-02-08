@@ -483,7 +483,7 @@ void Structure::SetSystemPointers(Simulator *lpSim, Structure *lpStructure, Neur
 	m_lpMovableSim = lpSim;
 }
 
-float *Structure::GetDataPointer(string strDataType)
+float *Structure::GetDataPointer(const string &strDataType)
 {
 	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);
@@ -497,7 +497,7 @@ float *Structure::GetDataPointer(string strDataType)
 	return lpData;
 }
 
-BOOL Structure::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Structure::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -520,7 +520,7 @@ void Structure::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &
 	MovableItem::QueryProperties(aryNames, aryTypes);
 }
 
-BOOL Structure::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
+BOOL Structure::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
@@ -537,7 +537,7 @@ BOOL Structure::AddItem(string strItemType, string strXml, BOOL bThrowError, BOO
 	return FALSE;
 }
 
-BOOL Structure::RemoveItem(string strItemType, string strID, BOOL bThrowError)
+BOOL Structure::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 

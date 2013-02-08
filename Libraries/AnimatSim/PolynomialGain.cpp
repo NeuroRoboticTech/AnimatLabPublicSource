@@ -136,7 +136,7 @@ float PolynomialGain::CalculateGain(float fltInput)
 		return CalculateLimitOutput(fltInput);
 }	
 
-BOOL PolynomialGain::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL PolynomialGain::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))
 		return true;

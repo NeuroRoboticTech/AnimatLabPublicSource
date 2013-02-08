@@ -124,7 +124,7 @@ namespace AnimatSim
 			**/
 			virtual float CalculateGain(float fltInput) = 0;
 
-			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 			virtual void Load(CStdXml &oXml);
 		};

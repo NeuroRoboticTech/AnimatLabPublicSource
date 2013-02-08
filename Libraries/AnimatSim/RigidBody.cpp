@@ -1114,7 +1114,7 @@ void RigidBody::StepSimulation()
 
 #pragma region DataAccesMethods
 
-float *RigidBody::GetDataPointer(string strDataType)
+float *RigidBody::GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -1139,7 +1139,7 @@ float *RigidBody::GetDataPointer(string strDataType)
 }
 
 
-BOOL RigidBody::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL RigidBody::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -1311,7 +1311,7 @@ void RigidBody::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &
 	aryTypes.Add("String");
 }
 
-BOOL RigidBody::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
+BOOL RigidBody::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
@@ -1340,7 +1340,7 @@ BOOL RigidBody::AddItem(string strItemType, string strXml, BOOL bThrowError, BOO
 	return FALSE;
 }
 
-BOOL RigidBody::RemoveItem(string strItemType, string strID, BOOL bThrowError)
+BOOL RigidBody::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 

@@ -91,7 +91,7 @@ namespace VortexAnimatSim
 			virtual void SetBody();
 			virtual void Physics_ResetSimulation();
 			virtual void Physics_CollectData();
-			virtual BOOL Physics_SetData(string strDataType, string strValue);
+			virtual BOOL Physics_SetData(const string &strDataType, const string &strValue);
 			virtual void Physics_QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 			virtual void Physics_Resize();
 

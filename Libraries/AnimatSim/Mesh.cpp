@@ -240,7 +240,7 @@ void Mesh::SetMeshFile(string strXml)
 	CollisionMeshType(oXml.GetChildString("MeshType"));
 }
 
-BOOL Mesh::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Mesh::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

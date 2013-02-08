@@ -517,7 +517,7 @@ void CurrentStimulus::ResetSimulation()
 	m_fltActiveCurrent = m_fltInitialActiveCurrent;
 }
 
-float *CurrentStimulus::GetDataPointer(string strDataType)
+float *CurrentStimulus::GetDataPointer(const string &strDataType)
 {
 	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);
@@ -530,7 +530,7 @@ float *CurrentStimulus::GetDataPointer(string strDataType)
 	return lpData;
 } 
 
-BOOL CurrentStimulus::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL CurrentStimulus::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

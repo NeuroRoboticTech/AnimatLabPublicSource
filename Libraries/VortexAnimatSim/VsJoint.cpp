@@ -394,7 +394,7 @@ void VsJoint::Physics_ResetSimulation()
 }
 
 
-BOOL VsJoint::Physics_SetData(string strDataType, string strValue)
+BOOL VsJoint::Physics_SetData(const string &strDataType, const string &strValue)
 {
 
 	if(strDataType == "ATTACHEDPARTMOVEDORROTATED")

@@ -185,7 +185,7 @@ void ExternalInputStimulus::Deactivate()
 	ExternalStimulus::Deactivate();
 }
 
-float *ExternalInputStimulus::GetDataPointer(string strDataType)
+float *ExternalInputStimulus::GetDataPointer(const string &strDataType)
 {
 	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);
@@ -198,7 +198,7 @@ float *ExternalInputStimulus::GetDataPointer(string strDataType)
 	return lpData;
 } 
 
-BOOL ExternalInputStimulus::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL ExternalInputStimulus::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 	

@@ -3995,7 +3995,7 @@ void  Simulator::IncrementPhysicsBodyCount()
 
 #pragma region DataAccesMethods
 
-float *Simulator::GetDataPointer(string strDataType)
+float *Simulator::GetDataPointer(const string &strDataType)
 {
 	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);
@@ -4034,7 +4034,7 @@ float *Simulator::GetDataPointer(string strDataType)
 	return lpData;
 }
 
-BOOL Simulator::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Simulator::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -4299,7 +4299,7 @@ void Simulator::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &
 	aryTypes.Add("Float");
 }
 
-BOOL Simulator::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
+BOOL Simulator::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
@@ -4340,7 +4340,7 @@ BOOL Simulator::AddItem(string strItemType, string strXml, BOOL bThrowError, BOO
 	return FALSE;
 }
 
-BOOL Simulator::RemoveItem(string strItemType, string strID, BOOL bThrowError)
+BOOL Simulator::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 

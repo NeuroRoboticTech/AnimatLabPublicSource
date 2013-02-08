@@ -169,7 +169,7 @@ void SimulationWindow::StandAlone(BOOL bVal) {m_bStandAlone = bVal;}
 
 #pragma region DataAccesMethods
 
-float *SimulationWindow::GetDataPointer(string strDataType)
+float *SimulationWindow::GetDataPointer(const string &strDataType)
 {
 	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);
@@ -182,7 +182,7 @@ float *SimulationWindow::GetDataPointer(string strDataType)
 	return lpData;
 }
 
-BOOL SimulationWindow::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL SimulationWindow::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 	

@@ -136,7 +136,7 @@ void Cone::Sides(int iVal)
 **/
 int Cone::Sides() {return m_iSides;}
 
-BOOL Cone::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Cone::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

@@ -104,7 +104,7 @@ BOOL Sensor::AllowRotateDragY() {return FALSE;}
 
 BOOL Sensor::AllowRotateDragZ() {return FALSE;}
 
-BOOL Sensor::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Sensor::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

@@ -126,7 +126,7 @@ void Sphere::LongtitudeSegments(int iVal)
 **/
 int Sphere::LongtitudeSegments() {return m_iLongtitudeSegments;}
 
-BOOL Sphere::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Sphere::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

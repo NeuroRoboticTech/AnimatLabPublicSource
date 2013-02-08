@@ -174,7 +174,7 @@ void FiringRateModule::StepSimulation()
 
 #pragma region DataAccesMethods
 
-BOOL FiringRateModule::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL FiringRateModule::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -237,7 +237,7 @@ void FiringRateModule::RemoveNeuron(string strID, BOOL bThrowError)
 	m_aryNeurons.RemoveAt(iPos);
 }
 
-BOOL FiringRateModule::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
+BOOL FiringRateModule::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
@@ -256,7 +256,7 @@ BOOL FiringRateModule::AddItem(string strItemType, string strXml, BOOL bThrowErr
 	return FALSE;
 }
 
-BOOL FiringRateModule::RemoveItem(string strItemType, string strID, BOOL bThrowError)
+BOOL FiringRateModule::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 

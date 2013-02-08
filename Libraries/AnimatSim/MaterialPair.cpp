@@ -556,7 +556,7 @@ void MaterialPair::CreateDefaultUnits()
 	m_fltMaxAdhesive *= (m_lpSim->InverseMassUnits() * m_lpSim->InverseDistanceUnits()); //This is a force.
 }
 
-BOOL MaterialPair::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL MaterialPair::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

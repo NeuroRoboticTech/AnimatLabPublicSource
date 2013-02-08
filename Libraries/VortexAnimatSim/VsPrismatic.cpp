@@ -244,7 +244,7 @@ void VsPrismatic::CreateJoint()
 
 #pragma region DataAccesMethods
 
-float *VsPrismatic::GetDataPointer(string strDataType)
+float *VsPrismatic::GetDataPointer(const string &strDataType)
 {
 	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);
@@ -276,7 +276,7 @@ float *VsPrismatic::GetDataPointer(string strDataType)
 	return lpData;
 }
 
-BOOL VsPrismatic::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL VsPrismatic::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;

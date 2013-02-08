@@ -116,7 +116,7 @@ void PhysicsNeuralModule::Initialize()
 
 #pragma region DataAccesMethods
 
-BOOL PhysicsNeuralModule::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL PhysicsNeuralModule::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -178,7 +178,7 @@ int PhysicsNeuralModule::FindAdapterListPos(string strID, BOOL bThrowError)
 	return -1;
 }
 
-BOOL PhysicsNeuralModule::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
+BOOL PhysicsNeuralModule::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
@@ -204,7 +204,7 @@ BOOL PhysicsNeuralModule::AddItem(string strItemType, string strXml, BOOL bThrow
 	return FALSE;
 }
 
-BOOL PhysicsNeuralModule::RemoveItem(string strItemType, string strID, BOOL bThrowError)
+BOOL PhysicsNeuralModule::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 

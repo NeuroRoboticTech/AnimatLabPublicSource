@@ -27,7 +27,7 @@ namespace AnimatSim
 			virtual void Physics_CollectData() = 0;
 			virtual void Physics_ResetSimulation() = 0;
 			virtual void Physics_AfterResetSimulation() = 0;
-			virtual float *Physics_GetDataPointer(string strDataType) = 0;
+			virtual float *Physics_GetDataPointer(const string &strDataType) = 0;
 			virtual void Physics_Selected(BOOL bValue, BOOL bSelectMultiple) = 0;  
 			virtual float Physics_GetBoundingRadius() = 0;
 			virtual BoundingBox Physics_GetBoundingBox() = 0;

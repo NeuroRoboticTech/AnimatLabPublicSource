@@ -265,7 +265,7 @@ void ConstraintLimit::VerifySystemPointers()
 
 #pragma region DataAccesMethods
 
-float *ConstraintLimit::GetDataPointer(string strDataType)
+float *ConstraintLimit::GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -277,7 +277,7 @@ float *ConstraintLimit::GetDataPointer(string strDataType)
 	return NULL;
 }
 
-BOOL ConstraintLimit::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL ConstraintLimit::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 	

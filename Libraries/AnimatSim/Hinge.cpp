@@ -174,7 +174,7 @@ float Hinge::GetLimitRange()
 		return -1;
 }
 
-BOOL Hinge::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Hinge::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

@@ -145,7 +145,7 @@ void Node::VerifySystemPointers()
 		THROW_PARAM_ERROR(Al_Err_lStructureNotDefined, Al_Err_strStructureNotDefined, "Link: ", m_strID);
 }
 
-BOOL Node::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Node::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

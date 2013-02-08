@@ -168,7 +168,7 @@ void Spring::AddExternalNodeInput(float fltInput)
 }
 
 
-float *Spring::GetDataPointer(string strDataType)
+float *Spring::GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -190,7 +190,7 @@ float *Spring::GetDataPointer(string strDataType)
 	return LineBase::GetDataPointer(strDataType);
 }
 
-BOOL Spring::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Spring::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	if(LineBase::SetData(strDataType, strValue, false))
 		return true;

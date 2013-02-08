@@ -1444,7 +1444,7 @@ int IntegrateFireNeuralModule::FindElectricalListPos(string strID, BOOL bThrowEr
 
 #pragma region DataAccesMethods
 
-BOOL IntegrateFireNeuralModule::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL IntegrateFireNeuralModule::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 			
@@ -1720,7 +1720,7 @@ void IntegrateFireNeuralModule::RemoveSynapseType(string strID, BOOL bThrowError
 	}
 }
 
-BOOL IntegrateFireNeuralModule::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
+BOOL IntegrateFireNeuralModule::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
@@ -1747,7 +1747,7 @@ BOOL IntegrateFireNeuralModule::AddItem(string strItemType, string strXml, BOOL 
 	return FALSE;
 }
 
-BOOL IntegrateFireNeuralModule::RemoveItem(string strItemType, string strID, BOOL bThrowError)
+BOOL IntegrateFireNeuralModule::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 

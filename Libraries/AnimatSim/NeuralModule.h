@@ -162,7 +162,7 @@ namespace AnimatSim
 			**/
 			virtual void RemoveTargetAdapter(Adapter *lpAdapter);
 
-			virtual float *GetDataPointer(string strDataType);
+			virtual float *GetDataPointer(const string &strDataType);
 
 			virtual void Initialize();
 			virtual BOOL NeedToStep(BOOL bIncrement);

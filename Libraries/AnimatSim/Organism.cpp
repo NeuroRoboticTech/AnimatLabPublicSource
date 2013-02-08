@@ -133,7 +133,7 @@ void Organism::MinTimeStep(float &fltMin)
 
 #pragma region DataAccesMethods
 
-BOOL Organism::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Organism::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -153,7 +153,7 @@ BOOL Organism::SetData(string strDataType, string strValue, BOOL bThrowError)
 	return FALSE;
 }
 
-BOOL Organism::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
+BOOL Organism::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
@@ -182,7 +182,7 @@ BOOL Organism::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL
 	return FALSE;
 }
 
-BOOL Organism::RemoveItem(string strItemType, string strID, BOOL bThrowError)
+BOOL Organism::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 	

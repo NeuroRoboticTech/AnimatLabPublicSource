@@ -297,7 +297,7 @@ array.
 \return	float pointer of the data item. If not found then it throws an exception. 
 \exception	If	DataType is not found. 
 **/
-float *AnimatBase::GetDataPointer(string strDataType)
+float *AnimatBase::GetDataPointer(const string &strDataType)
 {
 	//If we are using the AnimatBase function then there are no data pointer, so throw an error.
 	THROW_TEXT_ERROR(Al_Err_lDataPointNotFound, Al_Err_strDataPointNotFound, ("ID: " + m_strID + " Name: " + m_strName));
@@ -328,7 +328,7 @@ developers responsibilty to know what type of data is needed and to process it a
 
 \return	true if it succeeds, false if it fails. 
 **/
-BOOL AnimatBase::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL AnimatBase::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	if(strDataType == "NAME")
 	{
@@ -381,7 +381,7 @@ void AnimatBase::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> 
 
 \return	True if a property with that exact name is found. Capilalization is not important. 
 **/
-BOOL AnimatBase::HasProperty(string strName)
+BOOL AnimatBase::HasProperty(const string &strName)
 {
 	CStdArray<string> aryNames, aryTypes;
 	QueryProperties(aryNames, aryTypes);
@@ -396,7 +396,7 @@ BOOL AnimatBase::HasProperty(string strName)
 }
 
 
-AnimatBase::AnimatPropertyType AnimatBase::PropertyType(string strName)
+AnimatBase::AnimatPropertyType AnimatBase::PropertyType(const string &strName)
 {
 	CStdArray<string> aryNames, aryTypes;
 	QueryProperties(aryNames, aryTypes);
@@ -444,7 +444,7 @@ needed initialization and adds it to the parent.
 
 \return	true if it succeeds, false if it fails. 
 **/
-BOOL AnimatBase::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
+BOOL AnimatBase::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	//If we are using the AnimatBase function then there are no data pointer, so throw an error.
 	if(bThrowError)
@@ -469,7 +469,7 @@ part, etc.. The ID is then used to delete that specific item.
 
 \return	true if it succeeds, false if it fails. 
 **/
-BOOL AnimatBase::RemoveItem(string strItemType, string strID, BOOL bThrowError)
+BOOL AnimatBase::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
 {
 	//If we are using the AnimatBase function then there are no data pointer, so throw an error.
 	if(bThrowError)

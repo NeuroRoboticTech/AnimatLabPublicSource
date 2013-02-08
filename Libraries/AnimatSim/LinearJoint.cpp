@@ -95,7 +95,7 @@ float  LinearJoint::CylinderHeight()  {return m_fltSize;}
 
 #pragma region DataAccesMethods
 
-BOOL LinearJoint::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL LinearJoint::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

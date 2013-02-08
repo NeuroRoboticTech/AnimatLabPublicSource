@@ -279,7 +279,7 @@ void VsForceStimulus::Deactivate()
 		m_lpVsBody->Part()->wakeDynamics();
 }
 
-float *VsForceStimulus::GetDataPointer(string strDataType)
+float *VsForceStimulus::GetDataPointer(const string &strDataType)
 {
 	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);
@@ -302,7 +302,7 @@ float *VsForceStimulus::GetDataPointer(string strDataType)
 	return lpData;
 } 
 
-BOOL VsForceStimulus::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL VsForceStimulus::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

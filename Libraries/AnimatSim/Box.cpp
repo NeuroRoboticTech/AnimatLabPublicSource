@@ -214,7 +214,7 @@ float Box::WidthSegmentSize() {return m_fltWidth/(float) m_iWidthSections;}
 float Box::HeightSegmentSize() {return m_fltHeight/(float) m_iHeightSections;}
 
 
-BOOL Box::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Box::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

@@ -248,7 +248,7 @@ void Stomach::StepSimulation()
 	}
 }
 
-BOOL Stomach::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Stomach::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -303,7 +303,7 @@ void Stomach::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &ar
 	aryTypes.Add("Float");
 }
 
-float *Stomach::GetDataPointer(string strDataType)
+float *Stomach::GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 

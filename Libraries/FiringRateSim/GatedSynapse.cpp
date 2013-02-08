@@ -72,7 +72,7 @@ float GatedSynapse::CalculateModulation(FiringRateModule *lpModule)
 
 #pragma region DataAccesMethods
 
-float *GatedSynapse::GetDataPointer(string strDataType)
+float *GatedSynapse::GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -82,7 +82,7 @@ float *GatedSynapse::GetDataPointer(string strDataType)
 	return Synapse::GetDataPointer(strDataType);
 }
 
-BOOL GatedSynapse::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL GatedSynapse::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

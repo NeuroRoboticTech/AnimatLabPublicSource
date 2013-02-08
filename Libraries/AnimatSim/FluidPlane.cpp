@@ -149,7 +149,7 @@ BOOL FluidPlane::AllowRotateDragY() {return FALSE;}
 
 BOOL FluidPlane::AllowRotateDragZ() {return FALSE;}
 
-BOOL FluidPlane::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL FluidPlane::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

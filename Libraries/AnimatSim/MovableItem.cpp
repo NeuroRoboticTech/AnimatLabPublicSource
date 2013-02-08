@@ -1187,7 +1187,7 @@ BOOL MovableItem::CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY,
 
 #pragma region DataAccesMethods
 
-float *MovableItem::GetDataPointer(string strDataType)
+float *MovableItem::GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -1221,7 +1221,7 @@ float *MovableItem::GetDataPointer(string strDataType)
 	return 0;
 }
 
-BOOL MovableItem::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL MovableItem::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	if(strDataType == "POSITION")
 	{

@@ -162,7 +162,7 @@ void VsMotorVelocityStimulus::Deactivate()
 	}
 }
 
-float *VsMotorVelocityStimulus::GetDataPointer(string strDataType)
+float *VsMotorVelocityStimulus::GetDataPointer(const string &strDataType)
 {
 	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);
@@ -175,7 +175,7 @@ float *VsMotorVelocityStimulus::GetDataPointer(string strDataType)
 	return lpData;
 } 
 
-BOOL VsMotorVelocityStimulus::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL VsMotorVelocityStimulus::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

@@ -713,7 +713,7 @@ void VsRigidBody::Physics_DisableCollision(RigidBody *lpBody)
 		lpUniv->disablePairIntersect(m_vxSensor, lpVsBody->Sensor());
 }
 
-float *VsRigidBody::Physics_GetDataPointer(string strDataType)
+float *VsRigidBody::Physics_GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 	RigidBody *lpBody = dynamic_cast<RigidBody *>(this);

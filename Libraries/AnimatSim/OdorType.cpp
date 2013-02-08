@@ -168,7 +168,7 @@ float OdorType::CalculateOdorValue(CStdFPoint &oSensorPos)
 	return fltVal;
 }
 
-BOOL OdorType::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL OdorType::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

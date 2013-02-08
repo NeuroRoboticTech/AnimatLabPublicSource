@@ -76,7 +76,7 @@ float TonicNeuron::CalculateIntrinsicCurrent(FiringRateModule *lpModule, float f
 
 #pragma region DataAccesMethods
 
-BOOL TonicNeuron::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL TonicNeuron::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

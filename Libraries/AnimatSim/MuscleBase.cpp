@@ -264,7 +264,7 @@ void MuscleBase::VerifySystemPointers()
 	m_gainLengthTension.VerifySystemPointers();
 }
 
-float *MuscleBase::GetDataPointer(string strDataType)
+float *MuscleBase::GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -282,7 +282,7 @@ float *MuscleBase::GetDataPointer(string strDataType)
 	return lpData;
 }
 
-BOOL MuscleBase::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL MuscleBase::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	if(LineBase::SetData(strDataType, strValue, FALSE))
 		return true;

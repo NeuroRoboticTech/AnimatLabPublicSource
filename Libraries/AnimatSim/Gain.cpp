@@ -173,7 +173,7 @@ void Gain::LowerOutput(float fltVal) {m_fltLowerOutput = fltVal;}
 **/
 float Gain::UpperOutput() {return m_fltUpperOutput;}
 
-BOOL Gain::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Gain::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	if(AnimatBase::SetData(strDataType, strValue, false))
 		return true;

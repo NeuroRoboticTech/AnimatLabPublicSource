@@ -320,7 +320,7 @@ void ContactSensor::ProcessContact(StdVector3 vPos, float fltForceMagnitude)
 	}
 }
 
-BOOL ContactSensor::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
+BOOL ContactSensor::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
@@ -337,7 +337,7 @@ BOOL ContactSensor::AddItem(string strItemType, string strXml, BOOL bThrowError,
 	return FALSE;
 }
 
-BOOL ContactSensor::RemoveItem(string strItemType, string strID, BOOL bThrowError)
+BOOL ContactSensor::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 

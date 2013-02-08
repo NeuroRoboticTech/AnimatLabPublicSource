@@ -117,13 +117,13 @@ namespace AnimatSim
 		**/
 		virtual void SetSystemPointers(Simulator *lpSim, Structure *lpStructure, NeuralModule *lpModule, Node *lpNode, BOOL bVerify);
 		virtual void VerifySystemPointers();
-		virtual float *GetDataPointer(string strDataType);
-		virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+		virtual float *GetDataPointer(const string &strDataType);
+		virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
 		virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
-		virtual BOOL HasProperty(string strName);
-		virtual AnimatPropertyType PropertyType(string strName);
-		virtual BOOL AddItem(string strItemType, string strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
-		virtual BOOL RemoveItem(string strItemType, string strID, BOOL bThrowError = TRUE);
+		virtual BOOL HasProperty(const string &strName);
+		virtual AnimatPropertyType PropertyType(const string &strName);
+		virtual BOOL AddItem(const string &strItemType, const string &strXml, BOOL bThrowError = TRUE, BOOL bDoNotInit = FALSE);
+		virtual BOOL RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError = TRUE);
 
 #pragma endregion
 

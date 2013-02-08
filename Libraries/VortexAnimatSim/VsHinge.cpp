@@ -291,7 +291,7 @@ void VsHinge::CreateJoint()
 
 #pragma region DataAccesMethods
 
-float *VsHinge::GetDataPointer(string strDataType)
+float *VsHinge::GetDataPointer(const string &strDataType)
 {
 	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);
@@ -325,7 +325,7 @@ float *VsHinge::GetDataPointer(string strDataType)
 	return lpData;
 }
 
-BOOL VsHinge::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL VsHinge::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;

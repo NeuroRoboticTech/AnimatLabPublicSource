@@ -549,7 +549,7 @@ void LinearHillMuscle::CreateJoints()
 		m_aryMuscleVelocities[i] = 0;
 }
 
-float *LinearHillMuscle::GetDataPointer(string strDataType)
+float *LinearHillMuscle::GetDataPointer(const string &strDataType)
 {
 	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);
@@ -588,7 +588,7 @@ float *LinearHillMuscle::GetDataPointer(string strDataType)
 	return lpData;
 }
 
-BOOL LinearHillMuscle::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL LinearHillMuscle::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	if(MuscleBase::SetData(strDataType, strValue, false))
 		return true;

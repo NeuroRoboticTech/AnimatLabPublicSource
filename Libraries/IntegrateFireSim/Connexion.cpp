@@ -706,7 +706,7 @@ void Connexion::VerifySystemPointers()
 
 #pragma region DataAccesMethods
 
-float *Connexion::GetDataPointer(string strDataType)
+float *Connexion::GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -722,7 +722,7 @@ float *Connexion::GetDataPointer(string strDataType)
 	return NULL;
 }
 
-BOOL Connexion::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Connexion::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 				

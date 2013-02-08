@@ -209,7 +209,7 @@ float PropertyControlAdapter::FinalValue()
 **/
 AnimatBase *PropertyControlAdapter::TargetObject() {return m_lpTargetObject;}
 
-BOOL PropertyControlAdapter::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL PropertyControlAdapter::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

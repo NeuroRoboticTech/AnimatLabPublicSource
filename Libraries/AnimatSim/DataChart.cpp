@@ -636,7 +636,7 @@ DataColumn *DataChart::FindColumn(string strID, int &iIndex, BOOL bThrowError)
 
 #pragma region DataAccesMethods
 
-BOOL DataChart::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL DataChart::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -700,7 +700,7 @@ void DataChart::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &
 	aryTypes.Add("Float");
 }
 
-BOOL DataChart::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
+BOOL DataChart::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
@@ -717,7 +717,7 @@ BOOL DataChart::AddItem(string strItemType, string strXml, BOOL bThrowError, BOO
 	return FALSE;
 }
 
-BOOL DataChart::RemoveItem(string strItemType, string strID, BOOL bThrowError)
+BOOL DataChart::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 

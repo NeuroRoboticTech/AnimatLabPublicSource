@@ -144,7 +144,7 @@ void Torus::Rings(int iVal)
 **/
 int Torus::Rings() {return m_iRings;}
 
-BOOL Torus::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Torus::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

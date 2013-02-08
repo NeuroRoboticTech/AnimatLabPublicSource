@@ -257,7 +257,7 @@ void InverseMuscleCurrent::Deactivate()
 		*m_lpExternalCurrent = *m_lpExternalCurrent - m_fltCurrent;
 }
 
-float *InverseMuscleCurrent::GetDataPointer(string strDataType)
+float *InverseMuscleCurrent::GetDataPointer(const string &strDataType)
 {
 	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);
@@ -274,7 +274,7 @@ float *InverseMuscleCurrent::GetDataPointer(string strDataType)
 	return lpData;
 }
 
-BOOL InverseMuscleCurrent::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL InverseMuscleCurrent::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	if(ExternalStimulus::SetData(strDataType, strValue, false))
 		return true;

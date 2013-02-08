@@ -130,7 +130,7 @@ void Link::VerifySystemPointers()
 		THROW_PARAM_ERROR(Al_Err_lNodeNotDefined, Al_Err_strNodeNotDefined, "Link: ", m_strID);
 }
 
-BOOL Link::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Link::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

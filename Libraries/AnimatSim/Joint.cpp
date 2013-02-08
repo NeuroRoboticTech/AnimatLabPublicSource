@@ -261,7 +261,7 @@ void Joint::StepSimulation()
 }
 
 
-float *Joint::GetDataPointer(string strDataType)
+float *Joint::GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -280,7 +280,7 @@ float *Joint::GetDataPointer(string strDataType)
 	return BodyPart::GetDataPointer(strDataType);
 }
 
-BOOL Joint::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Joint::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

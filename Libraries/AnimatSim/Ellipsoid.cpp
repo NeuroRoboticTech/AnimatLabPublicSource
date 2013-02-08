@@ -144,7 +144,7 @@ void Ellipsoid::LongSegments(int iVal)
 **/
 int Ellipsoid::LongSegments() {return m_iLongSegments;}
 
-BOOL Ellipsoid::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Ellipsoid::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

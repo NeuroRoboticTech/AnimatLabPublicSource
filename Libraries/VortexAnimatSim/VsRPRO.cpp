@@ -129,7 +129,7 @@ void VsRPRO::CreateJoint()
 
 #pragma region DataAccesMethods
 
-BOOL VsRPRO::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL VsRPRO::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;

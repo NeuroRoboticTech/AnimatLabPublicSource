@@ -250,7 +250,7 @@ void Synapse::VerifySystemPointers()
 
 #pragma region DataAccesMethods
 
-float *Synapse::GetDataPointer(string strDataType)
+float *Synapse::GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -262,7 +262,7 @@ float *Synapse::GetDataPointer(string strDataType)
 	return NULL;
 }
 
-BOOL Synapse::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Synapse::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 		
@@ -290,7 +290,7 @@ void Synapse::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &ar
 	aryTypes.Add("Float");
 }
 
-BOOL Synapse::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
+BOOL Synapse::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
@@ -308,7 +308,7 @@ BOOL Synapse::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL 
 	return FALSE;
 }
 
-BOOL Synapse::RemoveItem(string strItemType, string strID, BOOL bThrowError)
+BOOL Synapse::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 

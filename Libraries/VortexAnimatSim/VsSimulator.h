@@ -119,7 +119,7 @@ namespace VortexAnimatSim
 
 #pragma endregion
 
-		virtual float *GetDataPointer(string strDataType);
+		virtual float *GetDataPointer(const string &strDataType);
 
 		virtual void Reset(); //Resets the entire application back to the default state 
 		virtual void ResetSimulation(); //Resets the current simulation back to time 0.0

@@ -113,7 +113,7 @@ void OdorSensor::ResetSimulation()
 	m_fltOdorValue = 0;
 }
 
-BOOL OdorSensor::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL OdorSensor::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -141,7 +141,7 @@ void OdorSensor::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> 
 	aryTypes.Add("String");
 }
 
-float *OdorSensor::GetDataPointer(string strDataType)
+float *OdorSensor::GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 

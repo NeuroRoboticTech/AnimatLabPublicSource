@@ -117,7 +117,7 @@ namespace VortexAnimatSim
 			virtual void Physics_CollectData();
 			virtual void Physics_ResetSimulation();
 			virtual void Physics_AfterResetSimulation() {};
-			virtual float *Physics_GetDataPointer(string strDataType);
+			virtual float *Physics_GetDataPointer(const string &strDataType);
 			virtual void Physics_OrientNewPart(float fltXPos, float fltYPos, float fltZPos, float fltXNorm, float fltYNorm, float fltZNorm);
 			virtual void Physics_SelectedVertex(float fltXPos, float fltYPos, float fltZPos) {};
 			virtual BOOL Physics_CalculateLocalPosForWorldPos(float fltWorldX, float fltWorldY, float fltWorldZ, CStdFPoint &vLocalPos);

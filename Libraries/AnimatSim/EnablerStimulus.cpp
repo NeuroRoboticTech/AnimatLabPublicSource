@@ -151,7 +151,7 @@ void EnablerStimulus::Deactivate()
 		m_lpNode->Enabled(TRUE);
 }
 
-BOOL EnablerStimulus::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL EnablerStimulus::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 	

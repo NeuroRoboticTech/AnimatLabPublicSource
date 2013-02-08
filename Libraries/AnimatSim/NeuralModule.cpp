@@ -324,7 +324,7 @@ void NeuralModule::VerifySystemPointers()
 }
 
 
-float *NeuralModule::GetDataPointer(string strDataType)
+float *NeuralModule::GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 

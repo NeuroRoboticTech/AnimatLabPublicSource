@@ -147,8 +147,8 @@ namespace AnimatSim
 			virtual void StepSimulation();
 			virtual void Deactivate();
 
-			virtual float *GetDataPointer(string strDataType);
-			virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+			virtual float *GetDataPointer(const string &strDataType);
+			virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
 			virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 		};
 

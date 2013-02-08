@@ -390,7 +390,7 @@ void RandomNeuron::LoadKeyFrameSnapshot(byte *aryBytes, long &lIndex)
 
 #pragma region DataAccesMethods
 
-BOOL RandomNeuron::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL RandomNeuron::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

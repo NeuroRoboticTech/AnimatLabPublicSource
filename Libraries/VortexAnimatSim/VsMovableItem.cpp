@@ -197,7 +197,7 @@ void VsMovableItem::DeleteSelectedVertex()
 
 #pragma endregion
 
-float *VsMovableItem::Physics_GetDataPointer(string strDataType) {return NULL;}
+float *VsMovableItem::Physics_GetDataPointer(const string &strDataType) {return NULL;}
 
 void VsMovableItem::LocalMatrix(osg::Matrix osgLocalMT)
 {

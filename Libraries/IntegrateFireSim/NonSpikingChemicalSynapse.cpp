@@ -124,7 +124,7 @@ double NonSpikingChemicalSynapse::PreSynapticSaturationLevel() {return m_dSatura
 
 #pragma region DataAccesMethods
 
-BOOL NonSpikingChemicalSynapse::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL NonSpikingChemicalSynapse::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 			

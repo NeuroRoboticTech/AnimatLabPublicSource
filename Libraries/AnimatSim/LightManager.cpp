@@ -108,7 +108,7 @@ void LightManager::RemoveLight(string strID, BOOL bThrowError)
 	m_aryLights.RemoveAt(iPos);
 }
 
-BOOL LightManager::AddItem(string strItemType, string strXml, BOOL bThrowError, BOOL bDoNotInit)
+BOOL LightManager::AddItem(const string &strItemType, const string &strXml, BOOL bThrowError, BOOL bDoNotInit)
 {
 	string strType = Std_CheckString(strItemType);
 
@@ -125,7 +125,7 @@ BOOL LightManager::AddItem(string strItemType, string strXml, BOOL bThrowError, 
 	return FALSE;
 }
 
-BOOL LightManager::RemoveItem(string strItemType, string strID, BOOL bThrowError)
+BOOL LightManager::RemoveItem(const string &strItemType, const string &strID, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strItemType);
 

@@ -338,7 +338,7 @@ long PacemakerNeuron::CalculateSnapshotByteSize()
 
 #pragma region DataAccesMethods
 
-float *PacemakerNeuron::GetDataPointer(string strDataType)
+float *PacemakerNeuron::GetDataPointer(const string &strDataType)
 {
 	string strType = Std_CheckString(strDataType);
 
@@ -354,7 +354,7 @@ float *PacemakerNeuron::GetDataPointer(string strDataType)
 	return Neuron::GetDataPointer(strDataType);
 }
 
-BOOL PacemakerNeuron::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL PacemakerNeuron::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

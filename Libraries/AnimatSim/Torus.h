@@ -88,7 +88,7 @@ namespace AnimatSim
 				virtual void Rings(int iVal);
 				virtual int Rings();
 
-				virtual BOOL SetData(string strDataType, string strValue, BOOL bThrowError = TRUE);
+				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
 				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);
 				virtual void Load(CStdXml &oXml);
 			};

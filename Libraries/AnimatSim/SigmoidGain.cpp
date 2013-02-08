@@ -136,7 +136,7 @@ float SigmoidGain::CalculateGain(float fltInput)
 }
 
 
-BOOL SigmoidGain::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL SigmoidGain::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	if(Gain::SetData(strDataType, strValue, false))
 		return true;

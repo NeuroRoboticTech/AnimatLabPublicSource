@@ -124,7 +124,7 @@ double ElectricalSynapse::TurnOnSaturate() {return m_dSaturateV;}
 
 #pragma region DataAccesMethods
 
-BOOL ElectricalSynapse::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL ElectricalSynapse::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 			

@@ -627,7 +627,7 @@ BOOL VsSimulator::StartSimulation()
 	return TRUE;
 }
 
-float *VsSimulator::GetDataPointer(string strDataType)
+float *VsSimulator::GetDataPointer(const string &strDataType)
 {
 	float *lpData=NULL;
 	string strType = Std_CheckString(strDataType);

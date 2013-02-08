@@ -115,7 +115,7 @@ BOOL Terrain::AllowRotateDragY() {return FALSE;}
 
 BOOL Terrain::AllowRotateDragZ() {return FALSE;}
 
-BOOL Terrain::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Terrain::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

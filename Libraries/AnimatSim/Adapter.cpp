@@ -283,7 +283,7 @@ void Adapter::AddExternalNodeInput(float fltInput)
 	THROW_TEXT_ERROR(Al_Err_lOpNotDefinedForAdapter, Al_Err_strOpNotDefinedForAdapter, "AddExternalNodeInput");
 }
 
-float *Adapter::GetDataPointer(string strDataType)
+float *Adapter::GetDataPointer(const string &strDataType)
 {
 	THROW_TEXT_ERROR(Al_Err_lOpNotDefinedForAdapter, Al_Err_strOpNotDefinedForAdapter, "GetDataPointer");
 	return 0;
@@ -352,7 +352,7 @@ void Adapter::SetDestinationID(string strXml)
 	Initialize();
 }
 
-BOOL Adapter::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL Adapter::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 

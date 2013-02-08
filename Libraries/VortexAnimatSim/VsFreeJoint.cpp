@@ -71,7 +71,7 @@ void VsFreeJoint::CreateJoint()
 #pragma region DataAccesMethods
 
 
-BOOL VsFreeJoint::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL VsFreeJoint::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
 {
 	if(VsJoint::Physics_SetData(strDataType, strValue))
 		return true;
