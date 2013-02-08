@@ -1,7 +1,7 @@
 /**
-\file	EnablerStimulus.h
+\file	PropertyControlStimulus.h
 
-\brief	Declares the enabler stimulus class. 
+\brief	Declares a stimulus class that can set any property on any object in the system. 
 **/
 
 #pragma once
@@ -16,26 +16,53 @@ namespace AnimatSim
 		\author	dcofer
 		\date	3/17/2011
 		**/
-		class ANIMAT_PORT EnablerStimulus  : public ExternalStimulus
+		class ANIMAT_PORT PropertyControlStimulus  : public ExternalStimulus
 		{
 		protected:
 			/// GUID ID of the target node to enable.
-			string m_strTargetNodeID;
+			string m_strTargetID;
 
-			/// Tells whether the node is enabled while stimulus is active or not.
-			BOOL m_bEnableWhenActive;
+			/// Pointer to the target node
+			AnimatBase *m_lpTargetObject;
+
+			float m_fltPreviousSetVal;
+			float m_fltSetThreshold;
+			float m_fltInitialValue;
+			float m_fltFinalValue;
+
+			string m_strEquation;
+			CStdPostFixEval *m_lpEval;
+
+			string m_strPropertyName;
+			AnimatBase::AnimatPropertyType m_ePropertyType;
+
+			virtual void SetPropertyValue(float fltVal);
 
 		public:
-			EnablerStimulus();
-			virtual ~EnablerStimulus();
+			PropertyControlStimulus();
+			virtual ~PropertyControlStimulus();
 			
 			virtual string Type();
 
-			virtual string TargetNodeID();
-			virtual void TargetNodeID(string strID);
+			virtual string TargetID();
+			virtual void TargetID(string strID);
+						
+			virtual AnimatBase *TargetObject();
 
-			virtual BOOL EnableWhenActive();
-			virtual void EnableWhenActive(BOOL bVal);
+			virtual void PropertyName(string strPropName);
+			virtual string PropertyName();
+
+			virtual void SetThreshold(float fltThreshold);
+			virtual float SetThreshold();
+
+			virtual void InitialValue(float fltVal);
+			virtual float InitialValue();
+
+			virtual void FinalValue(float fltVal);
+			virtual float FinalValue();
+			
+			string Equation() {return m_strEquation;};
+			void Equation(string strVal);
 
 			virtual void Initialize();
 			virtual void Activate();

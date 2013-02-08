@@ -48,13 +48,30 @@ Namespace DataObjects.ExternalStimuli
         End Property
 
         <Browsable(False)> _
+        Public Overrides Property StimulatedItem() As Framework.DataObject
+            Get
+                Return m_doStimulatedItem
+            End Get
+            Set(value As Framework.DataObject)
+                If Not Util.IsTypeOf(value.GetType, GetType(DataObjects.Behavior.Node), True) Then
+                    Throw New System.Exception("Stimulated item for a node stimulus can only be a node part.")
+                End If
+
+                DisconnectItemEvents()
+                m_doStimulatedItem = value
+                Me.Node = DirectCast(m_doStimulatedItem, DataObjects.Behavior.Node)
+                Me.Organism = Me.Node.Organism
+                ConnectItemEvents()
+            End Set
+        End Property
+
+        <Browsable(False)> _
         Public Overridable Property Node() As DataObjects.Behavior.Node
             Get
                 Return m_doNode
             End Get
             Set(ByVal Value As DataObjects.Behavior.Node)
                 m_doNode = Value
-                Me.StimulatedItem = Value
             End Set
         End Property
 
@@ -138,12 +155,8 @@ Namespace DataObjects.ExternalStimuli
         Public Overrides Sub InitializeAfterLoad()
             MyBase.InitializeAfterLoad()
 
-            If m_strOrganismID.Trim.Length > 0 Then
-                Me.Organism = DirectCast(Util.Environment.Organisms(m_strOrganismID), DataObjects.Physical.Organism)
-            End If
-
-            If Not m_doOrganism Is Nothing AndAlso m_strNodeID.Trim.Length > 0 Then
-                Me.Node = m_doOrganism.FindBehavioralNode(m_strNodeID, False)
+            If m_strNodeID.Trim.Length > 0 Then
+                Me.StimulatedItem = DirectCast(Util.Simulation.FindObjectByID(m_strNodeID), DataObjects.Behavior.Node)
             End If
 
         End Sub

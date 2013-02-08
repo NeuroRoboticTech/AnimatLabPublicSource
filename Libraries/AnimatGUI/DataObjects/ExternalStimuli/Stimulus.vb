@@ -35,17 +35,17 @@ Namespace DataObjects.ExternalStimuli
 
         Protected m_aryCompatibleDataObjects As New Collections.CompatibleDataObjects(Me)
 
-        Protected m_doStimulatedItem As DragObject
+        Protected m_doStimulatedItem As Framework.DataObject
 
 #End Region
 
 #Region " Properties "
 
-        Public Overridable Property StimulatedItem() As DragObject
+        Public Overridable Property StimulatedItem() As Framework.DataObject
             Get
                 Return m_doStimulatedItem
             End Get
-            Set(value As DragObject)
+            Set(value As Framework.DataObject)
                 DisconnectItemEvents()
                 m_doStimulatedItem = value
                 ConnectItemEvents()

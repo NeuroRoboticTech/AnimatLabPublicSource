@@ -540,6 +540,8 @@ try
 		lpStimulus = new AnimatSim::ExternalStimuli::CurrentStimulus;
 	else if(strType == "VOLTAGECLAMP")
 		lpStimulus = new AnimatSim::ExternalStimuli::VoltageClamp;
+	else if(strType == "PROPERTYCONTROLSTIMULUS")
+		lpStimulus = new AnimatSim::ExternalStimuli::PropertyControlStimulus;
 	else
 	{
 		lpStimulus = NULL;

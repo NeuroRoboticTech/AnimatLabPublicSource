@@ -1,5 +1,5 @@
 /**
-\file	EnablerStimulus.cpp
+\file	PropertyControlStimulus.cpp
 
 \brief	Implements the enabler stimulus class. 
 **/
@@ -31,7 +31,7 @@
 #include "ExternalStimuliMgr.h"
 #include "ExternalStimulus.h"
 #include "ExternalInputStimulus.h"
-#include "EnablerStimulus.h"
+#include "PropertyControlStimulus.h"
 #include "KeyFrame.h"
 #include "SimulationRecorder.h"
 #include "OdorType.h"
@@ -50,9 +50,14 @@ namespace AnimatSim
 \author	dcofer
 \date	3/17/2011
 **/
-EnablerStimulus::EnablerStimulus()
+PropertyControlStimulus::PropertyControlStimulus()
 {
-	m_bEnableWhenActive = TRUE;
+	m_lpEval = NULL;
+	m_lpTargetObject = NULL;
+	m_fltSetThreshold = 0.5;
+	m_fltPreviousSetVal = 0;
+	m_fltInitialValue = 0;
+	m_fltFinalValue = 1;
 }
 
 /**
@@ -61,17 +66,20 @@ EnablerStimulus::EnablerStimulus()
 \author	dcofer
 \date	3/17/2011
 **/
-EnablerStimulus::~EnablerStimulus()
+PropertyControlStimulus::~PropertyControlStimulus()
 {
 
 try
 {
+	m_ePropertyType = AnimatBase::AnimatPropertyType::Invalid;
+	m_lpTargetObject = NULL;
+	if(m_lpEval) delete m_lpEval;
 }
 catch(...)
-{Std_TraceMsg(0, "Caught Error in desctructor of EnablerStimulus\r\n", "", -1, FALSE, TRUE);}
+{Std_TraceMsg(0, "Caught Error in desctructor of PropertyControlStimulus\r\n", "", -1, FALSE, TRUE);}
 }
 
-string EnablerStimulus::Type() {return "EnablerInput";}
+string PropertyControlStimulus::Type() {return "PropertyControlStimulus";}
 
 /**
 \brief	Gets the GUID ID of the target node that will be enabled. 
@@ -81,7 +89,7 @@ string EnablerStimulus::Type() {return "EnablerInput";}
 
 \return	GUID ID of the node. 
 **/
-string EnablerStimulus::TargetNodeID() {return m_strTargetNodeID;}
+string PropertyControlStimulus::TargetID() {return m_strTargetID;}
 
 /**
 \brief	Sets the GUID ID of the target node to enable. 
@@ -91,76 +99,288 @@ string EnablerStimulus::TargetNodeID() {return m_strTargetNodeID;}
 
 \param	strID	GUID ID. 
 **/
-void EnablerStimulus::TargetNodeID(string strID)
+void PropertyControlStimulus::TargetID(string strID)
 {
 	if(Std_IsBlank(strID)) 
 		THROW_ERROR(Al_Err_lBodyIDBlank, Al_Err_strBodyIDBlank);
-	m_strTargetNodeID = strID;
+	m_strTargetID = strID;
 }
 
 /**
-\brief	Tells if the node is enabled when active. This is used to control if we are enabling the
-node during the active period, or disabling it.
+\brief	Sets the velocity equation used to control the motor speed over time.
 
 \author	dcofer
-\date	3/17/2011
+\date	4/3/2011
 
-\return	true if it enabled while active, false otherwise. 
+\param	strVal	The post-fix velocity equation string. 
 **/
-BOOL EnablerStimulus::EnableWhenActive() {return m_bEnableWhenActive;}
+void PropertyControlStimulus::Equation(string strVal)
+{
+	//Initialize the postfix evaluator.
+	if(m_lpEval) 
+	{delete m_lpEval; m_lpEval = NULL;}
+
+	m_strEquation = strVal;
+	m_lpEval = new CStdPostFixEval;
+
+	m_lpEval->AddVariable("t");
+	m_lpEval->Equation(m_strEquation);
+}
+
 
 /**
-\brief	Sets whether the node is enabled when active. This is used to control if we are enabling the
-node during the active period, or disabling it.
+\brief	Sets the name of the property that this adapter will be setting.
 
 \author	dcofer
-\date	3/17/2011
+\date	2/6/2013
 
-\param	bVal	true to enable when active. 
+\return	nothing.
 **/
-void EnablerStimulus::EnableWhenActive(BOOL bVal) {m_bEnableWhenActive = bVal;}
+void PropertyControlStimulus::PropertyName(string strPropName)
+{
+	//Reset the property name so we can get the property type setup correctly.
+	//If it is not set then we need to assume that they will set it later.
+	//Make sure the property type is set to invalid so the step sim method knows this.
+	if(m_lpTargetObject && !Std_IsBlank(strPropName))
+	{
+		if(Std_Trim(strPropName).length() == 0)
+			THROW_PARAM_ERROR(Al_Err_lPropertyNameBlank, Al_Err_strPropertyNameBlank, "Adapter ID", m_strID);
 
-void EnablerStimulus::Initialize()
+		if(!m_lpTargetObject->HasProperty(strPropName))
+			THROW_PARAM_ERROR(Al_Err_lTargetDoesNotHaveProperty, Al_Err_strTargetDoesNotHaveProperty, "Property name", strPropName);
+
+		AnimatBase::AnimatPropertyType ePropertyType = m_lpTargetObject->PropertyType(strPropName);
+		if(!(ePropertyType != AnimatBase::AnimatPropertyType::Boolean || ePropertyType != AnimatBase::AnimatPropertyType::Integer || ePropertyType != AnimatBase::AnimatPropertyType::Float))
+			THROW_PARAM_ERROR(Al_Err_lTargetInvalidPropertyType, Al_Err_strTargetInvalidPropertyType, "Property name", strPropName);
+
+		m_ePropertyType = ePropertyType;
+	}
+	else
+		m_ePropertyType = AnimatBase::AnimatPropertyType::Invalid;
+
+	m_strPropertyName = strPropName;
+}
+
+/**
+\brief	Gets the name of the property that this adapter will be setting.
+
+\author	dcofer
+\date	2/6/2013
+
+\return	Name of property that will be set.
+**/
+string PropertyControlStimulus::PropertyName() 
+{return m_strPropertyName;}
+
+/**
+\brief	Sets the threshold used for setting the value on the target object.
+
+\description If the absolute value of the current value - the last value when set is exceeded then
+this will trigger the adapter to set the value again.
+
+\author	dcofer
+\date	2/6/2013
+
+\return	Pointer to the target object.
+**/
+void PropertyControlStimulus::SetThreshold(float fltThreshold)
+{
+	if(fltThreshold < 0)
+		THROW_PARAM_ERROR(Al_Err_lInvalidSetThreshold, Al_Err_strInvalidSetThreshold, "Threshold", fltThreshold);
+
+	m_fltSetThreshold = fltThreshold;
+}
+
+/**
+\brief	Gets the threshold value used for determining when to set the value on the target object.
+
+\author	dcofer
+\date	2/6/2013
+
+\return	threshold value.
+**/
+float PropertyControlStimulus::SetThreshold()
+{return m_fltSetThreshold;}
+
+/**
+\brief	Sets the initial value used to set this property when the simulation starts.
+
+\author	dcofer
+\date	2/6/2013
+
+\return Nothing.
+**/
+void PropertyControlStimulus::InitialValue(float fltVal)
+{
+	m_fltInitialValue = fltVal;
+	m_fltPreviousSetVal = fltVal;
+}
+
+/**
+\brief	Gets vthe initial value used to set this property when the simulation starts.
+
+\author	dcofer
+\date	2/6/2013
+
+\return	Initial value.
+**/
+float PropertyControlStimulus::InitialValue()
+{return m_fltInitialValue;}
+
+/**
+\brief	Sets the final value used to set this property when the simulation ends.
+
+\author	dcofer
+\date	2/6/2013
+
+\return	Nothing.
+**/
+void PropertyControlStimulus::FinalValue(float fltVal)
+{
+	m_fltFinalValue = fltVal;
+}
+
+/**
+\brief	Gets the final value used to set this property when the simulation ends.
+
+\author	dcofer
+\date	2/6/2013
+
+\return	final value.
+**/
+float PropertyControlStimulus::FinalValue()
+{return m_fltFinalValue;}
+
+/**
+\brief	Gets the target object.
+
+\author	dcofer
+\date	2/6/2013
+
+\return	Pointer to the target object.
+**/
+AnimatBase *PropertyControlStimulus::TargetObject() {return m_lpTargetObject;}
+
+void PropertyControlStimulus::Initialize()
 {
 	ExternalStimulus::Initialize();
 
-	m_lpNode = dynamic_cast<Node *>(m_lpSim->FindByID(m_strTargetNodeID));
+	m_lpTargetObject = m_lpSim->FindByID(m_strTargetID);
+	if(!m_lpTargetObject)
+		THROW_PARAM_ERROR(Al_Err_lNodeNotFound, Al_Err_strNodeNotFound, "ID: ", m_strTargetID);
+
+	PropertyName(m_strPropertyName);
+
+	m_fltPreviousSetVal = m_fltInitialValue;
 }
 
-void EnablerStimulus::Activate()
+void PropertyControlStimulus::Activate()
 {
 	ExternalStimulus::Activate();
 
-	if(m_bEnableWhenActive)
-		m_lpNode->Enabled(TRUE);
-	else
-		m_lpNode->Enabled(FALSE);
+	m_fltPreviousSetVal = m_fltInitialValue;
+	if(m_ePropertyType != AnimatBase::AnimatPropertyType::Invalid)
+		m_lpTargetObject->SetData(m_strPropertyName, STR(m_fltPreviousSetVal));
 }
 
-void EnablerStimulus::StepSimulation()
+void PropertyControlStimulus::SetPropertyValue(float fltVal)
 {
+	//If they have not set the property name yet then we cannot set the property value
+	if(m_ePropertyType != AnimatBase::AnimatPropertyType::Invalid)
+	{
+		float fltDiff = fltVal - m_fltPreviousSetVal;
+		if(fabs(fltDiff) > m_fltSetThreshold)
+		{
+			m_fltPreviousSetVal = fltVal;
+
+			if(m_ePropertyType == AnimatBase::AnimatPropertyType::Boolean)
+			{
+				if(fltDiff > 0)
+					m_lpTargetObject->SetData(m_strPropertyName, "1");
+				else
+					m_lpTargetObject->SetData(m_strPropertyName, "0");
+			}
+			else if(m_ePropertyType == AnimatBase::AnimatPropertyType::Integer)
+			{
+				int iVal = (int) fltVal;
+				m_lpTargetObject->SetData(m_strPropertyName, STR(iVal));
+			}
+			else
+				m_lpTargetObject->SetData(m_strPropertyName, STR(fltVal));
+		}
+	}
 }
 
-void EnablerStimulus::Deactivate()
+void PropertyControlStimulus::StepSimulation()
+{
+
+	try
+	{
+		if(m_bEnabled)
+		{
+			//IMPORTANT! This stimulus applies a stimulus to the physics engine, so it should ONLY be called once for every time the physcis
+			//engine steps. If you do not do this then the you will accumulate forces being applied during the neural steps, and the total
+			//for you apply will be greater than what it should be. To get around this we will only call the code in step simulation if
+			//the physics step count is equal to the step interval.
+			if(m_lpSim->PhysicsStepCount() == m_lpSim->PhysicsStepInterval())
+			{
+				m_lpEval->SetVariable("t", (m_lpSim->Time()-m_fltStartTime) );
+
+				float fltInput = m_lpEval->Solve();
+
+				SetPropertyValue(fltInput);
+			}
+		}
+	}
+	catch(...)
+	{
+		LOG_ERROR("Error Occurred while setting Joint Velocity");
+	}
+}
+
+void PropertyControlStimulus::Deactivate()
 {
 	ExternalStimulus::Deactivate();
 
-	if(m_bEnableWhenActive)
-		m_lpNode->Enabled(FALSE);
-	else
-		m_lpNode->Enabled(TRUE);
+	m_fltPreviousSetVal = m_fltInitialValue;
+	if(m_ePropertyType != AnimatBase::AnimatPropertyType::Invalid)
+		m_lpTargetObject->SetData(m_strPropertyName, STR(m_fltFinalValue));
 }
 
-BOOL EnablerStimulus::SetData(string strDataType, string strValue, BOOL bThrowError)
+BOOL PropertyControlStimulus::SetData(string strDataType, string strValue, BOOL bThrowError)
 {
 	string strType = Std_CheckString(strDataType);
 	
 	if(ExternalStimulus::SetData(strDataType, strValue, FALSE))
 		return TRUE;
 
-	if(strType == "ENABLEWHENACTIVE")
+	if(strType == "PROPERTYNAME")
 	{
-		EnableWhenActive(Std_ToBool(strValue));
+		PropertyName(strValue);
+		return TRUE;
+	}
+
+	if(strType == "SETTHRESHOLD")
+	{
+		SetThreshold(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "INITIALVALUE")
+	{
+		InitialValue(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "FINALVALUE")
+	{
+		FinalValue(atof(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "EQUATION")
+	{
+		Equation(strValue);
 		return TRUE;
 	}
 
@@ -171,22 +391,39 @@ BOOL EnablerStimulus::SetData(string strDataType, string strValue, BOOL bThrowEr
 	return FALSE;
 }
 
-void EnablerStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
+void PropertyControlStimulus::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes)
 {
 	ExternalStimulus::QueryProperties(aryNames, aryTypes);
 
-	aryNames.Add("EnableWhenActive");
-	aryTypes.Add("Boolean");
+
+	aryNames.Add("PropertyName");
+	aryTypes.Add("String");
+
+	aryNames.Add("SetThreshold");
+	aryTypes.Add("Float");
+
+	aryNames.Add("InitialValue");
+	aryTypes.Add("Float");
+
+	aryNames.Add("FinalValue");
+	aryTypes.Add("Float");
+
+	aryNames.Add("Equation");
+	aryTypes.Add("String");
 }
 
-void EnablerStimulus::Load(CStdXml &oXml)
+void PropertyControlStimulus::Load(CStdXml &oXml)
 {
 	ActivatedItem::Load(oXml);
 
 	oXml.IntoElem();  //Into Simulus Element
 
-	TargetNodeID(oXml.GetChildString("BodyID"));
-	EnableWhenActive(oXml.GetChildBool("EnableWhenActive", m_bEnableWhenActive));
+	TargetID(oXml.GetChildString("TargetID"));
+	PropertyName(oXml.GetChildString("PropertyName", m_strPropertyName));
+	SetThreshold(oXml.GetChildFloat("SetThreshold", m_fltSetThreshold));
+	InitialValue(oXml.GetChildFloat("InitialValue", m_fltInitialValue));
+	FinalValue(oXml.GetChildFloat("FinalValue", m_fltFinalValue));
+	Equation(oXml.GetChildString("Equation", m_strEquation));
 
 	oXml.OutOfElem(); //OutOf Simulus Element
 

@@ -428,10 +428,11 @@ Namespace DataObjects.Behavior.Nodes
             If Not m_thLinkedObject Is Nothing AndAlso Not m_thLinkedObject.Item Is Nothing Then
                 oXml.AddChildElement("LinkedDataObjectID", m_thLinkedObject.Item.ID)
                 oXml.AddChildElement("LinkedDataObjectProperty", m_thLinkedProperty.PropertyName)
-                oXml.AddChildElement("SetThreshold", m_fltSetThreshold)
-                oXml.AddChildElement("InitialValue", m_fltInitialValue)
-                oXml.AddChildElement("FinalValue", m_fltFinalValue)
             End If
+
+            oXml.AddChildElement("SetThreshold", m_fltSetThreshold)
+            oXml.AddChildElement("InitialValue", m_fltInitialValue)
+            oXml.AddChildElement("FinalValue", m_fltFinalValue)
 
             oXml.OutOfElem() ' Outof Node Element
         End Sub

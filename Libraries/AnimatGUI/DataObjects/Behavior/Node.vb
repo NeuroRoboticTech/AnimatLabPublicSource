@@ -1038,9 +1038,8 @@ Namespace DataObjects.Behavior
             frmStimulusType.CompatibleStimuli = Me.CompatibleStimuli
 
             If frmStimulusType.ShowDialog() = DialogResult.OK Then
-                Dim doStimulus As DataObjects.ExternalStimuli.NodeStimulus = DirectCast(frmStimulusType.SelectedStimulus.Clone(frmStimulusType.SelectedStimulus.Parent, False, Nothing), DataObjects.ExternalStimuli.NodeStimulus)
-                doStimulus.Organism = Me.Organism
-                doStimulus.Node = Me
+                Dim doStimulus As DataObjects.ExternalStimuli.Stimulus = DirectCast(frmStimulusType.SelectedStimulus.Clone(frmStimulusType.SelectedStimulus.Parent, False, Nothing), DataObjects.ExternalStimuli.Stimulus)
+                doStimulus.StimulatedItem = Me
 
                 Util.Simulation.NewStimuliIndex = Util.Simulation.NewStimuliIndex + 1
                 doStimulus.Name = "Stimulus_" & Util.Simulation.NewStimuliIndex

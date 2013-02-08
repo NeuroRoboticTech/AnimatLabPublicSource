@@ -48,13 +48,30 @@ Namespace DataObjects.ExternalStimuli
         End Property
 
         <Browsable(False)> _
+        Public Overrides Property StimulatedItem() As Framework.DataObject
+            Get
+                Return m_doStimulatedItem
+            End Get
+            Set(value As Framework.DataObject)
+                If Not Util.IsTypeOf(value.GetType, GetType(DataObjects.Physical.BodyPart), True) Then
+                    Throw New System.Exception("Stimulated item for a body part stimulus can only be a body part.")
+                End If
+
+                DisconnectItemEvents()
+                m_doStimulatedItem = value
+                Me.BodyPart = DirectCast(m_doStimulatedItem, DataObjects.Physical.BodyPart)
+                Me.PhysicalStructure = Me.BodyPart.ParentStructure
+                ConnectItemEvents()
+            End Set
+        End Property
+
+        <Browsable(False)> _
         Public Overridable Property BodyPart() As DataObjects.Physical.BodyPart
             Get
                 Return m_doBodyPart
             End Get
             Set(ByVal Value As DataObjects.Physical.BodyPart)
                 m_doBodyPart = Value
-                Me.StimulatedItem = Value
             End Set
         End Property
 
@@ -138,15 +155,8 @@ Namespace DataObjects.ExternalStimuli
         Public Overrides Sub InitializeAfterLoad()
             MyBase.InitializeAfterLoad()
 
-            If m_strStructureID.Trim.Length > 0 Then
-                Dim objStruct As Object = Util.Environment.FindStructureFromAll(m_strStructureID)
-                If Not objStruct Is Nothing Then
-                    Me.PhysicalStructure = DirectCast(objStruct, DataObjects.Physical.PhysicalStructure)
-                End If
-            End If
-
-            If Not m_doStructure Is Nothing AndAlso m_strPartID.Trim.Length > 0 Then
-                Me.BodyPart = m_doStructure.FindBodyPart(m_strPartID, False)
+            If m_strPartID.Trim.Length > 0 Then
+                Me.StimulatedItem = DirectCast(Util.Simulation.FindObjectByID(m_strPartID), DataObjects.Physical.BodyPart)
             End If
         End Sub
 

@@ -252,9 +252,16 @@ void PropertyControlAdapter::QueryProperties(CStdArray<string> &aryNames, CStdAr
 	Adapter::QueryProperties(aryNames, aryTypes);
 
 	aryNames.Add("PropertyName");
+	aryTypes.Add("String");
+
 	aryNames.Add("SetThreshold");
+	aryTypes.Add("Float");
+
 	aryNames.Add("InitialValue");
+	aryTypes.Add("Float");
+
 	aryNames.Add("FinalValue");
+	aryTypes.Add("Float");
 }
 
 void PropertyControlAdapter::ResetSimulation()

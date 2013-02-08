@@ -363,6 +363,7 @@
     <Compile Include="DataObjects\ExternalStimuli\NodeStimulus.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataObjects\ExternalStimuli\PropertyControlStimulus.vb" />
     <Compile Include="DataObjects\ExternalStimuli\RepetitiveCurrent.vb">
       <SubType>Code</SubType>
     </Compile>

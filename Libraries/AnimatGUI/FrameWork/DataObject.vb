@@ -724,6 +724,37 @@ Namespace Framework
         End Function
 
         Public Overridable Sub InitAfterAppStart()
+            AddCompatibleStimulusType("PropertyControlStimulus")
+        End Sub
+
+
+        Protected Overridable Sub AddCompatibleStimulusType(ByVal strStimulusType As String)
+            AddCompatibleStimulusType(strStimulusType, Me)
+        End Sub
+
+        Protected Overridable Sub AddCompatibleStimulusType(ByVal strStimulusType As String, ByVal doDataObject As Framework.DataObject)
+
+            strStimulusType = strStimulusType.ToLower.Trim
+            For Each doStim As DataObjects.ExternalStimuli.Stimulus In Util.Application.ExternalStimuli
+                'If the control types match then add this object to the list for this stimulus
+                If doStim.ControlType.ToLower.Trim = strStimulusType Then
+                    doStim.AddCompatibleDataObject(doDataObject)
+                End If
+            Next
+
+        End Sub
+
+        Protected Overridable Sub RemoveCompatibleStimulus(ByVal strStimulusType As String)
+
+            strStimulusType = strStimulusType.ToLower.Trim
+            For Each doStim As DataObjects.ExternalStimuli.Stimulus In Util.Application.ExternalStimuli
+                'If the control types match then add this object to the list for this stimulus
+                If doStim.ControlType.ToLower.Trim = strStimulusType Then
+                    If Not doStim.CompatibleDataObjects Is Nothing AndAlso doStim.CompatibleDataObjects.Contains(Me.GetType.FullName) Then
+                        doStim.CompatibleDataObjects.Remove(Me.GetType.FullName)
+                    End If
+                End If
+            Next
 
         End Sub
 

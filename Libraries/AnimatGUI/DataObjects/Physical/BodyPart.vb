@@ -331,9 +331,8 @@ Namespace DataObjects.Physical
             frmStimulusType.CompatibleStimuli = Me.CompatibleStimuli
 
             If frmStimulusType.ShowDialog(Util.Application) = DialogResult.OK Then
-                Dim doStimulus As DataObjects.ExternalStimuli.BodyPartStimulus = DirectCast(frmStimulusType.SelectedStimulus.Clone(Util.Application.FormHelper, False, Nothing), DataObjects.ExternalStimuli.BodyPartStimulus)
-                doStimulus.PhysicalStructure = Me.ParentStructure
-                doStimulus.BodyPart = Me
+                Dim doStimulus As DataObjects.ExternalStimuli.Stimulus = DirectCast(frmStimulusType.SelectedStimulus.Clone(Util.Application.FormHelper, False, Nothing), DataObjects.ExternalStimuli.Stimulus)
+                doStimulus.StimulatedItem = Me
 
                 Util.Simulation.NewStimuliIndex = Util.Simulation.NewStimuliIndex + 1
                 doStimulus.Name = "Stimulus_" & Util.Simulation.NewStimuliIndex

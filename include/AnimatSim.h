@@ -127,6 +127,7 @@ namespace AnimatSim
 		class EnablerStimulus;
 		class VoltageClamp;
 		class InverseMuscleCurrent;
+		class PropertyControlStimulus;
 	}
 
 	namespace Gains
@@ -235,6 +236,7 @@ using namespace AnimatSim::Recording;
 #include "EnablerStimulus.h"
 #include "VoltageClamp.h"
 #include "InverseMuscleCurrent.h"
+#include "PropertyControlStimulus.h"
 #include "KeyFrame.h"
 #include "SimulationRecorder.h"
 #include "MaterialType.h"

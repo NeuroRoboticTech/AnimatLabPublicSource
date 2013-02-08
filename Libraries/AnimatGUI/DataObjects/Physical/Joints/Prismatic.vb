@@ -187,7 +187,6 @@ Namespace DataObjects.Physical.Joints
         Public Overrides Sub InitAfterAppStart()
             MyBase.InitAfterAppStart()
             AddCompatibleStimulusType("MotorVelocity")
-            AddCompatibleStimulusType("EnablerInput")
             AddCompatibleStimulusType("PositionClamp")
         End Sub
 
