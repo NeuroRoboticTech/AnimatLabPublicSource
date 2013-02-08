@@ -364,6 +364,9 @@ Namespace DataObjects
                 m_xnProjectXml.RemoveNode(xnRigidBody, "TranslationMatrix", False)
                 m_xnProjectXml.RemoveNode(xnRigidBody, "CombinedTransformationMatrix", False)
 
+                Dim strID As String = m_xnProjectXml.GetSingleNodeValue(xnRigidBody, "ID")
+                m_hashRigidBodies.Add(strID, xnRigidBody)
+
             End Sub
 
             Protected Overridable Sub ModifyRigidBodyDrag(ByVal xnRigidBody As XmlNode)
@@ -959,6 +962,8 @@ Namespace DataObjects
                         ModifyJointStatic(xnJoint)
                 End Select
 
+                Dim strID As String = m_xnProjectXml.GetSingleNodeValue(xnJoint, "ID")
+                m_hashJoints.Add(strID, xnJoint)
 
             End Sub
 
@@ -1521,9 +1526,48 @@ Namespace DataObjects
 
                 Dim aryReplaceText As Hashtable = CreateReplaceStringList()
 
-                m_xnProjectXml.AppendNode(xnSimNode, xnStimuli, "Stimuli", aryReplaceText)
+                Dim xnNewStimuliNode As XmlNode = m_xnProjectXml.AppendNode(xnSimNode, xnStimuli, "Stimuli", aryReplaceText)
 
                 m_xnProjectXml.RemoveNode(xnProjectNode, "Stimuli")
+
+                For Each xnStimulus As XmlNode In xnNewStimuliNode.ChildNodes
+                    Dim strClass As String = m_xnProjectXml.GetSingleNodeValue(xnStimulus, "ClassName").ToUpper
+
+                    If strClass = "ANIMATGUI.DATAOBJECTS.EXTERNALSTIMULI.ENABLER" Then
+                        ModifyEnablerStimulus(xnProjectNode, xnSimNode, xnStimulus, aryReplaceText)
+                    End If
+                Next
+
+            End Sub
+
+            Protected Overridable Sub ModifyEnablerStimulus(ByVal xnProjectNode As XmlNode, ByVal xnSimNode As XmlNode, ByVal xnNewStimuli As XmlNode, ByVal aryReplaceText As Hashtable)
+
+                Dim bEnabledWhenActive As Boolean = CBool(m_xnProjectXml.GetSingleNodeValue(xnNewStimuli, "EnableWhenActive"))
+                Dim strPartID As String = m_xnProjectXml.GetSingleNodeValue(xnNewStimuli, "PartID")
+
+                m_xnProjectXml.RemoveNode(xnNewStimuli, "ClassName")
+                m_xnProjectXml.RemoveNode(xnNewStimuli, "EnableWhenActive")
+                m_xnProjectXml.RemoveNode(xnNewStimuli, "PartID")
+                m_xnProjectXml.RemoveNode(xnNewStimuli, "StructureID")
+                m_xnProjectXml.RemoveNode(xnNewStimuli, "Equation")
+
+                Dim strPropertyName As String = "Enabled"
+                If m_hashJoints.ContainsKey(strPartID) Then strPropertyName = "EnableMotor"
+
+                m_xnProjectXml.AddNodeValue(xnNewStimuli, "ClassName", "AnimatGUI.DataObjects.ExternalStimuli.PropertyControlStimulus")
+                m_xnProjectXml.AddNodeValue(xnNewStimuli, "LinkedDataObjectID", strPartID)
+                m_xnProjectXml.AddNodeValue(xnNewStimuli, "LinkedDataObjectProperty", strPropertyName)
+                m_xnProjectXml.AddNodeValue(xnNewStimuli, "SetThreshold", "0.5")
+
+                If bEnabledWhenActive Then
+                    m_xnProjectXml.AddNodeValue(xnNewStimuli, "InitialValue", "1")
+                    m_xnProjectXml.AddNodeValue(xnNewStimuli, "StimulusValue", "1")
+                    m_xnProjectXml.AddNodeValue(xnNewStimuli, "FinalValue", "0")
+                Else
+                    m_xnProjectXml.AddNodeValue(xnNewStimuli, "InitialValue", "0")
+                    m_xnProjectXml.AddNodeValue(xnNewStimuli, "StimulusValue", "0")
+                    m_xnProjectXml.AddNodeValue(xnNewStimuli, "FinalValue", "1")
+                End If
 
             End Sub
 

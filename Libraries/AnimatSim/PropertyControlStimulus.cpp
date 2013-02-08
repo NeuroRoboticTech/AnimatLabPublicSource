@@ -426,7 +426,6 @@ void PropertyControlStimulus::Load(CStdXml &oXml)
 	Equation(oXml.GetChildString("Equation", m_strEquation));
 
 	oXml.OutOfElem(); //OutOf Simulus Element
-
 }
 
 	}			//ExternalStimuli

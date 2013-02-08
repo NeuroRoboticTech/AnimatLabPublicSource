@@ -37,9 +37,9 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>1</MajorInterval>
+<MajorInterval>200</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>Seconds</TimeScale>
+<TimeScale>MilliSeconds</TimeScale>
 </Form>
 </DockingForms>
 <ChildForms>
@@ -87,7 +87,7 @@
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Stimulus_1</Name>
+<Name>Node_1_Stim</Name>
 <ID>5ce86244-e9e5-4bde-9403-b56778a4bfb3</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
 <EndTime Value="10" Scale="None" Actual="10"/>
@@ -109,7 +109,7 @@
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.Enabler</ClassName>
-<Name>Stimulus_1</Name>
+<Name>Enabler_Stim</Name>
 <ID>6ad070d5-0d1a-42bd-a643-78e726b8fde8</ID>
 <StartTime Value="2" Scale="None" Actual="2"/>
 <EndTime Value="5" Scale="None" Actual="5"/>
@@ -125,7 +125,7 @@
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Stimulus_2</Name>
+<Name>Node_2_Stim</Name>
 <ID>d3d4b27b-cd01-4f9c-b6eb-52e43ae4c26c</ID>
 <StartTime Value="5" Scale="None" Actual="5"/>
 <EndTime Value="10" Scale="None" Actual="10"/>

@@ -31,6 +31,9 @@ Namespace DataObjects
 
         Protected m_xnProjectXml As New Framework.XmlDom
 
+        Protected m_hashRigidBodies As New Hashtable
+        Protected m_hashJoints As New Hashtable
+
         Public MustOverride ReadOnly Property ConvertFrom() As Single
         Public MustOverride ReadOnly Property ConvertTo() As Single
 
