@@ -56,6 +56,8 @@ Namespace TypeHelpers
             Dim tnRoot As Crownwood.DotNetMagic.Controls.Node = Util.Simulation.CreateObjectListTreeView(Nothing, Nothing, mgrWorkspaceImages)
             tvTree.Nodes.Add(tnRoot)
 
+            SelectDefaultNode(tvTree, tnRoot)
+
             tvTree.Width = 300
             tvTree.ExpandAll()
 
@@ -63,6 +65,26 @@ Namespace TypeHelpers
 
             tvTree.ResumeLayout()
             tvTree.Invalidate()
+
+        End Sub
+
+        Protected Sub SelectDefaultNode(ByVal tvTree As Crownwood.DotNetMagic.Controls.TreeControl, ByVal tnNode As Crownwood.DotNetMagic.Controls.Node)
+
+            If Not tnNode Is Nothing AndAlso Not tnNode.Tag Is Nothing AndAlso Util.IsTypeOf(tnNode.Tag.GetType, GetType(LinkedDataObjectTree), False) Then
+                Dim doItem As LinkedDataObjectTree = DirectCast(tnNode.Tag, LinkedDataObjectTree)
+
+                If Not doItem Is Nothing AndAlso Not doItem.Item Is Nothing AndAlso doItem.Item Is m_doItem Then
+                    tvTree.SelectNode(tnNode)
+                    Return
+                End If
+            End If
+
+            For Each tnChildNode As Crownwood.DotNetMagic.Controls.Node In tnNode.Nodes
+                SelectDefaultNode(tvTree, tnChildNode)
+                If Not tvTree.SelectedNode Is Nothing Then
+                    Return
+                End If
+            Next
 
         End Sub
 

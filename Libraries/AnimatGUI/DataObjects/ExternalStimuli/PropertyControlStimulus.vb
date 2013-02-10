@@ -60,6 +60,7 @@ Namespace DataObjects.ExternalStimuli
                 m_thLinkedObject = Value
 
                 If Not m_thLinkedObject Is Nothing AndAlso Not m_thLinkedObject.Item Is m_doStimulatedItem Then
+                    m_thLinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(Nothing)
                     Me.StimulatedItem = m_thLinkedObject.Item
                 End If
             End Set
@@ -82,7 +83,7 @@ Namespace DataObjects.ExternalStimuli
         End Property
 
         <Browsable(False)> _
-        Public Overridable ReadOnly Property LinkedPropertyName() As String
+        Public Overridable Property LinkedPropertyName() As String
             Get
                 If Not m_thLinkedProperty Is Nothing AndAlso Not m_thLinkedProperty.PropertyName Is Nothing Then
                     Return m_thLinkedProperty.PropertyName
@@ -90,6 +91,13 @@ Namespace DataObjects.ExternalStimuli
                     Return ""
                 End If
             End Get
+            Set(value As String)
+                If m_thLinkedObject Is Nothing OrElse m_thLinkedObject.Item Is Nothing Then
+                    Throw New System.Exception("You cannot set the linked object property name until the linked object is set.")
+                End If
+
+                Me.LinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(m_thLinkedObject.Item, value)
+            End Set
         End Property
 
         <Browsable(False)> _
@@ -322,6 +330,21 @@ Namespace DataObjects.ExternalStimuli
 
         End Sub
 
+        Public Overrides Sub Automation_SetLinkedItem(ByVal strItemPath As String, ByVal strLinkedItemPath As String)
+
+            Dim tnLinkedNode As Crownwood.DotNetMagic.Controls.Node = Util.FindTreeNodeByPath(strLinkedItemPath, Util.ProjectWorkspace.TreeView.Nodes)
+
+            If tnLinkedNode Is Nothing OrElse tnLinkedNode.Tag Is Nothing OrElse Not Util.IsTypeOf(tnLinkedNode.Tag.GetType, GetType(Framework.DataObject), False) Then
+                Throw New System.Exception("The path to the specified linked node was not the correct node type.")
+            End If
+
+            Dim doLinkedObject As Framework.DataObject = DirectCast(tnLinkedNode.Tag, Framework.DataObject)
+
+            Me.LinkedObject = New TypeHelpers.LinkedDataObjectTree(doLinkedObject)
+
+            Util.ProjectWorkspace.RefreshProperties()
+        End Sub
+
 #Region " DataObject Methods "
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
@@ -381,7 +404,7 @@ Namespace DataObjects.ExternalStimuli
 
             If Not m_thLinkedObject Is Nothing AndAlso Not m_thLinkedObject.Item Is Nothing Then
                 oXml.AddChildElement("LinkedDataObjectID", m_thLinkedObject.Item.ID)
-                oXml.AddChildElement("LinkedDataObjectProperty", m_thLinkedProperty.PropertyName)
+                oXml.AddChildElement("LinkedDataObjectProperty", Me.LinkedPropertyName)
             End If
 
             oXml.AddChildElement("SetThreshold", m_fltSetThreshold)

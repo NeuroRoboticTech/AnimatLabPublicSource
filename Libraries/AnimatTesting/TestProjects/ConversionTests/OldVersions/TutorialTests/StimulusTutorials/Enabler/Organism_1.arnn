@@ -54,12 +54,12 @@
 <Consolidation>1</Consolidation>
 </SpikingSynapse>
 <SpikingSynapse>
-<Name>Depolarizing IPSP</Name>
+<Name>Hyperpolarizing IPSP</Name>
 <ID>2</ID>
-<Equil>-55</Equil>
+<Equil>-70</Equil>
 <SynAmp>0.5</SynAmp>
-<Decay>3</Decay>
-<RelFacil>1</RelFacil>
+<Decay>10</Decay>
+<RelFacil>1.5</RelFacil>
 <FacilDecay>100</FacilDecay>
 <VoltDep>False</VoltDep>
 <MaxRelCond>5</MaxRelCond>
@@ -94,12 +94,12 @@
 <Consolidation>1</Consolidation>
 </SpikingSynapse>
 <SpikingSynapse>
-<Name>Hyperpolarizing IPSP</Name>
+<Name>Depolarizing IPSP</Name>
 <ID>4</ID>
-<Equil>-70</Equil>
+<Equil>-55</Equil>
 <SynAmp>0.5</SynAmp>
-<Decay>10</Decay>
-<RelFacil>1.5</RelFacil>
+<Decay>3</Decay>
+<RelFacil>1</RelFacil>
 <FacilDecay>100</FacilDecay>
 <VoltDep>False</VoltDep>
 <MaxRelCond>5</MaxRelCond>
@@ -232,7 +232,7 @@
 <Source>2</Source>
 <Target>1</Target>
 <Type>0</Type>
-<ID>4</ID>
+<ID>2</ID>
 <Delay>0</Delay>
 <GFacilCx>5</GFacilCx>
 <G>5</G>

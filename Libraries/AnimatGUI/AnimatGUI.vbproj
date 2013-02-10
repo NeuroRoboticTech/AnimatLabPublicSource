@@ -1380,6 +1380,10 @@
     <EmbeddedResource Include="Graphics\BodyPlan\FreeJoint_SelectType.gif" />
     <EmbeddedResource Include="Graphics\BodyPlan\FreeJoint_Treeview.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\BehavioralEditor\PropertyControlNode.gif" />
+    <EmbeddedResource Include="Graphics\BehavioralEditor\PropertyControlNode_Treeview.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PreBuildEvent />

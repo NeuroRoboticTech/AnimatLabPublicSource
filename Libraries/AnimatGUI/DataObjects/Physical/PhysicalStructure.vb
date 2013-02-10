@@ -527,10 +527,12 @@ Namespace DataObjects.Physical
                 m_dbRoot.CreateObjectListTreeView(Me, tnBodyPlanNode, mgrImageList)
             End If
 
-            Dim tnCollisionPairs As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Collision Pairs", "AnimatGUI.DefaultObject.gif", "", mgrImageList)
-            For Each doObj As Framework.DataObject In m_aryCollisionExclusionPairs
-                doObj.CreateObjectListTreeView(Me, tnCollisionPairs, mgrImageList)
-            Next
+            If m_aryCollisionExclusionPairs.Count > 0 Then
+                Dim tnCollisionPairs As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Collision Pairs", "AnimatGUI.DefaultObject.gif", "", mgrImageList)
+                For Each doObj As Framework.DataObject In m_aryCollisionExclusionPairs
+                    doObj.CreateObjectListTreeView(Me, tnCollisionPairs, mgrImageList)
+                Next
+            End If
 
             Return tnNode
         End Function

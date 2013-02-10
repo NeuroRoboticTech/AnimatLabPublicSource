@@ -441,6 +441,7 @@ Namespace DataObjects.Physical
 
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Mass", "Mass", "Kilograms", "Kg", -5000, 5000))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Volume", "Volume", "Cubic Meters", "m^3", -100, 100))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Visible", "Visible", "", "", 0, 1))
 
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ContactCount", "Contact Count", "", "", 0, 1))
 
@@ -680,7 +681,7 @@ Namespace DataObjects.Physical
             Next
 
             If Not m_doReceptiveFieldSensor Is Nothing Then m_doReceptiveFieldSensor.CreateObjectListTreeView(Me, tnNode, mgrImageList)
-            If Not m_aryOdorSources Is Nothing Then
+            If Not m_aryOdorSources Is Nothing AndAlso m_aryOdorSources.Count > 0 Then
                 Dim tnOdorSources As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Odor Sources", "AnimatGUI.DefaultObject.gif", "", mgrImageList)
                 Dim doObj As Framework.DataObject
                 For Each deEntry As DictionaryEntry In m_aryOdorSources

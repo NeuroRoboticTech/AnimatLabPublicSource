@@ -260,6 +260,15 @@ Namespace DataObjects.Physical
             End Get
         End Property
 
+        Public Overrides Property Name As String
+            Get
+                Return Material1Name & "-" & Material2Name
+            End Get
+            Set(value As String)
+                MyBase.Name = value
+            End Set
+        End Property
+
 #End Region
 
 #Region " Methods "

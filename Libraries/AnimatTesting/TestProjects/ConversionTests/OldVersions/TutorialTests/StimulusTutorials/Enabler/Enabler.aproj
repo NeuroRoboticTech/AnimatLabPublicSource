@@ -37,7 +37,7 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>200</MajorInterval>
+<MajorInterval>500</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
 <TimeScale>MilliSeconds</TimeScale>
 </Form>
@@ -108,6 +108,28 @@
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatTools.dll</AssemblyFile>
+<ClassName>AnimatTools.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
+<Name>Stim_A</Name>
+<ID>34e75ed0-5586-4619-8f76-7c0c954b96f0</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="10" Scale="None" Actual="10"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation/>
+<OrganismID>22941bdd-a987-4c8e-a14d-9096224691bd</OrganismID>
+<NodeID>dfd27124-aec8-4a39-8ab3-c7551b7c3882</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-08"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="250" Scale="milli" Actual="0.25"/>
+<CycleOffDuration Value="250" Scale="milli" Actual="0.25"/>
+<BurstOnDuration Value="10" Scale="None" Actual="10"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatTools.dll</AssemblyFile>
 <ClassName>AnimatTools.DataObjects.ExternalStimuli.Enabler</ClassName>
 <Name>Enabler_Stim</Name>
 <ID>6ad070d5-0d1a-42bd-a643-78e726b8fde8</ID>
@@ -166,7 +188,10 @@
       </Best>
       <Next Count="0" />
       <Previous Count="0" />
-      <NextAll Count="0" />
+      <NextAll Count="2">
+        <Item Name="Project Workspace" />
+        <Item Name="Project Toolbox" />
+      </NextAll>
       <PreviousAll Count="0" />
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Simulation Controller" />
@@ -191,7 +216,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Project Workspace" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="205, 150" DisplayLocation="150, 150" AutoHideSize="205, 150" FloatingSize="150, 150" FullTitle="Project Workspace">
+  <Content Name="Project Workspace" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="225, 150" DisplayLocation="150, 150" AutoHideSize="205, 150" FloatingSize="150, 150" FullTitle="Project Workspace">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Project Workspace" />
       <State Value="DockLeft" />
@@ -211,7 +236,7 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Project Workspace" />
       <State Value="DockLeft" />
-      <Position Size="200, 150" Location="150, 150" />
+      <Position Size="225, 150" Location="150, 150" />
       <Best Count="2">
         <Item Name="Project Toolbox" />
         <Item Name="Project Workspace" />
@@ -248,7 +273,7 @@
       <Child Type="null" />
     </FloatingRestore>
   </Content>
-  <Content Name="Project Toolbox" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="True" DisplaySize="205, 150" DisplayLocation="150, 150" AutoHideSize="205, 150" FloatingSize="150, 150" FullTitle="Project Toolbox">
+  <Content Name="Project Toolbox" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="True" DisplaySize="225, 150" DisplayLocation="150, 150" AutoHideSize="205, 150" FloatingSize="150, 150" FullTitle="Project Toolbox">
     <DefaultRestore Type="Crownwood.Magic.Docking.RestoreContentState">
       <Content Name="Project Toolbox" />
       <State Value="DockLeft" />
@@ -268,9 +293,10 @@
     <DockingRestore Type="Crownwood.Magic.Docking.RestoreContentDockingAffinity">
       <Content Name="Project Toolbox" />
       <State Value="DockLeft" />
-      <Position Size="150, 150" Location="150, 150" />
-      <Best Count="1">
+      <Position Size="225, 150" Location="150, 150" />
+      <Best Count="2">
         <Item Name="Project Toolbox" />
+        <Item Name="Project Workspace" />
       </Best>
       <Next Count="0" />
       <Previous Count="0" />
@@ -281,7 +307,8 @@
       <Child Type="Crownwood.Magic.Docking.RestoreZoneAffinity">
         <Content Name="Project Toolbox" />
         <Space Value="100" />
-        <Best Count="1">
+        <Best Count="2">
+          <Item Name="Project Workspace" />
           <Item Name="Project Toolbox" />
         </Best>
         <Next Count="0" />
@@ -289,8 +316,10 @@
         <Child Type="Crownwood.Magic.Docking.RestoreWindowContent">
           <Content Name="Project Toolbox" />
           <Next Count="0" />
-          <Previous Count="0" />
-          <Selected Value="True" />
+          <Previous Count="1">
+            <Item Name="Project Workspace" />
+          </Previous>
+          <Selected Value="False" />
           <Child Type="null" />
         </Child>
       </Child>

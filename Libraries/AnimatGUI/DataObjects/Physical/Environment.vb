@@ -795,46 +795,57 @@ Namespace DataObjects.Physical
                                                        ByVal mgrImageList As AnimatGUI.Framework.ImageManager) As Crownwood.DotNetMagic.Controls.Node
             Dim tnNode As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateObjectListTreeView(doParent, tnParentNode, mgrImageList)
 
-            Dim tnOrganisms As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Organisms", "AnimatGUI.Organisms.gif", "", mgrImageList)
-            Dim tnStructures As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Structures", "AnimatGUI.Structures.gif", "", mgrImageList)
-            Dim tnLights As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Lights", "AnimatGUI.Lamp.gif", "", mgrImageList)
+            If m_aryOrganisms.Count > 0 Then
+                Dim tnOrganisms As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Organisms", "AnimatGUI.Organisms.gif", "", mgrImageList)
+                Dim doOrganism As DataObjects.Physical.Organism
+                For Each deEntry As DictionaryEntry In m_aryOrganisms
+                    doOrganism = DirectCast(deEntry.Value, DataObjects.Physical.Organism)
+                    doOrganism.CreateObjectListTreeView(Me, tnOrganisms, mgrImageList)
+                Next
+            End If
 
-            Dim doOrganism As DataObjects.Physical.Organism
-            For Each deEntry As DictionaryEntry In m_aryOrganisms
-                doOrganism = DirectCast(deEntry.Value, DataObjects.Physical.Organism)
-                doOrganism.CreateObjectListTreeView(Me, tnOrganisms, mgrImageList)
-            Next
+            If m_aryStructures.Count > 0 Then
+                Dim tnStructures As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Structures", "AnimatGUI.Structures.gif", "", mgrImageList)
+                Dim doStructure As DataObjects.Physical.PhysicalStructure
+                For Each deEntry As DictionaryEntry In m_aryStructures
+                    doStructure = DirectCast(deEntry.Value, DataObjects.Physical.PhysicalStructure)
+                    doStructure.CreateObjectListTreeView(Me, tnStructures, mgrImageList)
+                Next
+            End If
 
-            Dim doStructure As DataObjects.Physical.PhysicalStructure
-            For Each deEntry As DictionaryEntry In m_aryStructures
-                doStructure = DirectCast(deEntry.Value, DataObjects.Physical.PhysicalStructure)
-                doStructure.CreateObjectListTreeView(Me, tnStructures, mgrImageList)
-            Next
+            If m_aryLights.Count > 0 Then
+                Dim tnLights As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Lights", "AnimatGUI.Lamp.gif", "", mgrImageList)
+                Dim doLight As DataObjects.Physical.Light
+                For Each deEntry As DictionaryEntry In m_aryLights
+                    doLight = DirectCast(deEntry.Value, DataObjects.Physical.Light)
+                    doLight.CreateObjectListTreeView(Me, tnLights, mgrImageList)
+                Next
+            End If
 
-            Dim doLight As DataObjects.Physical.Light
-            For Each deEntry As DictionaryEntry In m_aryLights
-                doLight = DirectCast(deEntry.Value, DataObjects.Physical.Light)
-                doLight.CreateObjectListTreeView(Me, tnLights, mgrImageList)
-            Next
-
-            Dim tnOdorTypes As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Odor Types", "AnimatGUI.DefaultObject.gif", "", mgrImageList)
             Dim doObj As Framework.DataObject
-            For Each deEntry As DictionaryEntry In m_aryOdorTypes
-                doObj = DirectCast(deEntry.Value, Framework.DataObject)
-                doObj.CreateObjectListTreeView(Me, tnOdorTypes, mgrImageList)
-            Next
+            If m_aryOdorTypes.Count > 0 Then
+                Dim tnOdorTypes As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Odor Types", "AnimatGUI.DefaultObject.gif", "", mgrImageList)
+                For Each deEntry As DictionaryEntry In m_aryOdorTypes
+                    doObj = DirectCast(deEntry.Value, Framework.DataObject)
+                    doObj.CreateObjectListTreeView(Me, tnOdorTypes, mgrImageList)
+                Next
+            End If
 
-            Dim tnMaterialTypes As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Material Types", "AnimatGUI.DefaultObject.gif", "", mgrImageList)
-            For Each deEntry As DictionaryEntry In m_aryMaterialTypes
-                doObj = DirectCast(deEntry.Value, Framework.DataObject)
-                doObj.CreateObjectListTreeView(Me, tnMaterialTypes, mgrImageList)
-            Next
+            If m_aryMaterialTypes.Count > 0 Then
+                Dim tnMaterialTypes As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Material Types", "AnimatGUI.DefaultObject.gif", "", mgrImageList)
+                For Each deEntry As DictionaryEntry In m_aryMaterialTypes
+                    doObj = DirectCast(deEntry.Value, Framework.DataObject)
+                    doObj.CreateObjectListTreeView(Me, tnMaterialTypes, mgrImageList)
+                Next
+            End If
 
-            Dim tnMaterialPairs As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Material Pairs", "AnimatGUI.DefaultObject.gif", "", mgrImageList)
-            For Each deEntry As DictionaryEntry In m_aryMaterialPairs
-                doObj = DirectCast(deEntry.Value, Framework.DataObject)
-                doObj.CreateObjectListTreeView(Me, tnMaterialPairs, mgrImageList)
-            Next
+            If m_aryMaterialPairs.Count > 0 Then
+                Dim tnMaterialPairs As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "Material Pairs", "AnimatGUI.DefaultObject.gif", "", mgrImageList)
+                For Each deEntry As DictionaryEntry In m_aryMaterialPairs
+                    doObj = DirectCast(deEntry.Value, Framework.DataObject)
+                    doObj.CreateObjectListTreeView(Me, tnMaterialPairs, mgrImageList)
+                Next
+            End If
 
             Return tnNode
         End Function

@@ -53,6 +53,9 @@ namespace AnimatSim
 			///whatever geometry this is, like a box, is not seen in the graphics.
 			BOOL m_bIsVisible;
 
+			//Used to report back if visible.
+			float m_fltReportIsVisible;
+
 			//Transparencies
 			/// The alpha transparency used in the Graphics VisualSelectionMode
 			float m_fltGraphicsAlpha;

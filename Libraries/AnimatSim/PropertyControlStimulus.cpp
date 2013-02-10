@@ -104,6 +104,14 @@ void PropertyControlStimulus::TargetID(string strID)
 	if(Std_IsBlank(strID)) 
 		THROW_ERROR(Al_Err_lBodyIDBlank, Al_Err_strBodyIDBlank);
 	m_strTargetID = strID;
+
+	//Reset the property name when switching objects.
+	m_ePropertyType = AnimatBase::AnimatPropertyType::Invalid;
+	m_strPropertyName = "";
+
+	//If we have already been initialized once then we need to re-call this.
+	if(m_bInitialized)
+		Initialize();
 }
 
 /**
@@ -278,9 +286,12 @@ void PropertyControlStimulus::Activate()
 {
 	ExternalStimulus::Activate();
 
-	m_fltPreviousSetVal = m_fltInitialValue;
-	if(m_ePropertyType != AnimatBase::AnimatPropertyType::Invalid)
-		m_lpTargetObject->SetData(m_strPropertyName, STR(m_fltPreviousSetVal));
+	if(m_bEnabled)
+	{
+		m_fltPreviousSetVal = m_fltInitialValue;
+		if(m_ePropertyType != AnimatBase::AnimatPropertyType::Invalid)
+			m_lpTargetObject->SetData(m_strPropertyName, STR(m_fltPreviousSetVal));
+	}
 }
 
 void PropertyControlStimulus::SetPropertyValue(float fltVal)
@@ -342,9 +353,12 @@ void PropertyControlStimulus::Deactivate()
 {
 	ExternalStimulus::Deactivate();
 
-	m_fltPreviousSetVal = m_fltInitialValue;
-	if(m_ePropertyType != AnimatBase::AnimatPropertyType::Invalid)
-		m_lpTargetObject->SetData(m_strPropertyName, STR(m_fltFinalValue));
+	if(m_bEnabled)
+	{
+		m_fltPreviousSetVal = m_fltInitialValue;
+		if(m_ePropertyType != AnimatBase::AnimatPropertyType::Invalid)
+			m_lpTargetObject->SetData(m_strPropertyName, STR(m_fltFinalValue));
+	}
 }
 
 BOOL PropertyControlStimulus::SetData(const string &strDataType, const string &strValue, BOOL bThrowError)
@@ -353,6 +367,12 @@ BOOL PropertyControlStimulus::SetData(const string &strDataType, const string &s
 	
 	if(ExternalStimulus::SetData(strDataType, strValue, FALSE))
 		return TRUE;
+	
+	if(strType == "TARGETID")
+	{
+		TargetID(strValue);
+		return TRUE;
+	}
 
 	if(strType == "PROPERTYNAME")
 	{
@@ -395,6 +415,8 @@ void PropertyControlStimulus::QueryProperties(CStdArray<string> &aryNames, CStdA
 {
 	ExternalStimulus::QueryProperties(aryNames, aryTypes);
 
+	aryNames.Add("TargetID");
+	aryTypes.Add("String");
 
 	aryNames.Add("PropertyName");
 	aryTypes.Add("String");

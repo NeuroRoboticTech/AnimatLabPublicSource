@@ -3871,6 +3871,7 @@ Namespace Forms.Behavior
 
                     ''If it does require an adapter then lets add the pieces.
                     Dim bnAdapter As AnimatGUI.DataObjects.Behavior.Node = bnDestination.CreateNewAdapter(bnOrigin, Me.FormHelper)
+                    bnAdapter = bnOrigin.ValidateDestinationAdapterChosen(bnAdapter)
 
                     bnAdapter.Location = FindHalfwayLocation(bnOrigin, bnDestination, bnAdapter.Size)
                     Me.Subsystem.Organism.MaxNodeCount = Me.Subsystem.Organism.MaxNodeCount + 1

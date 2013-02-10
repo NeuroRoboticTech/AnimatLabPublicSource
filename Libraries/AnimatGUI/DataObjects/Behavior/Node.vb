@@ -879,18 +879,22 @@ Namespace DataObjects.Behavior
                                                        ByVal mgrImageList As AnimatGUI.Framework.ImageManager) As Crownwood.DotNetMagic.Controls.Node
             Dim tnNode As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateObjectListTreeView(doParent, tnParentNode, mgrImageList)
 
-            'Now add back any links as children
-            Dim tnInLinks As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "InLinks", "AnimatGUI.DefaultObject.gif", "", mgrImageList)
-            For Each deEntry As DictionaryEntry In Me.InLinks
-                Dim blLink As Behavior.Link = DirectCast(deEntry.Value, Behavior.Link)
-                blLink.CreateObjectListTreeView(Me, tnInLinks, mgrImageList)
-            Next
+            If Me.InLinks.Count > 0 Then
+                'Now add back any links as children
+                Dim tnInLinks As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "InLinks", "AnimatGUI.DefaultObject.gif", "", mgrImageList)
+                For Each deEntry As DictionaryEntry In Me.InLinks
+                    Dim blLink As Behavior.Link = DirectCast(deEntry.Value, Behavior.Link)
+                    blLink.CreateObjectListTreeView(Me, tnInLinks, mgrImageList)
+                Next
+            End If
 
-            Dim tnOutLinks As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "OutLinks", "AnimatGUI.DefaultObject.gif", "", mgrImageList)
-            For Each deEntry As DictionaryEntry In Me.OutLinks
-                Dim blLink As Behavior.Link = DirectCast(deEntry.Value, Behavior.Link)
-                blLink.CreateObjectListTreeView(Me, tnOutLinks, mgrImageList)
-            Next
+            If Me.OutLinks.Count > 0 Then
+                Dim tnOutLinks As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnNode, "OutLinks", "AnimatGUI.DefaultObject.gif", "", mgrImageList)
+                For Each deEntry As DictionaryEntry In Me.OutLinks
+                    Dim blLink As Behavior.Link = DirectCast(deEntry.Value, Behavior.Link)
+                    blLink.CreateObjectListTreeView(Me, tnOutLinks, mgrImageList)
+                Next
+            End If
 
             Return tnNode
         End Function
@@ -1030,6 +1034,11 @@ Namespace DataObjects.Behavior
                 Throw New System.Exception("You can only link two physics nodes using a graphical link.")
             End If
 
+            Return bnAdapter
+        End Function
+
+        'For most all nodes this is just a pass through. Some source nodes need to be able to validate the adapter though.
+        Public Overridable Function ValidateDestinationAdapterChosen(ByVal bnAdapter As DataObjects.Behavior.Node) As DataObjects.Behavior.Node
             Return bnAdapter
         End Function
 

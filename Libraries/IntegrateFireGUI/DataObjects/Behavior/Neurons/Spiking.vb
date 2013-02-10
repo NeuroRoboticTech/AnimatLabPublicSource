@@ -199,6 +199,9 @@ Namespace DataObjects.Behavior.Neurons
             End Get
             Set(ByVal Value As ActivationType)
                 m_atCaActivation = Value
+                If Not m_atCaActivation Is Nothing Then
+                    m_atCaActivation.Name = "Calcium Activation"
+                End If
             End Set
         End Property
 
@@ -209,6 +212,9 @@ Namespace DataObjects.Behavior.Neurons
             End Get
             Set(ByVal Value As ActivationType)
                 m_atCaDeactivation = Value
+                If Not m_atCaDeactivation Is Nothing Then
+                    m_atCaDeactivation.Name = "Calcium Deactivation"
+                End If
             End Set
         End Property
 
@@ -294,7 +300,9 @@ Namespace DataObjects.Behavior.Neurons
 
                 m_snMaxCaConductance = New AnimatGUI.Framework.ScaledNumber(Me, "MaxCaConductance", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.micro, "Siemens", "S")
                 m_atCaActivation = New ActivationType(Me, True)
+                m_atCaActivation.Name = "Calcium Activation"
                 m_atCaDeactivation = New ActivationType(Me, False)
+                m_atCaDeactivation.Name = "Calcium Deactivation"
 
                 m_snTonicStimulus = New AnimatGUI.Framework.ScaledNumber(Me, "TonicStimulus", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.nano, "Amps", "A")
                 m_snTonicNoise = New AnimatGUI.Framework.ScaledNumber(Me, "TonicNoise", 0, AnimatGUI.Framework.ScaledNumber.enumNumericScale.milli, "Volts", "V")

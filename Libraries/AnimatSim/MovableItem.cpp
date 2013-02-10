@@ -46,6 +46,7 @@ namespace AnimatSim
 MovableItem::MovableItem(void)
 {
 	m_bIsVisible = TRUE;
+	m_fltReportIsVisible = 1;
 	m_lpCallback = NULL;
 	m_lpParent = NULL;
 	m_lpPhysicsMovableItem = NULL;
@@ -495,6 +496,7 @@ BOOL MovableItem::IsVisible() {return m_bIsVisible;}
 void MovableItem::IsVisible(BOOL bVal) 
 {
 	m_bIsVisible = bVal;
+	m_fltReportIsVisible = (float) bVal;
 
 	if(m_lpPhysicsMovableItem)
 		m_lpPhysicsMovableItem->SetVisible(m_bIsVisible);
@@ -1217,6 +1219,9 @@ float *MovableItem::GetDataPointer(const string &strDataType)
 
 	if(strType == "ROTATIONZ")
 		return &m_oReportRotation.z;
+
+	if(strType == "VISIBLE")
+		return &m_fltReportIsVisible;
 
 	return 0;
 }

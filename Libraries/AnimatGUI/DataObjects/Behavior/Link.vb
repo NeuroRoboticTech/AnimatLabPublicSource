@@ -915,6 +915,22 @@ Namespace DataObjects.Behavior
             Return tnNode
         End Function
 
+        Public Overrides Function CreateObjectListTreeView(ByVal doParent As Framework.DataObject, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal mgrImageList As AnimatGUI.Framework.ImageManager) As Crownwood.DotNetMagic.Controls.Node
+
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = Util.AddTreeNode(tnParentNode, Me.ItemName, Me.WorkspaceImageName, "", mgrImageList)
+            tnNode.Tag = New TypeHelpers.LinkedDataObjectTree(Me)
+
+            If Me.Enabled Then
+                tnNode.BackColor = Color.White
+            Else
+                tnNode.BackColor = Color.Gray
+            End If
+
+            Return tnNode
+        End Function
+
         Public Overrides Sub AfterInitialized()
             ConnectNodeEvents()
             ConnectDiagramEvents()

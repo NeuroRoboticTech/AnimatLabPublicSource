@@ -93,14 +93,14 @@ Namespace DataObjects.Behavior.Nodes
         <Browsable(False)> _
         Public Overrides ReadOnly Property WorkspaceImageName() As String
             Get
-                Return "AnimatGUI.Bone.gif"
+                Return "AnimatGUI.PropertyControlNode.gif"
             End Get
         End Property
 
         <Browsable(False)> _
         Public Overrides ReadOnly Property DragImageName As String
             Get
-                Return "AnimatGUI.DragBone.gif"
+                Return "AnimatGUI.PropertyControlNode.gif"
             End Get
         End Property
 
@@ -166,7 +166,7 @@ Namespace DataObjects.Behavior.Nodes
         End Property
 
         <Browsable(False)> _
-        Public Overridable ReadOnly Property LinkedPropertyName() As String
+        Public Overridable Property LinkedPropertyName() As String
             Get
                 If Not m_thLinkedProperty Is Nothing AndAlso Not m_thLinkedProperty.PropertyName Is Nothing Then
                     Return m_thLinkedProperty.PropertyName
@@ -174,6 +174,13 @@ Namespace DataObjects.Behavior.Nodes
                     Return ""
                 End If
             End Get
+            Set(value As String)
+                If m_thLinkedObject Is Nothing OrElse m_thLinkedObject.Item Is Nothing Then
+                    Throw New System.Exception("You cannot set the linked object property name until the linked object is set.")
+                End If
+
+                Me.LinkedProperty = New TypeHelpers.LinkedDataObjectPropertiesList(m_thLinkedObject.Item, value)
+            End Set
         End Property
 
 #End Region
@@ -194,9 +201,7 @@ Namespace DataObjects.Behavior.Nodes
                 Me.FillColor = Color.DarkOrchid
                 Me.AutoSize = AnimatGUI.DataObjects.Behavior.Node.enumAutoSize.ImageToNode
                 Me.Font = New Font("Arial", 14, FontStyle.Bold)
-                Me.Alignment = enumAlignment.CenterBottom
 
-                Me.DiagramImageName = "AnimatGUI.BoneNodeImage.gif"
                 Me.Name = "Property Control"
                 Me.Description = "This node allows the user to control the properties of any object in the simulation."
 
@@ -297,12 +302,11 @@ Namespace DataObjects.Behavior.Nodes
 
         End Sub
 
-
         Public Overrides Sub Automation_SetLinkedItem(ByVal strItemPath As String, ByVal strLinkedItemPath As String)
 
             Dim tnLinkedNode As Crownwood.DotNetMagic.Controls.Node = Util.FindTreeNodeByPath(strLinkedItemPath, Util.ProjectWorkspace.TreeView.Nodes)
 
-            If tnLinkedNode Is Nothing OrElse tnLinkedNode.Tag Is Nothing OrElse Not Util.IsTypeOf(tnLinkedNode.Tag.GetType, GetType(DataObjects.Physical.BodyPart), False) Then
+            If tnLinkedNode Is Nothing OrElse tnLinkedNode.Tag Is Nothing OrElse Not Util.IsTypeOf(tnLinkedNode.Tag.GetType, GetType(Framework.DataObject), False) Then
                 Throw New System.Exception("The path to the specified linked node was not the correct node type.")
             End If
 
@@ -394,7 +398,9 @@ Namespace DataObjects.Behavior.Nodes
 
             ''If it does require an adapter then lets add the pieces.
             Dim bnAdapter As AnimatGUI.DataObjects.Behavior.Node
-            If bnOrigin.IsPhysicsEngineNode AndAlso Not Me.IsPhysicsEngineNode Then
+            If bnOrigin Is Me Then
+                Throw New System.Exception("Property controls can only have incoming links, not outgoing links.")
+            ElseIf bnOrigin.IsPhysicsEngineNode AndAlso Not Me.IsPhysicsEngineNode Then
                 Throw New System.Exception("You cannot connect a physics engine node directly to a property control node.")
             ElseIf Not bnOrigin.IsPhysicsEngineNode AndAlso Me.IsPhysicsEngineNode Then
                 'If the origin is regular node and the destination is a physics node
@@ -405,6 +411,11 @@ Namespace DataObjects.Behavior.Nodes
             End If
 
             Return bnAdapter
+        End Function
+
+        'For most all nodes this is just a pass through. Some source nodes need to be able to validate the adapter though.
+        Public Overrides Function ValidateDestinationAdapterChosen(ByVal bnAdapter As DataObjects.Behavior.Node) As DataObjects.Behavior.Node
+            Throw New System.Exception("Property controls can only have incoming links, not outgoing links.")
         End Function
 
         Public Overrides Sub LoadData(ByVal oXml As ManagedAnimatInterfaces.IStdXml)
@@ -427,7 +438,7 @@ Namespace DataObjects.Behavior.Nodes
 
             If Not m_thLinkedObject Is Nothing AndAlso Not m_thLinkedObject.Item Is Nothing Then
                 oXml.AddChildElement("LinkedDataObjectID", m_thLinkedObject.Item.ID)
-                oXml.AddChildElement("LinkedDataObjectProperty", m_thLinkedProperty.PropertyName)
+                oXml.AddChildElement("LinkedDataObjectProperty", Me.LinkedPropertyName)
             End If
 
             oXml.AddChildElement("SetThreshold", m_fltSetThreshold)

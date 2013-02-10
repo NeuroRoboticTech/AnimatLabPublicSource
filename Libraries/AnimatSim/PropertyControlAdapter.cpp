@@ -268,16 +268,22 @@ void PropertyControlAdapter::ResetSimulation()
 {
 	Adapter::ResetSimulation();
 
-	m_fltPreviousSetVal = m_fltInitialValue;
-	if(m_ePropertyType != AnimatBase::AnimatPropertyType::Invalid)
-		m_lpTargetObject->SetData(m_strPropertyName, STR(m_fltFinalValue));
+	if(m_bEnabled)
+	{
+		m_fltPreviousSetVal = m_fltInitialValue;
+		if(m_ePropertyType != AnimatBase::AnimatPropertyType::Invalid)
+			m_lpTargetObject->SetData(m_strPropertyName, STR(m_fltFinalValue));
+	}
 }
 
 void PropertyControlAdapter::SimStarting() 
 {
-	m_fltPreviousSetVal = m_fltInitialValue;
-	if(m_ePropertyType != AnimatBase::AnimatPropertyType::Invalid)
-		m_lpTargetObject->SetData(m_strPropertyName, STR(m_fltPreviousSetVal));
+	if(m_bEnabled)
+	{
+		m_fltPreviousSetVal = m_fltInitialValue;
+		if(m_ePropertyType != AnimatBase::AnimatPropertyType::Invalid)
+			m_lpTargetObject->SetData(m_strPropertyName, STR(m_fltPreviousSetVal));
+	}
 }
 
 void PropertyControlAdapter::Initialize()
