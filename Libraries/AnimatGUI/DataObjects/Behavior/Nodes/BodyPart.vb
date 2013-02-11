@@ -20,7 +20,7 @@ Namespace DataObjects.Behavior.Nodes
         Protected m_tpBodyPartType As System.Type
 
         'Only used during loading
-        Protected m_strLinkedBodyPartID As String
+        Protected m_strLinkedBodyPartID As String = ""
 
 #End Region
 
@@ -303,7 +303,7 @@ Namespace DataObjects.Behavior.Nodes
 
                 If m_bIsInitialized Then
                     Dim bpPart As AnimatGUI.DataObjects.Physical.BodyPart
-                    If (m_strLinkedBodyPartID.Length > 0) Then
+                    If (Not Me.LinkedPart Is Nothing AndAlso Me.LinkedPart.BodyPart Is Nothing) AndAlso (m_strLinkedBodyPartID.Length > 0) Then
                         bpPart = m_doOrganism.FindBodyPart(m_strLinkedBodyPartID, False)
 
                         If Not bpPart Is Nothing Then
