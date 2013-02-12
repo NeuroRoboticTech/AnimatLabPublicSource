@@ -58,6 +58,7 @@ Namespace DataObjects.Behavior.Neurons
                 If Not m_gnCurrentDistribution Is Nothing Then
                     m_gnCurrentDistribution.ParentData = Me
                     m_gnCurrentDistribution.GainPropertyName = "CurrentDistribution"
+                    m_gnCurrentDistribution.Name = "Current Distribution Gain"
                 End If
             End Set
         End Property
@@ -78,6 +79,7 @@ Namespace DataObjects.Behavior.Neurons
                 If Not m_gnBurstLengthDistribution Is Nothing Then
                     m_gnBurstLengthDistribution.ParentData = Me
                     m_gnBurstLengthDistribution.GainPropertyName = "BurstLengthDistribution"
+                    m_gnBurstLengthDistribution.Name = "Burst Length Distribution Gain"
                 End If
             End Set
         End Property
@@ -98,6 +100,7 @@ Namespace DataObjects.Behavior.Neurons
                 If Not m_gnInterburstLengthDistribution Is Nothing Then
                     m_gnInterburstLengthDistribution.ParentData = Me
                     m_gnInterburstLengthDistribution.GainPropertyName = "InterburstLengthDistribution"
+                    m_gnInterburstLengthDistribution.Name = "Interburst Length Distribution Gain"
                 End If
             End Set
         End Property
@@ -140,6 +143,9 @@ Namespace DataObjects.Behavior.Neurons
                 m_gnBurstLengthDistribution = New AnimatGUI.DataObjects.Gains.Polynomial(Me, "BurstLengthDistribution", "Random Variable", "Seconds", False, False, False)
                 m_gnInterburstLengthDistribution = New AnimatGUI.DataObjects.Gains.Polynomial(Me, "InterburstLengthDistribution", "Random Variable", "Seconds", False, False, False)
 
+                m_gnCurrentDistribution.Name = "Current Distribution Gain"
+                m_gnBurstLengthDistribution.Name = "Burst Length Distribution Gain"
+                m_gnInterburstLengthDistribution.Name = "Interburst Length Distribution Gain"
 
                 m_gnCurrentDistribution.LowerLimit.Value = 0
                 m_gnCurrentDistribution.UpperLimit.Value = 100
@@ -181,6 +187,26 @@ Namespace DataObjects.Behavior.Neurons
             m_gnBurstLengthDistribution.AddToReplaceIDList(aryReplaceIDList)
             m_gnInterburstLengthDistribution.AddToReplaceIDList(aryReplaceIDList)
         End Sub
+
+        Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
+            MyBase.InitializeSimulationReferences(bShowError)
+
+            m_gnCurrentDistribution.InitializeSimulationReferences(bShowError)
+            m_gnBurstLengthDistribution.InitializeSimulationReferences(bShowError)
+            m_gnInterburstLengthDistribution.InitializeSimulationReferences(bShowError)
+        End Sub
+
+        Public Overrides Function CreateObjectListTreeView(ByVal doParent As AnimatGUI.Framework.DataObject, _
+                                                       ByVal tnParentNode As Crownwood.DotNetMagic.Controls.Node, _
+                                                       ByVal mgrImageList As AnimatGUI.Framework.ImageManager) As Crownwood.DotNetMagic.Controls.Node
+            Dim tnNode As Crownwood.DotNetMagic.Controls.Node = MyBase.CreateObjectListTreeView(doParent, tnParentNode, mgrImageList)
+
+            m_gnCurrentDistribution.CreateObjectListTreeView(Me, tnNode, mgrImageList)
+            m_gnBurstLengthDistribution.CreateObjectListTreeView(Me, tnNode, mgrImageList)
+            m_gnInterburstLengthDistribution.CreateObjectListTreeView(Me, tnNode, mgrImageList)
+
+            Return tnNode
+        End Function
 
         Public Overrides Sub SaveSimulationXml(ByVal oXml As ManagedAnimatInterfaces.IStdXml, Optional ByRef nmParentControl As AnimatGUI.Framework.DataObject = Nothing, Optional ByVal strName As String = "")
             MyBase.SaveSimulationXml(oXml, nmParentControl)
@@ -272,6 +298,10 @@ Namespace DataObjects.Behavior.Neurons
                 m_gnInterburstLengthDistribution = DirectCast(Util.LoadClass(strAssemblyFile, strClassName, Me), AnimatGUI.DataObjects.Gain)
                 m_gnInterburstLengthDistribution.LoadData(oXml, "InterburstLengthDistribution", "InterburstLengthDistribution")
             End If
+
+            m_gnCurrentDistribution.Name = "Current Distribution Gain"
+            m_gnBurstLengthDistribution.Name = "Burst Length Distribution Gain"
+            m_gnInterburstLengthDistribution.Name = "Interburst Length Distribution Gain"
 
             oXml.OutOfElem()
 
