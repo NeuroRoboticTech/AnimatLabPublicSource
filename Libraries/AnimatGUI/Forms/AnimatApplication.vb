@@ -1140,6 +1140,8 @@ Namespace Forms
         Protected m_frmReceptiveFieldGain As Forms.ReceptiveFieldGain
         Protected m_frmReceptiveFieldCurrent As Forms.ReceptiveFieldCurrent
 
+        Protected m_frmLastSelectedChart As Forms.Tools.DataChart
+
         'This keeps track of which part type pairs are exculded from being added to each other.
         'The key is the ParentType_ChildType. If an entry is found in the hashtable for that pair
         ' then that child cannot be added to that parent type.
@@ -1695,6 +1697,15 @@ Namespace Forms
                     Return ""
                 End If
             End Get
+        End Property
+
+        Public Overridable Property LastSelectedChart() As Forms.Tools.DataChart
+            Get
+                Return m_frmLastSelectedChart
+            End Get
+            Set(ByVal Value As Forms.Tools.DataChart)
+                m_frmLastSelectedChart = Value
+            End Set
         End Property
 
 #End Region
@@ -5847,6 +5858,27 @@ Namespace Forms
 
         Public Sub OnAddStimulus(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddStimulusToolStripButton.Click, AddStimulusToolStripMenuItem.Click
             AddStimulus()
+        End Sub
+
+        Public Overridable Sub OnAddToChart(ByVal sender As Object, ByVal e As System.EventArgs)
+
+            Try
+                If Not Util.ProjectWorkspace.SelectedDataObject Is Nothing AndAlso Not Util.Application.LastSelectedChart Is Nothing AndAlso Not Util.Application.LastSelectedChart.LastSelectedAxis Is Nothing Then
+                    If Util.IsTypeOf(Util.ProjectWorkspace.SelectedDataObject.GetType, GetType(DataObjects.DragObject), False) Then
+                        Dim doObj As DataObjects.DragObject = DirectCast(Util.ProjectWorkspace.SelectedDataObject, DataObjects.DragObject)
+
+                        If doObj.CanBeCharted Then
+                            Util.Application.LastSelectedChart.LastSelectedAxis.AddNewDataItem(doObj)
+                        End If
+                    End If
+
+                End If
+
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
         End Sub
 
         Public Sub OnSelectByType(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SelectByTypeToolStripMenuItem.Click, SelectByTypeToolStripButton.Click

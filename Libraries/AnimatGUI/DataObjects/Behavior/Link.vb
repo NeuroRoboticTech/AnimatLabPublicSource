@@ -1276,10 +1276,10 @@ Namespace DataObjects.Behavior
 
         End Sub
 
-        Protected Overridable Sub OnDestinationModified(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
+        Protected Overridable Sub OnDestinationModified(ByVal doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
         End Sub
 
-        Protected Overridable Sub OnOriginModified(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
+        Protected Overridable Sub OnOriginModified(ByVal doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
         End Sub
 
 #End Region

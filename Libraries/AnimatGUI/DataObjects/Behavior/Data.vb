@@ -472,11 +472,11 @@ Namespace DataObjects.Behavior
 
         End Sub
 
-        Protected Overridable Sub OnOrganismModified(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
+        Protected Overridable Sub OnOrganismModified(ByVal doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
 
         End Sub
 
-        Protected Overridable Sub OnNeuralModuleModified(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
+        Protected Overridable Sub OnNeuralModuleModified(ByVal doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
 
         End Sub
 

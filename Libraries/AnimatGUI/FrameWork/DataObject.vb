@@ -1014,8 +1014,8 @@ Namespace Framework
 
         End Sub
 
-        Public Event BeforePropertyChanged(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
-        Public Event AfterPropertyChanged(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
+        Public Event BeforePropertyChanged(ByVal doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
+        Public Event AfterPropertyChanged(ByVal doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
 
         Public Event BeforeAddItem(ByRef doObject As AnimatGUI.Framework.DataObject)
         Public Event AfterAddItem(ByRef doObject As AnimatGUI.Framework.DataObject)
@@ -1026,11 +1026,11 @@ Namespace Framework
         Public Event ItemSelected(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal bSelectMultiple As Boolean)
         Public Event ItemDeselected(ByRef doObject As AnimatGUI.Framework.DataObject)
 
-        Protected Overridable Sub SignalBeforePropertyChanged(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
+        Public Overridable Sub SignalBeforePropertyChanged(ByVal doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
             RaiseEvent BeforePropertyChanged(doObject, propInfo)
         End Sub
 
-        Protected Overridable Sub SignalAfterPropertyChanged(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
+        Public Overridable Sub SignalAfterPropertyChanged(ByVal doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
             RaiseEvent AfterPropertyChanged(doObject, propInfo)
         End Sub
 

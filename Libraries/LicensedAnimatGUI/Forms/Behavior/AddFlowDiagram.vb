@@ -98,31 +98,8 @@ Namespace Forms.Behavior
         Friend WithEvents PageSetupToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents EditToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents ShowConnectionsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomInDropDownButton As System.Windows.Forms.ToolStripDropDownButton
-        Friend WithEvents ZoomInBy10ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomInBy20ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomIn100ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomIn125ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomIn150ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomIn175ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomIn200ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomIn250ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomIn300ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomIn400ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomIn500ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomOutDropDownButton As System.Windows.Forms.ToolStripDropDownButton
-        Friend WithEvents ZoomOutBy10ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomOutBy20ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomOut100ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomOut90ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomOut80ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomOut70ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomOut60ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomOut50ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomOut40ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomOut30ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomOut20ToolStripItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ZoomOut10ToolStripItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ZoomInToolStripItem As System.Windows.Forms.ToolStripButton
+        Friend WithEvents ZoomOutToolStripItem As System.Windows.Forms.ToolStripButton
         Friend WithEvents AlignDropDownButton As System.Windows.Forms.ToolStripDropDownButton
         Friend WithEvents AlignTopToolStripItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents AlignVerticalCenterToolStripItem As System.Windows.Forms.ToolStripMenuItem
@@ -184,31 +161,8 @@ Namespace Forms.Behavior
             Me.m_ctrlAddFlow = New Lassalle.Flow.AddFlow
             Me.AddFlowToolStrip = New AnimatGuiCtrls.Controls.AnimatToolStrip
             Me.PrintToolStripButton = New System.Windows.Forms.ToolStripButton()
-            Me.ZoomInDropDownButton = New System.Windows.Forms.ToolStripDropDownButton()
-            Me.ZoomInBy10ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomInBy20ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomIn100ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomIn125ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomIn150ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomIn175ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomIn200ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomIn250ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomIn300ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomIn400ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomIn500ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomOutDropDownButton = New System.Windows.Forms.ToolStripDropDownButton()
-            Me.ZoomOutBy10ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomOutBy20ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomOut100ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomOut90ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomOut80ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomOut70ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomOut60ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomOut50ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomOut40ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomOut30ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomOut20ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.ZoomOut10ToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ZoomInToolStripItem = New System.Windows.Forms.ToolStripButton()
+            Me.ZoomOutToolStripItem = New System.Windows.Forms.ToolStripButton()
             Me.AlignDropDownButton = New System.Windows.Forms.ToolStripDropDownButton()
             Me.AlignTopToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.AlignVerticalCenterToolStripItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -333,7 +287,7 @@ Namespace Forms.Behavior
             'AddFlowToolStrip
             '
             Me.AddFlowToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PrintToolStripButton, Me.PasteToolStripButton, Me.CopyToolStripButton, _
-                                                                                         Me.CutToolStripButton, Me.ZoomInDropDownButton, Me.ZoomOutDropDownButton, _
+                                                                                         Me.CutToolStripButton, Me.ZoomInToolStripItem, Me.ZoomOutToolStripItem, _
                                                                                          Me.AlignDropDownButton, Me.DistributeDropDownButton, Me.SizeDropDownButton, Me.RelabelToolStripButton})
             Me.AddFlowToolStrip.Location = New System.Drawing.Point(0, 24)
             Me.AddFlowToolStrip.Name = "AddFlowToolStrip"
@@ -353,164 +307,23 @@ Namespace Forms.Behavior
             '
             'ZoomInDropDownButton
             '
-            Me.ZoomInDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.ZoomInDropDownButton.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ZoomInBy10ToolStripItem, Me.ZoomInBy20ToolStripItem, Me.ZoomIn100ToolStripItem, Me.ZoomIn125ToolStripItem, Me.ZoomIn150ToolStripItem, Me.ZoomIn175ToolStripItem, Me.ZoomIn200ToolStripItem, Me.ZoomIn250ToolStripItem, Me.ZoomIn300ToolStripItem, Me.ZoomIn400ToolStripItem, Me.ZoomIn500ToolStripItem})
-            Me.ZoomInDropDownButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.ZoomIn.gif")
-            Me.ZoomInDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.ZoomInDropDownButton.Name = "ZoomInDropDownButton"
-            Me.ZoomInDropDownButton.Size = New System.Drawing.Size(29, 22)
-            Me.ZoomInDropDownButton.Text = "ZoomInDropDownButton"
-            Me.ZoomInDropDownButton.ToolTipText = "Zoom in to diagram"
-            '
-            'ZoomInBy10ToolStripItem
-            '
-            Me.ZoomInBy10ToolStripItem.Name = "ZoomInBy10ToolStripItem"
-            Me.ZoomInBy10ToolStripItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.K), System.Windows.Forms.Keys)
-            Me.ZoomInBy10ToolStripItem.Size = New System.Drawing.Size(201, 22)
-            Me.ZoomInBy10ToolStripItem.Text = "Zoom in by 10%"
-            '
-            'ZoomInBy20ToolStripItem
-            '
-            Me.ZoomInBy20ToolStripItem.Name = "ZoomInBy20ToolStripItem"
-            Me.ZoomInBy20ToolStripItem.Size = New System.Drawing.Size(201, 22)
-            Me.ZoomInBy20ToolStripItem.Text = "Zoom in by 20%"
-            '
-            'ZoomIn100ToolStripItem
-            '
-            Me.ZoomIn100ToolStripItem.Name = "ZoomIn100ToolStripItem"
-            Me.ZoomIn100ToolStripItem.Size = New System.Drawing.Size(201, 22)
-            Me.ZoomIn100ToolStripItem.Text = "100%"
-            '
-            'ZoomIn125ToolStripItem
-            '
-            Me.ZoomIn125ToolStripItem.Name = "ZoomIn125ToolStripItem"
-            Me.ZoomIn125ToolStripItem.Size = New System.Drawing.Size(201, 22)
-            Me.ZoomIn125ToolStripItem.Text = "125%"
-            '
-            'ZoomIn150ToolStripItem
-            '
-            Me.ZoomIn150ToolStripItem.Name = "ZoomIn150ToolStripItem"
-            Me.ZoomIn150ToolStripItem.Size = New System.Drawing.Size(201, 22)
-            Me.ZoomIn150ToolStripItem.Text = "150%"
-            '
-            'ZoomIn175ToolStripItem
-            '
-            Me.ZoomIn175ToolStripItem.Name = "ZoomIn175ToolStripItem"
-            Me.ZoomIn175ToolStripItem.Size = New System.Drawing.Size(201, 22)
-            Me.ZoomIn175ToolStripItem.Text = "175%"
-            '
-            'ZoomIn200ToolStripItem
-            '
-            Me.ZoomIn200ToolStripItem.Name = "ZoomIn200ToolStripItem"
-            Me.ZoomIn200ToolStripItem.Size = New System.Drawing.Size(201, 22)
-            Me.ZoomIn200ToolStripItem.Text = "200%"
-            '
-            'ZoomIn250ToolStripItem
-            '
-            Me.ZoomIn250ToolStripItem.Name = "ZoomIn250ToolStripItem"
-            Me.ZoomIn250ToolStripItem.Size = New System.Drawing.Size(201, 22)
-            Me.ZoomIn250ToolStripItem.Text = "250%"
-            '
-            'ZoomIn300ToolStripItem
-            '
-            Me.ZoomIn300ToolStripItem.Name = "ZoomIn300ToolStripItem"
-            Me.ZoomIn300ToolStripItem.Size = New System.Drawing.Size(201, 22)
-            Me.ZoomIn300ToolStripItem.Text = "300%"
-            '
-            'ZoomIn400ToolStripItem
-            '
-            Me.ZoomIn400ToolStripItem.Name = "ZoomIn400ToolStripItem"
-            Me.ZoomIn400ToolStripItem.Size = New System.Drawing.Size(201, 22)
-            Me.ZoomIn400ToolStripItem.Text = "400%"
-            '
-            'ZoomIn500ToolStripItem
-            '
-            Me.ZoomIn500ToolStripItem.Name = "ZoomIn500ToolStripItem"
-            Me.ZoomIn500ToolStripItem.Size = New System.Drawing.Size(201, 22)
-            Me.ZoomIn500ToolStripItem.Text = "500%"
+            Me.ZoomInToolStripItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.ZoomInToolStripItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.ZoomIn.gif")
+            Me.ZoomInToolStripItem.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.ZoomInToolStripItem.Name = "ZoomInToolStripItem"
+            Me.ZoomInToolStripItem.Size = New System.Drawing.Size(29, 22)
+            Me.ZoomInToolStripItem.Text = "ZoomInToolStripItem"
+            Me.ZoomInToolStripItem.ToolTipText = "Zoom in to diagram"
             '
             'ZoomOutDropDownButton
             '
-            Me.ZoomOutDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.ZoomOutDropDownButton.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ZoomOutBy10ToolStripItem, Me.ZoomOutBy20ToolStripItem, Me.ZoomOut100ToolStripItem, Me.ZoomOut90ToolStripItem, Me.ZoomOut80ToolStripItem, Me.ZoomOut70ToolStripItem, Me.ZoomOut60ToolStripItem, Me.ZoomOut50ToolStripItem, Me.ZoomOut40ToolStripItem, Me.ZoomOut30ToolStripItem, Me.ZoomOut20ToolStripItem, Me.ZoomOut10ToolStripItem})
-            Me.ZoomOutDropDownButton.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.ZoomOut.gif")
-            Me.ZoomOutDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.ZoomOutDropDownButton.Name = "ZoomOutDropDownButton"
-            Me.ZoomOutDropDownButton.Size = New System.Drawing.Size(29, 22)
-            Me.ZoomOutDropDownButton.Text = "ZoomOutDropDownButton"
-            Me.ZoomOutDropDownButton.ToolTipText = "Zoom out of diagram"
-            '
-            'ZoomOutBy10ToolStripItem
-            '
-            Me.ZoomOutBy10ToolStripItem.Name = "ZoomOutBy10ToolStripItem"
-            Me.ZoomOutBy10ToolStripItem.Size = New System.Drawing.Size(135, 22)
-            Me.ZoomOutBy10ToolStripItem.Text = "Out by 10%"
-            '
-            'ZoomOutBy20ToolStripItem
-            '
-            Me.ZoomOutBy20ToolStripItem.Name = "ZoomOutBy20ToolStripItem"
-            Me.ZoomOutBy20ToolStripItem.Size = New System.Drawing.Size(135, 22)
-            Me.ZoomOutBy20ToolStripItem.Text = "Out by 20%"
-            '
-            'ZoomOut100ToolStripItem
-            '
-            Me.ZoomOut100ToolStripItem.Name = "ZoomOut100ToolStripItem"
-            Me.ZoomOut100ToolStripItem.Size = New System.Drawing.Size(135, 22)
-            Me.ZoomOut100ToolStripItem.Text = "100%"
-            '
-            'ZoomOut90ToolStripItem
-            '
-            Me.ZoomOut90ToolStripItem.Name = "ZoomOut90ToolStripItem"
-            Me.ZoomOut90ToolStripItem.Size = New System.Drawing.Size(135, 22)
-            Me.ZoomOut90ToolStripItem.Text = "90%"
-            '
-            'ZoomOut80ToolStripItem
-            '
-            Me.ZoomOut80ToolStripItem.Name = "ZoomOut80ToolStripItem"
-            Me.ZoomOut80ToolStripItem.Size = New System.Drawing.Size(135, 22)
-            Me.ZoomOut80ToolStripItem.Text = "80%"
-            '
-            'ZoomOut70ToolStripItem
-            '
-            Me.ZoomOut70ToolStripItem.Name = "ZoomOut70ToolStripItem"
-            Me.ZoomOut70ToolStripItem.Size = New System.Drawing.Size(135, 22)
-            Me.ZoomOut70ToolStripItem.Text = "70%"
-            '
-            'ZoomOut60ToolStripItem
-            '
-            Me.ZoomOut60ToolStripItem.Name = "ZoomOut60ToolStripItem"
-            Me.ZoomOut60ToolStripItem.Size = New System.Drawing.Size(135, 22)
-            Me.ZoomOut60ToolStripItem.Text = "60%"
-            '
-            'ZoomOut50ToolStripItem
-            '
-            Me.ZoomOut50ToolStripItem.Name = "ZoomOut50ToolStripItem"
-            Me.ZoomOut50ToolStripItem.Size = New System.Drawing.Size(135, 22)
-            Me.ZoomOut50ToolStripItem.Text = "50%"
-            '
-            'ZoomOut40ToolStripItem
-            '
-            Me.ZoomOut40ToolStripItem.Name = "ZoomOut40ToolStripItem"
-            Me.ZoomOut40ToolStripItem.Size = New System.Drawing.Size(135, 22)
-            Me.ZoomOut40ToolStripItem.Text = "40%"
-            '
-            'ZoomOut30ToolStripItem
-            '
-            Me.ZoomOut30ToolStripItem.Name = "ZoomOut30ToolStripItem"
-            Me.ZoomOut30ToolStripItem.Size = New System.Drawing.Size(135, 22)
-            Me.ZoomOut30ToolStripItem.Text = "30%"
-            '
-            'ZoomOut20ToolStripItem
-            '
-            Me.ZoomOut20ToolStripItem.Name = "ZoomOut20ToolStripItem"
-            Me.ZoomOut20ToolStripItem.Size = New System.Drawing.Size(135, 22)
-            Me.ZoomOut20ToolStripItem.Text = "20%"
-            '
-            'ZoomOut10ToolStripItem
-            '
-            Me.ZoomOut10ToolStripItem.Name = "ZoomOut10ToolStripItem"
-            Me.ZoomOut10ToolStripItem.Size = New System.Drawing.Size(135, 22)
-            Me.ZoomOut10ToolStripItem.Text = "10%"
+            Me.ZoomOutToolStripItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.ZoomOutToolStripItem.Image = AnimatGUI.Framework.ImageManager.LoadImage("AnimatGUI.ZoomOut.gif")
+            Me.ZoomOutToolStripItem.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.ZoomOutToolStripItem.Name = "ZoomOutDropDownButton"
+            Me.ZoomOutToolStripItem.Size = New System.Drawing.Size(29, 22)
+            Me.ZoomOutToolStripItem.Text = "ZoomOutDropDownButton"
+            Me.ZoomOutToolStripItem.ToolTipText = "Zoom out of diagram"
             '
             'AlignDropDownButton
             '
@@ -2191,6 +2004,21 @@ Namespace Forms.Behavior
             mcSize.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {mcSizeBoth, mcSizeWidth, mcSizeHeight})
 
             Dim mcAddStimulus As New System.Windows.Forms.ToolStripMenuItem("Add Stimulus", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddStimulus.gif"), New EventHandler(AddressOf Util.Application.OnAddStimulus))
+
+            Dim mcAddToChart As System.Windows.Forms.ToolStripMenuItem
+            If Not Util.ProjectWorkspace.SelectedDataObject Is Nothing AndAlso Not Util.Application.LastSelectedChart Is Nothing AndAlso Not Util.Application.LastSelectedChart.LastSelectedAxis Is Nothing Then
+                If Util.IsTypeOf(Util.ProjectWorkspace.SelectedDataObject.GetType, GetType(DragObject), False) Then
+                    Dim doObj As DragObject = DirectCast(Util.ProjectWorkspace.SelectedDataObject, DragObject)
+
+                    If doObj.CanBeCharted Then
+                        ' Create the menu items
+                        mcAddToChart = New System.Windows.Forms.ToolStripMenuItem("Add to Chart", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddChartItem.gif"), New EventHandler(AddressOf Util.Application.OnAddToChart))
+                        tsPopupMenu.Items.Add(mcAddToChart)
+                    End If
+                End If
+
+            End If
+
             Dim mcShowConnections As New System.Windows.Forms.ToolStripMenuItem("Show connections", Util.Application.ToolStripImages.GetImage("AnimatGUI.Connections.gif"), New EventHandler(AddressOf Me.ShowConnectionsToolStripMenuItem_Click))
             Dim mcExport As New System.Windows.Forms.ToolStripMenuItem("Export", Util.Application.ToolStripImages.GetImage("AnimatGUI.Export.gif"), New EventHandler(AddressOf Me.ExportToolStripMenuItem_Click))
             Dim mcPrint As New System.Windows.Forms.ToolStripMenuItem("Print", Util.Application.ToolStripImages.GetImage("AnimatGUI.Print.gif"), New EventHandler(AddressOf Me.PrintToolStripMenuItem_Click))
@@ -2250,7 +2078,11 @@ Namespace Forms.Behavior
             tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {toolStripSeparator5})
 
             If m_ctrlAddFlow.SelectedItems.Count > 0 Then
-                tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcAddStimulus, mcShowConnections})
+                If Not mcAddToChart Is Nothing Then
+                    tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcAddStimulus, mcAddToChart, mcShowConnections})
+                Else
+                    tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcAddStimulus, mcShowConnections})
+                End If
             End If
 
             tsPopupMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcExport, mcPrint, mcGrid})
@@ -3426,7 +3258,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomInBy10MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomInBy10MenuItem.Click, ZoomInBy10ToolStripItem.Click
+        Private Sub ZoomInBy10MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomInBy10MenuItem.Click, ZoomInToolStripItem.Click
             Try
                 ZoomBy(0.1)
             Catch ex As System.Exception
@@ -3434,7 +3266,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomInBy20MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomInBy20MenuItem.Click, ZoomInBy20ToolStripItem.Click
+        Private Sub ZoomInBy20MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomInBy20MenuItem.Click
             Try
                 ZoomBy(0.2)
             Catch ex As System.Exception
@@ -3442,7 +3274,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomIn100MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn100MenuItem.Click, ZoomIn100ToolStripItem.Click
+        Private Sub ZoomIn100MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn100MenuItem.Click
             Try
                 ZoomTo(1)
             Catch ex As System.Exception
@@ -3450,7 +3282,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomIn125MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn125MenuItem.Click, ZoomIn125ToolStripItem.Click
+        Private Sub ZoomIn125MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn125MenuItem.Click
             Try
                 ZoomTo(1.25)
             Catch ex As System.Exception
@@ -3458,7 +3290,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomIn150MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn150MenuItem.Click, ZoomIn150ToolStripItem.Click
+        Private Sub ZoomIn150MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn150MenuItem.Click
             Try
                 ZoomTo(1.5)
             Catch ex As System.Exception
@@ -3466,7 +3298,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomIn175MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn175MenuItem.Click, ZoomIn175ToolStripItem.Click
+        Private Sub ZoomIn175MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn175MenuItem.Click
             Try
                 ZoomTo(1.75)
             Catch ex As System.Exception
@@ -3474,7 +3306,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomIn200MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn200MenuItem.Click, ZoomIn200ToolStripItem.Click
+        Private Sub ZoomIn200MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn200MenuItem.Click
             Try
                 ZoomTo(2)
             Catch ex As System.Exception
@@ -3482,7 +3314,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomIn250MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn250MenuItem.Click, ZoomIn250ToolStripItem.Click
+        Private Sub ZoomIn250MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn250MenuItem.Click
             Try
                 ZoomTo(2.5)
             Catch ex As System.Exception
@@ -3490,7 +3322,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomIn300MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn300MenuItem.Click, ZoomIn300ToolStripItem.Click
+        Private Sub ZoomIn300MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn300MenuItem.Click
             Try
                 ZoomTo(3)
             Catch ex As System.Exception
@@ -3498,7 +3330,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomIn400MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn400MenuItem.Click, ZoomIn400ToolStripItem.Click
+        Private Sub ZoomIn400MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn400MenuItem.Click
             Try
                 ZoomTo(4)
             Catch ex As System.Exception
@@ -3506,7 +3338,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomIn500MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn500MenuItem.Click, ZoomIn500ToolStripItem.Click
+        Private Sub ZoomIn500MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomIn500MenuItem.Click
             Try
                 ZoomTo(5)
             Catch ex As System.Exception
@@ -3514,7 +3346,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomOutBy10MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOutBy10MenuItem.Click, ZoomOutBy10ToolStripItem.Click
+        Private Sub ZoomOutBy10MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOutBy10MenuItem.Click, ZoomOutToolStripItem.Click
             Try
                 ZoomBy(-0.1)
             Catch ex As System.Exception
@@ -3522,7 +3354,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomOutBy20MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOutBy20MenuItem.Click, ZoomOutBy20ToolStripItem.Click
+        Private Sub ZoomOutBy20MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOutBy20MenuItem.Click
             Try
                 ZoomBy(-0.2)
             Catch ex As System.Exception
@@ -3530,7 +3362,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomOut100MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut100MenuItem.Click, ZoomOut100ToolStripItem.Click
+        Private Sub ZoomOut100MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut100MenuItem.Click
             Try
                 ZoomTo(1)
             Catch ex As System.Exception
@@ -3538,7 +3370,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomOut90MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut90MenuItem.Click, ZoomOut90ToolStripItem.Click
+        Private Sub ZoomOut90MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut90MenuItem.Click
             Try
                 ZoomTo(0.9)
             Catch ex As System.Exception
@@ -3546,7 +3378,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomOut80MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut80MenuItem.Click, ZoomOut80ToolStripItem.Click
+        Private Sub ZoomOut80MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut80MenuItem.Click
             Try
                 ZoomTo(0.8)
             Catch ex As System.Exception
@@ -3554,7 +3386,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomOut70MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut70MenuItem.Click, ZoomOut70ToolStripItem.Click
+        Private Sub ZoomOut70MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut70MenuItem.Click
             Try
                 ZoomTo(0.7)
             Catch ex As System.Exception
@@ -3562,7 +3394,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomOut60MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut60MenuItem.Click, ZoomOut60ToolStripItem.Click
+        Private Sub ZoomOut60MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut60MenuItem.Click
             Try
                 ZoomTo(0.6)
             Catch ex As System.Exception
@@ -3570,7 +3402,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomOut50MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut50MenuItem.Click, ZoomOut50ToolStripItem.Click
+        Private Sub ZoomOut50MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut50MenuItem.Click
             Try
                 ZoomTo(0.5)
             Catch ex As System.Exception
@@ -3578,7 +3410,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomOut40MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut40MenuItem.Click, ZoomOut40ToolStripItem.Click
+        Private Sub ZoomOut40MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut40MenuItem.Click
             Try
                 ZoomTo(0.4)
             Catch ex As System.Exception
@@ -3586,7 +3418,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomOut30MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut30MenuItem.Click, ZoomOut30ToolStripItem.Click
+        Private Sub ZoomOut30MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut30MenuItem.Click
             Try
                 ZoomTo(0.3)
             Catch ex As System.Exception
@@ -3594,7 +3426,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomOut20MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut20MenuItem.Click, ZoomOut20ToolStripItem.Click
+        Private Sub ZoomOut20MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut20MenuItem.Click
             Try
                 ZoomTo(0.2)
             Catch ex As System.Exception
@@ -3602,7 +3434,7 @@ Namespace Forms.Behavior
             End Try
         End Sub
 
-        Private Sub ZoomOut10MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut10MenuItem.Click, ZoomOut10ToolStripItem.Click
+        Private Sub ZoomOut10MenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ZoomOut10MenuItem.Click
             Try
                 ZoomTo(0.1)
             Catch ex As System.Exception
@@ -3942,11 +3774,17 @@ Namespace Forms.Behavior
                         e.Cancel.Cancel = True
                     Else
                         bnNode.BeginBatchUpdate()
+
+                        bnNode.SignalBeforePropertyChanged(bnNode, bnNode.GetType().GetProperty("Text"))
+
                         bnNode.Text = e.Text
+
+                        bnNode.SignalAfterPropertyChanged(bnNode, bnNode.GetType().GetProperty("Text"))
                         bnNode.EndBatchUpdate(False)
                         bnNode.SelectItem(False)
 
                         bnNode.AfterEdit()
+
                         Me.IsDirty = True
                     End If
                 End If

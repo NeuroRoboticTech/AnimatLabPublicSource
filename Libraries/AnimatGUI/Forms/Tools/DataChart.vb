@@ -68,6 +68,8 @@ Namespace Forms.Tools
         Protected m_aryAutoFillColors(20) As System.Drawing.Color
         Protected m_iAutoFillColor As Integer = 0
 
+        Protected m_doLastSelectedAxis As DataObjects.Charting.Axis
+
 #End Region
 
 #Region " Properties "
@@ -254,6 +256,15 @@ Namespace Forms.Tools
                     End If
                 Next
             End Get
+        End Property
+
+        Public Overridable Property LastSelectedAxis() As DataObjects.Charting.Axis
+            Get
+                Return m_doLastSelectedAxis
+            End Get
+            Set(ByVal Value As DataObjects.Charting.Axis)
+                m_doLastSelectedAxis = Value
+            End Set
         End Property
 
         Public MustOverride Property MainTitle() As String
@@ -764,6 +775,10 @@ Namespace Forms.Tools
             MyBase.OnFormClosing(e)
 
             If Not e.Cancel Then
+                If Util.Application.LastSelectedChart Is Me Then
+                    Util.Application.LastSelectedChart = Nothing
+                End If
+
                 RemoveHandlers()
 
                 If Util.Application.SimulationInterface.FindItem(m_strID, False) Then

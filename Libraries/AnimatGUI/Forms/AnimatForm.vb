@@ -167,6 +167,9 @@ Namespace Forms
             End Get
             Set(ByVal Value As String)
                 m_strTabPageName = Value
+                If Not Me.TabPage Is Nothing Then
+                    Me.TabPage.Title = m_strTabPageName
+                End If
             End Set
         End Property
 
@@ -206,6 +209,7 @@ Namespace Forms
             Set(ByVal Value As String)
                 m_strTitle = Value
                 Me.Text = m_strTitle
+                Me.TabPageName = m_strTitle
             End Set
         End Property
 

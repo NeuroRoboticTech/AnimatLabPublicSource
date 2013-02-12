@@ -418,12 +418,14 @@ Namespace DataObjects.Charting
             DisconnectItemEvents()
 
             If Not m_doItem Is Nothing Then
+                AddHandler m_doItem.AfterPropertyChanged, AddressOf Me.OnAfterPropertyChanged
                 AddHandler m_doItem.AfterRemoveItem, AddressOf Me.OnAfterRemoveItem
             End If
         End Sub
 
         Protected Overridable Sub DisconnectItemEvents()
             If Not m_doItem Is Nothing Then
+                RemoveHandler m_doItem.AfterPropertyChanged, AddressOf Me.OnAfterPropertyChanged
                 RemoveHandler m_doItem.AfterRemoveItem, AddressOf Me.OnAfterRemoveItem
             End If
         End Sub
@@ -609,6 +611,15 @@ Namespace DataObjects.Charting
 
         End Sub
 
+        Public Overrides Sub SelectItem(Optional bSelectMultiple As Boolean = False)
+            MyBase.SelectItem(bSelectMultiple)
+
+            If Not m_frmParentAxis Is Nothing AndAlso Not m_frmParentAxis.ParentChart Is Nothing Then
+                Util.Application.LastSelectedChart = m_frmParentAxis.ParentChart
+                m_frmParentAxis.ParentChart.LastSelectedAxis = m_frmParentAxis
+            End If
+        End Sub
+
         Public Overrides Function Delete(Optional ByVal bAskToDelete As Boolean = True, Optional ByVal e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
 
             Try
@@ -698,6 +709,18 @@ Namespace DataObjects.Charting
             Try
                 'When the linked part is deleted then delete this column.
                 Me.Delete(False)
+            Catch ex As Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Private Sub OnAfterPropertyChanged(ByVal doObject As Framework.DataObject, propInfo As Reflection.PropertyInfo)
+            Try
+                If propInfo.Name = "Text" Then
+                    If Not m_doItem Is Nothing Then
+                        Me.DataItemName = m_doItem.ItemName
+                    End If
+                End If
             Catch ex As Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

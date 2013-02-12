@@ -1465,7 +1465,7 @@ Namespace DataObjects.Behavior
 
         End Sub
 
-        Protected Overridable Sub OnLinkModified(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
+        Protected Overridable Sub OnLinkModified(ByVal doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
         End Sub
 
         Protected Overridable Sub OnOriginModified(ByVal blLink As Link)

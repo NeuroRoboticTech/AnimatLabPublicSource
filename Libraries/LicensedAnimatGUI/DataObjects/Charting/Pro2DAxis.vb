@@ -363,6 +363,23 @@ Namespace DataObjects.Charting
                 Util.DisableDirtyFlags = False
             End Try
         End Sub
+
+        Public Overrides Sub AddNewDataItem(ByVal doItem As AnimatGUI.DataObjects.DragObject)
+
+            Try
+                Util.DisableDirtyFlags = True
+
+                Dim pro As New Pro2DColumn(Me)
+                Dim doColumn As AnimatGUI.DataObjects.Charting.DataColumn = pro.CreateDataColumn(doItem, False)
+                Me.DroppedItem(doColumn)
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            Finally
+                Util.DisableDirtyFlags = False
+            End Try
+        End Sub
+
     End Class
 
 End Namespace

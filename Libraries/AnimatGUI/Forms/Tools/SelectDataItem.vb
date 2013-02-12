@@ -252,6 +252,8 @@ Namespace Forms.Tools
                 tvStructures.ExpandAll()
             End If
 
+            tvStructures.Sort()
+
         End Sub
 
 #End Region

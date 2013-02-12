@@ -353,7 +353,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Sub OnSelPartPropertyChanged(ByRef doObject As Framework.DataObject, propInfo As Reflection.PropertyInfo)
+        Private Sub OnSelPartPropertyChanged(ByVal doObject As Framework.DataObject, propInfo As Reflection.PropertyInfo)
             If m_doSelPart Is doObject AndAlso Not propInfo Is Nothing AndAlso Util.IsTypeOf(m_doSelPart.GetType, GetType(DataObjects.Physical.RigidBody)) Then
                 Dim doPart As DataObjects.Physical.RigidBody = DirectCast(m_doSelPart, DataObjects.Physical.RigidBody)
 

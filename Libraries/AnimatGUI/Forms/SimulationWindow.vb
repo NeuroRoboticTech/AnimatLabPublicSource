@@ -739,7 +739,7 @@ Namespace Forms
 
         End Sub
 
-        Protected Overridable Sub OnStructurePropertyChanged(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
+        Protected Overridable Sub OnStructurePropertyChanged(ByVal doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
             Try
                 If propInfo.Name = "Name" AndAlso Not Me.TabPage Is Nothing Then
                     Me.TabPage.Title = m_doStructure.Name & "Body"

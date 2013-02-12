@@ -295,6 +295,12 @@ Namespace DataObjects.Physical
                     popup.Items.Add(mcAddStimulus)
                 End If
 
+                If Me.CanBeCharted AndAlso Not Util.Application.LastSelectedChart Is Nothing AndAlso Not Util.Application.LastSelectedChart.LastSelectedAxis Is Nothing Then
+                    ' Create the menu items
+                    Dim mcAddToChart As New System.Windows.Forms.ToolStripMenuItem("Add to Chart", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddChartItem.gif"), New EventHandler(AddressOf Util.Application.OnAddToChart))
+                    popup.Items.Add(mcAddToChart)
+                End If
+
                 Dim mcSwapPart As New System.Windows.Forms.ToolStripMenuItem("Swap Part", Util.Application.ToolStripImages.GetImage("AnimatGUI.Swap.gif"), New EventHandler(AddressOf Me.OnSwapBodyPart))
                 popup.Items.Add(mcSwapPart)
 

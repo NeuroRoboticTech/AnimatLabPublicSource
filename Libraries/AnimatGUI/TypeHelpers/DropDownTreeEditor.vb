@@ -55,6 +55,7 @@ Namespace TypeHelpers
             Dim ctrlTree As System.Windows.Forms.Control = DirectCast(m_treeView, System.Windows.Forms.Control)
             doValue.BuildPropertyDropDown(ctrlTree)
             AddHandler m_treeView.AfterSelect, AddressOf Me.handleSelection
+            m_treeView.Sort()
             m_bFirstSelect = True
             Me.edSvc.DropDownControl(m_treeView)
 

@@ -246,7 +246,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Sub onGainPropertyChanged(ByRef doObject As Framework.DataObject, propInfo As Reflection.PropertyInfo)
+        Private Sub OnGainPropertyChanged(ByVal doObject As Framework.DataObject, propInfo As Reflection.PropertyInfo)
             Try
 
                 If Not chartCurrentGain Is Nothing AndAlso Not chartCurrentGain.Gain Is Nothing Then

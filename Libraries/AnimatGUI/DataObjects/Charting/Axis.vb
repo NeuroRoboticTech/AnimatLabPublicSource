@@ -281,6 +281,9 @@ Namespace DataObjects.Charting
             OnAddDataItem(Me, New System.EventArgs)
         End Sub
 
+        Public Overridable Sub AddNewDataItem(ByVal doItem As AnimatGUI.DataObjects.DragObject)
+        End Sub
+
 #Region " TreeView Methods "
 
         Public Overrides Sub CreateWorkspaceTreeView(ByVal doParent As Framework.DataObject, _
@@ -525,6 +528,15 @@ Namespace DataObjects.Charting
             Return doAxis
         End Function
 
+        Public Overrides Sub SelectItem(Optional bSelectMultiple As Boolean = False)
+            MyBase.SelectItem(bSelectMultiple)
+
+            If Not m_frmParentChart Is Nothing Then
+                Util.Application.LastSelectedChart = m_frmParentChart
+                m_frmParentChart.LastSelectedAxis = Me
+            End If
+        End Sub
+
 #End Region
 
 #End Region
@@ -533,24 +545,6 @@ Namespace DataObjects.Charting
 
         Protected Overridable Sub OnAddDataItem(ByVal sender As Object, ByVal e As System.EventArgs)
 
-            'Try
-            '    Util.DisableDirtyFlags = True
-
-            '    Dim frmSelectItem As New Forms.Tools.SelectDataItem
-
-            '    frmSelectItem.Axis = Me
-            '    frmSelectItem.BuildTreeView()
-            '    If frmSelectItem.ShowDialog(Me.ParentChart) = DialogResult.OK Then
-            '        Util.DisableDirtyFlags = False
-            '        Me.DroppedItem(frmSelectItem.DataColumn)
-            '        m_frmParentChart.UpdateChartConfiguration(True)
-            '    End If
-
-            'Catch ex As System.Exception
-            '    AnimatGUI.Framework.Util.DisplayError(ex)
-            'Finally
-            '    Util.DisableDirtyFlags = False
-            'End Try
         End Sub
 
 #End Region

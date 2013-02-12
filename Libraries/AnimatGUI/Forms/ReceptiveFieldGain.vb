@@ -130,7 +130,7 @@ Namespace Forms
 
         Protected Sub SetupGainInfo()
             If Not chartFieldGain Is Nothing AndAlso Not chartFieldGain.Gain Is Nothing Then
-                RemoveHandler chartFieldGain.Gain.AfterPropertyChanged, AddressOf Me.onGainPropertyChanged
+                RemoveHandler chartFieldGain.Gain.AfterPropertyChanged, AddressOf Me.OnGainPropertyChanged
             End If
 
             If Not m_doSelPart Is Nothing AndAlso Not m_doSelPart.ReceptiveFieldSensor Is Nothing Then
@@ -142,7 +142,7 @@ Namespace Forms
             End If
 
             If Not chartFieldGain Is Nothing AndAlso Not chartFieldGain.Gain Is Nothing Then
-                AddHandler chartFieldGain.Gain.AfterPropertyChanged, AddressOf Me.onGainPropertyChanged
+                AddHandler chartFieldGain.Gain.AfterPropertyChanged, AddressOf Me.OnGainPropertyChanged
                 chartFieldGain.DrawGainChart(True)
             End If
 
@@ -186,7 +186,7 @@ Namespace Forms
 
             If Not chartFieldGain Is Nothing AndAlso Not chartFieldGain.Gain Is Nothing Then
                 Try
-                    RemoveHandler chartFieldGain.Gain.AfterPropertyChanged, AddressOf Me.onGainPropertyChanged
+                    RemoveHandler chartFieldGain.Gain.AfterPropertyChanged, AddressOf Me.OnGainPropertyChanged
                 Catch ex As Exception
                 End Try
                 chartFieldGain = Nothing
@@ -219,7 +219,7 @@ Namespace Forms
 
             Try
                 If Not chartFieldGain Is Nothing AndAlso Not chartFieldGain.Gain Is Nothing Then
-                    RemoveHandler chartFieldGain.Gain.AfterPropertyChanged, AddressOf Me.onGainPropertyChanged
+                    RemoveHandler chartFieldGain.Gain.AfterPropertyChanged, AddressOf Me.OnGainPropertyChanged
                 End If
 
                 If Not Util.ProjectWorkspace.SelectedDataObject Is Nothing AndAlso _
@@ -244,7 +244,7 @@ Namespace Forms
             End Try
         End Sub
 
-        Private Sub onGainPropertyChanged(ByRef doObject As Framework.DataObject, propInfo As Reflection.PropertyInfo)
+        Private Sub OnGainPropertyChanged(ByVal doObject As Framework.DataObject, propInfo As Reflection.PropertyInfo)
             Try
 
                 If Not chartFieldGain Is Nothing AndAlso Not chartFieldGain.Gain Is Nothing Then

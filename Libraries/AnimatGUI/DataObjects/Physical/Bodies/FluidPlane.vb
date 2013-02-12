@@ -188,7 +188,7 @@ Namespace DataObjects.Physical.Bodies
             End Try
         End Sub
 
-        Public Overridable Sub OnEnvironmentPropChanged(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
+        Public Overridable Sub OnEnvironmentPropChanged(ByVal doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
             Try
                 If propInfo.Name = "Gravity" Then
                     Me.SetSimData("Gravity", Util.Environment.Gravity.ToString, True)

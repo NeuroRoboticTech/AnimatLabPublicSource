@@ -265,7 +265,7 @@ Namespace DataObjects.Physical
                 Me.SetSimData("FoodSource", Value.ToString, True)
                 m_bFoodSource = Value
 
-                Util.ProjectProperties.RefreshProperties()
+                Util.Application.ProjectWorkspace.RefreshProperties()
             End Set
         End Property
 

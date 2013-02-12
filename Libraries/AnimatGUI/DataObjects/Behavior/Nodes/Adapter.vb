@@ -589,7 +589,7 @@ Namespace DataObjects.Behavior.Nodes
 
 #Region "Event Handlers"
 
-        Protected Overridable Sub OnOriginPropertyChanged(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
+        Protected Overridable Sub OnOriginPropertyChanged(ByVal doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
             Try
                 If Util.IsTypeOf(doObject.GetType, GetType(Behavior.Node), False) Then
                     Dim bnNode As Behavior.Node = DirectCast(doObject, Behavior.Node)
@@ -602,7 +602,7 @@ Namespace DataObjects.Behavior.Nodes
             End Try
         End Sub
 
-        Protected Overridable Sub OnDestinationPropertyChanged(ByRef doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
+        Protected Overridable Sub OnDestinationPropertyChanged(ByVal doObject As AnimatGUI.Framework.DataObject, ByVal propInfo As System.Reflection.PropertyInfo)
             Try
                 If Util.IsTypeOf(doObject.GetType, GetType(Behavior.Node), False) Then
                     Dim bnNode As Behavior.Node = DirectCast(doObject, Behavior.Node)
