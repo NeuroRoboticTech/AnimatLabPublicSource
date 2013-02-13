@@ -153,6 +153,7 @@ namespace FiringRateSim
 
 			virtual float ExternalI();
 			virtual void ExternalI(float fltVal);
+			virtual void AddExternalI(float fltVal);
 
 			virtual float IntrinsicCurrent();
 			virtual void IntrinsicCurrent(float fltVal);

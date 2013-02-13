@@ -20,6 +20,9 @@ namespace VortexAnimatSim
 VsOsgUserDataVisitor::VsOsgUserDataVisitor(VsMovableItem *lpItem) : osg::NodeVisitor(osg::NodeVisitor::TRAVERSE_ALL_CHILDREN )
 {
 	m_lpItem = lpItem;
+	//Force the osg user data visitor to visit all the nodes even if the node itself is set to not visit.
+	//Fixes a problem where frozen nodes were set as static in osg, so they were not getting their user data set.
+	setNodeMaskOverride(0xFFFFFFFF);
 }
 
 VsOsgUserDataVisitor::~VsOsgUserDataVisitor(void)

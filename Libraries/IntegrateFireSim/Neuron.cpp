@@ -151,6 +151,19 @@ void Neuron::Enabled(BOOL bValue)
 }
 
 /**
+\brief	Adds to the external current.
+
+\author	dcofer
+\date	3/29/2011
+
+\param	fltVal	The new value to add. 
+**/
+void Neuron::AddExternalI(float fltVal)
+{
+	m_fltExternalI+=fltVal;
+}
+
+/**
 \brief	Gets the resting potential.
 
 \author	dcofer
@@ -1481,6 +1494,12 @@ BOOL Neuron::SetData(const string &strDataType, const string &strValue, BOOL bTh
 		return TRUE;
 	}
 
+	if(strType == "ADDEXTERNALCURRENT")
+	{
+		AddExternalI(atof(strValue.c_str()));
+		return TRUE;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -1523,6 +1542,9 @@ void Neuron::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &ary
 	aryTypes.Add("Float");
 
 	aryNames.Add("TonicNoise");
+	aryTypes.Add("Float");
+
+	aryNames.Add("AddExternalCurrent");
 	aryTypes.Add("Float");
 }
 

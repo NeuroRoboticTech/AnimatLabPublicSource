@@ -288,6 +288,8 @@ namespace IntegrateFireSim
 		virtual BOOL Enabled();
 		virtual void Enabled(BOOL bValue);
 
+		virtual void AddExternalI(float fltVal);
+
 	//////
 	// ENGINE
 		double GetRestingPot();
