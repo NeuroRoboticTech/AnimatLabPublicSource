@@ -910,7 +910,8 @@ Namespace Framework
                     End If
 
                     If Util.ProjectWorkspace.TreeView.SelectedNodes.Contains(m_tnWorkspaceNode) Then
-                        Util.ProjectWorkspace.TreeView.DeselectNode(m_tnWorkspaceNode, True)
+                        'Needs to use recurse = false. If true then it will also deselect all child objects.
+                        Util.ProjectWorkspace.TreeView.DeselectNode(m_tnWorkspaceNode, False)
                     End If
 
                     If Not m_doInterface Is Nothing Then
