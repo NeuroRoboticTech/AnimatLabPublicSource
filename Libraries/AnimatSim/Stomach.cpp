@@ -49,6 +49,7 @@ namespace AnimatSim
 Stomach::Stomach()
 {
 	m_bKilled = FALSE;
+	m_fltReportAlive = 1;
 	m_fltMaxEnergyLevel = 100000;
 	m_fltEnergyLevel = 2000;
 	m_fltInitEnergyLevel = m_fltEnergyLevel;
@@ -222,6 +223,7 @@ void Stomach::ResetSimulation()
 	m_fltConsumptionRate = 0;
 	m_fltAdapterConsumptionRate = 0;
 	m_bKilled = FALSE;
+	m_fltReportAlive = 1;
 }
 
 void Stomach::StepSimulation()
@@ -245,6 +247,7 @@ void Stomach::StepSimulation()
 
 		lpOrganism->Kill(TRUE);
 		m_bKilled = TRUE;
+		m_fltReportAlive = 0;
 	}
 }
 
@@ -318,6 +321,9 @@ float *Stomach::GetDataPointer(const string &strDataType)
 
 	if(strType == "ADAPTERCONSUMPTIONRATE")
 		return &m_fltAdapterConsumptionRate;
+
+	if(strType == "ALIVE")
+		return &m_fltReportAlive;
 
 	return RigidBody::GetDataPointer(strDataType);
 }

@@ -783,10 +783,12 @@ Namespace DataObjects.Physical
                                      "Hydrodynamics", "Enables fluid interactions for this specific body.", m_bEnableFluids))
                 End If
 
-                pbNumberBag = m_snDensity.Properties
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Density", pbNumberBag.GetType(), "Density", _
-                                            "Part Properties", "Sets the density of this body part.", pbNumberBag, _
-                                            "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+                If Not Me.IsContactSensor Then
+                    pbNumberBag = m_snDensity.Properties
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Density", pbNumberBag.GetType(), "Density", _
+                                                "Part Properties", "Sets the density of this body part.", pbNumberBag, _
+                                                "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+                End If
 
                 'Center Of Mass
                 pbNumberBag = Me.COM.Properties
@@ -798,7 +800,7 @@ Namespace DataObjects.Physical
                 propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Freeze", m_bFreeze.GetType(), "Freeze", _
                                                 "Part Properties", "If the root body is frozen then it is locked in place in the environment.", m_bFreeze))
 
-                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Maerial Type", GetType(AnimatGUI.TypeHelpers.LinkedMaterialType), "MaterialType", _
+                propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Material Type", GetType(AnimatGUI.TypeHelpers.LinkedMaterialType), "MaterialType", _
                                "Part Properties", "The material to be used for this part.", _
                                m_thMaterialType, GetType(AnimatGUI.TypeHelpers.DropDownListEditor), _
                                GetType(AnimatGUI.TypeHelpers.LinkedMaterialTypeConverter)))

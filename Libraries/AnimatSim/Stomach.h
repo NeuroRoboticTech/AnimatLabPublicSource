@@ -55,6 +55,9 @@ namespace AnimatSim
 				/// Set to true if the organism is killed.
 				BOOL m_bKilled;
 
+				/// Used to report in GetDataPointer if the organism was killed.
+				float m_fltReportAlive;
+
 			public:
 				Stomach();
 				virtual ~Stomach();

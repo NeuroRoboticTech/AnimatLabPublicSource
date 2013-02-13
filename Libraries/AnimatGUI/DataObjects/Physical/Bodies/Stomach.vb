@@ -119,6 +119,7 @@ Namespace DataObjects.Physical.Bodies
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ConsumptionRate", "Consumption Rate", "", "", -10000, 10000))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ConsumptionForStep", "Consumption For Step", "", "", -10000, 10000))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("AdapterConsumptionRate", "Adapter Consumption Rate", "", "", -10000, 10000))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Alive", "Alive", "", "", 0, 1))
             m_thDataTypes.ID = "EnergyLevel"
 
         End Sub
