@@ -413,7 +413,7 @@ Namespace Forms
             '
             'EditToolStripMenuItem
             '
-            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UndoToolStripMenuItem, Me.RedoToolStripMenuItem, Me.RunMacroToolStripMenuItem})
+            Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RunMacroToolStripMenuItem})  'Me.UndoToolStripMenuItem, Me.RedoToolStripMenuItem, 
             Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.toolStripSeparator6, Me.DeleteToolStripMenuItem})
             Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripSeparator1, Me.SelectByTypeToolStripMenuItem, _
                                                                                                       Me.RelabelSelectedToolStripMenuItem, _

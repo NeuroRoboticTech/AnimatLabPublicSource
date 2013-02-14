@@ -181,7 +181,7 @@ Namespace DataObjects.Physical
                 popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcDelete, mcClone})
 
                 If Me.RootBody Is Nothing Then
-                    Dim mcAddRoot As New System.Windows.Forms.ToolStripMenuItem("Add root body", Util.Application.ToolStripImages.GetImage("AnimatGUI.Blank.gif"), New EventHandler(AddressOf Me.OnAddRootBody))
+                    Dim mcAddRoot As New System.Windows.Forms.ToolStripMenuItem("Add root body", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddPart.gif"), New EventHandler(AddressOf Me.OnAddRootBody))
                     popup.Items.Add(mcAddRoot)
                 End If
 
