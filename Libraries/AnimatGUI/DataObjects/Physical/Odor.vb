@@ -110,6 +110,9 @@ Namespace DataObjects.Physical
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("ID", Me.ID.GetType(), "ID", _
                                         "Odor Properties", "ID", Me.ID, True))
 
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Enabled", Me.Enabled.GetType(), "Enabled", _
+                                         "Odor Properties", "Enabled", Me.Enabled))
+
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Use Food Quantity", m_bUseFoodQuantity.GetType(), "UseFoodQuantity", _
                                         "Odor Properties", "If this is true then the odor quantity is determined by the food quantity value of this part.", m_bUseFoodQuantity))
 
@@ -160,6 +163,7 @@ Namespace DataObjects.Physical
 
                 m_strName = oXml.GetChildString("Name")
                 m_strID = oXml.GetChildString("ID")
+                m_bEnabled = oXml.GetChildBool("Enabled", m_bEnabled)
                 Dim strOdorTypeID As String = oXml.GetChildString("OdorTypeID")
                 m_fltQuantity = oXml.GetChildFloat("Quantity")
                 m_bUseFoodQuantity = oXml.GetChildBool("UseFoodQuantity", False)
@@ -192,6 +196,7 @@ Namespace DataObjects.Physical
                 oXml.AddChildElement("OdorTypeID", m_doOdorType.ID)
                 oXml.AddChildElement("Quantity", m_fltQuantity)
                 oXml.AddChildElement("UseFoodQuantity", m_bUseFoodQuantity)
+                oXml.AddChildElement("Enabled", m_bEnabled)
 
                 oXml.OutOfElem()
             End If
@@ -208,6 +213,7 @@ Namespace DataObjects.Physical
                 oXml.AddChildElement("OdorTypeID", m_doOdorType.ID)
                 oXml.AddChildElement("Quantity", m_fltQuantity)
                 oXml.AddChildElement("UseFoodQuantity", m_bUseFoodQuantity)
+                oXml.AddChildElement("Enabled", m_bEnabled)
 
                 oXml.OutOfElem()
             End If

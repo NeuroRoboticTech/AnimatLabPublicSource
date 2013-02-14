@@ -52,6 +52,7 @@ Odor::Odor(RigidBody *lpParent)
 	m_lpOdorType = NULL;
 	m_fltQuantity = 100;
 	m_bUseFoodQuantity = FALSE;
+	m_bEnabled = TRUE;
 }
 
 /**
@@ -69,6 +70,34 @@ try
 }
 catch(...)
 {Std_TraceMsg(0, "Caught Error in desctructor of Odor\r\n", "", -1, FALSE, TRUE);}
+}
+
+/**
+\fn	BOOL Odor::Enabled()
+
+\brief	Gets whether the odor is enabled or not. 
+
+\author	dcofer
+\date	3/1/2011
+
+\return	true if it enabled, false if not. 
+**/
+BOOL Odor::Enabled()
+{return m_bEnabled;}
+
+/**
+\fn	void Odor::Enabled(BOOL bVal)
+
+\brief	Enables the odor. 
+
+\author	dcofer
+\date	3/1/2011
+
+\param	bVal	true to enable, false to disable. 
+**/
+void Odor::Enabled(BOOL bVal)
+{
+	m_bEnabled = bVal;
 }
 
 /**
@@ -170,7 +199,7 @@ fltVal = (this->Quantity() * lpType->DiffusionConstant()) / (fltDist * fltDist);
 **/
 float Odor::CalculateOdorValue(OdorType *lpType, CStdFPoint &oSensorPos)
 {
-	if(!m_lpParent) return 0;
+	if(!m_lpParent || !m_bEnabled) return 0;
 
 	CStdFPoint oOdorPos = m_lpParent->GetCurrentPosition();
 
@@ -186,6 +215,12 @@ BOOL Odor::SetData(const string &strDataType, const string &strValue, BOOL bThro
 
 	if(AnimatBase::SetData(strType, strValue, FALSE))
 		return TRUE;
+
+	if(strType == "ENABLED")
+	{
+		Enabled(Std_ToBool(strValue));
+		return TRUE;
+	}
 
 	if(strType == "QUANTITY")
 	{
@@ -210,6 +245,9 @@ void Odor::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTy
 {
 	AnimatBase::QueryProperties(aryNames, aryTypes);
 
+	aryNames.Add("Enabled");
+	aryTypes.Add("Boolean");
+
 	aryNames.Add("Quantity");
 	aryTypes.Add("Float");
 
@@ -226,6 +264,7 @@ void Odor::Load(CStdXml &oXml)
 	SetOdorType(oXml.GetChildString("OdorTypeID"));
 	Quantity(oXml.GetChildFloat("Quantity", m_fltQuantity));
 	UseFoodQuantity(oXml.GetChildBool("UseFoodQuantity", m_bUseFoodQuantity));
+	Enabled(oXml.GetChildBool("Enabled", m_bEnabled));
 
 	oXml.OutOfElem(); //OutOf Odor Element
 }

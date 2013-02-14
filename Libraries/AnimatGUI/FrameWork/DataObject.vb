@@ -113,10 +113,12 @@ Namespace Framework
                 SetSimData("Enabled", Value.ToString, True)
                 m_bEnabled = Value
 
-                If Me.Enabled AndAlso Not m_tnWorkspaceNode Is Nothing Then
-                    m_tnWorkspaceNode.BackColor = Color.White
-                Else
-                    m_tnWorkspaceNode.BackColor = Color.Gray
+                If Not m_tnWorkspaceNode Is Nothing Then
+                    If Me.Enabled Then
+                        m_tnWorkspaceNode.BackColor = Color.White
+                    Else
+                        m_tnWorkspaceNode.BackColor = Color.Gray
+                    End If
                 End If
 
             End Set
