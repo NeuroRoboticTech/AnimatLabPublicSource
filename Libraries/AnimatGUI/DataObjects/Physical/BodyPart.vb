@@ -284,48 +284,52 @@ Namespace DataObjects.Physical
 
         End Sub
 
+        Protected Overridable Function CreateWorkspaceTreeViewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As System.Drawing.Point) As AnimatContextMenuStrip
+            Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Physical.BodyPart.WorkspaceTreeviewPopupMenu", Util.SecurityMgr)
+
+            If Me.AllowStimulus AndAlso Me.CompatibleStimuli.Count > 0 Then
+                ' Create the menu items
+                Dim mcAddStimulus As New System.Windows.Forms.ToolStripMenuItem("Add Stimulus", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddStimulus.gif"), New EventHandler(AddressOf Me.OnAddStimulus))
+                popup.Items.Add(mcAddStimulus)
+            End If
+
+            If Me.CanBeCharted AndAlso Not Util.Application.LastSelectedChart Is Nothing AndAlso Not Util.Application.LastSelectedChart.LastSelectedAxis Is Nothing Then
+                ' Create the menu items
+                Dim mcAddToChart As New System.Windows.Forms.ToolStripMenuItem("Add to Chart", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddChartItem.gif"), New EventHandler(AddressOf Util.Application.OnAddToChart))
+                popup.Items.Add(mcAddToChart)
+            End If
+
+            Dim mcSwapPart As New System.Windows.Forms.ToolStripMenuItem("Swap Part", Util.Application.ToolStripImages.GetImage("AnimatGUI.Swap.gif"), New EventHandler(AddressOf Me.OnSwapBodyPart))
+            popup.Items.Add(mcSwapPart)
+
+            Dim mcCut As New System.Windows.Forms.ToolStripMenuItem("Cut", Util.Application.ToolStripImages.GetImage("AnimatGUI.Cut.gif"), New EventHandler(AddressOf Me.OnCutBodyPart))
+            Dim mcCopy As New System.Windows.Forms.ToolStripMenuItem("Copy", Util.Application.ToolStripImages.GetImage("AnimatGUI.Copy.gif"), New EventHandler(AddressOf Me.OnCopyBodyPart))
+            Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete Part", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
+            popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcCut, mcCopy, mcDelete})
+
+            If Not Me.ParentStructure Is Nothing Then
+                Dim mcRelabel As New System.Windows.Forms.ToolStripMenuItem("Relabel Children", Util.Application.ToolStripImages.GetImage("AnimatGUI.Relabel.gif"), New EventHandler(AddressOf Me.OnRelabelChildren))
+                popup.Items.Add(mcRelabel)
+            End If
+
+            Dim mcSepExpand As New ToolStripSeparator()
+            Dim mcExpandAll As New System.Windows.Forms.ToolStripMenuItem("Expand All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Expand.gif"), New EventHandler(AddressOf Me.OnExpandAll))
+            Dim mcCollapseAll As New System.Windows.Forms.ToolStripMenuItem("Collapse All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Collapse.gif"), New EventHandler(AddressOf Me.OnCollapseAll))
+
+            mcExpandAll.Tag = tnSelectedNode
+            mcCollapseAll.Tag = tnSelectedNode
+
+            ' Create the popup menu object
+            popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcSepExpand, mcExpandAll, mcCollapseAll})
+
+            Return popup
+        End Function
+
         Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As System.Drawing.Point) As Boolean
 
             If tnSelectedNode Is m_tnWorkspaceNode Then
-                Dim popup As New AnimatContextMenuStrip("AnimatGUI.DataObjects.Physical.BodyPart.WorkspaceTreeviewPopupMenu", Util.SecurityMgr)
-
-                If Me.AllowStimulus AndAlso Me.CompatibleStimuli.Count > 0 Then
-                    ' Create the menu items
-                    Dim mcAddStimulus As New System.Windows.Forms.ToolStripMenuItem("Add Stimulus", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddStimulus.gif"), New EventHandler(AddressOf Me.OnAddStimulus))
-                    popup.Items.Add(mcAddStimulus)
-                End If
-
-                If Me.CanBeCharted AndAlso Not Util.Application.LastSelectedChart Is Nothing AndAlso Not Util.Application.LastSelectedChart.LastSelectedAxis Is Nothing Then
-                    ' Create the menu items
-                    Dim mcAddToChart As New System.Windows.Forms.ToolStripMenuItem("Add to Chart", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddChartItem.gif"), New EventHandler(AddressOf Util.Application.OnAddToChart))
-                    popup.Items.Add(mcAddToChart)
-                End If
-
-                Dim mcSwapPart As New System.Windows.Forms.ToolStripMenuItem("Swap Part", Util.Application.ToolStripImages.GetImage("AnimatGUI.Swap.gif"), New EventHandler(AddressOf Me.OnSwapBodyPart))
-                popup.Items.Add(mcSwapPart)
-
-                Dim mcCut As New System.Windows.Forms.ToolStripMenuItem("Cut", Util.Application.ToolStripImages.GetImage("AnimatGUI.Cut.gif"), New EventHandler(AddressOf Me.OnCutBodyPart))
-                Dim mcCopy As New System.Windows.Forms.ToolStripMenuItem("Copy", Util.Application.ToolStripImages.GetImage("AnimatGUI.Copy.gif"), New EventHandler(AddressOf Me.OnCopyBodyPart))
-                Dim mcDelete As New System.Windows.Forms.ToolStripMenuItem("Delete Part", Util.Application.ToolStripImages.GetImage("AnimatGUI.Delete.gif"), New EventHandler(AddressOf Util.Application.OnDeleteFromWorkspace))
-                popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcCut, mcCopy, mcDelete})
-
-                If Not Me.ParentStructure Is Nothing Then
-                    Dim mcRelabel As New System.Windows.Forms.ToolStripMenuItem("Relabel Children", Util.Application.ToolStripImages.GetImage("AnimatGUI.Relabel.gif"), New EventHandler(AddressOf Me.OnRelabelChildren))
-                    popup.Items.Add(mcRelabel)
-                End If
-
-                Dim mcSepExpand As New ToolStripSeparator()
-                Dim mcExpandAll As New System.Windows.Forms.ToolStripMenuItem("Expand All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Expand.gif"), New EventHandler(AddressOf Me.OnExpandAll))
-                Dim mcCollapseAll As New System.Windows.Forms.ToolStripMenuItem("Collapse All", Util.Application.ToolStripImages.GetImage("AnimatGUI.Collapse.gif"), New EventHandler(AddressOf Me.OnCollapseAll))
-
-                mcExpandAll.Tag = tnSelectedNode
-                mcCollapseAll.Tag = tnSelectedNode
-
-                ' Create the popup menu object
-                popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcSepExpand, mcExpandAll, mcCollapseAll})
-
+                Dim popup As AnimatContextMenuStrip = CreateWorkspaceTreeViewPopupMenu(tnSelectedNode, ptPoint)
                 Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
-
                 Return True
             End If
 
@@ -436,7 +440,7 @@ Namespace DataObjects.Physical
 
                 frmRelabel.SelectedItem = Me
                 frmRelabel.RootNode = Me
-                frmRelabel.ShowDialog 
+                frmRelabel.ShowDialog()
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

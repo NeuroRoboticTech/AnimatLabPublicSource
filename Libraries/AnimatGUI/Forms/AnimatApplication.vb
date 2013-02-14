@@ -5372,6 +5372,8 @@ Namespace Forms
                     m_bProjectIsOpen = True
                     UpdateToolstrips()
 
+                    Me.Simulation.VisualSelectionMode = DataObjects.Simulation.enumVisualSelectionMode.SelectCollisions
+
                     RaiseEvent ProjectCreated()
                 End If
 
@@ -5400,7 +5402,7 @@ Namespace Forms
                     LoadProject(openFileDialog.FileName)
                 End If
 
-                Util.Simulation.VisualSelectionMode = DataObjects.Simulation.enumVisualSelectionMode.SelectCollisions
+                Me.Simulation.VisualSelectionMode = DataObjects.Simulation.enumVisualSelectionMode.SelectCollisions
 
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)

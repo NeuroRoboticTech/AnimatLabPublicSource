@@ -543,6 +543,9 @@ Namespace Forms
                     GenerateBodyPartDropDown()
                 End If
 
+                'Reset the visual mode to be collisions.
+                Util.Simulation.VisualSelectionMode = DataObjects.Simulation.enumVisualSelectionMode.SelectCollisions
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try
@@ -762,7 +765,7 @@ Namespace Forms
             Try
                 'If we are deleting the body part this window is looking at then switch to the root body or null
                 If Not m_doStructure Is Nothing Then
-                    If Not m_doStructure Is Nothing AndAlso Not m_doStructure.RootBody Is Nothing AndAlso Not Me.BodyPart Is m_doStructure.RootBody Then
+                    If Not m_doStructure Is Nothing AndAlso Not m_doStructure.RootBody Is Nothing AndAlso Not doObject Is m_doStructure.RootBody Then
                         Me.BodyPart = m_doStructure.RootBody
                     Else
                         Me.BodyPart = Nothing

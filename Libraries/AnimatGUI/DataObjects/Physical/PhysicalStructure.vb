@@ -360,6 +360,35 @@ Namespace DataObjects.Physical
             DeleteBodyPart(bpPart)
         End Sub
 
+        Protected Overridable Sub RemoveWindowTracking(ByVal bpPart As AnimatGUI.DataObjects.Physical.BodyPart)
+
+            For Each frmWin As System.Windows.Forms.Form In Util.Application.ChildForms
+                If Util.IsTypeOf(frmWin.GetType(), GetType(Forms.SimulationWindow), False) Then
+                    Dim frmSimWin As Forms.SimulationWindow = DirectCast(frmWin, Forms.SimulationWindow)
+
+                    If frmSimWin.BodyPart Is bpPart Then
+                        frmSimWin.BodyPart = Nothing
+                    End If
+                End If
+            Next
+
+        End Sub
+
+        Protected Overridable Sub RemoveWindowTracking()
+
+            For Each frmWin As System.Windows.Forms.Form In Util.Application.ChildForms
+                If Util.IsTypeOf(frmWin.GetType(), GetType(Forms.SimulationWindow), False) Then
+                    Dim frmSimWin As Forms.SimulationWindow = DirectCast(frmWin, Forms.SimulationWindow)
+
+                    If frmSimWin.PhysicalStructure Is Me Then
+                        frmSimWin.BodyPart = Nothing
+                        frmSimWin.PhysicalStructure = Nothing
+                    End If
+                End If
+            Next
+
+        End Sub
+
         Public Overridable Sub DeleteBodyPart(ByVal bpPart As AnimatGUI.DataObjects.Physical.BodyPart)
 
             'Deselect it before continuing with the delete.
@@ -387,6 +416,8 @@ Namespace DataObjects.Physical
         End Sub
 
         Protected Overridable Sub DeleteBodyPartInternal(ByVal bpPart As AnimatGUI.DataObjects.Physical.BodyPart)
+
+            RemoveWindowTracking(bpPart)
 
             If Not bpPart.Parent Is Nothing Then
                 If TypeOf bpPart Is AnimatGUI.DataObjects.Physical.RigidBody Then
@@ -548,7 +579,7 @@ Namespace DataObjects.Physical
                 popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcDelete, mcClone})
 
                 If Me.RootBody Is Nothing Then
-                    Dim mcAddRoot As New System.Windows.Forms.ToolStripMenuItem("Add root body", Util.Application.ToolStripImages.GetImage("AnimatGUI.Blank.gif"), New EventHandler(AddressOf Me.OnAddRootBody))
+                    Dim mcAddRoot As New System.Windows.Forms.ToolStripMenuItem("Add root body", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddPart.gif"), New EventHandler(AddressOf Me.OnAddRootBody))
                     popup.Items.Add(mcAddRoot)
                 End If
 
@@ -793,6 +824,9 @@ Namespace DataObjects.Physical
         End Function
 
         Public Overridable Sub DeleteInternal()
+
+            RemoveWindowTracking()
+
             If Not Util.Environment.Structures Is Nothing Then
                 Util.Environment.Structures.Remove(Me.ID)
             End If

@@ -180,11 +180,11 @@ Namespace DataObjects.Physical.Bodies
             Util.Application.AddPartTypeExclusion(GetType(Spring), Me.GetType)
         End Sub
 
-        Public Overrides Function AddChildBody(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d) As Boolean
+        Public Overrides Function AddChildBody(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d, ByVal bDoNotOrient As Boolean) As Boolean
             'If you try and add a body to a muscle attachment then you really need to add it to the attachment parent.
             If Not Me.Parent Is Nothing AndAlso Util.IsTypeOf(Me.Parent.GetType, GetType(RigidBody), True) Then
                 Dim rbParent As RigidBody = DirectCast(Me.Parent, RigidBody)
-                Return rbParent.AddChildBody(vPos, vNorm)
+                Return rbParent.AddChildBody(vPos, vNorm, bDoNotOrient)
             End If
 
             Throw New System.Exception("You cannot add a child body to a line part type.")

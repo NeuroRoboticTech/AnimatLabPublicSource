@@ -17,7 +17,7 @@ Namespace DataObjects.Physical
 
 #Region " Delegates "
 
-        Delegate Function AddChildBodyDelegate(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d) As Boolean
+        Delegate Function AddChildBodyDelegate(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d, ByVal bDoNotOrient As Boolean) As Boolean
 
 #End Region
 
@@ -707,7 +707,18 @@ Namespace DataObjects.Physical
         Public Overrides Function WorkspaceTreeviewPopupMenu(ByRef tnSelectedNode As Crownwood.DotNetMagic.Controls.Node, ByVal ptPoint As System.Drawing.Point) As Boolean
 
             If tnSelectedNode Is m_tnWorkspaceNode Then
-                Return MyBase.WorkspaceTreeviewPopupMenu(tnSelectedNode, ptPoint)
+                If tnSelectedNode Is m_tnWorkspaceNode Then
+                    Dim popup As AnimatContextMenuStrip = CreateWorkspaceTreeViewPopupMenu(tnSelectedNode, ptPoint)
+
+                    If Me.IsCollisionObject AndAlso Me.AllowUserAdd Then
+                        Dim mcSepExpand As New ToolStripSeparator()
+                        Dim mcAddChild As New System.Windows.Forms.ToolStripMenuItem("Add child body", Util.Application.ToolStripImages.GetImage("AnimatGUI.AddPart.gif"), New EventHandler(AddressOf Me.OnAddChildBody))
+                        popup.Items.AddRange(New System.Windows.Forms.ToolStripItem() {mcSepExpand, mcAddChild})
+                    End If
+
+                    Util.ProjectWorkspace.ctrlTreeView.ContextMenuNode = popup
+                    Return True
+                End If
             Else
                 If Not m_JointToParent Is Nothing Then
                     If m_JointToParent.WorkspaceTreeviewPopupMenu(tnSelectedNode, ptPoint) Then
@@ -1369,7 +1380,7 @@ Namespace DataObjects.Physical
             End If
         End Sub
 
-        Public Overridable Overloads Function AddChildBody(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d) As Boolean
+        Public Overridable Overloads Function AddChildBody(ByVal vPos As Framework.Vec3d, ByVal vNorm As Framework.Vec3d, ByVal bDoNotOrient As Boolean) As Boolean
             Dim rbNew As RigidBody
             Dim bAddDefaultGraphics As Boolean = False
             Dim bPastedPart As Boolean = False
@@ -1381,7 +1392,7 @@ Namespace DataObjects.Physical
                 If Not Me.JointToParent Is Nothing AndAlso Not Me.JointToParent.AllowAddChildBody Then
                     If Not Me.Parent Is Nothing AndAlso Util.IsTypeOf(Me.Parent.GetType(), GetType(RigidBody)) Then
                         Dim rbParent As RigidBody = DirectCast(Me.Parent, RigidBody)
-                        Return rbParent.AddChildBody(vPos, vNorm)
+                        Return rbParent.AddChildBody(vPos, vNorm, bDoNotOrient)
                     Else
                         Throw New System.Exception("Unable to add the part type.")
                     End If
@@ -1405,14 +1416,16 @@ Namespace DataObjects.Physical
 
                 rbNew.VerifyCanBePasted()
 
-                'rbNew.LocalPosition.CopyData(0, 0, 0.1, True)
-
                 'Now add the new part to the parent
                 AddChildBody(rbNew, bAddDefaultGraphics)
 
                 rbNew.InitializeAfterLoad()
                 rbNew.AddToSim(True)
-                rbNew.OrientNewPart(vPos, vNorm)
+
+                If (Not bDoNotOrient) Then
+                    rbNew.OrientNewPart(vPos, vNorm)
+                End If
+
                 rbNew.SelectItem(False)
 
             Catch ex As System.Exception
@@ -1802,6 +1815,25 @@ Namespace DataObjects.Physical
 
 #Region " DataObjectInterface Events "
 
+
+        Protected Overridable Sub OnAddChildBody(ByVal sender As Object, ByVal e As System.EventArgs)
+
+            Try
+                Dim vPos As New Framework.Vec3d(Me, Me.WorldPosition.X.ActualValue, Me.WorldPosition.Y.ActualValue, Me.WorldPosition.Z.ActualValue)
+                Dim vNorm As New Framework.Vec3d(Me, 1, 0, 0)
+
+                Dim aryObjs(2) As Object
+                aryObjs(0) = vPos
+                aryObjs(1) = vNorm
+                aryObjs(2) = True
+                Util.Application.BeginInvoke(New AddChildBodyDelegate(AddressOf Me.AddChildBody), aryObjs)
+
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+
+        End Sub
+
         'All events coming up from the DataObjectInterface are actually coming from a different thread.
         'The one for the simulation. This means that we have to use BeginInvoke to recall a different 
         'method on the GUI thread or it will cause big problems. So all of these methods do that.
@@ -1813,9 +1845,10 @@ Namespace DataObjects.Physical
                 Dim vPos As New Framework.Vec3d(Me, fltPosX, fltPosY, fltPosZ)
                 Dim vNorm As New Framework.Vec3d(Me, fltNormX, fltNormY, fltNormZ)
 
-                Dim aryObjs(1) As Object
+                Dim aryObjs(2) As Object
                 aryObjs(0) = vPos
                 aryObjs(1) = vNorm
+                aryObjs(2) = False
                 Util.Application.BeginInvoke(New AddChildBodyDelegate(AddressOf Me.AddChildBody), aryObjs)
 
             Catch ex As System.Exception
