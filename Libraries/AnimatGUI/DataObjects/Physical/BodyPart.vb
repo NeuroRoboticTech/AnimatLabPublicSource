@@ -451,7 +451,15 @@ Namespace DataObjects.Physical
         Protected Overridable Sub OnSwapBodyPart(ByVal sender As Object, ByVal e As System.EventArgs)
 
             Try
-                'Me.ParentStructure.BodyEditor.BodyView.SwapBodyPart(Me)
+                Dim frmSwap As New Forms.BodyPlan.SwapParts
+                frmSwap.ExistingPart = Me
+                frmSwap.PartList = Me.SwapBodyPartList
+
+                If frmSwap.ShowDialog() = DialogResult.OK Then
+                    Dim doPart As BodyPart = frmSwap.NewPart
+                    doPart.SwapBodyPartCopy(Me)
+                End If
+
             Catch ex As System.Exception
                 AnimatGUI.Framework.Util.DisplayError(ex)
             End Try

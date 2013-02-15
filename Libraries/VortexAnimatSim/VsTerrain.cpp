@@ -67,11 +67,19 @@ void VsTerrain::SetTexture(string strTexture)
 			m_osgTexture->setFilter(osg::Texture2D::MAG_FILTER,osg::Texture2D::LINEAR);
 			m_osgTexture->setWrap(osg::Texture2D::WRAP_S, osg::Texture2D::REPEAT);
 			m_osgTexture->setWrap(osg::Texture2D::WRAP_T, osg::Texture2D::REPEAT);
-			
+
+			osg::Matrixd matrix;
+			matrix.makeScale(osg::Vec3(m_iTextureLengthSegments, m_iTextureWidthSegments, 1.0)); 
+
+			osg::ref_ptr<osg::TexMat> matTexture = new osg::TexMat;
+			matTexture->setMatrix(matrix); 
+
 			state->setTextureAttributeAndModes(0, m_osgTexture.get());
+			state->setTextureAttributeAndModes(0, matTexture.get(), osg::StateAttribute::ON); 
+
 			state->setTextureMode(0, m_eTextureMode, osg::StateAttribute::ON);
 			state->setMode(GL_BLEND,osg::StateAttribute::ON);
-
+			
 			//state->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);
 		}
 		else if(m_osgTexture.valid()) //If we have already set it and we are clearing it then reset the state

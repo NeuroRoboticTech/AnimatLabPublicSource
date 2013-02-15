@@ -57,6 +57,8 @@ Terrain::Terrain()
 	m_fltSegmentWidth = 1;
 	m_fltSegmentLength = 1;
 	m_fltMaxHeight = 5;
+	m_iTextureLengthSegments = 10;
+	m_iTextureWidthSegments = 10;
 }
 
 /**
@@ -109,6 +111,30 @@ void Terrain::MaxHeight(float fltVal, BOOL bUseScaling)
 	Resize();
 }
 
+int Terrain::TextureLengthSegments()
+{return m_iTextureLengthSegments;}
+
+void Terrain::TextureLengthSegments(int iVal)
+{
+	Std_IsAboveMin((int) 0, iVal, TRUE, "Terrain.TextureLengthSegments");
+	m_iTextureLengthSegments = iVal;
+
+	//Reset the texture
+	Texture(m_strTexture);
+}
+
+int Terrain::TextureWidthSegments()
+{return m_iTextureWidthSegments;}
+
+void Terrain::TextureWidthSegments(int iVal)
+{
+	Std_IsAboveMin((int) 0, iVal, TRUE, "Terrain.TextureWidthSegments");
+	m_iTextureWidthSegments = iVal;
+
+	//Reset the texture
+	Texture(m_strTexture);
+}
+
 BOOL Terrain::AllowRotateDragX() {return FALSE;}
 
 BOOL Terrain::AllowRotateDragY() {return FALSE;}
@@ -140,6 +166,18 @@ BOOL Terrain::SetData(const string &strDataType, const string &strValue, BOOL bT
 		return TRUE;
 	}
 
+	if(strType == "TEXTURELENGTHSEGMENTS")
+	{
+		TextureLengthSegments(atoi(strValue.c_str()));
+		return TRUE;
+	}
+
+	if(strType == "TEXTUREWIDTHSEGMENTS")
+	{
+		TextureWidthSegments(atoi(strValue.c_str()));
+		return TRUE;
+	}
+
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)
 		THROW_PARAM_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "Data Type", strDataType);
@@ -159,6 +197,12 @@ void Terrain::QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &ar
 
 	aryNames.Add("MaxHeight");
 	aryTypes.Add("Float");
+
+	aryNames.Add("TextureLengthSegments");
+	aryTypes.Add("Integer");
+
+	aryNames.Add("TextureWidthSegments");
+	aryTypes.Add("Integer");
 }
 
 void Terrain::Load(CStdXml &oXml)
@@ -170,6 +214,8 @@ void Terrain::Load(CStdXml &oXml)
 	SegmentWidth(oXml.GetChildFloat("SegmentWidth", m_fltSegmentWidth));
 	SegmentLength(oXml.GetChildFloat("SegmentLength", m_fltSegmentLength));
 	MaxHeight(oXml.GetChildFloat("MaxHeight", m_fltMaxHeight));
+	TextureLengthSegments(oXml.GetChildInt("TextureLengthSegments", m_iTextureLengthSegments));
+	TextureWidthSegments(oXml.GetChildInt("TextureWidthSegments", m_iTextureWidthSegments));
 
 	oXml.OutOfElem(); //OutOf RigidBody Element
 

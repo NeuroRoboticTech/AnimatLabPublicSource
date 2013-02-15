@@ -73,6 +73,7 @@
 #include <osg/Group>
 #include <osg/Geode>
 #include <osg/Geometry>
+#include <osg/Matrix>
 #include <osg/Matrixd>
 #include <osg/MatrixTransform>
 #include <osg/Material> 
@@ -99,6 +100,8 @@
 #include <osg/io_utils>
 #include <osg/LineWidth>
 #include <osg/Autotransform>
+#include <osg/StateAttribute>
+#include <osg/TexMat>
 
 #include <osgDB/ReadFile>
 #include <osgDB/WriteFile>

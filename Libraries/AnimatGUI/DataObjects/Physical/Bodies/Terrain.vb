@@ -20,6 +20,9 @@ Namespace DataObjects.Physical.Bodies
         Protected m_snSegmentLength As AnimatGUI.Framework.ScaledNumber
         Protected m_snMaxHeight As AnimatGUI.Framework.ScaledNumber
 
+        Protected m_iTextureWidthSegments As Integer = 10
+        Protected m_iTextureLengthSegments As Integer = 10
+
 #End Region
 
 #Region " Properties "
@@ -128,6 +131,32 @@ Namespace DataObjects.Physical.Bodies
             End Set
         End Property
 
+        Public Overridable Property TextureWidthSegments() As Integer
+            Get
+                Return m_iTextureWidthSegments
+            End Get
+            Set(ByVal value As Integer)
+                If value <= 0 Then
+                    Throw New System.Exception("The texture width segments must be greater than zero.")
+                End If
+                SetSimData("TextureWidthSegments", value.ToString, True)
+                m_iTextureWidthSegments = value
+            End Set
+        End Property
+
+        Public Overridable Property TextureLengthSegments() As Integer
+            Get
+                Return m_iTextureLengthSegments
+            End Get
+            Set(ByVal value As Integer)
+                If value <= 0 Then
+                    Throw New System.Exception("The texture height segments must be greater than zero.")
+                End If
+                SetSimData("TextureLengthSegments", value.ToString, True)
+                m_iTextureLengthSegments = value
+            End Set
+        End Property
+
         Public Overrides ReadOnly Property UsesAJoint() As Boolean
             Get
                 Return False
@@ -220,7 +249,8 @@ Namespace DataObjects.Physical.Bodies
             m_snSegmentWidth = doOrig.m_snSegmentWidth
             m_snSegmentLength = doOrig.m_snSegmentLength
             m_snMaxHeight = doOrig.m_snMaxHeight
-
+            m_iTextureLengthSegments = doOrig.m_iTextureLengthSegments
+            m_iTextureWidthSegments = doOrig.m_iTextureWidthSegments
         End Sub
 
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
@@ -267,6 +297,12 @@ Namespace DataObjects.Physical.Bodies
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Maximum Height", pbNumberBag.GetType(), "MaxHeight", _
                                         "Size", "Sets the maximum height of the terrain.", pbNumberBag, _
                                         "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Texture Width Segments", Me.TextureWidthSegments.GetType(), "TextureWidthSegments", _
+                                        "Size", "The number segments to use for the texture mapping.", Me.TextureWidthSegments))
+
+            propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Texture Length Segments", Me.TextureLengthSegments.GetType(), "TextureLengthSegments", _
+                                        "Size", "The number of segments to use for the height of the texture mapping.", Me.TextureLengthSegments))
         End Sub
 
         Public Overrides Sub SetupPartTypesExclusions()
@@ -318,6 +354,8 @@ Namespace DataObjects.Physical.Bodies
             m_snSegmentWidth.LoadData(oXml, "SegmentWidth")
             m_snSegmentLength.LoadData(oXml, "SegmentLength")
             m_snMaxHeight.LoadData(oXml, "MaxHeight")
+            m_iTextureLengthSegments = oXml.GetChildInt("TextureLengthSegments", m_iTextureLengthSegments)
+            m_iTextureWidthSegments = oXml.GetChildInt("TextureWidthSegments", m_iTextureWidthSegments)
 
             oXml.OutOfElem() 'Outof RigidBody Element
 
@@ -331,6 +369,8 @@ Namespace DataObjects.Physical.Bodies
             m_snSegmentWidth.SaveData(oXml, "SegmentWidth")
             m_snSegmentLength.SaveData(oXml, "SegmentLength")
             m_snMaxHeight.SaveData(oXml, "MaxHeight")
+            oXml.AddChildElement("TextureLengthSegments", m_iTextureLengthSegments)
+            oXml.AddChildElement("TextureWidthSegments", m_iTextureWidthSegments)
 
             oXml.OutOfElem() 'Outof BodyPart Element
 
@@ -344,6 +384,8 @@ Namespace DataObjects.Physical.Bodies
             m_snSegmentWidth.SaveSimulationXml(oXml, Me, "SegmentWidth")
             m_snSegmentLength.SaveSimulationXml(oXml, Me, "SegmentLength")
             m_snMaxHeight.SaveSimulationXml(oXml, Me, "MaxHeight")
+            oXml.AddChildElement("TextureLengthSegments", m_iTextureLengthSegments)
+            oXml.AddChildElement("TextureWidthSegments", m_iTextureWidthSegments)
 
             oXml.OutOfElem()
 

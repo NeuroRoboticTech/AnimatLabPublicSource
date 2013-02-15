@@ -28,6 +28,8 @@ namespace AnimatSim
 				float m_fltSegmentWidth;
 				float m_fltSegmentLength;
 				float m_fltMaxHeight;
+				int m_iTextureLengthSegments;
+				int m_iTextureWidthSegments;
 
 			public:
 				Terrain();
@@ -45,6 +47,12 @@ namespace AnimatSim
 
 				virtual float MaxHeight();							
 				virtual void MaxHeight(float fltVal, BOOL bUseScaling = TRUE);
+
+				virtual int TextureLengthSegments();
+				virtual void TextureLengthSegments(int iVal);
+
+				virtual int TextureWidthSegments();
+				virtual void TextureWidthSegments(int iVal);
 
 				virtual BOOL SetData(const string &strDataType, const string &strValue, BOOL bThrowError = TRUE);
 				virtual void QueryProperties(CStdArray<string> &aryNames, CStdArray<string> &aryTypes);

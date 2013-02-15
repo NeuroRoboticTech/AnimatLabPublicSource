@@ -92,6 +92,7 @@
 #include <osg/io_utils>
 #include <osg/LineWidth>
 #include <osg/Autotransform>
+#include <osg/StateAttribute>
 
 #include <osgDB/ReadFile>
 #include <osgDB/WriteFile>
