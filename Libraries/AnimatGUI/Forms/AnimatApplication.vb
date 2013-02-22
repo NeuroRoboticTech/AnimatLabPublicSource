@@ -1490,6 +1490,11 @@ Namespace Forms
                 Return m_doSimulation
             End Get
             Set(ByVal Value As DataObjects.Simulation)
+                'If we are replacing an existing sim objec then remove its handlers.
+                If Not m_doSimulation Is Nothing Then
+                    m_doSimulation.RemoveHandlers()
+                End If
+
                 m_doSimulation = Value
             End Set
         End Property
@@ -3077,12 +3082,14 @@ Namespace Forms
 
         End Sub
 
-        Public Overridable Sub CloseProject(ByVal bOpeningProject As Boolean)
+        Public Overridable Sub CloseProject(ByVal bOpeningProject As Boolean, Optional ByVal bCloseQuiet As Boolean = False)
             Me.AppStatusText = "Closing project"
 
-            If SaveIfDirty() = DialogResult.Cancel Then
-                Me.AppStatusText = "Canceling project close"
-                Return
+            If Not bCloseQuiet Then
+                If SaveIfDirty() = DialogResult.Cancel Then
+                    Me.AppStatusText = "Canceling project close"
+                    Return
+                End If
             End If
 
             Me.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "Closing project")
@@ -3116,7 +3123,7 @@ Namespace Forms
             m_strPhysicsClassName = "AnimatGUI.DataObjects.Simulation"
 
             If Not m_doSimulation Is Nothing Then m_doSimulation.RemoveFromSim(False)
-            m_doSimulation = New DataObjects.Simulation(Me.FormHelper)
+            Me.Simulation = New DataObjects.Simulation(Me.FormHelper)
 
             m_ModificationHistory = New AnimatGUI.Framework.UndoSystem.ModificationHistory
 
@@ -3423,7 +3430,7 @@ Namespace Forms
                     Me.Logger.TraceLevel = eLogLevel
                 End If
 
-                m_doSimulation = New DataObjects.Simulation(Me.FormHelper)
+                Me.Simulation = New DataObjects.Simulation(Me.FormHelper)
                 If m_strSimulationFile.Trim.Length > 0 Then
                     Try
                         m_doSimulation.LoadData(oXml)
@@ -3708,6 +3715,15 @@ Namespace Forms
             Me.AppStatusText = "Clearing child window contents"
 
             For Each frmChild As Form In Me.ChildForms
+                'I am unsure why, but sometimes some of the forms do not get their formclosing event fired corrctly.
+                'This only seems to happen when I close the forms down manually like here. So I am going to call the
+                'close method explicitly first. So the forms need to be able to handle the situation where this is 
+                'possibly called multiple times.
+                If Util.IsTypeOf(frmChild.GetType, GetType(Forms.AnimatForm), False) Then
+                    Dim frmAnimat As AnimatForm = DirectCast(frmChild, AnimatForm)
+                    frmAnimat.PrepareForClosing()
+                End If
+
                 frmChild.Close()
             Next
 
@@ -5348,7 +5364,7 @@ Namespace Forms
 
                     Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "User hit ok on new project dialog. Creating sim object.")
 
-                    m_doSimulation = New DataObjects.Simulation(Me.FormHelper)
+                    Me.Simulation = New DataObjects.Simulation(Me.FormHelper)
 
                     Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Info, "sim object created.")
 
@@ -5996,6 +6012,16 @@ Namespace Forms
             End Try
         End Sub
 
+        'Closes the app without any message boxes.
+        Public Overridable Sub CloseQuiet()
+            Try
+                CloseProject(False, True)
+                Me.Close()
+            Catch ex As Exception
+
+            End Try
+        End Sub
+
 #Region " Menu Opening Event Handlers "
 
 
@@ -6172,7 +6198,7 @@ Namespace Forms
                 Next
 
                 m_mdiClient = Nothing
-                m_doSimulation = Nothing
+                Me.Simulation = Nothing
                 'm_ipToolPanel = Nothing
                 m_wcWorkspaceContent = Nothing
                 m_frmWorkspace = Nothing

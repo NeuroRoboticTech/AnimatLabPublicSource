@@ -1403,6 +1403,29 @@ Namespace Forms
 
         End Sub
 
+        Protected Overrides Sub AnimatForm_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+            MyBase.AnimatForm_FormClosing(sender, e)
+
+            Try
+                RemoveHandler Me.ctrlTimeRuler.HooverValue, AddressOf Me.OnCursorMoved
+                RemoveHandler Me.ctrlTimeRuler.KeyFrameSelected, AddressOf Me.OnKeyFrameSelected
+                RemoveHandler Me.ctrlTimeRuler.KeyFrameAdded, AddressOf Me.OnKeyFrameAdded
+                RemoveHandler Me.ctrlTimeRuler.KeyFrameRemoved, AddressOf Me.OnKeyFrameRemoved
+                RemoveHandler Me.ctrlTimeRuler.KeyFrameMoved, AddressOf Me.OnKeyFrameMoved
+                RemoveHandler Me.ctrlTimeRuler.KeyFrameMoving, AddressOf Me.OnKeyFrameMoving
+                RemoveHandler Me.ctrlTimeRuler.CurrentFrameMoved, AddressOf Me.OnCurrentFrameMoved
+                RemoveHandler Util.Application.ProjectCreated, AddressOf Me.OnProjectCreated
+                RemoveHandler Util.Application.ProjectClosed, AddressOf Me.OnProjectClosed
+                RemoveHandler Util.Application.ProjectLoaded, AddressOf Me.OnProjectLoaded
+                RemoveHandler Util.Application.SimulationStarting, AddressOf Me.OnSimulationStarting
+                RemoveHandler Util.Application.SimulationStarted, AddressOf Me.OnSimulationStarted
+                RemoveHandler Util.Application.SimulationPaused, AddressOf Me.OnSimulationPaused
+                RemoveHandler Util.Application.SimulationResuming, AddressOf Me.OnSimulationResuming
+                RemoveHandler Util.Application.SimulationStopped, AddressOf Me.OnSimulationStopped
+            Catch ex As Exception
+            End Try
+        End Sub
+
 #End Region
 
 #End Region

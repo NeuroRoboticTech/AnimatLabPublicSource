@@ -217,10 +217,12 @@ namespace VortexAnimatSim
 		class VsOsgUserData;
 		class VsOsgUserDataVisitor;
 		class VsSimulationWindow;
+		class VsScriptedSimulationWindow;
 		class VsSimulationWindowMgr;
 		class VsTrackballDragger;
 		class VsTranslateAxisDragger;
 		class WorldCoordinateNodeVisitor;
+		class OsgCubicSpline;
 	}
 }
 
@@ -286,6 +288,7 @@ using namespace Vx;
 #include "VsTrackballDragger.h"
 #include "VsTranslateAxisDragger.h"
 #include "WorldCoordinateNodeVisitor.h"
+#include "OsgCubicSpline.h"
 
 #include "VsHudText.h"
 #include "VsHud.h"
@@ -297,6 +300,7 @@ using namespace Vx;
 #include "VsCameraManipulator.h"
 #include "VsIntersectionEvent.h"
 #include "VsSimulationWindow.h"
+#include "VsScriptedSimulationWindow.h"
 #include "VsSimulationWindowMgr.h"
 
 

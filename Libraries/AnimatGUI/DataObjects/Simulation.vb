@@ -359,8 +359,7 @@ Namespace DataObjects
             Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Sim.New Adding handlers")
 
             'These events are called when the simulation is starting or resuming so that we can initialize certain objects like stimuli and data charts.
-            AddHandler Util.Application.SimulationStarting, AddressOf Me.OnSimulationStarting
-            AddHandler Util.Application.SimulationResuming, AddressOf Me.OnSimulationResuming
+            AddHandlers()
 
             m_thDataTypes.DataTypes.Clear()
 
@@ -394,8 +393,7 @@ Namespace DataObjects
             Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Sim.New Adding handlers")
 
             'These events are called when the simulation is starting or resuming so that we can initialize certain objects like stimuli and data charts.
-            AddHandler Util.Application.SimulationStarting, AddressOf Me.OnSimulationStarting
-            AddHandler Util.Application.SimulationResuming, AddressOf Me.OnSimulationResuming
+            AddHandlers()
 
             m_thDataTypes.DataTypes.Clear()
 
@@ -414,6 +412,24 @@ Namespace DataObjects
             m_thDataTypes.ID = "SimulationRealTimeToStep"
 
             Util.Logger.LogMsg(ManagedAnimatInterfaces.ILogger.enumLogLevel.Detail, "Sim.New Finished")
+        End Sub
+
+        Public Overridable Sub AddHandlers()
+            Try
+                AddHandler Util.Application.SimulationStarting, AddressOf Me.OnSimulationStarting
+                AddHandler Util.Application.SimulationResuming, AddressOf Me.OnSimulationResuming
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
+        End Sub
+
+        Public Overridable Sub RemoveHandlers()
+            Try
+                RemoveHandler Util.Application.SimulationStarting, AddressOf Me.OnSimulationStarting
+                RemoveHandler Util.Application.SimulationResuming, AddressOf Me.OnSimulationResuming
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
         End Sub
 
         Public Overrides Function FindDragObject(strStructureName As String, strDataItemID As String, Optional bThrowError As Boolean = True) As DragObject

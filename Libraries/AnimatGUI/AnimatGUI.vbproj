@@ -176,6 +176,7 @@
     <Compile Include="Collections\BodyParts.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Collections\CameraPaths.vb" />
     <Compile Include="Collections\CollisionPairs.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -253,6 +254,7 @@
     <Compile Include="Collections\Tools.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Collections\Waypoints.vb" />
     <Compile Include="DataObjects\Behavior\Data.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -484,7 +486,9 @@
     <Compile Include="DataObjects\ToolHolder.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataObjects\Visualization\CameraPath.vb" />
     <Compile Include="DataObjects\Visualization\HudItem.vb" />
+    <Compile Include="DataObjects\Visualization\Waypoint.vb" />
     <Compile Include="Forms\About.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -651,6 +655,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Tools\Preference.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Tools\ScriptedSimulationWindow.designer.vb">
+      <DependentUpon>ScriptedSimulationWindow.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Tools\ScriptedSimulationWindow.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Tools\SelectDataItem.vb">
@@ -885,6 +895,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Tools\Preference.resx">
       <DependentUpon>Preference.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Tools\ScriptedSimulationWindow.resx">
+      <DependentUpon>ScriptedSimulationWindow.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Tools\SelectDataItem.resx">
       <DependentUpon>SelectDataItem.vb</DependentUpon>
@@ -1383,6 +1396,14 @@
   <ItemGroup>
     <EmbeddedResource Include="Graphics\BehavioralEditor\PropertyControlNode.gif" />
     <EmbeddedResource Include="Graphics\BehavioralEditor\PropertyControlNode_Treeview.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\AddCameraPath.gif" />
+    <EmbeddedResource Include="Graphics\AddCameraWaypoint.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\CameraPaths.gif" />
+    <EmbeddedResource Include="Graphics\CameraWaypoints.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

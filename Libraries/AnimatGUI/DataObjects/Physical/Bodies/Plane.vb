@@ -214,6 +214,8 @@ Namespace DataObjects.Physical.Bodies
             If propTable.Properties.Contains("Magnus") Then propTable.Properties.Remove("Magnus")
             If propTable.Properties.Contains("Enable Fluids") Then propTable.Properties.Remove("Enable Fluids")
             If propTable.Properties.Contains("Density") Then propTable.Properties.Remove("Density")
+            If propTable.Properties.Contains("Mass") Then propTable.Properties.Remove("Mass")
+            If propTable.Properties.Contains("Volume") Then propTable.Properties.Remove("Volume")
             If propTable.Properties.Contains("Center of Mass") Then propTable.Properties.Remove("Center of Mass")
             If propTable.Properties.Contains("Contact Sensor") Then propTable.Properties.Remove("Contact Sensor")
             If propTable.Properties.Contains("Freeze") Then propTable.Properties.Remove("Freeze")

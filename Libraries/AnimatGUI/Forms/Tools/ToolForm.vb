@@ -61,6 +61,9 @@ Namespace Forms.Tools
 #Region " Properties "
 
         <Browsable(False)> _
+        Public MustOverride ReadOnly Property ToolType() As String
+
+        <Browsable(False)> _
         Public Overridable Property ToolHolder() As AnimatGUI.DataObjects.ToolHolder
             Get
                 Return m_doToolHolder
@@ -88,8 +91,8 @@ Namespace Forms.Tools
 
             'If the simulator is loaded and paused then we need to add this chart to the simulation.
             If Not Util.Application.SimulationInterface.FindItem(m_strID, False) Then
-                Dim strXml As String = Me.GetSimulationXml("DataChart")
-                Util.Application.SimulationInterface.AddItem("Simulator", "DataChart", Me.ID, strXml, True, False)
+                Dim strXml As String = Me.GetSimulationXml(ToolType())
+                Util.Application.SimulationInterface.AddItem("Simulator", ToolType(), Me.ID, strXml, True, False)
             End If
 
         End Sub
@@ -142,7 +145,7 @@ Namespace Forms.Tools
             MyBase.LoadExternalFile(strFilename)
             InitializeAfterLoad()
 
-            Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, "DataChart", Me.ID, Me.GetSimulationXml("DataChart"), True, False)
+            Util.Application.SimulationInterface.AddItem(Util.Simulation.ID, ToolType(), Me.ID, Me.GetSimulationXml(ToolType()), True, False)
             InitializeSimulationReferences()
 
         End Sub
@@ -177,8 +180,8 @@ Namespace Forms.Tools
             Try
                 'If we do not find a datachart with this id then add one.
                 If Not Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
-                    Dim strXml As String = Me.GetSimulationXml("DataChart")
-                    Util.Application.SimulationInterface.AddItem("Simulator", "DataChart", Me.ID, strXml, True, False)
+                    Dim strXml As String = Me.GetSimulationXml(ToolType())
+                    Util.Application.SimulationInterface.AddItem("Simulator", ToolType(), Me.ID, strXml, True, False)
                     InitializeSimulationReferences()
                 End If
             Catch ex As System.Exception
@@ -187,12 +190,18 @@ Namespace Forms.Tools
 
         End Sub
 
+        Protected Overrides Sub AnimatForm_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+            MyBase.AnimatForm_FormClosing(sender, e)
+
+            Dim iVal As Integer = 5
+        End Sub
+
         Protected Overrides Sub OnFormClosing(ByVal e As System.Windows.Forms.FormClosingEventArgs)
             MyBase.OnFormClosing(e)
 
             Try
                 If Util.Application.SimulationInterface.FindItem(Me.ID, False) Then
-                    Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, "DataChart", Me.ID, True)
+                    Util.Application.SimulationInterface.RemoveItem(Util.Simulation.ID, ToolType(), Me.ID, True)
                 End If
 
             Catch ex As System.Exception

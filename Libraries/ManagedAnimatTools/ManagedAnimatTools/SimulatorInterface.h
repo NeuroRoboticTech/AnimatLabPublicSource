@@ -52,7 +52,7 @@ namespace AnimatGUI
 
 #pragma region SimulationControl
 
-			virtual bool AddWindow(IntPtr hParentWnd, System::String ^sWindowXml);
+			virtual bool AddWindow(IntPtr hParentWnd, System::String ^sWindowType, System::String ^sWindowXml);
 			virtual void RemoveWindow(IntPtr hParentWnd);
 			virtual void OnWindowGetFocus(System::String ^sID);
 			virtual void OnWindowLoseFocus(System::String ^sID);
@@ -129,7 +129,7 @@ namespace AnimatGUI
 			virtual void RunSimulator();
 
 			virtual void LogMsg(ManagedAnimatInterfaces::ILogger::enumLogLevel eLevel, System::String ^sMessage);
-			virtual void AddSimWindow(System::String ^sWindowXml, BOOL bInit, HWND hWnd);
+			virtual void AddSimWindow(System::String ^sWindowType, System::String ^sWindowXml, BOOL bInit, HWND hWnd);
 			virtual void RemoveSimWindow(HWND hWnd);
 
 #pragma endregion

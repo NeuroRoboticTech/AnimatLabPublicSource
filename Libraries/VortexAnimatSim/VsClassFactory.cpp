@@ -57,6 +57,7 @@
 #include "VsHudText.h"
 #include "VsHud.h"
 #include "VsSimulationWindow.h"
+#include "VsScriptedSimulationWindow.h"
 #include "VsDragger.h"
 
 #include "VsLight.h"
@@ -691,6 +692,8 @@ try
 
 	if(strType == "BASIC" || strType == "DEFAULT")
 		lpItem = new VsSimulationWindow;
+	else if(strType == "SCRIPTEDSIMWINDOW")
+		lpItem = new VsScriptedSimulationWindow;
 	else
 	{
 		lpItem = NULL;

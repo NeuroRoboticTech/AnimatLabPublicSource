@@ -109,6 +109,8 @@ Namespace DataObjects.Physical.Bodies
             If propTable.Properties.Contains("Food Source") Then propTable.Properties.Remove("Food Source")
             If propTable.Properties.Contains("Rotation") Then propTable.Properties.Remove("Rotation")
             If propTable.Properties.Contains("Density") Then propTable.Properties.Remove("Density")
+            If propTable.Properties.Contains("Mass") Then propTable.Properties.Remove("Mass")
+            If propTable.Properties.Contains("Volume") Then propTable.Properties.Remove("Volume")
             If propTable.Properties.Contains("Material Type") Then propTable.Properties.Remove("Material Type")
 
         End Sub

@@ -91,9 +91,9 @@ Namespace Framework
 
                 Dim strArgs = ""
                 If strProject.Trim.Length > 0 Then
-                    strArgs = "-Project " & strProject
+                    strArgs = " -Project " & strProject
                 End If
-                strArgs = strArgs & "-Port " & iPort.ToString
+                strArgs = strArgs & " -Port " & iPort.ToString
 
                 Process.Start(m_strRootFolder & "\bin\AnimatLab2.exe", strArgs)
 
@@ -183,14 +183,7 @@ Namespace Framework
                 bIsBusy = DirectCast(GetApplicationProperty("AppIsBusy"), Boolean)
 
                 If bInProgress OrElse bIsBusy Then
-                    Dim oVal As Object = GetApplicationProperty("ErrorDialogMessage")
-                    If Not oVal Is Nothing AndAlso CStr(oVal).Length > 0 Then
-                        If bErrorOk Then
-                            Return
-                        Else
-                            Throw New System.Exception("Error dialog open. Message: " & oVal.ToString)
-                        End If
-                    End If
+                    CheckForErrorDialog(bErrorOk)
 
                     iCount = iCount + 1
                     If iCount > 1000 Then
@@ -201,6 +194,17 @@ Namespace Framework
 
             Threading.Thread.Sleep(100)
 
+        End Sub
+
+        Protected Overridable Sub CheckForErrorDialog(ByVal bErrorOk As Boolean)
+            Dim oVal As Object = GetApplicationProperty("ErrorDialogMessage")
+            If Not oVal Is Nothing AndAlso CStr(oVal).Length > 0 Then
+                If bErrorOk Then
+                    Return
+                Else
+                    Throw New System.Exception("Error dialog open. Message: " & oVal.ToString)
+                End If
+            End If
         End Sub
 
         Protected Overridable Function ExecuteMethod(ByVal strMethodName As String, ByVal aryParams() As Object, Optional ByVal iWaitMilliseconds As Integer = 200, Optional ByVal bErrorOk As Boolean = False, Optional ByVal bSkipWaiting As Boolean = False) As Object
@@ -486,12 +490,14 @@ Namespace Framework
 
             'Start the simulation
             Debug.WriteLine("Running Simulation")
-            m_oServer.ExecuteMethod("ToggleSimulation", Nothing)
+            m_oServer.ExecuteIndirectMethod("ToggleSimulation", Nothing)
 
             Dim iIdx As Integer = 0
             Dim bDone As Boolean = False
             While Not bDone
                 Threading.Thread.Sleep(1000)
+                CheckForErrorDialog(False)
+
                 bDone = Not DirectCast(m_oServer.GetProperty("SimIsRunning"), Boolean)
                 iIdx = iIdx + 1
                 If iIdx = 90 Then

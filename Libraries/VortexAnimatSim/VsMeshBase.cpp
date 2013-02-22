@@ -188,6 +188,11 @@ void VsMeshBase::Physics_Resize()
 	if(m_vxGeometry)
 	{
 		ResizePhysicsGeometry();
+
+		//We need to reset the density in order for it to recompute the mass and volume.
+		Physics_SetDensity(m_lpThisRB->Density());
+
+		//Now get base values, including mass and volume
 		GetBaseValues();
 	}
 }

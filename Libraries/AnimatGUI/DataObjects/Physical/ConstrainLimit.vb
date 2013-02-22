@@ -189,10 +189,10 @@ Namespace DataObjects.Physical
             Dim doOrig As ConstraintLimit = DirectCast(doOriginal, ConstraintLimit)
 
             m_doPairedLimit = doOrig.m_doPairedLimit
-            m_snLimitPos = DirectCast(doOrig.m_snLimitPos, ScaledNumber)
-            m_snStiffness = DirectCast(doOrig.m_snStiffness, ScaledNumber)
-            m_snDamping = DirectCast(doOrig.m_snDamping, ScaledNumber)
-            m_snRestitution = DirectCast(doOrig.m_snRestitution, ScaledNumber)
+            m_snLimitPos = DirectCast(doOrig.m_snLimitPos.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
+            m_snStiffness = DirectCast(doOrig.m_snStiffness.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
+            m_snDamping = DirectCast(doOrig.m_snDamping.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
+            m_snRestitution = DirectCast(doOrig.m_snRestitution.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_bIsLowerLimit = doOrig.m_bIsLowerLimit
             m_bAngleLimit = doOrig.m_bAngleLimit
 

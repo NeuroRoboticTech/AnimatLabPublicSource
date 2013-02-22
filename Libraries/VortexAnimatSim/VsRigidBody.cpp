@@ -33,8 +33,6 @@ VsRigidBody::VsRigidBody()
 	//m_fltBuoyancy = 0;
 	//m_fltReportBuoyancy = 0;
 	m_fltMass = 0;
-	m_fltReportMass = 0;
-	m_fltReportVolume = 0;
 
 	for(int i=0; i<3; i++)
 	{
@@ -221,6 +219,11 @@ void VsRigidBody::Physics_Resize()
 	if(m_vxGeometry)
 	{
 		ResizePhysicsGeometry();
+
+		//We need to reset the density in order for it to recompute the mass and volume.
+		Physics_SetDensity(m_lpThisRB->Density());
+
+		//Now get base values, including mass and volume
 		GetBaseValues();
 	}
 }
@@ -292,14 +295,10 @@ void VsRigidBody::GetBaseValues()
 		//Fluid Density is in the units being used. So if the user set 1 g/cm^3 
 		//and the units were grams and decimeters then density would be 1000 g/dm^3
 
-		//Simulate buoyancy
-		//Fb = Pl * (Ms/Ps) * G
-		m_fltMass = m_vxPart->getMass();  //mass is in unit scale values. (ie. grams)
-		float fltVolume = m_fltMass/m_lpThisRB->Density();   //volume is in unit scale values. (ie. decimeters^3)
+		//Recalculate the mass and volume
+		m_lpThisRB->GetMass();
+		m_lpThisRB->GetVolume();
 
-		//We need to convert the mass to grams and the volume to cubic meters for reporting purposes.
-		m_fltReportMass = m_fltMass*m_lpThisAB->GetSimulator()->MassUnits();
-		m_fltReportVolume = fltVolume*(pow(m_lpThisAB->GetSimulator()->DistanceUnits(), 3));
 		//m_fltBuoyancy = -(m_lpThisAB->GetSimulator()->FluidDensity() * fltVolume * m_lpThisAB->GetSimulator()->Gravity());
 		//m_fltReportBuoyancy = m_fltBuoyancy * m_lpThisAB->GetSimulator()->MassUnits() * m_lpThisAB->GetSimulator()->DistanceUnits();
 	}
@@ -578,7 +577,6 @@ void VsRigidBody::Physics_CollectData()
 	float fMassUnits = m_lpThisAB->GetSimulator()->MassUnits();
 	Vx::VxReal3 vData;
 
-
 	if(m_vxSensor)
 	{
 		UpdateWorldMatrix();
@@ -774,12 +772,6 @@ float *VsRigidBody::Physics_GetDataPointer(const string &strDataType)
 
 	if(strType == "BODYANGULARACCELERATIONZ")
 		{m_bCollectExtraData = TRUE; return (&m_vAngularAcceleration[2]);}
-
-	if(strType == "MASS")
-		return &m_fltReportMass;
-
-	if(strType == "VOLUME")
-		return &m_fltReportVolume;
 
 	return NULL;
 }

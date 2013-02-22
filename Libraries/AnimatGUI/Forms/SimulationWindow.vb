@@ -536,7 +536,7 @@ Namespace Forms
                     End If
 
                     Dim strWinXml As String = GenerateSimWindowXml()
-                    Util.Application.SimulationInterface.AddWindow(Me.Handle, strWinXml)
+                    Util.Application.SimulationInterface.AddWindow(Me.Handle, "Basic", strWinXml)
                     InitializeSimulationReferences()
 
                     GenerateStructureDropDown()

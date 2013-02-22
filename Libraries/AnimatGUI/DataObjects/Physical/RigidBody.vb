@@ -30,6 +30,8 @@ Namespace DataObjects.Physical
         Protected m_bContactSensor As Boolean = False
         Protected m_bIsCollisionObject As Boolean = False
         Protected m_snDensity As ScaledNumber
+        Protected m_snMass As ScaledNumber
+        Protected m_snVolume As ScaledNumber
 
         Protected m_svCOM As ScaledVector3
 
@@ -158,7 +160,41 @@ Namespace DataObjects.Physical
 
                 Me.SetSimData("Density", Value.ToString, True)
                 m_snDensity.CopyData(Value)
+
+                UpdateMassAndVolume()
             End Set
+        End Property
+
+        Public Overridable Property Mass() As ScaledNumber
+            Get
+                Return m_snMass
+            End Get
+            Set(ByVal Value As ScaledNumber)
+                If Value.ActualValue <= 0 Then
+                    Throw New System.Exception("The mass can not be less than or equal to zero.")
+                End If
+
+                m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
+
+                If m_snVolume.ActualValue > 0 Then
+                    'Dim fltMassKg As Single = CSng(Value.ActualValue / 1000) 'The mass we get in here will ALWAYS be in grams. Must convert to Kg
+                    Dim fltDensityGramsPerMeterCube As Single = CSng(Value.ActualValue / m_snVolume.ActualValue)
+                    Dim fltDensityGramPerDistUnitCube As Single = CSng(fltDensityGramsPerMeterCube * Math.Pow(CDbl(Util.Environment.DisplayDistanceUnitValue), 3.0))
+
+                    Dim snNewVal As New ScaledNumber(Me, "Density", 1, ScaledNumber.enumNumericScale.Kilo, "g/m^3", "g/m^3")
+                    snNewVal.ActualValue = fltDensityGramPerDistUnitCube
+                    Me.Density = snNewVal
+                Else
+                    Throw New System.Exception("The volume has not been defined yet.")
+                End If
+
+            End Set
+        End Property
+
+        Public Overridable ReadOnly Property Volume() As ScaledNumber
+            Get
+                Return m_snVolume
+            End Get
         End Property
 
         Public Overridable Property BuoyancyCenter() As Framework.ScaledVector3
@@ -440,7 +476,7 @@ Namespace DataObjects.Physical
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("FoodEaten", "Food Eaten", "", "", 0, 1000))
 
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Mass", "Mass", "Kilograms", "Kg", -5000, 5000))
-            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Volume", "Volume", "Cubic Meters", "m^3", -100, 100))
+            m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Volume", "Volume", "Cubic Meters", "(m^3)", -100, 100))
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("Visible", "Visible", "", "", 0, 1))
 
             m_thDataTypes.DataTypes.Add(New AnimatGUI.DataObjects.DataType("ContactCount", "Contact Count", "", "", 0, 1))
@@ -466,6 +502,9 @@ Namespace DataObjects.Physical
                 m_snDensity = New ScaledNumber(Me, "Density", 1, ScaledNumber.enumNumericScale.Kilo, "g/m^3", "g/m^3")
             End If
 
+            m_snMass = New ScaledNumber(Me, "Mass", 1, ScaledNumber.enumNumericScale.Kilo, "g", "g")
+            m_snVolume = New ScaledNumber(Me, "Volume", 1, ScaledNumber.enumNumericScale.None, "(m^3)", "(m^3)")
+
             m_snFoodQuantity = New ScaledNumber(Me, "FoodQuantity", 100, ScaledNumber.enumNumericScale.None, "", "")
             m_snMaxFoodQuantity = New ScaledNumber(Me, "MaxFoodQuantity", 10, ScaledNumber.enumNumericScale.Kilo, "", "")
             m_snFoodReplenishRate = New ScaledNumber(Me, "FoodReplenishRate", 1, ScaledNumber.enumNumericScale.None, "Quantity/s", "Q/s")
@@ -475,6 +514,13 @@ Namespace DataObjects.Physical
             m_doReceptiveFieldSensor = Nothing
             m_vSelectedVertex = Nothing
 
+        End Sub
+
+        Protected Overridable Sub UpdateMassAndVolume()
+            m_snMass.ActualValue = Me.SimInterface.GetDataValueImmediate("Mass")
+            m_snVolume.ActualValue = Me.SimInterface.GetDataValueImmediate("Volume")
+
+            Util.ProjectProperties.RefreshProperties()
         End Sub
 
         Public Overrides Sub InitAfterAppStart()
@@ -491,6 +537,8 @@ Namespace DataObjects.Physical
             m_svDrag.ClearIsDirty()
             m_svCOM.ClearIsDirty()
             m_snDensity.ClearIsDirty()
+            m_snMass.ClearIsDirty()
+            m_snVolume.ClearIsDirty()
             m_snFoodQuantity.ClearIsDirty()
             m_snMaxFoodQuantity.ClearIsDirty()
             m_snFoodReplenishRate.ClearIsDirty()
@@ -797,8 +845,18 @@ Namespace DataObjects.Physical
                 If Not Me.IsContactSensor Then
                     pbNumberBag = m_snDensity.Properties
                     propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Density", pbNumberBag.GetType(), "Density", _
-                                                "Part Properties", "Sets the density of this body part.", pbNumberBag, _
+                                                "Mass Properties", "Sets the density of this body part.", pbNumberBag, _
                                                 "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+                    pbNumberBag = m_snMass.Properties
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Mass", pbNumberBag.GetType(), "Mass", _
+                                                "Mass Properties", "Sets the mass of this body part.", pbNumberBag, _
+                                                "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter)))
+
+                    pbNumberBag = m_snVolume.Properties
+                    propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Volume", pbNumberBag.GetType(), "Volume", _
+                                                "Mass Properties", "Tells the volume of this body part. Please note that this number is always in cubic meters.", pbNumberBag, _
+                                                "", GetType(AnimatGUI.Framework.ScaledNumber.ScaledNumericPropBagConverter), True))
                 End If
 
                 'Center Of Mass
@@ -895,7 +953,15 @@ Namespace DataObjects.Physical
             m_bFreeze = False   '' only the root object can be frozen.
             m_bContactSensor = doOrigPart.m_bContactSensor
             m_bIsCollisionObject = doOrigPart.m_bIsCollisionObject
-            m_snDensity = DirectCast(doOrigPart.m_snDensity, ScaledNumber)
+            m_snDensity = DirectCast(doOrigPart.m_snDensity.Clone(doOrigPart.m_snDensity.Parent, bCutData, doRoot), ScaledNumber)
+
+            'sometimes the units of the body parts loaded in from the plug-in initialization are not correct for the scale settings
+            'of this project. Lets just always reset them to be correct when doing a clone.
+            m_snDensity.Units = "g/" & Util.Environment.DistanceUnitAbbreviation(Util.Environment.DisplayDistanceUnits) & "^3"
+            m_snDensity.UnitsAbbreviation = m_snDensity.Units
+
+            m_snMass = DirectCast(doOrigPart.m_snMass.Clone(doOrigPart.m_snMass.Parent, bCutData, doRoot), ScaledNumber)
+            m_snVolume = DirectCast(doOrigPart.m_snVolume.Clone(doOrigPart.m_snVolume.Parent, bCutData, doRoot), ScaledNumber)
 
             m_svBuoyancyCenter = DirectCast(doOrigPart.m_svBuoyancyCenter.Clone(Me, bCutData, doRoot), ScaledVector3)
             m_fltBuoyancyScale = doOrigPart.m_fltBuoyancyScale
@@ -905,10 +971,10 @@ Namespace DataObjects.Physical
 
             m_bIsRoot = doOrigPart.m_bIsRoot
             m_bFoodSource = doOrigPart.m_bFoodSource
-            m_snFoodQuantity = DirectCast(doOrigPart.m_snFoodQuantity, ScaledNumber)
-            m_snMaxFoodQuantity = DirectCast(doOrigPart.m_snMaxFoodQuantity, ScaledNumber)
-            m_snFoodReplenishRate = DirectCast(doOrigPart.m_snFoodReplenishRate, ScaledNumber)
-            m_snFoodEnergyContent = DirectCast(doOrigPart.m_snFoodEnergyContent, ScaledNumber)
+            m_snFoodQuantity = DirectCast(doOrigPart.m_snFoodQuantity.Clone(doOrigPart.m_snFoodQuantity.Parent, bCutData, doRoot), ScaledNumber)
+            m_snMaxFoodQuantity = DirectCast(doOrigPart.m_snMaxFoodQuantity.Clone(doOrigPart.m_snMaxFoodQuantity.Parent, bCutData, doRoot), ScaledNumber)
+            m_snFoodReplenishRate = DirectCast(doOrigPart.m_snFoodReplenishRate.Clone(doOrigPart.m_snFoodReplenishRate.Parent, bCutData, doRoot), ScaledNumber)
+            m_snFoodEnergyContent = DirectCast(doOrigPart.m_snFoodEnergyContent.Clone(doOrigPart.m_snFoodEnergyContent.Parent, bCutData, doRoot), ScaledNumber)
             m_svCOM = DirectCast(doOrigPart.m_svCOM.Clone(Me, bCutData, doRoot), ScaledVector3)
 
             Me.MaterialType = DirectCast(doOrigPart.m_thMaterialType.Clone(Me, bCutData, doRoot), TypeHelpers.LinkedMaterialType)
@@ -1059,6 +1125,9 @@ Namespace DataObjects.Physical
                 If Not m_doInterface Is Nothing Then
                     AddHandler m_doInterface.OnAddBodyClicked, AddressOf Me.OnAddBodyClicked
                     AddHandler m_doInterface.OnSelectedVertexChanged, AddressOf Me.OnSelectedVertexChanged
+
+                    m_snMass.ActualValue = m_doInterface.GetDataValueImmediate("Mass")
+                    m_snVolume.ActualValue = m_doInterface.GetDataValueImmediate("Volume")
                 End If
 
                 If Not m_JointToParent Is Nothing Then
@@ -1109,6 +1178,7 @@ Namespace DataObjects.Physical
             m_bFreeze = oXml.GetChildBool("Freeze", m_bFreeze)
 
             m_snDensity.LoadData(oXml, "Density")
+
             m_svCOM.LoadData(oXml, "COM", False)
 
             m_svBuoyancyCenter.LoadData(oXml, "BuoyancyCenter", False)
@@ -1546,7 +1616,7 @@ Namespace DataObjects.Physical
             Dim fltValue As Double = (m_snDensity.ActualValue / Math.Pow(10, CInt(ePrevMass))) * (Math.Pow(fltDensityDistChange, 3) / fltMassChange)
             Dim eSCale As ScaledNumber.enumNumericScale = CType(Util.Environment.MassUnits, ScaledNumber.enumNumericScale)
             Dim strUnits As String = "g/" & Util.Environment.DistanceUnitAbbreviation(Util.Environment.DisplayDistanceUnits) & "^3"
-            m_snDensity = New ScaledNumber(Me, "Density", fltValue, eSCale, strUnits, strUnits)
+            Me.Density = New ScaledNumber(Me, "Density", fltValue, eSCale, strUnits, strUnits)
 
             If Not m_doReceptiveFieldSensor Is Nothing Then
                 m_doReceptiveFieldSensor.UnitsChanged(ePrevMass, eNewMass, fltMassChange, ePrevDistance, eNewDistance, fltDistanceChange)

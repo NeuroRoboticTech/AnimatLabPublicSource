@@ -137,16 +137,22 @@ Namespace Framework
             End Set
         End Property
 
-        Public ReadOnly Property Units() As String
+        Public Property Units() As String
             Get
                 Return m_strUnits
             End Get
+            Set(ByVal Value As String)
+                m_strUnits = Value
+            End Set
         End Property
 
-        Public ReadOnly Property UnitsAbbreviation() As String
+        Public Property UnitsAbbreviation() As String
             Get
                 Return m_strUnitsAbbrev
             End Get
+            Set(ByVal Value As String)
+                m_strUnitsAbbrev = Value
+            End Set
         End Property
 
         <Browsable(False)> _

@@ -810,6 +810,10 @@ Namespace Forms
 
 #Region " Events "
 
+        Public Overridable Sub PrepareForClosing()
+
+        End Sub
+
         Protected Overridable Sub AnimatForm_FormClosed(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles MyBase.FormClosed
         End Sub
 

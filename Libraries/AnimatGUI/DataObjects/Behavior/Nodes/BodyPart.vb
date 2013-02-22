@@ -370,7 +370,7 @@ Namespace DataObjects.Behavior.Nodes
             MyBase.LoadData(oXml)
 
             oXml.IntoElem()
-            m_strLinkedBodyPartID = Util.LoadID(oXml, "LinkedBodyPart", True, "")
+            m_strLinkedBodyPartID = Util.LoadID(oXml, "LinkedBodyPart", True, "") 'Note: The ID of the name is added in the LoadID method.
             oXml.OutOfElem()
 
         End Sub

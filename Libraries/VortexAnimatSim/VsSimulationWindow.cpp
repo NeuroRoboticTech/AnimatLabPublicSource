@@ -23,11 +23,26 @@ VsSimulationWindow::VsSimulationWindow()
 {
 	m_lpWinMgr = NULL;
 	m_lpTrackBody = NULL;
+	m_fltCameraPosX = m_fltCameraPosY = m_fltCameraPosZ = 0;
 }
 
 VsSimulationWindow::~VsSimulationWindow(void)
 {
-	int i = 5;
+}
+
+CStdFPoint VsSimulationWindow::GetCameraPosition()
+{
+	osg::Vec3d vEye, vCenter, vUp;
+	float fltlookat=0;
+	m_osgViewer->getCamera()->getViewMatrixAsLookAt(vEye, vCenter, vUp, fltlookat);
+
+	CStdFPoint vPos(vEye.x(), vEye.y(), vEye.z());
+
+	m_fltCameraPosX = vEye.x();
+	m_fltCameraPosY = vEye.y();
+	m_fltCameraPosZ = vEye.z();
+
+	return vPos;
 }
 
 osg::Matrix VsSimulationWindow::GetScreenMatrix()
@@ -268,6 +283,26 @@ void VsSimulationWindow::OnGetFocus()
 void VsSimulationWindow::OnLoseFocus()
 {
 }
+
+float *VsSimulationWindow::GetDataPointer(const string &strDataType)
+{
+	float *lpData=NULL;
+	string strType = Std_CheckString(strDataType);
+
+	GetCameraPosition();
+
+	if(strType == "CAMERAPOSITIONX")
+		lpData = &m_fltCameraPosX;
+	else if(strType == "CAMERAPOSITIONY")
+		lpData = &m_fltCameraPosY;
+	else if(strType == "CAMERAPOSITIONZ")
+		lpData = &m_fltCameraPosZ;
+	else
+		THROW_TEXT_ERROR(Al_Err_lInvalidDataType, Al_Err_strInvalidDataType, "StimulusName: " + STR(m_strName) + "  DataType: " + strDataType);
+
+	return lpData;
+} 
+
 
 	}// end Visualization
 }// end VortexAnimatSim

@@ -246,9 +246,9 @@ Namespace DataObjects.Physical.Bodies
             MyBase.CloneInternal(doOriginal, bCutData, doRoot)
 
             Dim doOrig As Bodies.Terrain = DirectCast(doOriginal, Bodies.Terrain)
-            m_snSegmentWidth = doOrig.m_snSegmentWidth
-            m_snSegmentLength = doOrig.m_snSegmentLength
-            m_snMaxHeight = doOrig.m_snMaxHeight
+            m_snSegmentWidth = DirectCast(doOrig.m_snSegmentWidth.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
+            m_snSegmentLength = DirectCast(doOrig.m_snSegmentLength.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
+            m_snMaxHeight = DirectCast(doOrig.m_snMaxHeight.Clone(Me, bCutData, doRoot), AnimatGUI.Framework.ScaledNumber)
             m_iTextureLengthSegments = doOrig.m_iTextureLengthSegments
             m_iTextureWidthSegments = doOrig.m_iTextureWidthSegments
         End Sub
@@ -263,6 +263,8 @@ Namespace DataObjects.Physical.Bodies
             If propTable.Properties.Contains("Magnus") Then propTable.Properties.Remove("Magnus")
             If propTable.Properties.Contains("Enable Fluids") Then propTable.Properties.Remove("Enable Fluids")
             If propTable.Properties.Contains("Density") Then propTable.Properties.Remove("Density")
+            If propTable.Properties.Contains("Mass") Then propTable.Properties.Remove("Mass")
+            If propTable.Properties.Contains("Volume") Then propTable.Properties.Remove("Volume")
             If propTable.Properties.Contains("Center of Mass") Then propTable.Properties.Remove("Center of Mass")
             If propTable.Properties.Contains("Contact Sensor") Then propTable.Properties.Remove("Contact Sensor")
             If propTable.Properties.Contains("Freeze") Then propTable.Properties.Remove("Freeze")

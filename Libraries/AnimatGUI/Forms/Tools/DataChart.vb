@@ -74,6 +74,13 @@ Namespace Forms.Tools
 
 #Region " Properties "
 
+        <Browsable(False)> _
+        Public Overrides ReadOnly Property ToolType() As String
+            Get
+                Return "DataChart"
+            End Get
+        End Property
+
         Public Overridable Property Gain() As AnimatGUI.DataObjects.Gain
             Get
                 Return m_gnGain
@@ -771,20 +778,41 @@ Namespace Forms.Tools
             If Me.AutoCollectDataInterval Then ResetCollectDataInterval()
         End Sub
 
-        Protected Overrides Sub OnFormClosing(e As System.Windows.Forms.FormClosingEventArgs)
+        'Protected Overrides Sub AnimatForm_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+        '    MyBase.AnimatForm_FormClosing(sender, e)
+
+        '    If Not e.Cancel Then
+        '        If Util.Application.LastSelectedChart Is Me Then
+        '            Util.Application.LastSelectedChart = Nothing
+        '        End If
+
+        '        RemoveHandlers()
+
+        '        If Util.Application.SimulationInterface.FindItem(m_strID, False) Then
+        '            Util.Application.SimulationInterface.RemoveItem("Simulator", "DataChart", m_strID, True)
+        '        End If
+        '    End If
+
+        'End Sub
+
+        Protected Overrides Sub OnFormClosing(ByVal e As System.Windows.Forms.FormClosingEventArgs)
             MyBase.OnFormClosing(e)
 
-            If Not e.Cancel Then
-                If Util.Application.LastSelectedChart Is Me Then
-                    Util.Application.LastSelectedChart = Nothing
-                End If
+            Try
+                If Not e.Cancel Then
+                    If Util.Application.LastSelectedChart Is Me Then
+                        Util.Application.LastSelectedChart = Nothing
+                    End If
 
-                RemoveHandlers()
+                    RemoveHandlers()
 
-                If Util.Application.SimulationInterface.FindItem(m_strID, False) Then
-                    Util.Application.SimulationInterface.RemoveItem("Simulator", "DataChart", m_strID, True)
+                    If Util.Application.SimulationInterface.FindItem(m_strID, False) Then
+                        Util.Application.SimulationInterface.RemoveItem("Simulator", "DataChart", m_strID, True)
+                    End If
                 End If
-            End If
+            Catch ex As System.Exception
+                AnimatGUI.Framework.Util.DisplayError(ex)
+            End Try
         End Sub
 
 #End Region

@@ -131,6 +131,9 @@ Namespace DataObjects.Physical.Bodies
         Public Overrides Sub BuildProperties(ByRef propTable As AnimatGuiCtrls.Controls.PropertyTable)
             MyBase.BuildProperties(propTable)
 
+            If propTable.Properties.Contains("Mass") Then propTable.Properties.Remove("Mass")
+            If propTable.Properties.Contains("Volume") Then propTable.Properties.Remove("Volume")
+
             Dim pbNumberBag As AnimatGuiCtrls.Controls.PropertyBag = m_svVelocity.Properties
             propTable.Properties.Add(New AnimatGuiCtrls.Controls.PropertySpec("Velocity", pbNumberBag.GetType(), "Velocity", _
                                         "Coordinates", "Sets the velocity of the fluid medium.", pbNumberBag, _

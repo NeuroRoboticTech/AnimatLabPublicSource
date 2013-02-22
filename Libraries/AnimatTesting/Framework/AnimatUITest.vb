@@ -148,12 +148,23 @@ Namespace Framework
             'Start the application.
             StartApplication("", m_bAttachServerOnly)
 
+            OpenExistingProject()
+        End Sub
+
+        Protected Overridable Sub OpenExistingProject()
             ExecuteIndirectMethod("LoadProject", New Object() {m_strRootFolder & m_strProjectPath & "\" & m_strProjectName & "\" & m_strProjectName & ".aproj"}, 20, False, True)
+
+            WaitForProjectToOpen()
 
             'Set simulation to fastest possible.
             If DirectCast(GetApplicationProperty("ProjectIsOpen"), Boolean) Then
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation", "PlaybackControlMode", "FastestPossible"})
             End If
+        End Sub
+
+        Protected Overridable Sub CloseProjectQuiet()
+
+            ExecuteMethod("CloseProject", New Object() {False, True})
 
         End Sub
 
@@ -177,8 +188,8 @@ Namespace Framework
                 'Save the project
                 ExecuteMethod("ClickToolbarItem", New Object() {"SaveToolStripButton", True}, 500)
 
-                'Close the project
-                ExecuteMethod("Close", Nothing)
+                'Close the App
+                ExecuteMethod("CloseQuiet", Nothing)
 
                 'Detach from the server.
                 DetachServer()
@@ -1378,14 +1389,14 @@ Namespace Framework
         '''<summary>
         '''NewProjectDlg_EnterNameAndPath - Use 'NewProjectDlg_EnterNameAndPathParams' to pass parameters into this method.
         '''</summary>
-        Protected Overridable Sub CheckForErrorDialog(ByVal strEndError As String)
+        Protected Overridable Sub CheckForErrorDialog(ByVal strEndError As String, Optional ByVal iSleep As Integer = 500)
             Debug.WriteLine("CheckForErrorDialog. EndError: " & strEndError)
 
             Dim uITxtProjectNameEdit As WinEdit = Me.UIMap.UINewProjectWindow.UINewProjectWindow1.UITxtProjectNameEdit
             Dim uITxtLocationEdit As WinEdit = Me.UIMap.UINewProjectWindow.UITxtLocationWindow.UITxtLocationEdit
             Dim uIOKButton As WinButton = Me.UIMap.UINewProjectWindow.UIOKWindow.UIOKButton
 
-            Threading.Thread.Sleep(500)
+            Threading.Thread.Sleep(iSleep)
 
             'Assert that the error box showed up with the correct ending text.
             AssertErrorDialog(strEndError)
@@ -1393,7 +1404,7 @@ Namespace Framework
             'Close the error box and new project window.
             Me.UIMap.CloseNewProjectErrorWindow()
 
-            Threading.Thread.Sleep(1000)
+            Threading.Thread.Sleep(2 * iSleep)
         End Sub
 
         '''<summary>

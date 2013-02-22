@@ -287,7 +287,7 @@ namespace AnimatGUI
 				}
 			}
 
-			void SimulatorInterface::AddSimWindow(System::String ^sWindowXml, BOOL bInit, HWND hWnd)
+			void SimulatorInterface::AddSimWindow(System::String ^sWindowType, System::String ^sWindowXml, BOOL bInit, HWND hWnd)
 			{
 				try
 				{
@@ -295,7 +295,9 @@ namespace AnimatGUI
 
 					if(m_lpSim->WaitForSimulationBlock())
 					{
-						m_lpSim->WindowMgr()->AddSimulationWindow("", "Basic", bInit, hWnd, Util::StringToStd(sWindowXml));
+						string strWindowType = Util::StringToStd(sWindowType);
+
+						m_lpSim->WindowMgr()->AddSimulationWindow("", strWindowType, bInit, hWnd, Util::StringToStd(sWindowXml));
 						m_lpSim->UnblockSimulation();
 					}
 					else
@@ -322,7 +324,7 @@ namespace AnimatGUI
 			}
 
 			//Returns a bool telling whether it had to start the sim or not.
-			bool SimulatorInterface::AddWindow(IntPtr hParentWnd, System::String ^sWindowXml)
+			bool SimulatorInterface::AddWindow(IntPtr hParentWnd, System::String ^sWindowType, System::String ^sWindowXml)
 			{
 				try
 				{
@@ -332,13 +334,15 @@ namespace AnimatGUI
 					//currently running simulation.
 					if(m_lpSim)
 					{
-						AddSimWindow(sWindowXml, true, hWnd);
+						AddSimWindow(sWindowType, sWindowXml, true, hWnd);
 						return false;
 					}
 					else 
 					{
+						string strWindowType = Util::StringToStd(sWindowType);
+
 						CreateSimulation();
-						m_lpSim->WindowMgr()->AddSimulationWindow("", "Basic", false, hWnd, Util::StringToStd(sWindowXml));
+						m_lpSim->WindowMgr()->AddSimulationWindow("", strWindowType, false, hWnd, Util::StringToStd(sWindowXml));
 						Simulate(true);
 						return true;
 					}

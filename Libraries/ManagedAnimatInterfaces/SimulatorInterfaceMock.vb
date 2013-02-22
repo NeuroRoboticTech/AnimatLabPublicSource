@@ -10,7 +10,7 @@ Public Class SimulatorInterfaceMock
         Return ""
     End Function
 
-    Public Function AddWindow(hParentWnd As System.IntPtr, sWindowXml As String) As Boolean Implements ISimulatorInterface.AddWindow
+    Public Function AddWindow(hParentWnd As System.IntPtr, sWindowType As String, sWindowXml As String) As Boolean Implements ISimulatorInterface.AddWindow
         Return True
     End Function
 

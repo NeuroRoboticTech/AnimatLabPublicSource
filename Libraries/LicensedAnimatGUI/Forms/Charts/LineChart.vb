@@ -1032,6 +1032,12 @@ Namespace Forms.Charts
 
         End Sub
 
+        Public Overrides Sub PrepareForClosing()
+            MyBase.PrepareForClosing()
+
+            OnFormClosing(New System.Windows.Forms.FormClosingEventArgs(CloseReason.MdiFormClosing, False))
+        End Sub
+
         Protected Overrides Sub AddHandlers()
 
             If Not m_bAddedHandlers Then
@@ -1947,23 +1953,6 @@ Namespace Forms.Charts
             oXml.OutOfElem() ' Outof DataChart
 
         End Sub
-
-        'Protected Overrides Sub AnimatForm_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
-        '    MyBase.AnimatForm_FormClosing(sender, e)
-
-        '    If e.Cancel AndAlso m_bAddedHandlers Then
-        '        RemoveHandler Util.Application.SimulationStarting, AddressOf Me.OnSimulationStarting
-        '        RemoveHandler Util.Application.SimulationResuming, AddressOf Me.OnSimulationResuming
-        '        RemoveHandler Util.Application.SimulationStarted, AddressOf Me.OnSimulationStarted
-        '        RemoveHandler Util.Application.SimulationPaused, AddressOf Me.OnSimulationPaused
-        '        RemoveHandler Util.Application.SimulationStopped, AddressOf Me.OnSimulationStopped
-        '        m_bAddedHandlers = False
-
-        '        If Util.Application.SimulationInterface.FindItem(m_strID, False) Then
-        '            Util.Application.SimulationInterface.RemoveItem("Simulator", m_strID, "DataChart", True)
-        '        End If
-        '    End If
-        'End Sub
 
 #Region " ToolStrips Code "
 

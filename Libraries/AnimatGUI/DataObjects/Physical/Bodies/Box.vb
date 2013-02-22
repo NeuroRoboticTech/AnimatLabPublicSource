@@ -63,6 +63,8 @@ Namespace DataObjects.Physical.Bodies
                 End If
                 SetSimData("Length", value.ActualValue.ToString, True)
                 m_snLength.CopyData(value)
+
+                UpdateMassAndVolume()
             End Set
         End Property
 
@@ -76,6 +78,8 @@ Namespace DataObjects.Physical.Bodies
                 End If
                 SetSimData("Width", value.ActualValue.ToString, True)
                 m_snWidth.CopyData(value)
+
+                UpdateMassAndVolume()
             End Set
         End Property
 
@@ -89,6 +93,8 @@ Namespace DataObjects.Physical.Bodies
                 End If
                 SetSimData("Height", value.ActualValue.ToString, True)
                 m_snHeight.CopyData(value)
+
+                UpdateMassAndVolume()
             End Set
         End Property
 

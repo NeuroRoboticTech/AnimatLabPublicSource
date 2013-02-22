@@ -302,6 +302,10 @@ Namespace DataObjects.Behavior.Nodes
             If Not m_gnGain Is Nothing Then m_gnGain.ClearIsDirty()
         End Sub
 
+        Public Overrides Function Delete(Optional bAskToDelete As Boolean = True, Optional e As Crownwood.DotNetMagic.Controls.TGCloseRequestEventArgs = Nothing) As Boolean
+            Return MyBase.Delete(bAskToDelete, e)
+        End Function
+
         Public Overrides Sub InitializeSimulationReferences(Optional ByVal bShowError As Boolean = True)
             Try
                 If m_doInterface Is Nothing AndAlso Not Util.Application.SimulationInterface Is Nothing AndAlso Util.Application.SimulationInterface.SimOpen Then

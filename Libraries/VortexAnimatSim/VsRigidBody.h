@@ -85,8 +85,6 @@ namespace VortexAnimatSim
 			float m_vTorque[3];
 			
 			float m_fltMass;
-			float m_fltReportMass;
-			float m_fltReportVolume;
 
 			virtual void SetThisPointers();
 

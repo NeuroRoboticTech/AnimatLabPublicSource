@@ -78,6 +78,12 @@ namespace AnimatSim
 			///Uniform density for the rigid body.
 			float m_fltDensity;
 
+			//The mass of the object to report to GUI
+			float m_fltReportMass;
+
+			//The volume of the object to report to GUI.
+			float m_fltReportVolume;
+
 			///A list of child parts that are connected to this part through
 			///different joints. 
 			CStdPtrArray<RigidBody> m_aryChildParts;

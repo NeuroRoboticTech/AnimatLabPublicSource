@@ -89,6 +89,8 @@ Namespace DataObjects.Physical.Bodies
 
                     SetSimData("SetMeshFile", CreateMeshFileXml(value, m_eMeshType, Me.ActiveMeshFile), True)
                     m_strMeshFile = value
+
+                    UpdateMassAndVolume()
                 Catch ex As Exception
                     Try
                         'If there is a problem with setting this property then 
@@ -122,6 +124,8 @@ Namespace DataObjects.Physical.Bodies
 
                     SetSimData("SetMeshFile", CreateMeshFileXml(m_strMeshFile, value, Me.ActiveMeshFile), True)
                     m_eMeshType = value
+
+                    UpdateMassAndVolume()
                 Catch ex As Exception
                     Try
                         'If there is a problem with setting this property then 
@@ -177,6 +181,8 @@ Namespace DataObjects.Physical.Bodies
                     Me.SetSimData("Scale", value.GetSimulationXml("Scale"), True)
                     m_svPrevScale.CopyData(m_svScale, True)
                     m_svScale.CopyData(value, bIgnoreEvents)
+
+                    UpdateMassAndVolume()
                 End If
             Catch ex As Exception
                 Try

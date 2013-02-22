@@ -399,6 +399,7 @@ Namespace Forms
 
         Protected Overrides Sub AnimatForm_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
             Try
+                MyBase.AnimatForm_FormClosing(sender, e)
                 RemoveHandler Util.Application.ProjectLoaded, AddressOf Me.OnProjectLoaded
             Catch ex As Exception
             End Try

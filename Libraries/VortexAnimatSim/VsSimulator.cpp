@@ -21,6 +21,7 @@
 #include "VsDragger.h"
 #include "MeshMinVertexDistanceVisitor.h"
 
+#include "OsgCubicSpline.h"
 
 namespace VortexAnimatSim
 {
@@ -291,6 +292,23 @@ void VsSimulator::SetSimulationStabilityParams()
 			m_uUniverse->getSolverParameters(0)->setConstraintAngularKineticLoss(m_fltAngularKineticLoss);
 		}*/
 
+		//VxSolverParameters* sp = m_uUniverse->getSolverParameters(0);
+		//sp->setConstraintLinearKineticLoss(0.0006);
+		//sp->setConstraintLinearKineticLoss(0.0006);
+		//sp->setConstraintLinearCompliance(1e-5);
+		//sp->setConstraintAngularCompliance(1e-5);
+		//sp->setConstraintLinearDamping(1e4);
+		//sp->setConstraintAngularDamping(1e4);
+
+		//VxReal scale = 10;
+		//VxSolverParameters* sp = m_uUniverse->getSolverParameters(0);
+		//sp->setConstraintLinearKineticLoss(sp->getConstraintLinearKineticLoss()*scale);
+		//sp->setConstraintLinearKineticLoss(sp->getConstraintAngularKineticLoss()*scale);
+		//sp->setConstraintLinearCompliance(sp->getConstraintLinearCompliance()/scale);
+		//sp->setConstraintAngularCompliance(sp->getConstraintAngularCompliance()/scale);
+		//sp->setConstraintLinearDamping(sp->getConstraintLinearDamping()*scale);
+		//sp->setConstraintAngularDamping(sp->getConstraintAngularDamping()*scale);
+
 		TRACE_DETAIL("Reset simulation stability params\r\n");
 		TRACE_DETAIL("Angular Compliance: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintAngularCompliance()) + "\r\n");
 		TRACE_DETAIL("Angular Damping: " + STR(m_uUniverse->getSolverParameters(0)->getConstraintAngularDamping()) + "\r\n");
@@ -327,6 +345,21 @@ void VsSimulator::InitializeVortex(int argc, const char **argv)
     // Register the simple callback to be notified at beginning and end of the interaction between parts and sensors.
     m_uUniverse->addIntersectSubscriber(VxUniverse::kResponseSensor, VxUniverse::kResponsePart, VxUniverse::kEventFirst, &m_vsIntersect, 0);
     m_uUniverse->addIntersectSubscriber(VxUniverse::kResponseSensor, VxUniverse::kResponsePart, VxUniverse::kEventDisjoint, &m_vsIntersect, 0);
+
+	//CreateTestSpline();
+}
+
+void VsSimulator::CreateTestSpline()
+{
+	OsgCubicSpline osgSpline;
+
+	osgSpline.AddControlPoint(osg::Vec3d(0, 5, 0), 0);
+	osgSpline.AddControlPoint(osg::Vec3d(5, 5, 0), 1);
+	osgSpline.AddControlPoint(osg::Vec3d(10, 7, 0), 2);
+	osgSpline.AddControlPoint(osg::Vec3d(10, 7, 5), 3);
+
+	m_Spline = osgSpline.CreateTestGeom(true);
+	m_grpScene->addChild(m_Spline);
 }
 
 Vx::VxTriangleMesh *VsSimulator::CreatTriangleMeshFromOsg(osg::Node *osgNode)

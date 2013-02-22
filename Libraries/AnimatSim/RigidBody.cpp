@@ -72,6 +72,9 @@ RigidBody::RigidBody()
 	m_fltMagnus = 0;
 	m_bEnableFluids = FALSE;
 
+	m_fltReportMass = 0;
+	m_fltReportVolume = 0;
+
 	m_strMaterialID = "DEFAULTMATERIAL";
 }
 
@@ -1126,6 +1129,16 @@ float *RigidBody::GetDataPointer(const string &strDataType)
 		return &m_fltEnabled;
 	if(strType == "CONTACTCOUNT")
 		return &m_fltSurfaceContactCount;
+	if(strType == "MASS")
+	{
+		GetMass();
+		return &m_fltReportMass;
+	}
+	if(strType == "VOLUME")
+	{
+		GetVolume();
+		return &m_fltReportVolume;
+	}
 
 	float *lpData = NULL;
 	if(m_lpPhysicsMovableItem)
@@ -1878,6 +1891,8 @@ float RigidBody::GetMass()
 	if(m_lpPhysicsBody)
 		fltMass = m_lpPhysicsBody->Physics_GetMass();
 
+	m_fltReportMass = fltMass*m_lpSim->DisplayMassUnits();
+
 	return fltMass;
 }
 
@@ -1896,7 +1911,14 @@ float RigidBody::GetVolume()
 	if(m_lpPhysicsBody)
 		fltMass = m_lpPhysicsBody->Physics_GetMass();
 
-	return fltMass/m_fltDensity;
+	float fltVolume = 0;
+	
+	if(m_fltDensity)
+		fltVolume = fltMass/m_fltDensity;
+
+	m_fltReportVolume = fltVolume*pow(m_lpSim->DistanceUnits(), (float) 3.0);
+
+	return fltVolume;
 }
 
 	}			//Environment

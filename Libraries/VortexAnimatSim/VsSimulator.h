@@ -61,6 +61,10 @@ namespace VortexAnimatSim
 
 		osg::NotifySeverity ConvertTraceLevelToOSG();
 
+		void CreateTestSpline();
+
+		osg::ref_ptr<osg::Node> m_Spline;
+
 	public:
 		VsSimulator();
 		virtual ~VsSimulator();

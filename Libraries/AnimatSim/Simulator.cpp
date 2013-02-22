@@ -4367,6 +4367,8 @@ BOOL Simulator::RemoveItem(const string &strItemType, const string &strID, BOOL 
 	}
 	else if(strType == "MATERIALTYPE" || strType == "MATERIALPAIR")
 		return m_oMaterialMgr.RemoveItem(strItemType, strID, bThrowError);
+	else if(strType == "SCRIPTEDSIMWINDOW")
+		return true; //Nothing to remove here. It is actually removed elsewhere in the simulationwindowmgr
 
 	//If it was not one of those above then we have a problem.
 	if(bThrowError)

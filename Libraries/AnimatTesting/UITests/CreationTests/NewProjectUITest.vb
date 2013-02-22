@@ -80,6 +80,35 @@ Namespace UITests
 
             End Sub
 
+            <TestMethod()>
+            Public Sub Test_CloseOpen()
+                'There was a bug where when you open, then close a project and run the simulation it was throwing an error
+                'The root cause was that it was not releasing event handlers for the main app/sim events and items in the
+                'garbage collector were firing. This tests this to make sure it does not happen anymore.
+
+                m_strProjectName = "TestCloseOpen"
+                m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\CreationTests"
+
+                StartExistingProject()
+
+                ''Start the application.
+                'StartApplication(m_strRootFolder & "TestCloseOpen.aproj")
+
+                'Run the simulation and wait for it to end.
+                RunSimulationWaitToEnd()
+
+                'Close the project
+                CloseProjectQuiet()
+
+                OpenExistingProject()
+
+                'Run the simulation and wait for it to end.
+                RunSimulationWaitToEnd()
+
+            End Sub
+
+
+
 #Region "Additional test attributes"
             '
             ' You can use the following additional attributes as you write your tests:

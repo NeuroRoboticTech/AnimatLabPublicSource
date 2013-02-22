@@ -34,7 +34,7 @@ Public Interface ISimulatorInterface
 
 #Region "SimulationControl"
 
-    Function AddWindow(ByVal hParentWnd As IntPtr, ByVal sWindowXml As String) As Boolean
+    Function AddWindow(ByVal hParentWnd As IntPtr, ByVal sWindowType As String, ByVal sWindowXml As String) As Boolean
     Sub RemoveWindow(ByVal hParentWnd As IntPtr)
     Sub OnWindowGetFocus(ByVal sID As String)
     Sub OnWindowLoseFocus(ByVal sID As String)

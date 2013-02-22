@@ -18,6 +18,8 @@ class VORTEX_PORT VsSimulationWindow : public AnimatSim::SimulationWindow, osgGA
 
 		BodyPart *m_lpTrackBody;
 
+		float m_fltCameraPosX, m_fltCameraPosY, m_fltCameraPosZ;
+
 		virtual void InitEmbedded(Simulator *lpSim, VsSimulator *lpVsSim);
 		virtual void InitStandalone(Simulator *lpSim, VsSimulator *lpVsSim);
 		virtual void TrackCamera();
@@ -25,6 +27,8 @@ class VORTEX_PORT VsSimulationWindow : public AnimatSim::SimulationWindow, osgGA
 	public:
 		VsSimulationWindow(void);
 		virtual ~VsSimulationWindow(void);
+
+		virtual CStdFPoint GetCameraPosition();
 
 		virtual BodyPart *TrackBody() {return m_lpTrackBody;};
 		virtual osg::Matrix GetScreenMatrix();
@@ -34,6 +38,8 @@ class VORTEX_PORT VsSimulationWindow : public AnimatSim::SimulationWindow, osgGA
 		virtual void SetupTrackCamera();
 		virtual void SetCameraLookAt(CStdFPoint oTarget);
 		
+		virtual float *GetDataPointer(const string &strDataType);
+
 		virtual void UpdateBackgroundColor();
 
 		virtual void Initialize();

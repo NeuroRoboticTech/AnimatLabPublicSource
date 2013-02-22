@@ -76,6 +76,8 @@ namespace AnimatSim
 		virtual BOOL StandAlone();
 		virtual void StandAlone(BOOL bVal);
 
+		virtual CStdFPoint GetCameraPosition() = 0;
+
 		/**
 		\brief	Sets up the camera tracking.
 		

@@ -59,6 +59,8 @@ Namespace DataObjects.Physical.Bodies
                 End If
                 SetSimData("Radius", value.ActualValue.ToString, True)
                 m_snRadius.CopyData(value)
+
+                UpdateMassAndVolume()
             End Set
         End Property
 
