@@ -2033,9 +2033,11 @@ Namespace UITests
                     DeleteSelectedParts("Delete Group", True)
                     ExecuteMethod("DblClickWorkspaceItem", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2"}, 2000)
                     ClickMenuItem("PasteInPlaceToolStripMenuItem", True)
-                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2", "Name", "S1I2_Temp"})
+
+                    'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2", "Name", "S1I2_Temp"})
+                    'This is a somewhat dangerous method because it depends on the order of the items in the treeview. Do not see another simple way of doing it though
                     ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2", "Name", "S1OP1"})
-                    ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2_Temp", "Name", "S1I2"})
+                    'ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation\Environment\Organisms\Organism_1\Behavioral System\S1\S2\S1I2_Temp", "Name", "S1I2"})
 
                     If CBool(ExecuteDirectMethod("DoesObjectExist", New Object() {"Tool Viewers\NeuralData\LineChart\Y Axis 1\S1I1Vm"})) Then
                         Throw New System.Exception("S1I1Vm chart node was not removed correctly.")

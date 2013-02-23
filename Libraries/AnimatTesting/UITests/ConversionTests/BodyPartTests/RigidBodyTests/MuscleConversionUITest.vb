@@ -71,14 +71,18 @@ Namespace UITests
                         Dim aryIgnoreRows As New ArrayList
                         aryIgnoreRows.Add(New Point(3001, 3001))
 
-                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\EnablerStim", "EnableWhenActive", "True"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\EnablerStim", "InitialValue", "1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\EnablerStim", "StimulusValue", "1"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\EnablerStim", "FinalValue", "0"})
                         RunSimulationWaitToEnd()
                         CompareSimulation(m_strRootFolder & m_strTestDataPath, aryMaxErrors, "EnableActive_True_", -1, aryIgnoreRows)
 
                         aryIgnoreRows.Clear()
                         aryIgnoreRows.Add(New Point(1501, 1501))
 
-                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\EnablerStim", "EnableWhenActive", "False"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\EnablerStim", "InitialValue", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\EnablerStim", "StimulusValue", "0"})
+                        ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\EnablerStim", "FinalValue", "1"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\EnablerStim", "EndTime", "6.5"})
                         ExecuteIndirectMethod("SetObjectProperty", New Object() {"Stimuli\EnablerStim", "StartTime", "5.5"})
                         RunSimulationWaitToEnd()

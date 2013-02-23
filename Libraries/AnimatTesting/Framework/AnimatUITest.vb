@@ -154,8 +154,6 @@ Namespace Framework
         Protected Overridable Sub OpenExistingProject()
             ExecuteIndirectMethod("LoadProject", New Object() {m_strRootFolder & m_strProjectPath & "\" & m_strProjectName & "\" & m_strProjectName & ".aproj"}, 20, False, True)
 
-            WaitForProjectToOpen()
-
             'Set simulation to fastest possible.
             If DirectCast(GetApplicationProperty("ProjectIsOpen"), Boolean) Then
                 ExecuteIndirectMethod("SetObjectProperty", New Object() {"Simulation", "PlaybackControlMode", "FastestPossible"})
