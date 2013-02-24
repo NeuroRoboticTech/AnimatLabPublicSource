@@ -66,30 +66,42 @@ Namespace UITests
 
                     End Sub
 
-                    '<TestMethod(), _
-                    '  DataSource("System.Data.OleDb", _
-                    '             "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
-                    '             "PrismaticLimitTestData", _
-                    '             DataAccessMethod.Sequential), _
-                    '  DeploymentItem("TestCases.accdb")>
-                    'Public Sub Test_PrismaticLimits()
-                    '    m_strProjectName = TestContext.DataRow("TestName").ToString
-                    '    Dim dblMin As Single = CSng(TestContext.DataRow("Min"))
-                    '    Dim dblMax As Single = CSng(TestContext.DataRow("Max"))
-                    '    Dim dblDamping As Single = CSng(TestContext.DataRow("Damping"))
-                    '    Dim strRestitution As Single = CSng(TestContext.DataRow("Restitution"))
-                    '    Dim strStiffness As Single = CSng(TestContext.DataRow("Stiffness"))
-                    '    Dim strDataPrefix As String = CStr(TestContext.DataRow("DataPrefix"))
+                    <TestMethod(), _
+                      DataSource("System.Data.OleDb", _
+                                 "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=TestCases.accdb;Persist Security Info=False;", _
+                                 "PrismaticLimitTestData", _
+                                 DataAccessMethod.Sequential), _
+                      DeploymentItem("TestCases.accdb")>
+                    Public Sub Test_PrismaticLimits()
+                        m_strProjectName = TestContext.DataRow("TestName").ToString
+                        Dim dblMin As Single = CSng(TestContext.DataRow("Min"))
+                        Dim dblMax As Single = CSng(TestContext.DataRow("Max"))
+                        Dim dblDamping As Single = CSng(TestContext.DataRow("Damping"))
+                        Dim strRestitution As Single = CSng(TestContext.DataRow("Restitution"))
+                        Dim strStiffness As Single = CSng(TestContext.DataRow("Stiffness"))
+                        Dim strDataPrefix As String = CStr(TestContext.DataRow("DataPrefix"))
+                        Dim bEnabled As Boolean = CBool(TestContext.DataRow("Enabled"))
 
-                    '    m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\JointTests\PrismaticTests"
-                    '    m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\JointTests\PrismaticTests\" & m_strProjectName
-                    '    m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\PrismaticTests\" & m_strProjectName
+                        'If test is not enabled then skip it.
+                        If Not bEnabled Then Return
 
-                    '    ModifyJointConstraintsInProjectFile(m_strOldProjectFolder, dblMin, dblMax, False, dblDamping, strRestitution, strStiffness)
+                        Dim aryMaxErrors As New Hashtable
+                        aryMaxErrors.Add("Time", 0.001)
+                        aryMaxErrors.Add("Body_X", CSng(TestContext.DataRow("MaxBodyXError")))
+                        aryMaxErrors.Add("Body_Y", CSng(TestContext.DataRow("MaxBodyYError")))
+                        aryMaxErrors.Add("Body_Z", CSng(TestContext.DataRow("MaxBodyZError")))
+                        aryMaxErrors.Add("Joint_1", CSng(TestContext.DataRow("MaxJointError")))
+                        aryMaxErrors.Add("default", 0.04)
 
-                    '    TestConversionProject(strDataPrefix, 2000)
+                        m_strProjectPath = "\Libraries\AnimatTesting\TestProjects\ConversionTests\BodyPartTests\JointTests\PrismaticTests"
+                        m_strTestDataPath = "\Libraries\AnimatTesting\TestData\ConversionTests\BodyPartTests\JointTests\PrismaticTests\" & m_strProjectName
+                        m_strOldProjectFolder = "\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\PrismaticTests\" & m_strProjectName
 
-                    'End Sub
+                        ModifyJointConstraintsInProjectFile(m_strOldProjectFolder, dblMin, dblMax, False, dblDamping, strRestitution, strStiffness)
+
+                        TestConversionProject(strDataPrefix, 2000)
+
+                    End Sub
 
                     <TestMethod()>
                     Public Sub Test_PrismaticMotor()

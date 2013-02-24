@@ -1,5 +1,5 @@
 <Simulation>
-<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\PrismaticTests\PrismaticLimitTest_dmg\</ProjectPath>
+<ProjectPath>C:\Projects\AnimatLabSDK\AnimatLabPublicSource\Libraries\AnimatTesting\TestProjects\ConversionTests\OldVersions\BodyPartTests\JointTests\PrismaticTests\PrismaticLimitTest_KgM\</ProjectPath>
 <AnimatModule>VortexAnimatLibrary_vc7.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
@@ -9,23 +9,23 @@
 <SimEndTime Value="3" Scale="None" Actual="3"/>
 <Environment>
 <PhysicsTimeStep Value="1" Scale="milli" Actual="0.001"/>
-<FluidDensity Value="1" Scale="None" Actual="1"/>
+<FluidDensity Value="1000" Scale="Kilo" Actual="1e+06"/>
 <MaxSurfaceFriction Value="15" Scale="Kilo" Actual="15000"/>
 <Gravity Value="-9.81" Scale="None" Actual="-9.81"/>
-<MouseSpringStiffness Value="300" Scale="None" Actual="300"/>
-<MouseSpringDamping Value="100" Scale="Kilo" Actual="100000"/>
-<LinearCompliance Value="0.1" Scale="micro" Actual="1e-07"/>
-<LinearDamping Value="200" Scale="Kilo" Actual="200000"/>
-<AngularCompliance Value="0.1" Scale="micro" Actual="1e-07"/>
-<AngularDamping Value="50" Scale="Kilo" Actual="50000"/>
+<MouseSpringStiffness Value="30" Scale="None" Actual="30"/>
+<MouseSpringDamping Value="30" Scale="milli" Actual="0.03"/>
+<LinearCompliance Value="1" Scale="micro" Actual="1e-06"/>
+<LinearDamping Value="20" Scale="Kilo" Actual="20000"/>
+<AngularCompliance Value="1" Scale="micro" Actual="1e-06"/>
+<AngularDamping Value="5" Scale="Kilo" Actual="5000"/>
 <LinearKineticLoss Value="1" Scale="micro" Actual="1e-06"/>
 <AngularKineticLoss Value="1" Scale="micro" Actual="1e-06"/>
 <MaxHydroForce Value="100" Scale="None" Actual="100"/>
 <MaxHydroTorque Value="100" Scale="None" Actual="100"/>
 <PlaybackRate>1</PlaybackRate>
 <SimulateHydrodynamics>False</SimulateHydrodynamics>
-<MassUnits>Grams</MassUnits>
-<DistanceUnits>Decimeters</DistanceUnits>
+<MassUnits>Kilograms</MassUnits>
+<DistanceUnits>Meters</DistanceUnits>
 <UseAlphaBlending>False</UseAlphaBlending>
 <AutoGenerateRandomSeed>True</AutoGenerateRandomSeed>
 <ManualRandomSeed>12345</ManualRandomSeed>

@@ -12,7 +12,7 @@
     <Ca>1</Ca>
     <Car>1</Car>
     <Texture />
-    <Density Value="1" Scale="None" Actual="1" />
+    <Density Value="1" Scale="Kilo" Actual="1000" />
     <XCenterOfMass Value="0" Scale="centi" Actual="0" />
     <YCenterOfMass Value="0" Scale="centi" Actual="0" />
     <ZCenterOfMass Value="0" Scale="centi" Actual="0" />
@@ -31,7 +31,7 @@
         <Ca>1</Ca>
         <Car>1</Car>
         <Texture />
-        <Density Value="1" Scale="None" Actual="1" />
+        <Density Value="1" Scale="Kilo" Actual="1000" />
         <XCenterOfMass Value="0" Scale="centi" Actual="0" />
         <YCenterOfMass Value="0" Scale="centi" Actual="0" />
         <ZCenterOfMass Value="0" Scale="centi" Actual="0" />
@@ -45,7 +45,7 @@
             <EnableLimits>True</EnableLimits>
             <Damping Value="10" Scale="None" Actual="10" />
             <Restitution Value="0" Scale="None" Actual="0" />
-            <Stiffness Value="1000" Scale="None" Actual="1000" />
+            <Stiffness Value="100" Scale="None" Actual="100" />
           </Constraint>
           <Length>5</Length>
           <EnableMotor>False</EnableMotor>
