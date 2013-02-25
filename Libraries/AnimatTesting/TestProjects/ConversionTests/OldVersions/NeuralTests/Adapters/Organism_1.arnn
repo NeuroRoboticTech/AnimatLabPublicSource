@@ -14,24 +14,24 @@
 <Synapses>
 <SpikingSynapses>
 <SpikingSynapse>
-<Name>Hyperpolarizing IPSP</Name>
+<Name>Hebbian ACh type</Name>
 <ID>0</ID>
-<Equil>-70</Equil>
-<SynAmp>0.5</SynAmp>
-<Decay>10</Decay>
-<RelFacil>1.5</RelFacil>
-<FacilDecay>100</FacilDecay>
-<VoltDep>False</VoltDep>
+<Equil>-10</Equil>
+<SynAmp>0.4</SynAmp>
+<Decay>3</Decay>
+<RelFacil>1</RelFacil>
+<FacilDecay>1</FacilDecay>
+<VoltDep>True</VoltDep>
 <MaxRelCond>5</MaxRelCond>
 <SatPSPot>-30</SatPSPot>
 <ThreshPSPot>-60</ThreshPSPot>
-<Hebbian>False</Hebbian>
-<MaxAugCond>1</MaxAugCond>
-<LearningInc>0.1</LearningInc>
-<LearningTime>20</LearningTime>
+<Hebbian>True</Hebbian>
+<MaxAugCond>2</MaxAugCond>
+<LearningInc>0.02</LearningInc>
+<LearningTime>40</LearningTime>
 <AllowForget>True</AllowForget>
 <ForgetTime>10000</ForgetTime>
-<Consolidation>1</Consolidation>
+<Consolidation>20</Consolidation>
 </SpikingSynapse>
 <SpikingSynapse>
 <Name>Depolarizing IPSP</Name>
@@ -54,24 +54,24 @@
 <Consolidation>1</Consolidation>
 </SpikingSynapse>
 <SpikingSynapse>
-<Name>Hebbian ACh type</Name>
+<Name>Hyperpolarizing IPSP</Name>
 <ID>2</ID>
-<Equil>-10</Equil>
-<SynAmp>0.4</SynAmp>
-<Decay>3</Decay>
-<RelFacil>1</RelFacil>
-<FacilDecay>1</FacilDecay>
-<VoltDep>True</VoltDep>
+<Equil>-70</Equil>
+<SynAmp>0.5</SynAmp>
+<Decay>10</Decay>
+<RelFacil>1.5</RelFacil>
+<FacilDecay>100</FacilDecay>
+<VoltDep>False</VoltDep>
 <MaxRelCond>5</MaxRelCond>
 <SatPSPot>-30</SatPSPot>
 <ThreshPSPot>-60</ThreshPSPot>
-<Hebbian>True</Hebbian>
-<MaxAugCond>2</MaxAugCond>
-<LearningInc>0.02</LearningInc>
-<LearningTime>40</LearningTime>
+<Hebbian>False</Hebbian>
+<MaxAugCond>1</MaxAugCond>
+<LearningInc>0.1</LearningInc>
+<LearningTime>20</LearningTime>
 <AllowForget>True</AllowForget>
 <ForgetTime>10000</ForgetTime>
-<Consolidation>20</Consolidation>
+<Consolidation>1</Consolidation>
 </SpikingSynapse>
 <SpikingSynapse>
 <Name>NMDA type</Name>

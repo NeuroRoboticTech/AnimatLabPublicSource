@@ -81,7 +81,7 @@ Namespace UITests
                 'Run the simulation and wait for it to end.
                 RunSimulationWaitToEnd()
 
-                ExecuteMethod("ExportDataCharts", New Object() {"", ""})
+                ExportDataCharts()
 
                 Dim dblAvgTime As Double = CalculateChartColumnAverage(m_strRootFolder & "\Libraries\AnimatTesting\TestProjects\PerformanceTests\NumberOfItems\DataTool_1.txt", 1)
 

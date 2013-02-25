@@ -220,6 +220,29 @@ Namespace Framework
 
 #End Region
 
+        Protected Overridable Sub ExportDataCharts(Optional ByVal strFilename As String = "", Optional ByVal strPrefix As String = "")
+            Debug.WriteLine("Exporting data Charts File: '" & strFilename & "', Prefix: '" & strPrefix)
+
+            'System.Threading.Thread.Sleep(2000)
+            WaitWhileBusy()
+
+            Dim bDone As Boolean = False
+            Dim iCount As Integer = 0
+            While Not bDone AndAlso iCount < 5
+                ExecuteMethod("ExportDataCharts", New Object() {strFilename, strPrefix})
+                bDone = CBool(GetApplicationProperty("Automation_ExportedChartData"))
+                iCount = iCount + 1
+                Debug.WriteLine("ExportData Charts Done: " & bDone)
+                System.Threading.Thread.Sleep(1500)
+            End While
+
+            If Not bDone Then
+                Throw New System.Exception("Unable to export data charts.")
+            End If
+
+            WaitWhileBusy()
+
+        End Sub
 
         Protected Overridable Sub CompareSimulation(ByVal strTestDataPath As String, Optional ByVal strPrefix As String = "", _
                                                     Optional ByVal dblMaxError As Double = 0.1, Optional ByVal iMaxRows As Integer = -1)
@@ -227,8 +250,7 @@ Namespace Framework
 
             If m_bIgnoreSimAndCompare Then Return
 
-            'No prefix on the exported chart.
-            ExecuteMethod("ExportDataCharts", New Object() {"", ""})
+            ExportDataCharts()
 
             'Prep the hashchart
             Dim aryMaxErrors As New Hashtable
@@ -251,8 +273,7 @@ Namespace Framework
 
             If m_bIgnoreSimAndCompare Then Return
 
-            'No prefix on the exported chart.
-            ExecuteMethod("ExportDataCharts", New Object() {"", ""})
+            ExportDataCharts()
 
             If aryIgnoreRows Is Nothing Then
                 'If no arraylist passed in then just create an empty one.
@@ -306,7 +327,7 @@ Namespace Framework
             Debug.WriteLine("Load Data Chartt. Test Data Path: '" & strTestDataPath & "', Prefix: '" & strPrefix & "', ChartFileName: '" & strChartFileName & "'")
 
             'Export all charts.
-            ExecuteMethod("ExportDataCharts", New Object() {"", ""})
+            ExportDataCharts()
             ExecuteMethod("CopyChartData", New Object() {strTestDataPath, strPrefix})
 
             Threading.Thread.Sleep(200)

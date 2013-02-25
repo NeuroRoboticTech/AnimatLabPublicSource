@@ -6,7 +6,7 @@
 <EnableSimRecording>True</EnableSimRecording>
 <SetSimEnd>True</SetSimEnd>
 <APIFile/>
-<SimEndTime Value="2" Scale="None" Actual="2"/>
+<SimEndTime Value="3" Scale="None" Actual="3"/>
 <Environment>
 <PhysicsTimeStep Value="1" Scale="milli" Actual="0.001"/>
 <FluidDensity Value="1" Scale="None" Actual="1"/>

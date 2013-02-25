@@ -35,14 +35,14 @@
 <Link>
 <AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
 <ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
-<ID>cf53c8f0-5a39-4324-9b21-20a2a644de66</ID>
+<ID>a22a8d6c-fd9e-4109-94ad-41682e6dadaa</ID>
 <AdjustDst>False</AdjustDst>
 <AdjustOrg>False</AdjustOrg>
 <ArrowDestination>
 <Style>Circle</Style>
 <Size>Medium</Size>
 <Angle>deg30</Angle>
-<Filled>True</Filled>
+<Filled>False</Filled>
 </ArrowDestination>
 <ArrowMiddle>
 <Style>None</Style>
@@ -74,23 +74,23 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<Name>Hyperpolarizing IPSP</Name>
-<EquilibriumPotential Value="-70" Scale="milli" Actual="-0.07"/>
-<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
-<DecayRate Value="10" Scale="milli" Actual="0.01"/>
-<RelativeFacilitation Value="1.5" Scale="None" Actual="1.5"/>
-<FacilitationDecay Value="100" Scale="milli" Actual="0.1"/>
-<VoltageDependent>False</VoltageDependent>
+<Name>Hebbian ACh type</Name>
+<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
+<SynapticConductance Value="0.4" Scale="micro" Actual="4e-07"/>
+<DecayRate Value="3" Scale="milli" Actual="0.003"/>
+<RelativeFacilitation Value="1" Scale="None" Actual="1"/>
+<FacilitationDecay Value="1" Scale="milli" Actual="0.001"/>
+<VoltageDependent>True</VoltageDependent>
 <MaxRelativeConductance Value="5" Scale="micro" Actual="5e-06"/>
 <SaturatePotential Value="-30" Scale="milli" Actual="-0.03"/>
 <ThresholdPotential Value="-60" Scale="milli" Actual="-0.06"/>
-<Hebbian>False</Hebbian>
-<MaxAugmentedConductance Value="1" Scale="micro" Actual="1e-06"/>
-<LearningIncrement>0.1</LearningIncrement>
-<LearningTimeWindow Value="20" Scale="milli" Actual="0.02"/>
+<Hebbian>True</Hebbian>
+<MaxAugmentedConductance Value="2" Scale="micro" Actual="2e-06"/>
+<LearningIncrement>0.02</LearningIncrement>
+<LearningTimeWindow Value="40" Scale="milli" Actual="0.04"/>
 <AllowForgetting>True</AllowForgetting>
 <ForgettingTimeWindow Value="10000" Scale="milli" Actual="10"/>
-<ConsolidationFactor>1</ConsolidationFactor>
+<ConsolidationFactor>20</ConsolidationFactor>
 </Link>
 <Link>
 <AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
@@ -395,14 +395,14 @@
 <Link>
 <AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
 <ClassName>RealisticNeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
-<ID>a22a8d6c-fd9e-4109-94ad-41682e6dadaa</ID>
+<ID>cf53c8f0-5a39-4324-9b21-20a2a644de66</ID>
 <AdjustDst>False</AdjustDst>
 <AdjustOrg>False</AdjustOrg>
 <ArrowDestination>
 <Style>Circle</Style>
 <Size>Medium</Size>
 <Angle>deg30</Angle>
-<Filled>False</Filled>
+<Filled>True</Filled>
 </ArrowDestination>
 <ArrowMiddle>
 <Style>None</Style>
@@ -434,23 +434,23 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<Name>Hebbian ACh type</Name>
-<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
-<SynapticConductance Value="0.4" Scale="micro" Actual="4e-07"/>
-<DecayRate Value="3" Scale="milli" Actual="0.003"/>
-<RelativeFacilitation Value="1" Scale="None" Actual="1"/>
-<FacilitationDecay Value="1" Scale="milli" Actual="0.001"/>
-<VoltageDependent>True</VoltageDependent>
+<Name>Hyperpolarizing IPSP</Name>
+<EquilibriumPotential Value="-70" Scale="milli" Actual="-0.07"/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<DecayRate Value="10" Scale="milli" Actual="0.01"/>
+<RelativeFacilitation Value="1.5" Scale="None" Actual="1.5"/>
+<FacilitationDecay Value="100" Scale="milli" Actual="0.1"/>
+<VoltageDependent>False</VoltageDependent>
 <MaxRelativeConductance Value="5" Scale="micro" Actual="5e-06"/>
 <SaturatePotential Value="-30" Scale="milli" Actual="-0.03"/>
 <ThresholdPotential Value="-60" Scale="milli" Actual="-0.06"/>
-<Hebbian>True</Hebbian>
-<MaxAugmentedConductance Value="2" Scale="micro" Actual="2e-06"/>
-<LearningIncrement>0.02</LearningIncrement>
-<LearningTimeWindow Value="40" Scale="milli" Actual="0.04"/>
+<Hebbian>False</Hebbian>
+<MaxAugmentedConductance Value="1" Scale="micro" Actual="1e-06"/>
+<LearningIncrement>0.1</LearningIncrement>
+<LearningTimeWindow Value="20" Scale="milli" Actual="0.02"/>
 <AllowForgetting>True</AllowForgetting>
 <ForgettingTimeWindow Value="10000" Scale="milli" Actual="10"/>
-<ConsolidationFactor>20</ConsolidationFactor>
+<ConsolidationFactor>1</ConsolidationFactor>
 </Link>
 <Link>
 <AssemblyFile>RealisticNeuralNetTools.dll</AssemblyFile>
@@ -632,7 +632,7 @@
 <Link>
 <AssemblyFile>FPGANeuralNetTools.dll</AssemblyFile>
 <ClassName>FPGANeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
-<ID>52a420fc-0907-4a70-b2b4-5f92e2071724</ID>
+<ID>829ac969-f939-4e64-ac33-3542862dc3dc</ID>
 <AdjustDst>False</AdjustDst>
 <AdjustOrg>False</AdjustOrg>
 <ArrowDestination>
@@ -671,10 +671,10 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<Name>NMDA type</Name>
-<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
-<SynapticConductance Value="0.1" Scale="micro" Actual="1e-07"/>
-<DecayRate Value="50" Scale="milli" Actual="0.05"/>
+<Name>Depolarizing IPSP</Name>
+<EquilibriumPotential Value="-55" Scale="milli" Actual="-0.055"/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
+<DecayRate Value="3" Scale="milli" Actual="0.003"/>
 </Link>
 <Link>
 <AssemblyFile>FPGANeuralNetTools.dll</AssemblyFile>
@@ -726,7 +726,7 @@
 <Link>
 <AssemblyFile>FPGANeuralNetTools.dll</AssemblyFile>
 <ClassName>FPGANeuralNetTools.DataObjects.Behavior.SynapseTypes.SpikingChemical</ClassName>
-<ID>829ac969-f939-4e64-ac33-3542862dc3dc</ID>
+<ID>52a420fc-0907-4a70-b2b4-5f92e2071724</ID>
 <AdjustDst>False</AdjustDst>
 <AdjustOrg>False</AdjustOrg>
 <ArrowDestination>
@@ -765,10 +765,10 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<Name>Depolarizing IPSP</Name>
-<EquilibriumPotential Value="-55" Scale="milli" Actual="-0.055"/>
-<SynapticConductance Value="0.5" Scale="micro" Actual="5e-07"/>
-<DecayRate Value="3" Scale="milli" Actual="0.003"/>
+<Name>NMDA type</Name>
+<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
+<SynapticConductance Value="0.1" Scale="micro" Actual="1e-07"/>
+<DecayRate Value="50" Scale="milli" Actual="0.05"/>
 </Link>
 <Link>
 <AssemblyFile>FPGANeuralNetTools.dll</AssemblyFile>

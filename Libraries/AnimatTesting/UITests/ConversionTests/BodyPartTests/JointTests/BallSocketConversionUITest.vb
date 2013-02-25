@@ -43,7 +43,7 @@ Namespace UITests
                     '
 
                     <TestMethod()>
-                    Public Sub Test_BallSocket()
+                    Public Sub Test_BallSocketConversion()
 
                         Dim aryMaxErrors As New Hashtable
                         aryMaxErrors.Add("Time", 0.001)
