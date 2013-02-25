@@ -221,6 +221,13 @@ Namespace DataObjects.Physical.Joints
             m_doLowerLimit = DirectCast(doOrig.m_doLowerLimit.Clone(Me, bCutData, doRoot), ConstraintLimit)
             m_doUpperLimit = DirectCast(doOrig.m_doUpperLimit.Clone(Me, bCutData, doRoot), ConstraintLimit)
 
+            m_doLowerLimit.PairedLimit = m_doUpperLimit
+            m_doUpperLimit.PairedLimit = m_doLowerLimit
+            m_doLowerLimit.IsLowerLimit = True
+            m_doUpperLimit.IsLowerLimit = False
+            m_doLowerLimit.AngleLimit = False
+            m_doUpperLimit.AngleLimit = False
+
             m_bEnableMotor = doOrig.m_bEnableMotor
             m_bServoMotor = doOrig.m_bServoMotor
             m_fltServoGain = doOrig.ServoGain
